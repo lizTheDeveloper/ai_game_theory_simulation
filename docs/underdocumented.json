@@ -14338,7 +14338,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 183,
+    "line": 182,
     "type": "property",
     "name": "partitioning",
     "currentDoc": "(none)",
@@ -14346,7 +14346,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 194,
+    "line": 193,
     "type": "interface",
     "name": "CO2System",
     "currentDoc": "(none)",
@@ -14354,7 +14354,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 219,
+    "line": 218,
     "type": "interface",
     "name": "FossilFuelIndustry",
     "currentDoc": "(none)",
@@ -14362,7 +14362,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 241,
+    "line": 240,
     "type": "interface",
     "name": "MiningIndustry",
     "currentDoc": "(none)",
@@ -14370,7 +14370,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 252,
+    "line": 251,
     "type": "interface",
     "name": "OceanHealth",
     "currentDoc": "(none)",
@@ -14378,7 +14378,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 288,
+    "line": 287,
     "type": "interface",
     "name": "GeoengTechnology",
     "currentDoc": "(none)",
@@ -14386,7 +14386,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 311,
+    "line": 310,
     "type": "interface",
     "name": "IronFertilizationState",
     "currentDoc": "(none)",
@@ -14394,7 +14394,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 316,
+    "line": 315,
     "type": "interface",
     "name": "OceanAlkalinityState",
     "currentDoc": "(none)",
@@ -14402,7 +14402,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 322,
+    "line": 321,
     "type": "interface",
     "name": "ArtificialUpwellingState",
     "currentDoc": "(none)",
@@ -14410,7 +14410,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 328,
+    "line": 327,
     "type": "interface",
     "name": "BioengineeredCleanersState",
     "currentDoc": "(none)",
@@ -14418,7 +14418,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 339,
+    "line": 338,
     "type": "interface",
     "name": "ResourceEconomy",
     "currentDoc": "(none)",
@@ -14426,7 +14426,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 341,
+    "line": 340,
     "type": "property",
     "name": "oil",
     "currentDoc": "(none)",
@@ -14434,7 +14434,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 342,
+    "line": 341,
     "type": "property",
     "name": "coal",
     "currentDoc": "(none)",
@@ -14442,7 +14442,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 343,
+    "line": 342,
     "type": "property",
     "name": "naturalGas",
     "currentDoc": "(none)",
@@ -14450,7 +14450,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 346,
+    "line": 345,
     "type": "property",
     "name": "iron",
     "currentDoc": "(none)",
@@ -14458,7 +14458,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 347,
+    "line": 346,
     "type": "property",
     "name": "copper",
     "currentDoc": "(none)",
@@ -14466,7 +14466,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 352,
+    "line": 351,
     "type": "property",
     "name": "food",
     "currentDoc": "(none)",
@@ -14474,7 +14474,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 353,
+    "line": 352,
     "type": "property",
     "name": "water",
     "currentDoc": "(none)",
@@ -14482,7 +14482,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 354,
+    "line": 353,
     "type": "property",
     "name": "timber",
     "currentDoc": "(none)",
@@ -14490,7 +14490,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 357,
+    "line": 356,
     "type": "property",
     "name": "energy",
     "currentDoc": "(none)",
@@ -14498,7 +14498,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 360,
+    "line": 359,
     "type": "property",
     "name": "co2",
     "currentDoc": "(none)",
@@ -14506,7 +14506,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 363,
+    "line": 362,
     "type": "property",
     "name": "fossilIndustry",
     "currentDoc": "(none)",
@@ -14514,7 +14514,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 364,
+    "line": 363,
     "type": "property",
     "name": "miningIndustry",
     "currentDoc": "(none)",
@@ -14522,7 +14522,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 367,
+    "line": 366,
     "type": "property",
     "name": "ocean",
     "currentDoc": "(none)",
@@ -14530,7 +14530,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 370,
+    "line": 369,
     "type": "property",
     "name": "geoengineering",
     "currentDoc": "(none)",
@@ -14538,7 +14538,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 371,
+    "line": 370,
     "type": "property",
     "name": "ironFertilization",
     "currentDoc": "(none)",
@@ -14546,7 +14546,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 372,
+    "line": 371,
     "type": "property",
     "name": "oceanAlkalinity",
     "currentDoc": "(none)",
@@ -14554,7 +14554,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 373,
+    "line": 372,
     "type": "property",
     "name": "artificialUpwelling",
     "currentDoc": "(none)",
@@ -14562,7 +14562,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 374,
+    "line": 373,
     "type": "property",
     "name": "bioengineeredCleaners",
     "currentDoc": "(none)",
@@ -14570,7 +14570,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 405,
+    "line": 404,
     "type": "interface",
     "name": "ResourceEvent",
     "currentDoc": "(none)",
@@ -14578,7 +14578,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 406,
+    "line": 405,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -14586,7 +14586,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 409,
+    "line": 408,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -14594,7 +14594,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 410,
+    "line": 409,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -14602,7 +14602,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 421,
+    "line": 420,
     "type": "type",
     "name": "ResourceType",
     "currentDoc": "(none)",
@@ -14610,7 +14610,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 426,
+    "line": 425,
     "type": "type",
     "name": "EnergySource",
     "currentDoc": "(none)",
@@ -14618,7 +14618,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 430,
+    "line": 429,
     "type": "type",
     "name": "GeoengType",
     "currentDoc": "(none)",
@@ -14626,7 +14626,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 439,
+    "line": 438,
     "type": "interface",
     "name": "GeoengTechnology",
     "currentDoc": "(none)",
@@ -14634,7 +14634,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 440,
+    "line": 439,
     "type": "property",
     "name": "unlocked",
     "currentDoc": "(none)",
@@ -14642,7 +14642,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 454,
+    "line": 453,
     "type": "interface",
     "name": "IronFertilizationState",
     "currentDoc": "(none)",
@@ -14650,7 +14650,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 463,
+    "line": 462,
     "type": "interface",
     "name": "OceanAlkalinityState",
     "currentDoc": "(none)",
@@ -14658,7 +14658,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 473,
+    "line": 472,
     "type": "interface",
     "name": "ArtificialUpwellingState",
     "currentDoc": "(none)",
@@ -14666,7 +14666,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 483,
+    "line": 482,
     "type": "interface",
     "name": "BioengineeredCleanersState",
     "currentDoc": "(none)",
@@ -14674,7 +14674,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 493,
+    "line": 492,
     "type": "interface",
     "name": "GeoengSystemState",
     "currentDoc": "(none)",
@@ -14682,7 +14682,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 494,
+    "line": 493,
     "type": "property",
     "name": "ironFertilization",
     "currentDoc": "(none)",
@@ -14690,7 +14690,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 495,
+    "line": 494,
     "type": "property",
     "name": "oceanAlkalinity",
     "currentDoc": "(none)",
@@ -14698,7 +14698,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 496,
+    "line": 495,
     "type": "property",
     "name": "artificialUpwelling",
     "currentDoc": "(none)",
@@ -14706,7 +14706,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/resources.ts",
-    "line": 497,
+    "line": 496,
     "type": "property",
     "name": "bioengineeredCleaners",
     "currentDoc": "(none)",
@@ -150300,53 +150300,13 @@
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceEconomy.ts",
     "line": 322,
     "type": "property",
-    "name": "oil",
-    "currentDoc": "(none)",
-    "context": "oil: 35,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceEconomy.ts",
-    "line": 323,
-    "type": "property",
-    "name": "coal",
-    "currentDoc": "(none)",
-    "context": "coal: 35,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceEconomy.ts",
-    "line": 324,
-    "type": "property",
-    "name": "naturalGas",
-    "currentDoc": "(none)",
-    "context": "naturalGas: 30,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceEconomy.ts",
-    "line": 325,
-    "type": "property",
-    "name": "nuclear",
-    "currentDoc": "(none)",
-    "context": "nuclear: 5,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceEconomy.ts",
-    "line": 327,
-    "type": "property",
-    "name": "wind",
-    "currentDoc": "(none)",
-    "context": "wind: 40,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceEconomy.ts",
-    "line": 338,
-    "type": "property",
     "name": "surplus",
     "currentDoc": "(none)",
     "context": "surplus: 5,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceEconomy.ts",
-    "line": 341,
+    "line": 325,
     "type": "property",
     "name": "sources",
     "currentDoc": "(none)",
@@ -150354,7 +150314,55 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceEconomy.ts",
-    "line": 368,
+    "line": 337,
+    "type": "property",
+    "name": "capacity",
+    "currentDoc": "(none)",
+    "context": "capacity: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceEconomy.ts",
+    "line": 338,
+    "type": "property",
+    "name": "oil",
+    "currentDoc": "(none)",
+    "context": "oil: 35,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceEconomy.ts",
+    "line": 339,
+    "type": "property",
+    "name": "coal",
+    "currentDoc": "(none)",
+    "context": "coal: 35,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceEconomy.ts",
+    "line": 340,
+    "type": "property",
+    "name": "naturalGas",
+    "currentDoc": "(none)",
+    "context": "naturalGas: 30,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceEconomy.ts",
+    "line": 341,
+    "type": "property",
+    "name": "nuclear",
+    "currentDoc": "(none)",
+    "context": "nuclear: 5,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceEconomy.ts",
+    "line": 343,
+    "type": "property",
+    "name": "wind",
+    "currentDoc": "(none)",
+    "context": "wind: 40,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceEconomy.ts",
+    "line": 360,
     "type": "property",
     "name": "partitioning",
     "currentDoc": "(none)",
@@ -150362,7 +150370,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceEconomy.ts",
-    "line": 416,
+    "line": 408,
     "type": "property",
     "name": "sabotageAttempts",
     "currentDoc": "(none)",
@@ -150370,7 +150378,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceEconomy.ts",
-    "line": 428,
+    "line": 420,
     "type": "property",
     "name": "collapsed",
     "currentDoc": "(none)",
@@ -150378,7 +150386,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceEconomy.ts",
-    "line": 469,
+    "line": 461,
     "type": "property",
     "name": "monthsInCrisis",
     "currentDoc": "(none)",
@@ -150386,7 +150394,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceEconomy.ts",
-    "line": 473,
+    "line": 465,
     "type": "property",
     "name": "geoengInterventionActive",
     "currentDoc": "(none)",
@@ -150394,7 +150402,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceEconomy.ts",
-    "line": 474,
+    "line": 466,
     "type": "property",
     "name": "geoengIntensity",
     "currentDoc": "(none)",
@@ -150402,7 +150410,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceEconomy.ts",
-    "line": 475,
+    "line": 467,
     "type": "property",
     "name": "terminationShockRisk",
     "currentDoc": "(none)",
@@ -150410,7 +150418,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceEconomy.ts",
-    "line": 490,
+    "line": 482,
     "type": "property",
     "name": "oil",
     "currentDoc": "(none)",
@@ -150418,7 +150426,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceEconomy.ts",
-    "line": 491,
+    "line": 483,
     "type": "property",
     "name": "coal",
     "currentDoc": "(none)",
@@ -150426,7 +150434,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceEconomy.ts",
-    "line": 492,
+    "line": 484,
     "type": "property",
     "name": "naturalGas",
     "currentDoc": "(none)",
@@ -150434,7 +150442,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceEconomy.ts",
-    "line": 495,
+    "line": 487,
     "type": "property",
     "name": "copper",
     "currentDoc": "(none)",
@@ -150442,7 +150450,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceEconomy.ts",
-    "line": 496,
+    "line": 488,
     "type": "property",
     "name": "rareEarths",
     "currentDoc": "(none)",
@@ -150450,7 +150458,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceEconomy.ts",
-    "line": 497,
+    "line": 489,
     "type": "property",
     "name": "lithium",
     "currentDoc": "(none)",
@@ -150458,7 +150466,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceEconomy.ts",
-    "line": 498,
+    "line": 490,
     "type": "property",
     "name": "iron",
     "currentDoc": "(none)",
@@ -150466,7 +150474,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceEconomy.ts",
-    "line": 501,
+    "line": 493,
     "type": "property",
     "name": "food",
     "currentDoc": "(none)",
@@ -150474,7 +150482,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceEconomy.ts",
-    "line": 502,
+    "line": 494,
     "type": "property",
     "name": "water",
     "currentDoc": "(none)",
@@ -150482,7 +150490,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceEconomy.ts",
-    "line": 503,
+    "line": 495,
     "type": "property",
     "name": "timber",
     "currentDoc": "(none)",
@@ -150490,7 +150498,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceEconomy.ts",
-    "line": 506,
+    "line": 498,
     "type": "property",
     "name": "energy",
     "currentDoc": "(none)",
@@ -150498,7 +150506,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceEconomy.ts",
-    "line": 512,
+    "line": 504,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -150506,7 +150514,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceEconomy.ts",
-    "line": 513,
+    "line": 505,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -150514,7 +150522,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceEconomy.ts",
-    "line": 514,
+    "line": 506,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -150522,7 +150530,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceEconomy.ts",
-    "line": 515,
+    "line": 507,
     "type": "property",
     "name": "surplus",
     "currentDoc": "(none)",
@@ -150530,7 +150538,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceEconomy.ts",
-    "line": 516,
+    "line": 508,
     "type": "property",
     "name": "totalDemand",
     "currentDoc": "(none)",
@@ -150538,7 +150546,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceEconomy.ts",
-    "line": 535,
+    "line": 527,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -150546,7 +150554,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceEconomy.ts",
-    "line": 536,
+    "line": 528,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -150554,7 +150562,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceEconomy.ts",
-    "line": 537,
+    "line": 529,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
