@@ -1,7 +1,7 @@
 # GCP Infrastructure Assessment - MARCUS 3.0
 
 **Date:** November 21, 2025
-**Assessed By:** Claude Code + User (g7throwawayplz)
+**Assessed By:** Claude Code + User (404GeneNotFound)
 **Purpose:** Document current GCP setup and assess needs for remaining tasks
 
 ---
@@ -310,7 +310,7 @@ sudo apt-get update
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
 # Add user to docker group
-sudo usermod -aG docker g7throwawayplz
+sudo usermod -aG docker $USER
 newgrp docker
 
 # Verify Docker installation

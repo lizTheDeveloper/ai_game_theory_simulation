@@ -418,10 +418,10 @@
 **Priority:** MEDIUM (not a blocker, but good practice)
 
 **Tasks:**
-- [ ] SSH to VM: `ssh g7throwawayplz@marcus-test-vm`
+- [ ] SSH to VM: `ssh <username>@marcus-test-vm`
 - [ ] Run migration script:
   ```bash
-  cd /home/g7throwawayplz/ai_game_theory_simulation
+  cd ~/ai_game_theory_simulation
   sudo ./scripts/migrate_postgres_port.sh
   ```
 - [ ] Verify migration: `sudo -u postgres psql -tAc "SHOW port;"`

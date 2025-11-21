@@ -221,7 +221,13 @@
       "Bash(peak:*)",
       "Bash(git cherry-pick:*)",
       "Bash(cp:*)",
-      "Bash(mv:*)"
+      "Bash(mv:*)",
+      "Bash(docker:*)",
+      "Bash(kubectl version:*)",
+      "Bash(sudo ufw status:*)",
+      "Bash(gcloud container clusters list:*)",
+      "Bash(gcloud sql instances list:*)",
+      "Bash(gcloud redis instances list:*)"
     ],
     "deny": [],
     "ask": [],
