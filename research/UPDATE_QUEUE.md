@@ -1,6 +1,6 @@
 # Research Update Queue
-**Generated:** 11/21/2025, 1:30:06 PM
-**Files Scanned:** 506
+**Generated:** 11/21/2025, 2:30:05 PM
+**Files Scanned:** 507
 
 ---
 
@@ -12,7 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 169 (33.4%)
+**Count:** 170 (33.5%)
 
 ### `CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
 - **Oldest source:** 2009 (16 years old)
@@ -223,6 +223,11 @@
 - **Oldest source:** 1998 (27 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/ai_coordination_transition_management_20251120.md`
+
+### `ai_coordination_transition_management_20251121.md`
+- **Oldest source:** 2009 (16 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/ai_coordination_transition_management_20251121.md`
 
 ### `ai_coordination_transition_mechanics_20251121.md`
 - **Oldest source:** 1990 (35 years old)
@@ -893,7 +898,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 314 (62.1%)
+**Count:** 314 (61.9%)
 
 All sources <3 years old. No action required.
 
@@ -903,11 +908,11 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 506 |
+| Total files | 507 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 169 (33.4%) |
+| HIGH | 170 (33.5%) |
 | MEDIUM | 23 (4.5%) |
-| LOW | 314 (62.1%) |
+| LOW | 314 (61.9%) |
 | Average age | 7.5 years |
 | Oldest source | 1955 (70 years ago) |
 
@@ -915,21 +920,21 @@ All sources <3 years old. No action required.
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 314 | 62.1% |
+| Current (<3yr) | 314 | 61.9% |
 | Warning (3-5yr) | 23 | 4.5% |
-| Critical (>5yr) | 169 | 33.4% |
+| Critical (>5yr) | 170 | 33.5% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-- **Current:** 33.4% critical (>5yr)
+- **Current:** 33.5% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
-1. Update 169 HIGH priority file(s) within 1 month
+1. Update 170 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 
