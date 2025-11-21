@@ -126682,7 +126682,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
-    "line": 504,
+    "line": 511,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -126690,7 +126690,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
-    "line": 505,
+    "line": 512,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -126698,7 +126698,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
-    "line": 506,
+    "line": 513,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -126706,7 +126706,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nitrogenFoodCoupling.ts",
-    "line": 507,
+    "line": 514,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
