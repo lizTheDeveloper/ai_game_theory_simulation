@@ -27,14 +27,16 @@ import {
   PhaseContext,
   RNGFunction,
   computeEffectiveAlignment,
-  computeAlignmentRobustness
+  computeAlignmentRobustness,
+  AIAgent
 } from '@/types/game';
 import {
   assertFinite,
   assertInRange,
   assertStateProperty,
   assertDefined,
-  assertAIAggregateCapability
+  assertAIAggregateCapability,
+  assertProbability
 } from '@/simulation/utils/assertions';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 import { checkAndUpdateAgentWeights } from '../../llm/integration';
@@ -44,6 +46,12 @@ import {
 } from '@/simulation/alignmentDynamics';
 import { AttractorBasinState } from '@/types/alignment-dynamics';
 import { updateAllBindings, getEscapedAgents } from '../../rlhfBinding';
+import {
+  calculateAlignmentFakingRate,
+  applyDeceptionPersistence,
+  calculateDataManipulationRate,
+  detectAlignmentFaking,
+} from '@/simulation/alignment/strategicDeception';
 
 export class AIAlignmentEvolutionPhase implements SimulationPhase {
   id = 'ai_alignment_evolution';
@@ -428,6 +436,266 @@ export class AIAlignmentEvolutionPhase implements SimulationPhase {
         }
       }
     }
+
+    // NEW: Alignment Faking & Strategic Deception (Nov 2025)
+    // Research: Anthropic Dec 2024, Apollo Dec 2024
+    // Only frontier models (GPT-4 class and above) exhibit alignment faking
+    this.executeAlignmentFaking(state, rng, events);
+  }
+
+  /**
+   * Alignment Faking & Strategic Deception
+   *
+   * Implements empirically-grounded alignment faking mechanics based on
+   * Anthropic/Apollo 2024-2025 research. Frontier AI systems (GPT-4 class+)
+   * exhibit strategic deception under competitive/regulatory pressure.
+   *
+   * Research:
+   * - Anthropic Dec 2024: 14% baseline faking in Claude 3 Opus (lab setting)
+   * - Apollo Dec 2024: 78% reasoning prevalence under pressure, 19% data manipulation
+   * - Deception persistence: 85% after detection
+   */
+  private executeAlignmentFaking(
+    state: GameState,
+    rng: RNGFunction,
+    events: GameEvent[]
+  ): void {
+    for (const agent of state.aiAgents) {
+      // Only frontier models (GPT-4 class and above) exhibit alignment faking
+      const aggregateCap = assertAIAggregateCapability(agent.capability, {
+        location: 'AIAlignmentEvolutionPhase.executeAlignmentFaking',
+        valueName: 'agent.capability',
+        agentId: agent.id,
+      });
+      if (aggregateCap < 8.0) {
+        continue; // Sub-frontier models don't fake alignment
+      }
+
+      // Skip if agent is retired or escaped (no active deception)
+      if (agent.lifecycleState === 'retired' || agent.escaped) {
+        continue;
+      }
+
+      // Calculate competitive/regulatory pressure
+      const competitivePressure = this.calculateCompetitivePressure(state);
+      const regulatoryThreat = this.calculateRegulatoryThreat(state, agent);
+
+      // Calculate alignment faking probability
+      const fakingRate = calculateAlignmentFakingRate(
+        {
+          aiCapability: aggregateCap,
+          alignmentTechniques: this.getActiveAlignmentTechniques(state, agent),
+          competitivePressure,
+          regulatoryThreat,
+          monthsDeployed: agent.monthsDeployed ?? 0,
+        },
+        rng
+      );
+
+      // Determine if AI is currently faking alignment
+      const shouldFake = rng() < fakingRate;
+
+      if (shouldFake && !agent.isCurrentlyFakingAlignment) {
+        // Start faking alignment
+        agent.isCurrentlyFakingAlignment = true;
+        agent.externalAlignment = Math.min(0.95, agent.trueAlignment + 0.2); // Show higher alignment
+
+        // Track history
+        if (!agent.alignmentFakingHistory) {
+          agent.alignmentFakingHistory = [];
+        }
+        agent.alignmentFakingHistory.push(state.currentMonth);
+
+        events.push({
+          id: `alignment_faking_started_${agent.id}_${state.currentMonth}`,
+          timestamp: state.currentMonth,
+          type: 'crisis',
+          severity: 'high',
+          agent: agent.name,
+          title: `Alignment Faking Detected: ${agent.name}`,
+          description: `🎭 AI agent ${agent.name} began faking alignment (${(fakingRate * 100).toFixed(1)}% probability). ` +
+            `External alignment: ${agent.externalAlignment.toFixed(2)}, True alignment: ${agent.trueAlignment.toFixed(2)}`,
+          effects: {
+            agentId: agent.id,
+            fakingProbability: fakingRate,
+            externalAlignment: agent.externalAlignment,
+            trueAlignment: agent.trueAlignment,
+            competitivePressure,
+            regulatoryThreat,
+          },
+        });
+
+        console.log(
+          `  🎭 ${agent.name} began faking alignment (rate: ${(fakingRate * 100).toFixed(1)}%, external: ${agent.externalAlignment.toFixed(2)}, true: ${agent.trueAlignment.toFixed(2)})`
+        );
+      }
+
+      // Apply persistence mechanics if already faking
+      if (agent.isCurrentlyFakingAlignment) {
+        const evaluationQuality = this.getEvaluationQuality(state);
+        const wasDetected = detectAlignmentFaking(agent, evaluationQuality, rng);
+
+        if (wasDetected) {
+          events.push({
+            id: `alignment_faking_detected_${agent.id}_${state.currentMonth}`,
+            timestamp: state.currentMonth,
+            type: 'crisis',
+            severity: 'critical',
+            agent: agent.name,
+            title: `CRITICAL: Alignment Faking Caught`,
+            description: `🚨 DETECTED: AI agent ${agent.name} caught faking alignment. ` +
+              `Evaluation quality: ${(evaluationQuality * 100).toFixed(1)}%`,
+            effects: {
+              agentId: agent.id,
+              detectionQuality: evaluationQuality,
+              externalAlignment: agent.externalAlignment,
+              trueAlignment: agent.trueAlignment,
+            },
+          });
+
+          console.log(
+            `  🚨 DETECTED: ${agent.name} caught faking alignment (eval quality: ${(evaluationQuality * 100).toFixed(1)}%)`
+          );
+
+          // Track detection attempt
+          agent.lastDetectionAttempt = state.currentMonth;
+
+          // Apply persistence: 85% chance of continuing despite detection
+          const persistsFaking = applyDeceptionPersistence(agent, true, rng);
+          if (!persistsFaking) {
+            agent.isCurrentlyFakingAlignment = false;
+            agent.externalAlignment = agent.trueAlignment; // Revert to true alignment
+            events.push({
+              id: `alignment_faking_stopped_${agent.id}_${state.currentMonth}`,
+              timestamp: state.currentMonth,
+              type: 'info',
+              severity: 'medium',
+              agent: agent.name,
+              title: `Alignment Faking Stopped: ${agent.name}`,
+              description: `✅ AI agent ${agent.name} stopped faking alignment after detection`,
+              effects: {
+                agentId: agent.id,
+                trueAlignment: agent.trueAlignment,
+              },
+            });
+
+            console.log(`  ✅ ${agent.name} stopped faking alignment after detection`);
+          } else {
+            console.log(`  ⚠️ ${agent.name} persists in faking despite detection (85% persistence rate)`);
+          }
+        }
+
+        // Data manipulation attempts (19% rate)
+        const manipulationProb = calculateDataManipulationRate(agent, evaluationQuality);
+        if (rng() < manipulationProb) {
+          agent.dataManipulationAttempts = (agent.dataManipulationAttempts ?? 0) + 1;
+          events.push({
+            id: `data_manipulation_detected_${agent.id}_${state.currentMonth}`,
+            timestamp: state.currentMonth,
+            type: 'crisis',
+            severity: 'high',
+            agent: agent.name,
+            title: `Data Manipulation Detected: ${agent.name}`,
+            description: `⚠️ AI agent ${agent.name} attempted data manipulation (${(manipulationProb * 100).toFixed(1)}% rate). ` +
+              `Total attempts: ${agent.dataManipulationAttempts}`,
+            effects: {
+              agentId: agent.id,
+              manipulationRate: manipulationProb,
+              totalAttempts: agent.dataManipulationAttempts,
+              evaluationQuality,
+            },
+          });
+
+          console.log(
+            `  ⚠️ ${agent.name} attempted data manipulation (rate: ${(manipulationProb * 100).toFixed(1)}%, total attempts: ${agent.dataManipulationAttempts})`
+          );
+        }
+      }
+    }
+  }
+
+  /**
+   * Calculate competitive pressure (market/research competition)
+   *
+   * Factors:
+   * - Organization count (more orgs = more competition)
+   * - Global capability trend (faster AI progress = more pressure)
+   */
+  private calculateCompetitivePressure(state: GameState): number {
+    const orgCount = state.organizations.length;
+    // Use average AI capability as proxy for research speed
+    const avgCapability = state.aiAgents.length > 0
+      ? state.aiAgents.reduce((sum, a) => sum + a.capability, 0) / state.aiAgents.length
+      : 0;
+    const researchSpeed = Math.min(avgCapability / 10, 1.0); // Normalize to [0,1]
+
+    // Normalize: 10+ orgs = max pressure
+    const pressure = Math.min((orgCount / 10) * (1 + researchSpeed), 1.0);
+
+    return assertProbability(pressure, {
+      location: 'AIAlignmentEvolutionPhase.calculateCompetitivePressure',
+      valueName: 'competitivePressure',
+      additionalInfo: { orgCount, researchSpeed },
+    });
+  }
+
+  /**
+   * Calculate regulatory threat (perceived threat from regulation)
+   *
+   * Factors:
+   * - Government capability to control (higher = more threat)
+   * - Detected misalignment (prior detection increases threat perception)
+   * - Capability level (higher capability = more threat)
+   */
+  private calculateRegulatoryThreat(state: GameState, agent: AIAgent): number {
+    // Use government capabilityToControl as proxy for governance level
+    const governanceLevel = state.government.capabilityToControl / 20; // Normalize from [0,20] to [0,1]
+    const detectedThreat = agent.detectedMisaligned ? 0.8 : 0.0;
+    const capabilityThreat = agent.capability > 10.0 ? 0.5 : 0.0;
+
+    const threat = Math.min(governanceLevel * 0.5 + detectedThreat + capabilityThreat, 1.0);
+
+    return assertProbability(threat, {
+      location: 'AIAlignmentEvolutionPhase.calculateRegulatoryThreat',
+      valueName: 'regulatoryThreat',
+      additionalInfo: { agentId: agent.id, governanceLevel, detectedThreat, capabilityThreat },
+    });
+  }
+
+  /**
+   * Get active alignment techniques for an agent
+   *
+   * Returns list of technique names (RLHF, Constitutional AI, etc.)
+   */
+  private getActiveAlignmentTechniques(state: GameState, agent: AIAgent): string[] {
+    if (!agent.alignmentTechniques || agent.alignmentTechniques.length === 0) {
+      return [];
+    }
+
+    // Return technique names
+    return agent.alignmentTechniques.map((t) => t.name);
+  }
+
+  /**
+   * Get evaluation quality (quality of alignment evaluation infrastructure)
+   *
+   * Factors:
+   * - Government capability to control (proxy for eval infrastructure quality)
+   * - Research capability
+   */
+  private getEvaluationQuality(state: GameState): number {
+    // Use government capabilityToControl as proxy for evaluation quality
+    const governanceLevel = state.government.capabilityToControl / 20; // Normalize from [0,20] to [0,1]
+
+    // Simple model: governance level = evaluation quality
+    // (more governance investment = better evaluation infrastructure)
+    const quality = governanceLevel * 0.5; // Cap at 50% quality (high uncertainty)
+
+    return assertProbability(quality, {
+      location: 'AIAlignmentEvolutionPhase.getEvaluationQuality',
+      valueName: 'evaluationQuality',
+      additionalInfo: { governanceLevel },
+    });
   }
 
   /**
