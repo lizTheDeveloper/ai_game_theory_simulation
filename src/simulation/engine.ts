@@ -787,6 +787,9 @@ export class SimulationEngine {
     // Phase 1B (Oct 17, 2025): Capture initial population BEFORE any mutations
     // This is critical because state = initialState (same reference), so mutations affect both
     const savedInitialPopulation = initialState.humanPopulationSystem.population;
+    // FIX (Nov 21, 2025): Set initialPopulation on state at START of simulation
+    // Previously was only set at END after simulation loop, causing undefined access
+    initialState.initialPopulation = savedInitialPopulation;
 
     // Reset crisis points for this run
     const { resetCrisisPoints } = require('./crisisPoints');
