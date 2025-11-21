@@ -55,7 +55,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Current Initiatives:**
 
-**Nov 21: Initialization Bug Fixes - State Access Errors Resolved** (commit 9223cb5)
+**Nov 21: Initialization Bug Fixes - State Access Errors Resolved** (commit 9223cb5 / cc47576)
 - 🐛 **Bug 1 Fixed:** initialPopulation timing bug (engine.ts)
   - Previously: initialPopulation only set at END of simulation loop
   - Now: Set immediately at START after capturing savedInitialPopulation
