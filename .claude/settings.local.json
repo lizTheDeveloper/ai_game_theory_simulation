@@ -214,7 +214,9 @@
       "Bash(timeout 60 npm test:*)",
       "Bash(timeout 120 npm test:*)",
       "Bash(sudo systemctl daemon-reload:*)",
-      "Bash(sudo systemctl enable:*)"
+      "Bash(sudo systemctl enable:*)",
+      "Bash(./scripts/provision_marcus_vm.sh:*)",
+      "Bash(timeout 60 ./scripts/test_marcus_complete.sh:*)"
     ],
     "deny": [],
     "ask": [],
