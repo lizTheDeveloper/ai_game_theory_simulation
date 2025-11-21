@@ -1,5 +1,1 @@
-<<<<<<< Updated upstream
-COMPLETE - 295s
-=======
-GIT SYNC
->>>>>>> Stashed changes
+GIT OPERATIONS
