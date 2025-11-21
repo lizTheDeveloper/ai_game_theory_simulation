@@ -668,6 +668,31 @@ function handleResumeFromState(gameState: GameState, seed: number, scenario: Sce
     throw new Error('Already initialized. Create a new worker to reinitialize.');
   }
 
+  // CRITICAL: Apply state migrations BEFORE using the state (Nov 21, 2025)
+  // This ensures old saves are upgraded to current schema version
+  const { migrateState, CURRENT_SCHEMA_VERSION } = require('../simulation/migrations');
+  const migrationResult = migrateState(gameState, CURRENT_SCHEMA_VERSION);
+
+  if (!migrationResult.success) {
+    throw new Error(
+      `❌ Failed to migrate saved state: ${migrationResult.error}\n` +
+      `  Cannot resume simulation with incompatible schema.\n` +
+      `  You may need to start a new simulation.`
+    );
+  }
+
+  // Log successful migration
+  if (migrationResult.migrationsApplied.length > 0) {
+    console.log(
+      `🔄 State migration successful:\n` +
+      `  Applied: ${migrationResult.migrationsApplied.join(', ')}\n` +
+      `  Schema version: ${CURRENT_SCHEMA_VERSION}`
+    );
+  }
+
+  // Use migrated state from here on
+  gameState = migrationResult.state!;
+
   // Set simulation ID for persistence
   simulationId = `${seed}_${scenario}`;
   simulationSeed = seed;
