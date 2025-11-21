@@ -88,6 +88,15 @@ This index lists all major systems in the AI Game Theory Simulation, organized b
 
 ## TIER 2: Major Mitigations
 
+### 🟡 AI Coordination & Transition Management
+**File:** ai-coordination-transition.md (pending creation)
+**Status:** Research complete, implementation pending
+**Phase:** CoordinatedDeploymentPhase (pending)
+**Summary:** Models AI-managed technology deployment coordination to reduce transition mortality. Research-backed conservative parameters: 9-12% mortality (coordinated) vs 30% (uncoordinated instant deployment). Includes coordination failure scenarios (10-20% probability) and rebound effects (5-10% decay per year). Quality Gate 1: PASSED (Grade B-).
+**Research:** research/ai_coordination_transition_management_20251121.md (15K words, 15 sources)
+**Critique:** reviews/ai_coordination_transition_critique_20251121.md
+**Handoff:** .claude/agents/HANDOFF_ai_coordination_conservative_params.md
+
 ### Enhanced UBI System
 **File:** *Not yet documented*
 **Status:** Implemented
