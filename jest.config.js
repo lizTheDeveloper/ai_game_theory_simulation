@@ -32,7 +32,8 @@ module.exports = {
   ],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   testTimeout: 30000,
-  verbose: true,
+  verbose: false,  // Only show failed tests and summary
   bail: false,
   maxWorkers: '50%',
+  silent: false,   // Allow console.log in tests (for debugging)
 };
