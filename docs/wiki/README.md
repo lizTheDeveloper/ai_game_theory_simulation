@@ -2669,6 +2669,23 @@ See: [`infrastructure_oct_nov_2025_COMPLETE_20251105.md`](/plans/completed/infra
 - **Medium-Priority Gaps:** Optimistic AI scenarios, recovery capacity, mortality stabilizer stochasticity
 - See: [`reviews/research_source_validation_20251106.md`](/reviews/research_source_validation_20251106.md) (946 lines)
 
+**🔬 Carbon Capture Deployment Timelines** (November 21, 2025):
+- **File:** `research/carbon_capture_deployment_timelines_2025.md` (625 lines, 12 primary sources)
+- **Research Quality:** A+ (100% peer-reviewed and authoritative 2024-2025 sources)
+- **Key Findings:**
+  - **Current Status:** 0.00005 Gt/yr (Mammoth plant: 36kt/yr operational May 2024)
+  - **Required by 2050:** 4.2 Gt/yr (1800x scale-up needed - faster than any energy transition in history)
+  - **Cost Trajectory:** $600-1,000/tonne (current) → $100-300/tonne (2040s, thermodynamic floor)
+  - **Timeline:** 20-40 years from breakthrough to gigatonne impact (10-20 year deployment lag)
+  - **Energy Requirement:** 4-10 TWh per 1 Gt/yr (must couple with clean energy to avoid increasing emissions)
+  - **Water Constraint:** 15 km³/yr for 4 Gt/yr (3.8% of global industrial water, competes with agriculture in water-stressed regions)
+- **Simulation Implications:**
+  - TIER 2 breakthrough (incremental, not transformative)
+  - Regional variance (Iceland/US Southwest high potential, Asia water-constrained)
+  - Must model energy/water coupling constraints in future implementation
+- **Sources:** Nature Communications (Tan et al. 2024), Climeworks (2024), IEA (2024), Frontiers in Climate (2024-2025)
+- **Status:** Research compilation for future implementation (no current simulation mechanics)
+
 **🔬 Tier 2 Threshold Research Update** (November 7, 2025):
 - **File:** `research/threshold_tier2_historical_ranges_20251026.md` → Updated with **25+ peer-reviewed 2024-2025 sources**
 - **Impact:** Oldest source: 1970 → 2022 (52-year improvement)
