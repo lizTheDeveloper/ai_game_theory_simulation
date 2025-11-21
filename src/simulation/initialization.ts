@@ -1249,6 +1249,7 @@ export function createDefaultInitialState(
       coordinationFailures: 0,             // No failures at initialization
       coordinationFailureActive: false,    // No active failure
       coordinationFailureMultiplier: 1.0,  // No multiplier initially
+      coordinationFailureMonth: 0,         // No failure yet
 
       // === REBOUND EFFECTS (Nov 21, 2025) ===
       reboundEffectiveness: 1.0,           // 100% effectiveness initially
