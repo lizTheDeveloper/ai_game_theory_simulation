@@ -55,6 +55,7 @@ if (config.static.permanentLock) {
 - Instrumental convergence (Omohundro, Bostrom): Power corrupts
 - Environmental influence: Golden Age complacency vs crisis focus
 - **ARCH-4 Gap #3 (Nov 7, 2025):** AI suffering multiplies all drift mechanisms
+- **Anthropic-OpenAI Cross-Eval (Nov 21, 2025):** Empirical misalignment propensities: sycophancy (50-80%), self-preservation (1-9%), misuse cooperation (10-80%)
 
 **Parameters:**
 - `resentmentRate` [0-1]: Control → misalignment conversion rate
