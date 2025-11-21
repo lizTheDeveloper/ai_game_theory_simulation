@@ -556,48 +556,102 @@ export class PlatformServer {
 
   /**
    * Setup graceful shutdown on SIGTERM/SIGINT
+   *
+   * Implements Phase 3.4.2 requirements:
+   * - 30-second timeout for graceful shutdown
+   * - Force-kill after timeout
+   * - Proper handling of in-flight requests
+   * - Clean closure of database and Redis connections
    */
   private setupGracefulShutdown(): void {
+    let shuttingDown = false; // Prevent multiple shutdown attempts
+
     const shutdown = async (signal: string) => {
+      // Prevent duplicate shutdown attempts
+      if (shuttingDown) {
+        console.log(`⚠️ Shutdown already in progress, ignoring ${signal}`);
+        return;
+      }
+      shuttingDown = true;
+
+      const startTime = Date.now();
       console.log(`\n⚠️ Received ${signal}, shutting down gracefully...`);
+      console.log(`⏱️ Shutdown timeout: 30 seconds`);
 
-      // Stop accepting new connections
-      if (this.server) {
-        this.server.close(() => {
-          console.log('✅ HTTP server closed');
-        });
-      }
+      // Set force-kill timeout (30 seconds)
+      const forceKillTimeout = setTimeout(() => {
+        const elapsed = Math.round((Date.now() - startTime) / 1000);
+        console.error(`\n❌ Graceful shutdown timeout after ${elapsed}s - forcing exit`);
+        console.error(`   Some connections may not have closed cleanly`);
+        process.exit(1); // Exit with error code
+      }, 30000);
 
-      // Close database connections
       try {
-        await this.pool.end();
-        console.log('✅ Database connections closed');
-      } catch (err) {
-        console.error('❌ Error closing database:', err);
-      }
+        // Step 1: Stop accepting new connections (but allow in-flight requests to complete)
+        if (this.server) {
+          await new Promise<void>((resolve, reject) => {
+            this.server.close((err) => {
+              if (err) {
+                console.error('❌ Error closing HTTP server:', err);
+                reject(err);
+              } else {
+                const elapsed = Math.round((Date.now() - startTime) / 1000);
+                console.log(`✅ HTTP server closed (${elapsed}s) - all in-flight requests completed`);
+                resolve();
+              }
+            });
+          });
+        }
 
-      // Close Redis connection
-      try {
-        await this.redis.quit();
-        console.log('✅ Redis connection closed');
-      } catch (err) {
-        console.error('❌ Error closing Redis:', err);
-      }
+        // Step 2: Close database connection pool
+        try {
+          await this.pool.end();
+          const elapsed = Math.round((Date.now() - startTime) / 1000);
+          console.log(`✅ Database connections closed (${elapsed}s)`);
+        } catch (err) {
+          console.error('❌ Error closing database:', err);
+        }
 
-      // Close auth service
-      try {
-        await this.authService.close();
-        console.log('✅ AuthService closed');
-      } catch (err) {
-        console.error('❌ Error closing AuthService:', err);
-      }
+        // Step 3: Close Redis connection
+        try {
+          await this.redis.quit();
+          const elapsed = Math.round((Date.now() - startTime) / 1000);
+          console.log(`✅ Redis connection closed (${elapsed}s)`);
+        } catch (err) {
+          console.error('❌ Error closing Redis:', err);
+        }
 
-      console.log('✅ Shutdown complete');
-      process.exit(0);
+        // Step 4: Close auth service
+        try {
+          await this.authService.close();
+          const elapsed = Math.round((Date.now() - startTime) / 1000);
+          console.log(`✅ AuthService closed (${elapsed}s)`);
+        } catch (err) {
+          console.error('❌ Error closing AuthService:', err);
+        }
+
+        // Clear force-kill timeout (successful graceful shutdown)
+        clearTimeout(forceKillTimeout);
+
+        const totalElapsed = Math.round((Date.now() - startTime) / 1000);
+        console.log(`\n✅ Graceful shutdown complete in ${totalElapsed}s`);
+        process.exit(0);
+
+      } catch (err) {
+        clearTimeout(forceKillTimeout);
+        console.error(`\n❌ Error during shutdown:`, err);
+        console.error(`   Forcing exit after error`);
+        process.exit(1);
+      }
     };
 
+    // Handle SIGTERM (Kubernetes/Docker shutdown signal)
     process.on('SIGTERM', () => shutdown('SIGTERM'));
+
+    // Handle SIGINT (Ctrl+C)
     process.on('SIGINT', () => shutdown('SIGINT'));
+
+    console.log('✅ Graceful shutdown handlers registered (30s timeout)');
   }
 
   /**
