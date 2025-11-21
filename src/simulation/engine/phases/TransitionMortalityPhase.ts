@@ -26,7 +26,9 @@ import type { GameState } from '@/types/game';
 import {
   assertFinite,
   assertInRange,
-  assertProbability
+  assertProbability,
+  assertStateProperty,
+  assertDefined
 } from '@/simulation/utils/assertions';
 
 /**
@@ -38,7 +40,19 @@ import {
  */
 function calculateSystemComplexity(state: GameState): number {
   // Check for multiple active transitions via unlocked techs
-  const unlockedTechs = state.techTreeState?.unlockedTech ?? [];
+  // techTreeState is REQUIRED field (initialized in initialization.ts)
+  const techTreeState = assertDefined(state.techTreeState, {
+    location: 'calculateSystemComplexity',
+    valueName: 'state.techTreeState',
+    month: state.currentMonth,
+    expectedSource: 'initialization.ts (techTree system)'
+  });
+  const unlockedTechs = assertDefined(techTreeState.unlockedTech, {
+    location: 'calculateSystemComplexity',
+    valueName: 'techTreeState.unlockedTech',
+    month: state.currentMonth,
+    expectedSource: 'initializeTechTreeState()'
+  });
 
   const energyTransition = unlockedTechs.some(
     id => id.includes('renewable-energy') || id.includes('nuclear-energy') || id.includes('fusion')
@@ -91,7 +105,19 @@ function calculateSystemComplexity(state: GameState): number {
 function calculateDeploymentSpeed(state: GameState): number {
   // Use number of unlocked TIER 2+ techs as proxy for deployment speed
   // This is a simplification - ideally track month-over-month changes
-  const unlockedTechs = state.techTreeState?.unlockedTech ?? [];
+  // techTreeState is REQUIRED field (initialized in initialization.ts)
+  const techTreeState = assertDefined(state.techTreeState, {
+    location: 'calculateDeploymentSpeed',
+    valueName: 'state.techTreeState',
+    month: state.currentMonth,
+    expectedSource: 'initialization.ts (techTree system)'
+  });
+  const unlockedTechs = assertDefined(techTreeState.unlockedTech, {
+    location: 'calculateDeploymentSpeed',
+    valueName: 'techTreeState.unlockedTech',
+    month: state.currentMonth,
+    expectedSource: 'initializeTechTreeState()'
+  });
 
   // Count high-tier transformative techs (TIER 2+)
   // Rough heuristic: tier2-, tier3-, tier4- prefixes
@@ -132,9 +158,28 @@ function calculateDeploymentSpeed(state: GameState): number {
  */
 function calculateCoordinationQuality(state: GameState): number {
   // Base: AI agent capability (proxy for AI governance quality)
-  const aiAgents = state.aiAgents ?? [];
+  const aiAgents = assertDefined(state.aiAgents, {
+    location: 'calculateCoordinationQuality',
+    valueName: 'state.aiAgents',
+    additionalInfo: { context: 'Required for AI governance quality calculation' }
+  });
+
   const avgAICapability = aiAgents.length > 0
-    ? aiAgents.reduce((sum, a) => sum + (a.capability ?? 0), 0) / aiAgents.length
+    ? aiAgents.reduce((sum, a) => {
+        const capability = assertFinite(
+          assertDefined(a.capability, {
+            location: 'calculateCoordinationQuality',
+            valueName: `agent[${a.id}].capability`,
+            additionalInfo: { context: 'Required for average AI capability calculation', agentId: a.id }
+          }),
+          {
+            location: 'calculateCoordinationQuality',
+            valueName: `agent[${a.id}].capability`,
+            additionalInfo: { agentId: a.id }
+          }
+        );
+        return sum + capability;
+      }, 0) / aiAgents.length
     : 0;
   const aiGovernanceProxy = Math.min(avgAICapability / 10, 0.9); // Cap at 0.9
 
@@ -142,7 +187,15 @@ function calculateCoordinationQuality(state: GameState): number {
   const govEffectiveness = 0.5; // TODO: Connect to actual governance metrics
 
   // International cooperation (from governmentSystem)
-  const intlCooperation = state.governmentSystem?.internationalCoordination ?? 0.5;
+  const intlCooperation = assertStateProperty(
+    state.governmentSystem,
+    'internationalCoordination',
+    {
+      location: 'calculateCoordinationQuality',
+      month: state.currentMonth,
+      expectedSource: 'governmentSystem initialization (required for coordination calculation)'
+    }
+  );
 
   // Social cohesion (simplified proxy)
   const socialCohesion = 0.5; // TODO: Connect to actual social cohesion metrics
@@ -188,7 +241,7 @@ function calculateSupportSystemCoverage(state: GameState): number {
   // Healthcare access (rough proxy)
   const healthcareAccess = 0.5; // Default middle value
 
-  // Retraining programs (if policyInterventions exists)
+  // Retraining programs (LEGITIMATE FALLBACK: policyInterventions is optional field)
   const retrainingLevel = state.policyInterventions?.retrainingLevel ?? 0;
 
   // Aggregate coverage (weighted by effectiveness from research)
@@ -508,13 +561,27 @@ export const TransitionMortalityPhase: SimulationPhase = {
     state.transitionMortality.supportSystems.cashTransferAmount = 0; // Not easily accessible
     state.transitionMortality.supportSystems.foodSecurityCoverage = 0.5; // TODO: Connect to actual metrics
     state.transitionMortality.supportSystems.healthcareAccessIndex = 0.5; // Default proxy
+    // LEGITIMATE FALLBACK: policyInterventions is optional field
     state.transitionMortality.supportSystems.retrainingProgramQuality = state.policyInterventions?.retrainingLevel ?? 0;
 
     // Update economic disruption from automation/tech deployment
     // Use unlocked tech count as rough proxy
-    const automationTechCount = state.techTreeState?.unlockedTech?.filter(
+    // techTreeState is REQUIRED field (initialized in initialization.ts)
+    const _techTreeState = assertDefined(state.techTreeState, {
+      location: 'TransitionMortalityPhase.execute',
+      valueName: 'state.techTreeState',
+      month: state.currentMonth,
+      expectedSource: 'initialization.ts (techTree system)'
+    });
+    const _unlockedTech = assertDefined(_techTreeState.unlockedTech, {
+      location: 'TransitionMortalityPhase.execute',
+      valueName: 'techTreeState.unlockedTech',
+      month: state.currentMonth,
+      expectedSource: 'initializeTechTreeState()'
+    });
+    const automationTechCount = _unlockedTech.filter(
       id => id.includes('automation') || id.includes('ai-manufacturing')
-    ).length ?? 0;
+    ).length;
     state.transitionMortality.economicDisruption.automationUnemploymentRate = Math.min(
       automationTechCount * 0.01, // 1% unemployment per automation tech
       0.3

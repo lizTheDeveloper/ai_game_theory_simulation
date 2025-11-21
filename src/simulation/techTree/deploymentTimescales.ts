@@ -392,6 +392,11 @@ export function updateDeploymentProgress(
       }
     }
   }
+
+  // HIGH PERFORMANCE FIX (Nov 20, 2025): Rebuild O(1) deployment index
+  // After all deployment levels updated, rebuild deployedTechMap for fast lookups
+  const { rebuildDeploymentIndex } = require('./engine');
+  rebuildDeploymentIndex(techTreeState);
 }
 
 /**

@@ -8,6 +8,7 @@
 import { GameState, GameEvent } from '@/types/game';
 import { logger } from '../utils/asyncLogger';
 import { stateValidator, type StateSnapshot } from '../utils/stateValidation';
+import { buildSimulationIndices, type SimulationIndices } from '../utils/simulationIndices';
 
 /**
  * Random number generator function
@@ -110,6 +111,21 @@ export interface PhaseContext {
    * Used for dependency validation
    */
   executedPhases: Set<string>;
+
+  /**
+   * Pre-built simulation indices for O(1) lookups (HIGH-1, Nov 20, 2025)
+   *
+   * Built once per step to eliminate O(n²) patterns. Provides:
+   * - datacenterOwnership: dcId → orgId (eliminates 60,000 ops/step)
+   * - agentMap: agentId → AIAgent (eliminates 500 ops/step)
+   * - orgMap: orgId → Organization (general purpose)
+   * - unlockedTech: Set<techId> (eliminates 710 ops/step)
+   * - buildingOrgs: Set<orgId> (eliminates 40,000 ops/step)
+   *
+   * See: src/simulation/utils/simulationIndices.ts
+   * Architecture Review: reviews/architecture_o2_bottlenecks_20251120.md
+   */
+  indices?: SimulationIndices;
 }
 
 /**
@@ -187,6 +203,12 @@ export class PhaseOrchestrator {
       data: new Map(),
       executedPhases: new Set()
     };
+
+    // BUILD SIMULATION INDICES (HIGH-1, Nov 20, 2025)
+    // Pre-build O(1) lookup structures to eliminate O(n²) patterns
+    // Impact: 98% reduction in operations (101,210 → 2,000 per step)
+    // See: reviews/architecture_o2_bottlenecks_20251120.md
+    ctx.indices = buildSimulationIndices(state);
 
     const allEvents: GameEvent[] = [];
     const stepStartTime = this.enableTiming ? performance.now() : 0;
@@ -287,8 +309,12 @@ export class PhaseOrchestrator {
         ctx.executedPhases.add(phase.id);
 
         // DETERMINISM DEBUG (Nov 5, 2025): Track AI capability checksum after EACH phase
+        // Performance fix (Nov 20, 2025): Use performance config for checksum logging
         // This helps identify which phase causes divergence in deterministic runs
-        if (state.currentMonth <= 2) { // Only log first few months to avoid spam
+        const { getPerformanceConfig } = require('../config/performanceConfig');
+        const perfConfig = getPerformanceConfig();
+
+        if (perfConfig.deterministicChecksums && state.currentMonth < perfConfig.deterministicDebugMonths) {
           const aiCapabilityChecksum = state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
           console.log(`[DET] Month ${state.currentMonth} After ${phase.name}: AI capability sum = ${aiCapabilityChecksum.toFixed(10)}`);
         }

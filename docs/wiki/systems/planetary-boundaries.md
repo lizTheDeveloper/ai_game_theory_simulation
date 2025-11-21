@@ -73,21 +73,22 @@ Boundaries update based on simulation state:
 - **Biosphere:** Driven by biodiversity index and invasive species impact, normalized to safe threshold (10 E/MSY = 10× natural extinction rate)
   - **Growth model (Oct 30, 2025):** Percentage-based growth matching IPBES research (10-30% per decade), with logistic saturation at 1000× max to prevent unrealistic exponential accumulation
 - **Freshwater:** Driven by freshwater system (water stress)
-<<<<<<< HEAD
-<<<<<<< HEAD
-- **Biogeochemical:** Driven by phosphorus depletion, legacy nutrient stocks (30-100yr half-lives), nitrogen-food coupling with regional differentiation (Nov 16, 2025)
-  - **Legacy stocks:** Soil (30yr half-life), sediments (100yr half-life) create decades-long recovery timescales
-  - **Nitrogen-food coupling:** Regional yield penalties based on nitrogen overuse (55% South Asian rice farms exceed safe limits)
-  - **Technology effects:** Vertical farming (60% N reduction), precision fermentation (40% N reduction) with multiplicative synergies
-=======
 - **Biogeochemical:** Driven by phosphorus depletion, legacy nutrient stocks (30-100yr half-lives), nitrogen-food coupling with regional differentiation (Nov 2025)
-  - **Nitrogen-Food Integration (Nov 16, 2025):** Legacy stocks contribute 18.6% baseline pollution (10 Mt N/mo + 2.08 Mt P/mo), tech deployment reduces current inputs but stocks decay slowly (exponential, decades-centuries timescale)
-  - **Regional Penalties:** South Asia 55% nitrogen overuse zones face zero food penalty; moderate zones face 30-40% yield reduction with aggressive N reduction
-  - **Recovery Inertia:** God mode effectiveness expected at 30-50% (vs 10% pre-integration) due to legacy stock half-lives (30yr soil, 100yr sediment)
->>>>>>> origin/auto/worker-20251116_160001
-=======
-- **Biogeochemical:** Driven by phosphorus depletion, legacy nutrient stocks (30-100yr half-lives, ✅ Phase 1 ACTIVE Nov 17, 2025), nitrogen-food coupling with regional differentiation (⏸️ Phase 2-3 pending)
->>>>>>> origin/auto/worker-20251117_080000
+  - **Legacy Nutrient Stocks (Phase 1 - Nov 20, 2025 - COMPLETE):**
+    - Soil nitrogen: 30-year half-life, sediment phosphorus: 100-year half-life
+    - Baseline pollution: 10 Mt N/month + 2.08 Mt P/month (18.2 Mt P/year global)
+    - Exponential decay creates decades-long recovery timescales
+    - Phase: LegacyNutrientStocksPhase (order 21.5)
+  - **Nitrogen-Food Coupling (Phases 2-3 - Nov 20, 2025 - COMPLETE):**
+    - Regional yield penalties based on nitrogen overuse zones
+    - Three-zone system: overuse (55% South Asian rice farms), optimal, underuse
+    - Technology integration: vertical farming, precision agriculture, nitroplast fixation
+    - Phase: NitrogenFoodCouplingPhase (order 19.6), FoodSecurityDegradationPhase integration
+  - **Architecture Fixes (Nov 20, 2025):**
+    - CRITICAL-1 resolved: Phase ordering conflict (IrreversibilityTrackingPhase 21.4, LegacyNutrientStocksPhase 21.5)
+    - CRITICAL-2 resolved: Circular dependency eliminated (single-owner architecture)
+    - HIGH-1 resolved: Connected to actual tech deployment data
+  - **Expected Impact:** God mode biogeochemical effectiveness 10% → 30-50%
 - **Novel Entities:** Driven by environmental pollution
 - **Ocean Acidification:** Driven by ocean acidification system
 - **Ozone:** Improving +0.06%/year (Montreal Protocol recovery)
@@ -208,9 +209,15 @@ The **stratospheric ozone boundary** is one of only 2 safe boundaries, and it's 
 - **Biosphere:** Current ~137 E/MSY (100-1000x natural extinction rate), normalized to safe threshold 10 E/MSY = boundary value 13.7x (Oct 30, 2025 calibration fix)
 - **Land:** 62% forest remaining vs 75% needed
 - **Freshwater:** Nature (2023) Jasechko et al., LA Times (Sept 2025)
-- **Biogeochemical:** 18.2 Tg P/year vs 6.2 Tg P/year boundary (phosphorus), 120 Mt N/year current vs 62 Mt N/year safe limit (nitrogen)
+- **Biogeochemical:** 18.2 Mt P/year current vs 6.2 Mt P/year boundary (phosphorus, Stockholm Resilience Centre 2025), 120 Mt N/year optimized target vs 62 Mt N/year safe limit (nitrogen, ~60% reduction from ~200 Mt current)
   - Legacy nutrient stocks: Paerl et al. (2024) Lake Erie study - internal loading equals external inputs
-  - Nitrogen-food coupling: 29 peer-reviewed sources (research/nitrogen_food_coupling_20251115.md)
+  - Nitrogen-food coupling: 34 peer-reviewed sources (research/nitrogen_food_coupling_20251115.md)
+  - Latest 2024-2025 updates (Nov 19, 2025):
+    * Wheat climate change: 4× fertilizer needed for 52% yield increase under mid-century warming (PMID: 38965400)
+    * Global overuse: 2× planetary boundary exceedance, only 30-35% nitrogen uptake efficiency (Planet Tracker 2024)
+    * China spatial analysis: Precision targeting achieves boundary compliance without food security loss (Environ Sci Tech 2024)
+    * Circular agriculture: 2% global energy + 1.4-5% GHG from fertilizer (Mongabay 2024)
+    * Regional redistribution: 11% savings India, 49% Ethiopia, 44% Malawi during price spikes (Nature Sustainability 2023)
 - **Novel Entities:** Microplastics, PFAS 99% prevalence
 - **Ocean:** Aragonite saturation <80% pre-industrial
 - **Ozone:** 285 DU recovering toward 290 DU baseline
@@ -247,16 +254,13 @@ The **stratospheric ozone boundary** is one of only 2 safe boundaries, and it's 
 
 ### Crisis Interactions:
 - **Phosphorus Depletion** → Worsens biogeochemical boundary
-<<<<<<< HEAD
-- **Nitrogen-Food Coupling** (Nov 16, 2025) → ✅ FULLY INTEGRATED
+- **Nitrogen-Food Coupling** (Nov 20, 2025) → ✅ FULLY INTEGRATED
   - Legacy nutrient stocks (soil 30yr, sediment 100yr half-lives) create decades-long recovery timescales
-  - Regional food production penalties (mapping simulation regions to nitrogen research regions)
-  - Technology pathway: nitrogenReduction effects (vertical farming 60%, precision fermentation 40%)
+  - Regional food production penalties with three-zone yield curves (overuse, optimal, underuse)
+  - Technology pathway: vertical farming, precision agriculture, nitroplast fixation, precision fermentation
   - Expected impact: God mode biogeochemical effectiveness 10% → 30-50%
-  - Research foundation: 29 peer-reviewed sources, Grade B validation
-=======
-- **Nitrogen-Food Coupling** (Nov 2025) → Legacy nutrient stocks create decades-long recovery timescales (✅ Phase 1 ACTIVE Nov 17), regional food production penalties (Phase 2 pending)
->>>>>>> origin/auto/worker-20251117_080000
+  - Research foundation: 29 peer-reviewed sources (883 lines), Grade B validation
+  - Architecture review: 9.5/10 → 9.7/10 after Nov 20 fixes
 - **Freshwater Depletion** → Worsens freshwater boundary
 - **Ocean Acidification** → Worsens ocean boundary
 - **Novel Entities** → Worsens pollution boundary
@@ -475,68 +479,101 @@ interface PlanetaryBoundariesSystem {
 
 ---
 
-## 🧪 Legacy Nutrient Stocks & Nitrogen-Food Coupling (Nov 15-17, 2025) - TIER 2 HIGH
+## 🧪 Legacy Nutrient Stocks & Nitrogen-Food Coupling (Nov 15-20, 2025) - TIER 2 HIGH
 
-**Status:** ✅ Phase 1 COMPLETE (stock updates wired), ⏸️ Phase 2-3 PENDING
-**Research Base:** `research/nitrogen_food_coupling_20251115.md` (883 lines, Grade B)
+**Status:** ✅ ALL PHASES COMPLETE (Nov 20, 2025)
+**Research Base:** `research/nitrogen_food_coupling_20251115.md` (883 lines, 29 sources, Grade B)
+**Architecture Review:** `reviews/architecture_integration_review_20251120.md` (9.5/10 → 9.7/10)
 **Implementation:**
-- `src/simulation/legacyNutrientStocks.ts` (stock tracking, exponential decay)
-- `src/simulation/nitrogenFoodCoupling.ts` (regional penalties, 3-zone yield curves)
-- `PlanetaryBoundariesPhase.ts:21.0` (monthly updates)
+- `src/simulation/legacyNutrientStocks.ts` (305 lines - stock tracking, exponential decay)
+- `src/simulation/nitrogenFoodCoupling.ts` (368 lines - regional penalties, 3-zone yield curves)
+- `LegacyNutrientStocksPhase.ts` (order 21.5 - monthly stock updates)
+- `NitrogenFoodCouplingPhase.ts` (order 19.6 - nitrogen-food constraints)
+- `FoodSecurityDegradationPhase.ts` (integration - applies regional penalties)
 
 ### Problem Addressed
 
 **God mode biogeochemical effectiveness stuck at 10%** (expected 30-50%)
 
-**Root cause:** Legacy nutrient stocks existed but were NEVER updated after initialization. Boundary calculations read static initial values with no decay over time.
+**Root causes identified:**
+1. Legacy nutrient stocks existed but were NEVER updated after initialization
+2. Nitrogen-food coupling not connected to food production system
+3. Technologies not wired to actual deployment data (hardcoded baselines)
+4. Phase ordering conflicts creating non-determinism
 
-### Phase 1 Implementation (✅ COMPLETE - Nov 17, 2025)
+### Implementation Complete (✅ Nov 20, 2025)
 
-**Monthly Stock Updates:**
-- Added `updateLegacyNutrientStocks()` call to PlanetaryBoundariesPhase (order 21.0) - Commit b84ddff03
-- Updates occur BEFORE boundary calculations (creates proper inertia effect)
-- Baseline inputs: 120 Mt N/year (10 Mt N/month), 25 Mt P/year (2.08 Mt P/month)
-- Scaled by phosphorus reserves as proxy for agricultural activity
-- Defensive coding: Uses `assertFinite`, no silent fallbacks
-- Test validation: 12-month simulation successful (Year 0: 18.6% legacy contribution)
+**Phase 1: Legacy Nutrient Stocks (Nov 17, 2025)**
+- Module: `legacyNutrientStocks.ts` - Exponential decay with 30-100 year half-lives
+- Phase: `LegacyNutrientStocksPhase` (order 21.5)
+- Baseline inputs: 10 Mt N/month, 2.08 Mt P/month (18.2 Mt P/year global)
+- Atmospheric deposition: 99% returns to surface (Cousins et al. 2022)
+- Defensive coding: Zero silent fallbacks, `assertFinite` validation
+- Integration: Reads actual regional nitrogen use (not hardcoded)
 
-**Impact Validated:**
-- Stock decay functioning correctly: exponential decay with 30-100 year half-lives
-- Legacy contribution observable: starts at ~18.6%, decreases over time
-- Recovery timeline: Decades-long inertia effect now active
+**Phase 2: Nitrogen-Food Coupling (Nov 17, 2025)**
+- Module: `nitrogenFoodCoupling.ts` - Regional yield penalties with 3-zone curves
+- Phase: `NitrogenFoodCouplingPhase` (order 19.6)
+- Three-zone system:
+  - **Overuse zones:** Zero penalty until excess removed (55% South Asian rice farms)
+  - **Optimal use:** Nonlinear penalty (3% at 15% reduction, accelerating beyond 30%)
+  - **Underuse zones:** Immediate penalties (need MORE nitrogen, not less)
+- Technology integration: Reads `techTreeState.regionalDeployment` for actual effectiveness
+- Food system integration: `FoodSecurityDegradationPhase` applies regional multipliers
+
+**Phase 3: Technology Additions (Nov 17, 2025)**
+- 6 biogeochemical technologies added to `comprehensiveTechTree.ts`:
+  - `precision_agriculture` (30% N reduction)
+  - `biological_nitrogen_fixation` (25% N reduction)
+  - `nitrogen_circular_food` (20% N reduction)
+  - `ecosystem_restoration_nitrogen` (15% N reduction)
+  - `nitrogen_monitoring_networks` (10% N reduction)
+  - `green_ammonia_production` (40% N reduction)
+
+**Architecture Fixes (Nov 20, 2025)**
+
+Following architecture review identifying 2 CRITICAL, 4 HIGH issues:
+
+1. **CRITICAL-1 RESOLVED:** Phase ordering conflict
+   - Problem: IrreversibilityTrackingPhase and LegacyNutrientStocksPhase both order 21.5
+   - Fix: IrreversibilityTrackingPhase → 21.4, LegacyNutrientStocksPhase → 21.5
+   - Impact: Deterministic phase execution restored
+
+2. **CRITICAL-2 RESOLVED:** Circular dependency eliminated
+   - Problem: `updateNitrogenFoodCoupling` read from and wrote to same state in one iteration
+   - Fix: Single-owner architecture - LegacyNutrientStocksPhase owns stock updates
+   - Impact: No read-modify-write race conditions
+
+3. **HIGH-1 RESOLVED:** Connected to actual data sources
+   - Problem: Hardcoded baseline values (`BASELINE_N_INPUT = 120/12`)
+   - Fix: Reads `regionalNitrogenManagement.currentNitrogenInput` from actual state
+   - Impact: Technologies now affect nutrient stocks correctly
+
+4. **HIGH-2 RESOLVED:** Duplicate import removed
+   - Problem: FoodSecurityDegradationPhase had both module import and runtime require()
+   - Fix: Consolidated to module-level imports only
+   - Impact: Code clarity, no mismatch bugs
 
 **Research Backing:**
-- Lake Erie sediment loading studies (Paerl et al. 2024)
-- Nitrogen half-life in sediments (30-100 years)
-- Legacy contribution: 18.6% at Year 0, decreases exponentially
+- Lake Erie sediment loading: Internal = external (Paerl et al. 2024)
+- Nitrogen half-lives: 30yr (soil), 100yr (sediment)
+- Phosphorus baseline: 18.2 Mt P/year (Stockholm Resilience Centre 2025)
+- Nitrogen baseline: 120 Mt N/year optimized target (~60% reduction from ~200 Mt current)
+- Regional overuse: 55% South Asian rice farmers exceed safe limits (Bhattarai et al. 2024)
+- Technology effectiveness: Zhang et al. (2021), Springmann et al. (2018)
 
-### Phase 2 Remaining Work (⏸️ PENDING - 30-45 min)
+### Expected Impact
 
-**Connect Nitrogen-Food Coupling to Food Production:**
-- Wire `updateNitrogenFoodCoupling()` to food production system
-- Apply regional yield penalties to QoL food security
-- Connect to mortality system (malnutrition pathways)
-- Enable multiplicative synergies (tech + natural recovery)
-
-### Phase 3 Remaining Work (⏸️ PENDING - 45-60 min)
-
-**Add 6 Missing Biogeochemical Technologies:**
-- Precision agriculture (regional nitrogen efficiency)
-- Nitroplasts (biological nitrogen fixation)
-- Rhizosphere engineering (nutrient capture)
-- Food waste reduction (input demand decrease)
-- Regenerative agriculture (soil health)
-- Phosphorus recovery from wastewater
-
-### Expected Final Impact
-
-**After Phase 2-3 completion:**
+**With full implementation:**
 - God mode biogeochemical effectiveness: 10% → 30-50%
-- Regional differentiation: South Asia worse than North America
-- Technology synergies: Cascading effectiveness multipliers
-- Realistic recovery timelines: Decades for legacy stocks to clear
+- Regional differentiation: South Asia faces higher penalties than North America
+- Technology synergies: Multiplicative effectiveness (vertical farming + precision agriculture)
+- Recovery timescales: Decades to centuries for legacy stocks to clear
+- Realistic inertia: Even with zero new inputs, stocks continue polluting
 
-**Current Status (Phase 1 only):** Stock updates working, logged annually. Phases 2-3 required for food system connection and full effectiveness.
+**Architecture health:** 9.5/10 → 9.7/10 (CRITICAL issues resolved)
+
+**Current Status:** ✅ COMPLETE - All phases implemented, architecture fixes applied, ready for Monte Carlo validation
 
 ---
 
@@ -611,21 +648,23 @@ interface PlanetaryBoundariesSystem {
 
 ---
 
-<<<<<<< HEAD
-**Last Updated:** November 11, 2025 (2025 ocean acidification breach documentation)
-**Implementation Status:** ✅ COMPLETE (Phase 2: Storm Systems + BII Framework)
+**Last Updated:** November 20, 2025 (Nitrogen-food coupling complete + architecture fixes)
+**Implementation Status:** ✅ COMPLETE (All nitrogen-food coupling phases + architecture review fixes)
 **Recent Updates:**
-- ✅ Ocean acidification boundary breach documented (2025 Planetary Health Check) - Nov 11, 2025
-=======
-**Last Updated:** November 17, 2025 (Legacy Nutrient Stocks Phase 1 Complete)
-**Implementation Status:** ✅ ACTIVE (Legacy nutrient stocks updating monthly, Phases 2-3 pending)
-**Recent Updates:**
-- ✅ **Phase 1 COMPLETE:** Legacy nutrient stocks wired into PlanetaryBoundariesPhase (order 21.0) - Commit b84ddff03, Nov 17, 2025
-- ✅ Monthly stock updates with baseline N/P inputs (10 Mt N/month, 2.08 Mt P/month), scaled by phosphorus reserves - Nov 17, 2025
-- ✅ Test validation: 12-month simulation successful (Year 0: 18.6% legacy contribution) - Nov 17, 2025
->>>>>>> origin/auto/worker-20251117_080000
+- ✅ **Nitrogen-Food Coupling COMPLETE:** All 3 phases implemented (Nov 15-20, 2025)
+  - Phase 1: Legacy nutrient stocks with exponential decay (LegacyNutrientStocksPhase order 21.5)
+  - Phase 2: Regional nitrogen-food coupling with 3-zone yield curves (NitrogenFoodCouplingPhase order 19.6)
+  - Phase 3: 6 biogeochemical technologies added to tech tree
+- ✅ **Architecture Fixes Applied (Nov 20, 2025):**
+  - CRITICAL-1: Phase ordering conflict resolved (IrreversibilityTrackingPhase 21.4, LegacyNutrientStocksPhase 21.5)
+  - CRITICAL-2: Circular dependency eliminated (single-owner architecture)
+  - HIGH-1: Connected to actual tech deployment data (no hardcoded baselines)
+  - HIGH-2: Duplicate imports removed from FoodSecurityDegradationPhase
+- ✅ **Parameter Verification (Nov 19):** Phosphorus baseline corrected (18.2 Mt P/year), nitrogen clarified (120 Mt N/year optimized target)
 - ✅ Storm intensity-frequency modeling (ExtremeWeatherEventsPhase) - Oct 28, 2025
 - ✅ BII framework with climate velocity tracking (updateBiosphereIntegrityIndex) - Oct 28, 2025
 - ✅ Biosphere boundary normalized to safe threshold (13.7×), polarity corrected - Oct 30, 2025
-**Next Steps:** Phase 2 (nitrogen-food coupling → food/mortality systems, 30-45 min), Phase 3 (6 biogeochemical technologies, 45-60 min)
+- ✅ Ocean acidification boundary breach documented (2025 Planetary Health Check) - Nov 11, 2025
+**Architecture Health:** 9.5/10 → 9.7/10 (post-fixes)
+**Next Steps:** Monte Carlo validation of nitrogen-food coupling effectiveness
 

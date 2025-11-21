@@ -18,6 +18,13 @@
  *
  * Order: 22.0 (AFTER legacy nutrients (21.5), BEFORE food security calculation)
  *
+ * SYNCHRONIZATION (Nov 20, 2025 - RACE CONDITION FIX):
+ * This phase is the SINGLE WRITER for nitrogen-food coupling state.
+ * - Calls updateNitrogenFoodCoupling() and stores results in state
+ * - Other phases (e.g., FoodSecurityDegradationPhase) MUST declare dependency on this phase
+ * - Other phases MUST READ from state.planetaryBoundariesSystem.regionalNitrogenManagement
+ * - NEVER call updateNitrogenFoodCoupling() from other phases (creates race condition)
+ *
  * @see research/nitrogen_food_coupling_20251115.md
  * @see src/simulation/nitrogenFoodCoupling.ts
  */
@@ -25,38 +32,31 @@
 import type { GameState, SimulationPhase, PhaseResult, RNGFunction } from '@/types/game';
 import {
   updateNitrogenFoodCoupling,
-  initializeRegionalNitrogenManagement,
-  calculateTechnologyNitrogenReduction
+  initializeRegionalNitrogenManagement
 } from '@/simulation/nitrogenFoodCoupling';
 import { assertFinite, assertProbability } from '@/simulation/utils/assertions';
 
 export class NitrogenFoodCouplingPhase implements SimulationPhase {
   readonly id = 'nitrogen-food-coupling';
   readonly name = 'Nitrogen-Food Coupling';
-  readonly order = 22.0;
+  readonly order = 19.6;  // AFTER QoL (19.5), BEFORE food degradation (19.7)
 
   readonly dependencies = [
-    'legacy-nutrient-stocks',  // Order 7.5: Needs effective nitrogen pollution
-    'planetary_boundaries',    // Order 7.0: Needs boundary status
+    'quality-of-life',         // Order 19.5: QoL calculated first
   ];
 
   execute(state: GameState, _rng: RNGFunction): PhaseResult {
-    // Defensive: Initialize if missing (should be created in initialization.ts)
+    // HIGH-3 FIX (Nov 20, 2025): Fail loudly if not initialized (will be moved to initialization.ts)
     if (!state.planetaryBoundariesSystem.regionalNitrogenManagement) {
-      console.log('⚠️ WARNING: regionalNitrogenManagement not initialized, creating default (FIX initialization.ts!)');
-      state.planetaryBoundariesSystem.regionalNitrogenManagement = initializeRegionalNitrogenManagement();
+      throw new Error('❌ CRITICAL: regionalNitrogenManagement not initialized. Must be created in initialization.ts.');
     }
 
-    // Collect deployed technology effectiveness values
-    // TODO: Wire this to actual deployed technologies (precision ag, vertical farming, etc.)
-    // For now, use baseline (no tech deployed = no reduction)
-    const deployedTechEffectiveness: number[] = [];
-
-    // If technologies are deployed, add their effectiveness
-    // Example: Precision agriculture (30%), Vertical farming (60%), Food waste reduction (25%)
-    // This is just a placeholder - real implementation will check state.technologies
+    // HIGH-1 FIX (Nov 20, 2025): Now wired to actual deployed technologies via getNitrogenReductionDeployment
+    // This function reads state.techTreeState.regionalDeployment and extracts nitrogen-reducing tech effectiveness
+    // Technologies: precision agriculture, vertical farming, nitroplast integration, etc.
 
     // Calculate global food production impact from nitrogen constraints
+    // This internally calls getNitrogenReductionDeployment to get actual tech deployment
     const globalFoodProductionMultiplier = updateNitrogenFoodCoupling(state);
 
     // Validate result
@@ -66,14 +66,13 @@ export class NitrogenFoodCouplingPhase implements SimulationPhase {
       month: state.currentMonth
     });
 
-    // Store multiplier somewhere food security can read it
-    // TODO: Add field to GameState for nitrogen food production multiplier
-    // For now, just log it
+    // CRITICAL FIX (Nov 20, 2025): Store in state to prevent race condition
+    // PlanetaryBoundariesPhase reads this value instead of calling updateNitrogenFoodCoupling() again
+    state.planetaryBoundariesSystem.globalFoodProductionIndex = validatedMultiplier;
 
     // Log annually for visibility
     if (state.currentMonth % 12 === 0) {
-      const nitrogenReduction = calculateTechnologyNitrogenReduction(deployedTechEffectiveness);
-      console.log(`🌾 [Nitrogen-Food] N reduction: ${(nitrogenReduction * 100).toFixed(1)}%, Food production: ${(validatedMultiplier * 100).toFixed(1)}%`);
+      console.log(`🌾 [Nitrogen-Food] Food production: ${(validatedMultiplier * 100).toFixed(1)}%`);
 
       // Log regional details
       const regions = state.planetaryBoundariesSystem.regionalNitrogenManagement;

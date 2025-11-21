@@ -1,9 +1,10 @@
 ---
 oldest_source: 2023
 newest_source: 2025
-last_verified: 2025-11-11
+last_verified: 2025-11-19
 status: used_in_simulation
 simulation_phases: TippingPointPhase, PlanetaryBoundaryPhase
+verification_status: UPDATED
 ---
 
 # Planetary Boundaries and Climate Tipping Points: 2024-2025 Update
@@ -280,7 +281,111 @@ const boundaryStatus = {
 
 ---
 
-## 7. Research Gaps Identified
+## 7. Latest 2025 Research Updates
+
+### 7.1 Global Tipping Points Report 2025 (November Release)
+
+**Source:** Global Tipping Points Report 2025, released ahead of 30th World Climate Conference (COP30), Belém, Brazil, November 10, 2025.
+
+**Key Findings:**
+
+**First Tipping Point Crossed:**
+- **Warm-water coral reefs** have crossed their tipping point at 1.4°C warming
+- This marks the first Earth system tipping point reached, signaling the beginning of irreversible planetary shifts
+- >100 scientists from >20 countries contributed to assessment
+
+**Cascading Risks Identified:**
+- Four interconnected core climate elements at highest risk:
+  1. Greenland Ice Sheet
+  2. West Antarctic Ice Sheet
+  3. Atlantic Meridional Overturning Circulation (AMOC)
+  4. Amazon Rainforest
+- Rising temperatures could trigger cascade of system collapses
+- Amazon shifting from carbon sink to carbon source (ecosystem transformation)
+- AMOC shutdown risk increasing (would disrupt global climate patterns)
+
+**Temperature-Tipping Risk Relationship:**
+- Every additional 0.1°C of warming past 1.5°C threshold increases tipping risk
+- Risk acceleration is "strong" above 2°C warming
+- Current trajectory (3.1°C by 2100 under current policies) implies high risk even with temperature overshoot-and-reversal scenarios
+
+**Human Impact Projections:**
+- 2 billion people affected by lethal heat at 2°C warming
+- Most vulnerable populations already living in high-risk areas
+- Described as "moral and physical threat to human future"
+
+**Simulation Implications:**
+- Update coral reef tipping from "imminent" to "CROSSED" status
+- Add lethal heat exposure for 2B people at 2°C threshold
+- Model cascading interactions between Amazon, AMOC, ice sheets
+- Implement overshoot risk (even with reversal, damage persists)
+
+---
+
+### 7.2 Planetary Health Check 2024 (PIK/Potsdam Institute)
+
+**Source:** Planetary Health Check (PHC), launched September 2024 by Potsdam Institute for Climate Impact Research
+
+**Novel Findings:**
+
+**Seventh Boundary Transgressed:**
+- **Ocean acidification** documented as 7th crossed limit in 2025
+- Joins: climate, biosphere, land, biogeochemical, freshwater, novel entities
+- Only 2 of 9 boundaries remain within safe operating space: stratospheric ozone, aerosol loading
+
+**Methodological Advance:**
+- First-of-its-kind report combining Earth science, satellite observation, multi-disciplinary analysis
+- Quantifies "planet's health" with integrated metrics
+- Uses real-time Earth observation data for monitoring
+
+**Timeline of Boundary Transgressions:**
+- 2022: Novel entities (5th boundary)
+- 2023: Freshwater change (6th boundary)
+- 2025: Ocean acidification (7th boundary)
+- Acceleration: 3 boundaries crossed in 3 years
+
+**Simulation Implications:**
+- Update boundary transgression timeline (3 new crossings since 2022)
+- Ocean acidification threshold lowered (now transgressed)
+- Model accelerating rate of boundary crossings (nonlinear)
+
+---
+
+### 7.3 BioScience 2025 State of Climate Report
+
+**Source:** "2025 state of the climate report: a planet on the brink," *BioScience*, Oxford Academic (advance article 2025)
+
+**Key Finding:** "Planet on the brink"
+- Scientific consensus: Earth approaching multiple critical thresholds simultaneously
+- Language shift from "risk" to "brink" indicates urgency escalation
+- Planetary systems showing early warning signals across multiple domains
+
+**Implication:** Update risk communication from probabilistic ("may tip") to deterministic ("on brink of tipping")
+
+---
+
+### 7.4 Temperature Overshoot Risk (2025 Modeling)
+
+**Source:** Multiple 2025 studies on overshoot scenarios
+
+**Critical Finding:**
+- Even if temperatures return below 1.5°C after overshoot period, tipping risk remains HIGH
+- Risk can be "minimised" if warming "swiftly reversed" but not eliminated
+- Overshoot duration matters: longer overshoot = higher irreversible damage
+
+**Mechanism:**
+- Some Earth systems have hysteresis (different thresholds for warming vs cooling)
+- Ice sheet collapse irreversible on policy-relevant timescales (centuries-millennia)
+- Coral reefs: Once bleached and ecosystem collapses, re-cooling doesn't restore ecosystem structure
+
+**Simulation Implications:**
+- Add overshoot penalty: Even with net-zero + carbon removal, some tipping elements remain locked in
+- Model hysteresis: Cooling thresholds ≠ warming thresholds for ice sheets
+- Track "peak warming" separately from "end-of-century warming" for tipping risk assessment
+
+---
+
+## 8. Research Gaps Identified
 
 1. **Tipping cascade interactions:** How does coral reef collapse affect other marine tipping elements?
 2. **Novel entities reversibility:** What's the timescale for PFAS/microplastic cleanup even with breakthrough tech?
@@ -289,23 +394,35 @@ const boundaryStatus = {
 
 ---
 
-## 8. Citations
+## 9. Citations
 
 1. Richardson, K., et al. (2023). "Earth beyond six of nine planetary boundaries." *Science Advances*, 9(37). DOI: 10.1126/sciadv.adh2458
 
 2. Armstrong McKay, D.I., et al. (2022). "Exceeding 1.5°C global warming could trigger multiple climate tipping points." *Science*, 377(6611). DOI: 10.1126/science.abn7950
 
-3. Global Tipping Points Report (2025). Second Edition. University of Exeter. October 2025. 160+ scientists, 87 institutions, 23 countries.
+3. Global Tipping Points Report (2025). Second Edition. University of Exeter. Released November 10, 2025 (ahead of COP30, Belém, Brazil). 100+ scientists, >20 countries.
 
 4. Frontiers in Public Health (2025). "Diagnosing earth's tipping points: where we stand in the Anthropocene." DOI: 10.3389/fpubh.2025.1653860
 
-5. Carbon Brief (2022). "Global warming above 1.5C could trigger multiple tipping points." https://www.carbonbrief.org/global-warming-above-1-5c-could-trigger-multiple-tipping-points/
+5. Planetary Health Check (PHC) (2024). Potsdam Institute for Climate Impact Research (PIK). Launched September 2024.
 
-6. Stockholm Resilience Centre (2024). "Exceeding 1.5°C global warming could trigger multiple climate tipping points." https://www.stockholmresilience.org/publications/publications/2024-10-10-exceeding-1.5c-global-warming-could-trigger-multiple-climate-tipping-points.html
+6. BioScience (2025). "2025 state of the climate report: a planet on the brink." *BioScience*, Oxford Academic. DOI: 10.1093/biosci/biaf149 (advance article)
+
+7. Carbon Brief (2022). "Global warming above 1.5C could trigger multiple tipping points." https://www.carbonbrief.org/global-warming-above-1-5c-could-trigger-multiple-tipping-points/
+
+8. Stockholm Resilience Centre (2024). "Exceeding 1.5°C global warming could trigger multiple climate tipping points." https://www.stockholmresilience.org/publications/publications/2024-10-10-exceeding-1.5c-global-warming-could-trigger-multiple-climate-tipping-points.html
 
 ---
 
 ## Changelog
+
+- **2025-11-19:** Latest 2025 research updates (Autonomous Researcher)
+  - Added Global Tipping Points Report 2025 (November COP30 release)
+  - First tipping point crossed: Coral reefs at 1.4°C
+  - Added Planetary Health Check 2024 (7th boundary transgressed: ocean acidification)
+  - Added BioScience 2025 "planet on the brink" assessment
+  - Added temperature overshoot risk analysis (hysteresis effects)
+  - Updated verification date to 2025-11-19
 
 - **2025-11-11:** Initial research compilation (Autonomous Researcher)
   - Added Richardson et al. 2023 planetary boundaries update

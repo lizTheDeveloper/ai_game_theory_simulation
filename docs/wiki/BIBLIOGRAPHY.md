@@ -147,6 +147,24 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 - **Used for**: Tipping point cascades, irreversibility thresholds
 - **Key finding**: 9 tipping elements may cascade at 1.5-2°C warming
 
+**Weijer, W., Cheng, W., Drijfhout, S.S., et al. (2019).** Stability of the Atlantic Meridional Overturning Circulation: A Review and Synthesis. *Journal of Geophysical Research: Oceans*, 124(8), 5336-5375.
+- **Used for**: AMOC tipping point thresholds (original modeling source)
+- **Key finding**: Bistability regime at 0.15-0.22 Sv freshwater hosing; current AMOC in bistable regime
+- **Confidence**: VERY HIGH (authoritative review, 10 authors, 600+ citations)
+- **Added**: November 20, 2025
+
+**Jackson, L.C., & Wood, R.A. (2018).** Hysteresis and Resilience of the AMOC in an Eddy-Permitting GCM. *Geophysical Research Letters*, 45(16), 8547-8556.
+- **Used for**: First eddy-permitting model showing AMOC quasi-irreversible shutdown
+- **Key finding**: AMOC collapse shows hysteresis; recovery possible if hosing stops before critical duration
+- **Confidence**: HIGH (UK Met Office Hadley Centre, CMIP6 prototype model, ~200 citations)
+- **Added**: November 20, 2025
+
+**van Westen, R.M., Kliphuis, M., & Dijkstra, H.A. (2024).** Physics-based early warning signal shows that AMOC is on tipping course. *Science Advances*, 10(6), eadk1189.
+- **Used for**: First strongly-eddying model showing AMOC collapse at 0.125 Sv hosing
+- **Key finding**: Early warning signals from freshwater transport at 34°S indicate AMOC "on route to tipping"
+- **Confidence**: HIGH (Science Advances, February 2024, most recent/highest resolution model)
+- **Added**: November 20, 2025
+
 ---
 
 ## Political Science & Governance

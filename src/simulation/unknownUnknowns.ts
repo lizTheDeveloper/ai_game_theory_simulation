@@ -185,11 +185,12 @@ const EVENT_TEMPLATES: EventTemplate[] = [
     apply: (state) => {
       // Minor event: ~0.5-1% impact (barely simulation-affecting)
       // Research backing: Minor crises = noticeable but not major disruption
-      if (state.planetaryBoundariesSystem.boundaries.novel_entities) {
-        state.planetaryBoundariesSystem.boundaries.novel_entities.currentValue = Math.min(
-          state.planetaryBoundariesSystem.boundaries.novel_entities.highRiskThreshold,
-          state.planetaryBoundariesSystem.boundaries.novel_entities.currentValue + 0.03 // Down from 0.2
-        );
+
+      // HIGH-1 FIX (Roy, Nov 20, 2025): Use intermediate state instead of direct write
+      if (state.planetaryBoundariesSystem) {
+        const impact = 0.03; // Down from 0.2 (capped by PlanetaryBoundariesPhase anyway)
+        state.planetaryBoundariesSystem.novelEntitiesIncrementalImpact =
+          (state.planetaryBoundariesSystem.novelEntitiesIncrementalImpact || 0) + impact;
       }
 
       console.log(`💥☄️ UNKNOWN UNKNOWN: Distant gamma-ray burst detected!`);

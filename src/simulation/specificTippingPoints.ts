@@ -431,11 +431,14 @@ export function updateCoralReefs(state: GameState): void {
     
     // Global biodiversity impact (25-30% of marine species)
     env.biodiversityIndex = Math.max(0, env.biodiversityIndex - 0.00005);
-    
-    // Ocean health metric
+
+    // HIGH-1 FIX (Roy, Nov 20, 2025): Use intermediate state instead of direct write
+    // Ocean health metric - coral collapse increases marine pollution
     if (state.planetaryBoundariesSystem) {
-      // Coral supports 25% of marine life
-      state.planetaryBoundariesSystem.boundaries.novel_entities.currentValue += 0.001; // Marine pollution from ecosystem breakdown
+      // Coral supports 25% of marine life - ecosystem breakdown = pollution increase
+      const impact = 0.001;
+      state.planetaryBoundariesSystem.novelEntitiesIncrementalImpact =
+        (state.planetaryBoundariesSystem.novelEntitiesIncrementalImpact || 0) + impact;
     }
     
     // Log milestone
