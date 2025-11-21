@@ -112,3 +112,4 @@ certs/
 *.csr
 *.p12
 *.pfx
+.env.test
