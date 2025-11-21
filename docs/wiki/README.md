@@ -2684,7 +2684,8 @@ See: [`infrastructure_oct_nov_2025_COMPLETE_20251105.md`](/plans/completed/infra
   - Regional variance (Iceland/US Southwest high potential, Asia water-constrained)
   - Must model energy/water coupling constraints in future implementation
 - **Sources:** Nature Communications (Tan et al. 2024), Climeworks (2024), IEA (2024), Frontiers in Climate (2024-2025)
-- **Status:** Research compilation for future implementation (no current simulation mechanics)
+- **Current Implementation:** ClimateDeploymentDelayPhase uses DAC parameters (7-year activation, 30-year T_50) from research/climate_tech_deployment_timescales_20251112.md
+- **Verification Status:** PENDING - New research provides enhanced detail (cost, energy, water constraints) requiring validation against current parameters
 
 **🔬 Tier 2 Threshold Research Update** (November 7, 2025):
 - **File:** `research/threshold_tier2_historical_ranges_20251026.md` → Updated with **25+ peer-reviewed 2024-2025 sources**
