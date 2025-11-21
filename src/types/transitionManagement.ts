@@ -167,6 +167,9 @@ export interface TransitionManagementSystem {
   /** Mortality multiplier when coordination failure is active (2-5x) */
   coordinationFailureMultiplier: number;
 
+  /** Month when last coordination failure occurred (for cooldown tracking) */
+  coordinationFailureMonth: number;
+
   // === REBOUND EFFECTS (Nov 21, 2025) ===
 
   /** Technology effectiveness decay due to Jevons paradox [0-1] */
