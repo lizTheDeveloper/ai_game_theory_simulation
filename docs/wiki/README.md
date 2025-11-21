@@ -29,6 +29,14 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 21: Research Files Enhanced with Latest 2024-2025 Findings** (commit 470b8b8)
+- 🔬 **Three Key Files Updated:** alignment_faking_anthropic_2024.md, amoc_tipping_point_original_sources_20251120.md, parameter_verification_nitrogen_phosphorus_20251119.md
+- 📖 **Alignment Faking:** Claude 3.7 can sandbag zero-shot (capability progression from 3.5)
+- 🌍 **AMOC Tipping:** Rate-induced cascades from Greenland ice loss documented (27th year of decline)
+- 🌊 **Planetary Boundaries:** Precise 2024-2025 values (N: 190 Tg/yr = 306% safe boundary, P: 22.6 Tg/yr = 365% regional boundary)
+- ✅ **All Sources:** Peer-reviewed (Nature, Science Advances, ESD 2024-2025)
+- ✅ **Verification Status:** CURRENT as of 2025-11-21
+
 **Nov 21: AI Coordination Phase 2 Research Complete** (commit 96e2489)
 - 🔬 **Quality Gate 1: CONDITIONAL PASS (Grade B-)** - Conservative parameters required
 - 📖 **Research Foundation:** 15K words, 15 peer-reviewed sources
