@@ -33,7 +33,7 @@ import { createSecurityHeadersMiddleware, getDefaultSecurityHeadersConfig, getDe
 import { AuditLogger, createAuditMiddleware } from '../middleware/auditLogger';
 import { metricsMiddleware } from '../monitoring/metricsEndpoint';
 import { HealthCheckService } from '../monitoring/healthChecks';
-import { RedisMetricsCollector } from '../monitoring/redisMetricsCollector';
+import { MetricsCollector, initializeMetricsCollector } from '../monitoring/metricsCollector';
 
 // ============================================================================
 // Server Configuration
@@ -90,7 +90,7 @@ export class PlatformServer {
   private jwtMiddleware: JWTMiddleware;
   private auditLogger: AuditLogger;
   private healthCheckService: HealthCheckService;
-  private redisMetricsCollector: RedisMetricsCollector;
+  private metricsCollector: MetricsCollector;
   private config: ServerConfig;
   private server: any;
 
@@ -113,9 +113,13 @@ export class PlatformServer {
       minSeverity: 'low',
     });
     this.healthCheckService = new HealthCheckService(this.pool, this.redis);
-    this.redisMetricsCollector = new RedisMetricsCollector(this.redis, {
-      collectionIntervalMs: 10000, // Collect every 10 seconds
-      enableCommandMonitoring: true // Track per-command latency
+    this.metricsCollector = initializeMetricsCollector(this.pool, this.redis, {
+      updateIntervalMs: 5000, // Update infrastructure metrics every 5 seconds
+      enableRedisMetrics: true, // Enable Redis metrics collection
+      redisCollectorConfig: {
+        collectionIntervalMs: 10000, // Collect Redis metrics every 10 seconds
+        enableCommandMonitoring: true // Track per-command latency
+      }
     });
 
     this.setupMiddleware();
@@ -542,8 +546,8 @@ export class PlatformServer {
       await this.pool.query('SELECT 1');
       console.log('✅ Database connection established');
 
-      // Start Redis metrics collection
-      this.redisMetricsCollector.start();
+      // Start unified metrics collection (includes Redis, DB pool, circuit breakers)
+      this.metricsCollector.start();
 
       // Start server
       this.server = this.app.listen(this.config.port, this.config.host, () => {
@@ -621,13 +625,13 @@ export class PlatformServer {
           console.error('❌ Error closing database:', err);
         }
 
-        // Step 2.5: Stop Redis metrics collection
+        // Step 2.5: Stop metrics collection
         try {
-          this.redisMetricsCollector.stop();
+          this.metricsCollector.stop();
           const elapsed = Math.round((Date.now() - startTime) / 1000);
-          console.log(`✅ Redis metrics collector stopped (${elapsed}s)`);
+          console.log(`✅ Metrics collector stopped (${elapsed}s)`);
         } catch (err) {
-          console.error('❌ Error stopping Redis metrics collector:', err);
+          console.error('❌ Error stopping metrics collector:', err);
         }
 
         // Step 3: Close Redis connection

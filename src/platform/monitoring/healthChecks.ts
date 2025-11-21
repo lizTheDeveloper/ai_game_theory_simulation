@@ -18,7 +18,6 @@ import { Redis } from 'ioredis';
 import * as os from 'os';
 import * as fs from 'fs';
 import { promisify } from 'util';
-import { dbPoolSize, dbPoolWaiting } from './metricsEndpoint';
 import { exec } from 'child_process';
 
 const execAsync = promisify(exec);
@@ -194,10 +193,8 @@ export class HealthCheckService {
       const idleConnections = this.pool.idleCount;
       const waitingClients = this.pool.waitingCount;
 
-      // Update Prometheus metrics
-      dbPoolSize.set({ pool_type: 'total' }, poolSize);
-      dbPoolSize.set({ pool_type: 'idle' }, idleConnections);
-      dbPoolWaiting.set(waitingClients);
+      // Note: Prometheus metrics are updated by MetricsCollector
+      // (avoids duplicate updates on every health check)
 
       // Determine status
       let status: 'pass' | 'warn' | 'fail' = 'pass';
