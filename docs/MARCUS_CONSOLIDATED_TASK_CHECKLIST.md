@@ -1,7 +1,7 @@
 # MARCUS 3.0 - Consolidated Task Checklist
 
-**Last Updated:** 2025-11-21 10:52 UTC
-**Current Status:** 96.5% Complete - Security Hardening Complete, Integration Tests In Progress
+**Last Updated:** 2025-11-21 11:00 UTC
+**Current Status:** 97% Complete - All CRITICAL Security Complete, Integration Tests In Progress
 **Purpose:** Comprehensive prioritized checklist for completing MARCUS 3.0 deployment
 
 ---
@@ -18,8 +18,9 @@
 
 **What's Next:**
 - ✅ Critical security hardening (Redis auth) - COMPLETE 2025-11-21
-- 🟡 PostgreSQL SSL configuration (optional production)
+- ✅ PostgreSQL SSL configuration - COMPLETE 2025-11-21
 - 🟡 Integration testing (72.2% passing → 100%)
+- 🟡 Complete missing test scripts (13 scripts needed)
 - 🟢 Infrastructure deployment (Kubernetes, monitoring)
 - 🔵 Optional enhancements (load testing, profiling)
 
@@ -84,12 +85,12 @@
 ---
 
 ### 2. PostgreSQL SSL Configuration (Optional Production)
-**Status:** Manual configuration needed
+**Status:** ✅ COMPLETE - Executed 2025-11-21
 **Time:** 🕐 30 minutes
 **Blocker:** None
 
 **Tasks:**
-- [ ] **2.1** Generate SSL certificates
+- [x] **2.1** Generate SSL certificates
   ```bash
   sudo openssl req -new -x509 -days 365 -nodes -text \
     -out /etc/ssl/certs/postgres.crt \
@@ -97,20 +98,20 @@
     -subj "/CN=marcus-vm"
   ```
 
-- [ ] **2.2** Set certificate permissions
+- [x] **2.2** Set certificate permissions
   ```bash
   sudo chown postgres:postgres /etc/ssl/private/postgres.key
   sudo chmod 600 /etc/ssl/private/postgres.key
   ```
 
-- [ ] **2.3** Enable SSL in PostgreSQL
+- [x] **2.3** Enable SSL in PostgreSQL
   ```bash
   sudo sed -i "s/#ssl = off/ssl = on/" /etc/postgresql/14/main/postgresql.conf
   sudo sed -i "s#ssl_cert_file = .*#ssl_cert_file = '/etc/ssl/certs/postgres.crt'#" /etc/postgresql/14/main/postgresql.conf
   sudo sed -i "s#ssl_key_file = .*#ssl_key_file = '/etc/ssl/private/postgres.key'#" /etc/postgresql/14/main/postgresql.conf
   ```
 
-- [ ] **2.4** Restart PostgreSQL and update .env
+- [x] **2.4** Restart PostgreSQL and update .env
   ```bash
   sudo systemctl restart postgresql
   echo "DATABASE_SSL=true" >> .env
@@ -118,9 +119,11 @@
   ```
 
 **Success Criteria:**
-- ✅ PostgreSQL accepts SSL connections
-- ✅ MARCUS connects via SSL
-- ✅ `psql "postgresql://user:pass@host:5432/db?sslmode=require"` works
+- ✅ PostgreSQL accepts SSL connections (verified: ssl = on)
+- ✅ MARCUS connects via SSL (DATABASE_SSL=true in .env)
+- ✅ `psql "postgresql://user:pass@host:5432/db?sslmode=require"` works (tested successfully)
+- ✅ Certificates: postgres.crt (644 root:root), postgres.key (600 postgres:postgres)
+- ✅ MARCUS service restarted successfully (Ready in 270ms)
 
 **References:**
 - `docs/MARCUS_INCOMPLETE_TASKS.md` (Task #9)
@@ -738,7 +741,7 @@
 | Category | Status | Progress |
 |----------|--------|----------|
 | **Core Infrastructure** | ✅ Complete | 100% |
-| **Security Hardening** | ⚠️ Scripts ready | 0% (needs execution) |
+| **Security Hardening** | ✅ Complete | 100% (Redis + PostgreSQL SSL) |
 | **Unit Tests** | ✅ Complete | 100% (96/96) |
 | **Integration Tests** | 🟡 In Progress | 72.2% (171/237) ⬆️ |
 | **Bash Validation** | ✅ Strong | 87.2% (34/39) |
@@ -747,7 +750,7 @@
 | **Security Testing** | ❌ Not started | 0% |
 | **Documentation** | ✅ Strong | 90% |
 
-**Overall Completion:** 96% → 100% (4% gap)
+**Overall Completion:** 97% → 100% (3% gap)
 
 ---
 

@@ -173,7 +173,12 @@
       "Bash(unzip:*)",
       "Bash(source ~/.bashrc)",
       "Bash(crontab:*)",
-      "Bash(redis-cli:*)"
+      "Bash(redis-cli:*)",
+      "Bash(sudo openssl req:*)",
+      "Bash(sudo grep:*)",
+      "Bash(sudo sed:*)",
+      "Bash(.env)",
+      "Bash(psql:*)"
     ],
     "deny": [],
     "ask": [],
