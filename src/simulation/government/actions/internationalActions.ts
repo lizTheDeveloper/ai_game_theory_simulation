@@ -162,10 +162,126 @@ const banReverseEngineering: CategorizedGovernmentAction = {
 };
 
 /**
+ * Invest in Governance Capacity
+ * Improve institutional quality, decision-making, and democratic processes (repeatable action for scenario testing)
+ *
+ * Research foundation:
+ * - World Bank Governance Indicators (2024): Regulatory quality, rule of law, voice & accountability
+ * - Transparency International CPI (2024): Corruption perceptions
+ * - IDEA Democracy Indices (2024): Electoral process, participation, civil liberties
+ * - Acemoglu & Robinson (2012): Institutional capacity and economic development
+ */
+const investGovernanceCapacity: CategorizedGovernmentAction = {
+  id: 'invest_governance_capacity',
+  name: 'Invest in Governance Capacity',
+  description: 'Improve institutional quality, transparency, and citizen participation. Requires resources but strengthens democratic resilience. Focus: institutions, transparency, or participation.',
+  agentType: 'government',
+  category: 'international',
+  energyCost: 2,
+
+  canExecute: (state: GameState): boolean => {
+    // Require baseline economic resources
+    const population = state.humanPopulationSystem?.population || 8.0;
+    const qol = state.globalMetrics.qualityOfLife || 1.0;
+    const stage = state.globalMetrics.economicTransitionStage || 1.0;
+    const gdp = population * qol * (1 + stage * 0.2) * 10; // GDP in $T
+
+    // Require at least $75T GDP (higher than research budget)
+    return gdp > 75;
+  },
+
+  execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {
+    // Determine focus based on scenario priorities or default
+    const scenarioPriorities = state.scenarioConfig?.governmentPriorities;
+    let focus: 'institutions' | 'transparency' | 'participation' = 'institutions';
+    let investmentStrength = 0.02; // Default investment strength
+
+    if (scenarioPriorities?.democraticParticipation !== undefined) {
+      const priority = scenarioPriorities.democraticParticipation;
+      investmentStrength = 0.01 + priority * 0.04; // Up to 0.05 at max priority
+
+      // Focus on participation at high priority
+      if (priority >= 0.7) {
+        focus = 'participation';
+      } else if (priority >= 0.4) {
+        focus = 'transparency';
+      } else {
+        focus = 'institutions';
+      }
+    }
+
+    // Update governance quality based on focus
+    const oldCapacity = state.government.governanceQuality.institutionalCapacity;
+    const oldTransparency = state.government.governanceQuality.transparency;
+    const oldParticipation = state.government.governanceQuality.participationRate;
+
+    if (focus === 'institutions') {
+      state.government.governanceQuality.institutionalCapacity = Math.min(
+        1.0,
+        state.government.governanceQuality.institutionalCapacity + investmentStrength
+      );
+      state.government.governanceQuality.decisionQuality = Math.min(
+        1.0,
+        state.government.governanceQuality.decisionQuality + investmentStrength * 0.5
+      );
+    } else if (focus === 'transparency') {
+      state.government.governanceQuality.transparency = Math.min(
+        1.0,
+        state.government.governanceQuality.transparency + investmentStrength * 1.5
+      );
+      state.government.governanceQuality.decisionQuality = Math.min(
+        1.0,
+        state.government.governanceQuality.decisionQuality + investmentStrength * 0.3
+      );
+    } else if (focus === 'participation') {
+      state.government.governanceQuality.participationRate = Math.min(
+        1.0,
+        state.government.governanceQuality.participationRate + investmentStrength * 1.25
+      );
+      state.government.governanceQuality.consensusBuildingEfficiency = Math.min(
+        1.0,
+        state.government.governanceQuality.consensusBuildingEfficiency + investmentStrength * 0.8
+      );
+    }
+
+    // Legitimacy boost (good governance is popular)
+    state.government.legitimacy = Math.min(
+      1.0,
+      state.government.legitimacy + investmentStrength * 0.5
+    );
+
+    // Trust improvement (better governance → more trust)
+    state.society.trustInAI = Math.min(
+      1.0,
+      state.society.trustInAI + investmentStrength * 0.3
+    );
+
+    return {
+      success: true,
+      effects: {
+        investmentStrength: investmentStrength
+      },
+      events: [{
+        id: `governance_invest_${state.currentMonth}_${Math.floor(random() * 1000000)}`,
+        type: 'policy',
+        timestamp: state.currentMonth,
+        severity: 'constructive',
+        agent: 'Government',
+        title: 'Governance Capacity Investment',
+        description: `Government invested in ${focus}. Capacity: ${oldCapacity.toFixed(2)} → ${state.government.governanceQuality.institutionalCapacity.toFixed(2)}, Transparency: ${oldTransparency.toFixed(2)} → ${state.government.governanceQuality.transparency.toFixed(2)}, Participation: ${oldParticipation.toFixed(2)} → ${state.government.governanceQuality.participationRate.toFixed(2)}`,
+        effects: { governanceQuality: investmentStrength }
+      }],
+      message: `🏛️ Governance investment (${focus}): capacity ${state.government.governanceQuality.institutionalCapacity.toFixed(2)}, transparency ${state.government.governanceQuality.transparency.toFixed(2)}, participation ${state.government.governanceQuality.participationRate.toFixed(2)}`
+    };
+  }
+};
+
+/**
  * All international actions
  */
 export const internationalActions: CategorizedGovernmentAction[] = [
   restrictResearchPublishing,
   limitEmployeeMobility,
-  banReverseEngineering
+  banReverseEngineering,
+  investGovernanceCapacity
 ];
