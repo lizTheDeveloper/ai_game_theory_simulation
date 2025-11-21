@@ -1,10 +1,6 @@
 # Research Update Queue
-<<<<<<< Updated upstream
-**Generated:** 11/21/2025, 6:30:04 PM
-=======
-**Generated:** 11/21/2025, 7:30:04 PM
->>>>>>> Stashed changes
-**Files Scanned:** 508
+**Generated:** 11/21/2025, 8:30:03 PM
+**Files Scanned:** 509
 
 ---
 
@@ -16,7 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 170 (33.5%)
+**Count:** 171 (33.6%)
 
 ### `CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
 - **Oldest source:** 2009 (16 years old)
@@ -823,6 +819,11 @@
 - **Status:** Not used in simulation
 - **Path:** `research/verification_d6e80e8_20251106.md`
 
+### `verification_e690a6a_20251121.md`
+- **Oldest source:** 2016 (9 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/verification_e690a6a_20251121.md`
+
 ### `visionary_ideas_research_validation_2025-10-16.md`
 - **Oldest source:** 2014 (11 years old)
 - **Status:** Not used in simulation
@@ -902,7 +903,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 315 (62.0%)
+**Count:** 315 (61.9%)
 
 All sources <3 years old. No action required.
 
@@ -912,11 +913,11 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 508 |
+| Total files | 509 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 170 (33.5%) |
+| HIGH | 171 (33.6%) |
 | MEDIUM | 23 (4.5%) |
-| LOW | 315 (62.0%) |
+| LOW | 315 (61.9%) |
 | Average age | 7.5 years |
 | Oldest source | 1955 (70 years ago) |
 
@@ -924,21 +925,21 @@ All sources <3 years old. No action required.
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 315 | 62.0% |
+| Current (<3yr) | 315 | 61.9% |
 | Warning (3-5yr) | 23 | 4.5% |
-| Critical (>5yr) | 170 | 33.5% |
+| Critical (>5yr) | 171 | 33.6% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-- **Current:** 33.5% critical (>5yr)
+- **Current:** 33.6% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
-1. Update 170 HIGH priority file(s) within 1 month
+1. Update 171 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 
