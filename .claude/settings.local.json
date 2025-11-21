@@ -178,7 +178,8 @@
       "Bash(sudo grep:*)",
       "Bash(sudo sed:*)",
       "Bash(.env)",
-      "Bash(psql:*)"
+      "Bash(psql:*)",
+      "Bash(git pull:*)"
     ],
     "deny": [],
     "ask": [],

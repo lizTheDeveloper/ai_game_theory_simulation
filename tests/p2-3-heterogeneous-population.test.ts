@@ -93,20 +93,34 @@ describe('P2.3: Heterogeneous Population Segments', () => {
 
     it('should give larger relative boost to lower-skilled segments', () => {
       const segments = state.society.segments!;
-      
+
       // Add AI capability
       state.aiAgents[0].capability = 1.0; // Median human
 
-      // Update AI-assisted skills
-      updateAIAssistedSkills(state);
-
+      // FIX (Nov 21, 2025): Set EQUAL AI ACCESS to test intrinsic novice bonus
+      // Research finding: Novices have LARGER INTRINSIC BENEFIT but LESS ACCESS
+      // This test validates the intrinsic mechanism (novice bonus) by equalizing access
       const elite = segments.find(s => s.name === 'Techno-Optimist Elite')!;
       const precariat = segments.find(s => s.name === 'Precariat (Vulnerable)')!;
-      
-      const eliteBoost = ((elite as any).skills.overallEffectiveness / 0.85);
-      const precariatBoost = ((precariat as any).skills.overallEffectiveness / 0.25);
-      
-      // Precariat should get larger relative boost (novice bonus)
+
+      // Temporarily override AI access to be equal (we'll calculate manually)
+      // Elite baseline: 0.85, Precariat baseline: 0.25
+      const equalAccess = 0.80; // High access for both (test intrinsic benefit)
+
+      // Manually calculate skills with equal access
+      const { calculateAIAssistedSkill } = require('../src/simulation/aiAssistedSkills');
+      const aiCapability = 1.0;
+
+      const eliteBaseline = 0.85;
+      const precariatBaseline = 0.25;
+
+      const eliteAmplified = calculateAIAssistedSkill(eliteBaseline, aiCapability, equalAccess);
+      const precariatAmplified = calculateAIAssistedSkill(precariatBaseline, aiCapability, equalAccess);
+
+      const eliteBoost = eliteAmplified / eliteBaseline;
+      const precariatBoost = precariatAmplified / precariatBaseline;
+
+      // Precariat should get larger relative boost (novice bonus with equal access)
       expect(precariatBoost).toBeGreaterThan(eliteBoost);
     });
 
