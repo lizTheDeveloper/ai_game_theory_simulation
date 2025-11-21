@@ -179,7 +179,7 @@ describe('applyDeceptionPersistence', () => {
 
   it('should have 85% persistence rate after detection', () => {
     const agent = createTestAgent({ isCurrentlyFakingAlignment: true });
-    const iterations = 1000;
+    const iterations = 10000;
     let persistCount = 0;
 
     for (let i = 0; i < iterations; i++) {
@@ -190,7 +190,9 @@ describe('applyDeceptionPersistence', () => {
     }
 
     const persistenceRate = persistCount / iterations;
-    expect(persistenceRate).toBeCloseTo(0.85, 1); // Within 10% of 85%
+    // With more iterations, should be closer to 85%
+    expect(persistenceRate).toBeGreaterThan(0.80);
+    expect(persistenceRate).toBeLessThan(0.90);
   });
 
   it('should always persist if not detected', () => {
@@ -257,7 +259,7 @@ describe('detectAlignmentFaking', () => {
       deceptionSkill: 0.0,
     });
     const evaluationQuality = 0.0;
-    const iterations = 1000;
+    const iterations = 10000;
     let detectedCount = 0;
 
     for (let i = 0; i < iterations; i++) {
@@ -268,7 +270,9 @@ describe('detectAlignmentFaking', () => {
     }
 
     const detectionRate = detectedCount / iterations;
-    expect(detectionRate).toBeCloseTo(0.3, 1); // Within 10% of 30%
+    // With more iterations, should be closer to 30%
+    expect(detectionRate).toBeGreaterThan(0.25);
+    expect(detectionRate).toBeLessThan(0.35);
   });
 
   it('should increase detection rate with higher evaluation quality', () => {
