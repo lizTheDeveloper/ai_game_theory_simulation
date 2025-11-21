@@ -69,6 +69,15 @@ fi
 
 log_section "📋 Recent Worker Activity"
 
+# Get current UTC hour (workers run 08:00-22:00 UTC, off 23:00-07:00 UTC)
+CURRENT_HOUR_UTC=$(date -u +%H | sed 's/^0//')
+OVERNIGHT_WINDOW=false
+
+if [ "$CURRENT_HOUR_UTC" -ge 23 ] || [ "$CURRENT_HOUR_UTC" -lt 8 ]; then
+  OVERNIGHT_WINDOW=true
+  log "ℹ️  Currently in overnight window (23:00-07:00 UTC) - workers scheduled off"
+fi
+
 # Find logs from the last CHECK_WINDOW_MINUTES
 RECENT_LOGS=$(find "$WORKER_LOG_DIR" -name "worker_*.log" -mmin -${CHECK_WINDOW_MINUTES} -type f 2>/dev/null | sort -r)
 RECENT_COUNT=$(echo "$RECENT_LOGS" | grep "worker_" | wc -l)
@@ -77,35 +86,56 @@ RECENT_COUNT=${RECENT_COUNT:-0}
 log "ℹ️  Found $RECENT_COUNT worker log(s) in last ${CHECK_WINDOW_MINUTES} minutes"
 
 if [ "$RECENT_COUNT" -eq 0 ]; then
-  log "⚠️  WARNING: No worker runs detected in last ${CHECK_WINDOW_MINUTES} minutes"
-  log "ℹ️  Expected: At least 1 hourly run"
+  # During overnight window, this is expected
+  if [ "$OVERNIGHT_WINDOW" = "true" ]; then
+    log "✅ No recent worker runs (expected during overnight window)"
 
-  # Check if cron is running (VM only)
-  if [ "$IS_VM" = "true" ]; then
-    log "ℹ️  Checking cron status..."
-    if pgrep cron > /dev/null 2>&1; then
-      log "✅ Cron service is running"
-      log "⚠️  Check crontab with: crontab -l"
-    else
-      log "❌ ERROR: Cron service is NOT running!"
-      log "💡 Start with: sudo service cron start"
+    # Check last worker log to ensure it's not TOO old (should be from 22:00 run)
+    LAST_LOG=$(ls -t "$WORKER_LOG_DIR"/worker_*.log 2>/dev/null | head -1)
+    if [ -n "$LAST_LOG" ]; then
+      LAST_RUN=$(stat -c %Y "$LAST_LOG" 2>/dev/null || stat -f %m "$LAST_LOG" 2>/dev/null)
+      NOW=$(date +%s)
+      AGE_MINUTES=$(( (NOW - LAST_RUN) / 60 ))
+      log "ℹ️  Last worker run: $(basename "$LAST_LOG") (${AGE_MINUTES} minutes ago)"
+
+      # Max expected age: from 22:00 previous day to 07:59 next day = ~10 hours = 600 minutes
+      if [ "$AGE_MINUTES" -gt 720 ]; then
+        log "🚨 CRITICAL: Workers haven't run in over 12 hours (expected max: 10 hours)"
+        ISSUE_DETECTED=true
+      fi
     fi
-  fi
+  else
+    # During work hours (08:00-22:00 UTC), missing runs are a problem
+    log "⚠️  WARNING: No worker runs detected in last ${CHECK_WINDOW_MINUTES} minutes"
+    log "ℹ️  Expected: At least 1 hourly run during work hours (08:00-22:00 UTC)"
 
-  # Check last worker log (sort by modification time, not alphabetically)
-  LAST_LOG=$(ls -t "$WORKER_LOG_DIR"/worker_*.log 2>/dev/null | head -1)
-  if [ -n "$LAST_LOG" ]; then
-    LAST_RUN=$(stat -c %Y "$LAST_LOG" 2>/dev/null || stat -f %m "$LAST_LOG" 2>/dev/null)
-    NOW=$(date +%s)
-    AGE_MINUTES=$(( (NOW - LAST_RUN) / 60 ))
-    log "ℹ️  Last worker run: $(basename "$LAST_LOG") (${AGE_MINUTES} minutes ago)"
-
-    if [ "$AGE_MINUTES" -gt 120 ]; then
-      log "🚨 CRITICAL: Workers haven't run in over 2 hours!"
+    # Check if cron is running (VM only)
+    if [ "$IS_VM" = "true" ]; then
+      log "ℹ️  Checking cron status..."
+      if pgrep cron > /dev/null 2>&1; then
+        log "✅ Cron service is running"
+        log "⚠️  Check crontab with: crontab -l"
+      else
+        log "❌ ERROR: Cron service is NOT running!"
+        log "💡 Start with: sudo service cron start"
+      fi
     fi
-  fi
 
-  ISSUE_DETECTED=true
+    # Check last worker log (sort by modification time, not alphabetically)
+    LAST_LOG=$(ls -t "$WORKER_LOG_DIR"/worker_*.log 2>/dev/null | head -1)
+    if [ -n "$LAST_LOG" ]; then
+      LAST_RUN=$(stat -c %Y "$LAST_LOG" 2>/dev/null || stat -f %m "$LAST_LOG" 2>/dev/null)
+      NOW=$(date +%s)
+      AGE_MINUTES=$(( (NOW - LAST_RUN) / 60 ))
+      log "ℹ️  Last worker run: $(basename "$LAST_LOG") (${AGE_MINUTES} minutes ago)"
+
+      if [ "$AGE_MINUTES" -gt 120 ]; then
+        log "🚨 CRITICAL: Workers haven't run in over 2 hours during work hours!"
+      fi
+    fi
+
+    ISSUE_DETECTED=true
+  fi
 else
   log "✅ Workers are running"
 
@@ -247,22 +277,42 @@ if [ -d "$RESEARCHER_LOG_DIR" ]; then
       ISSUE_DETECTED=true
     fi
   else
-    LAST_RESEARCHER=$(ls -t "$RESEARCHER_LOG_DIR"/*.log 2>/dev/null | head -1)
-    if [ -n "$LAST_RESEARCHER" ]; then
-      LAST_RESEARCHER_TIME=$(stat -c %Y "$LAST_RESEARCHER" 2>/dev/null || stat -f %m "$LAST_RESEARCHER" 2>/dev/null)
-      NOW=$(date +%s)
-      AGE_MINUTES=$(( (NOW - LAST_RESEARCHER_TIME) / 60 ))
-      log "ℹ️  Last researcher run: ${AGE_MINUTES} minutes ago"
+    # During overnight window, missing researcher runs are expected
+    if [ "$OVERNIGHT_WINDOW" = "true" ]; then
+      log "✅ No recent researcher runs (expected during overnight window)"
 
-      # Researcher runs hourly 8am-10pm, so max gap during work hours is ~60min
-      # Overnight gap (10pm-8am) is intentional (10 hours), so use 12h threshold
-      if [ "$AGE_MINUTES" -gt 720 ]; then
-        log "🚨 CRITICAL: Researcher hasn't run in over 12 hours!"
-        ISSUE_DETECTED=true
+      # Check last researcher log to ensure it's not TOO old
+      LAST_RESEARCHER=$(ls -t "$RESEARCHER_LOG_DIR"/*.log 2>/dev/null | head -1)
+      if [ -n "$LAST_RESEARCHER" ]; then
+        LAST_RESEARCHER_TIME=$(stat -c %Y "$LAST_RESEARCHER" 2>/dev/null || stat -f %m "$LAST_RESEARCHER" 2>/dev/null)
+        NOW=$(date +%s)
+        AGE_MINUTES=$(( (NOW - LAST_RESEARCHER_TIME) / 60 ))
+        log "ℹ️  Last researcher run: ${AGE_MINUTES} minutes ago"
+
+        # Researcher runs hourly 8am-10pm at :30, so max overnight gap is ~10 hours
+        if [ "$AGE_MINUTES" -gt 720 ]; then
+          log "🚨 CRITICAL: Researcher hasn't run in over 12 hours (expected max: 10 hours)"
+          ISSUE_DETECTED=true
+        fi
       fi
     else
-      log "⚠️  WARNING: No researcher logs found"
-      ISSUE_DETECTED=true
+      # During work hours, missing researcher runs are a problem
+      LAST_RESEARCHER=$(ls -t "$RESEARCHER_LOG_DIR"/*.log 2>/dev/null | head -1)
+      if [ -n "$LAST_RESEARCHER" ]; then
+        LAST_RESEARCHER_TIME=$(stat -c %Y "$LAST_RESEARCHER" 2>/dev/null || stat -f %m "$LAST_RESEARCHER" 2>/dev/null)
+        NOW=$(date +%s)
+        AGE_MINUTES=$(( (NOW - LAST_RESEARCHER_TIME) / 60 ))
+        log "⚠️  WARNING: No recent researcher runs during work hours (last: ${AGE_MINUTES} minutes ago)"
+
+        # During work hours, max gap should be ~90 minutes (hourly + wiggle room)
+        if [ "$AGE_MINUTES" -gt 120 ]; then
+          log "🚨 CRITICAL: Researcher hasn't run in over 2 hours during work hours!"
+          ISSUE_DETECTED=true
+        fi
+      else
+        log "⚠️  WARNING: No researcher logs found"
+        ISSUE_DETECTED=true
+      fi
     fi
   fi
 else
