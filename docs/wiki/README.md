@@ -37,6 +37,30 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - ✅ **All Sources:** Peer-reviewed (Nature, Science Advances, ESD 2024-2025)
 - ✅ **Verification Status:** CURRENT as of 2025-11-21
 
+**Nov 21: AI Coordination Conservative Parameters - Phase 2 IMPLEMENTED** (commit e690a6a)
+- ✅ **IMPLEMENTATION COMPLETE:** CoordinatedDeploymentPhase updated with conservative parameters
+- 🔬 **Research Grade:** B- (conditional pass - parametric assumptions flagged)
+- 📊 **New Mechanisms Added:**
+  1. **Coordination Failures (Stochastic):** 10% probability per month during active deployment, 2-5x mortality multiplier (central: 3x)
+  2. **Rebound Effects (Jevons Paradox):** 7.5% per year effectiveness decay, floor at 10% minimum effectiveness
+- 🎯 **Conservative Parameters:**
+  - Baseline mortality (uncoordinated): **30%** (was implicit, now explicit)
+  - AI coordination quality: **0.6 central** (0.4-0.8 range) - ⚠️ HIGH UNCERTAINTY
+  - Support effectiveness: **60%** (50-70% range) - ⚠️ HIGH UNCERTAINTY
+  - Target mortality: **9-12%** (was <5%, corrected to realistic)
+- 📊 **Expected Impact:**
+  - God mode: 30% → 9-12% mortality (moderate coordination)
+  - Observable failures: ~10% frequency in long runs
+  - Effectiveness decay: 21% after 3 years, 31% after 5 years
+- 📖 **Research Verification:** research/verification_e690a6a_20251121.md (two-layer citation + claim verification)
+  - ⚠️ **Finding:** Coordination failure probability (10%) and rebound decay rate (7.5%) are **PARAMETRIC ASSUMPTIONS**, not peer-reviewed values
+  - ✅ **Baseline mortality 30%** well-supported by historical data (USSR, Great Leap Forward)
+- ⏳ **Next:** Monte Carlo validation (N≥50), orchestrator verification of parametric assumptions
+- 📝 **Files Modified:**
+  - src/types/transitionManagement.ts (added coordinationFailures, reboundEffectiveness fields)
+  - src/simulation/initialization.ts (conservative defaults)
+  - src/simulation/engine/phases/CoordinatedDeploymentPhase.ts (failure + rebound logic)
+
 **Nov 21: AI Coordination Phase 2 Research Complete** (commit 96e2489)
 - 🔬 **Quality Gate 1: CONDITIONAL PASS (Grade B-)** - Conservative parameters required
 - 📖 **Research Foundation:** 15K words, 15 peer-reviewed sources
