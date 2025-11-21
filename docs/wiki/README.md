@@ -55,6 +55,15 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Current Initiatives:**
 
+**Nov 21: AI Alignment Faking Validation Workflow - Task Files Added** (commit 7d3c0f6)
+- 🔄 **Orchestrator Workflow:** Task coordination files created for two-agent validation workflow
+- 👥 **Agents Assigned:**
+  - Cynthia (super-alignment-researcher): Citation verification (Layer 1: existence, Layer 2: claim accuracy)
+  - Sylvia (research-skeptic): Methodology critique (Quality Gate 1 review)
+- 📄 **Task Files:** `.claude/agents/task_cynthia_alignment_faking_verification.md` (187 lines), `task_sylvia_alignment_faking_critique.md` (249 lines)
+- 🎯 **Target Research:** `research/ai_alignment_faking_strategic_deception_20251120.md` (673 lines, 19 claims to verify)
+- ⏳ **Status:** Task files queued, awaiting agent execution (Cynthia → Sylvia sequential workflow)
+
 **Nov 20: Autonomous Researcher Session - 2024-2025 Literature Update** (commit 4defe90)
 - 🔬 **Research Session:** 45-minute autonomous literature review addressing critical knowledge gaps
 - 📚 **Sources Added:** 3 peer-reviewed papers (2024-2025) + 1 authoritative report (FLI 2025)
