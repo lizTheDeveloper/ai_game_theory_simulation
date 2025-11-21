@@ -12,6 +12,16 @@
  * - Updates coordination quality and support effectiveness metrics
  * - Tracks regional heterogeneity in deployment outcomes
  *
+ * **RELATIONSHIP TO TransitionMortalityPhase:**
+ * This phase SUPERSEDES the older TransitionMortalityPhase (deprecated Nov 21, 2025).
+ * Both phases modeled transition mortality, but this implementation uses:
+ * - Newer validated research (Grade B+, Nov 21, 2025)
+ * - CRITICAL corrections (time-based pace factor, bottleneck constraints)
+ * - Evidence-weighted support systems (retraining removed due to weak evidence)
+ * - Power-law scaling (subadditive, not linear)
+ *
+ * TransitionMortalityPhase is now disabled to prevent double-counting deaths.
+ *
  * **RESEARCH BACKING (Grade B+, VALIDATED Nov 21 2025):**
  *
  * Calibrated parameters (god mode empirical = 30% mortality):
@@ -165,17 +175,94 @@ export class CoordinatedDeploymentPhase implements SimulationPhase {
     // Update cumulative mortality
     transition.transitionMortality += monthlyMortality;
 
-    // Apply mortality to population
-    const population = state.humanPopulationSystem.population;
-    const populationLost = population * monthlyMortality;
-    state.humanPopulationSystem.population -= populationLost;
+    // === STEP 10: Apply mortality to population ===
+    // CRITICAL FIX (Nov 21, 2025): Apply deaths to regional populations FIRST
+    // to prevent race condition with HumanPopulationPhase aggregation.
+    //
+    // Previously: Modified global population directly → HumanPopulationPhase
+    // aggregation from regions overwrote the changes, causing silent data loss.
+    //
+    // Now: Apply deaths proportionally to regions, then global value will be
+    // correct when HumanPopulationPhase aggregates.
 
-    assertFinite(state.humanPopulationSystem.population, {
-      location: 'CoordinatedDeploymentPhase.execute',
-      valueName: 'population after transition mortality',
-      month: state.currentMonth,
-      additionalInfo: { populationLost, monthlyMortality }
-    });
+    // Validate we have regional populations (should always exist after initialization)
+    const regions = state.humanPopulationSystem.regionalPopulations;
+    if (!regions || regions.length === 0) {
+      throw new Error(
+        `❌ CRITICAL: regionalPopulations missing at month ${state.currentMonth}\n` +
+        `  Regional populations required to apply transition deaths.\n` +
+        `  This indicates initialization.ts failed to create regional populations.`
+      );
+    }
+
+    // CRITICAL: Use regional sum as source of truth (NOT global value)
+    // If a previous phase modified regions without updating global, using global
+    // would cause wrong death distribution fractions.
+    const regionalSumMillions = regions.reduce((sum, r) => sum + r.population, 0);
+    const population = regionalSumMillions / 1000; // Convert millions → billions
+    const populationLost = population * monthlyMortality;
+
+    // Track global population before modification for assertion
+    const globalPopulationBefore = state.humanPopulationSystem.population;
+
+    // Apply deaths proportionally to each region (same pattern as BayesianMortalityResolution)
+    for (const region of regions) {
+      const regionFraction = region.population / regionalSumMillions; // Fraction of REGIONAL sum
+      const regionalDeaths = (populationLost * 1000) * regionFraction; // Convert billions → millions for regional scale
+
+      region.population = assertFinite(
+        Math.max(0, region.population - regionalDeaths),
+        {
+          location: 'CoordinatedDeploymentPhase.execute (regional mortality)',
+          valueName: `${region.name} population after transition deaths`,
+          month: state.currentMonth,
+          additionalInfo: {
+            regionalDeaths,
+            populationBefore: region.population,
+            regionFraction
+          }
+        }
+      );
+
+      // Track at regional level for debugging
+      region.monthlyExcessDeaths = (region.monthlyExcessDeaths || 0) + regionalDeaths;
+      region.cumulativeCrisisDeaths = (region.cumulativeCrisisDeaths || 0) + regionalDeaths;
+    }
+
+    // Update global population (will be re-aggregated by HumanPopulationPhase, but set correctly now)
+    state.humanPopulationSystem.population = assertFinite(
+      Math.max(0, population - populationLost),
+      {
+        location: 'CoordinatedDeploymentPhase.execute',
+        valueName: 'population after transition mortality',
+        month: state.currentMonth,
+        additionalInfo: {
+          populationLost,
+          monthlyMortality,
+          populationBefore: globalPopulationBefore
+        }
+      }
+    );
+
+    // ASSERTION: Verify regional sum matches global value (detect desync immediately)
+    // NOTE: Regional populations are in MILLIONS, global is in BILLIONS
+    // Recalculate regional sum AFTER applying deaths
+    const regionalSumMillionsAfter = regions.reduce((sum, r) => sum + r.population, 0);
+    const regionalSumBillions = regionalSumMillionsAfter / 1000;
+    const globalValue = state.humanPopulationSystem.population;
+    const discrepancy = Math.abs(regionalSumBillions - globalValue);
+
+    // Allow tiny floating-point errors but catch real desyncs
+    if (discrepancy > 0.001) {
+      throw new Error(
+        `❌ RACE CONDITION DETECTED: Regional/global population desync after transition deaths\n` +
+        `  Month: ${state.currentMonth}\n` +
+        `  Global value: ${globalValue.toFixed(6)}B\n` +
+        `  Regional sum: ${regionalSumBillions.toFixed(6)}B (${regionalSumMillions.toFixed(2)}M)\n` +
+        `  Discrepancy: ${discrepancy.toFixed(6)}B\n` +
+        `  This indicates transition deaths were applied incorrectly.`
+      );
+    }
 
     // Update tracking metrics
     if (deploymentSpeed > 0) {
@@ -399,26 +486,10 @@ export class CoordinatedDeploymentPhase implements SimulationPhase {
     });
   }
 
-  /**
-   * DEPRECATED: Old deployment mode classification (Nov 18 research)
-   *
-   * Nov 21 validated research uses continuous formula instead of discrete modes.
-   * Keeping method for potential fallback but not used in main execution flow.
-   *
-   * Thresholds:
-   * - <0.3: Chaos (instant deployment, no coordination) → 30% base mortality
-   * - 0.3-0.6: Uncoordinated (market-driven, weak coordination) → 15% base mortality
-   * - >0.6: Coordinated (AI-managed, strong coordination) → 3% base mortality
-   */
-  private determineDeploymentMode(coordinationQuality: number): DeploymentMode {
-    if (coordinationQuality < 0.3) {
-      return 'chaos';
-    } else if (coordinationQuality < 0.6) {
-      return 'uncoordinated';
-    } else {
-      return 'coordinated';
-    }
-  }
+  // DEPRECATED METHOD REMOVED (Nov 21, 2025)
+  // Old determineDeploymentMode() used discrete thresholds (chaos/uncoordinated/coordinated).
+  // Nov 21 validated research uses continuous formula instead.
+  // See git history if you need to restore: commit before removal.
 
   /**
    * Calculate deployment pace factor (CRITICAL-1: Nov 21 validated research)
@@ -476,39 +547,10 @@ export class CoordinatedDeploymentPhase implements SimulationPhase {
     });
   }
 
-  /**
-   * DEPRECATED: Apply deployment speed penalty (Nov 18 research)
-   *
-   * CRITICAL-1 uses time-based pace factor instead (see calculateDeploymentPaceFactor).
-   * The Nov 21 validated research shows TIME is the critical variable, not workforce %.
-   *
-   * This method is NOT CALLED in the main execution flow.
-   * Keeping for reference but redundant with pace factor.
-   *
-   * Old logic:
-   * - Safe threshold: 5% workforce displaced per year
-   * - Penalty: +50% mortality per doubling above threshold
-   * - Example: 10% deployment speed (2× safe threshold) → 1.5× mortality
-   */
-  private applyDeploymentSpeedPenalty(
-    baseMortality: number,
-    deploymentSpeed: number,
-    transition: TransitionManagementSystem
-  ): number {
-    if (deploymentSpeed <= transition.maxSafeDeploymentSpeed) {
-      return baseMortality; // No penalty if within safe limits
-    }
-
-    const excessSpeed = deploymentSpeed - transition.maxSafeDeploymentSpeed;
-    const speedMultiplier = 1.0 + (excessSpeed / MAX_SAFE_DEPLOYMENT_SPEED) * 0.5;
-    const adjusted = baseMortality * speedMultiplier;
-
-    return assertFinite(adjusted, {
-      location: 'CoordinatedDeploymentPhase.applyDeploymentSpeedPenalty',
-      valueName: 'speedAdjustedMortality',
-      additionalInfo: { baseMortality, deploymentSpeed, speedMultiplier }
-    });
-  }
+  // DEPRECATED METHOD REMOVED (Nov 21, 2025)
+  // Old applyDeploymentSpeedPenalty() used workforce displacement % threshold.
+  // Nov 21 validated research shows TIME is the critical variable (pace factor).
+  // See git history if you need to restore: commit before removal.
 
   /**
    * Apply regional heterogeneity
