@@ -225,40 +225,47 @@
   - **Priority:** HIGH
   - **Completed:** 2025-11-21
 
-**Phase 3: Operational (Week 3) - 5 scripts**
+**Phase 3: Operational (Week 3) - 6 scripts**
 
-- [ ] **4.9** Create `scripts/test_marcus_backup_restore.sh`
+- [x] **4.9** Create `scripts/test_migrate_postgres_port.sh` ✅ COMPLETE
+  - **Purpose:** Validate PostgreSQL port migration script
+  - **Tests:** Port detection, migration steps, rollback, .env updates, firewall rules
+  - **Time:** 🕐 1-2 hours
+  - **Priority:** MEDIUM
+  - **Completed:** 2025-11-21
+
+- [ ] **4.10** Create `scripts/test_marcus_backup_restore.sh`
   - **Purpose:** DR readiness
   - **Tests:** Backup creation, integrity, restore, point-in-time recovery
   - **Time:** 🕐 2-3 hours
   - **Priority:** MEDIUM
 
-- [ ] **4.10** Create `scripts/test_marcus_monitoring.sh`
+- [ ] **4.11** Create `scripts/test_marcus_monitoring.sh`
   - **Purpose:** Observability
   - **Tests:** Prometheus scraping, log aggregation, alerts, health checks
   - **Time:** 🕐 2-3 hours
   - **Priority:** MEDIUM
 
-- [ ] **4.11** Create `scripts/test_marcus_upgrade.sh`
+- [ ] **4.12** Create `scripts/test_marcus_upgrade.sh`
   - **Purpose:** Upgrade safety
   - **Tests:** Migration rollback, zero-downtime, config migration
   - **Time:** 🕐 2-3 hours
   - **Priority:** MEDIUM
 
-- [ ] **4.12** Create `scripts/debug_marcus_agent.sh`
+- [ ] **4.13** Create `scripts/debug_marcus_agent.sh`
   - **Purpose:** Agent debugging helper
   - **Tests:** Verbose logging, state capture, replay, profiling
   - **Time:** 🕐 1-2 hours
   - **Priority:** LOW
 
-- [ ] **4.13** Create `scripts/check_marcus_logs.sh`
+- [ ] **4.14** Create `scripts/check_marcus_logs.sh`
   - **Purpose:** Log analysis
   - **Tests:** Error rate, anomalies, security events, pattern matching
   - **Time:** 🕐 1-2 hours
   - **Priority:** LOW
 
 **Success Criteria:**
-- ✅ All 13 test scripts created
+- ✅ All 14 test scripts created (4 Phase 1 + 4 Phase 2 + 6 Phase 3)
 - ✅ Scripts follow template in `MARCUS_TEST_SUITE.md`
 - ✅ CI can run full suite automatically
 - ✅ Test coverage documented in updated `MARCUS_TEST_SUITE.md`
