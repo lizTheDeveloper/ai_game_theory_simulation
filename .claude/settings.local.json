@@ -164,7 +164,12 @@
       "Bash(./scripts/test_marcus_complete.sh:*)",
       "Bash(sudo systemctl restart:*)",
       "Bash(sudo systemctl status:*)",
-      "Bash(sudo journalctl:*)"
+      "Bash(sudo journalctl:*)",
+      "Bash(./scripts/harden_security.sh:*)",
+      "Bash(./scripts/verify_security.sh:*)",
+      "Bash(chmod:*)",
+      "Bash(./scripts/test_marcus_database.sh:*)",
+      "Bash(./scripts/test_marcus_auth.sh:*)"
     ],
     "deny": [],
     "ask": [],
