@@ -29,6 +29,13 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 21: Anthropic-OpenAI Cross-Evaluation Research** (commit 973ad9e)
+- 🔬 **Historic First:** Cross-evaluation between frontier AI labs testing misalignment propensities
+- 📊 **Quantitative Parameters:** Extracted empirical rates for 6 failure modes (misuse cooperation, sycophancy, self-preservation, whistleblowing, sabotage, overrefusal)
+- 🎯 **Key Findings:** Reasoning models 2-3x safer than general-purpose; o3 best alignment (near-zero sycophancy); all models except o3 struggle with sycophancy (50-80%)
+- 📖 **Research File:** research/anthropic_openai_cross_evaluation_2025.md (467 lines, A+ research quality)
+- ✅ **Status:** Research-only (no implementation yet, awaits future feature development)
+
 **Nov 21: Autonomous Researcher Session - AI Scaling Laws 2024-2025 Update** (commit fd6c5bc)
 - 🔬 **Research Update:** AI scaling laws updated with latest industry and academic findings
 - 📊 **New Data Added:**
