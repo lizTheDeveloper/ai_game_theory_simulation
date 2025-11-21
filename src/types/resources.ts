@@ -176,6 +176,7 @@ export interface EnergySystem {
   // Metrics
   renewablePercentage: number;       // % from clean sources (solar+wind+hydro+fusion)
   carbonIntensity: number;           // kg CO2 per energy unit
+  renewableCapacity: number;         // Total renewable generation capacity (solar+wind+hydro+fusion capacity)
 
   // Renewable surplus tracking (TIER 1 CRITICAL - Climate deployment model)
   renewableSurplus?: number;         // TWh available after baseline consumption
