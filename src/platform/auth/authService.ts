@@ -17,6 +17,7 @@ import bcrypt = require('bcrypt');
 import jwt = require('jsonwebtoken');
 import { Pool, PoolClient } from 'pg';
 import crypto = require('crypto');
+import { authAttempts, activeTokens } from '../monitoring/metricsEndpoint';
 
 // ============================================================================
 // Types & Interfaces
@@ -300,6 +301,9 @@ export class AuthService {
           failureReason: 'User not found',
         });
 
+        // Update Prometheus metrics
+        authAttempts.inc({ result: 'failure' });
+
         throw new Error('❌ Invalid email or password');
       }
 
@@ -321,6 +325,9 @@ export class AuthService {
           failureReason: `Account locked for ${minutesLeft} more minutes`,
         });
 
+        // Update Prometheus metrics
+        authAttempts.inc({ result: 'locked' });
+
         throw new Error(
           `❌ Account locked due to failed login attempts. Try again in ${minutesLeft} minutes.`
         );
@@ -337,6 +344,9 @@ export class AuthService {
           success: false,
           failureReason: 'Account disabled',
         });
+
+        // Update Prometheus metrics
+        authAttempts.inc({ result: 'failure' });
 
         throw new Error('❌ Account is disabled. Contact administrator.');
       }
@@ -361,6 +371,9 @@ export class AuthService {
           failureReason: 'Invalid password',
         });
 
+        // Update Prometheus metrics
+        authAttempts.inc({ result: 'failure' });
+
         throw new Error('❌ Invalid email or password');
       }
 
@@ -379,6 +392,10 @@ export class AuthService {
         userAgent: request.userAgent,
         success: true,
       });
+
+      // Update Prometheus metrics
+      authAttempts.inc({ result: 'success' });
+      activeTokens.inc(); // New token issued
 
       console.log(`✅ User logged in: ${user.email} (${user.role})`);
       return tokens;
@@ -570,6 +587,9 @@ export class AuthService {
           eventType: 'logout',
           success: true,
         });
+
+        // Update Prometheus metrics
+        activeTokens.dec(); // Token revoked
 
         console.log(`✅ User logged out: ${email}`);
       }
