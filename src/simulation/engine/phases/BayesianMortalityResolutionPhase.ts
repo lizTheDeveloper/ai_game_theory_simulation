@@ -27,6 +27,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { resolveMortality } from '@/simulation/bayesianMortality';
+import { aggregateGlobalPopulation } from '@/simulation/populationDynamics';
 import {
   assertPhaseNotExecuted,
   assertFinite,
@@ -90,6 +91,12 @@ export class BayesianMortalityResolutionPhase implements SimulationPhase {
     // Resolve all accumulated mortality risks
     const oldPopulation = state.humanPopulationSystem.population;
     const result = resolveMortality(state, rng);
+
+    // CRITICAL FIX (Nov 21, 2025): Aggregate regional populations to global level
+    // resolveMortality() updates regional populations with mortality applied,
+    // but the global population must be recalculated from the regions.
+    // This was missing, causing deaths to be applied to regions but not reflected globally!
+    aggregateGlobalPopulation(state);
 
     // ASSERTIONS (Nov 7, 2025): Validate mortality calculation results
     const totalDeaths = assertFinite(result.totalDeaths, {
