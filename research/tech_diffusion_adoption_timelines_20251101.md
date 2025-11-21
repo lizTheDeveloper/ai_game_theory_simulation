@@ -1,10 +1,19 @@
+---
+oldest_source: 2003
+newest_source: 2025
+last_verified: 2025-11-21
+status: used_in_simulation
+priority: TIER_2_HIGH
+---
+
 # Technology Diffusion and Adoption Timelines: Validation Research
 
-**Date:** 2025-11-01
-**Researcher:** Cynthia (super-alignment-researcher)
+**Date:** 2025-11-01 (Updated: 2025-11-21)
+**Researcher:** Cynthia (super-alignment-researcher), autonomous-researcher (2024-2025 updates)
 **Purpose:** Extract empirical adoption timelines for breakthrough technology deployment validation in Monte Carlo simulations
-**Status:** COMPLETE (Phase 1-3)
+**Status:** UPDATED (2024-2025 COVID vaccine adoption data + IEA renewable energy projections added)
 **Fabrication Rate:** 0% (all sources verified peer-reviewed or authoritative industry reports)
+**Last Verified:** 2025-11-21
 
 ---
 
@@ -34,7 +43,15 @@ Technology diffusion shows **MASSIVE VARIATION by tier**: crisis response techno
 - Development: 10 months (concept → emergency use authorization)
 - Scale-up: 8 billion doses produced by end of 2021
 - Crisis acceleration: ~10x faster than typical vaccine development (10-15 years)
-- Sources: Nature Biotechnology 2021, New England Journal of Medicine 2020
+- **Adoption Rate Analysis (2024-2025 Data):**
+  - Global acceptance rate: **67.8%** (95% CI: 67.1-68.6)
+  - Global uptake rate: **42.3%** (95% CI: 38.2-46.5) - significant gap between acceptance and actual uptake
+  - U.S. first-dose adoption: ~**75%** by early 2022 (peak adoption)
+  - U.S. booster adoption: **<25%** annually (2022-2025), declining from 75% to **23%** (2024-25 season)
+  - Age stratification: <10% (children <12) to 50% (adults >75) for 2024-25 boosters
+  - Vulnerable populations: Pregnant/breastfeeding women lowest (54.0% acceptance, 7.3% uptake)
+  - **Key Insight:** Crisis-driven rapid initial adoption (75% in 18 months) followed by steep decline post-crisis (23% by year 5)
+- Sources: Nature Biotechnology 2021, New England Journal of Medicine 2020, BMC Public Health 2024 (meta-analysis of 519 studies, 8M participants), NEJM 2025 vaccine effectiveness studies
 
 **CRISPR Gene Therapies:**
 - Discovery: 2012 (Doudna & Charpentier)
@@ -57,7 +74,14 @@ Technology diffusion shows **MASSIVE VARIATION by tier**: crisis response techno
 - Cost reduction: 90% decline since 2009 (BNEF 2024)
 - Adoption curve: Still in early majority phase (15-20% of electricity generation)
 - Timeline projection: 50% grid penetration by 2035-2040 (20-25 year total from critical mass)
-- Sources: IEA Renewables 2024, BloombergNEF
+- **2024-2025 IEA Projections:**
+  - **4,600 GW** new capacity 2025-2030 (double the 2019-2024 deployment)
+  - **5,520 GW** total renewable capacity growth 2024-2030 (2.6x previous 6 years)
+  - Solar PV accounts for **~80%** of renewable electricity expansion (utility-scale + distributed)
+  - Drivers: Low module costs, efficient permitting, broad social acceptance
+  - 2030 projection: Renewables at **46%** of global electricity generation (wind + solar = 30%)
+  - **Key acceleration:** Renewables overtake coal-fired generation in 2025
+- Sources: IEA Renewables 2024, IEA Renewables 2025, BloombergNEF
 
 **Electric Vehicles:**
 - Market penetration: 2% (2018) → 18% (2023) global new car sales
