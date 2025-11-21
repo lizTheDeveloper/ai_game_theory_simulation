@@ -1,0 +1,11 @@
+[Unit]
+Description=Researcher Worker Timer - Hourly at :30
+Requires=researcher-worker.service
+
+[Timer]
+# Run at :30 past each hour
+OnCalendar=*:30
+Persistent=true
+
+[Install]
+WantedBy=timers.target
