@@ -150,7 +150,132 @@ export class CoordinatedDeploymentPhase implements SimulationPhase {
     // === STEP 7: Calculate Mortality Fraction (exponential saturation) ===
     // mortality_fraction = 1 - exp(-base * multiplier)
     // Prevents >100% mortality while allowing high base*multiplier values
-    const mortalityFraction = 1.0 - Math.exp(-baseRisk * mortalityMultiplier);
+    let mortalityFraction = 1.0 - Math.exp(-baseRisk * mortalityMultiplier);
+
+    // === STEP 7A: Check for Coordination Failure (Nov 21 Conservative Parameters) ===
+    // HIGH-1 FIX (Nov 21, 2025): Decay deployment counter monthly to track "recent" deployments
+    // 50% decay per month means deployments become "stale" after ~2 months
+    // This prevents accumulating old deployments indefinitely
+    if (state.currentMonth % 1 === 0) { // Every month
+      const decayRate = 0.50; // 50% monthly decay (exponential)
+      const oldCount = transition.recentDeploymentsCount;
+      transition.recentDeploymentsCount = Math.max(0, oldCount * (1 - decayRate));
+
+      if (Math.abs(oldCount - transition.recentDeploymentsCount) > 0.5 && oldCount > 1) {
+        console.log(`\n📊 DEPLOYMENT COUNTER DECAY (Month ${state.currentMonth})`);
+        console.log(`   Recent deployments: ${oldCount.toFixed(1)} → ${transition.recentDeploymentsCount.toFixed(1)}`);
+        console.log(`   Decay rate: ${(decayRate * 100).toFixed(0)}% per month`);
+      }
+    }
+
+    // Stochastic coordination breakdowns mid-deployment
+    // Probability: 10-20% (central: 10%)
+    // Mortality multiplier: 2-5x baseline (central: 3x)
+    // Research: Cooperative AI (2025) failure modes
+    let coordinationFailureMultiplier = 1.0;
+
+    // HIGH-2 FIX (Nov 21, 2025): Reset coordination failure after cooldown period
+    // Coordination failures should be RECURRING, not one-time (per research description)
+    // After failure triggers, set 12-month cooldown before next failure can occur
+    if (transition.coordinationFailureActive) {
+      // Check if cooldown has expired (12 months minimum between failures)
+      const monthsSinceLastFailure = state.currentMonth - (transition.coordinationFailureMonth || 0);
+      if (monthsSinceLastFailure >= 12) {
+        transition.coordinationFailureActive = false;
+        console.log(`\n✅ COORDINATION FAILURE COOLDOWN EXPIRED (Month ${state.currentMonth})`);
+        console.log(`   System ready for next coordination check`);
+        console.log(`   Total failures so far: ${transition.coordinationFailures}`);
+      }
+    }
+
+    // Check for new failure (only if not already in failure state and deployments happening)
+    if (!transition.coordinationFailureActive && transition.recentDeploymentsCount > 0) {
+      const failureProbability = 0.10; // 10% probability (central estimate)
+      if (rng() < failureProbability) {
+        transition.coordinationFailureActive = true;
+        transition.coordinationFailures += 1;
+        transition.coordinationFailureMonth = state.currentMonth; // Track when failure occurred
+
+        // Mortality spike: 2-5x (central: 3x)
+        coordinationFailureMultiplier = 2.0 + rng() * 3.0; // Random in [2, 5]
+        transition.coordinationFailureMultiplier = coordinationFailureMultiplier; // Store in state
+
+        console.log(`\n🚨💥 COORDINATION FAILURE (${transition.coordinationFailures} total)`);
+        console.log(`  Mortality spike: ${coordinationFailureMultiplier.toFixed(1)}x baseline`);
+        console.log(`  Recent deployments: ${transition.recentDeploymentsCount.toFixed(1)}`);
+        console.log(`  Scenario: Geopolitical conflict / adversarial AI / cascading failures`);
+        console.log(`  Cooldown: 12 months before next failure can occur`);
+      }
+    } else if (transition.coordinationFailureActive) {
+      // Use stored multiplier if failure is still active
+      coordinationFailureMultiplier = transition.coordinationFailureMultiplier;
+    }
+
+    // Apply coordination failure multiplier
+    mortalityFraction = assertFinite(
+      mortalityFraction * coordinationFailureMultiplier,
+      {
+        location: 'CoordinatedDeploymentPhase.execute (coordination failure)',
+        valueName: 'mortalityFraction after coordination failure',
+        month: state.currentMonth,
+        additionalInfo: {
+          originalMortality: mortalityFraction / coordinationFailureMultiplier,
+          coordinationFailureMultiplier,
+          failureActive: transition.coordinationFailureActive,
+          recentDeployments: transition.recentDeploymentsCount
+        }
+      }
+    );
+
+    // === STEP 7B: Apply Rebound Effects (Nov 21 Conservative Parameters) ===
+    // Jevons paradox: Efficiency gains → consumption increase → environmental degradation
+    // Decay rate: 5-10% per year (central: 7.5%)
+    // Research: Finkelstein et al. (2025) - Great Recession mortality/pollution link
+
+    // Update rebound effectiveness annually (decay over time)
+    if (state.currentMonth % 12 === 0 && transition.monthsOfActiveDeployment > 0) {
+      // Annual decay: effectiveness *= (1 - decay_rate)
+      // Decay rate: 0.075 = 7.5% per year
+      const annualDecay = transition.reboundDecayRate; // 0.075 (7.5% per year)
+      const oldEffectiveness = transition.reboundEffectiveness;
+
+      transition.reboundEffectiveness = assertFinite(
+        Math.max(0.1, oldEffectiveness * (1 - annualDecay)), // Floor at 10% effectiveness
+        {
+          location: 'CoordinatedDeploymentPhase.execute (rebound decay)',
+          valueName: 'reboundEffectiveness after annual decay',
+          month: state.currentMonth,
+          additionalInfo: {
+            oldEffectiveness,
+            annualDecay,
+            yearsActive: Math.floor(transition.monthsOfActiveDeployment / 12)
+          }
+        }
+      );
+
+      if (oldEffectiveness !== transition.reboundEffectiveness) {
+        console.log(`\n⚠️📉 REBOUND EFFECT: Technology effectiveness decaying (Jevons paradox)`);
+        console.log(`  Effectiveness: ${(oldEffectiveness * 100).toFixed(1)}% → ${(transition.reboundEffectiveness * 100).toFixed(1)}%`);
+        console.log(`  Mechanism: Efficiency → consumption → environmental degradation → mortality`);
+      }
+    }
+
+    // Apply rebound effectiveness multiplier
+    // Lower effectiveness = higher mortality (inverse relationship)
+    // Example: 80% effectiveness → 1.25x mortality (1 / 0.8)
+    const reboundMultiplier = 1.0 / Math.max(0.1, transition.reboundEffectiveness);
+    mortalityFraction = assertFinite(
+      mortalityFraction * reboundMultiplier,
+      {
+        location: 'CoordinatedDeploymentPhase.execute (rebound effect)',
+        valueName: 'mortalityFraction after rebound effect',
+        month: state.currentMonth,
+        additionalInfo: {
+          reboundEffectiveness: transition.reboundEffectiveness,
+          reboundMultiplier
+        }
+      }
+    );
 
     // === STEP 8: Apply Regional Heterogeneity ===
     const regionalMortality = this.applyRegionalHeterogeneity(mortalityFraction, transition);

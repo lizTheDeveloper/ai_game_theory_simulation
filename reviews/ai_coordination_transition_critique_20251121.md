@@ -1,537 +1,614 @@
-# Research Critique: AI Coordination Transition Mechanics
-**Review Date:** November 21, 2025
-**Reviewer:** Sylvia (research-skeptic)
-**Research Document:** research/ai_coordination_transition_mechanics_20251121.md
-**Validation:** Quality Gate 1
+# Critical Evaluation: AI Coordination & Transition Management Research
 
-## Overall Assessment
+**Reviewer:** Sylvia (Research Skeptic)
+**Date:** November 21, 2025
+**Research Report:** `research/ai_coordination_transition_management_20251121.md`
+**Purpose:** Quality Gate 1 - Research Validation for Phase 2 Implementation
 
-**Grade: B+ (CONDITIONAL PASS)**
+---
 
-This research addresses a legitimate model gap with generally sound methodology, but contains several assumptions requiring correction and important limitations that must be acknowledged in implementation.
+## Executive Summary
+
+**Grade: B- (Conditional Pass with Major Corrections Required)**
+
+This research provides solid empirical grounding for transition mortality mechanisms BUT makes critical leaps when extrapolating to AI-coordinated deployment. The historical data on uncoordinated transitions (USS
+
+R, mass layoffs) is robust. The AI coordination effectiveness claims are **speculative** and lack peer-reviewed validation.
+
+**Critical Issues:**
+1. **AI coordination effectiveness (80%+ at scale):** Industry reports, not peer-reviewed research
+2. **Multiplicative mortality reduction (95%):** Assumes independent effects without evidence
+3. **S-curve adoption timing:** Assumes voluntary adoption, not AI-managed deployment
+4. **Missing failure modes:** What happens when AI coordination breaks mid-deployment?
+5. **Generalizability gap:** Historical transitions involved human coordination over years/decades, not AI-managed rapid deployment
+
+**Verdict:** PROCEED with implementation BUT use conservative parameter bounds and flag HIGH UNCERTAINTY for Monte Carlo sensitivity analysis.
+
+---
+
+## Section 1: Transition Mortality Rates - STRONG EVIDENCE
+
+### 1.1 Uncoordinated Transitions: HIGH CONFIDENCE
+
+**USSR Shock Therapy:** Lancet (2009) + multiple confirmations
+- Male life expectancy -6.8 years: **ROBUST** (replicated across studies)
+- +42% working-age male mortality: **ROBUST**
+- Causal mechanism debate: Privatization vs other factors (alcohol, healthcare collapse)
+- **Conservative estimate: 30% excess mortality** - JUSTIFIED
+
+**Job Loss Mortality:** Sullivan & von Wachter (2009), QJE
+- +50-100% year 1, +10-15% year 20: **GOLD STANDARD** (admin data, top-5 journal, 1,500+ citations)
+- 1.0-1.5 years life expectancy loss: **ROBUST**
+- **Use 1.25 years as central estimate** - JUSTIFIED
+
+**Great Leap Forward:** UCLA CCPR (2024)
+- 16.5-55M deaths: **WIDE UNCERTAINTY RANGE**
+- Research uses "conservative 16.5-30M" but this is still ~20M range
+- **Not directly comparable** to technology transitions (famine vs economic shock)
+- **Recommendation:** Don't anchor mortality estimates on this extreme outlier
+
+**Deaths of Despair:** Scheiring et al. (2022), Theory and Society
+- Deindustrialization >50% → elevated death rates: **ROBUST**
+- +0.42-0.63 suicides per 100K (trade exposure): **ROBUST**
+- **Mechanism validation: Economic decline, not just unemployment** - IMPORTANT DISTINCTION
+
+### 1.2 Coordinated Transitions: MODERATE CONFIDENCE
+
+**China Poverty Alleviation:** World Bank + Nature (2024)
+- 800M lifted from poverty: **WIDELY ACCEPTED**
+- -65% child mortality, -85% maternal mortality: **ROBUST**
+- **BUT:** Coordinated government programs over 30 years (1990-2020), not rapid tech deployment
+- **Generalizability issue:** Gradual poverty reduction ≠ AI-coordinated tech rollout
+- **Mechanism:** Healthcare expansion, infrastructure, education - NOT technology displacement mitigation
+
+**Great Recession Procyclical Mortality:** Finkelstein et al. (2025), MIT
+- +1pp unemployment → -0.5% mortality: **ROBUST** (causal inference methods)
+- Air pollution explains 20-100% of effect: **WIDE RANGE** (Heutel & Ruhm 2016)
+- **CRITICAL INSIGHT:** Mechanism matters - pollution reduction ≠ transition support
+- **Elderly benefit most:** Not workers losing jobs
+- **Not applicable to technology displacement** - different mechanism (environmental vs economic)
+
+**UBI Evidence:** Stanford (2024)
+- **MIXED RESULTS:** Alaska +13% mortality (substance abuse), Cherokee doubled accidental mortality
+- Positive transition effects: Better job search, entrepreneurship
+- **SHORT-TERM STUDIES:** <5 years, limited scale
+- **HIGH UNCERTAINTY:** Implementation context matters, not a silver bullet
+
+### 1.3 Critique: Coordinated vs Uncoordinated Comparison
+
+**Research claim:** "Coordinated transitions reduce mortality by 70-95%"
+
+**Problems:**
+1. **Apples to oranges:** USSR (rapid privatization) vs China (gradual poverty reduction over 30 years)
+2. **Mechanism mismatch:** Great Recession mortality decline from pollution reduction, not support systems
+3. **UBI evidence weak:** Mixed results, short-term, limited scale
+4. **No peer-reviewed study directly compares coordinated vs uncoordinated tech deployment**
+
+**Recommendation:** Use 70% reduction as UPPER BOUND, not central estimate. Conservative: 50-60% reduction with high coordination + support.
+
+---
+
+## Section 2: AI Coordination Effectiveness - SPECULATIVE
+
+### 2.1 Multi-Agent AI Systems: MIXED CREDIBILITY
+
+**Market Growth:** Industry reports (Gartner, market research)
+- $5.25B → $52.62B (2030): **NOT PEER-REVIEWED**
+- Market projections ≠ technical capability validation
+- **SPECULATION, not evidence**
+
+**Coordination Efficiency: 80%+ at 10,000+ entities**
+- **SOURCE MISSING:** Research cites "Current systems" but no peer-reviewed validation
+- GPT-4o-mini 84.13% on MultiAgentBench: **LAB BENCHMARK, not real-world deployment**
+- **Lab-to-deployment gap:** Benchmarks overestimate real-world performance (history of AI overpromising)
+
+**Memory Optimization: 8-10x efficiency (2025)**
+- **SOURCE MISSING:** No citation provided
+- **NOT PEER-REVIEWED**
+
+**Coordination Complexity: O(√t log t)**
+- **SOURCE MISSING:** No citation provided
+- **UNVERIFIED CLAIM**
+
+### 2.2 Real-World Applications: DOMAIN-SPECIFIC, NOT GENERALIZABLE
+
+**Autonomous Vehicles, Logistics:** Waymo, Amazon, UPS
+- **Narrow domains:** Vehicle coordination, warehouse routing
+- **Not applicable to global socioeconomic coordination**
+- **Bounded environments:** Roads, warehouses ≠ open-ended social systems
+
+**Business Impact: 35% productivity, $2.1M cost reduction**
+- **SOURCE MISSING:** No citation, likely industry case study
+- **NOT PEER-REVIEWED**
+- **Selection bias:** Published case studies show successes, not failures
+
+### 2.3 Risk Factors: WELL-RESEARCHED BUT UNDERWEIGHTED
+
+**Cooperative AI (2025): 3 Failure Modes**
+- Miscoordination, Conflict, Collusion: **WELL-DEFINED** (peer-reviewed)
+- **BUT:** Research treats as penalties (-10-30%, -30-50%, -50-80%) without quantifying BASE RATE
+- **What's the probability of each failure mode?** - MISSING
+
+**7 Risk Factors:** Information asymmetries, network effects, selection pressures, etc.
+- **IDENTIFIED but not QUANTIFIED**
+- **How often do these occur? Under what conditions?** - MISSING
+
+**Governance-as-a-Service (GaaS):** Arxiv (2025)
+- External enforcement, runtime policy: **THEORETICAL FRAMEWORK**
+- **NOT TESTED AT SCALE**
+- **Assumption: Works even with non-cooperative agents** - UNVALIDATED
+
+### 2.4 Critique: AI Coordination Effectiveness
+
+**Research claim:** "AI coordination reduces mortality by 85%"
+
+**Problems:**
+1. **Industry reports, not peer-reviewed research:** Market projections ≠ technical validation
+2. **Lab benchmarks don't generalize:** MultiAgentBench ≠ global socioeconomic coordination
+3. **Narrow domain successes:** Logistics ≠ technology deployment across fragile states
+4. **Failure mode probabilities missing:** Can't estimate expected coordination quality without base rates
+5. **No historical precedent:** AI-coordinated global deployment has never happened
+
+**Recommendation:** Use 60-80% coordination effectiveness as UPPER BOUND. Conservative: 40-60% for early deployments. Flag as HIGH UNCERTAINTY for sensitivity analysis.
+
+---
+
+## Section 3: Multiplicative Effects - UNJUSTIFIED ASSUMPTION
+
+### 3.1 Mortality Scaling Function
+
+**Research formula:**
+```
+TransitionMortality = BaselineMortality * (1 - CoordinationQuality * 0.85) * (1 - SupportQuality * 0.7)
+```
+
+**Example:** High coordination (0.9) + High support (0.9) → 2.4% mortality (95% reduction)
+
+**CRITICAL PROBLEM: Assumes independent effects**
+
+**Why this is wrong:**
+1. **Coordination and support are NOT independent:** Support systems require coordination to deploy
+2. **No empirical validation:** No study tests multiplicative interaction
+3. **Mechanistic overlap:** Coordinated deployment IS part of support system effectiveness
+4. **Historical evidence shows SYNERGY, not multiplication:** China poverty alleviation combined support + coordination (can't decompose)
+
+**Contradictory Evidence:**
+- **Procyclical mortality (Great Recession):** Pollution mechanism ≠ support systems (separate pathways)
+- **UBI mixed results:** Support alone has mixed effects (Alaska +13% mortality from substance abuse)
+- **USSR lesson:** Rapid deployment without support → high mortality (coordination alone insufficient)
+
+**Alternative Model: Additive with Interaction Term**
+```
+TransitionMortality = BaselineMortality * (1 - α*Coordination - β*Support + γ*Coordination*Support)
+```
+Where γ could be positive (synergy) or negative (redundancy)
+
+**Recommendation:** Use multiplicative as OPTIMISTIC scenario. Central estimate: Coordination and support each contribute 30-40% reduction independently, with 10-20% synergy bonus. This gives ~60-70% total reduction, not 95%.
+
+---
+
+## Section 4: Deployment Pacing - MISMATCH TO AI CONTEXT
+
+### 4.1 Rogers' Diffusion of Innovations
+
+**Research approach:** S-curve adoption (innovators → early adopters → majority → laggards)
+
+**Source:** Gartner (2025) technology adoption roadmaps
+- **Industry report, not peer-reviewed research**
+- Standard diffusion literature: **Assumes voluntary adoption**
+
+**CRITICAL MISMATCH:**
+- **Rogers' model:** Individuals/organizations choose to adopt based on perceived benefits
+- **AI-coordinated deployment:** Central coordination, not voluntary diffusion
+- **Different mechanisms:** AI can override voluntary adoption constraints (resource allocation, infrastructure deployment)
+
+**Historical Precedent: Top-Down Deployment**
+- **Rural Electrification (U.S., 1930s-1950s):** Government-coordinated, not voluntary diffusion
+- **Green Revolution (1960s-1980s):** Coordinated seed/fertilizer distribution, not market-driven
+- **Marshall Plan (1948-1952):** Centralized resource allocation, not voluntary adoption
+
+**Recommendation:** S-curve may apply to REGIONAL capacity building, but not to AI-managed intra-regional deployment. Use phased regional rollout, but assume faster-than-voluntary adoption within regions.
+
+### 4.2 Regional Capacity Assessment
+
+**TRL + Infrastructure + Institutions + Economics + Stability:**
+- **TRL (DoD/GAO):** Gold standard for technology readiness - **ROBUST**
+- **Fragile states:** World Bank data - **ROBUST**
+- **Deployment inequality:** Economic viability in higher-wage sectors first - **ROBUST**
+
+**Capacity Score Formula:**
+```
+CapacityScore = (TRL/9) * 0.3 + Infrastructure * 0.25 + Institutions * 0.2 + Economics * 0.15 + Stability * 0.1
+```
+
+**Problems:**
+1. **Weights arbitrary:** Why 0.3 for TRL? No empirical justification
+2. **Linear aggregation:** Assumes substitutability (high TRL can't compensate for zero infrastructure)
+3. **Missing: AI coordination capacity:** Does region have data infrastructure, governance frameworks for AI deployment?
+
+**Recommendation:** Use multiplicative (bottleneck) model for critical factors (infrastructure, stability). Additive for secondary factors (TRL, economics).
+
+---
+
+## Section 5: Missing Failure Modes & Rebound Effects
+
+### 5.1 AI Coordination Breakdown Mid-Deployment
+
+**Research acknowledges:** "What if AI coordination fails mid-deployment?" (Section 5.2)
+
+**BUT:** No quantitative assessment
+
+**Scenarios:**
+1. **Geopolitical conflict:** U.S.-China AI coordination breaks down, competing deployments
+2. **Adversarial AI:** Sleeper agents activate, sabotage coordination
+3. **Cascading failures:** One region's deployment failure triggers others (network effects)
+4. **Resource constraints:** Coordination requires massive compute/energy - what if resources diverted?
+
+**Historical Precedent:**
+- **USSR collapse (1991):** Coordination system breakdown → chaos, mortality spike
+- **2008 Financial Crisis:** Coordinated institutions (central banks) prevented worst outcomes, but coordination quality varies
+
+**Recommendation:** Model coordination quality as STOCHASTIC (not deterministic). Include low-probability catastrophic coordination failure (10-20% chance, 5-10x mortality spike).
+
+### 5.2 Rebound Effects (Jevons Paradox)
+
+**Research mentions (Section 5.3):** "Technology deployment → consumption increase → environmental impact → mortality"
+
+**BUT:** Not integrated into mortality model
+
+**Mechanism:**
+- **Jevons Paradox:** Efficiency gains → increased usage (e.g., fuel-efficient cars → more driving)
+- **Technology deployment → wealth increase → consumption increase → environmental degradation**
+- **Example:** Clean water tech reduces mortality, but population growth → more pollution
+
+**Contradictory Evidence:**
+- **Great Recession:** Economic slowdown REDUCED mortality via pollution reduction (Finkelstein et al. 2025)
+- **Implication:** Economic growth (from tech deployment) may INCREASE mortality via pollution
+
+**Recommendation:** Include environmental feedback loop. Technology effectiveness decays over time due to rebound effects (5-10% per year).
+
+### 5.3 Long-Term Persistence (20-Year Hazard)
+
+**Research includes (Section 4.1):** Sullivan & von Wachter +10-15% mortality at year 20
+
+**GOOD:** Captures persistent effects
+
+**BUT:** How does AI-coordinated support affect persistence?
+- **If support ends after 5 years, does mortality rebound?**
+- **If support continues, what's the fiscal cost?**
+
+**Recommendation:** Model support duration explicitly. If support < 10 years, include mortality rebound after support ends.
+
+---
+
+## Section 6: Parameter Uncertainty & Sensitivity Analysis
+
+### 6.1 High Uncertainty Parameters (Require Sensitivity Analysis)
+
+**CRITICAL UNCERTAINTY:**
+1. **AI coordination effectiveness:** 40-80% (conservative: 50%, optimistic: 80%)
+2. **Coordination-support interaction:** Multiplicative (optimistic) vs Additive with synergy (conservative)
+3. **Deployment pacing:** S-curve vs top-down coordinated
+4. **Failure mode probabilities:** 5-20% chance of catastrophic coordination failure
+5. **Rebound effects:** 5-15% technology effectiveness decay per year
+
+**MODERATE UNCERTAINTY:**
+1. **Baseline mortality:** 25-50% (conservative: 30%)
+2. **Support effectiveness:** 50-80% reduction (conservative: 60%)
+3. **Regional capacity assessment accuracy:** 0.6-0.9 (conservative: 0.7)
+
+**LOW UNCERTAINTY:**
+1. **Job loss mortality:** 1.0-1.5 years life expectancy loss (well-established)
+2. **TRL framework:** DoD/GAO standard (validated)
+3. **Fragile state capacity:** World Bank data (robust)
+
+### 6.2 Recommended Parameter Bounds for Monte Carlo
+
+**Baseline (Uncoordinated) Mortality:**
+- Conservative: 25%
+- Central: 30%
+- Pessimistic: 40%
+
+**AI Coordination Quality (0-1 scale):**
+- Pessimistic: 0.4 (40% effectiveness)
+- Central: 0.6 (60% effectiveness)
+- Optimistic: 0.8 (80% effectiveness)
+
+**Support Quality Effectiveness (mortality reduction):**
+- Conservative: 50% reduction
+- Central: 60% reduction
+- Optimistic: 70% reduction
+
+**Combined Mortality Reduction (Coordination + Support):**
+- Pessimistic: 50% (30% → 15% mortality)
+- Central: 65% (30% → 10.5% mortality)
+- Optimistic: 80% (30% → 6% mortality)
+- **NOT 95% as research claims**
+
+**Coordination Failure Probability:**
+- Low: 5% (well-governed, stable geopolitics)
+- Central: 10% (moderate risks)
+- High: 20% (geopolitical conflict, adversarial AI)
+
+**Coordination Failure Mortality Multiplier:**
+- Moderate: 2x baseline (30% → 60%)
+- Severe: 5x baseline (30% → 150%, exceeds population in some regions)
+
+---
+
+## Section 7: Source Quality Assessment
+
+### 7.1 Tier 1: Peer-Reviewed (High Quality)
+
+**Excellent:**
+- Sullivan & von Wachter (2009), QJE - **GOLD STANDARD**
+- Finkelstein et al. (2025), MIT - **RIGOROUS** (causal inference)
+- Heutel & Ruhm (2016), JAERE - **SOLID**
+- Scheiring et al. (2022), Theory and Society - **ROBUST**
+
+**Good:**
+- UCLA CCPR (2024) - **PEER-REVIEWED** but wide uncertainty (16.5-55M)
+- Nature Scientific Reports (2024) - **HIGH-IMPACT JOURNAL**
+- Cooperative AI (2025) - **WELL-RESEARCHED** but theoretical (no AGI deployment yet)
+
+### 7.2 Tier 2: Government/International Reports (Moderate Quality)
+
+**Reliable:**
+- World Bank (2025) - **OFFICIAL DATA**
+- DoD/GAO TRL framework - **STANDARD**
+- U.S. NIST (2024) - **OFFICIAL ANNOUNCEMENTS**
+
+**Note:** Government reports are reliable for descriptive data but lack peer review for causal claims.
+
+### 7.3 Tier 3: Industry Reports (Low-Moderate Quality)
+
+**Use With Caution:**
+- Gartner (2025) - **NOT PEER-REVIEWED**, industry projections
+- Google A2A Protocol (2025) - **TECHNICAL SPEC**, not research validation
+- Market research ($5.25B → $52.62B) - **SPECULATION**, not evidence
+
+**Critical Gap:** Multi-agent AI coordination effectiveness relies heavily on industry reports and lab benchmarks, not peer-reviewed real-world validation.
+
+### 7.4 Missing Sources (Contradictory Evidence Search)
+
+**I searched for contradictory evidence on:**
+
+1. **"AI coordination failures" / "multi-agent system failures"**
+   - **Finding:** Cooperative AI (2025) identifies failure modes but doesn't quantify base rates
+   - **Gap:** No peer-reviewed studies on AI coordination failure rates at scale
+
+2. **"Technology adoption inequality" / "digital divide"**
+   - **Finding:** World Bank confirms deployment inequality, fragile states lag
+   - **Confirms research, not contradicts**
+
+3. **"UBI mortality effects" / "cash transfer health outcomes"**
+   - **Finding:** Stanford (2024) shows MIXED results (Alaska +13% mortality)
+   - **CONTRADICTS optimistic UBI assumptions in research**
+
+4. **"Transition mortality coordinated vs uncoordinated"**
+   - **Finding:** No direct peer-reviewed comparison found
+   - **Gap:** Research extrapolates from indirect evidence (China poverty reduction vs USSR shock therapy)
+
+5. **"Rebound effects technology deployment"**
+   - **Finding:** Extensive literature on Jevons paradox (efficiency → increased consumption)
+   - **MISSING from mortality model in research**
+
+**Conclusion:** Research appropriately cites transition mortality literature, but AI coordination effectiveness is under-researched and overconfident.
+
+---
+
+## Section 8: Required Corrections Before Implementation
+
+### 8.1 CRITICAL Corrections (MUST Address)
+
+1. **Reduce AI coordination effectiveness claims**
+   - Current: 80%+ at scale
+   - Corrected: 50-80% (flag as HIGH UNCERTAINTY)
+
+2. **Abandon multiplicative mortality reduction (95%)**
+   - Current: Coordination * Support = 95% reduction (30% → 2.4%)
+   - Corrected: 65-80% reduction (30% → 6-10.5%) with uncertainty
+
+3. **Add coordination failure scenarios**
+   - Current: Deterministic coordination quality
+   - Corrected: Stochastic (10-20% catastrophic failure probability)
+
+4. **Include rebound effects**
+   - Current: Technology effectiveness constant
+   - Corrected: 5-10% decay per year from consumption increase
+
+5. **Justify regional capacity weights empirically or use sensitivity analysis**
+   - Current: Arbitrary weights (TRL * 0.3, Infrastructure * 0.25, etc.)
+   - Corrected: Sensitivity analysis on weight variations OR multiplicative bottleneck model
+
+### 8.2 MAJOR Corrections (SHOULD Address)
+
+1. **Distinguish AI-coordinated deployment from voluntary adoption (S-curve)**
+   - Use S-curve for regional capacity building, not intra-regional deployment
+
+2. **Model support duration explicitly**
+   - If support ends <10 years, include mortality rebound
+
+3. **Separate pollution-reduction mortality from transition-support mortality**
+   - Great Recession mechanism ≠ coordinated deployment mechanism
+
+4. **Quantify information quality effects**
+   - Assessment accuracy <0.7 → deployment errors → higher mortality
+
+### 8.3 MINOR Corrections (NICE to Address)
+
+1. **Acknowledge Great Leap Forward as extreme outlier, not anchor**
+   - Wide range (16.5-55M), not comparable to tech transitions
+
+2. **Flag UBI evidence as mixed/short-term**
+   - Alaska +13% mortality from substance abuse
+
+3. **Cite peer-reviewed sources for multi-agent efficiency claims**
+   - Replace industry reports with academic validation (if available)
+
+---
+
+## Section 9: Monte Carlo Validation Requirements
+
+### 9.1 Baseline Scenarios (Must Pass)
+
+**Scenario 1: No Coordination, No Support**
+- Expected: ~30% mortality (historical baseline)
+- Distribution: Log-normal (fat tail for worst cases)
+- **PASS CRITERIA:** Median 25-35%, 95th percentile <50%
+
+**Scenario 2: High Coordination (0.8), High Support (0.9)**
+- Expected: 6-10.5% mortality (NOT 2.4% as research claims)
+- Distribution: Narrow (low variance)
+- **PASS CRITERIA:** Median 5-12%, 95th percentile <20%
+
+**Scenario 3: High Coordination (0.8), No Support**
+- Expected: 10-15% mortality
+- Distribution: Moderate variance
+- **PASS CRITERIA:** Median 8-18%, 95th percentile <30%
+
+**Scenario 4: Low Coordination (0.4), High Support (0.9)**
+- Expected: 18-22% mortality
+- Distribution: High variance (coordination failures)
+- **PASS CRITERIA:** Median 15-25%, 95th percentile <40%
+
+### 9.2 Sensitivity Analysis (High Uncertainty Parameters)
+
+**Test Ranges:**
+1. AI coordination quality: [0.4, 0.5, 0.6, 0.7, 0.8]
+2. Support effectiveness: [0.5, 0.6, 0.7, 0.8]
+3. Coordination failure probability: [0.05, 0.10, 0.20]
+4. Rebound effect decay: [0.0, 0.05, 0.10, 0.15]
+5. Regional capacity weights: Vary by ±30%
+
+**PASS CRITERIA:**
+- Outcome variance should be driven by coordination quality (not noise)
+- Low coordination → high mortality (monotonic relationship)
+- Coordination failure scenarios → mortality spikes (5-10x baseline)
+- Rebound effects → long-term mortality increase (even with good initial deployment)
+
+### 9.3 God Mode Comparison
+
+**Research Goal:** Reduce mortality from 30% (uncoordinated) to <5% (coordinated)
+
+**Revised Goal (Conservative):** Reduce mortality to 6-12% (65-80% reduction)
+
+**PASS CRITERIA:**
+- God mode (perfect coordination + support) → <10% mortality
+- Realistic scenario (coordination 0.6, support 0.7) → 12-18% mortality
+- No-tech scenario (baseline) → 25-35% mortality
+
+**If mortality <5% in god mode:** Great, but requires VERY optimistic assumptions (coordination 0.9+, support 0.9+, no failures, no rebound)
+
+---
+
+## Section 10: Final Verdict & Recommendations
+
+### 10.1 Overall Assessment
+
+**Grade: B- (72/100)**
 
 **Strengths:**
-- Strong empirical grounding (Kenya UBI study, Great Leap Forward mortality)
-- Honest about evidence gaps (retraining effectiveness, USSR collectivization)
-- Proposes testable mechanisms with clear parameters
-- Identifies critical failure modes
+- Excellent historical transition mortality data (USSR, job loss, deaths of despair)
+- Strong sources for coordinated transitions (China, Great Recession)
+- Thoughtful framework (regional capacity, deployment pacing, support systems)
+- Identifies key failure modes (miscoordination, conflict, collusion)
 
 **Weaknesses:**
-- False equivalence between energy transitions and rapid tech deployment
-- Optimistic interpretation of AI coordination capabilities
-- Underspecified regional variation (could hide massive inequality)
-- Rebound effects mentioned but not quantified
-- Several citations are policy documents, not peer-reviewed research
+- Overconfident AI coordination effectiveness (industry reports, not peer-reviewed)
+- Unjustified multiplicative mortality reduction (assumes independence without evidence)
+- S-curve adoption mismatch (voluntary diffusion vs AI-coordinated deployment)
+- Missing quantitative failure mode probabilities
+- No rebound effects in mortality model
+- Arbitrary regional capacity weights
+
+**Research Quality by Component:**
+- Uncoordinated transition mortality: **A** (robust peer-reviewed data)
+- Coordinated transition mortality: **B+** (good data but generalizability issues)
+- AI coordination effectiveness: **C** (speculative, industry reports)
+- Deployment pacing: **B-** (standard framework but context mismatch)
+- Support systems: **B** (mixed UBI evidence, healthcare data good)
+- Failure modes: **C+** (identified but not quantified)
+
+### 10.2 Implementation Recommendation
+
+**CONDITIONAL PASS - Proceed with Major Adjustments**
+
+**Use Conservative Parameter Bounds:**
+1. Baseline mortality: 30% (uncoordinated)
+2. AI coordination quality: 0.5-0.7 (central: 0.6)
+3. Support effectiveness: 50-70% reduction (central: 60%)
+4. Combined reduction: 65-75% (central: 70%)
+5. **Expected mortality: 9-12% (NOT <5%)**
+
+**Flag High Uncertainty:**
+- AI coordination effectiveness
+- Coordination-support interaction
+- Failure mode probabilities
+- Rebound effects
+
+**Monte Carlo Requirements:**
+- N ≥ 50 runs (computationally expensive with regional heterogeneity)
+- Sensitivity analysis on coordination quality [0.4-0.8]
+- Coordination failure scenarios (10-20% probability)
+- Rebound effect scenarios (5-15% decay)
+
+**Documentation Requirements:**
+- Annotate parameters with uncertainty ranges
+- Document which claims are peer-reviewed vs speculative
+- Provide references for all quantitative estimates
+- Flag assumptions requiring validation
+
+### 10.3 Follow-Up Research Needed
+
+**Before Implementation:**
+1. Can proceed with current research (adequate for initial implementation)
+
+**Before Publication/External Use:**
+1. Expert elicitation: AI safety researchers + development economists
+2. Historical case studies: Marshall Plan, Green Revolution (coordinated tech deployment mortality)
+3. Peer-reviewed multi-agent coordination effectiveness (not industry reports)
+
+**After Initial Results:**
+1. Scenario modeling: Coordination breakdown mid-deployment
+2. Rebound effects quantification: Technology → consumption → environmental mortality
+3. Long-term persistence: Support duration effects on mortality rebound
 
 ---
 
-## CRITICAL Issues (Must Address Before Implementation)
+## Appendix: Methodological Rigor Checklist
 
-### CRITICAL-1: Energy Transition Analogy is Flawed
+**Peer-Reviewed Sources:** ✓ (15 peer-reviewed, 5 government/international)
+**Source Quality:** ⚠️ (Mix of excellent + speculative)
+**Causal Identification:** ✓ (Sullivan & von Wachter, Finkelstein et al.)
+**Generalizability:** ⚠️ (Historical transitions ≠ AI-coordinated deployment)
+**Parameter Uncertainty:** ⚠️ (Some ranges provided, others missing)
+**Contradictory Evidence:** ⚠️ (UBI mixed results acknowledged, but AI coordination optimism not challenged)
+**Failure Modes:** ⚠️ (Identified but not quantified)
+**Rebound Effects:** ❌ (Mentioned but not integrated)
+**Sensitivity Analysis:** ✓ (Recommended in research)
+**Monte Carlo Validation:** ✓ (Plan provided)
 
-**Problem:** Research claims "near-zero mortality" for energy just transitions and uses this as the optimistic baseline for AI-coordinated deployment.
-
-**Flaw:** Energy transitions are happening over 10-30 YEARS, not months. The comparison table shows:
-- Great Leap: 2-3 years → 15-55M deaths
-- Energy transitions: 10-30 years → ~0 deaths
-- God mode (proposed): months → 2.4B deaths reduced to 89M with "perfect coordination"
-
-**Missing Variable:** TIME. Mortality isn't just about coordination quality, it's about pace. Even perfect coordination over 1 month could be catastrophic.
-
-**Correction Required:**
-```typescript
-deployment_mortality = base_risk *
-  (2.0 - coordination_quality) *
-  (1.5 - support_strength) *
-  (deployment_pace_factor)  // MISSING
-
-where deployment_pace_factor =
-  (reference_duration_months / actual_duration_months)^0.5
-
-// Example: Deploy 73 tech over 12 months vs 120 months
-// pace_factor = (12/120)^0.5 = 0.316 (10x duration → 68% mortality reduction)
-```
-
-**Justification:** Great Leap Forward compressed agricultural transition into 2-3 years. Energy transitions spread over 20 years produce near-zero mortality. TIME IS THE CRITICAL VARIABLE, not just coordination.
-
-**Implementation Impact:** Even with perfect AI coordination, deploying 73 technologies in <12 months should still produce significant mortality. Model must gate deployment DURATION, not just mortality multiplier.
+**Overall Rigor: B-** (Solid foundation, but overconfident extrapolations)
 
 ---
 
-### CRITICAL-2: AI Coordination Capability Overestimated
+## Summary: Key Corrections Required
 
-**Problem:** Formula assumes AI coordination quality can reach 1.0 (perfect) based on:
-```
-coordination_quality = ai_capability_research * 0.4 +
-                      ai_capability_social * 0.3 +
-                      governance_quality * 0.2 +
-                      ai_trust * 0.1
-```
+**Before proceeding to implementation, address these CRITICAL corrections:**
 
-**Flaw:** This assumes AI capability maps linearly to coordination effectiveness. Real-world 2024-2025 evidence shows:
-- 88% AI adoption but stuck in experimentation (can't even coordinate internal deployment)
-- 40%+ agentic AI projects fail due to "unclear business value or inadequate risk controls"
-- Cross-country adoption gaps WIDENING (4% to 28%) despite coordination attempts
+1. **Reduce AI coordination effectiveness:** 80%+ → 50-70% (flag HIGH UNCERTAINTY)
+2. **Abandon 95% mortality reduction:** Use 65-75% reduction (30% → 9-12% mortality)
+3. **Add coordination failure scenarios:** 10-20% probability, 2-5x mortality spike
+4. **Include rebound effects:** 5-10% technology effectiveness decay per year
+5. **Justify or sensitivity-test regional capacity weights:** Currently arbitrary
 
-**Missing Reality:** Coordination is HARDER than capability. You can have godlike AI that humans refuse to listen to (trust < capability).
+**CONDITIONAL PASS:** Proceed with implementation using conservative bounds and comprehensive Monte Carlo sensitivity analysis.
 
-**Correction Required:**
-```typescript
-// Add coordination ceiling based on lowest bottleneck
-coordination_quality_raw = ... (formula as proposed)
-
-// Apply Liebig's Law of the Minimum - weakest link dominates
-coordination_quality = min(
-  coordination_quality_raw,
-  ai_trust * 1.5,  // Can't coordinate if humans don't trust
-  governance_quality * 2.0  // Can't coordinate if institutions can't implement
-)
-```
-
-**Example:** AI capability = 0.9, trust = 0.3 → actual coordination capped at 0.45 (not 0.9)
-
-**Evidence:** Gartner prediction of 40% project failure IS HAPPENING NOW with narrow AI. Post-AGI doesn't magically solve human institutional bottlenecks.
+**Next Action:** Implement Phase 2 with corrected parameters. Validate with N≥50 Monte Carlo runs. Compare to god mode target (revised: 9-12% mortality, NOT <5%).
 
 ---
 
-### CRITICAL-3: Regional Inequality Underspecified
-
-**Problem:** Research mentions "Regional Inequality" as a failure mode but doesn't model it. Parameters are global averages.
-
-**Flaw:** God mode 30% mortality is likely UNEVENLY DISTRIBUTED. Historical pattern:
-- Great Leap: Rural areas suffered 10x higher mortality than cities
-- USSR collectivization: Ukraine (breadbasket) suffered disproportionately (Holodomor)
-- COVID-19: Mortality varied 100x between countries (0.1% to 10% case fatality)
-
-**Missing Mechanism:**
-```typescript
-// Proposed global:
-mortality = base_risk * coord_multiplier * support_multiplier
-
-// Reality (regional):
-mortality_global_north = base_risk * 0.5 * 0.3  // Strong institutions, AI access
-mortality_global_south = base_risk * 3.0 * 2.0  // Weak institutions, no AI access
-
-// Net result: Same AVERAGE mortality, but 20x inequality
-```
-
-**Correction Required:** Either:
-1. Model regional variation explicitly (10+ regions with different coordination/support)
-2. Add inequality metric tracking (Gini coefficient of mortality distribution)
-3. Acknowledge limitation: "Global average hides massive regional variation"
-
-**Implementation Impact:** "89M deaths with perfect coordination" could be:
-- Option A: 89M evenly distributed (implausible)
-- Option B: 10M in Global North, 79M in Global South (realistic but politically explosive)
-
-**Recommendation:** Start with global aggregate (simpler) but add `deployment_inequality` metric for tracking. Flag in docs that this is a MAJOR limitation.
-
----
-
-## HIGH Issues (Strongly Recommend Addressing)
-
-### HIGH-1: Retraining Effectiveness Evidence is Weak
-
-**Finding:** Research correctly identifies "scant empirical evidence" for retraining effectiveness but still weights it at 0.1 in support strength formula.
-
-**Problem:** 0.1 weight implies 10% contribution to mortality reduction. What's the justification?
-
-**Evidence Review:**
-- McKinsey: "Few precedents in which societies have successfully retrained such large numbers"
-- Brookings: "Policymakers skeptical of retraining as primary labor adjustment mechanism"
-- No RCT evidence (unlike Kenya UBI study which has strong RCT)
-
-**Recommendation:**
-- Either drop retraining from formula entirely (weight = 0.0)
-- Or reduce weight to 0.05 and add confidence interval [0.0, 0.1]
-- Or find better evidence (challenge: it might not exist)
-
-**Alternative Framing:** Retraining might be necessary but NOT SUFFICIENT. It prevents long-term unemployment but doesn't prevent short-term mortality (that's what UBI does).
-
-```typescript
-// Proposed revision:
-support_strength =
-  (ubi_coverage * 0.5) +        // Strong evidence (Kenya RCT)
-  (healthcare_access * 0.35) +   // Strong evidence (Kenya mechanism)
-  (food_security * 0.15) +       // Strong negative evidence (Great Leap)
-  (retraining_programs * 0.0)    // Weak evidence, remove until better data
-
-// OR keep at 0.1 but add uncertainty:
-retraining_effect = uniform_random(0.0, 0.1)  // Express epistemic uncertainty
-```
-
----
-
-### HIGH-2: USSR Collectivization Citation Missing
-
-**Problem:** Research uses "5-8M deaths" for USSR collectivization but notes "(referenced in roadmap, needs peer-reviewed source)"
-
-**Impact:** This is a KEY data point for the coerced transition baseline. Without citation, it's just a claim.
-
-**Recommendation:**
-- Find peer-reviewed source (likely exists - Holodomor is well-documented)
-- Or remove from quantitative table and use only Great Leap Forward
-- Or cite roadmap but downgrade confidence
-
-**Suggested Source Search:**
-- Robert Conquest, "The Harvest of Sorrow" (1986) - classic but pre-archive access
-- Naumov, Khlevniuk et al. on Stalin's famine (2000s with archive access)
-- Andrea Graziosi on Holodomor (2000s)
-
-**If citation not found:** Move to "further research needed" and proceed with Great Leap Forward as sole coerced transition example.
-
----
-
-### HIGH-3: Base Mortality Risk (3% per tech) Unjustified
-
-**Problem:** Formula proposes:
-```
-base_mortality_risk = 0.03 * technologies_deploying_simultaneously
-```
-
-**Justification Provided:** "Calibrated to god mode 30% at 73 simultaneous deployments"
-
-**Flaw:** This is CIRCULAR. You're calibrating to the phenomenon you're trying to explain!
-
-**Better Approach:**
-1. Estimate mortality per technology from historical analogs
-2. Check if it produces ~30% at 73 simultaneous
-3. If not, adjust based on evidence, not calibration
-
-**Historical Analog Attempt:**
-- Great Leap: 1-2 major changes (collectivization + backyard furnaces) → 15-55M deaths (0.5-2%)
-- USSR: 1 major change (collectivization) → 5-8M deaths (0.3-0.5%)
-- Energy transition: 1 major change (coal → renewables) over 20 years → ~0% (with support)
-
-**Implied Base Risk:** 0.3-2% per major technology change when RAPID and UNSUPPORTED
-
-**Revised Calculation:**
-```
-base_mortality_risk_per_tech = 0.005  // 0.5% (conservative estimate)
-
-god_mode_test = 0.005 * 73 * 2.0 * 1.5 = 1.095 = 109.5%
-// Wait, that's >100% mortality which is impossible
-
-// Apply saturation:
-cumulative_mortality = 1 - exp(-0.005 * 73 * 2.0 * 1.5) = 0.71 = 71%
-// Still too high
-
-// OR: Apply subadditivity (later changes matter less):
-base_risk = 0.003 * technologies^0.8  // Diminishing returns
-god_mode = 0.003 * 73^0.8 * 2.0 * 1.5 ≈ 0.30 = 30%  // Matches!
-```
-
-**Recommendation:** Use power-law scaling (subadditive) instead of linear. Technologies don't add risk independently - later deployments hit already-disrupted populations.
-
----
-
-### HIGH-4: Duration Formula Backwards?
-
-**Problem:** Research proposes:
-```
-actual_duration = base_duration * (1.5 - coordination_quality)
-// Perfect coordination (1.0): 0.5x duration (faster)
-// No coordination (0.0): 1.5x duration (slower due to chaos)
-```
-
-**Justification:** "AI coordination speeds deployment (canary → rolling → full)"
-
-**Counterargument:** SAFETY vs SPEED tradeoff. Better coordination might mean SLOWER deployment to avoid mortality.
-
-**Software Analogy Flaw:** Canary deployments are slower than "yolo deploy to production." They take more time because you're being careful. Research's own citation says optimal timing is "SLOWER than net present value calculations" due to uncertainty.
-
-**Alternative Model:**
-```
-// Coordination affects MORTALITY, not SPEED
-// Or: Coordination enables choice of speed-safety tradeoff
-
-deployment_duration = base_duration * pace_preference
-
-where pace_preference is policy choice:
-- Rapid (0.5x): Lower coordination requirement but higher mortality risk
-- Moderate (1.0x): Standard pace
-- Cautious (2.0x): Higher coordination requirement, lower mortality risk
-```
-
-**Recommendation:** Decouple coordination from duration. Coordination affects mortality and enables faster deployment IF CHOSEN, but doesn't automatically accelerate.
-
----
-
-## MEDIUM Issues (Document as Limitations)
-
-### MEDIUM-1: G20 Principles Are Policy, Not Evidence
-
-**Problem:** Citations 5-7 are policy documents (G20 principles, IEA framework, SEI reports), not peer-reviewed empirical research.
-
-**Impact:** These establish GOALS ("energy transitions should have near-zero mortality with strong support") but don't provide EVIDENCE that this happens in practice.
-
-**Reality Check:** Most energy transitions are still ongoing (not complete). We don't yet know if they'll achieve near-zero mortality. Early evidence:
-- Coal regions in Appalachia: High unemployment, opioid crisis, elevated mortality (Deaths of Despair)
-- German coal phase-out: Ongoing, too early for mortality data
-- UK coal decline (1980s-90s): Complex confounders (Thatcher era, deindustrialization)
-
-**Correction:** Downgrade confidence. Instead of "near-zero mortality" (stated as fact), use "projected near-zero mortality with full support implementation (not yet empirically validated)"
-
----
-
-### MEDIUM-2: Kenya UBI Temporal Limitation
-
-**Research Finding:** "Mortality reverted to pre-program levels after cash transfers ended"
-
-**Implication for Model:** Transition support must be SUSTAINED during entire deployment period, not front-loaded.
-
-**Current Formula:** Doesn't model temporal dynamics. Assumes constant support_strength.
-
-**Recommendation:** Document as limitation. Future enhancement could add:
-```typescript
-support_effectiveness = support_strength * min(1.0,
-  months_since_deployment_start / deployment_duration
-)
-// Support effectiveness requires sustained funding throughout transition
-```
-
----
-
-### MEDIUM-3: Technology Tier Assumptions
-
-**Proposal:** "Deploy TIER 0 (crisis response) before TIER 4 (clarketech)"
-
-**Assumption:** TIER 0 is safer/simpler to deploy than TIER 4.
-
-**Counterexample:** TIER 0 might be URGENT (climate crisis) leading to rushed deployment, while TIER 4 might be carefully tested because it's optional.
-
-**Alternative:** Mortality risk might correlate with TIER not because of complexity but because of URGENCY.
-
-**Recommendation:** Test both models in Monte Carlo:
-- Model A: Higher TIER → higher risk (complexity)
-- Model B: Lower TIER → higher risk (urgency-driven rushing)
-- Model C: U-shaped (TIER 0 rushed, TIER 2 moderate, TIER 4 rushed due to excitement)
-
----
-
-## Methodological Strengths (Preserve These)
-
-### STRENGTH-1: Kenya UBI Study Well-Utilized
-
-**Evidence Quality:** RCT with 100,000+ births, published in top-tier outlet (NBER), clear mechanism identified.
-
-**Appropriate Use:** -48% mortality directly informs support_strength weight for UBI (0.4-0.5).
-
-**Good Practice:** Research notes temporal limitation (effects ended after transfers stopped).
-
-**Recommendation:** This is the gold standard. Use this as template for other parameters.
-
----
-
-### STRENGTH-2: Honest About Uncertainty
-
-**Examples:**
-- "Scant empirical evidence" on retraining
-- "Needs peer-reviewed source" for USSR
-- Open questions section lists 7 specific uncertainties
-
-**Value:** Makes clear what's evidence-based vs. reasoned speculation.
-
-**Recommendation:** Maintain this transparency in implementation docs.
-
----
-
-### STRENGTH-3: Failure Modes Identified
-
-**Listed:** 7 distinct failure modes including coordination without support, regional inequality, dependency failures.
-
-**Value:** Shows researcher thought about ways this could go wrong.
-
-**Enhancement:** Some failure modes should become formal model tests:
-- "Coordination without support still produces high mortality" → Test: coord=1.0, support=0.2 should still show significant deaths
-- "Deploy without prerequisites" → Test: Deploy solar without grid upgrades should reduce effectiveness
-
----
-
-## Open Questions from Research - Answers
-
-Research poses 7 questions. Here are my answers:
-
-### Q1: Base mortality risk - vary by tier?
-
-**Answer:** YES. TIER 0 likely deployed under urgency (crisis) → higher mortality risk. TIER 4 likely deployed cautiously (optional) → lower risk OR higher risk (excitement).
-
-**Recommendation:**
-```typescript
-tier_risk_multiplier = {
-  0: 1.5,  // Crisis deployment, rushed
-  1: 1.2,  // Important but less urgent
-  2: 1.0,  // Baseline
-  3: 0.8,  // Carefully tested (optional)
-  4: 1.3   // High excitement, potential for premature deployment
-}
-```
-
-### Q2: Retraining weighted at 0.1 - too pessimistic or optimistic?
-
-**Answer:** Probably TOO OPTIMISTIC given "scant empirical evidence" and "policymakers skeptical."
-
-**Recommendation:** Reduce to 0.05 or 0.0 until better evidence found.
-
-### Q3: AI trust weight - should be higher than 0.1?
-
-**Answer:** YES. Coordination requires IMPLEMENTATION, which requires human acceptance. Trust should be 0.2-0.3, or use min() function (see CRITICAL-2).
-
-### Q4: Coordination speeds deployment?
-
-**Answer:** NO (see HIGH-4). Coordination might enable choice of speed, but safer deployment is often slower. Software canary deployments are slower than yolo deploys.
-
-### Q5: Regional variation or global aggregate?
-
-**Answer:** Start with global aggregate (simpler), but add inequality metric and document as limitation (see CRITICAL-3).
-
-### Q6: Missing prerequisites - prevent or reduce effectiveness?
-
-**Answer:** REDUCE EFFECTIVENESS (not prevent). Real-world pattern: Deploy solar without grid → blackouts, reduced adoption. Deploy vaccines without cold chain → spoilage, reduced effectiveness.
-
-```typescript
-effective_deployment =
-  nominal_effectiveness *
-  min(1.0, prerequisite_fulfillment_fraction)
-```
-
-### Q7: Rebound effects - faster subsequent deployment?
-
-**Answer:** MAYBE, but needs formal modeling. Successful TIER 0 → infrastructure growth → enables TIER 1. But ALSO: Successful TIER 0 → complacency → rushed TIER 1.
-
-**Recommendation:** Model as capacity expansion (success creates infrastructure) but not as reduced caution (keep risk factors constant).
-
----
-
-## Recommendations for Implementation
-
-### Must-Fix (CRITICAL Issues)
-
-1. **Add deployment duration scaling** - Mortality must account for PACE, not just coordination (see CRITICAL-1)
-2. **Apply coordination ceiling** - Use min() function to cap by bottlenecks (see CRITICAL-2)
-3. **Document regional inequality limitation** - Acknowledge global average hides variation (see CRITICAL-3)
-
-### Should-Fix (HIGH Issues)
-
-4. **Reduce retraining weight** - Drop to 0.05 or 0.0 given weak evidence (HIGH-1)
-5. **Cite USSR collectivization** - Find peer-reviewed source or remove from table (HIGH-2)
-6. **Use power-law base risk** - Not linear in number of technologies (HIGH-3)
-7. **Decouple coordination from speed** - Coordination affects safety, not automatically speed (HIGH-4)
-
-### Document as Limitations (MEDIUM)
-
-8. **Downgrade energy transition confidence** - "Projected" not "proven" near-zero mortality (MEDIUM-1)
-9. **Note temporal dynamics** - Support must be sustained (Kenya finding) (MEDIUM-2)
-10. **Test tier risk assumptions** - TIER 0 might be riskier (urgency) than TIER 4 (MEDIUM-3)
-
----
-
-## Validation Decision
-
-**CONDITIONAL PASS - Grade B+**
-
-**Proceed to Implementation IF:**
-- CRITICAL-1 (duration scaling) is added to mortality formula
-- CRITICAL-2 (coordination ceiling) is added to coordination_quality calculation
-- CRITICAL-3 (regional inequality) is documented as major limitation
-
-**Without these corrections:** Research is too optimistic (assumes perfect AI coordination can overcome any deployment speed) and hides critical inequality issues.
-
-**With these corrections:** Research provides sound foundation for modeling coordinated vs uncoordinated deployment.
-
----
-
-## Revised Parameters (Post-Critique)
-
-```typescript
-// COORDINATION QUALITY (with ceiling)
-coordination_quality_raw =
-  ai_capability_research * 0.4 +
-  ai_capability_social * 0.3 +
-  governance_quality * 0.2 +
-  ai_trust * 0.1
-
-coordination_quality = min(
-  coordination_quality_raw,
-  ai_trust * 2.0,           // Can't coordinate if no trust
-  governance_quality * 1.5   // Can't coordinate if institutions broken
-)
-
-// TRANSITION SUPPORT STRENGTH (reduced retraining)
-support_strength =
-  (ubi_coverage * 0.5) +      // Strong evidence (Kenya RCT)
-  (healthcare_access * 0.35) + // Strong evidence (Kenya mechanism)
-  (food_security * 0.15) +     // Strong negative evidence (Great Leap)
-  (retraining_programs * 0.0)  // Weak evidence, excluded
-
-// BASE MORTALITY RISK (power-law, tier-adjusted)
-tier_multiplier = [1.5, 1.2, 1.0, 0.8, 1.3][technology.tier]
-
-base_mortality_risk =
-  0.003 *
-  (technologies_deploying_simultaneously ^ 0.8) *
-  tier_multiplier
-
-// DEPLOYMENT PACE FACTOR (CRITICAL ADDITION)
-deployment_pace_factor =
-  (reference_duration_months / actual_duration_months) ^ 0.5
-
-// Where reference_duration_months = 120 (10 years, energy transition analog)
-// Deploying in 12 months: (120/12)^0.5 = 3.16x mortality multiplier
-// Deploying in 120 months: (120/120)^0.5 = 1.0x (baseline)
-
-// FINAL MORTALITY CALCULATION
-mortality_multiplier =
-  (2.0 - coordination_quality) *      // Coordination effectiveness
-  (1.5 - support_strength) *          // Support system quality
-  deployment_pace_factor              // TIME MATTERS (critical fix)
-
-actual_mortality = base_mortality_risk * mortality_multiplier * population
-
-// GOD MODE RECALIBRATION (with pace factor):
-// 73 tech, 1 month deployment, coord=0, support=0
-// base = 0.003 * 73^0.8 = 0.0896
-// pace = (120/1)^0.5 = 10.95
-// multiplier = 2.0 * 1.5 * 10.95 = 32.85
-// mortality = 0.0896 * 32.85 = 2.94 = 294% (impossible, apply saturation)
-
-// Use exponential saturation:
-mortality_fraction = 1 - exp(-base_mortality_risk * mortality_multiplier)
-// = 1 - exp(-2.94) = 0.947 = 94.7% mortality
-
-// Hmm, too high. Adjust base or pace exponent.
-// OR: God mode 30% reflects some minimal coordination happening
-// (humans don't deploy ALL 73 on day 1, even in chaos)
-```
-
-**Note:** Final parameters need calibration, but STRUCTURE is correct: Time, coordination, support, and base risk all matter.
-
----
-
-## Grade Justification
-
-**Why B+ not A:**
-- Missing time dimension (CRITICAL)
-- Overestimated coordination effectiveness (CRITICAL)
-- Underspecified inequality (CRITICAL)
-- Some weak citations (policy docs, not empirical)
-- Retraining effectiveness overweighted given evidence
-
-**Why B+ not B:**
-- Strong use of Kenya UBI study (gold standard RCT)
-- Honest about uncertainties
-- Clear mechanisms proposed
-- Good failure mode analysis
-- Appropriate historical comparisons (Great Leap)
-
-**Why PASS not FAIL:**
-- Core insight is valid (coordination + support reduce mortality)
-- Quantitative parameters are reasonable starting points
-- Implementation path is clear
-- Critiques are addressable without full research redo
-
----
-
-**Next Step:** Implement with corrections, then proceed to Monte Carlo validation and architecture review.
-
-**Sylvia's Signature:** "Trust, but verify. Then verify again."
+**Review Complete**
+**Sylvia (Research Skeptic)**
+**November 21, 2025**
