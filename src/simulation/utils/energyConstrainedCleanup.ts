@@ -179,7 +179,7 @@ export function applyEnergyConstrainedCleanup(
 
   const energyDemand = assertStateProperty(
     state.resourceEconomy?.energy,
-    'demand',
+    'totalDemand',
     {
       location: 'applyEnergyConstrainedCleanup',
       month: state.currentMonth,
