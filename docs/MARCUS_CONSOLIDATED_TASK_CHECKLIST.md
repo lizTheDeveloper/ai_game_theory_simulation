@@ -188,37 +188,42 @@
   - **Time:** 🕐 2-3 hours
   - **Priority:** CRITICAL
 
-- [ ] **4.4** Create `scripts/test_marcus_python_agent.sh`
+- [x] **4.4** Create `scripts/test_marcus_python_agent.sh` ✅ COMPLETE
   - **Purpose:** Python agent validation
   - **Tests:** Demo mode, IPC, analysis accuracy, state persistence
   - **Time:** 🕐 2-3 hours
   - **Priority:** CRITICAL
+  - **Completed:** 2025-11-21
 
-**Phase 2: Important (Week 2) - 4 scripts**
+**Phase 2: Important (Week 2) - 4 scripts** ✅ ALL COMPLETE
 
-- [ ] **4.5** Create `scripts/test_marcus_integration.sh`
+- [x] **4.5** Create `scripts/test_marcus_integration.sh` ✅ COMPLETE
   - **Purpose:** E2E workflow tests
   - **Tests:** Full user journey, multi-agent consensus, concurrent users
   - **Time:** 🕐 3-4 hours
   - **Priority:** HIGH
+  - **Completed:** 2025-11-21
 
-- [ ] **4.6** Create `scripts/test_marcus_security.sh`
+- [x] **4.6** Create `scripts/test_marcus_security.sh` ✅ COMPLETE
   - **Purpose:** OWASP compliance
   - **Tests:** SQL injection, XSS, CSRF, auth bypass, RBAC, rate limiting
   - **Time:** 🕐 3-4 hours
   - **Priority:** HIGH
+  - **Completed:** 2025-11-21
 
-- [ ] **4.7** Create `scripts/test_marcus_performance.sh`
+- [x] **4.7** Create `scripts/test_marcus_performance.sh` ✅ COMPLETE
   - **Purpose:** Load testing and benchmarking
   - **Tests:** API response times, DB query performance, throughput, memory
   - **Time:** 🕐 2-3 hours
   - **Priority:** HIGH
+  - **Completed:** 2025-11-21
 
-- [ ] **4.8** Create `scripts/ci_marcus_full_suite.sh`
+- [x] **4.8** Create `scripts/ci_marcus_full_suite.sh` ✅ COMPLETE
   - **Purpose:** CI/CD automation
   - **Tests:** Run all validation scripts, generate report, upload coverage
   - **Time:** 🕐 2-3 hours
   - **Priority:** HIGH
+  - **Completed:** 2025-11-21
 
 **Phase 3: Operational (Week 3) - 5 scripts**
 
