@@ -28,6 +28,14 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 21: EnergySystem Interface Mismatch Fix** (commit 6cba6a2)
+- 🔧 **Bug Fix:** energyConstrainedCleanup.ts corrected to use proper EnergySystem interface
+- **Problem:** Code attempted to access non-existent `renewableCapacity` property and manually calculate `renewableSurplus`
+- **Solution:** Use existing `renewableSurplus` field (calculated by ClimateDeploymentPhase) via assertStateProperty
+- **Test Updates:** Updated test mocks to match actual EnergySystem interface structure
+- ✅ **Validation:** TypeScript compiles clean, novel-entities-irreversibility.test.ts passes (28/28 tests)
+- 📝 **Impact:** Unblocks autonomous workers and simulation test suite
+
 **Nov 19: Test Infrastructure Cleanup** (commit 10b689b)
 - 🔧 **Technical Debt:** Skipped 3 broken vitest tests pending rewrite
 - **Skipped tests:**
