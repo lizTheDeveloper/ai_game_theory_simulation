@@ -22,13 +22,19 @@ load_env_file() {
     return 1
 }
 
-# Try loading .env first
-if load_env_file "$PROJECT_DIR/.env"; then
-    : # Success - using .env
+# OWASP Credential Hierarchy (most specific to most general):
+# 1. Test-specific environment file (for CI/local dev with safe test credentials)
+# 2. User's .env.test file (test-specific secrets)
+# 3. User's .env file (production credentials)
+# 4. User's .env.secrets file (production secrets vault)
+if load_env_file "$PROJECT_DIR/.env.test"; then
+    : # Success - using .env.test (test-specific credentials)
+elif load_env_file "$PROJECT_DIR/.env"; then
+    : # Success - using .env (production credentials)
 elif load_env_file "$PROJECT_DIR/.env.secrets"; then
-    : # Success - using .env.secrets
+    : # Success - using .env.secrets (production secrets)
 else
-    echo "⚠️  Warning: No .env or .env.secrets file found"
+    echo "⚠️  Warning: No .env.test, .env, or .env.secrets file found"
     echo "    Environment variables must be set manually"
 fi
 

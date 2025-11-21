@@ -171,7 +171,9 @@
       "Bash(./scripts/test_marcus_database.sh:*)",
       "Bash(./scripts/test_marcus_auth.sh:*)",
       "Bash(unzip:*)",
-      "Bash(source ~/.bashrc)"
+      "Bash(source ~/.bashrc)",
+      "Bash(crontab:*)",
+      "Bash(redis-cli:*)"
     ],
     "deny": [],
     "ask": [],
