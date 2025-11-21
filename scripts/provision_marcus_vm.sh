@@ -14,6 +14,15 @@
 #   - Rollback on critical failures
 #   - Comprehensive error checking
 #   - Health validation after deployment
+#   - Comprehensive requirements checking
+#
+# Installs:
+#   - Node.js 18, PostgreSQL 14, Redis
+#   - Docker (29.0+) with Docker Compose plugin
+#   - k6 (load testing), Trivy (security scanning), kubectl (K8s CLI)
+#   - Prometheus (monitoring), Grafana (visualization)
+#   - Python packages, NPM packages
+#   - MARCUS platform services
 
 set -euo pipefail  # Exit on error, undefined vars, pipe failures
 
@@ -228,6 +237,82 @@ install_dependencies() {
     # Python and build tools
     sudo apt-get install -y python3 python3-pip python3-venv build-essential git curl
     print_success "Python tools installed"
+
+    # Docker and Docker Compose
+    if ! command -v docker &> /dev/null; then
+        print_step "Installing Docker..."
+        # Add Docker's official GPG key
+        sudo mkdir -p /etc/apt/keyrings
+        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --yes --dearmor -o /etc/apt/keyrings/docker.gpg
+
+        # Add Docker repository
+        echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | \
+            sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+        # Install Docker packages
+        sudo apt-get update
+        sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+        # Add current user to docker group
+        sudo usermod -aG docker $USER
+        print_warning "Docker group added - log out and back in for group changes to take effect"
+    fi
+    DOCKER_VERSION=$(docker --version | awk '{print $3}' | tr -d ',')
+    print_success "Docker: $DOCKER_VERSION"
+
+    # k6 (Load Testing)
+    if ! command -v k6 &> /dev/null; then
+        print_step "Installing k6..."
+        curl -s https://github.com/grafana/k6/releases/download/v0.55.0/k6-v0.55.0-linux-amd64.tar.gz -L | \
+            sudo tar -xz -C /usr/local/bin k6-v0.55.0-linux-amd64/k6 --strip-components=1
+    fi
+    K6_VERSION=$(k6 version | head -1 | awk '{print $2}')
+    print_success "k6: $K6_VERSION"
+
+    # Trivy (Container Security Scanner)
+    if ! command -v trivy &> /dev/null; then
+        print_step "Installing Trivy..."
+        curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | \
+            sudo sh -s -- -b /usr/local/bin
+    fi
+    TRIVY_VERSION=$(trivy --version | head -1 | awk '{print $2}')
+    print_success "Trivy: $TRIVY_VERSION"
+
+    # kubectl (optional - Kubernetes CLI)
+    if ! command -v kubectl &> /dev/null; then
+        print_step "Installing kubectl..."
+        curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+        sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+        rm kubectl
+    fi
+    KUBECTL_VERSION=$(kubectl version --client 2>&1 | head -1 | grep -oP 'v\d+\.\d+\.\d+' || echo "unknown")
+    print_success "kubectl: $KUBECTL_VERSION"
+
+    # Prometheus (Monitoring)
+    if ! command -v prometheus &> /dev/null; then
+        print_step "Installing Prometheus..."
+        sudo apt-get install -y prometheus
+        sudo systemctl enable prometheus || true
+    fi
+    print_success "Prometheus installed"
+
+    # Grafana (Visualization)
+    if ! command -v grafana-server &> /dev/null; then
+        print_step "Installing Grafana..."
+        sudo apt-get install -y grafana
+        sudo systemctl enable grafana-server || true
+    fi
+    print_success "Grafana installed"
+
+    # OWASP ZAP (Security Testing) - Docker image
+    if command -v docker &> /dev/null; then
+        if ! docker images | grep -q "owasp/zap2docker-stable"; then
+            print_step "Pulling OWASP ZAP Docker image..."
+            docker pull owasp/zap2docker-stable 2>/dev/null || print_warning "OWASP ZAP pull failed (will need docker group access)"
+        else
+            print_success "OWASP ZAP Docker image already available"
+        fi
+    fi
 }
 
 # Configure PostgreSQL
@@ -475,6 +560,27 @@ validate_installation() {
     print_success "Installation validated"
 }
 
+# Check requirements
+check_requirements() {
+    CURRENT_STEP="Checking requirements"
+    print_step "$CURRENT_STEP"
+
+    cd "$PROJECT_DIR"
+
+    # Run requirements check script
+    if [ -f "$PROJECT_DIR/scripts/check_requirements.sh" ]; then
+        print_step "Running comprehensive requirements check..."
+        if bash "$PROJECT_DIR/scripts/check_requirements.sh"; then
+            print_success "All requirements satisfied"
+        else
+            print_warning "Some requirements not met - see output above for details"
+            print_warning "This may be expected on first run before services are started"
+        fi
+    else
+        print_warning "Requirements check script not found, skipping"
+    fi
+}
+
 # Save credentials
 save_credentials() {
     CURRENT_STEP="Saving credentials"
@@ -549,6 +655,7 @@ main() {
     create_admin_user
     setup_systemd
     validate_installation
+    check_requirements
     save_credentials
 
     print_header "Provisioning Complete!"
