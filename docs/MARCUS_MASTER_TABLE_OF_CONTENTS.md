@@ -422,6 +422,15 @@ DELETE /api/admin/users/:id           - Deactivate user (admin only)
 - Dashboard setup
 - Performance baselines
 
+**📄 [`docs/MARCUS_MONITORING_ARCHITECTURE.md`](./MARCUS_MONITORING_ARCHITECTURE.md)** ⭐ **NEW**
+- **Purpose:** Complete monitoring stack architecture documentation
+- Mermaid flowchart showing all services and data flows
+- Port mapping reference (3000-9187)
+- Prometheus scraping configuration
+- Grafana dashboard setup
+- Service health check commands
+- Process naming for monitoring visibility
+
 ### Kubernetes Deployment
 
 **Directory:** `k8s/`
@@ -753,6 +762,14 @@ These documents are part of the broader project but contain relevant MARCUS info
 ---
 
 ## 🆕 Recent Additions (2025-11-21)
+
+### Process Naming & Monitoring Architecture (Latest) 🔍
+
+- ✅ `docs/MARCUS_MONITORING_ARCHITECTURE.md` - **Complete monitoring stack architecture with Mermaid flowchart** 📊
+- ✅ `src/platform/api/server.ts` - **Added descriptive process.title = 'marcus-api-server'** 🏷️
+- ✅ `src/metrics-server.ts` - **Added descriptive process.title = 'game-sim-metrics-server'** 🏷️
+- ✅ `src/platform/agents/citation_integrity_agent.py` - **Fixed hardcoded database config to use environment variables** 🔧
+- ✅ `.env.test` - **Updated test environment configuration** ⚙️
 
 ### Phase 3 Performance & Monitoring (In Progress) 🚀
 

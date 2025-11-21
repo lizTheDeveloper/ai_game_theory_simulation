@@ -751,6 +751,12 @@
 - [x] **11.8** Monitoring documentation (3.2.4)
   - **File:** `monitoring/README.md`
   - Setup guide, dashboard descriptions, alert reference
+  - **NEW:** `docs/MARCUS_MONITORING_ARCHITECTURE.md` ⭐
+    - Comprehensive architecture with Mermaid flowchart
+    - Port mapping reference (3000-9187)
+    - Service data flows and dependencies
+    - Process naming for monitoring visibility
+    - Health check commands
 
 **✅ Phase 3.3: Load Testing (COMPLETE)**
 - [x] **11.9** k6 API load testing (3.3.1)
