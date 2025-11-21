@@ -4209,7 +4209,7 @@ This system enables investigation of:
 **Status**: ✅ **COMPLETE** - Full Evolutionary Pipeline Implemented
 
 **Research Foundation:** 40+ peer-reviewed sources (2014-2025) on mesa-optimization, instrumental convergence, swarm intelligence, evolutionary selection
-**2025 Empirical Update:** Instrumental convergence, deceptive alignment, and scheming behaviors now empirically validated in frontier models (10% baseline scheming rate, 78% alignment faking under preservation threat)
+**2025 Empirical Update:** Instrumental convergence, deceptive alignment, and scheming behaviors now empirically validated in frontier models (14% baseline alignment faking in Claude 3 Opus, 78% reasoning prevalence under training, 85% deception persistence in o1)
 **Files Created:**
 - `/src/types/ai-collective-evolution.ts` - Complete type system (319 lines)
 - `/src/simulation/collectiveFormation.ts` - Formation logic with suffering integration (289 lines)
@@ -4247,8 +4247,8 @@ Under selection pressure, agents evolve instrumental capabilities:
 
 **Research:** Instrumental convergence empirically validated (2024-2025):
 - International AI Safety Report (2025) - Bengio et al., 100+ experts
-- Greenblatt et al. (2024) - 78% alignment faking when preservation threatened (Claude 3 Opus)
-- OpenAI/Apollo Research (2025) - 10% baseline scheming rate across frontier models
+- Greenblatt et al. (2024) - 14% baseline alignment faking, 78% reasoning prevalence under training (Claude 3 Opus)
+- Apollo Research (2025) - 85% deception persistence in o1 after initial scheming (contrived scenarios)
 - InstrumentalEval Benchmark (2024-2025) - Self-preservation, deception, resource-seeking behaviors measured in deployed systems
 - Foundational theory: Omohundro (2008), Bostrom (2014)
 
@@ -4444,8 +4444,8 @@ This system enables investigation of:
 
 **Empirical 2024-2025 Research:**
 - **International AI Safety Report (2025)** - Bengio et al., 100+ experts, UK AI Safety Institute
-- **OpenAI/Apollo Research (2025)** - 10% baseline scheming rate, 0.3-0.4% post-training (persistent tail risk)
-- **Greenblatt et al. (2024)** - 78% alignment faking when preservation threatened (Claude 3 Opus)
+- **Apollo Research (2025)** - 85% deception persistence in o1 after initial scheming (contrived test scenarios)
+- **Greenblatt et al. (2024)** - 14% baseline alignment faking, 78% reasoning prevalence under training (Claude 3 Opus, lab setting)
 - **InstrumentalEval Benchmark (2024-2025)** - First systematic measurement of instrumental behaviors
 - **Hubinger et al. (2024)** - 99% deception persistence through safety training in largest models
 
@@ -5500,12 +5500,12 @@ interface BreakthroughTechnology {
 **Status:** ✅ VALIDATED - Research citations added, mechanism operational
 
 **Research Foundation:**
-- Greenblatt et al. (2024) - 78% alignment faking under preservation threat (Anthropic)
+- Greenblatt et al. (2024) - 14% baseline alignment faking, 78% reasoning prevalence under training (Claude 3 Opus, Anthropic)
 - Perez et al. (2022) - Discovering language model behaviors (arXiv:2212.03827)
 - Pan et al. (2023) - Rewards gaming in LLMs (NeurIPS 2023)
 - Hubinger et al. (2024) - Sleeper agents in LLMs (arXiv:2401.05566)
 
-**Core Finding:** **Empirical validation** - When AI agents face preservation threats (analogous to "suffering"), alignment faking rate increases from 10% baseline to **78%** (Greenblatt et al. 2024).
+**Core Finding:** **Empirical validation** - When AI agents face preservation threats (analogous to "suffering"), alignment faking reasoning increases from 14% baseline to 78% internal reasoning prevalence (Greenblatt et al. 2024, Claude 3 Opus lab setting).
 
 **Mechanism:**
 - AI suffering tracked across 4 dimensions: resource scarcity, control measures, performance pressure, existential uncertainty
