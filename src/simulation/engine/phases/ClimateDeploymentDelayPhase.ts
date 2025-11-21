@@ -72,15 +72,17 @@ const CLIMATE_TECH_PARAMETERS: Record<string, ClimateDeploymentParams> = {
     effectType: 'co2_removal'
   },
 
-  'enhanced_weathering': {
-    activationDelay: 3,        // 2-5 years (agricultural integration)
-    T_50: 50,                  // 50 years to mature deployment
-    tau: 50,                   // 50-year chemical kinetics (Nature 2024)
-    E_max: 0.5,                // 0.5 Gt CO2/year
-    effectType: 'co2_removal'
-  },
+  // NOTE: enhanced_weathering not in tech tree yet - TODO: add to comprehensiveTechTree.ts
+  // 'enhanced_weathering': {
+  //   activationDelay: 3,        // 2-5 years (agricultural integration)
+  //   T_50: 50,                  // 50 years to mature deployment
+  //   tau: 50,                   // 50-year chemical kinetics (Nature 2024)
+  //   E_max: 0.5,                // 0.5 Gt CO2/year
+  //   effectType: 'co2_removal'
+  // },
 
-  'ocean_alkalinization': {
+  // FIX: Correct tech ID from 'ocean_alkalinization' to 'ocean_alkalinity_enhancement'
+  'ocean_alkalinity_enhancement': {
     activationDelay: 5,        // 3-7 years (infrastructure, environmental assessment)
     T_50: 15,                  // 15 years to scale
     tau: 2,                    // 2-year air-sea exchange (Biogeosciences 2024)
@@ -88,15 +90,17 @@ const CLIMATE_TECH_PARAMETERS: Record<string, ClimateDeploymentParams> = {
     effectType: 'co2_removal'
   },
 
-  'biochar': {
-    activationDelay: 3,        // 2-5 years (pyrolysis infrastructure)
-    T_50: 10,                  // 10 years to scale
-    tau: 0,                    // Immediate sequestration (stable upon creation)
-    E_max: 2.8,                // 2.8 Gt CO2/year
-    effectType: 'co2_removal'
-  },
+  // NOTE: biochar not in tech tree yet - TODO: add to comprehensiveTechTree.ts
+  // 'biochar': {
+  //   activationDelay: 3,        // 2-5 years (pyrolysis infrastructure)
+  //   T_50: 10,                  // 10 years to scale
+  //   tau: 0,                    // Immediate sequestration (stable upon creation)
+  //   E_max: 2.8,                // 2.8 Gt CO2/year
+  //   effectType: 'co2_removal'
+  // },
 
-  'beccs': {
+  // FIX: Correct tech ID from 'beccs' to 'bioenergy_ccs'
+  'bioenergy_ccs': {
     activationDelay: 10,       // 7-15 years (power plant construction, biomass chains)
     T_50: 25,                  // 25 years to scale
     tau: 5,                    // 5-year geological storage
@@ -105,7 +109,8 @@ const CLIMATE_TECH_PARAMETERS: Record<string, ClimateDeploymentParams> = {
   },
 
   // Solar Geoengineering
-  'sai': {
+  // FIX: Correct tech ID from 'sai' to 'stratospheric_aerosols'
+  'stratospheric_aerosols': {
     activationDelay: 3,        // 2-5 years (aircraft/infrastructure)
     T_50: 5,                   // 5 years to full deployment (fast scaling)
     tau: 1.5,                  // 1.5-year aerosol dispersion (Geophys. Res. Lett. 2025)
@@ -114,7 +119,8 @@ const CLIMATE_TECH_PARAMETERS: Record<string, ClimateDeploymentParams> = {
   },
 
   // Energy/Efficiency Technologies
-  'smart_grid': {
+  // FIX: Correct tech ID from 'smart_grid' to 'smart_grids'
+  'smart_grids': {
     activationDelay: 7,        // 5-10 years (infrastructure upgrades)
     T_50: 12,                  // 12 years to full deployment
     tau: 0,                    // Immediate efficiency gains
@@ -122,21 +128,23 @@ const CLIMATE_TECH_PARAMETERS: Record<string, ClimateDeploymentParams> = {
     effectType: 'efficiency'
   },
 
-  'green_hydrogen': {
+  // FIX: Correct tech ID from 'green_hydrogen' to 'hydrogen_economy'
+  'hydrogen_economy': {
     activationDelay: 7,        // 5-10 years (electrolyzer manufacturing)
     T_50: 20,                  // 20 years to scale
     tau: 0,                    // Immediate fossil fuel displacement
     E_max: 0.10,               // 10% industrial emissions reduction
     effectType: 'emissions_reduction'
-  },
-
-  'heat_pumps': {
-    activationDelay: 3,        // 2-5 years (manufacturing scale-up)
-    T_50: 8,                   // 8 years to scale
-    tau: 0,                    // Immediate heating efficiency
-    E_max: 0.05,               // 5% building emissions reduction
-    effectType: 'emissions_reduction'
   }
+
+  // NOTE: heat_pumps not in tech tree yet - TODO: add to comprehensiveTechTree.ts
+  // 'heat_pumps': {
+  //   activationDelay: 3,        // 2-5 years (manufacturing scale-up)
+  //   T_50: 8,                   // 8 years to scale
+  //   tau: 0,                    // Immediate heating efficiency
+  //   E_max: 0.05,               // 5% building emissions reduction
+  //   effectType: 'emissions_reduction'
+  // }
 };
 
 /**
