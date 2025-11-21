@@ -56,6 +56,15 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - ⏳ **Next:** Roy (simulation-maintainer) implements → Priya validates → Architecture review
 - 📝 **Status:** ORCHESTRATION_STATUS_ai_coordination_phase2.md
 
+**Nov 21: Climate Deployment Validation Fixes** (commit 0613cc1)
+- 🔧 **Bug Fixes:** Tech ID mismatches corrected (6/9 techs now working)
+- ✅ **Fixed IDs:** ocean_alkalinization → ocean_alkalinity_enhancement, beccs → bioenergy_ccs, sai → stratospheric_aerosols, smart_grid → smart_grids, green_hydrogen → hydrogen_economy
+- 📊 **Validation Results:** N=10, seed 42-51, 60 months - Mean effectiveness: 6.32% (deterministic, CV=0.0000%)
+- ✅ **Determinism:** PASS (perfect replicability)
+- ⚠️ **Below Target:** 6.32% < 10-20% target due to 3 missing techs in tech tree (enhanced_weathering, biochar, heat_pumps)
+- 🔧 **Script Fixes:** simulationResult.state → finalState, TARGET_MONTH 12 → 60, NUM_RUNS 1 → 10
+- 📖 **Research Foundation:** Grade A- (Sylvia validated Nov 12, 2025), research/climate_tech_deployment_timescales_20251112.md
+
 **Nov 21: Climate Deployment Timescales - Phase 1 Complete** (commit 9ae8281)
 - ✅ **Implementation Complete:** ClimateDeploymentDelayPhase (order 16.0) fully integrated
 - 🔬 **Three-Delay Model:** Activation, scaling, physical response delays for realistic tech deployment
