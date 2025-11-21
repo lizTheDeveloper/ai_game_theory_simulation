@@ -214,6 +214,34 @@ Armstrong McKay et al. (2022) cite IPCC AR6 for AMOC tipping thresholds, but AR6
 - **No full collapse:** None of 34 models show complete shutdown in 21st century simulations
 - **Resilience factors:** Global ocean dynamics (not just North Atlantic) determine stability
 
+### Context: 2024-2025 Climate Tipping Point Research
+
+Recent research highlights the broader tipping point context:
+
+**Greenland Ice Sheet (2024):**
+- 2024 marked 27th consecutive year of ice sheet shrinkage (269 gigatons/year average loss since 2002)
+- Abrupt melting following temperature overshoot can be mitigated by cooling below 1.5°C (Nature, 2024)
+- Simulations show threshold for slow collapse likely crossed at >1.5°C warming
+
+**AMOC Interactions (2024 ESD Study):**
+- Rate-induced tipping cascades identified: fast Greenland ice loss can trigger AMOC tipping even if AMOC hasn't crossed intrinsic threshold
+- Distinguishes "overshoot/bifurcation tipping cascades" from "rate-induced tipping cascades"
+- Under idealized forcing, both Greenland Ice Sheet and AMOC can tip through cascading interactions
+
+**Polar Ice Sheet Decisiveness (2024):**
+- Polar ice sheets (Greenland + West Antarctic) most decisive for tipping likelihoods
+- At 1.5°C warming, neglecting polar ice sheets alters expected number of tipped elements by >2× factor
+- Emphasizes importance of ice-ocean coupling in AMOC projections
+
+**2024 Temperature Breach:**
+- Planet temporarily breached 1.5°C warming threshold in 2024, highlighting urgency
+- First time crossing this threshold underscores relevance of tipping point research
+
+**Sources:**
+- ESD (2024). "Rate-induced tipping cascades arising from interactions between the Greenland Ice Sheet and AMOC." https://esd.copernicus.org/articles/15/635/2024/
+- Nature (2024). "Overshooting the critical threshold for the Greenland ice sheet." https://www.nature.com/articles/s41586-023-06503-9
+- Communications Earth & Environment (2024). "Polar ice sheets are decisive contributors to uncertainty in climate tipping projections." https://www.nature.com/articles/s43247-024-01799-5
+
 ### Credibility
 - **Published in Nature** (2025) - highest impact journal
 - **34 CMIP6 models** - most comprehensive ensemble to date
