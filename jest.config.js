@@ -10,6 +10,8 @@ module.exports = {
   testPathIgnorePatterns: [
     '/node_modules/',
     '<rootDir>/src/platform/tests/', // Node.js test runner (TAP format)
+    '<rootDir>/src/platform/__tests__/agentIntegration.test.ts', // Requires Python deps (numpy, psycopg2, redis)
+    '<rootDir>/src/platform/__tests__/e2e/fullWorkflow.test.ts', // E2E test - needs full server setup
     '<rootDir>/tests/integration/', // Node.js test runner
     '<rootDir>/tests/data/', // Node.js test runner
     '<rootDir>/tests/thresholds/', // Node.js test runner

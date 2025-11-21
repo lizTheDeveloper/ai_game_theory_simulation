@@ -52,6 +52,11 @@ describe('E2E: Full Citation Analysis Workflow', () => {
       // Table may not exist or owned by different user - that's OK
     }
     try {
+      await dbPool.query('DROP TABLE IF EXISTS auth_audit_log CASCADE');
+    } catch (err) {
+      // Table may not exist or owned by different user - that's OK
+    }
+    try {
       await dbPool.query('DROP TABLE IF EXISTS refresh_tokens CASCADE');
     } catch (err) {
       // Table may not exist or owned by different user - that's OK
@@ -62,36 +67,53 @@ describe('E2E: Full Citation Analysis Workflow', () => {
       // Table may not exist or owned by different user - that's OK
     }
 
-    // Create test schema
+    // Create test schema (matching authFlow schema - INTEGER IDs not UUID)
     await dbPool.query(`
       CREATE TABLE IF NOT EXISTS users (
-        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        id SERIAL PRIMARY KEY,
         email VARCHAR(255) UNIQUE NOT NULL,
-        password_hash TEXT NOT NULL,
-        role VARCHAR(50) NOT NULL,
+        password_hash VARCHAR(255) NOT NULL,
+        role VARCHAR(50) DEFAULT 'viewer',
         is_active BOOLEAN DEFAULT true,
+        email_verified BOOLEAN DEFAULT false,
         failed_login_attempts INTEGER DEFAULT 0,
         locked_until TIMESTAMP,
-        created_at TIMESTAMP DEFAULT NOW(),
-        updated_at TIMESTAMP DEFAULT NOW()
+        last_login TIMESTAMP,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `);
 
     await dbPool.query(`
       CREATE TABLE IF NOT EXISTS refresh_tokens (
-        token TEXT PRIMARY KEY,
-        user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        token VARCHAR(500) PRIMARY KEY,
+        user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
         expires_at TIMESTAMP NOT NULL,
-        revoked BOOLEAN DEFAULT false,
+        created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+        revoked BOOLEAN NOT NULL DEFAULT false,
         revoked_at TIMESTAMP,
-        created_at TIMESTAMP DEFAULT NOW()
+        CONSTRAINT valid_expiry CHECK (expires_at > created_at)
+      )
+    `);
+
+    await dbPool.query(`
+      CREATE TABLE IF NOT EXISTS auth_audit_log (
+        id SERIAL PRIMARY KEY,
+        user_id INTEGER REFERENCES users(id),
+        email VARCHAR(255) NOT NULL,
+        event_type VARCHAR(100) NOT NULL,
+        ip_address VARCHAR(45),
+        user_agent TEXT,
+        success BOOLEAN NOT NULL,
+        failure_reason TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `);
 
     await dbPool.query(`
       CREATE TABLE IF NOT EXISTS citation_analyses (
-        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-        user_id UUID REFERENCES users(id),
+        id SERIAL PRIMARY KEY,
+        user_id INTEGER REFERENCES users(id),
         text TEXT NOT NULL,
         claimed_source TEXT NOT NULL,
         credibility_score NUMERIC(3, 2),
@@ -113,6 +135,11 @@ describe('E2E: Full Citation Analysis Workflow', () => {
       // Ignore - may not have permission
     }
     try {
+      await dbPool.query('DROP TABLE IF EXISTS auth_audit_log CASCADE');
+    } catch (err) {
+      // Ignore - may not have permission
+    }
+    try {
       await dbPool.query('DROP TABLE IF EXISTS refresh_tokens CASCADE');
     } catch (err) {
       // Ignore - may not have permission
@@ -127,8 +154,9 @@ describe('E2E: Full Citation Analysis Workflow', () => {
   });
 
   beforeEach(async () => {
-    // Clear data before each test
+    // Clear data before each test (in order that respects foreign keys)
     await dbPool.query('DELETE FROM citation_analyses');
+    await dbPool.query('DELETE FROM auth_audit_log');
     await dbPool.query('DELETE FROM refresh_tokens');
     await dbPool.query('DELETE FROM users');
     await redisClient.flushdb();
