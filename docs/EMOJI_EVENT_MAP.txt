@@ -155,6 +155,7 @@
 🟢 | Success indicator/green light
 🧑 | Person (base emoji, used in composite 🧑‍🔬)
 🧑‍🔬 | Citizen science/volunteer research
+🏗️ | Architecture/infrastructure/building
 
 # Debug & Technical Events
 🔧 | Debug deployment
