@@ -1,0 +1,16 @@
+[Unit]
+Description=Autonomous Worker - Hourly Implementation Work
+After=network.target
+
+[Service]
+Type=oneshot
+User=root
+WorkingDirectory=/home/user/ai_game_theory_simulation
+ExecStart=/home/user/ai_game_theory_simulation/autonomous-worker.sh
+StandardOutput=append:/home/user/ai_game_theory_simulation/logs/systemd_worker.log
+StandardError=append:/home/user/ai_game_theory_simulation/logs/systemd_worker.log
+# Timeout after 50 minutes (script has internal 45min timeout + 5min cleanup)
+TimeoutStartSec=3000
+
+[Install]
+WantedBy=multi-user.target
