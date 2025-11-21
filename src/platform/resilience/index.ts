@@ -11,7 +11,7 @@
 export {
   CircuitBreaker,
   CircuitBreakerManager,
-  CircuitBreakerState,
+  CircuitState as CircuitBreakerState,  // Export with alias for backward compatibility
   circuitBreakerManager,
   type CircuitBreakerConfig,
   type CircuitBreakerMetrics

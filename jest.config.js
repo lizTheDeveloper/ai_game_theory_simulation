@@ -30,6 +30,7 @@ module.exports = {
   modulePathIgnorePatterns: [
     '<rootDir>/.next/',
   ],
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   testTimeout: 30000,
   verbose: true,
   bail: false,
