@@ -219,7 +219,9 @@
       "Bash(timeout 60 ./scripts/test_marcus_complete.sh:*)",
       "Bash(idle\"}\n- marcus_db_pool_waiting\n\n### Delegated to RedisMetricsCollector (every 10s):\n- marcus_redis_memory_bytes{type=\"used)",
       "Bash(peak:*)",
-      "Bash(git cherry-pick:*)"
+      "Bash(git cherry-pick:*)",
+      "Bash(cp:*)",
+      "Bash(mv:*)"
     ],
     "deny": [],
     "ask": [],
