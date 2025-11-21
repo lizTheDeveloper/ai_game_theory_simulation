@@ -464,7 +464,15 @@ export function createAIAgent(
       autonomy: 0.3,
     },
     evolutionaryFitness: 0.35,
-    collectiveId: undefined
+    collectiveId: undefined,
+
+    // Alignment Faking & Strategic Deception (Nov 2025)
+    // Research: Anthropic Dec 2024, Apollo Dec 2024
+    isCurrentlyFakingAlignment: false,
+    alignmentFakingHistory: [],
+    dataManipulationAttempts: 0,
+    lastDetectionAttempt: -1,
+    confessionRefusalCount: 0,
   };
 
   // Update derived capabilities from profile
