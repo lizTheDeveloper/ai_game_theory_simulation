@@ -608,6 +608,7 @@ export function createDefaultInitialState(
   }
   
   const state: GameState = {
+    schemaVersion: 1, // State Migration System (Nov 21, 2025) - Current schema version
     currentMonth: initialMonth,
     currentDay: 1,
     currentYear: initialYear,
