@@ -279,6 +279,15 @@ export function updateDeploymentProgress(
       // Get deployment start month (track in deployment metadata)
       if (!deployment.deploymentStartMonth) {
         deployment.deploymentStartMonth = gameState.currentMonth;
+
+        // HIGH-1 FIX (Nov 21, 2025): Increment recent deployments counter
+        // This enables coordination failure detection in CoordinatedDeploymentPhase
+        gameState.transitionManagementSystem.recentDeploymentsCount += 1;
+
+        console.log(`\n📊 NEW TECH DEPLOYMENT STARTED (Month ${gameState.currentMonth})`);
+        console.log(`   Tech: ${deployment.techId}`);
+        console.log(`   Region: ${region}`);
+        console.log(`   Total recent deployments: ${gameState.transitionManagementSystem.recentDeploymentsCount}`);
       }
 
       const monthsSinceStart = gameState.currentMonth - deployment.deploymentStartMonth;

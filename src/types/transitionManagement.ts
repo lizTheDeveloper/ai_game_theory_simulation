@@ -156,6 +156,25 @@ export interface TransitionManagementSystem {
   /** Number of breakthrough technologies deployed in last 12 months */
   recentDeploymentsCount: number;
 
+  // === COORDINATION FAILURES (Nov 21, 2025) ===
+
+  /** Count of coordination failures that have occurred */
+  coordinationFailures: number;
+
+  /** Whether a coordination failure is currently active */
+  coordinationFailureActive: boolean;
+
+  /** Mortality multiplier when coordination failure is active (2-5x) */
+  coordinationFailureMultiplier: number;
+
+  // === REBOUND EFFECTS (Nov 21, 2025) ===
+
+  /** Technology effectiveness decay due to Jevons paradox [0-1] */
+  reboundEffectiveness: number;
+
+  /** Annual decay rate for rebound effectiveness (7.5% per year) */
+  reboundDecayRate: number;
+
   // === REGIONAL HETEROGENEITY ===
 
   /** Regional readiness by income/institutional tier */
