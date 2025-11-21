@@ -167,19 +167,35 @@ export function applyEnergyConstrainedCleanup(
   // Research: EPA 2024 - 75 GJ/ton median, IEA 2024 - 600 EJ/year global energy
   // Cleanup competes with other energy uses
 
-  // Access renewable energy surplus (total renewable capacity - demand)
-  const renewableCapacity = assertStateProperty(
-    state.resourceEconomy?.energy,
-    'renewableCapacity',
-    {
-      location: 'applyEnergyConstrainedCleanup',
-      month: state.currentMonth,
-    }
+  // Calculate renewable capacity from individual sources (no dedicated renewableCapacity field exists)
+  const energySystem = state.resourceEconomy?.energy;
+  const solarCapacity = assertStateProperty(
+    energySystem?.capacity,
+    'solar',
+    { location: 'applyEnergyConstrainedCleanup', month: state.currentMonth }
   );
+  const windCapacity = assertStateProperty(
+    energySystem?.capacity,
+    'wind',
+    { location: 'applyEnergyConstrainedCleanup', month: state.currentMonth }
+  );
+  const hydroCapacity = assertStateProperty(
+    energySystem?.capacity,
+    'hydro',
+    { location: 'applyEnergyConstrainedCleanup', month: state.currentMonth }
+  );
+  const fusionCapacity = assertStateProperty(
+    energySystem?.capacity,
+    'fusion',
+    { location: 'applyEnergyConstrainedCleanup', month: state.currentMonth }
+  );
+
+  const totalRenewableCapacity = solarCapacity + windCapacity + hydroCapacity + fusionCapacity;
+  const renewableCapacity = totalRenewableCapacity > 0 ? totalRenewableCapacity : 1000;
 
   const energyDemand = assertStateProperty(
     state.resourceEconomy?.energy,
-    'demand',
+    'totalDemand',
     {
       location: 'applyEnergyConstrainedCleanup',
       month: state.currentMonth,
