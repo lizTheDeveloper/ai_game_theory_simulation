@@ -480,12 +480,25 @@ export function updateNitrogenFoodCoupling(state: GameState): number {
 
     // Update deployed tech IDs (from placeholder to actual tech)
     // Only store tech IDs that are actually contributing
-    region.deployedTechnologies = getNitrogenReductionDeployment(state)
-      .length > 0
-      ? Object.keys(state.techTreeState.regionalDeployment['global'] || {})
-          .filter(techId => ['soil_p_optimization', 'vertical_farming', 'precision_fermentation',
-                             'circular_food_systems', 'drought_resistant_crops'].includes(techId))
-      : [];
+    // MEDIUM-1 FIX (Nov 21, 2025): Corrected tech ID list from phosphorus to nitrogen
+    if (state.techTreeState) {
+      const unlockedTechSet = new Set(state.techTreeState.unlockedTech);
+      const regionalDeployment = state.techTreeState.regionalDeployment[region.region] || [];
+      const deployedTechSet = new Set(regionalDeployment.map(d => d.techId));
+
+      // Nitrogen tech IDs (matches getNitrogenReductionDeployment)
+      const nitrogenTechIds = [
+        'precision_agriculture', 'biological_nitrogen_fixation', 'nitrogen_circular_food',
+        'ecosystem_restoration_nitrogen', 'nitrogen_monitoring_networks', 'green_ammonia_production',
+        'rhizosphere_engineering', 'nitroplast_integration', 'precision_fermentation_nitrogen',
+        'regional_nitrogen_policies', 'soil_health_restoration', 'integrated_nutrient_management'
+      ];
+
+      region.deployedTechnologies = nitrogenTechIds
+        .filter(id => unlockedTechSet.has(id) && deployedTechSet.has(id));
+    } else {
+      region.deployedTechnologies = [];
+    }
   }
 
   // Global food production index (weighted average)
