@@ -32,7 +32,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 **Nov 21: Comprehensive Architecture Integration Review Complete** (commit cb574a0)
 - ✅ **Grade: A (Excellent)** - 0 CRITICAL issues, 0 HIGH priority issues, 2 MEDIUM priority (minor cleanup)
 - 🏗️ **Dependency Management:** 89 of 95 phases now declare explicit dependencies with PhaseOrchestrator validation
-- 🎯 **Key Systems Validated:**
+- ✓ **Key Systems Validated:**
   - Nuclear winter cascades (Nov 20) - proper two-phase cascade with assertions
   - Nitrogen-food coupling (Nov 18) - exemplary single-writer pattern preventing race conditions
   - Irreversibility framework (Nov 18) - multi-dimensional tipping points with probabilistic thresholds
@@ -1201,6 +1201,105 @@ All three critical items delivered:
 - **PAUSED:** Layer 2 Remediation, new features, UI updates
 
 See: [MASTER_IMPLEMENTATION_ROADMAP.md](/plans/MASTER_IMPLEMENTATION_ROADMAP.md) for detailed status.
+
+---
+
+## Research Validation Status & Known Limitations
+
+**Last Updated:** November 21, 2025 (Research Skeptic Critique)
+
+This section documents **critical parameter uncertainty findings** identified during recent research validation audits. All parameters are grounded in peer-reviewed research (2024-2025), but several contain uncertainty that should be understood when interpreting outcomes.
+
+### Critical Uncertainties (Nov 21 Skeptic Critique)
+
+**Grade: B- (Sound mechanisms, parameter uncertainty requires careful interpretation)**
+
+#### Parameter Uncertainty Summary
+
+| Parameter | Value | Uncertainty Range | Status | Impact | Mitigation |
+|-----------|-------|-------------------|--------|--------|-----------|
+| **Nuclear winter yield loss** | 80% | ±30% (60-110%) | ⚠️ EXTRAPOLATED | HIGH | Sensitivity range: 60% vs 80% outcomes differ by 15% |
+| **Nitrogen reduction feasible** | 40% | 20-60% (politically feasible, not technically sufficient) | ⚠️ SPECULATIVE | HIGH | Clarified: 55-60% reduction required per van Vliet et al. 2024 |
+| **PFAS irreversibility** | 90% | 80-95% (expert estimate) | ⚠️ EXPERT EST. | MEDIUM | No direct quantitative source; based on Montreal Protocol analogies |
+| **Kenya UBI effect persistence** | 48% | Valid as ONE-TIME effect; reverts without sustained transfers | ⚠️ TIME-LIMITED | MEDIUM | Comment updated to note effect reversion |
+
+#### 3 Critical Issues Identified
+
+1. **Nuclear Winter Model Extrapolation**
+   - **Issue:** Penn State model trained on 60-year historical weather; used for unprecedented nuclear event outside training distribution
+   - **Status:** Treatment as "empirical" may overstate confidence
+   - **Recommendation:** Add ±30% uncertainty bounds to outcomes, sensitivity test at 60%/70%/80% yield loss
+   - **Affected Outcomes:** Worst-case famine scenarios (most sensitive to this parameter)
+   - **Source:** reviews/research_skeptic_critique_20251121.md
+
+2. **Nitrogen Reduction Feasibility**
+   - **Issue:** Simulation models 20-40% reduction feasible; van Vliet et al. 2024 shows 55-60% reduction required for 8B people within planetary boundaries
+   - **Status:** 40% is politically feasible but technically insufficient for full boundary compliance
+   - **Recommendation:** Add hard constraint: "cannot go below 90 Mt N/year without starvation risk"
+   - **Affected Outcomes:** Long-term (2050+) nitrogen crisis resolution scenarios
+   - **Source:** van Vliet et al. 2024, Zhang et al. 2021
+
+3. **Irreversibility Framework Conflation**
+   - **Issue:** Framework treats all "irreversible" systems the same; literature distinguishes Type 1 (thermodynamically impossible) vs Type 2 (economically difficult)
+   - **Status:** Simulation overstates permanence; restoration IS happening (Florida coral: $1-3/m²/year, 30-50% success)
+   - **Recommendation:** Model restoration as explicit Phase 2 work; split irreversibility types
+   - **Affected Outcomes:** Long-term recovery scenarios; "collapse" scenarios show as permanent when technically reversible
+   - **Source:** Coral restoration literature (2024-2025)
+
+### 5 Significant Modeling Gaps
+
+| Gap | Evidence | Impact | Priority |
+|-----|----------|--------|----------|
+| **Supply chain mineral constraints** | IEA: Lithium limits solar deployment 28%, rare earths constrain wind | Renewable deployment 20-40% lower than projected | HIGH |
+| **Rebound effects** | Sorrell et al. 2024: 30-60% of efficiency gains rebounded (Jevons paradox) | Climate mitigation timescales extend 15-30% | HIGH |
+| **AI deception detection scaling** | Anthropic 2025: 95% success (7B params) → 60% (large models) | Assumes deployment-ready; actually in research phase | MEDIUM |
+| **Supply chain lag** | Grid integration: 2-5 years between installation and use | Effective deployment reduces 10-15% due to time lag | MEDIUM |
+| **Compound uncertainty** | 29+ parameter chain; 80% individual confidence ≠ 80% compound | Outcomes stated as point estimates vs confidence intervals | MEDIUM |
+
+**Interpretation Guidance:**
+- **Worst-case scenarios** (nuclear war, cascading collapse) - Most affected by parameter uncertainty; actual outcomes likely 15-30% less severe
+- **Best-case scenarios** (coordinated deployment, breakthrough technologies) - Less affected; resource constraints add 10-20% friction
+- **Mid-range scenarios** (managed decline, partial stabilization) - Moderate uncertainty; directional findings robust
+- **Directionality** (whether system trends toward utopia/dystopia/extinction) - **Highly robust** to parameter uncertainty
+
+### What This Means for Simulation Outputs
+
+**High Confidence:**
+- ✅ Directional trends (climate worsens without intervention, AI coordination reduces mortality, etc.)
+- ✅ Relative comparisons (scenario A better than scenario B)
+- ✅ Tipping point existence (coral reef collapse is real, not parametric uncertainty)
+
+**Medium Confidence:**
+- ⚠️ Absolute outcome numbers (e.g., "8.1B population" at 2050)
+- ⚠️ Timing of phase transitions (e.g., "AMOC collapse in year 47")
+- ⚠️ Magnitude of effects (e.g., "30% mortality reduction with UBI")
+
+**Lower Confidence:**
+- ❌ Precise parameter values in speculative domains (AI deception scaling)
+- ❌ Compound effects across 30+ coupled systems
+- ❌ Recovery timescales for "irreversible" systems
+
+### Recommended Research Priority Actions
+
+**This Week:**
+1. Mark extrapolated parameters with ±30-50% uncertainty bounds in code comments
+2. Add rebound effects multiplier (0.4-0.7) to efficiency improvements
+3. Document mineral supply constraints as hard bottlenecks
+
+**This Month:**
+4. Run sensitivity analysis: nuclear yield loss (60% vs 80%), nitrogen reduction (10% vs 40%)
+5. Report outcomes as confidence intervals, not point estimates
+6. Create parameter-to-validation mapping (which are empirical vs extrapolated)
+
+**This Quarter:**
+7. Model restoration pathways for "irreversible" systems (separate phase)
+8. Add grid integration lag (2-5 years) to renewable deployment
+9. Quantify rebound effects across all efficiency technologies
+10. Implement compound uncertainty analysis for major outcome pathways
+
+**Complete Review:** See [reviews/research_skeptic_critique_20251121.md](/reviews/research_skeptic_critique_20251121.md) for full analysis.
+
+---
 
 ## 🎯 Quick Start
 
