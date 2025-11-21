@@ -332,11 +332,115 @@ const subsidizeOrganization: CategorizedGovernmentAction = {
 };
 
 /**
+ * Adjust Redistribution Policy
+ * Set ongoing redistribution level as % of GDP (repeatable action for scenario testing)
+ *
+ * Research foundation:
+ * - Nordic model: ~30-35% GDP redistribution → Gini ~0.25-0.27 (OECD 2024)
+ * - US baseline: ~15% GDP redistribution → Gini ~0.40 (OECD 2024)
+ * - Each 10% GDP increase → ~0.04-0.05 Gini reduction (Atkinson 2015)
+ * - Wilkinson & Pickett (2009): Gini >0.45 = unstable societies
+ */
+const adjustRedistributionPolicy: CategorizedGovernmentAction = {
+  id: 'adjust_redistribution_policy',
+  name: 'Adjust Redistribution Policy',
+  description: 'Set ongoing redistribution as % of GDP via progressive taxation and transfers (minimal 5%, moderate 15%, aggressive 25%, transformative 35%). Repeatable action for adjusting equality.',
+  agentType: 'government',
+  category: 'economic',
+  energyCost: 2,
+
+  canExecute: (state: GameState): boolean => {
+    // Require industrial capacity for redistribution infrastructure
+    return state.globalMetrics.economicTransitionStage >= 2.0;
+  },
+
+  execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {
+    // Calculate GDP for redistribution amount
+    const population = state.humanPopulationSystem?.population || 8.0;
+    const qol = state.globalMetrics.qualityOfLife || 1.0;
+    const stage = state.globalMetrics.economicTransitionStage || 1.0;
+    const gdp = population * qol * (1 + stage * 0.2) * 10; // GDP in $T
+
+    // Determine redistribution level based on scenario priorities or default
+    const scenarioPriorities = state.scenarioConfig?.governmentPriorities;
+    let redistributionPercent = 0.15; // Default: moderate (15% GDP)
+
+    if (scenarioPriorities?.redistributionLevel !== undefined) {
+      // Map scenario priority [0,1] to redistribution levels
+      const priority = scenarioPriorities.redistributionLevel;
+      if (priority >= 0.8) {
+        redistributionPercent = 0.35; // Transformative: 35% GDP (Nordic+)
+      } else if (priority >= 0.6) {
+        redistributionPercent = 0.25; // Aggressive: 25% GDP
+      } else if (priority >= 0.4) {
+        redistributionPercent = 0.15; // Moderate: 15% GDP (US baseline)
+      } else {
+        redistributionPercent = 0.05; // Minimal: 5% GDP
+      }
+    }
+
+    // Calculate Gini reduction (research: each 10% GDP → 0.04-0.05 Gini reduction)
+    const baselineGini = 0.40; // US baseline without redistribution
+    const giniReduction = redistributionPercent * 0.4; // 35% GDP → 0.14 Gini reduction
+    const targetGini = Math.max(0.20, baselineGini - giniReduction); // Floor at 0.20 (theoretical minimum)
+
+    // Get current Gini
+    const currentGini = state.qualityOfLifeSystems.distribution?.globalGini || 0.40;
+
+    // Gradual adjustment (don't jump instantly)
+    const adjustment = (targetGini - currentGini) * 0.3; // 30% of gap per action
+    const newGini = currentGini + adjustment;
+
+    // Update state
+    if (state.qualityOfLifeSystems.distribution) {
+      state.qualityOfLifeSystems.distribution.globalGini = newGini;
+    }
+    if (state.qualityOfLifeSystems.regionalInequality) {
+      state.qualityOfLifeSystems.regionalInequality.giniCoefficient = newGini;
+    }
+
+    // Improve wealth distribution metric
+    state.globalMetrics.wealthDistribution = Math.min(
+      1.0,
+      state.globalMetrics.wealthDistribution + Math.abs(adjustment) * 0.5
+    );
+
+    // Legitimacy impact (progressive policies can be controversial)
+    if (redistributionPercent > 0.25) {
+      state.government.legitimacy = Math.max(0, state.government.legitimacy - 0.03); // Controversial
+    } else {
+      state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.01); // Popular
+    }
+
+    return {
+      success: true,
+      effects: {
+        giniCoefficient: newGini,
+        redistributionPercent: redistributionPercent * 100,
+        gdpRedistributed: gdp * redistributionPercent
+      },
+      events: [{
+        id: `redistribution_${state.currentMonth}_${Math.floor(random() * 1000000)}`,
+        type: 'policy',
+        timestamp: state.currentMonth,
+        severity: 'info',
+        agent: 'Government',
+        title: 'Redistribution Policy Adjusted',
+        description: `Government set redistribution to ${(redistributionPercent * 100).toFixed(1)}% of GDP. Gini coefficient: ${currentGini.toFixed(3)} → ${newGini.toFixed(3)} (target: ${targetGini.toFixed(3)})`,
+        effects: { giniChange: adjustment }
+      }],
+      message: `💰 Redistribution set to ${(redistributionPercent * 100).toFixed(1)}% GDP, Gini: ${newGini.toFixed(3)}`
+    };
+  }
+};
+
+/**
  * All economic actions
  */
 export const economicActions: CategorizedGovernmentAction[] = [
   implementGenerousUBI,
   implementMeansTestedBenefits,
   implementJobGuarantee,
-  subsidizeOrganization
+  subsidizeOrganization,
+  adjustRedistributionPolicy
 ];
