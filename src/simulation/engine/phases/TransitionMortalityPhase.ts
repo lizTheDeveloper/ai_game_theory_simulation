@@ -1,16 +1,44 @@
 /**
- * Transition Mortality Phase
+ * ⚠️ DEPRECATED: TransitionMortalityPhase (Nov 21, 2025)
  *
- * Calculates mortality from rapid technology deployment and economic transitions
- * based on comprehensive historical evidence.
+ * **STATUS:** This phase is DEPRECATED and should NOT be used.
+ * **REPLACEMENT:** CoordinatedDeploymentPhase (order 10.5)
  *
- * Research: /research/transition_mortality_coordination_effectiveness_20251115.md
+ * **Reason for deprecation:**
+ * This phase was superseded by CoordinatedDeploymentPhase which uses validated
+ * research (Grade B+, Nov 21, 2025) with critical corrections:
+ * - CRITICAL-1: Time-based pace factor (deployment duration matters)
+ * - CRITICAL-2: Bottleneck constraints (trust/governance ceilings)
+ * - CRITICAL-3: Regional inequality (documented limitations)
+ * - HIGH-1: Evidence-weighted support systems (retraining removed, weak evidence)
+ *
+ * **Double-counting issue:**
+ * Both phases calculate transition mortality from the same tech deployments.
+ * Running both phases would double-count deaths. CoordinatedDeploymentPhase
+ * runs earlier (order 10.5) and has more validated research backing.
+ *
+ * **Original research:** /research/transition_mortality_coordination_effectiveness_20251115.md
  * - 27 peer-reviewed sources (2009-2025)
  * - Calibrated against 3 historical cases
  * - KEY FINDING: 20-50x mortality differential between chaotic and coordinated transitions
  *
- * Runs after: Technology deployment phases, AI governance phases, economic systems
- * Runs before: Population update phases, QoL calculation
+ * **Replacement research:** /research/ai_coordination_transition_mechanics_VALIDATED_20251121.md
+ * - Grade B+ validation (Sylvia review)
+ * - 3 CRITICAL corrections applied
+ * - Power-law scaling (not linear)
+ * - Time-based pace factor
+ *
+ * **To remove this phase:**
+ * 1. Remove registration from src/simulation/engine.ts (line 577)
+ * 2. Remove import from src/simulation/engine.ts (line 171)
+ * 3. Delete this file
+ * 4. Update documentation references to point to CoordinatedDeploymentPhase
+ *
+ * ===================================================================
+ * DEPRECATED CODE BELOW - DO NOT USE
+ * ===================================================================
+ *
+ * Original implementation preserved for reference only.
  *
  * DEFENSIVE CODING (Roy's NaN Checklist):
  * ✅ All calculations use assertFinite
@@ -600,8 +628,27 @@ export const TransitionMortalityPhase: SimulationPhase = {
     state.transitionMortality.annualTransitionMortality = mortalityResults.annualExcessMortality;
     state.transitionMortality.mortalityByMechanism = mortalityResults.mortalityByMechanism;
 
+    // CRITICAL FIX (Nov 21, 2025): Apply deaths to regional populations FIRST
+    // to prevent race condition with HumanPopulationPhase aggregation.
+    //
+    // Same bug as CoordinatedDeploymentPhase: modifying global population
+    // without updating regions causes silent data loss when aggregation runs.
+    const regions = state.humanPopulationSystem.regionalPopulations;
+    if (!regions || regions.length === 0) {
+      throw new Error(
+        `❌ CRITICAL: regionalPopulations missing at month ${state.currentMonth}\n` +
+        `  Regional populations required to apply transition deaths.\n` +
+        `  This indicates initialization.ts failed to create regional populations.`
+      );
+    }
+
+    // CRITICAL: Use regional sum as source of truth (NOT global value)
+    // If a previous phase modified regions without updating global, using global
+    // would cause wrong death distribution fractions.
+    const regionalSumMillions = regions.reduce((sum, r) => sum + r.population, 0);
+    const population = regionalSumMillions / 1000; // Convert millions → billions
+
     // Apply population reduction
-    const population = state.humanPopulationSystem.population;
     const annualDeaths = assertFinite(
       (mortalityResults.annualExcessMortality / 1000) * population,
       {
@@ -622,6 +669,31 @@ export const TransitionMortalityPhase: SimulationPhase = {
       }
     );
 
+    // Apply deaths proportionally to each region
+    for (const region of regions) {
+      const regionFraction = region.population / regionalSumMillions; // Fraction of REGIONAL sum
+      const regionalDeaths = (monthlyDeaths * 1000) * regionFraction; // Convert billions → millions for regional scale
+
+      region.population = assertFinite(
+        Math.max(0, region.population - regionalDeaths),
+        {
+          location: 'TransitionMortalityPhase.execute (regional mortality)',
+          valueName: `${region.name} population after transition deaths`,
+          month: state.currentMonth,
+          additionalInfo: {
+            regionalDeaths,
+            populationBefore: region.population,
+            regionFraction
+          }
+        }
+      );
+
+      // Track at regional level
+      region.monthlyExcessDeaths = (region.monthlyExcessDeaths || 0) + regionalDeaths;
+      region.cumulativeCrisisDeaths = (region.cumulativeCrisisDeaths || 0) + regionalDeaths;
+    }
+
+    // Update global population (will be re-aggregated later, but set correctly now)
     state.humanPopulationSystem.population = assertFinite(
       Math.max(0, population - monthlyDeaths),
       {
@@ -631,6 +703,24 @@ export const TransitionMortalityPhase: SimulationPhase = {
         additionalInfo: { oldPopulation: population, monthlyDeaths }
       }
     );
+
+    // ASSERTION: Verify regional sum matches global value
+    // NOTE: Regional populations are in MILLIONS, global is in BILLIONS
+    // Recalculate regional sum AFTER applying deaths
+    const regionalSumMillionsAfter = regions.reduce((sum, r) => sum + r.population, 0);
+    const regionalSumBillions = regionalSumMillionsAfter / 1000;
+    const globalValue = state.humanPopulationSystem.population;
+    const discrepancy = Math.abs(regionalSumBillions - globalValue);
+
+    if (discrepancy > 0.001) {
+      throw new Error(
+        `❌ RACE CONDITION DETECTED: Regional/global population desync after transition deaths (TransitionMortalityPhase)\n` +
+        `  Month: ${state.currentMonth}\n` +
+        `  Global value: ${globalValue.toFixed(6)}B\n` +
+        `  Regional sum: ${regionalSumBillions.toFixed(6)}B (${regionalSumMillions.toFixed(2)}M)\n` +
+        `  Discrepancy: ${discrepancy.toFixed(6)}B`
+      );
+    }
 
     state.transitionMortality.cumulativeTransitionDeaths += monthlyDeaths;
 

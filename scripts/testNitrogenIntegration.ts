@@ -2,14 +2,14 @@
  * Quick validation test for nitrogen-food coupling integration
  *
  * Tests:
- * 1. collectNitrogenReducingTechEffectiveness() returns valid array
+ * 1. getNitrogenReductionDeployment() returns valid array
  * 2. updateNitrogenFoodCoupling() runs without NaN errors
  * 3. Regional nitrogen state is properly updated
  * 4. Global food production index is valid
  */
 
 import { createDefaultInitialState } from '../src/simulation/initialization';
-import { collectNitrogenReducingTechEffectiveness, updateNitrogenFoodCoupling } from '../src/simulation/nitrogenFoodCoupling';
+import { getNitrogenReductionDeployment, updateNitrogenFoodCoupling } from '../src/simulation/nitrogenFoodCoupling';
 
 console.log('=== Nitrogen-Food Coupling Integration Test ===\n');
 
@@ -19,9 +19,9 @@ const rng = () => Math.random();
 // Initialize game state
 const state = createDefaultInitialState(rng, 'standard');
 
-console.log('Step 1: Testing collectNitrogenReducingTechEffectiveness()...');
+console.log('Step 1: Testing getNitrogenReductionDeployment()...');
 try {
-  const techEffectiveness = collectNitrogenReducingTechEffectiveness(state);
+  const techEffectiveness = getNitrogenReductionDeployment(state);
   console.log(`✅ Tech effectiveness array: ${techEffectiveness.length} items`);
   console.log(`   Values: ${techEffectiveness.map(v => v.toFixed(3)).join(', ')}`);
 
@@ -33,7 +33,7 @@ try {
   }
   console.log('✅ All effectiveness values valid [0, 1]\n');
 } catch (error) {
-  console.error('❌ collectNitrogenReducingTechEffectiveness() failed:', error);
+  console.error('❌ getNitrogenReductionDeployment() failed:', error);
   process.exit(1);
 }
 
@@ -116,7 +116,7 @@ try {
   console.log('✅ Deployed soil_p_optimization at 50% level');
 
   // Re-run nitrogen coupling with deployed tech
-  const techEffectiveness = collectNitrogenReducingTechEffectiveness(state);
+  const techEffectiveness = getNitrogenReductionDeployment(state);
   console.log(`✅ Tech effectiveness after deployment: ${techEffectiveness.length} items`);
   console.log(`   Values: ${techEffectiveness.map(v => v.toFixed(3)).join(', ')}`);
 
@@ -135,6 +135,12 @@ try {
     console.log(`✅ Tech effectiveness matches expected: ${expectedEffectiveness.toFixed(3)}`);
   }
 
+  // CRITICAL FIX (Nov 21, 2025): Clear __lastUpdateMonth marker to allow second call
+  // This is a test script, not a real simulation step - we're testing the function in isolation
+  // In real simulation, updateNitrogenFoodCoupling is only called once per month by NitrogenFoodCouplingPhase
+  const nitrogenState = state.planetaryBoundariesSystem.regionalNitrogenManagement as any;
+  delete nitrogenState.__lastUpdateMonth;
+
   // Update nitrogen coupling with deployed tech
   const globalFoodIndex = updateNitrogenFoodCoupling(state);
   console.log(`✅ Global food index with tech: ${globalFoodIndex.toFixed(3)}`);
@@ -150,7 +156,7 @@ try {
 }
 
 console.log('=== All Tests Passed! ===');
-console.log('✅ collectNitrogenReducingTechEffectiveness() works');
+console.log('✅ getNitrogenReductionDeployment() works');
 console.log('✅ updateNitrogenFoodCoupling() works');
 console.log('✅ Regional nitrogen state valid');
 console.log('✅ Technology integration works');

@@ -383,11 +383,32 @@ export function getNitrogenReductionDeployment(state: GameState): number[] {
  * 4. Aggregate to global food production index
  * 5. Update regional management state (separate read/write for safety)
  *
- * CRITICAL: This function MUST be called exactly ONCE per simulation step
- * to avoid read-modify-write race conditions.
+ * CRITICAL SYNCHRONIZATION CONSTRAINT (Nov 21, 2025 - Race Condition Fix):
+ * ========================================================================
+ * This function is the SINGLE WRITER for nitrogen-food coupling state.
+ *
+ * OWNERSHIP:
+ * - NitrogenFoodCouplingPhase (order 19.6) is the ONLY caller
+ * - Called exactly ONCE per simulation step
+ * - Writes to state.planetaryBoundariesSystem.globalFoodProductionIndex
+ *
+ * READERS:
+ * - PlanetaryBoundariesPhase (order 21.0) depends on NitrogenFoodCouplingPhase
+ * - Must READ from state.planetaryBoundariesSystem.globalFoodProductionIndex
+ * - NEVER call this function directly from other phases
+ *
+ * RACE CONDITION PREVENTION:
+ * - Function tracks last update month internally (__lastUpdateMonth)
+ * - Throws error if called multiple times in same month
+ * - This prevents read-modify-write conflicts
+ *
+ * DO NOT EXPORT THIS FUNCTION. It is intentionally module-private to prevent
+ * external callers from breaking phase synchronization.
  *
  * @param state - Current game state
  * @returns Global food production multiplier [0, 2] where 1.0 = baseline
+ *
+ * @internal - Only called by NitrogenFoodCouplingPhase
  */
 export function updateNitrogenFoodCoupling(state: GameState): number {
   // CRITICAL-2 FIX: Assertion to detect multiple calls per step
