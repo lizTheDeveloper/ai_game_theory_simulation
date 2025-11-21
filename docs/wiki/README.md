@@ -5799,7 +5799,10 @@ deploymentSpeed = baselineSpeed
 - BCG/McKinsey (2024): AI implementation 26% success, 74% fail - high variance (NOT uniform 30-40%)
 - Prosci (2020, 2022): Change management - 5-7 years for major transformations
 - Historical case studies: Electrification 40 years, EHR 10 years, Cloud 8 years, COVID 20-25x faster
+- **COVID-19 vaccine adoption (2024-2025 data):** BMC Public Health 2024 meta-analysis (519 studies, 8M participants) - 67.8% acceptance vs 42.3% uptake globally, U.S. adoption peak 75% (2022) declining to 23% (2024-25 season) - demonstrates rapid crisis-driven adoption followed by steep post-crisis decline
+- **Renewable energy projections (2024-2025):** IEA Renewables 2024-2025 - 4,600 GW new capacity 2025-2030 (double previous period), solar PV ~80% of expansion, renewables overtake coal in 2025, 46% of global electricity by 2030
 - **Note**: ~~Previously cited Damschroder 2009/Fixsen 2005 for "AI helps 30-40%"~~ - both papers predate modern AI, never mentioned it - corrected Oct 29, 2025
+- **Detailed timelines:** See research/tech_diffusion_adoption_timelines_20251101.md (updated Nov 21, 2025 with 2024-2025 empirical data)
 
 **Files:**
 - `src/simulation/techTree/deploymentSpeed.ts` (NEW - 435 lines)
