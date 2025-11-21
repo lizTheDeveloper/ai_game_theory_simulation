@@ -24,11 +24,46 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **Research Quality:** A- (4 CRITICAL parameter fixes applied, 0 CRITICAL age issues) ✅ EXCELLENT
 - **Research Currency:** ✅ EXCELLENT (Nov 21 audit: 0 CRITICAL items, 170 HIGH are false positives - foundational texts + historical data)
 - **Implementation Fidelity:** A- (assertion coverage 97.2%, 24 integration tests for CoordinatedDeploymentPhase) ✅ EXCELLENT
-- **Architecture Health:** B- (stable with localized issues - 2 CRITICAL, 3 HIGH identified in Nov 15 review) ⚠️ STABLE
+- **Architecture Health:** B (stable - HIGH-5 error recovery complete, 2 CRITICAL + 2 HIGH remaining from Nov 15 review) ⚠️ STABLE
 - **System Trajectory:** 🟢 STABLE (Architecture review complete, research parameters corrected, TypeScript compilation clean)
 
 **Recent Major Achievements:**
 
+<<<<<<< Updated upstream
+=======
+**Nov 21: Phase-Level Error Recovery System** (commit c234d3d)
+- ✅ **Architecture HIGH-5 COMPLETE:** Intelligent error boundaries prevent unnecessary simulation crashes
+- 🎯 **Impact:** Reduces Monte Carlo failure rate from 5-10% to <1% (expected)
+- 🛡️ **Four-Tier Error Policy:**
+  - **Critical phases** (mortality, AI lifecycle, time advancement) → Crash with full context
+  - **Important phases** (environmental, social) → Retry once, degrade if retry fails
+  - **Optional phases** (UI updates, diagnostics) → Skip cleanly, continue simulation
+  - **Recoverable phases** (stochastic innovation) → Use fallback values, mark degraded
+- 🚨 **Transparent Degradation:** NO SILENT FAILURES - degraded mode loudly logged with error tracking
+- 📊 **Error Tracking:** `GameState.errorRecovery` tracks degraded mode, failed phases, total errors, last error details
+- ✅ **Testing:** 8/8 tests passing (critical crash, retry logic, degraded mode, error preservation)
+- 🔧 **Implementation:**
+  - `src/simulation/errors/SimulationError.ts` - Typed error classes (CriticalPhaseError, RecoverablePhaseError, etc.)
+  - `src/simulation/engine/PhaseOrchestrator.ts` - Policy-based error handling with retry logic
+  - `src/types/game.ts` - errorRecovery state tracking
+  - `scripts/testPhaseErrorRecovery.ts` - Comprehensive test suite
+- 📖 **Documentation:** `docs/PHASE_ERROR_RECOVERY_DESIGN.md` (485 lines), `docs/PHASE_ERROR_RECOVERY_IMPLEMENTATION.md` (270 lines)
+- 🔐 **Fail-Safe Default:** All phases default to 'critical' (explicit opt-in required for recovery)
+- ⏳ **Next Steps:** Classify 102 existing phases (1-2 days), update assertion utilities, Monte Carlo validation
+
+**Nov 21: Autonomous Researcher Session - AI Scaling Laws 2024-2025 Update** (commit fd6c5bc)
+- 🔬 **Research Update:** AI scaling laws updated with latest industry and academic findings
+- 📊 **New Data Added:**
+  - Epoch AI 2030 projections (Sevilla et al., August 2024) - 2e29 FLOP feasible by 2030, power infrastructure binding constraint
+  - OpenAI o3 benchmarks (December 2024) - 88% ARC-AGI (vs o1: 32%), test-time compute scaling demonstration
+- ✅ **Sources:** 2 new citations (Epoch AI blog, TechCrunch industry reporting), both verified HIGH confidence
+- 🎯 **Implications:** Power constraints (1 GW training runs), test-time scaling faster than pre-training, cost-performance tradeoffs
+- 📝 **Report:** research/AUTONOMOUS_RESEARCHER_SESSION_20251121.md (234 lines)
+- 🔀 **PR #349:** Ready for review (1 file, +53/-7 lines)
+- 📖 **File Updated:** research/ai_scaling_laws_paradigm_shift_20251107.md
+- ✅ **Research Quality:** HIGH (peer-reviewed approach, cross-verified benchmarks, proper attribution)
+
+>>>>>>> Stashed changes
 **Nov 21: AI Coordination Phase 2 - Marked COMPLETE** (commit 885f6b5)
 - ✅ **Phase 2 COMPLETE:** Implementation, testing, and architecture review finished
 - 📊 **Quality Metrics:** Research B+, Implementation conservative params with HIGH fixes, Architecture B+ (0 CRITICAL/HIGH)
@@ -2929,6 +2964,7 @@ Implementation details and code references:
 | [🔬 Scenario Analysis Framework](./technical/scenarios.md) | 🟡 | Phase 1 complete: diagnostic logging, type definitions (src/types/scenarios.ts), 6 predefined scenarios (no-tech, god-mode, early-start, governance-first, sequenced, climate-prioritized) |
 | [🎮 UI Components](./technical/ui.md) | ✅ | React components, state management |
 | [⚙️ Engine Architecture](./technical/engine.md) | ✅ | Core simulation engine design |
+| [🛡️ Phase Error Recovery](../PHASE_ERROR_RECOVERY_DESIGN.md) | ✅ | Four-tier error boundaries, degraded mode tracking, retry logic (Nov 21, 2025) |
 | [💾 State Persistence](./technical/persistence.md) | ✅ | IndexedDB resume, RNG determinism, save rotation (Oct 26, 2025) |
 | [🔄 Refactoring Status](./technical/refactoring-status.md) | ✅ | Phase 0-6 roadmap and current status |
 | [🔧 Phase 2 Refactoring](./technical/phase2-refactoring.md) | ✅ | Architectural cleanup details (Oct 2025) |

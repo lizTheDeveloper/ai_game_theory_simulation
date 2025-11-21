@@ -7041,6 +7041,54 @@
     "context": "data: any;"
   },
   {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
+    "line": 1011,
+    "type": "property",
+    "name": "phaseId",
+    "currentDoc": "(none)",
+    "context": "phaseId: string;"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
+    "line": 1012,
+    "type": "property",
+    "name": "phaseName",
+    "currentDoc": "(none)",
+    "context": "phaseName: string;"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
+    "line": 1013,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: number;"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
+    "line": 1014,
+    "type": "property",
+    "name": "message",
+    "currentDoc": "(none)",
+    "context": "message: string;"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
+    "line": 1015,
+    "type": "property",
+    "name": "stack",
+    "currentDoc": "(none)",
+    "context": "stack?: string;"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
+    "line": 1016,
+    "type": "property",
+    "name": "policy",
+    "currentDoc": "(none)",
+    "context": "policy: 'critical' | 'important' | 'optional' | 'recoverable';"
+  },
+  {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/government.ts",
     "line": 9,
     "type": "property",
@@ -56434,7 +56482,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 156,
+    "line": 183,
     "type": "property",
     "name": "totalMs",
     "currentDoc": "(none)",
@@ -56442,7 +56490,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 157,
+    "line": 184,
     "type": "property",
     "name": "callCount",
     "currentDoc": "(none)",
@@ -56450,7 +56498,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 158,
+    "line": 185,
     "type": "property",
     "name": "minMs",
     "currentDoc": "(none)",
@@ -56458,7 +56506,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 159,
+    "line": 186,
     "type": "property",
     "name": "maxMs",
     "currentDoc": "(none)",
@@ -56466,7 +56514,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 202,
+    "line": 229,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -56474,7 +56522,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 203,
+    "line": 230,
     "type": "property",
     "name": "data",
     "currentDoc": "(none)",
@@ -56482,7 +56530,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 204,
+    "line": 231,
     "type": "property",
     "name": "executedPhases",
     "currentDoc": "(none)",
@@ -56490,7 +56538,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 261,
+    "line": 288,
     "type": "property",
     "name": "totalMs",
     "currentDoc": "(none)",
@@ -56498,7 +56546,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 262,
+    "line": 289,
     "type": "property",
     "name": "callCount",
     "currentDoc": "(none)",
@@ -56506,7 +56554,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 263,
+    "line": 290,
     "type": "property",
     "name": "minMs",
     "currentDoc": "(none)",
@@ -56514,7 +56562,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 264,
+    "line": 291,
     "type": "property",
     "name": "maxMs",
     "currentDoc": "(none)",
@@ -56522,7 +56570,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 265,
+    "line": 292,
     "type": "property",
     "name": "mean",
     "currentDoc": "(none)",
@@ -56530,7 +56578,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 266,
+    "line": 293,
     "type": "property",
     "name": "m2",
     "currentDoc": "(none)",
@@ -56538,7 +56586,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 278,
+    "line": 305,
     "type": "property",
     "name": "totalMs",
     "currentDoc": "(none)",
@@ -56546,7 +56594,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 279,
+    "line": 306,
     "type": "property",
     "name": "callCount",
     "currentDoc": "(none)",
@@ -56554,7 +56602,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 280,
+    "line": 307,
     "type": "property",
     "name": "minMs",
     "currentDoc": "(none)",
@@ -56562,7 +56610,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 281,
+    "line": 308,
     "type": "property",
     "name": "maxMs",
     "currentDoc": "(none)",
@@ -56570,7 +56618,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 282,
+    "line": 309,
     "type": "property",
     "name": "mean",
     "currentDoc": "(none)",
@@ -56578,7 +56626,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 283,
+    "line": 310,
     "type": "property",
     "name": "m2",
     "currentDoc": "(none)",
@@ -56586,7 +56634,15 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 561,
+    "line": 448,
+    "type": "property",
+    "name": "default",
+    "currentDoc": "(none)",
+    "context": "default: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+    "line": 677,
     "type": "property",
     "name": "totalMs",
     "currentDoc": "(none)",
@@ -56594,7 +56650,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 562,
+    "line": 678,
     "type": "property",
     "name": "callCount",
     "currentDoc": "(none)",
@@ -56602,7 +56658,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 563,
+    "line": 679,
     "type": "property",
     "name": "minMs",
     "currentDoc": "(none)",
@@ -56610,7 +56666,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 564,
+    "line": 680,
     "type": "property",
     "name": "maxMs",
     "currentDoc": "(none)",
@@ -56618,7 +56674,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 565,
+    "line": 681,
     "type": "property",
     "name": "mean",
     "currentDoc": "(none)",
@@ -56626,7 +56682,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 566,
+    "line": 682,
     "type": "property",
     "name": "m2",
     "currentDoc": "(none)",
@@ -56634,7 +56690,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 606,
+    "line": 722,
     "type": "property",
     "name": "phaseName",
     "currentDoc": "(none)",
@@ -56642,7 +56698,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 607,
+    "line": 723,
     "type": "property",
     "name": "totalMs",
     "currentDoc": "(none)",
@@ -56650,7 +56706,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 608,
+    "line": 724,
     "type": "property",
     "name": "callCount",
     "currentDoc": "(none)",
@@ -56658,7 +56714,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 609,
+    "line": 725,
     "type": "property",
     "name": "avgMs",
     "currentDoc": "(none)",
@@ -56666,7 +56722,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 610,
+    "line": 726,
     "type": "property",
     "name": "minMs",
     "currentDoc": "(none)",
@@ -56674,7 +56730,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 611,
+    "line": 727,
     "type": "property",
     "name": "maxMs",
     "currentDoc": "(none)",
@@ -56682,7 +56738,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 612,
+    "line": 728,
     "type": "property",
     "name": "stdDevMs",
     "currentDoc": "(none)",
@@ -56690,7 +56746,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 733,
+    "line": 849,
     "type": "property",
     "name": "phases",
     "currentDoc": "(none)",
@@ -56698,7 +56754,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 734,
+    "line": 850,
     "type": "property",
     "name": "steps",
     "currentDoc": "(none)",
@@ -56706,7 +56762,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 735,
+    "line": 851,
     "type": "property",
     "name": "summary",
     "currentDoc": "(none)",
@@ -56714,7 +56770,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 736,
+    "line": 852,
     "type": "property",
     "name": "totalPhases",
     "currentDoc": "(none)",
@@ -56722,7 +56778,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 737,
+    "line": 853,
     "type": "property",
     "name": "totalSteps",
     "currentDoc": "(none)",
@@ -56730,7 +56786,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 743,
+    "line": 859,
     "type": "property",
     "name": "totalMs",
     "currentDoc": "(none)",
@@ -56738,7 +56794,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 744,
+    "line": 860,
     "type": "property",
     "name": "callCount",
     "currentDoc": "(none)",
@@ -56746,7 +56802,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 745,
+    "line": 861,
     "type": "property",
     "name": "avgMs",
     "currentDoc": "(none)",
@@ -56754,7 +56810,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 746,
+    "line": 862,
     "type": "property",
     "name": "minMs",
     "currentDoc": "(none)",
@@ -56762,7 +56818,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 747,
+    "line": 863,
     "type": "property",
     "name": "maxMs",
     "currentDoc": "(none)",
@@ -56770,7 +56826,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 748,
+    "line": 864,
     "type": "property",
     "name": "stdDevMs",
     "currentDoc": "(none)",
@@ -56778,7 +56834,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 756,
+    "line": 872,
     "type": "property",
     "name": "avg",
     "currentDoc": "(none)",
@@ -56786,7 +56842,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 757,
+    "line": 873,
     "type": "property",
     "name": "min",
     "currentDoc": "(none)",
@@ -56794,7 +56850,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 758,
+    "line": 874,
     "type": "property",
     "name": "max",
     "currentDoc": "(none)",
@@ -56802,11 +56858,227 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
-    "line": 759,
+    "line": 875,
     "type": "property",
     "name": "p95",
     "currentDoc": "(none)",
     "context": "p95: parseFloat(calculateP95(stepTotals).toFixed(2))"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+    "line": 892,
+    "type": "property",
+    "name": "state",
+    "currentDoc": "(none)",
+    "context": "state: GameState,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+    "line": 893,
+    "type": "property",
+    "name": "phase",
+    "currentDoc": "(none)",
+    "context": "phase: SimulationPhase,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+    "line": 894,
+    "type": "property",
+    "name": "error",
+    "currentDoc": "(none)",
+    "context": "error: any,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+    "line": 895,
+    "type": "property",
+    "name": "policy",
+    "currentDoc": "(none)",
+    "context": "policy: import('./PhaseOrchestrator').PhaseErrorPolicy"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+    "line": 900,
+    "type": "property",
+    "name": "degradedMode",
+    "currentDoc": "(none)",
+    "context": "degradedMode: false,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+    "line": 901,
+    "type": "property",
+    "name": "failedPhases",
+    "currentDoc": "(none)",
+    "context": "failedPhases: new Map(),"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+    "line": 902,
+    "type": "property",
+    "name": "totalErrors",
+    "currentDoc": "(none)",
+    "context": "totalErrors: 0"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+    "line": 919,
+    "type": "property",
+    "name": "phaseId",
+    "currentDoc": "(none)",
+    "context": "phaseId: phase.id,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+    "line": 920,
+    "type": "property",
+    "name": "phaseName",
+    "currentDoc": "(none)",
+    "context": "phaseName: phase.name,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+    "line": 921,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+    "line": 922,
+    "type": "property",
+    "name": "message",
+    "currentDoc": "(none)",
+    "context": "message: error instanceof Error ? error.message : String(error),"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+    "line": 923,
+    "type": "property",
+    "name": "stack",
+    "currentDoc": "(none)",
+    "context": "stack: error instanceof Error ? error.stack : undefined,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+    "line": 924,
+    "type": "property",
+    "name": "policy",
+    "currentDoc": "(none)",
+    "context": "policy: policy"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+    "line": 941,
+    "type": "property",
+    "name": "state",
+    "currentDoc": "(none)",
+    "context": "state: GameState,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+    "line": 942,
+    "type": "property",
+    "name": "phase",
+    "currentDoc": "(none)",
+    "context": "phase: SimulationPhase,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+    "line": 943,
+    "type": "property",
+    "name": "error",
+    "currentDoc": "(none)",
+    "context": "error: any,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+    "line": 944,
+    "type": "property",
+    "name": "policy",
+    "currentDoc": "(none)",
+    "context": "policy: import('./PhaseOrchestrator').PhaseErrorPolicy,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+    "line": 945,
+    "type": "property",
+    "name": "retrySucceeded",
+    "currentDoc": "(none)",
+    "context": "retrySucceeded: boolean"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+    "line": 950,
+    "type": "property",
+    "name": "degradedMode",
+    "currentDoc": "(none)",
+    "context": "degradedMode: false,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+    "line": 951,
+    "type": "property",
+    "name": "failedPhases",
+    "currentDoc": "(none)",
+    "context": "failedPhases: new Map(),"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+    "line": 952,
+    "type": "property",
+    "name": "totalErrors",
+    "currentDoc": "(none)",
+    "context": "totalErrors: 0"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+    "line": 961,
+    "type": "property",
+    "name": "phaseId",
+    "currentDoc": "(none)",
+    "context": "phaseId: phase.id,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+    "line": 962,
+    "type": "property",
+    "name": "phaseName",
+    "currentDoc": "(none)",
+    "context": "phaseName: phase.name,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+    "line": 963,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+    "line": 964,
+    "type": "property",
+    "name": "message",
+    "currentDoc": "(none)",
+    "context": "message: error instanceof Error ? error.message : String(error),"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+    "line": 965,
+    "type": "property",
+    "name": "stack",
+    "currentDoc": "(none)",
+    "context": "stack: error instanceof Error ? error.stack : undefined,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts",
+    "line": 966,
+    "type": "property",
+    "name": "policy",
+    "currentDoc": "(none)",
+    "context": "policy: policy"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAdversarialDetectionPhase.ts",
@@ -93023,6 +93295,174 @@
     "name": "effects",
     "currentDoc": "(none)",
     "context": "effects: {}"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/errors/SimulationError.ts",
+    "line": 18,
+    "type": "property",
+    "name": "message",
+    "currentDoc": "(none)",
+    "context": "message: string,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/errors/SimulationError.ts",
+    "line": 68,
+    "type": "property",
+    "name": "message",
+    "currentDoc": "(none)",
+    "context": "message: string,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/errors/SimulationError.ts",
+    "line": 69,
+    "type": "property",
+    "name": "phaseId",
+    "currentDoc": "(none)",
+    "context": "phaseId: string,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/errors/SimulationError.ts",
+    "line": 70,
+    "type": "property",
+    "name": "phaseName",
+    "currentDoc": "(none)",
+    "context": "phaseName: string,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/errors/SimulationError.ts",
+    "line": 71,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: number,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/errors/SimulationError.ts",
+    "line": 72,
+    "type": "property",
+    "name": "context",
+    "currentDoc": "(none)",
+    "context": "context?: Record<string, any>"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/errors/SimulationError.ts",
+    "line": 95,
+    "type": "property",
+    "name": "message",
+    "currentDoc": "(none)",
+    "context": "message: string,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/errors/SimulationError.ts",
+    "line": 96,
+    "type": "property",
+    "name": "phaseId",
+    "currentDoc": "(none)",
+    "context": "phaseId: string,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/errors/SimulationError.ts",
+    "line": 97,
+    "type": "property",
+    "name": "phaseName",
+    "currentDoc": "(none)",
+    "context": "phaseName: string,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/errors/SimulationError.ts",
+    "line": 98,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: number,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/errors/SimulationError.ts",
+    "line": 99,
+    "type": "property",
+    "name": "context",
+    "currentDoc": "(none)",
+    "context": "context?: Record<string, any>"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/errors/SimulationError.ts",
+    "line": 122,
+    "type": "property",
+    "name": "message",
+    "currentDoc": "(none)",
+    "context": "message: string,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/errors/SimulationError.ts",
+    "line": 123,
+    "type": "property",
+    "name": "phaseId",
+    "currentDoc": "(none)",
+    "context": "phaseId: string,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/errors/SimulationError.ts",
+    "line": 124,
+    "type": "property",
+    "name": "phaseName",
+    "currentDoc": "(none)",
+    "context": "phaseName: string,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/errors/SimulationError.ts",
+    "line": 125,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: number,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/errors/SimulationError.ts",
+    "line": 126,
+    "type": "property",
+    "name": "context",
+    "currentDoc": "(none)",
+    "context": "context?: Record<string, any>"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/errors/SimulationError.ts",
+    "line": 145,
+    "type": "property",
+    "name": "message",
+    "currentDoc": "(none)",
+    "context": "message: string,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/errors/SimulationError.ts",
+    "line": 146,
+    "type": "property",
+    "name": "phaseId",
+    "currentDoc": "(none)",
+    "context": "phaseId: string,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/errors/SimulationError.ts",
+    "line": 147,
+    "type": "property",
+    "name": "phaseName",
+    "currentDoc": "(none)",
+    "context": "phaseName: string,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/errors/SimulationError.ts",
+    "line": 148,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: number,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/errors/SimulationError.ts",
+    "line": 151,
+    "type": "property",
+    "name": "context",
+    "currentDoc": "(none)",
+    "context": "context?: Record<string, any>"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/eventAggregator.ts",
