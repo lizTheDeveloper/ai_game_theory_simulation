@@ -39,6 +39,44 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
+   - **Carbon Capture Deployment Parameters & Constraints** - MEDIUM (Added Nov 21, 2025)
+     - **Context:** Comprehensive carbon capture research document (625 lines, 12 sources, A+ quality) provides enhanced detail on DAC deployment
+     - **Research File:** research/carbon_capture_deployment_timelines_2025.md (committed 55c3535a0)
+     - **Sources to Verify:**
+       - Tan et al. (2024) *Nature Communications* - gigatonne requirements, energy/water nexus
+       - Climeworks (2024) - Mammoth plant operational data (36,000 tonnes/yr)
+       - IEA (2024) - CCUS project milestones, 5-10 year activation delay
+       - Frontiers in Climate (2024-2025) - technical analysis, energy requirements
+       - Canary Media (2024) - Gen 3 technology cost reduction claims
+     - **Key Claims Requiring Verification:**
+       - Current capacity: 0.00005 Gt/yr (Mammoth: 36kt/yr operational May 2024)
+       - Timeline: 20-40 years breakthrough → gigatonne impact (10-20 year deployment lag)
+       - Energy: 4-10 TWh per 1 Gt/yr (must couple with clean energy)
+       - Water: 15 km³/yr for 4 Gt/yr (3.8% global industrial use, regional constraint)
+       - Cost: $600-1,000/tonne (current) → $100-300/tonne (2040s thermodynamic floor)
+       - IEA 5-10 year activation delay (currently used in ClimateDeploymentDelayPhase)
+     - **Verification File:** research/verification_c52826e_20251121.md (two-layer: existence + claim accuracy)
+     - **Current Implementation:**
+       - ClimateDeploymentDelayPhase.ts:67-73 - DAC parameters (7-year activation, 30-year T_50, 1 Gt/yr E_max)
+       - Source: research/climate_tech_deployment_timescales_20251112.md
+     - **Parameter Validation:**
+       - ✅ Activation delay (7 years) - compatible with 5-10 range (verify IEA source)
+       - ✅ T_50 (30 years) - compatible with 20-40 year timeline (verify backing)
+       - ⚠️ Energy requirements - NOT MODELED (enhancement opportunity)
+       - ⚠️ Water constraints - NOT MODELED (regional deployment factor)
+       - ⚠️ Cost trajectory - NOT MODELED (optional economic constraint)
+     - **Enhancement Opportunities:**
+       - HIGH: Add energy coupling constraint (DAC limited by clean energy availability)
+       - MEDIUM: Add regional water stress factors (Asia 0.4×, US Southwest 0.7×, Europe 1.0×)
+       - LOW: Add cost-based deployment curve (learning rate)
+     - **Affected Files:**
+       - src/simulation/engine/phases/ClimateDeploymentDelayPhase.ts (verify parameters, add constraints)
+       - src/types/game.ts (ensure EnergySystem.totalCleanEnergy exists)
+     - **Priority:** MEDIUM - Validates existing parameters and identifies enhancement opportunities
+     - **Status:** ⚠️ READY FOR VALIDATION - Verification file created, awaiting orchestrator to begin at VALIDATION phase
+     - **Commit:** c52826e
+     - **Next Steps:** Two-layer verification (paper existence + claim accuracy) → Parameter validation → Enhancement implementation (energy/water constraints) → Monte Carlo N≥10
+
    - **AI Governance 2025 Proposals (Global Moratorium + US-China Bilateral)** - HIGH (Added Nov 20, 2025)
      - **Context:** Two major 2025 governance frameworks from arXiv preprints with detailed quantitative parameters
      - **Research File:** research/ai_governance_international_coordination_20251113.md (updated with sections 4.5.1-4.5.3)
