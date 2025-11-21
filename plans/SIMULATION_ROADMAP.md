@@ -39,6 +39,30 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
+   - **Nitrogen-Food Phase 3 Technologies** - MEDIUM (Added Nov 21, 2025)
+     - **Context:** 6 new nitrogen reduction technologies added to tech tree (Phase 3 complete)
+     - **Technologies:**
+       1. Rhizosphere Engineering (15-40% N reduction, TIER 1, commercial)
+       2. Nitroplast Integration (50-70% reduction, breakthrough, Coale et al. 2024)
+       3. Precision Fermentation (30-50% agri N reduction, emerging)
+       4. Regional Nitrogen Policies (20% efficiency via redistribution)
+       5. Soil Health Restoration (20-40% NUE improvement)
+       6. Integrated Nutrient Management (25-45% efficiency gains)
+     - **Verification File:** research/verification_cd1e83a_20251121.md
+     - **Key Claims Requiring Two-Layer Verification:**
+       - **Layer 1:** Citation existence (Coale et al. 2024 *Science* for nitroplasts, others TBD)
+       - **Layer 2:** Claim accuracy (do papers support specific effectiveness ranges?)
+     - **Critical Issues:**
+       - Most technologies lack specific citations in code
+       - Effectiveness ranges need research backing (15-40%, 20-45%, etc.)
+       - Co-benefits quantification (soil health, biodiversity, carbon) needs verification
+       - Timeline assumptions (R&D + deployment) need validation
+     - **Affected Systems:** Tech tree, nitrogen-food coupling, planetary boundaries
+     - **Priority:** MEDIUM - Phase 3 complete, but research verification needed for confidence
+     - **Status:** ⚠️ READY FOR VALIDATION - Verification file created, awaiting orchestrator
+     - **Commit:** cd1e83a
+     - **Next Steps:** Two-layer verification (existence + claim accuracy) → Parameter adjustments if needed → Monte Carlo validation
+
    - **AI Governance 2025 Proposals (Global Moratorium + US-China Bilateral)** - HIGH (Added Nov 20, 2025)
      - **Context:** Two major 2025 governance frameworks from arXiv preprints with detailed quantitative parameters
      - **Research File:** research/ai_governance_international_coordination_20251113.md (updated with sections 4.5.1-4.5.3)
