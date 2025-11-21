@@ -39,6 +39,31 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
+   - **AI Coordination & Transition Management** - HIGH (Added Nov 21, 2025)
+     - **Context:** Phase 2 research complete (15K words, 15 sources), Grade B- CONDITIONAL PASS
+     - **Research File:** research/ai_coordination_transition_management_20251121.md
+     - **Critique File:** reviews/ai_coordination_transition_critique_20251121.md
+     - **Handoff File:** .claude/agents/HANDOFF_ai_coordination_conservative_params.md (26KB spec)
+     - **Verification File:** research/verification_96e2489_20251121.md
+     - **Key Claims Requiring Two-Layer Verification:**
+       - **CRITICAL:** USSR shock therapy 13-42% mortality (Stuckler 2009 Lancet)
+       - **CRITICAL:** Job loss mortality 1.0-1.5yr (Sullivan 2009 QJE - "GOLD STANDARD")
+       - **HIGH UNCERTAINTY:** AI coordination 80%+ efficiency (arXiv 2025 - critique flags as lab benchmark, not peer-reviewed)
+       - **HIGH UNCERTAINTY:** Coordination failure 10% probability, 2-5× spike (Cooperative AI 2025 - "no historical precedent")
+       - **HIGH UNCERTAINTY:** Rebound effects 5-10% decay (Finkelstein 2025 - "not integrated into mortality model")
+       - **MODERATE:** Support systems 32-37% reduction (BMC Public Health 2020)
+       - **MODERATE:** Grid deployment 5-15%/yr (IEA 2024)
+     - **Total:** 12 citations requiring verification (4 flagged HIGH UNCERTAINTY by critique)
+     - **Implementation Impact:**
+       - GameState.transitionManagement interface
+       - CoordinatedDeploymentPhase (NEW)
+       - Conservative parameters: 9-12% mortality (coordinated) vs 30% (uncoordinated)
+       - Monte Carlo: N≥50 (sensitivity analysis required)
+     - **Priority:** HIGH - Phase 2 critical path, HIGH UNCERTAINTY parameters need validation before implementation
+     - **Status:** ⏳ READY FOR VALIDATION - Verification file created, awaiting orchestrator
+     - **Commit:** 96e2489
+     - **Next Steps:** Two-layer verification → Implementation (Roy) → Monte Carlo (Priya, N≥50) → Architecture review
+
 <<<<<<< Updated upstream
    - **Nitrogen-Food Phase 3 Technologies** - MEDIUM (Added Nov 21, 2025)
      - **Context:** 6 new nitrogen reduction technologies added to tech tree (Phase 3 complete)
