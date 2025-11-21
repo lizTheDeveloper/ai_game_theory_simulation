@@ -168,25 +168,28 @@
 **Time:** 📅 2-5 days
 **Blocker:** None
 
-**Phase 1: Critical (Week 1) - 4 scripts**
+**Phase 1: Critical (Week 1) - 4 scripts** ✅ ALL COMPLETE
 
-- [ ] **4.1** Create `scripts/test_marcus_database.sh`
+- [x] **4.1** Create `scripts/test_marcus_database.sh` ✅ COMPLETE
   - **Purpose:** Deep database validation
   - **Tests:** Migrations applied, foreign keys, indices, connection pooling, RLS
   - **Time:** 🕐 2-3 hours
   - **Priority:** CRITICAL
+  - **Completed:** 2025-11-21 (pre-existing)
 
-- [ ] **4.2** Create `scripts/test_marcus_auth.sh`
+- [x] **4.2** Create `scripts/test_marcus_auth.sh` ✅ COMPLETE
   - **Purpose:** Authentication system validation
   - **Tests:** Registration, login, lockout, tokens, password reset, rate limiting
   - **Time:** 🕐 2-3 hours
   - **Priority:** CRITICAL
+  - **Completed:** 2025-11-21 (pre-existing)
 
-- [ ] **4.3** Create `scripts/test_marcus_api.sh`
+- [x] **4.3** Create `scripts/test_marcus_api.sh` ✅ COMPLETE
   - **Purpose:** API endpoint validation
   - **Tests:** Health, auth, citations, agents, CORS, error handling
   - **Time:** 🕐 2-3 hours
   - **Priority:** CRITICAL
+  - **Completed:** 2025-11-21 (pre-existing)
 
 - [x] **4.4** Create `scripts/test_marcus_python_agent.sh` ✅ COMPLETE
   - **Purpose:** Python agent validation
