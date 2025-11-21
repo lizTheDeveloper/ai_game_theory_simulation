@@ -146,6 +146,42 @@ export const activeTokens = new promClient.Gauge({
 });
 
 /**
+ * Redis metrics
+ */
+export const redisMemoryUsage = new promClient.Gauge({
+  name: 'marcus_redis_memory_bytes',
+  help: 'Redis memory usage in bytes',
+  labelNames: ['type'], // used, peak, rss
+  registers: [register]
+});
+
+export const redisConnectedClients = new promClient.Gauge({
+  name: 'marcus_redis_connected_clients',
+  help: 'Number of clients connected to Redis',
+  registers: [register]
+});
+
+export const redisCommandsDuration = new promClient.Histogram({
+  name: 'marcus_redis_command_duration_seconds',
+  help: 'Redis command execution duration',
+  labelNames: ['command'],
+  buckets: [0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1], // 1ms to 1s
+  registers: [register]
+});
+
+export const redisKeyspaceHits = new promClient.Counter({
+  name: 'marcus_redis_keyspace_hits_total',
+  help: 'Total number of successful key lookups',
+  registers: [register]
+});
+
+export const redisKeyspaceMisses = new promClient.Counter({
+  name: 'marcus_redis_keyspace_misses_total',
+  help: 'Total number of failed key lookups',
+  registers: [register]
+});
+
+/**
  * Normalize URL path for metrics (group similar paths together)
  * Examples:
  *   /api/citations/123 -> /api/citations/:id

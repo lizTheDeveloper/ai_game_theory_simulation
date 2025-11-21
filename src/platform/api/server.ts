@@ -33,6 +33,7 @@ import { createSecurityHeadersMiddleware, getDefaultSecurityHeadersConfig, getDe
 import { AuditLogger, createAuditMiddleware } from '../middleware/auditLogger';
 import { metricsMiddleware } from '../monitoring/metricsEndpoint';
 import { HealthCheckService } from '../monitoring/healthChecks';
+import { RedisMetricsCollector } from '../monitoring/redisMetricsCollector';
 
 // ============================================================================
 // Server Configuration
@@ -89,6 +90,7 @@ export class PlatformServer {
   private jwtMiddleware: JWTMiddleware;
   private auditLogger: AuditLogger;
   private healthCheckService: HealthCheckService;
+  private redisMetricsCollector: RedisMetricsCollector;
   private config: ServerConfig;
   private server: any;
 
@@ -111,6 +113,10 @@ export class PlatformServer {
       minSeverity: 'low',
     });
     this.healthCheckService = new HealthCheckService(this.pool, this.redis);
+    this.redisMetricsCollector = new RedisMetricsCollector(this.redis, {
+      collectionIntervalMs: 10000, // Collect every 10 seconds
+      enableCommandMonitoring: true // Track per-command latency
+    });
 
     this.setupMiddleware();
     this.setupRoutes();
@@ -536,6 +542,9 @@ export class PlatformServer {
       await this.pool.query('SELECT 1');
       console.log('✅ Database connection established');
 
+      // Start Redis metrics collection
+      this.redisMetricsCollector.start();
+
       // Start server
       this.server = this.app.listen(this.config.port, this.config.host, () => {
         console.log(`\n✅ MARCUS Platform Server started`);
@@ -610,6 +619,15 @@ export class PlatformServer {
           console.log(`✅ Database connections closed (${elapsed}s)`);
         } catch (err) {
           console.error('❌ Error closing database:', err);
+        }
+
+        // Step 2.5: Stop Redis metrics collection
+        try {
+          this.redisMetricsCollector.stop();
+          const elapsed = Math.round((Date.now() - startTime) / 1000);
+          console.log(`✅ Redis metrics collector stopped (${elapsed}s)`);
+        } catch (err) {
+          console.error('❌ Error stopping Redis metrics collector:', err);
         }
 
         // Step 3: Close Redis connection
