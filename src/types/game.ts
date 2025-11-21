@@ -160,6 +160,18 @@ export type {
 } from '../simulation/engine/PhaseOrchestrator';
 
 export interface GameState {
+  /**
+   * Schema Version (State Migration System, Nov 21, 2025)
+   *
+   * Tracks GameState schema version for migration support across deployments.
+   * Every breaking change to GameState increments this version.
+   * Migration system applies sequential transformations (v1→v2→v3) to upgrade old saves.
+   *
+   * Current version: 1
+   * Expected impact: Preserves user progress across schema changes instead of breaking saves
+   */
+  schemaVersion: number;
+
   // Core state
   currentMonth: number;
   currentDay: number; // Day of the month (1-31)
