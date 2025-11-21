@@ -13,6 +13,9 @@
 import * as dotenv from 'dotenv';
 dotenv.config();
 
+// Set descriptive process title for monitoring
+process.title = 'marcus-api-server';
+
 import express, { Express, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import { Pool } from 'pg';
@@ -28,6 +31,7 @@ import { updateUserRoleBodySchema, updateUserRoleParamsSchema, deleteUserParamsS
 import { createCORSMiddleware, getDefaultCORSConfig } from '../middleware/corsMiddleware';
 import { createSecurityHeadersMiddleware, getDefaultSecurityHeadersConfig, getDevelopmentSecurityHeadersConfig } from '../middleware/securityHeaders';
 import { AuditLogger, createAuditMiddleware } from '../middleware/auditLogger';
+import { metricsMiddleware } from '../monitoring/metricsEndpoint';
 
 // ============================================================================
 // Server Configuration
@@ -127,10 +131,13 @@ export class PlatformServer {
     // 3. JSON body parsing (before validation middleware)
     this.app.use(express.json());
 
-    // 4. Audit logging middleware
+    // 4. Prometheus metrics middleware (track all HTTP requests)
+    this.app.use(metricsMiddleware);
+
+    // 5. Audit logging middleware
     this.app.use(createAuditMiddleware(this.auditLogger));
 
-    // 5. Request logging
+    // 6. Request logging
     this.app.use((req: Request, res: Response, next: NextFunction) => {
       const start = Date.now();
       res.on('finish', () => {
@@ -142,7 +149,7 @@ export class PlatformServer {
       next();
     });
 
-    // 6. Rate limiting (if enabled)
+    // 7. Rate limiting (if enabled)
     if (this.config.rateLimiting?.enabled !== false) {
       this.setupRateLimiting();
     }
@@ -150,6 +157,7 @@ export class PlatformServer {
     console.log('✅ Security middleware initialized:');
     console.log('   - Security Headers (CSP, HSTS, X-Frame-Options)');
     console.log('   - CORS whitelist protection');
+    console.log('   - Prometheus metrics tracking');
     console.log('   - Comprehensive audit logging');
     console.log('   - Rate limiting');
   }
@@ -289,19 +297,14 @@ export class PlatformServer {
       }
     );
 
-    // GET /api/metrics - Get platform metrics (requires viewer, operator, or admin)
+    // GET /api/metrics - Get platform metrics (public for Prometheus scraping)
     this.app.get(
       '/api/metrics',
-      this.jwtMiddleware.authenticate,
-      requirePermission('metrics:read'),
       async (req: Request, res: Response) => {
         try {
-          // Return Prometheus metrics in text format
-          const { register } = await import('prom-client');
-
-          const metrics = await register.metrics();
-          res.set('Content-Type', register.contentType);
-          res.send(metrics);
+          // Use the MARCUS metrics registry with platform-specific metrics
+          const { metricsHandler } = await import('../monitoring/metricsEndpoint');
+          return metricsHandler(req, res);
 
         } catch (err) {
           console.error('❌ Metrics error:', err);

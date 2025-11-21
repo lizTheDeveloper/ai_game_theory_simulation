@@ -7,6 +7,9 @@
 
 import http from 'http';
 
+// Set descriptive process title for monitoring
+process.title = 'game-sim-metrics-server';
+
 // In-memory storage for simulation state
 let latestState: any = null;
 let lastUpdateTime = 0;

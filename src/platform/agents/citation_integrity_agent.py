@@ -901,11 +901,11 @@ def run_ipc_server(agent_id: str):
             initial_reputation=0.5,
             exploration_rate=0.2,
             db_config={
-                'host': 'localhost',
-                'port': 5433,
-                'database': 'marcus_test',
-                'user': 'marcus',
-                'password': 'marcus_dev_password'
+                'host': os.getenv('DATABASE_HOST', 'localhost'),
+                'port': int(os.getenv('DATABASE_PORT', '5432')),
+                'database': os.getenv('DATABASE_NAME', 'marcus_test'),
+                'user': os.getenv('DATABASE_USER', 'marcus'),
+                'password': os.getenv('DATABASE_PASSWORD', '7DNaVDnhAHEd1blicHcq1pwc58a3DBUK')
             },
             redis_config=redis_config
         )
