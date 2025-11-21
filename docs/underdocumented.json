@@ -184114,30 +184114,6 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/tier2InterventionConfig.ts",
-    "line": 150,
-    "type": "property",
-    "name": "min",
-    "currentDoc": "(none)",
-    "context": "min: 36,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/tier2InterventionConfig.ts",
-    "line": 151,
-    "type": "property",
-    "name": "mode",
-    "currentDoc": "(none)",
-    "context": "mode: 60,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/tier2InterventionConfig.ts",
-    "line": 152,
-    "type": "property",
-    "name": "max",
-    "currentDoc": "(none)",
-    "context": "max: 120,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/tier2InterventionConfig.ts",
     "line": 153,
     "type": "property",
     "name": "unit",
@@ -184150,7 +184126,7 @@
     "type": "property",
     "name": "citation",
     "currentDoc": "(none)",
-    "context": "citation: 'Black-footed ferret 18→500 in 20 years, condor 14→200+ in 40 years'"
+    "context": "citation: 'Black-footed ferret 18→500 in 240 months (20y), condor 27→569 in 444 months (37y) - USFWS verified'"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/tier2InterventionConfig.ts",
