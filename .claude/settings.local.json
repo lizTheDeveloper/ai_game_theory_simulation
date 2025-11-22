@@ -248,7 +248,8 @@
       "Bash(security/trivy-orchestrator-20251122.txt)",
       "Bash(security/trivy-agent-20251122.txt)",
       "Bash(npm audit:*)",
-      "Bash(security/npm-audit-20251122.txt)"
+      "Bash(security/npm-audit-20251122.txt)",
+      "Bash(git -C /home/g7throwawayplz/ai_game_theory_simulation status --short)"
     ],
     "deny": [],
     "ask": [],
