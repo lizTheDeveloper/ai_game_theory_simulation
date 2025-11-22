@@ -316,7 +316,8 @@
       "Bash(export REGISTRY=us-central1-docker.pkg.dev/project-6d921a00-c010-437c-990/marcus-platform)",
       "Bash(kubectl set env:*)",
       "Bash(./scripts/verify-infrastructure.sh:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(git reset:*)"
     ],
     "deny": [],
     "ask": [],

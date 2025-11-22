@@ -1,0 +1,119 @@
+# MARCUS 3.1 L6 Cost Optimization
+# Spot/Preemptible Node Pool for Citation Workers
+#
+# Benefits:
+# - 60-70% cost reduction vs on-demand instances
+# - Auto-scaling from 0 to 10 nodes based on demand
+# - Tolerates preemption gracefully (workers are stateless)
+#
+# Author: Marcus (Platform Engineer)
+# Date: 2025-11-22
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: spot-node-pool-config
+  namespace: marcus-platform
+data:
+  description: |
+    Spot node pool configuration for cost-optimized worker nodes.
+
+    Create with:
+    gcloud container node-pools create spot-workers \
+      --cluster=marcus-cluster \
+      --zone=us-central1-a \
+      --spot \
+      --enable-autoscaling \
+      --min-nodes=0 \
+      --max-nodes=10 \
+      --machine-type=e2-medium \
+      --disk-size=20 \
+      --disk-type=pd-standard \
+      --node-labels=workload-type=worker,cost-optimized=true \
+      --node-taints=spot=true:NoSchedule
+
+---
+# Update citation-worker deployment to use spot nodes
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: citation-worker
+  namespace: marcus-platform
+  labels:
+    app: citation-worker
+    tier: worker
+    cost-tier: spot
+spec:
+  replicas: 3  # Managed by KEDA (can scale to 0)
+  selector:
+    matchLabels:
+      app: citation-worker
+  template:
+    metadata:
+      labels:
+        app: citation-worker
+    spec:
+      # Node affinity: prefer spot nodes
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              preference:
+                matchExpressions:
+                  - key: cost-optimized
+                    operator: In
+                    values:
+                      - "true"
+
+      # Tolerate spot node taints
+      tolerations:
+        - key: spot
+          operator: Equal
+          value: "true"
+          effect: NoSchedule
+
+      # Graceful shutdown for preemption
+      terminationGracePeriodSeconds: 30
+
+      containers:
+        - name: worker
+          image: gcr.io/PROJECT_ID/citation-worker:latest
+          resources:
+            requests:
+              cpu: 250m      # Right-sized from analysis (was 500m)
+              memory: 256Mi  # Right-sized from analysis (was 512Mi)
+            limits:
+              cpu: 500m      # p95 + 20% headroom
+              memory: 384Mi  # p95 + 20% headroom
+
+          env:
+            - name: WORKER_TYPE
+              value: "async"
+            - name: REDIS_HOST
+              value: "marcus-redis"
+            - name: POSTGRES_HOST
+              value: "marcus-postgres"
+
+            # Graceful shutdown handling
+            - name: SHUTDOWN_GRACE_PERIOD
+              value: "25"  # 5s before K8s SIGKILL
+
+          # Liveness probe (restart if unhealthy)
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 30
+            timeoutSeconds: 5
+            failureThreshold: 3
+
+          # Readiness probe (remove from load balancer if not ready)
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 2

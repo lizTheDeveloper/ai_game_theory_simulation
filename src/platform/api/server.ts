@@ -93,6 +93,7 @@ export class PlatformServer {
   private metricsCollector: MetricsCollector;
   private config: ServerConfig;
   private server: any;
+  private httpServer?: any; // HTTP server for GraphQL WebSocket support
 
   constructor(config: ServerConfig) {
     this.config = config;
@@ -538,6 +539,45 @@ export class PlatformServer {
   }
 
   /**
+   * Setup GraphQL API endpoint
+   *
+   * Integrates Apollo Server with Express for efficient GraphQL queries.
+   * Feature-flagged via ENABLE_GRAPHQL environment variable.
+   */
+  private async setupGraphQL(): Promise<void> {
+    try {
+      console.log('🚀 Setting up GraphQL endpoint...');
+
+      // Get orchestrator from global (set by orchestrator startup script)
+      const orchestrator = (global as any).__citationOrchestrator;
+
+      if (!orchestrator) {
+        console.warn('⚠️ Citation orchestrator not initialized - GraphQL disabled');
+        return;
+      }
+
+      // Lazy-load GraphQL server (avoid circular dependencies)
+      const { setupGraphQLServer } = await import('../graphql/server');
+
+      // Setup GraphQL with Apollo Server
+      await setupGraphQLServer(
+        this.app,
+        this.httpServer,
+        orchestrator,
+        this.pool,
+        process.env.NODE_ENV !== 'production' // Enable playground in dev
+      );
+
+      console.log('✅ GraphQL endpoint configured');
+
+    } catch (err) {
+      console.error('❌ Failed to setup GraphQL:', err);
+      // Don't fail server startup if GraphQL setup fails
+      console.warn('⚠️ GraphQL disabled due to setup error');
+    }
+  }
+
+  /**
    * Start server
    */
   async start(): Promise<void> {
@@ -549,13 +589,27 @@ export class PlatformServer {
       // Start unified metrics collection (includes Redis, DB pool, circuit breakers)
       this.metricsCollector.start();
 
+      // Create HTTP server (needed for GraphQL WebSocket support)
+      const http = await import('http');
+      this.httpServer = http.createServer(this.app);
+
+      // Setup GraphQL endpoint (if enabled via feature flag)
+      if (process.env.ENABLE_GRAPHQL === 'true') {
+        await this.setupGraphQL();
+      }
+
       // Start server
-      this.server = this.app.listen(this.config.port, this.config.host, () => {
+      this.server = this.httpServer.listen(this.config.port, this.config.host, () => {
         console.log(`\n✅ MARCUS Platform Server started`);
         console.log(`   Host: ${this.config.host}`);
         console.log(`   Port: ${this.config.port}`);
         console.log(`   CORS Origins: ${this.config.corsOrigins.join(', ')}`);
-        console.log(`   Health: http://${this.config.host}:${this.config.port}/health\n`);
+        console.log(`   Health: http://${this.config.host}:${this.config.port}/health`);
+        if (process.env.ENABLE_GRAPHQL === 'true') {
+          console.log(`   GraphQL: http://${this.config.host}:${this.config.port}/graphql\n`);
+        } else {
+          console.log();
+        }
       });
 
       // Setup graceful shutdown

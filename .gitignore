@@ -113,3 +113,5 @@ certs/
 *.p12
 *.pfx
 .env.test
+*.tar.gz
+google-cloud-sdk/
