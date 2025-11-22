@@ -229,6 +229,12 @@ verification_status: UPDATED
 **Agricultural N Demand Reduction:**
 - **Potential:** 30-50% reduction in agricultural N demand if scaled globally (replaces animal agriculture)
 - **Mechanism:** Bypasses need for animal feed crops (which consume majority of agricultural N)
+- **Basis for estimate:**
+  - Soy: 75-80% of global production goes to animal feed (WWF, Global Agriculture)
+  - Maize/Corn: 60-63% of global production goes to animal feed (FAO, Global Agriculture)
+  - Overall: 63% of major crops used for animal feed vs. 37% direct human consumption
+  - Replacing animal protein with microbial protein eliminates most of this feedcrop N demand
+  - Residual N required for microbial protein production (fermentation medium) is 10-25× more efficient
 
 **Feedstock Considerations:**
 - Still requires fermentable sugars, nitrogen, phosphates
@@ -957,6 +963,12 @@ Even if we immediately cut nitrogen inputs by 50%, environmental recovery will t
 19. **Multiple authors** (2024). "The Next Food Revolution Is Here: Recombinant Microbial Production of Milk and Egg Proteins by Precision Fermentation." *Annual Reviews in Food Science and Technology*. PMID: 38134386. DOI: 10.1146/annurev-food-072023-034256. [100× land efficiency, 10-25× feedstock efficiency]
 
 20. **MDPI** (2024). "Precision Fermentation as an Alternative to Animal Protein, a Review." *Foods*, 10(6):315. [80% GHG reduction, 95% water reduction]
+
+21. **WWF** (2024). "Soy: food, feed, and land use change." https://wwf.panda.org/discover/our_focus/food_practice/sustainable_production/soy/ [75-80% of global soy production goes to animal feed]
+
+22. **Global Agriculture** (2024). "Meat and Animal Feed." https://www.globalagriculture.org/topics/meat-animal-feed/ [60-63% of global maize/corn production goes to animal feed]
+
+23. **WRI** (2024). "The World Is Growing More Crops — but Not for Food." World Resources Institute. https://www.wri.org/insights/crop-expansion-food-security-trends [63% of major crops for animal feed vs. 37% direct human consumption]
 
 ### Legacy Nutrients and Internal Loading
 
