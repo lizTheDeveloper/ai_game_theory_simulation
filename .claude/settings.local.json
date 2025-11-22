@@ -297,7 +297,9 @@
       "Bash(./scripts/gcp/init-database.sh:*)",
       "Bash(gcloud container clusters get-credentials:*)",
       "Bash(kubectl patch:*)",
-      "Bash(git restore:*)"
+      "Bash(git restore:*)",
+      "Bash(kubectl exec:*)",
+      "Bash(kubectl run:*)"
     ],
     "deny": [],
     "ask": [],

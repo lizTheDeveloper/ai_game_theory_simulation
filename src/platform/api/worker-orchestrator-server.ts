@@ -77,6 +77,7 @@ const CONFIG = {
     port: parseInt(process.env.REDIS_PORT || '6379', 10),
     db: parseInt(process.env.REDIS_DB || '0', 10),
     password: process.env.REDIS_PASSWORD,
+    clusterMode: process.env.REDIS_CLUSTER_MODE === 'true',
   },
 
   database: {
@@ -112,19 +113,34 @@ class WorkerOrchestratorServer {
   constructor() {
     this.app = express();
 
-    // Initialize Redis client
-    this.redis = new Redis({
-      host: CONFIG.redis.host,
-      port: CONFIG.redis.port,
-      db: CONFIG.redis.db,
-      password: CONFIG.redis.password,
-      maxRetriesPerRequest: 3,
-      enableReadyCheck: true,
-      retryStrategy: (times: number) => {
-        const delay = Math.min(times * 100, 3000);
-        return delay;
-      },
-    });
+    // Initialize Redis client (cluster or standalone)
+    if (CONFIG.redis.clusterMode) {
+      this.redis = new Redis.Cluster([
+        {
+          host: CONFIG.redis.host,
+          port: CONFIG.redis.port,
+        },
+      ], {
+        redisOptions: {
+          password: CONFIG.redis.password,
+        },
+        enableReadyCheck: true,
+        maxRedirections: 16,
+      });
+    } else {
+      this.redis = new Redis({
+        host: CONFIG.redis.host,
+        port: CONFIG.redis.port,
+        db: CONFIG.redis.db,
+        password: CONFIG.redis.password,
+        maxRetriesPerRequest: 3,
+        enableReadyCheck: true,
+        retryStrategy: (times: number) => {
+          const delay = Math.min(times * 100, 3000);
+          return delay;
+        },
+      });
+    }
 
     // Initialize PostgreSQL pool
     this.db = new PostgresPool({
@@ -235,9 +251,9 @@ class WorkerOrchestratorServer {
 
           // Store task metadata in PostgreSQL
           await this.db.query(
-            `INSERT INTO citation_tasks (task_id, document, submitted_at, status)
+            `INSERT INTO citation_tasks (task_id, document, created_at, status)
              VALUES ($1, $2, $3, $4)`,
-            [task_id, JSON.stringify(document), new Date(), 'queued']
+            [task_id, JSON.stringify(document), new Date(), 'pending']
           );
 
           // Push task to Redis queue (workers will BLPOP this)
@@ -303,7 +319,7 @@ class WorkerOrchestratorServer {
 
           // Check database for task metadata
           const taskResult = await this.db.query(
-            `SELECT task_id, status, submitted_at, completed_at, result
+            `SELECT task_id, status, created_at, completed_at, result
              FROM citation_tasks
              WHERE task_id = $1`,
             [task_id]
@@ -323,7 +339,7 @@ class WorkerOrchestratorServer {
           res.status(200).json({
             task_id,
             status: task.status,
-            submitted_at: task.submitted_at.getTime(),
+            submitted_at: task.created_at.getTime(),
             message: 'Task is still processing',
           } as TaskResult);
 
@@ -346,7 +362,7 @@ class WorkerOrchestratorServer {
         const statusCounts = await this.db.query(`
           SELECT status, COUNT(*) as count
           FROM citation_tasks
-          WHERE submitted_at > NOW() - INTERVAL '1 hour'
+          WHERE created_at > NOW() - INTERVAL '1 hour'
           GROUP BY status
         `);
 
@@ -380,6 +396,28 @@ class WorkerOrchestratorServer {
         res.status(500).json({
           error: 'Internal Server Error',
           message: 'Failed to retrieve metrics',
+        });
+      }
+    });
+
+    // GET /ready - Kubernetes readiness probe
+    this.app.get('/ready', async (req: Request, res: Response) => {
+      try {
+        // Check Redis connection
+        await this.redis.ping();
+
+        // Check database connection
+        await this.db.query('SELECT 1');
+
+        res.status(200).json({
+          status: 'ready',
+          timestamp: new Date().toISOString(),
+        });
+      } catch (err) {
+        console.error('❌ Readiness check failed:', err);
+        res.status(503).json({
+          status: 'not ready',
+          error: err instanceof Error ? err.message : 'Unknown error',
         });
       }
     });
@@ -445,16 +483,16 @@ class WorkerOrchestratorServer {
         CREATE TABLE IF NOT EXISTS citation_tasks (
           task_id VARCHAR(50) PRIMARY KEY,
           document JSONB NOT NULL,
-          submitted_at TIMESTAMP NOT NULL DEFAULT NOW(),
+          created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+          started_at TIMESTAMP,
           completed_at TIMESTAMP,
-          status VARCHAR(20) NOT NULL DEFAULT 'queued',
+          status VARCHAR(20) NOT NULL DEFAULT 'pending',
           result JSONB,
-          error TEXT,
-          created_at TIMESTAMP NOT NULL DEFAULT NOW()
+          error TEXT
         );
 
         CREATE INDEX IF NOT EXISTS idx_tasks_status ON citation_tasks(status);
-        CREATE INDEX IF NOT EXISTS idx_tasks_submitted ON citation_tasks(submitted_at DESC);
+        CREATE INDEX IF NOT EXISTS idx_tasks_created ON citation_tasks(created_at DESC);
       `);
 
       console.log('✅ citation_tasks table ready');
