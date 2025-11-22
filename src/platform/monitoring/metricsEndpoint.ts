@@ -182,6 +182,109 @@ export const redisKeyspaceMisses = new promClient.Counter({
 });
 
 /**
+ * MARCUS 3.1 - Enhanced Monitoring Metrics (M3)
+ *
+ * Added missing metrics:
+ * - Error classification (by error type)
+ * - Queue processing metrics (depth, lag, throughput)
+ * - State synchronization metrics (delay, lock contention)
+ * - P95/P99 latency tracking (via histogram buckets)
+ */
+
+/**
+ * Error classification counter - track errors by type
+ */
+export const errorsByType = new promClient.Counter({
+  name: 'marcus_errors_total',
+  help: 'Total number of errors by type',
+  labelNames: ['error_type', 'component', 'severity'],
+  registers: [register]
+});
+
+/**
+ * Error rate gauge - percentage of requests that error
+ */
+export const errorRate = new promClient.Gauge({
+  name: 'marcus_error_rate',
+  help: 'Current error rate (errors per second)',
+  labelNames: ['component'],
+  registers: [register]
+});
+
+/**
+ * Queue metrics - message queue depth and processing
+ */
+export const queueDepth = new promClient.Gauge({
+  name: 'marcus_queue_depth',
+  help: 'Current number of items in queue',
+  labelNames: ['queue_name'],
+  registers: [register]
+});
+
+export const queueProcessingLag = new promClient.Gauge({
+  name: 'marcus_queue_processing_lag_seconds',
+  help: 'Age of oldest item in queue (seconds)',
+  labelNames: ['queue_name'],
+  registers: [register]
+});
+
+export const queueThroughput = new promClient.Gauge({
+  name: 'marcus_queue_throughput_items_per_second',
+  help: 'Queue processing throughput (items/second)',
+  labelNames: ['queue_name'],
+  registers: [register]
+});
+
+export const queueProcessingDuration = new promClient.Histogram({
+  name: 'marcus_queue_processing_duration_seconds',
+  help: 'Time to process queue items',
+  labelNames: ['queue_name'],
+  buckets: [0.01, 0.05, 0.1, 0.5, 1, 5, 10, 30],
+  registers: [register]
+});
+
+/**
+ * State synchronization metrics
+ */
+export const stateSyncDelay = new promClient.Histogram({
+  name: 'marcus_state_sync_delay_seconds',
+  help: 'Delay between orchestrator state update and database persistence',
+  labelNames: ['sync_type'], // agent_state, analysis_result
+  buckets: [0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1, 5],
+  registers: [register]
+});
+
+export const cacheHitRatio = new promClient.Gauge({
+  name: 'marcus_cache_hit_ratio',
+  help: 'Cache hit ratio (0-1)',
+  labelNames: ['cache_type'], // redis, memory
+  registers: [register]
+});
+
+export const lockContentionCounter = new promClient.Counter({
+  name: 'marcus_lock_contention_total',
+  help: 'Total number of lock acquisition failures or waits',
+  labelNames: ['lock_name', 'result'], // acquired, timeout, failed
+  registers: [register]
+});
+
+export const lockAcquisitionDuration = new promClient.Histogram({
+  name: 'marcus_lock_acquisition_duration_seconds',
+  help: 'Time spent acquiring distributed locks',
+  labelNames: ['lock_name'],
+  buckets: [0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1, 5],
+  registers: [register]
+});
+
+export const lockHoldDuration = new promClient.Histogram({
+  name: 'marcus_lock_hold_duration_seconds',
+  help: 'Time locks are held',
+  labelNames: ['lock_name'],
+  buckets: [0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1, 5],
+  registers: [register]
+});
+
+/**
  * Normalize URL path for metrics (group similar paths together)
  * Examples:
  *   /api/citations/123 -> /api/citations/:id

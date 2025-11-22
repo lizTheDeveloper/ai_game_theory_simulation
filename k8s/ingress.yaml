@@ -10,9 +10,13 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
 
-    # Rate limiting
-    nginx.ingress.kubernetes.io/limit-rps: "100"
-    nginx.ingress.kubernetes.io/limit-connections: "20"
+    # Rate limiting (per IP address)
+    # Target: 100 req/min per IP (1.67 req/sec), burst 150
+    nginx.ingress.kubernetes.io/limit-rps: "2"  # ~100/min, allowing small burst
+    nginx.ingress.kubernetes.io/limit-burst-multiplier: "75"  # 2 * 75 = 150 burst capacity
+    nginx.ingress.kubernetes.io/limit-connections: "20"  # Max concurrent connections per IP
+    nginx.ingress.kubernetes.io/limit-rpm: "100"  # Explicit requests per minute
+    nginx.ingress.kubernetes.io/limit-whitelist: ""  # No IP whitelist by default
 
     # Timeouts
     nginx.ingress.kubernetes.io/proxy-connect-timeout: "30"

@@ -4,11 +4,15 @@
 
 MARCUS 3.0 supports **two distinct orchestration patterns** for managing citation integrity agents. This document explains both architectures, their trade-offs, and when to use each.
 
+**IMPORTANT:** As of MARCUS 3.1 (November 22, 2025), the **spawn-agents pattern is DEPRECATED**. All new deployments should use the worker service pattern.
+
+**Migration Guide:** See `docs/MIGRATION_GUIDE.md` for step-by-step migration instructions.
+
 ---
 
 ## Architecture Comparison
 
-### 1. Spawn-Agents Architecture (LEGACY)
+### 1. Spawn-Agents Architecture (DEPRECATED - DO NOT USE)
 
 **Pattern:** Orchestrator spawns Python agent subprocesses internally via TypeScript child_process API.
 

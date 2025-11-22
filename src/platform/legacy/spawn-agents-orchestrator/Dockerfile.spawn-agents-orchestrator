@@ -1,21 +1,9 @@
-# ============================================================================
-# DEPRECATED: Spawn-Agents Orchestrator Pattern
-# ============================================================================
-# Status: DEPRECATED as of MARCUS 3.1 (November 22, 2025)
-# Reason: Replaced by Worker Service Pattern for better scalability
-# Migration: See src/platform/legacy/spawn-agents-orchestrator/README.md
-# Recommended: Use docker/Dockerfile.citation-worker-orchestrator instead
-# ============================================================================
-
-# MARCUS 3.0 - TypeScript Orchestrator (LEGACY - DO NOT USE)
+# MARCUS 3.0 - TypeScript Orchestrator
 FROM node:20-slim as base
 
 LABEL org.opencontainers.image.source="https://github.com/your-org/ai_game_theory_simulation"
-LABEL org.opencontainers.image.description="MARCUS 3.0 Citation Orchestrator (DEPRECATED)"
+LABEL org.opencontainers.image.description="MARCUS 3.0 Citation Orchestrator"
 LABEL maintainer="marcus@platform.engineering"
-LABEL deprecated="true"
-LABEL deprecation.reason="Replaced by worker service pattern"
-LABEL deprecation.migration="See src/platform/legacy/spawn-agents-orchestrator/README.md"
 
 # Set working directory
 WORKDIR /app
