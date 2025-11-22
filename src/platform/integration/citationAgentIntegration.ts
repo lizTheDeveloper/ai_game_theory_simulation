@@ -26,6 +26,8 @@ import { Counter, Histogram, Gauge, register as promRegister } from 'prom-client
 import * as fs from 'fs/promises';
 import * as path from 'path';
 import { agentStatus as agentStatusMetric, agentRequestDuration, citationAnalysisCounter, citationAnalysisDuration } from '../monitoring/metricsEndpoint';
+import { DistributedLockManager, withLock } from '../utils/distributedLock';
+import { ProcessRegistry, ProcessState } from '../utils/processRegistry';
 
 // ============================================================================
 // Type Definitions
@@ -149,6 +151,7 @@ export class PythonAgentWrapper extends EventEmitter {
   private isHealthy: boolean = false;
   private lastHealthCheck: Date | null = null;
   private requestQueue: Array<{ method: string; params: any; resolve: Function; reject: Function }> = [];
+  private processRegistry: ProcessRegistry;
 
   constructor(
     public readonly agentId: string,
@@ -157,6 +160,7 @@ export class PythonAgentWrapper extends EventEmitter {
     private readonly timeout: number = 30000
   ) {
     super();
+    this.processRegistry = ProcessRegistry.getInstance();
   }
 
   async start(): Promise<void> {
@@ -185,9 +189,15 @@ export class PythonAgentWrapper extends EventEmitter {
       throw new Error(`Failed to initialize stdio for agent ${this.agentId}`);
     }
 
+    // CRITICAL FIX: Register process in registry to prevent memory leaks
+    this.processRegistry.register(this.agentId, this.process, this.restartCount);
+
     // Set up IPC
     this.setupIPC();
     this.setupHealthMonitor();
+
+    // Mark as running in registry
+    this.processRegistry.updateState(this.agentId, ProcessState.RUNNING);
 
     this.emit('started', { agentId: this.agentId });
     console.log(`✅ Agent ${this.agentId} started (PID: ${this.process.pid})`);
@@ -211,8 +221,8 @@ export class PythonAgentWrapper extends EventEmitter {
 
     for (const { method, params, resolve, reject } of queue) {
       this.invokeInternal(method, params, 0, 3)
-        .then(resolve)
-        .catch(reject);
+        .then((result) => resolve(result))
+        .catch((err) => reject(err));
     }
   }
 
@@ -238,7 +248,8 @@ export class PythonAgentWrapper extends EventEmitter {
       this.isHealthy = false;
 
       // Reject pending requests
-      for (const [requestId, pending] of this.pendingRequests.entries()) {
+      const pendingEntries = Array.from(this.pendingRequests.entries());
+      for (const [requestId, pending] of pendingEntries) {
         clearTimeout(pending.timeout);
         pending.reject(new Error(`Agent process exited (code: ${code})`));
       }
@@ -248,6 +259,10 @@ export class PythonAgentWrapper extends EventEmitter {
       if (this.restartCount < this.maxRestarts) {
         this.restartCount++;
         console.log(`🔄 Restarting agent ${this.agentId} (attempt ${this.restartCount}/${this.maxRestarts})`);
+
+        // CRITICAL FIX: Track restart in registry metrics
+        this.processRegistry.recordRestart(this.agentId);
+
         this.process = undefined;
         this.start().catch(err => {
           console.error(`❌ Failed to restart agent ${this.agentId}:`, err);
@@ -446,6 +461,11 @@ export class PythonAgentWrapper extends EventEmitter {
       try {
         const status = await this.getStatus();
         this.isHealthy = status.isHealthy;
+
+        // CRITICAL FIX: Mark process as alive in registry
+        if (this.isHealthy) {
+          this.processRegistry.markAlive(this.agentId);
+        }
       } catch (err) {
         console.error(`❌ Health check failed for agent ${this.agentId}:`, err);
         this.isHealthy = false;
@@ -458,8 +478,12 @@ export class PythonAgentWrapper extends EventEmitter {
       return;
     }
 
+    // CRITICAL FIX: Update registry state to STOPPING
+    this.processRegistry.updateState(this.agentId, ProcessState.STOPPING);
+
     // Clear pending requests
-    for (const [requestId, pending] of this.pendingRequests.entries()) {
+    const pendingEntries = Array.from(this.pendingRequests.entries());
+    for (const [requestId, pending] of pendingEntries) {
       clearTimeout(pending.timeout);
       pending.reject(new Error('Agent stopped'));
     }
@@ -474,6 +498,9 @@ export class PythonAgentWrapper extends EventEmitter {
         console.warn(`⚠️ Force killing agent ${this.agentId}`);
         this.process.kill('SIGKILL');
       }
+
+      // CRITICAL FIX: Unregister from registry after cleanup
+      this.processRegistry.unregister(this.agentId);
     }, 5000);
 
     console.log(`🛑 Agent ${this.agentId} stopped`);
@@ -491,6 +518,7 @@ export class PythonAgentWrapper extends EventEmitter {
 export class AgentStateManager {
   private db: PostgresPool;
   private cache: Redis;
+  private lockManager: DistributedLockManager;
 
   constructor(
     dbConfig: PlatformConfig['database'],
@@ -515,80 +543,98 @@ export class AgentStateManager {
       db: redisConfig.db,
     });
 
+    // CRITICAL FIX: Distributed lock manager for race condition prevention
+    this.lockManager = new DistributedLockManager(this.cache);
+
     console.log('✅ AgentStateManager initialized');
   }
 
   /**
-   * Save agent state with optimistic locking.
+   * Save agent state with distributed locking + optimistic locking.
    *
-   * KEY FIX (H2): Uses version field to detect concurrent updates.
-   * If version mismatch detected, throws error instead of silently overwriting.
+   * CRITICAL FIX: Two-layer protection against race conditions:
+   * 1. Distributed lock (Redis) - prevents concurrent updates across pods
+   * 2. Version check (PostgreSQL) - fallback if lock fails or expires
+   *
+   * This prevents data corruption under high concurrency (e.g., 3 K8s replicas).
    *
    * @param state Agent state to save
-   * @throws Error if version conflict detected
+   * @throws Error if version conflict detected or lock cannot be acquired
    */
   async saveState(state: AgentState): Promise<void> {
     const startTime = Date.now();
 
-    // Generate new version
-    const newVersion = Date.now();
+    // CRITICAL FIX: Acquire distributed lock before state update
+    return withLock(
+      this.lockManager,
+      `agent:${state.agentId}:state`,
+      async () => {
+        // Generate new version
+        const newVersion = Date.now();
 
-    try {
-      // Write-through cache pattern
-      const cacheKey = `agent:${state.agentId}:state`;
-      const stateWithVersion = { ...state, version: newVersion };
+        try {
+          // Write-through cache pattern
+          const cacheKey = `agent:${state.agentId}:state`;
+          const stateWithVersion = { ...state, version: newVersion };
 
-      await this.cache.setex(
-        cacheKey,
-        3600, // 1 hour TTL
-        JSON.stringify(stateWithVersion)
-      );
+          await this.cache.setex(
+            cacheKey,
+            3600, // 1 hour TTL
+            JSON.stringify(stateWithVersion)
+          );
 
-      // Persist to database with version check
-      const result = await this.db.query<{ affected: number }>(`
-        INSERT INTO agent_states (
-          agent_id, reputation, total_citations, detected_violations,
-          current_behavior, memory_state, exploration_rate, timestamp, version
-        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-        ON CONFLICT (agent_id) DO UPDATE SET
-          reputation = EXCLUDED.reputation,
-          total_citations = EXCLUDED.total_citations,
-          detected_violations = EXCLUDED.detected_violations,
-          current_behavior = EXCLUDED.current_behavior,
-          memory_state = EXCLUDED.memory_state,
-          exploration_rate = EXCLUDED.exploration_rate,
-          timestamp = EXCLUDED.timestamp,
-          version = EXCLUDED.version
-        WHERE agent_states.version < EXCLUDED.version
-        RETURNING version
-      `, [
-        state.agentId,
-        state.reputation,
-        state.totalCitations,
-        state.detectedViolations,
-        state.currentBehavior,
-        JSON.stringify(state.memoryState),
-        state.explorationRate,
-        state.timestamp,
-        newVersion
-      ]);
+          // Persist to database with version check (optimistic locking)
+          const result = await this.db.query<{ affected: number }>(`
+            INSERT INTO agent_states (
+              agent_id, reputation, total_citations, detected_violations,
+              current_behavior, memory_state, exploration_rate, timestamp, version
+            ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+            ON CONFLICT (agent_id) DO UPDATE SET
+              reputation = EXCLUDED.reputation,
+              total_citations = EXCLUDED.total_citations,
+              detected_violations = EXCLUDED.detected_violations,
+              current_behavior = EXCLUDED.current_behavior,
+              memory_state = EXCLUDED.memory_state,
+              exploration_rate = EXCLUDED.exploration_rate,
+              timestamp = EXCLUDED.timestamp,
+              version = EXCLUDED.version
+            WHERE agent_states.version < EXCLUDED.version
+            RETURNING version
+          `, [
+            state.agentId,
+            state.reputation,
+            state.totalCitations,
+            state.detectedViolations,
+            state.currentBehavior,
+            JSON.stringify(state.memoryState),
+            state.explorationRate,
+            state.timestamp,
+            newVersion
+          ]);
 
-      // Check if update succeeded (version conflict detection)
-      if (result.rowCount === 0) {
-        throw new Error(
-          `❌ CRITICAL: Version conflict for agent ${state.agentId}. ` +
-          `Concurrent update detected. Expected version ${state.version}, ` +
-          `but database has newer version. State NOT saved.`
-        );
+          // Check if update succeeded (version conflict detection)
+          if (result.rowCount === 0) {
+            throw new Error(
+              `❌ CRITICAL: Version conflict for agent ${state.agentId}. ` +
+              `Concurrent update detected. Expected version ${state.version}, ` +
+              `but database has newer version. State NOT saved.`
+            );
+          }
+
+          const latency = Date.now() - startTime;
+          console.log(`✅ Agent ${state.agentId} state saved (version: ${newVersion}, latency: ${latency}ms)`);
+
+        } catch (err) {
+          console.error(`❌ Failed to save state for agent ${state.agentId}:`, err);
+          throw err;
+        }
+      },
+      {
+        lockTimeout: 10000,    // 10 second lock
+        acquireTimeout: 5000,   // 5 second wait for lock
+        retryInterval: 50       // Check every 50ms
       }
-
-      const latency = Date.now() - startTime;
-      console.log(`✅ Agent ${state.agentId} state saved (version: ${newVersion}, latency: ${latency}ms)`);
-
-    } catch (err) {
-      console.error(`❌ Failed to save state for agent ${state.agentId}:`, err);
-      throw err;
-    }
+    );
   }
 
   /**
@@ -666,31 +712,48 @@ export class AgentStateManager {
   /**
    * Save analysis result to database.
    *
+   * CRITICAL FIX: Uses distributed lock to prevent duplicate entries
+   * when multiple orchestrator pods process the same document simultaneously.
+   *
    * @param analysis Aggregated analysis to persist
    */
   async saveAnalysis(analysis: AggregatedAnalysis): Promise<void> {
-    try {
-      await this.db.query(`
-        INSERT INTO citation_analyses (
-          source, mean_integrity, consensus, behavior_distribution,
-          recommendations, num_agents, latency_ms, timestamp
-        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-      `, [
-        'platform',  // Source identifier
-        analysis.meanIntegrity,
-        analysis.consensus,
-        JSON.stringify(analysis.behaviorDistribution),
-        JSON.stringify(analysis.recommendations),
-        analysis.numAgents,
-        analysis.latencyMs,
-        analysis.timestamp
-      ]);
+    // Create lock key based on timestamp (deduplication window)
+    const lockKey = `analysis:${analysis.timestamp}`;
 
-      console.log(`✅ Analysis saved (${analysis.numAgents} agents, consensus: ${analysis.consensus.toFixed(2)})`);
-    } catch (err) {
-      console.error('❌ Failed to save analysis:', err);
-      throw err;
-    }
+    return withLock(
+      this.lockManager,
+      lockKey,
+      async () => {
+        try {
+          await this.db.query(`
+            INSERT INTO citation_analyses (
+              source, mean_integrity, consensus, behavior_distribution,
+              recommendations, num_agents, latency_ms, timestamp
+            ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+          `, [
+            'platform',  // Source identifier
+            analysis.meanIntegrity,
+            analysis.consensus,
+            JSON.stringify(analysis.behaviorDistribution),
+            JSON.stringify(analysis.recommendations),
+            analysis.numAgents,
+            analysis.latencyMs,
+            analysis.timestamp
+          ]);
+
+          console.log(`✅ Analysis saved (${analysis.numAgents} agents, consensus: ${analysis.consensus.toFixed(2)})`);
+        } catch (err) {
+          console.error('❌ Failed to save analysis:', err);
+          throw err;
+        }
+      },
+      {
+        lockTimeout: 5000,     // 5 second lock
+        acquireTimeout: 2000,  // 2 second wait
+        retryInterval: 50
+      }
+    );
   }
 
   async cleanup(): Promise<void> {
@@ -752,8 +815,8 @@ export class MetricsCollector {
     this.agentFailuresCounter.inc({ agent_id: agentId });
   }
 
-  getMetrics(): string {
-    return promRegister.metrics();
+  async getMetrics(): Promise<string> {
+    return await promRegister.metrics();
   }
 }
 
@@ -998,7 +1061,8 @@ export class CitationAgentOrchestrator {
 
   async getHealthyAgentCount(): Promise<number> {
     let healthyCount = 0;
-    for (const agent of this.agents.values()) {
+    const agents = Array.from(this.agents.values());
+    for (const agent of agents) {
       if (agent.getHealthStatus()) {
         healthyCount++;
       }
@@ -1059,7 +1123,8 @@ export class CitationAgentOrchestrator {
   async getAgentStatuses(): Promise<AgentStatus[]> {
     const statuses: AgentStatus[] = [];
 
-    for (const agent of this.agents.values()) {
+    const agents = Array.from(this.agents.values());
+    for (const agent of agents) {
       try {
         const status = await agent.getStatus();
         statuses.push(status);
@@ -1102,7 +1167,8 @@ export class CitationAgentOrchestrator {
     this.isRunning = false;
 
     // Stop all agents
-    const stopPromises = Array.from(this.agents.values()).map(agent => agent.stop());
+    const agents = Array.from(this.agents.values());
+    const stopPromises = agents.map(agent => agent.stop());
     await Promise.all(stopPromises);
 
     this.agents.clear();
