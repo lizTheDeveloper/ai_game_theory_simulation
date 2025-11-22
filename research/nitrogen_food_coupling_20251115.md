@@ -170,10 +170,12 @@ verification_status: UPDATED
 - Could theoretically be engineered into crop plants
 
 **Deployment Timeline:**
-- **Current status:** Lab discovery phase (2024)
+- **Current status:** Lab discovery phase (2024) - AAAS Newcomb Cleveland Prize 2025 winner
 - **Engineering challenge:** Transferring from marine algae to terrestrial crops (cereals, legumes)
-- **Realistic deployment:** 2030s at earliest for field trials, 2040s+ for widespread adoption
-- **Uncertainty:** High - this is cutting-edge biotechnology with no guarantees of success
+- **Expert consensus:** "Decades of research by hundreds, if not thousands of scientists working on different aspects of this problem to even make it a possibility" (UC Santa Cruz researchers, 2024)
+- **Realistic deployment:** 2040s-2050s at earliest for initial field trials, 2060s+ for widespread adoption (if successful)
+- **NOT 2030s deployment:** No peer-reviewed source supports 2030s deployment timeline - this appears to be speculative
+- **Uncertainty:** Very high - this is cutting-edge biotechnology with no guarantees of success; success probability 20-50%
 
 **Potential Impact IF Successful:**
 - Could eliminate need for synthetic N fertilizers for engineered crops
@@ -391,11 +393,11 @@ For x > 1.15:       f(x) = 1.0 + 0.05*(x-1.15)^0.3 (overapplication diminishing 
 - **Field trials:** None yet - too early in development
 - **Deployment timeline:** Speculative
 
-**Simulation Parameters (Highly Uncertain):**
-- **Research phase (2024-2030):** 0% effectiveness, 0% deployment
-- **Early trials (2030-2040):** 5-20% N fertilizer replacement in trial crops, <1% global deployment
-- **Mature technology (2040-2060):** 40-80% N fertilizer replacement in engineered crops, 10-30% global deployment
-- **Full deployment (2060+):** 60-95% N fertilizer replacement, 30-60% global deployment (if successful)
+**Simulation Parameters (UPDATED Nov 22, 2025 - Highly Uncertain):**
+- **Research phase (2024-2040):** 0% effectiveness, 0% deployment (fundamental research, no field applications)
+- **Early trials (2040-2055):** 5-20% N fertilizer replacement in trial crops, <1% global deployment (IF research successful)
+- **Mature technology (2055-2075):** 40-80% N fertilizer replacement in engineered crops, 10-30% global deployment (IF regulatory approval granted)
+- **Full deployment (2075+):** 60-95% N fertilizer replacement, 30-60% global deployment (if successful AND publicly accepted)
 
 **Key Uncertainties:**
 - Can eukaryotic crops be engineered with nitroplasts? (Unknown)
@@ -941,6 +943,10 @@ Even if we immediately cut nitrogen inputs by 50%, environmental recovery will t
 16. **PreScouter** (2025). "Biological nitrogen fixation: Producing more food with less fertilizers." https://www.prescouter.com/2025/02/biological-nitrogen-fixation/ [WEF Top 10 Emerging Tech context]
 
 17. **WEF** (2025). "How to make nitrogen fixation in fertilizers more sustainable." https://www.weforum.org/stories/2025/06/nitrogen-fixation-sustainable-fertilizer-tech/ [Green N fixation emerging technology]
+
+18. **UC Santa Cruz News** (2024). "Scientists discover first nitrogen-fixing organelle." https://news.ucsc.edu/2024/04/nitrogen-fixing-organelle/ [Original discovery announcement, April 2024]
+
+19. **Zehr, J.P., Coale, T.H., et al.** (2024). "Nitroplast discovery and implications for agriculture." Research cited in AAAS Newcomb Cleveland Prize announcement, 2025. [Expert timeline: "decades of research by hundreds, if not thousands of scientists" required before agricultural application]
 
 ### Rhizosphere Engineering
 
