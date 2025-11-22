@@ -1,11 +1,11 @@
 # Master Implementation Roadmap
 ## AI Alignment Game Theory Simulation - Project Hub
 
-**Date:** November 22, 2025 (Updated: MARCUS 3.0 Phase 5 Ready)
+**Date:** November 22, 2025 (Updated: MARCUS Port Config + Grafana Planning)
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**Current Status:** 🟢 **STABLE** (Nov 22, 2025 - MARCUS Phase 5 Cloud Deployment Ready)
+**Current Status:** 🟢 **STABLE** (Nov 22, 2025 - MARCUS monitoring configured, simulation dashboards planned)
 - **Research Quality:** A (peer-reviewed foundation, 29 sources added Nov 15 - nitrogen-food coupling)
 - **Implementation Fidelity:** A- (assertion coverage 97.2%, outcome probabilities bug FIXED, biogeochemical partial)
 - **Architecture Health:** 9.5/10 (CRITICAL/HIGH issues resolved, MEDIUM items remain)
@@ -115,22 +115,46 @@
     - `plans/completed/MARCUS_3.0_WORKER_SERVICE_COMPLETE_20251122.md`
   - **Status:** ✅ COMPLETE - Ready for cloud deployment (Phase 5)
 
-- 🔵 **MARCUS 3.0 PHASE 5: Cloud Deployment (GCP/GKE) - READY TO EXECUTE** (Nov 22, 2025)
-  - **Scope:** Production deployment to Google Kubernetes Engine with managed services
-  - **Decision:** Skip Phase 4.5 (local hardening) - security fixes already complete, worker metrics deferred to post-deployment
+- ✅ **MARCUS 3.0 PORT CONFIGURATION & GRAFANA PLANNING** (Nov 22, 2025 - Session 2)
+  - **Scope:** Port conflict resolution, SSH tunnel fixes, Grafana cleanup, simulation dashboard planning
+  - **Port Changes:** Grafana 4000 → 5000 (resolved conflict with Game Simulation frontend)
+  - **Grafana Cleanup:** Removed 5 duplicate dashboards, organized MARCUS folder + Research Tool folder
+  - **Simulation Metrics:** Prometheus configured to scrape port 9091, 10 dashboard specs created
+  - **Documentation:**
+    - `docs/PORT_MAPPING.md` - Single source of truth for all ports
+    - `docs/PORT_SEPARATION.md` - Frontend vs backend architecture
+    - `docs/SSH_TUNNEL_COMMAND.md` - Correct tunnel setup
+    - `docs/GRAFANA_SIMULATION_DASHBOARDS.md` - 10 dashboard implementation plan
+    - Updated: `docs/MARCUS_MONITORING_ARCHITECTURE.md`, `docs/MARCUS_MONITORING_OVERVIEW.md`
+  - **Archive:** `plans/completed/MARCUS_3.0_PORT_GRAFANA_CLEANUP_20251122.md`
+  - **Next Steps:** Implement 10 simulation dashboards (simulation-maintainer + far-future-ux-designer, 2-3 hours)
+  - **Commit:** `84e40da8` on branch `claude/build-marcus-agent-016LTPXuAb6A3hYDwTvMjyof`
+  - **Status:** ✅ COMPLETE
+
+- 🔵 **MARCUS 3.0 PHASE 5: Cloud Deployment (GCP/GKE) - READY TO EXECUTE** (Nov 22, 2025 - Session 1)
+  - **Scope:** Production deployment to Google Kubernetes Engine with self-hosted databases
+  - **Decision:** Use self-hosted PostgreSQL/Redis (StatefulSets) instead of managed Cloud SQL/Memorystore
   - **Target Environment:** GCP us-central1 (same region as existing VM)
   - **Infrastructure:**
-    - GKE cluster (2-10 nodes, e2-standard-2, autoscaling)
-    - Cloud SQL PostgreSQL 15 (db-g1-small, 20GB SSD)
-    - Memorystore Redis 7 (Basic 1GB)
-    - Artifact Registry for Docker images
-  - **Timeline:** 3-4 hours (infrastructure 45min, registry 15min, K8s config 60min, validation 30min, monitoring 30min)
-  - **Cost Estimate:** ~$115/month (GKE $50, Cloud SQL $25, Redis $30, network $10)
+    - GKE cluster (1-5 nodes, e2-standard-4, autoscaling)
+    - PostgreSQL StatefulSet (1 primary + 2 replicas, 50GB SSD each)
+    - Redis StatefulSet (6 nodes cluster mode, 10GB SSD each)
+    - Artifact Registry for Docker images (orchestrator 3.5GB, agent 629MB)
+    - Google Cloud Load Balancer + TLS
+    - kube-prometheus-stack (Prometheus + Grafana + Alertmanager)
+  - **Timeline:** 25-40 minutes (GKE 8-12min, images 10-15min, PostgreSQL 2-3min, Redis 2-3min, app 2-3min, monitoring 3-5min)
+  - **Cost Estimate:** ~$173/month (minimal 1 node) to ~$473/month (production 3 nodes) vs $115-228 with managed services
+  - **Scripts Created:**
+    - `scripts/gcp/deploy-to-gke.sh` - One-command deployment (350 lines)
+    - `scripts/gcp/validate-prerequisites.sh` - Pre-flight checks (150 lines)
+    - `scripts/gcp/init-database.sh` - PostgreSQL schema (120 lines)
+    - `scripts/gcp/setup-monitoring.sh` - Prometheus + Grafana (180 lines)
   - **Documentation:**
-    - `plans/MARCUS_3.0_PHASE_5_CLOUD_DEPLOYMENT.md` - Complete deployment plan (500+ lines)
-    - `plans/MARCUS_PHASE_4_5_DECISION.md` - Phase 4.5 vs 5 decision rationale
-  - **Deferred to Phase 5.5:** Worker Prometheus metrics, multi-container load testing
-  - **Status:** 🔵 READY TO EXECUTE - All prerequisites met
+    - `docs/GCP_DEPLOYMENT_GUIDE.md` - Comprehensive deployment guide (450 lines)
+    - `docs/PRODUCTION_RUNBOOK.md` - Operational procedures (600 lines)
+  - **Blocker:** VM service account insufficient scopes - user must authenticate with `gcloud auth login`
+  - **Archive:** `plans/completed/MARCUS_3.0_PHASE_5_GKE_DEPLOYMENT_READY_20251122.md`
+  - **Status:** 🔵 READY TO EXECUTE - Scripts complete, awaiting user authentication
 
 - ✅ **MARCUS 3.0 PHASE 3: Performance & Monitoring COMPLETE** (Nov 21, 2025)
   - **Scope:** Performance benchmarking, monitoring setup (Prometheus/Grafana), load testing, production readiness
