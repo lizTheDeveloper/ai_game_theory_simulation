@@ -1,4 +1,5 @@
-version: '3.8'
+# Docker Compose v3.8 (version field deprecated in Compose v2)
+# Multi-container setup for MARCUS 3.0 platform
 
 services:
   # PostgreSQL Database
@@ -11,9 +12,10 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-citation_integrity}
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./src/platform/database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      # Schema initialization will be handled by migrations or orchestrator
+      # - ./src/platform/database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
     ports:
-      - "5432:5432"
+      - "5433:5432"  # Using 5433 on host to avoid conflict with native PostgreSQL
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-marcus}"]
       interval: 10s
@@ -30,7 +32,7 @@ services:
     volumes:
       - redis_data:/data
     ports:
-      - "6379:6379"
+      - "6380:6379"  # Using 6380 on host to avoid conflict with native Redis
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 10s
@@ -45,11 +47,18 @@ services:
       context: .
       dockerfile: docker/Dockerfile.agent
     image: ghcr.io/your-org/marcus-citation-agent:latest
-    container_name: marcus-agent-${AGENT_ID:-1}
+    # Note: container_name removed to allow deploy.replicas (multiple instances)
     environment:
-      DATABASE_URL: postgresql://${POSTGRES_USER:-marcus}:${POSTGRES_PASSWORD:-changeme}@postgres:5432/${POSTGRES_DB:-citation_integrity}
-      REDIS_URL: redis://redis:6379/0
-      AGENT_ID: ${AGENT_ID:-1}
+      # Worker service configuration (Redis queue-based)
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-}
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_NAME: ${POSTGRES_DB:-citation_integrity}
+      DATABASE_USER: ${POSTGRES_USER:-marcus}
+      DATABASE_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      AGENT_ID: ${AGENT_ID:-agent_${HOSTNAME}}
       LOG_LEVEL: ${LOG_LEVEL:-INFO}
     depends_on:
       postgres:

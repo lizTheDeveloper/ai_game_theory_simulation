@@ -40,5 +40,6 @@ ENV PYTHONUNBUFFERED=1
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD python -c "import sys; sys.exit(0)"
 
-# Run agent
-CMD ["python", "/app/src/platform/agents/citation_integrity_agent.py"]
+# Run agent in worker mode (long-lived service)
+# Worker pulls tasks from Redis queue and processes them continuously
+CMD ["python", "/app/src/platform/agents/citation_worker.py"]

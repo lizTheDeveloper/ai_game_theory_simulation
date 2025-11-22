@@ -652,7 +652,7 @@ class CitationIntegrityAgent:
             'total_citations': self.total_citations,
             'detected_violations': self.detected_violations,
             'current_behavior': self.current_behavior.value,
-            'memory_state': self.memory.to_dict(),
+            'memory_state': json.dumps(self.memory.to_dict()),  # Serialize to JSON string for JSONB
             'exploration_rate': self.exploration_rate,
             'timestamp': datetime.now().isoformat(),
             'version': version if version is not None else int(time.time() * 1000)

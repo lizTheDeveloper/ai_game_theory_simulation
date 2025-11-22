@@ -1,0 +1,13 @@
+npm warn config production Use `--omit=dev` instead.
+# npm audit report
+
+@anthropic-ai/claude-code  <2.0.31
+Severity: high
+@anthropic-ai/claude-code has Sed Command Validation Bypass that Allows Arbitrary File Writes - https://github.com/advisories/GHSA-7mv8-j34q-vp7q
+fix available via `npm audit fix`
+node_modules/@anthropic-ai/claude-code
+
+1 high severity vulnerability
+
+To address all issues, run:
+  npm audit fix
