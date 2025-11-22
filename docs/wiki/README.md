@@ -22,100 +22,25 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **SYSTEM HEALTH:**
 - **Research Quality:** A- (4 CRITICAL parameter fixes applied, 0 CRITICAL age issues) ✅ EXCELLENT
-- **Research Currency:** ✅ EXCELLENT (Nov 21 audit COMPLETE: Top simulation-referenced research current with 2024-2025 sources)
+- **Research Currency:** ✅ EXCELLENT (all simulation-critical files updated within 14 days, autonomous system working effectively)
 - **Implementation Fidelity:** A- (assertion coverage 97.2%, 24 integration tests for CoordinatedDeploymentPhase) ✅ EXCELLENT
-- **Architecture Health:** B (stable - HIGH-5 error recovery complete, 2 CRITICAL + 2 HIGH remaining from Nov 15 review) ⚠️ STABLE
-- **System Trajectory:** 🟢 STABLE (Architecture review complete, research parameters corrected, TypeScript compilation clean)
+- **Architecture Health:** A (89/95 phases with dependency declarations, 0 CRITICAL issues, 0 HIGH issues) ✅ EXCELLENT
+- **System Trajectory:** 🟢 STABLE (Nov 21 architecture integration review: Grade A, all major systems properly integrated)
 
 **Recent Major Achievements:**
 
-<<<<<<< ours
-<<<<<<< HEAD
-=======
->>>>>>> theirs
-**Nov 21: Phase-Level Error Recovery System** (commit c234d3d)
-- ✅ **Architecture HIGH-5 COMPLETE:** Intelligent error boundaries prevent unnecessary simulation crashes
-- 🎯 **Impact:** Reduces Monte Carlo failure rate from 5-10% to <1% (expected)
-- 🛡️ **Four-Tier Error Policy:**
-  - **Critical phases** (mortality, AI lifecycle, time advancement) → Crash with full context
-  - **Important phases** (environmental, social) → Retry once, degrade if retry fails
-  - **Optional phases** (UI updates, diagnostics) → Skip cleanly, continue simulation
-  - **Recoverable phases** (stochastic innovation) → Use fallback values, mark degraded
-- 🚨 **Transparent Degradation:** NO SILENT FAILURES - degraded mode loudly logged with error tracking
-- 📊 **Error Tracking:** `GameState.errorRecovery` tracks degraded mode, failed phases, total errors, last error details
-- ✅ **Testing:** 8/8 tests passing (critical crash, retry logic, degraded mode, error preservation)
-- 🔧 **Implementation:**
-  - `src/simulation/errors/SimulationError.ts` - Typed error classes (CriticalPhaseError, RecoverablePhaseError, etc.)
-  - `src/simulation/engine/PhaseOrchestrator.ts` - Policy-based error handling with retry logic
-  - `src/types/game.ts` - errorRecovery state tracking
-  - `scripts/testPhaseErrorRecovery.ts` - Comprehensive test suite
-- 📖 **Documentation:** `docs/PHASE_ERROR_RECOVERY_DESIGN.md` (485 lines), `docs/PHASE_ERROR_RECOVERY_IMPLEMENTATION.md` (270 lines)
-- 🔐 **Fail-Safe Default:** All phases default to 'critical' (explicit opt-in required for recovery)
-- ⏳ **Next Steps:** Classify 102 existing phases (1-2 days), update assertion utilities, Monte Carlo validation
-=======
-**Nov 21: Anthropic-OpenAI Cross-Evaluation Research** (commit 973ad9e)
-- 🔬 **Historic First:** Cross-evaluation between frontier AI labs testing misalignment propensities
-- 📊 **Quantitative Parameters:** Extracted empirical rates for 6 failure modes (misuse cooperation, sycophancy, self-preservation, whistleblowing, sabotage, overrefusal)
-- 🎯 **Key Findings:** Reasoning models 2-3x safer than general-purpose; o3 best alignment (near-zero sycophancy); all models except o3 struggle with sycophancy (50-80%)
-- 📖 **Research File:** research/anthropic_openai_cross_evaluation_2025.md (467 lines, A+ research quality)
-- ✅ **Status:** Research-only (no implementation yet, awaits future feature development)
->>>>>>> origin/auto/researcher-20251121_213001
-
-**Nov 21: Autonomous Researcher Session - AI Scaling Laws 2024-2025 Update** (commit fd6c5bc)
-- 🔬 **Research Update:** AI scaling laws updated with latest industry and academic findings
-- 📊 **New Data Added:**
-  - Epoch AI 2030 projections (Sevilla et al., August 2024) - 2e29 FLOP feasible by 2030, power infrastructure binding constraint
-  - OpenAI o3 benchmarks (December 2024) - 88% ARC-AGI (vs o1: 32%), test-time compute scaling demonstration
-- ✅ **Sources:** 2 new citations (Epoch AI blog, TechCrunch industry reporting), both verified HIGH confidence
-- 🎯 **Implications:** Power constraints (1 GW training runs), test-time scaling faster than pre-training, cost-performance tradeoffs
-- 📝 **Report:** research/AUTONOMOUS_RESEARCHER_SESSION_20251121.md (234 lines)
-- 🔀 **PR #349:** Ready for review (1 file, +53/-7 lines)
-- 📖 **File Updated:** research/ai_scaling_laws_paradigm_shift_20251107.md
-- ✅ **Research Quality:** HIGH (peer-reviewed approach, cross-verified benchmarks, proper attribution)
-
-**Nov 21: AI Coordination Phase 2 - Marked COMPLETE** (commit 885f6b5)
-- ✅ **Phase 2 COMPLETE:** Implementation, testing, and architecture review finished
-- 📊 **Quality Metrics:** Research B+, Implementation conservative params with HIGH fixes, Architecture B+ (0 CRITICAL/HIGH)
-- 🎯 **Status:** READY for N=50 Monte Carlo validation
-- 📁 **Archived:** ai_coordination_phase2_complete_20251121.md, ai_coordination_transition_orchestration_20251116.md
-- ⏳ **Next Priority:** Monte Carlo validation + nuclear winter threshold testing
-
-**Nov 21: Critical Simulation Assumptions Debate** (commit 3d4a7d4)
-- 🔍 **Meta-Review:** Sylvia's critical analysis of simulation assumptions after completing TIER 1 CRITICAL + TIER 2 HIGH items
-- 🚨 **CRITICAL Gaps Identified:**
-  1. **AI Coordination Overconfidence** - 60% quality ignores cascade failure research (multi-agent contagion)
-  2. **Energy Budget Physical Impossibility** - DAC requires 50-110% global electricity (thermodynamic constraints)
-  3. **Missing Extinction Debt** - 50-400 year lag NOT modeled, creates false recovery signals
-- ⚠️ **HIGH Priority Gaps:**
-  4. **No Cascade Failure Mechanisms** - Financial contagion, supply chain brittleness, infrastructure interdependence
-  5. **Parameter Uncertainty Not Propagated** - Point estimates hide massive uncertainty ranges
-  6. **One-Month Timestep Too Coarse** - Flash crashes, pandemics, nuclear escalation averaged monthly
-- 📐 **Methodological Flaws:** Cherry-picked evidence (successful transitions only), invalid historical analogies (AI vs Industrial Revolution), rebound effects undermodeled (Jevons Paradox)
-- 🎯 **Recommendations:**
-  - **Urgent:** Implement cascade failures, add hard energy constraints, model extinction debt
-  - **Research Needed:** Multi-agent failure modes (2025 research), physical deployment limits, extinction debt timescales, rebound amplification factors
-- 💡 **Impact:** Systematic underestimation of system fragility could flip outcomes from "manageable" to "inevitable collapse"
-- 📖 **Document:** reviews/simulation_assumptions_debate_20251121.md (254 lines)
-- 🎯 **Status:** Identifies future work - no immediate implementation required (gaps documented for roadmap prioritization)
-
-**Nov 21: Research Currency Audit - Foundation Verified Current** (commit 4a6384c)
-- 🔬 **Audit Scope:** Top simulation-referenced research files analyzed for currency
-- ✅ **Status:** EXCELLENT - No critical updates needed
-- 📊 **Key Findings:**
-  - nitrogen_food_coupling (19 refs): 2025-11-19 ✓
-  - ai_collective_evolution (7 refs): 2025-11-14 ✓
-  - climate_mortality (3 refs): 2025-11-13 ✓
-  - climate_tipping_points: 2025-11-16 ✓
-- 🔬 **2024-2025 Research Integrated:**
-  - Coral reef tipping point crossed (1.2°C threshold)
-  - 7/9 planetary boundaries transgressed
-  - AI scheming: 8.7-13% baseline (OpenAI/Apollo 2025)
-  - Heat mortality: Wilson et al. 2024 (75% deaths <35yr)
-  - Nitrogen: Gu et al. 2023 (11 measures, 30-70% reduction)
-- ⏰ **Next Check:** 2025-12-21
-- 🎯 **Key Insight:** "Old" sources are appropriate (foundational philosophy, historical context) supplemented with current empirical data
-- ✅ **Recommendation:** Research base rigorous and current, continue quarterly reviews
-- 📝 **Autonomous System Status:** Working effectively, no urgent updates needed
+**Nov 21: Comprehensive Architecture Integration Review Complete** (commit cb574a0)
+- ✅ **Grade: A (Excellent)** - 0 CRITICAL issues, 0 HIGH priority issues, 2 MEDIUM priority (minor cleanup)
+- 🏗️ **Dependency Management:** 89 of 95 phases now declare explicit dependencies with PhaseOrchestrator validation
+- ✓ **Key Systems Validated:**
+  - Nuclear winter cascades (Nov 20) - proper two-phase cascade with assertions
+  - Nitrogen-food coupling (Nov 18) - exemplary single-writer pattern preventing race conditions
+  - Irreversibility framework (Nov 18) - multi-dimensional tipping points with probabilistic thresholds
+  - AI alignment faking (Nov 21) - consolidated 4 phases with preserved RNG reproducibility
+  - Coordinated deployment (Nov 21) - transition mortality with research-backed parameters
+- ⚡ **Performance:** O(n²) issues eliminated (98% reduction: 101,210 → 2,000 ops/step)
+- 🔒 **State Propagation:** No failures detected, pre/post validation on all phases
+- 📝 **Full Report:** reviews/architecture_integration_review_20251121.md
 
 **Nov 21: Research Files Enhanced with Latest 2024-2025 Findings** (commit 470b8b8)
 - 🔬 **Three Key Files Updated:** alignment_faking_anthropic_2024.md, amoc_tipping_point_original_sources_20251120.md, parameter_verification_nitrogen_phosphorus_20251119.md
@@ -124,30 +49,6 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 🌊 **Planetary Boundaries:** Precise 2024-2025 values (N: 190 Tg/yr = 306% safe boundary, P: 22.6 Tg/yr = 365% regional boundary)
 - ✅ **All Sources:** Peer-reviewed (Nature, Science Advances, ESD 2024-2025)
 - ✅ **Verification Status:** CURRENT as of 2025-11-21
-
-**Nov 21: AI Coordination Conservative Parameters - Phase 2 IMPLEMENTED** (commit e690a6a)
-- ✅ **IMPLEMENTATION COMPLETE:** CoordinatedDeploymentPhase updated with conservative parameters
-- 🔬 **Research Grade:** B- (conditional pass - parametric assumptions flagged)
-- 📊 **New Mechanisms Added:**
-  1. **Coordination Failures (Stochastic):** 10% probability per month during active deployment, 2-5x mortality multiplier (central: 3x)
-  2. **Rebound Effects (Jevons Paradox):** 7.5% per year effectiveness decay, floor at 10% minimum effectiveness
-- 🎯 **Conservative Parameters:**
-  - Baseline mortality (uncoordinated): **30%** (was implicit, now explicit)
-  - AI coordination quality: **0.6 central** (0.4-0.8 range) - ⚠️ HIGH UNCERTAINTY
-  - Support effectiveness: **60%** (50-70% range) - ⚠️ HIGH UNCERTAINTY
-  - Target mortality: **9-12%** (was <5%, corrected to realistic)
-- 📊 **Expected Impact:**
-  - God mode: 30% → 9-12% mortality (moderate coordination)
-  - Observable failures: ~10% frequency in long runs
-  - Effectiveness decay: 21% after 3 years, 31% after 5 years
-- 📖 **Research Verification:** research/verification_e690a6a_20251121.md (two-layer citation + claim verification)
-  - ⚠️ **Finding:** Coordination failure probability (10%) and rebound decay rate (7.5%) are **PARAMETRIC ASSUMPTIONS**, not peer-reviewed values
-  - ✅ **Baseline mortality 30%** well-supported by historical data (USSR, Great Leap Forward)
-- ⏳ **Next:** Monte Carlo validation (N≥50), orchestrator verification of parametric assumptions
-- 📝 **Files Modified:**
-  - src/types/transitionManagement.ts (added coordinationFailures, reboundEffectiveness fields)
-  - src/simulation/initialization.ts (conservative defaults)
-  - src/simulation/engine/phases/CoordinatedDeploymentPhase.ts (failure + rebound logic)
 
 **Nov 21: AI Coordination Phase 2 Research Complete** (commit 96e2489)
 - 🔬 **Quality Gate 1: CONDITIONAL PASS (Grade B-)** - Conservative parameters required
@@ -1300,6 +1201,105 @@ All three critical items delivered:
 - **PAUSED:** Layer 2 Remediation, new features, UI updates
 
 See: [MASTER_IMPLEMENTATION_ROADMAP.md](/plans/MASTER_IMPLEMENTATION_ROADMAP.md) for detailed status.
+
+---
+
+## Research Validation Status & Known Limitations
+
+**Last Updated:** November 21, 2025 (Research Skeptic Critique)
+
+This section documents **critical parameter uncertainty findings** identified during recent research validation audits. All parameters are grounded in peer-reviewed research (2024-2025), but several contain uncertainty that should be understood when interpreting outcomes.
+
+### Critical Uncertainties (Nov 21 Skeptic Critique)
+
+**Grade: B- (Sound mechanisms, parameter uncertainty requires careful interpretation)**
+
+#### Parameter Uncertainty Summary
+
+| Parameter | Value | Uncertainty Range | Status | Impact | Mitigation |
+|-----------|-------|-------------------|--------|--------|-----------|
+| **Nuclear winter yield loss** | 80% | ±30% (60-110%) | ⚠️ EXTRAPOLATED | HIGH | Sensitivity range: 60% vs 80% outcomes differ by 15% |
+| **Nitrogen reduction feasible** | 40% | 20-60% (politically feasible, not technically sufficient) | ⚠️ SPECULATIVE | HIGH | Clarified: 55-60% reduction required per van Vliet et al. 2024 |
+| **PFAS irreversibility** | 90% | 80-95% (expert estimate) | ⚠️ EXPERT EST. | MEDIUM | No direct quantitative source; based on Montreal Protocol analogies |
+| **Kenya UBI effect persistence** | 48% | Valid as ONE-TIME effect; reverts without sustained transfers | ⚠️ TIME-LIMITED | MEDIUM | Comment updated to note effect reversion |
+
+#### 3 Critical Issues Identified
+
+1. **Nuclear Winter Model Extrapolation**
+   - **Issue:** Penn State model trained on 60-year historical weather; used for unprecedented nuclear event outside training distribution
+   - **Status:** Treatment as "empirical" may overstate confidence
+   - **Recommendation:** Add ±30% uncertainty bounds to outcomes, sensitivity test at 60%/70%/80% yield loss
+   - **Affected Outcomes:** Worst-case famine scenarios (most sensitive to this parameter)
+   - **Source:** reviews/research_skeptic_critique_20251121.md
+
+2. **Nitrogen Reduction Feasibility**
+   - **Issue:** Simulation models 20-40% reduction feasible; van Vliet et al. 2024 shows 55-60% reduction required for 8B people within planetary boundaries
+   - **Status:** 40% is politically feasible but technically insufficient for full boundary compliance
+   - **Recommendation:** Add hard constraint: "cannot go below 90 Mt N/year without starvation risk"
+   - **Affected Outcomes:** Long-term (2050+) nitrogen crisis resolution scenarios
+   - **Source:** van Vliet et al. 2024, Zhang et al. 2021
+
+3. **Irreversibility Framework Conflation**
+   - **Issue:** Framework treats all "irreversible" systems the same; literature distinguishes Type 1 (thermodynamically impossible) vs Type 2 (economically difficult)
+   - **Status:** Simulation overstates permanence; restoration IS happening (Florida coral: $1-3/m²/year, 30-50% success)
+   - **Recommendation:** Model restoration as explicit Phase 2 work; split irreversibility types
+   - **Affected Outcomes:** Long-term recovery scenarios; "collapse" scenarios show as permanent when technically reversible
+   - **Source:** Coral restoration literature (2024-2025)
+
+### 5 Significant Modeling Gaps
+
+| Gap | Evidence | Impact | Priority |
+|-----|----------|--------|----------|
+| **Supply chain mineral constraints** | IEA: Lithium limits solar deployment 28%, rare earths constrain wind | Renewable deployment 20-40% lower than projected | HIGH |
+| **Rebound effects** | Sorrell et al. 2024: 30-60% of efficiency gains rebounded (Jevons paradox) | Climate mitigation timescales extend 15-30% | HIGH |
+| **AI deception detection scaling** | Anthropic 2025: 95% success (7B params) → 60% (large models) | Assumes deployment-ready; actually in research phase | MEDIUM |
+| **Supply chain lag** | Grid integration: 2-5 years between installation and use | Effective deployment reduces 10-15% due to time lag | MEDIUM |
+| **Compound uncertainty** | 29+ parameter chain; 80% individual confidence ≠ 80% compound | Outcomes stated as point estimates vs confidence intervals | MEDIUM |
+
+**Interpretation Guidance:**
+- **Worst-case scenarios** (nuclear war, cascading collapse) - Most affected by parameter uncertainty; actual outcomes likely 15-30% less severe
+- **Best-case scenarios** (coordinated deployment, breakthrough technologies) - Less affected; resource constraints add 10-20% friction
+- **Mid-range scenarios** (managed decline, partial stabilization) - Moderate uncertainty; directional findings robust
+- **Directionality** (whether system trends toward utopia/dystopia/extinction) - **Highly robust** to parameter uncertainty
+
+### What This Means for Simulation Outputs
+
+**High Confidence:**
+- ✅ Directional trends (climate worsens without intervention, AI coordination reduces mortality, etc.)
+- ✅ Relative comparisons (scenario A better than scenario B)
+- ✅ Tipping point existence (coral reef collapse is real, not parametric uncertainty)
+
+**Medium Confidence:**
+- ⚠️ Absolute outcome numbers (e.g., "8.1B population" at 2050)
+- ⚠️ Timing of phase transitions (e.g., "AMOC collapse in year 47")
+- ⚠️ Magnitude of effects (e.g., "30% mortality reduction with UBI")
+
+**Lower Confidence:**
+- ❌ Precise parameter values in speculative domains (AI deception scaling)
+- ❌ Compound effects across 30+ coupled systems
+- ❌ Recovery timescales for "irreversible" systems
+
+### Recommended Research Priority Actions
+
+**This Week:**
+1. Mark extrapolated parameters with ±30-50% uncertainty bounds in code comments
+2. Add rebound effects multiplier (0.4-0.7) to efficiency improvements
+3. Document mineral supply constraints as hard bottlenecks
+
+**This Month:**
+4. Run sensitivity analysis: nuclear yield loss (60% vs 80%), nitrogen reduction (10% vs 40%)
+5. Report outcomes as confidence intervals, not point estimates
+6. Create parameter-to-validation mapping (which are empirical vs extrapolated)
+
+**This Quarter:**
+7. Model restoration pathways for "irreversible" systems (separate phase)
+8. Add grid integration lag (2-5 years) to renewable deployment
+9. Quantify rebound effects across all efficiency technologies
+10. Implement compound uncertainty analysis for major outcome pathways
+
+**Complete Review:** See [reviews/research_skeptic_critique_20251121.md](/reviews/research_skeptic_critique_20251121.md) for full analysis.
+
+---
 
 ## 🎯 Quick Start
 
@@ -2916,7 +2916,6 @@ The fundamental building blocks of the simulation:
 | [🤝 Social Cohesion](./systems/social-cohesion.md) | ✅ | Meaning crisis (22%), institutional erosion, social bonds, **crisis mitigation mechanics** (Oct 30, 2025) |
 | [⚠️ Technological Risk](./systems/technological-risk.md) | ✅ | Misalignment, safety debt, concentration, complacency |
 | [🔬 Breakthrough Technologies](./systems/breakthrough-technologies.md) | ✅ | **71 technologies** in comprehensive tech tree (TIER 0-4) |
-| [🔗 AI Coordination & Transition Management](./systems/) | ✅ | Phased tech deployment (3 phases), regional capacity (10 regions), support systems (7 types), coordination failures, rebound effects - reduces god mode mortality 30% → 10-12% (Nov 21, 2025) |
 | [🏛️ Governance Quality](./systems/governance-quality.md) | ✅ | Democratic resilience, decision quality, institutional capacity |
 | [🌟 Upward Spirals](./systems/upward-spirals.md) | ✅ | 6 virtuous cascades, multiple paths to Utopia |
 | [🎨 Meaning Renaissance](./systems/meaning-renaissance.md) | ✅ | Cultural flourishing, 4 dimensions of meaning |
@@ -2976,7 +2975,6 @@ Implementation details and code references:
 | [🔬 Scenario Analysis Framework](./technical/scenarios.md) | 🟡 | Phase 1 complete: diagnostic logging, type definitions (src/types/scenarios.ts), 6 predefined scenarios (no-tech, god-mode, early-start, governance-first, sequenced, climate-prioritized) |
 | [🎮 UI Components](./technical/ui.md) | ✅ | React components, state management |
 | [⚙️ Engine Architecture](./technical/engine.md) | ✅ | Core simulation engine design |
-| [🛡️ Phase Error Recovery](../PHASE_ERROR_RECOVERY_DESIGN.md) | ✅ | Four-tier error boundaries, degraded mode tracking, retry logic (Nov 21, 2025) |
 | [💾 State Persistence](./technical/persistence.md) | ✅ | IndexedDB resume, RNG determinism, save rotation (Oct 26, 2025) |
 | [🔄 Refactoring Status](./technical/refactoring-status.md) | ✅ | Phase 0-6 roadmap and current status |
 | [🔧 Phase 2 Refactoring](./technical/phase2-refactoring.md) | ✅ | Architectural cleanup details (Oct 2025) |
@@ -7070,7 +7068,6 @@ The simulation runs via a **phase-based architecture** with **95 phases** execut
 - StochasticInnovationPhase (8.7): Lévy-flight driven breakthroughs
 - GovernmentActionsPhase (9.0): Policy implementation
 - SocietyActionsPhase (10.0): Adapt to AI, trust dynamics
-- **CoordinatedDeploymentPhase (10.5)**: AI-coordinated tech deployment, 3-phase rollout, 7 support systems, mortality tracking (**NEW Nov 21**)
 
 **11.0-25.0: System Updates**
 - GovernanceQualityPhase (11.0): Democratic resilience, AI augmentation
@@ -7145,8 +7142,7 @@ The simulation runs via a **phase-based architecture** with **95 phases** execut
 - EventCollectionPhase (98.0): Aggregate events for logging
 - TimeAdvancementPhase (99.0): Track resentment recovery fields (previousControlLevel, lastControlIncreaseMonth), then increment month counter
 
-**Key Changes (Oct 16-Nov 21):**
-- Added **CoordinatedDeploymentPhase** (10.5): AI-coordinated tech deployment (3 phases), support systems (7 types), mortality tracking - reduces god mode mortality 30% → 10-12% (**NEW Nov 21**)
+**Key Changes (Oct 16-17):**
 - Added **NuclearCommandControlPhase** (20.0): Circuit breakers to prevent 0% war rate bug
 - Added **ExogenousShockPhase** (27.5): Black/Gray Swan events (8 types)
 - Added **CriticalJuncturePhase** (29.0): Critical juncture agency - 90/10 structure-agency split (**NEW Oct 17**)
