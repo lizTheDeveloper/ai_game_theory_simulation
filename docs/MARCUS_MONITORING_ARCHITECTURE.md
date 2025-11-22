@@ -12,10 +12,11 @@ graph TB
         USER[User Browser]
     end
 
-    subgraph "Web Services - Port 3000-4000"
-        NEXT["Next.js Server<br/>(next-server)<br/>Port 3000<br/>Game Simulation UI"]
+    subgraph "Web Services - Port 3000-5000"
+        NEXT["Next.js Server<br/>(next-server)<br/>Port 3000<br/>MARCUS Frontend"]
         MARCUS["MARCUS API Server<br/>(marcus-api-server)<br/>Port 3001<br/>Citation Platform"]
-        GRAFANA["Grafana<br/>Port 4000<br/>Visualization"]
+        GAME["Game Simulation<br/>(next-server)<br/>Port 4000<br/>Research Tool (SEPARATE)"]
+        GRAFANA["Grafana<br/>Port 5000<br/>MARCUS Monitoring"]
     end
 
     subgraph "Metrics Servers - Port 9000+"
@@ -46,7 +47,8 @@ graph TB
     %% User Connections
     USER -->|HTTP :3000| NEXT
     USER -->|HTTP :3001| MARCUS
-    USER -->|HTTP :4000| GRAFANA
+    USER -->|HTTP :4000| GAME
+    USER -->|HTTP :5000| GRAFANA
 
     %% Prometheus Scraping (Data Collection)
     PROMETHEUS -->|Scrape /api/metrics<br/>10s interval| MARCUS
@@ -102,10 +104,11 @@ graph TB
 
 | Port | Service | Process Name | Purpose |
 |------|---------|--------------|---------|
-| 3000 | Next.js | `next-server` | Game Simulation Web UI |
+| 3000 | Next.js | `next-server` | MARCUS Platform Frontend |
 | 3001 | MARCUS API | `marcus-api-server` | Citation Integrity Platform API |
 | 3002 | (Reserved) | - | MARCUS Test Environment |
-| 4000 | Grafana | `grafana-server` | Monitoring Dashboards |
+| 4000 | Game Simulation | `next-server` | Research Tool (SEPARATE SYSTEM) |
+| 5000 | Grafana | `grafana-server` | MARCUS Monitoring Dashboards |
 | 5001-5009 | Python Agents | `citation_agent_*` | MARCUS Behavioral Agents |
 | 5432 | PostgreSQL | `postgres` | Database (marcus_production, marcus_test) |
 | 6379 | Redis | `redis-server` | Cache & Queue |
@@ -118,9 +121,10 @@ graph TB
 ## Data Flow Descriptions
 
 ### 1. User → Web Services
-- Users access Next.js UI (port 3000) for game simulation
+- Users access MARCUS frontend (port 3000) for platform UI
 - Users access MARCUS API (port 3001) for citation analysis
-- Users access Grafana (port 4000) for monitoring dashboards
+- Users access Game Simulation (port 4000) for research tool (SEPARATE SYSTEM)
+- Users access Grafana (port 5000) for MARCUS monitoring dashboards
 
 ### 2. Prometheus Scraping
 Prometheus actively scrapes metrics endpoints every 10-15 seconds:

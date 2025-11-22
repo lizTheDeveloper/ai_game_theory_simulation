@@ -16,9 +16,11 @@ This document provides a high-level overview of the MARCUS monitoring infrastruc
 - ✅ Setup Script - `sudo ./scripts/setup-monitoring.sh` (5-10 min)
 
 **Access Points:**
-- Grafana UI: http://localhost:3000 (admin/admin)
+- Grafana UI: http://localhost:5000 (admin/admin)
 - Prometheus UI: http://localhost:9090
 - Alert Manager: http://localhost:9093
+
+**NOTE:** Port 5000 (not 3000) - Game Simulation is on port 4000. See `docs/PORT_SEPARATION.md`.
 
 ---
 
@@ -213,16 +215,18 @@ sudo ./scripts/setup-monitoring.sh
 
 **Services installed:**
 - Prometheus → http://localhost:9090
-- Grafana → http://localhost:3000
+- Grafana → http://localhost:5000 (MARCUS monitoring only)
 - Node Exporter → http://localhost:9100
 - PostgreSQL Exporter → http://localhost:9187
 - Redis Exporter → http://localhost:9121
+
+**NOTE:** Grafana is on port 5000. Port 4000 is used by Game Simulation (separate system).
 
 ### 2. Configure Grafana
 
 ```bash
 # Access Grafana
-open http://localhost:3000
+open http://localhost:5000
 
 # Login: admin/admin (change password on first login)
 
@@ -293,10 +297,10 @@ curl http://localhost:9090/api/v1/targets
 # - redis-exporter (up)
 
 # Check Grafana health
-curl http://localhost:3000/api/health
+curl http://localhost:5000/api/health
 
 # Access dashboards
-open http://localhost:3000/dashboards
+open http://localhost:5000/dashboards
 ```
 
 ---
