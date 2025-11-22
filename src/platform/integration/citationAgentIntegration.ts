@@ -28,6 +28,7 @@ import * as path from 'path';
 import { agentStatus as agentStatusMetric, agentRequestDuration, citationAnalysisCounter, citationAnalysisDuration } from '../monitoring/metricsEndpoint';
 import { DistributedLockManager, withLock } from '../utils/distributedLock';
 import { ProcessRegistry, ProcessState } from '../utils/processRegistry';
+import { RedisConnectionPool, withRedis } from '../utils/redisPool';
 
 // ============================================================================
 // Type Definitions
@@ -517,12 +518,12 @@ export class PythonAgentWrapper extends EventEmitter {
 
 export class AgentStateManager {
   private db: PostgresPool;
-  private cache: Redis;
+  private redisPool: RedisConnectionPool;
   private lockManager: DistributedLockManager;
 
   constructor(
     dbConfig: PlatformConfig['database'],
-    redisConfig: PlatformConfig['redis']
+    redisPool: RedisConnectionPool
   ) {
     // PostgreSQL connection pool
     this.db = new PostgresPool({
@@ -536,17 +537,21 @@ export class AgentStateManager {
       connectionTimeoutMillis: 2000,
     });
 
-    // Redis client
-    this.cache = new Redis({
-      host: redisConfig.host,
-      port: redisConfig.port,
-      db: redisConfig.db,
-    });
+    // H1 FIX: Use shared Redis connection pool instead of dedicated client
+    this.redisPool = redisPool;
 
     // CRITICAL FIX: Distributed lock manager for race condition prevention
-    this.lockManager = new DistributedLockManager(this.cache);
+    // Note: DistributedLockManager needs to be updated to use pool
+    // For now, acquire a dedicated client for lock manager
+    this.lockManager = new DistributedLockManager(
+      new Redis({
+        host: process.env.REDIS_HOST || 'localhost',
+        port: parseInt(process.env.REDIS_PORT || '6379', 10),
+        db: parseInt(process.env.REDIS_DB || '0', 10)
+      })
+    );
 
-    console.log('✅ AgentStateManager initialized');
+    console.log('✅ AgentStateManager initialized with Redis pool');
   }
 
   /**
@@ -573,15 +578,17 @@ export class AgentStateManager {
         const newVersion = Date.now();
 
         try {
-          // Write-through cache pattern
+          // Write-through cache pattern (H1 FIX: use pool)
           const cacheKey = `agent:${state.agentId}:state`;
           const stateWithVersion = { ...state, version: newVersion };
 
-          await this.cache.setex(
-            cacheKey,
-            3600, // 1 hour TTL
-            JSON.stringify(stateWithVersion)
-          );
+          await this.redisPool.execute(async (redis) => {
+            await redis.setex(
+              cacheKey,
+              3600, // 1 hour TTL
+              JSON.stringify(stateWithVersion)
+            );
+          });
 
           // Persist to database with version check (optimistic locking)
           const result = await this.db.query<{ affected: number }>(`
@@ -645,9 +652,11 @@ export class AgentStateManager {
    */
   async loadState(agentId: string): Promise<AgentState | null> {
     try {
-      // Try cache first
+      // Try cache first (H1 FIX: use pool)
       const cacheKey = `agent:${agentId}:state`;
-      const cached = await this.cache.get(cacheKey);
+      const cached = await this.redisPool.execute(async (redis) => {
+        return await redis.get(cacheKey);
+      });
 
       if (cached) {
         console.log(`📦 Agent ${agentId} state loaded from cache`);
@@ -678,8 +687,10 @@ export class AgentStateManager {
 
       const state = result.rows[0];
 
-      // Populate cache for next time
-      await this.cache.setex(cacheKey, 3600, JSON.stringify(state));
+      // Populate cache for next time (H1 FIX: use pool)
+      await this.redisPool.execute(async (redis) => {
+        await redis.setex(cacheKey, 3600, JSON.stringify(state));
+      });
 
       console.log(`💾 Agent ${agentId} state loaded from database (version: ${state.version})`);
       return state;
@@ -758,7 +769,8 @@ export class AgentStateManager {
 
   async cleanup(): Promise<void> {
     await this.db.end();
-    await this.cache.quit();
+    // H1 FIX: Don't close pool here - it's shared across components
+    // Pool will be closed by global shutdown
     console.log('✅ AgentStateManager cleanup complete');
   }
 }
@@ -1185,6 +1197,7 @@ export class CitationIntegrityPlatform {
   private orchestrator?: CitationAgentOrchestrator;
   private stateManager?: AgentStateManager;
   private metricsCollector: MetricsCollector;
+  private redisPool?: RedisConnectionPool;
 
   constructor(private config: PlatformConfig) {
     this.metricsCollector = new MetricsCollector();
@@ -1193,10 +1206,27 @@ export class CitationIntegrityPlatform {
   async start(): Promise<void> {
     console.log('🚀 Starting Citation Integrity Platform...');
 
-    // Initialize state manager
+    // H1 FIX: Initialize Redis connection pool first
+    this.redisPool = new RedisConnectionPool({
+      host: this.config.redis.host,
+      port: this.config.redis.port,
+      db: this.config.redis.db,
+      maxConnections: parseInt(process.env.REDIS_POOL_SIZE || '20', 10),
+      minConnections: 2,
+      acquireTimeout: 5000,
+      idleTimeout: 300000,
+      healthCheckInterval: 10000,
+      maxRetriesPerRequest: 3,
+      connectTimeout: 10000,
+      enableReadyCheck: true,
+      enableOfflineQueue: true,
+      lazyConnect: false
+    });
+
+    // Initialize state manager with shared pool
     this.stateManager = new AgentStateManager(
       this.config.database,
-      this.config.redis
+      this.redisPool
     );
 
     // Initialize orchestrator
@@ -1257,6 +1287,11 @@ export class CitationIntegrityPlatform {
 
     if (this.stateManager) {
       await this.stateManager.cleanup();
+    }
+
+    // H1 FIX: Shutdown Redis pool last (shared resource)
+    if (this.redisPool) {
+      await this.redisPool.shutdown();
     }
 
     console.log('✅ Platform shutdown complete');
