@@ -94,7 +94,8 @@ EXPOSE 3000
 
 # Set environment
 ENV NODE_ENV=production
-ENV NODE_OPTIONS="--max-old-space-size=512"  # Limit memory usage
+# Limit memory usage to 512MB
+ENV NODE_OPTIONS="--max-old-space-size=512"
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
