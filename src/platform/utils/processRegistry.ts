@@ -20,6 +20,7 @@
 
 import { ChildProcess } from 'child_process';
 import { Gauge, Counter } from 'prom-client';
+import { normalizeAgentId } from '../monitoring/metricsHelpers';
 
 /**
  * Process lifecycle states
@@ -455,7 +456,8 @@ export class ProcessRegistry {
    * @param agentId Agent ID
    */
   recordRestart(agentId: string): void {
-    processRestartCounter.inc({ agent_id: agentId });
+    // Use normalized agent_id for cardinality control
+    processRestartCounter.inc({ agent_id: normalizeAgentId(agentId) });
   }
 
   /**

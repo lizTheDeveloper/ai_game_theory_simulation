@@ -16,6 +16,16 @@
 
 import { Request, Response, Express } from 'express';
 import promClient from 'prom-client';
+import {
+  normalizeRoute,
+  bucketStatusCode,
+  normalizeAgentId,
+  classifyError,
+  normalizeLockName,
+  normalizeQueueName,
+  normalizeComponent,
+  normalizeSeverity
+} from './metricsHelpers';
 
 // Create a Registry to register metrics
 const register = new promClient.Registry();
@@ -285,30 +295,22 @@ export const lockHoldDuration = new promClient.Histogram({
 });
 
 /**
- * Normalize URL path for metrics (group similar paths together)
- * Examples:
- *   /api/citations/123 -> /api/citations/:id
- *   /health -> /health
+ * Cardinality monitoring metric
+ * Tracks number of time series per metric to detect cardinality explosion
+ */
+export const metricCardinality = new promClient.Gauge({
+  name: 'marcus_metric_cardinality',
+  help: 'Number of unique time series per metric',
+  labelNames: ['metric_name'],
+  registers: [register]
+});
+
+/**
+ * DEPRECATED: Use normalizeRoute() from metricsHelpers instead
+ * This function is kept for backward compatibility but delegates to the helper.
  */
 function normalizeRoutePath(path: string): string {
-  // Remove query parameters
-  const pathWithoutQuery = path.split('?')[0];
-
-  // Common route patterns
-  const patterns = [
-    { regex: /^\/api\/citations\/[^\/]+$/, replacement: '/api/citations/:id' },
-    { regex: /^\/api\/agents\/[^\/]+$/, replacement: '/api/agents/:id' },
-    { regex: /^\/api\/users\/[^\/]+$/, replacement: '/api/users/:id' },
-    { regex: /^\/api\/citations\/[^\/]+\/verify$/, replacement: '/api/citations/:id/verify' },
-  ];
-
-  for (const pattern of patterns) {
-    if (pattern.regex.test(pathWithoutQuery)) {
-      return pattern.replacement;
-    }
-  }
-
-  return pathWithoutQuery;
+  return normalizeRoute(path);
 }
 
 /**
@@ -323,19 +325,22 @@ export function metricsMiddleware(req: Request, res: Response, next: Function): 
   res.on('finish', () => {
     const duration = (Date.now() - start) / 1000; // Convert to seconds
 
-    // Normalize the route path for better metric grouping
-    const route = normalizeRoutePath(req.path);
+    // Normalize the route path for better metric grouping (with cardinality control)
+    const route = normalizeRoute(req.path);
+
+    // Bucket status codes into ranges (2xx, 3xx, 4xx, 5xx) to reduce cardinality
+    const statusBucket = bucketStatusCode(res.statusCode);
 
     httpRequestDuration.observe({
       method: req.method,
       route,
-      status_code: res.statusCode.toString()
+      status_code: statusBucket
     }, duration);
 
     httpRequestCounter.inc({
       method: req.method,
       route,
-      status_code: res.statusCode.toString()
+      status_code: statusBucket
     });
 
     activeConnections.dec();
@@ -395,6 +400,53 @@ export function healthCheckHandler(req: Request, res: Response): void {
 export function setupHealthCheck(app: Express): void {
   app.get('/health', healthCheckHandler);
   console.log('✅ Health check endpoint configured at /health');
+}
+
+/**
+ * Calculate and update cardinality metrics
+ *
+ * Call periodically (e.g., every 60 seconds) to track metric cardinality growth.
+ * Alerts if any metric exceeds 1,000 time series.
+ */
+export async function updateCardinalityMetrics(): Promise<void> {
+  try {
+    const metrics = await register.getMetricsAsJSON();
+
+    for (const metric of metrics) {
+      // Count unique time series (each value is a unique label combination)
+      const cardinality = metric.values.length;
+
+      // Update cardinality metric
+      metricCardinality.set({ metric_name: metric.name }, cardinality);
+
+      // Alert on high cardinality (>1,000 time series)
+      if (cardinality > 1000) {
+        console.warn(
+          `⚠️ HIGH CARDINALITY: ${metric.name} has ${cardinality} time series (threshold: 1,000)`
+        );
+      }
+    }
+  } catch (err) {
+    console.error('❌ Failed to update cardinality metrics:', err);
+  }
+}
+
+/**
+ * Start periodic cardinality monitoring
+ *
+ * Call once at application startup to begin monitoring.
+ * Checks every 60 seconds.
+ */
+export function startCardinalityMonitoring(): NodeJS.Timeout {
+  console.log('✅ Starting cardinality monitoring (interval: 60s)');
+
+  // Update immediately
+  updateCardinalityMetrics().catch(console.error);
+
+  // Then update every 60 seconds
+  return setInterval(() => {
+    updateCardinalityMetrics().catch(console.error);
+  }, 60000);
 }
 
 // Export the registry for testing
