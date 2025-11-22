@@ -1,0 +1,42 @@
+# Citation Worker Metrics Aggregator Scrape Configuration
+# Add this to /etc/prometheus/prometheus.yml in the scrape_configs section
+#
+# Installation:
+#   1. Backup existing config:
+#      sudo cp /etc/prometheus/prometheus.yml /etc/prometheus/prometheus.yml.backup
+#
+#   2. Add this configuration to scrape_configs section
+#
+#   3. Reload Prometheus:
+#      sudo systemctl reload prometheus
+#      OR
+#      curl -X POST http://localhost:9090/-/reload
+#
+#   4. Verify target:
+#      curl http://localhost:9090/api/v1/targets | jq '.data.activeTargets[] | select(.job=="citation-workers")'
+
+  # ==========================================================================
+  # Citation Worker Metrics (Aggregated via Port 9300)
+  # ==========================================================================
+  - job_name: 'citation-workers'
+    static_configs:
+      - targets: ['localhost:9300']
+        labels:
+          service: 'citation-workers'
+          component: 'agents'
+          pattern: 'aggregator'
+
+    # Metrics path
+    metrics_path: '/metrics'
+
+    # Scrape interval - 30s is sufficient for agent metrics
+    scrape_interval: 30s
+    scrape_timeout: 10s
+
+    # Relabel to add helpful labels
+    metric_relabel_configs:
+      # Add job label to all metrics
+      - source_labels: [__name__]
+        regex: 'citation_.*'
+        target_label: 'job'
+        replacement: 'citation-workers'

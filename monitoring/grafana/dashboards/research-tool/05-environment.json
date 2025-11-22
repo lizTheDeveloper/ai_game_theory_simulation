@@ -1,0 +1,412 @@
+{
+  "dashboard": {
+    "title": "Planetary Boundaries",
+    "uid": "sim-environment-05",
+    "tags": ["simulation", "research-tool", "environment", "planetary"],
+    "timezone": "browser",
+    "schemaVersion": 38,
+    "version": 1,
+    "refresh": "5s",
+    "time": {
+      "from": "now-6h",
+      "to": "now"
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 1,
+    "panels": [
+      {
+        "id": 1,
+        "type": "bargauge",
+        "title": "Planetary Boundaries Status",
+        "gridPos": { "x": 0, "y": 0, "w": 24, "h": 8 },
+        "datasource": { "type": "prometheus", "uid": "prometheus" },
+        "targets": [
+          {
+            "expr": "planetary_boundary{boundary=\"climate\"}",
+            "refId": "A",
+            "legendFormat": "Climate Change"
+          },
+          {
+            "expr": "planetary_boundary{boundary=\"biodiversity\"}",
+            "refId": "B",
+            "legendFormat": "Biodiversity Loss"
+          },
+          {
+            "expr": "planetary_boundary{boundary=\"nitrogen\"}",
+            "refId": "C",
+            "legendFormat": "Nitrogen Cycle"
+          },
+          {
+            "expr": "planetary_boundary{boundary=\"phosphorus\"}",
+            "refId": "D",
+            "legendFormat": "Phosphorus Cycle"
+          },
+          {
+            "expr": "planetary_boundary{boundary=\"ocean_acidification\"}",
+            "refId": "E",
+            "legendFormat": "Ocean Acidification"
+          },
+          {
+            "expr": "planetary_boundary{boundary=\"land_use\"}",
+            "refId": "F",
+            "legendFormat": "Land Use Change"
+          },
+          {
+            "expr": "planetary_boundary{boundary=\"freshwater\"}",
+            "refId": "G",
+            "legendFormat": "Freshwater Use"
+          },
+          {
+            "expr": "planetary_boundary{boundary=\"aerosols\"}",
+            "refId": "H",
+            "legendFormat": "Atmospheric Aerosols"
+          },
+          {
+            "expr": "planetary_boundary{boundary=\"novel_entities\"}",
+            "refId": "I",
+            "legendFormat": "Novel Entities"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "min": 0,
+            "max": 1,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "color": "#FF0040", "value": null },
+                { "color": "#FFB000", "value": 0.33 },
+                { "color": "#00FF88", "value": 0.66 }
+              ]
+            },
+            "unit": "percentunit"
+          },
+          "overrides": []
+        },
+        "options": {
+          "displayMode": "gradient",
+          "orientation": "horizontal",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          },
+          "showUnfilled": true,
+          "text": {
+            "titleSize": 12,
+            "valueSize": 14
+          }
+        },
+        "transformations": [
+          {
+            "id": "reduce",
+            "options": {
+              "reducers": ["lastNotNull"]
+            }
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "type": "stat",
+        "title": "Temperature Delta",
+        "gridPos": { "x": 0, "y": 8, "w": 8, "h": 6 },
+        "datasource": { "type": "prometheus", "uid": "prometheus" },
+        "targets": [
+          {
+            "expr": "global_temperature_delta",
+            "refId": "A",
+            "legendFormat": "Delta"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "color": "#00FF88", "value": null },
+                { "color": "#FFB000", "value": 1.5 },
+                { "color": "#FF6B00", "value": 2 },
+                { "color": "#FF0040", "value": 3 }
+              ]
+            },
+            "unit": "celsius",
+            "decimals": 2
+          },
+          "overrides": []
+        },
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "center",
+          "orientation": "auto",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          },
+          "textMode": "value_and_name",
+          "text": {
+            "titleSize": 14,
+            "valueSize": 42
+          }
+        }
+      },
+      {
+        "id": 3,
+        "type": "stat",
+        "title": "Ocean pH Level",
+        "gridPos": { "x": 8, "y": 8, "w": 8, "h": 6 },
+        "datasource": { "type": "prometheus", "uid": "prometheus" },
+        "targets": [
+          {
+            "expr": "ocean_ph_level",
+            "refId": "A",
+            "legendFormat": "pH"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "color": "#FF0040", "value": null },
+                { "color": "#FFB000", "value": 7.8 },
+                { "color": "#00FF88", "value": 8.0 }
+              ]
+            },
+            "unit": "none",
+            "decimals": 2,
+            "min": 7.5,
+            "max": 8.5
+          },
+          "overrides": []
+        },
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "center",
+          "orientation": "auto",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          },
+          "textMode": "value_and_name",
+          "text": {
+            "titleSize": 14,
+            "valueSize": 42
+          }
+        }
+      },
+      {
+        "id": 4,
+        "type": "gauge",
+        "title": "Safe Operating Space",
+        "gridPos": { "x": 16, "y": 8, "w": 8, "h": 6 },
+        "datasource": { "type": "prometheus", "uid": "prometheus" },
+        "targets": [
+          {
+            "expr": "avg(planetary_boundary)",
+            "refId": "A",
+            "legendFormat": "Average"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "min": 0,
+            "max": 1,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "color": "#FF0040", "value": null },
+                { "color": "#FFB000", "value": 0.33 },
+                { "color": "#00FF88", "value": 0.66 }
+              ]
+            },
+            "unit": "percentunit"
+          },
+          "overrides": []
+        },
+        "options": {
+          "orientation": "horizontal",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          },
+          "showThresholdLabels": true,
+          "showThresholdMarkers": true,
+          "text": {
+            "titleSize": 14,
+            "valueSize": 28
+          }
+        }
+      },
+      {
+        "id": 5,
+        "type": "timeseries",
+        "title": "Planetary Boundaries Over Time",
+        "gridPos": { "x": 0, "y": 14, "w": 24, "h": 10 },
+        "datasource": { "type": "prometheus", "uid": "prometheus" },
+        "targets": [
+          {
+            "expr": "planetary_boundary{boundary=\"climate\"}",
+            "refId": "A",
+            "legendFormat": "Climate"
+          },
+          {
+            "expr": "planetary_boundary{boundary=\"biodiversity\"}",
+            "refId": "B",
+            "legendFormat": "Biodiversity"
+          },
+          {
+            "expr": "planetary_boundary{boundary=\"ocean_acidification\"}",
+            "refId": "C",
+            "legendFormat": "Ocean"
+          },
+          {
+            "expr": "planetary_boundary{boundary=\"freshwater\"}",
+            "refId": "D",
+            "legendFormat": "Freshwater"
+          },
+          {
+            "expr": "planetary_boundary{boundary=\"land_use\"}",
+            "refId": "E",
+            "legendFormat": "Land Use"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "Boundary Status",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 15,
+              "gradientMode": "opacity",
+              "hideFrom": {
+                "tooltip": false,
+                "viz": false,
+                "legend": false
+              },
+              "lineInterpolation": "smooth",
+              "lineWidth": 2,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "never",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "area"
+              }
+            },
+            "mappings": [],
+            "min": 0,
+            "max": 1,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "color": "rgba(255, 0, 64, 0.1)", "value": null },
+                { "color": "rgba(255, 176, 0, 0.1)", "value": 0.33 },
+                { "color": "rgba(0, 255, 136, 0.1)", "value": 0.66 }
+              ]
+            },
+            "unit": "percentunit"
+          },
+          "overrides": [
+            {
+              "matcher": { "id": "byName", "options": "Climate" },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": { "mode": "fixed", "fixedColor": "#FFB000" }
+                }
+              ]
+            },
+            {
+              "matcher": { "id": "byName", "options": "Ocean" },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": { "mode": "fixed", "fixedColor": "#00F0FF" }
+                }
+              ]
+            },
+            {
+              "matcher": { "id": "byName", "options": "Biodiversity" },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": { "mode": "fixed", "fixedColor": "#00FF88" }
+                }
+              ]
+            }
+          ]
+        },
+        "options": {
+          "tooltip": {
+            "mode": "multi",
+            "sort": "desc"
+          },
+          "legend": {
+            "displayMode": "table",
+            "placement": "right",
+            "showLegend": true,
+            "calcs": ["lastNotNull", "min"]
+          }
+        }
+      }
+    ],
+    "style": "dark",
+    "templating": {
+      "list": []
+    },
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": {
+            "type": "datasource",
+            "uid": "grafana"
+          },
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 255, 136, 1)",
+          "name": "Environmental Events",
+          "target": {
+            "limit": 100,
+            "matchAny": false,
+            "tags": ["environment"],
+            "type": "tags"
+          }
+        }
+      ]
+    }
+  },
+  "folderUid": "ef4v15yhwmjggd",
+  "overwrite": true
+}

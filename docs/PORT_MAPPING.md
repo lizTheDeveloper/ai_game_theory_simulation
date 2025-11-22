@@ -10,12 +10,14 @@ Last verified: 2025-11-22 04:52 UTC
 
 ```
 Port 3000: next-server (PID 1582)          - MARCUS Platform Frontend
+Port 3002: marcus-orchestrator (Docker)    - MARCUS Citation Orchestrator API
 Port 4000: next-server (PID 8327)          - GAME SIMULATION DASHBOARD ✅
 Port 5000: grafana (PID 15465)             - GRAFANA DASHBOARDS ✅
 Port 9090: prometheus (PID 702)            - PROMETHEUS METRICS ✅
 Port 9091: game-sim-metric (PID 2175)      - Game Sim Metrics Server
 Port 9100: prometheus-node-exporter        - System Metrics
 Port 9187: prometheus-postgres-exporter    - Database Metrics
+Port 9300: worker-metrics-aggregator       - Citation Worker Metrics Aggregator
 ```
 
 ---
@@ -75,6 +77,33 @@ curl http://localhost:9090/-/healthy
 **Process:** marcus-api-server
 **URL:** http://localhost:3001
 **Purpose:** Citation integrity platform API
+
+---
+
+### 📊 METRICS - Citation Worker Aggregator
+**Port:** 9300
+**Process:** worker-metrics-aggregator
+**URL:** http://localhost:9300/metrics
+**Purpose:** Aggregated Prometheus metrics from all 9 citation workers
+**Pattern:** Connection pooling (similar to database queries)
+
+**Exposed Metrics:**
+- `citation_tasks_processed_total{agent_id, status}` - Tasks processed (success/failure)
+- `citation_task_duration_seconds{agent_id}` - Task processing duration histogram
+- `citation_agent_reputation{agent_id}` - Agent reputation score (0-1)
+- `citation_queue_depth` - Number of tasks in Redis queue
+- `citation_integrity_score{agent_id}` - Distribution of integrity scores
+- `citation_workers_active` - Number of active workers
+
+**Verification:**
+```bash
+# Check metrics
+curl http://localhost:9300/metrics
+
+# Health check
+curl http://localhost:9300/health
+# Expected: {"status": "ok", "service": "worker-metrics-aggregator", ...}
+```
 
 ---
 
@@ -158,8 +187,11 @@ USER BROWSER
                             |                          - Port 3001 (MARCUS API)
                             |                          - Port 9100 (Node Exporter)
                             |                          - Port 9187 (PostgreSQL Exporter)
+                            |                          - Port 9300 (Worker Metrics Aggregator)
                             |
-                            +-- manages --> Python Agents (5001-5009)
+                            +-- manages --> Python Citation Workers
+                                              |
+                                              +-- all report to --> Port 9300 (shared registry)
 ```
 
 ---
@@ -173,6 +205,7 @@ GAME SIMULATION:     http://localhost:4000  (research tool)
 GRAFANA DASHBOARDS:  http://localhost:5000  (monitoring UI)
 PROMETHEUS:          http://localhost:9090  (metrics backend)
 MARCUS API:          http://localhost:3001  (citation platform)
+WORKER METRICS:      http://localhost:9300  (citation worker aggregator)
 ```
 
 **Do NOT confuse:**

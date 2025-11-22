@@ -374,19 +374,38 @@ class CitationIntegrityAgent:
         Connect to Redis for caching and coordination.
 
         Args:
-            config: Dict with keys: host, port, db
+            config: Dict with keys: host, port, db, cluster_mode
         """
         try:
-            self.redis_client = redis.Redis(
-                host=config.get('host', 'localhost'),
-                port=config.get('port', 6379),
-                db=config.get('db', 0),
-                password=config.get('password'),  # Support Redis auth
-                decode_responses=True
-            )
+            # Support both standalone and cluster mode
+            cluster_mode = config.get('cluster_mode', False)
+
+            if cluster_mode:
+                # Redis Cluster mode - use RedisCluster client
+                from redis.cluster import ClusterNode
+                host = config.get('host', 'localhost')
+                port = config.get('port', 6379)
+                startup_nodes = [ClusterNode(host, port)]
+                self.redis_client = redis.RedisCluster(
+                    startup_nodes=startup_nodes,
+                    password=config.get('password'),
+                    decode_responses=True,
+                    skip_full_coverage_check=True
+                )
+            else:
+                # Standalone mode - use standard Redis client
+                self.redis_client = redis.Redis(
+                    host=config.get('host', 'localhost'),
+                    port=config.get('port', 6379),
+                    db=config.get('db', 0),
+                    password=config.get('password'),
+                    decode_responses=True
+                )
+
             # Test connection
             self.redis_client.ping()
-            logger.info(f"Agent {self.agent_id} connected to Redis")
+            mode = "Redis Cluster" if cluster_mode else "Redis"
+            logger.info(f"Agent {self.agent_id} connected to {mode}")
         except Exception as e:
             logger.error(f"Failed to connect to Redis: {e}")
             raise

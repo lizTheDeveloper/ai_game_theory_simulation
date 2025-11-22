@@ -42,7 +42,7 @@ spec:
       serviceAccountName: marcus-orchestrator
       containers:
         - name: orchestrator
-          image: ghcr.io/404genenotfound/marcus-orchestrator:latest
+          image: us-central1-docker.pkg.dev/project-6d921a00-c010-437c-990/marcus-platform/orchestrator:v3.0.0
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3000

@@ -17,6 +17,8 @@ data:
   POSTGRES_POOL_MAX: "50"
 
   # Redis configuration
+  REDIS_HOST: "redis.marcus-platform.svc.cluster.local"
+  REDIS_PORT: "6379"
   REDIS_CLUSTER_NODES: "redis-0.redis-headless.marcus-platform.svc.cluster.local:6379,redis-1.redis-headless.marcus-platform.svc.cluster.local:6379,redis-2.redis-headless.marcus-platform.svc.cluster.local:6379"
   REDIS_CLUSTER_ENABLED: "true"
 

@@ -93,9 +93,6 @@ spec:
                   key: POSTGRES_PASSWORD
             - name: PGDATA
               value: /var/lib/postgresql/data/pgdata
-            # Enable streaming replication
-            - name: POSTGRES_INITDB_ARGS
-              value: "-c wal_level=replica -c max_wal_senders=5 -c max_replication_slots=5"
           volumeMounts:
             - name: postgres-data
               mountPath: /var/lib/postgresql/data

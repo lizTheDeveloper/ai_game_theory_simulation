@@ -75,28 +75,84 @@ services:
           cpus: '0.5'
           memory: 512M
 
-  # TypeScript Orchestrator
-  orchestrator:
+  # ============================================================================
+  # ORCHESTRATOR ARCHITECTURES
+  # ============================================================================
+  # MARCUS 3.0 supports TWO orchestration patterns:
+  #
+  # 1. SPAWN-AGENTS (Legacy) - Orchestrator spawns Python agents internally
+  #    - Tightly coupled, single container
+  #    - Simpler for development, not recommended for production
+  #    - Service: orchestrator-spawn-agents (COMMENTED OUT by default)
+  #
+  # 2. WORKER SERVICE (Recommended) - Independent worker containers
+  #    - Loosely coupled, horizontally scalable
+  #    - Production-ready, Kubernetes-native pattern
+  #    - Service: citation-worker-orchestrator (ACTIVE by default)
+  #
+  # See docs/ORCHESTRATOR_ARCHITECTURES.md for detailed comparison
+  # ============================================================================
+
+  # ----------------------------------------------------------------------------
+  # ARCHITECTURE 1: Spawn-Agents Pattern (LEGACY - commented out)
+  # ----------------------------------------------------------------------------
+  # Uncomment to use the spawn-agents architecture for development/testing
+  #
+  # orchestrator-spawn-agents:
+  #   build:
+  #     context: .
+  #     dockerfile: docker/Dockerfile.spawn-agents-orchestrator
+  #   image: ghcr.io/your-org/marcus-spawn-agents-orchestrator:latest
+  #   container_name: marcus-orchestrator-spawn-agents
+  #   environment:
+  #     DATABASE_URL: postgresql://${POSTGRES_USER:-marcus}:${POSTGRES_PASSWORD:-changeme}@postgres:5432/${POSTGRES_DB:-citation_integrity}
+  #     REDIS_URL: redis://redis:6379/0
+  #     NUM_AGENTS: ${NUM_AGENTS:-3}
+  #     API_PORT: 3000
+  #     LOG_LEVEL: ${LOG_LEVEL:-INFO}
+  #   ports:
+  #     - "3003:3000"  # Different port to avoid conflict with worker orchestrator
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
+  #     redis:
+  #       condition: service_healthy
+  #   restart: unless-stopped
+  #   networks:
+  #     - marcus-network
+  #   healthcheck:
+  #     test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 3
+
+  # ----------------------------------------------------------------------------
+  # ARCHITECTURE 2: Worker Service Pattern (RECOMMENDED - active)
+  # ----------------------------------------------------------------------------
+  citation-worker-orchestrator:
     build:
       context: .
-      dockerfile: docker/Dockerfile.orchestrator
-    image: ghcr.io/your-org/marcus-orchestrator:latest
-    container_name: marcus-orchestrator
+      dockerfile: docker/Dockerfile.citation-worker-orchestrator
+    image: ghcr.io/your-org/marcus-citation-worker-orchestrator:latest
+    container_name: marcus-worker-orchestrator
     environment:
-      DATABASE_URL: postgresql://${POSTGRES_USER:-marcus}:${POSTGRES_PASSWORD:-changeme}@postgres:5432/${POSTGRES_DB:-citation_integrity}
-      REDIS_URL: redis://redis:6379/0
-      NUM_AGENTS: ${NUM_AGENTS:-3}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-}
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_NAME: ${POSTGRES_DB:-citation_integrity}
+      DATABASE_USER: ${POSTGRES_USER:-marcus}
+      DATABASE_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
       API_PORT: 3000
       LOG_LEVEL: ${LOG_LEVEL:-INFO}
     ports:
-      - "3000:3000"
+      - "3002:3000"  # Worker orchestrator API
     depends_on:
       postgres:
         condition: service_healthy
       redis:
         condition: service_healthy
-      citation-agent:
-        condition: service_started
     restart: unless-stopped
     networks:
       - marcus-network

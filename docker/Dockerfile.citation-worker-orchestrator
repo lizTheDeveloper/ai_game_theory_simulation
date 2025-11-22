@@ -1,0 +1,59 @@
+# MARCUS 3.0 - Worker Service Orchestrator (TypeScript-only)
+#
+# Minimal API server that submits tasks to Redis queue for independent worker services.
+# This orchestrator does NOT spawn Python processes - it's purely task routing.
+#
+# Architecture: Worker Service Pattern (Recommended for Production)
+# - Loosely coupled: Workers run in separate containers
+# - Horizontally scalable: Scale workers with docker compose or Kubernetes
+# - Failure isolated: Worker crashes don't affect orchestrator
+# - Cloud-ready: Kubernetes-native pattern
+
+FROM node:20-slim as base
+
+LABEL org.opencontainers.image.source="https://github.com/your-org/ai_game_theory_simulation"
+LABEL org.opencontainers.image.description="MARCUS 3.0 Citation Worker Orchestrator (TypeScript API)"
+LABEL maintainer="marcus@platform.engineering"
+
+# Set working directory
+WORKDIR /app
+
+# Install minimal system dependencies (no Python needed)
+RUN apt-get update && apt-get install -y \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create non-root user
+RUN useradd -m -s /bin/bash marcus && \
+    chown -R marcus:marcus /app
+
+# Copy package files
+COPY package*.json ./
+COPY tsconfig.json ./
+
+# Install Node dependencies
+RUN npm install --only=production
+
+# Copy platform code (TypeScript only - no Python agents)
+COPY src/platform /app/src/platform
+COPY src/types /app/src/types
+
+# Set ownership
+RUN chown -R marcus:marcus /app
+
+# Switch to non-root user
+USER marcus
+
+# Expose API port
+EXPOSE 3000
+
+# Set environment
+ENV NODE_ENV=production
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
+    CMD curl -f http://localhost:3000/health || exit 1
+
+# Run worker orchestrator API server
+# This server ONLY submits tasks to Redis - workers process them
+CMD ["npx", "tsx", "/app/src/platform/api/worker-orchestrator-server.ts"]

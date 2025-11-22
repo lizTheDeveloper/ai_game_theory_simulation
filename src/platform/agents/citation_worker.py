@@ -34,10 +34,11 @@ from typing import Optional, Dict, Any
 try:
     import redis
     from citation_integrity_agent import CitationIntegrityAgent, CitationDocument
+    from prometheus_client import Counter, Histogram, Gauge, CollectorRegistry
 except ImportError as e:
     raise ImportError(
         f"Missing required dependencies: {e}. "
-        "Ensure citation_integrity_agent.py is in the same directory."
+        "Ensure citation_integrity_agent.py is in the same directory and prometheus_client is installed."
     )
 
 # Configure logging with colorlog if available
@@ -70,6 +71,54 @@ except ImportError:
     )
 
 logger = logging.getLogger(__name__)
+
+
+# Shared Prometheus registry for aggregator pattern
+# All workers use the same registry so the aggregator can collect metrics
+METRICS_REGISTRY = CollectorRegistry()
+
+# Metrics for citation worker performance
+TASKS_PROCESSED = Counter(
+    'citation_tasks_processed_total',
+    'Total citation tasks processed',
+    ['agent_id', 'status'],
+    registry=METRICS_REGISTRY
+)
+
+TASK_DURATION = Histogram(
+    'citation_task_duration_seconds',
+    'Citation task processing duration',
+    ['agent_id'],
+    buckets=[0.01, 0.05, 0.1, 0.25, 0.5, 1.0, 2.5, 5.0, 10.0],
+    registry=METRICS_REGISTRY
+)
+
+AGENT_REPUTATION = Gauge(
+    'citation_agent_reputation',
+    'Agent reputation score (0-1)',
+    ['agent_id'],
+    registry=METRICS_REGISTRY
+)
+
+QUEUE_DEPTH = Gauge(
+    'citation_queue_depth',
+    'Number of tasks in Redis queue',
+    registry=METRICS_REGISTRY
+)
+
+INTEGRITY_SCORE = Histogram(
+    'citation_integrity_score',
+    'Distribution of citation integrity scores',
+    ['agent_id'],
+    buckets=[0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+    registry=METRICS_REGISTRY
+)
+
+ACTIVE_WORKERS = Gauge(
+    'citation_workers_active',
+    'Number of active citation workers',
+    registry=METRICS_REGISTRY
+)
 
 
 class CitationWorker:
@@ -107,25 +156,50 @@ class CitationWorker:
         self.result_ttl = result_ttl
         self.shutdown_requested = False
 
-        # Connect to Redis
-        logger.info(f"🔌 Connecting to Redis at {redis_host}:{redis_port}")
+        # Connect to Redis (detect cluster mode from environment)
+        cluster_mode = os.getenv('REDIS_CLUSTER_MODE', 'false').lower() == 'true'
+        logger.info(f"🔌 Connecting to Redis at {redis_host}:{redis_port} (cluster={cluster_mode})")
+
         redis_config = {
             'host': redis_host,
             'port': redis_port,
-            'db': 0,
             'decode_responses': True,
             'socket_keepalive': True,
             'socket_timeout': 5,
-            'retry_on_timeout': True
+            'retry_on_timeout': True,
+            'cluster_mode': cluster_mode
         }
 
         if redis_password:
             redis_config['password'] = redis_password
 
         try:
-            self.redis_client = redis.Redis(**redis_config)
+            if cluster_mode:
+                # Redis Cluster mode
+                from redis.cluster import ClusterNode
+                startup_nodes = [ClusterNode(redis_host, redis_port)]
+                self.redis_client = redis.RedisCluster(
+                    startup_nodes=startup_nodes,
+                    password=redis_password,
+                    decode_responses=True,
+                    skip_full_coverage_check=True
+                )
+            else:
+                # Standalone mode
+                self.redis_client = redis.Redis(
+                    host=redis_host,
+                    port=redis_port,
+                    db=0,
+                    password=redis_password,
+                    decode_responses=True,
+                    socket_keepalive=True,
+                    socket_timeout=5,
+                    retry_on_timeout=True
+                )
+
             self.redis_client.ping()
-            logger.info(f"✅ Redis connected")
+            mode = "Redis Cluster" if cluster_mode else "Redis"
+            logger.info(f"✅ {mode} connected")
         except Exception as e:
             logger.error(f"❌ Redis connection failed: {e}")
             raise
@@ -156,6 +230,9 @@ class CitationWorker:
         signal.signal(signal.SIGTERM, self._signal_handler)
         signal.signal(signal.SIGINT, self._signal_handler)
 
+        # Register worker as active
+        ACTIVE_WORKERS.inc()
+
         logger.info(f"🚀 Worker {agent_id} ready")
 
     def _signal_handler(self, signum, frame):
@@ -177,6 +254,9 @@ class CitationWorker:
         doc_data = task_data.get('document', {})
 
         logger.info(f"🔍 Processing task {task_id}")
+
+        # Start timing
+        start_time = time.time()
 
         try:
             # Create document
@@ -206,17 +286,54 @@ class CitationWorker:
                 'success': True
             }
 
+            # Record success metrics
+            TASKS_PROCESSED.labels(
+                agent_id=self.agent_id,
+                status='success'
+            ).inc()
+
+            # Record integrity score distribution
+            INTEGRITY_SCORE.labels(
+                agent_id=self.agent_id
+            ).observe(result.integrity_score)
+
+            # Update reputation gauge
+            AGENT_REPUTATION.labels(
+                agent_id=self.agent_id
+            ).set(self.agent.reputation)
+
             logger.info(f"✅ Task {task_id} completed - Integrity: {result.integrity_score:.2f}")
             return response
 
         except Exception as e:
             logger.error(f"❌ Task {task_id} failed: {e}")
+
+            # Record failure metrics
+            TASKS_PROCESSED.labels(
+                agent_id=self.agent_id,
+                status='failure'
+            ).inc()
+
             return {
                 'task_id': task_id,
                 'error': str(e),
                 'agent_id': self.agent_id,
                 'success': False
             }
+
+        finally:
+            # Record duration regardless of success/failure
+            duration = time.time() - start_time
+            TASK_DURATION.labels(
+                agent_id=self.agent_id
+            ).observe(duration)
+
+            # Update queue depth
+            try:
+                queue_length = self.redis_client.llen(self.task_queue)
+                QUEUE_DEPTH.set(queue_length)
+            except Exception:
+                pass  # Don't fail task on metrics error
 
     def publish_result(self, task_id: str, result: Dict[str, Any]) -> None:
         """
@@ -314,6 +431,9 @@ class CitationWorker:
         """Clean up resources before shutdown."""
         logger.info(f"🧹 Cleaning up worker {self.agent_id}")
 
+        # Decrement active workers counter
+        ACTIVE_WORKERS.dec()
+
         try:
             # Save agent state one last time
             self.agent.save_state()
@@ -346,6 +466,7 @@ def main():
     redis_host = os.getenv('REDIS_HOST', 'localhost')
     redis_port = int(os.getenv('REDIS_PORT', '6379'))
     redis_password = os.getenv('REDIS_PASSWORD')
+    cluster_mode = os.getenv('REDIS_CLUSTER_MODE', 'false').lower() == 'true'
 
     # Database configuration
     db_config = None

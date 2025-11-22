@@ -155,7 +155,14 @@ VALUES
 ON CONFLICT (agent_id) DO NOTHING;
 
 -- Create read-only user for reporting
-CREATE USER IF NOT EXISTS marcus_readonly WITH PASSWORD 'readonly_password';
+DO
+$$
+BEGIN
+  IF NOT EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = 'marcus_readonly') THEN
+    CREATE ROLE marcus_readonly WITH LOGIN PASSWORD 'readonly_password';
+  END IF;
+END
+$$;
 GRANT CONNECT ON DATABASE citation_integrity TO marcus_readonly;
 GRANT USAGE ON SCHEMA public TO marcus_readonly;
 GRANT SELECT ON ALL TABLES IN SCHEMA public TO marcus_readonly;
