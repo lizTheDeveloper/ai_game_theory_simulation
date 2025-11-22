@@ -1,11 +1,11 @@
 # Master Implementation Roadmap
 ## AI Alignment Game Theory Simulation - Project Hub
 
-**Date:** November 22, 2025 (Updated: MARCUS 3.0 Phase 4 Complete)
+**Date:** November 22, 2025 (Updated: MARCUS 3.0 Phase 5 Ready)
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**Current Status:** 🟢 **STABLE** (Nov 22, 2025 - MARCUS Phase 4 Docker + Worker Service)
+**Current Status:** 🟢 **STABLE** (Nov 22, 2025 - MARCUS Phase 5 Cloud Deployment Ready)
 - **Research Quality:** A (peer-reviewed foundation, 29 sources added Nov 15 - nitrogen-food coupling)
 - **Implementation Fidelity:** A- (assertion coverage 97.2%, outcome probabilities bug FIXED, biogeochemical partial)
 - **Architecture Health:** 9.5/10 (CRITICAL/HIGH issues resolved, MEDIUM items remain)
@@ -101,19 +101,36 @@
   - **Phase 4.1 Docker Images:** Both images production-ready
     - Orchestrator: `marcus-orchestrator:v3.0.0` (3.51GB / 809MB compressed)
     - Agent: `marcus-citation-agent:v3.0.0` (629MB / 156MB compressed - 95% size reduction after requirements.txt fix)
-  - **Phase 4.2 Security Scans:** Trivy + npm audit completed, 2 HIGH Node.js packages require upgrade (cross-spawn, glob)
+  - **Phase 4.2 Security Scans:** Trivy + npm audit completed, 2 HIGH Node.js packages upgraded (cross-spawn 7.0.6, glob 10.5.0)
   - **Phase 4.3 Worker Service:** Transformed from run-once demo to long-lived Redis queue-based workers
     - Redis BLPOP pattern (blocking queue pull)
     - Graceful shutdown (SIGTERM/SIGINT)
     - Horizontal scaling ready (multiple workers share queue)
     - State persistence (PostgreSQL agent_states table)
-  - **Phase 4.4 Multi-Container:** docker-compose.yml fixed (port conflicts resolved, environment variables updated)
+  - **Phase 4.4 Multi-Container:** docker-compose.yml fixed (port conflicts resolved, environment variables updated, container_name removed)
   - **Validation:** 100% success rate on test suite (3/3 tasks processed)
   - **Commits:** 84d76740, f5c514c1 (Docker fixes)
   - **Archives:**
     - `plans/completed/MARCUS_3.0_PHASE_4_DOCKER_COMPLETE_20251122.md`
     - `plans/completed/MARCUS_3.0_WORKER_SERVICE_COMPLETE_20251122.md`
   - **Status:** ✅ COMPLETE - Ready for cloud deployment (Phase 5)
+
+- 🔵 **MARCUS 3.0 PHASE 5: Cloud Deployment (GCP/GKE) - READY TO EXECUTE** (Nov 22, 2025)
+  - **Scope:** Production deployment to Google Kubernetes Engine with managed services
+  - **Decision:** Skip Phase 4.5 (local hardening) - security fixes already complete, worker metrics deferred to post-deployment
+  - **Target Environment:** GCP us-central1 (same region as existing VM)
+  - **Infrastructure:**
+    - GKE cluster (2-10 nodes, e2-standard-2, autoscaling)
+    - Cloud SQL PostgreSQL 15 (db-g1-small, 20GB SSD)
+    - Memorystore Redis 7 (Basic 1GB)
+    - Artifact Registry for Docker images
+  - **Timeline:** 3-4 hours (infrastructure 45min, registry 15min, K8s config 60min, validation 30min, monitoring 30min)
+  - **Cost Estimate:** ~$115/month (GKE $50, Cloud SQL $25, Redis $30, network $10)
+  - **Documentation:**
+    - `plans/MARCUS_3.0_PHASE_5_CLOUD_DEPLOYMENT.md` - Complete deployment plan (500+ lines)
+    - `plans/MARCUS_PHASE_4_5_DECISION.md` - Phase 4.5 vs 5 decision rationale
+  - **Deferred to Phase 5.5:** Worker Prometheus metrics, multi-container load testing
+  - **Status:** 🔵 READY TO EXECUTE - All prerequisites met
 
 - ✅ **MARCUS 3.0 PHASE 3: Performance & Monitoring COMPLETE** (Nov 21, 2025)
   - **Scope:** Performance benchmarking, monitoring setup (Prometheus/Grafana), load testing, production readiness
