@@ -14,8 +14,8 @@ RUN apt-get update && apt-get install -y \
     gcc \
     && rm -rf /var/lib/apt/lists/*
 
-# Create non-root user
-RUN useradd -m -u 1000 -s /bin/bash marcus && \
+# Create non-root user (let system assign UID)
+RUN useradd -m -s /bin/bash marcus && \
     chown -R marcus:marcus /app
 
 # Copy requirements and install Python dependencies

@@ -8,15 +8,16 @@ LABEL maintainer="marcus@platform.engineering"
 # Set working directory
 WORKDIR /app
 
-# Install system dependencies for Python interop
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     python3 \
     python3-pip \
     libpq-dev \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Create non-root user
-RUN useradd -m -u 1000 -s /bin/bash marcus && \
+# Create non-root user (let system assign UID)
+RUN useradd -m -s /bin/bash marcus && \
     chown -R marcus:marcus /app
 
 # Copy package files
@@ -24,13 +25,11 @@ COPY package*.json ./
 COPY tsconfig.json ./
 
 # Install Node dependencies
-RUN npm ci --only=production
+RUN npm install --only=production
 
-# Copy platform code
+# Copy platform code and types
 COPY src/platform /app/src/platform
-
-# Build TypeScript
-RUN npm run build
+COPY src/types /app/src/types
 
 # Set ownership
 RUN chown -R marcus:marcus /app
@@ -41,9 +40,12 @@ USER marcus
 # Expose API port
 EXPOSE 3000
 
+# Set environment
+ENV NODE_ENV=production
+
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
-    CMD node -e "require('http').get('http://localhost:3000/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1))"
+    CMD curl -f http://localhost:3000/health || exit 1
 
-# Run orchestrator
-CMD ["node", "dist/platform/integration/citationAgentIntegration.js"]
+# Run orchestrator with tsx (run TypeScript directly)
+CMD ["npx", "tsx", "/app/src/platform/integration/citationAgentIntegration.ts"]
