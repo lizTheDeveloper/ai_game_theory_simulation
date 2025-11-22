@@ -19,7 +19,8 @@ RUN useradd -m -s /bin/bash marcus && \
     chown -R marcus:marcus /app
 
 # Copy requirements and install Python dependencies
-COPY requirements.txt .
+# Use platform agent requirements, not root MCP RAG requirements
+COPY src/platform/agents/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy platform code
