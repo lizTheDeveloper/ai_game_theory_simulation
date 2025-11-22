@@ -19,7 +19,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: citation-worker
+    name: citation-agent
 
   # Polling interval (how often to check Redis)
   pollingInterval: 15  # seconds
@@ -36,18 +36,12 @@ spec:
     - type: redis
       metadata:
         # Redis connection
-        address: marcus-redis:6379
+        address: redis:6379
         databaseIndex: "0"
 
         # Queue to monitor
         listName: citation_analysis_queue
         listLength: "10"  # 1 pod per 10 queue items
-
-        # Authentication (if Redis has password)
-        # passwordFromEnv: REDIS_PASSWORD
-
-      authenticationRef:
-        name: redis-trigger-auth  # Optional: reference to TriggerAuthentication
 
 ---
 # Optional: TriggerAuthentication for Redis password

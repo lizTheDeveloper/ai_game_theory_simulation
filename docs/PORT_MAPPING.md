@@ -4,6 +4,8 @@
 
 Last verified: 2025-11-22 04:52 UTC
 
+**IMPORTANT:** This document covers **LOCAL** services only. For accessing **MARCUS 3.2 on GKE**, see `MARCUS_3.2_GKE_ACCESS.md`.
+
 ---
 
 ## Actual Running Services (verified with ss -tlnp)
@@ -216,8 +218,44 @@ They work together: Grafana reads data FROM Prometheus.
 
 ---
 
+## GKE Services (MARCUS 3.2)
+
+**For accessing MARCUS 3.2 running on GKE, use port-forwarding with different local ports to avoid conflicts.**
+
+See **`MARCUS_3.2_GKE_ACCESS.md`** for complete guide.
+
+### Quick Port-Forward Commands
+
+```bash
+# GraphQL API (GKE port 4000 → local 4001)
+kubectl port-forward -n marcus-platform svc/orchestrator 4001:4000
+
+# Prometheus (GKE port 9090 → local 9095)
+kubectl port-forward -n marcus-platform svc/prometheus 9095:9090
+
+# Main API (GKE port 3000 → local 3000, no conflict)
+kubectl port-forward -n marcus-platform svc/orchestrator 3000:3000
+```
+
+### Access URLs (Port-Forwarded)
+
+```
+MARCUS GraphQL:     http://localhost:4001/graphql
+MARCUS Prometheus:  http://localhost:9095
+MARCUS API:         http://localhost:3000
+Jaeger UI:          http://34.123.164.214  (external LoadBalancer)
+```
+
+**Key Point:** GKE services use **different local ports** to avoid conflicting with:
+- Local game simulation (port 4000)
+- Local Prometheus (port 9090)
+- Local game sim metrics (port 9091)
+
+---
+
 ## Last Updated
 
 **Date:** 2025-11-22
 **Verified by:** Direct check with `ss -tlnp` and curl tests
 **Status:** All services healthy and running on documented ports
+**GKE Version:** MARCUS 3.2 (v3.2.0)

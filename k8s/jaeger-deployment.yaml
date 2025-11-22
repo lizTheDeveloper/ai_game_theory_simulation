@@ -1,0 +1,156 @@
+# MARCUS 3.1 L5 Distributed Tracing
+# Jaeger All-in-One Deployment
+#
+# Features:
+# - Jaeger UI for trace visualization
+# - OpenTelemetry collector endpoint
+# - Trace storage (in-memory for now)
+#
+# Author: Marcus (Platform Engineer)
+# Date: 2025-11-22
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jaeger
+  namespace: marcus-platform
+  labels:
+    app: jaeger
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jaeger
+  template:
+    metadata:
+      labels:
+        app: jaeger
+    spec:
+      containers:
+      - name: jaeger
+        image: jaegertracing/all-in-one:1.51
+        ports:
+        - containerPort: 5775
+          protocol: UDP
+          name: zipkin-compact
+        - containerPort: 6831
+          protocol: UDP
+          name: jaeger-compact
+        - containerPort: 6832
+          protocol: UDP
+          name: jaeger-binary
+        - containerPort: 5778
+          protocol: TCP
+          name: config-rest
+        - containerPort: 16686
+          protocol: TCP
+          name: ui
+        - containerPort: 14268
+          protocol: TCP
+          name: collector
+        - containerPort: 14250
+          protocol: TCP
+          name: grpc
+        - containerPort: 4317
+          protocol: TCP
+          name: otlp-grpc
+        - containerPort: 4318
+          protocol: TCP
+          name: otlp-http
+        env:
+        - name: COLLECTOR_OTLP_ENABLED
+          value: "true"
+        - name: SPAN_STORAGE_TYPE
+          value: "memory"
+        - name: MEMORY_MAX_TRACES
+          value: "10000"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 14269
+          initialDelaySeconds: 10
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 14269
+          initialDelaySeconds: 5
+          periodSeconds: 10
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jaeger
+  namespace: marcus-platform
+  labels:
+    app: jaeger
+spec:
+  type: ClusterIP
+  ports:
+  - port: 5775
+    targetPort: 5775
+    protocol: UDP
+    name: zipkin-compact
+  - port: 6831
+    targetPort: 6831
+    protocol: UDP
+    name: jaeger-compact
+  - port: 6832
+    targetPort: 6832
+    protocol: UDP
+    name: jaeger-binary
+  - port: 5778
+    targetPort: 5778
+    protocol: TCP
+    name: config-rest
+  - port: 16686
+    targetPort: 16686
+    protocol: TCP
+    name: ui
+  - port: 14268
+    targetPort: 14268
+    protocol: TCP
+    name: collector
+  - port: 14250
+    targetPort: 14250
+    protocol: TCP
+    name: grpc
+  - port: 4317
+    targetPort: 4317
+    protocol: TCP
+    name: otlp-grpc
+  - port: 4318
+    targetPort: 4318
+    protocol: TCP
+    name: otlp-http
+  selector:
+    app: jaeger
+
+---
+# Optional: Expose Jaeger UI via Ingress or LoadBalancer
+apiVersion: v1
+kind: Service
+metadata:
+  name: jaeger-ui
+  namespace: marcus-platform
+  labels:
+    app: jaeger
+    component: ui
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 16686
+    protocol: TCP
+    name: http
+  selector:
+    app: jaeger
