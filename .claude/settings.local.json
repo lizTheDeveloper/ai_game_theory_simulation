@@ -249,7 +249,10 @@
       "Bash(security/trivy-agent-20251122.txt)",
       "Bash(npm audit:*)",
       "Bash(security/npm-audit-20251122.txt)",
-      "Bash(git -C /home/g7throwawayplz/ai_game_theory_simulation status --short)"
+      "Bash(git -C /home/g7throwawayplz/ai_game_theory_simulation status --short)",
+      "Bash(sudo du:*)",
+      "Bash(sudo apt-get clean:*)",
+      "Bash(sudo find /var/log -type f ( -name \"*.log.*\" -o -name \"*.gz\" ) -delete)"
     ],
     "deny": [],
     "ask": [],
