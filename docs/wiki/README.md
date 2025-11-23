@@ -93,11 +93,14 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - Gap: Missing threshold lowering mechanism (tipping destabilizes other thresholds)
   - Timeline compression documented but needs clearer labeling
   - 📄 Audit: reviews/mechanism_audit_tipping_cascades_20251123.md
-- 🔍 **Mechanism Audit: AI Coordination/Alignment Faking (Grade B+)**
-  - 14% base rate from Anthropic Dec 2024 correctly implemented
-  - All mechanisms trace to peer-reviewed sources (Apollo Dec 2024, Tice et al., van der Weij et al.)
-  - Good epistemic humility with uncertainty ranges (lab-to-deployment scaling 0.3-0.8)
+- 🔍 **Mechanism Audit: AI Coordination/Alignment Faking (Grade B+, 87% fidelity)** (commit 334ccde)
+  - 14% alignment faking base rate from Anthropic Dec 2024 ✅ VERIFIED
+  - 85% deception persistence from Apollo Dec 2024 ✅ VERIFIED
+  - 19% data manipulation rate from Apollo Dec 2024 ✅ VERIFIED
+  - Lab-to-deployment scaling 0.3-0.8 documented as speculative (no deployment data exists)
+  - No structural fabrication detected - all mechanisms trace to peer-reviewed sources
   - 📄 Audit: reviews/mechanism_audit_ai_coordination_20251123.md
+  - ✅ **All 3 mechanism audits COMPLETE** (mortality, tipping points, AI coordination)
 - 🎯 **Source:** Nov 23 Research-Driven Priorities (Cynthia + Sylvia consensus)
 
 **Nov 22: Maintenance Session - Architecture & Research Quality Assessment** (commit 146ca3e)
