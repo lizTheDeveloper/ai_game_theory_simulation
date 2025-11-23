@@ -65,11 +65,13 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - Validation: Compare simulated 2024 vs actual 2024 metrics
   - Estimated effort: 2-3 weeks phased implementation
   - 📄 Plan: plans/hindcasting_validation_implementation_plan.md (256 lines)
-- 🔍 **Mechanism Audit: Mortality Stabilizers (Grade B+)**
-  - Verified Xia/Shi citations in nuclearWinter.ts (correctly cite Nature Food 2022)
-  - NO structural fabrication detected - citations match actual paper claims
-  - Gap found: Wet bulb threshold inconsistency (30.5C vs 35C literature standard)
-  - 📄 Audit: reviews/mechanism_audit_mortality_stabilizers_20251123.md
+- 🔍 **Mechanism Audit: Mortality Systems - CONDITIONAL PASS** (commit 4b90937)
+  - **Nuclear Winter:** PARTIAL MATCH - 12% monthly rate calibrated to Xia 2022 totals (not from paper), TIER 3 BRONZE
+  - **Aid Effectiveness:** MATCH - Parameters match Cavalcanti et al. (2025) exactly, TIER 1 GOLD
+  - **Heat Adaptation:** PARTIAL MATCH - 44% max correctly reflects Ballester et al. (2024), TIER 1 GOLD
+  - **Migration:** STRUCTURAL FABRICATION (acknowledged) - IOM 2024 is QUALITATIVE ONLY, quantitative params marked [MODELING ASSUMPTION]
+  - MortalityStabilizersPhase header updated with evidence tier annotations
+  - 📄 Audit: reviews/mechanism_audit_mortality_20251123.md
 - 🔍 **Mechanism Audit: Tipping Point Cascades (Grade B+)**
   - Thresholds match Armstrong McKay et al. 2022 exactly (AMOC, Amazon, Arctic, etc.)
   - Gap: Missing threshold lowering mechanism (tipping destabilizes other thresholds)
