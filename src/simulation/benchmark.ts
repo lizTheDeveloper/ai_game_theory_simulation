@@ -1,13 +1,15 @@
 /**
  * Benchmark Evaluation System - Phase 5.2
- * 
+ *
  * Handles government evaluation of AI capabilities and alignment.
- * 
+ *
  * KEY INSIGHT: You can't trust the tests!
  * - Benchmarks measure revealed capability (not true)
  * - Gaming inflates scores
  * - Sandbagging hides dangerous capabilities
  * - Better investment → better (but still imperfect) evaluation
+ *
+ * PERFORMANCE FIX (Nov 22, 2025): HIGH-1 - Use optimized cloning for hot paths
  */
 
 import { GameState, AIAgent, BenchmarkResult, AICapabilityProfile, GameEvent } from '@/types/game';
@@ -15,6 +17,7 @@ import { assertFinite } from './utils/assertions';
 import { calculateTotalCapabilityFromProfile } from './capabilities';
 import { detectBehavioralAnomalies, updateBehavioralTracking } from './behavioralDetection';
 import { detectViaEnsemble, initializeEnsembleDetection, updateEnsembleStatistics } from './ensembleDetection';
+import { cloneAICapabilityProfile } from './utils/cloning';
 
 /**
  * Run benchmark evaluation on an AI
@@ -149,7 +152,7 @@ function measureCapability(
   deceptionSkill: number,
   rng: () => number
 ): AICapabilityProfile {
-  const measured = structuredClone(revealedCapability);
+  const measured = cloneAICapabilityProfile(revealedCapability);
   
   // Add measurement noise (better evaluation = less noise)
   const noiseLevel = 0.2 * (1 - evaluationQuality); // [0, 0.2]
