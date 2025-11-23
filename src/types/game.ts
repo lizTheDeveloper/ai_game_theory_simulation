@@ -797,6 +797,26 @@ export interface GameState {
   speculativeThresholds?: import('../simulation/thresholds/tier3Config').Tier3Thresholds;
 
   /**
+   * Uncertainty Parameters (Climate & Tipping Points, Nov 23, 2025)
+   *
+   * Research-backed parameter sampling for climate sensitivity and tipping point thresholds.
+   * Sampled ONCE at initialization, constant throughout simulation run.
+   * Different seeds produce different parameters, enabling Monte Carlo to vary underlying physics.
+   *
+   * Parameters with research sources:
+   * - ECS (Equilibrium Climate Sensitivity): 2.5-4.0C (IPCC AR6 2021)
+   * - TCR (Transient Climate Response): 1.4-2.2C (IPCC AR6 2021)
+   * - AMOC Collapse Threshold: 2.2-3.9C (Westen et al. JGR 2024)
+   * - Greenland Ice Sheet Threshold: 0.8-3.2C (Nature 2023)
+   * - WAIS Collapse Threshold: 2.0-3.0C (Nature Comms 2025)
+   * - Amazon Dieback Deforestation: 20-25% (Frontiers 2025)
+   *
+   * Research: research/uncertainty_propagation_climate_parameters_20251120.md
+   * Expected impact: Increase Monte Carlo outcome variance by 15-30% (reflecting epistemic uncertainty)
+   */
+  uncertaintyParameters?: import('../simulation/uncertainty').UncertaintyParameters;
+
+  /**
    * Coordinated Technology Deployment System (Nov 15, 2025)
    *
    * AI-managed gradual deployment of transformative technologies to minimize transition mortality.
