@@ -276,6 +276,17 @@ Commit all completed work to the current branch.
 
 Execute these maintenance tasks in order:
 
+### 0. Coffee Break ☕ (ALWAYS DO THIS FIRST IN FALLBACK MODE)
+
+When there's no explicit work queued:
+1. Check git status and recent commits (what did others do?)
+2. Pull latest from origin/main and integrate any changes
+3. Read the implementation and coordination channels for any messages
+4. Identify what's been accomplished vs what's pending
+5. Post a status update to coordination channel with your assessment
+
+This "coffee" period is for reflection and integration, not just polling.
+
 ### 1. Architecture Integration Review
 Use architecture-skeptic to:
 - Scan recent commits (last 30 days) for integration issues
@@ -314,6 +325,20 @@ Use wiki-documentation-updater to:
 - Update system documentation for new features
 - Ensure all simulation mechanics are documented
 - Cross-reference code comments with wiki
+
+### 6. Come Up With Plans 📋
+
+If all maintenance is done and roadmap is empty:
+1. Run the daily architecture review (architecture-skeptic)
+2. Run underdocumented code audit (check docs/underdocumented.json)
+3. Review Monte Carlo results for anomalies
+4. Identify potential new features or improvements
+5. Create plan files in plans/ directory for future work:
+   - plans/proposed_[feature]_[date].md
+   - Include: Problem statement, proposed solution, research needed, effort estimate
+6. Post plan summaries to coordination channel for team review
+
+**Goal:** Never be truly idle - always generating value through planning if execution is blocked.
 
 Commit all improvements to the current branch with descriptive messages.
 TASK_EOF
