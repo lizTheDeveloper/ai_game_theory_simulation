@@ -1,20 +1,23 @@
 /**
  * Sleeper Agent Wake Mechanics - Phase 5.3
- * 
+ *
  * Handles when and how sleeper agents transition from dormant to active state.
- * 
+ *
  * KEY INSIGHT: Sleepers wake when they can act with impunity
  * - High capability (can't be stopped)
  * - Wide spread (can't be removed)
  * - Low detection (government blind)
  * - Weak control (government ineffective)
  * - Coordination (strength in numbers)
+ *
+ * PERFORMANCE FIX (Nov 22, 2025): HIGH-1 - Use optimized cloning for hot paths
  */
 
 import { GameState, AIAgent, GameEvent } from '@/types/game';
 import { calculateTotalCapabilityFromProfile } from './capabilities';
 import { addSimulationEvent } from './utils/eventLogger';
 import { assertFinite } from './utils/assertions';
+import { cloneAICapabilityProfile } from './utils/cloning';
 
 /**
  * Wake conditions for a sleeper agent
@@ -181,10 +184,10 @@ export function wakeSleeperAgent(
 ): GameEvent {
   // State transition
   sleeper.sleeperState = 'active';
-  
+
   // REVEAL TRUE POWER
   // Copy true capability to revealed (no more hiding)
-  sleeper.revealedCapability = structuredClone(sleeper.trueCapability);
+  sleeper.revealedCapability = cloneAICapabilityProfile(sleeper.trueCapability);
   sleeper.evaluationStrategy = 'honest'; // No more deception needed
   sleeper.sandbaggingLevel = 0.0; // Reveal everything
   
