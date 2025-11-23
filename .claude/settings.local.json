@@ -323,7 +323,13 @@
       "Bash(kubectl wait:*)",
       "Bash(gcloud container node-pools list:*)",
       "Bash(npm run lint:*)",
-      "Bash(gh pr comment:*)"
+      "Bash(gh pr comment:*)",
+      "Bash(git prune:*)",
+      "Bash(git gc:*)",
+      "Bash(/tmp/current_pr_body.md)",
+      "Bash(/tmp/pr2_content.md)",
+      "Bash(gh pr edit:*)",
+      "Bash(mkdir:*)"
     ],
     "deny": [],
     "ask": [],
