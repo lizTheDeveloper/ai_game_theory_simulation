@@ -1,5 +1,5 @@
 # Research Update Queue
-**Generated:** 11/22/2025, 8:30:03 AM
+**Generated:** 11/23/2025, 5:36:18 PM
 **Files Scanned:** 513
 
 ---
@@ -12,7 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 172 (33.5%)
+**Count:** 171 (33.3%)
 
 ### `CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
 - **Oldest source:** 2009 (16 years old)
@@ -679,11 +679,6 @@
 - **Status:** Not used in simulation
 - **Path:** `research/slovic_1993_trust_asymmetry_verification_20251029.md`
 
-### `source_validation_20251122.md`
-- **Oldest source:** 2008 (17 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/source_validation_20251122.md`
-
 ### `spanish_flu_1918_historical_validation_20251101.md`
 - **Oldest source:** 2002 (23 years old)
 - **Status:** Not used in simulation
@@ -908,7 +903,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 318 (62.0%)
+**Count:** 319 (62.2%)
 
 All sources <3 years old. No action required.
 
@@ -920,9 +915,9 @@ All sources <3 years old. No action required.
 |--------|-------|
 | Total files | 513 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 172 (33.5%) |
+| HIGH | 171 (33.3%) |
 | MEDIUM | 23 (4.5%) |
-| LOW | 318 (62.0%) |
+| LOW | 319 (62.2%) |
 | Average age | 7.5 years |
 | Oldest source | 1955 (70 years ago) |
 
@@ -930,21 +925,21 @@ All sources <3 years old. No action required.
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 318 | 62.0% |
+| Current (<3yr) | 319 | 62.2% |
 | Warning (3-5yr) | 23 | 4.5% |
-| Critical (>5yr) | 172 | 33.5% |
+| Critical (>5yr) | 171 | 33.3% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-- **Current:** 33.5% critical (>5yr)
+- **Current:** 33.3% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
-1. Update 172 HIGH priority file(s) within 1 month
+1. Update 171 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 
