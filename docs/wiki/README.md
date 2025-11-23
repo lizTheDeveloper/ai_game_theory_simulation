@@ -29,6 +29,14 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 23: AMOC Threshold Bug Fix - Research Integrity** (commit 563addf)
+- 🔧 **CRITICAL Bug Fix:** AMOC `triggerTempC` corrected from 1.7C to 3.0C (Van Westen et al. 2024)
+- **Problem:** Code said 1.7C but comment claimed 4C central estimate - internal contradiction
+- **Resolution:** Updated to Van Westen et al. (2024) Science Advances median: 3.0C [95% CI: 2.2-3.9C]
+- **Consistency:** Now aligned with `IrreversibilityTrackingPhase` which already used 3.0C
+- **Source:** More constrained than Armstrong McKay (2022) range of 1.4-8C
+- 📄 **Research:** research/amoc_tipping_point_original_sources_20251120.md
+
 **Nov 23: AMOC Tipping Point 2025 Research Update** (commit 0b5bbc7)
 - 🌍 **Research Update:** New peer-reviewed sources on AMOC collapse timelines (3 papers, 2025)
 - **Key Sources:** Drijfhout et al. (ERL 2025), van Westen (JGR 2025), Baker et al. (Nature 2025)
@@ -76,7 +84,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - **MATCH:** Armstrong McKay et al. 2022 thresholds (coral 1.0-1.5C, Amazon 20-25%, permafrost)
   - **MATCH:** Richardson et al. 2023 planetary boundaries (7/9 breached correctly)
   - **MATCH:** Probabilistic thresholds with uncertainty sampling (Nature 2023 ranges)
-  - **CRITICAL:** AMOC dual implementations - `tipping-points.ts` (1.7C) vs `IrreversibilityTrackingPhase` (3.0C)
+  - **~~CRITICAL~~ RESOLVED:** AMOC threshold unified at 3.0C (Van Westen 2024) - both `tipping-points.ts` and `IrreversibilityTrackingPhase` now consistent (commit 563addf)
   - **HIGH:** Missing ice sheet → AMOC freshwater cascade (primary literature pathway)
   - **MEDIUM:** Greenland default 2.0C vs Armstrong McKay central 1.5C
   - 📄 Audit: reviews/mechanism_audit_tipping_points_20251123.md
