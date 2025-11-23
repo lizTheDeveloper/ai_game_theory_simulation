@@ -1,0 +1,69 @@
+=== STATE SCHEMA VERSIONING IMPLEMENTATION (Nov 21, 2025) ===
+
+**HIGH Priority Infrastructure Fix: COMPLETE**
+
+**Problem:** GameState interface lacked version field. Every deployment broke saved games. No migration system existed.
+
+**Solution Implemented:**
+
+1. **Added schemaVersion to GameState** (src/types/game.ts)
+   - Required field: `schemaVersion: number`
+   - Documents current version (1) and purpose
+   - Initialization sets schemaVersion: 1
+
+2. **Created Migration Infrastructure** (src/simulation/migrations/)
+   - types.ts: MigrationFunction, MigrationResult, CURRENT_SCHEMA_VERSION
+   - registry.ts: MIGRATIONS registry, canMigrate() validation
+   - validator.ts: validateMigratedState() with assertion utilities
+   - v1_to_v2.ts: Example migration (no-op for testing)
+   - index.ts: migrateState() orchestrator
+
+3. **Integrated with State Loading** (src/workers/simulationWorker.ts)
+   - handleResumeFromState() now applies migrations before using state
+   - Fails loudly with detailed error if migration corrupted
+   - Logs successful migrations with full context
+
+4. **Tested and Validated** (scripts/testStateMigration.ts)
+   - Pre-versioning saves (no schemaVersion) → upgraded to v1
+   - v1 saves → load without migration
+   - v1 → v2 migration → works correctly
+   - Corrupted saves → rejected with detailed error
+   - Current schema saves → load and validate
+
+**Architecture:**
+- Sequential migrations: v1→v2→v3 (not v1→v3 jumps)
+- Deterministic: pure functions, same input → same output
+- Fail-loudly: assertion utilities validate migrated state
+- Backward compatible: old saves upgrade automatically
+- Forward compatible: NOT required (old code can't load new saves)
+
+**When to Update:**
+1. Make breaking change to GameState
+2. Increment CURRENT_SCHEMA_VERSION in migrations/types.ts
+3. Create new migration file (e.g., v2_to_v3.ts)
+4. Register in migrations/registry.ts
+5. Update initialization.ts schemaVersion
+6. Test with old saves
+
+**Files Modified:**
+- src/types/game.ts (added schemaVersion field)
+- src/simulation/initialization.ts (set schemaVersion: 1)
+- src/workers/simulationWorker.ts (integrate migrations)
+- src/simulation/migrations/ (5 new files)
+- scripts/testStateMigration.ts (test suite)
+
+**Defensive Coding:**
+- Uses assertion utilities (assertDefined, assertFinite, assertInRange)
+- Validates state even when no migration needed
+- Fails loudly with full context on corrupted migrations
+- NO silent fallbacks (research simulation rigor)
+
+**Impact:**
+- UNBLOCKS all future GameState changes
+- Preserves user progress across deployments
+- Prevents "every update breaks saves" problem
+- Essential infrastructure before next release
+
+**Type Safety:** All changes type check cleanly (npx tsc --noEmit)
+
+**Test Results:** All 5 tests passed ✅

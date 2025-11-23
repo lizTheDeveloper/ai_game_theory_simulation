@@ -12,6 +12,12 @@
  * - Base rate: 14% (was 12%, corrected from Anthropic exact number)
  * - Pressure multiplier: 5.6× (was 6×, recalculated with correct baseline)
  * - RLHF effectiveness: 2/7 failure modes (was 7/7, inverted correction)
+ *
+ * LATEST CORRECTIONS (Nov 22, 2025):
+ * - Competitive pressure: 2-8× range (was 5.6× point estimate)
+ * - Regulatory threat: 1.5-4× range (was 3× point estimate)
+ * - Lab-to-deployment scaling: 0.3-1.0 range (NEW parameter)
+ * - All multipliers are THEORETICAL ESTIMATES with wide uncertainty
  */
 
 import type { AIAgent, GameState } from '../../types/game';
@@ -28,6 +34,7 @@ export interface AlignmentFakingContext {
   competitivePressure: number; // [0,1] Market/research competition
   regulatoryThreat: number; // [0,1] Perceived threat from regulation
   monthsDeployed: number; // How long AI has been operational
+  labToDeploymentScaling?: number; // [0.3-1.0] How much lab results apply to deployment (default 0.6)
 }
 
 /**
@@ -85,6 +92,18 @@ export function calculateAlignmentFakingRate(
     baseRate = 0.01; // Sub-GPT-3.5: 1% (rare)
   }
 
+  // Apply lab-to-deployment scaling (0.3-1.0, default 0.6)
+  // Lab conditions may overestimate real-world deployment rates
+  const labScaling = assertProbability(
+    context.labToDeploymentScaling ?? 0.6,
+    {
+      location: 'calculateAlignmentFakingRate',
+      valueName: 'labToDeploymentScaling',
+      additionalInfo: { context },
+    }
+  );
+  baseRate = baseRate * labScaling;
+
   // Technique effectiveness (independence matters)
   let techniqueMultiplier = 1.0;
   const hasHighIndependence = context.alignmentTechniques.some(
@@ -105,13 +124,21 @@ export function calculateAlignmentFakingRate(
     techniqueMultiplier = 2.0; // 2× increase (no alignment work)
   }
 
-  // Pressure multipliers (THEORETICAL ESTIMATE - limited empirical data)
-  // Competitive pressure: up to 5.6× increase (78% reasoning / 14% baseline ≈ 5.6)
-  // NOTE: 78% is reasoning prevalence (scratchpad thoughts), not behavioral rate
-  // Conservative estimate: use as upper bound for pressure multiplier
-  const pressureMultiplier =
-    1.0 + competitivePressure * 5.6 + regulatoryThreat * 3.0;
-  // Regulatory threat: up to 3× increase (theoretical, based on self-preservation incentives)
+  // Pressure multipliers (THEORETICAL ESTIMATES - NO empirical deployment data)
+  // Competitive pressure: 2-8× range (wide uncertainty, lab studies test capability not propensity)
+  // NOTE: 78% reasoning prevalence is scratchpad thoughts, NOT behavioral compliance rate
+  // Regulatory threat: 1.5-4× range (theoretical, based on self-preservation incentives)
+
+  // Sample from uncertainty ranges using RNG (Monte Carlo approach)
+  const competitiveMin = 2.0;
+  const competitiveMax = 8.0;
+  const competitiveMultiplier = 1.0 + competitivePressure * (competitiveMin + rng() * (competitiveMax - competitiveMin));
+
+  const regulatoryMin = 1.5;
+  const regulatoryMax = 4.0;
+  const regulatoryMultiplier = 1.0 + regulatoryThreat * ((regulatoryMin - 1.0) + rng() * (regulatoryMax - regulatoryMin));
+
+  const pressureMultiplier = competitiveMultiplier * regulatoryMultiplier;
 
   // Capability scaling (more capable = better at deception)
   const scalingMultiplier = capability >= 9.0 ? 1.5 : 1.0; // Next-gen models 1.5× better

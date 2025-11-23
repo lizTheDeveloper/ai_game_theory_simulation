@@ -35,8 +35,28 @@ describe('Energy-Constrained Cleanup - Unit Tests', () => {
       currentMonth: 120,
       resourceEconomy: {
         energy: {
-          renewableCapacity: 100, // EJ
-          demand: 50, // EJ (50 EJ surplus)
+          totalProduction: 100,
+          totalDemand: 50,
+          surplus: 50,
+          sources: {
+            oil: 31, coal: 27, naturalGas: 24, nuclear: 4,
+            solar: 5, wind: 7, hydro: 7, fusion: 0,
+          },
+          capacity: {
+            oil: 500, coal: 500, naturalGas: 500, nuclear: 50,
+            solar: 30, wind: 40, hydro: 30, fusion: 0,
+          },
+          gridEfficiency: 0.85,
+          storageCapacity: 0.05,
+          renewablePercentage: 0.19,
+          carbonIntensity: 0.50,
+          renewableCapacity: 100,  // solar + wind + hydro + fusion
+          renewableSurplus: 0,     // CRITICAL: Required by energyConstrainedCleanup
+          partitioning: {
+            baseline: 50,
+            deployment: 0,
+            operation: 0,
+          },
         },
       },
       planetaryBoundariesSystem: {

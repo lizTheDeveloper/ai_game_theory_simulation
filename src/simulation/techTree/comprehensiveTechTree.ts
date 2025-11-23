@@ -593,6 +593,193 @@ const ALL_TECH: TechDefinition[] = [
   },
 
   // ===================================================================
+  // ADDITIONAL NITROGEN REDUCTION TECHNOLOGIES (Nov 21, 2025)
+  // Research: nitrogen_food_coupling_20251115.md
+  // Phase 3 completion: 6 technologies to complete nitrogen-food integration
+  // ===================================================================
+
+  {
+    id: 'rhizosphere_engineering',
+    name: 'Rhizosphere Engineering',
+    description: 'Mycorrhizal biofertilizers and nitrogen-fixing bacteria for 15-40% N reduction without yield loss',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: ['biological_nitrogen_fixation'],  // Builds on existing N-fixation tech
+    minResearchCapabilities: [
+      { domain: 'biotech', subdomain: 'geneEditing', threshold: 0.6 }  // Moderate biotech requirement
+    ],
+    minEconomicStage: 2.0,  // Advanced post-industrial
+    minMonth: 24,  // 2 years for microbial engineering trials
+    researchMonthsRequired: 30,  // 2.5 years R&D for synthetic microbiomes
+    researchCost: 600,  // Moderate biotech cost
+    deploymentCost: 80000,  // Seed coating + inoculation infrastructure
+    deploymentMonthsRequired: 48,  // 4 years for agricultural adoption
+    deploymentLevel: 0,
+    effects: {
+      nitrogenEfficiency: 0.275,  // 27.5% N reduction (middle of 15-40% range)
+      soilHealthBonus: 0.08,  // Microbial communities improve soil
+      biodiversityBonus: 0.03,  // Rhizosphere diversity enhancement
+    },
+    capabilityEffects: {
+      research: [
+        { domain: 'biotech', subdomain: 'syntheticBiology', boost: 0.12 }
+      ],
+    },
+  },
+
+  {
+    id: 'nitroplast_integration',
+    name: 'Nitroplast Integration',
+    description: 'Nitrogen-fixing organelles engineered into crops (2024 discovery) - 50-70% N fertilizer elimination',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: ['rhizosphere_engineering', 'crispr_genome_editing'],  // Requires advanced biotech
+    minResearchCapabilities: [
+      { domain: 'biotech', subdomain: 'geneEditing', threshold: 0.85 },  // Very high threshold
+      { domain: 'biotech', subdomain: 'syntheticBiology', threshold: 0.80 }
+    ],
+    minEconomicStage: 3.0,  // Very advanced biotech infrastructure
+    minMonth: 60,  // 5 years minimum (2030s deployment per research)
+    researchMonthsRequired: 120,  // 10 years R&D (highly uncertain, breakthrough tech)
+    researchCost: 8000,  // Very high cost for breakthrough biotech
+    deploymentCost: 250000,  // Massive seed development + regulatory approval
+    deploymentMonthsRequired: 120,  // 10 years deployment (GMO approval + farmer adoption)
+    deploymentLevel: 0,
+    effects: {
+      nitrogenEfficiency: 0.60,  // 60% N fertilizer elimination (middle of 50-70% range)
+      carbonEmissionsReduction: 0.12,  // Haber-Bosch process eliminated for engineered crops
+      energyIndependenceBonus: 0.08,  // Reduces fertilizer dependency
+      soilHealthBonus: 0.10,  // Natural nitrogen cycling restored
+    },
+    capabilityEffects: {
+      research: [
+        { domain: 'biotech', subdomain: 'geneEditing', boost: 0.20 },  // Major biotech breakthrough
+        { domain: 'biotech', subdomain: 'syntheticBiology', boost: 0.25 }
+      ],
+    },
+  },
+
+  {
+    id: 'precision_fermentation_nitrogen',
+    name: 'Precision Fermentation for Nitrogen Reduction',
+    description: 'Microbial protein production to replace animal agriculture - 30-50% agricultural N demand reduction',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: ['precision_fermentation'],  // Builds on existing precision fermentation tech (if it exists)
+    minResearchCapabilities: [
+      { domain: 'biotech', subdomain: 'syntheticBiology', threshold: 0.65 }
+    ],
+    minEconomicStage: 2.5,  // Advanced biotech + food processing infrastructure
+    minMonth: 12,  // 1 year (already commercially emerging 2024-2025)
+    researchMonthsRequired: 18,  // 1.5 years for scaling
+    researchCost: 1200,  // Medium-high cost for bioreactor scale-up
+    deploymentCost: 150000,  // Commercial bioreactor facilities + distribution
+    deploymentMonthsRequired: 60,  // 5 years for market penetration (consumer acceptance barrier)
+    deploymentLevel: 0,
+    effects: {
+      nitrogenEfficiency: 0.40,  // 40% agricultural N demand reduction (replaces animal feed crops)
+      landUseReduction: 0.15,  // 100× land efficiency vs animal agriculture
+      waterEfficiency: 0.12,  // 95% less water than dairy
+      carbonEmissionsReduction: 0.10,  // 80% lower GHG vs conventional animal agriculture
+      foodSecurityBonus: 0.05,  // 10-25× feedstock efficiency
+    },
+    capabilityEffects: {
+      research: [
+        { domain: 'biotech', subdomain: 'syntheticBiology', boost: 0.15 }
+      ],
+    },
+  },
+
+  {
+    id: 'regional_nitrogen_policies',
+    name: 'Regional Nitrogen Differentiation Policies',
+    description: 'Targeted N reduction in overuse regions (South Asia 55%), increase in underuse regions (Sub-Saharan Africa) - 20% global efficiency gain',
+    category: 'social',  // Governance policies fall under social category
+    status: 'unlockable',
+    prerequisites: ['nitrogen_monitoring_networks'],  // Requires monitoring infrastructure
+    minAICapability: 0.7,  // Moderate AI for regional optimization
+    minEconomicStage: 2.0,  // Post-industrial coordination capacity
+    minMonth: 18,  // 1.5 years for policy development
+    researchMonthsRequired: 24,  // 2 years for regional coordination frameworks
+    researchCost: 800,  // Policy development + international coordination
+    deploymentCost: 50000,  // Implementation of differentiated regulations
+    deploymentMonthsRequired: 36,  // 3 years for policy rollout + compliance
+    deploymentLevel: 0,
+    effects: {
+      nitrogenEfficiency: 0.20,  // 20% global efficiency via redistribution (research-backed)
+      governanceCoordinationBonus: 0.05,  // International cooperation improvement
+      equityBonus: 0.03,  // Reduces inequality (underuse regions get more, overuse regions reduce)
+    },
+    capabilityEffects: {
+      dimensions: {
+        social: 0.08,  // International coordination
+        economic: 0.05,  // Resource redistribution
+      },
+    },
+  },
+
+  {
+    id: 'soil_health_restoration',
+    name: 'Soil Health Restoration Programs',
+    description: 'No-till agriculture, cover cropping, organic matter restoration - 20-40% NUE improvement',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: ['precision_agriculture'],  // Builds on precision ag
+    minAICapability: 0.4,  // Low-moderate AI for soil monitoring
+    minEconomicStage: 1.8,  // Early post-industrial
+    minMonth: 12,  // 1 year (practices already exist, need scaling)
+    researchMonthsRequired: 18,  // 1.5 years for regional adaptation
+    researchCost: 400,  // Low cost for existing practices
+    deploymentCost: 60000,  // Farmer training + transition subsidies
+    deploymentMonthsRequired: 48,  // 4 years for agricultural transition
+    deploymentLevel: 0,
+    effects: {
+      nitrogenEfficiency: 0.30,  // 30% NUE improvement (middle of 20-40% range)
+      soilHealthBonus: 0.15,  // Major soil carbon + organic matter gains
+      biodiversityBonus: 0.05,  // Cover crops support pollinators
+      carbonSequestration: 0.08,  // Soil carbon storage
+      waterEfficiency: 0.06,  // Improved water retention
+    },
+    capabilityEffects: {
+      dimensions: {
+        cognitive: 0.10,  // Ecosystem services understanding (using cognitive as proxy for ecological systems thinking)
+      },
+    },
+  },
+
+  {
+    id: 'integrated_nutrient_management',
+    name: 'Integrated Nutrient Management Systems',
+    description: 'Combines precision ag, biofertilizers, crop rotation, and circular systems - 25-45% efficiency gains',
+    category: 'agriculture',
+    status: 'unlockable',
+    prerequisites: ['precision_agriculture', 'nitrogen_circular_food', 'soil_health_restoration'],  // Requires multiple foundation techs
+    minAICapability: 0.8,  // High AI for integrated optimization
+    minEconomicStage: 2.5,  // Advanced coordination infrastructure
+    minMonth: 36,  // 3 years (requires foundation techs first)
+    researchMonthsRequired: 36,  // 3 years for integrated system design
+    researchCost: 1500,  // High cost for systems integration
+    deploymentCost: 180000,  // Comprehensive agricultural transformation
+    deploymentMonthsRequired: 72,  // 6 years for full system deployment
+    deploymentLevel: 0,
+    effects: {
+      nitrogenEfficiency: 0.35,  // 35% efficiency gains (middle of 25-45% range)
+      phosphorusEfficiency: 0.25,  // Integrated P management benefits
+      soilHealthBonus: 0.12,
+      biodiversityBonus: 0.08,
+      waterEfficiency: 0.10,
+      carbonSequestration: 0.10,
+      foodSecurityBonus: 0.08,  // Resilient, diversified systems
+    },
+    capabilityEffects: {
+      dimensions: {
+        cognitive: 0.25,  // Systems thinking + complex optimization (combined ecological/cognitive)
+        economic: 0.08,  // Circular economy principles
+      },
+    },
+  },
+
+  // ===================================================================
   // NUCLEAR WINTER RESILIENT FOOD SYSTEMS (Nov 20, 2025)
   // Research: Penn State (2025), IIASA (2025), FAO (2024-2025)
   // Purpose: Reduce nuclear winter famine mortality by 20-40%
