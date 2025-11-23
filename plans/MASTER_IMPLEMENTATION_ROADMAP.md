@@ -36,24 +36,25 @@
    - **Complexity:** 3 systems (Monte Carlo, parameter config, state)
    - **Related:** Research debate response strategy (add uncertainty bounds)
 
-3. **Mechanism Audits**
+3. **Mechanism Audits** (PARTIALLY COMPLETE - Nov 23, 2025)
    - Verify code actually implements what papers describe
    - Check for "structural fabrication" (citation exists but mechanism does not match)
    - **Priority targets:**
-     - Mortality stabilizers (do formulas match Xia/Shi papers?)
-     - Tipping point cascades (do thresholds match Richardson et al.?)
-     - AI coordination phases (do dynamics match Anthropic findings?)
+     - ✅ Mortality stabilizers (Nov 23) - CONDITIONAL PASS, migration params acknowledged as TIER 3 BRONZE
+       - Report: `reviews/mechanism_audit_mortality_20251123.md`
+       - Commit: 4b90937e3
+     - ⏸️ Tipping point cascades (do thresholds match Richardson et al.?)
+     - ⏸️ AI coordination phases (do dynamics match Anthropic findings?)
    - **Complexity:** 2 systems per audit (research + implementation)
-   - **Plan:** TBD - systematic audit checklist needed
+   - **Next:** Continue audits for remaining targets
 
 ### MEDIUM Priority
 
-4. **AMOC Temperature-Dependent Function**
-   - Current code has fixed 5% probability
-   - Research recommends temperature-dependent function (Lenton et al.)
-   - Straightforward implementation
-   - **Complexity:** 2 systems (climate, tipping points)
-   - **Plan:** TBD - extract function from research
+4. ~~**AMOC Temperature-Dependent Function**~~ ✅ COMPLETE (Nov 20, 2025)
+   - **Implemented:** Temperature-dependent collapse probability function
+   - **Location:** `src/simulation/engine/phases/IrreversibilityTrackingPhase.ts`
+   - **Research:** Van Westen et al. (2024), Qin et al. (2025)
+   - **Features:** Uses sampled AMOC threshold from uncertainty parameters
 
 5. **Alignment Faking Model Validation**
    - Does "sandbagging" implementation capture Greenblatt et al. findings?
