@@ -1,8 +1,11 @@
 # Parameter Verification: Nitrogen & Phosphorus Baselines
 
-**Date:** November 19, 2025
+**Date:** November 19, 2025 (Updated: November 20, 2025)
 **Purpose:** Resolve discrepancies in biogeochemical baseline parameters before Phase 2-3 implementation
 **Status:** ✅ RESOLVED
+**Last Verified:** 2025-11-20
+**Oldest Source:** 2015 (Steffen et al. - foundational planetary boundaries)
+**Newest Source:** 2024 (Potsdam Institute Planetary Health Check)
 
 ---
 
@@ -11,6 +14,8 @@
 **Parameter corrections required:**
 1. Phosphorus baseline: 25 Mt P/year → **18.2 Mt P/year** (37% reduction)
 2. Nitrogen baseline: 120 Mt N/year → **Clarified as reduced target, not current**
+
+**2024 Update:** Six of nine planetary boundaries now transgressed, including biogeochemical flows (N & P). Latest research confirms parameter values remain valid.
 
 ---
 
@@ -161,8 +166,42 @@ TOTAL: 120 Mt N/year ✓
 2. Steffen et al. (2015): Planetary boundary 62 Mt N/year - cited in `research/nitrogen_food_coupling_20251115.md:512`
 
 **Phosphorus:**
-1. Stockholm Resilience Centre (2025): Planetary Health Check - "18.2 Tg P/year vs 6.2 Tg P/year boundary" - cited in `docs/wiki/systems/planetary-boundaries.md:211`
-2. Steffen et al. (2015): Planetary boundaries framework
+1. Stockholm Resilience Centre (2024): Planetary Health Check - "18.2 Tg P/year vs 6.2 Tg P/year boundary" - cited in `docs/wiki/systems/planetary-boundaries.md:211`
+2. Steffen et al. (2015): Planetary boundaries framework - foundational paper establishing 6.2 Tg P/year safe limit
+3. Richardson et al. (2023): "Earth beyond six of nine planetary boundaries" - Science Advances - confirms biogeochemical flows boundary transgressed
+
+**2024 Validation:**
+- **Six of nine boundaries transgressed** as of 2024 (Richardson et al. 2023, updated by Potsdam Institute 2024)
+- Biogeochemical flows (N & P) remains in transgressed state
+- Current P flow to ocean: 18.2 Tg/year vs 6.2 Tg/year boundary (294% of safe limit)
+- Industrial N fixation and P flows have "disrupted global biogeochemical flows"
+- Annual Planetary Health Check by Potsdam Institute confirms ongoing boundary violations
+
+**2024-2025 Specific Updates:**
+
+**Nitrogen (N):**
+- Current industrial fixation: **190 Tg/year** (vs 62 Tg/year boundary)
+- Safe limit: 62 Tg/year globally
+- Exceedance: **306% of safe boundary**
+- Impacts: Widespread water pollution, eutrophication, aquatic "dead zones"
+- Rate of production/releases exceeds societies' capacity for assessment and monitoring
+
+**Phosphorus (P):**
+- Current global use: **22.6 Tg/year** (vs 11 Tg/year global boundary, 6.2 Tg/year regional)
+- Safe limits: 11 Tg/year globally, 6.2 Tg/year regionally
+- Exceedance: **205% globally, 365% regionally**
+- Sources: Agricultural runoff, industrial processes disrupting natural biogeochemical cycles
+
+**Novel Entities (Related Boundary):**
+- Boundary calculated as **zero** - any novel entity production crosses threshold
+- Status: **Transgressed** - rate of production exceeds monitoring capacity
+- Includes: Microplastics, endocrine disruptors, organic pollutants
+- Interaction: Novel entities compound N/P boundary violations through chemical contamination
+
+**Source:**
+- Richardson, K., et al. (2023). "Earth beyond six of nine planetary boundaries." *Science Advances*, 9(37), eadh2458. https://doi.org/10.1126/sciadv.adh2458
+- Stockholm Resilience Centre (2024). Planetary Boundaries Framework. https://www.stockholmresilience.org/research/planetary-boundaries.html
+- Potsdam Institute for Climate Impact Research (2024). Planetary Health Check (annual update).
 
 ---
 

@@ -490,7 +490,10 @@ export function applyAllTechEffects(
   if (gameState.planetaryBoundariesSystem?.regionalNitrogenManagement) {
     // Collect all nitrogen-reducing tech deployments
     const nitrogenReducingTechs: number[] = [];
-    for (const [region, deployments] of Object.entries(techTreeState.regionalDeployment)) {
+    // FIX (Nov 19, 2025): Sort regions for deterministic iteration (non-determinism bug)
+    // CRITICAL: Object.entries() order is implementation-dependent in some JS engines
+    const sortedRegions = Object.entries(techTreeState.regionalDeployment).sort((a, b) => a[0].localeCompare(b[0]));
+    for (const [region, deployments] of sortedRegions) {
       for (const deployment of deployments) {
         const tech = getTechById(deployment.techId);
         if (tech && deployment.effects.nitrogenReduction && deployment.deploymentLevel > 0) {
@@ -500,19 +503,13 @@ export function applyAllTechEffects(
       }
     }
 
-    // Update nitrogen-food coupling if any nitrogen-reducing techs deployed
-    if (nitrogenReducingTechs.length > 0) {
-      const { updateNitrogenFoodCoupling } = require('@/simulation/nitrogenFoodCoupling');
-      const globalFoodProductionIndex = updateNitrogenFoodCoupling(
-        gameState,
-        nitrogenReducingTechs
-      );
-
-      // Log nitrogen coupling updates (annually)
-      if (gameState.currentMonth % 12 === 0) {
-        console.log(`🌾 Nitrogen-food coupling updated: ${nitrogenReducingTechs.length} techs deployed, Global food index: ${globalFoodProductionIndex.toFixed(3)}`);
-      }
-    }
+    // CRITICAL-2 FIX (Nov 20, 2025): Removed duplicate call to updateNitrogenFoodCoupling
+    // NitrogenFoodCouplingPhase (order 19.6) is the ONLY place that should call this function
+    // Tech deployment is automatically picked up by getNitrogenReductionDeployment()
+    // which reads state.techTreeState.regionalDeployment
+    //
+    // Original code caused read-modify-write race condition by calling update function
+    // multiple times per step (once here in effectsEngine, once in NitrogenFoodCouplingPhase)
   }
 
   // Apply global effects

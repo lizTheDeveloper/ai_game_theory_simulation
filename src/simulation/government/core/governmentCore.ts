@@ -82,6 +82,14 @@ export function selectGovernmentAction(
     }
   }
 
+  // DEBUG: Log scenario config status
+  if (state.currentMonth <= 1) {
+    console.log(`\n[GOV-DEBUG] Month ${state.currentMonth}: scenarioConfig=${!!state.scenarioConfig}, priorities=${!!scenarioPriorities}`);
+    if (state.scenarioConfig) {
+      console.log(`[GOV-DEBUG] Scenario name: ${state.scenarioConfig.name}`);
+    }
+  }
+
   // First month: Log active scenario priorities (if any)
   if (state.currentMonth === 0) {
     if (scenarioPriorities) {
@@ -101,15 +109,17 @@ export function selectGovernmentAction(
       if (scenarioPriorities.democraticParticipation !== undefined) {
         console.log(`  Democratic participation: ${(scenarioPriorities.democraticParticipation * 100).toFixed(0)}%`);
       }
+    } else {
+      console.log(`[GOV-DEBUG] Month 0 but scenarioPriorities is UNDEFINED!`);
     }
+  }
 
-    // Oct 24, 2025: Log climate priority configuration (if using config-based climate priority)
-    if (state.config.climatePriority) {
-      console.log(`\n[Government] Climate Priority: ${state.config.climatePriority.preset}`);
-      console.log(`  Climate weight: ${(state.config.climatePriority.weights.climate * 100).toFixed(0)}%`);
-      console.log(`  Economic weight: ${(state.config.climatePriority.weights.economic * 100).toFixed(0)}%`);
-      console.log(`  Policy effectiveness: ${(state.config.climatePriority.policyEffectiveness * 100).toFixed(1)}%/year`);
-    }
+  // Oct 24, 2025: Log climate priority configuration (if using config-based climate priority)
+  if (state.config.climatePriority) {
+    console.log(`\n[Government] Climate Priority: ${state.config.climatePriority.preset}`);
+    console.log(`  Climate weight: ${(state.config.climatePriority.weights.climate * 100).toFixed(0)}%`);
+    console.log(`  Economic weight: ${(state.config.climatePriority.weights.economic * 100).toFixed(0)}%`);
+    console.log(`  Policy effectiveness: ${(state.config.climatePriority.policyEffectiveness * 100).toFixed(1)}%/year`);
   }
 
   const unemploymentLevel = state.society.unemploymentLevel;
@@ -666,7 +676,10 @@ export function selectGovernmentAction(
           // Alignment research is a form of scientific research
           priority *= (1 + scenarioPriorities.scientificResearch * 9); // Up to 10x at priority=1.0
         }
-        // TODO: Add other research-related actions here when they exist
+        if (action.id === 'allocate_research_budget') {
+          // Direct research budget allocation action
+          priority *= (1 + scenarioPriorities.scientificResearch * 14); // Up to 15x at priority=1.0 (stronger boost)
+        }
       }
 
       // Redistribution Priority (Equality First scenario)
@@ -677,6 +690,10 @@ export function selectGovernmentAction(
           // Strong boost to redistribution actions to achieve target Gini
           priority *= (1 + scenarioPriorities.redistributionLevel * 14); // Up to 15x at priority=1.0
         }
+        if (action.id === 'adjust_redistribution_policy') {
+          // Direct redistribution policy action (repeatable)
+          priority *= (1 + scenarioPriorities.redistributionLevel * 19); // Up to 20x at priority=1.0 (strongest boost)
+        }
       }
 
       // Climate Spending Priority (Climate First scenario)
@@ -684,7 +701,8 @@ export function selectGovernmentAction(
         if (action.id === 'emergency_amazon_protection' ||
             action.id === 'fund_coral_restoration' ||
             action.id === 'ban_harmful_pesticides' ||
-            action.id === 'deploy_environmental_tech') {
+            action.id === 'deploy_environmental_tech' ||
+            action.id === 'increase_climate_investment') {
           // Strong boost to environmental actions
           priority *= (1 + scenarioPriorities.climateSpending * 9); // Up to 10x at priority=1.0
         }
@@ -702,8 +720,85 @@ export function selectGovernmentAction(
 
       // Democratic Participation Priority (Democratic Participation scenario)
       if (scenarioPriorities.democraticParticipation !== undefined && scenarioPriorities.democraticParticipation > 0) {
-        // TODO: Add democratic participation actions when they exist in action registry
-        // For now, this doesn't match any existing actions
+        if (action.id === 'invest_governance_capacity') {
+          // Direct governance capacity investment action
+          priority *= (1 + scenarioPriorities.democraticParticipation * 14); // Up to 15x at priority=1.0
+        }
+      }
+    }
+
+    // === SCENARIO PRIORITY FLOORS (Nov 18, 2025 - Phase 3 Bug Fix) ===
+    // Multipliers alone are insufficient - crisis actions dominate with base priority 50-100.
+    // Priority floors GUARANTEE scenario-targeted actions compete with crisis responses.
+    // CRITICAL FIX: Only apply floor to HIGHEST priority dimension to prevent all actions from getting floors.
+    // Example: Green New Deal (climate 0.8, research 0.6) should boost ONLY climate actions, not research.
+    // This ensures behavioral divergence - scenarios select actions matching their TOP priority.
+    if (scenarioPriorities) {
+      const SCENARIO_PRIORITY_FLOOR = 3000; // EXTREMELY HIGH floor to beat double-boosted actions
+
+      // Find highest priority dimension
+      const priorities = {
+        climate: scenarioPriorities.climateSpending ?? 0,
+        redistribution: scenarioPriorities.redistributionLevel ?? 0,
+        alignment: scenarioPriorities.alignmentResearch ?? 0,
+        scientific: scenarioPriorities.scientificResearch ?? 0,
+        democratic: scenarioPriorities.democraticParticipation ?? 0,
+      };
+      const maxPriority = Math.max(...Object.values(priorities));
+
+      // Research Priority Floor (ONLY if research is highest priority)
+      if (scenarioPriorities.scientificResearch !== undefined &&
+          scenarioPriorities.scientificResearch >= 0.6 &&
+          scenarioPriorities.scientificResearch === maxPriority) {
+        if (action.id === 'allocate_research_budget' || action.id === 'invest_alignment_research') {
+          priority = Math.max(priority, SCENARIO_PRIORITY_FLOOR * scenarioPriorities.scientificResearch);
+        }
+      }
+
+      // Redistribution Priority Floor (ONLY if redistribution is highest priority)
+      if (scenarioPriorities.redistributionLevel !== undefined &&
+          scenarioPriorities.redistributionLevel >= 0.6 &&
+          scenarioPriorities.redistributionLevel === maxPriority) {
+        if (action.id === 'adjust_redistribution_policy' ||
+            action.id === 'implement_generous_ubi' ||
+            action.id === 'implement_means_tested_benefits' ||
+            action.id === 'implement_job_guarantee') {
+          priority = Math.max(priority, SCENARIO_PRIORITY_FLOOR * scenarioPriorities.redistributionLevel);
+        }
+      }
+
+      // Climate Spending Priority Floor (ONLY if climate is highest priority)
+      if (scenarioPriorities.climateSpending !== undefined &&
+          scenarioPriorities.climateSpending >= 0.6 &&
+          scenarioPriorities.climateSpending === maxPriority) {
+        if (action.id === 'deploy_environmental_tech' ||
+            action.id === 'emergency_amazon_protection' ||
+            action.id === 'fund_coral_restoration' ||
+            action.id === 'ban_harmful_pesticides' ||
+            action.id === 'increase_climate_investment') {
+          priority = Math.max(priority, SCENARIO_PRIORITY_FLOOR * scenarioPriorities.climateSpending);
+        }
+      }
+
+      // AI Alignment Priority Floor (ONLY if alignment is highest priority)
+      if (scenarioPriorities.alignmentResearch !== undefined &&
+          scenarioPriorities.alignmentResearch >= 0.6 &&
+          scenarioPriorities.alignmentResearch === maxPriority) {
+        if (action.id === 'invest_alignment_research' ||
+            action.id === 'implement_compute_governance' ||
+            action.id === 'mandatory_safety_reviews') {
+          priority = Math.max(priority, SCENARIO_PRIORITY_FLOOR * scenarioPriorities.alignmentResearch);
+        }
+      }
+
+      // Democratic Participation Priority Floor (ONLY if democratic is highest priority)
+      if (scenarioPriorities.democraticParticipation !== undefined &&
+          scenarioPriorities.democraticParticipation >= 0.6 &&
+          scenarioPriorities.democraticParticipation === maxPriority) {
+        if (action.id === 'invest_governance_capacity' ||
+            action.id === 'implement_liquid_democracy') {
+          priority = Math.max(priority, SCENARIO_PRIORITY_FLOOR * scenarioPriorities.democraticParticipation);
+        }
       }
     }
 
@@ -918,7 +1013,15 @@ export function executeGovernmentActions(
 
   const actionsThisMonth = Math.floor(adjustedFrequency);
   const extraActionChance = adjustedFrequency - actionsThisMonth;
-  const totalActions = actionsThisMonth + (random() < extraActionChance ? 1 : 0);
+  let totalActions = actionsThisMonth + (random() < extraActionChance ? 1 : 0);
+
+  // Nov 18, 2025: Ensure at least 1 action at month 0 for scenario initialization
+  // Scenario priorities are logged on first selectGovernmentAction call
+  // If totalActions = 0, scenario announcement never happens
+  if (state.currentMonth === 0 && totalActions === 0) {
+    totalActions = 1;
+    console.log(`🏛️ [Government] Forcing 1 action at month 0 for scenario initialization`);
+  }
 
   if (maxMultiplier > 1.5) {
     console.log(`🏛️ CRISIS RESPONSE: Government frequency ${baseFrequency.toFixed(2)} → ${adjustedFrequency.toFixed(2)} (${totalActions} actions this month)`);

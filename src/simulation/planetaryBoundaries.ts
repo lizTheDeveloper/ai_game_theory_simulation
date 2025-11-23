@@ -369,6 +369,9 @@ export function initializePlanetaryBoundariesSystem(rng: RNGFunction): Planetary
     // Research: Regional overuse patterns (55% South Asian rice), yield penalty curves
     // Expected impact: Realistic nitrogen-food coupling with regional differentiation
     regionalNitrogenManagement: initializeRegionalNitrogenManagement(),
+    // Global Food Production Index (Nov 20, 2025)
+    // Initialized to baseline (1.0), updated by NitrogenFoodCouplingPhase each step
+    globalFoodProductionIndex: 1.0,
   };
 }
 
@@ -894,22 +897,18 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     if (system.legacyNutrientStock) {
       // Import update functions dynamically to avoid circular dependencies
       const { updateLegacyNutrientStocks } = require('@/simulation/legacyNutrientStocks');
-      const { updateNitrogenFoodCoupling } = require('@/simulation/nitrogenFoodCoupling');
 
-      // Get deployed nitrogen-reducing technologies
-      // TODO (TIER 2 HIGH): Connect to actual technology deployment
-      // 6 biogeochemical restoration technologies from research (nitrogen_food_coupling_20251115.md):
-      // 1. Precision agriculture (25-30% N reduction) - TIER 3 or god mode policy
-      // 2. Vertical/indoor farming (60% N reduction) - TIER 3 or god mode policy
-      // 3. Food waste reduction (30% demand reduction) - TIER 3 or god mode policy
-      // 4. Nitroplast integration (20-40% reduction, 2040+, 40% success probability) - TIER 4 breakthrough
-      // 5. Precision fermentation (30-50% agricultural N reduction) - TIER 3 or god mode policy
-      // 6. Dietary shift (protein transition 50:50 A:P ratio) - TIER 3 or god mode policy
-      const deployedTechEffectiveness: number[] = [];
-      // For now, no technologies deployed (baseline scenario)
-
-      // Update nitrogen-food coupling and get global food production impact
-      globalFoodProductionIndex = updateNitrogenFoodCoupling(state, deployedTechEffectiveness);
+      // CRITICAL FIX (Nov 20, 2025): Read globalFoodProductionIndex from state
+      // NitrogenFoodCouplingPhase (order 19.6) writes this value
+      // This prevents race condition from calling updateNitrogenFoodCoupling() multiple times
+      globalFoodProductionIndex = assertStateProperty(
+        state.planetaryBoundariesSystem,
+        'globalFoodProductionIndex',
+        {
+          location: 'updatePlanetaryBoundaries (requires NitrogenFoodCouplingPhase)',
+          month: state.currentMonth
+        }
+      );
 
       // Current nitrogen and phosphorus inputs (Mt/month)
       // Food production index can modify this (lower food production = less nitrogen needed)
@@ -928,24 +927,35 @@ export function updatePlanetaryBoundaries(state: GameState): void {
       effectivePhosphorus = currentPhosphorusInput;
     }
 
-    // Boundary value calculation
-    // Baseline (2025): 2.94 (294% of safe boundary)
-    // Scale by effective pollution vs baseline pollution
-    // Baseline total: 12.1 Mt/month (10 N + 2.1 P)
-    const baselinePollution = 12.1;
-    const currentEffectivePollution = effectiveNitrogen + effectivePhosphorus;
-    const pollutionRatio = currentEffectivePollution / baselinePollution;
+    // NOTE (Roy, Nov 18 & Nov 20, 2025): Removed DUPLICATE biogeochemical calculation
+    // - Lines 897-928 already update legacy nutrients AND set effectiveNitrogen/Phosphorus
+    // - Duplicate block (lines 935-946) was calling updateLegacyNutrientStocks() AGAIN with wrong variables
+    // - This was leftover dead code from refactoring
 
-    // Boundary value = baseline × pollution ratio + depletion factor
-    // Depletion factor: phosphorus reserves declining increases boundary value
-    const biogeochemicalValue = assertFinite(Math.max(0, 2.94 * pollutionRatio + depletion * 0.5), {
+    // Normalize to boundary scale
+    // Baseline (2025): 10 Mt N/month + 2.08 Mt P/month = 12.08 Mt/month total → boundary value 2.94
+    // Scaling: 2.94 / 12.08 = 0.243 boundary units per Mt/month
+    const POLLUTION_TO_BOUNDARY_SCALE = 0.243;
+    const effectivePollutionBoundaryValue = (effectiveNitrogen + effectivePhosphorus) * POLLUTION_TO_BOUNDARY_SCALE;
+
+    // Boundary value = effective pollution (includes current inputs + legacy releases)
+    // This creates INERTIA: reducing current inputs helps, but legacy stocks slow recovery dramatically
+    const biogeochemicalValue = assertFinite(Math.max(0, effectivePollutionBoundaryValue), {
       location: 'updatePlanetaryBoundaries:biogeochemical',
       valueName: 'biogeochemical_flows.currentValue',
       month: state.currentMonth,
-      additionalInfo: { reserves, depletion, effectiveNitrogen, effectivePhosphorus }
+      additionalInfo: {
+        effectiveNitrogen,
+        effectivePhosphorus,
+        globalFoodProductionIndex
+      }
     });
     system.boundaries.biogeochemical_flows.currentValue = biogeochemicalValue;
   }
+  // NOTE (Roy, Nov 18, 2025): Removed duplicate biogeochemicalValue calculation (lines 988-1004)
+  // - Extra closing brace at line 986 was closing function prematurely
+  // - Duplicate calculation used different formula (pollutionRatio vs effectivePollutionBoundaryValue)
+  // - Kept the effectivePollutionBoundaryValue version (includes legacy stock inertia)
   updateBoundaryStatus(system.boundaries.biogeochemical_flows);
 
   // Novel entities (from environmental pollution)
@@ -977,7 +987,15 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     novelEntitiesBoundary.peak = Math.max(novelEntitiesBoundary.peak, novelEntitiesValue);
   }
 
-  let finalNovelEntitiesValue = novelEntitiesValue;
+  // HIGH-1 FIX (Roy, Nov 20, 2025): Read and apply incremental impacts from other phases
+  // Single-owner pattern: This phase is the ONLY writer to boundaries.novel_entities.currentValue
+  // Other phases (IrreversibilityTracking, UnknownUnknown) write to novelEntitiesIncrementalImpact
+  const incrementalImpact = system.novelEntitiesIncrementalImpact || 0;
+
+  let finalNovelEntitiesValue = novelEntitiesValue + incrementalImpact;
+
+  // Reset incremental impact for next step
+  system.novelEntitiesIncrementalImpact = 0;
 
   // === LEGACY STOCK RELEASE (if enabled) ===
   if (novelEntitiesBoundary.legacyStock !== undefined && novelEntitiesBoundary.legacyStock > 0) {
@@ -1046,6 +1064,23 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     console.log(`     Attempted: ${finalNovelEntitiesValue.toFixed(3)} | Actual: ${flooredValue.toFixed(3)}`);
     console.log(`     Cousins 2022: Global PFAS distribution prevents full remediation`);
   }
+
+  // HIGH-1 FIX (Roy, Nov 20, 2025): CRITICAL - Actually assign the computed value!
+  // This was computed but never written - classic race condition setup
+  // SINGLE-OWNER ENFORCEMENT: Only this phase writes to novel_entities.currentValue
+  system.boundaries.novel_entities.currentValue = assertFinite(flooredValue, {
+    location: 'updatePlanetaryBoundaries:novelEntities[final]',
+    valueName: 'novel_entities.currentValue',
+    month: state.currentMonth,
+    additionalInfo: {
+      novelEntitiesValue,
+      finalNovelEntitiesValue,
+      flooredValue,
+      irreversibleFloor,
+      peak: novelEntitiesBoundary.peak,
+      incrementalImpact
+    }
+  });
 
   updateBoundaryStatus(system.boundaries.novel_entities);
 
@@ -1207,12 +1242,13 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     }
 
     // Once active, severity scales with blended risk
-    if (system.cascadeActive && system.tippingPointRisk >= 0.45) {
+    if (system.cascadeActive) {
       const baseSeverity = Math.pow(Math.max(0, blendedRisk - 0.5) / 0.5, 1.5);
       const stochasticMultiplier = 0.8 + deterministicRandom() * 0.4;
       system.cascadeSeverity = baseSeverity * stochasticMultiplier;
       system.cascadeMultiplier = 1.0 + system.cascadeSeverity;
-    } else if (system.cascadeActive && system.tippingPointRisk < 0.45) {
+    }
+  } else if (system.cascadeActive && system.tippingPointRisk < 0.45) {
     // Cascade can REVERSE if risk drops significantly
     system.cascadeActive = false;
     system.cascadeSeverity = 0;
@@ -1220,7 +1256,6 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     delete (system as any).firstHighRiskMonth; // Reset survival tracking
     console.log(`\n✅ TIPPING POINT CASCADE REVERSED (Month ${state.currentMonth})`);
     console.log(`Environmental interventions successful! Risk reduced below threshold.\n`);
-  }
   }
 
   // === 5. APPLY CASCADE EFFECTS ===
@@ -2080,7 +2115,12 @@ export function updateBiosphereIntegrityIndex(
     }
   });
 
-  const yearsElapsed = (state.currentMonth || 1) / 12;
+  // Roy's fix (Nov 20, 2025): currentMonth should ALWAYS exist - if undefined, that's a bug
+  const yearsElapsed = assertFinite(state.currentMonth, {
+    location: 'updateBiosphereIntegrityIndex',
+    valueName: 'state.currentMonth',
+    month: state.currentMonth
+  }) / 12;
   const extinctionsPerYear = assertFinite(speciesLost / Math.max(1, yearsElapsed), {
     location: 'updateBiosphereIntegrityIndex:extinctionRate',
     valueName: 'extinctionsPerYear',
@@ -2171,3 +2211,4 @@ export function updateBiosphereIntegrityIndex(
     }
   }
 }
+

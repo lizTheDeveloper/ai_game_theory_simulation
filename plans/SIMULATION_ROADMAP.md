@@ -39,6 +39,192 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
+<<<<<<< Updated upstream
+   - **AI Coordination & Transition Management** - HIGH (Added Nov 21, 2025)
+     - **Context:** Phase 2 research complete (15K words, 15 sources), Grade B- CONDITIONAL PASS
+     - **Research File:** research/ai_coordination_transition_management_20251121.md
+     - **Critique File:** reviews/ai_coordination_transition_critique_20251121.md
+     - **Handoff File:** .claude/agents/HANDOFF_ai_coordination_conservative_params.md (26KB spec)
+     - **Verification File:** research/verification_96e2489_20251121.md
+     - **Key Claims Requiring Two-Layer Verification:**
+       - **CRITICAL:** USSR shock therapy 13-42% mortality (Stuckler 2009 Lancet)
+       - **CRITICAL:** Job loss mortality 1.0-1.5yr (Sullivan 2009 QJE - "GOLD STANDARD")
+       - **HIGH UNCERTAINTY:** AI coordination 80%+ efficiency (arXiv 2025 - critique flags as lab benchmark, not peer-reviewed)
+       - **HIGH UNCERTAINTY:** Coordination failure 10% probability, 2-5× spike (Cooperative AI 2025 - "no historical precedent")
+       - **HIGH UNCERTAINTY:** Rebound effects 5-10% decay (Finkelstein 2025 - "not integrated into mortality model")
+       - **MODERATE:** Support systems 32-37% reduction (BMC Public Health 2020)
+       - **MODERATE:** Grid deployment 5-15%/yr (IEA 2024)
+     - **Total:** 12 citations requiring verification (4 flagged HIGH UNCERTAINTY by critique)
+     - **Implementation Impact:**
+       - GameState.transitionManagement interface
+       - CoordinatedDeploymentPhase (NEW)
+       - Conservative parameters: 9-12% mortality (coordinated) vs 30% (uncoordinated)
+       - Monte Carlo: N≥50 (sensitivity analysis required)
+     - **Priority:** HIGH - Phase 2 critical path, HIGH UNCERTAINTY parameters need validation before implementation
+     - **Status:** ⏳ READY FOR VALIDATION - Verification file created, awaiting orchestrator
+     - **Commit:** 96e2489
+     - **Next Steps:** Two-layer verification → Implementation (Roy) → Monte Carlo (Priya, N≥50) → Architecture review
+
+<<<<<<< Updated upstream
+   - **Nitrogen-Food Phase 3 Technologies** - MEDIUM (Added Nov 21, 2025)
+     - **Context:** 6 new nitrogen reduction technologies added to tech tree (Phase 3 complete)
+     - **Technologies:**
+       1. Rhizosphere Engineering (15-40% N reduction, TIER 1, commercial)
+       2. Nitroplast Integration (50-70% reduction, breakthrough, Coale et al. 2024)
+       3. Precision Fermentation (30-50% agri N reduction, emerging)
+       4. Regional Nitrogen Policies (20% efficiency via redistribution)
+       5. Soil Health Restoration (20-40% NUE improvement)
+       6. Integrated Nutrient Management (25-45% efficiency gains)
+     - **Verification File:** research/verification_cd1e83a_20251121.md
+     - **Key Claims Requiring Two-Layer Verification:**
+       - **Layer 1:** Citation existence (Coale et al. 2024 *Science* for nitroplasts, others TBD)
+       - **Layer 2:** Claim accuracy (do papers support specific effectiveness ranges?)
+     - **Critical Issues:**
+       - Most technologies lack specific citations in code
+       - Effectiveness ranges need research backing (15-40%, 20-45%, etc.)
+       - Co-benefits quantification (soil health, biodiversity, carbon) needs verification
+       - Timeline assumptions (R&D + deployment) need validation
+     - **Affected Systems:** Tech tree, nitrogen-food coupling, planetary boundaries
+     - **Priority:** MEDIUM - Phase 3 complete, but research verification needed for confidence
+     - **Status:** ⚠️ READY FOR VALIDATION - Verification file created, awaiting orchestrator
+     - **Commit:** cd1e83a
+     - **Next Steps:** Two-layer verification (existence + claim accuracy) → Parameter adjustments if needed → Monte Carlo validation
+=======
+=======
+>>>>>>> Stashed changes
+   - **Carbon Capture Deployment Parameters & Constraints** - MEDIUM (Added Nov 21, 2025)
+     - **Context:** Comprehensive carbon capture research document (625 lines, 12 sources, A+ quality) provides enhanced detail on DAC deployment
+     - **Research File:** research/carbon_capture_deployment_timelines_2025.md (committed 55c3535a0)
+     - **Sources to Verify:**
+       - Tan et al. (2024) *Nature Communications* - gigatonne requirements, energy/water nexus
+       - Climeworks (2024) - Mammoth plant operational data (36,000 tonnes/yr)
+       - IEA (2024) - CCUS project milestones, 5-10 year activation delay
+       - Frontiers in Climate (2024-2025) - technical analysis, energy requirements
+       - Canary Media (2024) - Gen 3 technology cost reduction claims
+     - **Key Claims Requiring Verification:**
+       - Current capacity: 0.00005 Gt/yr (Mammoth: 36kt/yr operational May 2024)
+       - Timeline: 20-40 years breakthrough → gigatonne impact (10-20 year deployment lag)
+       - Energy: 4-10 TWh per 1 Gt/yr (must couple with clean energy)
+       - Water: 15 km³/yr for 4 Gt/yr (3.8% global industrial use, regional constraint)
+       - Cost: $600-1,000/tonne (current) → $100-300/tonne (2040s thermodynamic floor)
+       - IEA 5-10 year activation delay (currently used in ClimateDeploymentDelayPhase)
+     - **Verification File:** research/verification_c52826e_20251121.md (two-layer: existence + claim accuracy)
+     - **Current Implementation:**
+       - ClimateDeploymentDelayPhase.ts:67-73 - DAC parameters (7-year activation, 30-year T_50, 1 Gt/yr E_max)
+       - Source: research/climate_tech_deployment_timescales_20251112.md
+     - **Parameter Validation:**
+       - ✅ Activation delay (7 years) - compatible with 5-10 range (verify IEA source)
+       - ✅ T_50 (30 years) - compatible with 20-40 year timeline (verify backing)
+       - ⚠️ Energy requirements - NOT MODELED (enhancement opportunity)
+       - ⚠️ Water constraints - NOT MODELED (regional deployment factor)
+       - ⚠️ Cost trajectory - NOT MODELED (optional economic constraint)
+     - **Enhancement Opportunities:**
+       - HIGH: Add energy coupling constraint (DAC limited by clean energy availability)
+       - MEDIUM: Add regional water stress factors (Asia 0.4×, US Southwest 0.7×, Europe 1.0×)
+       - LOW: Add cost-based deployment curve (learning rate)
+     - **Affected Files:**
+       - src/simulation/engine/phases/ClimateDeploymentDelayPhase.ts (verify parameters, add constraints)
+       - src/types/game.ts (ensure EnergySystem.totalCleanEnergy exists)
+     - **Priority:** MEDIUM - Validates existing parameters and identifies enhancement opportunities
+     - **Status:** ⚠️ READY FOR VALIDATION - Verification file created, awaiting orchestrator to begin at VALIDATION phase
+     - **Commit:** c52826e
+     - **Next Steps:** Two-layer verification (paper existence + claim accuracy) → Parameter validation → Enhancement implementation (energy/water constraints) → Monte Carlo N≥10
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
+
+   - **AI Governance 2025 Proposals (Global Moratorium + US-China Bilateral)** - HIGH (Added Nov 20, 2025)
+     - **Context:** Two major 2025 governance frameworks from arXiv preprints with detailed quantitative parameters
+     - **Research File:** research/ai_governance_international_coordination_20251113.md (updated with sections 4.5.1-4.5.3)
+     - **Sources Added:**
+       - arXiv:2505.04592 (May 2025) - "AI Governance to Avoid Extinction" (global moratorium)
+       - arXiv:2511.10783 (Nov 2025) - "International Agreement to Prevent ASI" (US-China bilateral)
+     - **Key Claims Requiring Verification:**
+       - Catastrophic risk estimates: 10-25% (Amodei), 20% (Bengio), 38% (AI conference survey)
+       - Compute thresholds: 10²⁴ FLOP hard prohibition, 10²³ FLOP post-training, 10²²-10²⁴ FLOP monitoring
+       - Chip cluster definitions: >16 H100-equivalents (~$500k), 990 TFLOP/s FP16 per H100
+       - Consolidation timeline: Day 1 (>10k H100s), Day 10 (>1k), Day 100 (>100), Year 2 (all)
+       - Verification mechanisms: On-chip monitoring, satellite surveillance, sting operations, whistleblowers
+       - Timeline estimates: "2020s or decades" for catastrophic-risk frontier systems, "decades of research" for safety
+       - 6-phase implementation structure
+       - Off-switch infrastructure components (5 specific categories)
+     - **Verification File:** research/verification_ff6ff02_20251120.md (two-layer: existence + claim accuracy)
+     - **Integration Questions:**
+       - Should simulation model global moratorium scenario as distinct from bilateral?
+       - Add compute threshold enforcement mechanics to government phase?
+       - Model chip cluster tracking and consolidation timeline?
+       - Add coordination quality spectrum (moratorium vs bilateral vs status quo)?
+       - Should catastrophic risk estimates affect AI agent behavior?
+     - **Affected Systems:** Government coordination, AI governance, international cooperation
+     - **Priority:** HIGH - Major governance frameworks with detailed quantitative parameters
+     - **Status:** ⚠️ READY FOR VALIDATION - Verification file created, documentation updated, awaiting orchestrator
+     - **Commit:** ff6ff02
+     - **Next Steps:** Two-layer verification (paper existence + claim accuracy) → Parameter integration → Monte Carlo N≥10
+
+   - **Defensive Coding & Error Handling Philosophy** - HIGH (Added Nov 20, 2025)
+     - **Context:** Split-brain error handling fix - systematic shift from silent fallbacks to fail-loudly assertions
+     - **Implementation:** 17 calculation fallbacks replaced across 7 files (commit 6ab69c6)
+     - **Files Modified:**
+       - behavioralDetection.ts, endGame.ts, IrreversibilityTrackingPhase.ts
+       - PlanetaryBoundariesPhase.ts, TransitionMortalityPhase.ts
+       - nitrogenFoodCoupling.ts, stateValidation.ts
+     - **Key Claims Requiring Verification:**
+       - Silent fallbacks hide bugs in scientific computing (vs graceful degradation)
+       - Backwards assertion pattern (fallback before validation) is anti-pattern
+       - CRITICAL severity justified for extinction classification fallbacks
+       - Clear boundaries for when fallbacks ARE appropriate (display, config, external interfaces)
+       - 120ms performance budget justification (new profiling script)
+     - **Verification File:** research/verification_6ab69c6_20251120.md (two-layer: existence + claim accuracy)
+     - **Suggested Sources:**
+       - Wilson et al. (2014) "Best Practices for Scientific Computing" (PLOS Biology)
+       - McConnell (2004) *Code Complete* Ch.8 (Defensive Programming contexts)
+       - Hatton (1997) "T-experiments: errors in scientific software" (IEEE)
+       - Hunt & Thomas (1999) *Pragmatic Programmer* (Dead Programs Tell No Lies)
+       - Goldberg (1991) "Floating-point arithmetic" (ACM)
+       - Meyer (1992) "Design by Contract" (IEEE Computer)
+     - **Integration Questions:**
+       - Are fallback vs assertion boundaries well-defined?
+       - Should CLAUDE.md error handling guidance be updated?
+       - Does testing strategy validate assertion coverage?
+     - **Blockers:**
+       - ⚠️ Merge conflicts in behavioralDetection.ts and IrreversibilityTrackingPhase.ts
+       - Monte Carlo N=10 validation pending (verify no false-positive assertions)
+     - **Status:** ⚠️ READY FOR VALIDATION - Implementation partial (conflicts), verification file created, awaiting orchestrator
+
+   - **Ocean Acidification 2024-2025 Coral Studies** - HIGH (Added Nov 19, 2025)
+     - **Context:** Research update with SSP-specific carbonate production projections and coral resilience under combined stressors
+     - **Research File:** research/ocean_acidification_planetary_boundary_2025.md (updated with 2 new peer-reviewed studies)
+     - **New Sources Added:**
+       - Bouttes et al. (2025) - Biogeosciences: Global climate-coral reef coupled model
+       - Jury et al. (2024) - PNAS: Experimental coral resilience study
+     - **Key Claims Requiring Verification:**
+       - Carbonate production by 2100: 0-76% of preindustrial (SSP-specific pathways)
+       - Net dissolution threshold: 560 ppm CO₂ (~2050 timing)
+       - Coral transformation: Reefs persist as degraded ecosystems (not total extinction)
+       - Calcification reduction: 50-75% under +2°C/-0.2 pH
+       - Experimental conditions: 2-year study, Paris mitigation scenario alignment
+       - Biodiversity maintenance claim despite structural changes
+       - Species composition shifts (branching vs. massive corals)
+     - **Verification File:** research/verification_c616bd8_20251119.md (two-layer: existence + claim accuracy)
+     - **Integration Questions:**
+       - Add SSP-specific carbonate production trajectories?
+       - Add 560 ppm CO₂ dissolution threshold?
+       - Model thermal adaptation vs. no-adaptation scenarios?
+       - Add coral transformation state (degraded persistence before extinction)?
+       - Separate calcification tracking from coral health?
+     - **Affected System:** Ocean Acidification (TIER 1.3 - already implemented)
+     - **Files to Modify:** src/simulation/oceanAcidification.ts (coral decline mechanics, lines 94-132)
+     - **Assignments:**
+       - Cynthia: Verify DOIs resolve, extract specific quotes for quantitative claims
+       - Sylvia: Assess model uncertainties (Bouttes), mesocosm scale-up validity (Jury), Paris scenario optimism
+       - Roy: BLOCKED on validation - Parameter integration pending verification
+     - **Expected Impact:** More nuanced coral decline curves, SSP-specific pathways, transformation mechanics
+     - **Priority:** HIGH - Affects implemented TIER 1 system with new quantitative projections
+     - **Status:** ⚠️ READY FOR VALIDATION - Verification file created, documentation updated, awaiting orchestrator
+     - **Commit:** c616bd8
+     - **Next Steps:** Validation → Implementation → Monte Carlo N≥10
+
    - **Irreversibility Framework - Novel Entities & Biosphere** - TIER 1 CRITICAL (Added Nov 17, 2025)
      - **Context:** God mode 0% effectiveness bug - asymptotic recovery mechanics implemented
      - **Key Implementation:** Phase 1 (novel entities) + Phase 2 (biosphere extinction debt) COMPLETE

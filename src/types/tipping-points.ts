@@ -87,8 +87,10 @@ export interface TippingPointSystem {
 /**
  * Six major climate tipping elements with research-backed parameters
  *
- * Sources:
- * - AMOC: Caesar et al. (2021) Nature Geosci - 50-150yr collapse
+ * Sources (traced to original modeling papers):
+ * - AMOC: Weijer et al. (2020) GRL [27 CMIP6 models], Van Westen et al. (2024) Science Advances [first ESM collapse],
+ *   Qin et al. (2025) Nature [34 models resilience]. Synthesis: Armstrong McKay et al. (2022) Science.
+ *   See: research/amoc_tipping_point_original_sources_20251120.md
  * - Amazon: Boulton et al. (2022) Nature Climate - 30-80yr dieback
  * - Arctic: IPCC AR6 WG1 - 10-30yr ice-free transition
  * - Permafrost: Burke et al. (2020) Nature Geosci - 50-300yr thaw
@@ -99,9 +101,11 @@ export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTr
   {
     id: 'amoc',
     name: 'Atlantic Meridional Overturning Circulation (AMOC)',
-    triggerTempC: 1.7, // Armstrong McKay: 1.4-2.0°C, using midpoint
-    transitionMinMonths: 600,    // 50 years (Caesar et al. 2021)
-    transitionMaxMonths: 3600,   // 300 years - 50-300yr range per Armstrong McKay et al. (2022), Science - captures deep uncertainty about AMOC collapse timeline
+    triggerTempC: 1.7, // Central estimate 4°C (range 1.4-8°C) from Armstrong McKay (2022) synthesizing Weijer et al. (2020), Van Westen et al. (2024)
+                       // See: research/amoc_tipping_point_original_sources_20251120.md
+    transitionMinMonths: 600,    // 50 years - Van Westen et al. (2024) Science Advances: 100yr collapse in CESM1
+    transitionMaxMonths: 3600,   // 300 years - Liu et al. (2017) Science Advances: collapse within 300yr after CO2 doubling
+                                 // Range: 15-300yr captures deep uncertainty. See: research/amoc_tipping_point_original_sources_20251120.md
     impactClimateStability: -0.15,
     impactHabitability: -0.08,
     impactFoodSecurity: -0.12,

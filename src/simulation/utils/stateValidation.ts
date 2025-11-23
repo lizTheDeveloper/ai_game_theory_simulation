@@ -233,6 +233,10 @@ export function createStateSnapshot(state: GameState): StateSnapshot {
 
   return {
     month: state.currentMonth,
+    // LEGITIMATE FALLBACK (Nov 20, 2025): Display/snapshot context
+    // This function creates snapshots for logging/comparison, not calculations
+    // Fallbacks are acceptable because boundaries may not exist during early initialization
+    // If these values are missing in actual simulation calculations, assertions will catch it
     goldenAgeActive: state.goldenAgeState?.active ?? false,
     population: state.humanPopulationSystem.population,
     // Planetary boundaries use normalized values [0, 2] where 1.0 = boundary threshold

@@ -68,7 +68,7 @@ function runScenarioInstance(
   console.log(`\n  🎲 Run seed ${seed}...`);
 
   // Create engine FIRST to get deterministic RNG
-  const tempEngine = new SimulationEngine(undefined as any, seed);
+  const tempEngine = new SimulationEngine({ seed });
   const rng = tempEngine.getRNG().next.bind(tempEngine.getRNG());
 
   // Create initial state with RNG
@@ -78,7 +78,7 @@ function runScenarioInstance(
   applyScenario(state, scenario, rng);
 
   // Create engine for simulation
-  const engine = new SimulationEngine(undefined as any, seed);
+  const engine = new SimulationEngine({ seed });
 
   // Track spiral activation timing
   const spiralActivationMonths: Record<string, number | null> = {
@@ -179,11 +179,28 @@ function runMonteCarloForScenario(
   console.log('='.repeat(80));
 
   const results: ScenarioResult[] = [];
+  let failures = 0;
 
   for (let run = 0; run < nRuns; run++) {
     const runSeed = 1000 + run * 1337; // Different seed per run
-    const result = runScenarioInstance(scenarioKey, scenario, runSeed, maxMonths);
-    results.push(result);
+
+    try {
+      const result = runScenarioInstance(scenarioKey, scenario, runSeed, maxMonths);
+      results.push(result);
+      console.log(`  ✅ Run ${run + 1}/${nRuns} complete (seed ${runSeed})`);
+    } catch (error) {
+      failures++;
+      console.error(`  ❌ Run ${run + 1}/${nRuns} FAILED (seed ${runSeed})`);
+      console.error(`     Error: ${error instanceof Error ? error.message : String(error)}`);
+      if (error instanceof Error && error.stack) {
+        console.error(`     Stack: ${error.stack.split('\n').slice(0, 3).join('\n')}`);
+      }
+      console.error(`     Continuing to next run...`);
+    }
+  }
+
+  if (failures > 0) {
+    console.log(`\n  ⚠️ Completed with ${failures} failure(s) out of ${nRuns} runs`);
   }
 
   return results;
@@ -199,6 +216,14 @@ function generateSummary(allResults: Record<string, ScenarioResult[]>): void {
 
   for (const [scenarioKey, results] of Object.entries(allResults)) {
     const scenario = (SCENARIOS as any)[scenarioKey];
+
+    // Skip scenarios with no successful runs
+    if (results.length === 0) {
+      console.log(`\n${'─'.repeat(80)}`);
+      console.log(`❌ ${scenario.name} - NO SUCCESSFUL RUNS`);
+      console.log(`${'─'.repeat(80)}`);
+      continue;
+    }
 
     // Calculate averages
     const avgSpirals = results.reduce((sum, r) => sum + r.spiralsActivated.length, 0) / results.length;
@@ -289,18 +314,38 @@ console.log(`Total runs: ${scenariosToRun.length * N_RUNS}`);
 console.log('='.repeat(80));
 
 const allResults: Record<string, ScenarioResult[]> = {};
+let totalRuns = 0;
+let totalSuccesses = 0;
+let totalFailures = 0;
 
+let scenarioIndex = 0;
 for (const scenarioKey of scenariosToRun) {
+  scenarioIndex++;
   const scenario = (SCENARIOS as any)[scenarioKey];
   if (!scenario) {
     console.error(`❌ Unknown scenario: ${scenarioKey}`);
     continue;
   }
 
-  allResults[scenarioKey] = runMonteCarloForScenario(scenarioKey, scenario, N_RUNS, MAX_MONTHS);
+  console.log(`\n📍 Progress: Scenario ${scenarioIndex}/${scenariosToRun.length} (${scenarioKey})`);
+  const results = runMonteCarloForScenario(scenarioKey, scenario, N_RUNS, MAX_MONTHS);
+  allResults[scenarioKey] = results;
+
+  totalRuns += N_RUNS;
+  totalSuccesses += results.length;
+  totalFailures += (N_RUNS - results.length);
+
+  console.log(`✅ Completed scenario ${scenarioIndex}/${scenariosToRun.length} (${results.length}/${N_RUNS} successful)`);
 }
 
 // Generate summary
 generateSummary(allResults);
 
+console.log('\n' + '='.repeat(80));
+console.log('📊 FINAL STATISTICS');
+console.log('='.repeat(80));
+console.log(`Total runs attempted: ${totalRuns}`);
+console.log(`Successful runs: ${totalSuccesses} (${(totalSuccesses / totalRuns * 100).toFixed(1)}%)`);
+console.log(`Failed runs: ${totalFailures} (${(totalFailures / totalRuns * 100).toFixed(1)}%)`);
+console.log('='.repeat(80));
 console.log('\n✅ All scenarios complete. Results logged above.\n');

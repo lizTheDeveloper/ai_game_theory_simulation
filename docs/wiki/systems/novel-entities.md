@@ -709,12 +709,23 @@ God mode testing revealed 0% effectiveness for Novel Entities boundary despite 7
    - Research: UNEP 2024 (waste +81%), Sorrell 2025 (AI hardware)
    - Derived assumption: 30% is CONSERVATIVE (theory: 20-80%)
 
-**Irreversibility Floor (90%):**
-- Modified: `src/simulation/planetaryBoundaries.ts`
+**Irreversibility Floor (87.5% ± 7.5%):**
+- Modified: `src/simulation/planetaryBoundaries.ts` and `src/simulation/novelEntities.ts`
+- Parameter: 87.5% irreversible (12.5% reversible) - midpoint of 80-95% research range
 - Added `peakValue` field to track peak contamination
-- Asymptotic approach to 90% of peak (can't clean below this floor)
-- Research basis: Cousins 2022 (global distribution), Kane 2022 (centuries recovery), Ling 2024 (thermodynamic constraints)
-- Derived assumption: Not directly measured, requires sensitivity testing
+- Asymptotic approach to irreversible fraction of peak (can't clean below this floor)
+- **Research basis:**
+  - Cousins et al. ES&T (2022): PFAS atmospheric half-life 50-100 years, global distribution
+  - Kane et al. Science (2020): Deep-sea microplastics, centuries-millennia persistence (NOT 2022)
+  - Ling et al. ES&T (2024): Cleanup cost 0.2-66× GDP, economic impossibility
+  - Thompson et al. PNAS Nexus (2024): Conceptual framework (timescale-dependent, system-specific)
+- **IMPORTANT CLARIFICATION (Nov 20, 2025):** Thompson et al. (2024) does NOT contradict 87.5% parameter
+  - Thompson is conceptual/semantic analysis, NOT quantitative empirical study
+  - "60-70% reversible" claim applies to CLIMATE SYSTEM (precipitation, surface temp) on century timescales
+  - Novel Entities (PFAS, microplastics) are correctly modeled as HIGHLY IRREVERSIBLE (87.5%)
+  - See: `research/irreversibility_reconciliation_20251120.md` (Grade C, NO CONTRADICTION)
+- **Uncertainty:** HIGH (80-95% range = 15 percentage points)
+- Derived assumption: Requires Monte Carlo sensitivity testing across 80-95% range
 
 **Type System Updates:**
 - Modified: `src/types/planetaryBoundaries.ts`

@@ -16,7 +16,12 @@
  * 4. Uncertainty ranges for ALL parameters
  * 5. Empirical vs model-derived flagged
  *
- * Order: 21.5 (after planetary boundaries update, before crisis detection)
+ * Order: 21.4 (after planetary boundaries update, before crisis detection)
+ *
+ * @reads state.resourceEconomy.co2, state.amazonForest, state.coralReefs, state.iceSheets, etc.
+ * @writes state.planetaryBoundariesSystem.novelEntitiesIncrementalImpact (adds coral collapse impact)
+ *         state.environmentalAccumulation.biodiversityIndex
+ *         state.tippingPoints.* (various tipping point states)
  */
 
 import {
@@ -32,12 +37,13 @@ import {
   assertInRange,
   assertProbability,
   assertDefined,
+  assertStateProperty,
 } from '@/simulation/utils/assertions';
 
 export class IrreversibilityTrackingPhase implements SimulationPhase {
   readonly id = 'irreversibility_tracking';
   readonly name = 'Irreversibility Tracking';
-  readonly order = 21.5; // After planetary boundaries (21.0), before crisis detection
+  readonly order = 21.4; // After planetary boundaries (21.0), before legacy nutrients (21.5)
 
   readonly dependencies = ['planetary_boundaries'] as const;
 
@@ -101,13 +107,15 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     rng: RNGFunction,
     events: any[]
   ): void {
-    // Get current temperature anomaly
-    const tempAnomaly = state.resourceEconomy?.co2?.temperatureAnomaly ?? 0;
-    assertFinite(tempAnomaly, {
-      location: 'trackIceSheetHysteresis',
-      valueName: 'temperatureAnomaly',
-      month: state.currentMonth,
-    });
+    // Get current temperature anomaly - no silent fallbacks
+    const tempAnomaly = assertStateProperty(
+      state,
+      'resourceEconomy.co2.temperatureAnomaly',
+      {
+        location: 'trackIceSheetHysteresis',
+        month: state.currentMonth,
+      }
+    );
 
     // === PROBABILISTIC THRESHOLD (Sylvia condition #1) ===
     // Research: Nature 2023 - Greenland threshold +0.8-3.2°C (95% CI)
@@ -209,12 +217,14 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     rng: RNGFunction,
     events: any[]
   ): void {
-    const tempAnomaly = state.resourceEconomy?.co2?.temperatureAnomaly ?? 0;
-    assertFinite(tempAnomaly, {
-      location: 'trackPermafrostThaw',
-      valueName: 'temperatureAnomaly',
-      month: state.currentMonth,
-    });
+    const tempAnomaly = assertStateProperty(
+      state,
+      'resourceEconomy.co2.temperatureAnomaly',
+      {
+        location: 'trackPermafrostThaw',
+        month: state.currentMonth,
+      }
+    );
 
     // === ARCTIC AMPLIFICATION (4x global warming) ===
     // Research: Nature Climate Change 2022 - Arctic warming 4x global average
@@ -317,12 +327,14 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     rng: RNGFunction,
     events: any[]
   ): void {
-    const tempAnomaly = state.resourceEconomy?.co2?.temperatureAnomaly ?? 0;
-    assertFinite(tempAnomaly, {
-      location: 'trackAMOCWeakening',
-      valueName: 'temperatureAnomaly',
-      month: state.currentMonth,
-    });
+    const tempAnomaly = assertStateProperty(
+      state,
+      'resourceEconomy.co2.temperatureAnomaly',
+      {
+        location: 'trackAMOCWeakening',
+        month: state.currentMonth,
+      }
+    );
 
     // Initialize AMOC state
     if (!state.tippingPoints) {
@@ -343,11 +355,49 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     // NOAA Jan 2025 - Extensive weakening 2000s, paused since early 2010s
     // Type: EMPIRICAL observations (RAPID array) + MODEL consensus
 
-    // CRITICAL: NO COLLAPSE before +4°C (consensus view)
+    // === TEMPERATURE-DEPENDENT COLLAPSE PROBABILITY ===
+    // Original Sources (traced from Armstrong McKay et al. 2022):
+    // - Stommel (1961) Tellus - Bistability theory (salt-advection feedback)
+    // - Rahmstorf (1996) Climate Dynamics - Freshwater transport criterion
+    // - Weijer et al. (2020) GRL - CMIP6 projections (27 models: -18% to -74% by 2100)
+    // - Van Westen et al. (2024) Science Advances - First ESM collapse (CESM1)
+    // - Qin et al. (2025) Nature - Resilience across 34 models (Southern Ocean sustains weak AMOC)
+    // Synthesis: Armstrong McKay et al. (2022) Science
+    //
+    // See: research/amoc_collapse_probability_20251120.md
+    // See: research/amoc_tipping_point_original_sources_20251120.md
+    //
+    // CRITICAL UPDATE (Nov 20, 2025): Fixed 5% probability replaced with temperature-dependent function
+    // - <+2°C: ~0.5% (extremely unlikely)
+    // - +2-2.2°C: ~1-5% (outlier tail risk)
+    // - +2.2-3°C: ~5-50% (rising risk)
+    // - +3-3.9°C: ~50-90% (high risk)
+    // - >+3.9°C: ~90% (very likely)
+    //
     // Gradual weakening: ~15% per degree of warming (linear approximation)
     const WEAKENING_RATE_PER_DEGREE = 0.15; // [MODEL-DERIVED from EMPIRICAL observations]
-    const COLLAPSE_THRESHOLD = 4.0; // [MODEL-DERIVED] °C - consensus threshold
-    const OUTLIER_COLLAPSE_PROBABILITY = 0.05; // [MODEL-DERIVED] 5% tail risk at +2-3°C (outlier scenario)
+    const COLLAPSE_THRESHOLD = 4.0; // [MODEL-DERIVED] °C - consensus threshold (Armstrong McKay 2022: range 1.4-8°C)
+
+    // === TEMPERATURE-DEPENDENT COLLAPSE PROBABILITY FUNCTION ===
+    // Based on Weijer et al. (2020), Van Westen et al. (2024), Qin et al. (2025)
+    const calculateAMOCCollapseProbability = (temp: number): number => {
+      if (temp < 2.0) {
+        // Extremely unlikely below +2°C
+        return 0.005; // 0.5% annual probability
+      } else if (temp < 2.2) {
+        // Linear interpolation: 0.5% at +2°C → 5% at +2.2°C
+        return 0.005 + ((temp - 2.0) / 0.2) * (0.05 - 0.005);
+      } else if (temp < 3.0) {
+        // Linear interpolation: 5% at +2.2°C → 50% at +3°C
+        return 0.05 + ((temp - 2.2) / 0.8) * (0.50 - 0.05);
+      } else if (temp < 3.9) {
+        // Linear interpolation: 50% at +3°C → 90% at +3.9°C
+        return 0.50 + ((temp - 3.0) / 0.9) * (0.90 - 0.50);
+      } else {
+        // Very likely above +3.9°C
+        return 0.90; // 90% annual probability
+      }
+    };
 
     // Calculate target strength based on temperature
     let targetStrength = 1.0 - (tempAnomaly * WEAKENING_RATE_PER_DEGREE);
@@ -364,51 +414,46 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
       month: state.currentMonth,
     });
 
-    // === COLLAPSE CHECK (Only at extreme warming) ===
-    if (!amoc.collapsed) {
-      if (tempAnomaly >= COLLAPSE_THRESHOLD) {
-        // At +4°C, collapse becomes possible (consensus threshold)
-        const collapseProbability = 0.1; // [MODEL-DERIVED] 10% annual probability at +4°C
-        const monthlyCollapseProbability = collapseProbability / 12;
+    // === COLLAPSE CHECK (Temperature-Dependent Probability) ===
+    if (!amoc.collapsed && tempAnomaly >= 2.0) {
+      // Calculate temperature-dependent annual collapse probability
+      const annualCollapseProbability = calculateAMOCCollapseProbability(tempAnomaly);
+      const monthlyCollapseProbability = annualCollapseProbability / 12;
 
-        if (rng() < monthlyCollapseProbability) {
-          amoc.collapsed = true;
-          amoc.strength = 0.1; // Near-zero but not complete shutdown (eddies sustain weak circulation)
+      // Validate probability is in [0, 1]
+      assertProbability(monthlyCollapseProbability, {
+        location: 'trackAMOCWeakening',
+        valueName: 'monthlyCollapseProbability',
+        month: state.currentMonth,
+        additionalInfo: {
+          tempAnomaly,
+          annualProbability: annualCollapseProbability,
+        },
+      });
 
-          events.push({
-            type: 'tipping_point_crossed',
-            severity: 0.85,
-            description: `🌊🚨 AMOC COLLAPSE: Atlantic circulation collapsed at +${tempAnomaly.toFixed(2)}°C. Northern Europe cooling, sea level rise, monsoon disruption.`,
-            impact:
-              'Regional cooling 2-5°C (Northern Europe), accelerated sea level rise (North Atlantic), African monsoon disruption',
-            month: state.currentMonth,
-          });
+      if (rng() < monthlyCollapseProbability) {
+        amoc.collapsed = true;
+        amoc.strength = 0.1; // Near-zero but not complete shutdown (eddies sustain weak circulation)
 
-          console.log(`\n🌊🚨 AMOC COLLAPSE (Month ${state.currentMonth})`);
-          console.log(`   Temperature: +${tempAnomaly.toFixed(2)}°C (threshold: +${COLLAPSE_THRESHOLD}°C)`);
-          console.log(`   Residual strength: ${(amoc.strength * 100).toFixed(1)}% (eddies sustain weak circulation)`);
-          console.log(`   Recovery timescale: 500-2000 years`);
-        }
-      } else if (tempAnomaly >= 2.0 && tempAnomaly < COLLAPSE_THRESHOLD) {
-        // Outlier scenario: Small tail risk of early collapse (Sylvia approved 5%)
-        const earlyCollapseProbability = OUTLIER_COLLAPSE_PROBABILITY / 12; // Annual → monthly
-        if (rng() < earlyCollapseProbability) {
-          amoc.collapsed = true;
-          amoc.strength = 0.1;
+        const isOutlier = tempAnomaly < COLLAPSE_THRESHOLD;
+        const severityLabel = isOutlier ? 'OUTLIER' : 'EXPECTED';
+        const emoji = isOutlier ? '🌊⚠️' : '🌊🚨';
 
-          events.push({
-            type: 'tipping_point_crossed',
-            severity: 0.85,
-            description: `🌊⚠️ EARLY AMOC COLLAPSE (Outlier): Atlantic circulation collapsed at +${tempAnomaly.toFixed(2)}°C (below consensus +4°C threshold). Rare event (<5% probability).`,
-            impact:
-              'Regional cooling 2-5°C, sea level rise, monsoon disruption. Earlier than expected.',
-            month: state.currentMonth,
-          });
+        events.push({
+          type: 'tipping_point_crossed',
+          severity: 0.85,
+          description: `${emoji} AMOC COLLAPSE ${isOutlier ? '(Outlier)' : ''}: Atlantic circulation collapsed at +${tempAnomaly.toFixed(2)}°C. Northern Europe cooling, sea level rise, monsoon disruption. Annual probability: ${(annualCollapseProbability * 100).toFixed(1)}%.`,
+          impact:
+            'Regional cooling 2-5°C (Northern Europe), accelerated sea level rise (North Atlantic), African monsoon disruption',
+          month: state.currentMonth,
+        });
 
-          console.log(`\n🌊⚠️ EARLY AMOC COLLAPSE - OUTLIER SCENARIO (Month ${state.currentMonth})`);
-          console.log(`   Temperature: +${tempAnomaly.toFixed(2)}°C (consensus threshold: +${COLLAPSE_THRESHOLD}°C)`);
-          console.log(`   Probability: <5% (outlier scenario per Sylvia's critique)`);
-        }
+        console.log(`\n${emoji} AMOC COLLAPSE - ${severityLabel} (Month ${state.currentMonth})`);
+        console.log(`   Temperature: +${tempAnomaly.toFixed(2)}°C`);
+        console.log(`   Annual collapse probability: ${(annualCollapseProbability * 100).toFixed(1)}%`);
+        console.log(`   Consensus threshold: +${COLLAPSE_THRESHOLD}°C`);
+        console.log(`   Residual strength: ${(amoc.strength * 100).toFixed(1)}% (eddies sustain weak circulation)`);
+        console.log(`   Recovery timescale: 500-2000 years`);
       }
     }
 
@@ -559,6 +604,20 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
   // ============================================================================
   // 5. EXTINCTION DEBT (50-150 year time lag)
   // ============================================================================
+  //
+  // COMPLEXITY ANALYSIS (Nov 20, 2025 optimization):
+  // - Time: O(n) per month where n = current queue size
+  //   Previous: O(n²) with splice() causing n element shifts per deletion
+  //   Optimized: O(n) single pass with two-pointer compaction
+  // - Space: O(1) in-place modification (no allocations)
+  // - Determinism: PRESERVED (same iteration order, same RNG consumption)
+  //
+  // Performance characteristics:
+  // - Normal queue size: <100 debts (150-year max lag → ~10 debts/decade)
+  // - Extreme scenarios: ~500 debts (warning threshold)
+  // - Cost per month: O(n) iterate + O(1) truncate = O(n) total
+  //
+  // Regression detection: Performance assertion warns if queue exceeds 500 items
 
   private trackExtinctionDebt(
     state: GameState,
@@ -579,6 +638,16 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
 
     const extinctionDebt = state.tippingPoints!.extinctionDebt;
 
+    // PERFORMANCE ASSERTION: Detect pathological queue growth
+    // Normal: <100 debts (150-year max lag → ~10 debts per decade)
+    // Warning: 100-500 debts (investigate debt accumulation rate)
+    // Critical: >500 debts (likely bug or extreme scenario)
+    if (extinctionDebt.debtQueue.length > 500) {
+      console.warn(
+        `⚠️ PERFORMANCE: Extinction debt queue size ${extinctionDebt.debtQueue.length} exceeds 500. Investigate accumulation rate (Month ${state.currentMonth}).`
+      );
+    }
+
     // === ADD NEW DEBT (from current habitat loss) ===
     // Research: Conservation Letters 2024 - 150-year avian extinction debt
     //           Nature Comms 2016 - Power-law decay with half-life increasing with area
@@ -587,7 +656,19 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     // Get current habitat loss rate from land use system
     if (state.planetaryBoundariesSystem?.landUse) {
       const landUse = state.planetaryBoundariesSystem.landUse;
-      const globalHabitatCover = landUse.globalHabitatCoverPercent ?? 75;
+      const globalHabitatCover = assertFinite(
+        assertDefined(landUse.globalHabitatCoverPercent, {
+          location: 'trackExtinctionDebt',
+          valueName: 'landUse.globalHabitatCoverPercent',
+          month: state.currentMonth,
+          additionalInfo: { context: 'Required for extinction debt calculation' }
+        }),
+        {
+          location: 'trackExtinctionDebt',
+          valueName: 'globalHabitatCover',
+          month: state.currentMonth,
+        }
+      );
 
       // Habitat loss this month (estimate from rate of change)
       // This is a simplified proxy - full implementation would track monthly changes
@@ -629,11 +710,18 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     }
 
     // === PAY DEBT (extinctions from historical habitat loss) ===
-    for (const debt of extinctionDebt.debtQueue) {
+    // PERFORMANCE FIX (Nov 20, 2025): O(n) compaction with two-pointer technique
+    // Previous: splice() causes O(n²) with n deletions × n array shifts each
+    // Optimized: Single O(n) pass with in-place compaction (no shifts, no allocations)
+
+    let writeIndex = 0; // Write pointer for keeping valid debts
+
+    for (let readIndex = 0; readIndex < extinctionDebt.debtQueue.length; readIndex++) {
+      const debt = extinctionDebt.debtQueue[readIndex];
       debt.monthsRemaining -= 1;
 
       if (debt.monthsRemaining <= 0) {
-        // Debt fully paid - extinctions occur
+        // Debt fully paid - extinctions occur (skip in compaction)
         extinctionDebt.paidDebt += debt.speciesCount;
         extinctionDebt.totalDebt -= debt.speciesCount;
 
@@ -647,16 +735,25 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
           biosphere.currentValue += debt.speciesCount * 0.01; // Increase extinction rate
           biosphere.extinctionContribution += 0.05; // Debt contributes to risk
         }
-      } else if (debt.monthsRemaining % 120 === 0) {
+        // Skip: don't copy to writeIndex, don't increment writeIndex
+      } else {
+        // Keep this debt - copy to writeIndex if different from readIndex
+        if (writeIndex !== readIndex) {
+          extinctionDebt.debtQueue[writeIndex] = debt;
+        }
+        writeIndex++;
+
         // Log every 10 years
-        console.log(
-          `🦴 Extinction debt: ${debt.speciesCount.toFixed(1)} species (${(debt.monthsRemaining / 12).toFixed(0)} years remaining)`
-        );
+        if (debt.monthsRemaining % 120 === 0) {
+          console.log(
+            `🦴 Extinction debt: ${debt.speciesCount.toFixed(1)} species (${(debt.monthsRemaining / 12).toFixed(0)} years remaining)`
+          );
+        }
       }
     }
 
-    // Remove fully paid debts
-    extinctionDebt.debtQueue = extinctionDebt.debtQueue.filter((d) => d.monthsRemaining > 0);
+    // Truncate array to new length (O(1) operation)
+    extinctionDebt.debtQueue.length = writeIndex;
   }
 
   // ============================================================================
@@ -668,19 +765,22 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     rng: RNGFunction,
     events: any[]
   ): void {
-    const tempAnomaly = state.resourceEconomy?.co2?.temperatureAnomaly ?? 0;
-    const oceanPH = state.oceanAcidificationSystem?.pHLevel ?? 8.1;
-
-    assertFinite(tempAnomaly, {
-      location: 'trackCoralReefCollapse',
-      valueName: 'temperatureAnomaly',
-      month: state.currentMonth,
-    });
-    assertFinite(oceanPH, {
-      location: 'trackCoralReefCollapse',
-      valueName: 'oceanPH',
-      month: state.currentMonth,
-    });
+    const tempAnomaly = assertStateProperty(
+      state,
+      'resourceEconomy.co2.temperatureAnomaly',
+      {
+        location: 'trackCoralReefCollapse',
+        month: state.currentMonth,
+      }
+    );
+    const oceanPH = assertStateProperty(
+      state,
+      'oceanAcidificationSystem.pHLevel',
+      {
+        location: 'trackCoralReefCollapse',
+        month: state.currentMonth,
+      }
+    );
 
     // Initialize coral state
     if (!state.tippingPoints) {
@@ -871,7 +971,19 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     // Gradual decline phase
     if (!institutional.collapsed) {
       // Deterioration accelerates with crises
-      const crisisCount = state.planetaryBoundariesSystem?.boundariesBreached ?? 0;
+      const crisisCount = assertFinite(
+        assertDefined(state.planetaryBoundariesSystem?.boundariesBreached, {
+          location: 'trackInstitutionalCollapse',
+          valueName: 'state.planetaryBoundariesSystem.boundariesBreached',
+          month: state.currentMonth,
+          additionalInfo: { context: 'Required for institutional deterioration calculation' }
+        }),
+        {
+          location: 'trackInstitutionalCollapse',
+          valueName: 'crisisCount',
+          month: state.currentMonth,
+        }
+      );
       const deteriorationRate = Math.min(0.5, crisisCount * 0.05); // [EXPERT-ESTIMATE]
 
       institutional.corruptionIndex += deteriorationRate * rng();

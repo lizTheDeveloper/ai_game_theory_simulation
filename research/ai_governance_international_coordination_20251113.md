@@ -11,9 +11,9 @@
 
 ```yaml
 oldest_source: 1998
-newest_source: 2025
-last_verified: 2025-11-16
-primary_sources: 9
+newest_source: 2025-01 (AI Diffusion Framework)
+last_verified: 2025-11-20
+primary_sources: 12
 verification_status: VERIFIED
 research_quality: A- (peer-reviewed + official UN/NIST sources, includes historical context)
 ```
@@ -37,11 +37,73 @@ research_quality: A- (peer-reviewed + official UN/NIST sources, includes histori
 - God mode 30% mortality (8.15B → 5.71B) likely reflects uncoordinated deployment scenario
 - Coordinated deployment with transition support should reduce mortality to <5%
 
+**2025 Update (January):**
+- **US AI Diffusion Framework:** Three-tier export control system for advanced AI chips effective Jan 13, 2025
+- **Tier 1 (18 allies):** Unrestricted access (Five Eyes + Japan, Netherlands, South Korea, Taiwan, NATO allies)
+- **Tier 2 (majority of world):** Caps at ~50,000 advanced AI chips through 2027 (can double with agreement)
+- **Tier 3 (adversaries):** Effectively blocked from importing advanced chips
+- **Model weights controls:** First-ever export controls on frontier AI model weights
+- **Coordination challenge:** EU enacted separate European Chips Act 2024 - overlapping regimes
+
 ---
 
 ## Section 1: International Coordination Frameworks (2024-2025)
 
-### 1.1 Multilateral Governance Proliferation
+### 1.1 US AI Diffusion Framework (January 2025)
+
+**Source:** Federal Register, Framework for Artificial Intelligence Diffusion (Jan 15, 2025)
+
+**Citation:** U.S. Department of Commerce. (2025). Framework for Artificial Intelligence Diffusion. *Federal Register*, 90(9), FR Doc 2025-00636. https://www.federalregister.gov/documents/2025/01/15/2025-00636/framework-for-artificial-intelligence-diffusion
+
+**Key Developments:**
+- **Effective date:** January 13, 2025
+- **Scope:** Export controls on advanced AI chips and model weights worldwide
+- **Mechanism:** Three-tier country classification system
+
+**Three-Tier System:**
+
+**Tier 1 (18 countries - unrestricted access):**
+- Five Eyes: Australia, Canada, New Zealand, United Kingdom
+- Major partners: Japan, Netherlands, South Korea, Taiwan
+- Close NATO allies
+- Rationale: Trusted partners with equivalent security standards
+
+**Tier 2 (majority of world - limited access):**
+- Cap: ~50,000 advanced AI chips through 2027
+- Flexibility: Can double if state reaches agreement with US
+- Enforcement: Computing power must be hosted in "trusted and secure environments"
+- Purpose: Prevent diversion to Tier 3 countries while enabling development
+
+**Tier 3 (adversaries - blocked):**
+- Effectively prohibited from importing advanced chips
+- Includes countries of concern for AI safety/security
+
+**Model Weights Controls (NEW):**
+- First-ever export controls on frontier AI model weights
+- Applies to "most advanced AI models"
+- Prevents model exfiltration to adversaries
+
+**International Coordination Challenges:**
+- EU enacted separate European Chips Act (2024) → overlapping regimes
+- Criticism: May fragment global AI ecosystem rather than harmonize
+- Debate: Effectiveness vs. undermining US AI leadership
+
+**Citations:**
+1. CSIS (2025). "Understanding U.S. Allies' Current Legal Authority to Implement AI and Semiconductor Export Controls." Center for Strategic and International Studies.
+2. Carnegie Endowment (2025). "With Its Latest Rule, the U.S. Tries to Govern AI's Global Spread." Carnegie Endowment for International Peace.
+3. RAND (2025). "Understanding the Artificial Intelligence Diffusion Framework." RAND Corporation, PEA3776-1.
+4. Anthropic (2025). "Securing America's Compute Advantage: Anthropic's Position on the Diffusion Rule." https://www.anthropic.com/news/securing-america-s-compute-advantage-anthropic-s-position-on-the-diffusion-rule
+
+**Simulation Implications:**
+- Compute access becomes geopolitically stratified (3 tiers)
+- AI capability development diverges by country tier
+- Coordination quality variable: Tier 1 countries share governance burden, Tier 2/3 excluded
+- Black markets for chips/models become strategic concern
+- Model weights controls enable "AI alignment export" - only deploy aligned models globally
+
+---
+
+### 1.2 Multilateral Governance Proliferation
 
 **Source:** ITU AI Governance Day 2024 (reported in Oxford Academic 2025)
 
