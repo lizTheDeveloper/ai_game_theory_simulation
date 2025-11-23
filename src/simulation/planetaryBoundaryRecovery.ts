@@ -37,33 +37,21 @@ import { asymptoteRecovery, legacyStockRelease } from './utils/irreversibility';
  * Called monthly from PlanetaryBoundariesPhase
  */
 export function updateBoundaryRecovery(state: GameState, rng: RNGFunction): void {
-  const getClimateVal = () => state.planetaryBoundariesSystem?.boundaries?.climate_change?.currentValue;
-  console.log(`[BR-DEBUG] start: ${getClimateVal()}`);
-
   // Tier 1: Reversible boundaries (10-50 years)
   updateFreshwaterRecovery(state, rng);
-  console.log(`[BR-DEBUG] after freshwater: ${getClimateVal()}`);
   updateAtmosphericAerosolRecovery(state, rng);
-  console.log(`[BR-DEBUG] after aerosol: ${getClimateVal()}`);
   // Ozone recovery already implemented in ozoneRecovery.ts
 
   // Tier 2: Partial recovery (30-100+ years)
   updateClimateRecovery(state, rng);
-  console.log(`[BR-DEBUG] after climate: ${getClimateVal()}`);
   updatePhosphorusRecovery(state, rng);
-  console.log(`[BR-DEBUG] after phosphorus: ${getClimateVal()}`);
   updateNitrogenRecovery(state, rng);
-  console.log(`[BR-DEBUG] after nitrogen: ${getClimateVal()}`);
   updateLandSystemRecovery(state, rng);
-  console.log(`[BR-DEBUG] after land: ${getClimateVal()}`);
 
   // Tier 3: Irreversible/stabilization only
   updateBiosphereStabilization(state, rng);
-  console.log(`[BR-DEBUG] after biosphere: ${getClimateVal()}`);
   updateOceanAcidificationRecovery(state, rng);
-  console.log(`[BR-DEBUG] after ocean: ${getClimateVal()}`);
   updateNovelEntitiesStabilization(state, rng);
-  console.log(`[BR-DEBUG] after novel: ${getClimateVal()}`);
 }
 
 // ============================================================================
@@ -197,9 +185,6 @@ function updateClimateRecovery(state: GameState, rng: RNGFunction): void {
   const boundary = state.planetaryBoundariesSystem?.boundaries.climate_change;
   if (!boundary) return;
 
-  console.log(`  [DEBUG-CLIMATE-RECOVERY-START] currentValue=${boundary.currentValue}`);
-  console.log(`  [DEBUG-CLIMATE-RECOVERY] biosphere_integrity=${state.planetaryBoundariesSystem?.boundaries?.biosphere_integrity?.currentValue}`);
-
   // Calculate globalWarming from planetary boundary (currentValue * 2 = degrees C)
   const globalWarming = boundary.currentValue * 2.0;
 
@@ -313,11 +298,15 @@ function updateClimateRecovery(state: GameState, rng: RNGFunction): void {
       const effectiveHalfLife = recoveryHalfLife / (climatePenalty * governanceBonus);
 
       const oldValue = boundary.currentValue;
+      // BUG FIX (Nov 23, 2025): Pass explicit maxBoundaryValue=6 for climate boundary (0-6 Celsius scale)
+      // Old code had no 6th param, causing auto-scale to pick 100 (wrong for climate values ~2.0)
       boundary.currentValue = asymptoteRecovery(
         oldValue,
         boundary.boundaryThreshold,  // Target: return to safe boundary (1.0)
         effectiveHalfLife,
-        minimumAsymptoticValue
+        minimumAsymptoticValue,
+        1/12,  // deltaYears (monthly step)
+        6      // maxBoundaryValue: climate uses 0-6 Celsius scale, NOT 0-100 percentage
       );
 
       const recoveryDelta = oldValue - boundary.currentValue;
