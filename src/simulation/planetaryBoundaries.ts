@@ -713,6 +713,7 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     });
 
     climateBoundary.currentValue = Math.max(0, newClimateValue);
+    console.log(`  [DEBUG] climate_change set to ${climateBoundary.currentValue} from tempAnomaly=${tempAnomaly}`);
   } else {
     // Fallback: Use climateStability (legacy behavior)
     const climateStability = assertProbability(env.climateStability, {
@@ -729,9 +730,12 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     });
 
     climateBoundary.currentValue = newClimateValue;
+    console.log(`  [DEBUG] climate_change set to ${climateBoundary.currentValue} from climateStability fallback`);
   }
 
+  console.log(`  [DEBUG] climate_change BEFORE updateBoundaryStatus: ${climateBoundary.currentValue}`);
   updateBoundaryStatus(climateBoundary);
+  console.log(`  [DEBUG] climate_change AFTER updateBoundaryStatus: ${climateBoundary.currentValue}`);
 
   // Biosphere integrity (from regional extinction rates)
   // UPDATED (Oct 30, 2025): BLOCKER-2 fix v3 - IPBES (2019) + Richardson et al. (2023)

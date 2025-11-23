@@ -1,0 +1,237 @@
+{
+  "timestamp": "2025-11-23T21:09:56.086Z",
+  "config": {
+    "startYear": 1990,
+    "endYear": 2024,
+    "totalMonths": 408,
+    "numRuns": 5,
+    "baseSeed": 19900101,
+    "outputDir": "logs/hindcast_validation"
+  },
+  "historical1990": {
+    "temperatureAnomaly": 0.45,
+    "co2Concentration": 354.4,
+    "population": 5.32,
+    "gdpTrillion": 22.6,
+    "aiCapabilityLevel": 0.01,
+    "biodiversityIndex": 0.75,
+    "socialCohesion": 0.65,
+    "trustInGovernment": 0.55,
+    "unemploymentRate": 0.06
+  },
+  "actual2024": {
+    "temperatureAnomaly": 1.28,
+    "co2Concentration": 424.6,
+    "population": 8.12,
+    "gdpTrillion": 110,
+    "aiCapabilityHigh": true,
+    "biodiversityIndex": 0.49,
+    "socialCohesion": 0.45,
+    "qualityOfLife": 0.74,
+    "unemploymentRate": 0.049
+  },
+  "runs": [
+    {
+      "runNumber": 1,
+      "seed": 19900102,
+      "months": 0,
+      "outcome": "error",
+      "outcomeReason": "❌ Out-of-range value in calculateCategoryDistribution\n   globalTempIncrease = 35\n   Valid range: [0, 6]\n   Month: 0",
+      "finalYear": 1990,
+      "finalMonth": 0,
+      "metrics": {
+        "simulatedTemperatureProxy": 0,
+        "actualTemperature": 1.28,
+        "temperatureDeviation": 1,
+        "simulatedPopulation": 0,
+        "actualPopulation": 8.12,
+        "populationDeviation": 1,
+        "simulatedQoL": 0,
+        "actualQoL": 0.74,
+        "qolDeviation": 1,
+        "simulatedSocialCohesion": 0,
+        "actualSocialCohesion": 0.45,
+        "socialDeviation": 1,
+        "hasSignificantAI": false,
+        "aiCapabilityLevel": 0,
+        "simulatedBiodiversity": 0,
+        "actualBiodiversity": 0.49,
+        "biodiversityDeviation": 1,
+        "overallDeviationScore": 1
+      },
+      "snapshots": [],
+      "errors": [
+        "❌ Out-of-range value in calculateCategoryDistribution\n   globalTempIncrease = 35\n   Valid range: [0, 6]\n   Month: 0"
+      ],
+      "warnings": []
+    },
+    {
+      "runNumber": 2,
+      "seed": 19900103,
+      "months": 0,
+      "outcome": "error",
+      "outcomeReason": "❌ Out-of-range value in calculateCategoryDistribution\n   globalTempIncrease = 35\n   Valid range: [0, 6]\n   Month: 0",
+      "finalYear": 1990,
+      "finalMonth": 0,
+      "metrics": {
+        "simulatedTemperatureProxy": 0,
+        "actualTemperature": 1.28,
+        "temperatureDeviation": 1,
+        "simulatedPopulation": 0,
+        "actualPopulation": 8.12,
+        "populationDeviation": 1,
+        "simulatedQoL": 0,
+        "actualQoL": 0.74,
+        "qolDeviation": 1,
+        "simulatedSocialCohesion": 0,
+        "actualSocialCohesion": 0.45,
+        "socialDeviation": 1,
+        "hasSignificantAI": false,
+        "aiCapabilityLevel": 0,
+        "simulatedBiodiversity": 0,
+        "actualBiodiversity": 0.49,
+        "biodiversityDeviation": 1,
+        "overallDeviationScore": 1
+      },
+      "snapshots": [],
+      "errors": [
+        "❌ Out-of-range value in calculateCategoryDistribution\n   globalTempIncrease = 35\n   Valid range: [0, 6]\n   Month: 0"
+      ],
+      "warnings": []
+    },
+    {
+      "runNumber": 3,
+      "seed": 19900104,
+      "months": 0,
+      "outcome": "error",
+      "outcomeReason": "❌ Out-of-range value in aggregateGlobalPopulation (billions conversion)\n   totalPopulationBillions = 0.0009908238392652281\n   Valid range: [0.001, 100]\n   Month: 389",
+      "finalYear": 1990,
+      "finalMonth": 0,
+      "metrics": {
+        "simulatedTemperatureProxy": 0,
+        "actualTemperature": 1.28,
+        "temperatureDeviation": 1,
+        "simulatedPopulation": 0,
+        "actualPopulation": 8.12,
+        "populationDeviation": 1,
+        "simulatedQoL": 0,
+        "actualQoL": 0.74,
+        "qolDeviation": 1,
+        "simulatedSocialCohesion": 0,
+        "actualSocialCohesion": 0.45,
+        "socialDeviation": 1,
+        "hasSignificantAI": false,
+        "aiCapabilityLevel": 0,
+        "simulatedBiodiversity": 0,
+        "actualBiodiversity": 0.49,
+        "biodiversityDeviation": 1,
+        "overallDeviationScore": 1
+      },
+      "snapshots": [],
+      "errors": [
+        "❌ Out-of-range value in aggregateGlobalPopulation (billions conversion)\n   totalPopulationBillions = 0.0009908238392652281\n   Valid range: [0.001, 100]\n   Month: 389"
+      ],
+      "warnings": []
+    },
+    {
+      "runNumber": 4,
+      "seed": 19900105,
+      "months": 408,
+      "outcome": "stalemate",
+      "outcomeReason": "QoL-based classification: 0.700",
+      "finalYear": 1,
+      "finalMonth": 19,
+      "metrics": {
+        "simulatedTemperatureProxy": 1.06,
+        "actualTemperature": 1.28,
+        "temperatureDeviation": 0.17187499999999997,
+        "simulatedPopulation": 7.575418488074738,
+        "actualPopulation": 8.12,
+        "populationDeviation": 0.06706668866074647,
+        "simulatedQoL": 0.7,
+        "actualQoL": 0.74,
+        "qolDeviation": 0.054054054054054106,
+        "simulatedSocialCohesion": 0.62,
+        "actualSocialCohesion": 0.45,
+        "socialDeviation": 0.3777777777777777,
+        "hasSignificantAI": false,
+        "aiCapabilityLevel": 0,
+        "simulatedBiodiversity": 0.6,
+        "actualBiodiversity": 0.49,
+        "biodiversityDeviation": 0.22448979591836732,
+        "overallDeviationScore": 0.16875752439330022
+      },
+      "snapshots": [
+        {
+          "year": 1990,
+          "month": 0,
+          "population": 0,
+          "qol": 0,
+          "climateValue": 0
+        }
+      ],
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "runNumber": 5,
+      "seed": 19900106,
+      "months": 0,
+      "outcome": "error",
+      "outcomeReason": "❌ Out-of-range value in calculateCategoryDistribution\n   globalTempIncrease = 35\n   Valid range: [0, 6]\n   Month: 0",
+      "finalYear": 1990,
+      "finalMonth": 0,
+      "metrics": {
+        "simulatedTemperatureProxy": 0,
+        "actualTemperature": 1.28,
+        "temperatureDeviation": 1,
+        "simulatedPopulation": 0,
+        "actualPopulation": 8.12,
+        "populationDeviation": 1,
+        "simulatedQoL": 0,
+        "actualQoL": 0.74,
+        "qolDeviation": 1,
+        "simulatedSocialCohesion": 0,
+        "actualSocialCohesion": 0.45,
+        "socialDeviation": 1,
+        "hasSignificantAI": false,
+        "aiCapabilityLevel": 0,
+        "simulatedBiodiversity": 0,
+        "actualBiodiversity": 0.49,
+        "biodiversityDeviation": 1,
+        "overallDeviationScore": 1
+      },
+      "snapshots": [],
+      "errors": [
+        "❌ Out-of-range value in calculateCategoryDistribution\n   globalTempIncrease = 35\n   Valid range: [0, 6]\n   Month: 0"
+      ],
+      "warnings": []
+    }
+  ],
+  "aggregate": {
+    "totalRuns": 5,
+    "successfulRuns": 1,
+    "outcomeDistribution": {
+      "error": 4,
+      "stalemate": 1
+    },
+    "avgPopulationDeviation": 0.06706668866074647,
+    "avgTemperatureDeviation": 0.17187499999999997,
+    "avgQoLDeviation": 0.054054054054054106,
+    "avgSocialDeviation": 0.3777777777777777,
+    "avgBiodiversityDeviation": 0.22448979591836732,
+    "avgOverallDeviation": 0.16875752439330022,
+    "bestRun": {
+      "runNumber": 4,
+      "deviation": 0.16875752439330022
+    },
+    "worstRun": {
+      "runNumber": 4,
+      "deviation": 0.16875752439330022
+    },
+    "deviationCV": 0,
+    "findings": [
+      "GOOD: Model hindcasts within 30% of historical values"
+    ]
+  }
+}
