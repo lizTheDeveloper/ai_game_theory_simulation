@@ -23,6 +23,8 @@ import {
   assertInRange,
   assertStateProperty
 } from '@/simulation/utils/assertions';
+// REMOVED (Nov 20, 2025): updateNitrogenFoodCoupling import
+// This phase no longer calls it directly - reads cached values from state instead
 
 export class FoodSecurityDegradationPhase implements SimulationPhase {
   readonly id = 'food-security-degradation';
@@ -30,9 +32,13 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
   readonly order = 19.7;  // AFTER QualityOfLifePhase (19.5), BEFORE population (20.5)
 
   // DEPENDENCIES (Nov 6, 2025): Requires quality of life baseline calculation
+  // UPDATED (Nov 20, 2025): Added nitrogen-food-coupling dependency (RACE CONDITION FIX)
+  //   - nitrogen-food-coupling MUST run before this phase
+  //   - This phase READS nitrogen values from state (single-writer pattern)
   readonly dependencies = [
     'quality-of-life',          // Order 19.5: Food baseline calculated
     'extreme-weather-events',   // Order 15.2: Weather disrupts food production
+    'nitrogen-food-coupling',   // Order 19.6: CRITICAL - Nitrogen values must be calculated BEFORE this phase reads them
   ];
 
   execute(state: GameState, _rng: RNGFunction): PhaseResult {
@@ -46,6 +52,22 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
     if (!pop.regionalPopulations || pop.regionalPopulations.length === 0) {
       return { events: [] };
     }
+
+    // === RACE CONDITION FIX (Nov 20, 2025) ===
+    // REMOVED: Duplicate call to updateNitrogenFoodCoupling()
+    // NitrogenFoodCouplingPhase (order 19.6) already called it and stored results in state
+    // This phase (order 19.7) now READS the cached values from regionalNitrogenManagement
+    // Research: Science Advances (2024), Zhang et al. (2021)
+    //
+    // SYNCHRONIZATION STRATEGY: Single-writer pattern
+    // - NitrogenFoodCouplingPhase is the ONLY phase that calls updateNitrogenFoodCoupling()
+    // - All other phases READ from state.planetaryBoundariesSystem.regionalNitrogenManagement
+    // - This ensures deterministic state mutations (critical for Monte Carlo reproducibility)
+    //
+    // Previously: This phase was calling updateNitrogenFoodCoupling() a second time, causing:
+    // 1. Non-deterministic state mutations (which phase "wins"?)
+    // 2. Wasted computation (calculating same values twice)
+    // 3. Potential for divergent values if RNG is used differently
 
     // Validate required systems (use assertions for cleaner error messages)
     const phosphorusReserves = assertStateProperty(state.phosphorusSystem, 'reserves', {
@@ -161,15 +183,72 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
       });
 
       // Apply degradation to regional food security
-      const currentFood = assertProbability(region.foodSecurity, {
+      let currentFood = assertProbability(region.foodSecurity, {
         location: 'FoodSecurityDegradationPhase.execute',
         valueName: `${region.name}.foodSecurity (before)`,
         month: state.currentMonth
       });
 
-      const newFood = assertProbability(Math.max(0, currentFood * (1 - degradationRateCapped)), {
+      // === TIER 2 HIGH: NITROGEN-FOOD COUPLING (Nov 15, 2025) ===
+      // Research: Science Advances (2024), Zhang et al. (2021)
+      // Regional nitrogen reduction creates yield penalties (nonlinear, region-specific)
+      // Expected impact: Realistic biogeochemical boundary trade-offs
+      // Applied BEFORE crisis degradation (nitrogen affects baseline food production)
+      if (state.planetaryBoundariesSystem?.regionalNitrogenManagement) {
+        // Find matching regional nitrogen data
+        const regionMapping: Record<string, string> = {
+          'South Asia': 'southAsia',
+          'East Asia': 'eastAsia',
+          'North America': 'northAmerica',
+          'Europe': 'europe',
+          'Latin America': 'latinAmerica',
+          'Sub-Saharan Africa': 'subSaharanAfrica'
+        };
+
+        const nitrogenRegionKey = regionMapping[region.name];
+        if (nitrogenRegionKey) {
+          const nitrogenData = state.planetaryBoundariesSystem.regionalNitrogenManagement.find(
+            r => r.region === nitrogenRegionKey
+          );
+
+          if (nitrogenData) {
+            // Apply food production index from nitrogen coupling
+            // foodProductionIndex ranges from 0 (total failure) to 1.0 (baseline) to 2.0 (improved)
+            const foodProductionIndex = assertProbability(Math.min(nitrogenData.foodProductionIndex, 2.0), {
+              location: 'FoodSecurityDegradationPhase.execute',
+              valueName: `${region.name}.nitrogenFoodProductionIndex`,
+              month: state.currentMonth
+            });
+
+            // Apply food production penalty/bonus to regional food security
+            // If index < 1.0: penalty (nitrogen reduction hurts crops)
+            // If index > 1.0: bonus (optimized nitrogen IMPROVES crops - Zhang et al. overuse reduction case)
+            currentFood *= foodProductionIndex;
+
+            // Log nitrogen effects annually
+            if (state.currentMonth % 12 === 0 && Math.abs(foodProductionIndex - 1.0) > 0.05) {
+              console.log(`  [${region.name}] 🌾 Nitrogen coupling: Food production index ${foodProductionIndex.toFixed(3)}, Yield impact: ${(nitrogenData.yieldImpact * 100).toFixed(1)}%`);
+            }
+          }
+        }
+      }
+
+      // Apply degradation to food security (after nitrogen penalty)
+      let newFood = assertProbability(Math.max(0, currentFood * (1 - degradationRateCapped)), {
         location: 'FoodSecurityDegradationPhase.execute',
-        valueName: `${region.name}.foodSecurity (after)`,
+        valueName: `${region.name}.foodSecurity (after degradation)`,
+        month: state.currentMonth
+      });
+
+      // NOTE (Roy, Nov 18, 2025): Duplicate nitrogen penalty removed
+      // BUG FIX: Was applying nitrogen penalty TWICE (before + after degradation) = squared penalty
+      // Now applies ONCE (before degradation only, lines 194-236)
+      // Example: 20% penalty was being applied as 0.8² = 64% (36% total loss instead of 20%)
+
+      // Final validation
+      newFood = assertProbability(newFood, {
+        location: 'FoodSecurityDegradationPhase.execute',
+        valueName: `${region.name}.foodSecurity (final)`,
         month: state.currentMonth
       });
 

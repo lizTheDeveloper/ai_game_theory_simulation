@@ -30,6 +30,7 @@ import type { GameState, RNGFunction } from '../types/game';
 import type { BoundaryName } from '../types/planetaryBoundaries';
 import { assertFinite, assertDefined, assertStateProperty } from './utils/assertions';
 import { addSimulationEvent } from './utils/eventLogger';
+import { asymptoteRecovery, legacyStockRelease } from './utils/irreversibility';
 
 /**
  * Main recovery update function
@@ -545,6 +546,11 @@ function updateLandSystemRecovery(state: GameState, rng: RNGFunction): void {
  * Mechanism: Cannot reverse extinctions, only stop further loss
  * Timeline: Stabilization when extinction rate < 10% baseline (not recovery)
  *
+ * IRREVERSIBILITY FRAMEWORK (Nov 20, 2025):
+ * - Uses asymptoteRecovery() with 5% extinction debt floor
+ * - Recovery half-life: 200 years (century-scale ecosystem recovery)
+ * - Boundary approaches floor asymptotically, never reaches zero
+ *
  * Citations:
  * - Richardson et al. (2023): Current ~2× safe boundary (not 100-1000×, see BLOCKER-2 fix)
  * - IPBES (2024): Historical estimates varied 100-1000× (measurement uncertainty)
@@ -603,9 +609,55 @@ function updateBiosphereStabilization(state: GameState, rng: RNGFunction): void 
       }
     }
 
+    // IRREVERSIBILITY FRAMEWORK (Nov 20, 2025):
+    // Apply asymptotic recovery to boundary value with 5% extinction debt floor
+    // Research: Committed extinctions from habitat loss, climate lag, invasive species
+    const minimumAsymptoticValue = assertStateProperty(boundary, 'minimumAsymptoticValue', {
+      location: 'updateBiosphereStabilization',
+      month: state.currentMonth
+    });
+    const recoveryHalfLife = assertStateProperty(boundary, 'recoveryHalfLife', {
+      location: 'updateBiosphereStabilization',
+      month: state.currentMonth
+    });
+
+    // Track peak value for irreversibility floor calculation
+    if (!boundary.peak || boundary.currentValue > boundary.peak) {
+      boundary.peak = boundary.currentValue;
+    }
+
+    // Target value: asymptotic floor (minimum boundary value we can approach)
+    const targetValue = minimumAsymptoticValue * 2.0; // Scale: 0-2 normalized range
+
+    // Apply asymptotic recovery (approach floor exponentially, never reach zero)
+    const newValue = asymptoteRecovery(
+      boundary.currentValue,
+      targetValue,
+      recoveryHalfLife,
+      minimumAsymptoticValue,
+      1/12 // deltaYears = 1 month
+    );
+
+    // Defensive assertion: Verify no NaN/Infinity
+    const recoveredValue = assertFinite(newValue, {
+      location: 'updateBiosphereStabilization',
+      valueName: 'asymptoteRecovery result',
+      month: state.currentMonth,
+      additionalInfo: {
+        currentValue: boundary.currentValue,
+        targetValue,
+        recoveryHalfLife,
+        minimumAsymptoticValue
+      }
+    });
+
+    boundary.currentValue = recoveredValue;
+
     if (state.currentMonth % 120 === 0) { // Log every 10 years
       console.log(`\n=== Biosphere Integrity STABILIZED (not recovered) ===`);
       console.log(`  Extinction rate: ${extinctionRate.toFixed(1)}× natural (down from ${INITIAL_EXTINCTION_RATE}×)`);
+      console.log(`  Boundary value: ${boundary.currentValue.toFixed(3)} (approaching ${targetValue.toFixed(3)} floor)`);
+      console.log(`  Extinction debt: ${(minimumAsymptoticValue * 100).toFixed(0)}% irreversible (committed extinctions)`);
       console.log(`  Lost species: PERMANENT (extinction is irreversible)`);
       console.log(`  Population recovery: In progress for surviving species`);
     }
@@ -623,8 +675,13 @@ function updateBiosphereStabilization(state: GameState, rng: RNGFunction): void 
  * Mechanism: Surface ocean can recover if net-negative emissions, deep ocean cannot
  * Timeline: 100 years (1200 months) for surface recovery
  *
+ * IRREVERSIBILITY FRAMEWORK (Nov 20, 2025):
+ * - Surface component: Asymptotic recovery toward baseline (reversible)
+ * - Deep ocean component: 15-18% permanent acidification (irreversible floor)
+ * - Combined boundary value reflects both components
+ *
  * Citations:
- * - Jiang et al. (2023): Deep ocean acidification irreversibility
+ * - Jiang et al. (2023): Deep ocean acidification irreversibility (15-18% permanent)
  * - IPCC AR6 WG2 (2022): Ocean carbonate chemistry hysteresis
  * - Hönisch et al. (2012): Paleo-ocean acidification recovery timescales
  */
@@ -675,6 +732,52 @@ function updateOceanAcidificationRecovery(state: GameState, rng: RNGFunction): v
   if (surfaceRecoveryPossible) {
     boundary.recoveryMonths = boundary.recoveryMonths + 1;
 
+    // IRREVERSIBILITY FRAMEWORK (Nov 20, 2025):
+    // Ocean acidification has TWO components:
+    // 1. Surface ocean (0-200m): Can recover with net-negative emissions (100-year timescale)
+    // 2. Deep ocean (200m+): Permanent acidification (15-18% irreversible, 300+ year lag)
+    //
+    // Deep ocean irreversibility floor: ~15% of peak acidification
+    // Research: Jiang et al. (2023) - Deep ocean mixing time scale 300+ years
+    const DEEP_OCEAN_IRREVERSIBILITY_FLOOR = 0.15; // 15% of acidification is permanent
+
+    // Track peak acidification for floor calculation
+    if (!boundary.peak || boundary.currentValue > boundary.peak) {
+      boundary.peak = boundary.currentValue;
+    }
+
+    // Target value: Deep ocean irreversibility floor
+    // If peak was 1.5× threshold, floor is 0.15 × 1.5 = 0.225 (22.5% of peak remains)
+    const targetValue = DEEP_OCEAN_IRREVERSIBILITY_FLOOR * (boundary.peak || boundary.currentValue);
+
+    // Recovery half-life: 100 years for surface, but combined system approaches deep ocean floor
+    const recoveryHalfLife = 100; // years (surface recovery timescale)
+
+    // Apply asymptotic recovery (approach deep ocean floor, never reach zero)
+    const newValue = asymptoteRecovery(
+      boundary.currentValue,
+      targetValue,
+      recoveryHalfLife,
+      DEEP_OCEAN_IRREVERSIBILITY_FLOOR,
+      1/12 // deltaYears = 1 month
+    );
+
+    // Defensive assertion: Verify no NaN/Infinity
+    const recoveredValue = assertFinite(newValue, {
+      location: 'updateOceanAcidificationRecovery',
+      valueName: 'asymptoteRecovery result',
+      month: state.currentMonth,
+      additionalInfo: {
+        currentValue: boundary.currentValue,
+        targetValue,
+        recoveryHalfLife,
+        deepOceanFloor: DEEP_OCEAN_IRREVERSIBILITY_FLOOR,
+        peak: boundary.peak
+      }
+    });
+
+    boundary.currentValue = recoveredValue;
+
     // Surface recovery: 100 years (1200 months)
     if (boundary.recoveryMonths >= 1200) {
       boundary.surfaceRecovered = true;
@@ -682,8 +785,14 @@ function updateOceanAcidificationRecovery(state: GameState, rng: RNGFunction): v
 
       console.log(`\n=== Ocean Acidification SURFACE RECOVERY ===`);
       console.log(`  Surface ocean: Partially recovered (100 years)`);
+      console.log(`  Boundary value: ${boundary.currentValue.toFixed(3)} (approaching ${targetValue.toFixed(3)} floor)`);
       console.log(`  Deep ocean: Still 15-18% more acidic (PERMANENT on human timescales)`);
       console.log(`  Boundary: STILL BREACHED (deep ocean irreversible)`);
+    }
+
+    // Log progress every 24 months
+    if (state.currentMonth % 24 === 0) {
+      console.log(`🌊 OCEAN ACIDIFICATION RECOVERY: Boundary ${boundary.currentValue.toFixed(3)} → ${targetValue.toFixed(3)} (deep ocean floor)`);
     }
   } else {
     boundary.recoveryMonths = 0;
@@ -699,9 +808,16 @@ function updateOceanAcidificationRecovery(state: GameState, rng: RNGFunction): v
  * Mechanism: Can only stop NEW inputs, cannot remove existing contamination
  * Timeline: Instantaneous stabilization when inputs < 5% baseline
  *
+ * IRREVERSIBILITY FRAMEWORK (Nov 20, 2025):
+ * - Uses asymptoteRecovery() with 15% irreversibility floor (atmospheric distribution + covalent binding)
+ * - Recovery half-life: 75 years (Montreal Protocol analog for PFAS phase-out)
+ * - Legacy stock release: 46,000 Mt PFAS accumulated (Persson 2022)
+ * - Boundary approaches floor asymptotically, never reaches zero
+ *
  * Citations:
  * - Glüge et al. (2020): PFAS environmental persistence
- * - Cousins et al. (2020): "Forever chemicals" nomenclature
+ * - Cousins et al. (2022): "Forever chemicals" atmospheric half-life 50-100 years
+ * - Sörengård et al. (2024): Economic impossibility of cleanup at current emission rates
  * - Pyrolysis: Works on concentrated sources (biosolids) not environmental cleanup
  */
 function updateNovelEntitiesStabilization(state: GameState, rng: RNGFunction): void {
@@ -722,11 +838,109 @@ function updateNovelEntitiesStabilization(state: GameState, rng: RNGFunction): v
     boundary.inputsStopped = true;
     boundary.trend = 'stable'; // Not "improving" - existing contamination permanent
 
-    console.log(`\n=== Novel Entities INPUTS STOPPED (not recovered) ===`);
-    console.log(`  PFAS production: BANNED`);
-    console.log(`  Microplastic regulations: ENFORCED`);
-    console.log(`  Existing contamination: PERMANENT (no environmental cleanup technology)`);
-    console.log(`  Boundary: STILL BREACHED (ubiquitous contamination irreversible)`);
+    // IRREVERSIBILITY FRAMEWORK (Nov 20, 2025):
+    // Novel Entities has TWO mechanisms:
+    // 1. New inputs stopped (policy intervention)
+    // 2. Legacy stock release from environmental reservoirs (exponential decay)
+    //
+    // Research: Cousins et al. (2022) - PFAS atmospheric half-life 50-100 years
+    // Even with inputs stopped, existing contamination persists for decades
+
+    // Get irreversibility parameters from boundary
+    const minimumAsymptoticValue = assertStateProperty(boundary, 'minimumAsymptoticValue', {
+      location: 'updateNovelEntitiesStabilization',
+      month: state.currentMonth
+    });
+    const recoveryHalfLife = assertStateProperty(boundary, 'recoveryHalfLife', {
+      location: 'updateNovelEntitiesStabilization',
+      month: state.currentMonth
+    });
+
+    // Track peak contamination for irreversibility floor calculation
+    if (!boundary.peak || boundary.currentValue > boundary.peak) {
+      boundary.peak = boundary.currentValue;
+    }
+
+    // Track peak value (for 90% irreversible floor from Novel Entities redesign)
+    if (!boundary.peakValue || boundary.currentValue > boundary.peakValue) {
+      boundary.peakValue = boundary.currentValue;
+    }
+
+    // Target value: 15% irreversibility floor (atmospheric distribution + covalent binding)
+    // Research: Cousins et al. (2022) - PFAS ubiquitous in atmosphere, no cleanup tech
+    const targetValue = minimumAsymptoticValue * 2.0; // Scale: 0-2 normalized range
+
+    // Apply asymptotic recovery (approach floor exponentially, never reach zero)
+    const newValue = asymptoteRecovery(
+      boundary.currentValue,
+      targetValue,
+      recoveryHalfLife,
+      minimumAsymptoticValue,
+      1/12 // deltaYears = 1 month
+    );
+
+    // Defensive assertion: Verify no NaN/Infinity
+    const recoveredValue = assertFinite(newValue, {
+      location: 'updateNovelEntitiesStabilization',
+      valueName: 'asymptoteRecovery result',
+      month: state.currentMonth,
+      additionalInfo: {
+        currentValue: boundary.currentValue,
+        targetValue,
+        recoveryHalfLife,
+        minimumAsymptoticValue,
+        peak: boundary.peak
+      }
+    });
+
+    boundary.currentValue = recoveredValue;
+
+    // Legacy stock release (if tracked)
+    if (boundary.legacyStock && boundary.legacyStock > 0) {
+      // Release accumulated PFAS from environmental reservoirs
+      // Research: Lake Erie phosphorus case study - sediment release matches river inputs
+      const releaseHalfLife = recoveryHalfLife; // Same timescale as atmospheric clearance
+
+      const { newStock, released } = legacyStockRelease(
+        boundary.legacyStock,
+        releaseHalfLife,
+        1/12 // deltaYears = 1 month
+      );
+
+      // Defensive assertions
+      const validatedStock = assertFinite(newStock, {
+        location: 'updateNovelEntitiesStabilization',
+        valueName: 'legacyStockRelease newStock',
+        month: state.currentMonth,
+        additionalInfo: { oldStock: boundary.legacyStock, released }
+      });
+
+      const validatedReleased = assertFinite(released, {
+        location: 'updateNovelEntitiesStabilization',
+        valueName: 'legacyStockRelease released',
+        month: state.currentMonth,
+        additionalInfo: { oldStock: boundary.legacyStock, newStock }
+      });
+
+      boundary.legacyStock = validatedStock;
+
+      // Log every 24 months
+      if (state.currentMonth % 24 === 0) {
+        console.log(`🧪 PFAS LEGACY RELEASE: ${validatedReleased.toFixed(1)} Mt/month from environmental reservoirs`);
+        console.log(`   Remaining stock: ${validatedStock.toFixed(0)} Mt (of 46,000 Mt initial)`);
+      }
+    }
+
+    // Log stabilization status every 10 years
+    if (state.currentMonth % 120 === 0) {
+      console.log(`\n=== Novel Entities INPUTS STOPPED (not recovered) ===`);
+      console.log(`  PFAS production: BANNED`);
+      console.log(`  Microplastic regulations: ENFORCED`);
+      console.log(`  Boundary value: ${boundary.currentValue.toFixed(3)} (approaching ${targetValue.toFixed(3)} floor)`);
+      console.log(`  Irreversibility floor: ${(minimumAsymptoticValue * 100).toFixed(0)}% (atmospheric distribution + covalent binding)`);
+      console.log(`  Existing contamination: PERMANENT (no environmental cleanup technology)`);
+      console.log(`  Boundary: STILL BREACHED (ubiquitous contamination irreversible)`);
+    }
   } else {
     boundary.inputsStopped = false;
   }

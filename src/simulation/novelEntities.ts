@@ -16,8 +16,10 @@
 import { GameState } from '@/types/game';
 import { NovelEntitiesSystem } from '@/types/novelEntities';
 import { RootCause } from '@/types/population';
-import { assertStateProperty } from './utils/assertions';
+import { assertStateProperty, assertFinite } from './utils/assertions';
 import { addMortalityRisk } from './bayesianMortality';
+import { asymptoteRecovery, legacyStockRelease } from './utils/irreversibility';
+import { isTechDeployed } from './techTree/helpers';
 
 /**
  * Initialize novel entities system state (2025 baseline - ALREADY BREACHED)
@@ -42,7 +44,9 @@ export function initializeNovelEntitiesSystem(): NovelEntitiesSystem {
     bioremediationDeployment: 0.0,       // Emerging technology
 
     // CRITICAL FIX (Nov 11, 2025): Stock vs flow tracking (Ling 2024)
-    annualEmissions: 60000,              // 60,000 Mt/year (mid-range: 20,000-100,000 Mt/yr from Ling 2024)
+    baselineAnnualEmissions: 60000,      // 60,000 Mt/year BASELINE (mid-range: 20,000-100,000 Mt/yr from Ling 2024)
+    annualEmissions: 60000,              // 60,000 Mt/year (starts at baseline, modified by prevention tech)
+    preventionMultiplier: 1.0,           // 1.0 = no prevention deployed yet (100% of baseline emissions)
     accumulatedStock: 1800000,           // 1.8M Mt (30 years × 60k/yr - decades of accumulation)
     atmosphericDistribution: true,       // PFAS in rainwater globally (Cousins 2022: all continents + Antarctica)
     naturalDecayHalfLife: 500,           // 500 years (PFAS "forever chemicals" persist centuries)
@@ -53,6 +57,40 @@ export function initializeNovelEntitiesSystem(): NovelEntitiesSystem {
     atmosphericRedepositionRate: 0.01,   // 1% of legacy stock re-rains monthly (Cousins 2022)
     biologicalDegradationRate: 0.0001,   // 0.01% per month = 0.12% per year (slow but non-zero, 2024 research)
     atmosphericReservoirStock: 180000,   // 180,000 Mt in atmospheric reservoir (10% of total stock cycles)
+
+    // CRITICAL FIX (Nov 18, 2025): Phase 3 - Irreversibility + Energy Trap + Rebound Effects
+    // Research: Ling 2024, Cousins 2022, Kane 2020, UNEP 2024, Sorrell 2025
+    //
+    // CLARIFICATION (Nov 20, 2025): Thompson et al. PNAS Nexus (2024) provides conceptual
+    // framework for (ir)reversibility but does NOT contradict 87.5% parameter.
+    // - Thompson is semantic analysis (how terms are used), not quantitative meta-analysis
+    // - Climate system reversibility (60-70% for precipitation) applies to DIFFERENT systems
+    //   on DIFFERENT timescales (centuries), NOT persistent pollutants (PFAS, microplastics)
+    // - See: research/irreversibility_reconciliation_20251120.md (Grade C, NO CONTRADICTION)
+
+    // Irreversibility (HIGH UNCERTAINTY: 80-95% range, ±7.5%)
+    irreversibleFraction: 0.875,         // 87.5% (midpoint of 80-95% research range)
+                                         // Cousins et al. ES&T (2022): PFAS atmospheric half-life 50-100 years
+                                         // Kane et al. Science (2020): Deep-sea microplastics, centuries persistence
+                                         // Ling et al. ES&T (2024): Cleanup cost 0.2-66× GDP, economic impossibility
+                                         // Thompson et al. PNAS Nexus (2024): Conceptual framework (timescale-dependent)
+    reversibleStock: 1800000 * 0.125,    // 225,000 Mt (12.5% of accumulated stock)
+    irreversibleStock: 1800000 * 0.875,  // 1,575,000 Mt (87.5% persists indefinitely)
+    minimumAchievableLevel: 1800000 * 0.875, // Asymptotic floor = irreversible stock
+
+    // Energy constraints (Ling 2024: 0.2-66× GDP energy requirement)
+    renewableEnergySurplus: 0,           // TWh/year (calculated from energy system)
+    cleanupEnergyRequirement: 50000,     // 50,000 TWh/year (gigatonne-scale PFAS cleanup)
+                                         // Ling 2024: $20-7,000 trillion/year cost
+                                         // Global energy ~180,000 TWh/year → 28% required
+
+    // Rebound effects (HIGH UNCERTAINTY: 50-90% range)
+    reboundFactor: 0.7,                  // 70% (midpoint of 0.5-0.9 research range)
+                                         // UNEP 2024: Waste +81% despite circular economy tech
+                                         // Sorrell 2025: AI efficiency → increased deployment
+    reboundTimelagMonths: 240,           // 20 years (midpoint of 10-30 year estimate)
+    monthsSinceCleanupDeployment: 0,     // No cleanup tech deployed yet
+    cleanupInducedProduction: 0,         // Mt/year (calculated when cleanup active)
   };
 }
 
@@ -120,6 +158,105 @@ export function updateNovelEntitiesSystem(state: GameState): void {
       console.log(`   Annual emissions: ${ne.annualEmissions.toFixed(0)} Mt/year`);
       console.log(`   Approaching saturation cap (2B Mt)`);
     }
+
+    // === PHASE 3: IRREVERSIBILITY + ENERGY TRAP + REBOUND EFFECTS (Nov 18, 2025) ===
+    // Research: Ling 2024, Cousins 2022, Kane 2022, UNEP 2024, Sorrell 2025
+
+    if (ne.irreversibleFraction !== undefined && ne.reversibleStock !== undefined && ne.irreversibleStock !== undefined) {
+      // 1. UPDATE IRREVERSIBLE/REVERSIBLE SPLIT
+      // Total stock splits into reversible (can be cleaned) and irreversible (permanent)
+      // Irreversible fraction is CONSTANT (atmospheric distribution persists)
+      const totalStock = ne.accumulatedStock;
+      ne.irreversibleStock = totalStock * ne.irreversibleFraction;
+      ne.reversibleStock = totalStock * (1.0 - ne.irreversibleFraction);
+      ne.minimumAchievableLevel = ne.irreversibleStock; // Can NEVER go below this
+
+      // 2. ENERGY-CONSTRAINED CLEANUP
+      // Calculate renewable energy surplus (if energy system available)
+      let renewableSurplus = 0; // TWh/year
+      if (state.powerGenerationSystem) {
+        const totalGen = state.powerGenerationSystem.totalElectricityGeneration || 0; // TWh/month
+        const renewablePct = state.powerGenerationSystem.renewablePercentage || 0; // [0,1]
+        const dataCenterDemand = state.powerGenerationSystem.dataCenterPower || 0; // TWh/month
+
+        // Convert monthly to annual and calculate renewable surplus
+        const annualRenewableGen = totalGen * renewablePct * 12; // TWh/year
+        const annualDataCenterDemand = dataCenterDemand * 12; // TWh/year
+
+        // Surplus = renewable generation - data center demand (simplified proxy)
+        // In reality, total demand is much higher, but data centers are the marginal load
+        renewableSurplus = Math.max(0, annualRenewableGen - annualDataCenterDemand);
+      }
+      ne.renewableEnergySurplus = renewableSurplus;
+
+      // Energy gate: Cleanup effectiveness limited by available energy
+      const energyRequired = ne.cleanupEnergyRequirement || 50000; // TWh/year default
+      const energyAvailableFraction = energyRequired > 0 ? Math.min(1.0, renewableSurplus / energyRequired) : 0;
+
+      // 3. CALCULATE CLEANUP EFFECTIVENESS (energy-gated)
+      // Only reversible stock can be cleaned (irreversible persists forever)
+      let cleanupEffectiveness = 0;
+      if (ne.bioremediationDeployment > 0 || ne.greenChemistryDeployment > 0) {
+        // Base cleanup rate from deployed technologies
+        const baseCleanupRate = (ne.bioremediationDeployment * 0.005) + (ne.greenChemistryDeployment * 0.002);
+
+        // Apply energy constraint (if insufficient energy, cleanup is ineffective)
+        cleanupEffectiveness = baseCleanupRate * energyAvailableFraction;
+      }
+
+      // 4. REBOUND EFFECTS (Jevons Paradox)
+      // Cleanup success → industries relax pollution controls → MORE production
+      if (ne.reboundFactor !== undefined && ne.reboundTimelagMonths !== undefined && ne.monthsSinceCleanupDeployment !== undefined) {
+        // Track time since cleanup deployment
+        if (ne.bioremediationDeployment > 0.1) {
+          ne.monthsSinceCleanupDeployment++;
+        }
+
+        // Rebound kicks in after time lag (10-30 years)
+        if (ne.monthsSinceCleanupDeployment > ne.reboundTimelagMonths) {
+          // Cleanup induces additional production (moral hazard)
+          const cleanupAmount = cleanupEffectiveness * ne.reversibleStock; // Mt/month
+          ne.cleanupInducedProduction = (cleanupAmount * 12) * ne.reboundFactor; // Mt/year
+
+          // Add induced production to monthly emissions
+          const monthlyInducedProduction = ne.cleanupInducedProduction / 12; // Mt/month
+          ne.accumulatedStock += monthlyInducedProduction;
+
+          // Log rebound effect (when significant)
+          if (ne.cleanupInducedProduction > 1000 && state.currentMonth % 24 === 0) {
+            console.log(`🔄 Rebound effect active: Cleanup inducing ${(ne.cleanupInducedProduction / 1000).toFixed(1)}k Mt/year NEW production`);
+            console.log(`   ⚠️ HIGH UNCERTAINTY: Rebound factor ${(ne.reboundFactor * 100).toFixed(0)}% (range: 50-90%)`);
+          }
+        }
+      }
+
+      // 5. APPLY CLEANUP TO REVERSIBLE STOCK ONLY
+      // Irreversible stock is UNTOUCHABLE (atmospheric distribution, covalent binding)
+      const cleanupAmount = cleanupEffectiveness * ne.reversibleStock; // Mt/month
+      ne.reversibleStock = Math.max(0, ne.reversibleStock - cleanupAmount);
+
+      // Recalculate total stock (reversible + irreversible)
+      ne.accumulatedStock = ne.reversibleStock + ne.irreversibleStock;
+
+      // CRITICAL: Total stock can NEVER go below minimum achievable level
+      if (ne.accumulatedStock < ne.minimumAchievableLevel) {
+        ne.accumulatedStock = ne.minimumAchievableLevel;
+        ne.reversibleStock = 0; // All reversible stock cleaned
+      }
+
+      // 6. LOG ENERGY TRAP STATUS (yearly)
+      if (state.currentMonth % 12 === 0 && cleanupEffectiveness > 0.0001) {
+        console.log(`\n=== Novel Entities Energy Trap Status ===`);
+        console.log(`  ⚡ Renewable surplus: ${renewableSurplus.toFixed(0)} TWh/year`);
+        console.log(`  ⚡ Cleanup requirement: ${energyRequired.toFixed(0)} TWh/year`);
+        console.log(`  ⚡ Energy available: ${(energyAvailableFraction * 100).toFixed(1)}%`);
+        console.log(`  🧹 Cleanup effectiveness: ${(cleanupEffectiveness * 100).toFixed(2)}%/month`);
+        console.log(`  ♻️ Reversible stock: ${(ne.reversibleStock / 1000).toFixed(0)}k Mt`);
+        console.log(`  ⚠️ Irreversible stock: ${(ne.irreversibleStock / 1000).toFixed(0)}k Mt (PERMANENT)`);
+        console.log(`  📊 Minimum achievable: ${(ne.minimumAchievableLevel / 1000).toFixed(0)}k Mt (asymptotic floor)`);
+        console.log(`  ⚠️ HIGH UNCERTAINTY: Irreversible fraction ${(ne.irreversibleFraction * 100).toFixed(0)}% (range: 80-95%)`);
+      }
+    }
   }
 
   // === HETEROGENEOUS CONTAMINATION (Nov 12, 2025: Sylvia's requirement) ===
@@ -185,11 +322,94 @@ export function updateNovelEntitiesSystem(state: GameState): void {
     ));
   }
   
+  // === IRREVERSIBILITY FRAMEWORK INTEGRATION (Nov 18, 2025) ===
+  // Apply asymptotic recovery and legacy stock release mechanics
+  // Research: Cousins 2022 (75-year half-life), Sörengård 2024 (energy trap)
+
+  // Check fusion deployment (required for cleanup to be effective)
+  const fusionDeployment = isTechDeployed(state, 'fusion_power');
+  const hasFusion = fusionDeployment > 0.3;  // 30%+ deployment threshold
+
+  // PREVENTION-FIRST PARADIGM (60-90% effective, no energy trap)
+  // Research: Prevention avoids dilution problem entirely (Sörengård 2024)
+  const preventionEffectiveness = ne.greenChemistryDeployment * 0.7 + ne.chemicalBansDeployment * 0.9;
+
+  // CLEANUP EFFECTIVENESS (10-25% max, requires fusion)
+  // Research: Dilution makes cleanup 6-9 orders of magnitude harder (Sörengård 2024)
+  let cleanupEffectiveness = 0;
+  if (hasFusion) {
+    // Cleanup only works with abundant energy AND high concentrations
+    const industrialCleanupEff = ne.bioremediationDeployment * 0.25;  // 25% max (industrial sites)
+    const environmentalCleanupEff = ne.bioremediationDeployment * 0.01;  // 1% max (diffuse contamination)
+
+    // Weighted by contamination type
+    cleanupEffectiveness = (industrialCleanupEff * 0.3) + (environmentalCleanupEff * 0.7);
+
+    console.log(`⚡ FUSION ENERGY: Novel entities cleanup active (${(cleanupEffectiveness * 100).toFixed(1)}% effectiveness)`);
+  } else if (ne.bioremediationDeployment > 0.1) {
+    console.log(`⚠️ ENERGY TRAP: Bioremediation blocked without fusion energy (deployment: ${(fusionDeployment * 100).toFixed(0)}%, need: 30%+)`);
+  }
+
+  // COMBINED EFFECTIVENESS (prevention + cleanup)
+  const totalEffectiveness = Math.min(0.90, preventionEffectiveness + cleanupEffectiveness);
+
+  // Apply asymptotic recovery to syntheticChemicalLoad
+  // Uses 75-year half-life, 15% asymptotic floor
+  const boundary = state.planetaryBoundariesSystem?.boundaries?.novel_entities;
+  if (boundary && boundary.minimumAsymptoticValue !== undefined && boundary.recoveryHalfLife !== undefined) {
+    const targetLoad = boundary.minimumAsymptoticValue;  // 0.15 (15% floor)
+    const halfLife = boundary.recoveryHalfLife;  // 75 years
+
+    // Apply recovery with effectiveness modifier
+    const recoveryRate = totalEffectiveness * 0.01;  // Scale to monthly rate
+    const currentLoadNormalized = ne.syntheticChemicalLoad;
+
+    // Apply asymptotic recovery (exponential approach to 15% floor)
+    ne.syntheticChemicalLoad = assertFinite(
+      asymptoteRecovery(
+        currentLoadNormalized * 100,  // Convert to 0-100 scale
+        targetLoad * 100,  // Target 15
+        halfLife,
+        targetLoad,  // 0.15 minimum
+        1/12  // Monthly timestep
+      ) / 100,  // Convert back to 0-1 scale
+      {
+        location: 'updateNovelEntitiesSystem[asymptotic recovery]',
+        valueName: 'syntheticChemicalLoad',
+        month: state.currentMonth,
+      }
+    );
+
+    // Apply legacy stock release (atmospheric redeposition continues)
+    if (boundary.legacyStock !== undefined && ne.atmosphericReservoirStock !== undefined) {
+      const { newStock, released } = legacyStockRelease(
+        ne.atmosphericReservoirStock,
+        50,  // 50-year atmospheric half-life (Cousins 2022)
+        1/12  // Monthly timestep
+      );
+
+      ne.atmosphericReservoirStock = assertFinite(newStock, {
+        location: 'updateNovelEntitiesSystem[legacy stock]',
+        valueName: 'atmosphericReservoirStock',
+        month: state.currentMonth,
+      });
+
+      // Released contamination re-enters environment (futile cleanup cycle)
+      const recontaminationRate = released / 180000;  // Normalize to [0, 1]
+      ne.environmentalContamination = Math.min(1.0, (ne.environmentalContamination || 0) + recontaminationRate * 0.001);
+
+      // Log significant recontamination events
+      if (released > 1000 && state.currentMonth % 12 === 0) {
+        console.log(`🌍 LEGACY STOCK RELEASE: ${(released / 1000).toFixed(1)}k Mt PFAS re-entering environment (atmospheric cycling)`);
+      }
+    }
+  }
+
   // === MICROPLASTICS ===
   // Persistent, everywhere, breaks down into smaller pieces but never disappears
   let microplasticRate = (economicStage * 0.0015) + (manufacturingCap * 0.0008);
   microplasticRate *= (1.0 - ne.circularEconomyDeployment * 0.5); // Reduce plastic use
-  
+
   ne.microplasticConcentration = Math.min(1.0, ne.microplasticConcentration + microplasticRate);
   
   // === PFAS ("FOREVER CHEMICALS") ===
@@ -214,7 +434,7 @@ export function updateNovelEntitiesSystem(state: GameState): void {
   
   ne.reproductiveHealthDecline = Math.min(1.0, ne.reproductiveHealthDecline + reproductiveDeclineRate);
   
-  // Reproductive crisis
+  // Reproductive crisis - TRIGGER (one-time announcement)
   if (ne.reproductiveHealthDecline > 0.50 && !ne.reproductiveCrisisActive) {
     ne.reproductiveCrisisActive = true;
     console.log(`🚨 REPRODUCTIVE CRISIS: Widespread fertility decline`);
@@ -222,19 +442,24 @@ export function updateNovelEntitiesSystem(state: GameState): void {
     console.log(`   Endocrine disruption: ${(ne.endocrineDisruption * 100).toFixed(0)}%`);
     console.log(`   PFAS prevalence: ${(ne.pfasPrevalence * 100).toFixed(0)}%`);
 
-    // Health impact
+    // Health impact (one-time QoL hit when crisis announced)
     const currentHealth1 = assertStateProperty(
       state.qualityOfLifeSystems,
       'health',
       { location: 'updateNovelEntitiesSystem[reproductive crisis]', month: state.currentMonth }
     );
     state.qualityOfLifeSystems.health = Math.max(0.3, currentHealth1 - 0.08);
+  }
 
+  // Reproductive crisis - ONGOING MORTALITY (every month while active)
+  if (ne.reproductiveCrisisActive) {
     // Population impact: Reproductive crisis causes despair, failed fertility treatments (0.05-0.1% casualties)
     // TRULY GLOBAL: PFAS in 99% of human blood = everyone exposed (100% of world)
     // 0.08% mortality rate from despair/failed fertility treatments
     const pop = state.humanPopulationSystem as any;
+    console.log(`💀 Novel Entities: Adding reproductive crisis mortality risk (baseRisk=0.0008)`);
     addMortalityRisk(pop, {
+
       type: 'pollution',
       baseRisk: 0.0008,
       proximate: 'pollution',
@@ -244,6 +469,7 @@ export function updateNovelEntitiesSystem(state: GameState): void {
       month: state.currentMonth,
       exposedFraction: 1.00
     });
+    console.log(`  Risks now: ${pop.mortalityRisks?.length || 0}`)
   }
   
   // === BIOACCUMULATION ===
@@ -256,25 +482,30 @@ export function updateNovelEntitiesSystem(state: GameState): void {
   );
   ne.bioaccumulationFactor = ne.syntheticChemicalLoad * (0.5 + biodiversity * 0.5);
   
-  // Bioaccumulation collapse (apex predators failing)
+  // Bioaccumulation collapse - TRIGGER (one-time announcement)
   if (ne.bioaccumulationFactor > 0.60 && !ne.bioaccumulationCollapseActive) {
     ne.bioaccumulationCollapseActive = true;
     console.log(`🚨 BIOACCUMULATION COLLAPSE: Apex predators poisoned`);
     console.log(`   Bioaccumulation factor: ${(ne.bioaccumulationFactor * 100).toFixed(0)}%`);
     console.log(`   Chemical load: ${(ne.syntheticChemicalLoad * 100).toFixed(0)}%`);
 
-    // Biodiversity impact (top-down cascade)
+    // Biodiversity impact (one-time top-down cascade when collapse announced)
     if (state.environmentalAccumulation) {
       state.environmentalAccumulation.biodiversityIndex = Math.max(0,
         state.environmentalAccumulation.biodiversityIndex - 0.08 // -8% instant hit
       );
     }
+  }
 
+  // Bioaccumulation collapse - ONGOING MORTALITY (every month while active)
+  if (ne.bioaccumulationCollapseActive) {
     // Population impact: Food chain collapse causes contaminated food deaths (0.1-0.2% casualties)
     // TRULY GLOBAL: Food chain is globally interconnected (100% of world affected)
     // 0.15% mortality rate from contaminated food poisoning
     const pop = state.humanPopulationSystem as any;
+    console.log(`💀 Novel Entities: Adding bioaccumulation collapse mortality risk (baseRisk=0.0015)`);
     addMortalityRisk(pop, {
+
       type: 'pollution',
       baseRisk: 0.0015,
       proximate: 'pollution',
@@ -284,6 +515,7 @@ export function updateNovelEntitiesSystem(state: GameState): void {
       month: state.currentMonth,
       exposedFraction: 1.00
     });
+    console.log(`  Risks now: ${pop.mortalityRisks?.length || 0}`)
   }
   
   // === CHRONIC DISEASE EPIDEMIC ===
@@ -295,7 +527,7 @@ export function updateNovelEntitiesSystem(state: GameState): void {
   ne.chronicDiseasePrevalence = 0.20 + (cumulativeExposure * 0.3) + (ne.endocrineDisruption * 0.2);
   ne.chronicDiseasePrevalence = Math.min(0.80, ne.chronicDiseasePrevalence);
   
-  // Chronic disease epidemic
+  // Chronic disease epidemic - TRIGGER (one-time announcement)
   if (ne.chronicDiseasePrevalence > 0.40 && !ne.chronicDiseaseEpidemicActive) {
     ne.chronicDiseaseEpidemicActive = true;
     console.log(`🚨 CHRONIC DISEASE EPIDEMIC: Widespread health crisis`);
@@ -303,7 +535,7 @@ export function updateNovelEntitiesSystem(state: GameState): void {
     console.log(`   Exposure years: ${exposureYears.toFixed(0)}`);
     console.log(`   Chemical load: ${(ne.syntheticChemicalLoad * 100).toFixed(0)}%`);
 
-    // Health QoL impact
+    // Health QoL impact (one-time hit when epidemic announced)
     const healthImpact = (ne.chronicDiseasePrevalence - 0.40) * 0.3; // Up to 12% impact
     const currentHealth2 = assertStateProperty(
       state.qualityOfLifeSystems,
@@ -311,12 +543,17 @@ export function updateNovelEntitiesSystem(state: GameState): void {
       { location: 'updateNovelEntitiesSystem[chronic disease epidemic]', month: state.currentMonth }
     );
     state.qualityOfLifeSystems.health = Math.max(0.2, currentHealth2 - healthImpact);
+  }
 
+  // Chronic disease epidemic - ONGOING MORTALITY (every month while active)
+  if (ne.chronicDiseaseEpidemicActive) {
     // Population impact: Chronic disease epidemic causes cancer/autoimmune deaths (0.3-0.5% casualties)
     // TRULY GLOBAL: Chemical exposure is global (100% of world affected)
     // 0.4% mortality rate from cancer/autoimmune surge
     const pop = state.humanPopulationSystem as any;
+    console.log(`💀 Novel Entities: Adding chronic disease epidemic mortality risk (baseRisk=0.004)`);
     addMortalityRisk(pop, {
+
       type: 'pollution',
       baseRisk: 0.004,
       proximate: 'pollution',
@@ -326,6 +563,7 @@ export function updateNovelEntitiesSystem(state: GameState): void {
       month: state.currentMonth,
       exposedFraction: 1.00
     });
+    console.log(`  Risks now: ${pop.mortalityRisks?.length || 0}`)
   }
   
   // === ONGOING HEALTH IMPACTS ===

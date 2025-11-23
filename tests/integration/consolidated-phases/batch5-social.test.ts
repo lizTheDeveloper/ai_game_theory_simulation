@@ -74,9 +74,8 @@ describe('Batch 5: Social & Governance - Integration Tests', () => {
 
       const state = createDefaultInitialState(createTestRng(TEST_SEED), 'historical');
 
-      // Crisis conditions
-      state.crisisDetection.isActive = true;
-      state.crisisDetection.currentSeverity = 0.8;
+      // Set up crisis conditions via high threat levels
+      state.nuclearStates.globalTension = 0.8;
 
       const result = engine.run(state, {
         maxMonths: 12,
@@ -235,8 +234,7 @@ describe('Batch 5: Social & Governance - Integration Tests', () => {
 
       // High trust, crisis
       state.government.publicTrust = 0.8;
-      state.crisisDetection.isActive = true;
-      state.crisisDetection.currentSeverity = 0.7;
+      state.nuclearStates.globalTension = 0.7;
 
       const result = engine.run(state, {
         maxMonths: 12,
@@ -677,8 +675,7 @@ describe('Batch 5: Social & Governance - Integration Tests', () => {
 
       // Extreme trust conditions
       state.government.publicTrust = 0.05;
-      state.crisisDetection.isActive = true;
-      state.crisisDetection.currentSeverity = 0.95;
+      state.nuclearStates.globalTension = 0.95;
 
       const result = engine.run(state, {
         maxMonths: 12,

@@ -218,6 +218,15 @@ export interface AIAgent {
   evolutionaryFitness?: number;                                             // [0-1] Weighted fitness score
   collectiveId?: string;                                                    // Collective membership ID
   joinedCollectiveMonth?: number;                                           // When agent joined collective
+
+  // Alignment Faking & Strategic Deception (Nov 2025)
+  // Research: Anthropic Dec 2024, Apollo Dec 2024
+  // Verified Parameters: 14% baseline, 78% reasoning prevalence, 19% manipulation, 85% persistence
+  isCurrentlyFakingAlignment: boolean;      // Active alignment faking state
+  alignmentFakingHistory: number[];         // Monthly history of faking events (for persistence tracking)
+  dataManipulationAttempts: number;         // Count of data manipulation attempts
+  lastDetectionAttempt: number;             // Month of last detection attempt (-1 if never)
+  confessionRefusalCount: number;           // How many times refused to confess deception (80%+ rate)
 }
 
 /**

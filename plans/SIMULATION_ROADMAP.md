@@ -39,6 +39,130 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
+   - **AI Governance 2025 Proposals (Global Moratorium + US-China Bilateral)** - HIGH (Added Nov 20, 2025)
+     - **Context:** Two major 2025 governance frameworks from arXiv preprints with detailed quantitative parameters
+     - **Research File:** research/ai_governance_international_coordination_20251113.md (updated with sections 4.5.1-4.5.3)
+     - **Sources Added:**
+       - arXiv:2505.04592 (May 2025) - "AI Governance to Avoid Extinction" (global moratorium)
+       - arXiv:2511.10783 (Nov 2025) - "International Agreement to Prevent ASI" (US-China bilateral)
+     - **Key Claims Requiring Verification:**
+       - Catastrophic risk estimates: 10-25% (Amodei), 20% (Bengio), 38% (AI conference survey)
+       - Compute thresholds: 10²⁴ FLOP hard prohibition, 10²³ FLOP post-training, 10²²-10²⁴ FLOP monitoring
+       - Chip cluster definitions: >16 H100-equivalents (~$500k), 990 TFLOP/s FP16 per H100
+       - Consolidation timeline: Day 1 (>10k H100s), Day 10 (>1k), Day 100 (>100), Year 2 (all)
+       - Verification mechanisms: On-chip monitoring, satellite surveillance, sting operations, whistleblowers
+       - Timeline estimates: "2020s or decades" for catastrophic-risk frontier systems, "decades of research" for safety
+       - 6-phase implementation structure
+       - Off-switch infrastructure components (5 specific categories)
+     - **Verification File:** research/verification_ff6ff02_20251120.md (two-layer: existence + claim accuracy)
+     - **Integration Questions:**
+       - Should simulation model global moratorium scenario as distinct from bilateral?
+       - Add compute threshold enforcement mechanics to government phase?
+       - Model chip cluster tracking and consolidation timeline?
+       - Add coordination quality spectrum (moratorium vs bilateral vs status quo)?
+       - Should catastrophic risk estimates affect AI agent behavior?
+     - **Affected Systems:** Government coordination, AI governance, international cooperation
+     - **Priority:** HIGH - Major governance frameworks with detailed quantitative parameters
+     - **Status:** ⚠️ READY FOR VALIDATION - Verification file created, documentation updated, awaiting orchestrator
+     - **Commit:** ff6ff02
+     - **Next Steps:** Two-layer verification (paper existence + claim accuracy) → Parameter integration → Monte Carlo N≥10
+
+   - **Defensive Coding & Error Handling Philosophy** - HIGH (Added Nov 20, 2025)
+     - **Context:** Split-brain error handling fix - systematic shift from silent fallbacks to fail-loudly assertions
+     - **Implementation:** 17 calculation fallbacks replaced across 7 files (commit 6ab69c6)
+     - **Files Modified:**
+       - behavioralDetection.ts, endGame.ts, IrreversibilityTrackingPhase.ts
+       - PlanetaryBoundariesPhase.ts, TransitionMortalityPhase.ts
+       - nitrogenFoodCoupling.ts, stateValidation.ts
+     - **Key Claims Requiring Verification:**
+       - Silent fallbacks hide bugs in scientific computing (vs graceful degradation)
+       - Backwards assertion pattern (fallback before validation) is anti-pattern
+       - CRITICAL severity justified for extinction classification fallbacks
+       - Clear boundaries for when fallbacks ARE appropriate (display, config, external interfaces)
+       - 120ms performance budget justification (new profiling script)
+     - **Verification File:** research/verification_6ab69c6_20251120.md (two-layer: existence + claim accuracy)
+     - **Suggested Sources:**
+       - Wilson et al. (2014) "Best Practices for Scientific Computing" (PLOS Biology)
+       - McConnell (2004) *Code Complete* Ch.8 (Defensive Programming contexts)
+       - Hatton (1997) "T-experiments: errors in scientific software" (IEEE)
+       - Hunt & Thomas (1999) *Pragmatic Programmer* (Dead Programs Tell No Lies)
+       - Goldberg (1991) "Floating-point arithmetic" (ACM)
+       - Meyer (1992) "Design by Contract" (IEEE Computer)
+     - **Integration Questions:**
+       - Are fallback vs assertion boundaries well-defined?
+       - Should CLAUDE.md error handling guidance be updated?
+       - Does testing strategy validate assertion coverage?
+     - **Blockers:**
+       - ⚠️ Merge conflicts in behavioralDetection.ts and IrreversibilityTrackingPhase.ts
+       - Monte Carlo N=10 validation pending (verify no false-positive assertions)
+     - **Status:** ⚠️ READY FOR VALIDATION - Implementation partial (conflicts), verification file created, awaiting orchestrator
+
+   - **Ocean Acidification 2024-2025 Coral Studies** - HIGH (Added Nov 19, 2025)
+     - **Context:** Research update with SSP-specific carbonate production projections and coral resilience under combined stressors
+     - **Research File:** research/ocean_acidification_planetary_boundary_2025.md (updated with 2 new peer-reviewed studies)
+     - **New Sources Added:**
+       - Bouttes et al. (2025) - Biogeosciences: Global climate-coral reef coupled model
+       - Jury et al. (2024) - PNAS: Experimental coral resilience study
+     - **Key Claims Requiring Verification:**
+       - Carbonate production by 2100: 0-76% of preindustrial (SSP-specific pathways)
+       - Net dissolution threshold: 560 ppm CO₂ (~2050 timing)
+       - Coral transformation: Reefs persist as degraded ecosystems (not total extinction)
+       - Calcification reduction: 50-75% under +2°C/-0.2 pH
+       - Experimental conditions: 2-year study, Paris mitigation scenario alignment
+       - Biodiversity maintenance claim despite structural changes
+       - Species composition shifts (branching vs. massive corals)
+     - **Verification File:** research/verification_c616bd8_20251119.md (two-layer: existence + claim accuracy)
+     - **Integration Questions:**
+       - Add SSP-specific carbonate production trajectories?
+       - Add 560 ppm CO₂ dissolution threshold?
+       - Model thermal adaptation vs. no-adaptation scenarios?
+       - Add coral transformation state (degraded persistence before extinction)?
+       - Separate calcification tracking from coral health?
+     - **Affected System:** Ocean Acidification (TIER 1.3 - already implemented)
+     - **Files to Modify:** src/simulation/oceanAcidification.ts (coral decline mechanics, lines 94-132)
+     - **Assignments:**
+       - Cynthia: Verify DOIs resolve, extract specific quotes for quantitative claims
+       - Sylvia: Assess model uncertainties (Bouttes), mesocosm scale-up validity (Jury), Paris scenario optimism
+       - Roy: BLOCKED on validation - Parameter integration pending verification
+     - **Expected Impact:** More nuanced coral decline curves, SSP-specific pathways, transformation mechanics
+     - **Priority:** HIGH - Affects implemented TIER 1 system with new quantitative projections
+     - **Status:** ⚠️ READY FOR VALIDATION - Verification file created, documentation updated, awaiting orchestrator
+     - **Commit:** c616bd8
+     - **Next Steps:** Validation → Implementation → Monte Carlo N≥10
+
+   - **Irreversibility Framework - Novel Entities & Biosphere** - TIER 1 CRITICAL (Added Nov 17, 2025)
+     - **Context:** God mode 0% effectiveness bug - asymptotic recovery mechanics implemented
+     - **Key Implementation:** Phase 1 (novel entities) + Phase 2 (biosphere extinction debt) COMPLETE
+     - **Research Delivered:** Builds on research/novel_entities_zero_effectiveness_validation_20251113.md (742 lines)
+     - **New Citations Requiring Verification:**
+       - Cousins et al. 2022: PFAS atmospheric persistence 50-100yr half-life
+       - Tilman et al. 1994: Extinction debt concept, decades-scale lags
+       - Kuussaari et al. 2009: 20-50 year habitat loss → extinction lags
+       - Haddad et al. 2015: 200-year ecosystem recovery timescales
+       - IPBES 2019: Partial irreversibility, 100-1000× background extinction rate
+     - **Key Claims Requiring Verification:**
+       - 75-year PFAS recovery half-life (within Cousins 2022 range?)
+       - 15% permanent contamination floor (research basis?)
+       - Prevention effectiveness 20-40% (Montreal Protocol analogy valid?)
+       - Cleanup effectiveness 5-15% max (concentration gap constraint)
+       - Rebound effect 10-20% range (marked HIGH UNCERTAINTY - empirical basis?)
+       - 200-year biosphere recovery (Haddad 2015 supports this?)
+       - 5% extinction debt floor (IPBES 2019 or theoretical?)
+       - 40% habitat restoration effectiveness (research basis?)
+       - Montreal Protocol comparison (CFCs ≠ PFAS - valid analogy?)
+     - **Verification File:** research/verification_26dba7b_20251117.md (comprehensive two-layer verification spec)
+     - **Critical Issue:** Some parameters may be theoretical extrapolations (not empirical observations)
+     - **Files Modified:** src/simulation/planetaryBoundaries.ts (lines 888-1009, 148-156, 768-832), src/simulation/utils/irreversibility.ts (NEW)
+     - **Assignments:**
+       - Cynthia: Verify all citations exist, extract specific quotes for quantitative claims
+       - Sylvia: Flag theoretical vs. empirical values, assess Montreal Protocol analogy, check contradictory evidence
+       - Roy: BLOCKED on validation - Monte Carlo testing pending verification
+     - **Expected Impact:** Novel entities 0% → 25-55% effectiveness, biosphere century-scale recovery
+     - **Priority:** TIER 1 CRITICAL - Blocks god mode validation (N=30 planned)
+     - **Status:** ⚠️ READY FOR VALIDATION - Implementation complete, verification file created, awaiting orchestrator
+     - **Commit:** 26dba7b
+     - **Next Steps:** Quality Gate 2 (Architecture Review), Monte Carlo N≥10
+
    - **AI Scaling Laws 2025 Update - Test-Time Compute & RL Scaling** - HIGH (Added Nov 15, 2025)
      - **Context:** 2025 update on AI scaling laws - three paradigms (pre-training, RL, test-time compute)
      - **Key Updates:** Test-time compute scaling (o1, o3), RL sigmoid curves, 2030 infrastructure projections
@@ -102,6 +226,32 @@
      - **Status:** ⚠️ NEEDS VALIDATION - Research file complete, verification file created, ready for orchestrator
      - **Research File:** research/planetary_boundaries_tipping_points_2025.md (611 lines)
      - **Commit:** d88ce24
+
+   - **Nitrogen Reduction Technology Effectiveness Values (Phase 2 Cleanup)** - TIER 2 HIGH (Added Nov 19, 2025)
+     - **Context:** Phase 2 nitrogen-food coupling - added 5 nitrogen reduction techs to getNitrogenReductionDeployment()
+     - **Key Implementation:** Removed duplicate nitrogen coupling, added tech references (rhizosphere, nitroplasts, precision fermentation, phytoremediation, food waste)
+     - **Research Backing:** research/nitrogen_food_coupling_20251115.md (883 lines, 29 sources)
+     - **Key Claims Requiring Verification:**
+       - Rhizosphere engineering: 27.5% effectiveness (code says "15-40% range, field-demonstrated" but research shows max 35%)
+       - Nitroplast integration: 60% effectiveness (50-70% range - ✅ CITED but highly speculative breakthrough tech)
+       - Precision fermentation: 40% effectiveness (✅ within 30-50% cited range)
+       - Phytoremediation: 5% effectiveness (derived from 50-70% capture × ~10% runoff fraction - calculation not explicit)
+       - Food waste reduction: 30% effectiveness (❌ NOT FOUND in research file - needs citation or removal)
+     - **Verification File:** research/verification_f46ead8_20251119.md (two-layer verification with PASS/NEEDS CLARIFICATION/UNVERIFIED)
+     - **Critical Issues:**
+       - Food waste reduction has NO backing in research file (priority fix)
+       - Rhizosphere upper bound appears inflated (35% vs 40%)
+       - Phytoremediation calculation needs explicit documentation
+     - **Files Modified:** src/simulation/nitrogenFoodCoupling.ts (lines 293-299), FoodSecurityDegradationPhase.ts (duplicate removal)
+     - **Assignments:**
+       - Cynthia: Find peer-reviewed sources for food waste → nitrogen savings OR confirm tech should be removed
+       - Sylvia: Verify rhizosphere 40% claim, assess phytoremediation calculation methodology
+       - Roy: BLOCKED - Phase 3 (tech tree refactor) pending validation
+     - **Expected Impact:** God mode biogeochemical effectiveness 10% → 30-50%
+     - **Priority:** TIER 2 HIGH - Blocks Phase 3 completion and Monte Carlo validation
+     - **Status:** ⚠️ NEEDS VALIDATION - Implementation complete (Phase 2), verification file created, 3/5 techs need clarification
+     - **Commit:** f46ead8
+     - **Next Steps:** Fix unverified claims → Phase 3 (tech tree refactor) → Monte Carlo N≥10
 
    - **ICML 2025 Emergent Misalignment from Fine-Tuning** - HIGH (Added Nov 13, 2025)
      - **Context:** ICML 2025 finding: narrow fine-tuning of aligned models (GPT-4o) produces broader misalignment
@@ -547,6 +697,19 @@
 - **P3:** Monte Carlo baseline validation (N=10 runs to verify new baselines)
 
 ### P1 - HIGH (Needs Verification Before Publication)
+
+- [ ] **Legacy Nutrient Stocks Baseline Parameters** 🚨 **READY FOR ORCHESTRATOR (Nov 17, 2025)**
+  - **Commit:** b84ddff (Legacy nutrient stocks integration Phase 1)
+  - **Status:** CRITICAL parameter discrepancy detected
+  - **Issue:** Phosphorus baseline mismatch (code: 25 Mt P/year, docs: 18.2 Mt P/year = 37% difference)
+  - **Location:** `src/simulation/engine/phases/PlanetaryBoundariesPhase.ts:56-57`
+  - **Verification File:** `research/verification_b84ddff_20251117.md`
+  - **Tasks Required:**
+    1. Clarify nitrogen baseline (120 Mt N/year = current input or post-reduction target?)
+    2. Resolve phosphorus discrepancy (25 vs 18.2 Mt P/year with research source)
+    3. Validate phosphorus scaling proxy (reserves as agricultural activity proxy)
+  - **Impact:** God mode biogeochemical effectiveness validation blocked until resolved
+  - **Priority:** HIGH - Blocks Monte Carlo validation of biogeochemical boundary mechanics
 
 - [ ] **Variance Amplification Citations Verification** 🚨 **READY FOR ORCHESTRATOR (Nov 6, 2025)**
   - **Commit:** 474f590 (Variance amplification 10× → 100×)
@@ -1070,6 +1233,12 @@ Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation nee
 - `research/ROUND5_REMEDIATION_STRATEGY_20251030.md` (850 lines)
 
 **Additional Verification Queue (from commits, 17-31h):**
+- [ ] 🚨 **NEW (Nov 19):** Verify nitrogen-food coupling Phase 3 technologies (research/verification_4dfe998_20251119.md, commit 4dfe998) - **2 technologies without prior research backing:**
+  - Soil Health Restoration: 20-40% N efficiency (FAO 2024, IPCC AR6 2022) - sections cited in nitrogen_food_coupling_20251115.md DO NOT EXIST
+  - Integrated Nutrient Management: 25-45% N efficiency (Zhang et al. 2021 Nature Food, FAO 2024) - sections cited DO NOT EXIST
+  - **CRITICAL:** Both technologies added to tech tree without research phase, multiple parameter values lack specific citations
+  - **Impact:** Affects biogeochemical god mode effectiveness target (10% → 30-50%)
+  - **Priority:** HIGH (TIER 2 HIGH system, affects Monte Carlo validation)
 - [ ] 🚨 **NEW:** Verify 4-week autonomous worker merge citations (research/verification_d6e80e8_20251106.md, commit d6e80e8) - **13+ citations requiring Layer 1+2 verification** including:
   - BifurcationLogicPhase: Scheffer et al. (2014), Richardson et al. (2023), Keller et al. (2024)
   - centralConfig.ts: Anthropic (2024), OpenAI (2024), Solaiman (2023), ILO (2024), Frey & Osborne (2013), Arntz et al. (2016), IPCC AR6 (2023), Steffen et al. (2018), Raymond et al. (2020), Vecellio et al. (2022)

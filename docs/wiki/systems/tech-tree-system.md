@@ -14,6 +14,7 @@ The tech tree system manages 71 technologies across 8 categories, with realistic
    - Manages tech unlocking and deployment
    - Handles serialization/deserialization
    - Processes deployment actions
+   - **O(1) lookup indexes** for deployment and unlock checks (Nov 2025)
 
 2. **Comprehensive Tech Tree** (`src/simulation/techTree/comprehensiveTechTree.ts`)
    - Defines all 71 technologies
@@ -30,12 +31,16 @@ The tech tree system manages 71 technologies across 8 categories, with realistic
    - Technology-specific regional relevance
    - Deployment speed and cost modifiers
 
-5. **AI Tech Actions** (`src/simulation/agents/aiTechActions.ts`)
+5. **Deployment Timescales** (`src/simulation/techTree/deploymentTimescales.ts`)
+   - Monthly deployment progress updates
+   - Maintains O(1) lookup indexes after updates
+
+6. **AI Tech Actions** (`src/simulation/agents/aiTechActions.ts`)
    - AI agent technology deployment/sabotage
    - Alignment-based tech selection
    - Regional deployment strategies
 
-6. **Government Tech Actions** (`src/simulation/agents/governmentTechActions.ts`)
+7. **Government Tech Actions** (`src/simulation/agents/governmentTechActions.ts`)
    - National technology deployment
    - Nation-specific priorities and budgets
    - Crisis-driven investment scaling
@@ -333,7 +338,25 @@ All technologies include research citations from:
 
 ## Performance Considerations
 
-### Optimization
+### Optimization (Updated Nov 20, 2025)
+
+**O(1) Lookup Indexes:**
+- `TechTreeState.deployedTechMap`: Maps tech ID → max deployment level (instant lookup)
+- `TechTreeState.unlockedTechSet`: Maps tech ID → true (instant membership check)
+- **Impact**: Eliminated 284+ O(n) array searches per month
+- **Performance gain**: Technology Tree Update phase reduced from 14.4% (23ms/step) to sub-10ms
+
+**Helper Functions** (`src/simulation/techTree/engine.ts`):
+- `getTechDeployment(techTreeState, techId)`: O(1) deployment level lookup
+- `isTechUnlocked(techTreeState, techId)`: O(1) unlock status check
+- `rebuildDeploymentIndex(techTreeState)`: Rebuild index after deployment updates
+
+**Index Maintenance:**
+- `unlockTech()`: Updates `unlockedTechSet` on tech unlock
+- `deploymentTimescales.ts`: Calls `rebuildDeploymentIndex()` after monthly updates
+- `ClimateDeploymentPhase`: Updates `deployedTechMap` after immediate deployments
+
+**Additional Optimizations:**
 - Effects engine uses efficient property access
 - Regional calculations cached where possible
 - Tech tree state serialized efficiently
@@ -344,6 +367,7 @@ All technologies include research citations from:
 - Regional deployment scales with number of regions
 - Effects engine handles 100+ effect types
 - Visualization supports large tech trees
+- O(1) lookups maintain constant-time performance regardless of tech count
 
 ---
 

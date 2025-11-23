@@ -27,9 +27,11 @@ import { assertFinite, assertInRange } from '@/simulation/utils/assertions';
  * Initialize legacy nutrient stocks based on current (2025) pollution baselines
  *
  * Research-backed initial values:
- * - Global nitrogen use: ~120 Mt N/year (2025 baseline)
- * - Global phosphorus use: ~25 Mt P/year (2025 baseline)
+ * - Global nitrogen flow: ~120 Mt N/year (total agricultural N)
+ * - Global phosphorus flow: ~18.2 Mt P/year (Stockholm Resilience Centre data)
  * - Accumulated stocks from decades of overuse
+ *
+ * Sources: Wiki planetary-boundaries.md line 211, Steffen et al. 2015
  */
 export function initializeLegacyNutrientStock(): LegacyNutrientStock {
   // Research: Decades of fertilizer overuse have built up massive legacy stocks

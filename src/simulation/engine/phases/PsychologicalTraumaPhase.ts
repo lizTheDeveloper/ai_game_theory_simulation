@@ -23,6 +23,7 @@ import {
   assertDefined,
   assertMortalityRate
 } from '../../utils/assertions';
+import { isTechDeployed } from '../../techTree/helpers';
 
 export class PsychologicalTraumaPhase implements SimulationPhase {
   readonly id = 'psychological_trauma';
@@ -129,15 +130,19 @@ export class PsychologicalTraumaPhase implements SimulationPhase {
       let recoveryRate = 0.02;
 
       // Mental health tech increases recovery rate
-      const { isTechDeployed } = require('../../techTree/helpers');
       const psychWellbeingDeployment = isTechDeployed(state, 'psychologicalWellbeing');
       if (psychWellbeingDeployment > 0.5) {
         recoveryRate *= 1.5;  // 50% faster recovery with tech
       }
 
       // Social cohesion helps recovery (average of components, 0-1 scale)
-      const defaultCohesion = { trust: 50, communityBonds: 50, civilLiberties: 50 };
-      const cohesion = state.socialAccumulation?.socialCohesion || defaultCohesion;
+      // socialAccumulation.socialCohesion is REQUIRED field
+      const cohesion = assertDefined(state.socialAccumulation.socialCohesion, {
+        location: 'PsychologicalTraumaPhase.execute',
+        valueName: 'state.socialAccumulation.socialCohesion',
+        month: state.currentMonth,
+        expectedSource: 'socialAccumulation initialization'
+      });
       const avgCohesion = assertProbability(
         (cohesion.trust + cohesion.communityBonds + cohesion.civilLiberties) / 300,
         {

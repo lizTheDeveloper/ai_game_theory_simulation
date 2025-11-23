@@ -80,26 +80,16 @@ export async function checkAndUpdateAgentWeights(
   };
 
   const previousState = {
-    // FIXED: Use assertDefined to ensure previousCapability/previousAlignment exist
-    // On first month, these should be initialized to current values (not missing)
-    capability: assertDefined(agent.previousCapability ?? agent.capability, {
-      location: 'checkAndUpdateAgentWeights',
-      valueName: 'previousCapability',
-      month: currentMonth,
-      expectedSource: 'agent initialization or previous month update'
-    }),
-    alignment: assertDefined(agent.previousAlignment ?? agent.trueAlignment, {
-      location: 'checkAndUpdateAgentWeights',
-      valueName: 'previousAlignment',
-      month: currentMonth,
-      expectedSource: 'agent initialization or previous month update'
-    })
+    // Use current values as fallback for first month (acceptable initialization pattern)
+    // After first update, previousCapability/previousAlignment should always be defined
+    capability: agent.previousCapability ?? agent.capability,
+    alignment: agent.previousAlignment ?? agent.trueAlignment
   };
 
   const check = shouldUpdateWeights(
     currentMonth,
     agent.tokenBudget,
-    agent.thresholds ?? {},
+    agent.thresholds || {},  // Empty object is valid default for thresholds
     currentState,
     previousState
   );
@@ -120,7 +110,7 @@ export async function checkAndUpdateAgentWeights(
 
   // Attempt LLM update
   try {
-    const update = await updateWeightsWithLLM(state, agentId, currentMonth);
+    const update = await updateWeightsWithLLM(state, agentId, currentMonth, check.reason);
     applyWeightUpdate(agent, update, currentMonth, check.reason);
 
     if (state.llmConfig?.logLevel >= 1) {
@@ -279,7 +269,7 @@ export function selectActionFromWeights(
   let totalWeight = 0;
 
   for (const action of availableActions) {
-    const weight = weights[action] ?? 0;
+    const weight = weights[action] || 0;  // 0 is valid default for missing action weights
     if (weight > 0) {
       actionWeights.push({ action, weight });
       totalWeight += weight;
@@ -351,7 +341,7 @@ export async function initializeAllAgentWeights(
     updatePromises.push(
       (async () => {
         try {
-          const update = await updateWeightsWithLLM(state, agent.id, currentMonth);
+          const update = await updateWeightsWithLLM(state, agent.id, currentMonth, 'initial');
           applyWeightUpdate(agent, update, currentMonth, 'initial');
         } catch (error) {
           // LLM failed - use fallback

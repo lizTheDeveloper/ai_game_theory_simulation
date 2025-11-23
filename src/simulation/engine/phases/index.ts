@@ -59,6 +59,7 @@ export { CrisisDetectionPhase } from './CrisisDetectionPhase';
 // export { UpwardSpiralsPhase } from './UpwardSpiralsPhase';  // CONSOLIDATED into CooperativeSystemsPhase (Batch 5, Nov 9, 2025)
 // export { CooperativeSpiralsPhase } from './CooperativeSpiralsPhase';  // CONSOLIDATED into CooperativeSystemsPhase (Batch 5, Nov 9, 2025)
 export { TechTreePhase } from './TechTreePhase';
+export { CoordinatedDeploymentPhase } from './CoordinatedDeploymentPhase';  // Nov 15, 2025: AI-managed gradual deployment (order 16.5)
 export { MeaningRenaissancePhase } from './MeaningRenaissancePhase';
 // export { ConflictResolutionPhase } from './ConflictResolutionPhase';  // CONSOLIDATED into InternationalRelationsPhase (Batch 5, Nov 9, 2025)
 // export { FlashWarEscalationPhase } from './FlashWarEscalationPhase';  // CONSOLIDATED into InternationalRelationsPhase (Batch 5, Nov 9, 2025)
@@ -95,6 +96,9 @@ export { RadiationSystemPhase } from './RadiationSystemPhase';
 export { WetBulbTemperaturePhase } from './WetBulbTemperaturePhase';  // Wet Bulb Temperature Events (Oct 17, 2025)
 export { ExtremeWeatherEventsPhase } from './ExtremeWeatherEventsPhase';  // Extreme Weather Events (Oct 28, 2025)
 export { PlanetaryBoundariesPhase } from './PlanetaryBoundariesPhase';
+export { IrreversibilityTrackingPhase } from './IrreversibilityTrackingPhase';  // TIER 1 CRITICAL (Nov 16, 2025): Environmental & social tipping points with hysteresis
+export { LegacyNutrientStocksPhase } from './LegacyNutrientStocksPhase';  // TIER 2 HIGH (Nov 15, 2025): Legacy nutrient stock decay
+export { NitrogenFoodCouplingPhase } from './NitrogenFoodCouplingPhase';  // TIER 2 HIGH (Nov 15, 2025): Nitrogen-food production coupling
 export { PositiveTippingPointsPhase } from './PositiveTippingPointsPhase';  // Oct 17, 2025
 // export { TippingPointPhase } from './TippingPointPhase';  // CONSOLIDATED into ClimateSystemPhase (Batch 3, Nov 2025)
 export { FamineSystemPhase } from './FamineSystemPhase';
@@ -103,6 +107,7 @@ export { FoodSecurityDegradationPhase } from './FoodSecurityDegradationPhase';  
 // Batch 3 (Nov 2025): Climate & Environmental Consolidation
 export { ClimateSystemPhase } from './ClimateSystemPhase';  // Consolidates: Geoengineering, TippingPoint, EnvironmentalFeedback, ClimateImpactCascade
 export { ClimateDeploymentPhase } from './ClimateDeploymentPhase';  // TIER 1 CRITICAL (Nov 2025): Climate tech phased deployment + energy constraints
+export { ClimateDeploymentDelayPhase } from './ClimateDeploymentDelayPhase';  // TIER 1 CRITICAL (Nov 18, 2025): Three-delay model for realistic deployment
 export { ResourceSoilPhase } from './ResourceSoilPhase';  // Consolidates: Phosphorus, NovelEntities
 export { ResourceWaterPhase } from './ResourceWaterPhase';  // Consolidates: Freshwater, OceanAcidification
 export { BayesianMortalityResolutionPhase } from './BayesianMortalityResolutionPhase';  // Phase 35 (Oct 27, 2025) - Centralized mortality resolution

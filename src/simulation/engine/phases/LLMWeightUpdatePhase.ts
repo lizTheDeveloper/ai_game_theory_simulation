@@ -30,8 +30,12 @@ export const LLMWeightUpdatePhase: SimulationPhase = {
     // by queuing them and processing them in the background. The phase doesn't wait for responses.
     const changes: string[] = [];
 
-    // DEBUG: Log phase execution
-    if (state.currentMonth === 0 || state.currentMonth % 6 === 0) {
+    // Performance fix (Nov 20, 2025): Use performance config for LLM logging
+    const { getPerformanceConfig } = require('../../config/performanceConfig');
+    const perfConfig = getPerformanceConfig();
+
+    // DEBUG: Log phase execution (only when enabled)
+    if (perfConfig.llmPhaseLogging && (state.currentMonth === 0 || state.currentMonth % 6 === 0)) {
       console.log(`\n[LLM PHASE] Month ${state.currentMonth}: Checking weights (enabled: ${state.llmConfig?.enabled})`);
     }
 

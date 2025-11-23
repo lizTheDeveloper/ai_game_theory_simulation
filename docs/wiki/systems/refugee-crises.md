@@ -240,10 +240,16 @@ state.humanPopulationSystem.population -= (transitDeaths / 1000); // Convert to 
 - Separate from other crisis deaths
 - Contributes to overall death toll
 - **Global cumulative caps**: 20B (2× initial world population) across all regions and time
-  - Updated Nov 2025: Raised from 10B after Monte Carlo N=10 hit cap at Month 160
-  - Rationale: High-mortality scenarios with partial recovery cycles can exceed 1× initial population
-  - Warning threshold: 12B (1.5× initial pop) logs unusual but possible accumulation
-  - Research: Xia et al. 2022 - worst-case nuclear winter: 75% mortality (6B deaths), multiple collapse/recovery cycles over 20 years could reach 2× initial population
+  - **Updated Nov 2025:** Raised from 10B after Monte Carlo N=10 hit cap at Month 160
+  - **Purpose:** Validation bound to prevent silent bugs (not hard physical limit)
+  - **Warning threshold:** 12B (1.5× initial pop) logs unusual but possible accumulation
+  - **Hard cap:** 20B (2× initial pop) fails with assertion error
+  - **Research foundation:**
+    - **Xia et al. 2022 (Nature Food):** Worst-case nuclear winter (150 Tg soot) → 75% mortality = 6B deaths
+    - **Single-event baseline:** 6B verified for catastrophic nuclear war + global famine
+    - **Multi-cycle rationale:** 20B = 2× safety margin for compounding crises over 20-year simulation
+    - **Scenarios:** Nuclear winter + climate collapse + refugee crises + AMR amplification with partial recovery cycles
+  - **Verification status:** PARTIAL (single-event verified, multi-cycle theoretical justification pending)
 
 **Outcome Impact**:
 - Large displacements reduce civilization viability
@@ -302,6 +308,23 @@ state.humanPopulationSystem.population -= (transitDeaths / 1000); // Convert to 
 - Global average across all routes
 - Includes sea, land, desert, mountain crossings
 - Conservative estimate (some routes much higher)
+
+### 4. Maximum Mortality Research
+
+**Xia et al. 2022 (Nature Food)**:
+- **Paper:** "Global food insecurity and famine from reduced crop, marine fishery and livestock production due to climate disruption from nuclear war soot injection"
+- **Worst-case scenario:** 150 Tg soot injection (US-Russia full nuclear exchange)
+- **Mortality:** 75% of global population (6B deaths from 8B initial population)
+- **Mechanism:**
+  - Global temperature drops from stratospheric soot
+  - Agricultural collapse (crop yields fall 90%+)
+  - Marine ecosystem failure
+  - Cascading famine over 3-5 years
+- **Model application:**
+  - Single-event baseline: 6B deaths
+  - Multi-cycle bound: 20B (2× for collapse/recovery cycles over 20 years)
+  - Validation purpose: Prevent silent bugs in death tracking
+- **Verification status:** Single-event verified, multi-cycle theoretical justification pending
 
 ## Crisis Creation Examples
 

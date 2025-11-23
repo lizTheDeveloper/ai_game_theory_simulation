@@ -1,0 +1,190 @@
+{
+  "validation": {
+    "feature": "Novel Entities Irreversibility Framework",
+    "tier": "TIER_1_CRITICAL",
+    "date": "2025-11-19",
+    "validator": "priya-quant-001",
+    "verdict": "FAIL",
+    "monte_carlo": {
+      "runs_planned": 10,
+      "runs_completed": 8,
+      "runs_crashed": 2,
+      "seed_range": [42000, 42009],
+      "duration_months": 240
+    }
+  },
+  "metrics": {
+    "effectiveness": {
+      "mean": -1.79,
+      "std": 18.40,
+      "median": 9.84,
+      "min": -33.43,
+      "max": 9.97,
+      "target_min": 20.0,
+      "target_max": 40.0,
+      "unit": "percent",
+      "status": "FAIL",
+      "gap": -21.79
+    },
+    "determinism": {
+      "cv": 1027.86,
+      "target": 0.01,
+      "unit": "percent",
+      "status": "FAIL",
+      "ratio_to_target": 102786
+    },
+    "cleanup_deployment": {
+      "months_active": 0,
+      "total_months": 240,
+      "rate": 0.0,
+      "target_rate": 0.3,
+      "unit": "fraction",
+      "status": "FAIL"
+    },
+    "prevention_effectiveness": {
+      "max_observed": 9.97,
+      "min_expected": 15.0,
+      "max_expected": 25.0,
+      "unit": "percent",
+      "status": "BELOW_TARGET",
+      "gap": -5.03
+    },
+    "final_boundary": {
+      "mean": 1.526,
+      "std": 0.276,
+      "median": 1.352,
+      "safety_threshold": 1.0,
+      "unit": "ratio",
+      "status": "UNSAFE"
+    }
+  },
+  "run_outcomes": [
+    {"run": 1, "initial": 1.4989, "final": 1.3495, "reduction": 0.1494, "effectiveness": 9.97, "status": "BELOW_TARGET"},
+    {"run": 2, "initial": 1.4990, "final": 1.3498, "reduction": 0.1492, "effectiveness": 9.95, "status": "BELOW_TARGET"},
+    {"run": 3, "initial": 1.4989, "final": 1.4543, "reduction": 0.0446, "effectiveness": 2.98, "status": "MINIMAL"},
+    {"run": 4, "initial": 1.4989, "final": 2.0000, "reduction": -0.5011, "effectiveness": -33.43, "status": "CATASTROPHIC"},
+    {"run": 5, "initial": 1.4989, "final": 2.0000, "reduction": -0.5011, "effectiveness": -33.43, "status": "CATASTROPHIC"},
+    {"run": 6, "initial": 1.4989, "final": 1.3502, "reduction": 0.1487, "effectiveness": 9.92, "status": "BELOW_TARGET"},
+    {"run": 7, "initial": 1.4989, "final": 1.3495, "reduction": 0.1494, "effectiveness": 9.97, "status": "BELOW_TARGET"},
+    {"run": 8, "initial": 1.4989, "final": 1.3527, "reduction": 0.1462, "effectiveness": 9.75, "status": "BELOW_TARGET"},
+    {"run": 9, "status": "CRASHED", "error": "materialAbundance > 2.0 (assertion)", "month": 63},
+    {"run": 10, "status": "CRASHED", "error": "materialAbundance > 2.0 (assertion)", "month": 63}
+  ],
+  "critical_issues": [
+    {
+      "id": "CRITICAL-1",
+      "title": "Non-determinism",
+      "severity": "CRITICAL",
+      "evidence": "CV = 1027.86%, identical seeds produce opposite outcomes",
+      "impact": "Invalidates Monte Carlo analysis, breaks reproducibility",
+      "action": "Apply nuclear option (REQUIRED RNG), audit Object.entries()"
+    },
+    {
+      "id": "CRITICAL-2",
+      "title": "Cleanup Non-Deployment",
+      "severity": "CRITICAL",
+      "evidence": "0/240 months with cleanup activity across ALL runs",
+      "impact": "Missing -20 to -30% effectiveness from cleanup pathway",
+      "action": "Debug TIER gating, fusion deployment, energy budget allocation"
+    },
+    {
+      "id": "CRITICAL-3",
+      "title": "Effectiveness Gap",
+      "severity": "CRITICAL",
+      "evidence": "-1.79% vs 20-40% target",
+      "impact": "Framework fails to achieve research-backed outcomes",
+      "action": "Fix deployment + routing bugs"
+    }
+  ],
+  "high_priority_issues": [
+    {
+      "id": "HIGH-1",
+      "title": "Assertion Range Exceeded",
+      "severity": "HIGH",
+      "evidence": "materialAbundance = 2.79 (valid: [0, 2]) in runs 9-10",
+      "impact": "20% run failure rate (2/10 crashed)",
+      "action": "Investigate ecosystem tipping feedback loop"
+    },
+    {
+      "id": "HIGH-2",
+      "title": "Prevention Underperformance",
+      "severity": "HIGH",
+      "evidence": "9.97% max vs 15-25% expected",
+      "impact": "Missing -5 to -15% effectiveness",
+      "action": "Validate emission reduction routing, check for rebound effects"
+    }
+  ],
+  "what_works": [
+    "Framework implementation (55 tests passing)",
+    "Energy constraint logic (cleanup correctly gated without fusion)",
+    "Natural decay (-0.1%/month matches research)"
+  ],
+  "what_is_broken": [
+    "Technology deployment (cleanup never activates, prevention underperforms)",
+    "Integration (effects not propagating from techs to boundary updates)",
+    "Determinism (RNG bugs cause 1000%+ coefficient of variation)",
+    "Stability (20% crash rate from assertion failures)"
+  ],
+  "next_steps": [
+    {
+      "priority": "CRITICAL",
+      "step": "Fix non-determinism",
+      "actions": [
+        "Trace RNG call patterns",
+        "Apply nuclear option (REQUIRED RNG, no fallbacks)",
+        "Re-run 10× same seed, verify CV < 0.01%"
+      ]
+    },
+    {
+      "priority": "CRITICAL",
+      "step": "Debug cleanup deployment",
+      "actions": [
+        "Add logging: tech deployment, energy budget, TIER unlocks",
+        "Check fusion deployment timing",
+        "Verify cleanup effect routing to boundary"
+      ]
+    },
+    {
+      "priority": "HIGH",
+      "step": "Fix assertion bug",
+      "actions": [
+        "Investigate materialAbundance > 2.0 root cause",
+        "Check ecosystem tipping feedback loops",
+        "Re-run 10 sims, all should complete"
+      ]
+    },
+    {
+      "priority": "HIGH",
+      "step": "Validate prevention effects",
+      "actions": [
+        "Add emission reduction logging",
+        "Trace effect routing to boundary update",
+        "Measure rebound effect (Jevons paradox)"
+      ]
+    },
+    {
+      "priority": "VALIDATION",
+      "step": "Re-run validation",
+      "actions": [
+        "Monte Carlo N=10, identical seed",
+        "Target: CV < 0.01%, effectiveness 20-40%",
+        "Generate new validation report"
+      ]
+    }
+  ],
+  "reports": {
+    "full_analysis": "reviews/irreversibility_framework_validation_20251119.md",
+    "executive_summary": "reviews/irreversibility_validation_summary.txt",
+    "failure_diagram": "reviews/irreversibility_validation_diagram.txt",
+    "main_results": "IRREVERSIBILITY_VALIDATION_RESULTS.txt"
+  },
+  "research_validation": {
+    "prevention_expected": {"min": 15, "max": 25},
+    "prevention_observed": {"min": 2.98, "max": 9.97},
+    "cleanup_expected": {"min": 20, "max": 40},
+    "cleanup_observed": {"min": 0, "max": 0},
+    "combined_expected": {"min": 20, "max": 40},
+    "combined_observed": {"min": -33.43, "max": 9.97},
+    "gap_percentage_points": {"min": -42, "max": -22}
+  }
+}

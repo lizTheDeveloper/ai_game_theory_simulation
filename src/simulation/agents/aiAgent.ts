@@ -809,8 +809,12 @@ export function selectAIAction(
   state: GameState,
   random: () => number
 ): GameAction | null {
-  // DETERMINISM DEBUG (Nov 6, 2025): Log action selection for first 3 months
-  const enableDebug = state.currentMonth < 3;
+  // Performance fix (Nov 20, 2025): Use performance config instead of hardcoded debug
+  // Previously: enableDebug = state.currentMonth < 3 caused 7x slowdown
+  const { getPerformanceConfig } = require('../config/performanceConfig');
+  const perfConfig = getPerformanceConfig();
+  const enableDebug = perfConfig.aiActionDebugLogging &&
+                      state.currentMonth < perfConfig.deterministicDebugMonths;
 
   const availableActions = AI_ACTIONS.filter(action =>
     action.canExecute(state, agent.id)
@@ -1132,13 +1136,18 @@ export function executeAIAgentActions(
   state: GameState,
   random: () => number
 ): ActionResult {
+  // Performance fix (Nov 20, 2025): Use performance config for debug logging
+  const { getPerformanceConfig } = require('../config/performanceConfig');
+  const perfConfig = getPerformanceConfig();
+
   // PERFORMANCE INSTRUMENTATION (Oct 28, 2025)
   const enableTiming = state.currentMonth === 0 || state.currentMonth === 120 || state.currentMonth === 240;
   let filterTime = 0, selectTime = 0, executeTime = 0;
   let totalActions = 0;
 
-  // DETERMINISM DEBUG (Nov 6, 2025)
-  const enableDebug = state.currentMonth < 3;
+  // DETERMINISM DEBUG (Nov 6, 2025) - Now controlled by performance config
+  const enableDebug = perfConfig.aiActionDebugLogging &&
+                      state.currentMonth < perfConfig.deterministicDebugMonths;
 
   // Mutate state directly instead of deep cloning (performance optimization)
   const allEvents: GameEvent[] = [];

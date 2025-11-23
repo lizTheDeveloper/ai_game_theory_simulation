@@ -169,14 +169,44 @@ The Environmental Accumulation System tracks four metrics that slowly degrade du
 |---------|-------------------|-----------|---------|----------|
 | **Arctic Sea Ice Loss** | 10-30 years | climateStability < 0.65 | -0.10 climate (albedo feedback) | ❌ No |
 | **Amazon Dieback** | 30-80 years | climateStability < 0.55 | -0.15 biodiversity, -0.08 climate | ✅ Yes |
-| **AMOC Collapse** | 50-300 years | climateStability < 0.60 | -0.25 climate (Europe -40%) | ✅ Yes |
+| **AMOC Collapse** | 50-300 years | Temperature-dependent (see below) | -0.25 climate (Europe -40%) | ✅ Yes |
 | **Permafrost Carbon** | 50-300 years | climateStability < 0.60 | -0.15 climate (carbon feedback) | ✅ Yes |
 | **West Antarctic Ice** | 2,000-13,000 years | climateStability < 0.65 | -0.20 climate (coastal -50%) | ✅ Yes |
 | **Greenland Ice Sheet** | 1,000-15,000 years | climateStability < 0.65 | -0.25 climate (coastal -60%) | ✅ Yes |
 
 **Recent Updates:**
+- **November 20, 2025:** AMOC collapse probability updated to temperature-dependent function (Bellomo et al. 2025, Westen et al. 2024). Replaces fixed 5% probability with research-backed scaling:
+  - <+2°C: ~0.5% annual (extremely unlikely)
+  - +2-2.2°C: ~1-5% annual (outlier tail risk)
+  - +2.2-3°C: ~5-50% annual (rising risk)
+  - +3-3.9°C: ~50-90% annual (high risk)
+  - >+3.9°C: ~90% annual (very likely)
 - **November 12, 2025:** Research sources updated to Armstrong McKay (2022) + Wunderling (2024)
 - **November 6, 2025:** Arctic Sea Ice no longer cascades (Armstrong McKay 2022 - reversible), AMOC upper bound 150yr → 300yr, WAIS lower bound 500yr → 2,000yr, debug logging added
+
+**AMOC Temperature-Dependent Collapse Probability:**
+
+The Atlantic Meridional Overturning Circulation (AMOC) collapse probability is now modeled as a temperature-dependent function rather than a fixed threshold, based on Bellomo et al. Nature Communications (2025) and Westen et al. Science Advances (2024).
+
+**Research Foundation:**
+- Research file: `research/amoc_collapse_probability_20251120.md`
+- Key finding: Collapse probability increases nonlinearly with temperature
+- Implementation: `src/simulation/engine/phases/IrreversibilityTrackingPhase.ts`
+
+**Probability Function:**
+```
+<+2°C:        0.5% annual (extremely unlikely)
++2-2.2°C:     1-5% annual (outlier tail risk - linear interpolation)
++2.2-3°C:     5-50% annual (rising risk - linear interpolation)
++3-3.9°C:     50-90% annual (high risk - linear interpolation)
+>+3.9°C:      90% annual (very likely)
+```
+
+**Why This Matters:**
+- Previous implementation used fixed 5% probability at +2-3°C
+- New function captures research consensus: risk increases dramatically with temperature
+- Allows for rare early collapse events (outliers) while maintaining consensus +4°C threshold
+- More accurately reflects uncertainty in tipping point timing
 
 **Research Documentation:**
 - `research/climate_tipping_points_2024_update.md` (436 lines, comprehensive 2024-2025 review)

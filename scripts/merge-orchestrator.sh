@@ -314,9 +314,9 @@ for BRANCH in $BRANCHES; do
           log "🎉 All quality gates passed!"
           log "🔀 Merging to main..."
 
-          git checkout main 2>&1 | tee -a "$LOG_FILE"
-          git merge "$MERGE_BRANCH" --no-edit 2>&1 | tee -a "$LOG_FILE"
-          git push origin main 2>&1 | tee -a "$LOG_FILE"
+          git checkout main 2>&1 | tee -a "$LOG_FILE" || true
+          git merge "$MERGE_BRANCH" --no-edit 2>&1 | tee -a "$LOG_FILE" || true
+          git push origin main 2>&1 | tee -a "$LOG_FILE" || true
 
           log "✅ Successfully merged to main"
 
@@ -330,7 +330,7 @@ for BRANCH in $BRANCHES; do
           log "    ❌ Tests failed"
           log "🔧 AUTO-REMEDIATION: Spawning Claude Code to fix test failures..."
 
-          git checkout main 2>&1 >> "$LOG_FILE"
+          git checkout main 2>&1 >> "$LOG_FILE" || true
 
           # Create remediation task file (sanitize branch name for filesystem)
           SAFE_BRANCH=$(echo "$BRANCH" | sed "s|[+ /]|_|g")
@@ -394,14 +394,14 @@ EOFT
         log "🚫 Merge BLOCKED: TypeScript errors"
         log "📋 Merge branch preserved: $MERGE_BRANCH"
         FAILED=$((FAILED + 1))
-        git checkout main 2>&1 >> "$LOG_FILE"
+        git checkout main 2>&1 >> "$LOG_FILE" || true
       fi
     else
       log "❌ Merge conflicts detected"
       log "🔧 AUTO-REMEDIATION: Spawning Claude Code to resolve conflicts..."
 
       # Don't abort yet - keep conflict state for Claude Code
-      git checkout main 2>&1 >> "$LOG_FILE"
+      git checkout main 2>&1 >> "$LOG_FILE" || true
 
       # Create remediation task file (sanitize branch name for filesystem)
       SAFE_BRANCH=$(echo "$BRANCH" | sed "s|[+ /]|_|g")

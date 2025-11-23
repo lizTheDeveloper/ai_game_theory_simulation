@@ -126,6 +126,20 @@ npx tsx --test tests/refactoring/phase1-utilities.test.ts
 npx tsx tests/refactoring/runRegressionTests.ts
 ```
 
+### Test Framework
+
+**This project uses Node's native test runner** (`node --test` via tsx), not vitest or jest.
+
+- Test command: `npx tsx --test tests/**/*.test.ts`
+- Assertion style: Node's `assert` module (not vitest's `expect` API)
+- Coverage: `--experimental-test-coverage` flag available
+
+**All tests converted to Node native test framework (Nov 19, 2025):**
+- ✅ `tests/integration/novel-entities-irreversibility.test.ts` (667 lines converted)
+- ✅ `tests/unit/irreversibility.test.ts` (744 lines converted)
+
+Full test suite now runs with native Node test runner. 4 test failures are pre-existing simulation logic issues (non-determinism, deployment bugs), not conversion issues.
+
 ### Test Philosophy
 
 - **Regression tests:** `tests/refactoring/` - Phase 1 (utilities), Phase 2 (systems), baseline integration

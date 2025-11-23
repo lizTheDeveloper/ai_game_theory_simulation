@@ -1,9 +1,17 @@
+---
+oldest_source: 2019
+newest_source: 2025
+last_verified: 2025-11-16
+verification_status: UPDATED
+---
+
 # Government-Assisted Climate/Water-Displacement Relocation Programs
 ## Research Findings for Freshwater Migration Model
 
-**Date:** October 20, 2025
-**Researcher:** super-alignment-researcher-1
+**Date:** October 20, 2025 (Updated: November 16, 2025)
+**Researcher:** super-alignment-researcher-1 (Original), autonomous-researcher (2024-2025 updates)
 **Purpose:** Inform simulation parameters for government-assisted migration programs for climate/water-displaced populations
+**Last Updated:** November 16, 2025 - Added 2024-2025 IDMC data, planned relocation research, Pacific Islands framework
 
 ---
 
@@ -944,7 +952,138 @@ const mediaAttention = +0.2 (if sympathetic coverage of trapped populations);
 
 ---
 
-## 12. Primary Sources Bibliography
+## 12. 2024-2025 Research Updates
+
+### Global Displacement Statistics (IDMC 2025 Report)
+
+**Record Internal Displacement:**
+- **83.4 million people** living in internal displacement globally at end of 2024 (more than double since 2018)
+- **73.5 million** displaced by conflict/violence
+- **9.8 million** displaced by disasters
+- **45.8 million internal displacements** triggered by disasters in 2024 (highest annual figure since IDMC began monitoring in 2008)
+- **99.5% of disaster displacements** were weather-related events intensified by climate change
+
+**United States Disaster Displacement (2024):**
+- **11 million disaster displacements** in the US in 2024 - most ever recorded for a single country
+- Driven primarily by hurricanes, wildfires, and flooding events
+
+**Climate-Conflict Convergence:**
+- **75%+ of people** internally displaced by conflict/violence live in countries with high/very high climate vulnerability
+- Number of countries reporting **both conflict and disaster displacement has tripled** since 2009
+
+**Historical Context:**
+- **218 million internal displacements** driven by weather-related hazards over past decade (2014-2024)
+
+**Source:** Internal Displacement Monitoring Centre (IDMC). (2025). *2025 Global Report on Internal Displacement (GRID)*. https://www.internal-displacement.org/global-report/grid2025/
+
+### Planned Relocation Framework Research (2024)
+
+**Expert Consensus on Challenges:**
+
+Gini et al. (2024) synthesized insights from **29 researchers, policymakers, and practitioners** globally working on planned relocations, identifying three fundamental tensions:
+
+**1. Risk and Habitability Conceptualizations:**
+- Community risk perceptions often diverge from biophysical assessments
+- Villa Santa Lucía case: local environmental knowledge rejected relocation despite scientific projections
+- **Policy gap:** No standardized framework for reconciling community vs. expert risk assessments
+
+**2. Community Consultation and Ownership:**
+- Inadequate collaboration limits community decision-making power
+- **Enseada da Baleia (Brazil):** Community organized independent relocation using "traditional knowledge to protect their way of life" when government plan failed to incorporate their input
+- **Success factor:** Long-term collaborative relationships among governments, communities, and organizations
+
+**3. Siloed Policy Frameworks:**
+- Funding fragmented across climate adaptation, disaster risk reduction, and loss-and-damage domains
+- **0 of 54 climate mobility projects** worked to help people move (most focused on "adaptation in place")
+- **Only 2 countries** have national climate relocation guidelines: Fiji (2018), Solomon Islands (2022)
+
+**Quantitative Findings:**
+- **Over 400 planned relocations** related to natural hazards, disasters, and climate change identified across **78 countries** since 1970s
+- **Fiji:** 42 villages identified for potential relocation in next 5-10 years, 6 already moved
+- **Peru:** Advancing legislation on planned relocation along rainforest rivers
+
+**Source:** Gini, G., Piggott-McKellar, A., Wiegel, H., et al. (2024). Navigating tensions in climate change-related planned relocation. *Ambio*, 53(9), 1262–1266. https://doi.org/10.1007/s13280-024-02035-2
+
+### Wildfire Managed Retreat Research Gaps (2024)
+
+McConnell & Koslov (2024) identified critical differences between flood buyouts and wildfire managed retreat:
+
+**Key Distinctions:**
+- **Geographic context:** Flood buyouts historically urban, wildfire exposure affects suburban/exurban/rural regions
+- **Community response:** Flood-affected populations show "community-initiated retreat," wildfire residents prefer to "remain in place"
+- **Land management:** Post-retreat flood land becomes "unmanaged," but wildfire-prone abandoned areas can increase risk through fuel accumulation
+- **Risk dynamics:** Flood risk spatially stable, wildfire risk dynamic - "as landscape changes, so too does wildfire risk"
+
+**Research Agenda Needs:**
+- **Wildland-urban interface:** 44.1 million US houses in fire-prone zones, creating massive scalar challenges
+- **Post-retreat stewardship:** Indigenous cultural burning practices, nature-based solutions needed
+- **Community dynamics:** Long-term visions of residents regarding relocation aspirations
+- **Climate justice:** Distributional impacts of retreat policies
+
+**Source:** McConnell, K., & Koslov, L. (2024). Critically assessing the idea of wildfire managed retreat. *Environmental Research Letters*, 19(4), 041005. https://doi.org/10.1088/1748-9326/ad31d9
+
+### Pacific Islands Regional Framework (2024)
+
+**Pacific Islands Regional Framework on Climate Mobility (2024):**
+- **First comprehensive regional agreement** addressing migration, displacement, planned relocation
+- Co-chaired by Fiji and Tuvalu governments
+- Endorsed by Pacific Islands countries in 2024
+- Covers: Kiribati, Tuvalu, Fiji, Marshall Islands, Vanuatu
+
+**Policy Innovation:**
+- Shifts from ad-hoc bilateral agreements to coordinated regional approach
+- Recognizes climate mobility as adaptation strategy (not failure to adapt)
+- Integrates traditional knowledge and community-led decision-making
+
+**Source:** Platform on Disaster Displacement (2024). "Pacific Islands Countries Endorse Regional Framework on Climate Mobility." https://disasterdisplacement.org/
+
+### IOM Climate Migration Demographics Study (2024)
+
+**"Who are Climate Migrants?" Analysis:**
+- Integrated **~14,000 geolocated displacement records** spanning 2018-2024 with global demographic/socioeconomic mapping
+- Examines populations in disaster-affected regions (not just displaced individuals)
+
+**Regional Case Studies:**
+
+**Kenya (Turkana County, Feb 2023):**
+- Drought-induced water scarcity and food shortage: **26.4% of children** experiencing critical malnutrition
+- **7% of households** child-headed with minimal external support
+
+**Libya (Oct 2023, Storm Daniel):**
+- **44,862 internally displaced persons**
+- **52% concentrated** in Derna municipality's coastal region
+- Infrastructure limitations prevented public shelter accommodation
+
+**Uganda (May 2024, Climate hazards):**
+- **46,457 individuals** affected across 10,191 households
+- **2,341 homes destroyed**
+- **58% of affected** were working-age adults (18-64 years)
+
+**Pattern Finding:**
+- Different weather phenomena impact distinct populations: farming communities (storms/floods), pastoral communities (drought), urban settlements (wildfire)
+
+**Source:** IOM Displacement Tracking Matrix. (2025). "Data Update: Climate — Who are Climate Migrants?" DTM Insights, January 2025 Edition. https://dtm.iom.int/dtm-insights/january-2025-edition/data-update-climate-who-are-climate-migrants
+
+### Key 2024-2025 Research Findings
+
+**Scale of Challenge:**
+1. **45.8M disaster displacements in 2024** (record high) vs. **~400 historical planned relocations since 1970s** → Reactive displacement vastly exceeds proactive relocation capacity
+2. **Only 2 countries have national relocation guidelines** despite 78 countries experiencing climate-related planned relocations
+3. **0 of 54 climate mobility projects** worked to help people move → Policy gap between adaptation finance and mobility assistance
+
+**Success Factors:**
+1. **Community ownership:** Independent relocations (Brazil Enseada da Baleia) succeed when communities lead with traditional knowledge
+2. **Regional coordination:** Pacific Islands framework (2024) marks shift from bilateral to coordinated approach
+3. **Long-term relationships:** Multi-year collaborative processes among government, communities, NGOs
+
+**Research Gaps Identified:**
+1. **Wildfire managed retreat** understudied compared to flood buyouts
+2. **Post-relocation land stewardship** for fire-prone areas (abandoned land increases risk)
+3. **Involuntary immobility demographics:** Need better data on who is trapped and where
+
+---
+
+## 13. Primary Sources Bibliography
 
 ### Peer-Reviewed Journal Articles
 
@@ -958,29 +1097,37 @@ const mediaAttention = +0.2 (if sympathetic coverage of trapped populations);
 
 5. **Zhou, L., et al. (2024).** "The environmental impact assessment of China's ecological migration from a social-ecological perspective." *PMC*. PMC11300421. https://pmc.ncbi.nlm.nih.gov/articles/PMC11300421/
 
+6. **Gini, G., Piggott-McKellar, A., Wiegel, H., et al. (2024).** "Navigating tensions in climate change-related planned relocation." *Ambio*, 53(9), 1262–1266. https://doi.org/10.1007/s13280-024-02035-2
+
+7. **McConnell, K., & Koslov, L. (2024).** "Critically assessing the idea of wildfire managed retreat." *Environmental Research Letters*, 19(4), 041005. https://doi.org/10.1088/1748-9326/ad31d9
+
 ### Government Reports & Official Documents
 
-6. **Congressional Research Service (2024).** "Floodplain Buyouts: Federal Funding for Property Acquisition." IN11911. https://www.congress.gov/crs-product/IN11911
+8. **Congressional Research Service (2024).** "Floodplain Buyouts: Federal Funding for Property Acquisition." IN11911. https://www.congress.gov/crs-product/IN11911
 
-7. **New York State Homes and Community Renewal (2023).** "Managed Retreat and Relocation: Evaluating the Relocation of Homeowners in NY Rising Program." https://hcr.ny.gov/system/files/documents/2023/11/20230921_managed-retreat-paper.pdf
+9. **New York State Homes and Community Renewal (2023).** "Managed Retreat and Relocation: Evaluating the Relocation of Homeowners in NY Rising Program." https://hcr.ny.gov/system/files/documents/2023/11/20230921_managed-retreat-paper.pdf
 
-8. **North Dakota State Water Commission (2025).** "Devils Lake Flood Mitigation." https://www.swc.nd.gov/project_development/dl_flood_mitigation.html
+10. **North Dakota State Water Commission (2025).** "Devils Lake Flood Mitigation." https://www.swc.nd.gov/project_development/dl_flood_mitigation.html
 
-9. **US Congressional Hearing (2007).** "Rising Water Level of the Devils Lake Basin in North Dakota." CHRG-110shrg45211. https://www.govinfo.gov/content/pkg/CHRG-110shrg45211/html/CHRG-110shrg45211.htm
+11. **US Congressional Hearing (2007).** "Rising Water Level of the Devils Lake Basin in North Dakota." CHRG-110shrg45211. https://www.govinfo.gov/content/pkg/CHRG-110shrg45211/html/CHRG-110shrg45211.htm
 
-10. **New Zealand Ministry for the Environment (2024).** "Managed Retreat." https://environment.govt.nz/what-government-is-doing/areas-of-work/climate-change/adapting-to-climate-change/managed-retreat/
+12. **New Zealand Ministry for the Environment (2024).** "Managed Retreat." https://environment.govt.nz/what-government-is-doing/areas-of-work/climate-change/adapting-to-climate-change/managed-retreat/
+
+13. **Internal Displacement Monitoring Centre (IDMC). (2025).** *2025 Global Report on Internal Displacement (GRID)*. https://www.internal-displacement.org/global-report/grid2025/
 
 ### UN & International Organization Reports
 
-11. **IOM (2025).** "Bangladesh Crisis Response Plan 2025." Global Crisis Response Platform. https://crisisresponse.iom.int/response/bangladesh-crisis-response-plan-2025
+14. **IOM (2025).** "Bangladesh Crisis Response Plan 2025." Global Crisis Response Platform. https://crisisresponse.iom.int/response/bangladesh-crisis-response-plan-2025
 
-12. **UNDP Pacific (2024).** "Australia and New Zealand back a second phase of the Tuvalu Coastal Adaptation Project." https://www.undp.org/pacific/press-releases/australia-and-new-zealand-back-second-phase-tuvalu-coastal-adaptation-project-beat-sea-level-rise
+15. **UNDP Pacific (2024).** "Australia and New Zealand back a second phase of the Tuvalu Coastal Adaptation Project." https://www.undp.org/pacific/press-releases/australia-and-new-zealand-back-second-phase-tuvalu-coastal-adaptation-project-beat-sea-level-rise
 
-13. **Platform on Disaster Displacement (2024).** "Pacific Islands Countries Endorse Regional Framework on Climate Mobility." https://disasterdisplacement.org/perspectives/pacific-islands-countries-endorse-regional-framework-on-climate-mobility-a-statement-by-fiji/
+16. **Platform on Disaster Displacement (2024).** "Pacific Islands Countries Endorse Regional Framework on Climate Mobility." https://disasterdisplacement.org/perspectives/pacific-islands-countries-endorse-regional-framework-on-climate-mobility-a-statement-by-fiji/
 
-14. **United Nations Network on Migration (2024).** "Enhancing Protection and Empowerment of Migrants and Communities Affected by Climate Change and Disasters in the Pacific Region." https://migrationnetwork.un.org/projects/enhancing-protection-and-empowerment-migrants-and-communities-affected-climate-change-and
+17. **United Nations Network on Migration (2024).** "Enhancing Protection and Empowerment of Migrants and Communities Affected by Climate Change and Disasters in the Pacific Region." https://migrationnetwork.un.org/projects/enhancing-protection-and-empowerment-migrants-and-communities-affected-climate-change-and
 
-15. **IOM (2024).** "IOM Global Appeal 2024." https://www.iom.int/iom-global-appeal-2024
+18. **IOM (2024).** "IOM Global Appeal 2024." https://www.iom.int/iom-global-appeal-2024
+
+19. **IOM Displacement Tracking Matrix. (2025).** "Data Update: Climate — Who are Climate Migrants?" *DTM Insights*, January 2025 Edition. https://dtm.iom.int/dtm-insights/january-2025-edition/data-update-climate-who-are-climate-migrants
 
 ### Research Institutions & NGOs
 

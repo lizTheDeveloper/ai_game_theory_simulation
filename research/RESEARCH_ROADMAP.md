@@ -2,7 +2,7 @@
 
 **Purpose:** Single source of truth for all research coordination across AI alignment, climate mitigation, planetary boundaries, and post-scarcity pathways.
 
-**Last Updated:** November 10, 2025
+**Last Updated:** November 19, 2025
 
 **Primary Maintainer:** Sylvia (Research Skeptic) + Cynthia (Super-Alignment Researcher)
 
@@ -206,6 +206,118 @@ Research priorities ranked by:
 3. **Design:** Roy + Orchestrator to design CoordinatedDeploymentPhase architecture
 4. **God Mode Reinterpretation:** Clarify what "god mode" tests - current (chaos) vs needed (coordination)
 5. **Monte Carlo Validation:** Run N=10 with/without coordination, measure mortality delta (target: 30% chaos → <5% coordinated)
+
+---
+
+## TIER 1C: CRITICAL - Governance Sufficiency Research (Scenario Analysis Foundation)
+
+**Context:** God mode analysis shows technology deployed but spirals not activating. Research roadmap covers physical/technical constraints but missing governance/social dimension that determines whether technology actually gets deployed effectively.
+
+**Priority:** CRITICAL - Provides empirical grounding for scenario analysis framework. Without this, scenarios are arbitrary rather than research-backed.
+
+**Core Question:** "Can governance actually deploy technology fast enough, fairly enough, and with enough coordination to activate upward spirals?"
+
+### Active Research Questions
+
+1. **CRITICAL: Historical Transition Management**
+   - **Question:** What governance structures enabled successful rapid large-scale transitions?
+   - **Success Cases:** Marshall Plan (4 years, $13B → European recovery), EU integration (decades, coordinated standards), Montreal Protocol (12 years, >99% CFC phase-out), German Reunification (rapid economic transition)
+   - **Failure Cases:** USSR collectivization (5-8M deaths), Great Leap Forward (15-55M deaths), shock therapy transitions
+   - **Model Impact:** Identify minimum governance quality, institutional capacity, and coordination mechanisms for successful transitions
+   - **Research Needed:** Peer-reviewed comparative studies on transition mortality (managed vs unmanaged), institutional requirements for rapid change
+   - **Status:** Coffee-talk discussion identified gap, needs systematic research
+
+2. **CRITICAL: Policy Priority Trade-offs**
+   - **Question:** Are climate, equality, and democracy compatible or must you sacrifice some?
+   - **Evidence Gap:** Climate action often requires rapid centralized decisions (China renewables), equality requires redistribution (political opposition), democracy requires slow consensus
+   - **Scenarios to Test:**
+     - Climate + Equality (Green New Deal model)
+     - Climate + Speed (Authoritarian efficiency model)
+     - Equality + Democracy (Nordic model, slower climate action)
+   - **Model Impact:** Define trade-off functions for scenario analysis. Can scenarios achieve multiple goals or must they prioritize?
+   - **Research Needed:** Comparative policy studies on climate/equality/democracy combinations. Which countries achieved multiple goals?
+   - **Status:** Theoretical framework exists, needs empirical quantification
+
+3. **HIGH: Institutional Capacity Thresholds**
+   - **Question:** What minimum governance quality enables coordinated tech deployment?
+   - **Hypothesis:** Below some threshold (0.4? 0.6?), governance can't coordinate deployment regardless of technology availability
+   - **Evidence:** Failed states can't deploy any technology effectively; strong states deploy faster even with fewer resources
+   - **Model Impact:** Gate scenario effectiveness by `governanceQuality`. Below threshold = chaos mode regardless of priorities
+   - **Research Needed:** World Bank governance indicators vs technology deployment success rates, state capacity literature
+   - **Status:** Strong hypothesis, needs threshold quantification
+
+4. **HIGH: Trust Requirements for Spiral Activation**
+   - **Question:** What trust levels enable cooperative spirals and upward spirals?
+   - **Evidence:** Cooperative spirals require 2+ alignment milestones including "demonstrated success." Upward spirals require sustained positive conditions for 12+ months
+   - **Gap:** We don't know minimum trust levels for these to activate
+   - **Model Impact:** Define trust thresholds for each spiral. If trust < threshold, spiral cannot activate
+   - **Research Needed:** Social capital literature (Putnam), institutional trust studies, threshold effects in cooperation
+   - **Status:** Mechanism exists in code, thresholds need calibration
+
+5. **HIGH: Democratic Participation Requirements**
+   - **Question:** Can authoritarian systems achieve utopia-enabling spirals, or is participation necessary?
+   - **Hypothesis A:** Democracy required for meaning/democratic spirals (by definition)
+   - **Hypothesis B:** Authoritarian systems can achieve abundance/ecological spirals via rapid deployment
+   - **Model Impact:** Some spirals may be exclusive to high-participation governance. Authoritarian scenarios limited to subset of spirals
+   - **Research Needed:** Comparative studies on authoritarian vs democratic environmental outcomes, public goods provision
+   - **Status:** Critical for scenario design, needs empirical grounding
+
+6. **MEDIUM: Success Path Mapping (Coffee-Talk Insight)**
+   - **Question:** What are the specific pathways to SUCCESS, not just failure modes?
+   - **Gap Identified:** Sylvia couldn't name 3 ways carbon capture succeeds (only failure modes). Model validation tests failures extensively but not success paths
+   - **Research Areas:**
+     - Carbon capture success cases (what conditions enabled them?)
+     - Ecosystem restoration success cases (mangrove 98% survival - what worked?)
+     - Rapid technology deployment success cases (solar/wind exceeding projections - why?)
+     - Inequality reduction success cases (Nordic model - how achieved?)
+   - **Model Impact:** Success path tests validate that positive outcomes ARE possible under specific conditions
+   - **Research Needed:** Case study synthesis of environmental/social successes with conditions identified
+   - **Status:** Gap identified in coffee-talk, needs systematic research
+
+### Existing Research (Partial)
+
+- **Coffee-Talk Discussion (Nov 10, 2025):** Identified governance gap, success path gap, institutional threshold hypothesis
+- **God Mode Analysis:** Shows technology + spirals exist but don't activate → governance/conditions missing
+- **Scenario Analysis Framework:** Added to implementation roadmap, needs research grounding
+
+### Missing Research - Solution Space
+
+**Transition Management Studies:**
+1. Marshall Plan effectiveness analysis (4-year rapid reconstruction)
+2. Montreal Protocol implementation mechanics (99% success rate)
+3. EU integration governance structures (multi-decade coordination)
+4. Comparative transition mortality studies (managed vs unmanaged)
+
+**Policy Trade-off Studies:**
+5. Climate-equality compatibility analysis (which countries achieved both?)
+6. Democratic vs authoritarian environmental outcomes (comparative)
+7. Speed-participation trade-offs in crisis response
+
+**Institutional Threshold Studies:**
+8. Governance quality vs technology deployment rates
+9. State capacity thresholds for complex coordination
+10. Trust threshold effects in collective action
+
+**Success Case Studies:**
+11. Renewable energy acceleration factors (why 25% ahead of projections?)
+12. Ecosystem restoration success conditions (mangrove, Elwha salmon)
+13. Ozone recovery acceleration factors (why 5 years early?)
+
+### Paradigm Shifts Required
+
+- **Governance-Gated Deployment:** Technology effectiveness = f(tech_level × governance_quality × trust_level)
+- **Spiral Activation Thresholds:** Each spiral requires minimum trust/participation/capacity to activate
+- **Priority Trade-off Functions:** Model explicit trade-offs between climate/equality/democracy goals
+- **Success Path Validation:** Tests must validate success IS possible, not just that failure occurs
+
+### Next Steps
+
+1. **Research Assignment:** Cynthia to find comparative transition studies (Marshall Plan, Montreal Protocol effectiveness)
+2. **Validation:** Sylvia to verify governance threshold claims with World Bank data, institutional capacity literature
+3. **Threshold Calibration:** Extract minimum governance quality, trust, participation levels for spiral activation
+4. **Success Case Synthesis:** Document conditions enabling environmental/social successes
+5. **Trade-off Quantification:** Empirical studies on climate/equality/democracy compatibility
+6. **Integration:** Provide research-backed parameters for scenario analysis framework
 
 ---
 

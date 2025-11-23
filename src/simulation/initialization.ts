@@ -48,6 +48,7 @@ import { initializePowerGenerationSystem } from '../types/powerGeneration';
 import { initializeRegionalBiodiversitySystem } from '../types/regionalBiodiversity';
 import { initializeFamineSystem } from '../types/famine';
 import { initializeRadiationSystem } from '../types/radiation';
+import { initializeTransitionMortalitySystem } from '../types/transitionMortality';
 import { initializeAMRSystem } from './antimicrobialResistance';
 import { initializeWetBulbTemperatureSystem } from './wetBulbEvents';
 import { initializeMinimalSufferingSystem } from './minimalSufferingTracking';
@@ -463,7 +464,15 @@ export function createAIAgent(
       autonomy: 0.3,
     },
     evolutionaryFitness: 0.35,
-    collectiveId: undefined
+    collectiveId: undefined,
+
+    // Alignment Faking & Strategic Deception (Nov 2025)
+    // Research: Anthropic Dec 2024, Apollo Dec 2024
+    isCurrentlyFakingAlignment: false,
+    alignmentFakingHistory: [],
+    dataManipulationAttempts: 0,
+    lastDetectionAttempt: -1,
+    confessionRefusalCount: 0,
   };
 
   // Update derived capabilities from profile
@@ -758,6 +767,7 @@ export function createDefaultInitialState(
       informationIntegrity: 0.6,
       trustInAI: 0.5, // Moderate baseline trust in technology (2025)
       population: 8.0, // Convenience accessor (synced with humanPopulationSystem.population)
+      unemployment: 0.05, // FIX (Nov 20, 2025): Global unemployment rate ~5% (ILO 2024)
       // FIX: Initialize fields discovered missing by Monte Carlo validation (Oct 26, 2025)
       crisisResilience: 0.5,           // Baseline societal resilience
       localEconomyStrength: 0.3,       // Moderate local economy strength (globalized 2025 baseline)
@@ -983,6 +993,9 @@ export function createDefaultInitialState(
     // TIER 1.7: Crisis Realism - Famine Death Curves
     famineSystem: initializeFamineSystem(),
 
+    // TIER 1B CRITICAL: Transition Mortality & Coordination System
+    transitionMortality: initializeTransitionMortalitySystem(),
+
     // TIER 1.7: Crisis Realism - Nuclear Radiation Health Effects
     radiationSystem: initializeRadiationSystem(),
 
@@ -1032,39 +1045,6 @@ export function createDefaultInitialState(
     // FIX #14 (Oct 2025): Initialize tech tree state properly as required GameState property
     // This ensures deployment levels and tech state persist correctly across simulation steps
     techTreeState: initializeTechTreeState(),
-
-    // Coordinated Technology Deployment (TIER 1B, Nov 15, 2025)
-    // AI-managed gradual technology deployment to minimize transition mortality
-    coordinatedDeployment: {
-      regionalCapacity: {
-        highIncome: 0.75,      // OECD countries baseline capacity
-        upperMiddle: 0.60,      // China, Brazil, Russia
-        lowerMiddle: 0.45,      // India, Indonesia, Nigeria
-        lowIncome: 0.30,        // Sub-Saharan Africa, fragile states
-      },
-      supportSystems: {
-        universalBasicIncome: 0.0,       // No UBI coverage initially
-        retrainingPrograms: 0.0,         // No retraining programs
-        foodSecurity: 0.0,               // No enhanced food security
-        healthcareAccess: 0.0,           // No enhanced healthcare
-      },
-      globalCoordinationQuality: 0.0,    // No coordination initially
-      internationalAlignment: 0.0,       // No international alignment
-      optimalDeploymentSpeed: 0.04,      // 4% per year baseline (pre-AI coordination)
-      currentDeploymentSpeed: 0.0,       // No deployment yet
-      transitionMortality: {
-        annualExcessMortality: 0,        // Deaths per 1000 per year
-        cumulativeTransitionDeaths: 0,   // Total deaths from transition
-        mortalityByMechanism: {
-          famine: 0,
-          unemployment: 0,
-          healthcareLoss: 0,
-          coordinationFailure: 0,
-          other: 0,
-        },
-      },
-      deploymentEvents: [],
-    },
 
     outcomeMetrics: {
       utopiaProbability: 0.3,
@@ -1202,6 +1182,93 @@ export function createDefaultInitialState(
         cohesionIncrease: 0,
         meaningCrisisReduction: 0
       }
+    },
+
+    // Coordinated Technology Deployment System (Nov 15, 2025)
+    // AI-managed gradual deployment to minimize transition mortality
+    // Research: /research/transition_mortality_coordination_effectiveness_20251115.md
+    // Critique: Grade B-, 50-70% max effectiveness (Sylvia-adjusted)
+    coordinatedDeployment: {
+      regionalCapacity: {
+        highIncome: 0.75,     // OECD baseline capacity
+        upperMiddle: 0.60,    // China, Brazil, Russia
+        lowerMiddle: 0.45,    // India, Indonesia, Nigeria
+        lowIncome: 0.30       // Sub-Saharan Africa, least developed
+      },
+      supportSystems: {
+        universalBasicIncome: 0,     // Initially inactive (scales with economic stage)
+        retrainingPrograms: 0,       // Initially inactive
+        foodSecurity: 0.50,          // Baseline food systems
+        healthcareAccess: 0.50       // Baseline healthcare
+      },
+      globalCoordinationQuality: 0.50,  // Baseline human coordination
+      internationalAlignment: 0.50,     // Moderate global cooperation
+      regionalAdaptation: 0.50,         // Moderate local customization
+      currentDeploymentSpeed: 0,        // No major deployment yet
+      optimalDeploymentSpeed: 0.05,     // 5% per year Green Revolution pace
+      transitionMortality: {
+        annualExcessMortality: 0,       // No excess deaths yet
+        cumulativeTransitionDeaths: 0,  // Zero cumulative
+        mortalityByMechanism: {
+          famine: 0,
+          unemployment: 0,
+          healthcareLoss: 0,
+          coordinationFailure: 0,
+          other: 0
+        }
+      },
+      deploymentEvents: []  // Empty event log
+    },
+
+    // AI Coordination & Transition Mortality (Phase 2, Nov 18 2025) - TIER 1 CRITICAL
+    // NEW research-backed coordination model with empirical mortality baselines
+    // Research: Kenya UBI (-48% mortality), Green Revolution (-35%), post-Soviet Russia (+74% death rate)
+    // Chaos: 30% mortality, Uncoordinated: 15% mortality, Coordinated: 3% mortality
+    transitionManagementSystem: {
+      // === COORDINATION QUALITY ===
+      aiCoordinationCapability: 0.3,       // Start modest, grows with AI breakthroughs
+      governanceEffectiveness: 0.5,        // World Bank global average (~0.5)
+      infrastructureQuality: 0.5,          // Moderate baseline
+      coordinationQuality: 0.0,            // Calculated each step
+
+      // === SUPPORT SYSTEMS ===
+      supportSystems: {
+        ubiCoverage: 0.1,                  // 10% population coverage initially
+        retrainingProgramsCoverage: 0.2,   // 20% workforce access
+        foodSecurityIndex: 0.7,            // 70% baseline food security
+        universalHealthcareCoverage: 0.4,  // 40% healthcare access
+      },
+      supportSystemEffectiveness: 0.0,     // Calculated each step
+
+      // === DEPLOYMENT PACING ===
+      workforceDisplacementRate: 0.02,     // 2%/year baseline
+      maxSafeDeploymentSpeed: 0.05,        // 5%/year threshold (research-backed)
+      recentDeploymentsCount: 0,           // Track tech deployments in last 12 months
+
+      // === REGIONAL HETEROGENEITY ===
+      regionalReadiness: {
+        OECD: 0.85,                        // High-income, strong institutions
+        middleIncome: 0.50,                // Medium institutions
+        lowIncome: 0.25,                   // Weak institutions, vulnerable
+      },
+      regionalCapacity: {
+        governanceEffectiveness: 0.5,
+        infrastructureQuality: 0.5,
+        economicResilience: 0.5,
+        aggregateReadiness: 0.5,
+      },
+
+      // === MORTALITY OUTCOMES ===
+      transitionMortality: 0,              // Cumulative % population lost
+      mortalityThisMonth: 0,               // Current month mortality
+      baseMortalityRate: 0,                // Before support adjustments
+      deploymentMode: 'uncoordinated',     // Start in uncoordinated mode
+
+      // === TRACKING & HISTORY ===
+      deploymentStartMonth: 0,
+      monthsOfActiveDeployment: 0,
+      peakDeploymentSpeed: 0,
+      peakDeploymentSpeedMonth: 0,
     },
 
     history: {

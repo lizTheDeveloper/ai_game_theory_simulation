@@ -195,15 +195,15 @@ function calculateOutcomeProbabilities(state: GameState): OutcomeProbabilities {
   extinction += calculateExtinctionProbability(state);
 
   // Normalize to sum to 1.0
-  const total = utopia + dystopia + extinction;
-  if (total > 0) {
-    utopia /= total;
-    dystopia /= total;
-    extinction /= total;
-  } else {
-    // No clear direction yet
-    return { utopia: 0.33, dystopia: 0.33, extinction: 0.33, inconclusive: 0.01 };
-  }
+  // Add small baseline (0.01) to each score to prevent division by zero
+  const baseline = 0.01;
+  const total = (utopia + baseline) + (dystopia + baseline) + (extinction + baseline);
+
+  utopia = (utopia + baseline) / total;
+  dystopia = (dystopia + baseline) / total;
+  extinction = (extinction + baseline) / total;
+
+  // Probabilities now always sum to exactly 1.0 (within floating point precision)
 
   // Check for decisive outcome (>85%)
   if (utopia > 0.85) return { utopia: 1.0, dystopia: 0, extinction: 0, inconclusive: 0 };
@@ -215,6 +215,8 @@ function calculateOutcomeProbabilities(state: GameState): OutcomeProbabilities {
 ```
 
 **Implementation:** `outcomes.ts:calculateOutcomeProbabilities()`
+
+**Mathematical Correctness (Nov 2025 Fix):** The normalization now adds a small baseline (0.01) to **each** score before division. Previous implementation added baseline to total only, causing probabilities to sum to 0.939 instead of 1.0. Fixed in commit 51f78b8.
 
 ## Instant Extinction Triggers
 
