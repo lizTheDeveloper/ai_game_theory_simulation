@@ -1,33 +1,71 @@
-# MARCUS 3.0 - Python Citation Agent
-FROM python:3.11-slim as base
+# MARCUS 3.0 - Python Citation Agent (OPTIMIZED)
+#
+# HIGH PRIORITY #4: Multi-stage build optimization
+#
+# Problem:
+# - Original image: 629MB
+# - Could be smaller with Alpine and optimized layers
+#
+# Solution:
+# - Multi-stage build (builder + runtime)
+# - Alpine base image for smaller footprint
+# - Layer caching optimization
+# - Remove build artifacts
+#
+# Expected Outcome:
+# - Image size: <300MB (50% reduction)
+# - Faster deployments
+#
+# Author: Marcus (Platform Engineer)
+# Date: 2025-11-22
+
+# ============================================================================
+# Stage 1: Builder (compile native dependencies)
+# ============================================================================
+FROM python:3.11-alpine as builder
 
 LABEL org.opencontainers.image.source="https://github.com/your-org/ai_game_theory_simulation"
-LABEL org.opencontainers.image.description="MARCUS 3.0 Citation Integrity Agent"
+LABEL org.opencontainers.image.description="MARCUS 3.0 Citation Agent (Build Stage)"
+
+WORKDIR /build
+
+# Install build dependencies
+RUN apk add --no-cache \
+    gcc \
+    musl-dev \
+    libpq-dev \
+    postgresql-dev \
+    linux-headers
+
+# Copy requirements
+COPY src/platform/agents/requirements.txt .
+
+# Install Python dependencies (build wheels)
+RUN pip install --no-cache-dir --user -r requirements.txt
+
+# ============================================================================
+# Stage 2: Runtime (minimal production image)
+# ============================================================================
+FROM python:3.11-alpine as runtime
+
+LABEL org.opencontainers.image.source="https://github.com/your-org/ai_game_theory_simulation"
+LABEL org.opencontainers.image.description="MARCUS 3.0 Citation Integrity Agent (Production)"
 LABEL maintainer="marcus@platform.engineering"
 
-# Set working directory
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    libpq-dev \
-    gcc \
-    && rm -rf /var/lib/apt/lists/*
+# Install ONLY runtime dependencies (no build tools)
+RUN apk add --no-cache \
+    libpq \
+    postgresql-libs \
+    && adduser -D -s /bin/sh marcus \
+    && chown -R marcus:marcus /app
 
-# Create non-root user (let system assign UID)
-RUN useradd -m -s /bin/bash marcus && \
-    chown -R marcus:marcus /app
+# Copy Python packages from builder
+COPY --from=builder --chown=marcus:marcus /root/.local /home/marcus/.local
 
-# Copy requirements and install Python dependencies
-# Use platform agent requirements, not root MCP RAG requirements
-COPY src/platform/agents/requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy platform code
-COPY src/platform /app/src/platform
-
-# Set ownership
-RUN chown -R marcus:marcus /app
+# Copy application code
+COPY --chown=marcus:marcus src/platform /app/src/platform
 
 # Switch to non-root user
 USER marcus
@@ -35,11 +73,11 @@ USER marcus
 # Set Python path
 ENV PYTHONPATH=/app/src
 ENV PYTHONUNBUFFERED=1
+ENV PATH=/home/marcus/.local/bin:$PATH
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD python -c "import sys; sys.exit(0)"
 
-# Run agent in worker mode (long-lived service)
-# Worker pulls tasks from Redis queue and processes them continuously
+# Run agent in worker mode
 CMD ["python", "/app/src/platform/agents/citation_worker.py"]

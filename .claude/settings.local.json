@@ -321,7 +321,9 @@
       "Bash(gcloud container clusters describe:*)",
       "Bash(gcloud container node-pools create:*)",
       "Bash(kubectl wait:*)",
-      "Bash(gcloud container node-pools list:*)"
+      "Bash(gcloud container node-pools list:*)",
+      "Bash(npm run lint:*)",
+      "Bash(gh pr comment:*)"
     ],
     "deny": [],
     "ask": [],
