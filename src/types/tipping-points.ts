@@ -55,6 +55,13 @@ export interface TippingElement {
 
   /** Can this element cascade with others? */
   cascades: boolean;
+
+  /** === RECOVERY PARAMETERS (Nov 22, 2025) === */
+  /** Recovery half-life in years (for asymptotic recovery after intervention) */
+  recoveryHalfLife?: number;
+
+  /** Minimum asymptotic value (floor below which recovery cannot proceed) */
+  minimumAsymptoticValue?: number;
 }
 
 /**
@@ -138,7 +145,12 @@ export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTr
       'Asia': 0.8,
       'Oceania': 0.6
     },
-    cascades: true
+    cascades: true,
+    // === RECOVERY PARAMETERS (Nov 22, 2025) ===
+    // Research: Drüke et al. (2024) - Amazon recovery 650 years (300-1000 range)
+    // Post-dieback: 25% of rainforest converts to savanna (irreversible)
+    recoveryHalfLife: 650,           // Years for half-life exponential recovery
+    minimumAsymptoticValue: 0.25,    // 25% irreversible savanna conversion
   },
   {
     id: 'arctic_ice',
@@ -178,7 +190,12 @@ export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTr
       'Asia': 1.3,
       'Oceania': 0.2
     },
-    cascades: true
+    cascades: true,
+    // === RECOVERY PARAMETERS (Nov 22, 2025) ===
+    // Research: Drüke et al. (2024) - Permafrost recovery 350 years (200-500 range)
+    // Post-thaw: 20% of carbon remains in atmosphere (irreversible release)
+    recoveryHalfLife: 350,           // Years for half-life exponential recovery
+    minimumAsymptoticValue: 0.20,    // 20% irreversible carbon release floor
   },
   {
     id: 'wais',
