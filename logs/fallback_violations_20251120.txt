@@ -1,0 +1,28 @@
+src/simulation/engine/phases/ClimateDeploymentPhase.ts:75:              progress: tech.phaseProgress || 0,
+src/simulation/engine/phases/ClimateDeploymentPhase.ts:348:    const progress = (tech.phaseProgress || 0) / 100; // Convert to [0, 1]
+src/simulation/engine/phases/ClimateDeploymentPhase.ts:523:    const currentMax = state.techTreeState.deployedTechMap[techId] ?? 0;
+src/simulation/engine/phases/ClimateSystemPhase.ts:655:          const currentChange = changes.get(region) || 0;
+src/simulation/engine/phases/ClimateSystemPhase.ts:671:        const currentChange = changes.get(region) || 0;
+src/simulation/engine/phases/CriticalJuncturePhase.ts:189:  const movementStrength = state.society.socialMovements?.strength || 0;
+src/simulation/engine/phases/CriticalJuncturePhase.ts:532:    stateChanges += escapeResult.metadata?.stateChanges ?? 0;
+src/simulation/engine/phases/EvolutionarySelectionPhase.ts:163:      const members = agentsByCollective.get(collective.id) ?? [];
+src/simulation/engine/phases/GovernmentResponsePhase.ts:133:      const capacity = (gov as any).capacity?.derived?.overallCapacity || 0.5;
+src/simulation/engine/phases/GovernmentResponsePhase.ts:195:  return state.aiAgents.reduce((sum, a) => sum + (a.capabilityProfile?.cognitive || 0), 0) / state.aiAgents.length;
+src/simulation/engine/phases/GovernmentResponsePhase.ts:209:    const capacity = (gov as any).capacity?.derived?.overallCapacity || 0.5;
+src/simulation/engine/phases/GovernmentResponsePhase.ts:268:  const stateCapacity = (gov as any).capacity?.derived?.overallCapacity || 0.5;
+src/simulation/engine/phases/PsychologicalTraumaPhase.ts:140:      const cohesion = state.socialAccumulation?.socialCohesion || defaultCohesion;
+src/simulation/engine/phases/QualityOfLifePhase.ts:90:      const foodSec = state.qualityOfLifeSystems.survivalFundamentals?.foodSecurity || 0;
+src/simulation/engine/phases/QualityOfLifePhase.ts:92:      console.log(`[Phase ${this.order}] ${this.name}: Food sec AFTER calc = ${(foodSec * 100).toFixed(1)}%, QoL = ${(qol * 100).toFixed(1)}% (aggregated from ${state.humanPopulationSystem.regionalPopulations?.length || 0} regions)`);
+src/simulation/engine/phases/StochasticInnovationPhase.ts:359:      const achievedCount = state.achievedBreakthroughs?.length || 0;
+src/simulation/engine/phases/SurvivalTraitsPhase.ts:85:      state.aiAgents.reduce((sum, a) => sum + (a.evolutionaryFitness || 0), 0) / agentCount,
+src/simulation/engine/phases/Tier2PhysicalSystemsPhase.ts:545:      const currentSecurityRate = interventions.nuclearSecurity.effectiveSecurityRate || 0;
+src/simulation/engine/phases/Tier2SocialSystemsPhase.ts:79:      const unemployment = state.globalMetrics.unemployment || 0;
+src/simulation/engine/phases/Tier2SocialSystemsPhase.ts:207:      const unemployment = state.globalMetrics.unemployment || 0;
+src/simulation/engine/phases/Tier2SocialSystemsPhase.ts:208:      const socialCohesion = state.socialAccumulation.socialCohesion?.trust || 0.70;
+src/simulation/engine/phases/TransitionMortalityPhase.ts:17: * ✅ No ?? fallback operators in calculations
+src/simulation/engine/phases/TransitionMortalityPhase.ts:43:  const unlockedTechs = state.techTreeState?.unlockedTech ?? [];
+src/simulation/engine/phases/TransitionMortalityPhase.ts:96:  const unlockedTechs = state.techTreeState?.unlockedTech ?? [];
+src/simulation/engine/phases/TransitionMortalityPhase.ts:221:  const retrainingLevel = state.policyInterventions?.retrainingLevel ?? 0;
+src/simulation/engine/phases/TransitionMortalityPhase.ts:540:    state.transitionMortality.supportSystems.retrainingProgramQuality = state.policyInterventions?.retrainingLevel ?? 0;
+src/simulation/engine/phases/TransitionMortalityPhase.ts:546:    ).length ?? 0;
+src/simulation/engine/phases/UnknownUnknownPhase.ts:125:        const occurrenceCount = state.unknownUnknownCount || 0;

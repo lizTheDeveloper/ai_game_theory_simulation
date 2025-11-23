@@ -170,6 +170,18 @@ export interface PlanetaryBoundariesSystem {
   // Regional differentiation: overuse zones vs underuse zones
   // Key mechanic: Nitrogen reduction impacts vary by region
   regionalNitrogenManagement?: RegionalNitrogenManagement[];
+
+  // === GLOBAL FOOD PRODUCTION INDEX (TIER 2 HIGH - Nov 20, 2025) ===
+  // Computed by NitrogenFoodCouplingPhase, consumed by PlanetaryBoundariesPhase
+  // Prevents race condition from calling updateNitrogenFoodCoupling() multiple times
+  // Range: [0, 2] where 1.0 = baseline food production
+  // Lower values indicate nitrogen constraint penalties on crop yields
+  globalFoodProductionIndex?: number;
+
+  // === NOVEL ENTITIES BOUNDARY INCREMENTAL IMPACTS (HIGH-1 - Nov 20, 2025) ===
+  // Single-owner pattern: Other phases write increments here, PlanetaryBoundariesPhase reads and applies
+  // Prevents race condition from multiple phases writing to boundaries.novel_entities.currentValue
+  novelEntitiesIncrementalImpact?: number; // Cumulative delta to add this step (reset each step)
 }
 
 /**
@@ -555,6 +567,9 @@ export interface LegacyNutrientStock {
     halfLife: number;      // Years for half-life decay (~100 years)
   };
   atmosphericDeposition: number;  // Mt N/year from atmospheric transport
+  // HIGH-1 FIX (Nov 20, 2025): Store effective pollution values for planetary boundaries to read
+  effectiveNitrogen?: number;    // Mt N/month (current inputs + legacy releases)
+  effectivePhosphorus?: number;  // Mt P/month (current inputs + legacy releases)
 }
 
 /**

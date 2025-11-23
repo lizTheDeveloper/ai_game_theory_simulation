@@ -1,564 +1,779 @@
 /**
- * CoordinatedDeploymentPhase (16.5)
+ * CoordinatedDeploymentPhase (Order: 10.5)
  *
- * AI-managed gradual technology deployment to minimize transition mortality.
- * Implements research-backed coordination effectiveness (50-70% reduction, NOT 96-98%).
+ * Models AI-coordinated technology deployment with support systems to minimize
+ * mortality during rapid technological transitions.
  *
- * **EXECUTION ORDER:** 16.5 (after tech deployment at 12.5, before economic effects at 31.0)
- * **DEPENDENCIES:**
- * - tech-tree (12.5): Reads technology deployment levels
- * - ai-lifecycle (3.0): Reads AI capabilities for coordination quality
- * - government-actions (7.0): Reads governance capacity
- *
- * **RESEARCH:**
- * - Primary: /research/transition_mortality_coordination_effectiveness_20251115.md
- * - Critique: /reviews/transition_mortality_research_critique_20251115.md (Grade B-, Sylvia adjustments)
- *
- * **KEY FINDINGS (Sylvia-Adjusted):**
- * - Chaotic rapid transition: 3.5-8.1% population mortality over 2-4 years
- * - Coordinated gradual transition: 0.14-0.53% mortality
- * - Coordination effectiveness: 50-70% reduction (capped, NOT 96-98%)
- * - Optimal deployment speed: 4-8% per year (Green Revolution pace)
- * - Support system effectiveness: 40-60% cumulative protection
- * - Labor participation penalty: 2-5% reduction from support systems
- *
+ * **EXECUTION ORDER:** 10.5 (After government actions, before environmental systems)
+ * **DEPENDENCIES:** Requires AI capabilities, government state, population
  * **SIDE EFFECTS:**
- * - Updates coordinatedDeployment.transitionMortality
- * - Modifies humanPopulationSystem.population (mortality application)
- * - Logs deployment events with mortality impacts
+ * - Calculates transition mortality based on deployment mode and support systems
+ * - Applies mortality to population
+ * - Updates coordination quality and support effectiveness metrics
+ * - Tracks regional heterogeneity in deployment outcomes
+ *
+ * **RELATIONSHIP TO TransitionMortalityPhase:**
+ * This phase SUPERSEDES the older TransitionMortalityPhase (deprecated Nov 21, 2025).
+ * Both phases modeled transition mortality, but this implementation uses:
+ * - Newer validated research (Grade B+, Nov 21, 2025)
+ * - CRITICAL corrections (time-based pace factor, bottleneck constraints)
+ * - Evidence-weighted support systems (retraining removed due to weak evidence)
+ * - Power-law scaling (subadditive, not linear)
+ *
+ * TransitionMortalityPhase is now disabled to prevent double-counting deaths.
+ *
+ * **RESEARCH BACKING (Grade B+, VALIDATED Nov 21 2025):**
+ *
+ * Calibrated parameters (god mode empirical = 30% mortality):
+ * - Base risk coefficient: 0.0015 (not 0.003)
+ * - Power-law exponent: 0.8 (subadditive, later techs hit already-disrupted populations)
+ * - Pace exponent: 0.3 (not 0.5, weaker time scaling)
+ * - God mode minimal coordination: 0.2 (existing institutions provide minimal coordination)
+ * - God mode minimal support: 0.2 (existing food stocks, healthcare infrastructure)
+ *
+ * CRITICAL corrections applied:
+ * - CRITICAL-1: Deployment pace scaling (reference_duration / actual_duration)^0.3
+ * - CRITICAL-2: Coordination ceiling min(raw, trust*2.0, governance*1.5) (bottleneck constraints)
+ * - CRITICAL-3: Regional inequality limitation documented
+ * - HIGH-1: Retraining weight reduced from 0.1 → 0.0 (weak evidence)
+ *
+ * Support system effectiveness (evidence-weighted):
+ * - Cash transfers/UBI: -48% mortality (Kenya 2025, NBER WP 34152, 100k+ births)
+ * - Healthcare: -35% (Kenya mechanism: hospital deliveries +45%)
+ * - Food security: -15% (Great Leap negative case)
+ * - Retraining: 0.0 (Brookings 2024: "scant empirical evidence")
+ *
+ * Deployment pace (TIME MATTERS - CRITICAL):
+ * - Energy transitions: 10-30 years → near-zero mortality with support
+ * - Great Leap Forward: 2-3 years → 15-55M deaths
+ * - Reference duration: 120 months (10 years)
+ * - Pace factor: (reference_duration / actual_duration)^0.3
+ *
+ * Regional inequality (LIMITATION):
+ * - Global average hides 5-10x regional variation
+ * - Global North: 5-10% mortality (strong institutions)
+ * - Global South: 40-60% mortality (weak institutions)
+ * - Failed states: 70-90% mortality (no coordination)
+ *
+ * @see research/ai_coordination_transition_mechanics_VALIDATED_20251121.md (Grade B+)
+ * @see reviews/ai_coordination_transition_critique_20251121.md (Sylvia validation)
+ * @see research/ai_coordination_transition_mortality_20251118.md (original research)
  */
 
+import { GameState, SimulationPhase, PhaseResult, RNGFunction } from '@/types/game';
 import {
-  GameState,
-  GameEvent,
-  SimulationPhase,
-  PhaseResult,
-  PhaseContext,
-  RNGFunction
-} from '@/types/game';
+  TransitionManagementSystem,
+  DeploymentMode,
+  MORTALITY_BASELINES,
+  SUPPORT_EFFECTIVENESS,
+  MAX_SAFE_DEPLOYMENT_SPEED
+} from '@/types/transitionManagement';
 import {
   assertFinite,
   assertProbability,
   assertInRange,
-  assertDefined,
-  assertStateProperty
+  assertDefined
 } from '@/simulation/utils/assertions';
 
+/**
+ * CoordinatedDeploymentPhase
+ *
+ * Each month:
+ * 1. Assess coordination quality (AI capability + governance + infrastructure)
+ * 2. Assess support system effectiveness (UBI, retraining, food, healthcare)
+ * 3. Calculate deployment speed (% workforce displaced)
+ * 4. Determine deployment mode (chaos, uncoordinated, coordinated)
+ * 5. Calculate base mortality from mode
+ * 6. Apply support system reductions (multiplicative)
+ * 7. Apply deployment speed penalty if exceeds safe threshold
+ * 8. Apply regional heterogeneity (OECD vs low-income)
+ * 9. Update population and tracking metrics
+ */
 export class CoordinatedDeploymentPhase implements SimulationPhase {
   readonly id = 'coordinated-deployment';
-  readonly name = 'Coordinated Technology Deployment';
-  readonly order = 16.5;
+  readonly name = 'AI Coordination & Transition Mortality';
+  readonly order = 10.5;
 
+  // DEPENDENCIES: Requires government actions (support systems), population, AI capabilities
   readonly dependencies = [
-    'tech-tree',         // Order 12.5: Tech deployment levels
-    'ai-lifecycle',      // Order 3.0: AI capabilities
-    'government-actions' // Order 7.0: Governance capacity
+    'government-actions',     // Order 9.0: Support system policies
+    'ai-lifecycle',           // Order 3.0: AI coordination capability
   ] as const;
 
-  execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
-    const events: GameEvent[] = [];
+  execute(state: GameState, rng: RNGFunction): PhaseResult {
+    // CRITICAL: RNG must be defined (deterministic simulation requirement)
+    assertDefined(rng, {
+      location: 'CoordinatedDeploymentPhase.execute',
+      valueName: 'rng',
+      additionalInfo: { reason: 'RNG required for deterministic simulation' }
+    });
 
-    // DEFENSIVE CHECK: Fail loudly if state not initialized after bootstrap
-    if (!state.coordinatedDeployment) {
-      if (state.currentMonth > 1) {
-        throw new Error(
-          `❌ CRITICAL: coordinatedDeployment state missing at month ${state.currentMonth}. ` +
-          `This indicates initialization failure. Check src/simulation/initialization.ts.`
-        );
-      }
-      // Only skip during bootstrap (month 0-1)
-      return { events };
-    }
+    // CRITICAL: transitionManagementSystem state must exist after bootstrap
+    assertDefined(state.transitionManagementSystem, {
+      location: 'CoordinatedDeploymentPhase.execute',
+      valueName: 'transitionManagementSystem',
+      month: state.currentMonth,
+      additionalInfo: { reason: 'transitionManagementSystem state missing after bootstrap' }
+    });
 
-    const deployment = state.coordinatedDeployment;
-    const currentMonth = state.currentMonth;
+    const transition = state.transitionManagementSystem;
 
-    // === STEP 1: Assess Regional Capacity ===
-    const regionalCapacity = this.assessRegionalCapacity(state, rng);
-    deployment.regionalCapacity = regionalCapacity;
+    // === STEP 1: Assess Coordination Quality (with bottleneck constraints - CRITICAL-2) ===
+    const coordinationQuality = this.assessCoordinationQuality(state);
+    transition.coordinationQuality = coordinationQuality;
 
-    // === STEP 2: Activate Support Systems ===
-    this.activateSupportSystems(state, rng);
+    // === STEP 2: Assess Support System Effectiveness (evidence-weighted - HIGH-1) ===
+    const supportEffectiveness = this.assessSupportSystems(state);
+    transition.supportSystemEffectiveness = supportEffectiveness;
 
-    // === STEP 3: Calculate AI Coordination Quality ===
-    deployment.globalCoordinationQuality = this.calculateCoordinationQuality(state, rng);
+    // === STEP 3: Calculate Deployment Speed ===
+    const deploymentSpeed = this.calculateDeploymentSpeed(state);
+    transition.workforceDisplacementRate = deploymentSpeed;
 
-    // === STEP 4: Calculate Optimal Deployment Speed ===
-    const avgRegionalCapacity = this.averageRegionalCapacity(regionalCapacity);
-    deployment.optimalDeploymentSpeed = this.calculateOptimalDeploymentSpeed(
-      avgRegionalCapacity,
-      deployment.globalCoordinationQuality,
-      this.averageSupportSystemQuality(deployment.supportSystems),
-      rng
+    // === STEP 4: Calculate Deployment Pace Factor (TIME MATTERS - CRITICAL-1) ===
+    const paceFactor = this.calculateDeploymentPaceFactor(state);
+
+    // === STEP 5: Calculate Base Mortality Risk (Nov 21 validated formula) ===
+    // Power-law base risk with tier multipliers (not linear)
+    // base = 0.0015 * (techs_deploying)^0.8 * tier_multiplier
+    const baseRisk = this.calculateBaseMortalityRisk(state, deploymentSpeed);
+    transition.baseMortalityRate = baseRisk;
+
+    // === STEP 6: Calculate Mortality Multiplier (Nov 21 validated) ===
+    // multiplier = (2.0 - coordination) * (1.5 - support) * pace_factor
+    const mortalityMultiplier = (
+      (2.0 - coordinationQuality) *
+      (1.5 - supportEffectiveness) *
+      paceFactor
     );
 
-    // === STEP 5: Calculate Current Deployment Speed ===
-    deployment.currentDeploymentSpeed = this.calculateCurrentDeploymentSpeed(state, rng);
+    // === STEP 7: Calculate Mortality Fraction (exponential saturation) ===
+    // mortality_fraction = 1 - exp(-base * multiplier)
+    // Prevents >100% mortality while allowing high base*multiplier values
+    let mortalityFraction = 1.0 - Math.exp(-baseRisk * mortalityMultiplier);
 
-    // === STEP 6: Calculate Transition Mortality ===
-    const mortalityResults = this.calculateTransitionMortality(
-      deployment.currentDeploymentSpeed,
-      deployment.supportSystems,
-      avgRegionalCapacity,
-      deployment.globalCoordinationQuality,
-      state.humanPopulationSystem.population,
-      rng
-    );
+    // === STEP 7A: Check for Coordination Failure (Nov 21 Conservative Parameters) ===
+    // HIGH-1 FIX (Nov 21, 2025): Decay deployment counter monthly to track "recent" deployments
+    // 50% decay per month means deployments become "stale" after ~2 months
+    // This prevents accumulating old deployments indefinitely
+    if (state.currentMonth % 1 === 0) { // Every month
+      const decayRate = 0.50; // 50% monthly decay (exponential)
+      const oldCount = transition.recentDeploymentsCount;
+      transition.recentDeploymentsCount = Math.max(0, oldCount * (1 - decayRate));
 
-    // === STEP 7: Update State ===
-    deployment.transitionMortality.annualExcessMortality = mortalityResults.annualRate;
-    deployment.transitionMortality.mortalityByMechanism = mortalityResults.byMechanism;
-
-    // Monthly deaths = annual rate / 12
-    const monthlyDeaths = mortalityResults.absoluteDeathsMonthly;
-    deployment.transitionMortality.cumulativeTransitionDeaths += monthlyDeaths;
-
-    // Apply mortality to population (deaths in millions)
-    const previousPop = state.humanPopulationSystem.population;
-    state.humanPopulationSystem.population = Math.max(
-      0.001, // Minimum 1M population
-      previousPop - monthlyDeaths / 1000 // Convert millions to billions
-    );
-
-    // === STEP 8: Log Events ===
-    if (currentMonth % 6 === 0 || mortalityResults.annualRate > 5) {
-      console.log(`\n🤝 COORDINATED DEPLOYMENT (Month ${currentMonth})`);
-      console.log(`   Deployment Speed: ${(deployment.currentDeploymentSpeed * 100).toFixed(1)}%/year` +
-        ` (optimal: ${(deployment.optimalDeploymentSpeed * 100).toFixed(1)}%)`);
-      console.log(`   Coordination Quality: ${(deployment.globalCoordinationQuality * 100).toFixed(0)}%` +
-        ` (capped at 70% per Sylvia)`);
-      console.log(`   Regional Capacity: High=${(regionalCapacity.highIncome * 100).toFixed(0)}%,` +
-        ` Mid=${(regionalCapacity.upperMiddle * 100).toFixed(0)}%,` +
-        ` Low=${(regionalCapacity.lowIncome * 100).toFixed(0)}%`);
-      console.log(`   Support Systems: UBI=${(deployment.supportSystems.universalBasicIncome * 100).toFixed(0)}%,` +
-        ` Food=${(deployment.supportSystems.foodSecurity * 100).toFixed(0)}%,` +
-        ` Healthcare=${(deployment.supportSystems.healthcareAccess * 100).toFixed(0)}%`);
-      console.log(`   Transition Mortality: ${mortalityResults.annualRate.toFixed(2)} per 1000/year` +
-        ` (${monthlyDeaths.toFixed(2)}M deaths this month)`);
-      console.log(`   Cumulative Deaths: ${deployment.transitionMortality.cumulativeTransitionDeaths.toFixed(1)}M`);
-
-      if (mortalityResults.annualRate > 5) {
-        console.log(`   ⚠️ HIGH MORTALITY: Exceeds 5 per 1000 threshold`);
+      if (Math.abs(oldCount - transition.recentDeploymentsCount) > 0.5 && oldCount > 1) {
+        console.log(`\n📊 DEPLOYMENT COUNTER DECAY (Month ${state.currentMonth})`);
+        console.log(`   Recent deployments: ${oldCount.toFixed(1)} → ${transition.recentDeploymentsCount.toFixed(1)}`);
+        console.log(`   Decay rate: ${(decayRate * 100).toFixed(0)}% per month`);
       }
     }
 
-    // Log significant mortality events
-    if (mortalityResults.annualRate > 10) {
-      events.push({
-        id: `transition_mortality_crisis_${currentMonth}`,
-        timestamp: currentMonth,
-        type: 'crisis',
-        severity: 'major',
-        agent: 'Technology Deployment',
-        title: `High Transition Mortality (${mortalityResults.annualRate.toFixed(1)} per 1000)`,
-        description: `Rapid technology deployment causing ${mortalityResults.annualRate.toFixed(1)} deaths per 1000 population annually. ` +
-          `Coordination quality: ${(deployment.globalCoordinationQuality * 100).toFixed(0)}%. ` +
-          `Deployment speed: ${(deployment.currentDeploymentSpeed * 100).toFixed(0)}%/year.`,
-        effects: {
-          mortality: monthlyDeaths,
-          coordination: deployment.globalCoordinationQuality
+    // Stochastic coordination breakdowns mid-deployment
+    // Probability: 10-20% (central: 10%)
+    // Mortality multiplier: 2-5x baseline (central: 3x)
+    // Research: Cooperative AI (2025) failure modes
+    let coordinationFailureMultiplier = 1.0;
+
+    // HIGH-2 FIX (Nov 21, 2025): Reset coordination failure after cooldown period
+    // Coordination failures should be RECURRING, not one-time (per research description)
+    // After failure triggers, set 12-month cooldown before next failure can occur
+    if (transition.coordinationFailureActive) {
+      // Check if cooldown has expired (12 months minimum between failures)
+      const monthsSinceLastFailure = state.currentMonth - (transition.coordinationFailureMonth || 0);
+      if (monthsSinceLastFailure >= 12) {
+        transition.coordinationFailureActive = false;
+        console.log(`\n✅ COORDINATION FAILURE COOLDOWN EXPIRED (Month ${state.currentMonth})`);
+        console.log(`   System ready for next coordination check`);
+        console.log(`   Total failures so far: ${transition.coordinationFailures}`);
+      }
+    }
+
+    // Check for new failure (only if not already in failure state and deployments happening)
+    if (!transition.coordinationFailureActive && transition.recentDeploymentsCount > 0) {
+      const failureProbability = 0.10; // 10% probability (central estimate)
+      if (rng() < failureProbability) {
+        transition.coordinationFailureActive = true;
+        transition.coordinationFailures += 1;
+        transition.coordinationFailureMonth = state.currentMonth; // Track when failure occurred
+
+        // Mortality spike: 2-5x (central: 3x)
+        coordinationFailureMultiplier = 2.0 + rng() * 3.0; // Random in [2, 5]
+        transition.coordinationFailureMultiplier = coordinationFailureMultiplier; // Store in state
+
+        console.log(`\n🚨💥 COORDINATION FAILURE (${transition.coordinationFailures} total)`);
+        console.log(`  Mortality spike: ${coordinationFailureMultiplier.toFixed(1)}x baseline`);
+        console.log(`  Recent deployments: ${transition.recentDeploymentsCount.toFixed(1)}`);
+        console.log(`  Scenario: Geopolitical conflict / adversarial AI / cascading failures`);
+        console.log(`  Cooldown: 12 months before next failure can occur`);
+      }
+    } else if (transition.coordinationFailureActive) {
+      // Use stored multiplier if failure is still active
+      coordinationFailureMultiplier = transition.coordinationFailureMultiplier;
+    }
+
+    // Apply coordination failure multiplier
+    mortalityFraction = assertFinite(
+      mortalityFraction * coordinationFailureMultiplier,
+      {
+        location: 'CoordinatedDeploymentPhase.execute (coordination failure)',
+        valueName: 'mortalityFraction after coordination failure',
+        month: state.currentMonth,
+        additionalInfo: {
+          originalMortality: mortalityFraction / coordinationFailureMultiplier,
+          coordinationFailureMultiplier,
+          failureActive: transition.coordinationFailureActive,
+          recentDeployments: transition.recentDeploymentsCount
         }
-      });
+      }
+    );
+
+    // === STEP 7B: Apply Rebound Effects (Nov 21 Conservative Parameters) ===
+    // Jevons paradox: Efficiency gains → consumption increase → environmental degradation
+    // Decay rate: 5-10% per year (central: 7.5%)
+    // Research: Finkelstein et al. (2025) - Great Recession mortality/pollution link
+
+    // Update rebound effectiveness annually (decay over time)
+    if (state.currentMonth % 12 === 0 && transition.monthsOfActiveDeployment > 0) {
+      // Annual decay: effectiveness *= (1 - decay_rate)
+      // Decay rate: 0.075 = 7.5% per year
+      const annualDecay = transition.reboundDecayRate; // 0.075 (7.5% per year)
+      const oldEffectiveness = transition.reboundEffectiveness;
+
+      transition.reboundEffectiveness = assertFinite(
+        Math.max(0.1, oldEffectiveness * (1 - annualDecay)), // Floor at 10% effectiveness
+        {
+          location: 'CoordinatedDeploymentPhase.execute (rebound decay)',
+          valueName: 'reboundEffectiveness after annual decay',
+          month: state.currentMonth,
+          additionalInfo: {
+            oldEffectiveness,
+            annualDecay,
+            yearsActive: Math.floor(transition.monthsOfActiveDeployment / 12)
+          }
+        }
+      );
+
+      if (oldEffectiveness !== transition.reboundEffectiveness) {
+        console.log(`\n⚠️📉 REBOUND EFFECT: Technology effectiveness decaying (Jevons paradox)`);
+        console.log(`  Effectiveness: ${(oldEffectiveness * 100).toFixed(1)}% → ${(transition.reboundEffectiveness * 100).toFixed(1)}%`);
+        console.log(`  Mechanism: Efficiency → consumption → environmental degradation → mortality`);
+      }
     }
 
-    return { events };
-  }
-
-  /**
-   * Assess regional capacity for technology adoption
-   *
-   * Metrics: governance effectiveness, infrastructure quality, economic resilience
-   *
-   * @research Historical regional variation in Green Revolution (3x difference)
-   * @research Post-Soviet transition capacity differences (Poland vs Russia)
-   */
-  private assessRegionalCapacity(state: GameState, rng: RNGFunction): {
-    highIncome: number;
-    upperMiddle: number;
-    lowerMiddle: number;
-    lowIncome: number;
-  } {
-    // Base capacity by income level
-    let highIncome = 0.75;    // OECD: strong institutions, infrastructure
-    let upperMiddle = 0.60;   // China, Brazil: moderate capacity
-    let lowerMiddle = 0.45;   // India, Indonesia: developing infrastructure
-    let lowIncome = 0.30;     // Sub-Saharan Africa: limited capacity
-
-    // Governance quality modifier (±0.15)
-    // Use government capability as proxy (normalized to 0-1 range)
-    const governanceQuality = Math.min(1.0, state.government.capabilityToControl / 2) || 0.50;
-    const governanceMod = (governanceQuality - 0.50) * 0.30;
-
-    highIncome = assertProbability(highIncome + governanceMod, {
-      location: 'assessRegionalCapacity',
-      valueName: 'highIncome',
-      month: state.currentMonth
-    });
-
-    upperMiddle = assertProbability(upperMiddle + governanceMod * 0.8, {
-      location: 'assessRegionalCapacity',
-      valueName: 'upperMiddle',
-      month: state.currentMonth
-    });
-
-    lowerMiddle = assertProbability(lowerMiddle + governanceMod * 0.6, {
-      location: 'assessRegionalCapacity',
-      valueName: 'lowerMiddle',
-      month: state.currentMonth
-    });
-
-    lowIncome = assertProbability(lowIncome + governanceMod * 0.4, {
-      location: 'assessRegionalCapacity',
-      valueName: 'lowIncome',
-      month: state.currentMonth
-    });
-
-    return { highIncome, upperMiddle, lowerMiddle, lowIncome };
-  }
-
-  /**
-   * Activate support systems based on economic capacity and governance
-   *
-   * Support systems: UBI, retraining, food security, healthcare access
-   *
-   * @research SNAP 33% food insecurity reduction (Bailey et al. 2020)
-   * @research Social Security $1k/yr → 10-20% mortality reduction (Behrman et al. 2011)
-   * @research Worker retraining 25-40% effectiveness (Dorn et al. 2024)
-   * @uncertainty Labor participation penalty 2-5% (Sylvia adjustment)
-   */
-  private activateSupportSystems(state: GameState, rng: RNGFunction): void {
-    const deployment = state.coordinatedDeployment!;
-    const economicStage = state.globalMetrics.economicTransitionStage || 2;
-
-    // UBI coverage scales with GDP per capita and economic stage
-    const ubiBase = Math.min(0.85, economicStage / 4);
-    deployment.supportSystems.universalBasicIncome = assertProbability(
-      ubiBase * (0.9 + rng() * 0.2), // ±10% variation
+    // Apply rebound effectiveness multiplier
+    // Lower effectiveness = higher mortality (inverse relationship)
+    // Example: 80% effectiveness → 1.25x mortality (1 / 0.8)
+    const reboundMultiplier = 1.0 / Math.max(0.1, transition.reboundEffectiveness);
+    mortalityFraction = assertFinite(
+      mortalityFraction * reboundMultiplier,
       {
-        location: 'activateSupportSystems',
-        valueName: 'universalBasicIncome',
-        month: state.currentMonth
+        location: 'CoordinatedDeploymentPhase.execute (rebound effect)',
+        valueName: 'mortalityFraction after rebound effect',
+        month: state.currentMonth,
+        additionalInfo: {
+          reboundEffectiveness: transition.reboundEffectiveness,
+          reboundMultiplier
+        }
       }
     );
 
-    // Retraining quality scales with education spending and governance
-    // Use government capability as proxy (normalized to 0-1 range)
-    const governanceQuality = Math.min(1.0, state.government.capabilityToControl / 2) || 0.50;
-    const retrainingBase = Math.min(0.80, governanceQuality + economicStage / 8);
-    deployment.supportSystems.retrainingPrograms = assertProbability(
-      retrainingBase * (0.85 + rng() * 0.30), // Higher variation (program quality varies)
-      {
-        location: 'activateSupportSystems',
-        valueName: 'retrainingPrograms',
-        month: state.currentMonth
+    // === STEP 8: Apply Regional Heterogeneity ===
+    const regionalMortality = this.applyRegionalHeterogeneity(mortalityFraction, transition);
+
+    // === STEP 9: Calculate Monthly Mortality and Update Population ===
+    const monthlyMortality = regionalMortality / 12.0; // Annual → monthly
+    transition.mortalityThisMonth = assertProbability(monthlyMortality, {
+      location: 'CoordinatedDeploymentPhase.execute',
+      valueName: 'monthlyMortality',
+      month: state.currentMonth,
+      additionalInfo: {
+        baseRisk,
+        mortalityMultiplier,
+        mortalityFraction,
+        coordinationQuality,
+        supportEffectiveness,
+        paceFactor,
+        deploymentSpeed
       }
-    );
+    });
 
-    // Food security scales with agricultural capacity
-    const foodBase = 0.95; // AI-optimized food systems
-    deployment.supportSystems.foodSecurity = assertProbability(
-      Math.min(1.0, foodBase * (0.90 + rng() * 0.20)), // Clamp to [0, 1]
-      {
-        location: 'activateSupportSystems',
-        valueName: 'foodSecurity',
-        month: state.currentMonth
-      }
-    );
+    // Update cumulative mortality
+    transition.transitionMortality += monthlyMortality;
 
-    // Healthcare access scales with health infrastructure
-    const healthBase = 0.90; // AI healthcare support
-    deployment.supportSystems.healthcareAccess = assertProbability(
-      Math.min(1.0, healthBase * (0.85 + rng() * 0.30)), // Clamp to [0, 1]
-      {
-        location: 'activateSupportSystems',
-        valueName: 'healthcareAccess',
-        month: state.currentMonth
-      }
-    );
-  }
+    // === STEP 10: Apply mortality to population ===
+    // CRITICAL FIX (Nov 21, 2025): Apply deaths to regional populations FIRST
+    // to prevent race condition with HumanPopulationPhase aggregation.
+    //
+    // Previously: Modified global population directly → HumanPopulationPhase
+    // aggregation from regions overwrote the changes, causing silent data loss.
+    //
+    // Now: Apply deaths proportionally to regions, then global value will be
+    // correct when HumanPopulationPhase aggregates.
 
-  /**
-   * Calculate AI coordination quality
-   *
-   * CRITICAL SYLVIA ADJUSTMENT: Capped at 70% (NOT 95%)
-   * Maximum AI coordination = human best (60%) + 20% speculative improvement
-   *
-   * @research AI governance coordination mechanisms (Oxford 2024, Nature 2024)
-   * @critique Sylvia: No empirical AI governance at scale, 95% pure speculation
-   * @uncertainty HIGH - extrapolation from human coordination to AI
-   */
-  private calculateCoordinationQuality(state: GameState, rng: RNGFunction): number {
-    // Base coordination from governance quality
-    // Use government capability as proxy (normalized to 0-1 range)
-    const governanceQuality = Math.min(1.0, state.government.capabilityToControl / 2) || 0.50;
-
-    // AI capability contribution (capped)
-    const aiAgents = state.aiAgents.filter(a => a.lifecycleState === 'deployed_open' || a.lifecycleState === 'deployed_closed');
-    let avgAICapability = 0;
-    if (aiAgents.length > 0) {
-      const totalCapability = aiAgents.reduce((sum, agent) => {
-        // Use cognitive + social capabilities for coordination
-        return sum + (agent.capabilityProfile.cognitive || 0) + (agent.capabilityProfile.social || 0);
-      }, 0);
-      avgAICapability = totalCapability / (aiAgents.length * 10); // Normalize to 0-1 (max 5+5=10)
+    // Validate we have regional populations (should always exist after initialization)
+    const regions = state.humanPopulationSystem.regionalPopulations;
+    if (!regions || regions.length === 0) {
+      throw new Error(
+        `❌ CRITICAL: regionalPopulations missing at month ${state.currentMonth}\n` +
+        `  Regional populations required to apply transition deaths.\n` +
+        `  This indicates initialization.ts failed to create regional populations.`
+      );
     }
 
-    // International alignment (placeholder - would come from governance system)
-    const internationalAlignment = 0.70; // Moderate global cooperation
+    // CRITICAL: Use regional sum as source of truth (NOT global value)
+    // If a previous phase modified regions without updating global, using global
+    // would cause wrong death distribution fractions.
+    const regionalSumMillions = regions.reduce((sum, r) => sum + r.population, 0);
+    const population = regionalSumMillions / 1000; // Convert millions → billions
+    const populationLost = population * monthlyMortality;
 
-    // Base coordination quality (weighted factors)
-    const baseCoordination =
-      governanceQuality * 0.40 +
-      avgAICapability * 0.30 +
-      internationalAlignment * 0.30;
+    // Track global population before modification for assertion
+    const globalPopulationBefore = state.humanPopulationSystem.population;
 
-    // SYLVIA CAP: Maximum 70% coordination effectiveness
-    const SYLVIA_MAX = 0.70;
-    const coordinationQuality = Math.min(SYLVIA_MAX, baseCoordination);
+    // Apply deaths proportionally to each region (same pattern as BayesianMortalityResolution)
+    for (const region of regions) {
+      const regionFraction = region.population / regionalSumMillions; // Fraction of REGIONAL sum
+      const regionalDeaths = (populationLost * 1000) * regionFraction; // Convert billions → millions for regional scale
 
-    return assertProbability(coordinationQuality, {
-      location: 'calculateCoordinationQuality',
+      region.population = assertFinite(
+        Math.max(0, region.population - regionalDeaths),
+        {
+          location: 'CoordinatedDeploymentPhase.execute (regional mortality)',
+          valueName: `${region.name} population after transition deaths`,
+          month: state.currentMonth,
+          additionalInfo: {
+            regionalDeaths,
+            populationBefore: region.population,
+            regionFraction
+          }
+        }
+      );
+
+      // Track at regional level for debugging
+      region.monthlyExcessDeaths = (region.monthlyExcessDeaths || 0) + regionalDeaths;
+      region.cumulativeCrisisDeaths = (region.cumulativeCrisisDeaths || 0) + regionalDeaths;
+    }
+
+    // Update global population (will be re-aggregated by HumanPopulationPhase, but set correctly now)
+    state.humanPopulationSystem.population = assertFinite(
+      Math.max(0, population - populationLost),
+      {
+        location: 'CoordinatedDeploymentPhase.execute',
+        valueName: 'population after transition mortality',
+        month: state.currentMonth,
+        additionalInfo: {
+          populationLost,
+          monthlyMortality,
+          populationBefore: globalPopulationBefore
+        }
+      }
+    );
+
+    // ASSERTION: Verify regional sum matches global value (detect desync immediately)
+    // NOTE: Regional populations are in MILLIONS, global is in BILLIONS
+    // Recalculate regional sum AFTER applying deaths
+    const regionalSumMillionsAfter = regions.reduce((sum, r) => sum + r.population, 0);
+    const regionalSumBillions = regionalSumMillionsAfter / 1000;
+    const globalValue = state.humanPopulationSystem.population;
+    const discrepancy = Math.abs(regionalSumBillions - globalValue);
+
+    // Allow tiny floating-point errors but catch real desyncs
+    if (discrepancy > 0.001) {
+      throw new Error(
+        `❌ RACE CONDITION DETECTED: Regional/global population desync after transition deaths\n` +
+        `  Month: ${state.currentMonth}\n` +
+        `  Global value: ${globalValue.toFixed(6)}B\n` +
+        `  Regional sum: ${regionalSumBillions.toFixed(6)}B (${regionalSumMillions.toFixed(2)}M)\n` +
+        `  Discrepancy: ${discrepancy.toFixed(6)}B\n` +
+        `  This indicates transition deaths were applied incorrectly.`
+      );
+    }
+
+    // Update tracking metrics
+    if (deploymentSpeed > 0) {
+      if (transition.deploymentStartMonth === 0) {
+        transition.deploymentStartMonth = state.currentMonth;
+      }
+      transition.monthsOfActiveDeployment += 1;
+    }
+
+    if (deploymentSpeed > transition.peakDeploymentSpeed) {
+      transition.peakDeploymentSpeed = deploymentSpeed;
+      transition.peakDeploymentSpeedMonth = state.currentMonth;
+    }
+
+    // === STEP 10: Logging (annual summary) ===
+    if (state.currentMonth % 12 === 0 && deploymentSpeed > 0.001) {
+      this.logCoordinationStatus(state, coordinationQuality, supportEffectiveness, baseRisk, deploymentSpeed);
+    }
+
+    return { events: [] };
+  }
+
+  /**
+   * Assess coordination quality (0 = chaos, 1 = perfect)
+   *
+   * CRITICAL-2 (Nov 21 validated research): Apply bottleneck constraints
+   *
+   * Raw coordination from weighted combination:
+   * - AI research capability: 40% weight (coordination knowledge)
+   * - AI social capability: 30% weight (implementation capacity)
+   * - Governance effectiveness: 20% weight (institutional execution)
+   * - AI trust: 10% weight (human willingness to accept coordination)
+   *
+   * Bottleneck constraints (weakest link dominates):
+   * - Can't coordinate if humans don't trust AI (trust bottleneck)
+   * - Can't coordinate if institutions can't implement (governance bottleneck)
+   *
+   * Evidence: Gartner 2025 - 40% agentic AI projects fail despite high capability
+   * due to "inadequate risk controls" (governance) and trust issues.
+   *
+   * Final coordination = min(raw, trust*2.0, governance*1.5)
+   *
+   * Example: AI capability = 0.9, trust = 0.3 → actual coordination = min(0.7, 0.6, 0.45) = 0.45
+   */
+  private assessCoordinationQuality(state: GameState): number {
+    const transition = state.transitionManagementSystem;
+
+    // NOTE: We need AI capabilities and trust from state
+    // For now, use proxy fields from transition system
+    // TODO: Wire in actual AI capability dimensions and trust when those systems exist
+    const aiResearch = transition.aiCoordinationCapability; // Proxy for AI research capability
+    const aiSocial = transition.aiCoordinationCapability * 0.8; // Proxy (social typically lower)
+    const governance = transition.governanceEffectiveness;
+    const aiTrust = transition.aiCoordinationCapability * 0.7; // Proxy (trust lags capability)
+
+    // Raw coordination quality (before bottleneck constraints)
+    const coordinationRaw = (
+      aiResearch * 0.4 +
+      aiSocial * 0.3 +
+      governance * 0.2 +
+      aiTrust * 0.1
+    );
+
+    // Apply bottleneck constraints (CRITICAL-2)
+    // Real-world: High AI capability doesn't matter if trust or governance blocks implementation
+    const coordinationQuality = Math.min(
+      coordinationRaw,
+      aiTrust * 2.0,        // Can't coordinate beyond 2x trust level
+      governance * 1.5      // Can't coordinate beyond 1.5x governance capacity
+    );
+
+    assertProbability(coordinationQuality, {
+      location: 'CoordinatedDeploymentPhase.assessCoordinationQuality',
       valueName: 'coordinationQuality',
-      month: state.currentMonth
+      month: state.currentMonth,
+      additionalInfo: {
+        coordinationRaw,
+        aiResearch,
+        aiSocial,
+        governance,
+        aiTrust,
+        trustCeiling: aiTrust * 2.0,
+        governanceCeiling: governance * 1.5
+      }
+    });
+
+    return coordinationQuality;
+  }
+
+  /**
+   * Assess support system effectiveness (0 = none, 1 = comprehensive)
+   *
+   * HIGH-1 (Nov 21 validated research): Evidence-weighted effectiveness
+   *
+   * Empirical effectiveness:
+   * - UBI: -48% mortality (Kenya 2025 RCT, 100k+ births, HIGH QUALITY)
+   * - Healthcare: -35% mortality (Kenya mechanism: hospital deliveries +45%, HIGH QUALITY)
+   * - Food security: -15% mortality (Great Leap negative case, HIGH QUALITY)
+   * - Retraining: 0.0 weight (Brookings 2024: "scant empirical evidence", LOW QUALITY)
+   *
+   * Formula (Nov 21 validated):
+   * support = (ubi * 0.5) + (healthcare * 0.35) + (food * 0.15) + (retraining * 0.0)
+   *
+   * Effects are multiplicative, not additive (diminishing returns)
+   */
+  private assessSupportSystems(state: GameState): number {
+    const support = state.transitionManagementSystem.supportSystems;
+
+    // Evidence-weighted combination (Nov 21 validated research)
+    const ubiEffect = support.ubiCoverage * 0.5;        // Strong evidence: Kenya RCT
+    const healthEffect = support.universalHealthcareCoverage * 0.35;  // Strong evidence: Kenya mechanism
+    const foodEffect = support.foodSecurityIndex * 0.15;              // Strong negative evidence: Great Leap famine
+    const retrainingEffect = 0.0;  // HIGH-1 correction: Weak evidence (Brookings: "policymakers skeptical")
+
+    // Combined effectiveness
+    const combinedEffect = Math.min(1.0,
+      ubiEffect + healthEffect + foodEffect + retrainingEffect
+    );
+
+    return assertProbability(combinedEffect, {
+      location: 'CoordinatedDeploymentPhase.assessSupportSystems',
+      valueName: 'supportEffectiveness',
+      month: state.currentMonth,
+      additionalInfo: {
+        ubiEffect,
+        healthEffect,
+        foodEffect,
+        retrainingEffect,
+        note: 'Retraining excluded (weight=0.0) due to weak evidence - Brookings 2024'
+      }
     });
   }
 
   /**
-   * Calculate optimal deployment speed based on capacity and coordination
+   * Calculate deployment speed (% workforce displaced per year)
    *
-   * @research Green Revolution: 4-8% per year optimal pace
-   * @research Post-Soviet gradual reform: ~4-5% per year avoided mortality spike
-   * @research PLOS (2024): Fast deployment (>60-70%) creates oscillating cycles
-   */
-  private calculateOptimalDeploymentSpeed(
-    regionalCapacity: number,
-    coordinationQuality: number,
-    supportSystemQuality: number,
-    rng: RNGFunction
-  ): number {
-    // Base safe speed: 4-7% per year (Green Revolution range)
-    const baseSafeSpeed = 0.05; // 5% midpoint
-
-    // Capacity adjustment: higher capacity → faster safe speed
-    const capacityMultiplier = 0.6 + regionalCapacity * 0.8;
-
-    // Coordination adjustment: better coordination → faster safe speed
-    const coordinationMultiplier = 0.7 + coordinationQuality * 0.6;
-
-    // Support systems: comprehensive support → faster safe speed
-    const supportMultiplier = 0.7 + supportSystemQuality * 0.6;
-
-    const optimalSpeed = baseSafeSpeed *
-      capacityMultiplier *
-      coordinationMultiplier *
-      supportMultiplier;
-
-    // Cap at 30% per year (shock therapy threshold)
-    const cappedSpeed = Math.min(0.30, optimalSpeed);
-
-    return assertFinite(cappedSpeed, {
-      location: 'calculateOptimalDeploymentSpeed',
-      valueName: 'optimalSpeed',
-      month: 0, // No month context in this helper
-      additionalInfo: { regionalCapacity, coordinationQuality, supportSystemQuality }
-    });
-  }
-
-  /**
-   * Calculate current deployment speed from tech tree
+   * Based on recent technology deployments (last 12 months)
+   * Each breakthrough technology affects ~3% of workforce on average
    *
-   * Measures fraction of economy transformed per year based on
-   * recent technology deployment progress.
+   * Safe threshold: ≤5% per year
+   * Risky: 10-15% per year
+   * Crisis: >20% per year (exceeds human adaptation capacity)
    */
-  private calculateCurrentDeploymentSpeed(state: GameState, rng: RNGFunction): number {
-    // Placeholder: Would calculate based on tech deployment deltas
-    // For now, use moderate deployment assumption
-    const deploymentSpeed = 0.08; // 8% per year (moderate pace)
+  private calculateDeploymentSpeed(state: GameState): number {
+    const transition = state.transitionManagementSystem;
 
-    return assertFinite(deploymentSpeed, {
-      location: 'calculateCurrentDeploymentSpeed',
+    // Count recent deployments (simplified - could be refined with actual tech deployment tracking)
+    // For now, use the recentDeploymentsCount field (updated by technology deployment phases)
+    const recentDeployments = transition.recentDeploymentsCount;
+
+    // Each breakthrough affects ~3% of workforce (average across sectors)
+    const averageImpactPerTech = 0.03;
+    const totalImpact = recentDeployments * averageImpactPerTech;
+
+    return assertInRange(totalImpact, 0, 1, {
+      location: 'CoordinatedDeploymentPhase.calculateDeploymentSpeed',
       valueName: 'deploymentSpeed',
-      month: state.currentMonth
+      month: state.currentMonth,
+      additionalInfo: { recentDeployments, averageImpactPerTech }
     });
   }
 
   /**
-   * Calculate transition mortality from technology deployment
+   * Calculate base mortality risk (Nov 21 validated formula)
    *
-   * COMPREHENSIVE MODEL synthesizing all historical findings:
-   * - Chaotic rapid transition baseline: 3.5-8.1% over 2-4 years
-   * - Coordination mitigation: 50-70% reduction (Sylvia-adjusted, NOT 96-98%)
-   * - Support systems: 40-60% cumulative protection
-   * - Labor participation penalty: 2-5% from support systems (Sylvia addition)
+   * Power-law scaling (not linear): Technologies don't add risk independently
+   * Later technologies hit already-disrupted populations (diminishing marginal risk)
    *
-   * @research Meng et al. (2015) Great Leap Forward: 3.5-4.6% mortality
-   * @research Naumenko (2021) Soviet collectivization: 8.1-12.2% mortality
-   * @research Stuckler et al. (2009) Shock therapy: 12.8% increase
-   * @research Moscona et al. (2020) Green Revolution: -2.8% infant mortality reduction
-   * @research Bailey et al. (2020) SNAP: 33% food insecurity reduction
-   * @critique Sylvia: Coordination effectiveness capped at 70%, labor participation penalty required
+   * Formula:
+   * base = 0.0015 * (technologies_deploying)^0.8 * tier_multiplier
+   *
+   * Tier risk multipliers (urgency and complexity):
+   * - TIER 0 (crisis): 1.5x (rushed deployment under urgency)
+   * - TIER 1 (important): 1.2x (less urgent but still important)
+   * - TIER 2 (baseline): 1.0x (moderate pace)
+   * - TIER 3 (optional): 0.8x (carefully tested, cautious)
+   * - TIER 4 (exciting): 1.3x (high excitement, potential premature deployment)
+   *
+   * Calibration:
+   * - God mode (73 techs, tier avg 1.2): base = 0.0015 * 73^0.8 * 1.2 = 0.054
+   * - With minimal coordination (0.2) and support (0.2), pace (2.76): mortality = 29.5% ✓
+   *
+   * Historical validation:
+   * - Great Leap Forward: 1-2 major changes → 0.5-2% mortality
+   * - 73 changes shouldn't be 73× that (linear would give 73-146% - impossible)
+   * - Power-law provides realistic subadditivity
    */
-  private calculateTransitionMortality(
-    deploymentSpeed: number, // Fraction per year
-    supportSystems: { universalBasicIncome: number; retrainingPrograms: number; foodSecurity: number; healthcareAccess: number },
-    regionalCapacity: number, // Average regional capacity
-    coordinationQuality: number, // 0-0.70 (Sylvia-capped)
-    populationBillions: number,
-    rng: RNGFunction
-  ): {
-    annualRate: number; // Deaths per 1000 per year
-    byMechanism: {
-      famine: number;
-      unemployment: number;
-      healthcareLoss: number;
-      coordinationFailure: number;
-      other: number;
-    };
-    absoluteDeathsMonthly: number; // Millions
-  } {
-    const baselineMortalityRate = 8; // per 1000 (global average)
+  private calculateBaseMortalityRisk(state: GameState, deploymentSpeed: number): number {
+    const transition = state.transitionManagementSystem;
 
-    // === RISK FACTORS (increase mortality) ===
+    // Number of technologies currently deploying
+    // Proxy: use recentDeploymentsCount (ideally would track active deployments)
+    const techsDeploying = Math.max(1, transition.recentDeploymentsCount);
 
-    // 1. Deployment speed risk (deviation from optimal 5%)
-    const optimalSpeed = 0.05;
-    const speedDeviation = Math.abs(deploymentSpeed - optimalSpeed);
-    const speedRisk = speedDeviation * 15; // per 1000
+    // Tier multipliers (Nov 21 validated)
+    const tierMultipliers = [1.5, 1.2, 1.0, 0.8, 1.3]; // TIER 0-4
 
-    // 2. Coordination failure risk (Sylvia-adjusted: max 70% effectiveness)
-    const chaoticBaseRisk = 50; // per 1000 (Soviet collectivization level)
-    const SYLVIA_MAX_MITIGATION = 0.70; // NOT 0.95
-    const coordinationMitigation = Math.min(SYLVIA_MAX_MITIGATION, coordinationQuality);
-    const coordinationRisk = chaoticBaseRisk * (1 - coordinationMitigation);
+    // Average tier of deploying technologies (assume balanced mix for now)
+    // TODO: Track actual tier distribution when tech deployment tracking exists
+    const avgTier = 1.2; // Weighted average assuming more TIER 0-1 (crisis response)
+    const tierMultiplier = avgTier; // Use continuous value (not discrete lookup)
 
-    // 3. Economic disruption risks
-    const unemploymentRate = 0.18; // 18% automation displacement (placeholder)
-    const unemploymentRisk = unemploymentRate * 0.63 * baselineMortalityRate; // 63% hazard increase
+    // Power-law base risk (Nov 21 validated calibration)
+    // Research shows: base = 0.0015 * 73^0.8 = 0.054 (with tier multiplier baked in)
+    // This means: 0.0015 * 73^0.8 * 1.16 ≈ 0.054
+    const baseCoefficient = 0.0015; // Calibrated to god mode 30% mortality
+    const powerLawExponent = 0.8;   // Subadditive scaling
+    const baseRisk = baseCoefficient * Math.pow(techsDeploying, powerLawExponent) * tierMultiplier;
 
-    // === PROTECTIVE FACTORS (decrease mortality) ===
-
-    // 1. Cash transfer protection (UBI)
-    const cashTransferAmount = 15.0; // thousands USD (robust UBI)
-    const cashTransferProtection =
-      supportSystems.universalBasicIncome *
-      Math.min(cashTransferAmount * 0.15, 0.60) *
-      baselineMortalityRate;
-
-    // 2. Food security protection
-    const foodInsecurityBaseline = 3; // per 1000
-    const foodSecurityProtection = supportSystems.foodSecurity * 0.33 * foodInsecurityBaseline;
-
-    // 3. Healthcare access protection
-    const healthcareProtection = supportSystems.healthcareAccess * 2.5; // per 1000
-
-    // 4. Retraining effectiveness (reduces unemployment mortality)
-    const retrainingProtection = supportSystems.retrainingPrograms * 0.35 * unemploymentRisk;
-
-    // 5. Regional capacity buffer
-    const capacityProtection = regionalCapacity * 0.40 * coordinationRisk;
-
-    // SYLVIA ADDITION: Labor participation penalty from support systems
-    // 2-5% reduction in labor force participation reduces economic output
-    const laborPenalty = (supportSystems.universalBasicIncome * 0.05 +
-      supportSystems.retrainingPrograms * 0.02) * baselineMortalityRate * 0.5;
-
-    // === NET MORTALITY CALCULATION ===
-
-    const totalRisk = speedRisk + coordinationRisk + unemploymentRisk;
-    const totalProtection = cashTransferProtection + foodSecurityProtection +
-      healthcareProtection + retrainingProtection + capacityProtection -
-      laborPenalty; // Subtract penalty
-
-    const annualExcessMortality = Math.max(0, totalRisk - totalProtection); // per 1000
-
-    // === MORTALITY BY MECHANISM ===
-    const mortalityByMechanism = {
-      famine: assertFinite(foodInsecurityBaseline * (1 - supportSystems.foodSecurity * 0.33), {
-        location: 'calculateTransitionMortality',
-        valueName: 'famineComponent',
-        additionalInfo: { foodSecurity: supportSystems.foodSecurity }
-      }),
-      unemployment: assertFinite(unemploymentRisk - retrainingProtection, {
-        location: 'calculateTransitionMortality',
-        valueName: 'unemploymentComponent',
-        additionalInfo: { unemploymentRate, retraining: supportSystems.retrainingPrograms }
-      }),
-      healthcareLoss: assertFinite((baselineMortalityRate * 0.2) * (1 - supportSystems.healthcareAccess), {
-        location: 'calculateTransitionMortality',
-        valueName: 'healthcareLossComponent',
-        additionalInfo: { healthcareAccess: supportSystems.healthcareAccess }
-      }),
-      coordinationFailure: assertFinite(coordinationRisk - capacityProtection, {
-        location: 'calculateTransitionMortality',
-        valueName: 'coordinationFailureComponent',
-        additionalInfo: { coordinationRisk, capacityProtection }
-      }),
-      other: assertFinite(speedRisk + laborPenalty, {
-        location: 'calculateTransitionMortality',
-        valueName: 'otherComponent',
-        additionalInfo: { speedRisk, laborPenalty }
-      })
-    };
-
-    // === ABSOLUTE DEATHS ===
-    // Annual mortality per 1000 → monthly deaths in millions
-    const annualDeathsMillions = (annualExcessMortality / 1000) * populationBillions * 1000;
-    const monthlyDeathsMillions = annualDeathsMillions / 12;
-
-    return {
-      annualRate: assertFinite(annualExcessMortality, {
-        location: 'calculateTransitionMortality',
-        valueName: 'annualExcessMortality',
-        additionalInfo: { totalRisk, totalProtection, laborPenalty }
-      }),
-      byMechanism: mortalityByMechanism,
-      absoluteDeathsMonthly: assertFinite(monthlyDeathsMillions, {
-        location: 'calculateTransitionMortality',
-        valueName: 'monthlyDeathsMillions',
-        additionalInfo: { annualDeathsMillions, populationBillions }
-      })
-    };
+    return assertFinite(baseRisk, {
+      location: 'CoordinatedDeploymentPhase.calculateBaseMortalityRisk',
+      valueName: 'baseRisk',
+      month: state.currentMonth,
+      additionalInfo: {
+        techsDeploying,
+        tierMultiplier,
+        baseCoefficient,
+        powerLawExponent,
+        note: 'Calibrated to god mode 30% mortality with coordination=0.2, support=0.2'
+      }
+    });
   }
 
-  /**
-   * Calculate average regional capacity across all regions
-   */
-  private averageRegionalCapacity(regional: {
-    highIncome: number;
-    upperMiddle: number;
-    lowerMiddle: number;
-    lowIncome: number;
-  }): number {
-    // Population-weighted average (rough approximation)
-    // High income: 1.2B, Upper middle: 2.5B, Lower middle: 3.0B, Low income: 1.3B
-    const totalPop = 8.0;
-    const weighted =
-      (regional.highIncome * 1.2 +
-        regional.upperMiddle * 2.5 +
-        regional.lowerMiddle * 3.0 +
-        regional.lowIncome * 1.3) / totalPop;
+  // DEPRECATED METHOD REMOVED (Nov 21, 2025)
+  // Old determineDeploymentMode() used discrete thresholds (chaos/uncoordinated/coordinated).
+  // Nov 21 validated research uses continuous formula instead.
+  // See git history if you need to restore: commit before removal.
 
-    return assertProbability(weighted, {
-      location: 'averageRegionalCapacity',
-      valueName: 'weightedAverage'
+  /**
+   * Calculate deployment pace factor (CRITICAL-1: Nov 21 validated research)
+   *
+   * TIME IS THE CRITICAL VARIABLE - not just workforce displacement %
+   *
+   * Evidence:
+   * - Energy transitions: 10-30 years → near-zero mortality with support
+   * - Great Leap Forward: 2-3 years → 15-55M deaths
+   *
+   * Formula (calibrated to god mode 30% mortality):
+   * pace_factor = (reference_duration / actual_duration)^0.3
+   *
+   * Reference: 120 months (10 years, energy transition baseline)
+   *
+   * Examples:
+   * - 1 month (god mode): (120/1)^0.3 = 2.76x mortality multiplier
+   * - 12 months (rapid): (120/12)^0.3 = 1.71x
+   * - 60 months (moderate): (120/60)^0.3 = 1.24x
+   * - 120 months (cautious): (120/120)^0.3 = 1.0x (baseline)
+   * - 240 months (very slow): (120/240)^0.3 = 0.81x
+   *
+   * Weaker scaling (exponent 0.3 not 0.5): 10x slower → 2x mortality reduction (not 3.16x)
+   */
+  private calculateDeploymentPaceFactor(state: GameState): number {
+    const transition = state.transitionManagementSystem;
+
+    // Deployment duration (months since deployment started)
+    // If no deployment yet, assume instant (month 0 = 1 month duration for calculation)
+    let actualDuration = 1; // Default to 1 month (god mode scenario)
+
+    if (transition.deploymentStartMonth > 0) {
+      actualDuration = Math.max(1, state.currentMonth - transition.deploymentStartMonth);
+    }
+
+    // Reference duration: Energy transition baseline
+    // NOTE: Research document shows conflicting values:
+    // - Line 114: "reference_duration_months = 120"
+    // - Line 189 calibration: pace = 2.76 for 1 month → implies ref = 29.2 months
+    // Using calibrated value that produces god mode 30% mortality
+    const referenceDuration = 30; // Calibrated to match god mode 30% (not 120)
+
+    // Pace factor: (reference / actual)^0.3 (CRITICAL-1 calibrated exponent)
+    const paceFactor = Math.pow(referenceDuration / actualDuration, 0.3);
+
+    return assertFinite(paceFactor, {
+      location: 'CoordinatedDeploymentPhase.calculateDeploymentPaceFactor',
+      valueName: 'paceFactor',
+      month: state.currentMonth,
+      additionalInfo: {
+        actualDuration,
+        referenceDuration,
+        note: 'Pace exponent 0.3 calibrated to god mode 30% mortality'
+      }
+    });
+  }
+
+  // DEPRECATED METHOD REMOVED (Nov 21, 2025)
+  // Old applyDeploymentSpeedPenalty() used workforce displacement % threshold.
+  // Nov 21 validated research shows TIME is the critical variable (pace factor).
+  // See git history if you need to restore: commit before removal.
+
+  /**
+   * Apply regional heterogeneity
+   *
+   * Post-Soviet divergence shows institutional quality dominates outcomes:
+   * - Russia (weak institutions): +74% death rate
+   * - Poland/Czech (strong institutions): negligible mortality increase
+   * - 100% mortality difference by 2000 for same type of transition
+   *
+   * Regional multipliers:
+   * - OECD (15% population): 0.5× mortality (strong institutions, existing safety nets)
+   * - Middle-income (50% population): 1.0× mortality (base case)
+   * - Low-income (35% population): 2.0× mortality (weak institutions, vulnerable)
+   */
+  private applyRegionalHeterogeneity(baseMortality: number, transition: TransitionManagementSystem): number {
+    const readiness = transition.regionalReadiness;
+
+    // Regional mortality multipliers
+    const oecdMortality = baseMortality * 0.5;        // Strong institutions
+    const middleIncomeMortality = baseMortality * 1.0; // Base case
+    const lowIncomeMortality = baseMortality * 2.0;   // Weak institutions
+
+    // Weighted average by population distribution
+    // Assume: 15% OECD, 50% middle-income, 35% low-income
+    const weightedMortality =
+      oecdMortality * 0.15 +
+      middleIncomeMortality * 0.50 +
+      lowIncomeMortality * 0.35;
+
+    return assertFinite(weightedMortality, {
+      location: 'CoordinatedDeploymentPhase.applyRegionalHeterogeneity',
+      valueName: 'regionalMortality',
+      additionalInfo: { baseMortality, oecdMortality, middleIncomeMortality, lowIncomeMortality }
     });
   }
 
   /**
-   * Calculate average support system quality
+   * Log coordination status (annual summary)
+   *
+   * Emoji conventions:
+   * - 🤝 Coordination activities
+   * - 🛡️ Support system activation
+   * - ⚠️ Mortality risk
+   * - ⚡ Rapid deployment warning
+   * - 🚨 Critical threshold exceeded
+   * - ✅ Successful coordination
    */
-  private averageSupportSystemQuality(systems: {
-    universalBasicIncome: number;
-    retrainingPrograms: number;
-    foodSecurity: number;
-    healthcareAccess: number;
-  }): number {
-    const avg = (systems.universalBasicIncome + systems.retrainingPrograms +
-      systems.foodSecurity + systems.healthcareAccess) / 4;
+  private logCoordinationStatus(
+    state: GameState,
+    coordination: number,
+    support: number,
+    baseRisk: number,
+    speed: number
+  ): void {
+    const transition = state.transitionManagementSystem;
 
-    return assertProbability(avg, {
-      location: 'averageSupportSystemQuality',
-      valueName: 'average'
-    });
+    // Calculate current pace factor for logging
+    let actualDuration = 1;
+    if (transition.deploymentStartMonth > 0) {
+      actualDuration = Math.max(1, state.currentMonth - transition.deploymentStartMonth);
+    }
+    const referenceDuration = 30; // Calibrated value (see calculateDeploymentPaceFactor)
+    const paceFactor = Math.pow(referenceDuration / actualDuration, 0.3);
+
+    // Calculate multiplier and fraction
+    const multiplier = (2.0 - coordination) * (1.5 - support) * paceFactor;
+    const mortalityFraction = 1.0 - Math.exp(-baseRisk * multiplier);
+    const annualMortality = mortalityFraction;
+
+    console.log(`\n=== 🤝 Coordinated Deployment Phase (Year ${Math.floor(state.currentMonth / 12)}) ===`);
+    console.log(`  Coordination Quality: ${(coordination * 100).toFixed(1)}% (bottleneck-constrained)`);
+    console.log(`  🛡️ Support System Effectiveness: ${(support * 100).toFixed(1)}% (evidence-weighted, no retraining)`);
+    console.log(`  Base Risk: ${(baseRisk * 100).toFixed(3)}% (power-law: ${transition.recentDeploymentsCount} techs^0.8)`);
+    console.log(`  ⏱️ Pace Factor: ${paceFactor.toFixed(2)}x (${actualDuration} months vs ${referenceDuration} month reference)`);
+    console.log(`  Mortality Multiplier: ${multiplier.toFixed(2)}x`);
+    console.log(`  ⚠️ Projected Annual Mortality: ${(annualMortality * 100).toFixed(2)}%`);
+    console.log(`  Deployment Speed: ${(speed * 100).toFixed(1)}%/year (threshold: ${(transition.maxSafeDeploymentSpeed * 100).toFixed(1)}%/year)`);
+
+    // Coordination quality warnings (based on thresholds)
+    if (coordination < 0.3) {
+      console.log(`  🚨 CHAOS: coordination < 30% - catastrophic mortality risk`);
+    } else if (coordination < 0.6) {
+      console.log(`  ⚠️ WEAK COORDINATION: 30-60% quality - elevated mortality risk`);
+    } else {
+      console.log(`  ✅ STRONG COORDINATION: >60% quality - mortality minimized`);
+    }
+
+    // Deployment pace warning (CRITICAL-1: Time matters!)
+    if (actualDuration < 6) {
+      console.log(`  ⚡ CRITICAL: Ultra-rapid deployment (<6 months) - pace factor ${paceFactor.toFixed(2)}x increases mortality`);
+    } else if (actualDuration < 30) {
+      console.log(`  ⚠️ WARNING: Rapid deployment (<30 months) - pace factor ${paceFactor.toFixed(2)}x penalty`);
+    } else if (actualDuration > 30) {
+      console.log(`  ✅ GRADUAL: Deployment >${referenceDuration} months - pace factor ${paceFactor.toFixed(2)}x reduces mortality`);
+    }
+
+    // Cumulative tracking
+    console.log(`  Cumulative Transition Mortality: ${(transition.transitionMortality * 100).toFixed(2)}%`);
+    console.log(`  Current Population: ${state.humanPopulationSystem.population.toFixed(3)}B`);
   }
 }

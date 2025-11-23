@@ -316,6 +316,22 @@ function initializeTimber(): TimberResource {
 
 function initializeEnergy(): EnergySystem {
   // 2023 global energy mix (IEA data)
+  // CRITICAL FIX (Nov 21, 2025): Initialize renewableCapacity for energy-constrained cleanup
+  // Bug: applyEnergyConstrainedCleanup() requires renewableCapacity but it was never initialized
+  const capacity = {
+    oil: 35,
+    coal: 35,
+    naturalGas: 30,
+    nuclear: 5,
+    solar: 50,                   // Massive potential
+    wind: 40,
+    hydro: 10,                   // Limited sites
+    fusion: 0,                   // Not unlocked
+  };
+
+  // Calculate total renewable capacity (solar + wind + hydro + fusion)
+  const renewableCapacity = capacity.solar + capacity.wind + capacity.hydro + capacity.fusion;
+
   return {
     totalProduction: 100,          // Abstract units
     totalDemand: 95,               // 5% surplus
@@ -334,16 +350,7 @@ function initializeEnergy(): EnergySystem {
     },
 
     // Capacity (room to grow)
-    capacity: {
-      oil: 35,
-      coal: 35,
-      naturalGas: 30,
-      nuclear: 5,
-      solar: 50,                   // Massive potential
-      wind: 40,
-      hydro: 10,                   // Limited sites
-      fusion: 0,                   // Not unlocked
-    },
+    capacity,
 
     // Infrastructure
     gridEfficiency: 0.85,          // 15% transmission losses
@@ -352,6 +359,7 @@ function initializeEnergy(): EnergySystem {
     // Metrics
     renewablePercentage: 0.19,     // 19% from clean (solar+wind+hydro)
     carbonIntensity: 0.50,         // kg CO2 per unit energy (high!)
+    renewableCapacity,             // Total renewable capacity (100 = solar+wind+hydro+fusion)
 
     // Renewable surplus tracking (TIER 1 CRITICAL - Climate deployment model)
     // Initially 0 because baseline demand exceeds renewable generation

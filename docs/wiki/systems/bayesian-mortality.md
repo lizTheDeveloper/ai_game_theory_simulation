@@ -102,17 +102,25 @@ Resolve all accumulated mortality risks for the month. Called by `BayesianMortal
 
 ```typescript
 import { resolveMortality } from '@/simulation/bayesianMortality';
+import { aggregateGlobalPopulation } from '@/simulation/populationDynamics';
 
 const result = resolveMortality(state, rng);
+
+// CRITICAL: Aggregate regional populations to global level
+// resolveMortality() applies deaths to regional populations,
+// but global population must be recalculated from regions
+aggregateGlobalPopulation(state);
 ```
 
 **Process:**
 
 1. **Compound risks:** P(death) = 1 - ∏(1 - p_i × v_i)
 2. **Apply demographic vulnerabilities:** Different segments have different multipliers
-3. **Enforce mortality caps:** Monthly (2.8%) and instant (50%) limits
-4. **Update tracking:** Automatically updates `deathsByCategory` and `deathsByRootCause`
-5. **Clear queue:** Empties `mortalityRisks` array for next month
+3. **Apply to regional populations:** Deaths reduce regional population values
+4. **Aggregate to global:** `aggregateGlobalPopulation()` recalculates global total from regions (CRITICAL, Nov 21 2025)
+5. **Enforce mortality caps:** Monthly (2.8%) and instant (50%) limits
+6. **Update tracking:** Automatically updates `deathsByCategory` and `deathsByRootCause`
+7. **Clear queue:** Empties `mortalityRisks` array for next month
 
 **Returns:** `MortalityResult` with:
 - `totalDeaths` - Total deaths (in billions)

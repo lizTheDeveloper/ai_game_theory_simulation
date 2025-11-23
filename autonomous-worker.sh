@@ -4,7 +4,8 @@ set -e
 # Ensure PATH includes claude (needed for cron execution)
 export PATH="/usr/bin:/usr/local/bin:/bin:$PATH"
 
-PROJECT_DIR="/home/lizthedeveloper_gmail_com/ai_game_theory_simulation"
+# Get the actual project directory where this script lives
+PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Lock file to prevent concurrent runs
 LOCK_FILE="$PROJECT_DIR/.autonomous-worker.lock"

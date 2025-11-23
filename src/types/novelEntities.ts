@@ -114,5 +114,45 @@ export interface NovelEntitiesSystem {
   /** Prevention multiplier [0, 1] - Fraction of baseline emissions still produced */
   /** 1.0 = no prevention, 0.01 = 99% prevented (PFAS ban), 0.0 = 100% prevented */
   preventionMultiplier?: number;
+
+  // === CRITICAL FIX (Nov 18, 2025): Irreversibility + Energy Trap + Rebound Effects (Phase 3) ===
+
+  /** Irreversible fraction [0.80-0.95] - Contamination that persists indefinitely */
+  /** Research: Cousins 2022 (atmospheric PFAS), Kane 2022 (ocean microplastics centuries recovery) */
+  /** HIGH UNCERTAINTY: Range 80-95%, sensitivity analysis REQUIRED */
+  irreversibleFraction?: number;
+
+  /** Reversible contamination stock (Mt) - Can be cleaned with sufficient energy */
+  reversibleStock?: number;
+
+  /** Irreversible contamination stock (Mt) - Persists indefinitely (atmospheric, covalently bound) */
+  irreversibleStock?: number;
+
+  /** Minimum achievable contamination (Mt) - Asymptotic floor, never reaches zero */
+  minimumAchievableLevel?: number;
+
+  // Energy-constrained cleanup
+  /** Renewable energy surplus available for cleanup (TWh/year) */
+  renewableEnergySurplus?: number;
+
+  /** Energy required for cleanup at gigatonne scale (TWh/year) */
+  /** Research: Ling 2024 (0.2-66× GDP), Li 2024 (5-132 kWh/m³) */
+  cleanupEnergyRequirement?: number;
+
+  // Rebound effects (Jevons Paradox)
+  /** Rebound factor [0.5-0.9] - Fraction of cleanup that induces new production */
+  /** HIGH UNCERTAINTY: Range 50-90%, MUST run sensitivity analysis */
+  /** Research: UNEP 2024 (waste +81%), Sorrell 2025 (AI efficiency paradox) */
+  reboundFactor?: number;
+
+  /** Time lag for rebound to manifest (months) */
+  /** Research: 10-30 years estimated (120-360 months) */
+  reboundTimelagMonths?: number;
+
+  /** Months since cleanup tech deployment */
+  monthsSinceCleanupDeployment?: number;
+
+  /** Cleanup-induced production rate (Mt/year) - New pollution from moral hazard */
+  cleanupInducedProduction?: number;
 }
 

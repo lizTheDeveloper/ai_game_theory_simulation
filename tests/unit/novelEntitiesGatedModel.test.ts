@@ -18,16 +18,30 @@
 
 import { describe, it, beforeEach } from 'node:test';
 import assert from 'node:assert';
-import { createTestState } from '../../src/simulation/initialization';
+import { createDefaultInitialState } from '../../src/simulation/initialization';
 import type { GameState } from '../../src/types/game';
 import { TechTreeState } from '../../src/simulation/techTree/engine';
 
-// TODO: Needs conversion from vitest to node:test and fix function references
-describe.skip('Novel Entities Gated Remediation Model', () => {
+// Simple RNG for test initialization
+let testSeed = 42;
+const testRng = () => {
+  testSeed = (testSeed * 1664525 + 1013904223) % (2**32);
+  return testSeed / (2**32);
+};
+
+// Helper for toBeCloseTo assertions
+const assertCloseTo = (actual: number, expected: number, precision: number = 2) => {
+  const diff = Math.abs(actual - expected);
+  const tolerance = Math.pow(10, -precision) / 2;
+  assert.ok(diff < tolerance, `Expected ${actual} to be close to ${expected} (within ${tolerance})`);
+};
+
+describe('Novel Entities Gated Remediation Model', () => {
   let state: GameState;
 
   beforeEach(() => {
-    state = initializeGameState();
+    testSeed = 42; // Reset seed for determinism
+    state = createDefaultInitialState(testRng);
     // Ensure novel entities boundary exists
     if (state.planetaryBoundariesSystem?.boundaries?.novel_entities) {
       const boundary = state.planetaryBoundariesSystem.boundaries.novel_entities;
@@ -55,7 +69,7 @@ describe.skip('Novel Entities Gated Remediation Model', () => {
       // Net = 0.15 * 0.01 * 0.001 * 0.5 * 0 * 0.7 = 0
 
       // With time lag = 0, effectiveness should be 0
-      expect(boundary.currentValue).toBe(initialValue);
+      assert.strictEqual(boundary.currentValue, initialValue);
 
       // Even with some time lag (12 months), should be minimal
       // timeLagFactor = 12/360 = 0.033
@@ -74,8 +88,8 @@ describe.skip('Novel Entities Gated Remediation Model', () => {
       const attemptedCleanup = 0.5; // Try to reduce by 0.5
       const expectedValue = Math.max(irreversibleFloor, 1.8 - attemptedCleanup);
 
-      expect(expectedValue).toBe(1.8); // Clamped to floor
-      expect(expectedValue).toBeGreaterThanOrEqual(irreversibleFloor);
+      assert.strictEqual(expectedValue, 1.8); // Clamped to floor
+      assert.ok(expectedValue >= irreversibleFloor);
     });
   });
 
@@ -119,9 +133,9 @@ describe.skip('Novel Entities Gated Remediation Model', () => {
       const expectedMultiplier = 1.0 * 0.001 * 0.5 * 1.0 * 0.7;
       const expectedNet = baseEffect * expectedMultiplier;
 
-      expect(expectedNet).toBeGreaterThan(0);
-      expect(expectedNet).toBeLessThan(baseEffect); // Still reduced by multipliers
-      expect(expectedNet).toBeCloseTo(0.0000525, 6); // 0.00525%
+      assert.ok(expectedNet > 0);
+      assert.ok(expectedNet < baseEffect); // Still reduced by multipliers
+      assertCloseTo(expectedNet, 0.0000525, 6); // 0.00525%
     });
 
     it('should scale effectiveness with number of prevention techs deployed', () => {
@@ -133,10 +147,10 @@ describe.skip('Novel Entities Gated Remediation Model', () => {
         0.01 + (3/3) * 0.99,     // 3 techs: 100%
       ];
 
-      expect(regulationMultipliers[0]).toBeCloseTo(0.01, 2);
-      expect(regulationMultipliers[1]).toBeCloseTo(0.34, 2);
-      expect(regulationMultipliers[2]).toBeCloseTo(0.67, 2);
-      expect(regulationMultipliers[3]).toBeCloseTo(1.0, 2);
+      assertCloseTo(regulationMultipliers[0], 0.01, 2);
+      assertCloseTo(regulationMultipliers[1], 0.34, 2);
+      assertCloseTo(regulationMultipliers[2], 0.67, 2);
+      assertCloseTo(regulationMultipliers[3], 1.0, 2);
     });
 
     it('should track peak contamination for irreversible floor', () => {
@@ -154,24 +168,24 @@ describe.skip('Novel Entities Gated Remediation Model', () => {
         boundary.peakValue = boundary.currentValue;
       }
 
-      expect(boundary.peakValue).toBe(2.0);
+      assert.strictEqual(boundary.peakValue, 2.0);
 
       // Floor is 90% of peak
       const floor = boundary.peakValue * 0.90;
-      expect(floor).toBe(1.8);
+      assert.strictEqual(floor, 1.8);
 
-      // Contamination decreases
-      boundary.currentValue = 1.7;
+      // Contamination decreases to 1.9 (above floor)
+      boundary.currentValue = 1.9;
 
-      // Can clean to 1.7 (above floor)
-      expect(boundary.currentValue).toBeGreaterThan(floor);
+      // Can clean to 1.9 (above floor of 1.8)
+      assert.ok(boundary.currentValue > floor);
 
       // Try to clean to 1.5 (below floor)
       const attemptedValue = 1.5;
       const clampedValue = Math.max(floor, attemptedValue);
 
-      expect(clampedValue).toBe(floor); // Clamped to 1.8
-      expect(clampedValue).toBeGreaterThan(attemptedValue);
+      assert.strictEqual(clampedValue, floor); // Clamped to 1.8
+      assert.ok(clampedValue > attemptedValue);
     });
   });
 
@@ -180,19 +194,19 @@ describe.skip('Novel Entities Gated Remediation Model', () => {
       const timescale = 360; // 30 years in months
 
       // Month 0: 0%
-      expect(0 / timescale).toBe(0);
+      assert.strictEqual(0 / timescale, 0);
 
       // Month 36 (3 years): 10%
-      expect(36 / timescale).toBeCloseTo(0.1, 2);
+      assertCloseTo(36 / timescale, 0.1, 2);
 
       // Month 180 (15 years): 50%
-      expect(180 / timescale).toBeCloseTo(0.5, 2);
+      assertCloseTo(180 / timescale, 0.5, 2);
 
       // Month 360 (30 years): 100%
-      expect(360 / timescale).toBe(1.0);
+      assert.strictEqual(360 / timescale, 1.0);
 
       // Month 720 (60 years): Still 100% (capped)
-      expect(Math.min(1.0, 720 / timescale)).toBe(1.0);
+      assert.strictEqual(Math.min(1.0, 720 / timescale), 1.0);
     });
   });
 
@@ -202,7 +216,7 @@ describe.skip('Novel Entities Gated Remediation Model', () => {
       const baseCleanup = 0.10; // 10% cleanup
       const netCleanup = baseCleanup * reboundFactor;
 
-      expect(netCleanup).toBe(0.07); // 7% net (30% offset by rebound)
+      assertCloseTo(netCleanup, 0.07, 10); // 7% net (30% offset by rebound)
 
       // Validates research: UNEP 2024 (+81% waste despite tech)
       // Sorrell 2025 (Jevons paradox in AI hardware)
@@ -215,8 +229,8 @@ describe.skip('Novel Entities Gated Remediation Model', () => {
       const labEffectiveness = 0.70; // 70% in lab (mg/L concentrations)
       const envEffectiveness = labEffectiveness * concentrationMultiplier;
 
-      expect(envEffectiveness).toBe(0.0007); // 0.07% in environment
-      expect(envEffectiveness).toBeLessThan(0.001); // Sub-0.1%
+      assertCloseTo(envEffectiveness, 0.0007, 10); // 0.07% in environment
+      assert.ok(envEffectiveness < 0.001); // Sub-0.1%
 
       // Validates research: Fennell 2024 (cost scales 12-47× for dilute streams)
       // Technologies work at mg/L but environment is pg/L to ng/L
@@ -234,7 +248,7 @@ describe.skip('Novel Entities Gated Remediation Model', () => {
       // - Derivation: Atmospheric + covalent binding + ocean persistence
       //   → <10% reversible → 90% irreversible floor
 
-      expect(irreversibleFraction).toBe(0.90);
+      assert.strictEqual(irreversibleFraction, 0.90);
     });
 
     it('should document 30% rebound factor assumption', () => {
@@ -246,7 +260,7 @@ describe.skip('Novel Entities Gated Remediation Model', () => {
       // - Sorrell 2025: AI efficiency → increased use (Jevons paradox)
       // - Conservative estimate: 30% offset by induced production
 
-      expect(reboundFactor).toBe(0.7);
+      assert.strictEqual(reboundFactor, 0.7);
     });
 
     it('should document 0.1% concentration multiplier assumption', () => {
@@ -258,7 +272,7 @@ describe.skip('Novel Entities Gated Remediation Model', () => {
       // - Assumption: Cost scaling → effectiveness drops proportionally
       // - Conservative: 0.1% effectiveness at environmental dilution
 
-      expect(concentrationMultiplier).toBe(0.001);
+      assert.strictEqual(concentrationMultiplier, 0.001);
     });
   });
 });

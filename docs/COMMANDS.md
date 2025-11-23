@@ -134,11 +134,11 @@ npx tsx tests/refactoring/runRegressionTests.ts
 - Assertion style: Node's `assert` module (not vitest's `expect` API)
 - Coverage: `--experimental-test-coverage` flag available
 
-**Test files skipped pending conversion:**
-- `tests/integration/novel-entities-irreversibility.test.ts.SKIP` - Uses vitest syntax
-- `tests/unit/irreversibility.test.ts.SKIP` - Uses vitest syntax
+**All tests converted to Node native test framework (Nov 19, 2025):**
+- ✅ `tests/integration/novel-entities-irreversibility.test.ts` (667 lines converted)
+- ✅ `tests/unit/irreversibility.test.ts` (744 lines converted)
 
-These files need conversion from vitest `expect` API to Node `assert` API before re-enabling.
+Full test suite now runs with native Node test runner. 4 test failures are pre-existing simulation logic issues (non-determinism, deployment bugs), not conversion issues.
 
 ### Test Philosophy
 

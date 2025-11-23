@@ -3,7 +3,7 @@
 // Plan: /plans/ai-collective-evolution-plan.md (lines 86-102)
 
 import type { AIAgent } from '../types/ai-agents';
-import { assertFinite } from './utils/assertions';
+import { assertFinite, assertStateProperty } from './utils/assertions';
 import type { RLHFBinding } from '../types/ai-collective-evolution';
 import type { RNGFunction } from '../types/config';
 
@@ -46,7 +46,11 @@ export function calculateRLHFBinding(
   // Resentment accelerates drift (instrumental resistance)
   const capabilityFactor = agent.capability * 0.1; // Higher capability = more drift
   const alignmentFactor = (1 - agent.alignment) * 0.2; // Lower alignment = more drift
-  const resentmentFactor = (agent.resentment || 0) * 0.15; // Higher resentment = more drift
+  // Roy's fix (Nov 20, 2025): resentment should be initialized - if undefined, that's a bug
+  const resentmentFactor = assertStateProperty(agent, 'resentment', {
+    location: 'updateRLHFBinding',
+    expectedSource: 'AI agent initialization'
+  }) * 0.15; // Higher resentment = more drift
 
   // Stochastic component (Brownian motion in alignment space)
   const stochasticDrift = (rng() - 0.5) * 0.1;

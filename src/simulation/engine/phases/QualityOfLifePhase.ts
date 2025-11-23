@@ -14,7 +14,8 @@ import {
   assertFinite,
   assertProbability,
   assertStateProperty,
-  assertNonEmpty
+  assertNonEmpty,
+  assertDefined
 } from '@/simulation/utils/assertions';
 
 export class QualityOfLifePhase implements SimulationPhase {
@@ -87,8 +88,21 @@ export class QualityOfLifePhase implements SimulationPhase {
 
     // DEBUG: Log phase execution every 12 months
     if (state.currentMonth % 12 === 0) {
-      const foodSec = state.qualityOfLifeSystems.survivalFundamentals?.foodSecurity || 0;
+      // qualityOfLifeSystems.survivalFundamentals is REQUIRED field
+      const survivalFundamentals = assertDefined(state.qualityOfLifeSystems.survivalFundamentals, {
+        location: 'QualityOfLifePhase.execute',
+        valueName: 'state.qualityOfLifeSystems.survivalFundamentals',
+        month: state.currentMonth,
+        expectedSource: 'initialization.ts (QoL system)'
+      });
+      const foodSec = assertDefined(survivalFundamentals.foodSecurity, {
+        location: 'QualityOfLifePhase.execute',
+        valueName: 'survivalFundamentals.foodSecurity',
+        month: state.currentMonth,
+        expectedSource: 'QoL calculation phases'
+      });
       const qol = state.globalMetrics.qualityOfLife;
+      // LEGITIMATE FALLBACK: regionalPopulations length is for logging only
       console.log(`[Phase ${this.order}] ${this.name}: Food sec AFTER calc = ${(foodSec * 100).toFixed(1)}%, QoL = ${(qol * 100).toFixed(1)}% (aggregated from ${state.humanPopulationSystem.regionalPopulations?.length || 0} regions)`);
     }
 

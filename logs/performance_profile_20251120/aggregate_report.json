@@ -1,0 +1,276 @@
+{
+  "config": {
+    "runs": 3,
+    "maxMonths": 50,
+    "baseSeed": 42,
+    "outputDir": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/logs/performance_profile_20251120"
+  },
+  "timestamp": "2025-11-20T11:28:05.273Z",
+  "budgetTarget": 120,
+  "overallStats": {
+    "meanAvgStep": 91.89726575333344,
+    "meanP95Step": 157.47625033333395,
+    "peakStep": 325.6181630000001,
+    "budgetUsage": 76.58105479444454,
+    "budgetViolation": false
+  },
+  "orchestrationOverhead": {
+    "totalPhaseTimeMs": 4420.099999999999,
+    "totalStepTimeMs": 4594.8632876666725,
+    "overheadMs": 174.76328766667302,
+    "overheadPct": 3.8034491284161787,
+    "perPhaseOverheadMs": 2.0087734214560116
+  },
+  "top20Phases": [
+    {
+      "name": "AI Agent Actions",
+      "meanAvgMs": 52.81,
+      "meanTotalMs": 2640.4,
+      "meanMaxMs": 112.37333333333333,
+      "meanCalls": 50,
+      "cv": 5.699667606317646
+    },
+    {
+      "name": "Technology Tree Update",
+      "meanAvgMs": 11.579999999999998,
+      "meanTotalMs": 578.9666666666666,
+      "meanMaxMs": 37.62666666666667,
+      "meanCalls": 50,
+      "cv": 7.108502807342551
+    },
+    {
+      "name": "Social Influence Update",
+      "meanAvgMs": 9.466666666666667,
+      "meanTotalMs": 473.2333333333333,
+      "meanMaxMs": 41.263333333333335,
+      "meanCalls": 50,
+      "cv": 31.46756736820004
+    },
+    {
+      "name": "AI Population Lifecycle",
+      "meanAvgMs": 1.9033333333333335,
+      "meanTotalMs": 95.13333333333334,
+      "meanMaxMs": 6.043333333333333,
+      "meanCalls": 50,
+      "cv": 12.509331998899176
+    },
+    {
+      "name": "Benchmark Evaluations",
+      "meanAvgMs": 0.8333333333333334,
+      "meanTotalMs": 41.76666666666667,
+      "meanMaxMs": 4.663333333333333,
+      "meanCalls": 50,
+      "cv": 26.87452325158531
+    },
+    {
+      "name": "Organization Turns",
+      "meanAvgMs": 0.8133333333333334,
+      "meanTotalMs": 40.6,
+      "meanMaxMs": 4.096666666666667,
+      "meanCalls": 50,
+      "cv": 20.873494390568595
+    },
+    {
+      "name": "Human Survival System",
+      "meanAvgMs": 0.7066666666666667,
+      "meanTotalMs": 35.46666666666667,
+      "meanMaxMs": 4.216666666666667,
+      "meanCalls": 50,
+      "cv": 35.37421369670316
+    },
+    {
+      "name": "Government Agent Actions",
+      "meanAvgMs": 0.57,
+      "meanTotalMs": 28.46666666666667,
+      "meanMaxMs": 3.22,
+      "meanCalls": 50,
+      "cv": 25.463790710031866
+    },
+    {
+      "name": "Planetary Boundaries System",
+      "meanAvgMs": 0.5499999999999999,
+      "meanTotalMs": 27.633333333333336,
+      "meanMaxMs": 3.6333333333333333,
+      "meanCalls": 50,
+      "cv": 29.57923476827256
+    },
+    {
+      "name": "AI Alignment Evolution",
+      "meanAvgMs": 0.42333333333333334,
+      "meanTotalMs": 21.166666666666668,
+      "meanMaxMs": 1.2766666666666666,
+      "meanCalls": 50,
+      "cv": 16.4036745322832
+    },
+    {
+      "name": "Cooperative Systems Update",
+      "meanAvgMs": 0.4033333333333333,
+      "meanTotalMs": 20.133333333333333,
+      "meanMaxMs": 1.26,
+      "meanCalls": 50,
+      "cv": 18.700344626421096
+    },
+    {
+      "name": "Memetic Evolution",
+      "meanAvgMs": 0.3933333333333333,
+      "meanTotalMs": 19.7,
+      "meanMaxMs": 1.5133333333333334,
+      "meanCalls": 50,
+      "cv": 33.621753262504015
+    },
+    {
+      "name": "Minimal Suffering Indicators",
+      "meanAvgMs": 0.37000000000000005,
+      "meanTotalMs": 18.566666666666666,
+      "meanMaxMs": 2.2933333333333334,
+      "meanCalls": 50,
+      "cv": 36.461452873600116
+    },
+    {
+      "name": "Refugee Crisis System",
+      "meanAvgMs": 0.36999999999999994,
+      "meanTotalMs": 18.53333333333333,
+      "meanMaxMs": 2.83,
+      "meanCalls": 50,
+      "cv": 20.22517506364293
+    },
+    {
+      "name": "Bayesian Mortality Resolution",
+      "meanAvgMs": 0.3666666666666667,
+      "meanTotalMs": 18.366666666666664,
+      "meanMaxMs": 1.4233333333333331,
+      "meanCalls": 50,
+      "cv": 29.653648055091068
+    },
+    {
+      "name": "National AI Update",
+      "meanAvgMs": 0.2933333333333333,
+      "meanTotalMs": 14.6,
+      "meanMaxMs": 1.5733333333333335,
+      "meanCalls": 50,
+      "cv": 28.157981121281516
+    },
+    {
+      "name": "Resource Economy Update",
+      "meanAvgMs": 0.27666666666666667,
+      "meanTotalMs": 13.866666666666667,
+      "meanMaxMs": 1.6500000000000001,
+      "meanCalls": 50,
+      "cv": 46.87970230926199
+    },
+    {
+      "name": "Quality of Life Systems",
+      "meanAvgMs": 0.26666666666666666,
+      "meanTotalMs": 13.466666666666667,
+      "meanMaxMs": 1.3166666666666667,
+      "meanCalls": 50,
+      "cv": 32.739502134271994
+    },
+    {
+      "name": "Climate System",
+      "meanAvgMs": 0.2633333333333333,
+      "meanTotalMs": 13.200000000000001,
+      "meanMaxMs": 0.8566666666666668,
+      "meanCalls": 50,
+      "cv": 26.00333997996726
+    },
+    {
+      "name": "Extinction System",
+      "meanAvgMs": 0.26,
+      "meanTotalMs": 13.133333333333333,
+      "meanMaxMs": 2.0500000000000003,
+      "meanCalls": 50,
+      "cv": 52.26619771958849
+    }
+  ],
+  "highVariancePhases": [
+    {
+      "name": "Extinction System",
+      "meanAvgMs": 0.26,
+      "meanTotalMs": 13.133333333333333,
+      "meanMaxMs": 2.0500000000000003,
+      "meanCalls": 50,
+      "cv": 52.26619771958849
+    },
+    {
+      "name": "Extreme Weather Events",
+      "meanAvgMs": 0.12,
+      "meanTotalMs": 6.166666666666667,
+      "meanMaxMs": 3.203333333333333,
+      "meanCalls": 50,
+      "cv": 77.28015412913086
+    },
+    {
+      "name": "Exogenous Shock Detection",
+      "meanAvgMs": 0.04,
+      "meanTotalMs": 1.8999999999999997,
+      "meanMaxMs": 0.7333333333333334,
+      "meanCalls": 50,
+      "cv": 70.71067811865476
+    },
+    {
+      "name": "Sleeper Agent Wake Check",
+      "meanAvgMs": 0.02666666666666666,
+      "meanTotalMs": 1.4000000000000001,
+      "meanMaxMs": 0.5566666666666666,
+      "meanCalls": 50,
+      "cv": 88.38834764831846
+    },
+    {
+      "name": "Psychological Trauma",
+      "meanAvgMs": 0.02,
+      "meanTotalMs": 1.0666666666666667,
+      "meanMaxMs": 0.15666666666666665,
+      "meanCalls": 50,
+      "cv": 70.71067811865476
+    },
+    {
+      "name": "Time Advancement",
+      "meanAvgMs": 0.0033333333333333335,
+      "meanTotalMs": 0.3,
+      "meanMaxMs": 0.04,
+      "meanCalls": 50,
+      "cv": 141.42135623730948
+    },
+    {
+      "name": "Triggered Events",
+      "meanAvgMs": 0.0033333333333333335,
+      "meanTotalMs": 0.2333333333333333,
+      "meanMaxMs": 0.02666666666666667,
+      "meanCalls": 50,
+      "cv": 141.42135623730948
+    }
+  ],
+  "runs": [
+    {
+      "run": 1,
+      "seed": 42,
+      "totalDurationMs": 5969.728887,
+      "monthsSimulated": 51,
+      "avgStepMs": 108.23730800000003,
+      "maxStepMs": 325.6181630000001,
+      "minStepMs": 63.90366399999948,
+      "p95StepMs": 248.391929
+    },
+    {
+      "run": 2,
+      "seed": 43,
+      "totalDurationMs": 4703.95916,
+      "monthsSimulated": 51,
+      "avgStepMs": 83.62626104000006,
+      "maxStepMs": 120.632239999999,
+      "minStepMs": 58.47435500000029,
+      "p95StepMs": 115.14810100000068
+    },
+    {
+      "run": 3,
+      "seed": 44,
+      "totalDurationMs": 4706.0051,
+      "monthsSimulated": 51,
+      "avgStepMs": 83.82822822000024,
+      "maxStepMs": 189.27530500000103,
+      "minStepMs": 52.04658500000005,
+      "p95StepMs": 108.88872100000117
+    }
+  ]
+}

@@ -334,6 +334,15 @@ export function allocateComputeWithinOrganization(
   // But they share with other orgs that also have no DCs
   // NaN AUDIT (Nov 7, 2025): Protect complex calculations from NaN propagation
   if (ownedCompute === 0) {
+    // PERFORMANCE FIX (Nov 20, 2025 - HIGH-1): O(n²) → O(n)
+    // Build datacenter ownership index once (O(n)), not in filter (O(n²))
+    const dcOwnership = new Map<string, any>();
+    for (const org of state.organizations) {
+      for (const dcId of org.ownedDataCenters) {
+        dcOwnership.set(dcId, org);
+      }
+    }
+
     // Find unrestricted DCs that aren't owned by orgs with models
     // (i.e., academic DCs are truly open to all)
     let trulyUnrestrictedCompute = Assertions.assertFinite(
@@ -341,7 +350,7 @@ export function allocateComputeWithinOrganization(
         .filter(dc => {
           if (!dc.operational || dc.restrictedAccess) return false;
           // Check if this DC's owner has AIs using it
-          const dcOrg = state.organizations.find(o => o.ownedDataCenters.includes(dc.id));
+          const dcOrg = dcOwnership.get(dc.id);
           if (!dcOrg) return true; // No owner, truly open
           const dcOrgAIs = state.aiAgents.filter(ai =>
             ai.organizationId === dcOrg.id && ai.lifecycleState !== 'retired'

@@ -1,0 +1,11 @@
+[Unit]
+Description=Worker Watcher Timer - Hourly at :15
+Requires=worker-watcher.service
+
+[Timer]
+# Run at :15 past each hour
+OnCalendar=*:15
+Persistent=true
+
+[Install]
+WantedBy=timers.target

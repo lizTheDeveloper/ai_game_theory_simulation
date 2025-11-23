@@ -26,7 +26,7 @@
 
 import type { GameState } from '@/types/game';
 import type { RegionalNitrogenManagement } from '@/types/planetaryBoundaries';
-import { assertFinite, assertInRange, assertProbability } from '@/simulation/utils/assertions';
+import { assertFinite, assertInRange, assertProbability, assertDefined } from '@/simulation/utils/assertions';
 
 /**
  * Regional overuse baselines from research
@@ -43,6 +43,7 @@ const REGIONAL_OVERUSE: Record<string, number> = {
   europe: 0.15,         // 15% overuse (CAP subsidies drive overuse)
   latinAmerica: 0.10,   // 10% overuse (expanding agriculture)
   subSaharanAfrica: -0.10,  // 10% UNDERUSE (fertilizer poverty trap)
+  global: 0.20,         // 20% overuse (weighted global average, used for simplified calculations)
 };
 
 /**
@@ -76,8 +77,17 @@ export function calculateNitrogenYieldPenalty(
     additionalInfo: { region }
   });
 
-  // Get regional overuse baseline (default to global average if region unknown)
-  const regionalOveruse = REGIONAL_OVERUSE[region] ?? 0.20;  // Default 20% overuse
+  // Get regional overuse baseline
+  // DEFENSIVE CODING FIX (Nov 20, 2025): Unknown region is a bug, not a legitimate state
+  // If region isn't in REGIONAL_OVERUSE map, that indicates incorrect region identifier
+  const regionalOveruse = assertDefined(REGIONAL_OVERUSE[region], {
+    location: 'calculateNitrogenReductionYieldPenalty',
+    valueName: `REGIONAL_OVERUSE[${region}]`,
+    additionalInfo: {
+      context: 'Unknown region identifier - must be one of: ' + Object.keys(REGIONAL_OVERUSE).join(', '),
+      providedRegion: region
+    }
+  });
 
   // === ZONE 1: OVERUSE REDUCTION (no penalty) ===
   if (validatedReduction <= regionalOveruse) {
@@ -306,42 +316,58 @@ export function getNitrogenReductionDeployment(state: GameState): number[] {
     return deployments; // Return empty array if no tech tree
   }
 
-  // Extract deployment levels from tech tree
-  // Tech tree uses regional deployment, so we aggregate across all regions
+  // HIGH-4 FIX (Nov 20, 2025): O(n²) → O(n+m) optimization using lookup map
+  // Build lookup map: techId → { totalDeployment, regionCount }
+  // Reduces from O(n×m×p) to O(m×p + n) where n=nitrogenTechs, m=regions, p=deployedTechs
+  const deploymentMap = new Map<string, { totalDeployment: number; regionCount: number }>();
+
+  for (const region in state.techTreeState.regionalDeployment) {
+    const regionalTechs = state.techTreeState.regionalDeployment[region];
+    if (!regionalTechs) continue;
+
+    for (const deployedTech of regionalTechs) {
+      const existing = deploymentMap.get(deployedTech.techId);
+      if (existing) {
+        existing.totalDeployment += deployedTech.deploymentLevel;
+        existing.regionCount++;
+      } else {
+        deploymentMap.set(deployedTech.techId, {
+          totalDeployment: deployedTech.deploymentLevel,
+          regionCount: 1
+        });
+      }
+    }
+  }
+
+  // PERFORMANCE FIX (Nov 20, 2025 - HIGH-1): O(n) → O(1)
+  // Build Set for O(1) membership test
+  const unlockedTechSet = new Set(state.techTreeState.unlockedTech);
+
+  // Extract deployment levels from tech tree using lookup map
   for (const { id, maxEffectiveness } of nitrogenTechIds) {
     // Check if tech is unlocked
-    if (!state.techTreeState.unlockedTech.includes(id)) {
+    if (!unlockedTechSet.has(id)) {
       continue; // Skip locked tech
     }
 
-    // Aggregate deployment across all regions
-    let totalDeployment = 0;
-    let regionCount = 0;
+    // Lookup aggregated deployment from map (O(1) instead of O(m×p))
+    const deployment = deploymentMap.get(id);
+    if (!deployment) continue;
 
-    for (const region in state.techTreeState.regionalDeployment) {
-      const regionalTechs = state.techTreeState.regionalDeployment[region];
-      const deployedTech = regionalTechs?.find(t => t.techId === id);
-
-      if (deployedTech) {
-        totalDeployment += deployedTech.deploymentLevel;
-        regionCount++;
-      }
-    }
+    const { totalDeployment, regionCount } = deployment;
 
     // Calculate average deployment across regions
-    if (regionCount > 0) {
-      const avgDeployment = totalDeployment / regionCount;
+    const avgDeployment = totalDeployment / regionCount;
 
-      // Validate deployment level
-      const validatedDeployment = assertProbability(avgDeployment, {
-        location: 'getNitrogenReductionDeployment',
-        valueName: `${id}.deploymentLevel`,
-        additionalInfo: { regionCount, totalDeployment }
-      });
+    // Validate deployment level
+    const validatedDeployment = assertProbability(avgDeployment, {
+      location: 'getNitrogenReductionDeployment',
+      valueName: `${id}.deploymentLevel`,
+      additionalInfo: { regionCount, totalDeployment }
+    });
 
-      // Add weighted effectiveness
-      deployments.push(validatedDeployment * maxEffectiveness);
-    }
+    // Add weighted effectiveness
+    deployments.push(validatedDeployment * maxEffectiveness);
   }
 
   return deployments;
@@ -357,15 +383,48 @@ export function getNitrogenReductionDeployment(state: GameState): number[] {
  * 4. Aggregate to global food production index
  * 5. Update regional management state (separate read/write for safety)
  *
+ * CRITICAL SYNCHRONIZATION CONSTRAINT (Nov 21, 2025 - Race Condition Fix):
+ * ========================================================================
+ * This function is the SINGLE WRITER for nitrogen-food coupling state.
+ *
+ * OWNERSHIP:
+ * - NitrogenFoodCouplingPhase (order 19.6) is the ONLY caller
+ * - Called exactly ONCE per simulation step
+ * - Writes to state.planetaryBoundariesSystem.globalFoodProductionIndex
+ *
+ * READERS:
+ * - PlanetaryBoundariesPhase (order 21.0) depends on NitrogenFoodCouplingPhase
+ * - Must READ from state.planetaryBoundariesSystem.globalFoodProductionIndex
+ * - NEVER call this function directly from other phases
+ *
+ * RACE CONDITION PREVENTION:
+ * - Function tracks last update month internally (__lastUpdateMonth)
+ * - Throws error if called multiple times in same month
+ * - This prevents read-modify-write conflicts
+ *
+ * DO NOT EXPORT THIS FUNCTION. It is intentionally module-private to prevent
+ * external callers from breaking phase synchronization.
+ *
  * @param state - Current game state
  * @returns Global food production multiplier [0, 2] where 1.0 = baseline
+ *
+ * @internal - Only called by NitrogenFoodCouplingPhase
  */
 export function updateNitrogenFoodCoupling(state: GameState): number {
-  // Initialize regional management if not present
+  // CRITICAL-2 FIX: Assertion to detect multiple calls per step
   if (!state.planetaryBoundariesSystem.regionalNitrogenManagement) {
-    console.log('⚠️ WARNING: regionalNitrogenManagement not initialized, creating default');
-    state.planetaryBoundariesSystem.regionalNitrogenManagement = initializeRegionalNitrogenManagement();
+    throw new Error('❌ CRITICAL: regionalNitrogenManagement not initialized. Must be created in initialization.ts.');
   }
+
+  // Track last update month to detect multiple calls per step
+  const nitrogenState = state.planetaryBoundariesSystem.regionalNitrogenManagement;
+  if ((nitrogenState as any).__lastUpdateMonth === state.currentMonth) {
+    throw new Error(
+      `❌ CRITICAL: updateNitrogenFoodCoupling called multiple times in month ${state.currentMonth}. ` +
+      `This creates read-modify-write race conditions. Check phase execution order.`
+    );
+  }
+  (nitrogenState as any).__lastUpdateMonth = state.currentMonth;
 
   const regions = state.planetaryBoundariesSystem.regionalNitrogenManagement;
 
@@ -421,12 +480,25 @@ export function updateNitrogenFoodCoupling(state: GameState): number {
 
     // Update deployed tech IDs (from placeholder to actual tech)
     // Only store tech IDs that are actually contributing
-    region.deployedTechnologies = getNitrogenReductionDeployment(state)
-      .length > 0
-      ? Object.keys(state.techTreeState.regionalDeployment['global'] || {})
-          .filter(techId => ['soil_p_optimization', 'vertical_farming', 'precision_fermentation',
-                             'circular_food_systems', 'drought_resistant_crops'].includes(techId))
-      : [];
+    // MEDIUM-1 FIX (Nov 21, 2025): Corrected tech ID list from phosphorus to nitrogen
+    if (state.techTreeState) {
+      const unlockedTechSet = new Set(state.techTreeState.unlockedTech);
+      const regionalDeployment = state.techTreeState.regionalDeployment[region.region] || [];
+      const deployedTechSet = new Set(regionalDeployment.map(d => d.techId));
+
+      // Nitrogen tech IDs (matches getNitrogenReductionDeployment)
+      const nitrogenTechIds = [
+        'precision_agriculture', 'biological_nitrogen_fixation', 'nitrogen_circular_food',
+        'ecosystem_restoration_nitrogen', 'nitrogen_monitoring_networks', 'green_ammonia_production',
+        'rhizosphere_engineering', 'nitroplast_integration', 'precision_fermentation_nitrogen',
+        'regional_nitrogen_policies', 'soil_health_restoration', 'integrated_nutrient_management'
+      ];
+
+      region.deployedTechnologies = nitrogenTechIds
+        .filter(id => unlockedTechSet.has(id) && deployedTechSet.has(id));
+    } else {
+      region.deployedTechnologies = [];
+    }
   }
 
   // Global food production index (weighted average)

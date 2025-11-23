@@ -28,6 +28,10 @@
  * Target frequency (updated):
  * - ~1 event per 20-year run (expected value from 0.15% monthly)
  * - Monte Carlo validation (N≥100): Check for appropriate distribution
+ *
+ * @reads state.globalRisks, state.resourceEconomy, state.aiAgents
+ * @writes state.planetaryBoundariesSystem.novelEntitiesIncrementalImpact (adds gamma-ray burst impact)
+ *         state.qualityOfLifeSystems.* (various impacts from different events)
  */
 
 import type { GameState, GameEvent, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';

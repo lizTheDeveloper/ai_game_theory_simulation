@@ -200,17 +200,17 @@ updateLegacyNutrientStocks(state, currentNitrogenInput, currentPhosphorusInput);
 
 | Parameter | Status | Priority | Action Required |
 |-----------|--------|----------|----------------|
-| N baseline (120 Mt/yr) | ⚠️ Ambiguous | HIGH | Clarify if current or target |
-| P baseline (25 Mt/yr) | ❌ Unverified | CRITICAL | Resolve 25 vs 18.2 discrepancy |
+| N baseline (120 Mt/yr) | ✅ Resolved | - | Clarified as total agricultural N flow (wiki line 211) |
+| P baseline (18.2 Mt/yr) | ✅ Resolved | - | Fixed from 25 to 18.2 Mt/yr (SRC data) |
 | Phosphorus scaling | ⚠️ Assumption | MEDIUM | Find research support |
 | Stock update mechanism | ✅ Verified | - | No action needed |
 | Implementation quality | ✅ Verified | - | No action needed |
 
-**Overall Grade:** C+ (implementation solid, but parameter verification incomplete)
+**Overall Grade:** B (parameter discrepancies resolved Nov 19, 2025)
 
-**Blocker:** Phosphorus baseline discrepancy (25 vs 18.2 Mt/yr) must be resolved before Monte Carlo validation.
+**Former Blocker:** Phosphorus baseline discrepancy resolved - updated from 25 to 18.2 Mt P/year in both PlanetaryBoundariesPhase.ts and legacyNutrientStocks.ts
 
 ---
 
 **Created:** November 17, 2025 (historian/wiki-documentation-updater)
-**Next:** Route to orchestrator for research validation (super-alignment-researcher + research-skeptic review)
+**Updated:** November 19, 2025 (roy/simulation-maintainer) - Resolved parameter discrepancies, Phases 2-3 complete

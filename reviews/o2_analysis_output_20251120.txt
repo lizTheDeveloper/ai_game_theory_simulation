@@ -1,0 +1,140 @@
+=== O(n²) PERFORMANCE BOTTLENECK ANALYSIS ===
+
+Analyzing simulation codebase for O(n²) patterns...
+
+=== PATTERN SCAN RESULTS ===
+
+Found 14 potential O(n²) patterns:
+  🔴 CRITICAL: 7
+  🟡 HIGH: 7
+  🟠 MEDIUM: 0
+
+🔴 CRITICAL ISSUES:
+  src/simulation/agents/governmentAgent.ts:1497
+    Pattern: const org = state.organizations.find(o => o.ownedDataCenters.includes(dc.id));
+    Fix: Build Map<dcId, orgId> index at step start
+  src/simulation/agents/governmentAgent.ts:1508
+    Pattern: const org = state.organizations.find((o: any) => o.ownedDataCenters.includes(dc.id));
+    Fix: Build Map<dcId, orgId> index at step start
+  src/simulation/agents/governmentAgent.ts:1522
+    Pattern: const oldOrg = state.organizations.find((o: any) => o.ownedDataCenters.includes(target.id));
+    Fix: Build Map<dcId, orgId> index at step start
+  src/simulation/computeInfrastructure.ts:344
+    Pattern: const dcOrg = state.organizations.find(o => o.ownedDataCenters.includes(dc.id));
+    Fix: Build Map<dcId, orgId> index at step start
+  src/simulation/government/actions/crisisActions.ts:97
+    Pattern: const org = state.organizations.find(o => o.ownedDataCenters.includes(dc.id));
+    Fix: Build Map<dcId, orgId> index at step start
+  src/simulation/government/actions/crisisActions.ts:108
+    Pattern: const org = state.organizations.find((o: any) => o.ownedDataCenters.includes(dc.id));
+    Fix: Build Map<dcId, orgId> index at step start
+  src/simulation/government/actions/crisisActions.ts:122
+    Pattern: const oldOrg = state.organizations.find((o: any) => o.ownedDataCenters.includes(target.id));
+    Fix: Build Map<dcId, orgId> index at step start
+
+=== KNOWN O(n²) BOTTLENECKS ===
+
+📍 src/simulation/agents/governmentAgent.ts:1497,1508,1522
+   Datacenter ownership lookup
+   Impact: O(datacenters × organizations) per government action
+   Fix: Build ownership Map once per step
+
+📍 src/simulation/collectiveFormation.ts:196
+   Agent lookup in collective loop
+   Impact: O(collectives × agents) per update
+   Fix: Build agent Map<id, agent> once per step
+
+📍 src/simulation/organizationManagement.ts:109
+   Competitor building check
+   Impact: O(orgs × projects) per org decision
+   Fix: Track building status in separate index
+   Note: PARTIAL FIX: Lines 44-64 already optimized for compute utilization
+
+📍 src/simulation/techTree/engine.ts:134,218,469
+   Tech unlock includes() checks
+   Impact: O(tech × unlock checks) per step
+   Fix: Convert unlockedTech array to Set
+
+📍 src/simulation/techTree/effectsEngine.ts:3135
+   Nested deployment check
+   Impact: O(regions × deployments × tech)
+   Fix: Build deployment index Map<techId, Set<region>>
+
+
+=== THEORETICAL PERFORMANCE IMPACT ===
+
+Assumptions:
+  agents: 50
+  organizations: 200
+  datacenters: 100
+  collectives: 10
+  tech: 71
+  stepsPerGame: 240
+  gamesPerMonteCarlo: 100
+
+O(n²) Operations per Step:
+  🔴 DC Ownership (3 lookups): 60,000 ops
+  ⚠️ Collective Membership: 500 ops
+  🔴 Org Competition Check: 40,000 ops
+  ⚠️ Tech Unlock Checks (est. 10/step): 710 ops
+
+Total O(n²) ops per step: 101,210
+Total per game (240 steps): 24,290,400
+Total per Monte Carlo (100 games): 2,429,040,000
+
+Estimated Time per Step:
+  Current: 1.01ms
+  Optimized: 0.02ms
+  Savings: 0.99ms (98% reduction)
+
+=== IMPLEMENTATION PLAN ===
+
+CRITICAL - Phase 1: Datacenter Ownership Index
+  Effort: 2-3 hours
+  Impact: Eliminate 60,000 ops/step
+  Files: governmentAgent.ts
+  Steps:
+    - Create buildDatacenterOwnershipMap() utility
+    - Call once at phase start
+    - Replace all find().includes() with Map lookups
+    - Test government seizure actions
+
+HIGH - Phase 2: Agent & Org Indices
+  Effort: 3-4 hours
+  Impact: Eliminate 40,500 ops/step
+  Files: collectiveFormation.ts, organizationManagement.ts
+  Steps:
+    - Create buildAgentMap() and buildOrgMap() utilities
+    - Add to PhaseContext for sharing
+    - Replace find() calls with Map lookups
+    - Test collective and org behaviors
+
+MEDIUM - Phase 3: Tech Tree Set Conversion
+  Effort: 2 hours
+  Impact: Reduce tech checks from O(n) to O(1)
+  Files: techTree/engine.ts, types/game.ts
+  Steps:
+    - Convert unlockedTech from array to Set
+    - Update all includes() to has()
+    - Update serialization/deserialization
+    - Run tech tree tests
+
+LOW - Phase 4: Deployment Index
+  Effort: 2 hours
+  Impact: Minor - not in hot path
+  Files: techTree/effectsEngine.ts
+  Steps:
+    - Build tech deployment index
+    - Cache per step
+    - Update deployment checks
+
+Total Estimated Effort: 9-11 hours
+Expected Performance Gain: 70-90% reduction in hot path time
+
+=== SUMMARY ===
+
+The simulation has several O(n²) bottlenecks in hot paths that run every step.
+With 50 agents × 200 orgs, these create ~100,000 unnecessary operations per step.
+Implementing the proposed indexing optimizations would reduce this by 70-90%.
+
+Priority: Fix CRITICAL issues first (datacenter ownership), then HIGH (agent/org lookups).

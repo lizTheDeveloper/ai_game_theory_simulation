@@ -160,6 +160,18 @@ export type {
 } from '../simulation/engine/PhaseOrchestrator';
 
 export interface GameState {
+  /**
+   * Schema Version (State Migration System, Nov 21, 2025)
+   *
+   * Tracks GameState schema version for migration support across deployments.
+   * Every breaking change to GameState increments this version.
+   * Migration system applies sequential transformations (v1→v2→v3) to upgrade old saves.
+   *
+   * Current version: 1
+   * Expected impact: Preserves user progress across schema changes instead of breaking saves
+   */
+  schemaVersion: number;
+
   // Core state
   currentMonth: number;
   currentDay: number; // Day of the month (1-31)
@@ -327,6 +339,37 @@ export interface GameState {
    * See: /src/simulation/techTree/ for modular implementation
    */
   techTreeState: import('../simulation/techTree/engine').TechTreeState; // REQUIRED: Modular tech tree system
+
+  /**
+   * Climate Tech Deployment Tracking (TIER 1 CRITICAL - Nov 18, 2025)
+   *
+   * Three-delay model for realistic climate technology effectiveness:
+   * 1. Activation delay: Construction/manufacturing before first operation (2-15 years)
+   * 2. Scaling delay: S-curve adoption to peak capacity (5-50 years)
+   * 3. Physical response delay: Atmospheric CO2 equilibration (<1 to 100 years)
+   *
+   * Research: research/climate_tech_deployment_timescales_20251112.md (Grade A-, 15+ sources)
+   * Expected impact: God mode 5.5% effectiveness explained by realistic deployment timescales
+   */
+  climateDeploymentTracking?: {
+    // Per-technology deployment tracking
+    deployments: {
+      [techId: string]: {
+        deployedAt: number;              // Month technology was deployed (0 = start)
+        activationDelay: number;         // Years before first operation
+        scalingCurveInflection: number;  // T_50: years to 50% effectiveness
+        physicalResponseTau: number;     // Physical response time constant (years)
+        maxEffectiveness: number;        // E_max: maximum theoretical effectiveness
+        currentEffectiveness: number;    // 0-1: current effectiveness multiplier
+        cumulativeImpact: number;        // Running total of impact (CO2 removed, etc)
+      };
+    };
+
+    // Aggregate metrics
+    totalClimateEffectiveness: number;   // Weighted average across all deployed techs
+    CO2RemovalRate: number;              // Gt CO2/year currently being removed
+    temperatureOffset: number;           // Degrees C cooling from SAI
+  };
 
   upwardSpirals: import('../simulation/upwardSpirals').UpwardSpiralState; // Phase 2D: Upward spirals for Utopia detection
   meaningRenaissance: import('../simulation/meaningRenaissance').MeaningRenaissanceState; // Phase 2E: Meaning renaissance
@@ -527,6 +570,12 @@ export interface GameState {
 
   // Social Safety Nets & Community Infrastructure (TIER 2.2)
   socialSafetyNets: import('../types/socialSafetyNets').SocialSafetyNetsSystem; // Physical/social infrastructure to combat loneliness
+
+  // AI Coordination & Transition Mortality (Phase 2, Nov 18 2025) - TIER 1 CRITICAL
+  // Models AI-coordinated technology deployment with support systems to minimize mortality during rapid transitions
+  // Research: Kenya UBI (-48% mortality), Green Revolution (-35% mortality), post-Soviet Russia (+74% death rate)
+  // Chaos deployment: 30% mortality, Coordinated deployment: <5% mortality
+  transitionManagementSystem: import('../types/transitionManagement').TransitionManagementSystem; // AI-coordinated deployment with empirical mortality baselines
 
   // P2.5: Triggered Events System (Oct 16, 2025) - External event triggers for validation testing
   triggeredEvents?: import('../simulation/triggeredEvents').TriggeredEventsState;

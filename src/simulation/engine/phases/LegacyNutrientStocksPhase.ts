@@ -32,30 +32,41 @@ export class LegacyNutrientStocksPhase implements SimulationPhase {
   ];
 
   execute(state: GameState, _rng: RNGFunction): PhaseResult {
-    // Defensive: Initialize if missing (should be created in initialization.ts)
+    // HIGH-3 FIX (Nov 20, 2025): Fail loudly if not initialized (will be moved to initialization.ts)
     if (!state.planetaryBoundariesSystem.legacyNutrientStock) {
-      console.log('⚠️ WARNING: legacyNutrientStock not initialized, creating default (FIX initialization.ts!)');
-      state.planetaryBoundariesSystem.legacyNutrientStock = initializeLegacyNutrientStock();
+      throw new Error('❌ CRITICAL: legacyNutrientStock not initialized. Must be created in initialization.ts.');
     }
 
-    // Get current month's nitrogen and phosphorus inputs
-    // TODO: Wire this to actual pollution sources once biogeochemical boundary is fully integrated
-    // For now, use placeholder baseline (2025 global averages)
-    const BASELINE_N_INPUT = 120 / 12;  // Mt N/month (120 Mt/year global baseline)
-    const BASELINE_P_INPUT = 25 / 12;   // Mt P/month (25 Mt/year global baseline)
+    // Get current month's nitrogen and phosphorus inputs from regional nitrogen management
+    // HIGH-1 FIX (Nov 20, 2025): Wire to actual regional nitrogen use instead of hardcoded baselines
+    let totalNitrogenInput = 0;  // Mt N/month
+    const BASELINE_P_INPUT = 25 / 12;   // Mt P/month (25 Mt/year global baseline - P tracking not yet regionalized)
+
+    if (state.planetaryBoundariesSystem?.regionalNitrogenManagement) {
+      // Sum current nitrogen inputs across all regions
+      for (const region of state.planetaryBoundariesSystem.regionalNitrogenManagement) {
+        totalNitrogenInput += region.currentNitrogenInput / 12;  // Convert annual to monthly
+      }
+    } else {
+      // Fallback if regional management not initialized (shouldn't happen after initialization.ts fix)
+      totalNitrogenInput = 120 / 12;  // Mt N/month (2025 baseline)
+      console.log('⚠️ WARNING: regionalNitrogenManagement not found, using baseline nitrogen input');
+    }
 
     // Calculate effective pollution (current inputs + legacy releases)
     const { effectiveNitrogen, effectivePhosphorus } = updateLegacyNutrientStocks(
       state,
-      BASELINE_N_INPUT,
+      totalNitrogenInput,
       BASELINE_P_INPUT
     );
 
-    // Store effective values for downstream phases to use
-    // (biogeochemical boundary calculation, nitrogen-food coupling)
+    // HIGH-1 FIX (Nov 20, 2025): Store effective values in state for planetaryBoundaries to read
+    // This breaks the circular dependency where planetaryBoundaries was calling update functions
     if (!state.planetaryBoundariesSystem.legacyNutrientStock) {
       throw new Error('❌ CRITICAL: legacyNutrientStock disappeared after update');
     }
+    state.planetaryBoundariesSystem.legacyNutrientStock.effectiveNitrogen = effectiveNitrogen;
+    state.planetaryBoundariesSystem.legacyNutrientStock.effectivePhosphorus = effectivePhosphorus;
 
     // Store in a place where biogeochemical boundary can read it
     // For now, just validate the calculation succeeded

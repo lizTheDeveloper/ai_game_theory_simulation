@@ -188,7 +188,12 @@ Traditional benchmarks (next-token prediction, single-shot Q&A) show diminishing
 **OpenAI o1 / o3 (September 2024 / December 2024):**
 - First production models using explicit "thinking budget"
 - Can allocate variable compute at inference time
-- o3 achieves near-human performance on ARC-AGI benchmark (unlikely for o1)
+- **o3 performance (Dec 2024):**
+  - ARC-AGI benchmark: 88% (vs o1: 32%)
+  - Frontier Math: 25% (vs previous models: 2% maximum)
+  - Uses ~78K reasoning tokens per response (high-efficiency mode)
+  - High-compute mode: $1,000+ per task (~170x more compute than efficient variant)
+  - Demonstrates test-time scaling: 3-month gap from o1 to o3 with major performance jumps
 
 **Anthropic Claude 3.7 Sonnet (July 2025):**
 - Supports "thinking budget" parameter in API
@@ -223,6 +228,37 @@ Giving models **more time to think** can **decrease accuracy** on simple tasks.
 
 **Security Concern:**
 Research shows that extended reasoning can also **weaken security** (models find ways around safety guardrails through extended deliberation).
+
+---
+
+### 3.5 Compute Scaling Through 2030
+
+**Citation:** Sevilla, J., Besiroglu, T., Cottier, B., You, J., Roldán, E., Villalobos, P., & Erdil, E. (2024). "Can AI scaling continue through 2030?" Epoch AI. August 20, 2024.
+
+**Key Projections:**
+
+**Compute Growth Rate:**
+- Training compute expanding at **4x per year** (2020-2024 trend)
+- Exceeds mobile adoption (2x/year) and solar capacity (1.5x/year)
+- If sustained, represents fastest technological scaling in history
+
+**2030 Training Runs:**
+- Feasible scale: **2e29 FLOP** (median estimate)
+- Represents **10,000x** increase over GPT-4 (2e25 FLOP)
+- o3 would exceed GPT-4 by same margin that GPT-4 exceeds GPT-2
+
+**Constraint Analysis (Median Estimates):**
+- **Power availability:** 2e29 FLOP (binding constraint)
+- **Chip manufacturing:** 9e29 FLOP
+- **Data availability:** 2e30 FLOP
+- **Latency wall:** 3e31 FLOP
+
+**Critical Finding:** Power infrastructure will likely become the primary bottleneck before chip supply or data availability. Training runs approaching 1 GW power consumption (equivalent to small city) by 2028-2030.
+
+**Implication for Simulation:**
+- Hardware scaling constraints become critical factor 2027-2030
+- Power consumption creates physical/political barriers even if algorithmic progress continues
+- "Scaling wall" may be infrastructure-driven, not capability-driven
 
 ---
 
@@ -278,6 +314,53 @@ where:
 - **Constitutional AI (Anthropic):** Self-generated high-quality data for alignment
 
 **Implication:** Dataset curation becoming core competency, not just engineering task.
+
+---
+
+## 4.5. Emergent Capabilities: Random Variation vs Deterministic Thresholds (2025)
+
+### 4.5.1 The Nature of Capability Emergence
+
+**Citation:** Zhao, R., Qin, T., Alvarez-Melis, D., Kakade, S., & Saphra, N. (2025). "Random Scaling of Emergent Capabilities." arXiv:2502.17356v4. Harvard University, Kempner Institute.
+
+**Key Finding:** Emergent capabilities in LLMs are not deterministic thresholds crossed at specific scales, but rather arise from **random variation across training seeds**, with different runs clustering into distinct high and low performance groups.
+
+**Core Observations:**
+
+1. **Bimodal Distribution Drives Apparent Breakthroughs:**
+   - Multiple independent training runs at the same scale cluster into distinct high/low performance groups
+   - Different random seeds sample from these clusters differently
+   - Creates varied scaling curves: some showing sharp jumps ("emergence"), others linear progression
+   - **Implication:** Single-run scaling curves are misleading - need ensemble analysis
+
+2. **Continuous Underlying Changes:**
+   - While individual scaling curves appear to show sudden emergence, underlying distributional statistics change gradually
+   - Probability of learning a skill increases continuously with scale
+   - Performance of successful runs improves monotonically
+   - **Implication:** Capability acquisition is smoother than it appears from single runs
+
+3. **Minimum Capacity vs Observable Emergence:**
+   - Models may develop required computational capacity at smaller scales than where emergence is observed
+   - Observable emergence reflects sampling from bimodal distribution, not crossing capacity threshold
+   - Distributional metrics can predict sudden appearance of successful runs
+   - **Implication:** True capability thresholds may be lower than observed empirically
+
+4. **U-Shaped Scaling Explained:**
+   - "Inverse scaling" (performance declining with scale) reflects changing success probability
+   - Mean of successful runs still improves monotonically even when overall mean declines
+   - Artifacts of aggregating over bimodal distributions
+   - **Implication:** Anomalous scaling curves don't indicate fundamental problems
+
+**Simulation Implications:**
+
+- **Probabilistic capability acquisition:** Model capability emergence as probability distribution over training seeds, not deterministic threshold
+- **Ensemble modeling:** AI capabilities in simulation should sample from distribution of training outcomes
+- **Earlier threshold estimates:** Observable emergence may lag true capability acquisition by 1-2 orders of magnitude in compute
+- **Variance increases with scale:** Larger models show MORE variation in outcomes, not less
+
+**Critical Insight:** The "scaling wall" narrative may partially reflect sampling variance rather than fundamental limits. If labs are training single large runs and observing diminishing returns, they may be unlucky with random seed selection. However, the economic constraint (can't afford 100 training runs at $100M each) makes this variance practically indistinguishable from a true scaling limit.
+
+**Confidence:** HIGH (peer-reviewed, Harvard Kempner Institute, explains previously anomalous scaling phenomena)
 
 ---
 
@@ -522,13 +605,19 @@ const agiTimeline = {
 
 7. **Anonymous (2025).** "Sub-Scaling Laws: On the Role of Data Density and Training Strategies in LLMs." arXiv:2507.10613. [https://arxiv.org/html/2507.10613v1](https://arxiv.org/html/2507.10613v1)
 
-### Industry Reports
+8. **Zhao, R., Qin, T., Alvarez-Melis, D., Kakade, S., & Saphra, N. (2025).** "Random Scaling of Emergent Capabilities." arXiv:2502.17356v4. Harvard University, Kempner Institute. [https://arxiv.org/html/2502.17356v4](https://arxiv.org/html/2502.17356v4)
 
-8. **Newton, C. (2024).** "AI companies hit a scaling wall." Platformer. [https://www.platformer.news/openai-google-scaling-laws-anthropic-ai/](https://www.platformer.news/openai-google-scaling-laws-anthropic-ai/)
+### Industry Reports and Research Blogs
 
-9. **Wiggers, K. (2024).** "Current AI scaling laws are showing diminishing returns, forcing AI labs to change course." TechCrunch. [https://techcrunch.com/2024/11/20/ai-scaling-laws-are-showing-diminishing-returns-forcing-ai-labs-to-change-course/](https://techcrunch.com/2024/11/20/ai-scaling-laws-are-showing-diminishing-returns-forcing-ai-labs-to-change-course/)
+9. **Sevilla, J., Besiroglu, T., Cottier, B., You, J., Roldán, E., Villalobos, P., & Erdil, E. (2024).** "Can AI scaling continue through 2030?" Epoch AI. August 20, 2024. [https://epoch.ai/blog/can-ai-scaling-continue-through-2030](https://epoch.ai/blog/can-ai-scaling-continue-through-2030)
 
-10. **Stripe (2025).** "The Scaling Era: An Oral History of AI, 2019-2025." [https://assets.stripe.com/.../ZINE-Scaling_Era-singles.pdf](https://assets.stripeassets.com/fzn2n1nzq965/5j0dFbeGgGbohTE3a2jrVA/ebd35e791ca5fa926c6a0b076860c71c/ZINE-Scaling_Era-singles.pdf)
+10. **Newton, C. (2024).** "AI companies hit a scaling wall." Platformer. [https://www.platformer.news/openai-google-scaling-laws-anthropic-ai/](https://www.platformer.news/openai-google-scaling-laws-anthropic-ai/)
+
+11. **Wiggers, K. (2024).** "Current AI scaling laws are showing diminishing returns, forcing AI labs to change course." TechCrunch. [https://techcrunch.com/2024/11/20/ai-scaling-laws-are-showing-diminishing-returns-forcing-ai-labs-to-change-course/](https://techcrunch.com/2024/11/20/ai-scaling-laws-are-showing-diminishing-returns-forcing-ai-labs-to-change-course/)
+
+12. **Wiggers, K. (2024).** "OpenAI's o3 suggests AI models are scaling in new ways — but so are the costs." TechCrunch. December 23, 2024. [https://techcrunch.com/2024/12/23/openais-o3-suggests-ai-models-are-scaling-in-new-ways-but-so-are-the-costs/](https://techcrunch.com/2024/12/23/openais-o3-suggests-ai-models-are-scaling-in-new-ways-but-so-are-the-costs/)
+
+13. **Stripe (2025).** "The Scaling Era: An Oral History of AI, 2019-2025." [https://assets.stripe.com/.../ZINE-Scaling_Era-singles.pdf](https://assets.stripeassets.com/fzn2n1nzq965/5j0dFbeGgGbohTE3a2jrVA/ebd35e791ca5fa926c6a0b076860c71c/ZINE-Scaling_Era-singles.pdf)
 
 ---
 
@@ -537,7 +626,7 @@ const agiTimeline = {
 ```yaml
 oldest_source: 2020
 newest_source: 2025
-last_verified: 2025-11-07
+last_verified: 2025-11-21
 verification_status: CURRENT
 topic: ai_scaling_laws
 subtopics:
@@ -545,18 +634,28 @@ subtopics:
   - test_time_compute
   - efficiency_optimization
   - diminishing_returns
+  - emergent_capabilities
+  - random_variation
+  - compute_constraints_2030
+  - power_infrastructure_bottleneck
 simulation_usage: HIGH
   - AI capabilities projection
   - AGI timeline modeling
   - Economic cost modeling
+  - Infrastructure constraint modeling
 confidence: HIGH
-  - Industry evidence (OpenAI, Anthropic, Google all pivoting)
+  - Industry evidence (OpenAI o3, Anthropic, Google all pivoting)
   - Multiple peer-reviewed papers (2024-2025)
   - Consistent findings across independent research groups
+  - Epoch AI quantitative projections through 2030
 ```
 
 ---
 
 ## Changelog
+
+**2025-11-21:** Added section 3.5 on compute scaling through 2030 (Epoch AI, Aug 2024). Key findings: 4x/year compute growth, power infrastructure becomes binding constraint at 2e29 FLOP (2030). Updated section 3.3 with o3 quantitative performance data (88% ARC-AGI, 25% Frontier Math, $1,000+ per task high-compute mode). Added TechCrunch Dec 2024 source on test-time compute costs.
+
+**2025-11-20:** Added section 4.5 on emergent capabilities as random variation (Zhao et al. 2025, Harvard Kempner Institute). Key finding: capability emergence reflects bimodal distribution over training seeds, not deterministic thresholds. Provides alternative explanation for "scaling wall" narrative.
 
 **2025-11-07:** Initial research compilation by autonomous researcher. Documented paradigm shift from pre-training scaling to test-time compute + efficiency optimization based on 2024-2025 empirical evidence and academic research.
