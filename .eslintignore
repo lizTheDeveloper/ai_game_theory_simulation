@@ -1,0 +1,22 @@
+# Generated documentation files
+docs/api/
+
+# Node modules
+node_modules/
+
+# Build outputs
+dist/
+build/
+.next/
+
+# MCP chatroom compiled output
+.claude/mcp-chatroom/dist/
+
+# Test coverage
+coverage/
+
+# Temporary files
+*.log
+.env*
+!.env.template
+!.env.example
