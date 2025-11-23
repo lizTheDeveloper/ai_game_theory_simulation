@@ -1741,7 +1741,41 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
 
 ## 🎯 Progress Summary
 
-**Overall Project Status: 🟢 EXCELLENT - STABLE** (Nov 22, 2025 - MARCUS 3.0 Production-Ready)
+**Overall Project Status: 🟢 EXCELLENT - STABLE** (Nov 23, 2025 - MARCUS 3.2 PR Preparation)
+
+**End-of-Session Updates (Nov 23, 2025 - Session 11):**
+- 🔧 **MARCUS 3.2 PR PREPARATION - UPSTREAM ENHANCEMENT**
+  - Scope: PR message refinement, demo fixes, screenshot automation for upstream submission
+  - Context: VM crashes required work recovery, demo script had placeholder URLs, screenshots needed backup system
+  - Recovery: Salvaged uncommitted work from unstable VM (UPSTREAM_PR_MESSAGE.md, Dockerfile.agent, stubborn_agent.py)
+  - PR Enhancement: Updated draft #372 with merged content (current draft + PR #2 + PR_DESCRIPTION.md)
+    - Added repository status: 533 files, 200 commits, +199K lines
+    - Enhanced performance benchmarks table, improved architecture documentation
+    - Added breaking changes section (none - backward compatible)
+  - Demo Fixes: Replaced placeholder URLs with actual GKE endpoints
+    - GraphQL: http://localhost:4001/graphql (port-forward from 34.123.164.214:80)
+    - Grafana: http://localhost:5001 (port-forward from 34.123.164.214:3001)
+    - Jaeger: http://34.123.164.214 (direct access, no auth)
+    - Added port-forward setup instructions to demo script
+  - Screenshot Automation: Created backup capture system
+    - `create_demo_screenshots.sh` - Bash helper with port forwarding
+    - `capture_screenshots_auto.ts` - Playwright automation script
+    - `screenshots/README.md` - Documentation for capture workflow
+  - Git Maintenance: VM stability improvements (git prune, git gc --aggressive)
+  - Files:
+    - MODIFIED: `UPSTREAM_PR_MESSAGE.md` (comprehensive PR message with merged content)
+    - MODIFIED: `DEMO_SCRIPT.md` (actual URLs, port-forward instructions)
+    - NEW: `create_demo_screenshots.sh` (180 lines)
+    - NEW: `capture_screenshots_auto.ts` (290 lines)
+    - NEW: `screenshots/README.md` (150 lines)
+    - MODIFIED: `docker/Dockerfile.agent` (multi-stage Alpine optimization)
+    - MODIFIED: `.claude/settings.local.json` (agent config updates)
+  - Commits:
+    - 0ec750fc: "WIP: Save work in progress - VM stability issues"
+    - 12326cdc: "fix: Update demo script with actual GKE access URLs"
+    - 8f92b16b: "feat: Add screenshot capture automation for demo backup"
+  - Status: Draft PR #372 ready, awaiting screenshot capture and final submission
+  - Next: Capture screenshots, finalize PR message, submit to lizTheDeveloper:main
 
 **End-of-Session Completions (Nov 22, 2025 - Session 4):**
 - ✅ **MARCUS 3.0 PHASE 5: CLOUD DEPLOYMENT COMPLETE**
