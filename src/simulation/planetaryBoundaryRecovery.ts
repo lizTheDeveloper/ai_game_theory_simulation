@@ -264,37 +264,54 @@ function updateClimateRecovery(state: GameState, rng: RNGFunction): void {
       });
     }
 
-    // FIX #17 (Oct 21, 2025): ACTUALLY REDUCE BOUNDARY VALUE
-    // Research: planetary_boundary_reversibility_empirical_20251020.md
-    // - Climate temperature reversible in 50-100 years with massive CDR (360-680 GtCO₂)
-    // - Requires net-negative emissions
-    // - IPCC AR6: "on order of decades" to return below 1.5°C after overshoot
+    // UPDATED (Nov 22, 2025): ASYMPTOTIC RECOVERY WITH POST-2100 COMMITMENT
+    // Research: Drüke et al. (2024) - Ice sheet recovery 450 years (100-800 range)
+    // - Climate temperature reversible in 50-100 years with massive CDR (atmosphere)
+    // - Ice sheet recovery 450 years half-life (slow dynamics)
+    // - Post-2100 commitment: 30-50% irreversible (35% central, committed SLR)
+    // - Recovery approaches asymptotic floor, never reaches zero
     //
-    // Recovery rate calculation:
-    // - Base: 1.0 / (50 years × 12 months) = 0.00167/month (50-year recovery)
-    // - With strong CDR: 1.0 / (30 years × 12) = 0.00278/month (30-year recovery)
-    // - Climate feedback penalty: Half speed if warming ≥ 1.5°C (tipping points)
+    // Key mechanic: Even after full decarbonization, ice sheets retain 35% committed melting
+    // This creates permanent sea level rise regardless of future emissions
 
     const netNegative = netEmissions < 0;
     const hasActiveCDR = annualCDR > 5; // ≥ 5 GtCO₂/year CDR
 
     // Recovery only happens with net-negative emissions
     if (netNegative) {
-      const baseRecoveryRate = hasActiveCDR ? 0.00278 : 0.00167; // 30yr with CDR, 50yr natural
+      // Get ice sheet recovery parameters
+      const recoveryHalfLife = assertStateProperty(boundary, 'recoveryHalfLife', {
+        location: 'updateClimateRecovery',
+        month: state.currentMonth
+      });
+      const minimumAsymptoticValue = assertStateProperty(boundary, 'minimumAsymptoticValue', {
+        location: 'updateClimateRecovery',
+        month: state.currentMonth
+      });
+
+      // Asymptotic recovery: approach floor value exponentially
+      // Formula: newValue = asymptoteRecovery(currentValue, recoveryHalfLife, minimumAsymptoticValue)
+      // Recovery half-life: 450 years (ice sheet inertia)
+      // Asymptotic floor: 0.35 (35% committed warming/SLR)
       const climatePenalty = climateMultiplier > 1 ? 0.5 : 1.0; // Half speed if ≥1.5°C
-      const governanceBonus = internationalCoordination > 0.7 ? 1.2 : 1.0; // 20% faster with strong cooperation
+      const governanceBonus = internationalCoordination > 0.7 ? 1.2 : 1.0; // 20% faster with cooperation
+      const effectiveHalfLife = recoveryHalfLife / (climatePenalty * governanceBonus);
 
-      const recoveryRate = baseRecoveryRate * climatePenalty * governanceBonus;
+      const oldValue = boundary.currentValue;
+      boundary.currentValue = asymptoteRecovery(
+        oldValue,
+        boundary.boundaryThreshold,  // Target: return to safe boundary (1.0)
+        effectiveHalfLife,
+        minimumAsymptoticValue
+      );
 
-      // CRITICAL: Actually reduce the boundary value (currentValue represents warming level)
-      // boundary.currentValue = 1.0 means at threshold (1.0°C above pre-industrial in normalized space)
-      // Reduce it toward 0 (pre-industrial baseline)
-      boundary.currentValue = Math.max(0, boundary.currentValue - recoveryRate);
+      const recoveryDelta = oldValue - boundary.currentValue;
 
       // Log every 2 years if recovering
       if (state.currentMonth % 24 === 0) {
-        console.log(`🌡️  CLIMATE RECOVERY: Boundary improving at -${(recoveryRate * 100).toFixed(4)}%/month`);
-        console.log(`   Current value: ${boundary.currentValue.toFixed(3)} (1.0 = threshold, 0 = safe)`);
+        console.log(`🌡️  CLIMATE RECOVERY: Asymptotic approach to ${(minimumAsymptoticValue * 100).toFixed(0)}% floor`);
+        console.log(`   Current value: ${boundary.currentValue.toFixed(3)} (1.0 = threshold, ${minimumAsymptoticValue.toFixed(2)} = asymptotic floor)`);
+        console.log(`   Monthly delta: -${(recoveryDelta * 100).toFixed(4)}% (half-life: ${Math.floor(effectiveHalfLife)} years)`);
         console.log(`   Net emissions: ${netEmissions.toFixed(1)} GtCO₂/year, CDR: ${annualCDR} GtCO₂/year`);
       }
 
@@ -421,13 +438,16 @@ function updatePhosphorusRecovery(state: GameState, rng: RNGFunction): void {
 }
 
 /**
- * Nitrogen Recovery (faster than phosphorus - atmospheric cycle)
+ * Nitrogen Recovery (asymptotic approach to legacy stock floor)
  *
- * Research: Nitrogen has atmospheric cycle, no legacy sediment issue
- * Mechanism: Input reduction from agriculture
- * Timeline: 36 months (3 years) with input reduction
+ * UPDATED (Nov 22, 2025): Exponential recovery with 125-year half-life
+ * Research: Drüke et al. (2024) - Nitrogen recovery 125 years (50-200 range)
+ * Mechanism: Input reduction from agriculture + legacy soil stock depletion
+ * Timeline: 125 years half-life (NOT 3 years linear!)
+ * Asymptotic floor: 10% (legacy nitrogen stocks persist in soil)
  *
  * Citations:
+ * - Drüke et al. (2024): Nitrogen recovery timescales 50-200 years
  * - Rockström et al. (2009): Nitrogen boundary definition
  * - Steffen et al. (2015): Nitrogen cycle reversibility
  */
@@ -451,14 +471,46 @@ function updateNitrogenRecovery(state: GameState, rng: RNGFunction): void {
     });
     boundary.recoveryMonths = currentRecoveryMonths + governanceMultiplier;
 
-    // Faster than phosphorus (no legacy sediment): 36 months base
-    const recoveryThreshold = 36 / governanceMultiplier;
+    // Get nitrogen recovery parameters
+    const recoveryHalfLife = assertStateProperty(boundary, 'recoveryHalfLife', {
+      location: 'updateNitrogenRecovery',
+      month: state.currentMonth
+    });
+    const minimumAsymptoticValue = assertStateProperty(boundary, 'minimumAsymptoticValue', {
+      location: 'updateNitrogenRecovery',
+      month: state.currentMonth
+    });
 
-    if (boundary.recoveryMonths >= recoveryThreshold) {
+    // Asymptotic recovery: approach 10% floor exponentially
+    // Recovery half-life: 125 years (legacy soil nitrogen stocks)
+    const effectiveHalfLife = recoveryHalfLife / governanceMultiplier;
+
+    const oldValue = boundary.currentValue;
+    boundary.currentValue = asymptoteRecovery(
+      oldValue,
+      boundary.boundaryThreshold,  // Target: return to safe boundary (1.0)
+      effectiveHalfLife,
+      minimumAsymptoticValue
+    );
+
+    const recoveryDelta = oldValue - boundary.currentValue;
+
+    // Log every 2 years if recovering
+    if (state.currentMonth % 24 === 0 && recoveryDelta > 0) {
+      console.log(`🌾 NITROGEN RECOVERY: Asymptotic approach to ${(minimumAsymptoticValue * 100).toFixed(0)}% floor`);
+      console.log(`   Current value: ${boundary.currentValue.toFixed(3)} (half-life: ${Math.floor(effectiveHalfLife)} years)`);
+      console.log(`   Monthly delta: -${(recoveryDelta * 100).toFixed(4)}%`);
+    }
+
+    // Check if recovered to safe zone (but NOT to zero - asymptotic floor remains)
+    if (boundary.currentValue < boundary.boundaryThreshold) {
       boundary.status = 'safe';
       boundary.trend = 'improving';
-      console.log(`\n=== Nitrogen Boundary RECOVERED ===`);
-      console.log(`  Recovery time: ${Math.floor(boundary.recoveryMonths / 12)} years (faster than phosphorus)`);
+      if (state.currentMonth % 24 === 0) {
+        console.log(`\n=== Nitrogen Boundary RECOVERED (to safe zone) ===`);
+        console.log(`  Recovery time: ${Math.floor(boundary.recoveryMonths / 12)} years`);
+        console.log(`  Asymptotic floor: ${(minimumAsymptoticValue * 100).toFixed(0)}% (legacy soil stocks)`);
+      }
     }
   } else {
     boundary.recoveryMonths = 0;
