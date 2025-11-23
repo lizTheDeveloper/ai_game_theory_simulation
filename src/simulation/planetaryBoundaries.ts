@@ -118,6 +118,12 @@ export function initializePlanetaryBoundariesSystem(rng: RNGFunction): Planetary
     timescaleYears: 50,
     extinctionContribution: 0.25,
     tippingPointRisk: 0.30,
+    // === POST-2100 COMMITMENT TRACKING (Nov 22, 2025) ===
+    // Research: Drüke et al. (2024) - Ice sheet recovery 450 years (100-800 range)
+    // Post-2100 commitment: 30-50% of ice loss irreversible (35% central estimate)
+    // Even after full decarbonization, ice sheets retain committed melting
+    recoveryHalfLife: 450,                 // Years for half-life exponential recovery (ice sheet inertia)
+    minimumAsymptoticValue: 0.35,          // 35% irreversible floor (30-50% range, committed SLR)
   };
 
   // 2. BIOSPHERE INTEGRITY (Core Boundary) - Current ~10× safe boundary
@@ -216,6 +222,12 @@ export function initializePlanetaryBoundariesSystem(rng: RNGFunction): Planetary
     timescaleYears: 20,
     extinctionContribution: 0.15,
     tippingPointRisk: 0.30,
+    // === NITROGEN ASYMPTOTIC RECOVERY (Nov 22, 2025) ===
+    // Research: Drüke et al. (2024) - Nitrogen recovery 125 years (50-200 range)
+    // Nitrogen has atmospheric cycle (unlike phosphorus), but legacy soil stocks persist
+    // Recovery approaches asymptotic minimum (not full recovery to pre-industrial)
+    recoveryHalfLife: 125,                 // Years for half-life exponential recovery
+    minimumAsymptoticValue: 0.10,          // 10% floor (legacy soil nitrogen stocks)
   };
 
   // 6. NOVEL ENTITIES (Chemical Pollution) - Microplastics, PFAS
