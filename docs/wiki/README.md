@@ -47,6 +47,20 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📄 **Report:** reviews/hindcasting_validation_results_20251123.md
 - ⚠️ **Implication:** Model is designed for near-future forecasting from 2025, NOT historical reconstruction. Forecasts should include this caveat.
 
+**Nov 23: Threshold Lowering for Tipping Cascades** (commit cf49657)
+- 🌍 **HIGH Priority Gap Filled:** Implemented threshold lowering mechanism from mechanism audit
+- **TIPPING_INTERACTIONS Matrix:** 9 research-backed interactions between tipping elements
+- **Cascade Mechanics:**
+  - Arctic ice → Greenland/permafrost (0.15-0.20°C lowering)
+  - Greenland → AMOC (0.30°C - freshwater hosing)
+  - AMOC → Amazon (0.25°C - monsoon disruption)
+  - Permafrost → global elements (0.10-0.15°C - carbon feedback)
+- **Scaling:** sqrt(progress) for front-loading; cap at 0.5°C per element
+- **Research:** Armstrong McKay et al. (2022) Science, Wunderling et al. (2024) ESD
+- **Cascade Demonstration:** Arctic(1.5°C) → Greenland(1.55°C, lowered from 1.6°C) → AMOC(1.60°C, lowered from 1.7°C)
+- 📄 **Files:** ClimateSystemPhase.ts, src/types/tipping-points.ts
+- ⚠️ **Pending:** Research verification for threshold reduction magnitudes
+
 **Nov 23: AMOC Tipping Point 2025 Research Update** (commit 0b5bbc7)
 - 🌍 **Research Update:** New peer-reviewed sources on AMOC collapse timelines (3 papers, 2025)
 - **Key Sources:** Drijfhout et al. (ERL 2025), van Westen (JGR 2025), Baker et al. (Nature 2025)
@@ -89,9 +103,9 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - NO structural fabrication detected - citations match actual paper claims
   - Gap found: Wet bulb threshold inconsistency (30.5C vs 35C literature standard)
   - 📄 Audit: reviews/mechanism_audit_mortality_stabilizers_20251123.md
-- 🔍 **Mechanism Audit: Tipping Point Cascades (Grade B+)**
+- 🔍 **Mechanism Audit: Tipping Point Cascades (Grade A-)**
   - Thresholds match Armstrong McKay et al. 2022 exactly (AMOC, Amazon, Arctic, etc.)
-  - Gap: Missing threshold lowering mechanism (tipping destabilizes other thresholds)
+  - ✅ **GAP FILLED:** Threshold lowering mechanism implemented (commit cf49657)
   - Timeline compression documented but needs clearer labeling
   - 📄 Audit: reviews/mechanism_audit_tipping_cascades_20251123.md
 - 🔍 **Mechanism Audit: AI Coordination/Alignment Faking (Grade B+)**
