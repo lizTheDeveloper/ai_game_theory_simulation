@@ -42,6 +42,14 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📊 **Tests:** 19 unit tests validating determinism, ranges, and variance
 - 📄 **Research:** research/uncertainty_propagation_climate_parameters_20251120.md
 
+**Nov 23: ECS Connected to Temperature Calculations** (commit df8ff4a)
+- 🔧 **Critical Bug Fix:** Architecture review identified sampled ECS was NOT used in temperature calculations
+- **Problem:** `updateCO2System()` in `resourceDepletion.ts` used hardcoded `co2.climateSensitivity` (3.0) instead of sampled `uncertaintyParameters.equilibriumClimateSensitivity`
+- **Fix:** Modified temperature calculation to use sampled ECS, with fail-loudly assertions
+- **Validation:** Different seeds now produce ~0.5°C temperature variance at month 24 (Spearman ρ=1.0 with ECS)
+- 📄 **Validation Script:** scripts/validateClimateSensitivity.ts
+- ✅ **Impact:** Uncertainty propagation now actually affects simulation outcomes
+
 **Nov 23: Mechanism Audits & Hindcasting Plan - Research Priorities** (commit 993f818)
 - 🔬 **Hindcasting Validation Plan (CRITICAL):** Implementation design for running simulation 1990→2024
   - Architecture: Historical state factory, timeseries loaders (V-Dem, UNDP, climate, economic)
