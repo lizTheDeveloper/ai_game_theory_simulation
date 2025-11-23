@@ -1,9 +1,14 @@
 # MARCUS 3.2 Live Demo Script
 
 ## Pre-Demo Setup Checklist
-- [ ] MARCUS platform running in GKE
-- [ ] Grafana dashboards open in tabs
-- [ ] GraphQL playground ready
+- [ ] MARCUS platform running in GKE (`kubectl get pods -n marcus-platform`)
+- [ ] Port forwarding active:
+  - [ ] GraphQL: `kubectl port-forward -n marcus-platform svc/orchestrator 4001:4000`
+  - [ ] REST API: `kubectl port-forward -n marcus-platform svc/orchestrator 3000:3000`
+  - [ ] Grafana: `kubectl port-forward -n marcus-platform svc/grafana 5001:3000`
+- [ ] Grafana dashboards open in tabs (http://localhost:5001)
+- [ ] GraphQL playground ready (http://localhost:4001/graphql)
+- [ ] Jaeger UI ready (http://34.123.164.214 - direct LoadBalancer access, no port-forward needed)
 - [ ] Sample citations prepared
 - [ ] Backup screenshots if live demo fails
 
@@ -13,7 +18,13 @@
 
 ### Part 1: GraphQL API Call (2 minutes)
 
-**Navigate to:** GraphQL Playground (https://api.marcus.example.com/graphql)
+**Navigate to:** GraphQL Playground (http://localhost:4001/graphql)
+
+**Setup:**
+```bash
+# In a terminal, start port forwarding (keep this running)
+kubectl port-forward -n marcus-platform svc/orchestrator 4001:4000
+```
 
 **Step 1:** Show the simple integration
 ```graphql
@@ -126,7 +137,14 @@ mutation AnalyzeCitationDetailed {
 
 ### Part 3: Grafana Dashboard (2 minutes)
 
-**Navigate to:** Grafana Dashboard (https://grafana.marcus.example.com)
+**Navigate to:** Grafana Dashboard (http://localhost:5001)
+
+**Setup:**
+```bash
+# In a separate terminal, start Grafana port forwarding
+kubectl port-forward -n marcus-platform svc/grafana 5001:3000
+# Login: admin/admin (or your configured credentials)
+```
 
 **Show these panels in order:**
 
@@ -269,10 +287,11 @@ mutation {
    Thank you for attending the MARCUS demo. As promised, here are the
    resources to get started:
 
-   - GraphQL Playground: [link]
-   - API Documentation: [link]
+   - GraphQL Playground: http://localhost:4001/graphql (via port-forward)
+   - Jaeger Tracing UI: http://34.123.164.214 (direct access)
+   - API Documentation: [link to docs]
    - Sample Integration Code: [attached]
-   - Your trial account: [credentials]
+   - GKE Access Guide: MARCUS_3.2_GKE_ACCESS.md
 
    During the demo, MARCUS achieved:
    - 94% accuracy on valid citations
