@@ -48,12 +48,12 @@
 
 ### MEDIUM Priority
 
-4. **AMOC Temperature-Dependent Function**
-   - Current code has fixed 5% probability
-   - Research recommends temperature-dependent function (Lenton et al.)
-   - Straightforward implementation
-   - **Complexity:** 2 systems (climate, tipping points)
-   - **Plan:** TBD - extract function from research
+4. **AMOC Temperature-Dependent Function** ✅ COMPLETE (Nov 20, 2025)
+   - ~~Current code has fixed 5% probability~~
+   - Implemented temperature-dependent function based on Weijer et al. (2020), Van Westen et al. (2024)
+   - Integrated with uncertainty propagation (sampled threshold from [2.2, 3.9]C)
+   - Location: `IrreversibilityTrackingPhase.ts:381-412`
+   - Probability ranges from 0.5% (below threshold) to 90% (above high threshold)
 
 5. **Alignment Faking Model Validation**
    - Does "sandbagging" implementation capture Greenblatt et al. findings?
