@@ -108,8 +108,11 @@ export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTr
   {
     id: 'amoc',
     name: 'Atlantic Meridional Overturning Circulation (AMOC)',
-    triggerTempC: 1.7, // Central estimate 4°C (range 1.4-8°C) from Armstrong McKay (2022) synthesizing Weijer et al. (2020), Van Westen et al. (2024)
-                       // See: research/amoc_tipping_point_original_sources_20251120.md
+    // AMOC Threshold: Van Westen et al. (2024) Science Advances - median 3.0C, 95% CI [2.2, 3.9]C
+    // This is more constrained than Armstrong McKay (2022) range of 1.4-8C (central 4C).
+    // IrreversibilityTrackingPhase uses sampled values from uncertainty system with same 3.0C default.
+    // See: research/amoc_tipping_point_original_sources_20251120.md
+    triggerTempC: 3.0,
     transitionMinMonths: 600,    // 50 years - Van Westen et al. (2024) Science Advances: 100yr collapse in CESM1
     transitionMaxMonths: 3600,   // 300 years - Liu et al. (2017) Science Advances: collapse within 300yr after CO2 doubling
                                  // Range: 15-300yr captures deep uncertainty. See: research/amoc_tipping_point_original_sources_20251120.md
