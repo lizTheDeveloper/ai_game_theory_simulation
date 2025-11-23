@@ -27,6 +27,7 @@
  */
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction, GameEvent } from '@/types/game';
+import { TIPPING_INTERACTIONS } from '@/types/tipping-points';
 import { addMortalityRisk } from '@/simulation/bayesianMortality';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 import {
@@ -134,6 +135,10 @@ export class ClimateSystemPhase implements SimulationPhase {
     console.log(`\n=== Tipping Points ===`);
     console.log(`  Current Temperature: ${currentTempC.toFixed(2)}°C above pre-industrial`);
 
+    // Step 0.5: Calculate threshold lowering from triggered elements (Nov 23, 2025)
+    // Research: Wunderling et al. (2024), Armstrong McKay et al. (2022)
+    this.calculateThresholdLowering(state);
+
     // Step 1: Check for new triggers
     const newlyTriggered = this.detectTippingThresholds(state, currentTempC);
 
@@ -175,6 +180,83 @@ export class ClimateSystemPhase implements SimulationPhase {
     }
   }
 
+  /**
+   * Calculate threshold lowering from triggered tipping elements (Nov 23, 2025)
+   *
+   * Research:
+   * - Wunderling et al. (2024) ESD: "combined effect tending to lower temperature thresholds"
+   * - Armstrong McKay et al. (2022) Science: Network of 16 tipping elements with causal interactions
+   *
+   * When one tipping element triggers, it can lower the effective threshold for connected elements.
+   * This creates cascade dynamics where crossing one threshold increases probability of others.
+   */
+  private calculateThresholdLowering(state: GameState): void {
+    const system = state.tippingPointSystem;
+
+    // Reset threshold reductions for all elements
+    for (const element of system.elements) {
+      element.effectiveThresholdReduction = 0;
+    }
+
+    // For each triggered element, find interactions and apply threshold lowering
+    for (const sourceElement of system.elements) {
+      if (!sourceElement.triggered) continue;
+
+      // Scale reduction by progress (0 = just triggered, 1 = fully transitioned)
+      // Use sqrt to front-load the effect - most reduction happens early in transition
+      const progressScalar = Math.sqrt(Math.max(0.1, sourceElement.progress));
+
+      // Find all interactions where this element is the source
+      const interactions = TIPPING_INTERACTIONS.filter(i => i.sourceId === sourceElement.id);
+
+      for (const interaction of interactions) {
+        const targetElement = system.elements.find(e => e.id === interaction.targetId);
+        if (!targetElement) continue;
+        if (targetElement.triggered) continue; // Already triggered, no need to lower
+
+        // Calculate threshold reduction scaled by progress
+        const reduction = assertFinite(
+          interaction.thresholdReduction * progressScalar,
+          {
+            location: 'ClimateSystemPhase.calculateThresholdLowering',
+            valueName: 'thresholdReduction',
+            month: state.currentMonth,
+            additionalInfo: {
+              sourceId: sourceElement.id,
+              targetId: targetElement.id,
+              baseReduction: interaction.thresholdReduction,
+              progressScalar
+            }
+          }
+        );
+
+        // Accumulate reductions (multiple sources can affect same target)
+        targetElement.effectiveThresholdReduction =
+          (targetElement.effectiveThresholdReduction || 0) + reduction;
+
+        // Log significant threshold lowering events
+        if (reduction > 0.05) {
+          console.log(
+            `  🔗 CASCADE: ${sourceElement.name} lowers ${targetElement.name} threshold by ${reduction.toFixed(2)}°C`
+          );
+          console.log(`     Mechanism: ${interaction.mechanism}`);
+        }
+      }
+    }
+
+    // Cap total threshold reduction at 0.5°C per element to prevent runaway cascades
+    // Research: Conservative estimate from Wunderling et al. (2024)
+    const MAX_THRESHOLD_REDUCTION = 0.5;
+    for (const element of system.elements) {
+      if (element.effectiveThresholdReduction && element.effectiveThresholdReduction > MAX_THRESHOLD_REDUCTION) {
+        console.log(
+          `  ⚠️ Threshold reduction capped: ${element.name} ${element.effectiveThresholdReduction.toFixed(2)}°C -> ${MAX_THRESHOLD_REDUCTION}°C`
+        );
+        element.effectiveThresholdReduction = MAX_THRESHOLD_REDUCTION;
+      }
+    }
+  }
+
   private detectTippingThresholds(state: GameState, currentTempC: number): string[] {
     const system = state.tippingPointSystem;
     const newlyTriggered: string[] = [];
@@ -182,7 +264,24 @@ export class ClimateSystemPhase implements SimulationPhase {
     for (const element of system.elements) {
       if (element.triggered) continue;
 
-      if (currentTempC >= element.triggerTempC) {
+      // Calculate effective threshold with reduction from triggered elements (Nov 23, 2025)
+      // Research: Wunderling et al. (2024), Armstrong McKay et al. (2022)
+      const thresholdReduction = element.effectiveThresholdReduction || 0;
+      const effectiveThreshold = assertFinite(
+        element.triggerTempC - thresholdReduction,
+        {
+          location: 'ClimateSystemPhase.detectTippingThresholds',
+          valueName: 'effectiveThreshold',
+          month: state.currentMonth,
+          additionalInfo: {
+            elementId: element.id,
+            baseThreshold: element.triggerTempC,
+            thresholdReduction
+          }
+        }
+      );
+
+      if (currentTempC >= effectiveThreshold) {
         element.triggered = true;
         element.monthsSinceTrigger = 0;
 
@@ -193,8 +292,17 @@ export class ClimateSystemPhase implements SimulationPhase {
         });
 
         newlyTriggered.push(element.name);
-        console.warn(`  ⚠️ TIPPING POINT TRIGGERED: ${element.name}`);
-        console.log(`     Threshold: ${element.triggerTempC}°C | Current: ${currentTempC.toFixed(2)}°C`);
+
+        // Log with cascade context if threshold was lowered
+        if (thresholdReduction > 0) {
+          console.warn(`  🚨 CASCADE TIPPING POINT: ${element.name}`);
+          console.log(`     Original threshold: ${element.triggerTempC}°C`);
+          console.log(`     Effective threshold: ${effectiveThreshold.toFixed(2)}°C (lowered by ${thresholdReduction.toFixed(2)}°C)`);
+          console.log(`     Current: ${currentTempC.toFixed(2)}°C`);
+        } else {
+          console.warn(`  ⚠️ TIPPING POINT TRIGGERED: ${element.name}`);
+          console.log(`     Threshold: ${element.triggerTempC}°C | Current: ${currentTempC.toFixed(2)}°C`);
+        }
         console.log(`     Transition timescale: ${element.transitionMinMonths}-${element.transitionMaxMonths} months`);
       }
     }
