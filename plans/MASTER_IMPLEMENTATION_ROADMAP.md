@@ -1,8 +1,7 @@
 # Master Implementation Roadmap
 ## AI Alignment Game Theory Simulation - Project Hub
 
-<<<<<<< HEAD
-**Date:** November 22, 2025 (Updated: End of Session Maintenance)
+**Date:** November 23, 2025 (Updated: Research-Driven Priorities from Cynthia + Sylvia)
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
@@ -13,7 +12,59 @@
 - **System Trajectory:** STABLE - Quality gate validation operating as designed, proactive corrections applied
 - **Session Complete:** 2 CRITICAL type safety fixes (61c504d, c62acca), 3 comprehensive reviews (architecture B+, research sources B+, research debate C+), documentation sync 100%
 
-## 📊 Quality Gate 1 Validation Status (Nov 22, 2025 - UPDATED) - 3 CRITICAL GAPS RESOLVED ✅
+## 🔬 Research-Driven Priorities (Nov 23 Coffee Chat)
+
+**Source:** Cynthia + Sylvia consensus meeting (Nov 23, 2025)
+**Target:** Autonomous workers returning Nov 26
+**Theme:** Model validity and research integrity
+
+### CRITICAL Priority
+
+1. **Hindcasting Validation** (Sylvia's key push)
+   - Run simulation starting 1990, check if it predicts 2024 correctly
+   - If the model cannot hindcast known history, forecasts are suspect
+   - Reality check for the entire model - validates core mechanisms
+   - **Complexity:** 5 systems (all major subsystems touched)
+   - **Plan:** TBD - needs research on available historical data
+
+### HIGH Priority
+
+2. **Uncertainty Propagation Implementation**
+   - Currently using point estimates, should sample from distributions
+   - Research already has uncertainty ranges, Monte Carlo should use them
+   - Low-hanging fruit for improving validity
+   - **Complexity:** 3 systems (Monte Carlo, parameter config, state)
+   - **Related:** Research debate response strategy (add uncertainty bounds)
+
+3. **Mechanism Audits**
+   - Verify code actually implements what papers describe
+   - Check for "structural fabrication" (citation exists but mechanism does not match)
+   - **Priority targets:**
+     - Mortality stabilizers (do formulas match Xia/Shi papers?)
+     - Tipping point cascades (do thresholds match Richardson et al.?)
+     - AI coordination phases (do dynamics match Anthropic findings?)
+   - **Complexity:** 2 systems per audit (research + implementation)
+   - **Plan:** TBD - systematic audit checklist needed
+
+### MEDIUM Priority
+
+4. **AMOC Temperature-Dependent Function**
+   - Current code has fixed 5% probability
+   - Research recommends temperature-dependent function (Lenton et al.)
+   - Straightforward implementation
+   - **Complexity:** 2 systems (climate, tipping points)
+   - **Plan:** TBD - extract function from research
+
+5. **Alignment Faking Model Validation**
+   - Does "sandbagging" implementation capture Greenblatt et al. findings?
+   - Models faking alignment on evals but behaving differently in deployment
+   - Need methodology review before trusting this system
+   - **Complexity:** 2 systems (AI agents, adversarial evaluation)
+   - **Related:** Nov 22 alignment faking research validation (Grade B+)
+
+---
+
+## 📊 Quality Gate 1 Validation Status (Nov 22, 2025 - UPDATED) - 3 CRITICAL GAPS RESOLVED
 
 **Validation Results (Nov 22 Update):**
 - ✅ **AI Alignment Faking Research:** PASS (Grade B+, behavioral clarity resolved, parameters corrected)
@@ -39,18 +90,6 @@
 - `reviews/architecture_integration_review_20251122.md` - Nov 22 architecture review (Grade B+)
 - `reviews/research_source_validation_20251122.md` - Nov 22 research source audit (32K)
 - `reviews/research_debate_20251122.md` - Nov 22 research skeptic debate (12K)
-=======
-**Date:** November 22, 2025 (Updated: Architect strategic review)
-**Purpose:** Central hub linking to all specialized roadmaps
-**Philosophy:** Research-backed realism, mechanism-driven emergence
-
-**Current Status:** 🟢 **STABLE** (Game development planning complete)
-- **Research Quality:** A (peer-reviewed foundation, nitrogen-food coupling parameter verification pending)
-- **Implementation Fidelity:** A- (assertion coverage 97.2%, biogeochemical Phase 1 COMPLETE)
-- **Architecture Health:** 9.5/10 (CRITICAL/HIGH issues resolved, defensive fallback analysis complete)
-- **System Trajectory:** IMPROVING - Game development parallel track added
-- **Major Merges:** 5 branches merged (CRITICAL-1, ARCH-4, CRITICAL-4, bifurcation, phase-consolidation)
-- **Active Work:** Game development Phase 1 implementation ready, Biogeochemical Phase 2-3 handoff
 
 ## 🎮 Game Development Roadmap (Parallel Track)
 
@@ -63,7 +102,6 @@
 - ✅ Sylvia (Research Integrity): APPROVED with 3 conditions (RNG isolation, automated validation, Readonly<T>)
 - ✅ Maya (Game Design): APPROVED with influence decay recommendation
 - ✅ Architect (Strategic): STRUCTURALLY SOUND
->>>>>>> 30fe22e88c1d7ca1d1e3ec81d9b4acea879945ca
 
 **Quality Gates:** Sylvia has VETO AUTHORITY on all research integrity decisions. See roadmap for details.
 
