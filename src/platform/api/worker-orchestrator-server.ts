@@ -27,6 +27,12 @@ import { Pool as PostgresPool } from 'pg';
 import Redis from 'ioredis';
 import { v4 as uuidv4 } from 'uuid';
 import { register as promRegister } from 'prom-client';
+import {
+  CircuitBreaker,
+  CircuitBreakerFactory,
+  CircuitBreakerOpenError,
+  CircuitBreakerTimeoutError
+} from '../utils/circuit-breaker';
 
 // ============================================================================
 // Type Definitions
@@ -109,9 +115,17 @@ class WorkerOrchestratorServer {
   private redis: Redis;
   private db: PostgresPool;
   private server: any;
+  private dbCircuitBreaker: CircuitBreaker;
+  private redisCircuitBreaker: CircuitBreaker;
 
   constructor() {
     this.app = express();
+
+    // Initialize circuit breakers
+    this.dbCircuitBreaker = CircuitBreakerFactory.forDatabase('PostgreSQL');
+    this.redisCircuitBreaker = CircuitBreakerFactory.forCache('Redis');
+
+    console.log('✅ Circuit breakers initialized');
 
     // Initialize Redis client (cluster or standalone)
     if (CONFIG.redis.clusterMode) {
@@ -159,6 +173,27 @@ class WorkerOrchestratorServer {
     this.setupErrorHandling();
   }
 
+  /**
+   * Execute database query with circuit breaker protection
+   */
+  private async dbQuery<T = any>(
+    query: string,
+    params?: any[]
+  ): Promise<{ rows: T[]; rowCount: number }> {
+    return this.dbCircuitBreaker.execute(async () => {
+      return this.db.query(query, params);
+    });
+  }
+
+  /**
+   * Execute Redis command with circuit breaker protection
+   */
+  private async redisExec<T = any>(
+    fn: () => Promise<T>
+  ): Promise<T> {
+    return this.redisCircuitBreaker.execute(fn);
+  }
+
   private setupMiddleware(): void {
     // CORS
     this.app.use(cors({
@@ -189,25 +224,50 @@ class WorkerOrchestratorServer {
 
     this.app.get('/health', async (req: Request, res: Response) => {
       try {
-        // Check Redis
-        await this.redis.ping();
+        const components: Record<string, string> = {};
+        let queueDepth = 0;
 
-        // Check PostgreSQL
-        await this.db.query('SELECT 1');
+        // Check Redis with circuit breaker
+        try {
+          await this.redisExec(() => this.redis.ping());
+          queueDepth = await this.redisExec(() => this.redis.llen(CONFIG.queue.taskQueue));
+          components.redis = 'healthy';
+        } catch (err) {
+          if (err instanceof CircuitBreakerOpenError) {
+            components.redis = 'circuit_open';
+          } else {
+            components.redis = 'unhealthy';
+          }
+        }
 
-        // Check queue depth
-        const queueDepth = await this.redis.llen(CONFIG.queue.taskQueue);
+        // Check PostgreSQL with circuit breaker
+        try {
+          await this.dbQuery('SELECT 1');
+          components.database = 'healthy';
+        } catch (err) {
+          if (err instanceof CircuitBreakerOpenError) {
+            components.database = 'circuit_open';
+          } else {
+            components.database = 'unhealthy';
+          }
+        }
 
-        res.status(200).json({
-          status: 'healthy',
+        // Include circuit breaker metrics
+        const circuitMetrics = {
+          redis: this.redisCircuitBreaker.getMetrics(),
+          database: this.dbCircuitBreaker.getMetrics()
+        };
+
+        const allHealthy = Object.values(components).every(status => status === 'healthy');
+
+        res.status(allHealthy ? 200 : 503).json({
+          status: allHealthy ? 'healthy' : 'degraded',
           timestamp: new Date().toISOString(),
-          components: {
-            redis: 'healthy',
-            database: 'healthy',
-          },
+          components,
           queue: {
             depth: queueDepth,
           },
+          circuitBreakers: circuitMetrics
         });
       } catch (err) {
         console.error('❌ Health check failed:', err);
@@ -249,17 +309,19 @@ class WorkerOrchestratorServer {
             status: 'queued',
           };
 
-          // Store task metadata in PostgreSQL
-          await this.db.query(
+          // Store task metadata in PostgreSQL (with circuit breaker)
+          await this.dbQuery(
             `INSERT INTO citation_tasks (task_id, document, created_at, status)
              VALUES ($1, $2, $3, $4)`,
             [task_id, JSON.stringify(document), new Date(), 'pending']
           );
 
-          // Push task to Redis queue (workers will BLPOP this)
-          await this.redis.lpush(
-            CONFIG.queue.taskQueue,
-            JSON.stringify(task)
+          // Push task to Redis queue (with circuit breaker)
+          await this.redisExec(() =>
+            this.redis.lpush(
+              CONFIG.queue.taskQueue,
+              JSON.stringify(task)
+            )
           );
 
           console.log(`📤 Task ${task_id} queued for processing`);
@@ -272,6 +334,17 @@ class WorkerOrchestratorServer {
 
         } catch (err) {
           console.error('❌ Failed to submit task:', err);
+
+          // Check if circuit breaker is open
+          if (err instanceof CircuitBreakerOpenError) {
+            res.status(503).json({
+              error: 'Service Unavailable',
+              message: 'System is experiencing high load - circuit breaker open',
+              retryAfter: 30
+            });
+            return;
+          }
+
           res.status(500).json({
             error: 'Internal Server Error',
             message: 'Failed to submit citation analysis task',
@@ -287,21 +360,35 @@ class WorkerOrchestratorServer {
         try {
           const { task_id } = req.params;
 
-          // Check if result exists in Redis (workers store results here)
+          // Check if result exists in Redis (workers store results here) - with circuit breaker
           const resultKey = `${CONFIG.queue.resultPrefix}${task_id}`;
-          const resultJson = await this.redis.get(resultKey);
+          let resultJson: string | null = null;
+
+          try {
+            resultJson = await this.redisExec(() => this.redis.get(resultKey));
+          } catch (err) {
+            // If Redis circuit is open, fall back to database
+            if (err instanceof CircuitBreakerOpenError) {
+              console.log('⚠️ Redis circuit open - falling back to database for task result');
+            }
+          }
 
           if (resultJson) {
             // Result available
             const result = JSON.parse(resultJson);
 
-            // Update task status in database
-            await this.db.query(
-              `UPDATE citation_tasks
-               SET status = $1, completed_at = $2, result = $3
-               WHERE task_id = $4`,
-              ['completed', new Date(), JSON.stringify(result), task_id]
-            );
+            // Update task status in database (with circuit breaker)
+            try {
+              await this.dbQuery(
+                `UPDATE citation_tasks
+                 SET status = $1, completed_at = $2, result = $3
+                 WHERE task_id = $4`,
+                ['completed', new Date(), JSON.stringify(result), task_id]
+              );
+            } catch (err) {
+              // Non-critical - result already available
+              console.warn('⚠️ Failed to update task status in database:', err);
+            }
 
             res.status(200).json({
               task_id,
@@ -317,8 +404,8 @@ class WorkerOrchestratorServer {
             return;
           }
 
-          // Check database for task metadata
-          const taskResult = await this.db.query(
+          // Check database for task metadata (with circuit breaker)
+          const taskResult = await this.dbQuery(
             `SELECT task_id, status, created_at, completed_at, result
              FROM citation_tasks
              WHERE task_id = $1`,
@@ -345,6 +432,17 @@ class WorkerOrchestratorServer {
 
         } catch (err) {
           console.error('❌ Failed to retrieve task:', err);
+
+          // Check if circuit breaker is open
+          if (err instanceof CircuitBreakerOpenError) {
+            res.status(503).json({
+              error: 'Service Unavailable',
+              message: 'Database temporarily unavailable - circuit breaker open',
+              retryAfter: 30
+            });
+            return;
+          }
+
           res.status(500).json({
             error: 'Internal Server Error',
             message: 'Failed to retrieve task status',
@@ -356,10 +454,10 @@ class WorkerOrchestratorServer {
     // GET /api/queue/stats - Queue statistics
     this.app.get('/api/queue/stats', async (req: Request, res: Response) => {
       try {
-        const queueDepth = await this.redis.llen(CONFIG.queue.taskQueue);
+        const queueDepth = await this.redisExec(() => this.redis.llen(CONFIG.queue.taskQueue));
 
-        // Count tasks by status
-        const statusCounts = await this.db.query(`
+        // Count tasks by status (with circuit breaker)
+        const statusCounts = await this.dbQuery(`
           SELECT status, COUNT(*) as count
           FROM citation_tasks
           WHERE created_at > NOW() - INTERVAL '1 hour'
@@ -379,6 +477,15 @@ class WorkerOrchestratorServer {
 
       } catch (err) {
         console.error('❌ Failed to get queue stats:', err);
+
+        if (err instanceof CircuitBreakerOpenError) {
+          res.status(503).json({
+            error: 'Service Unavailable',
+            message: 'Queue statistics temporarily unavailable - circuit breaker open',
+          });
+          return;
+        }
+
         res.status(500).json({
           error: 'Internal Server Error',
           message: 'Failed to retrieve queue statistics',
@@ -403,11 +510,11 @@ class WorkerOrchestratorServer {
     // GET /ready - Kubernetes readiness probe
     this.app.get('/ready', async (req: Request, res: Response) => {
       try {
-        // Check Redis connection
-        await this.redis.ping();
+        // Check Redis connection (with circuit breaker)
+        await this.redisExec(() => this.redis.ping());
 
-        // Check database connection
-        await this.db.query('SELECT 1');
+        // Check database connection (with circuit breaker)
+        await this.dbQuery('SELECT 1');
 
         res.status(200).json({
           status: 'ready',
@@ -415,6 +522,17 @@ class WorkerOrchestratorServer {
         });
       } catch (err) {
         console.error('❌ Readiness check failed:', err);
+
+        // Return 503 if circuit breaker is open
+        if (err instanceof CircuitBreakerOpenError) {
+          res.status(503).json({
+            status: 'not ready',
+            reason: 'circuit_breaker_open',
+            error: err.message,
+          });
+          return;
+        }
+
         res.status(503).json({
           status: 'not ready',
           error: err instanceof Error ? err.message : 'Unknown error',
@@ -447,12 +565,12 @@ class WorkerOrchestratorServer {
 
   async start(): Promise<void> {
     try {
-      // Test Redis connection
-      await this.redis.ping();
+      // Test Redis connection (with circuit breaker)
+      await this.redisExec(() => this.redis.ping());
       console.log('✅ Redis connection established');
 
-      // Test database connection
-      await this.db.query('SELECT 1');
+      // Test database connection (with circuit breaker)
+      await this.dbQuery('SELECT 1');
       console.log('✅ Database connection established');
 
       // Ensure citation_tasks table exists
@@ -479,7 +597,7 @@ class WorkerOrchestratorServer {
 
   private async ensureTasksTable(): Promise<void> {
     try {
-      await this.db.query(`
+      await this.dbQuery(`
         CREATE TABLE IF NOT EXISTS citation_tasks (
           task_id VARCHAR(50) PRIMARY KEY,
           document JSONB NOT NULL,

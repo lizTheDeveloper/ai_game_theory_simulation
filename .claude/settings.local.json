@@ -317,7 +317,11 @@
       "Bash(kubectl set env:*)",
       "Bash(./scripts/verify-infrastructure.sh:*)",
       "Bash(npm install:*)",
-      "Bash(git reset:*)"
+      "Bash(git reset:*)",
+      "Bash(gcloud container clusters describe:*)",
+      "Bash(gcloud container node-pools create:*)",
+      "Bash(kubectl wait:*)",
+      "Bash(gcloud container node-pools list:*)"
     ],
     "deny": [],
     "ask": [],

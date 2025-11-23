@@ -32,6 +32,27 @@ rules:
       - get
       - list
       - watch
+  - apiGroups:
+      - authorization.k8s.io
+    resources:
+      - subjectaccessreviews
+    verbs:
+      - create
+---
+# Additional RBAC for extension-apiserver-authentication configmap
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: prometheus-adapter-auth-reader
+  namespace: kube-system
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: extension-apiserver-authentication-reader
+subjects:
+  - kind: ServiceAccount
+    name: prometheus-adapter
+    namespace: marcus-platform
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -144,12 +165,13 @@ spec:
       serviceAccountName: prometheus-adapter
       containers:
         - name: prometheus-adapter
-          image: k8s.gcr.io/prometheus-adapter/prometheus-adapter:v0.11.1
+          image: registry.k8s.io/prometheus-adapter/prometheus-adapter:v0.11.2
           args:
             - --prometheus-url=http://prometheus.marcus-platform.svc.cluster.local:9090
             - --config=/etc/adapter/config.yaml
-            - --logtostderr=true
             - --v=4
+            - --cert-dir=/var/run/serving-cert
+            - --secure-port=6443
           ports:
             - containerPort: 6443
               name: https
@@ -159,6 +181,8 @@ spec:
               readOnly: true
             - name: tmp
               mountPath: /tmp
+            - name: serving-cert
+              mountPath: /var/run/serving-cert
           resources:
             requests:
               cpu: 100m
@@ -171,6 +195,8 @@ spec:
           configMap:
             name: prometheus-adapter-config
         - name: tmp
+          emptyDir: {}
+        - name: serving-cert
           emptyDir: {}
 ---
 apiVersion: v1

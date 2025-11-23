@@ -13,6 +13,9 @@ spec:
       name: http
     - port: 9090
       targetPort: 9090
+      name: prometheus
+    - port: 4000
+      targetPort: 4000
       name: metrics
   selector:
     app: orchestrator
@@ -42,8 +45,8 @@ spec:
       serviceAccountName: marcus-orchestrator
       containers:
         - name: orchestrator
-          image: us-central1-docker.pkg.dev/project-6d921a00-c010-437c-990/marcus-platform/orchestrator:v3.0.0
-          imagePullPolicy: IfNotPresent
+          image: gcr.io/project-6d921a00-c010-437c-990/marcus-orchestrator:v3.2.1-circuit-breakers
+          imagePullPolicy: Always
           ports:
             - containerPort: 3000
               name: http
