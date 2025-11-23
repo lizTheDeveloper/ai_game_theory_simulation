@@ -1,18 +1,18 @@
 # Master Implementation Roadmap
 ## AI Alignment Game Theory Simulation - Project Hub
 
-**Date:** November 22, 2025 (Updated: MARCUS 3.2 DEPLOYED - All L3-L6 Optimizations Live)
+**Date:** November 23, 2025 (Updated: MARCUS 3.2.1 DEPLOYED - Circuit Breakers + Prometheus Adapter Fix)
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**Current Status:** 🟢 **STABLE** (Nov 22, 2025 - MARCUS 3.2 DEPLOYED)
+**Current Status:** 🟢 **STABLE** (Nov 23, 2025 - MARCUS 3.2.1 PRODUCTION-READY)
 - **Research Quality:** A (peer-reviewed foundation, 29 sources added Nov 15 - nitrogen-food coupling)
 - **Implementation Fidelity:** A- (assertion coverage 97.2%, outcome probabilities bug FIXED, biogeochemical partial)
 - **Architecture Health (Simulation):** 9.5/10 (CRITICAL/HIGH issues resolved, MEDIUM items remain)
-- **Architecture Health (MARCUS Platform):** 10/10 (DEPLOYED) - All 21 architecture review items complete, L3-L6 optimizations live on GKE
-- **System Trajectory:** STABLE - MARCUS 3.2 deployed to production, simulation biogeochemical integration next priority
+- **Architecture Health (MARCUS Platform):** 9.5/10 (PRODUCTION-READY) - H1-H2 fixes complete, circuit breakers operational, HPA functional
+- **System Trajectory:** STABLE - MARCUS 3.2.1 production-ready, awaiting PR submission to main
 - **Major Merges:** 5 branches merged (CRITICAL-1, ARCH-4, CRITICAL-4, bifurcation, phase-consolidation)
-- **Active Work:** Production monitoring (L3 canary validation, cost savings verification), simulation biogeochemical integration pending
+- **Active Work:** PR submission preparation (MARCUS 3.2 branch → main), simulation biogeochemical integration pending
 
 **🔬 Research Verification Complete:**
 - ✅ **State Validation Domain Bounds** - PHASE 2 COMPLETE (Nov 13, 2025)
@@ -50,7 +50,47 @@
 - **Archive:** `/plans/completed/scenario_analysis_phase3_phase4_complete_20251113.md`
 - **Commits:** ff22268 - "fix: Scenario Phase 3 critical fixes (CRITICAL-1, HIGH-3)", a140fb07b - "fix: Scenario parameter divergence (sequenced deployment)"
 
-**Recent Completions (Nov 22, 2025):**
+**Recent Completions (Nov 22-23, 2025):**
+
+- ✅ **MARCUS 3.2.1 - CIRCUIT BREAKERS + PROMETHEUS ADAPTER FIX** (Nov 23, 2025 - Session 10)
+  - **Scope:** Final two HIGH priority fixes (H1-H2) for production readiness
+  - **Time:** ~4-5 hours (implementation + testing + documentation + PR prep)
+  - **Platform Evolution:** MARCUS 3.2 (10/10 deployed) → MARCUS 3.2.1 (9.5/10 production-ready)
+  - **H1: Circuit Breaker Implementation:**
+    - Full circuit breaker pattern for PostgreSQL and Redis
+    - Three-state pattern: CLOSED → OPEN → HALF_OPEN
+    - Conservative DB config (50% threshold, 30s reset)
+    - Aggressive Redis config (70% threshold, 10s reset)
+    - Prevents cascading failures under load
+    - Real-time monitoring via /health endpoint
+    - <1ms performance overhead
+  - **H2: Prometheus Adapter CrashLoopBackOff Fix:**
+    - Fixed deprecated --logtostderr flag (v0.11.1+ incompatibility)
+    - Deployed Prometheus server (v2.48.0) as metrics backend
+    - Fixed RBAC gaps (subjectaccessreviews, auth reader binding)
+    - Adapter now stable: 0 crashes, 0 restarts (was 199 restarts)
+    - HPA autoscaling fully operational
+    - Custom metrics API serving 200 responses
+  - **Deliverable:** 1,500 lines (280 circuit breaker + 175 Prometheus + tests/configs/docs)
+  - **Files:**
+    - NEW: `src/platform/utils/circuit-breaker.ts` (280 lines)
+    - NEW: `k8s/prometheus-deployment.yaml` (175 lines)
+    - NEW: `scripts/verify-marcus-3.2-fixes.sh` (120 lines)
+    - MODIFIED: `src/platform/api/worker-orchestrator-server.ts` (+150/-50)
+    - MODIFIED: `k8s/prometheus-adapter.yaml` (+25/-5)
+    - MODIFIED: `k8s/orchestrator-deployment.yaml` (v3.2.1 image)
+  - **PR Documentation:**
+    - `PR_DESCRIPTION.md` - Comprehensive PR body (1,200+ lines)
+    - `PR_SUBMISSION_STRATEGY.md` - Git strategy and commands
+    - `REVIEW_CHECKLIST.md` - Senior developer review guide (300+ items)
+    - `METRICS_SUMMARY.md` - Performance metrics and cost analysis (380 lines)
+    - `PR_SUBMISSION_READY.md` - Quick start guide
+  - **Commits:**
+    - 3b74a064: "feat: MARCUS 3.2.1 - Circuit Breakers + Prometheus Adapter Fix (H1-H2)"
+    - 213e89fd: "docs: Archive MARCUS 3.2.1 completion and prepare PR documentation"
+    - f7ba93e3: "docs: Add MARCUS 3.2 demo presentation and materials"
+  - **Status:** ✅ COMPLETE - Ready for PR submission to main branch
+  - **Next:** Submit PR for senior developer review
 
 - ✅ **MARCUS 3.0 CRITICAL + HIGH PRIORITY FIXES COMPLETE** (Nov 22, 2025 - Session 5)
   - **Scope:** Production-critical bug fixes and performance optimizations
