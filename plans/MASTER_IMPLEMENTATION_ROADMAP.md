@@ -36,20 +36,17 @@
    - **Complexity:** 3 systems (Monte Carlo, parameter config, state)
    - **Related:** Research debate response strategy (add uncertainty bounds)
 
-3. **Mechanism Audits** (2/3 COMPLETE - Nov 23, 2025)
-   - Verify code actually implements what papers describe
-   - Check for "structural fabrication" (citation exists but mechanism does not match)
-   - **Priority targets:**
-     - ✅ Mortality stabilizers (Nov 23) - CONDITIONAL PASS
+3. ~~**Mechanism Audits**~~ ✅ ALL COMPLETE (Nov 23, 2025)
+   - Verified code implements what papers describe, checked for "structural fabrication"
+   - **All 3 targets audited:**
+     - ✅ Mortality stabilizers - CONDITIONAL PASS
        - Report: `reviews/mechanism_audit_mortality_20251123.md`
-       - Commit: 4b90937e3
-     - ✅ Tipping point cascades (Nov 23) - CONDITIONAL PASS (B+)
+     - ✅ Tipping point cascades - CONDITIONAL PASS (B+)
        - Report: `reviews/mechanism_audit_tipping_points_20251123.md`
-       - Commit: 210da8a3b
        - CRITICAL FIX: AMOC 1.7°C → 3.0°C (commit 563addfc6)
-     - ⏸️ AI coordination phases (do dynamics match Anthropic findings?)
-   - **Complexity:** 2 systems per audit (research + implementation)
-   - **Next:** AI coordination phases audit
+     - ✅ AI coordination phases - COMPLETE (B+, 87% fidelity)
+       - Report: `reviews/mechanism_audit_ai_coordination_20251123.md`
+   - **PR:** #397
 
 ### MEDIUM Priority
 
