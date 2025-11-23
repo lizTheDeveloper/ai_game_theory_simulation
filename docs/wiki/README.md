@@ -18,16 +18,40 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 ## 🚀 Project Status
 
-**🟢 STABLE** (November 22, 2025)
+**🟢 STABLE** (November 23, 2025)
 
 **SYSTEM HEALTH:**
 - **Research Quality:** B+ (56.5% sources 2023-2025, 3 CRITICAL parameter issues resolved/documented, 8 research gaps identified) ✅ GOOD
 - **Research Currency:** ✅ EXCELLENT (all simulation-critical files updated within 14 days, autonomous system working effectively)
 - **Implementation Fidelity:** A- (assertion coverage 97.2%, 24 integration tests for CoordinatedDeploymentPhase) ✅ EXCELLENT
 - **Architecture Health:** B+ (0 CRITICAL, 2 HIGH technical debt non-urgent, deep clone optimization complete) ✅ GOOD
-- **System Trajectory:** 🟢 STABLE (Nov 22 maintenance session complete: all TIER 1/2 items remain complete, system healthy)
+- **System Trajectory:** 🟢 STABLE (Nov 23 research priorities: mechanism audits complete, hindcasting plan ready)
 
 **Recent Major Achievements:**
+
+**Nov 23: Mechanism Audits & Hindcasting Plan - Research Priorities** (commit 993f818)
+- 🔬 **Hindcasting Validation Plan (CRITICAL):** Implementation design for running simulation 1990→2024
+  - Architecture: Historical state factory, timeseries loaders (V-Dem, UNDP, climate, economic)
+  - Data Infrastructure: CO2/temp from NOAA/NASA GISS, democracy indices from V-Dem (1789-2024)
+  - Validation: Compare simulated 2024 vs actual 2024 metrics
+  - Estimated effort: 2-3 weeks phased implementation
+  - 📄 Plan: plans/hindcasting_validation_implementation_plan.md (256 lines)
+- 🔍 **Mechanism Audit: Mortality Stabilizers (Grade B+)**
+  - Verified Xia/Shi citations in nuclearWinter.ts (correctly cite Nature Food 2022)
+  - NO structural fabrication detected - citations match actual paper claims
+  - Gap found: Wet bulb threshold inconsistency (30.5C vs 35C literature standard)
+  - 📄 Audit: reviews/mechanism_audit_mortality_stabilizers_20251123.md
+- 🔍 **Mechanism Audit: Tipping Point Cascades (Grade B+)**
+  - Thresholds match Armstrong McKay et al. 2022 exactly (AMOC, Amazon, Arctic, etc.)
+  - Gap: Missing threshold lowering mechanism (tipping destabilizes other thresholds)
+  - Timeline compression documented but needs clearer labeling
+  - 📄 Audit: reviews/mechanism_audit_tipping_cascades_20251123.md
+- 🔍 **Mechanism Audit: AI Coordination/Alignment Faking (Grade B+)**
+  - 14% base rate from Anthropic Dec 2024 correctly implemented
+  - All mechanisms trace to peer-reviewed sources (Apollo Dec 2024, Tice et al., van der Weij et al.)
+  - Good epistemic humility with uncertainty ranges (lab-to-deployment scaling 0.3-0.8)
+  - 📄 Audit: reviews/mechanism_audit_ai_coordination_20251123.md
+- 🎯 **Source:** Nov 23 Research-Driven Priorities (Cynthia + Sylvia consensus)
 
 **Nov 22: Maintenance Session - Architecture & Research Quality Assessment** (commit 146ca3e)
 - 🏛️ **Architect Session:** End-of-session roadmap cleanup and archival
