@@ -29,6 +29,22 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 22: Game Design Document v3.0 - Crisis NUX, AI Advisor, Realistic Currencies** (commit 85fbee2)
+- 🎮 **Design Philosophy:** "The world is on fire, what do we do?" - Crisis opening, not peaceful tutorial
+- 🤖 **AI Advisor System:** In-game mentor (responsive, not preachy) - represents GAI's institutional AI
+- 🚀 **New User Experience (NUX):** Cold open mid-crisis, learn by doing under pressure
+- 💰 **5 Realistic Currencies** replacing arbitrary game limits:
+  - Political Capital (governance research - Kingdon's policy windows)
+  - Research Funding (R&D economics - allocation theory)
+  - Public Attention (agenda-setting theory - McCombs & Shaw)
+  - Institutional Capacity (organizational theory - Besley & Persson)
+  - International Cooperation (IR theory - Keohane's cooperation)
+- 📖 **Research Brief:** Educational game design research queued for autonomous researcher
+  - Stealth learning analysis (Civ, Stellaris, KSP, Factorio)
+  - Anti-patterns: no preachy edutainment, no "Captain Planet" energy
+- ⚠️ **Status:** Design spec only - currency parameters require Sylvia validation before implementation
+- 📄 **Documentation:** plans/game-design/GAME_DESIGN_DOCUMENT.md, research/educational_game_design_research_brief.md
+
 **Nov 21: Comprehensive Architecture Integration Review Complete** (commit cb574a0)
 - ✅ **Grade: A (Excellent)** - 0 CRITICAL issues, 0 HIGH priority issues, 2 MEDIUM priority (minor cleanup)
 - 🏗️ **Dependency Management:** 89 of 95 phases now declare explicit dependencies with PhaseOrchestrator validation
@@ -2937,6 +2953,7 @@ How the simulation operates and what determines outcomes:
 
 | Mechanic | Status | Description |
 |----------|--------|-------------|
+| [🎮 Game Design Document](../../plans/game-design/GAME_DESIGN_DOCUMENT.md) | ✅ | v3.0: Crisis NUX, AI Advisor, 5 realistic currencies (Nov 22, 2025) |
 | [💰 Economics](./mechanics/economics.md) | ✅ | Stages, revenue, expenses, UBI transitions |
 | [📊 Quality of Life](./mechanics/quality-of-life.md) | ✅ | 17-dimensional welfare measurement |
 | [🌐 Multi-Paradigm DUI](./mechanics/multi-paradigm-dui.md) | ✅ | 4 simultaneous paradigms (Western, Development, Ecological, Indigenous) - Oct 2025 |
