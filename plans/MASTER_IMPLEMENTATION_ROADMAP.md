@@ -20,12 +20,18 @@
 
 ### CRITICAL Priority
 
-1. **Hindcasting Validation** (Sylvia's key push)
+1. **Hindcasting Validation** (Sylvia's key push) - **BLOCKED**
    - Run simulation starting 1990, check if it predicts 2024 correctly
    - If the model cannot hindcast known history, forecasts are suspect
    - Reality check for the entire model - validates core mechanisms
    - **Complexity:** 5 systems (all major subsystems touched)
-   - **Plan:** TBD - needs research on available historical data
+   - **Status:** BLOCKED - Model has hardcoded 2025 assumptions (Nov 23, 2025)
+   - **Finding:** Simulation cannot run from 1990 - assertions fail on out-of-range values
+   - **Research:** COMPLETE - Historical data 1990-2024 compiled (`research/hindcasting_validation_20251123.md`)
+   - **Script:** READY - `scripts/hindcastingValidation.ts` awaits model support
+   - **Review:** `reviews/hindcasting_validation_results_20251123.md`
+   - **Blocker:** Need historical initialization module + time-agnostic assertions (3-5 day effort)
+   - **Implication:** Forecasts CANNOT be validated against history until this is resolved
 
 ### HIGH Priority
 
