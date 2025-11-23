@@ -1,5 +1,1 @@
-2025-11-23 22:36:20 - Autonomous Researcher Session
-- Updated catastrophe-recovery-timescales_20251017.md with 2025 sources
-- Added: UNDRR GAR 2025, Buijs et al. 2025, Zhao et al. 2025, Communications Psychology 2024
-- Added frontmatter metadata and used_in_simulation flag
-- Session complete - 1 research file updated thoroughly
+GIT OPERATIONS
