@@ -4,6 +4,46 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
+## 🔍 Mechanism Audit: Mortality Stabilizers (November 23, 2025 - commit 9922fb4)
+
+**Status:** ⚠️ CITATION ISSUES IDENTIFIED
+**Priority:** HIGH
+**Type:** Research Integrity Audit
+**Grade:** C+ (Partial Match)
+
+**Summary:** Comprehensive audit of mortality stabilizer mechanisms revealed critical citation attribution issues. While nuclear winter mechanics are correctly calibrated, the stabilizer system has significant parameter attribution problems.
+
+**Key Findings:**
+
+1. **CRITICAL - Roadmap Misattribution:**
+   - Roadmap item "Xia/Shi papers" incorrectly paired with mortality stabilizers
+   - Xia/Shi papers are about nuclear winter agricultural collapse, NOT stabilization
+   - MortalityStabilizersPhase actually cites: Cavalcanti, Ballester, IOM, GAO
+
+2. **CRITICAL - IOM Migration Parameters:**
+   - 10/11 migration parameters NOT in cited IOM 2024 report
+   - Report is qualitative; code cites it for specific quantitative values
+   - Constitutes structural fabrication
+
+3. **MODERATE - Cavalcanti Aid Effectiveness:**
+   - Paper measures funding levels, code models donor availability
+   - Values ~2x inflated (29.5% code vs 15% paper for high aid)
+   - "Pakistan 2010" donor fatigue claim unsourced
+
+4. **GOOD - Nuclear Winter:**
+   - Correctly calibrated to Xia et al. 5B death estimate
+   - Formula produces correct crop failure percentages
+
+5. **GOOD - Heat Adaptation:**
+   - Total max FIXED from 0.8 → 0.45 (matches Ballester 44%)
+   - Component breakdown extrapolated but clearly documented
+
+**Next Steps:** Address CRITICAL recommendations (roadmap clarification, IOM parameter marking, find peer-reviewed migration sources)
+
+**Report:** reviews/mechanism_audit_mortality_stabilizers_20251123.md
+
+---
+
 ## 🐛 CRITICAL Bug Fix: asymptoteRecovery Auto-Scale (November 23, 2025 - commit 9978b83)
 
 **Status:** ✅ RESOLVED

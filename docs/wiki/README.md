@@ -65,10 +65,12 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - Validation: Compare simulated 2024 vs actual 2024 metrics
   - Estimated effort: 2-3 weeks phased implementation
   - 📄 Plan: plans/hindcasting_validation_implementation_plan.md (256 lines)
-- 🔍 **Mechanism Audit: Mortality Stabilizers (Grade B+)**
-  - Verified Xia/Shi citations in nuclearWinter.ts (correctly cite Nature Food 2022)
-  - NO structural fabrication detected - citations match actual paper claims
-  - Gap found: Wet bulb threshold inconsistency (30.5C vs 35C literature standard)
+- 🔍 **Mechanism Audit: Mortality Stabilizers (Grade C+)** ⚠️ UPDATED
+  - CRITICAL: Roadmap item "Xia/Shi papers" misattributes - those papers are nuclear winter, NOT stabilizers
+  - CRITICAL: IOM 2024 migration parameters (10/11) not in cited source - structural fabrication
+  - MODERATE: Cavalcanti aid effectiveness ~2x inflated vs paper values (29.5% vs 15%)
+  - GOOD: Nuclear winter correctly calibrated to Xia's 5B death estimate
+  - GOOD: Heat adaptation total max FIXED (0.8 → 0.45 matches Ballester)
   - 📄 Audit: reviews/mechanism_audit_mortality_stabilizers_20251123.md
 - 🔍 **Mechanism Audit: Tipping Point Cascades (Grade B+)**
   - Thresholds match Armstrong McKay et al. 2022 exactly (AMOC, Amazon, Arctic, etc.)
