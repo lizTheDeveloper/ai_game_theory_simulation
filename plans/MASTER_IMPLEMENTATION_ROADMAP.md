@@ -141,7 +141,7 @@
     - L1: Metrics cardinality (DEPLOYED - 60% storage savings)
     - L2: Redis memory (DEPLOYED - 69% reduction)
     - L3: Python async/await (DEPLOYED - canary rollout ready, 2.6x throughput expected)
-    - L4: GraphQL API (DEPLOYED - port 4000/4001, 30-50% latency reduction expected)
+    - L4: GraphQL API (ABANDONED - See docs/investigations/graphql_2025_11_23/DECISION.md)
     - L5: Distributed tracing (DEPLOYED - Jaeger UI http://34.123.164.214, <5min MTTR expected)
     - L6: Cost optimization (DEPLOYED - KEDA scale-to-zero + spot nodes, 63% cost reduction expected)
     - Deliverable: ~8,000 lines (production code + configs + guides)
@@ -158,7 +158,7 @@
     - Files: 75+ created/modified
     - Guides: 20+ comprehensive (operational + implementation)
     - Issues: 21/21 architecture review items addressed and deployed
-    - Performance: 2-100x improvements across subsystems (async, GraphQL, indexes, startup)
+    - Performance: 2-100x improvements across subsystems (async, indexes, startup)
     - Cost savings: $200/month realized (53%), $75/month projected with L6 (total 63%)
   - **Production Readiness:**
     - SLO compliance: All 7 core SLOs validated (99.9% uptime, P95 <500ms, <1% errors)
@@ -172,13 +172,14 @@
     - `MARCUS_3.2_GKE_ACCESS.md` - GKE access guide with port mappings
     - `docs/MARCUS_3.1_IMPLEMENTATION_SUMMARY.md` (L3-L6 technical details)
     - `docs/L3_ASYNC_AGENT_GUIDE.md` (async implementation)
-    - `docs/L4_GRAPHQL_API_GUIDE.md` (GraphQL implementation)
+    - `docs/investigations/graphql_2025_11_23/DECISION.md` (GraphQL investigation - ABANDONED)
     - `docs/L5_DISTRIBUTED_TRACING_GUIDE.md` (tracing implementation)
     - `docs/L6_COST_OPTIMIZATION_GUIDE.md` + `docs/L6_DEPLOYMENT_GUIDE.md` (cost optimization)
     - `docs/PORT_MAPPING.md` - Updated with GKE services section
   - **Commits:**
-    - f7192050: "feat: MARCUS 3.1 async agent implementation (L3) and GraphQL foundation (L4)"
-    - 2728dc25: "feat: Complete MARCUS 3.1 optimizations (L4 GraphQL, L5 Tracing, L6 Cost)"
+    - f7192050: "feat: MARCUS 3.1 async agent implementation (L3) and GraphQL foundation (L4)" [REVERTED]
+    - 2728dc25: "feat: Complete MARCUS 3.1 optimizations (L4 GraphQL, L5 Tracing, L6 Cost)" [REVERTED]
+    - e823cb7f: "Revert GraphQL integration commits" (Nov 23, 2025)
     - 7a3c6719: "chore: Archive MARCUS 3.1 L3-L6 completion" (code completion)
     - 02110364: "docs: Add MARCUS 3.2 GKE access guide with port mappings" (deployment)
   - **Status:** ✅ DEPLOYED - All optimizations live on GKE, platform health 10/10, production monitoring active
@@ -1741,7 +1742,35 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
 
 ## 🎯 Progress Summary
 
-**Overall Project Status: 🟢 EXCELLENT - STABLE** (Nov 23, 2025 - MARCUS 3.2 PR Preparation)
+**Overall Project Status: 🟢 EXCELLENT - STABLE** (Nov 23, 2025 - GraphQL Investigation Complete)
+
+**End-of-Session Updates (Nov 23, 2025 - Session 12):**
+- 🔍 **GRAPHQL INTEGRATION INVESTIGATION - ABORTED**
+  - Scope: Recovery from VM crash, expert review of GraphQL integration approach
+  - Context: Work in progress from Session 11 included GraphQL server integration attempt
+  - Recovery: User provided alternative simplified approach (graphql-server-fix.ts, fix-graphql.sh)
+  - Expert Review:
+    - Architecture-skeptic: CRITICAL RISK - overlapping ports (4000/4001 vs 3002), dual schema maintenance, breaking change risk
+    - Marcus: Explained worker queue architecture, recommended simplified approach if needed but questioned necessity
+  - Decision: ABORT GraphQL integration (followed architecture-skeptic's recommendation)
+  - Actions Taken:
+    - Reverted commit e823cb7f (GraphQL integration)
+    - Archived investigation to `docs/investigations/graphql_2025_11_23/`
+    - Documented decision rationale in `DECISION.md`
+    - Updated roadmap L4 status: DEPLOYED → ABANDONED
+  - Investigation Archive:
+    - `docs/investigations/graphql_2025_11_23/DECISION.md` (decision rationale)
+    - `docs/investigations/graphql_2025_11_23/GRAPHQL_INTEGRATION_INVESTIGATION.md` (original work)
+    - `docs/investigations/graphql_2025_11_23/graphql-server-fix.ts` (alternative approach)
+    - `docs/investigations/graphql_2025_11_23/fix-graphql.sh` (fix script)
+  - Outcome: System stable on REST-only architecture, GraphQL deemed unnecessary complexity
+  - Files Modified:
+    - `plans/MASTER_IMPLEMENTATION_ROADMAP.md` (L4 status updated, commits marked [REVERTED])
+  - Commits:
+    - b3e23eb0: "docs: Archive GraphQL integration investigation (ABORTED)"
+    - [REVERTED] e823cb7f: GraphQL integration commits
+  - Status: Investigation complete, system returned to stable state
+  - Next: Continue with MARCUS 3.2 PR preparation (screenshot capture, final submission)
 
 **End-of-Session Updates (Nov 23, 2025 - Session 11):**
 - 🔧 **MARCUS 3.2 PR PREPARATION - UPSTREAM ENHANCEMENT**
@@ -1753,7 +1782,6 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
     - Enhanced performance benchmarks table, improved architecture documentation
     - Added breaking changes section (none - backward compatible)
   - Demo Fixes: Replaced placeholder URLs with actual GKE endpoints
-    - GraphQL: http://localhost:4001/graphql (port-forward from 34.123.164.214:80)
     - Grafana: http://localhost:5001 (port-forward from 34.123.164.214:3001)
     - Jaeger: http://34.123.164.214 (direct access, no auth)
     - Added port-forward setup instructions to demo script

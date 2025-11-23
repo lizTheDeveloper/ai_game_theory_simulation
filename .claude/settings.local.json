@@ -329,7 +329,8 @@
       "Bash(/tmp/current_pr_body.md)",
       "Bash(/tmp/pr2_content.md)",
       "Bash(gh pr edit:*)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(npm ls:*)"
     ],
     "deny": [],
     "ask": [],
