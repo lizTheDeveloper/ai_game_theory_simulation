@@ -72,6 +72,7 @@ import { getTier3Scenario, type ScenarioName } from './thresholds/tier3Config';
 import { sampleTier2InterventionParameters } from './thresholds/tier2InterventionConfig';
 import { setDeterministicRng, deterministicRandom } from './utils/deterministicRng';
 import { validateSimulationConfig } from './config/validateConfig';
+import { sampleUncertaintyParameters } from './uncertainty';
 
 /**
  * P2.3: Initialize Heterogeneous Population Segments (Oct 16, 2025)
@@ -1111,6 +1112,12 @@ export function createDefaultInitialState(
     // Phase 3: Speculative Scenario Thresholds (Oct 26, 2025)
     // Named scenarios for unprecedented parameters (AI alignment difficulty, post-scarcity distribution, etc.)
     speculativeThresholds: speculativeScenario ? getTier3Scenario(speculativeScenario) : undefined,
+
+    // Uncertainty Parameters (Climate & Tipping Points, Nov 23, 2025)
+    // Sample climate sensitivity and tipping point thresholds from research-backed distributions
+    // Research: research/uncertainty_propagation_climate_parameters_20251120.md
+    // Expected impact: Increase Monte Carlo outcome variance by 15-30%
+    uncertaintyParameters: sampleUncertaintyParameters(rngFunction),
 
     // TIER 2 Interventions System (Oct 27, 2025)
     // Sample intervention parameters ONCE at initialization for epistemic uncertainty

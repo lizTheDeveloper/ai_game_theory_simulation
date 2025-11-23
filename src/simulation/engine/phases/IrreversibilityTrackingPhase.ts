@@ -119,12 +119,13 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
 
     // === PROBABILISTIC THRESHOLD (Sylvia condition #1) ===
     // Research: Nature 2023 - Greenland threshold +0.8-3.2°C (95% CI)
-    // Using normal distribution centered at +1.5°C with σ=0.5°C
-    // This gives ~95% probability between 0.5-2.5°C (matches research range)
+    // UNCERTAINTY PROPAGATION (Nov 23, 2025): Use sampled threshold if available
+    // Range: [0.8, 3.2]C - Nature (2023)
 
-    const COLLAPSE_THRESHOLD_MEAN = 1.5; // [MODEL-DERIVED] °C
+    // Use sampled threshold or default to midpoint (2.0°C)
+    const COLLAPSE_THRESHOLD_MEAN = state.uncertaintyParameters?.greenlandCollapseThreshold ?? 2.0; // [MODEL-DERIVED] °C
     const COLLAPSE_THRESHOLD_STDDEV = 0.5; // [MODEL-DERIVED] Uncertainty range
-    const RECOVERY_THRESHOLD = 1.0; // [MODEL-DERIVED] Hysteresis gap: need cooling to <+1°C to recover
+    const RECOVERY_THRESHOLD = COLLAPSE_THRESHOLD_MEAN - 0.5; // [MODEL-DERIVED] Hysteresis gap: need cooling below threshold
 
     // CRITICAL FIX (Nov 22, 2025): tippingPoints initialized in createDefaultInitialState
     // No more dynamic creation with `as any` - fail loudly if missing
@@ -278,7 +279,9 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     // === CARBON RELEASE (Progressive with thaw) ===
     // Research: Harvard 2024 - 1,500 Gt C in permafrost (2x atmospheric carbon)
     // Nature Climate Change 2022 - +9% methane emissions since 2002
-    const TOTAL_PERMAFROST_CARBON = 1500; // [EMPIRICAL] Gt C
+    // UNCERTAINTY PROPAGATION (Nov 23, 2025): Use sampled carbon pool if available
+    // Range: [1460, 1600] Gt C - Nature Climate Change (2022)
+    const TOTAL_PERMAFROST_CARBON = state.uncertaintyParameters?.permafrostCarbonPool ?? 1500; // [EMPIRICAL] Gt C
     const CARBON_RELEASE_FRACTION = 0.15; // [MODEL-DERIVED] 15% released as CO2/CH4 when thawed
 
     const thawedThisMonth = permafrost.percentThawed - previousPercentThawed;
@@ -377,21 +380,33 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
 
     // === TEMPERATURE-DEPENDENT COLLAPSE PROBABILITY FUNCTION ===
     // Based on Weijer et al. (2020), Van Westen et al. (2024), Qin et al. (2025)
+    // UNCERTAINTY PROPAGATION (Nov 23, 2025): Use sampled AMOC threshold if available
+    // Range: [2.2, 3.9]C - Westen et al. JGR (2024) 95% CI
+    const amocThreshold = state.uncertaintyParameters?.amocCollapseThreshold ?? 3.0;
+
     const calculateAMOCCollapseProbability = (temp: number): number => {
-      if (temp < 2.0) {
-        // Extremely unlikely below +2°C
+      // Dynamically scale probability based on sampled threshold
+      // Low threshold → crisis triggers earlier, High threshold → more resilient
+      const lowThreshold = amocThreshold - 0.8;   // e.g., 2.2 if sampled=3.0
+      const midThreshold = amocThreshold;          // e.g., 3.0
+      const highThreshold = amocThreshold + 0.9;   // e.g., 3.9
+
+      if (temp < lowThreshold - 0.2) {
+        // Extremely unlikely well below threshold
         return 0.005; // 0.5% annual probability
-      } else if (temp < 2.2) {
-        // Linear interpolation: 0.5% at +2°C → 5% at +2.2°C
-        return 0.005 + ((temp - 2.0) / 0.2) * (0.05 - 0.005);
-      } else if (temp < 3.0) {
-        // Linear interpolation: 5% at +2.2°C → 50% at +3°C
-        return 0.05 + ((temp - 2.2) / 0.8) * (0.50 - 0.05);
-      } else if (temp < 3.9) {
-        // Linear interpolation: 50% at +3°C → 90% at +3.9°C
-        return 0.50 + ((temp - 3.0) / 0.9) * (0.90 - 0.50);
+      } else if (temp < lowThreshold) {
+        // Linear interpolation: 0.5% → 5%
+        return 0.005 + ((temp - (lowThreshold - 0.2)) / 0.2) * (0.05 - 0.005);
+      } else if (temp < midThreshold) {
+        // Linear interpolation: 5% → 50%
+        const range = midThreshold - lowThreshold;
+        return 0.05 + ((temp - lowThreshold) / range) * (0.50 - 0.05);
+      } else if (temp < highThreshold) {
+        // Linear interpolation: 50% → 90%
+        const range = highThreshold - midThreshold;
+        return 0.50 + ((temp - midThreshold) / range) * (0.90 - 0.50);
       } else {
-        // Very likely above +3.9°C
+        // Very likely above high threshold
         return 0.90; // 90% annual probability
       }
     };
@@ -490,10 +505,14 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     // Research: Nature Feb 2024 - 10-47% exposed to tipping by 2050
     //           RAISG 2023 - Regional variation SE 28%, Brazilian 25%, NW <10%
     //           Lovejoy & Nobre 2019 - 20-25% threshold (classic estimate)
+    // UNCERTAINTY PROPAGATION (Nov 23, 2025): Use sampled threshold if available
+    // Range: [0.20, 0.25] - Frontiers in Public Health (2025)
 
     // Threshold is PROBABILISTIC with regional variation
-    const DEFORESTATION_THRESHOLD_MEAN = 22.5; // [EXPERT-ESTIMATE] % (midpoint of 20-25%)
-    const DEFORESTATION_THRESHOLD_RANGE = 2.5; // [EXPERT-ESTIMATE] ± range
+    // Use sampled threshold (as percentage 0-1) converted to percent, or default
+    const sampledThreshold = state.uncertaintyParameters?.amazonDiebackDeforestation;
+    const DEFORESTATION_THRESHOLD_MEAN = sampledThreshold ? sampledThreshold * 100 : 22.5; // [EXPERT-ESTIMATE] %
+    const DEFORESTATION_THRESHOLD_RANGE = 2.5; // [EXPERT-ESTIMATE] +/- range
     const TRANSITION_TIMESCALE_YEARS = 50; // [MODEL-DERIVED] Years for savanna transition once tipped
 
     // Check each region
@@ -777,9 +796,11 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     // Research: NOAA 2024 - 4th global bleaching event, 84.4% of reefs affected
     //           Nature Comms 2024 - Recovery possible if <+2°C
     // Type: EMPIRICAL bleaching events + MODEL recovery projections
+    // UNCERTAINTY PROPAGATION (Nov 23, 2025): Use sampled threshold if available
+    // Range: [1.0, 1.5]C - IPCC AR6 (2021)
 
-    const BLEACHING_THRESHOLD = 1.2; // [EMPIRICAL] °C - crossed in 2024
-    const EXTINCTION_THRESHOLD = 2.0; // [MODEL-DERIVED] °C - recovery impossible above this
+    const BLEACHING_THRESHOLD = state.uncertaintyParameters?.coralReefThreshold ?? 1.2; // [EMPIRICAL] C - crossed in 2024
+    const EXTINCTION_THRESHOLD = BLEACHING_THRESHOLD + 0.8; // [MODEL-DERIVED] C - recovery impossible above this
     const BLEACHING_PROBABILITY_PER_MONTH = 0.02; // [EMPIRICAL] ~20% annual at current temps
 
     if (tempAnomaly >= BLEACHING_THRESHOLD && rng() < BLEACHING_PROBABILITY_PER_MONTH) {
