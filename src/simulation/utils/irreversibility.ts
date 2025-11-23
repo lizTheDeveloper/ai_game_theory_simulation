@@ -41,7 +41,8 @@ export function asymptoteRecovery(
   targetValue: number,
   halfLife: number,
   minimumAsymptoticValue: number,
-  deltaYears: number = 1/12
+  deltaYears: number = 1/12,
+  maxBoundaryValue?: number  // BUG FIX (Nov 23, 2025): Explicit scale for climate boundary
 ): number {
   assertFinite(currentValue, { location: 'asymptoteRecovery', valueName: 'currentValue' });
   assertFinite(targetValue, { location: 'asymptoteRecovery', valueName: 'targetValue' });
@@ -56,9 +57,11 @@ export function asymptoteRecovery(
   // Decay constant from half-life: λ = ln(2) / t_half
   const decayConstant = Math.log(2) / halfLife;
 
-  // Effective target includes asymptotic floor
-  // Assume currentValue is on 0-100 scale if > 2, otherwise 0-2 scale
-  const scale = currentValue > 2 ? 100 : 2;
+  // BUG FIX (Nov 23, 2025): Auto-scale detection was WRONG for climate_change boundary
+  // Old logic: currentValue > 2 => scale = 100 (assumed 0-100 scale)
+  // Bug: climate_change.currentValue can be 2.0+ (degrees Celsius), not a percentage!
+  // Fix: Use explicit maxBoundaryValue parameter, default to threshold > 10 for percentage scale
+  const scale = maxBoundaryValue !== undefined ? maxBoundaryValue : (currentValue > 10 ? 100 : 2);
   const effectiveTarget = Math.max(targetValue, minimumAsymptoticValue * scale);
 
   // Exponential approach to effective target: V(t) = V_target + (V_0 - V_target) × e^(-λt)
