@@ -17932,15 +17932,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 115,
-    "type": "property",
-    "name": "triggerTempC",
-    "currentDoc": "(none)",
-    "context": "triggerTempC: 3.0,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 119,
+    "line": 116,
     "type": "property",
     "name": "impactClimateStability",
     "currentDoc": "(none)",
@@ -17948,7 +17940,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 120,
+    "line": 117,
     "type": "property",
     "name": "impactHabitability",
     "currentDoc": "(none)",
@@ -17956,7 +17948,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 121,
+    "line": 118,
     "type": "property",
     "name": "impactFoodSecurity",
     "currentDoc": "(none)",
@@ -17964,7 +17956,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 122,
+    "line": 119,
     "type": "property",
     "name": "impactFreshwater",
     "currentDoc": "(none)",
@@ -17972,7 +17964,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 123,
+    "line": 120,
     "type": "property",
     "name": "regionalImpacts",
     "currentDoc": "(none)",
@@ -17980,7 +17972,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 131,
+    "line": 128,
     "type": "property",
     "name": "cascades",
     "currentDoc": "(none)",
@@ -17988,7 +17980,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 134,
+    "line": 131,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -17996,7 +17988,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 135,
+    "line": 132,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -18004,7 +17996,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 139,
+    "line": 136,
     "type": "property",
     "name": "impactClimateStability",
     "currentDoc": "(none)",
@@ -18012,7 +18004,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 140,
+    "line": 137,
     "type": "property",
     "name": "impactHabitability",
     "currentDoc": "(none)",
@@ -18020,7 +18012,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 141,
+    "line": 138,
     "type": "property",
     "name": "impactFoodSecurity",
     "currentDoc": "(none)",
@@ -18028,7 +18020,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 142,
+    "line": 139,
     "type": "property",
     "name": "impactFreshwater",
     "currentDoc": "(none)",
@@ -18036,7 +18028,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 143,
+    "line": 140,
     "type": "property",
     "name": "regionalImpacts",
     "currentDoc": "(none)",
@@ -18044,7 +18036,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 151,
+    "line": 148,
     "type": "property",
     "name": "cascades",
     "currentDoc": "(none)",
@@ -18052,7 +18044,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 159,
+    "line": 156,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -18060,7 +18052,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 160,
+    "line": 157,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -18068,7 +18060,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 164,
+    "line": 161,
     "type": "property",
     "name": "impactClimateStability",
     "currentDoc": "(none)",
@@ -18076,7 +18068,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 165,
+    "line": 162,
     "type": "property",
     "name": "impactHabitability",
     "currentDoc": "(none)",
@@ -18084,7 +18076,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 166,
+    "line": 163,
     "type": "property",
     "name": "impactFoodSecurity",
     "currentDoc": "(none)",
@@ -18092,7 +18084,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 167,
+    "line": 164,
     "type": "property",
     "name": "impactFreshwater",
     "currentDoc": "(none)",
@@ -18100,7 +18092,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 168,
+    "line": 165,
     "type": "property",
     "name": "regionalImpacts",
     "currentDoc": "(none)",
@@ -18108,7 +18100,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 179,
+    "line": 176,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -18116,7 +18108,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 180,
+    "line": 177,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -18124,7 +18116,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 185,
+    "line": 182,
     "type": "property",
     "name": "impactHabitability",
     "currentDoc": "(none)",
@@ -18132,7 +18124,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 186,
+    "line": 183,
     "type": "property",
     "name": "impactFoodSecurity",
     "currentDoc": "(none)",
@@ -18140,7 +18132,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 187,
+    "line": 184,
     "type": "property",
     "name": "impactFreshwater",
     "currentDoc": "(none)",
@@ -18148,7 +18140,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 188,
+    "line": 185,
     "type": "property",
     "name": "regionalImpacts",
     "currentDoc": "(none)",
@@ -18156,7 +18148,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 196,
+    "line": 193,
     "type": "property",
     "name": "cascades",
     "currentDoc": "(none)",
@@ -18164,7 +18156,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 204,
+    "line": 201,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -18172,7 +18164,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 205,
+    "line": 202,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -18180,7 +18172,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 209,
+    "line": 206,
     "type": "property",
     "name": "impactClimateStability",
     "currentDoc": "(none)",
@@ -18188,7 +18180,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 211,
+    "line": 208,
     "type": "property",
     "name": "impactFoodSecurity",
     "currentDoc": "(none)",
@@ -18196,7 +18188,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 213,
+    "line": 210,
     "type": "property",
     "name": "regionalImpacts",
     "currentDoc": "(none)",
@@ -18204,7 +18196,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 224,
+    "line": 221,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -18212,7 +18204,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 225,
+    "line": 222,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -18220,7 +18212,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 229,
+    "line": 226,
     "type": "property",
     "name": "impactClimateStability",
     "currentDoc": "(none)",
@@ -18228,7 +18220,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 231,
+    "line": 228,
     "type": "property",
     "name": "impactFoodSecurity",
     "currentDoc": "(none)",
@@ -18236,7 +18228,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 233,
+    "line": 230,
     "type": "property",
     "name": "regionalImpacts",
     "currentDoc": "(none)",
@@ -78452,7 +78444,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 190,
+    "line": 184,
     "type": "property",
     "name": "majorEconomiesCollapsed",
     "currentDoc": "(none)",
@@ -78460,7 +78452,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 191,
+    "line": 185,
     "type": "property",
     "name": "totalMajorEconomies",
     "currentDoc": "(none)",
@@ -78468,7 +78460,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 192,
+    "line": 186,
     "type": "property",
     "name": "globalCrisisActive",
     "currentDoc": "(none)",
@@ -78476,7 +78468,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 193,
+    "line": 187,
     "type": "property",
     "name": "donorFatigue",
     "currentDoc": "(none)",
@@ -78484,7 +78476,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 247,
+    "line": 241,
     "type": "property",
     "name": "majorEconomiesCollapsed",
     "currentDoc": "(none)",
@@ -78492,7 +78484,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 265,
+    "line": 259,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -78500,7 +78492,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 266,
+    "line": 260,
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
@@ -78508,7 +78500,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 267,
+    "line": 261,
     "type": "property",
     "name": "stabilizers",
     "currentDoc": "(none)",
@@ -78516,7 +78508,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 268,
+    "line": 262,
     "type": "property",
     "name": "globalIndicators",
     "currentDoc": "(none)",
@@ -78524,7 +78516,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 311,
+    "line": 305,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -78532,7 +78524,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 312,
+    "line": 306,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -78540,7 +78532,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 313,
+    "line": 307,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -78548,7 +78540,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 331,
+    "line": 325,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -78556,7 +78548,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 332,
+    "line": 326,
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
@@ -78564,7 +78556,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 333,
+    "line": 327,
     "type": "property",
     "name": "stabilizers",
     "currentDoc": "(none)",
@@ -78572,7 +78564,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 348,
+    "line": 342,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -78580,7 +78572,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 349,
+    "line": 343,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -78588,7 +78580,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 350,
+    "line": 344,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -78596,7 +78588,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 351,
+    "line": 345,
     "type": "property",
     "name": "expectedSource",
     "currentDoc": "(none)",
@@ -78604,7 +78596,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 441,
+    "line": 435,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -78612,7 +78604,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 442,
+    "line": 436,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -78620,7 +78612,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 443,
+    "line": 437,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -78628,7 +78620,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 471,
+    "line": 465,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -78636,7 +78628,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 472,
+    "line": 466,
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
@@ -78644,7 +78636,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 473,
+    "line": 467,
     "type": "property",
     "name": "stabilizers",
     "currentDoc": "(none)",
@@ -78652,7 +78644,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 504,
+    "line": 498,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -78660,7 +78652,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 505,
+    "line": 499,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -78668,7 +78660,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 506,
+    "line": 500,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -78676,7 +78668,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 514,
+    "line": 508,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -78684,7 +78676,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 515,
+    "line": 509,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -78692,7 +78684,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 516,
+    "line": 510,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -78700,7 +78692,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 517,
+    "line": 511,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -78708,7 +78700,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 557,
+    "line": 551,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -78716,7 +78708,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 558,
+    "line": 552,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -78724,7 +78716,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 559,
+    "line": 553,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -78732,7 +78724,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 573,
+    "line": 567,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -78740,7 +78732,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 574,
+    "line": 568,
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
@@ -78748,7 +78740,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 575,
+    "line": 569,
     "type": "property",
     "name": "stabilizers",
     "currentDoc": "(none)",
@@ -78756,7 +78748,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 615,
+    "line": 609,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -78764,7 +78756,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 616,
+    "line": 610,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -78772,7 +78764,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 617,
+    "line": 611,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -78780,7 +78772,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 630,
+    "line": 624,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -78788,7 +78780,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 631,
+    "line": 625,
     "type": "property",
     "name": "stabilizers",
     "currentDoc": "(none)",
@@ -78796,7 +78788,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 640,
+    "line": 634,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -78804,7 +78796,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 641,
+    "line": 635,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -78812,7 +78804,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 642,
+    "line": 636,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -78820,7 +78812,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 649,
+    "line": 643,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -78828,7 +78820,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 650,
+    "line": 644,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -78836,7 +78828,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 651,
+    "line": 645,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -78844,7 +78836,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 658,
+    "line": 652,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -78852,7 +78844,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 659,
+    "line": 653,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -78860,7 +78852,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 660,
+    "line": 654,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -78868,7 +78860,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 667,
+    "line": 661,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -78876,7 +78868,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 668,
+    "line": 662,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -78884,7 +78876,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 669,
+    "line": 663,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -78892,7 +78884,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 701,
+    "line": 695,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -78900,7 +78892,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 702,
+    "line": 696,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -78908,7 +78900,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 703,
+    "line": 697,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -78916,7 +78908,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 710,
+    "line": 704,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -78924,7 +78916,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 711,
+    "line": 705,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -78932,7 +78924,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 712,
+    "line": 706,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -78940,7 +78932,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 719,
+    "line": 713,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -78948,7 +78940,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 720,
+    "line": 714,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -78956,7 +78948,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 721,
+    "line": 715,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -78964,7 +78956,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 728,
+    "line": 722,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -78972,7 +78964,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 729,
+    "line": 723,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -78980,7 +78972,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 730,
+    "line": 724,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -78988,7 +78980,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 749,
+    "line": 743,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -78996,7 +78988,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 750,
+    "line": 744,
     "type": "property",
     "name": "stabilizers",
     "currentDoc": "(none)",
@@ -79004,7 +78996,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 761,
+    "line": 755,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -79012,7 +79004,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 762,
+    "line": 756,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -79020,7 +79012,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 763,
+    "line": 757,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -79028,7 +79020,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 764,
+    "line": 758,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -79036,7 +79028,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 769,
+    "line": 763,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -79044,7 +79036,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 770,
+    "line": 764,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -79052,7 +79044,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 771,
+    "line": 765,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -79060,7 +79052,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 772,
+    "line": 766,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -79068,7 +79060,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 779,
+    "line": 773,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -79076,7 +79068,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 780,
+    "line": 774,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -79084,7 +79076,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts",
-    "line": 781,
+    "line": 775,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
