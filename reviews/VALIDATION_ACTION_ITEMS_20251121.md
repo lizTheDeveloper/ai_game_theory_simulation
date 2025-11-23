@@ -71,25 +71,24 @@ ulative claim without peer-reviewed backing
 
 ## HIGH ITEMS (Complete by End of Dec 2025)
 
-### 4. Lab-to-Deployment Scaling Sensitivity Analysis [HIGH]
+### 4. Lab-to-Deployment Scaling Sensitivity Analysis [HIGH] ✅ COMPLETED
 - **File:** `/research/ai_alignment_faking_strategic_deception_20251120.md`
 - **Issue:** Lab-to-deployment scaling factor (0.3-0.8) is entirely speculative
 - **Impact:** ALL pressure multipliers depend on this unknown parameter
-- **Current Status:** Wide range acknowledged but not validated via Monte Carlo
-- **Action Required:**
-  - Run Monte Carlo simulation with parameter sweep:
-    - Low case: 0.3 (lab rates 3× higher than deployment)
-    - Mid case: 0.5 (lab rates 2× higher)
-    - High case: 0.8 (lab rates ~same as deployment)
-  - Measure outcomes:
-    - Utopia probability at year 300
-    - Alignment crisis probability by year 100
-    - Competitive pressure impact on failure rates
-  - Document sensitivity curve: scaling factor (X-axis) vs. outcome variance (Y-axis)
-  - Create visualization showing confidence intervals
-- **Output:** `/research/ai_alignment_faking_lab_deployment_sensitivity_20251121.md`
-- **Effort:** 2-3 hours (including Monte Carlo runs + visualization)
-- **Timeline:** Next 2 weeks
+- **Status:** ✅ **COMPLETED** (Nov 22, 2025)
+- **Findings:**
+  - **264,000 samples** across 24 configurations (2 capability levels × 3 competition levels × 4 alignment approaches × 11 scaling values)
+  - **Average CV: 23.4%** (MODERATE sensitivity - parameter affects outcomes meaningfully)
+  - **22 of 24 configurations** show MODERATE sensitivity (CV 10-30%)
+  - **2 of 24 configurations** show LOW sensitivity (CV < 10%) - high competition + no alignment scenarios saturate at 95% cap
+  - **Key interaction:** Scaling factor matters MORE under moderate competition (CV ~29%) vs. high competition (CV ~15% avg)
+  - **Verdict:** Use Monte Carlo with parameter ranges [0.3-0.8]. Current default (0.6) is reasonable midpoint.
+- **Output:** `/research/ai_alignment_faking_lab_deployment_sensitivity_20251122.md`
+- **Analysis Script:** `/scripts/labDeploymentSensitivityAnalysis.ts`
+- **Recommendation:**
+  - Continue using current implementation with labToDeploymentScaling parameter
+  - Report alignment faking predictions with confidence intervals
+  - **URGENT:** Real-world deployment studies needed to narrow ±0.25 uncertainty
 - **Owner:** Priya (quantitative validator)
 
 ---
