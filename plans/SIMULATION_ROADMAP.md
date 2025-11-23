@@ -1348,6 +1348,11 @@ Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation nee
 - `research/ROUND5_REMEDIATION_STRATEGY_20251030.md` (850 lines)
 
 **Additional Verification Queue (from commits, 17-31h):**
+- [ ] 🚨 **NEW (Nov 23):** Verify AMOC 2025 Research Update citations (research/verification_0b5bbc7_20251123.md, commit 0b5bbc7) - **3 new 2025 papers proposing AMOC parameter updates:**
+  - Drijfhout et al. (2025) ERL: High-emission shutdown claims
+  - van Westen (2025) JGR: Tipping window 2023-2076 (median 2055)
+  - Baker et al. (2025) Nature: Southern Ocean resilience mechanism
+  - **Priority:** HIGH (informs future AMOC parameter changes)
 - [ ] 🚨 **NEW (Nov 23):** Verify Uncertainty Propagation Framework citations (research/verification_79aea88_20251123.md, commit 79aea88) - **9 climate parameters with research citations:**
   - 3 CRITICAL: Incomplete citations (Nature 2023 Greenland, Nature Comms 2025 WAIS, Nature CC 2022 Permafrost)
   - 6 PENDING: Need claim verification (IPCC AR6 ECS/TCR/Coral, Westen JGR 2024 AMOC, Frontiers 2025 Amazon, Bellomo 2025)

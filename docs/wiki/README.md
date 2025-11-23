@@ -29,6 +29,14 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 23: AMOC Tipping Point 2025 Research Update** (commit 0b5bbc7)
+- 🌍 **Research Update:** New peer-reviewed sources on AMOC collapse timelines (3 papers, 2025)
+- **Key Sources:** Drijfhout et al. (ERL 2025), van Westen (JGR 2025), Baker et al. (Nature 2025)
+- **Key Finding:** Tipping point window narrowed to 2023-2076 (median 2055) for high emissions
+- **Implication:** Proposed updates to AMOC transition parameters (scenario-dependent timelines)
+- 📄 **Research:** research/amoc_tipping_point_2025_update.md
+- ⏳ **Status:** Research complete, awaiting validation and implementation
+
 **Nov 23: Uncertainty Propagation Framework for Climate Parameters** (commit 79aea88)
 - 🌍 **Research-Backed Uncertainty Sampling:** Climate sensitivity and tipping point thresholds now sampled from literature distributions at initialization
 - **9 Uncertainty Parameters:** ECS, TCR, AMOC, Greenland, WAIS, Amazon, coral reef, permafrost carbon, aid effectiveness
