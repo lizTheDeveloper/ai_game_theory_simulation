@@ -28,6 +28,11 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 22: Autonomous Worker Fallback Mode Enhancement** (commit e39ec3c)
+- ☕ **Coffee Break Phase:** Worker now integrates latest work, reads channels, and assesses state when queue empty
+- 📋 **Plan Generation:** If roadmap truly empty, creates proposal files (`plans/proposed_[feature]_[date].md`) for future work
+- 🎯 **Goal:** Never truly idle - always generating value through reflection or planning
+
 **Nov 19: TIER 1C Governance Sufficiency Research + Four-Layer Validation Framework** (commit cbe2d04)
 - 📚 **Research Tier Added:** TIER 1C in RESEARCH_ROADMAP.md - Governance conditions for technology deployment
 - 🔬 **6 Research Questions:** Transition management, policy trade-offs, institutional thresholds, trust requirements, democratic participation, success path mapping
@@ -8210,6 +8215,28 @@ state.history.exogenousShocks?: Array<{
   - 9254e54 (Oct 31, 2025) - Fixed to use active monitor instead of passive monitor
   - 4cd638d (Oct 31, 2025) - Fixed exactly-once semantics (prevent queue backup)
   - ba8dfcb (Oct 31, 2025) - Fixed message processing: only mark processed after successful spawn
+
+**Autonomous Worker Fallback Mode: Coffee Break + Plan Generation** ✅ DOCUMENTED
+- **Purpose**: When work queue is empty, worker generates value through reflection and planning instead of being idle
+- **Two-phase fallback**:
+  1. **☕ Coffee Break** (ALWAYS first in fallback mode):
+     - Check git status and recent commits (what did others do?)
+     - Pull latest from origin/main and integrate changes
+     - Read implementation and coordination channels for messages
+     - Identify accomplished vs pending work
+     - Post status update to coordination channel with assessment
+     - **Philosophy**: Reflection and integration period, not just polling
+  2. **📋 Plan Generation** (if maintenance done and roadmap empty):
+     - Run daily architecture review (architecture-skeptic)
+     - Run underdocumented code audit (check `docs/underdocumented.json`)
+     - Review Monte Carlo results for anomalies
+     - Identify potential new features or improvements
+     - Create proposal files: `plans/proposed_[feature]_[date].md`
+     - Include: Problem statement, proposed solution, research needed, effort estimate
+     - Post plan summaries to coordination channel for team review
+- **Goal**: Never truly idle - always generating value through planning if execution is blocked
+- **Location**: `autonomous-worker.sh` (lines 279-343, FALLBACK MODE MAINTENANCE section)
+- Commit: e39ec3c (Nov 22, 2025)
 
 **Autonomous Infrastructure Health Monitoring & Auto-Remediation** ✅ DOCUMENTED
 - **Proactive health checking**: Hourly watcher script monitors all three autonomous systems and auto-remediates issues
