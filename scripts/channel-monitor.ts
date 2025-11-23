@@ -189,10 +189,9 @@ Remember: You coordinate, you don't implement. Delegate to specialists!
     const tmpFile = `/tmp/orchestrator_spawn_${Date.now()}.txt`;
     fs.writeFileSync(tmpFile, taskPrompt, 'utf-8');
 
-    // Spawn orchestrator using Claude Code CLI
+    // Spawn orchestrator using Claude Code CLI (& backgrounds via shell)
     execSync(`claude --dangerously-skip-permissions < ${tmpFile} > /dev/null 2>&1 &`, {
-      stdio: 'ignore',
-      detached: true
+      stdio: 'ignore'
     });
 
     // Clean up temp file after a delay
