@@ -1348,6 +1348,10 @@ Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation nee
 - `research/ROUND5_REMEDIATION_STRATEGY_20251030.md` (850 lines)
 
 **Additional Verification Queue (from commits, 17-31h):**
+- [ ] 🚨 **NEW (Nov 23):** Verify Uncertainty Propagation Framework citations (research/verification_79aea88_20251123.md, commit 79aea88) - **9 climate parameters with research citations:**
+  - 3 CRITICAL: Incomplete citations (Nature 2023 Greenland, Nature Comms 2025 WAIS, Nature CC 2022 Permafrost)
+  - 6 PENDING: Need claim verification (IPCC AR6 ECS/TCR/Coral, Westen JGR 2024 AMOC, Frontiers 2025 Amazon, Bellomo 2025)
+  - **Priority:** MEDIUM (parameters already have reasonable defaults, but need bibliographic completion)
 - [ ] 🚨 **NEW (Nov 19):** Verify nitrogen-food coupling Phase 3 technologies (research/verification_4dfe998_20251119.md, commit 4dfe998) - **2 technologies without prior research backing:**
   - Soil Health Restoration: 20-40% N efficiency (FAO 2024, IPCC AR6 2022) - sections cited in nitrogen_food_coupling_20251115.md DO NOT EXIST
   - Integrated Nutrient Management: 25-45% N efficiency (Zhang et al. 2021 Nature Food, FAO 2024) - sections cited DO NOT EXIST
