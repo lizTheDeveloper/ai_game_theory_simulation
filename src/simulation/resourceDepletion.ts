@@ -1004,8 +1004,20 @@ function updateCO2System(state: GameState, resources: ResourceEconomy): void {
   co2.sinkSaturation = Math.min(0.8, co2.cumulativeEmissions / 1000); // 80% saturated at 1000 Gt
   
   // === TEMPERATURE ===
+  //
+  // Uses sampled climate sensitivity (ECS) from uncertainty parameters for Monte Carlo variance.
+  // IPCC AR6 formula: T = ECS * log2(CO2 / CO2_preindustrial)
+  //
+  // ECS = Equilibrium Climate Sensitivity: Long-term temperature per CO2 doubling
+  //   - Sampled from log-normal distribution at initialization
+  //   - IPCC AR6: Best estimate 3.0C, very likely [2.0, 5.0]C
+  //
+  // TCR = Transient Climate Response: Near-term warming rate
+  //   - Currently not used here (affects rate of approach to equilibrium)
+  //   - Future: Could implement thermal inertia using TCR/ECS ratio
+  //
+  // Research: research/uncertainty_propagation_climate_parameters_20251120.md
 
-  // IPCC formula: T = sensitivity * log2(CO2 / CO2_preindustrial)
   const co2Ratio = assertFinite(
     co2.atmosphericCO2 / 280, // 280 ppm = pre-industrial
     {
@@ -1026,19 +1038,46 @@ function updateCO2System(state: GameState, resources: ResourceEconomy): void {
     }
   );
 
-  assertFinite(co2.climateSensitivity, {
-    location: 'updateCO2System',
-    valueName: 'climateSensitivity',
-    month: state.currentMonth
-  });
+  /**
+   * Get climate sensitivity: prefer sampled ECS from uncertainty parameters,
+   * fall back to hardcoded value for backward compatibility with older states.
+   *
+   * NOTE: The fallback is ONLY for states created before uncertainty sampling was added.
+   * New simulations MUST have uncertaintyParameters initialized.
+   */
+  let effectiveClimateSensitivity: number;
+  if (state.uncertaintyParameters?.equilibriumClimateSensitivity !== undefined) {
+    // Use sampled ECS from uncertainty parameters (preferred)
+    effectiveClimateSensitivity = assertFinite(
+      state.uncertaintyParameters.equilibriumClimateSensitivity,
+      {
+        location: 'updateCO2System',
+        valueName: 'uncertaintyParameters.equilibriumClimateSensitivity',
+        month: state.currentMonth,
+        additionalInfo: { source: 'sampled_uncertainty_parameters' }
+      }
+    );
+  } else {
+    // Backward compatibility: use hardcoded value from CO2 system (3.0)
+    // This path should only execute for legacy states
+    console.warn(
+      `  Warning: Using legacy hardcoded climateSensitivity (month ${state.currentMonth}). ` +
+      `New simulations should have uncertaintyParameters initialized.`
+    );
+    effectiveClimateSensitivity = assertFinite(co2.climateSensitivity, {
+      location: 'updateCO2System',
+      valueName: 'co2.climateSensitivity (legacy fallback)',
+      month: state.currentMonth
+    });
+  }
 
   co2.temperatureAnomaly = assertFinite(
-    co2Doublings * co2.climateSensitivity,
+    co2Doublings * effectiveClimateSensitivity,
     {
       location: 'updateCO2System',
       valueName: 'temperatureAnomaly',
       month: state.currentMonth,
-      additionalInfo: { co2Doublings, climateSensitivity: co2.climateSensitivity }
+      additionalInfo: { co2Doublings, climateSensitivity: effectiveClimateSensitivity }
     }
   );
   
