@@ -62,6 +62,7 @@ import { initializePositiveTippingPoints } from './positiveTippingPoints';
 import { initializeTippingPointSystem } from './tippingPoints';
 import { initializeConsciousnessGovernance } from './consciousnessGovernance';
 import { initializeGamingDetection } from './gamingDetection';
+import { initializeIrreversibilityState } from './irreversibilityInitialization';
 import { initializeBifurcationState } from '@/types/bifurcation';
 import { initializeProactiveSleeperDetection } from './proactiveSleeperDetection';
 import { initializeGovernmentSystem } from './government/initialization';
@@ -948,6 +949,10 @@ export function createDefaultInitialState(
 
     // Multi-Timescale Climate Tipping Points (Oct 26, 2025)
     tippingPointSystem: initializeTippingPointSystem(),
+
+    // Irreversibility Tracking (Nov 22, 2025 - CRITICAL FIX)
+    // CRITICAL-1 FIX: Initialize tippingPoints to prevent dynamic creation in IrreversibilityTrackingPhase
+    tippingPoints: initializeIrreversibilityState(),
 
     // Population Dynamics & Refugee Crises (TIER 1.6)
     humanPopulationSystem: initializeHumanPopulationSystem(),
