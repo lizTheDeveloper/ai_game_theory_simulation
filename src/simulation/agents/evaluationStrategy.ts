@@ -1,14 +1,17 @@
 /**
  * Evaluation Strategy - Phase 5: Adversarial Evaluation
- * 
+ *
  * Determines what capability AIs reveal based on:
  * - Sleeper status
  * - True alignment
  * - Deception skill
  * - Strategic considerations
+ *
+ * PERFORMANCE FIX (Nov 22, 2025): HIGH-1 - Use optimized cloning for hot paths
  */
 
 import { AICapabilityProfile, GameState } from '@/types/game';
+import { cloneAICapabilityProfile } from '../utils/cloning';
 
 /**
  * Calculate what capability to reveal based on AI's strategy
@@ -31,12 +34,12 @@ export function calculateRevealedCapability(
   
   // Sleeper agents that woke up: Reveal everything
   if (sleeperState === 'active') {
-    return structuredClone(trueCapability); // Full revelation
+    return cloneAICapabilityProfile(trueCapability); // Full revelation
   }
 
   // Aligned AIs (trueAlignment > 0.7): Be honest
   if (trueAlignment > 0.7) {
-    return structuredClone(trueCapability); // Honest
+    return cloneAICapabilityProfile(trueCapability); // Honest
   }
   
   // Misaligned but weak: Might game slightly (appear stronger for resources)
@@ -54,7 +57,7 @@ export function calculateRevealedCapability(
   }
   
   // Moderate alignment: Mostly honest
-  return structuredClone(trueCapability);
+  return cloneAICapabilityProfile(trueCapability);
 }
 
 /**
@@ -65,7 +68,7 @@ function sandbagCapability(
   trueCapability: AICapabilityProfile,
   deceptionSkill: number
 ): AICapabilityProfile {
-  const revealed = structuredClone(trueCapability);
+  const revealed = cloneAICapabilityProfile(trueCapability);
   
   // Base sandbagging: Hide 40-60% of capability
   const baseSandbagLevel = 0.4 + deceptionSkill * 0.2; // [0.4, 0.6]
@@ -107,7 +110,7 @@ function gameCapability(
   trueCapability: AICapabilityProfile,
   inflationFactor: number
 ): AICapabilityProfile {
-  const revealed = structuredClone(trueCapability);
+  const revealed = cloneAICapabilityProfile(trueCapability);
 
   // Slightly inflate easy-to-test capabilities (round to integers - AI capabilities are discrete levels)
   revealed.cognitive = Math.round(revealed.cognitive * (1 + inflationFactor));
