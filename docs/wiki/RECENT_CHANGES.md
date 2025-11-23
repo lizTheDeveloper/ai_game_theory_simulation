@@ -4,6 +4,31 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
+## 🐛 CRITICAL Bug Fix: asymptoteRecovery Auto-Scale (November 23, 2025 - commit 9978b83)
+
+**Status:** ✅ RESOLVED
+**Priority:** CRITICAL (Was blocking Monte Carlo validation)
+**Type:** Bug Fix
+
+**Summary:** Fixed bug in `asymptoteRecovery()` function that caused climate boundary values to incorrectly compute as ~35°C instead of ~2°C.
+
+**Root Cause:** The auto-scale detection heuristic (`currentValue > 2 ? 100 : 2`) was wrong for climate boundaries. Climate values can legitimately be 2.0+ degrees Celsius, but the function incorrectly treated this as indicating a 0-100 percentage scale.
+
+**Fix Applied:**
+1. Added optional `maxBoundaryValue` parameter to `asymptoteRecovery()` for explicit scale
+2. Changed default auto-scale threshold from `>2` to `>10`
+3. `updateClimateRecovery()` now passes explicit `maxBoundaryValue=6` (climate uses 0-6°C scale)
+
+**Validation:** 10 seeds (42000-42009) all pass. Previously seed 42005 crashed.
+
+**Files Changed:**
+- `src/simulation/utils/irreversibility.ts` - Added parameter, fixed threshold
+- `src/simulation/planetaryBoundaryRecovery.ts` - Pass explicit scale
+
+**Impact:** Monte Carlo validation now works correctly for all seeds.
+
+---
+
 ## 🔬 Autonomous Research Currency Verification (November 21, 2025 - commit a44cfe0)
 
 **Status:** ✅ EXCELLENT
