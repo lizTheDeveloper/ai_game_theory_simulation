@@ -72,6 +72,14 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - **Migration:** STRUCTURAL FABRICATION (acknowledged) - IOM 2024 is QUALITATIVE ONLY, quantitative params marked [MODELING ASSUMPTION]
   - MortalityStabilizersPhase header updated with evidence tier annotations
   - 📄 Audit: reviews/mechanism_audit_mortality_20251123.md
+- 🔍 **Mechanism Audit: Tipping Point Thresholds (Grade B+)** (commit 210da8a)
+  - **MATCH:** Armstrong McKay et al. 2022 thresholds (coral 1.0-1.5C, Amazon 20-25%, permafrost)
+  - **MATCH:** Richardson et al. 2023 planetary boundaries (7/9 breached correctly)
+  - **MATCH:** Probabilistic thresholds with uncertainty sampling (Nature 2023 ranges)
+  - **CRITICAL:** AMOC dual implementations - `tipping-points.ts` (1.7C) vs `IrreversibilityTrackingPhase` (3.0C)
+  - **HIGH:** Missing ice sheet → AMOC freshwater cascade (primary literature pathway)
+  - **MEDIUM:** Greenland default 2.0C vs Armstrong McKay central 1.5C
+  - 📄 Audit: reviews/mechanism_audit_tipping_points_20251123.md
 - 🔍 **Mechanism Audit: Tipping Point Cascades (Grade B+)**
   - Thresholds match Armstrong McKay et al. 2022 exactly (AMOC, Amazon, Arctic, etc.)
   - Gap: Missing threshold lowering mechanism (tipping destabilizes other thresholds)
