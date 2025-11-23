@@ -205,6 +205,8 @@ kubectl delete pod citation-agent-skeptic-5d7f9c8b-x2j9s
 
 ### Use Screenshots
 
+**⚠️ NOTE:** Screenshots need to be created before the demo. Run `./create_demo_screenshots.sh` to set up the environment, then capture screenshots manually or use the automated capture script.
+
 Have these screenshots ready:
 1. `screenshots/graphql_valid_citation.png`
 2. `screenshots/graphql_invalid_citation.png`
