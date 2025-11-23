@@ -460,6 +460,15 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 - **Recently Completed:** Nitrogen-food coupling research (Nov 15), Climate deployment timescales (Nov 15), Novel Entities 0% effectiveness (Nov 14)
 
 **Research Verification Queue:**
+- [ ] **Hindcasting Data Loaders** - ⚠️ NEEDS VERIFICATION (Nov 23, 2025)
+  - **Research Verification:** `research/verification_6ee48e3_20251123.md`
+  - **Files:** `src/data/loaders/historicalClimateLoader.ts`, `src/data/loaders/historicalEconomicLoader.ts`
+  - **Verification Needed:**
+    - Layer 1: Citation existence (NOAA, NASA GISS, World Bank, UN WPP, ILO, UNDP)
+    - Layer 2: Claim accuracy (35 years of hardcoded data values must match sources)
+  - **Priority:** HIGH - foundational for hindcasting validation (CRITICAL priority item)
+  - **Next Action:** Route to super-alignment-researcher for verification
+
 - [x] **Climate Deployment Timescales** - ✅ COMPLETE (Nov 12-15, 2025)
   - **Research:** `research/climate_tech_deployment_timescales_20251112.md` (35 KB, 15+ sources, Grade B+)
   - **Implementation Plan:** `plans/completed/climate_phased_deployment_model_20251113.md` (911 lines)
