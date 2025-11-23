@@ -493,7 +493,11 @@ export function applyResearchGrowth(
   selection: ReturnType<typeof selectDimensionToAdvance>,
   rng: () => number // REQUIRED: Deterministic RNG for reproducibility
 ): { newProfile: AICapabilityProfile; growth: number } {
-  const newProfile = structuredClone(ai.capabilityProfile) as AICapabilityProfile;
+  // PERFORMANCE FIX (Nov 22, 2025): HIGH-1 - Replace structuredClone with optimized shallow clone
+  // Hot path: Called every research action (20+ agents × multiple times per step)
+  // Shallow clone is safe: profile contains only numbers and one-level-deep research object
+  const { cloneAICapabilityProfile } = require('./utils/cloning');
+  const newProfile = cloneAICapabilityProfile(ai.capabilityProfile);
 
   // DETERMINISM FIX (Nov 5, 2025): RNG is now required, no fallback to Math.random
   // This ensures Monte Carlo simulations are reproducible with seeds
@@ -583,7 +587,7 @@ export function applyResearchGrowth(
       : 0;
 
     // Calculate AI's research capability (average of cognitive + relevant research domain)
-    const domainAvg = Object.values(newProfile.research[domain]).reduce((a, b) => a + b, 0) /
+    const domainAvg = Object.values(newProfile.research[domain]).reduce((a: number, b: number) => a + b, 0) /
       Object.keys(newProfile.research[domain]).length;
     const aiResearchCapability = (newProfile.cognitive + domainAvg) / 2;
 
