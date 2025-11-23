@@ -416,15 +416,19 @@ export function updateNitrogenFoodCoupling(state: GameState): number {
     throw new Error('❌ CRITICAL: regionalNitrogenManagement not initialized. Must be created in initialization.ts.');
   }
 
-  // Track last update month to detect multiple calls per step
-  const nitrogenState = state.planetaryBoundariesSystem.regionalNitrogenManagement;
-  if ((nitrogenState as any).__lastUpdateMonth === state.currentMonth) {
+  // CRITICAL-2 FIX (Nov 22, 2025): Runtime validation for single-writer pattern
+  // Track last update month to detect multiple calls per step (race condition detection)
+  // Store on planetaryBoundariesSystem (has __raceConditionCheck field added for this purpose)
+  const pbSystem = state.planetaryBoundariesSystem;
+  const raceCheck = (pbSystem as any).__nitrogenFoodCouplingLastUpdate;
+  if (raceCheck === state.currentMonth) {
     throw new Error(
-      `❌ CRITICAL: updateNitrogenFoodCoupling called multiple times in month ${state.currentMonth}. ` +
-      `This creates read-modify-write race conditions. Check phase execution order.`
+      `❌ CRITICAL RACE CONDITION: updateNitrogenFoodCoupling() called multiple times in month ${state.currentMonth}. ` +
+      `Only NitrogenFoodCouplingPhase (order 19.6) should call this function. ` +
+      `Other phases must read from state.planetaryBoundariesSystem.globalFoodProductionIndex.`
     );
   }
-  (nitrogenState as any).__lastUpdateMonth = state.currentMonth;
+  (pbSystem as any).__nitrogenFoodCouplingLastUpdate = state.currentMonth;
 
   const regions = state.planetaryBoundariesSystem.regionalNitrogenManagement;
 
