@@ -129,10 +129,30 @@
      - **Status:** ⚠️ READY FOR VALIDATION - Verification file created, awaiting orchestrator to begin at VALIDATION phase
      - **Commit:** c52826e
      - **Next Steps:** Two-layer verification (paper existence + claim accuracy) → Parameter validation → Enhancement implementation (energy/water constraints) → Monte Carlo N≥10
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
+   - **AI Infrastructure Resources 2025 Update (Energy & Water)** - MEDIUM (Added Nov 23, 2025)
+     - **Context:** Research document updated with 2025 peer-reviewed sources for AI data center resource consumption
+     - **Research File:** research/ai-infrastructure-resources_20251019.md (updated)
+     - **Verification File:** research/verification_dbf1438_20251123.md
+     - **Sources Added:**
+       - Cornell/Nature Sustainability 2025: 2030 water (731-1,125M m³/yr), carbon (24-44M tonnes CO₂/yr)
+       - MIT/Lawrence Berkeley Lab 2025: 7-8× energy multiplier, 183 TWh U.S. data centers (2024)
+       - IEA 2025: Global water 560B→1,200B liters (2024→2030)
+     - **Key Claims Requiring Verification:**
+       - 2030 water projections (Cornell PEESE lab): 731-1,125M cubic meters/year
+       - 2030 carbon projections: 24-44 million metric tons CO₂/year
+       - AI training clusters 7-8× energy multiplier (vs typical workloads)
+       - Geographic optimization: Midwest "windbelt" states optimal, Arizona 7.4% state power
+       - Mitigation potential: 73% carbon reduction, 86% water reduction
+     - **Proposed Parameters:**
+       - trainingWaterL: 700K-10M L per training run
+       - inferenceWaterL: 2-5M L/month at scale
+       - aiTrainingMultiplier: 7.5 (MIT: 7-8×)
+       - Geographic modifiers: desert 2.5×, nordic 0.3×, windbelt 0.7× carbon
+     - **Implementation Impact:** May update OrganizationalResources water/energy parameters
+     - **Priority:** MEDIUM - Research prep for future parameter update, not blocking
+     - **Status:** ⚠️ READY FOR VALIDATION - Verification file created, awaiting orchestrator
+     - **Commit:** dbf1438
+     - **Next Steps:** Two-layer verification (DOI + claim accuracy) → Parameter update decision → Monte Carlo if implemented
 
    - **AI Governance 2025 Proposals (Global Moratorium + US-China Bilateral)** - HIGH (Added Nov 20, 2025)
      - **Context:** Two major 2025 governance frameworks from arXiv preprints with detailed quantitative parameters
