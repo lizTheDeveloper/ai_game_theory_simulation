@@ -1,24 +1,27 @@
 /**
  * Technology Diffusion System - Phase 5.4
- * 
+ *
  * Models how AI capability breakthroughs spread through the ecosystem.
- * 
+ *
  * KEY INSIGHTS:
  * - Once a technique is discovered, it spreads (papers, employees, reverse engineering)
  * - New AIs start with access to known techniques (capability floor rises)
  * - This creates a RATCHET EFFECT: capabilities can only go up
  * - Makes alignment harder over time (more capable AIs keep appearing)
- * 
+ *
  * REALISTIC MECHANISMS:
  * - Open research: Published papers spread techniques quickly
  * - Employee mobility: Researchers move between companies
  * - Reverse engineering: Capabilities can be copied from deployed systems
  * - Independent discovery: Multiple entities discover same techniques
+ *
+ * PERFORMANCE FIX (Nov 22, 2025): HIGH-1 - Use optimized cloning for hot paths
  */
 
 import { GameState, AIAgent, AICapabilityProfile, EcosystemState, GameEvent } from '@/types/game';
 import { createEmptyCapabilityProfile } from './capabilities';
 import { levyAdoptionCurve, ALPHA_PRESETS } from './utils/levyDistributions';
+import { cloneAICapabilityProfile } from './utils/cloning';
 
 /**
  * Initialize ecosystem state at game start
@@ -279,7 +282,7 @@ export function getCapabilityFloorForNewAI(state: GameState): AICapabilityProfil
   const floor = state.ecosystem.capabilityFloor;
 
   // Return a copy (don't mutate the floor)
-  return structuredClone(floor);
+  return cloneAICapabilityProfile(floor);
 }
 
 /**
