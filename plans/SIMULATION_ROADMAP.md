@@ -857,6 +857,22 @@
   - **Quality Gate 1:** APPROVE WITH CONDITIONS (research-skeptic review complete)
   - **Priority:** MEDIUM (parameters conservative, but citation accuracy critical)
 
+- [ ] **Tipping Point Threshold Audit Fixes** 🆕 **IMPLEMENTATION NEEDED (Nov 23, 2025)**
+  - **Commit:** 210da8a (Mechanism audit for tipping point thresholds - CONDITIONAL PASS B+)
+  - **Status:** Audit complete, fixes required before next Monte Carlo
+  - **Audit Report:** `reviews/mechanism_audit_tipping_points_20251123.md`
+  - **CRITICAL Issues (Fix Before Next MC):**
+    1. **AMOC Dual Implementations:** `tipping-points.ts` uses 1.7C, `IrreversibilityTrackingPhase.ts` uses 3.0C - RECONCILE
+    2. **Missing Ice Sheet → AMOC Cascade:** Greenland collapse should increase AMOC collapse probability via freshwater pathway (primary literature pathway per Armstrong McKay 2022)
+  - **HIGH Issues:**
+    3. Greenland default 2.0C → should be 1.5C (Armstrong McKay central estimate)
+    4. WAIS lower bound 2.0C → should be 1.5C (Armstrong McKay range)
+    5. Add AMOC → Amazon cascade (AMOC collapse → ITCZ shift → Amazon drought)
+  - **MEDIUM Issues:**
+    6. AMOC transition minimum 50yr → consider 15yr (Armstrong McKay lower bound)
+  - **No Research Verification Needed:** Audit already verified citations against papers
+  - **Priority:** CRITICAL (affects cascade realism, Monte Carlo outcomes)
+
 - [ ] **AI Suffering → Alignment Drift Citations Verification** 🆕 **READY FOR ORCHESTRATOR (Nov 7, 2025)**
   - **Commit:** 707b57a (AI suffering multiplies all drift mechanisms - ARCH-4 Gap #3)
   - **Status:** Research file created, ready for VALIDATION phase
