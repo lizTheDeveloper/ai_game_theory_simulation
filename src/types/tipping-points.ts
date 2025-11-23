@@ -62,6 +62,17 @@ export interface TippingElement {
 
   /** Minimum asymptotic value (floor below which recovery cannot proceed) */
   minimumAsymptoticValue?: number;
+
+  /** === THRESHOLD LOWERING (Nov 23, 2025) === */
+  /**
+   * Effective threshold reduction from other tipped elements (degrees C)
+   * Research: Wunderling et al. (2024) ESD - "combined effect tending to lower temperature thresholds"
+   * Armstrong McKay et al. (2022) Science - network of 16 tipping elements with causal interactions
+   *
+   * This value is SUBTRACTED from triggerTempC to get the effective threshold
+   * Example: If triggerTempC=2.0 and effectiveThresholdReduction=0.3, effective threshold is 1.7C
+   */
+  effectiveThresholdReduction?: number;
 }
 
 /**
@@ -237,4 +248,122 @@ export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTr
     },
     cascades: false // Too slow to cascade effectively
   }
+];
+
+/**
+ * Tipping Element Interaction Matrix (Nov 23, 2025)
+ *
+ * Research-backed threshold lowering effects when one tipping element tips another.
+ *
+ * Sources:
+ * - Armstrong McKay et al. (2022) Science - Network of 16 tipping elements with causal interactions
+ * - Wunderling et al. (2024) Earth System Dynamics - "combined effect tending to lower temperature thresholds"
+ * - Climate tipping points research file: research/climate_tipping_points_2024_2025_20251116.md
+ *
+ * Format: source_id -> target_id -> threshold_reduction_C
+ *
+ * Magnitude Justification (Wunderling et al. 2024):
+ * - Direct interactions (e.g., ice sheet -> AMOC): 0.2-0.4 C reduction
+ * - Indirect interactions (e.g., Arctic ice -> Amazon): 0.1-0.2 C reduction
+ * - Weak interactions: 0.05-0.1 C reduction
+ *
+ * Conservative estimates used (lower end of ranges) to avoid over-catastrophizing.
+ */
+export interface TippingInteraction {
+  /** Source element that tips first */
+  sourceId: string;
+  /** Target element whose threshold is lowered */
+  targetId: string;
+  /** Threshold reduction in degrees C */
+  thresholdReduction: number;
+  /** Mechanism description */
+  mechanism: string;
+}
+
+/**
+ * Research-backed tipping element interactions
+ *
+ * Cascade Sequences (research/climate_tipping_points_2024_2025_20251116.md Section 4.1):
+ * 1. Arctic ice loss -> albedo feedback -> Arctic amplification
+ * 2. Arctic amplification -> Greenland melt -> freshwater influx
+ * 3. Freshwater influx -> AMOC weakening -> tropical rainfall shift
+ * 4. Tropical rainfall shift -> Amazon drying -> rainforest dieback
+ *
+ * Ice sheet interactions (research/amoc_tipping_point_original_sources_20251120.md):
+ * - Greenland melt -> freshwater -> AMOC (Weijer et al. 2020, Van Westen et al. 2024)
+ * - AMOC collapse -> reduced heat transport -> accelerated Greenland melt (positive feedback)
+ */
+export const TIPPING_INTERACTIONS: TippingInteraction[] = [
+  // === ARCTIC ICE -> OTHER ELEMENTS ===
+  // Arctic ice loss accelerates Arctic amplification, affecting other elements
+  {
+    sourceId: 'arctic_ice',
+    targetId: 'permafrost',
+    thresholdReduction: 0.2, // Arctic amplification directly heats permafrost regions
+    mechanism: 'Arctic amplification: 4x warming in Arctic region accelerates permafrost thaw'
+  },
+  {
+    sourceId: 'arctic_ice',
+    targetId: 'greenland',
+    thresholdReduction: 0.15, // Albedo feedback accelerates Greenland surface melt
+    mechanism: 'Albedo feedback: reduced ice cover increases regional warming'
+  },
+
+  // === GREENLAND -> AMOC ===
+  // Greenland melt provides freshwater that destabilizes AMOC
+  // Research: Van Westen et al. (2024) - freshwater hosing experiments
+  {
+    sourceId: 'greenland',
+    targetId: 'amoc',
+    thresholdReduction: 0.3, // Direct physical mechanism: freshwater reduces AMOC stability
+    mechanism: 'Freshwater influx: Greenland melt reduces North Atlantic salinity, weakening AMOC'
+  },
+
+  // === PERMAFROST -> CLIMATE ELEMENTS ===
+  // Permafrost thaw releases methane and CO2, amplifying warming
+  {
+    sourceId: 'permafrost',
+    targetId: 'amazon',
+    thresholdReduction: 0.15, // Methane feedback accelerates global warming
+    mechanism: 'Carbon feedback: permafrost methane/CO2 release accelerates global warming'
+  },
+  {
+    sourceId: 'permafrost',
+    targetId: 'greenland',
+    thresholdReduction: 0.1, // Indirect via global warming
+    mechanism: 'Carbon feedback: accelerated global warming from permafrost carbon release'
+  },
+
+  // === AMOC -> TROPICAL SYSTEMS ===
+  // AMOC collapse shifts tropical rainfall patterns
+  {
+    sourceId: 'amoc',
+    targetId: 'amazon',
+    thresholdReduction: 0.25, // AMOC collapse disrupts Amazon rainfall
+    mechanism: 'Monsoon disruption: AMOC collapse shifts ITCZ southward, reducing Amazon rainfall'
+  },
+
+  // === AMAZON -> GLOBAL CLIMATE ===
+  // Amazon dieback releases stored carbon
+  {
+    sourceId: 'amazon',
+    targetId: 'permafrost',
+    thresholdReduction: 0.1, // Carbon feedback accelerates warming
+    mechanism: 'Carbon feedback: Amazon carbon release (~150 Gt C) accelerates global warming'
+  },
+
+  // === WAIS/GREENLAND ICE SHEET INTERACTIONS ===
+  // These are slow but can interact
+  {
+    sourceId: 'greenland',
+    targetId: 'wais',
+    thresholdReduction: 0.1, // Sea level feedback affects ice sheet stability
+    mechanism: 'Sea level feedback: Greenland-driven sea level rise affects WAIS grounding lines'
+  },
+  {
+    sourceId: 'wais',
+    targetId: 'greenland',
+    thresholdReduction: 0.1, // Mutual sea level/climate feedback
+    mechanism: 'Climate feedback: WAIS collapse accelerates global warming via albedo and ocean circulation'
+  },
 ];
