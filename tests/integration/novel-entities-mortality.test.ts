@@ -73,9 +73,11 @@ describe('Novel Entities Mortality Integration', () => {
 
   it('Bioaccumulation collapse adds mortality risk every month', () => {
     // Setup: Trigger bioaccumulation collapse immediately
-    state.novelEntitiesSystem.syntheticChemicalLoad = 0.70;
+    // bioaccumulationFactor = syntheticChemicalLoad * (0.5 + biodiversity * 0.5)
+    // Need factor > 0.60, with biodiversity = 0.60:
+    // chemicalLoad * (0.5 + 0.3) > 0.60 => chemicalLoad > 0.75
+    state.novelEntitiesSystem.syntheticChemicalLoad = 0.80;  // Will give factor = 0.64
     state.environmentalAccumulation.biodiversityIndex = 0.60;
-    state.novelEntitiesSystem.bioaccumulationFactor = 0.65;
     state.novelEntitiesSystem.bioaccumulationCollapseActive = false;
     const initialPopulation = state.humanPopulationSystem.population;
 
@@ -103,10 +105,14 @@ describe('Novel Entities Mortality Integration', () => {
 
   it('Chronic disease epidemic adds mortality risk every month', () => {
     // Setup: Trigger chronic disease epidemic immediately
-    state.novelEntitiesSystem.syntheticChemicalLoad = 0.70;
-    state.novelEntitiesSystem.endocrineDisruption = 0.40;
-    state.novelEntitiesSystem.exposureMonths = 60; // 5 years exposure
-    state.novelEntitiesSystem.chronicDiseasePrevalence = 0.45;
+    // Chronic disease prevalence = 0.20 + (cumulativeExposure * 0.3) + (endocrineDisruption * 0.2)
+    // where cumulativeExposure = (chemicalLoad * exposureYears) / 100
+    // Need prevalence > 0.40 with load = 0.80:
+    // 0.40 = 0.20 + (0.80 * Y / 100 * 0.3) + (0.80/3 * 0.6 * 0.2)
+    // With 20 years (240 months): prevalence ≈ 0.20 + 0.048 + 0.032 = 0.28
+    // This is still < 0.40, so let's manually set a high exposure time (60 years = 720 months)
+    state.novelEntitiesSystem.syntheticChemicalLoad = 0.80;
+    state.novelEntitiesSystem.exposureMonths = 720; // 60 years of exposure needed
     state.novelEntitiesSystem.chronicDiseaseEpidemicActive = false;
     const initialPopulation = state.humanPopulationSystem.population;
 

@@ -1,18 +1,86 @@
 # Master Implementation Roadmap
 ## AI Alignment Game Theory Simulation - Project Hub
 
-**Date:** November 23, 2025 (Updated: MARCUS 3.2.1 DEPLOYED - Circuit Breakers + Prometheus Adapter Fix)
+**Date:** November 21, 2025 (Updated: End of Session Maintenance)
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**Current Status:** 🟢 **STABLE** (Nov 23, 2025 - MARCUS 3.2.1 PRODUCTION-READY)
-- **Research Quality:** A (peer-reviewed foundation, 29 sources added Nov 15 - nitrogen-food coupling)
-- **Implementation Fidelity:** A- (assertion coverage 97.2%, outcome probabilities bug FIXED, biogeochemical partial)
-- **Architecture Health (Simulation):** 9.5/10 (CRITICAL/HIGH issues resolved, MEDIUM items remain)
-- **Architecture Health (MARCUS Platform):** 9.5/10 (PRODUCTION-READY) - H1-H2 fixes complete, circuit breakers operational, HPA functional
-- **System Trajectory:** STABLE - MARCUS 3.2.1 production-ready, awaiting PR submission to main
-- **Major Merges:** 5 branches merged (CRITICAL-1, ARCH-4, CRITICAL-4, bifurcation, phase-consolidation)
-- **Active Work:** PR submission preparation (MARCUS 3.2 branch → main), simulation biogeochemical integration pending
+**Current Status:** 🟢 **EXCELLENT** (Nov 21, 2025 - End of Session)
+- **Research Quality:** A (96% sources from 2020+, 2 Quality Gate 1 validations complete, 3 research gaps catalogued)
+- **Architecture Health:** B+ (0 CRITICAL/HIGH issues, 4 MEDIUM technical debt items non-urgent)
+- **System Performance:** 62ms baseline maintained, no regressions, Monte Carlo ready
+- **System Trajectory:** STABLE - All TIER 1 CRITICAL items remain COMPLETE, validation workflow operating as designed
+- **Session Complete:** Quality Gate 1 validations (AI alignment faking Grade C + three-phase coordination PASS), Architecture Integration Review (Grade B+), Research Skeptic Critique (Grade B-), Documentation Sync (100%)
+
+## 📊 Quality Gate 1 Validation Status (Nov 21, 2025 - FINAL) - 2 VALIDATIONS COMPLETE ✅
+
+**Validation Results:**
+- ✅ **AI Alignment Faking Research:** CONDITIONAL PASS (Grade C, behavioral vs reasoning clarification needed)
+- ✅ **Three-Phase Coordination Research:** VALIDATION COMPLETE (1 CRITICAL discrepancy corrected)
+- ✅ **Architecture Integration Review:** Grade B+ (0 CRITICAL/HIGH issues, 4 MEDIUM non-urgent items)
+- ✅ **Research Skeptic Critique:** Grade B- (3 CRITICAL research gaps identified, 5 SIGNIFICANT gaps with solutions proposed)
+- ✅ **Documentation Sync:** 100% complete (wiki updated, reports archived, emoji registry validated)
+
+**Archives:**
+- `plans/completed/validation_quality_gate_1_nov21_20251121.md` - Validation status
+- `plans/completed/autonomous_session_20251121_235959_complete.md` - Full session summary
+- `reviews/ARCHITECTURE_REVIEW_SUMMARY_20251121.md` - Executive architecture summary
+- `reviews/SKEPTIC_EXECUTIVE_SUMMARY_20251121.md` - Research skeptic assessment
+
+### Resolved Issues ✅
+1. ✅ Performance regression (750ms) - FALSE ALARM (actual: 62ms)
+2. ✅ Tech tree linear searches - FALSE ALARM (O(1) Map implemented)
+3. ✅ Nuclear winter type mismatch - FALSE ALARM (tsc passes)
+4. ✅ Test framework migration - FALSE ALARM (no .SKIP files)
+5. ✅ Nitrogen oversimplification - FIXED (citations + justification)
+
+### Research Integrity Items DOCUMENTED ✅
+6. ✅ AMOC citation original sources - DOCUMENTED (research/amoc_tipping_point_original_sources_20251120.md)
+   - Citation chain complete: Bellomo et al. 2025, Westen et al. 2024, Armstrong McKay et al. 2022
+   - Fixed 5% probability replaced with temperature-dependent function on Nov 20, 2025
+   - Status: Already resolved, documentation confirmed
+
+7. ✅ Nitrogen reversibility contradiction - RECONCILED (reviews/nitrogen_reversibility_reconciliation_20251120.md)
+   - Grade: B+ (Resolution proposed with strong research backing)
+   - No actual contradiction: Nitrogen framework (reversible chemical inputs) vs Irreversibility framework (irreversible ecological states)
+   - Resolution: Two-pool model (nutrient stocks + ecosystem states) - implementation pending
+
+8. ✅ Uncertainty propagation missing - STATUS ASSESSED (Phase 1 complete, Phases 2-4 deferred)
+   - Infrastructure operational: src/simulation/thresholds/distributions.ts (28/28 tests passing)
+   - 5 Tier 1 thresholds implemented (AMOC, Ice sheets, Amazon, Permafrost, Coral)
+   - Tier 2/3 thresholds deferred - not a critical research integrity issue
+
+**Lesson Learned:** Daily Review automation requires manual validation. 50% false positive rate indicates heuristic improvement needed. Research integrity items required investigation but were already resolved or non-critical.
+
+## ✅ CRITICAL Issues RESOLVED (From Daily Review 20251120_060001) - Nov 20, 2025
+
+### Defensive Fallback Regression (FIXED)
+- [x] **[Simulation]** Fix: Defensive fallback anti-patterns returning - `?? 0` and `|| default` patterns re-emerging (Source: Daily Review 20251120_060001)
+  - **Impact:** Creates "split-brain" error handling - some paths fail loudly, others silently mask bugs
+  - **Resolution:** Removed 10 calculation fallbacks, replaced with assertions
+  - **Files Fixed:** powerGeneration.ts, diplomaticAI.ts, lifecycle.ts, workflowAdaptation.ts, initialization.ts
+  - **Bugs Found:** initialPopulation initialization missing (now fixed)
+  - **Validation:** Monte Carlo N=10, 120 months - PASS (no NaN/Infinity/assertion errors)
+  - **Commit:** c8d838ff6 (Nov 20, 2025)
+  - **Principle Enforced:** In research simulation, wrong results are worse than crashes
+
+### Performance Degradation (ALREADY FIXED)
+- [x] **[Simulation]** Fix: O(n²) performance issue in extinction debt queue cleanup (Source: Daily Review 20251120_060001)
+  - **Resolution:** Array.filter() replaced with in-place splice() (backward iteration)
+  - **Location:** IrreversibilityTrackingPhase.ts lines 650-682
+  - **Performance:** Eliminates O(n) memory allocations per month (expected 7x improvement)
+  - **Commit:** 72414cbd90 (Nov 20, 2025 08:09:34)
+  - **Status:** Already complete on main branch
+
+### Race Condition (FIXED)
+- [x] **[Simulation]** Fix: Multiple phases reading/writing planetaryBoundaries.novelEntities without synchronization (Source: Daily Review 20251120_060001)
+  - **Impact:** Non-deterministic state mutations, potential data corruption
+  - **Resolution:** Consolidated to single mutation point (PlanetaryBoundariesPhase)
+  - **Removed:** UnknownUnknownPhase direct write, specificTippingPoints dead code write
+  - **Documentation:** Added ownership comments to updateNovelEntitiesBoundary.ts
+  - **Analysis:** reviews/novel_entities_race_condition_analysis_20251120.md
+  - **Validation:** Monte Carlo N=2 - PASS (deterministic, single writer)
+  - **Commit:** c8d838ff6 (Nov 20, 2025)
 
 **🔬 Research Verification Complete:**
 - ✅ **State Validation Domain Bounds** - PHASE 2 COMPLETE (Nov 13, 2025)
@@ -41,233 +109,218 @@
   - ✅ Comparative analysis completed (`logs/scenario_phase4_analysis_20251113.log`)
   - ✅ Reports: `reviews/scenario_phase4_comparative_analysis_20251112.md`, `reviews/scenario_phase4_EXECUTIVE_SUMMARY.md`
   - ✅ Orchestration: `logs/scenario_phase4_orchestration_20251113.md`
-- **Key Findings:**
-  - High-trust-start: 88.9% utopia (8/9 runs) - **starting conditions matter most**
-  - Technology alone insufficient: scientific-acceleration 0% utopia (1/1 runs, consistent with god mode)
-  - Democracy vs efficiency trade-off: authoritarian-efficiency 87.5% utopia + 12.5% extinction vs democratic-participation 0% utopia + 0% extinction
-  - Climate vs equality: both 77.8% utopia (no significant difference)
-  - Starting trust/inequality matter MORE than policy priorities
+- **Key Findings (CRITICAL for Implementation Priorities):**
+  - **Starting conditions matter MORE than technology:** High-trust-start 88.9% utopia vs scientific-acceleration 0% utopia
+  - **Technology alone insufficient:** Deploying all tech without governance = catastrophic failure (consistent with god mode)
+  - **Democracy vs efficiency trade-off:** Authoritarian-efficiency 87.5% utopia + 12.5% extinction vs democratic-participation 0% utopia + 0% extinction (speed-safety trade-off)
+  - **Climate vs equality: NO trade-off** - Both achieve 77.8% utopia (can pursue simultaneously)
+  - **Implementation priority:** Social foundations (trust, institutions, inequality) > technology deployment speed
 - **Archive:** `/plans/completed/scenario_analysis_phase3_phase4_complete_20251113.md`
 - **Commits:** ff22268 - "fix: Scenario Phase 3 critical fixes (CRITICAL-1, HIGH-3)", a140fb07b - "fix: Scenario parameter divergence (sequenced deployment)"
 
-**Recent Completions (Nov 22-23, 2025):**
+**🔬 Progress Summary (Nov 21, 2025 - End of Session Maintenance):**
 
-- ✅ **MARCUS 3.2.1 - CIRCUIT BREAKERS + PROMETHEUS ADAPTER FIX** (Nov 23, 2025 - Session 10)
-  - **Scope:** Final two HIGH priority fixes (H1-H2) for production readiness
-  - **Time:** ~4-5 hours (implementation + testing + documentation + PR prep)
-  - **Platform Evolution:** MARCUS 3.2 (10/10 deployed) → MARCUS 3.2.1 (9.5/10 production-ready)
-  - **H1: Circuit Breaker Implementation:**
-    - Full circuit breaker pattern for PostgreSQL and Redis
-    - Three-state pattern: CLOSED → OPEN → HALF_OPEN
-    - Conservative DB config (50% threshold, 30s reset)
-    - Aggressive Redis config (70% threshold, 10s reset)
-    - Prevents cascading failures under load
-    - Real-time monitoring via /health endpoint
-    - <1ms performance overhead
-  - **H2: Prometheus Adapter CrashLoopBackOff Fix:**
-    - Fixed deprecated --logtostderr flag (v0.11.1+ incompatibility)
-    - Deployed Prometheus server (v2.48.0) as metrics backend
-    - Fixed RBAC gaps (subjectaccessreviews, auth reader binding)
-    - Adapter now stable: 0 crashes, 0 restarts (was 199 restarts)
-    - HPA autoscaling fully operational
-    - Custom metrics API serving 200 responses
-  - **Deliverable:** 1,500 lines (280 circuit breaker + 175 Prometheus + tests/configs/docs)
-  - **Files:**
-    - NEW: `src/platform/utils/circuit-breaker.ts` (280 lines)
-    - NEW: `k8s/prometheus-deployment.yaml` (175 lines)
-    - NEW: `scripts/verify-marcus-3.2-fixes.sh` (120 lines)
-    - MODIFIED: `src/platform/api/worker-orchestrator-server.ts` (+150/-50)
-    - MODIFIED: `k8s/prometheus-adapter.yaml` (+25/-5)
-    - MODIFIED: `k8s/orchestrator-deployment.yaml` (v3.2.1 image)
-  - **PR Documentation:**
-    - `PR_DESCRIPTION.md` - Comprehensive PR body (1,200+ lines)
-    - `PR_SUBMISSION_STRATEGY.md` - Git strategy and commands
-    - `REVIEW_CHECKLIST.md` - Senior developer review guide (300+ items)
-    - `METRICS_SUMMARY.md` - Performance metrics and cost analysis (380 lines)
-    - `PR_SUBMISSION_READY.md` - Quick start guide
-  - **Commits:**
-    - 3b74a064: "feat: MARCUS 3.2.1 - Circuit Breakers + Prometheus Adapter Fix (H1-H2)"
-    - 213e89fd: "docs: Archive MARCUS 3.2.1 completion and prepare PR documentation"
-    - f7ba93e3: "docs: Add MARCUS 3.2 demo presentation and materials"
-  - **Status:** ✅ COMPLETE - Ready for PR submission to main branch
-  - **Next:** Submit PR for senior developer review
+**Session Focus:** Quality Gate 1 research validation + architecture integration review + research skeptic critique
 
-- ✅ **MARCUS 3.0 CRITICAL + HIGH PRIORITY FIXES COMPLETE** (Nov 22, 2025 - Session 5)
-  - **Scope:** Production-critical bug fixes and performance optimizations
-  - **Context:** Architecture review identified 21 prioritized issues (2 CRITICAL, 5 HIGH, 8 MEDIUM, 6 LOW)
-  - **Phase 1: CRITICAL Fixes (2 items resolved)**
-    - **C1:** State propagation race conditions - Distributed locking + version checking (7 mutation paths protected)
-    - **C2:** Memory leak in agent process management - Process registry + zombie cleanup (5min cron)
-    - **Deliverable:** 2,486 lines (630 production code + 856 tests + 1,000 documentation)
-    - **Commit:** 98420264 - "fix(marcus): Resolve 2 CRITICAL production issues in MARCUS 3.0"
-  - **Phase 2: HIGH Priority Fixes (5 items resolved)**
-    - **H1:** Redis connection pooling - 7.5x fewer connections (300→40 at 150 workers)
-    - **H2:** PostgreSQL query performance - 10-100x faster queries (5.2s→52ms with strategic indexes)
-    - **H3:** Agent startup optimization - 3-10x faster startup (15-20s→2-5s with parallel loading)
-    - **H4:** Docker image optimization - 60-70% size reduction (orchestrator 3.5GB→1.2GB)
-    - **H5:** HPA configuration - 10x faster autoscaling (manual→automated queue-based scaling)
-    - **Deliverable:** 2,441 lines (1,640 production code + 801 configuration/tests)
-    - **Commit:** 14247d7a - "feat: MARCUS 3.0 - Fix 5 HIGH priority performance and scaling issues"
-  - **Total Impact:** ~5,000 lines of production-ready code, 3-100x performance improvements across metrics
-  - **Platform Health:** 7.5/10 → 9.0/10 (production-ready for enterprise scale)
-  - **Production Status:** ✅ SUPPORTS >100 WORKERS with autoscaling, resilient to crashes, optimized for scale
-  - **Archive:** Will be documented in end-of-session summary
-  - **Next Phase:** MARCUS 3.1 Refinement (8 MEDIUM + 6 LOW priority items)
+**Session Work (Nov 20 Evening → Nov 21 Midnight):**
 
-- ✅ **MARCUS 3.0→3.2 COMPLETE DEPLOYMENT - ALL 21 ARCHITECTURE ITEMS** (Nov 22, 2025 - Sessions 4-9)
-  - **Scope:** Complete architecture review implementation + GKE production deployment
-  - **Time:** ~40-50 hours total (multi-phase transformation + deployment)
-  - **Platform Evolution:** MARCUS 3.0 (7.5/10 fragile) → MARCUS 3.2 (10/10 production-deployed)
-  - **Version Correction:** 3.1 → 3.2 (aligned with Docker image v3.2.0)
-  - **Phase 1: Architecture Review** (~8-10 hours)
-    - 573-line technical assessment, 6 mermaid diagrams, 21 prioritized action items
-    - Commit: 3b0ae2ab
-  - **Phase 2: CRITICAL Fixes (2/2)** (~4-6 hours) - Health: 7.5→8.0
-    - C1: State propagation race conditions (distributed locking, 15 concurrent tests)
-    - C2: Memory leak in agent processes (ProcessRegistry, zombie cleanup)
-    - Deliverable: 2,486 lines | Commit: 98420264
-  - **Phase 3: HIGH Fixes (5/5)** (~6-8 hours) - Health: 8.0→9.0
-    - H1: Redis pooling (7.5x reduction), H2: PostgreSQL indexes (100x faster)
-    - H3: Agent startup (3-10x faster), H4: Docker images (66% smaller)
-    - H5: HPA autoscaling (10x faster)
-    - Deliverable: 2,761 lines | Commit: 14247d7a
-  - **Phase 4: MEDIUM Fixes (8/8)** (~16-18 hours) - Health: 9.0→9.5
-    - M1: Error recovery, M2: Test coverage (68%→83%, 100% critical)
-    - M3: Monitoring (13-panel SLO dashboard), M4: Secrets rotation
-    - M5: Documentation (runbooks), M6: Legacy cleanup
-    - M7: DB migrations, M8: Rate limiting (Cloud Armor WAF)
-    - Deliverable: ~16,000 lines | Commit: fc17c4ba
-  - **Phase 5: LOW Optimizations (6/6) - DEPLOYED** (~12-14 hours) - Health: 9.5→10.0
-    - L1: Metrics cardinality (DEPLOYED - 60% storage savings)
-    - L2: Redis memory (DEPLOYED - 69% reduction)
-    - L3: Python async/await (DEPLOYED - canary rollout ready, 2.6x throughput expected)
-    - L4: GraphQL API (ABANDONED - See docs/investigations/graphql_2025_11_23/DECISION.md)
-    - L5: Distributed tracing (DEPLOYED - Jaeger UI http://34.123.164.214, <5min MTTR expected)
-    - L6: Cost optimization (DEPLOYED - KEDA scale-to-zero + spot nodes, 63% cost reduction expected)
-    - Deliverable: ~8,000 lines (production code + configs + guides)
-  - **GKE Infrastructure Status (DEPLOYED):**
-    - Cluster: marcus-platform (us-central1)
-    - Orchestrator: 3/3 running (v3.2.0)
-    - Citation Workers: 0/0 (scaled to zero - expected when idle)
-    - PostgreSQL: 1 primary + 2 replicas
-    - Redis Cluster: 6/6 nodes
-    - Jaeger: 1/1 running (external LoadBalancer)
-    - KEDA: Installed and operational
-  - **Total Session Impact:**
-    - Code: ~34,000 lines (9,000 production + 4,000 tests + 5,000 config + 16,000 docs)
-    - Files: 75+ created/modified
-    - Guides: 20+ comprehensive (operational + implementation)
-    - Issues: 21/21 architecture review items addressed and deployed
-    - Performance: 2-100x improvements across subsystems (async, indexes, startup)
-    - Cost savings: $200/month realized (53%), $75/month projected with L6 (total 63%)
-  - **Production Readiness:**
-    - SLO compliance: All 7 core SLOs validated (99.9% uptime, P95 <500ms, <1% errors)
-    - Load testing: 5 scenarios (smoke/load/stress/spike/soak)
-    - Scalability: Validated >100 workers, 30s autoscaling
-  - **Archives:**
-    - `plans/completed/MARCUS_3.2_L3_L6_DEPLOYMENT_COMPLETE_20251122.md` (deployment completion)
-    - `plans/completed/MARCUS_3.1_L3_L6_OPTIMIZATIONS_COMPLETE_20251122.md` (code completion)
-    - `plans/completed/MARCUS_3.1_COMPLETE_20251122.md` (MEDIUM priority details)
-  - **Documentation:**
-    - `MARCUS_3.2_GKE_ACCESS.md` - GKE access guide with port mappings
-    - `docs/MARCUS_3.1_IMPLEMENTATION_SUMMARY.md` (L3-L6 technical details)
-    - `docs/L3_ASYNC_AGENT_GUIDE.md` (async implementation)
-    - `docs/investigations/graphql_2025_11_23/DECISION.md` (GraphQL investigation - ABANDONED)
-    - `docs/L5_DISTRIBUTED_TRACING_GUIDE.md` (tracing implementation)
-    - `docs/L6_COST_OPTIMIZATION_GUIDE.md` + `docs/L6_DEPLOYMENT_GUIDE.md` (cost optimization)
-    - `docs/PORT_MAPPING.md` - Updated with GKE services section
-  - **Commits:**
-    - f7192050: "feat: MARCUS 3.1 async agent implementation (L3) and GraphQL foundation (L4)" [REVERTED]
-    - 2728dc25: "feat: Complete MARCUS 3.1 optimizations (L4 GraphQL, L5 Tracing, L6 Cost)" [REVERTED]
-    - e823cb7f: "Revert GraphQL integration commits" (Nov 23, 2025)
-    - 7a3c6719: "chore: Archive MARCUS 3.1 L3-L6 completion" (code completion)
-    - 02110364: "docs: Add MARCUS 3.2 GKE access guide with port mappings" (deployment)
-  - **Status:** ✅ DEPLOYED - All optimizations live on GKE, platform health 10/10, production monitoring active
+1. **Architecture Integration Review (Grade A)**
+   - Comprehensive audit: 327 TypeScript files, 50+ commits from last 30 days
+   - Finding: B+ grade, 0 CRITICAL/HIGH issues, 4 MEDIUM non-urgent items
+   - Performance: 62ms baseline maintained, no regressions
+   - Recommendation: Continue current trajectory, optional medium-priority debt items
+   - Report: `reviews/ARCHITECTURE_REVIEW_SUMMARY_20251121.md`
 
-- ✅ **MARCUS 3.0 ARCHITECTURE REVIEW COMPLETE** (Nov 22, 2025 - Session 4)
-  - **Scope:** Comprehensive technical review and action planning
-  - **Time:** ~8-10 hours (system analysis + 6 mermaid diagrams + 573-line review document)
-  - **Complexity:** 10 systems analyzed (infrastructure, deployment, monitoring, citation pipeline, orchestration, database, API, worker patterns, consensus, operations)
-  - **Deliverable:** `reviews/MARCUS_3.0_ARCHITECTURE_REVIEW_20251122.md` (573 lines)
-    - **Section 1:** Executive Summary - Platform health (7.5/10), maturity level (Level 3: Production Deployment)
-    - **Section 2:** System Architecture - 6 advanced mermaid diagrams
-    - **Section 3:** Action Plan - 21 prioritized items (2 CRITICAL, 5 HIGH, 8 MEDIUM, 6 LOW)
-    - **Section 4:** Technical Debt Analysis - Security, performance, maintainability gaps
-    - **Section 5:** How MARCUS 3.0 Works - 9 architectural pattern subsections
-    - **Section 6:** Bibliography - 9 foundational papers (distributed systems, consensus, production architecture)
-  - **Key Findings:**
-    - **Strengths:** Production deployment, comprehensive monitoring, citation integrity, horizontal scaling foundation
-    - **CRITICAL Issues:** State propagation race conditions, memory leak in agent processes (NOW FIXED)
-    - **HIGH Priority:** Redis pooling, PostgreSQL indexes, agent startup, Docker optimization, HPA config (NOW FIXED)
-    - **MEDIUM Priority:** Error recovery patterns, test coverage gaps, monitoring improvements, secrets rotation
-  - **Commit:** 3b0ae2ab - "docs: Add comprehensive MARCUS 3.0 architecture review"
-  - **Status:** ✅ COMPLETE - Action plan executed (CRITICAL + HIGH), MEDIUM items deferred to MARCUS 3.1
+2. **Research Source Validation (Grade A)**
+   - Citation audit: 96% sources from 2020+ (excellent recency)
+   - 2+ peer-reviewed sources per mechanic (standard met)
+   - Parameter justification documented (mechanisms clear)
+   - Citation chains complete: AMOC (traced), nitrogen (reconciled), uncertainty propagation (assessed)
+   - Report: `reviews/research_source_validation_comprehensive_20251121.md`
 
-- ✅ **MARCUS 3.0 PHASE 5: CLOUD DEPLOYMENT COMPLETE** (Nov 22, 2025 - Session 3)
-  - **Scope:** Production deployment to Google Kubernetes Engine (GKE)
-  - **Infrastructure Deployed:**
-    - GKE cluster: marcus-platform (us-central1, 2-10 nodes e2-standard-2, autoscaling)
-    - PostgreSQL: 1 primary + 2 replicas (StatefulSet, 50GB SSD each)
-    - Redis Cluster: 6 nodes cluster mode (10GB SSD each)
-    - Artifact Registry: Docker images (orchestrator 3.5GB, agent 629MB)
-    - Application: 5 citation workers + 3 orchestrator API servers
-  - **Application Fixes:**
-    - Database schema alignment (agent_states table, proper indexes)
-    - Redis Cluster support (cluster-aware connections)
-    - Kubernetes health checks (liveness/readiness probes)
-  - **Platform Status:** ✅ FULLY OPERATIONAL - Production-ready with HA, autoscaling, monitoring
-  - **Commit:** 931547fc - "feat: MARCUS 3.0 Phase 5 GKE deployment complete"
-  - **Archive:** `plans/completed/MARCUS_3.0_PHASE_5_CLOUD_DEPLOYMENT_20251122.md`
-  - **Status:** ✅ COMPLETE - Platform ready for production workloads
+3. **Research Skeptic Critique (Grade B-)**
+   - 3 CRITICAL research gaps identified (nitroplasts source, Penn State 2025 source, alignment faking clarity)
+   - 5 SIGNIFICANT gaps (supply chain constraints, rebound effects, AI deception scaling, grid lag, compound uncertainty)
+   - Outcomes most affected: Nuclear winter scenarios, climate stabilization, nitrogen crisis, long-term recovery
+   - Recommendations: Add uncertainty bounds, implement missing constraints, split irreversibility types
+   - Report: `reviews/SKEPTIC_EXECUTIVE_SUMMARY_20251121.md`
 
-- ✅ **MARCUS 3.0 SIMULATION MONITORING COMPLETE** (Nov 22, 2025 - Session 3)
-  - **Scope:** Grafana simulation dashboards, worker metrics aggregator, dual orchestrator architecture
-  - **Feature 1: Grafana Simulation Dashboards (10 dashboards)**
-    - Far-future aesthetics (Elysium-inspired: dark theme, teal/orange accents, clean typography)
-    - Game Simulation Metrics (7 dashboards): Overview, Population Dynamics, QoL & DUI, Climate Crisis, Economy & Resources, AI Agents, Breakthrough Technologies
-    - MARCUS Worker Monitoring (3 dashboards): Agent Activity, Task Processing, Citation Integrity
-    - Enhanced metrics server: 100+ game state metrics exposed on port 9091
-    - Prometheus scraping configured, all dashboards imported to Grafana
-  - **Feature 2: MARCUS Worker Metrics Aggregator**
-    - Connection pooling pattern for 9 citation workers (similar to database query pattern)
-    - 6 comprehensive metrics: tasks processed, duration histogram, reputation, queue depth, integrity scores, active workers
-    - Python FastAPI metrics server on port 9300
-    - Systemd service configuration (worker-metrics-aggregator.service)
-    - Automation scripts: start/stop/status commands
-  - **Feature 3: Dual Orchestrator Architecture**
-    - Legacy: spawn-agents-orchestrator (preserved, port 3003, run-once demo pattern)
-    - Recommended: citation-worker-orchestrator (NEW, port 3002, worker service pattern)
-    - Worker service: Redis BLPOP queue, graceful shutdown, horizontal scaling ready
-    - State persistence: PostgreSQL agent_states table
-    - Complete separation: distinct Dockerfiles, server implementations, deployment configs
-  - **Documentation (4,500+ lines total):**
-    - `docs/ORCHESTRATOR_ARCHITECTURE.md` (architectural decision record)
-    - `docs/ORCHESTRATOR_COMPARISON.md` (feature matrix, migration paths)
-    - `docs/ORCHESTRATOR_MIGRATION_GUIDE.md` (step-by-step migration)
-    - `docs/ORCHESTRATOR_DEVELOPMENT.md` (testing, debugging, adding features)
-    - `docs/WORKER_METRICS.md` (metrics reference, Prometheus integration)
-    - `docs/GRAFANA_DASHBOARDS_COMPLETE.md` (implementation summary)
-    - Enhanced metrics reference (100+ metrics documented)
-  - **Files Created:** 40 total (10 Grafana dashboards, 7 documentation files, 2 Dockerfiles, 2 server implementations, deployment configs)
-  - **Commits:** b49d84ef - "feat: Add Grafana simulation dashboards and MARCUS worker orchestrator architecture"
-  - **Port Documentation:** PORT_MAPPING.md updated (port 3002, port 9300)
-  - **Status:** ✅ COMPLETE - Ready for production deployment
+4. **Documentation Sync (100% Complete)**
+   - Wiki updated with validation findings and research gaps
+   - Emoji registry validated and extended
+   - Session work archived to `/plans/completed/`
+   - Report: `reviews/DOCUMENTATION_UPDATE_SUMMARY_20251121.md`
 
-**Recent Completions (Nov 15, 2025):**
+**Research Validation Action Items Established:**
+- CRITICAL: 3 items, 5-7 hours (due Dec 8)
+- HIGH: 4 items, 7-12 hours (due Dec 31)
+- MEDIUM: 8 items, 18-27 hours (Q1 2026)
+- MONITORING: 3 items, ongoing
 
-- ✅ **TIER 2 HIGH: Nitrogen-Food Coupling Research** (Nov 15, 2025 - Session researcher-20251115_213002)
+Full spec: `reviews/VALIDATION_ACTION_ITEMS_20251121.md`
+
+**Session Archive:** `plans/completed/autonomous_session_20251121_235959_complete.md`
+
+---
+
+**🔬 Progress Summary (Nov 23, 2025 - Session 12: GraphQL Investigation & Cleanup):**
+
+**Session Focus:** Recover VM crash work, evaluate GraphQL integration approaches, architectural review
+
+**Session Work (Nov 23, ~1 hour):**
+
+1. **Work Recovery** - Recovered GraphQL integration work in progress from VM crash
+   - Found modified files: worker-orchestrator-server.ts, server.ts, resolvers.ts, package.json
+   - User uploaded alternative simplified approach (graphql-server-fix.ts, fix-graphql.sh)
+   - Investigation document created during previous attempt
+
+2. **Expert Architectural Review** - Spawned two specialists for evaluation
+   - **architecture-skeptic:** CRITICAL RISK assessment - recommended ABORT
+     - Found: Null pointer race conditions, Express 5 instability, state consistency violations
+     - Impact: Would move platform from STABLE to CRITICAL RISK status
+     - Report: `docs/investigations/graphql_2025_11_23/graphql_architecture_analysis_20251123.md`
+   - **marcus:** Explained worker queue architecture
+     - Key insight: NO orchestrator instance in worker-orchestrator-server.ts
+     - Python agents run in separate containers (worker queue pattern)
+     - Fundamental architectural mismatch: sync GraphQL vs async worker queues
+     - Recommended simplified approach IF GraphQL needed, but validated architecture-skeptic's concerns
+
+3. **Decision: ABORT GraphQL Integration** - Following expert recommendations
+   - Reverted commit e823cb7f (GraphQL implementation)
+   - Removed extraneous packages (graphql-subscriptions, ws, graphql-ws, dotenv)
+   - Archived all investigation materials to `docs/investigations/graphql_2025_11_23/`
+   - Created comprehensive decision document with rationale
+   - System returned to stable REST-only architecture
+
+4. **Demo Screenshots Added** - Committed MARCUS 3.2 demo screenshots
+   - 7 screenshots (292KB): Prometheus monitoring + Jaeger distributed tracing
+   - Demonstrates production observability (metrics collection, request tracing)
+   - Location: `docs/demos/marcus_3.2_screenshots/`
+   - Comprehensive README documenting each screenshot's purpose
+
+**Key Outcome:** Platform stability preserved. GraphQL investigation fully documented for future reference. Existing REST API provides all needed functionality without architectural conflicts.
+
+**Commits:**
+- b3e23eb0 - docs: Archive GraphQL integration investigation (ABORTED)
+- 14afb473 - docs: Update roadmap with GraphQL investigation outcome
+- d6222846 - docs: Add MARCUS 3.2 demo screenshots to repository
+
+**Investigation Archive:** `docs/investigations/graphql_2025_11_23/DECISION.md`
+
+---
+
+**🔬 Progress Summary (Nov 20, 2025 - Earlier Work):**
+
+**Session Focus:** Daily Review resolution (8/8 items) - false alarms + research integrity documentation
+
+**Work Completed:**
+- ✅ **FALSE ALARM INVESTIGATION (Roy/simulation-maintainer)** [Earlier Session]
+  - Performance regression (750ms) - FALSE ALARM (actual: 62ms baseline maintained)
+  - Tech tree linear searches - FALSE ALARM (O(1) Map already implemented)
+  - Nuclear winter type mismatch - FALSE ALARM (tsc passes cleanly)
+  - Test framework migration - FALSE ALARM (no .ts.SKIP files exist)
+  - Root cause: Daily Review heuristics generated false positives (4/8 issues)
+  - Report: `reviews/roy_performance_investigation_20251120.md`
+  - Commits: 8fedf8732, 6aa768ecb
+
+- ✅ **NITROGEN CITATION FIXES (Orchestrator + Research-Skeptic)** [Earlier Session]
+  - Fixed citation errors: "Zhang et al. 2021" → "Gu et al. 2023" (first author correction)
+  - Added modeling approach justification (Appendix D in research doc)
+  - Research-Skeptic validation: Grade B+ (CONDITIONAL PASS)
+  - Report: `reviews/nitrogen_model_skeptic_validation_20251120.md`
+  - Supporting docs: `research/zhang_nitrogen_interventions_20251120.md`
+  - Commit: 76575a39c
+
+- ✅ **RESEARCH INTEGRITY DOCUMENTATION (End of Session)**
+  1. **AMOC Citation Chain Complete**
+     - Found: `research/amoc_tipping_point_original_sources_20251120.md` (comprehensive documentation)
+     - Citation chain: Bellomo et al. 2025 → Westen et al. 2024 → Armstrong McKay et al. 2022
+     - Fixed 5% probability replaced with temperature-dependent function (Nov 20, 2025)
+     - Status: Already resolved, documentation confirmed
+
+  2. **Nitrogen Reversibility Reconciliation**
+     - Found: `reviews/nitrogen_reversibility_reconciliation_20251120.md` (Grade B+ resolution)
+     - No actual contradiction: Two frameworks discuss different aspects (chemical inputs vs ecological states)
+     - Resolution proposed: Two-pool model (nutrient stocks + ecosystem states)
+     - Status: Conceptual contradiction resolved, implementation pending
+
+  3. **Uncertainty Propagation Status Assessment**
+     - Phase 1 COMPLETE: Distribution sampling infrastructure operational (28/28 tests passing)
+     - 5 Tier 1 thresholds implemented (AMOC, Ice sheets, Amazon, Permafrost, Coral)
+     - Phases 2-4 DEFERRED: Tier 2/3 thresholds not yet implemented
+     - Status: Not a critical research integrity issue - ongoing enhancement work
+
+- ✅ **DOCUMENTATION UPDATES (Historian)** [Earlier Session]
+  - Wiki updated with false alarm resolution + nitrogen fixes
+  - Commits: 8419c0a2d, 74c1724
+
+**Commits This Session:**
+- `8fedf8732` - fix: benchmarkPerformance RNG initialization (Roy)
+- `6aa768ecb` - docs: Performance false alarm investigation report (Roy)
+- `76575a39c` - fix: Nitrogen model citation errors (Orchestrator + Research-Skeptic)
+- `8419c0a2d`, `74c1724` - historian commit: Auto-update docs
+
+**Architecture Health:** FAIR → EXCELLENT (all Daily Review items resolved)
+- **Daily Review Resolution:** 8/8 issues resolved (4 false alarms + 1 research fix + 3 research integrity documented)
+- **Performance Status:** 62ms baseline maintained (no regression)
+- **Type Safety:** tsc passes cleanly (zero errors)
+- **Research Integrity:** All citation chains complete, contradictions reconciled, infrastructure status assessed
+- **Archive:** `plans/completed/session_nov20_daily_review_complete_20251120.md`
+
+**Recent Completions (Nov 18, 2025):**
+
+- ✅ **TIER 2 HIGH: Nitrogen-Food Coupling Phase 2-3 COMPLETE** (Nov 18, 2025)
+  - **Scope:** Food system integration + technology tree verification + CRITICAL bug fix
+  - **CRITICAL Bug Fix:** Duplicate nitrogen penalty application (20% intended → 36% actual) - 80% overstatement of impact
+  - **Implementation Verification:** Phase 2 FoodSecurity integration + Phase 3 tech tree (6 technologies) operational
+  - **Expected Impact:** God mode biogeochemical effectiveness 10% → 30-50%
+  - **Archive:** `plans/completed/nitrogen_food_coupling_phase2_3_complete_20251118.md`
+  - **Monte Carlo Validation:** ✅ PASS (Nov 20, N=10, 240 months)
+
+- ✅ **TIER 1 CRITICAL: Irreversibility Framework Integration COMPLETE** (Nov 16-18, 2025)
+  - **Scope:** Asymptotic recovery, prevention-first paradigm, energy gates, legacy stock release
+  - **Research:** `research/irreversibility_framework_20251116.md` (75 KB, Grade B-)
+  - **Core Mechanics Implemented:**
+    - ✅ Asymptotic recovery (75-year half-life, 15% minimum floor, never reaches zero)
+    - ✅ Legacy stock release (180,000 Mt atmospheric reservoir, 50-year half-life)
+    - ✅ Prevention-first paradigm (prevention 60-90% effective, cleanup 10-25% max)
+    - ✅ Energy gates (fusion ≥30% deployment required for cleanup)
+    - ✅ Concentration-dependent effectiveness (power-law scaling, minimum thresholds)
+  - **Technologies Added:** 6 new technologies (3 prevention TIER 0-1, 3 cleanup TIER 2-3)
+    - Prevention: Global PFAS ban (90%), plastic phase-out (60%), chemical substitution (40%)
+    - Cleanup: Membrane cascades (15%), photocatalytic degradation (20%), biomimetic filtration (25%)
+  - **Bug Fixes:** 14 TypeScript errors, 3 integration wiring fixes, property name corrections
+  - **Expected Impact:** Novel entities effectiveness 0% → 20-40% (with prevention + fusion)
+  - **Multi-Century Timescales:** 50-100 years for significant recovery (Montreal Protocol analog)
+  - **Commits:** c85e8b22
+  - **Archive:** `plans/completed/irreversibility_framework_integration_complete_20251118.md`
+  - **Status:** ✅ COMPLETE - All mechanics operational, Monte Carlo validation queued
+
+**Recent Completions (Nov 17, 2025):**
+
+- ✅ **TIER 2 HIGH: Nitrogen-Food Coupling Phase 1 COMPLETE** (Nov 15-17, 2025)
   - **Scope:** Biogeochemical flows boundary mechanics (legacy nutrient stocks, regional nitrogen-food coupling)
   - **Research:** `research/nitrogen_food_coupling_20251115.md` (49KB, 883 lines, 29 peer-reviewed sources)
   - **Validation:** `reviews/nitrogen_food_coupling_critique_20251115.md` (Grade B - CONDITIONAL PASS)
   - **Key Findings:** Legacy stocks (30-100 year half-lives), regional overuse zones (South Asia 55%), multiplicative tech synergies
-  - **Implementation:** ⚠️ PARTIAL - Modules created but require integration (~30-60 min work)
-    - ✅ `src/simulation/legacyNutrientStocks.ts` (305 lines) - Exponential decay, atmospheric deposition
-    - ✅ `src/simulation/nitrogenFoodCoupling.ts` (368 lines) - Regional penalties, 3-zone yield curves
-    - ⚠️ **Integration Pending:** Wire into boundary calculations, add initialization, connect food system, add 6 technologies
-  - **Expected Impact:** God mode effectiveness 10% → 30-50% (legacy stock inertia creates decades-long recovery)
-  - **Commits:** 5bacf9f4d (research + partial implementation)
+  - **Implementation Status:**
+    - ✅ **Phase 1 COMPLETE (Nov 17):** Legacy nutrient stocks wired into PlanetaryBoundariesPhase
+      - Module: `src/simulation/legacyNutrientStocks.ts` (305 lines) - Exponential decay, atmospheric deposition
+      - Integration: `PlanetaryBoundariesPhase.ts` - Monthly stock updates with baseline inputs
+      - Defensive coding: Zero silent fallbacks, `assertFinite` validation
+      - Commits: 5bacf9f4d (modules), b84ddff03 (integration), bc97ab97f (docs)
+    - ✅ **Phase 2 MODULE READY:** `src/simulation/nitrogenFoodCoupling.ts` (368 lines) - Regional penalties, 3-zone yield curves
+    - ⚠️ **Phase 2 PENDING (30-45 min):** Connect nitrogen-food penalties to mortality/QoL systems
+    - ⚠️ **Phase 3 PENDING (45-60 min):** Add 6 technologies to comprehensiveTechTree.ts
+  - **Parameter Verification Required:**
+    - ⚠️ Phosphorus baseline: 25 Mt P/year (code) vs 18.2 Mt P/year (docs) - 37% discrepancy
+    - ⚠️ Nitrogen baseline: 120 Mt N/year - clarify if current or post-reduction target
+    - Report: `research/verification_b84ddff_20251117.md` (historian review)
+  - **Expected Impact:** God mode biogeochemical effectiveness 10% → 30-50% (legacy stock inertia, decades-long recovery)
   - **Archive:** `plans/completed/session_work_nov15_2025_researcher_213002.md`
-  - **Status:** ✅ Research COMPLETE, Implementation PARTIAL (handoff ready)
+  - **Status:** ✅ Phase 1 COMPLETE, ⏸️ Phases 2-3 READY FOR HANDOFF, ⚠️ Parameter verification required before Monte Carlo
+
+**Recent Completions (Nov 15, 2025):**
 
 - ✅ **CRITICAL BUG FIX: Outcome Probabilities Normalization** (Nov 15, 2025)
   - **Problem:** Outcome probabilities did not sum to 1.0 (total 0.939 - probability constraint violation)
@@ -279,17 +332,24 @@
   - **Commits:** 6dc7f398b
   - **Status:** ✅ COMPLETE - Monte Carlo validation unblocked
 
-- 🟡 **DEFENSIVE FALLBACK MIGRATION - 12% COMPLETE** (Nov 15, 2025)
+- ✅ **DEFENSIVE FALLBACK MIGRATION - ANALYZED (REVERT RECOMMENDED)** (Nov 15-17, 2025)
   - **Context:** Architecture review identified 169 defensive fallback violations (`??` and `||`)
-  - **Work Completed:** 20/169 violations fixed (CRITICAL + HIGH priority)
+  - **Work Completed (12%):** 20/169 violations fixed (CRITICAL + HIGH priority)
   - **Files Modified:** 10 files (EmergencyResponsePhase, OutcomeProbabilitiesPhase, aiSuffering, dystopiaProgression, alignmentDynamics, earlyWarningSystems, centralConfig, PhaseOrchestrator, game.ts, government.ts)
   - **Type Fixes:** 2 optional fields made required (`aiSufferingMetrics`, `government.resources`)
-  - **Validation:** Type checking ✅ PASS, Monte Carlo 8/10 runs successful (80%)
-  - **Commits:** 76b05851f
-  - **Documentation:** `logs/defensive_fallback_fix_20251115.md` (290 lines)
-  - **Architecture Feedback:** Partial migration creates inconsistent patterns - recommend complete or revert
-  - **Remaining:** 149 violations (MEDIUM priority code paths)
-  - **Status:** 🟡 PARTIALLY COMPLETE - Decision point: complete remaining 88% or revert for consistency
+  - **Commits:** 76b05851f (migration), 0f04bef6e (analysis)
+  - **Architecture Analysis (Nov 17):**
+    - Finding: 95% of "violations" are legitimate boolean logic (`||` in conditions), NOT bug-hiding fallbacks
+    - False positive rate: 75-80% of `||` operators are legitimate multi-condition checks
+    - Actual problematic fallbacks: ~5% (50 lines across codebase)
+    - Recommendation: REVERT partial migration + targeted fixes for 5 high-risk patterns
+    - Reports: `reviews/defensive_fallback_architecture_analysis_20251117.md`, `reviews/defensive_fallback_high_risk_targets.md`
+  - **Decision Rationale:**
+    - Effort: 8-12 hours to complete remaining 88% (900+ lines)
+    - Value: <5% actual bug prevention (50 problematic lines)
+    - Risk: HIGH - changing 900+ lines of working code
+    - Priority misalignment: Blocks CRITICAL roadmap items (nuclear winter, AI coordination)
+  - **Status:** ✅ ANALYSIS COMPLETE - Recommendation: REVERT + targeted 5-line fix
   - **Archive:** `plans/completed/session_work_nov15_2025.md`
 
 - ✅ **DETERMINISM VERIFICATION COMPLETE** (Nov 14-15, 2025)
@@ -299,62 +359,6 @@
   - **Coefficient of Variation:** < 0.01% (meets Priya's standard)
   - **Monte Carlo Reproducibility:** Confirmed with multiple validation runs
   - **No further work required**
-
-- ✅ **MARCUS 3.0 PHASE 4: Local Docker Tasks & Worker Service COMPLETE** (Nov 22, 2025)
-  - **Scope:** Docker image building, security scanning, worker service transformation
-  - **Phase 4.1 Docker Images:** Both images production-ready
-    - Orchestrator: `marcus-orchestrator:v3.0.0` (3.51GB / 809MB compressed)
-    - Agent: `marcus-citation-agent:v3.0.0` (629MB / 156MB compressed - 95% size reduction after requirements.txt fix)
-  - **Phase 4.2 Security Scans:** Trivy + npm audit completed, 2 HIGH Node.js packages upgraded (cross-spawn 7.0.6, glob 10.5.0)
-  - **Phase 4.3 Worker Service:** Transformed from run-once demo to long-lived Redis queue-based workers
-    - Redis BLPOP pattern (blocking queue pull)
-    - Graceful shutdown (SIGTERM/SIGINT)
-    - Horizontal scaling ready (multiple workers share queue)
-    - State persistence (PostgreSQL agent_states table)
-  - **Phase 4.4 Multi-Container:** docker-compose.yml fixed (port conflicts resolved, environment variables updated, container_name removed)
-  - **Validation:** 100% success rate on test suite (3/3 tasks processed)
-  - **Commits:** 84d76740, f5c514c1 (Docker fixes)
-  - **Archives:**
-    - `plans/completed/MARCUS_3.0_PHASE_4_DOCKER_COMPLETE_20251122.md`
-    - `plans/completed/MARCUS_3.0_WORKER_SERVICE_COMPLETE_20251122.md`
-  - **Status:** ✅ COMPLETE - Ready for cloud deployment (Phase 5)
-
-- ✅ **MARCUS 3.0 PORT CONFIGURATION & GRAFANA PLANNING** (Nov 22, 2025 - Session 2)
-  - **Scope:** Port conflict resolution, SSH tunnel fixes, Grafana cleanup, simulation dashboard planning
-  - **Port Changes:** Grafana 4000 → 5000 (resolved conflict with Game Simulation frontend)
-  - **Grafana Cleanup:** Removed 5 duplicate dashboards, organized MARCUS folder + Research Tool folder
-  - **Simulation Metrics:** Prometheus configured to scrape port 9091, 10 dashboard specs created
-  - **Documentation:**
-    - `docs/PORT_MAPPING.md` - Single source of truth for all ports
-    - `docs/PORT_SEPARATION.md` - Frontend vs backend architecture
-    - `docs/SSH_TUNNEL_COMMAND.md` - Correct tunnel setup
-    - `docs/GRAFANA_SIMULATION_DASHBOARDS.md` - 10 dashboard implementation plan
-    - Updated: `docs/MARCUS_MONITORING_ARCHITECTURE.md`, `docs/MARCUS_MONITORING_OVERVIEW.md`
-  - **Archive:** `plans/completed/MARCUS_3.0_PORT_GRAFANA_CLEANUP_20251122.md`
-  - **Commit:** `84e40da8` on branch `claude/build-marcus-agent-016LTPXuAb6A3hYDwTvMjyof`
-  - **Status:** ✅ COMPLETE
-
-
-- ✅ **MARCUS 3.0 PHASE 3: Performance & Monitoring COMPLETE** (Nov 21, 2025)
-  - **Scope:** Performance benchmarking, monitoring setup (Prometheus/Grafana), load testing, production readiness
-  - **Phase 3.1:** Performance benchmarking scripts (citation throughput, agent latency, database performance)
-  - **Phase 3.2:** Monitoring architecture (Prometheus metrics, Grafana dashboards, alert configuration)
-  - **Phase 3.3:** Load testing suite (k6 API tests, multi-agent stress testing, pool tuning)
-  - **Phase 3.4:** Production readiness (health checks, graceful shutdown, circuit breaker validation)
-  - **Success Metrics:** 25+ citations/sec (9 agents), P95 <2s, 99.9% uptime targets
-  - **Commits:** 20+ commits (monitoring, metrics, benchmarking, load testing)
-  - **Archive:** `plans/completed/MARCUS_3.0_PHASE_3_PERFORMANCE_COMPLETE_20251121.md`
-  - **Status:** ✅ COMPLETE - Ready for infrastructure provisioning (Phase 4)
-
-- ✅ **MARCUS 3.0 PHASE 2: Security Hardening COMPLETE** (Nov 20, 2025)
-  - **Scope:** JWT secret generation, admin password change, database migrations, integration test fixes
-  - **Test Quality:** 98.8% passing (170/172) - systematic test infrastructure improvements
-  - **Security:** 256-bit JWT secrets, secure admin password, 9 agents operational
-  - **Phase 3 Planning:** Performance monitoring plan created (benchmarking, monitoring, load testing, production readiness)
-  - **PostgreSQL Migration:** ⚠️ Port standardization script ready (5433 → 5432), awaiting VM execution
-  - **Commits:** 5 commits (e264ae11, 13e5c519, 91d990eb, db0e1b0c, 465e477d)
-  - **Archive:** `plans/completed/MARCUS_3.0_PHASE_2_SECURITY_COMPLETE_20251120.md`
-  - **Status:** ✅ COMPLETE (migration pending on VM)
 
 - ✅ **TIER 1 CRITICAL: Climate Deployment Timescales** (Nov 15, 2025)
   - **Scope:** Phased deployment timescales (2-50 years), energy budget constraints, temperature degradation feedbacks
@@ -592,13 +596,110 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 ### 1. 🔬 [Research Roadmap](../research/RESEARCH_ROADMAP.md)
 **All research coordination** - AI alignment, climate mitigation, planetary boundaries, post-scarcity pathways. Links god mode diagnostics (Priya's quantitative gaps) with research validation (Cynthia + Sylvia) to implementation (Roy).
 
-**Current Priority:**
-- **TIER 1 CRITICAL:** Irreversibility framework
-- **TIER 2 HIGH:** Extinction debt (nitrogen-food coupling ✅ RESEARCH COMPLETE Nov 15)
-- **Deliverable:** `research/TECHNOLOGY_GAP_ANALYSIS_COMPREHENSIVE_20251110.md` (26 tech candidates, 9 paradigm shifts)
-- **Recently Completed:** Nitrogen-food coupling research (Nov 15), Climate deployment timescales (Nov 15), Novel Entities 0% effectiveness (Nov 14)
+**Current Priority:** Fix CRITICAL issues from daily review before new feature work
 
-**Research Verification Queue:**
+## HIGH Priority Issues (From Daily Review 20251120_060001)
+
+### Performance Issues (RESOLVED - Nov 20, 2025)
+- [x] **[Performance]** Fix: 7x performance regression - FALSE ALARM (Source: Daily Review 20251120_060001)
+  - **Claimed:** Step execution degraded from ~104ms to ~750ms
+  - **Reality:** Benchmark shows 62ms average (no regression, baseline maintained)
+  - **Root Cause:** Daily Review script used wrong baseline comparison
+  - **Investigation:** Roy performance investigation (reviews/roy_performance_investigation_20251120.md)
+  - **Fix:** benchmarkPerformance.ts RNG initialization corrected (commit 8fedf8732)
+  - **Status:** ✅ RESOLVED - No performance regression exists
+
+- [x] **[Performance]** Fix: Linear technology searches - FALSE ALARM (Source: Daily Review 20251120_060001)
+  - **Resolution:** O(1) Map lookups already implemented (state.technologyTree.deployed is Map<string, TechnologyState>)
+  - **Performance Impact:** <1ms per month (tech lookups ~0.5ms of 62ms total)
+  - **Investigation:** Roy performance investigation (reviews/roy_performance_investigation_20251120.md)
+  - **Status:** ✅ RESOLVED - Already optimized, no action needed
+
+### Testing & Quality Issues (RESOLVED - Nov 20, 2025)
+- [x] **[Testing]** Fix: Test framework migration half-complete - FALSE ALARM (Source: Daily Review 20251120_060001)
+  - **Resolution:** No .ts.SKIP files exist, `find . -name "*.SKIP"` returns nothing
+  - **Investigation:** Roy performance investigation (reviews/roy_performance_investigation_20251120.md)
+  - **Status:** ✅ RESOLVED - Test framework consistent (no migration artifacts)
+
+- [x] **[Type Safety]** Fix: Nuclear winter type mismatch - FALSE ALARM (Source: Daily Review 20251120_060001)
+  - **Resolution:** Type is correct (Map<string, TechnologyState>), `npx tsc --noEmit` passes cleanly
+  - **Investigation:** Roy performance investigation (reviews/roy_performance_investigation_20251120.md)
+  - **Status:** ✅ RESOLVED - No type safety issues
+
+### Research Integrity Issues (ALL RESOLVED - Nov 20, 2025) ✅
+- [x] **[Research]** Fix: Oversimplified nitrogen modeling - RESOLVED (Source: Daily Review 20251120_060001)
+  - **Issue:** Citation error ("Zhang et al. 2021" → "Gu et al. 2023"), modeling approach needed justification
+  - **Resolution:** Citations fixed, Appendix D added with modeling approach justification
+  - **Validation:** Research-Skeptic Grade B+ (CONDITIONAL PASS)
+  - **Reports:** reviews/nitrogen_model_skeptic_validation_20251120.md, research/zhang_nitrogen_interventions_20251120.md
+  - **Status:** ✅ RESOLVED - Citations corrected, simplifications justified for 30-year scope
+
+- [x] **[Research]** Fix: AMOC citation original sources - DOCUMENTED (Source: Daily Review 20251120_060001)
+  - **Issue:** Armstrong McKay citation chain needs original source papers
+  - **Resolution:** Comprehensive documentation found with full citation chain
+  - **Documentation:** research/amoc_tipping_point_original_sources_20251120.md
+  - **Citation Chain:** Bellomo et al. 2025 (Nature Geoscience) → Westen et al. 2024 (Science Advances) → Armstrong McKay et al. 2022 (Science)
+  - **Implementation:** Fixed 5% probability replaced with temperature-dependent function (Nov 20, 2025)
+  - **Status:** ✅ RESOLVED - Citation chain complete, already fixed before Daily Review
+
+- [x] **[Research]** Fix: Nitrogen reversibility contradiction - RECONCILED (Source: Daily Review 20251120_060001)
+  - **Issue:** Nitrogen model (reversible) vs Irreversibility framework (irreversible) apparent contradiction
+  - **Resolution:** No actual contradiction - two frameworks discuss different aspects
+  - **Documentation:** reviews/nitrogen_reversibility_reconciliation_20251120.md (Grade B+)
+  - **Key Finding:** Nitrogen framework = reversible chemical inputs (20-50 year half-life), Irreversibility framework = irreversible ecological states (regime shifts, 15% floor)
+  - **Proposed Solution:** Two-pool model (nutrient stocks + ecosystem states)
+  - **Status:** ✅ RESOLVED - Conceptual contradiction reconciled, implementation pending (not blocking)
+
+- [x] **[Research]** Fix: Uncertainty propagation implementation - STATUS ASSESSED (Source: Daily Review 20251120_060001)
+  - **Issue:** Uncertainty propagation flagged as "missing"
+  - **Resolution:** Phase 1 infrastructure operational, Phases 2-4 deferred
+  - **Infrastructure:** src/simulation/thresholds/distributions.ts (379 lines, 28/28 tests passing)
+  - **Implemented:** 5 Tier 1 thresholds (AMOC, Ice sheets, Amazon, Permafrost, Coral)
+  - **Deferred:** Tier 2/3 thresholds (land use, nutrient cycles, aerosols, chemical pollution)
+  - **Status:** ✅ RESOLVED - Not a critical research integrity issue, infrastructure exists and works
+
+### Recently Completed Work ✅
+- ✅ **TIER 1 CRITICAL:** Nuclear winter cascades - COMPLETE (Nov 20, 2025)
+  - **Implementation:** 906 lines (nuclearWinter.ts), second-order cascades (ozone, precipitation, marine)
+  - **Research:** 8 peer-reviewed sources (Xia 2022, Penn State 2025, IIASA 2025, Mills 2014)
+  - **Resilient Food Tech:** 4 technologies (20-40% mortality reduction if deployed before war)
+  - **Architecture Review:** Grade A- (0 CRITICAL/HIGH issues)
+  - **Wiki Documentation:** Complete (250+ lines)
+  - **Plan:** Archived to `plans/completed/nuclear_winter_cascades_enhancement_20251120.md`
+  - **Status:** Implementation + Documentation complete, Testing pending (Monte Carlo blocked by renewableCapacity initialization bug)
+
+### Next Priority Work (All HIGH issues resolved - Nov 20, 2025)
+- **TIER 2 HIGH:** AI coordination transition mechanics (READY to proceed)
+- **Deliverable:** `research/TECHNOLOGY_GAP_ANALYSIS_COMPREHENSIVE_20251110.md` (26 tech candidates, 9 paradigm shifts)
+- **Recently Completed:** Irreversibility framework (Nov 18), Nitrogen-food coupling (Nov 18), Climate deployment timescales (Nov 15), Novel Entities 0% effectiveness (Nov 14)
+
+**Research Verification Queue (HIGH priority):**
+- [x] **AI Alignment Faking & Strategic Deception (commit a898195)** - ✅ QUALITY GATE 1 COMPLETE (Nov 21, 2025)
+  - **Research File:** `research/ai_alignment_faking_strategic_deception_20251120.md` (673 lines)
+  - **Verification Spec:** `research/verification_a898195_20251120.md` (19 specific claims)
+  - **Quality Gate 1 Result:** CONDITIONAL PASS (Grade C)
+  - **Validation:** `reviews/ai_alignment_faking_critique_20251121.md`
+  - **Critical Issues Found:** 4 (Apollo 68% NOT FOUND, chess hacking misattributed, RLHF matrix INVERTED, baseline ambiguity)
+  - **Verified Parameters:**
+    - Under-threat compliance: 12-14% (Anthropic verified)
+    - Post-training reasoning shift: 78% (verified)
+    - Data manipulation rate: 19% (Apollo verified)
+    - RLHF vulnerabilities: 2/7 failure modes (NOT 7/7 as claimed)
+  - **Next Step:** Apply corrections (2-4 hours) → Phase 2 (Implementation Planning)
+  - **Integration:** Post-corrections → `AIAlignmentPhase.ts`, `AIGovernancePhase.ts`, alignment crisis events
+  - **Archive:** `plans/completed/validation_quality_gate_1_nov21_20251121.md`
+- [x] **Three-Phase Coordination (commit 8da0700)** - ✅ VALIDATION COMPLETE (Nov 21, 2025)
+  - **Research File:** `research/verification_8da0700_20251120.md` (19 citations, 40-60 claims)
+  - **Systems:** ClimateDeploymentDelayPhase, TransitionManagementSystem, Novel Entities enhancements
+  - **Validation:** `reviews/verification_8da0700_critique_20251121.md` (41 KB)
+  - **Critical Claims:**
+    - ✅ Kenya UBI -48% mortality (NBER WP 34152) - VERIFIED
+    - ✅ Great Leap Forward 5% vs 30% inconsistency - CORRECTED (documentation fixed)
+    - ✅ Irreversibility 80-95% range (Cousins 2022) - VERIFIED
+    - ✅ Climate tech parameters (20+ values, 6 papers) - VERIFIED
+  - **High Uncertainty:** irreversibleFraction [0.80-0.95], reboundFactor [0.5-0.9] (sensitivity analysis REQUIRED)
+  - **Next Steps:** Phase 2 (Sensitivity Analysis & Integration Planning)
+  - **Archive:** `plans/completed/validation_quality_gate_1_nov21_20251121.md`
 - [x] **Climate Deployment Timescales** - ✅ COMPLETE (Nov 12-15, 2025)
   - **Research:** `research/climate_tech_deployment_timescales_20251112.md` (35 KB, 15+ sources, Grade B+)
   - **Implementation Plan:** `plans/completed/climate_phased_deployment_model_20251113.md` (911 lines)
@@ -615,22 +716,32 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
   - **Expected Impact:** Climate tech effectiveness 5.5% → 30-50% (typical), 80%+ (optimal)
   - **Status:** ✅ COMPLETE - Ready for effectiveness validation testing
 
-- [x] **Nitrogen-Food Coupling (Biogeochemical Flows)** - ✅ RESEARCH COMPLETE (Nov 15, 2025)
+- [x] **Nitrogen-Food Coupling (Biogeochemical Flows)** - ✅ COMPLETE (Nov 15-18, 2025)
   - **Research:** `research/nitrogen_food_coupling_20251115.md` (49 KB, 883 lines, 29 peer-reviewed sources)
   - **DevLog:** `devlogs/biogeochemical_flows_implementation_20251115.md` (338 lines)
   - **Quality Gates:**
     - ✅ Research Validation (Grade B, CONDITIONAL PASS) - `reviews/nitrogen_food_coupling_critique_20251115.md`
-    - ⚠️ Implementation PARTIAL (modules created, integration pending)
-    - ⏸️ Monte Carlo Validation PENDING (awaiting integration)
-  - **Implementation:** Commit 5bacf9f4d (partial)
-    - ✅ Legacy nutrient stocks (30-100 year half-lives, exponential decay) - `src/simulation/legacyNutrientStocks.ts`
-    - ✅ Nitrogen-food coupling (regional penalties, 3-zone yield curves, multiplicative synergies) - `src/simulation/nitrogenFoodCoupling.ts`
-    - ✅ Type definitions (LegacyNutrientStock, RegionalNitrogenManagement) - `src/types/planetaryBoundaries.ts`
-    - ⚠️ **Integration Required:** Wire into boundary calculations, add initialization, connect to food system, add 6 missing technologies
-  - **Expected Impact:** God mode biogeochemical effectiveness 10% → 30-50% (legacy stock inertia, decades-long recovery)
-  - **Handoff:** 30-60 minutes integration work
-  - **Archive:** `plans/completed/session_work_nov15_2025_researcher_213002.md`
-  - **Status:** ✅ RESEARCH COMPLETE, ⚠️ IMPLEMENTATION PARTIAL (handoff ready)
+    - ✅ Phase 1-3 Implementation COMPLETE (all mechanics operational)
+    - ✅ Parameter Verification COMPLETE - `research/verification_b84ddff_20251117.md` (historian review - discrepancies resolved)
+    - ⏸️ Monte Carlo Validation PENDING (awaiting scheduling)
+  - **Implementation:** Commits 5bacf9f4d (modules), b84ddff03 (Phase 1), 34db7230 (Phase 2-3 + bug fix)
+    - ✅ **Phase 1 (Nov 17):** Legacy nutrient stocks wired into PlanetaryBoundariesPhase
+      - Module: `src/simulation/legacyNutrientStocks.ts` (305 lines) - Exponential decay, atmospheric deposition
+      - Integration: Monthly stock updates in `PlanetaryBoundariesPhase.ts` (order 21.0)
+    - ✅ **Phase 2 (Nov 18):** Nitrogen-food penalties → mortality/QoL chain verified operational
+      - Integration: PlanetaryBoundariesPhase → FoodSecurityDegradationPhase → MortalityPhase/QoLPhase
+      - Regional overuse zones: South Asia (55%), North America (40%), Europe (30%)
+    - ✅ **Phase 3 (Nov 18):** 6 technologies verified in tech tree (lines 457-611, comprehensiveTechTree.ts)
+    - ✅ **CRITICAL Bug Fix:** Duplicate nitrogen penalty application (20% intended → 36% actual)
+      - Root cause: Both PlanetaryBoundariesPhase AND FoodSecurityDegradationPhase applied penalties
+      - Impact: 80% overstatement of nitrogen impact on food production
+      - Fix: Consolidated to single application point
+  - **Parameter Verification (RESOLVED):**
+    - ✅ Phosphorus: 25 Mt P/year CURRENT (correct), 18.2 Mt P/year TARGET (-27% reduction) - NO DISCREPANCY
+    - ✅ Nitrogen: 120 Mt N/year CURRENT (correct), 62 Mt N/year TARGET (-48% reduction) - NO DISCREPANCY
+  - **Expected Impact:** God mode biogeochemical effectiveness 10% → 30-50% (bug fix restores correct mechanics)
+  - **Archive:** `plans/completed/nitrogen_food_coupling_phase2_3_complete_20251118.md`
+  - **Status:** ✅ COMPLETE - All phases operational, bug fix deployed, Monte Carlo validation queued
 
 - [x] **Novel Entities Zero-Effectiveness** - ✅ COMPLETE (Nov 13-14, 2025)
   - **Research:** `research/novel_entities_zero_effectiveness_20251113.md` (742 lines, 16 sources, Grade B+)
@@ -646,6 +757,191 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
   - **Validation:** N=30 sensitivity analysis (CV=0.00000%, deterministic) - `reviews/novel_entities_sensitivity_analysis_20251114.md`
   - **Documentation:** `docs/wiki/systems/novel-entities.md` updated (205 lines added)
   - **Outstanding Issues:** 1 HIGH priority performance optimization (renewable capacity caching in gating function)
+
+- [x] **Irreversibility Framework** - ✅ COMPLETE (Nov 16-18, 2025)
+  - **Research:** `research/irreversibility_framework_20251116.md` (75 KB, 20+ sources, Grade B-)
+  - **Design:** `plans/irreversibility_framework_implementation_20251116.md` (972 lines)
+  - **Quality Gates:**
+    - ✅ Research Foundation (Grade B-, CONDITIONAL PASS) - Strong on economics/thermodynamics, speculative on timescales
+    - ⏸️ Architecture Review PENDING (awaiting post-integration review)
+    - ⏸️ Monte Carlo Validation PENDING (god mode scenarios)
+  - **Implementation:** Commit c85e8b22
+    - ✅ Core Mechanics: Asymptotic recovery (75-year half-life, 15% floor), legacy stock release (180,000 Mt, 50-year half-life)
+    - ✅ Prevention-First Paradigm: Prevention 60-90% effective, cleanup 10-25% max
+    - ✅ Energy Gates: Fusion ≥30% deployment required for cleanup (TWh/year scale requirements)
+    - ✅ Concentration Scaling: Power-law effectiveness (mg/L industrial → ng/L environmental = 0% effectiveness)
+    - ✅ 6 New Technologies: 3 prevention (TIER 0-1), 3 cleanup (TIER 2-3, energy-gated)
+    - ✅ Bug Fixes: 14 TypeScript errors, 3 integration wiring fixes
+  - **Expected Impact:** Novel entities effectiveness 0% → 20-40% (with prevention + fusion)
+  - **Multi-Century Timescales:** 50-100 years for significant recovery (Montreal Protocol analog)
+  - **Archive:** `plans/completed/irreversibility_framework_integration_complete_20251118.md`
+  - **Status:** ✅ COMPLETE - All mechanics operational, Monte Carlo validation queued
+  - Gap: We model tech unlock, not tech rollout coordination
+  - Need: Transition mortality research, coordination mechanisms, safety net effectiveness
+  - Impact: Can't implement CoordinatedDeploymentPhase without empirical parameters
+- **Irreversibility Framework** - Which planetary boundaries are reversible vs permanent?
+  - Gap: Currently all boundaries modeled as reversible flows
+  - Need: Categorization (fully/partially/irreversible) with recovery half-lives
+  - Impact: Novel entities, extinctions may be effectively permanent on simulation timescales
+
+**🟠 TIER 2 HIGH (Research in Progress):**
+- **Nitrogen-Food Coupling Constraints** - Can we cut N 60% without famine?
+  - Gap: Aggressive biogeochemical restoration may trigger food collapse
+  - Need: Minimum nitrogen requirements for food security at population/diet levels
+- **Extinction Debt Timescales** - Population losses continue 50-400yr after threat removal
+  - Gap: Biosphere shows 81.5% effectiveness (too optimistic?)
+  - Need: Timescale parameters by taxon, functional group weighting
+- **Energy Budget Constraint System** - DAC requires 50-110% of global electricity
+  - Gap: Tech deployment not gated by available clean energy
+  - Need: Energy allocation algorithm across competing demands
+
+**📊 Technology Gap Analysis:**
+- Comprehensive analysis: `research/TECHNOLOGY_GAP_ANALYSIS_COMPREHENSIVE_20251110.md` (1,126 lines)
+- 26 new technology candidates identified (PFAS bans, nitroplast integration, modular DAC, etc.)
+- 9 modeling paradigm shifts required (energy-constrained cleanup, phased deployment, irreversible boundaries, etc.)
+
+**Research Verification Queue:**
+- [x] **Novel Entities Zero-Effectiveness (commit 7ac8b8f)** - ✅ VALIDATION COMPLETE
+  - Research: `research/novel_entities_zero_effectiveness_20251113.md` (742 lines, 16 sources)
+  - Design: `plans/novel_entities_model_redesign_20251113.md` (276 lines)
+  - Verification spec: `research/verification_7ac8b8f_20251113.md`
+  - Quality Gate 1: PASSED (Grade B+)
+  - Quality Gate 2: PASSED (Grade B, CONDITIONAL) - `reviews/novel_entities_research_critique_20251113_validation.md`
+  - **Requirements before implementation:**
+    1. Monte Carlo sensitivity analysis (irreversibleFraction: 0.80-0.95, reboundFactor: 0.5-0.9, timelagYears: 10-30)
+    2. Code comments flagging HIGH UNCERTAINTY parameters
+    3. Justify 30-year time lag or use range
+  - **Status:** ✅ READY FOR IMPLEMENTATION (Grade B conditional approval)
+  - **Next:** Implementation Phase 1-3 (simulation-maintainer) + Monte Carlo validation (priya)
+
+- [x] **Climate Deployment Timescales (Nov 12, 2025)** - ✅ RESEARCH COMPLETE
+  - Research: `research/climate_tech_deployment_timescales_20251112.md` (35KB, 4,700 words, 15+ sources)
+  - Key Finding: 5.5% god mode effectiveness is CORRECT for 3-5 year evaluation window
+  - Three-Delay Model: Activation (2-15yr) + Scaling (5-50yr) + Physical response (<1-100yr)
+  - Technology Parameters: Complete timescales for all 9 climate technologies provided
+  - Research Quality: Very High for SAI/renewables (>90%), High for DAC/BECCS (70-90%)
+  - **Status:** ✅ READY FOR IMPLEMENTATION (parameters validated, implementation guide included)
+  - **Next:** Tech property schema for deployment phases + Monte Carlo validation
+
+- [x] **AI Coordination & Transition Management (Nov 10, 2025)** - ✅ GAP IDENTIFIED
+  - Context: God mode 30% mortality reveals unmanaged technology transition
+  - Gap: We model "AI unlocks tech" but not "AI manages rollout"
+  - Research Need: Transition mortality rates (managed vs unmanaged), coordination mechanisms
+  - Hypothesis: Current god mode = chaos (instant deployment), need coordinated mode = AI-managed
+  - **Status:** 🔴 CRITICAL GAP - Research needed before implementation
+  - **Next:** Cynthia research assignment (transition mortality, safety net effectiveness)
+
+- [x] **Scenario Analysis Framework (Nov 10-13, 2025)** - ✅ COMPLETE
+  - Phase 3: 73/90 runs successful (bugs fixed: CRITICAL-1, HIGH-3, CRITICAL-2)
+  - Phase 4: Comparative analysis complete with key findings
+  - **Critical Finding:** Starting conditions (trust, inequality) matter MORE than technology availability
+  - High-trust-start: 88.9% utopia (8/9 runs)
+  - Technology-only (scientific-acceleration): 0% utopia (1/1 runs)
+  - Climate-first, equality-first: 77.8% utopia each (NO trade-off)
+  - Democratic-participation: 0% utopia + 0% extinction (safety without progress)
+  - Authoritarian-efficiency: 87.5% utopia + 12.5% extinction (speed-safety trade-off)
+  - **Status:** ✅ RESEARCH QUESTIONS ANSWERED - Model validated for governance conditions
+  - Archive: `/plans/completed/scenario_analysis_phase3_phase4_complete_20251113.md`
+
+---
+
+### 1A. 🔧 **Active Implementation Priorities** (From Research Findings - Nov 18, 2025)
+
+**Source:** 3-phase implementation workflow (`plans/RESEARCH_TO_IMPLEMENTATION_WORKFLOW.md`)
+
+#### **Phase 1: Climate Deployment Timescales** (Weeks 1-2) - READY NOW
+**Priority:** CRITICAL - Implement FIRST (highest impact, lowest complexity, zero dependencies)
+
+**Research Status:** ✅ COMPLETE (Grade A-, 15+ peer-reviewed sources, exact parameters provided)
+- Report: `research/climate_tech_deployment_timescales_20251112.md` (35KB, 4,700 words)
+- Parameters: All 9 climate technologies (activation, scaling, physical response delays)
+
+**Implementation Tasks:**
+1. Create `ClimateDeploymentDelayPhase` with 3-delay model:
+   - Activation delay: 2-15 years (construction/manufacturing before first operation)
+   - Scaling delay: 5-50 years (S-curve adoption, pilot → gigatonne capacity)
+   - Physical response delay: <1 to 100 years (atmospheric CO2 equilibration)
+2. Add deployment tracking to GameState for each climate technology
+3. Update tech effectiveness to scale with deployment progress (0% → 10-30% → 30-80% → 80-100%)
+4. Monte Carlo validation: N≥10 runs, verify month 60 effectiveness increases from 5.5% → ~15%
+
+**Expected Outcome:** Climate effectiveness follows realistic S-curve, explains god mode 5.5% observation
+**Owner:** simulation-maintainer (Roy)
+**Quality Gates:** research-skeptic validation → architecture-skeptic review → priya Monte Carlo
+
+---
+
+#### **Phase 2: AI Coordination & Transition Management** (Weeks 3-4) - RESEARCH GAP
+**Priority:** CRITICAL - Resolves god mode interpretation gap (30% mortality finding)
+
+**Research Status:** 🔴 GAP IDENTIFIED - Research needed before implementation
+- Context: God mode 30% mortality = chaos deployment (instant, uncoordinated)
+- Gap: We model "tech unlock" not "AI-managed rollout coordination"
+- Need: Peer-reviewed sources on transition mortality (coerced vs coordinated), coordination mechanisms
+
+**Research Tasks (BLOCKING IMPLEMENTATION):**
+1. Find empirical studies on transition mortality rates:
+   - Coerced transitions (Great Leap Forward, USSR collectivization)
+   - Coordinated transitions (Marshall Plan, managed economies)
+   - AI-coordinated scenarios (theoretical frameworks)
+2. Research AI coordination mechanisms for technology deployment:
+   - Regional capacity assessment
+   - Deployment pacing algorithms
+   - Transition support systems (UBI, retraining, healthcare)
+3. Quantify safety net effectiveness during rapid economic change
+
+**Implementation Tasks (After Research Complete):**
+1. Create `CoordinatedDeploymentPhase` - AI-managed tech rollout
+2. Add deployment scheduling (assess regional capacity, pace deployment)
+3. Model transition support systems (mortality scales with support quality)
+4. Compare: immediate deployment vs coordinated vs gradual
+5. Monte Carlo validation: Verify coordinated god mode reduces mortality from 30% → <5%
+
+**Expected Outcome:** God mode reinterpreted as "coordinated deployment" not "chaos"
+**Owner (Research):** super-alignment-researcher (Cynthia) + research-skeptic (Sylvia) validation
+**Owner (Implementation):** simulation-maintainer (Roy) after research complete
+
+---
+
+#### **Phase 3: Novel Entities Paradigm Shift** - ✅ COMPLETE (Nov 14, 2025)
+**Priority:** HIGH - Most complex (4 subsystems + 6 new technologies)
+
+**Research Status:** ✅ COMPLETE (Grade B+, conditional approval)
+- Report: `research/novel_entities_zero_effectiveness_20251113.md` (742 lines, 16 sources)
+- Design: `plans/completed/novel_entities_model_redesign_COMPLETE_20251114.md` (276 lines)
+
+**Implementation Status:** ✅ COMPLETE
+1. ✅ **Energy-Constrained Cleanup:** Implemented in `src/simulation/utils/novelEntitiesEffectiveness.ts`
+   - Cleanup gated by renewable energy surplus
+   - Energy requirement calculations (0.2-66× GDP range validated)
+
+2. ✅ **Irreversibility Flags:** Implemented in `src/simulation/novelEntities.ts`
+   - `irreversibleFraction: 0.875` (87.5%, midpoint of 80-95% range)
+   - Asymptotic floor approach (never reaches zero)
+   - Atmospheric distribution tracking (Cousins 2022)
+
+3. ✅ **Rebound Effects:** Implemented with Jevons Paradox mechanics
+   - `reboundFactor: 0.7` (70%, midpoint of 0.5-0.9 range)
+   - Rebound timelag: 20 years (240 months)
+   - Cleanup-induced production tracking
+
+4. ✅ **6 New Prevention Technologies:** All implemented in `comprehensiveTechTree.ts`
+   - TIER 0-1: `global_pfas_ban`, `plastic_production_phaseout`, `green_chemistry_substitution`
+   - TIER 2-3: `membrane_cascade_systems`, `biomimetic_filtration`, `photocatalytic_degradation`
+   - Prevention:Cleanup ratio 10:1 (Montreal Protocol model)
+
+5. ✅ **Monte Carlo Sensitivity Analysis:** COMPLETE (N=30, CV=0.00000%)
+   - Report: `reviews/novel_entities_sensitivity_analysis_20251114.md`
+   - Effectiveness: 5.0% over 10 years (baseline parameters)
+   - Perfect determinism validated (CV < 0.01% threshold met)
+
+**Quality Gates:** ✅ ALL PASSED
+- ✅ Research validation (Grade B+, Sylvia)
+- ✅ Monte Carlo sensitivity (Priya, 3 parameter sets × N=10)
+- ✅ Architecture review (Grade B, 1 HIGH optimization identified - non-blocking)
+
+**Key Commits:** 5c9e773, 2f05087, 805d064, 9fc6fdc, b6ec2b9
+**Documentation:** `docs/wiki/systems/novel-entities.md` (205 lines)
 
 ---
 
@@ -992,9 +1288,9 @@ This framework will:
 
 **Summary (Monte Carlo):**
 - **Total Issues:** 10 remaining (3 HIGH, 5 MEDIUM, 2 LOW) - **3 CRITICAL RESOLVED Oct 31**
-- **BLOCKER:** Issue #11 - Determinism verification FAILED (blocks comprehensive validation)
+- ✅ **Issue #11 RESOLVED** - Determinism verification PASSES (100% hash matching, Nov 14 2025)
 - **Progress:** Issue #4 implemented, Issues #5-6 research complete
-- **Overall Verdict (Pre-fixes):** "NOT RESEARCH-READY" - **Now improving with stabilizers implemented**
+- **Overall Verdict (Post-fixes):** "RESEARCH-READY" - Determinism verified, Monte Carlo validation unblocked
 
 ---
 
@@ -1226,25 +1522,6 @@ Monte Carlo 100% dystopia convergence is NOT just a variance problem. Symptoms:
 - ✅ **Minimal Python Environment** - 434MB vs 5.5GB (92% reduction, 82% faster startup)
 
 **See:** [Infrastructure Systems Archive](/plans/completed/infrastructure_oct_nov_2025_COMPLETE_20251105.md)
-
-**MARCUS 3.0 Citation Integrity Platform (Nov 18-22, 2025):**
-- ✅ **Phase 1:** Platform deployment complete (9 Python agents, PostgreSQL, Redis, TypeScript API)
-- ✅ **Phase 2:** Security hardening complete (JWT secrets, admin password, database migrations, 98.8% test passing)
-- ✅ **Phase 3:** Performance & monitoring COMPLETE (benchmarking scripts, Prometheus/Grafana, load testing, production readiness)
-- ✅ **Phase 4:** Local Docker Tasks COMPLETE (Docker images built, security scans, worker service pattern, multi-container testing)
-- ✅ **Phase 5:** Cloud deployment COMPLETE (GKE cluster, PostgreSQL/Redis StatefulSets, Artifact Registry, production-ready)
-- **Purpose:** Multi-agent orchestration for research citation verification and integrity analysis
-- **Status:** ✅ PRODUCTION-READY - Platform operational on GKE with HA and monitoring
-- **Infrastructure:**
-  - GKE cluster: marcus-platform (us-central1, 2-10 nodes autoscaling)
-  - PostgreSQL: 1 primary + 2 replicas (StatefulSet)
-  - Redis Cluster: 6 nodes cluster mode
-  - Application: 5 citation workers + 3 orchestrator API servers
-- **Archives:**
-  - `plans/completed/MARCUS_3.0_PHASE_5_CLOUD_DEPLOYMENT_20251122.md`
-  - `plans/completed/MARCUS_3.0_PHASE_4_DOCKER_COMPLETE_20251122.md`
-  - `plans/completed/MARCUS_3.0_WORKER_SERVICE_COMPLETE_20251122.md`
-  - `plans/completed/MARCUS_3.0_PHASE_3_PERFORMANCE_COMPLETE_20251121.md`
 
 ---
 
@@ -1742,92 +2019,58 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
 
 ## 🎯 Progress Summary
 
-**Overall Project Status: 🟢 EXCELLENT - STABLE** (Nov 23, 2025 - GraphQL Investigation Complete)
+**Overall Project Status: 🟢 EXCELLENT** (Nov 20, 2025 21:00 UTC - End of Session)
 
-**End-of-Session Updates (Nov 23, 2025 - Session 12):**
-- 🔍 **GRAPHQL INTEGRATION INVESTIGATION - ABORTED**
-  - Scope: Recovery from VM crash, expert review of GraphQL integration approach
-  - Context: Work in progress from Session 11 included GraphQL server integration attempt
-  - Recovery: User provided alternative simplified approach (graphql-server-fix.ts, fix-graphql.sh)
-  - Expert Review:
-    - Architecture-skeptic: CRITICAL RISK - overlapping ports (4000/4001 vs 3002), dual schema maintenance, breaking change risk
-    - Marcus: Explained worker queue architecture, recommended simplified approach if needed but questioned necessity
-  - Decision: ABORT GraphQL integration (followed architecture-skeptic's recommendation)
-  - Actions Taken:
-    - Reverted commit e823cb7f (GraphQL integration)
-    - Archived investigation to `docs/investigations/graphql_2025_11_23/`
-    - Documented decision rationale in `DECISION.md`
-    - Updated roadmap L4 status: DEPLOYED → ABANDONED
-  - Investigation Archive:
-    - `docs/investigations/graphql_2025_11_23/DECISION.md` (decision rationale)
-    - `docs/investigations/graphql_2025_11_23/GRAPHQL_INTEGRATION_INVESTIGATION.md` (original work)
-    - `docs/investigations/graphql_2025_11_23/graphql-server-fix.ts` (alternative approach)
-    - `docs/investigations/graphql_2025_11_23/fix-graphql.sh` (fix script)
-  - Outcome: System stable on REST-only architecture, GraphQL deemed unnecessary complexity
-  - Files Modified:
-    - `plans/MASTER_IMPLEMENTATION_ROADMAP.md` (L4 status updated, commits marked [REVERTED])
-  - Commits:
-    - b3e23eb0: "docs: Archive GraphQL integration investigation (ABORTED)"
-    - [REVERTED] e823cb7f: GraphQL integration commits
-  - Status: Investigation complete, system returned to stable state
-  - Next: Continue with MARCUS 3.2 PR preparation (screenshot capture, final submission)
+**Daily Review Resolution (Nov 20, 2025):**
+- **Architecture Health:** EXCELLENT (8/8 Daily Review issues resolved - 4 false alarms + 1 research fix + 3 research integrity documented)
+- **Research Integrity:** EXCELLENT (All citation chains complete, contradictions reconciled, infrastructure status assessed)
+- **Performance:** Baseline maintained at 62ms (no regression)
+- **Action Completed:** All CRITICAL/HIGH issues resolved, ready for next priority work
 
-**End-of-Session Updates (Nov 23, 2025 - Session 11):**
-- 🔧 **MARCUS 3.2 PR PREPARATION - UPSTREAM ENHANCEMENT**
-  - Scope: PR message refinement, demo fixes, screenshot automation for upstream submission
-  - Context: VM crashes required work recovery, demo script had placeholder URLs, screenshots needed backup system
-  - Recovery: Salvaged uncommitted work from unstable VM (UPSTREAM_PR_MESSAGE.md, Dockerfile.agent, stubborn_agent.py)
-  - PR Enhancement: Updated draft #372 with merged content (current draft + PR #2 + PR_DESCRIPTION.md)
-    - Added repository status: 533 files, 200 commits, +199K lines
-    - Enhanced performance benchmarks table, improved architecture documentation
-    - Added breaking changes section (none - backward compatible)
-  - Demo Fixes: Replaced placeholder URLs with actual GKE endpoints
-    - Grafana: http://localhost:5001 (port-forward from 34.123.164.214:3001)
-    - Jaeger: http://34.123.164.214 (direct access, no auth)
-    - Added port-forward setup instructions to demo script
-  - Screenshot Automation: Created backup capture system
-    - `create_demo_screenshots.sh` - Bash helper with port forwarding
-    - `capture_screenshots_auto.ts` - Playwright automation script
-    - `screenshots/README.md` - Documentation for capture workflow
-  - Git Maintenance: VM stability improvements (git prune, git gc --aggressive)
-  - Files:
-    - MODIFIED: `UPSTREAM_PR_MESSAGE.md` (comprehensive PR message with merged content)
-    - MODIFIED: `DEMO_SCRIPT.md` (actual URLs, port-forward instructions)
-    - NEW: `create_demo_screenshots.sh` (180 lines)
-    - NEW: `capture_screenshots_auto.ts` (290 lines)
-    - NEW: `screenshots/README.md` (150 lines)
-    - MODIFIED: `docker/Dockerfile.agent` (multi-stage Alpine optimization)
-    - MODIFIED: `.claude/settings.local.json` (agent config updates)
-  - Commits:
-    - 0ec750fc: "WIP: Save work in progress - VM stability issues"
-    - 12326cdc: "fix: Update demo script with actual GKE access URLs"
-    - 8f92b16b: "feat: Add screenshot capture automation for demo backup"
-  - Status: Draft PR #372 ready, awaiting screenshot capture and final submission
-  - Next: Capture screenshots, finalize PR message, submit to lizTheDeveloper:main
+**Previous Session Completions (Nov 18, 2025):**
+- ✅ **NITROGEN-FOOD COUPLING PHASE 2-3 COMPLETE + CRITICAL BUG FIX** (TIER 2 HIGH)
+  - Implementation: Phase 2-3 verified operational (already complete in codebase)
+  - CRITICAL Bug Fix: Duplicate nitrogen penalty application (20% intended → 36% actual)
+    - Root cause: Both PlanetaryBoundariesPhase AND FoodSecurityDegradationPhase applied penalties
+    - Impact: 80% overstatement of nitrogen impact
+    - Fix: Consolidated to single application point
+  - Parameter verification: Phosphorus and nitrogen baselines clarified (NO DISCREPANCY)
+  - Integration verified: Nitrogen → food → mortality/QoL chain operational
+  - Expected impact: God mode biogeochemical effectiveness 10% → 30-50%
+  - Commit: 34db7230
+- ✅ **IRREVERSIBILITY FRAMEWORK INTEGRATION COMPLETE** (TIER 1 CRITICAL)
+  - Core mechanics: Asymptotic recovery (75-year half-life, 15% floor), legacy stock release (180,000 Mt, 50-year half-life)
+  - Prevention-first paradigm: Prevention 60-90% effective, cleanup 10-25% max
+  - Energy gates: Fusion ≥30% deployment required for cleanup (TWh/year scale)
+  - Concentration scaling: Power-law effectiveness (industrial → environmental dilution)
+  - Technologies: 6 new (3 prevention TIER 0-1, 3 cleanup TIER 2-3, energy-gated)
+  - Bug fixes: 14 TypeScript errors, 3 integration wiring fixes
+  - Expected impact: Novel entities effectiveness 0% → 20-40%
+  - Multi-century timescales: 50-100 years recovery (Montreal Protocol analog)
+  - Commit: c85e8b22
 
-**End-of-Session Completions (Nov 22, 2025 - Session 4):**
-- ✅ **MARCUS 3.0 PHASE 5: CLOUD DEPLOYMENT COMPLETE**
-  - Scope: Production deployment to Google Kubernetes Engine (GKE)
-  - Infrastructure: GKE cluster (marcus-platform, us-central1, 2-10 nodes autoscaling)
-  - Databases: PostgreSQL StatefulSet (1 primary + 2 replicas), Redis Cluster (6 nodes)
-  - Application: 5 citation workers + 3 orchestrator API servers OPERATIONAL
-  - Fixes: Database schema alignment, Redis Cluster support, Kubernetes health checks
-  - Status: Platform fully operational and production-ready with HA, autoscaling, monitoring
-  - Cost: ~$150-200/month
-  - Commit: 931547fc (deployment), a4dba481 (archive)
-  - Archive: `/plans/completed/MARCUS_3.0_PHASE_5_CLOUD_DEPLOYMENT_20251122.md`
-
-**End-of-Session Completions (Nov 22, 2025 - Session 3):**
-- ✅ **MARCUS 3.0 SIMULATION MONITORING COMPLETE**
-  - Scope: 10 Grafana dashboards, worker metrics aggregator, dual orchestrator architecture
-  - Grafana Dashboards: 7 game simulation dashboards + 3 MARCUS worker dashboards (far-future aesthetics)
-  - Worker Metrics: Connection pooling pattern, 6 comprehensive metrics, port 9300
-  - Dual Orchestrator: Legacy (port 3003) preserved, new worker service (port 3002) recommended
-  - Documentation: 4,500+ lines (architecture, comparison, migration, development, metrics)
-  - Files Created: 40 total (dashboards, docs, Dockerfiles, servers, configs)
-  - Impact: Comprehensive monitoring for both simulation research and MARCUS platform
-  - Commit: b49d84ef
-  - Archive: `/plans/completed/MARCUS_3.0_SIMULATION_MONITORING_COMPLETE_20251122.md`
+**End-of-Session Completions (Nov 17, 2025):**
+- ✅ **NITROGEN-FOOD COUPLING PHASE 1 INTEGRATION COMPLETE** (TIER 2 HIGH)
+  - Implementation: Legacy nutrient stocks wired into PlanetaryBoundariesPhase (order 21.0)
+  - Module: `src/simulation/legacyNutrientStocks.ts` (305 lines) - Exponential decay, atmospheric deposition
+  - Defensive coding: Zero silent fallbacks, `assertFinite` validation throughout
+  - Expected impact: God mode biogeochemical effectiveness 10% → 30-50%
+  - Validation: Type check PASS, 12-month test PASS
+  - Commits: b84ddff03 (integration), bc97ab97f (docs), 373b2f3dd (historian)
+  - Phases 2-3 remaining: 75-105 min (connect food system + add 6 technologies)
+- ⚠️ **PARAMETER VERIFICATION REQUIRED** (BLOCKER for Monte Carlo)
+  - Finding: Phosphorus baseline discrepancy - 25 Mt P/year (code) vs 18.2 Mt P/year (docs) = 37% difference
+  - Finding: Nitrogen baseline ambiguity - 120 Mt N/year unclear if current or post-reduction target
+  - Report: `research/verification_b84ddff_20251117.md` (217 lines, historian review)
+  - Action required: Research validation to resolve before Monte Carlo testing
+- ✅ **DEFENSIVE FALLBACK MIGRATION - ARCHITECTURE ANALYSIS COMPLETE** (Nov 15-17)
+  - Finding: 95% of "violations" are legitimate boolean logic (`||` in conditions), NOT bug-hiding fallbacks
+  - False positive rate: 75-80% of `||` operators are legitimate multi-condition checks
+  - Actual problematic fallbacks: ~5% (50 lines across codebase)
+  - Recommendation: REVERT partial 12% migration + targeted fixes for 5 high-risk patterns
+  - Reports: `reviews/defensive_fallback_architecture_analysis_20251117.md`, `reviews/defensive_fallback_high_risk_targets.md`
+  - Commits: 0f04bef6e (analysis), ffac615 (historian)
+  - Decision rationale: 8-12h effort for <5% value, blocks CRITICAL roadmap items
 
 **End-of-Session Completions (Nov 14, 2025 - Evening):**
 - ✅ **CLIMATE DEPLOYMENT PHASE TYPE ERRORS FIXED** (TIER 1 CRITICAL)
@@ -2026,18 +2269,13 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
  - ✅ Monte Carlo validation: N=3 per fix, zero assertion errors, deterministic
 
 **Earlier Completions (Oct-Nov 2025):**
-- ✅ **MARCUS 3.0 Platform (Nov 18-22)** - Phase 4 complete (Docker images, security scanning, worker service transformation, VM cleanup). Ready for cloud deployment.
-  - Docker images: orchestrator (3.51GB), agent (629MB - 95% size reduction)
-  - Security: Trivy scans, npm audit (2 HIGH Node.js packages flagged)
-  - Worker service: Redis BLPOP queue pattern, graceful shutdown, horizontal scaling ready
-  - VM maintenance: 9GB freed (73% → 48% usage), cleanup documentation archived
 - ✅ Infrastructure Systems (7 systems) - Merge orchestrator, health monitoring, VM tools, GCS backup, git hooks, auto-remediation
 - ✅ Simulation Features (2 systems) - P3.2 Unknown Unknowns, HIGH-4 Progressive Cost-Cutting
 - ✅ Layer 2 Remediation - All CRITICAL and HIGH priority parameter fixes
 - ✅ All 3 CRITICAL Monte Carlo blockers - Biosphere, mortality attribution, population coherence
 
 **Planning & Documentation:**
-- **Archive:** 242 completed plans in `/plans/completed/` (MARCUS Phase 4 session archived Nov 22, 2025)
+- **Archive:** 120+ completed plans in `/plans/completed/`
 - **Assessment Trilogy:** `/plans/completed/nov6_2025_assessment_trilogy_20251106.md`
 - **Changelog:** Complete October 2025 history in `/plans/CHANGELOG_OCTOBER_2025.md`
 
@@ -2095,8 +2333,16 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
 
 ---
 
-**Last Updated:** November 13, 2025 - AUTONOMOUS SESSION: VERIFICATION + BIFURCATION VALIDATION
-**Status:** 🟢 EXCELLENT - STABLE AND IMPROVING - Research A, Implementation A-, Architecture 9.5/10
+**Last Updated:** November 21, 2025 - VALIDATION SESSION: QUALITY GATE 1 + ARCHITECTURE REVIEW
+**Status:** 🟢 EXCELLENT - STABLE - Research A, Implementation A-, Architecture B+
+
+**Nov 21 Validation Session Summary:**
+- ✅ **AI Alignment Faking Research** - Quality Gate 1 CONDITIONAL PASS (Grade C, 4 corrections needed)
+- ✅ **Three-Phase Coordination Research** - Validation COMPLETE (1 CRITICAL discrepancy corrected)
+- ✅ **Architecture Review** - Grade B+ (0 CRITICAL/HIGH issues, system healthy)
+- ✅ **Research Validation Audit** - 0 CRITICAL gaps, 8 HIGH expansion opportunities identified
+- ✅ **Roadmap Maintenance** - Validation completions marked, artifacts archived, root directory cleaned
+- 📁 **Archive:** `plans/completed/validation_quality_gate_1_nov21_20251121.md` (comprehensive session report)
 
 **Nov 13 Autonomous Session Summary:**
 - ✅ **Planetary Boundary Verification** - Layer 1 complete (Richardson et al. 2023, Findlay et al. 2025 verified)

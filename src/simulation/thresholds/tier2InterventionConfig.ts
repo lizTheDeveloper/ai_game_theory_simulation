@@ -147,11 +147,11 @@ export const DARK_COMPUTE_MONITORING_PARAMS = {
 export const SYNTHETIC_ECOSYSTEM_PARAMS = {
   recoveryTimeGranted: {
     distribution: 'triangular' as const,
-    min: 36,
-    mode: 60,
-    max: 120,
+    min: 120,     // 10 years (accelerated with tech)
+    mode: 240,    // 20 years (black-footed ferret empirical)
+    max: 480,     // 40 years (condor empirical)
     unit: 'months',
-    citation: 'Black-footed ferret 18→500 in 20 years, condor 14→200+ in 40 years'
+    citation: 'Black-footed ferret 18→500 in 240 months (20y), condor 27→569 in 444 months (37y) - USFWS verified'
   },
   crisisMitigation: {
     distribution: 'triangular' as const,

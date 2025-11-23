@@ -62,6 +62,36 @@ export class HumanPopulationPhase implements SimulationPhase {
       assertRegionalConsistency
     } = require('../../utils/assertions');
 
+    // === DEFENSIVE CHECK (Nov 21, 2025): Detect population race conditions ===
+    // BEFORE updating regional populations, verify global/regional sync.
+    // If a previous phase (e.g., CoordinatedDeploymentPhase) modified global
+    // population WITHOUT updating regions, we'll detect the desync here.
+    const regions = state.humanPopulationSystem.regionalPopulations;
+    if (regions && regions.length > 0) {
+      // NOTE: Regional populations are in MILLIONS, global is in BILLIONS
+      const regionalSumMillions = regions.reduce((sum, r) => sum + r.population, 0);
+      const regionalSumBillions = regionalSumMillions / 1000;
+      const globalValue = state.humanPopulationSystem.population;
+      const discrepancy = Math.abs(regionalSumBillions - globalValue);
+
+      // Allow tiny floating-point errors but catch real desyncs
+      if (discrepancy > 0.001) {
+        console.error(
+          `⚠️ WARNING: Regional/global population desync detected BEFORE HumanPopulationPhase\n` +
+          `  Month: ${state.currentMonth}\n` +
+          `  Global value: ${globalValue.toFixed(6)}B\n` +
+          `  Regional sum: ${regionalSumBillions.toFixed(6)}B (${regionalSumMillions.toFixed(2)}M)\n` +
+          `  Discrepancy: ${discrepancy.toFixed(6)}B\n` +
+          `  A previous phase likely modified global population without updating regions.\n` +
+          `  This will cause silent data loss when aggregation overwrites the global value.`
+        );
+
+        // Log which phase might be responsible (if context available)
+        console.error(`  Previous phases this step: coordination, deployment, etc.`);
+        console.error(`  Aggregation will now OVERWRITE global value with regional sum.`);
+      }
+    }
+
     // === PHASE 5: REGIONAL POPULATION DYNAMICS ===
     // Update regional populations with differential growth/decline rates
     updateRegionalPopulations(state);

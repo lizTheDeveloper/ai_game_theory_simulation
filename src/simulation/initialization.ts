@@ -608,6 +608,7 @@ export function createDefaultInitialState(
   }
   
   const state: GameState = {
+    schemaVersion: 1, // State Migration System (Nov 21, 2025) - Current schema version
     currentMonth: initialMonth,
     currentDay: 1,
     currentYear: initialYear,
@@ -1245,6 +1246,16 @@ export function createDefaultInitialState(
       maxSafeDeploymentSpeed: 0.05,        // 5%/year threshold (research-backed)
       recentDeploymentsCount: 0,           // Track tech deployments in last 12 months
 
+      // === COORDINATION FAILURES (Nov 21, 2025) ===
+      coordinationFailures: 0,             // No failures at initialization
+      coordinationFailureActive: false,    // No active failure
+      coordinationFailureMultiplier: 1.0,  // No multiplier initially
+      coordinationFailureMonth: 0,         // No failure yet
+
+      // === REBOUND EFFECTS (Nov 21, 2025) ===
+      reboundEffectiveness: 1.0,           // 100% effectiveness initially
+      reboundDecayRate: 0.075,             // 7.5% annual decay (conservative)
+
       // === REGIONAL HETEROGENEITY ===
       regionalReadiness: {
         OECD: 0.85,                        // High-income, strong institutions
@@ -1281,7 +1292,12 @@ export function createDefaultInitialState(
       criticalJunctureEscapes: [],
       cooperativeSpirals: [],
       cooperativeOwnershipEvents: []
-    }
+    },
+
+    // Initial population for mortality calculations (Nov 21, 2025)
+    // Used by endGame.ts to calculate mortality bands
+    // Research: UN World Population Prospects 2024 Revision (8.1B)
+    initialPopulation: 8.0  // 8.0 billion baseline (matches global population)
   };
   
   // Phase 2: Initialize and link organizations

@@ -1,6 +1,6 @@
 # Research Update Queue
-**Generated:** 11/20/2025, 10:30:04 PM
-**Files Scanned:** 491
+**Generated:** 11/21/2025, 9:30:04 PM
+**Files Scanned:** 510
 
 ---
 
@@ -12,7 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 166 (33.8%)
+**Count:** 171 (33.5%)
 
 ### `CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
 - **Oldest source:** 2009 (16 years old)
@@ -224,6 +224,21 @@
 - **Status:** Not used in simulation
 - **Path:** `research/ai_coordination_transition_management_20251120.md`
 
+### `ai_coordination_transition_management_20251121.md`
+- **Oldest source:** 2009 (16 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/ai_coordination_transition_management_20251121.md`
+
+### `ai_coordination_transition_mechanics_20251121.md`
+- **Oldest source:** 1990 (35 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/ai_coordination_transition_mechanics_20251121.md`
+
+### `ai_coordination_transition_mechanics_VALIDATED_20251121.md`
+- **Oldest source:** 1990 (35 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/ai_coordination_transition_mechanics_VALIDATED_20251121.md`
+
 ### `ai_governance_international_coordination_20251113.md`
 - **Oldest source:** 1998 (27 years old)
 - **Status:** Not used in simulation
@@ -268,6 +283,11 @@
 - **Oldest source:** 2018 (7 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/alignment_technique_network_completion_20251031.md`
+
+### `amoc_original_sources_20251120.md`
+- **Oldest source:** 1996 (29 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/amoc_original_sources_20251120.md`
 
 ### `amoc_tipping_point_original_sources_20251120.md`
 - **Oldest source:** 1996 (29 years old)
@@ -799,6 +819,11 @@
 - **Status:** Not used in simulation
 - **Path:** `research/verification_d6e80e8_20251106.md`
 
+### `verification_e690a6a_20251121.md`
+- **Oldest source:** 2016 (9 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/verification_e690a6a_20251121.md`
+
 ### `visionary_ideas_research_validation_2025-10-16.md`
 - **Oldest source:** 2014 (11 years old)
 - **Status:** Not used in simulation
@@ -848,7 +873,7 @@
 
 ## 📋 MEDIUM (Review Within Quarter)
 
-**Count:** 23 (4.7%)
+**Count:** 23 (4.5%)
 
 - `LAYER2_COMPREHENSIVE_STATUS_20251030.md` - Oldest: 2020 (5 years)
 - `LAYER2_DEBATE_SUMMARY_20251030.md` - Oldest: 2020 (5 years)
@@ -878,7 +903,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 302 (61.5%)
+**Count:** 316 (62.0%)
 
 All sources <3 years old. No action required.
 
@@ -888,11 +913,11 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 491 |
+| Total files | 510 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 166 (33.8%) |
-| MEDIUM | 23 (4.7%) |
-| LOW | 302 (61.5%) |
+| HIGH | 171 (33.5%) |
+| MEDIUM | 23 (4.5%) |
+| LOW | 316 (62.0%) |
 | Average age | 7.5 years |
 | Oldest source | 1955 (70 years ago) |
 
@@ -900,21 +925,21 @@ All sources <3 years old. No action required.
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 302 | 61.5% |
-| Warning (3-5yr) | 23 | 4.7% |
-| Critical (>5yr) | 166 | 33.8% |
+| Current (<3yr) | 316 | 62.0% |
+| Warning (3-5yr) | 23 | 4.5% |
+| Critical (>5yr) | 171 | 33.5% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-- **Current:** 33.8% critical (>5yr)
+- **Current:** 33.5% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
-1. Update 166 HIGH priority file(s) within 1 month
+1. Update 171 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 

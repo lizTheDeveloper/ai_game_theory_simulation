@@ -1,0 +1,16 @@
+[Unit]
+Description=Autonomous Researcher - Hourly Research Updates
+After=network.target
+
+[Service]
+Type=oneshot
+User=root
+WorkingDirectory=/home/user/ai_game_theory_simulation
+ExecStart=/home/user/ai_game_theory_simulation/researcher-worker.sh
+StandardOutput=append:/home/user/ai_game_theory_simulation/logs/systemd_researcher.log
+StandardError=append:/home/user/ai_game_theory_simulation/logs/systemd_researcher.log
+# Timeout after 35 minutes (script has internal 30min timeout)
+TimeoutStartSec=2100
+
+[Install]
+WantedBy=multi-user.target

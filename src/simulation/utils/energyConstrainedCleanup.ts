@@ -167,26 +167,16 @@ export function applyEnergyConstrainedCleanup(
   // Research: EPA 2024 - 75 GJ/ton median, IEA 2024 - 600 EJ/year global energy
   // Cleanup competes with other energy uses
 
-  // Access renewable energy surplus (total renewable capacity - demand)
-  const renewableCapacity = assertStateProperty(
+  // Access renewable energy surplus (calculated by ClimateDeploymentPhase)
+  // This represents TWh available after baseline consumption
+  const renewableSurplus = assertStateProperty(
     state.resourceEconomy?.energy,
-    'renewableCapacity',
+    'renewableSurplus',
     {
       location: 'applyEnergyConstrainedCleanup',
       month: state.currentMonth,
     }
   );
-
-  const energyDemand = assertStateProperty(
-    state.resourceEconomy?.energy,
-    'demand',
-    {
-      location: 'applyEnergyConstrainedCleanup',
-      month: state.currentMonth,
-    }
-  );
-
-  const renewableSurplus = Math.max(0, renewableCapacity - energyDemand);
 
   // Estimate energy required for cleanup (very rough - assumes boundary value correlates with stock)
   // TODO: Better stock tracking (needs contamination mass estimates)
