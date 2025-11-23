@@ -4,6 +4,26 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
+## 📖 Research Update: Catastrophe Recovery Timescales (November 23, 2025 - commit edec81d)
+
+**Status:** ✅ UPDATED
+**Priority:** N/A (Research Enhancement)
+**Type:** Research Currency Update
+
+**Summary:** Updated catastrophe recovery timescales research file with 2025 peer-reviewed sources. No mechanics changed - strengthens existing research foundation.
+
+**New Sources Added:**
+- **UNDRR GAR 2025:** $2.3T annual disaster costs, three downward spirals (debt + insurability + GDP)
+- **Buijs et al. 2025:** Consecutive disasters, non-linear cascade effects, critical tipping points
+- **Zhao et al. 2025:** Social capital mechanisms (5 mechanisms, 3 capital types)
+- **Communications Psychology 2024:** Three-level resilience model, socioeconomic effect sizes
+
+**Relevance:** Validates existing cascade dynamics and 80-150 year recovery timescales for major catastrophes. Supports current model findings.
+
+**File:** research/catastrophe-recovery-timescales_20251017.md (upgraded to A- quality: 85% peer-reviewed)
+
+---
+
 ## 🔍 Mechanism Audit: Mortality Stabilizers (November 23, 2025 - commit 9922fb4)
 
 **Status:** ⚠️ CITATION ISSUES IDENTIFIED
