@@ -703,6 +703,15 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 - **Recently Completed:** Nitrogen-food coupling research (Nov 15), Climate deployment timescales (Nov 15), Novel Entities 0% effectiveness (Nov 14)
 
 **Research Verification Queue:**
+- [ ] **Hindcast Food Security Parameters** - ⏳ PENDING VERIFICATION
+  - **Research Spec:** `research/verification_bb445b3_20251124.md`
+  - **Implementation:** Commit bb445b3 - Historical mode food security guards
+  - **Priority:** HIGH - Affects hindcast famine occurrence
+  - **Citations to Verify:**
+    - FAO State of Food Insecurity reports (1999-2015): Regional undernourishment percentages
+    - Global 95% food security claim (vs FAO's ~18.6% global undernourishment 1990-92)
+    - Sub-Saharan Africa 15% undernourishment (vs FAO's ~35% for 1990-92)
+  - **Status:** ⏳ AWAITING VALIDATION PHASE
 - [ ] **Hindcast Calibration Era Mortality Multipliers** - ⏳ PENDING VERIFICATION
   - **Research Spec:** `research/verification_dd327b7_20251124.md`
   - **Implementation:** Commit dd327b7 - ERA_MORTALITY_MULTIPLIERS, thermal inertia, climate stability derivation
