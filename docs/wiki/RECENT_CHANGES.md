@@ -4,6 +4,35 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
+## ✅ Validation: Nuclear Winter + Planetary Restoration (November 24, 2025 - commit a56f7b9)
+
+**Status:** ✅ BOTH PASS
+**Priority:** MEDIUM/HIGH (Research Currency)
+**Type:** Literature Revalidation
+
+**Summary:** Two research validation reviews completed, both passing:
+
+1. **Nuclear Winter Literature Revalidation (MEDIUM):**
+   - Updated to 2022-2025 sources (Xia et al. 2022, Penn State 2025, IIASA 2025)
+   - Robock 2007/Toon 2008 concerns addressed - now using current research
+   - Parameters verified: crop yield multipliers, temperature anomalies
+   - File: `reviews/nuclear_winter_literature_validation_20251124.md`
+
+2. **Planetary Restoration Timescales Audit (HIGH):**
+   - All timescales match Druke et al. 2024 and irreversibility research
+   - Ice sheets: 100-800yr (impl: 450yr half-life) ✅
+   - Permafrost: Correctly irreversible ✅
+   - Amazon: 50yr transition, irreversible past threshold ✅
+   - Nitrogen: 50-200yr (impl: 125yr half-life) ✅
+   - File: `reviews/planetary_restoration_timescales_audit_20251124.md`
+
+**Also in this commit:**
+- New plan: `plans/proposed_3stage_governance_model_20251124.md` (3-stage governance implementation spec)
+- Research: Test-time compute energy data (Section 8 in ai_energy_water_consumption)
+- Verification: `research/verification_769af04_20251124.md` (test-time compute citations)
+
+---
+
 ## 📖 Research Update: Catastrophe Recovery Timescales (November 23, 2025 - commit edec81d)
 
 **Status:** ✅ UPDATED
