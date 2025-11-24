@@ -173,6 +173,17 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - Global Tipping Points Report Oct 2025 - Four interconnected elements (GIS, AMOC, Amazon, SAM) showing diminished resilience
 - **Key Finding:** Validates simulation's cascade multiplier approach (1.15-1.60× for 2-4+ elements)
 
+**Nov 24: TIPMIP 2025 Framework - Major Upcoming Research Source** (commit b7f29b8)
+- 🔬 **Research Update:** Added TIPMIP (Tipping Points Modelling Intercomparison Project) to `climate_tipping_cascades_2024_2025_update.md`
+- **New Sources (7→9):**
+  - Winkelmann et al. (2025) EGUsphere - First systematic multi-model tipping point intercomparison (50+ authors: PIK, NASA, SRC)
+  - TIPMIP ESM Protocol Phase 1 (2025) - Standardized experimental methodology
+- **Key Contribution:** TIPMIP is the first CMIP7-tier MIP dedicated to tipping thresholds
+  - 7 core systems: Ice sheets, AMOC, permafrost, forests, glaciers
+  - 300-year reversibility testing methodology
+- **Simulation Impact:** Future parameter update expected 2026-2028 when multi-model results publish
+- **Current Status:** Flagged as `TIPMIP_pending_update: true` - continue using Armstrong McKay 2022/2024 thresholds
+
 **Nov 24: Positive Tipping Points Research Update** (commit 38cb04b)
 - 🔬 **Research Update:** Added November 2025 sources to `positive_tipping_points_2024_2025_20251114.md`
 - **New Sources (11→14):**
