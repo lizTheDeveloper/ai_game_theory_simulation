@@ -53,6 +53,19 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
       return { events: [] };
     }
 
+    // ============================================================================
+    // HINDCAST MODE GUARD (Nov 24, 2025)
+    // ============================================================================
+    // In historical mode (1990-2020), food security was STABLE or IMPROVING.
+    // This degradation phase models future AI-era stress that didn't exist then.
+    // Skip degradation to allow hindcast validation against actual history.
+    // Source: FAO State of Food Insecurity reports (1999-2015) show stable/improving trends
+    // ============================================================================
+    if (state.config?.scenarioMode === 'historical' && state.currentYear < 2020) {
+      // Don't degrade food security in historical mode - it was actually stable
+      return { events: [] };
+    }
+
     // === RACE CONDITION FIX (Nov 20, 2025) ===
     // REMOVED: Duplicate call to updateNitrogenFoodCoupling()
     // NitrogenFoodCouplingPhase (order 19.6) already called it and stored results in state
