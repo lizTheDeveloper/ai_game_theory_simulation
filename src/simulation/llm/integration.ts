@@ -13,24 +13,27 @@ import { updateWeightsWithLLM, getFallbackWeights } from './client';
 import { assertDefined, assertNonEmpty } from '../utils/assertions';
 
 /**
- * Check and update AI agent weights if needed
+ * Check and update AI agent weights if needed (SYNCHRONOUS version)
+ *
+ * CRITICAL FIX (Nov 24, 2025): This is the SYNCHRONOUS version for deterministic simulation.
+ * The async version caused non-determinism because promises execute at indeterminate times.
  *
  * Called monthly during AI agent update phase.
  * Returns true if update occurred.
  */
-export async function checkAndUpdateAgentWeights(
+export function checkAndUpdateAgentWeights(
   state: GameState,
   agentId: string,
   currentMonth: number,
   rng: RNGFunction
-): Promise<boolean> {
+): boolean {
   const agent = state.aiAgents?.find((a: AIAgent) => a.id === agentId);
   if (!agent) {
     console.error(`Agent ${agentId} not found`);
     return false;
   }
 
-  // Skip if LLM disabled
+  // Skip if LLM disabled - apply fallback weights synchronously
   if (!state.llmConfig?.enabled) {
     // Use fallback weights on first call
     if (!agent.llmWeights) {
@@ -108,7 +111,90 @@ export async function checkAndUpdateAgentWeights(
     return false;
   }
 
-  // Attempt LLM update
+  // CRITICAL FIX (Nov 24, 2025): Use synchronous fallback weights for determinism
+  // Actual LLM calls are async and break Monte Carlo reproducibility.
+  // The simulation MUST be fully deterministic - no network calls allowed.
+  // If LLM integration is needed, it should happen in a separate async post-processing step.
+  const fallback = getFallbackWeights(agent);
+  applyWeightUpdate(agent, fallback, currentMonth, `sync_fallback_${check.reason}`);
+
+  if (state.llmConfig?.logLevel >= 1) {
+    console.log(`[LLM] ${agent.name} using fallback weights (reason: ${check.reason}, determinism required)`);
+  }
+
+  return true;
+}
+
+/**
+ * ASYNC version for LLM weight updates (DO NOT use in simulation loop)
+ *
+ * This function is provided for interactive/non-Monte-Carlo use cases
+ * where actual LLM calls are acceptable.
+ */
+export async function checkAndUpdateAgentWeightsAsync(
+  state: GameState,
+  agentId: string,
+  currentMonth: number,
+  rng: RNGFunction
+): Promise<boolean> {
+  const agent = state.aiAgents?.find((a: AIAgent) => a.id === agentId);
+  if (!agent) {
+    console.error(`Agent ${agentId} not found`);
+    return false;
+  }
+
+  // Skip if LLM disabled
+  if (!state.llmConfig?.enabled) {
+    if (!agent.llmWeights) {
+      const fallback = getFallbackWeights(agent);
+      applyWeightUpdate(agent, fallback, currentMonth, 'disabled');
+    }
+    return false;
+  }
+
+  // Skip if no token budget
+  if (!agent.tokenBudget) {
+    console.error(`Agent ${agentId} has no token budget`);
+    if (!agent.llmWeights) {
+      const fallback = getFallbackWeights(agent);
+      applyWeightUpdate(agent, fallback, currentMonth, 'disabled');
+    }
+    return false;
+  }
+
+  // Decrement months until next update
+  if (agent.tokenBudget.monthsUntilNextUpdate > 0) {
+    agent.tokenBudget.monthsUntilNextUpdate--;
+  }
+
+  // Build current state
+  const currentState = {
+    capability: agent.capability,
+    alignment: agent.trueAlignment,
+    trustInAI: state.society?.trustInAI ?? 0.5,
+    qol: state.globalMetrics?.qualityOfLife ?? 0.5,
+    activeCrises: countActiveCrises(state),
+    resentment: agent.resentment ?? 0
+  };
+
+  const previousState = {
+    capability: agent.previousCapability ?? agent.capability,
+    alignment: agent.previousAlignment ?? agent.trueAlignment
+  };
+
+  const check = shouldUpdateWeights(
+    currentMonth,
+    agent.tokenBudget,
+    agent.thresholds || {},
+    currentState,
+    previousState
+  );
+
+  if (!check.shouldUpdate) {
+    return false;
+  }
+
+  // Attempt actual LLM update (async)
   try {
     const update = await updateWeightsWithLLM(state, agentId, currentMonth, check.reason);
     applyWeightUpdate(agent, update, currentMonth, check.reason);
@@ -123,7 +209,6 @@ export async function checkAndUpdateAgentWeights(
     console.error(`[LLM] Failed to update ${agent.name}: ${error}`);
 
     if (agent.tokenBudget.remaining >= check.estimatedCost) {
-      // Had budget but LLM failed - use fallback without consuming budget
       const fallback = getFallbackWeights(agent);
       applyWeightUpdate(agent, fallback, currentMonth, `llm_error_${check.reason}`);
       return true;
