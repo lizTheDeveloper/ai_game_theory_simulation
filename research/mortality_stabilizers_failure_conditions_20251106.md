@@ -1,6 +1,13 @@
+---
+oldest_source: 2010
+newest_source: 2025
+last_verified: 2025-11-24
+---
+
 # Mortality Stabilizers: Failure Conditions and Conditional Application Logic
 
 **Date:** November 6, 2025
+**Last Updated:** 2025-11-24 (Autonomous Researcher - added frontmatter)
 **Researcher:** Orchestrator (with web search verification of 2024-2025 sources)
 **Purpose:** Extend existing mortality stabilizer research with FAILURE CONDITIONS for realistic simulation
 **Status:** Research Complete - Ready for Sylvia (research-skeptic) validation
