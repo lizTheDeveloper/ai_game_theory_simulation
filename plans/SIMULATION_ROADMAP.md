@@ -39,6 +39,31 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
+   - **BaselineMortalityPhase UN WPP 2024 Citations** - CRITICAL (Added Nov 24, 2025)
+     - **Context:** New phase added to fix hindcast Phase 3 blocker (population declining instead of growing)
+     - **Research File:** logs/baseline_mortality_fix_20251124.md (84 lines)
+     - **Verification File:** research/verification_2087a26_20251124.md
+     - **Key Claims Requiring Two-Layer Verification:**
+       - **CRITICAL:** UN WPP 2024 historical CDR values (1950-2030)
+         - 1990: 9.8 per 1000 (hindcast start)
+         - 2000: 9.0 per 1000
+         - 2025: 7.2 per 1000 (calibration baseline)
+         - Complete series 1950-2030 with 10 data points
+       - **HIGH:** IHME GBD 2024 socioeconomic mortality differentials
+         - Elite 0.5×, Professional 0.7×, Working 1.0×, Precariat 1.3×, Informal 1.5×
+       - **ISSUE:** UN WPP 2024 may not exist (2022 is latest known edition?)
+       - **ISSUE:** IHME GBD 2024 may not exist (2021 is latest known edition?)
+       - **ISSUE:** Socioeconomic categories may not match IHME terminology
+     - **Total:** 2 major citations, 10 CDR data points, 5 mortality multipliers
+     - **Implementation Impact:**
+       - BaselineMortalityPhase (order 34.8, 171 lines)
+       - Fixes hindcast population growth 5.3B→6.1B (1990-2000)
+       - Separates "baseline health" from "crisis response" (ERA multiplier design decision)
+     - **Priority:** CRITICAL - Already implemented and affecting hindcast validation
+     - **Status:** ⏳ READY FOR VALIDATION - Verification file created by historian
+     - **Commit:** 2087a26
+     - **Next Steps:** Two-layer verification (existence + claim accuracy) → Validate CDR values → Confirm socioeconomic multipliers → Update if sources don't exist
+
    - **AMOC & Planetary Boundaries 2024-2025 Updates** - CRITICAL (Added Nov 24, 2025)
      - **Context:** Two research files documenting latest findings on Earth system tipping points
      - **Research Files:**
