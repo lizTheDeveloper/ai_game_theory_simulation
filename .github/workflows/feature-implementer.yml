@@ -300,7 +300,6 @@ jobs:
           prompt: ${{ steps.read_prompt.outputs.prompt }}
           claude_args: |
             --max-turns 100
-            --agents feature-implementer
             --dangerously-skip-permissions
 
       - name: Commit Agent Changes
