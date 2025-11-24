@@ -25,8 +25,8 @@
 
 import type { GameState, ScenarioMode } from '@/types/game';
 import { createDefaultInitialState } from './initialization';
-import { historicalClimateLoader, type HistoricalClimateYear } from '@/data/loaders/historicalClimateLoader';
-import { historicalEconomicLoader, type HistoricalEconomicYear } from '@/data/loaders/historicalEconomicLoader';
+import { getClimateDataForYear, type AnnualClimateData } from '@/data/loaders/historicalClimateLoader';
+import { getEconomicDataForYear, type AnnualEconomicData } from '@/data/loaders/historicalEconomicLoader';
 import { assertFinite } from './utils/assertions';
 
 /**
@@ -53,6 +53,24 @@ export interface HistoricalInitializationOptions {
 }
 
 /**
+ * Historical climate data for hindcasting (mapped from AnnualClimateData)
+ */
+export interface HistoricalClimateYear {
+  co2Ppm: number;
+  tempAnomaly: number;
+  tempVsPreindustrial: number;
+}
+
+/**
+ * Historical economic data for hindcasting (mapped from AnnualEconomicData)
+ */
+export interface HistoricalEconomicYear {
+  populationBillions: number;
+  globalGini: number;
+  globalHDI: number;
+}
+
+/**
  * Historical data bundle for a specific year
  */
 export interface HistoricalDataBundle {
@@ -72,18 +90,22 @@ export async function loadHistoricalData(year: number): Promise<HistoricalDataBu
     throw new Error(`Historical data only available for 1990-2024, got ${year}`);
   }
 
-  await historicalClimateLoader.load();
-  await historicalEconomicLoader.load();
+  const climateData = getClimateDataForYear(year);
+  const economicData = getEconomicDataForYear(year);
 
-  const climate = historicalClimateLoader.getYear(year);
-  const economic = historicalEconomicLoader.getYear(year);
+  // Map raw data to hindcasting format
+  const climate: HistoricalClimateYear = {
+    co2Ppm: climateData.co2Ppm,
+    tempAnomaly: climateData.temperatureAnomalyC,
+    // Pre-industrial baseline is ~0.7C below 1951-1980 baseline used by NASA GISS
+    tempVsPreindustrial: climateData.temperatureAnomalyC + 0.7,
+  };
 
-  if (!climate) {
-    throw new Error(`Missing climate data for year ${year}`);
-  }
-  if (!economic) {
-    throw new Error(`Missing economic data for year ${year}`);
-  }
+  const economic: HistoricalEconomicYear = {
+    populationBillions: economicData.globalPopulationBillion,
+    globalGini: economicData.giniIndex,
+    globalHDI: economicData.hdi,
+  };
 
   return { climate, economic, year };
 }
