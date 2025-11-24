@@ -587,7 +587,8 @@ export function applyResearchGrowth(
       : 0;
 
     // Calculate AI's research capability (average of cognitive + relevant research domain)
-    const domainAvg = Object.values(newProfile.research[domain]).reduce((a: number, b: number) => a + b, 0) /
+    const domainValues = Object.values(newProfile.research[domain]) as number[];
+    const domainAvg = domainValues.reduce((a: number, b: number) => a + b, 0) /
       Object.keys(newProfile.research[domain]).length;
     const aiResearchCapability = (newProfile.cognitive + domainAvg) / 2;
 
