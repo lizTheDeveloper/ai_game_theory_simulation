@@ -64,7 +64,8 @@ export class TimeAdvancementPhase implements SimulationPhase {
     // CRITICAL FIX (Nov 24, 2025): Respect simulation start year for historical hindcasts
     // Historical mode starts at year 1990 (or other historical year), not year 0
     // currentYear should be startYear + years elapsed, not just years elapsed
-    const simulationStartYear = (state as { simulationStartYear?: number }).simulationStartYear ?? 0;
+    // BUG FIX (Nov 24, 2025): Read from config.startYear, not non-existent simulationStartYear
+    const simulationStartYear = state.config?.startYear ?? 2025;
     state.currentYear = simulationStartYear + Math.floor(state.currentMonth / 12);
 
     // DEBUG (Nov 24, 2025): Verify start year is propagating correctly
