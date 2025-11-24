@@ -1,16 +1,16 @@
 # Master Implementation Roadmap
 ## AI Alignment Game Theory Simulation - Project Hub
 
-**Date:** November 23, 2025 (Updated: Research-Driven Priorities from Cynthia + Sylvia)
+**Date:** November 23, 2025 (Updated: Monte Carlo Fixed, Validation Sprint Ready)
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**Current Status:** 🟡 **GOOD** (Nov 23, 2025 - Uncertainty Complete, Monte Carlo Blocked)
+**Current Status:** 🟢 **OPERATIONAL** (Nov 23, 2025 - Monte Carlo Fixed, Validation Sprint Ready)
 - **Research Quality:** A (96% sources from 2020+, 3 CRITICAL gaps resolved, research debate complete)
 - **Architecture Health:** B+ (2 CRITICAL fixes applied, 0 CRITICAL/HIGH issues remaining, 3 MEDIUM debt items)
-- **System Performance:** Monte Carlo BLOCKED by temperature assertion bug (new CRITICAL)
-- **System Trajectory:** STABLE - Uncertainty propagation complete, but validation blocked
-- **Nov 23 Update:** Uncertainty propagation implementation validated (Grade B+), 1 new CRITICAL bug filed
+- **System Performance:** ✅ Monte Carlo OPERATIONAL (temperature assertion bug FIXED Nov 23)
+- **System Trajectory:** STABLE - Uncertainty propagation complete, validation unblocked
+- **Nov 23 Update:** Temperature assertion bug FIXED (10/10 runs pass), determinism verified (bit-identical for same seed)
 
 ## 🔬 Research-Driven Priorities (Nov 23 Coffee Chat)
 
@@ -43,8 +43,7 @@
      - ECS connected to temperature calculations (commit df8ff4a)
    - **Research:** `research/uncertainty_propagation_climate_parameters_20251120.md` (Grade A)
    - **Validation:** `reviews/uncertainty_propagation_validation_20251123.md` (Grade B+)
-   - **BLOCKER:** Monte Carlo CV analysis blocked by separate bug (temperature assertion failure)
-   - **Bug Filed:** `plans/CRITICAL_monte_carlo_temperature_bug_20251123.md`
+   - **Bug RESOLVED:** Temperature assertion bug FIXED (Nov 23) - `plans/CRITICAL_monte_carlo_temperature_bug_20251123.md`
    - **Remaining:** Research-skeptic validation (not blocking), wiki documentation
 
 3. **Mechanism Audits**
@@ -150,6 +149,53 @@
     - **Complexity:** 2 systems (multi-paradigm DUI, research update)
     - **Timeline:** Q2 2026
     - **Source:** `reviews/VALIDATION_ACTION_ITEMS_20251121.md` Item #15
+
+---
+
+## 🗓️ Week of Nov 26 - Validation Sprint
+
+**Context:** Monte Carlo temperature bug FIXED (Nov 23). Validation blocked for 2 days, now unblocked.
+**Target:** Autonomous workers returning Nov 26 with validation priority stack.
+
+**Key Insight (Nov 24 Orchestrator Session):**
+> **Degradation >> recovery asymmetry is EXPECTED BEHAVIOR per irreversibility research, not a bug.**
+> The model shows rapid environmental collapse with slow recovery timescales (100-800 years for ice sheets).
+> This is research-accurate per Drüke et al. 2024, not a calibration error.
+
+### Validation Priority Stack
+
+| Priority | Task | Owner | Est. Hours | Status | Dependencies |
+|----------|------|-------|------------|--------|--------------|
+| 1 | Verify temp bug fix committed | Orchestrator | 0.5 | ✅ DONE | None |
+| 2 | Determinism stress test (N=100) | Priya | 2 | Ready | #1 |
+| 3 | Planetary restoration timescales audit | Roy | 2-3 | Ready | None |
+| 4 | Climate mini-hindcast data (1990-2010) | Cynthia | 2 | Ready | None |
+| 5 | Historical initialization mode | Roy | 3-4 | Ready | None |
+| 6 | Mini-hindcast validation | Priya | 2 | Blocked | #4, #5 |
+| 7 | Mechanism audits (tipping points) | Sylvia | 2-3 | Ready | None |
+
+### Climate Mini-Hindcast Validation (NEW - HIGH Priority)
+
+**Objective:** Validate climate subsystem against 1990-2010 historical data
+**Success Criteria:** CO2 within 5% of Keeling curve
+**Source:** Nov 24 orchestrator session
+
+**Work Breakdown:**
+1. **Historical Data Collection (Cynthia):**
+   - CO2: Keeling curve monthly (NOAA/Scripps)
+   - Temperature: HadCRUT5 anomaly time series
+   - Emissions: Global Carbon Project annual estimates
+2. **Historical Initialization Mode (Roy):**
+   - Add 1990 initialization state (CO2=354ppm, temp anomaly=0.45C)
+   - Wire existing `initializeSimulation` to accept historical overrides
+3. **Validation Analysis (Priya):**
+   - Run simulation 1990-2010 (240 months)
+   - Calculate % deviation from Keeling curve
+   - Assess temperature trajectory alignment
+   - Generate hindcast validation report
+
+**Complexity:** 3 systems (climate, initialization, validation)
+**Related:** Hindcasting Validation (CRITICAL #1) - this is a focused subset
 
 ---
 
