@@ -50,15 +50,14 @@
      - Default amocThreshold: 3.0°C → 4.0°C
    - **Validated:** Monte Carlo N=3, no crashes, no early AMOC collapses
 
-1c. **Governance Scenario Validation Bug** (NEW from Nov 23 - CRITICAL)
-   - **Location:** `src/types/scenarios.ts` + `ApplyScenarioPrioritiesPhase.ts`
-   - **Issue:** Scenarios define `researchInvestment: 50` ($50B/month) but validation caps at ~$0.17B/month
-   - **Root cause:** GDP proxy (`getGDPProxy`) returns ~4 (population 8 x QoL 0.5) but validation assumes trillions (~$114T)
-   - **Impact:** All 6 governance scenarios fail immediately on validation
-   - **Fix options:**
-     - Scale GDP proxy to real-world values, OR
-     - Adjust validation formula, OR
-     - Reduce scenario parameters to match proxy scale
+1c. **Governance Scenario Validation Bug** - **FIXED** (Nov 24, 2025)
+   - **Location:** `src/simulation/utils/recoveryCalculations.ts`
+   - **Issue:** GDP proxy returned ~4 (unitless) instead of ~114T, causing scenario validation to fail
+   - **Fix:** Updated `getGDPProxy()` to return realistic GDP in trillions
+     - Formula: population × baseGDPPerCapitaK × qolMultiplier × economicMultiplier
+     - At baseline: 8 × 14.25 × 1.0 × 1.0 = 114 (trillions)
+     - New validation limits: max research budget = $4.75T/month (was $0.17B)
+   - **Commit:** `bdfc045fb`
    - **Complexity:** 2 systems (scenarios, GDP proxy/validation)
    - **Owner:** Roy (simulation-maintainer)
 
@@ -148,18 +147,24 @@
    - **Research:** Weijer et al. (2020), Van Westen et al. JGR (2024), Qin et al. (2025)
    - **Complexity:** 2 systems (climate, tipping points)
 
-7. **Alignment Faking Model Validation**
-   - Does "sandbagging" implementation capture Greenblatt et al. findings?
-   - Models faking alignment on evals but behaving differently in deployment
-   - Need methodology review before trusting this system
+7. **Alignment Faking Model Validation** - **VALIDATION COMPLETE** (Nov 24, 2025)
+   - ✅ Implementation captures Greenblatt et al. (Dec 2024) findings:
+     - 14% baseline faking rate (Claude 3 Opus)
+     - Lab-to-deployment scaling (0.3-1.0 range)
+     - 85% deception persistence (Apollo 2024)
+     - Dual alignment states (trueAlignment vs externalAlignment)
+   - **Report:** `reviews/alignment_faking_model_validation_20251124.md` (Grade B+)
    - **Complexity:** 2 systems (AI agents, adversarial evaluation)
    - **Related:** Nov 22 alignment faking research validation (Grade B+)
 
-8. **Nuclear Winter Literature 2020-2025 Revalidation** (Nov 21 Verification Crisis)
-   - Oldest sources (Robock 2007, Toon 2008) are 15-17 years old
-   - Check if parameters are still valid or contradicted by 2020-2025 studies
-   - **Search:** Journals (JGR, Earth's Future, Nature Climate Change), keywords ("nuclear winter", "soot injection climate")
-   - **Owner:** Cynthia (super-alignment-researcher)
+8. **Nuclear Winter Literature 2020-2025 Revalidation** - **VALIDATION COMPLETE** (Nov 24, 2025)
+   - ✅ Implementation already uses 2022-2025 research:
+     - Xia et al. (2022) Nature Food
+     - Penn State (2025) Cycles agroecosystem model
+     - IIASA (2025) nuclear winter research
+     - Robock et al. (2024-2025 updates)
+   - Original Robock 2007/Toon 2008 superseded by their own 2024-2025 updates
+   - **Report:** `reviews/nuclear_winter_literature_validation_20251124.md`
    - **Complexity:** 1 system (research validation)
    - **Source:** `reviews/VALIDATION_ACTION_ITEMS_20251121.md` Item #11
 
