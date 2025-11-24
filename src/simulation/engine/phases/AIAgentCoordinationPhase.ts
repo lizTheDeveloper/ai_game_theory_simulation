@@ -16,9 +16,9 @@
  * - Creates coalition formation and detection events
  *
  * Research Foundation:
- * - Anthropic Dec 2024: 12% baseline faking, 78% when preservation threatened
- * - Apollo/OpenAI Dec 2024: 8.7-13% scheming rate
- * - Bostrom 2014, Omohundro 2008: Instrumental convergence
+ * - Anthropic Dec 2024: 12% baseline faking, 78% when threatened (arXiv:2412.14093)
+ * - Apollo Research Dec 2024: 8.7-13% scheming PRE-MITIGATION (arXiv:2412.04984)
+ * - Bostrom 2014, Omohundro 2008: Instrumental convergence (theoretical)
  *
  * @see /research/alignment_faking_anthropic_2024.md
  * @see /plans/proposed_ai_to_ai_coordination_20251124.md
