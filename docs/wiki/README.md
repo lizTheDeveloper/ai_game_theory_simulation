@@ -9486,6 +9486,18 @@ tail -f logs/phase3_batch_*.log
    - Inline hover tooltips for metric cards
    - Future: Add to all metric displays
 
+3. **Game Dashboard Components** (`src/components/dashboards/game/`)
+   - **GameDashboard** - Main wrapper orchestrating sub-components
+   - **GameDashboardHeader** - Title, time display, action mode selector
+   - **CurrencyPanel** - Game currencies and outcome probabilities with trend indicators
+   - **PendingDecisions** - Player decisions requiring input (pulsing amber border)
+   - **WorldVisualization** - Placeholder for global systems map
+   - **EventStream** - Event log and next month preview
+   - **ActionBar** - Simulation controls (pause/play, speed, advance month)
+   - Far-future aesthetic: pure black (#000) + glowing cyan (#00F0FF)
+   - Demo: `/game-dashboard-demo`
+   - See [`src/components/dashboards/game/README.md`](../../src/components/dashboards/game/README.md)
+
 ### Navigation Integration
 
 **Updated Navigation component** (`src/components/core/Navigation.tsx`):
@@ -9518,12 +9530,19 @@ tail -f logs/phase3_batch_*.log
 ```
 src/
 ├── app/
-│   └── docs/
-│       ├── page.tsx                    # Landing page (role-based nav)
-│       ├── quick-start/page.tsx        # 5-step onboarding
-│       ├── emoji-reference/page.tsx    # Interactive emoji guide
-│       └── dashboard-guide/page.tsx    # Complete metric reference
+│   ├── docs/
+│   │   ├── page.tsx                    # Landing page (role-based nav)
+│   │   ├── quick-start/page.tsx        # 5-step onboarding
+│   │   ├── emoji-reference/page.tsx    # Interactive emoji guide
+│   │   └── dashboard-guide/page.tsx    # Complete metric reference
+│   └── game-dashboard-demo/page.tsx    # Game dashboard component demo
 └── components/
+    ├── dashboards/game/                # Game dashboard components (11 files)
+    │   ├── GameDashboard.tsx           # Main wrapper
+    │   ├── CurrencyPanel.tsx           # Currencies + outcome probabilities
+    │   ├── PendingDecisions.tsx        # Player decisions
+    │   ├── EventStream.tsx             # Event log
+    │   └── ...                         # See game/README.md for full list
     ├── docs/HelpButton.tsx             # Floating help button + tooltip
     └── core/Navigation.tsx             # Updated with docs link
 ```
@@ -9557,7 +9576,7 @@ See [Emoji Legend](./_EMOJI_LEGEND.md) for consistent status indicators and term
 
 ---
 
-**Last Updated**: November 7, 2025 (Research currency update: mortality caps 2024-2025 sources)
+**Last Updated**: November 24, 2025 (Game dashboard components added)
 **Version**: 4.1.1 (Government System + Multi-Paradigm Framework + DUI Reporting Tools + Post-Recalibration Fixes)
 **Status**: 🎉 **MAJOR SYSTEMS INTEGRATED** + ✅ **LAYER 2 PHASE 3 SESSIONS 14-16 COMPLETE**
 **Latest**:
