@@ -165,6 +165,16 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - Temperature-dependent collapse: 0.5% (<4°C) → 50% (4°C) → 90% (>5.5°C) [Updated Nov 24]
 - 📄 **Audit:** reviews/mechanism_audit_mortality_stabilizers_20251124.md
 
+**Nov 24: Positive Tipping Points Research Update** (commit 38cb04b)
+- 🔬 **Research Update:** Added November 2025 sources to `positive_tipping_points_2024_2025_20251114.md`
+- **New Sources (11→14):**
+  - IEA (2025): Solar generation grew 30% in 2024, surpassed 2,000 TWh milestone
+  - Gupta & Stein (2024) PLOS ONE: EV 15-month doubling time confirmed (peer-reviewed)
+  - OECD (2025): Net Zero+ report on positive tipping cascades
+- **Key Finding:** Solar 30% annual growth EXCEEDS model's 25% parameter - model may be conservative
+- **Validation:** EV doubling time matches Høyer et al. 2023 (15.1 months)
+- 📊 **Updated Tipping Point Status Table:** Solar ✅, EVs ✅, Battery Storage ✅ ACCELERATING
+
 **Nov 23: God Mode Paradox Analysis - Technology Shock Discovery** (commit fb043bf)
 - 🔬 **Analysis:** N=20 Monte Carlo of "god mode" (all 71 technologies deployed at Month 0)
 - **PARADOX CONFIRMED:** Instant deployment produces WORSE outcomes than gradual deployment
