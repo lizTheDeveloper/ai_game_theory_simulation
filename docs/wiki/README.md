@@ -14,7 +14,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **17-dimensional quality of life**: Survival, health, education, meaning, environment
 - **Multi-paradigm perspectives**: Western Liberal, Development, Ecological, Indigenous worldviews
 - **Deterministic simulation**: Reproducible with RNG seeds for Monte Carlo analysis
-- **Phase-based architecture**: 98 phases per step (reduced from 116 via Nov 2025 consolidation, +1 AIAgentCoordinationPhase Nov 24)
+- **Phase-based architecture**: 99 phases per step (reduced from 116 via Nov 2025 consolidation, +2 AIAgentCoordinationPhase + BaselineMortalityPhase Nov 24)
 
 ## 🚀 Project Status
 
@@ -28,6 +28,22 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **System Trajectory:** 🟡 OPERATIONAL (Nov 24: Game Layer Phase 1 complete, hindcast calibration Phase 1-2 COMPLETE - temperature/mortality fixes applied, remaining: planetary boundaries + food security)
 
 **Recent Major Achievements:**
+
+**Nov 24: Hindcast Phase 3 Blocker - BaselineMortalityPhase RESOLVED** (commit 2087a26)
+- 🔧 **PROBLEM FIXED:** Population declining (5.3B→2.7B) instead of growing (5.3B→6.1B) during 1990-2000 hindcast
+- **ROOT CAUSE:** Baseline demographic mortality (natural deaths from aging/disease) was DEFINED in demographics but NEVER added to Bayesian mortality system
+  - Bayesian system only tracked crisis deaths (climate, famine, conflict)
+  - Missing ~50M/year baseline deaths from aging
+- **SOLUTION:** Created BaselineMortalityPhase (order 34.8)
+  - Uses UN World Population Prospects 2024 historical CDR (crude death rate) data
+  - Converts CDR to monthly mortality risk: 1990 (9.8/1000) → 2025 (7.2/1000)
+  - ERA multipliers = crisis response capability (NOT baseline health)
+  - Baseline mortality and crisis response are INDEPENDENT dimensions
+- **VALIDATION:** Baseline deaths now match UN data across 1950-2030
+  - 1990: 9.8/1000 CDR (0.82% monthly) = ~52M deaths/year
+  - 2025: 7.2/1000 CDR (0.60% monthly) = ~60M deaths/year
+- **KEY INSIGHT:** ERA multipliers scale crisis vulnerability, not demographic baseline (which improves independently via healthcare)
+- 📄 **Files:** `BaselineMortalityPhase.ts` (171 lines), `logs/baseline_mortality_fix_20251124.md`
 
 **Nov 24: CRITICAL - Non-Determinism in Alignment Calculations RESOLVED** (commit 5858b05)
 - 🔧 **ROOT CAUSES FOUND AND FIXED:**
@@ -7860,7 +7876,7 @@ See **[`plans/MASTER_IMPLEMENTATION_ROADMAP.md`](../../plans/MASTER_IMPLEMENTATI
 
 ## 🔄 Phase Execution Order (Updated Nov 6, 2025)
 
-The simulation runs via a **phase-based architecture** with **95 phases** executing in deterministic order each month (reduced from 116 via Nov 2025 consolidation).
+The simulation runs via a **phase-based architecture** with **99 phases** executing in deterministic order each month (reduced from 116 via Nov 2025 consolidation, +2 Nov 24).
 
 **✅ Phase Consolidation Complete (Nov 9, 2025):** Reduced **116 → 95 phases** (-18% complexity). Target exceeded: 3-4 days actual vs 2-3 weeks estimated (5× faster). Zero regressions, 143 test cases, Monte Carlo validated.
 
@@ -7933,6 +7949,7 @@ The simulation runs via a **phase-based architecture** with **95 phases** execut
 - **UpdateEconomicStagePhase (34.0)**: Recovery tracking (**NEW Oct 16**)
 - QualityOfLifePhase (34.0): 17-dimensional QoL calculation
 - **FoodSecurityDegradationPhase (34.5)**: Crisis-accelerated food degradation (**NEW Oct 17**)
+- **BaselineMortalityPhase (34.8)**: Baseline demographic mortality (natural deaths from aging/disease) using UN WPP 2024 historical CDR data (**NEW Nov 24**)
 - **BayesianMortalityResolutionPhase (35.0)**: Resolve mortality risks from multiple sources (**NEW Oct 29**)
 - OutcomeProbabilitiesPhase (36.0): Utopia/dystopia/extinction probabilities
 - CrisisDetectionPhase (36.5): Detect active crises
@@ -8009,7 +8026,16 @@ The simulation runs via a **phase-based architecture** with **95 phases** execut
 - **✅ BLOCKER-3 FIXED & VALIDATED (Oct 30):** Fixed phantom "99.7% mortality = extinction" outcomes (BLOCKER-3). Root cause: Extinction rate floors using obsolete baseline (137× instead of 2.2×) in tech tree effects. Fix: Removed old floors, assertions now catch invalid values. **Validation:** N=10 Monte Carlo (seeds 42000-42009, 120 months) - 0 false extinction outcomes (validated 98c17d2).
 - **🎯 PRODUCTION READY (Oct 30):** All 3 critical blockers fixed and validated with N=10 Monte Carlo (seeds 42000-42009). **Status:** Physically plausible (bounded values), research-backed (Richardson 2023, Sen 1981, FAO 2023), defensively coded (fail-loudly assertions working as designed). Performance: ~9-11s/run (0.04s/month). Exit code: 0 (SUCCESS). See `reviews/blocker_fixes_final_validation_20251030.md`.
 
-**Total Phases**: 116 registered phases (phase proliferation addressed via consolidation plan - see below)
+**Key Changes (Nov 24):**
+- **✅ HINDCAST PHASE 3 BLOCKER FIXED (Nov 24):** BaselineMortalityPhase (order 34.8) - Fixes population declining instead of growing during 1990-2000 hindcast
+  - **Problem:** Population declining 5.3B→2.7B (expected: 5.3B→6.1B). Root cause: Baseline demographic mortality DEFINED but never added to Bayesian system
+  - **Solution:** New phase converts UN WPP 2024 historical CDR to mortality risk (9.8/1000 in 1990 → 7.2/1000 in 2025)
+  - **Key insight:** ERA multipliers = crisis response capability (NOT baseline health) - these are independent dimensions
+  - **Validation:** Deaths now match UN data (±10%): 1990 ~52M/year → 2025 ~60M/year
+  - **Research:** UN World Population Prospects 2024, IHME Global Burden of Disease 2024
+  - **Files:** `BaselineMortalityPhase.ts` (171 lines), `logs/baseline_mortality_fix_20251124.md` (84 lines)
+
+**Total Phases**: 99 registered phases (reduced from 116 via Nov 2025 consolidation, +2 Nov 24)
 
 ---
 
