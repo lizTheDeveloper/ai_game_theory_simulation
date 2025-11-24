@@ -18,7 +18,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 ## 🚀 Project Status
 
-**🟢 STABLE** (November 23, 2025)
+**🟢 STABLE** (November 24, 2025)
 
 **SYSTEM HEALTH:**
 - **Research Quality:** B+ (56.5% sources 2023-2025, 3 CRITICAL parameter issues resolved/documented, 8 research gaps identified) ✅ GOOD
@@ -28,6 +28,12 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **System Trajectory:** 🟢 STABLE (Nov 23 research priorities: mechanism audits complete, hindcasting plan ready)
 
 **Recent Major Achievements:**
+
+**Nov 24: Wet Bulb Era Scaling Fix** (commit dc141a7)
+- 🔧 **Hindcast Fix:** Re-applied accidentally reverted era scaling for wet bulb temperature events
+- **Changes:** Quadratic era scaling (year/2025)² for event frequency, baseline temperature adjustment
+- **Impact:** 1990 events now scale to ~61% of 2025 baseline (matches NOAA heat event trends)
+- **Status:** Partial fix for hindcast validation - dual death system investigation ongoing
 
 **Nov 23: AMOC Tipping Point 2025 Research Update** (commit 0b5bbc7)
 - 🌍 **Research Update:** New peer-reviewed sources on AMOC collapse timelines (3 papers, 2025)
@@ -65,12 +71,6 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - Validation: Compare simulated 2024 vs actual 2024 metrics
   - Estimated effort: 2-3 weeks phased implementation
   - 📄 Plan: plans/hindcasting_validation_implementation_plan.md (256 lines)
-<<<<<<< Updated upstream
-- 🔍 **Mechanism Audit: Mortality Stabilizers (Grade B+)**
-  - Verified Xia/Shi citations in nuclearWinter.ts (correctly cite Nature Food 2022)
-  - NO structural fabrication detected - citations match actual paper claims
-  - Gap found: Wet bulb threshold inconsistency (30.5C vs 35C literature standard)
-=======
   - ❌ **EXECUTED:** See commit 9f61983 above - validation FAILED, confirming need for historical initialization
 - 🔍 **Mechanism Audit: Mortality Stabilizers (Grade C+)** ⚠️ UPDATED
   - CRITICAL: Roadmap item "Xia/Shi papers" misattributes - those papers are nuclear winter, NOT stabilizers
@@ -78,7 +78,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - MODERATE: Cavalcanti aid effectiveness ~2x inflated vs paper values (29.5% vs 15%)
   - GOOD: Nuclear winter correctly calibrated to Xia's 5B death estimate
   - GOOD: Heat adaptation total max FIXED (0.8 → 0.45 matches Ballester)
->>>>>>> Stashed changes
+  - Gap found: Wet bulb threshold inconsistency (30.5C vs 35C literature standard)
   - 📄 Audit: reviews/mechanism_audit_mortality_stabilizers_20251123.md
 - 🔍 **Mechanism Audit: Tipping Point Cascades (Grade B+)**
   - Thresholds match Armstrong McKay et al. 2022 exactly (AMOC, Amazon, Arctic, etc.)
