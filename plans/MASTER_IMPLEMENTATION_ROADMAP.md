@@ -678,29 +678,35 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
     - Trust dynamics parameters: MODEL-DERIVED (documented as assumption)
   - **Report:** `research/verification_ae8380b_20251124.md`
   - **Status:** ✅ COMPLETE - Key empirical rates verified against source papers
-- [ ] **GDP Proxy Unit Fix** - VERIFICATION NEEDED (Nov 23, 2025)
+- [x] **GDP Proxy Unit Fix** - ✅ VERIFIED (Nov 24, 2025)
   - **Research Spec:** `research/verification_66e516f_20251123.md`
   - **Implementation:** Commit 66e516f - GDP per capita baseline in getGDPProxy()
-  - **Citation to Verify:** IMF April 2025 global GDP per capita $14,250
-  - **Status:** Ready for orchestrator VALIDATION phase (research file created)
-- [ ] **AI Agent Coordination Phase** - VERIFICATION NEEDED (Nov 24, 2025)
+  - **Citation Verified:** IMF WEO April 2025 - $14,250 * 8B = $114T matches IMF's $113.8T
+  - **Code Comment Fixed:** Clarified source as IMF WEO April 2025
+  - **Status:** ✅ COMPLETE
+- [x] **AI Agent Coordination Phase** - ✅ VERIFIED (Nov 24, 2025)
   - **Research Spec:** `research/verification_876abe5_20251124.md`
   - **Implementation Plan:** `plans/proposed_ai_to_ai_coordination_20251124.md` (commit 3c85bda)
   - **Implementation:** Commit 876abe5 - AIAgentCoordinationPhase (order 4.25)
-  - **Citations to Verify:**
-    - Anthropic Dec 2024: 12% baseline, 78% threatened alignment faking
-    - OpenAI/Apollo 2025: 8.7-13% scheming rate
-    - Situational awareness: 2% baseline, 4.5% trained (VAGUE SOURCE)
-  - **Status:** Ready for orchestrator VALIDATION phase (research file created)
-- [ ] **Hindcasting Data Loaders** - VERIFICATION NEEDED (Nov 23, 2025)
+  - **Citations Verified:**
+    - ✅ Anthropic Dec 2024: 12% baseline, 78% threatened (arXiv:2412.14093)
+    - ✅ Apollo Research Sep 2025: 8.7-13% scheming (date corrected from Dec 2024)
+    - ⚠️ Situational awareness: 2% baseline - MODEL ASSUMPTION (documented)
+  - **Code Comment Fixed:** Corrected scheming rate date (Dec 2024 -> Sep 2025)
+  - **Status:** ✅ COMPLETE - Key citations verified, model assumptions documented
+- [x] **Hindcasting Data Loaders** - ✅ VERIFIED (Nov 24, 2025)
   - **Research Spec:** `research/verification_6ee48e3_20251123.md`
   - **Implementation:** Commit 6ee48e3 - historicalClimateLoader.ts (329 lines), historicalEconomicLoader.ts (338 lines)
-  - **Data Sources to Verify:**
-    - Climate: NOAA Mauna Loa CO2, NASA GISS temperature, Global Carbon Budget emissions, AVISO sea level, NSIDC Arctic ice
-    - Economic: World Bank GDP/Gini, UN WPP population, UNDP HDI, ILO unemployment, PovcalNet poverty
-  - **Sample Values to Verify:** CO2 354→426 ppm, temp anomaly 0.44→1.45°C, population 5.32B→8.15B, GDP $22.6T→$105T
+  - **Data Sources Verified:**
+    - ✅ Climate: NOAA Mauna Loa CO2, NASA GISS temperature, Global Carbon Budget, AVISO, NSIDC - all URLs active
+    - ✅ Economic: World Bank GDP, UN WPP 2024, UNDP HDI, ILO ILOSTAT, PovcalNet - all URLs active
+  - **Sample Values Verified (HIGH PRIORITY):**
+    - ✅ CO2: 354.39 ppm (1990) vs IPCC/GISS 354.21-354.29 (<0.1% diff)
+    - ✅ Temperature: 1.45°C (2024) vs NASA 1.47°C (<2% diff)
+    - ✅ Population: 8.15B (2024) vs UN WPP 8.1B (<1% diff)
+    - ✅ GDP: $84.71T (2020) vs World Bank $84.7-85.8T (match)
   - **Priority:** HIGH (foundational for hindcasting validation)
-  - **Status:** Ready for orchestrator VALIDATION phase (research file created)
+  - **Status:** ✅ COMPLETE - High priority items verified, authoritative sources confirmed
 - [x] **Climate Deployment Timescales** - ✅ COMPLETE (Nov 12-15, 2025)
   - **Research:** `research/climate_tech_deployment_timescales_20251112.md` (35 KB, 15+ sources, Grade B+)
   - **Implementation Plan:** `plans/completed/climate_phased_deployment_model_20251113.md` (911 lines)
