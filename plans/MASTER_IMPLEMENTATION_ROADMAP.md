@@ -833,8 +833,17 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
   - Files: `plans/game-design/mockups/*.html`, `MOCKUP_REVIEW*.md`
 
 **Next Up (HIGH Priority):**
-- [ ] Convert HTML mockups to React components
-- [ ] Connect components to simulation state
+- [x] Convert HTML mockups to React components - **COMPLETE** (Nov 24, 2025)
+  - 11 files in `src/components/dashboards/game/`
+  - GameDashboard, Header, CurrencyPanel, PendingDecisions, EventStream, ActionBar
+  - Demo page at `/game-dashboard-demo`
+  - Commit: c549012f5
+- [x] Connect components to simulation state - **COMPLETE** (Nov 24, 2025)
+  - GameStateProvider.tsx - React context provider
+  - useGameState() hook for components
+  - Transforms GameState -> UI-ready data
+  - Actions: advanceMonth(), setSpeed(), queueDecision()
+  - Commit: 63ffd7660
 - [x] Create `src/game/` directory structure (per PHASE1_TECHNICAL_SPEC.md) - **COMPLETE** (Nov 24, 2025)
   - 17 files created across 4 subdirectories (core/, types/, scenarios/, observers/)
   - Core types: GameSessionInterface, ResearchScenarioId, QueueResult, GameLayerEvent
