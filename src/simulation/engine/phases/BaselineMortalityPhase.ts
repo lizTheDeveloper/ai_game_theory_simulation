@@ -89,6 +89,61 @@ function getHistoricalCrudeDeathRate(year: number): number {
 }
 
 /**
+ * Get historical baseline birth rate (crude birth rate per 1000)
+ *
+ * Returns the global average annual birth rate for a given year.
+ * Data from UN World Population Prospects 2024.
+ *
+ * Note: Birth rates have been steadily declining due to demographic transition:
+ * - Improved access to contraception
+ * - Rising education levels (especially for women)
+ * - Urbanization (lower economic incentive for large families)
+ * - Declining infant mortality (less need for "replacement" children)
+ */
+function getHistoricalCrudeBirthRate(year: number): number {
+  // UN WPP 2024 data: CBR per 1000 population
+  const HISTORICAL_CBR = {
+    1950: 36.9,  // Post-war baby boom
+    1960: 35.3,  // Peak global fertility
+    1970: 32.9,  // Start of demographic transition
+    1980: 28.1,  // Contraception spreading
+    1990: 24.3,  // HINDCAST START
+    2000: 21.1,  // Further decline
+    2010: 19.5,  // Continued decline
+    2020: 17.7,  // Modern low-fertility era
+    2025: 16.8,  // Projected (below replacement in many regions)
+    2030: 16.0,  // Projected (aging population effect)
+  };
+
+  const years = Object.keys(HISTORICAL_CBR).map(Number).sort((a, b) => a - b);
+
+  // Before earliest year
+  if (year <= years[0]) {
+    return HISTORICAL_CBR[years[0]];
+  }
+
+  // After latest year
+  if (year >= years[years.length - 1]) {
+    return HISTORICAL_CBR[years[years.length - 1]];
+  }
+
+  // Interpolate between known years
+  for (let i = 0; i < years.length - 1; i++) {
+    const y1 = years[i];
+    const y2 = years[i + 1];
+    if (year >= y1 && year < y2) {
+      const t = (year - y1) / (y2 - y1);
+      const cbr1 = HISTORICAL_CBR[y1];
+      const cbr2 = HISTORICAL_CBR[y2];
+      return cbr1 + (cbr2 - cbr1) * t;
+    }
+  }
+
+  // Fallback (should never reach here)
+  return HISTORICAL_CBR[2025];
+}
+
+/**
  * Calculate baseline demographic mortality risk
  *
  * This is the "background" mortality that occurs even when no crises are active.
@@ -149,20 +204,57 @@ export class BaselineMortalityPhase implements SimulationPhase {
     addMortalityRisk(pop, {
       type: 'other', // Baseline mortality is catch-all for natural causes
       baseRisk: baselineRisk,
-      proximate: 'natural causes',
-      root: 'aging/disease',
+      proximate: 'other',      // Natural causes (aging, disease, accidents)
+      root: 'demographic',     // Demographic factors (age distribution)
       confidence: 'HIGH',
       scope: 'GLOBAL',
       month: state.currentMonth,
       description: `Baseline demographic mortality (CDR ${getHistoricalCrudeDeathRate(state.currentYear).toFixed(1)}/1000)`,
     });
 
-    // DIAGNOSTIC LOGGING (only log occasionally to reduce noise)
-    if (state.currentMonth % 12 === 0) {
-      const cdr = getHistoricalCrudeDeathRate(state.currentYear);
-      const annualDeaths = (pop.population * 1e9) * (baselineRisk * 12);
-      const annualDeathsMillions = (annualDeaths / 1e6).toFixed(1);
-      console.log(`💀 Baseline mortality: ${cdr.toFixed(1)}/1000 CDR (${annualDeathsMillions}M deaths/year projected)`);
+    // HINDCAST FIX: Add births in historical mode
+    // The model previously only tracked deaths, causing population to decline
+    // Net growth = births - deaths
+    // 1990: CBR 24.3 - CDR 9.8 = 14.5 per 1000 (1.45%/year growth)
+    if (state.config.scenarioMode === 'historical') {
+      const year = state.currentYear;
+      const cbrPer1000 = getHistoricalCrudeBirthRate(year);
+      const monthlyBirthRate = (cbrPer1000 / 1000) / 12;
+
+      const birthsThisMonth = pop.population * monthlyBirthRate;
+
+      assertFinite(birthsThisMonth, {
+        location: 'BaselineMortalityPhase.execute',
+        valueName: 'birthsThisMonth',
+        month: state.currentMonth,
+        additionalInfo: { year, cbrPer1000, population: pop.population }
+      });
+
+      // Add births to population
+      pop.population += birthsThisMonth;
+
+      // DIAGNOSTIC LOGGING (only log occasionally to reduce noise)
+      if (state.currentMonth % 12 === 0) {
+        const cdr = getHistoricalCrudeDeathRate(year);
+        const cbr = cbrPer1000;
+        const netGrowthPer1000 = cbr - cdr;
+        const annualBirths = (pop.population * 1e9) * (monthlyBirthRate * 12);
+        const annualBirthsMillions = (annualBirths / 1e6).toFixed(1);
+        const annualDeaths = (pop.population * 1e9) * (baselineRisk * 12);
+        const annualDeathsMillions = (annualDeaths / 1e6).toFixed(1);
+        console.log(`👶 Historical demographics (${year}):`);
+        console.log(`   Births: ${cbr.toFixed(1)}/1000 CBR (${annualBirthsMillions}M/year)`);
+        console.log(`   Deaths: ${cdr.toFixed(1)}/1000 CDR (${annualDeathsMillions}M/year)`);
+        console.log(`   Net: ${netGrowthPer1000.toFixed(1)}/1000 (${(netGrowthPer1000 / 10).toFixed(2)}%/year)`);
+      }
+    } else {
+      // Non-historical mode: Only log deaths
+      if (state.currentMonth % 12 === 0) {
+        const cdr = getHistoricalCrudeDeathRate(state.currentYear);
+        const annualDeaths = (pop.population * 1e9) * (baselineRisk * 12);
+        const annualDeathsMillions = (annualDeaths / 1e6).toFixed(1);
+        console.log(`💀 Baseline mortality: ${cdr.toFixed(1)}/1000 CDR (${annualDeathsMillions}M deaths/year projected)`);
+      }
     }
 
     return { events: [] };
