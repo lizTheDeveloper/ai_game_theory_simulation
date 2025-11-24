@@ -38,6 +38,29 @@
 export type DeploymentMode = 'chaos' | 'uncoordinated' | 'coordinated';
 
 /**
+ * 3-Stage Governance Model (Nov 24, 2025)
+ * Research: ai_coordination_transition_management_20251121.md Section 4.1
+ */
+export type GovernanceStage = 'inactive' | 'recognition' | 'decision' | 'implementation';
+
+/** Adopter Category (Rogers Diffusion Model) */
+export type AdopterCategory = 'innovators' | 'earlyAdopters' | 'earlyMajority' | 'lateMajority' | 'laggards';
+
+/** S-Curve Adoption Position */
+export interface AdoptionCurve {
+  adoptionLevel: number;
+  currentCategory: AdopterCategory;
+  adoptionVelocity: number;
+}
+
+/** Stage Timing Configuration */
+export interface StageTiming {
+  recognitionDuration: number;
+  decisionDuration: number;
+  implementationDuration: number;
+}
+
+/**
  * Support system coverage metrics
  *
  * Each system has empirically validated mortality reduction
@@ -213,6 +236,22 @@ export interface TransitionManagementSystem {
 
   /** Month when peak deployment speed occurred */
   peakDeploymentSpeedMonth: number;
+
+  // === 3-STAGE GOVERNANCE MODEL (Nov 24, 2025) ===
+  /** Current governance stage */
+  governanceStage: GovernanceStage;
+  /** Month when current stage was entered */
+  stageEnteredMonth: number;
+  /** Month when crisis was recognized (0 = not recognized) */
+  crisisRecognizedMonth: number;
+  /** Month when decision was made (0 = no decision) */
+  decisionMadeMonth: number;
+  /** Month when implementation started (0 = not started) */
+  implementationStartedMonth: number;
+  /** S-curve adoption tracking */
+  adoptionCurve: AdoptionCurve;
+  /** Stage timing configuration */
+  stageTiming: StageTiming;
 }
 
 /**

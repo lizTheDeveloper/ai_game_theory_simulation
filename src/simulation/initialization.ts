@@ -1295,6 +1295,23 @@ export function createDefaultInitialState(
       monthsOfActiveDeployment: 0,
       peakDeploymentSpeed: 0,
       peakDeploymentSpeedMonth: 0,
+
+      // === 3-STAGE GOVERNANCE MODEL (Nov 24, 2025) ===
+      governanceStage: 'inactive' as const,
+      stageEnteredMonth: 0,
+      crisisRecognizedMonth: 0,
+      decisionMadeMonth: 0,
+      implementationStartedMonth: 0,
+      adoptionCurve: {
+        adoptionLevel: 0,
+        currentCategory: 'innovators' as const,
+        adoptionVelocity: 0,
+      },
+      stageTiming: {
+        recognitionDuration: 6,
+        decisionDuration: 12,
+        implementationDuration: 18,
+      },
     },
 
     history: {
