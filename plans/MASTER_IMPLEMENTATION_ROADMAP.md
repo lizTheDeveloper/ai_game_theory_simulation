@@ -97,8 +97,6 @@
    - **Research:** `research/irreversibility_framework_20251116.md`
    - **Owner:** Roy (simulation-maintainer)
    - **Complexity:** 2 systems (planetary boundaries, recovery mechanics)
-   - **Effort:** 2-3 hours
-   - **Timeline:** Dec 20, 2025
    - **Source:** `reviews/VALIDATION_ACTION_ITEMS_20251121.md` Item #6
 
 5. **AI Coordination Effectiveness Integration** (Nov 21 Verification Crisis)
@@ -113,8 +111,6 @@
    - **Research:** `research/ai_coordination_transition_management_20251121.md`
    - **Owner:** Moss (feature-implementer)
    - **Complexity:** 4 systems (government, crisis response, mortality, deployment curves)
-   - **Effort:** 3-4 hours
-   - **Timeline:** Dec 31, 2025
    - **Source:** `reviews/VALIDATION_ACTION_ITEMS_20251121.md` Item #7
 
 ### MEDIUM Priority
@@ -143,7 +139,6 @@
    - **Search:** Journals (JGR, Earth's Future, Nature Climate Change), keywords ("nuclear winter", "soot injection climate")
    - **Owner:** Cynthia (super-alignment-researcher)
    - **Complexity:** 1 system (research validation)
-   - **Timeline:** Q1 2026
    - **Source:** `reviews/VALIDATION_ACTION_ITEMS_20251121.md` Item #11
 
 9. **COVID-19 Mortality Case Study** (Nov 21 Verification Crisis)
@@ -151,7 +146,6 @@
    - **Sources:** WHO 2024 final report, peer-reviewed retrospectives, excess mortality meta-analyses (2024)
    - **Owner:** Cynthia (super-alignment-researcher)
    - **Complexity:** 1 system (research enrichment)
-   - **Timeline:** Q1 2026
    - **Source:** `reviews/VALIDATION_ACTION_ITEMS_20251121.md` Item #12
 
 10. **AI Infrastructure Energy Q4 2024 Update** (Nov 21 Verification Crisis)
@@ -159,7 +153,6 @@
     - **Sources:** IEA data center energy 2024 reports, OpenAI/Anthropic efficiency disclosures, training vs inference breakdown
     - **Owner:** Cynthia (super-alignment-researcher)
     - **Complexity:** 1 system (parameter update)
-    - **Timeline:** December 2025
     - **Source:** `reviews/VALIDATION_ACTION_ITEMS_20251121.md` Item #13
 
 11. **Workflow Adaptation GenAI Adoption Update** (Nov 21 Verification Crisis)
@@ -167,7 +160,6 @@
     - **Sources:** McKinsey GenAI survey 2024, academic LLM workplace integration studies, sector-specific curves
     - **Owner:** Cynthia (super-alignment-researcher)
     - **Complexity:** 1 system (parameter update)
-    - **Timeline:** December 2025
     - **Source:** `reviews/VALIDATION_ACTION_ITEMS_20251121.md` Item #14
 
 ### LOW Priority
@@ -177,7 +169,6 @@
     - **Topics:** Indigenous wellbeing metrics, ecological harmony frameworks, development economics QOL
     - **Owner:** Cynthia (super-alignment-researcher)
     - **Complexity:** 2 systems (multi-paradigm DUI, research update)
-    - **Timeline:** Q2 2026
     - **Source:** `reviews/VALIDATION_ACTION_ITEMS_20251121.md` Item #15
 
 ---
@@ -194,15 +185,15 @@
 
 ### Validation Priority Stack
 
-| Priority | Task | Owner | Est. Hours | Status | Dependencies |
-|----------|------|-------|------------|--------|--------------|
-| 1 | Verify temp bug fix committed | Orchestrator | 0.5 | ✅ DONE | None |
-| 2 | Determinism stress test (N=100) | Priya | 2 | Ready | #1 |
-| 3 | Planetary restoration timescales audit | Roy | 2-3 | Ready | None |
-| 4 | Climate mini-hindcast data (1990-2010) | Cynthia | 2 | Ready | None |
-| 5 | Historical initialization mode | Roy | 3-4 | Ready | None |
-| 6 | Mini-hindcast validation | Priya | 2 | Blocked | #4, #5 |
-| 7 | Mechanism audits (tipping points) | Sylvia | 2-3 | Ready | None |
+| Priority | Task | Owner | Status | Dependencies |
+|----------|------|-------|--------|--------------|
+| 1 | Verify temp bug fix committed | Orchestrator | ✅ DONE | None |
+| 2 | Determinism stress test (N=100) | Priya | Ready | #1 |
+| 3 | Planetary restoration timescales audit | Roy | Ready | None |
+| 4 | Climate mini-hindcast data (1990-2010) | Cynthia | Ready | None |
+| 5 | Historical initialization mode | Roy | Ready | None |
+| 6 | Mini-hindcast validation | Priya | Blocked | #4, #5 |
+| 7 | Mechanism audits (tipping points) | Sylvia | Ready | None |
 
 ### Climate Mini-Hindcast Validation (NEW - HIGH Priority)
 
@@ -367,7 +358,7 @@
     - Recommendation: REVERT partial migration + targeted fixes for 5 high-risk patterns
     - Reports: `reviews/defensive_fallback_architecture_analysis_20251117.md`, `reviews/defensive_fallback_high_risk_targets.md`
   - **Decision Rationale:**
-    - Effort: 8-12 hours to complete remaining 88% (900+ lines)
+    - Remaining scope: 88% of codebase (900+ lines)
     - Value: <5% actual bug prevention (50 problematic lines)
     - Risk: HIGH - changing 900+ lines of working code
     - Priority misalignment: Blocks CRITICAL roadmap items (nuclear winter, AI coordination)
@@ -744,8 +735,8 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
 
 **Key Documents:**
 - **Design:** `plans/game-design/GAME_DESIGN_DOCUMENT.md` (v2.0 - research-aligned revision)
-- **Roadmap:** `plans/game-design/GAME_DEVELOPMENT_ROADMAP.md` (4-phase epic, 16 weeks)
-- **Phase 1 Spec:** `plans/game-design/PHASE1_TECHNICAL_SPEC.md` (~50 hours)
+- **Roadmap:** `plans/game-design/GAME_DEVELOPMENT_ROADMAP.md` (4-phase epic)
+- **Phase 1 Spec:** `plans/game-design/PHASE1_TECHNICAL_SPEC.md`
 - **Reviews:** `reviews/game_design_research_integrity_review_20251122.md` (Sylvia), `reviews/game_design_technical_alignment_review_20251122.md` (Maya)
 
 **Architecture:**
@@ -1779,7 +1770,7 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
  - NPM scripts: `audit:research`, `audit:research:verbose`
  - Validation: Test run successful (3s, 315 files scanned, 0 errors)
  - Current Status: **0 CRITICAL items** ✅ (all simulation-used sources <3yr after WEEK 2), 128 HIGH (historical docs)
- - Impact: Research currency maintained with **zero manual overhead** (~359 hours/year saved)
+ - Impact: Research currency maintained with **zero manual overhead**
  - Quality Grade: A+ (comprehensive automation, full documentation, GitHub integration)
  - Archive: `/plans/completed/week4_task10_research_pipeline_complete_20251106.md`
 
