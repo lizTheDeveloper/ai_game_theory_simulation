@@ -164,8 +164,8 @@ The following parameters in the AI Agent Coordination code are MODEL ASSUMPTIONS
 2. [x] Verify alignment faking citations - **DONE**
 3. [x] Verify scheming rate citations - **DONE**
 4. [x] Verify instrumental convergence citations - **DONE**
-5. [ ] **LOW:** Fix code comment in recoveryCalculations.ts (World Bank vs IMF)
-6. [ ] **MEDIUM:** Fix date citation for scheming rates (Dec 2024 -> Sep 2025)
+5. [x] **LOW:** Fix code comment in recoveryCalculations.ts (World Bank vs IMF) - **FIXED Nov 24**
+6. [x] **MEDIUM:** Fix date citation for scheming rates (Dec 2024 -> Sep 2025) - **FIXED Nov 24**
 7. [ ] **LOW:** Add MODEL ASSUMPTION labels to unverified parameters
 
 ---
