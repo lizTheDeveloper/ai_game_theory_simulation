@@ -9636,6 +9636,18 @@ tail -f logs/phase3_batch_*.log
    - Inline hover tooltips for metric cards
    - Future: Add to all metric displays
 
+3. **Game Dashboard Components** (`src/components/dashboards/game/`)
+   - **GameDashboard** - Main wrapper orchestrating sub-components
+   - **GameDashboardHeader** - Title, time display, action mode selector
+   - **CurrencyPanel** - Game currencies and outcome probabilities with trend indicators
+   - **PendingDecisions** - Player decisions requiring input (pulsing amber border)
+   - **WorldVisualization** - Placeholder for global systems map
+   - **EventStream** - Event log and next month preview
+   - **ActionBar** - Simulation controls (pause/play, speed, advance month)
+   - Far-future aesthetic: pure black (#000) + glowing cyan (#00F0FF)
+   - Demo: `/game-dashboard-demo`
+   - See [`src/components/dashboards/game/README.md`](../../src/components/dashboards/game/README.md)
+
 ### Navigation Integration
 
 **Updated Navigation component** (`src/components/core/Navigation.tsx`):
@@ -9675,10 +9687,10 @@ src/
 │   │   └── dashboard-guide/page.tsx    # Complete metric reference
 │   └── game-dashboard-demo/page.tsx    # Game dashboard demo (NEW Nov 24)
 └── components/
-    ├── dashboards/game/                # Game interface components (NEW Nov 24)
+    ├── dashboards/game/                # Game interface components (11 files, NEW Nov 24)
     │   ├── GameDashboard.tsx           # Main wrapper
     │   ├── GameDashboardHeader.tsx     # Title + action modes
-    │   ├── CurrencyPanel.tsx           # Resources + trajectory
+    │   ├── CurrencyPanel.tsx           # Currencies + outcome probabilities
     │   ├── PendingDecisions.tsx        # Player decisions
     │   ├── WorldVisualization.tsx      # Global systems viz
     │   ├── EventStream.tsx             # Event log
