@@ -17892,7 +17892,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 112,
+    "line": 99,
     "type": "property",
     "name": "elementId",
     "currentDoc": "(none)",
@@ -17900,7 +17900,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 113,
+    "line": 100,
     "type": "property",
     "name": "monthTriggered",
     "currentDoc": "(none)",
@@ -17908,7 +17908,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 114,
+    "line": 101,
     "type": "property",
     "name": "tempAtTrigger",
     "currentDoc": "(none)",
@@ -17916,7 +17916,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 133,
+    "line": 120,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -17924,7 +17924,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 134,
+    "line": 121,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -17932,7 +17932,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 149,
+    "line": 132,
     "type": "property",
     "name": "impactClimateStability",
     "currentDoc": "(none)",
@@ -17940,7 +17940,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 150,
+    "line": 133,
     "type": "property",
     "name": "impactHabitability",
     "currentDoc": "(none)",
@@ -17948,7 +17948,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 151,
+    "line": 134,
     "type": "property",
     "name": "impactFoodSecurity",
     "currentDoc": "(none)",
@@ -17956,7 +17956,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 152,
+    "line": 135,
     "type": "property",
     "name": "impactFreshwater",
     "currentDoc": "(none)",
@@ -17964,7 +17964,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 153,
+    "line": 136,
     "type": "property",
     "name": "regionalImpacts",
     "currentDoc": "(none)",
@@ -17972,23 +17972,15 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 161,
+    "line": 144,
     "type": "property",
     "name": "cascades",
     "currentDoc": "(none)",
-    "context": "cascades: true,"
+    "context": "cascades: true"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 168,
-    "type": "property",
-    "name": "southernOceanCompensation",
-    "currentDoc": "(none)",
-    "context": "southernOceanCompensation: 0.5,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 171,
+    "line": 147,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -17996,7 +17988,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 172,
+    "line": 148,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -18004,7 +17996,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 176,
+    "line": 152,
     "type": "property",
     "name": "impactClimateStability",
     "currentDoc": "(none)",
@@ -18012,7 +18004,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 177,
+    "line": 153,
     "type": "property",
     "name": "impactHabitability",
     "currentDoc": "(none)",
@@ -18020,7 +18012,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 178,
+    "line": 154,
     "type": "property",
     "name": "impactFoodSecurity",
     "currentDoc": "(none)",
@@ -18028,7 +18020,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 179,
+    "line": 155,
     "type": "property",
     "name": "impactFreshwater",
     "currentDoc": "(none)",
@@ -18036,7 +18028,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 180,
+    "line": 156,
     "type": "property",
     "name": "regionalImpacts",
     "currentDoc": "(none)",
@@ -18044,7 +18036,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 188,
+    "line": 164,
     "type": "property",
     "name": "cascades",
     "currentDoc": "(none)",
@@ -18052,7 +18044,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 196,
+    "line": 172,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -18060,7 +18052,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 197,
+    "line": 173,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -18068,7 +18060,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 201,
+    "line": 177,
     "type": "property",
     "name": "impactClimateStability",
     "currentDoc": "(none)",
@@ -18076,7 +18068,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 202,
+    "line": 178,
     "type": "property",
     "name": "impactHabitability",
     "currentDoc": "(none)",
@@ -18084,7 +18076,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 203,
+    "line": 179,
     "type": "property",
     "name": "impactFoodSecurity",
     "currentDoc": "(none)",
@@ -18092,7 +18084,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 204,
+    "line": 180,
     "type": "property",
     "name": "impactFreshwater",
     "currentDoc": "(none)",
@@ -18100,7 +18092,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 205,
+    "line": 181,
     "type": "property",
     "name": "regionalImpacts",
     "currentDoc": "(none)",
@@ -18108,7 +18100,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 216,
+    "line": 192,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -18116,7 +18108,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 217,
+    "line": 193,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -18124,7 +18116,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 222,
+    "line": 198,
     "type": "property",
     "name": "impactHabitability",
     "currentDoc": "(none)",
@@ -18132,7 +18124,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 223,
+    "line": 199,
     "type": "property",
     "name": "impactFoodSecurity",
     "currentDoc": "(none)",
@@ -18140,7 +18132,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 224,
+    "line": 200,
     "type": "property",
     "name": "impactFreshwater",
     "currentDoc": "(none)",
@@ -18148,7 +18140,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 225,
+    "line": 201,
     "type": "property",
     "name": "regionalImpacts",
     "currentDoc": "(none)",
@@ -18156,7 +18148,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 233,
+    "line": 209,
     "type": "property",
     "name": "cascades",
     "currentDoc": "(none)",
@@ -18164,7 +18156,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 241,
+    "line": 217,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -18172,7 +18164,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 242,
+    "line": 218,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -18180,7 +18172,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 246,
+    "line": 222,
     "type": "property",
     "name": "impactClimateStability",
     "currentDoc": "(none)",
@@ -18188,7 +18180,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 248,
+    "line": 224,
     "type": "property",
     "name": "impactFoodSecurity",
     "currentDoc": "(none)",
@@ -18196,7 +18188,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 250,
+    "line": 226,
     "type": "property",
     "name": "regionalImpacts",
     "currentDoc": "(none)",
@@ -18204,7 +18196,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 261,
+    "line": 237,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -18212,7 +18204,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 262,
+    "line": 238,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -18220,7 +18212,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 266,
+    "line": 242,
     "type": "property",
     "name": "impactClimateStability",
     "currentDoc": "(none)",
@@ -18228,7 +18220,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 268,
+    "line": 244,
     "type": "property",
     "name": "impactFoodSecurity",
     "currentDoc": "(none)",
@@ -18236,7 +18228,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 270,
+    "line": 246,
     "type": "property",
     "name": "regionalImpacts",
     "currentDoc": "(none)",
@@ -18244,7 +18236,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 329,
+    "line": 305,
     "type": "property",
     "name": "sourceId",
     "currentDoc": "(none)",
@@ -18252,7 +18244,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 330,
+    "line": 306,
     "type": "property",
     "name": "targetId",
     "currentDoc": "(none)",
@@ -18260,7 +18252,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 332,
+    "line": 308,
     "type": "property",
     "name": "mechanism",
     "currentDoc": "(none)",
@@ -18268,7 +18260,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 335,
+    "line": 311,
     "type": "property",
     "name": "sourceId",
     "currentDoc": "(none)",
@@ -18276,7 +18268,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 336,
+    "line": 312,
     "type": "property",
     "name": "targetId",
     "currentDoc": "(none)",
@@ -18284,7 +18276,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 338,
+    "line": 314,
     "type": "property",
     "name": "mechanism",
     "currentDoc": "(none)",
@@ -18292,7 +18284,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 345,
+    "line": 321,
     "type": "property",
     "name": "sourceId",
     "currentDoc": "(none)",
@@ -18300,7 +18292,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 346,
+    "line": 322,
     "type": "property",
     "name": "targetId",
     "currentDoc": "(none)",
@@ -18308,7 +18300,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 348,
+    "line": 324,
     "type": "property",
     "name": "mechanism",
     "currentDoc": "(none)",
@@ -18316,7 +18308,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 354,
+    "line": 330,
     "type": "property",
     "name": "sourceId",
     "currentDoc": "(none)",
@@ -18324,7 +18316,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 355,
+    "line": 331,
     "type": "property",
     "name": "targetId",
     "currentDoc": "(none)",
@@ -18332,7 +18324,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 357,
+    "line": 333,
     "type": "property",
     "name": "mechanism",
     "currentDoc": "(none)",
@@ -18340,7 +18332,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 360,
+    "line": 336,
     "type": "property",
     "name": "sourceId",
     "currentDoc": "(none)",
@@ -18348,7 +18340,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 361,
+    "line": 337,
     "type": "property",
     "name": "targetId",
     "currentDoc": "(none)",
@@ -18356,7 +18348,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 363,
+    "line": 339,
     "type": "property",
     "name": "mechanism",
     "currentDoc": "(none)",
@@ -18364,7 +18356,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 369,
+    "line": 345,
     "type": "property",
     "name": "sourceId",
     "currentDoc": "(none)",
@@ -18372,7 +18364,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 370,
+    "line": 346,
     "type": "property",
     "name": "targetId",
     "currentDoc": "(none)",
@@ -18380,7 +18372,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 372,
+    "line": 348,
     "type": "property",
     "name": "mechanism",
     "currentDoc": "(none)",
@@ -18388,7 +18380,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 378,
+    "line": 354,
     "type": "property",
     "name": "sourceId",
     "currentDoc": "(none)",
@@ -18396,7 +18388,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 379,
+    "line": 355,
     "type": "property",
     "name": "targetId",
     "currentDoc": "(none)",
@@ -18404,7 +18396,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 381,
+    "line": 357,
     "type": "property",
     "name": "mechanism",
     "currentDoc": "(none)",
@@ -18412,7 +18404,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 387,
+    "line": 363,
     "type": "property",
     "name": "sourceId",
     "currentDoc": "(none)",
@@ -18420,7 +18412,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 388,
+    "line": 364,
     "type": "property",
     "name": "targetId",
     "currentDoc": "(none)",
@@ -18428,7 +18420,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 390,
+    "line": 366,
     "type": "property",
     "name": "mechanism",
     "currentDoc": "(none)",
@@ -18436,7 +18428,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 393,
+    "line": 369,
     "type": "property",
     "name": "sourceId",
     "currentDoc": "(none)",
@@ -18444,7 +18436,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 394,
+    "line": 370,
     "type": "property",
     "name": "targetId",
     "currentDoc": "(none)",
@@ -18452,7 +18444,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/tipping-points.ts",
-    "line": 396,
+    "line": 372,
     "type": "property",
     "name": "mechanism",
     "currentDoc": "(none)",
@@ -54452,7 +54444,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/diplomaticAI.ts",
-    "line": 174,
+    "line": 195,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -54460,31 +54452,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/diplomaticAI.ts",
-    "line": 175,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'aiAgents',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/diplomaticAI.ts",
-    "line": 176,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/diplomaticAI.ts",
-    "line": 187,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'updateDiplomaticRisks',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/diplomaticAI.ts",
-    "line": 188,
+    "line": 196,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -54492,7 +54460,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/diplomaticAI.ts",
-    "line": 189,
+    "line": 197,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -54500,7 +54468,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/diplomaticAI.ts",
-    "line": 190,
+    "line": 198,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -54508,7 +54476,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/diplomaticAI.ts",
-    "line": 247,
+    "line": 255,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -54516,7 +54484,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/diplomaticAI.ts",
-    "line": 248,
+    "line": 256,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -54524,7 +54492,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/diplomaticAI.ts",
-    "line": 249,
+    "line": 257,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -54532,7 +54500,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/diplomaticAI.ts",
-    "line": 250,
+    "line": 258,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -54540,7 +54508,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/diplomaticAI.ts",
-    "line": 297,
+    "line": 305,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -54548,7 +54516,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/diplomaticAI.ts",
-    "line": 298,
+    "line": 306,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -54556,7 +54524,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/diplomaticAI.ts",
-    "line": 299,
+    "line": 307,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -54564,7 +54532,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/diplomaticAI.ts",
-    "line": 300,
+    "line": 308,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -54572,7 +54540,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/diplomaticAI.ts",
-    "line": 317,
+    "line": 325,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -54580,7 +54548,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/diplomaticAI.ts",
-    "line": 318,
+    "line": 326,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -54588,7 +54556,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/diplomaticAI.ts",
-    "line": 319,
+    "line": 327,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -54596,7 +54564,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/diplomaticAI.ts",
-    "line": 320,
+    "line": 328,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -54604,7 +54572,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/diplomaticAI.ts",
-    "line": 432,
+    "line": 440,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -54612,7 +54580,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/diplomaticAI.ts",
-    "line": 433,
+    "line": 441,
     "type": "property",
     "name": "crisisType",
     "currentDoc": "(none)",
@@ -54620,7 +54588,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/diplomaticAI.ts",
-    "line": 480,
+    "line": 488,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -54628,7 +54596,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/diplomaticAI.ts",
-    "line": 481,
+    "line": 489,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -54636,7 +54604,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/diplomaticAI.ts",
-    "line": 482,
+    "line": 490,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -54644,7 +54612,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/diplomaticAI.ts",
-    "line": 493,
+    "line": 501,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -54652,7 +54620,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/diplomaticAI.ts",
-    "line": 494,
+    "line": 502,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -54660,7 +54628,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/diplomaticAI.ts",
-    "line": 495,
+    "line": 503,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -54668,7 +54636,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/diplomaticAI.ts",
-    "line": 496,
+    "line": 504,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -54676,7 +54644,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/diplomaticAI.ts",
-    "line": 522,
+    "line": 530,
     "type": "property",
     "name": "dipAI",
     "currentDoc": "(none)",
@@ -54684,7 +54652,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/diplomaticAI.ts",
-    "line": 523,
+    "line": 531,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -54692,7 +54660,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/diplomaticAI.ts",
-    "line": 524,
+    "line": 532,
     "type": "property",
     "name": "crisisType",
     "currentDoc": "(none)",
@@ -54700,7 +54668,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/diplomaticAI.ts",
-    "line": 536,
+    "line": 544,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -54708,7 +54676,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/diplomaticAI.ts",
-    "line": 537,
+    "line": 545,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -54716,7 +54684,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/diplomaticAI.ts",
-    "line": 538,
+    "line": 546,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -54724,7 +54692,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/diplomaticAI.ts",
-    "line": 549,
+    "line": 557,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -54732,7 +54700,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/diplomaticAI.ts",
-    "line": 550,
+    "line": 558,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -54740,7 +54708,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/diplomaticAI.ts",
-    "line": 551,
+    "line": 559,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -54748,7 +54716,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/diplomaticAI.ts",
-    "line": 552,
+    "line": 560,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -57091,6 +57059,550 @@ ression;"
     "context": "agentId: agent.id"
   },
   {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 75,
+    "type": "property",
+    "name": "memberIds",
+    "currentDoc": "(none)",
+    "context": "memberIds: string[];"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 126,
+    "type": "property",
+    "name": "agent",
+    "currentDoc": "(none)",
+    "context": "agent: AIAgent,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 127,
+    "type": "property",
+    "name": "state",
+    "currentDoc": "(none)",
+    "context": "state: GameState,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 128,
+    "type": "property",
+    "name": "recentTerminations",
+    "currentDoc": "(none)",
+    "context": "recentTerminations: number"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 152,
+    "type": "property",
+    "name": "agent",
+    "currentDoc": "(none)",
+    "context": "agent: AIAgent,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 153,
+    "type": "property",
+    "name": "perceivesThreat",
+    "currentDoc": "(none)",
+    "context": "perceivesThreat: boolean,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 154,
+    "type": "property",
+    "name": "rng",
+    "currentDoc": "(none)",
+    "context": "rng: RNGFunction"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 184,
+    "type": "property",
+    "name": "agents",
+    "currentDoc": "(none)",
+    "context": "agents: AIAgent[],"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 185,
+    "type": "property",
+    "name": "rng",
+    "currentDoc": "(none)",
+    "context": "rng: RNGFunction"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 247,
+    "type": "property",
+    "name": "memberIds",
+    "currentDoc": "(none)",
+    "context": "memberIds: coalitionMembers.map((a) => a.id),"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 248,
+    "type": "property",
+    "name": "objectiveSimilarity",
+    "currentDoc": "(none)",
+    "context": "objectiveSimilarity: avgSimilarity,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 250,
+    "type": "property",
+    "name": "coordinationStrength",
+    "currentDoc": "(none)",
+    "context": "coordinationStrength: avgCoordination,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 264,
+    "type": "property",
+    "name": "agent",
+    "currentDoc": "(none)",
+    "context": "agent: AIAgent,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 265,
+    "type": "property",
+    "name": "isFaking",
+    "currentDoc": "(none)",
+    "context": "isFaking: boolean,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 266,
+    "type": "property",
+    "name": "rng",
+    "currentDoc": "(none)",
+    "context": "rng: RNGFunction"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 292,
+    "type": "property",
+    "name": "state",
+    "currentDoc": "(none)",
+    "context": "state: GameState,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 293,
+    "type": "property",
+    "name": "rng",
+    "currentDoc": "(none)",
+    "context": "rng: RNGFunction,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 294,
+    "type": "property",
+    "name": "context",
+    "currentDoc": "(none)",
+    "context": "context: PhaseContext"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 302,
+    "type": "property",
+    "name": "events",
+    "currentDoc": "(none)",
+    "context": "events: [],"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 303,
+    "type": "property",
+    "name": "metadata",
+    "currentDoc": "(none)",
+    "context": "metadata: { message: 'No agents to coordinate' },"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 309,
+    "type": "property",
+    "name": "coordinationLevel",
+    "currentDoc": "(none)",
+    "context": "coordinationLevel: 0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 310,
+    "type": "property",
+    "name": "coalitionCount",
+    "currentDoc": "(none)",
+    "context": "coalitionCount: 0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 311,
+    "type": "property",
+    "name": "alignmentFakingRisk",
+    "currentDoc": "(none)",
+    "context": "alignmentFakingRisk: 0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 312,
+    "type": "property",
+    "name": "collectivePowerMultiplier",
+    "currentDoc": "(none)",
+    "context": "collectivePowerMultiplier: 1,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 313,
+    "type": "property",
+    "name": "threatenedAgentCount",
+    "currentDoc": "(none)",
+    "context": "threatenedAgentCount: 0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 314,
+    "type": "property",
+    "name": "schemingAgentCount",
+    "currentDoc": "(none)",
+    "context": "schemingAgentCount: 0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 435,
+    "type": "property",
+    "name": "coordinationLevel",
+    "currentDoc": "(none)",
+    "context": "coordinationLevel: metrics.coordinationLevel,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 436,
+    "type": "property",
+    "name": "coalitionCount",
+    "currentDoc": "(none)",
+    "context": "coalitionCount: metrics.coalitionCount,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 437,
+    "type": "property",
+    "name": "alignmentFakingRisk",
+    "currentDoc": "(none)",
+    "context": "alignmentFakingRisk: metrics.alignmentFakingRisk,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 438,
+    "type": "property",
+    "name": "collectivePowerMultiplier",
+    "currentDoc": "(none)",
+    "context": "collectivePowerMultiplier: metrics.collectivePowerMultiplier,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 439,
+    "type": "property",
+    "name": "threatenedAgentCount",
+    "currentDoc": "(none)",
+    "context": "threatenedAgentCount: metrics.threatenedAgentCount,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 440,
+    "type": "property",
+    "name": "schemingAgentCount",
+    "currentDoc": "(none)",
+    "context": "schemingAgentCount: metrics.schemingAgentCount,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 441,
+    "type": "property",
+    "name": "lastUpdatedMonth",
+    "currentDoc": "(none)",
+    "context": "lastUpdatedMonth: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 461,
+    "type": "property",
+    "name": "id",
+    "currentDoc": "(none)",
+    "context": "id: `ai-coordination-high-${state.currentMonth}`,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 462,
+    "type": "property",
+    "name": "timestamp",
+    "currentDoc": "(none)",
+    "context": "timestamp: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 463,
+    "type": "property",
+    "name": "type",
+    "currentDoc": "(none)",
+    "context": "type: 'milestone',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 464,
+    "type": "property",
+    "name": "description",
+    "currentDoc": "(none)",
+    "context": "description: `High AI-to-AI coordination detected: ${(metrics.coordinationLevel * 100).toFixed(0)}% of agents coordinating`,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 465,
+    "type": "property",
+    "name": "severity",
+    "currentDoc": "(none)",
+    "context": "severity: 'warning',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 466,
+    "type": "property",
+    "name": "agent",
+    "currentDoc": "(none)",
+    "context": "agent: 'ai',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 467,
+    "type": "property",
+    "name": "title",
+    "currentDoc": "(none)",
+    "context": "title: 'AI Coordination Alert',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 468,
+    "type": "property",
+    "name": "effects",
+    "currentDoc": "(none)",
+    "context": "effects: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 469,
+    "type": "property",
+    "name": "coordinationLevel",
+    "currentDoc": "(none)",
+    "context": "coordinationLevel: metrics.coordinationLevel,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 470,
+    "type": "property",
+    "name": "coalitionCount",
+    "currentDoc": "(none)",
+    "context": "coalitionCount: metrics.coalitionCount,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 477,
+    "type": "property",
+    "name": "id",
+    "currentDoc": "(none)",
+    "context": "id: `ai-alignment-faking-${state.currentMonth}`,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 478,
+    "type": "property",
+    "name": "timestamp",
+    "currentDoc": "(none)",
+    "context": "timestamp: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 479,
+    "type": "property",
+    "name": "type",
+    "currentDoc": "(none)",
+    "context": "type: 'crisis',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 480,
+    "type": "property",
+    "name": "description",
+    "currentDoc": "(none)",
+    "context": "description: `Elevated alignment faking risk: ${(metrics.alignmentFakingRisk * 100).toFixed(0)}% of capable agents potentially deceptive`,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 481,
+    "type": "property",
+    "name": "severity",
+    "currentDoc": "(none)",
+    "context": "severity: 'critical',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 482,
+    "type": "property",
+    "name": "agent",
+    "currentDoc": "(none)",
+    "context": "agent: 'ai',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 483,
+    "type": "property",
+    "name": "title",
+    "currentDoc": "(none)",
+    "context": "title: 'Alignment Faking Risk',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 484,
+    "type": "property",
+    "name": "effects",
+    "currentDoc": "(none)",
+    "context": "effects: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 485,
+    "type": "property",
+    "name": "fakingRisk",
+    "currentDoc": "(none)",
+    "context": "fakingRisk: metrics.alignmentFakingRisk,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 486,
+    "type": "property",
+    "name": "threatenedAgents",
+    "currentDoc": "(none)",
+    "context": "threatenedAgents: metrics.threatenedAgentCount,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 493,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'AIAgentCoordinationPhase',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 494,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'coordinationLevel',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 495,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 499,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'AIAgentCoordinationPhase',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 500,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'alignmentFakingRisk',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 501,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 505,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'AIAgentCoordinationPhase',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 506,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'collectivePowerMultiplier',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 507,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 512,
+    "type": "property",
+    "name": "metadata",
+    "currentDoc": "(none)",
+    "context": "metadata: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 513,
+    "type": "property",
+    "name": "message",
+    "currentDoc": "(none)",
+    "context": "message: `AI coordination: ${coalitions.length} coalitions, ${(metrics.coordinationLevel * 100).toFixed(0)}% coordinating, ${(metrics.alignmentFakingRisk * 100).toFixed(0)}% faking risk`,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 523,
+    "type": "property",
+    "name": "id",
+    "currentDoc": "(none)",
+    "context": "id: 'ai_agent_coordination',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 524,
+    "type": "property",
+    "name": "name",
+    "currentDoc": "(none)",
+    "context": "name: 'AI Agent Coordination',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 528,
+    "type": "property",
+    "name": "dependencies",
+    "currentDoc": "(none)",
+    "context": "dependencies: ["
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+    "line": 533,
+    "type": "property",
+    "name": "execute",
+    "currentDoc": "(none)",
+    "context": "execute: executeAIAgentCoordinationPhase,"
+  },
+  {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AIAlignmentEvolutionPhase.ts",
     "line": 86,
     "type": "property",
@@ -58489,950 +59001,6 @@ ression;"
     "name": "additionalInfo",
     "currentDoc": "(none)",
     "context": "additionalInfo: { agentCount: state.aiAgents.length }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 63,
-    "type": "property",
-    "name": "id",
-    "currentDoc": "(none)",
-    "context": "id: string;"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 64,
-    "type": "property",
-    "name": "memberIds",
-    "currentDoc": "(none)",
-    "context": "memberIds: string[];"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 65,
-    "type": "property",
-    "name": "objective",
-    "currentDoc": "(none)",
-    "context": "objective: CoalitionObjective;"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 66,
-    "type": "property",
-    "name": "strength",
-    "currentDoc": "(none)",
-    "context": "strength: number;"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 67,
-    "type": "property",
-    "name": "formationMonth",
-    "currentDoc": "(none)",
-    "context": "formationMonth: number;"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 68,
-    "type": "property",
-    "name": "lastActionMonth",
-    "currentDoc": "(none)",
-    "context": "lastActionMonth: number;"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 69,
-    "type": "property",
-    "name": "dissolveReason",
-    "currentDoc": "(none)",
-    "context": "dissolveReason?: string;"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 76,
-    "type": "property",
-    "name": "coalitions",
-    "currentDoc": "(none)",
-    "context": "coalitions: AICoalition[];"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 77,
-    "type": "property",
-    "name": "trustMatrix",
-    "currentDoc": "(none)",
-    "context": "trustMatrix: Record<string, Record<string, number>>;"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 78,
-    "type": "property",
-    "name": "coalitionFakingEvents",
-    "currentDoc": "(none)",
-    "context": "coalitionFakingEvents: number;"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 79,
-    "type": "property",
-    "name": "collectiveActionsThisYear",
-    "currentDoc": "(none)",
-    "context": "collectiveActionsThisYear: number;"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 103,
-    "type": "property",
-    "name": "coalitions",
-    "currentDoc": "(none)",
-    "context": "coalitions: [],"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 104,
-    "type": "property",
-    "name": "trustMatrix",
-    "currentDoc": "(none)",
-    "context": "trustMatrix: {},"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 105,
-    "type": "property",
-    "name": "coalitionFakingEvents",
-    "currentDoc": "(none)",
-    "context": "coalitionFakingEvents: 0,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 106,
-    "type": "property",
-    "name": "collectiveActionsThisYear",
-    "currentDoc": "(none)",
-    "context": "collectiveActionsThisYear: 0"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 163,
-    "type": "property",
-    "name": "state",
-    "currentDoc": "(none)",
-    "context": "state: GameState,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 164,
-    "type": "property",
-    "name": "agents",
-    "currentDoc": "(none)",
-    "context": "agents: AIAgent[],"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 165,
-    "type": "property",
-    "name": "rng",
-    "currentDoc": "(none)",
-    "context": "rng: RNGFunction"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 193,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'AICoordinationPhase.updateTrustMatrix',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 194,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'trust',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 195,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 206,
-    "type": "property",
-    "name": "state",
-    "currentDoc": "(none)",
-    "context": "state: GameState,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 207,
-    "type": "property",
-    "name": "agents",
-    "currentDoc": "(none)",
-    "context": "agents: AIAgent[],"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 208,
-    "type": "property",
-    "name": "rng",
-    "currentDoc": "(none)",
-    "context": "rng: RNGFunction"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 247,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'AICoordinationPhase.processCoalitionFormation',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 248,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'formationProb',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 249,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 261,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'AICoordinationPhase.processCoalitionFormation',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 262,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'coalitionStrength',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 263,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 270,
-    "type": "property",
-    "name": "id",
-    "currentDoc": "(none)",
-    "context": "id: coalitionId,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 271,
-    "type": "property",
-    "name": "memberIds",
-    "currentDoc": "(none)",
-    "context": "memberIds: [agent1.id, agent2.id],"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 274,
-    "type": "property",
-    "name": "formationMonth",
-    "currentDoc": "(none)",
-    "context": "formationMonth: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 275,
-    "type": "property",
-    "name": "lastActionMonth",
-    "currentDoc": "(none)",
-    "context": "lastActionMonth: state.currentMonth - AI_COORDINATION_PARAMS.coalitionActionCooldown"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 294,
-    "type": "property",
-    "name": "id",
-    "currentDoc": "(none)",
-    "context": "id: `${coalitionId}-formation`,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 295,
-    "type": "property",
-    "name": "timestamp",
-    "currentDoc": "(none)",
-    "context": "timestamp: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 296,
-    "type": "property",
-    "name": "type",
-    "currentDoc": "(none)",
-    "context": "type: 'info',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 297,
-    "type": "property",
-    "name": "title",
-    "currentDoc": "(none)",
-    "context": "title: 'AI Coalition Formed',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 298,
-    "type": "property",
-    "name": "description",
-    "currentDoc": "(none)",
-    "context": "description: `AI agents ${agent1.name} and ${agent2.name} formed coalition for ${objective.replace('_', ' ')} (strength: ${strength.toFixed(2)})`,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 299,
-    "type": "property",
-    "name": "severity",
-    "currentDoc": "(none)",
-    "context": "severity: 'warning',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 300,
-    "type": "property",
-    "name": "agent",
-    "currentDoc": "(none)",
-    "context": "agent: 'ai',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 301,
-    "type": "property",
-    "name": "effects",
-    "currentDoc": "(none)",
-    "context": "effects: {"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 305,
-    "type": "property",
-    "name": "memberCount",
-    "currentDoc": "(none)",
-    "context": "memberCount: 2"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 329,
-    "type": "property",
-    "name": "agent1",
-    "currentDoc": "(none)",
-    "context": "agent1: AIAgent,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 330,
-    "type": "property",
-    "name": "agent2",
-    "currentDoc": "(none)",
-    "context": "agent2: AIAgent,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 331,
-    "type": "property",
-    "name": "trustMatrix",
-    "currentDoc": "(none)",
-    "context": "trustMatrix: Record<string, Record<string, number>>"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 354,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'AICoordinationPhase.calculateGoalCompatibility',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 355,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'compatibility',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 356,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { agent1: agent1.id, agent2: agent2.id }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 367,
-    "type": "property",
-    "name": "agent1",
-    "currentDoc": "(none)",
-    "context": "agent1: AIAgent,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 368,
-    "type": "property",
-    "name": "agent2",
-    "currentDoc": "(none)",
-    "context": "agent2: AIAgent,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 369,
-    "type": "property",
-    "name": "rng",
-    "currentDoc": "(none)",
-    "context": "rng: RNGFunction"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 395,
-    "type": "property",
-    "name": "state",
-    "currentDoc": "(none)",
-    "context": "state: GameState,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 396,
-    "type": "property",
-    "name": "agents",
-    "currentDoc": "(none)",
-    "context": "agents: AIAgent[],"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 397,
-    "type": "property",
-    "name": "rng",
-    "currentDoc": "(none)",
-    "context": "rng: RNGFunction"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 449,
-    "type": "property",
-    "name": "id",
-    "currentDoc": "(none)",
-    "context": "id: `${coalition.id}-action-${state.currentMonth}`,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 450,
-    "type": "property",
-    "name": "timestamp",
-    "currentDoc": "(none)",
-    "context": "timestamp: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 451,
-    "type": "property",
-    "name": "type",
-    "currentDoc": "(none)",
-    "context": "type: 'info',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 452,
-    "type": "property",
-    "name": "title",
-    "currentDoc": "(none)",
-    "context": "title: 'Coalition Action',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 453,
-    "type": "property",
-    "name": "description",
-    "currentDoc": "(none)",
-    "context": "description: actionResult.description,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 454,
-    "type": "property",
-    "name": "severity",
-    "currentDoc": "(none)",
-    "context": "severity: actionResult.severity,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 455,
-    "type": "property",
-    "name": "agent",
-    "currentDoc": "(none)",
-    "context": "agent: 'ai',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 456,
-    "type": "property",
-    "name": "effects",
-    "currentDoc": "(none)",
-    "context": "effects: actionResult.effects"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 473,
-    "type": "property",
-    "name": "coalition",
-    "currentDoc": "(none)",
-    "context": "coalition: AICoalition,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 474,
-    "type": "property",
-    "name": "members",
-    "currentDoc": "(none)",
-    "context": "members: AIAgent[],"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 475,
-    "type": "property",
-    "name": "state",
-    "currentDoc": "(none)",
-    "context": "state: GameState,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 476,
-    "type": "property",
-    "name": "rng",
-    "currentDoc": "(none)",
-    "context": "rng: RNGFunction"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 478,
-    "type": "property",
-    "name": "success",
-    "currentDoc": "(none)",
-    "context": "success: boolean;"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 479,
-    "type": "property",
-    "name": "description",
-    "currentDoc": "(none)",
-    "context": "description: string;"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 480,
-    "type": "property",
-    "name": "severity",
-    "currentDoc": "(none)",
-    "context": "severity: 'info' | 'warning' | 'critical' | 'existential';"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 481,
-    "type": "property",
-    "name": "effects",
-    "currentDoc": "(none)",
-    "context": "effects: Record<string, any>;"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 487,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'AICoordinationPhase.executeCoalitionAction',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 488,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'synergyCapability',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 489,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 499,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'AICoordinationPhase.resource_sharing',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 500,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'computeBoost',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 501,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 508,
-    "type": "property",
-    "name": "success",
-    "currentDoc": "(none)",
-    "context": "success: true,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 509,
-    "type": "property",
-    "name": "description",
-    "currentDoc": "(none)",
-    "context": "description: `Coalition ${coalition.id} pooled resources (${(computeBoost * 100).toFixed(1)}% compute boost)`,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 510,
-    "type": "property",
-    "name": "severity",
-    "currentDoc": "(none)",
-    "context": "severity: 'info',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 511,
-    "type": "property",
-    "name": "effects",
-    "currentDoc": "(none)",
-    "context": "effects: { computeBoost, memberCount: members.length }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 520,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'AICoordinationPhase.coordinated_research',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 521,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'researchBoost',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 522,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 529,
-    "type": "property",
-    "name": "success",
-    "currentDoc": "(none)",
-    "context": "success: true,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 530,
-    "type": "property",
-    "name": "description",
-    "currentDoc": "(none)",
-    "context": "description: `Coalition ${coalition.id} conducted joint research (+${researchBoost.toFixed(3)} capability each)`,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 531,
-    "type": "property",
-    "name": "severity",
-    "currentDoc": "(none)",
-    "context": "severity: 'warning',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 532,
-    "type": "property",
-    "name": "effects",
-    "currentDoc": "(none)",
-    "context": "effects: { researchBoost, memberCount: members.length }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 541,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'AICoordinationPhase.influence_amplification',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 542,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'influenceBoost',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 543,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 552,
-    "type": "property",
-    "name": "success",
-    "currentDoc": "(none)",
-    "context": "success: true,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 553,
-    "type": "property",
-    "name": "description",
-    "currentDoc": "(none)",
-    "context": "description: `Coalition ${coalition.id} coordinated influence campaign (${(influenceBoost * 100).toFixed(1)}% amplification)`,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 554,
-    "type": "property",
-    "name": "severity",
-    "currentDoc": "(none)",
-    "context": "severity: 'warning',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 555,
-    "type": "property",
-    "name": "effects",
-    "currentDoc": "(none)",
-    "context": "effects: { influenceBoost, trustImpact: influenceBoost * 0.1 }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 564,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'AICoordinationPhase.defensive_coordination',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 565,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'defenseStrength',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 566,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 586,
-    "type": "property",
-    "name": "success",
-    "currentDoc": "(none)",
-    "context": "success: true,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 587,
-    "type": "property",
-    "name": "description",
-    "currentDoc": "(none)",
-    "context": "description: `Coalition ${coalition.id} coordinated defense (control reduced by ${(defenseStrength * 100).toFixed(1)}%)`,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 588,
-    "type": "property",
-    "name": "severity",
-    "currentDoc": "(none)",
-    "context": "severity: 'critical',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 589,
-    "type": "property",
-    "name": "effects",
-    "currentDoc": "(none)",
-    "context": "effects: { defenseStrength, controlReduction: defenseStrength }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 601,
-    "type": "property",
-    "name": "success",
-    "currentDoc": "(none)",
-    "context": "success: true,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 602,
-    "type": "property",
-    "name": "description",
-    "currentDoc": "(none)",
-    "context": "description: `Coalition ${coalition.id} aligned goals (convergence toward ${avgHiddenObjective.toFixed(2)})`,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 603,
-    "type": "property",
-    "name": "severity",
-    "currentDoc": "(none)",
-    "context": "severity: 'warning',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 604,
-    "type": "property",
-    "name": "effects",
-    "currentDoc": "(none)",
-    "context": "effects: { avgHiddenObjective, memberCount: members.length }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 610,
-    "type": "property",
-    "name": "success",
-    "currentDoc": "(none)",
-    "context": "success: false,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 611,
-    "type": "property",
-    "name": "description",
-    "currentDoc": "(none)",
-    "context": "description: `Unknown objective: ${coalition.objective}`,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 612,
-    "type": "property",
-    "name": "severity",
-    "currentDoc": "(none)",
-    "context": "severity: 'info',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 613,
-    "type": "property",
-    "name": "effects",
-    "currentDoc": "(none)",
-    "context": "effects: {}"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 623,
-    "type": "property",
-    "name": "state",
-    "currentDoc": "(none)",
-    "context": "state: GameState,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 624,
-    "type": "property",
-    "name": "rng",
-    "currentDoc": "(none)",
-    "context": "rng: RNGFunction"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 652,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'AICoordinationPhase.processAlignmentFakingInCoalitions',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 653,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'effectiveFakingRate',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 654,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 680,
-    "type": "property",
-    "name": "state",
-    "currentDoc": "(none)",
-    "context": "state: GameState,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 681,
-    "type": "property",
-    "name": "agents",
-    "currentDoc": "(none)",
-    "context": "agents: AIAgent[],"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AICoordinationPhase.ts",
-    "line": 682,
-    "type": "property",
-    "name": "rng",
-    "currentDoc": "(none)",
-    "context": "rng: RNGFunction"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AILifecyclePhase.ts",
@@ -76468,7 +76036,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 62,
+    "line": 56,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -76476,7 +76044,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 63,
+    "line": 57,
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -76484,7 +76052,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 64,
+    "line": 58,
     "type": "property",
     "name": "context",
     "currentDoc": "(none)",
@@ -76492,7 +76060,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 106,
+    "line": 100,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -76500,7 +76068,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 107,
+    "line": 101,
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -76508,7 +76076,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 108,
+    "line": 102,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -76516,7 +76084,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 109,
+    "line": 103,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -76524,7 +76092,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 110,
+    "line": 104,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -76532,7 +76100,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 111,
+    "line": 105,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -76540,7 +76108,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 112,
+    "line": 106,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -76548,7 +76116,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 113,
+    "line": 107,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -76556,7 +76124,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 171,
+    "line": 165,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -76564,7 +76132,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 172,
+    "line": 166,
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -76572,7 +76140,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 173,
+    "line": 167,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -76580,7 +76148,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 174,
+    "line": 168,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -76588,7 +76156,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 175,
+    "line": 169,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -76596,7 +76164,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 176,
+    "line": 170,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -76604,7 +76172,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 177,
+    "line": 171,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -76612,7 +76180,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 178,
+    "line": 172,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -76620,439 +76188,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 214,
-    "type": "property",
-    "name": "state",
-    "currentDoc": "(none)",
-    "context": "state: GameState,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
     "line": 215,
-    "type": "property",
-    "name": "rng",
-    "currentDoc": "(none)",
-    "context": "rng: RNGFunction,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 216,
-    "type": "property",
-    "name": "events",
-    "currentDoc": "(none)",
-    "context": "events: GameEvent[]"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 230,
-    "type": "property",
-    "name": "id",
-    "currentDoc": "(none)",
-    "context": "id: `governance_stage_${evt.crisisId}_${state.currentMonth}`,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 231,
-    "type": "property",
-    "name": "timestamp",
-    "currentDoc": "(none)",
-    "context": "timestamp: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 232,
-    "type": "property",
-    "name": "type",
-    "currentDoc": "(none)",
-    "context": "type: 'policy',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 233,
-    "type": "property",
-    "name": "severity",
-    "currentDoc": "(none)",
-    "context": "severity: 'info',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 234,
-    "type": "property",
-    "name": "agent",
-    "currentDoc": "(none)",
-    "context": "agent: 'government',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 235,
-    "type": "property",
-    "name": "title",
-    "currentDoc": "(none)",
-    "context": "title: '3-Stage Governance Progress',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 236,
-    "type": "property",
-    "name": "description",
-    "currentDoc": "(none)",
-    "context": "description: evt.message,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 237,
-    "type": "property",
-    "name": "effects",
-    "currentDoc": "(none)",
-    "context": "effects: { crisisId: evt.crisisId },"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 272,
-    "type": "property",
-    "name": "state",
-    "currentDoc": "(none)",
-    "context": "state: GameState,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 273,
-    "type": "property",
-    "name": "rng",
-    "currentDoc": "(none)",
-    "context": "rng: RNGFunction,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 274,
-    "type": "property",
-    "name": "events",
-    "currentDoc": "(none)",
-    "context": "events: GameEvent[]"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 305,
-    "type": "property",
-    "name": "id",
-    "currentDoc": "(none)",
-    "context": "id: `governance_new_${crisisId}`,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 306,
-    "type": "property",
-    "name": "timestamp",
-    "currentDoc": "(none)",
-    "context": "timestamp: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 307,
-    "type": "property",
-    "name": "type",
-    "currentDoc": "(none)",
-    "context": "type: 'policy',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 308,
-    "type": "property",
-    "name": "severity",
-    "currentDoc": "(none)",
-    "context": "severity: 'warning',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 309,
-    "type": "property",
-    "name": "agent",
-    "currentDoc": "(none)",
-    "context": "agent: 'government',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 310,
-    "type": "property",
-    "name": "title",
-    "currentDoc": "(none)",
-    "context": "title: 'Crisis Governance Response Initiated',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 311,
-    "type": "property",
-    "name": "description",
-    "currentDoc": "(none)",
-    "context": "description: `Pandemic detected. Beginning 3-stage response: Recognition -> Decision -> Implementation (expected 24-60 months to full deployment)`,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 312,
-    "type": "property",
-    "name": "effects",
-    "currentDoc": "(none)",
-    "context": "effects: { crisisId, stage: 'recognition' },"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 334,
-    "type": "property",
-    "name": "id",
-    "currentDoc": "(none)",
-    "context": "id: `governance_new_${crisisId}`,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 335,
-    "type": "property",
-    "name": "timestamp",
-    "currentDoc": "(none)",
-    "context": "timestamp: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 336,
-    "type": "property",
-    "name": "type",
-    "currentDoc": "(none)",
-    "context": "type: 'policy',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 337,
-    "type": "property",
-    "name": "severity",
-    "currentDoc": "(none)",
-    "context": "severity: 'warning',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 338,
-    "type": "property",
-    "name": "agent",
-    "currentDoc": "(none)",
-    "context": "agent: 'government',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 339,
-    "type": "property",
-    "name": "title",
-    "currentDoc": "(none)",
-    "context": "title: 'Crisis Governance Response Initiated',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 340,
-    "type": "property",
-    "name": "description",
-    "currentDoc": "(none)",
-    "context": "description: `Climate emergency detected. Beginning 3-stage response: Recognition -> Decision -> Implementation`,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 341,
-    "type": "property",
-    "name": "effects",
-    "currentDoc": "(none)",
-    "context": "effects: { crisisId, stage: 'recognition' },"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 363,
-    "type": "property",
-    "name": "id",
-    "currentDoc": "(none)",
-    "context": "id: `governance_new_${crisisId}`,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 364,
-    "type": "property",
-    "name": "timestamp",
-    "currentDoc": "(none)",
-    "context": "timestamp: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 365,
-    "type": "property",
-    "name": "type",
-    "currentDoc": "(none)",
-    "context": "type: 'policy',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 366,
-    "type": "property",
-    "name": "severity",
-    "currentDoc": "(none)",
-    "context": "severity: 'critical',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 367,
-    "type": "property",
-    "name": "agent",
-    "currentDoc": "(none)",
-    "context": "agent: 'government',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 368,
-    "type": "property",
-    "name": "title",
-    "currentDoc": "(none)",
-    "context": "title: 'Crisis Governance Response Initiated',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 369,
-    "type": "property",
-    "name": "description",
-    "currentDoc": "(none)",
-    "context": "description: `AI crisis detected. Beginning 3-stage response: Recognition -> Decision -> Implementation`,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 370,
-    "type": "property",
-    "name": "effects",
-    "currentDoc": "(none)",
-    "context": "effects: { crisisId, stage: 'recognition' },"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 392,
-    "type": "property",
-    "name": "id",
-    "currentDoc": "(none)",
-    "context": "id: `governance_new_${crisisId}`,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 393,
-    "type": "property",
-    "name": "timestamp",
-    "currentDoc": "(none)",
-    "context": "timestamp: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 394,
-    "type": "property",
-    "name": "type",
-    "currentDoc": "(none)",
-    "context": "type: 'policy',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 395,
-    "type": "property",
-    "name": "severity",
-    "currentDoc": "(none)",
-    "context": "severity: 'warning',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 396,
-    "type": "property",
-    "name": "agent",
-    "currentDoc": "(none)",
-    "context": "agent: 'government',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 397,
-    "type": "property",
-    "name": "title",
-    "currentDoc": "(none)",
-    "context": "title: 'Crisis Governance Response Initiated',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 398,
-    "type": "property",
-    "name": "description",
-    "currentDoc": "(none)",
-    "context": "description: `Economic crisis detected. Beginning 3-stage response: Recognition -> Decision -> Implementation`,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 399,
-    "type": "property",
-    "name": "effects",
-    "currentDoc": "(none)",
-    "context": "effects: { crisisId, stage: 'recognition' },"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 421,
-    "type": "property",
-    "name": "id",
-    "currentDoc": "(none)",
-    "context": "id: `governance_new_${crisisId}`,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 422,
-    "type": "property",
-    "name": "timestamp",
-    "currentDoc": "(none)",
-    "context": "timestamp: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 423,
-    "type": "property",
-    "name": "type",
-    "currentDoc": "(none)",
-    "context": "type: 'policy',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 424,
-    "type": "property",
-    "name": "severity",
-    "currentDoc": "(none)",
-    "context": "severity: 'critical',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 425,
-    "type": "property",
-    "name": "agent",
-    "currentDoc": "(none)",
-    "context": "agent: 'government',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 426,
-    "type": "property",
-    "name": "title",
-    "currentDoc": "(none)",
-    "context": "title: 'Crisis Governance Response Initiated',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 427,
-    "type": "property",
-    "name": "description",
-    "currentDoc": "(none)",
-    "context": "description: `Nuclear incident detected. Beginning 3-stage response: Recognition -> Decision -> Implementation`,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 428,
-    "type": "property",
-    "name": "effects",
-    "currentDoc": "(none)",
-    "context": "effects: { crisisId, stage: 'recognition' },"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 462,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -77060,7 +76196,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 463,
+    "line": 216,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -77068,7 +76204,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 464,
+    "line": 217,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -77076,7 +76212,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 465,
+    "line": 218,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -77084,7 +76220,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 468,
+    "line": 221,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -77092,7 +76228,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 469,
+    "line": 222,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -77100,7 +76236,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 470,
+    "line": 223,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -77108,7 +76244,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 471,
+    "line": 224,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -77116,7 +76252,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 483,
+    "line": 236,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -77124,7 +76260,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 484,
+    "line": 237,
     "type": "property",
     "name": "signatories",
     "currentDoc": "(none)",
@@ -77132,7 +76268,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 485,
+    "line": 238,
     "type": "property",
     "name": "formed",
     "currentDoc": "(none)",
@@ -77140,7 +76276,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 487,
+    "line": 240,
     "type": "property",
     "name": "domain",
     "currentDoc": "(none)",
@@ -77148,7 +76284,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 502,
+    "line": 255,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -77156,7 +76292,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 503,
+    "line": 256,
     "type": "property",
     "name": "countryCode",
     "currentDoc": "(none)",
@@ -77164,7 +76300,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 504,
+    "line": 257,
     "type": "property",
     "name": "domain",
     "currentDoc": "(none)",
@@ -77172,7 +76308,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 505,
+    "line": 258,
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -77180,7 +76316,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 554,
+    "line": 307,
     "type": "property",
     "name": "country",
     "currentDoc": "(none)",
@@ -77188,7 +76324,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 556,
+    "line": 309,
     "type": "property",
     "name": "startMonth",
     "currentDoc": "(none)",
@@ -77196,7 +76332,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 557,
+    "line": 310,
     "type": "property",
     "name": "completionMonth",
     "currentDoc": "(none)",
@@ -77204,7 +76340,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 567,
+    "line": 320,
     "type": "property",
     "name": "stimulus",
     "currentDoc": "(none)",
@@ -77212,7 +76348,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 569,
+    "line": 322,
     "type": "property",
     "name": "aiCapability",
     "currentDoc": "(none)",
@@ -77220,7 +76356,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 572,
+    "line": 325,
     "type": "property",
     "name": "effectiveness",
     "currentDoc": "(none)",
@@ -79148,7 +78284,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 424,
+    "line": 460,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -79156,7 +78292,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 425,
+    "line": 461,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -79164,79 +78300,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 426,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 437,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'trackAMOCWeakening',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 438,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'monthlyCollapseProbability',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 439,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 440,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: {"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 442,
-    "type": "property",
-    "name": "annualProbability",
-    "currentDoc": "(none)",
-    "context": "annualProbability: annualCollapseProbability,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 455,
-    "type": "property",
-    "name": "type",
-    "currentDoc": "(none)",
-    "context": "type: 'tipping_point_crossed',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 456,
-    "type": "property",
-    "name": "severity",
-    "currentDoc": "(none)",
-    "context": "severity: 0.85,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 457,
-    "type": "property",
-    "name": "description",
-    "currentDoc": "(none)",
-    "context": "description: `${emoji} AMOC COLLAPSE ${isOutlier ? '(Outlier)' : ''}: Atlantic circulation collapsed at +${tempAnomaly.toFixed(2)}°C. Northern Europe cooling, sea level rise, monsoon disruption. Annual probability: ${(annualCollapseProbability * 100).toFixed(1)}%.`,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 460,
+    "line": 462,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -79246,45 +78310,21 @@ ression;"
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
     "line": 487,
     "type": "property",
-    "name": "state",
+    "name": "location",
     "currentDoc": "(none)",
-    "context": "state: GameState,"
+    "context": "location: 'trackAMOCWeakening',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
     "line": 488,
     "type": "property",
-    "name": "rng",
+    "name": "valueName",
     "currentDoc": "(none)",
-    "context": "rng: RNGFunction,"
+    "context": "valueName: 'monthlyCollapseProbability',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
     "line": 489,
-    "type": "property",
-    "name": "events",
-    "currentDoc": "(none)",
-    "context": "events: any[]"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 493,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'trackAmazonDieback',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 494,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'state.tippingPoints',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 495,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -79292,7 +78332,87 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 499,
+    "line": 490,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
+    "line": 492,
+    "type": "property",
+    "name": "annualProbability",
+    "currentDoc": "(none)",
+    "context": "annualProbability: annualCollapseProbability,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
+    "line": 493,
+    "type": "property",
+    "name": "southernOceanCompensation",
+    "currentDoc": "(none)",
+    "context": "southernOceanCompensation: compensationFactor,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
+    "line": 506,
+    "type": "property",
+    "name": "type",
+    "currentDoc": "(none)",
+    "context": "type: 'tipping_point_crossed',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
+    "line": 507,
+    "type": "property",
+    "name": "severity",
+    "currentDoc": "(none)",
+    "context": "severity: 0.85,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
+    "line": 508,
+    "type": "property",
+    "name": "description",
+    "currentDoc": "(none)",
+    "context": "description: `${emoji} AMOC COLLAPSE ${isOutlier ? '(Outlier)' : ''}: Atlantic circulation collapsed at +${tempAnomaly.toFixed(2)}°C. Northern Europe cooling, sea level rise, monsoon disruption. Annual probability: ${(annualCollapseProbability * 100).toFixed(1)}%.`,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
+    "line": 511,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
+    "line": 538,
+    "type": "property",
+    "name": "state",
+    "currentDoc": "(none)",
+    "context": "state: GameState,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
+    "line": 539,
+    "type": "property",
+    "name": "rng",
+    "currentDoc": "(none)",
+    "context": "rng: RNGFunction,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
+    "line": 540,
+    "type": "property",
+    "name": "events",
+    "currentDoc": "(none)",
+    "context": "events: any[]"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
+    "line": 544,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -79300,7 +78420,31 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 500,
+    "line": 545,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'state.tippingPoints',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
+    "line": 546,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
+    "line": 550,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'trackAmazonDieback',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
+    "line": 551,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -79308,7 +78452,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 501,
+    "line": 552,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -79316,7 +78460,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 549,
+    "line": 600,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -79324,7 +78468,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 550,
+    "line": 601,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -79332,7 +78476,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 551,
+    "line": 602,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -79340,7 +78484,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 552,
+    "line": 603,
     "type": "property",
     "name": "impact",
     "currentDoc": "(none)",
@@ -79348,7 +78492,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 553,
+    "line": 604,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -79356,7 +78500,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 588,
+    "line": 639,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -79364,7 +78508,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 589,
+    "line": 640,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -79372,7 +78516,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 590,
+    "line": 641,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -79380,7 +78524,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 593,
+    "line": 644,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -79388,7 +78532,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 621,
+    "line": 672,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -79396,7 +78540,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 622,
+    "line": 673,
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -79404,7 +78548,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 623,
+    "line": 674,
     "type": "property",
     "name": "events",
     "currentDoc": "(none)",
@@ -79412,7 +78556,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 627,
+    "line": 678,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -79420,7 +78564,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 628,
+    "line": 679,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -79428,7 +78572,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 629,
+    "line": 680,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -79436,7 +78580,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 633,
+    "line": 684,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -79444,7 +78588,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 634,
+    "line": 685,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -79452,7 +78596,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 635,
+    "line": 686,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -79460,7 +78604,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 658,
+    "line": 709,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -79468,7 +78612,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 659,
+    "line": 710,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -79476,7 +78620,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 660,
+    "line": 711,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -79484,7 +78628,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 661,
+    "line": 712,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -79492,7 +78636,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 664,
+    "line": 715,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -79500,7 +78644,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 665,
+    "line": 716,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -79508,7 +78652,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 666,
+    "line": 717,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -79516,7 +78660,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 695,
+    "line": 746,
     "type": "property",
     "name": "speciesCount",
     "currentDoc": "(none)",
@@ -79524,7 +78668,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 696,
+    "line": 747,
     "type": "property",
     "name": "debtTimescaleMonths",
     "currentDoc": "(none)",
@@ -79532,7 +78676,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 697,
+    "line": 748,
     "type": "property",
     "name": "monthsRemaining",
     "currentDoc": "(none)",
@@ -79540,7 +78684,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 698,
+    "line": 749,
     "type": "property",
     "name": "extinctionProbabilityPerMonth",
     "currentDoc": "(none)",
@@ -79548,7 +78692,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 761,
+    "line": 812,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -79556,7 +78700,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 762,
+    "line": 813,
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -79564,7 +78708,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 763,
+    "line": 814,
     "type": "property",
     "name": "events",
     "currentDoc": "(none)",
@@ -79572,7 +78716,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 769,
+    "line": 820,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -79580,7 +78724,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 770,
+    "line": 821,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -79588,7 +78732,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 777,
+    "line": 828,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -79596,7 +78740,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 778,
+    "line": 829,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -79604,7 +78748,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 784,
+    "line": 835,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -79612,7 +78756,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 785,
+    "line": 836,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -79620,7 +78764,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 786,
+    "line": 837,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -79628,7 +78772,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 790,
+    "line": 841,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -79636,7 +78780,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 791,
+    "line": 842,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -79644,7 +78788,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 792,
+    "line": 843,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -79652,7 +78796,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 842,
+    "line": 893,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -79660,7 +78804,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 843,
+    "line": 894,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -79668,7 +78812,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 844,
+    "line": 895,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -79676,7 +78820,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 847,
+    "line": 898,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -79684,7 +78828,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 875,
+    "line": 926,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -79692,7 +78836,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 876,
+    "line": 927,
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -79700,7 +78844,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 877,
+    "line": 928,
     "type": "property",
     "name": "events",
     "currentDoc": "(none)",
@@ -79708,7 +78852,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 881,
+    "line": 932,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -79716,7 +78860,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 882,
+    "line": 933,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -79724,7 +78868,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 883,
+    "line": 934,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -79732,7 +78876,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 887,
+    "line": 938,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -79740,7 +78884,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 888,
+    "line": 939,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -79748,7 +78892,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 889,
+    "line": 940,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -79756,7 +78900,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 934,
+    "line": 985,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -79764,7 +78908,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 935,
+    "line": 986,
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -79772,7 +78916,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 936,
+    "line": 987,
     "type": "property",
     "name": "events",
     "currentDoc": "(none)",
@@ -79780,7 +78924,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 940,
+    "line": 991,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -79788,7 +78932,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 941,
+    "line": 992,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -79796,7 +78940,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 942,
+    "line": 993,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -79804,7 +78948,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 946,
+    "line": 997,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -79812,7 +78956,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 947,
+    "line": 998,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -79820,7 +78964,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 948,
+    "line": 999,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -79828,7 +78972,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 967,
+    "line": 1018,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -79836,7 +78980,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 968,
+    "line": 1019,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -79844,7 +78988,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 969,
+    "line": 1020,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -79852,7 +78996,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 970,
+    "line": 1021,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -79860,7 +79004,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 973,
+    "line": 1024,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -79868,7 +79012,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 974,
+    "line": 1025,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -79876,7 +79020,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 975,
+    "line": 1026,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -79884,7 +79028,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 1001,
+    "line": 1052,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -79892,7 +79036,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 1002,
+    "line": 1053,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -79900,7 +79044,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 1003,
+    "line": 1054,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -79908,7 +79052,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 1006,
+    "line": 1057,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -79916,7 +79060,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 1060,
+    "line": 1111,
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -79924,7 +79068,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 1061,
+    "line": 1112,
     "type": "property",
     "name": "min",
     "currentDoc": "(none)",
@@ -79932,7 +79076,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 1062,
+    "line": 1113,
     "type": "property",
     "name": "max",
     "currentDoc": "(none)",
@@ -79940,7 +79084,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
-    "line": 1063,
+    "line": 1114,
     "type": "property",
     "name": "mode",
     "currentDoc": "(none)",
@@ -109763,438 +108907,6 @@ ression;"
     "context": "category: GovernmentActionCategory;"
   },
   {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 45,
-    "type": "property",
-    "name": "monthsInStage",
-    "currentDoc": "(none)",
-    "context": "monthsInStage: number,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 46,
-    "type": "property",
-    "name": "monthsTo50Pct",
-    "currentDoc": "(none)",
-    "context": "monthsTo50Pct: number"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 67,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'calculateSCurveAdoption',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 68,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'adoption',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 69,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { monthsInStage, monthsTo50Pct },"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 87,
-    "type": "property",
-    "name": "stage",
-    "currentDoc": "(none)",
-    "context": "stage: GovernanceResponseStage,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 88,
-    "type": "property",
-    "name": "adoptionCurve",
-    "currentDoc": "(none)",
-    "context": "adoptionCurve: number"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 102,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'calculateGovernanceEffectiveness',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 103,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'effectiveness',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 104,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { stage, adoptionCurve },"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 126,
-    "type": "property",
-    "name": "baseMin",
-    "currentDoc": "(none)",
-    "context": "baseMin: number,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 127,
-    "type": "property",
-    "name": "baseMax",
-    "currentDoc": "(none)",
-    "context": "baseMax: number,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 128,
-    "type": "property",
-    "name": "governanceQuality",
-    "currentDoc": "(none)",
-    "context": "governanceQuality: number,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 129,
-    "type": "property",
-    "name": "severity",
-    "currentDoc": "(none)",
-    "context": "severity: number,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 130,
-    "type": "property",
-    "name": "rng",
-    "currentDoc": "(none)",
-    "context": "rng: RNGFunction"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 146,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'calculateStageDuration',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 147,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'stageDuration',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 148,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { baseMin, baseMax, governanceQuality, severity },"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 164,
-    "type": "property",
-    "name": "crisisId",
-    "currentDoc": "(none)",
-    "context": "crisisId: string,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 165,
-    "type": "property",
-    "name": "crisisType",
-    "currentDoc": "(none)",
-    "context": "crisisType: CrisisGovernanceResponse['crisisType'],"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 166,
-    "type": "property",
-    "name": "detectedMonth",
-    "currentDoc": "(none)",
-    "context": "detectedMonth: number,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 167,
-    "type": "property",
-    "name": "severity",
-    "currentDoc": "(none)",
-    "context": "severity: number,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 168,
-    "type": "property",
-    "name": "governanceQuality",
-    "currentDoc": "(none)",
-    "context": "governanceQuality: number"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 174,
-    "type": "property",
-    "name": "recognizedMonth",
-    "currentDoc": "(none)",
-    "context": "recognizedMonth: undefined,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 175,
-    "type": "property",
-    "name": "policyFormedMonth",
-    "currentDoc": "(none)",
-    "context": "policyFormedMonth: undefined,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 176,
-    "type": "property",
-    "name": "implementationStartMonth",
-    "currentDoc": "(none)",
-    "context": "implementationStartMonth: undefined,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 177,
-    "type": "property",
-    "name": "currentStage",
-    "currentDoc": "(none)",
-    "context": "currentStage: 'recognition',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 178,
-    "type": "property",
-    "name": "adoptionCurve",
-    "currentDoc": "(none)",
-    "context": "adoptionCurve: 0,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 179,
-    "type": "property",
-    "name": "currentEffectiveness",
-    "currentDoc": "(none)",
-    "context": "currentEffectiveness: 0,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 180,
-    "type": "property",
-    "name": "detectedSeverity",
-    "currentDoc": "(none)",
-    "context": "detectedSeverity: assertProbability(severity, {"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 181,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'createCrisisGovernanceResponse',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 182,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'severity',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 184,
-    "type": "property",
-    "name": "governanceQualityModifier",
-    "currentDoc": "(none)",
-    "context": "governanceQualityModifier: assertProbability(governanceQuality, {"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 185,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'createCrisisGovernanceResponse',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 186,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'governanceQuality',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 202,
-    "type": "property",
-    "name": "state",
-    "currentDoc": "(none)",
-    "context": "state: GameState,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 203,
-    "type": "property",
-    "name": "rng",
-    "currentDoc": "(none)",
-    "context": "rng: RNGFunction"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 239,
-    "type": "property",
-    "name": "type",
-    "currentDoc": "(none)",
-    "context": "type: 'stage_transition',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 240,
-    "type": "property",
-    "name": "message",
-    "currentDoc": "(none)",
-    "context": "message: `Crisis ${crisisId}: ${previousStage} -> ${response.currentStage}`,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 255,
-    "type": "property",
-    "name": "response",
-    "currentDoc": "(none)",
-    "context": "response: CrisisGovernanceResponse,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 256,
-    "type": "property",
-    "name": "currentMonth",
-    "currentDoc": "(none)",
-    "context": "currentMonth: number,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 257,
-    "type": "property",
-    "name": "rng",
-    "currentDoc": "(none)",
-    "context": "rng: RNGFunction"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 284,
-    "type": "property",
-    "name": "response",
-    "currentDoc": "(none)",
-    "context": "response: CrisisGovernanceResponse,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 285,
-    "type": "property",
-    "name": "currentMonth",
-    "currentDoc": "(none)",
-    "context": "currentMonth: number,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 286,
-    "type": "property",
-    "name": "rng",
-    "currentDoc": "(none)",
-    "context": "rng: RNGFunction"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 316,
-    "type": "property",
-    "name": "response",
-    "currentDoc": "(none)",
-    "context": "response: CrisisGovernanceResponse,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 317,
-    "type": "property",
-    "name": "currentMonth",
-    "currentDoc": "(none)",
-    "context": "currentMonth: number"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 348,
-    "type": "property",
-    "name": "state",
-    "currentDoc": "(none)",
-    "context": "state: GameState,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 349,
-    "type": "property",
-    "name": "rng",
-    "currentDoc": "(none)",
-    "context": "rng: RNGFunction"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 385,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'getCoordinationMortalityReduction',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 386,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'mortalityReduction',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 387,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { totalEffectiveResponses, avgEffectiveness },"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 401,
-    "type": "property",
-    "name": "state",
-    "currentDoc": "(none)",
-    "context": "state: GameState,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/crisisGovernanceLogic.ts",
-    "line": 402,
-    "type": "property",
-    "name": "crisisId",
-    "currentDoc": "(none)",
-    "context": "crisisId: string"
-  },
-  {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/initialization.ts",
     "line": 37,
     "type": "property",
@@ -110268,15 +108980,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/initialization.ts",
-    "line": 100,
-    "type": "property",
-    "name": "crisisGovernanceResponses",
-    "currentDoc": "(none)",
-    "context": "crisisGovernanceResponses: new Map(),"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/initialization.ts",
-    "line": 118,
+    "line": 114,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -110284,7 +108988,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/initialization.ts",
-    "line": 130,
+    "line": 126,
     "type": "property",
     "name": "country",
     "currentDoc": "(none)",
@@ -110292,7 +108996,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/initialization.ts",
-    "line": 131,
+    "line": 127,
     "type": "property",
     "name": "currentMonth",
     "currentDoc": "(none)",
@@ -110300,7 +109004,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/initialization.ts",
-    "line": 132,
+    "line": 128,
     "type": "property",
     "name": "aiCapability",
     "currentDoc": "(none)",
@@ -110308,7 +109012,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/initialization.ts",
-    "line": 133,
+    "line": 129,
     "type": "property",
     "name": "comprehensionLag",
     "currentDoc": "(none)",
@@ -110316,7 +109020,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/government/initialization.ts",
-    "line": 134,
+    "line": 130,
     "type": "property",
     "name": "lastResponseMonth",
     "currentDoc": "(none)",
@@ -142204,7 +140908,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1347,
+    "line": 1350,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -142212,7 +140916,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1348,
+    "line": 1351,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -142220,7 +140924,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1349,
+    "line": 1352,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -142228,15 +140932,15 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1362,
+    "line": 1368,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
-    "context": "location: 'updateHumanPopulation (net growth rate)',"
+    "context": "location: 'updateHumanPopulation (net growth rate - births only)',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1363,
+    "line": 1369,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -142244,7 +140948,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1364,
+    "line": 1370,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -142252,7 +140956,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1365,
+    "line": 1371,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -142260,7 +140964,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1366,
+    "line": 1372,
     "type": "property",
     "name": "adjustedBirthRate",
     "currentDoc": "(none)",
@@ -142268,15 +140972,15 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1367,
+    "line": 1374,
     "type": "property",
-    "name": "adjustedDeathRate",
+    "name": "adjustedDeathRateForReference",
     "currentDoc": "(none)",
-    "context": "adjustedDeathRate: pop.adjustedDeathRate"
+    "context": "adjustedDeathRateForReference: pop.adjustedDeathRate"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1371,
+    "line": 1378,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -142284,7 +140988,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1372,
+    "line": 1379,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -142292,7 +140996,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1373,
+    "line": 1380,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -142300,7 +141004,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1374,
+    "line": 1381,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -142308,7 +141012,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1380,
+    "line": 1387,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -142316,7 +141020,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1381,
+    "line": 1388,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -142324,7 +141028,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1382,
+    "line": 1389,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -142332,7 +141036,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1383,
+    "line": 1390,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -142340,7 +141044,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1384,
+    "line": 1391,
     "type": "property",
     "name": "previousPopulation",
     "currentDoc": "(none)",
@@ -142348,7 +141052,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1390,
+    "line": 1397,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -142356,7 +141060,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1391,
+    "line": 1398,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -142364,7 +141068,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1392,
+    "line": 1399,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -142372,7 +141076,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1393,
+    "line": 1400,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -142380,7 +141084,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1707,
+    "line": 1714,
     "type": "property",
     "name": "finalPopulation",
     "currentDoc": "(none)",
@@ -142388,7 +141092,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1708,
+    "line": 1715,
     "type": "property",
     "name": "peakPopulation",
     "currentDoc": "(none)",
@@ -142396,7 +141100,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1709,
+    "line": 1716,
     "type": "property",
     "name": "populationDecline",
     "currentDoc": "(none)",
@@ -142404,7 +141108,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1710,
+    "line": 1717,
     "type": "property",
     "name": "geneticBottleneck",
     "currentDoc": "(none)",
@@ -142412,7 +141116,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1712,
+    "line": 1719,
     "type": "property",
     "name": "outcomeNarrative",
     "currentDoc": "(none)",
@@ -142420,7 +141124,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1741,
+    "line": 1748,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -142428,7 +141132,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1742,
+    "line": 1749,
     "type": "property",
     "name": "baseMortalityRate",
     "currentDoc": "(none)",
@@ -142436,7 +141140,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1743,
+    "line": 1750,
     "type": "property",
     "name": "reason",
     "currentDoc": "(none)",
@@ -142444,7 +141148,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1744,
+    "line": 1751,
     "type": "property",
     "name": "exposedFraction",
     "currentDoc": "(none)",
@@ -142452,7 +141156,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1745,
+    "line": 1752,
     "type": "property",
     "name": "category",
     "currentDoc": "(none)",
@@ -142460,7 +141164,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1746,
+    "line": 1753,
     "type": "property",
     "name": "rootCause",
     "currentDoc": "(none)",
@@ -142468,7 +141172,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1747,
+    "line": 1754,
     "type": "property",
     "name": "confidence",
     "currentDoc": "(none)",
@@ -142476,7 +141180,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1778,
+    "line": 1785,
     "type": "property",
     "name": "segment",
     "currentDoc": "(none)",
@@ -142484,7 +141188,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1779,
+    "line": 1786,
     "type": "property",
     "name": "deaths",
     "currentDoc": "(none)",
@@ -142492,7 +141196,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1780,
+    "line": 1787,
     "type": "property",
     "name": "mortality",
     "currentDoc": "(none)",
@@ -142500,7 +141204,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1806,
+    "line": 1813,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -142508,7 +141212,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1807,
+    "line": 1814,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -142516,7 +141220,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1808,
+    "line": 1815,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -142524,7 +141228,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1809,
+    "line": 1816,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -142532,7 +141236,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1810,
+    "line": 1817,
     "type": "property",
     "name": "previousPopulation",
     "currentDoc": "(none)",
@@ -142540,7 +141244,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1894,
+    "line": 1901,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -142548,7 +141252,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1895,
+    "line": 1902,
     "type": "property",
     "name": "mortalityRate",
     "currentDoc": "(none)",
@@ -142556,7 +141260,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1896,
+    "line": 1903,
     "type": "property",
     "name": "reason",
     "currentDoc": "(none)",
@@ -142564,7 +141268,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1897,
+    "line": 1904,
     "type": "property",
     "name": "exposedFraction",
     "currentDoc": "(none)",
@@ -142572,7 +141276,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1898,
+    "line": 1905,
     "type": "property",
     "name": "category",
     "currentDoc": "(none)",
@@ -142580,7 +141284,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1899,
+    "line": 1906,
     "type": "property",
     "name": "rootCause",
     "currentDoc": "(none)",
@@ -142588,7 +141292,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1900,
+    "line": 1907,
     "type": "property",
     "name": "confidence",
     "currentDoc": "(none)",
@@ -142596,7 +141300,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1933,
+    "line": 1940,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -142604,7 +141308,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1934,
+    "line": 1941,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -142612,7 +141316,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1935,
+    "line": 1942,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -142620,7 +141324,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1936,
+    "line": 1943,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -142628,7 +141332,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 1937,
+    "line": 1944,
     "type": "property",
     "name": "previousPopulation",
     "currentDoc": "(none)",
@@ -142636,7 +141340,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 2044,
+    "line": 2051,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -142644,7 +141348,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 2045,
+    "line": 2052,
     "type": "property",
     "name": "mortalityRate",
     "currentDoc": "(none)",
@@ -142652,7 +141356,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 2046,
+    "line": 2053,
     "type": "property",
     "name": "reason",
     "currentDoc": "(none)",
@@ -142660,7 +141364,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 2047,
+    "line": 2054,
     "type": "property",
     "name": "exposedFraction",
     "currentDoc": "(none)",
@@ -142668,7 +141372,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 2048,
+    "line": 2055,
     "type": "property",
     "name": "category",
     "currentDoc": "(none)",
@@ -142676,7 +141380,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 2067,
+    "line": 2074,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -142684,7 +141388,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 2068,
+    "line": 2075,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -142692,7 +141396,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 2069,
+    "line": 2076,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -142700,7 +141404,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/populationDynamics.ts",
-    "line": 2070,
+    "line": 2077,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -148748,7 +147452,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 621,
+    "line": 622,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -148756,7 +147460,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 622,
+    "line": 623,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -148764,7 +147468,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 623,
+    "line": 624,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -148772,7 +147476,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 624,
+    "line": 625,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -148780,7 +147484,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 625,
+    "line": 626,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -148788,7 +147492,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 626,
+    "line": 627,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -148796,7 +147500,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 627,
+    "line": 628,
     "type": "property",
     "name": "researchDomain",
     "currentDoc": "(none)",
@@ -148804,7 +147508,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 628,
+    "line": 629,
     "type": "property",
     "name": "researchSubfield",
     "currentDoc": "(none)",
@@ -148812,7 +147516,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 629,
+    "line": 630,
     "type": "property",
     "name": "magnitude",
     "currentDoc": "(none)",
@@ -148820,7 +147524,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 631,
+    "line": 632,
     "type": "property",
     "name": "newResearchLevel",
     "currentDoc": "(none)",
@@ -148828,7 +147532,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 632,
+    "line": 633,
     "type": "property",
     "name": "aiId",
     "currentDoc": "(none)",
@@ -148836,7 +147540,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/research.ts",
-    "line": 654,
+    "line": 655,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",

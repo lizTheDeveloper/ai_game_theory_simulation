@@ -5,7 +5,7 @@
  * properly initialized capability profiles, research investments, etc.
  */
 
-import { GameState, AIAgent, ScenarioMode } from '@/types/game';
+import { GameState, AIAgent, ScenarioMode, HistoricalOverrides } from '@/types/game';
 import { initializeCapabilityProfile, initializeResearchInvestments, calculateTotalCapabilityFromProfile, updateDerivedCapabilities, scaleCapabilityProfile } from './capabilities';
 import { computeEffectiveAlignment, computeAlignmentRobustness } from '@/types/alignment-techniques';
 import { wrapStateForValidation } from './utils/stateValidation';
@@ -525,6 +525,7 @@ export function createAIAgent(
  * @param climatePriorityConfig Optional climate priority configuration override
  * @param preSampledThresholds Optional pre-sampled thresholds (Phase 1C: Nested Monte Carlo)
  * @param speculativeScenario Optional speculative scenario for Tier 3 thresholds (Phase 3)
+ * @param historicalOverrides Optional historical overrides for hindcast validation (Nov 24, 2025)
  */
 export function createDefaultInitialState(
   rng: () => number,  // CRITICAL (Nov 7, 2025): RNG REQUIRED, no Math.random fallback (moved to first param for TypeScript)
@@ -532,13 +533,15 @@ export function createDefaultInitialState(
   alignmentDynamicsConfig?: any,
   climatePriorityConfig?: any,
   thresholdSliders?: import('../components/thresholds/ThresholdConfigModal').ThresholdSliders, // Phase 4: Slider-based threshold control
-  speculativeScenario?: 'doom' | 'cautious' | 'baseline' | 'progressive' | 'utopia'
+  speculativeScenario?: 'doom' | 'cautious' | 'baseline' | 'progressive' | 'utopia',
+  historicalOverrides?: HistoricalOverrides  // Climate Mini-Hindcast (Nov 24, 2025)
 ): GameState {
   // WEEK 2 Task 2.1 (Nov 6, 2025): Validate central configuration at startup
   // Fail-loudly if any parameter is invalid (research simulation rigor)
   validateSimulationConfig();
 
-  const initialYear = 2025;
+  // Climate Mini-Hindcast (Nov 24, 2025): Use historical year if provided, else 2025
+  const initialYear = historicalOverrides?.startYear ?? 2025;
   const initialMonth = 0;
 
   // CRITICAL FIX (Nov 7, 2025): Removed Math.random fallback (CRITICAL-3 regression)
@@ -1332,6 +1335,107 @@ export function createDefaultInitialState(
   // Previous code was comparing scalar totalCap with non-existent floor variable.
   // capabilityFloor is a complex multi-dimensional object (state.ecosystem.capabilityFloor),
   // cannot be compared as a simple number. If validation needed, must check each dimension separately.
+
+  // ============================================================================
+  // CLIMATE MINI-HINDCAST: Apply Historical Overrides (Nov 24, 2025)
+  // ============================================================================
+  // Apply historical overrides to enable model validation against known trajectories
+  // (e.g., 1990-2010 Keeling curve CO2 validation)
+  if (historicalOverrides) {
+    console.log(`\n=== HISTORICAL HINDCAST MODE ===`);
+    console.log(`  Starting year: ${historicalOverrides.startYear}`);
+    console.log(`  CO2: ${historicalOverrides.co2Ppm} ppm`);
+    console.log(`  Temperature anomaly: ${historicalOverrides.temperatureAnomalyC}C`);
+    console.log(`  Population: ${historicalOverrides.globalPopulationBillions}B`);
+    console.log(`  Emissions: ${historicalOverrides.emissionsGtCO2PerYear} GtCO2/year`);
+
+    // Apply CO2 system overrides
+    state.resourceEconomy.co2.atmosphericCO2 = assertFinite(historicalOverrides.co2Ppm, {
+      location: 'applyHistoricalOverrides',
+      valueName: 'co2Ppm',
+      additionalInfo: { startYear: historicalOverrides.startYear }
+    });
+    state.resourceEconomy.co2.annualEmissions = assertFinite(historicalOverrides.emissionsGtCO2PerYear, {
+      location: 'applyHistoricalOverrides',
+      valueName: 'emissionsGtCO2PerYear',
+      additionalInfo: { startYear: historicalOverrides.startYear }
+    });
+    state.resourceEconomy.co2.temperatureAnomaly = assertFinite(historicalOverrides.temperatureAnomalyC, {
+      location: 'applyHistoricalOverrides',
+      valueName: 'temperatureAnomalyC',
+      additionalInfo: { startYear: historicalOverrides.startYear }
+    });
+
+    // Apply environmental tipping point overrides if provided
+    if (historicalOverrides.environmental) {
+      const env = historicalOverrides.environmental;
+      if (env.arcticIceLoss !== undefined) {
+        state.resourceEconomy.co2.arcticIceLoss = assertFinite(env.arcticIceLoss, {
+          location: 'applyHistoricalOverrides',
+          valueName: 'arcticIceLoss',
+          additionalInfo: { startYear: historicalOverrides.startYear }
+        });
+      }
+      if (env.permafrostThaw !== undefined) {
+        state.resourceEconomy.co2.permafrostThaw = assertFinite(env.permafrostThaw, {
+          location: 'applyHistoricalOverrides',
+          valueName: 'permafrostThaw',
+          additionalInfo: { startYear: historicalOverrides.startYear }
+        });
+      }
+      if (env.amazonDieback !== undefined) {
+        state.resourceEconomy.co2.amazonDieback = assertFinite(env.amazonDieback, {
+          location: 'applyHistoricalOverrides',
+          valueName: 'amazonDieback',
+          additionalInfo: { startYear: historicalOverrides.startYear }
+        });
+      }
+      if (env.sinkSaturation !== undefined) {
+        state.resourceEconomy.co2.sinkSaturation = assertFinite(env.sinkSaturation, {
+          location: 'applyHistoricalOverrides',
+          valueName: 'sinkSaturation',
+          additionalInfo: { startYear: historicalOverrides.startYear }
+        });
+      }
+    }
+
+    // Apply population overrides
+    // Scale regional populations proportionally to match historical global population
+    const currentPop = state.humanPopulationSystem.population;
+    const targetPop = historicalOverrides.globalPopulationBillions;
+    const popScaleFactor = targetPop / currentPop;
+
+    state.humanPopulationSystem.population = assertFinite(targetPop, {
+      location: 'applyHistoricalOverrides',
+      valueName: 'population',
+      additionalInfo: { startYear: historicalOverrides.startYear }
+    });
+    state.humanPopulationSystem.baselinePopulation = targetPop;
+    state.humanPopulationSystem.peakPopulation = targetPop;
+    state.initialPopulation = targetPop;
+    state.society.totalPopulation = targetPop;
+    state.globalMetrics.population = targetPop;
+
+    // Scale regional populations proportionally
+    if (state.humanPopulationSystem.regionalPopulations) {
+      for (const region of state.humanPopulationSystem.regionalPopulations) {
+        region.population = assertFinite(region.population * popScaleFactor, {
+          location: 'applyHistoricalOverrides',
+          valueName: 'regional.population',
+          additionalInfo: { regionName: region.name, startYear: historicalOverrides.startYear }
+        });
+      }
+    }
+
+    // For hindcast scenarios pre-2020, disable AI agents (they didn't exist yet)
+    if (historicalOverrides.startYear < 2020) {
+      console.log(`  Disabling AI agents (pre-2020 hindcast)`);
+      state.aiAgents = []; // No frontier AI before 2020
+    }
+
+    console.log(`  Hindcast initialization complete`);
+    console.log(`=================================\n`);
+  }
 
   // Wrap with validation proxy in dev mode (zero overhead in production)
   return wrapStateForValidation(state);

@@ -30,8 +30,11 @@ export type {
   ScenarioMode,
   ScenarioParameters,
   ConfigurationSettings,
-  RNGFunction
+  RNGFunction,
+  HistoricalOverrides
 } from './config';
+
+export { HISTORICAL_BASELINES } from './config';
 
 export type {
   GameEvent,
