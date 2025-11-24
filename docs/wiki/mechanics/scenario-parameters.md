@@ -215,6 +215,42 @@ const historicalState = createDefaultInitialState('historical');
 const unprecedentedState = createDefaultInitialState('unprecedented');
 ```
 
+### Historical Hindcast Validation
+
+**Purpose:** Validate model against known 1990-2024 outcomes before trusting future projections.
+
+```typescript
+import { createHistoricalInitialState } from './simulation/historicalInitialization';
+
+// Initialize at 1990 with correct historical values
+const state = await createHistoricalInitialState({
+  year: 1990,
+  rng: deterministicRNG,
+  includeAIAgents: false,  // AI didn't exist in 1990
+  scenarioMode: 'historical'
+});
+
+// Run 408 months (1990-2024) and compare to actual outcomes
+```
+
+**Key hindcast behaviors (commit b01a37c, Nov 24 2025):**
+- **Regional population scaling:** Scales 2025 baseline (7.4B) proportionally to match historical global (5.3B for 1990)
+- **Year tracking:** `simulationStartYear` preserved in state, `currentYear = startYear + monthsElapsed/12`
+- **ExogenousShockPhase:** Skips random shock generation in historical mode (real events only)
+- **Temperature:** Initializes both `planetaryBoundaries.currentValue` and `resourceEconomy.temperatureAnomaly`
+- **Birth rate scaling:** Regional birth rates scaled using historical CBR values (1990: 24.3/1000 vs 2025: 16.8/1000)
+
+**Validation targets (UN WPP, NOAA, FAO):**
+| Year | Population | Temp Anomaly | CO2 ppm |
+|------|-----------|--------------|---------|
+| 1990 | 5.3B | 0.45°C | 354 |
+| 2000 | 6.1B | 0.65°C | 370 |
+| 2010 | 6.9B | 0.90°C | 390 |
+| 2020 | 7.8B | 1.15°C | 412 |
+| 2024 | 8.1B | 1.30°C | 422 |
+
+**Current status:** Population growth direction correct (5.3B → 6.24B), calibration gap remaining (~1.86B).
+
 ### Monte Carlo Analysis
 
 **Recommended approach:** Run 50% historical, 50% unprecedented to show range of outcomes
