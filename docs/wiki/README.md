@@ -51,6 +51,16 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - Temperature-dependent collapse: 0.5% (<2°C) → 50% (3°C) → 90% (>3.9°C)
 - 📄 **Audit:** reviews/mechanism_audit_mortality_stabilizers_20251124.md
 
+**Nov 23: Monte Carlo N=100 Stress Test - Bimodal Distribution** (commit e628aa9)
+- 📊 **Analysis:** N=100 Monte Carlo stress test (seeds 42000-42099)
+- **Key Finding: BIMODAL OUTCOMES** - 94% Pyrrhic Dystopia (1.65-2.90B), 6% Humane Dystopia (7.27-7.88B)
+- **No middle ground:** Population histogram shows sharp bifurcation with NO runs in 3-7B range
+- **Mortality:** Mean 68.7% (CV=23.8%), bimodal distribution matching population
+- **Early Warning Quality:** 30-50% detection (consistently late)
+- **Technology Cascade:** 0% trigger rate across 100 runs - never fires
+- **Implications:** Model exhibits critical threshold/bifurcation early in simulation; needs investigation
+- 📄 **Analysis:** reviews/monte_carlo_n100_determinism_analysis_20251123.md
+
 **Nov 23: CRITICAL - Hindcasting Validation Framework - FAILED** (commit 9f61983)
 - 🔬 **Validation Framework:** Implemented 500-line hindcasting validation script to test model against 1990-2024 historical data
 - ❌ **Result: FAILED** - Model cannot complete 1990-2024 hindcast
