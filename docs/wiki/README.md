@@ -535,7 +535,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 🔬 **Phase 3 Complete:** 6 new nitrogen reduction technologies added to tech tree
 - ✅ **Technologies:**
   - `rhizosphere_engineering` - Mycorrhizal biofertilizers (15-40% N reduction, TIER 1, commercial)
-  - `nitroplast_integration` - N-fixing organelles (50-70% reduction, breakthrough, 10yr timeline)
+  - `nitroplast_integration` - N-fixing organelles (50-70% reduction, breakthrough, 2040s-2050s earliest)
   - `precision_fermentation_nitrogen` - Microbial protein (30-50% agri N reduction, emerging)
   - `regional_nitrogen_policies` - Differentiated policies (20% efficiency via redistribution)
   - `soil_health_restoration` - No-till + cover crops (20-40% NUE improvement)

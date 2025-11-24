@@ -1,9 +1,10 @@
 # Nuclear Winter Climate Effects: 2024-2025 Assessment
 
-**Date:** November 13, 2025
+**Date:** November 13, 2025 (UPDATED: November 22, 2025 - Penn State citation)
 **Researcher:** Autonomous Researcher
 **Purpose:** Update simulation parameters with latest nuclear winter research including soot injection models, agricultural collapse timelines, and casualty estimates
-**Sources Reviewed:** 8 peer-reviewed sources and reports (2022-2025)
+**Sources Reviewed:** 9 peer-reviewed sources and reports (2022-2025)
+**Latest Update:** Penn State agroecosystem modeling study citation completed (Shi et al. 2025)
 
 ---
 
@@ -34,12 +35,14 @@
 **Immediate casualties:** ~45 million (blast + radiation + burns)
 **Global casualties (famine):** ~2 billion within 2 years (Xia et al. 2022)
 
-**2025 Agricultural Modeling (Penn State):**
-- **Corn yield reduction:** ~7% globally (first 5 years)
-- **Regional variation:** Midlatitude breadbasket regions hit hardest (10-40% reductions)
-- **Duration:** 5-10 years of reduced productivity
+**2025 Agricultural Modeling (Penn State - UPDATED CITATION):**
+- **Corn yield reduction:** ~7% globally (regional war with 5 Tg soot), ~80% (global war with 150 Tg soot)
+- **UV-B damage:** Additional 7% reduction (peaks 6-8 years post-war)
+- **Recovery time:** 7-12 years to pre-war yield levels
+- **Adaptation potential:** Selecting faster-growing cold-tolerant varieties increases yields by 10%
+- **Methodology:** Cycles agroecosystem model, 38,572 locations modeled globally
 
-**Citation:** Penn State University (2025). "Cycles agroecosystem model simulation of nuclear winter impacts." 38,572 locations modeled globally.
+**Citation:** Shi, Y., Montes, F., Di Gioia, F., Xia, L., Bardeen, C.G., Anderson, C.T., Gil, Y., Khider, D., Ratnakar, V., & Kemanian, A.R. (2025). "Adapting agriculture to climate catastrophes: the nuclear winter case." *Environmental Research Letters*, 20(6), 064006. DOI: 10.1088/1748-9326/adcfb5
 
 ### 1.2 Regional Nuclear War (Larger Exchange)
 
