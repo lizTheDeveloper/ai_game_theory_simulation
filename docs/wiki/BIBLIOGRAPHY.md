@@ -10,9 +10,9 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 ## ⚠️ Citation Verification Status (November 2025)
 
 **NEW (Nov 24):** Two research files added, pending verification:
-- `research/amoc_tipping_point_2024_2025_update.md` (7 citations)
-- `research/planetary_boundaries_2025_update.md` (6 citations)
-- Verification spec: `research/verification_1e37dcb_20251124.md`
+- `research/amoc_tipping_point_2024_2025_update.md` - 7 citations (van Westen 2024, Jackson 2024, RealClimate, etc.)
+- `research/planetary_boundaries_2025_update.md` - 6 citations (JIRCAS 2025, Richardson 2023, Persson 2024, etc.)
+- Verification spec: `research/verification_1e37dcb_20251124.md` (13 claims flagged)
 
 **Phase 2 Layer 2 verification ongoing.** Recent findings reveal systematic attribution errors in codebase citations:
 
