@@ -1,6 +1,6 @@
 # Research Update Queue
-**Generated:** 11/24/2025, 6:30:04 PM
-**Files Scanned:** 538
+**Generated:** 11/24/2025, 7:30:03 PM
+**Files Scanned:** 544
 
 ---
 
@@ -12,7 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 173 (32.2%)
+**Count:** 175 (32.2%)
 
 ### `CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
 - **Oldest source:** 2009 (16 years old)
@@ -299,6 +299,11 @@
 - **Status:** Not used in simulation
 - **Path:** `research/arch4_cross_system_integrations_20251108.md`
 
+### `baseline_mortality_skeptical_review_20251124.md`
+- **Oldest source:** 2006 (19 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/baseline_mortality_skeptical_review_20251124.md`
+
 ### `bifurcation_empirical_validation_20251112.md`
 - **Oldest source:** 2008 (17 years old)
 - **Status:** Not used in simulation
@@ -483,6 +488,11 @@
 - **Oldest source:** 2019 (6 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/hendrycks_2021_citation_verification.md`
+
+### `ihme_gbd_mortality_differentials_20251124.md`
+- **Oldest source:** 1993 (32 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/ihme_gbd_mortality_differentials_20251124.md`
 
 ### `instrumental_convergence_citation_verification_20251029.md`
 - **Oldest source:** 2008 (17 years old)
@@ -883,7 +893,7 @@
 
 ## 📋 MEDIUM (Review Within Quarter)
 
-**Count:** 24 (4.5%)
+**Count:** 23 (4.2%)
 
 - `LAYER2_COMPREHENSIVE_STATUS_20251030.md` - Oldest: 2020 (5 years)
 - `LAYER2_DEBATE_SUMMARY_20251030.md` - Oldest: 2020 (5 years)
@@ -900,7 +910,6 @@
 - `government-modeling-approaches_20251019.md` - Oldest: 2020 (5 years)
 - `government_climate_investment_adoption_patterns_20251024.md` - Oldest: 2020 (5 years)
 - `government_climate_investment_verification_20251031.md` - Oldest: 2020 (5 years)
-- `hindcast_era_mortality_verification_20251124.md` - Oldest: 2020 (5 years)
 - `irreversibility_reconciliation_20251120.md` - Oldest: 2020 (5 years)
 - `kangas_ubi_finland_verification_20251030.md` - Oldest: 2020 (5 years)
 - `malthusian-overshoot-causation-attribution_20251018.md` - Oldest: 2020 (5 years)
@@ -914,7 +923,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 341 (63.4%)
+**Count:** 346 (63.6%)
 
 All sources <3 years old. No action required.
 
@@ -924,11 +933,11 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 538 |
+| Total files | 544 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 173 (32.2%) |
-| MEDIUM | 24 (4.5%) |
-| LOW | 341 (63.4%) |
+| HIGH | 175 (32.2%) |
+| MEDIUM | 23 (4.2%) |
+| LOW | 346 (63.6%) |
 | Average age | 7.2 years |
 | Oldest source | 1955 (70 years ago) |
 
@@ -936,9 +945,9 @@ All sources <3 years old. No action required.
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 341 | 63.4% |
-| Warning (3-5yr) | 24 | 4.5% |
-| Critical (>5yr) | 173 | 32.2% |
+| Current (<3yr) | 346 | 63.6% |
+| Warning (3-5yr) | 23 | 4.2% |
+| Critical (>5yr) | 175 | 32.2% |
 
 ### Targets
 
@@ -950,7 +959,7 @@ All sources <3 years old. No action required.
 
 ## 🔄 Next Steps
 
-1. Update 173 HIGH priority file(s) within 1 month
+1. Update 175 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 
