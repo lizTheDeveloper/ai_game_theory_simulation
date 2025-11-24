@@ -134,8 +134,12 @@ export async function createHistoricalInitialState(
   }
 
   // Population (from UN WPP)
+  // FIX (Nov 24, 2025): humanPopulationSystem.population stores BILLIONS, not raw count
+  // The original code multiplied by 1e9 which caused immediate population collapse
   if (baseState.humanPopulationSystem) {
-    baseState.humanPopulationSystem.population = historical.economic.populationBillions * 1e9;
+    baseState.humanPopulationSystem.population = historical.economic.populationBillions;
+    baseState.humanPopulationSystem.baselinePopulation = historical.economic.populationBillions;
+    baseState.humanPopulationSystem.peakPopulation = historical.economic.populationBillions;
   }
   if (baseState.globalMetrics) {
     baseState.globalMetrics.population = historical.economic.populationBillions;
