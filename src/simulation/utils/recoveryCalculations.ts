@@ -147,17 +147,45 @@ export function detectEconomicStage(state: GameState): EconomicStage {
 /**
  * Get GDP proxy from game state
  *
- * Uses economic transition stage + population + QoL as proxy for GDP
+ * Uses economic transition stage + population + QoL as proxy for GDP.
+ *
+ * **Returns:** GDP in trillions of dollars (e.g., 114 = $114T global GDP)
+ *
+ * **Calibration (Nov 24, 2025):**
+ * - Global GDP 2025: ~$114T (World Bank 2024)
+ * - Population: ~8B
+ * - GDP per capita: ~$14.25K (114T / 8B)
+ * - QoL baseline: 0.5
+ * - Formula: population × baseGDPPerCapita × (1 + qolDelta × sensitivity) × economicMultiplier
+ *
+ * **FIX:** Previous formula returned ~4 (unitless) instead of ~114T, causing
+ * scenario validation to fail (researchInvestment: $50B vs max: $0.17B).
+ * See MASTER_IMPLEMENTATION_ROADMAP.md item 1c.
  */
 export function getGDPProxy(state: GameState): number {
   const economicStage = state.globalMetrics.economicTransitionStage;
-  const population = state.humanPopulationSystem.population;
-  const qol = state.globalMetrics.qualityOfLife;
+  const population = state.humanPopulationSystem.population; // ~8 (billion)
+  const qol = state.globalMetrics.qualityOfLife; // 0-1, baseline ~0.5
 
-  // GDP proxy: population × QoL × economic multiplier
-  const economicMultiplier = 1 + (economicStage * 0.2); // Stages 0-4 → 1.0-1.8x
+  // Base GDP per capita in $K (global average 2025: ~$14.25K)
+  // This ensures baseline GDP ≈ $114T (8B × $14.25K = $114T)
+  const baseGDPPerCapitaK = 14.25;
 
-  return population * qol * economicMultiplier;
+  // QoL adjustment: QoL 0.5 = baseline, higher/lower scales GDP
+  // Sensitivity: ±50% QoL change → ±25% GDP change
+  const qolBaseline = 0.5;
+  const qolSensitivity = 0.5; // GDP changes by 50% of QoL delta
+  const qolMultiplier = 1 + ((qol - qolBaseline) * qolSensitivity);
+
+  // Economic stage multiplier: stages 0-4 → 1.0-1.8x
+  const economicMultiplier = 1 + (economicStage * 0.2);
+
+  // GDP in trillions: population (B) × GDP/capita ($K) × multipliers / 1000
+  // = 8 × 14.25 × 1.0 × 1.0 / 1000 × 1000 = 114
+  // Simplified: population × baseGDPPerCapitaK × multipliers (already in trillions when B × K / 1000)
+  // Actually: 8B people × $14.25K/person = $114T → we want to return 114
+  // So: population × baseGDPPerCapitaK = 8 × 14.25 = 114 ✓
+  return population * baseGDPPerCapitaK * qolMultiplier * economicMultiplier;
 }
 
 /**
