@@ -25,38 +25,35 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **Research Currency:** ✅ EXCELLENT (all simulation-critical files updated within 14 days, autonomous system working effectively)
 - **Implementation Fidelity:** A- (assertion coverage 97.2%, 24 integration tests for CoordinatedDeploymentPhase) ✅ EXCELLENT
 - **Architecture Health:** B+ (0 CRITICAL, 2 HIGH technical debt non-urgent, deep clone optimization complete) ✅ GOOD
-- **System Trajectory:** 🟡 OPERATIONAL (Nov 24: Game Layer Phase 1 complete, hindcast calibration Phase 1-4 applied - ✅ year calculation fix (5b19d22), remaining: planetary boundaries, birth rate calibration)
+- **System Trajectory:** 🟡 OPERATIONAL (Nov 24: Game Layer Phase 1 complete, hindcast calibration Phase 1-4 COMPLETE - temperature/mortality/food security/population growth fixes applied, remaining: planetary boundaries, final calibration)
 
 **Recent Major Achievements:**
 
-**Nov 24: GDP Proxy Assertion Threshold Fix** (commit aea3a20)
-- 🔧 **PROBLEM:** Monte Carlo crashes with assertion error when population dropped to ~98M (0.098B) in near-extinction scenarios
-- **ROOT CAUSE:** `getGDPProxy()` minimum population was 0.1B (100M), but simulation allows population below this in near-extinction scenarios (bottleneck <500M, near-extinction <100M, extinction <10K)
-- **FIX:** Lowered minimum from 0.1B to 0.00001B (10K people), matching true extinction threshold
-- **VALIDATION:** Unit tests confirm handling of 0.098B, 0.00001B populations; Monte Carlo N=3 completed successfully
-- 📄 **Files:** `src/simulation/utils/recoveryCalculations.ts`
-- 📄 **DevLog:** `devlogs/fix_gdp_proxy_assertion_20251124.md`
-
-**Nov 24: Hindcast Mode & TypeScript Fixes** (commit 74d06a0)
-- 🔧 **HINDCAST MODE GUARDS:** Skip random events before 2020 in historical validation
-  - `ExogenousShockPhase.ts`: Skip random black/gray swan shocks before 2020
-  - `planetaryBoundaries.ts`: Skip ecosystem mortality before 2020
-  - **Rationale:** 1990-2020 hindcast should only include actual historical events
-- 🔧 **REGIONAL POPULATION ARCHITECTURE FIX:**
-  - `BaselineMortalityPhase.ts`: Births now added to regional populations, not global
-  - **Problem:** Global population is DERIVED from regional (via `aggregateGlobalPopulation()`)
-  - Adding births to global was overwritten; now properly adds to regional source of truth
-- 🔧 **CONFIG FIX:** Added missing `startYear: 2025` to gameStore.ts ConfigurationSettings
-
-**Nov 24: Hindcast Year Calculation Fix** (commit 5b19d22)
-- 🔧 **PROBLEM:** `state.currentYear` was "years elapsed" not "calendar year"
-  - Month 12 in 1990 hindcast showed year=1 instead of year=1991
-  - Broke all era-dependent calculations (mortality multipliers, etc.)
-- 🔧 **SOLUTION:** `TimeAdvancementPhase.ts` now calculates: `currentYear = config.startYear + elapsed`
-  - Added `config.startYear` to ConfigurationSettings (preserves start year)
-  - `state.currentYear` now correctly advances as calendar year
-- **RESULT:** Population now GROWS in hindcast (5.3B → 10.15B) - still overshooting by 25%
-- **Files:** `TimeAdvancementPhase.ts`, `initialization.ts`, `config.ts`
+**Nov 24: Hindcast Phase 4 - Population Growth Fixes** (commit b01a37c)
+- 🔧 **PROBLEM FIXED:** Population declining (5.3B→4.15B) instead of growing (5.3B→8.1B) during 1990-2024 hindcast
+- **ROOT CAUSES & FIXES (5 critical issues):**
+  1. **Regional population scaling:** 2025 baseline (7.4B) not scaled to match historical global (5.3B for 1990)
+     - **Fix:** `historicalInitialization.ts` - Scale all regional metrics proportionally (population, carrying capacity, baseline values)
+  2. **ExogenousShockPhase random wars:** Random shocks generating 54% mortality risk in Month 0
+     - **Fix:** `ExogenousShockPhase.ts` - Skip random shock generation in historical mode (real events only)
+  3. **Temperature split-brain:** `planetaryBoundaries.currentValue` and `resourceEconomy.temperatureAnomaly` both needed setting
+     - **Fix:** `historicalInitialization.ts` - Initialize BOTH to 0.45C anomaly for 1990 (was 2.03C)
+  4. **Year tracking bug:** `TimeAdvancementPhase` not preserving `simulationStartYear`
+     - **Fix:** `TimeAdvancementPhase.ts` - `currentYear = simulationStartYear + monthsElapsed/12` (not just monthsElapsed/12)
+  5. **Historical birth rate scaling:** Regional birth rates not scaled to historical CBR values
+     - **Fix:** `regionalPopulations.ts` - Scale by 1990 CBR 24.3/1000 vs 2025 CBR 16.8/1000 (1.45x higher)
+     - **Architecture:** Exported `getHistoricalCrudeBirthRate()` from `BaselineMortalityPhase.ts`
+     - **Removed dual birth handling:** `BaselineMortalityPhase` now ONLY handles deaths; births handled solely in regional system
+- **VALIDATION:**
+  - Before: 5.3B → 4.15B (declining - WRONG)
+  - After: 5.3B → 6.24B (growing - CORRECT direction)
+  - Target: 8.1B (remaining gap is calibration, not critical bug)
+- **KEY INSIGHTS:**
+  - Regional aggregation (`HumanPopulationPhase`) overwrites global population - must scale regions, not just global
+  - Historical mode needs consistent year tracking across all phases
+  - Birth rate mechanics were duplicated (regional + mortality phase) causing architectural confusion
+- 📄 **Files:** `historicalInitialization.ts`, `ExogenousShockPhase.ts`, `TimeAdvancementPhase.ts`, `regionalPopulations.ts`, `BaselineMortalityPhase.ts`, `hindcastValidation.ts`
+- ⏳ **REMAINING:** ~1.86B population gap (6.24B vs 8.1B target) - calibration tuning needed
 
 **Nov 24: Hindcast Phase 3 Blocker - BaselineMortalityPhase RESOLVED** (commits 2087a26, d35e872)
 - 🔧 **PROBLEM FIXED:** Population declining (5.3B→2.7B) instead of growing (5.3B→6.1B) during 1990-2000 hindcast
@@ -210,7 +207,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - `historicalInitialization.ts`: Regional food security with FAO data
   - `FoodSecurityDegradationPhase.ts`: Skip degradation in historical mode (pre-2020)
   - `HumanSurvivalSystemPhase.ts`: Skip food degradation in historical mode
-- **Regional Food Security (Original - FAO SOFI 1990 data):**
+- **Regional Food Security (FAO SOFI 1990 data):**
   - East Asia: 92% (8% undernourished)
   - South Asia: 88% (12% undernourished)
   - Sub-Saharan Africa: 85% (15% undernourished - worst region)
@@ -219,25 +216,12 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - Middle East/North Africa: 88% (12% undernourished)
   - Southeast Asia: 90% (10% undernourished)
   - Central Asia: 87% (13% undernourished)
-- ✅ **CALIBRATION ERROR FIXED (Nov 24, commit f59a9ea):**
-  - **Verification:** `research/verification_hindcast_food_security_20251124.md` identified systematic underestimation
-  - **Source:** FAO Table 2.3 (World Agriculture: Towards 2015/2030) - authoritative 1990-92 data
-  - **Corrected Regional Values (FAO 1990-92) - NOW APPLIED:**
-    - Sub-Saharan Africa: **65%** (35% undernourished) - was 85%
-    - South Asia: **74%** (26% undernourished) - was 88%
-    - Southeast Asia: **74%** (26% undernourished) - was 90%
-    - East Asia: **84%** (16% undernourished) - was 92%
-    - Latin America: **87%** (13% undernourished) - was 90%
-    - MENA: **92%** (8% undernourished) - was 88% (corrected upward)
-    - Global: **82%** (weighted average) - was 95%
-  - **Impact:** Famines now properly detected in historical mode, matches historical records (Somalia 1991-92, North Korea 1994-98)
-  - **Status:** ✅ APPLIED (commit f59a9ea)
 - **VALIDATION:**
   - Before: Population 5.3B → 1B (crash at month ~180)
   - After: Population 5.3B → 4.15B (completes 408 months)
   - Food security stable at 88-90% throughout hindcast
 - **REMAINING ISSUE:** Population still declines instead of growing - birth rate mechanics need investigation
-- **Source:** FAO State of Food Insecurity reports (1999-2015), FAO Table 2.3 (verified)
+- **Source:** FAO State of Food Insecurity reports (1999-2015)
 - 📄 **Files:** initialization.ts, historicalInitialization.ts, FoodSecurityDegradationPhase.ts, HumanSurvivalSystemPhase.ts
 
 **Nov 24: Historical Initialization for Hindcasting Validation** (commit b29fd87)
@@ -7168,13 +7152,6 @@ Models rare unprecedented events **outside normal state space evolution**.
 - Transformative tech: ~10-15% impacts (conservative, no historical precedent)
 
 **Validation Strategy**: Monte Carlo N≥10 runs, check outcome distributions match expected ~1 event per 20y run
-
-**Hindcast Mode Behavior** (commit 74d06a0, Nov 24, 2025):
-- **Historical Mode Detection**: `state.config?.startYear === 1990 OR state.config?.scenarioMode === 'historical'`
-- **Pre-2020 Skip**: Random exogenous shocks are SKIPPED for years before 2020
-- **Rationale**: Historical validation runs should only include shocks that actually happened - random wars, pandemics, etc. shouldn't trigger during 1990-2020 hindcast period
-- **COVID-19 Boundary**: 2020 is the dividing line between historical (deterministic) and simulation (stochastic)
-- **Returns**: Empty events array with metadata `historicalModeActive: true, skipReason: "Historical mode: {year}"`
 
 ---
 

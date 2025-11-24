@@ -149,10 +149,19 @@ export async function createHistoricalInitialState(
   // Store simulation start year for reference (not in strict type but used at runtime)
   (baseState as unknown as Record<string, unknown>).simulationStartYear = year;
 
-  // Climate state - set on boundaries record if available
+  // Climate state - set BOTH planetary boundaries AND resourceEconomy temperature
+  // BUG FIX (Nov 24, 2025): ClimateSystemPhase reads from resourceEconomy.co2.temperatureAnomaly
+  // Historical initialization was only setting planetaryBoundariesSystem, causing 2.03°C instead of 1.15°C
   if (baseState.planetaryBoundariesSystem?.boundaries?.climate_change) {
     // Set current value in the climate change boundary
     baseState.planetaryBoundariesSystem.boundaries.climate_change.currentValue = historical.climate.tempVsPreindustrial;
+  }
+
+  // CRITICAL: Also set resourceEconomy temperature (used by ClimateSystemPhase line 133)
+  if (baseState.resourceEconomy?.co2) {
+    baseState.resourceEconomy.co2.temperatureAnomaly = historical.climate.tempAnomaly;
+    console.log(`  Temperature anomaly (resourceEconomy.co2): ${historical.climate.tempAnomaly.toFixed(2)}°C`);
+    console.log(`  Temperature vs pre-industrial: ${historical.climate.tempVsPreindustrial.toFixed(2)}°C`);
   }
 
   // Population (from UN WPP)
@@ -162,6 +171,53 @@ export async function createHistoricalInitialState(
     baseState.humanPopulationSystem.population = historical.economic.populationBillions;
     baseState.humanPopulationSystem.baselinePopulation = historical.economic.populationBillions;
     baseState.humanPopulationSystem.peakPopulation = historical.economic.populationBillions;
+
+    // CRITICAL FIX (Nov 24, 2025): Scale regional populations to match historical global total
+    // Regional populations default to 2025 values (~7.4B total)
+    // But historical years have different totals (1990: 5.3B, 2000: 6.1B, etc.)
+    // HumanPopulationPhase aggregates regional → global, overwriting the correct value above
+    // Solution: Scale ALL regional populations proportionally
+    if (baseState.humanPopulationSystem.regionalPopulations && baseState.humanPopulationSystem.regionalPopulations.length > 0) {
+      const currentRegionalTotalM = baseState.humanPopulationSystem.regionalPopulations
+        .reduce((sum, r) => sum + r.population, 0);
+      const targetTotalM = historical.economic.populationBillions * 1000; // Convert B to M
+
+      assertFinite(currentRegionalTotalM, {
+        location: 'createHistoricalInitialState',
+        valueName: 'currentRegionalTotalM',
+        month: 0,
+        additionalInfo: { year, regionCount: baseState.humanPopulationSystem.regionalPopulations.length }
+      });
+
+      assertFinite(targetTotalM, {
+        location: 'createHistoricalInitialState',
+        valueName: 'targetTotalM',
+        month: 0,
+        additionalInfo: { year, populationBillions: historical.economic.populationBillions }
+      });
+
+      if (currentRegionalTotalM === 0) {
+        throw new Error(`Regional populations sum to zero - cannot scale for year ${year}`);
+      }
+
+      const scaleFactor = targetTotalM / currentRegionalTotalM;
+
+      console.log(`  Regional population scaling for ${year}:`);
+      console.log(`    Current total: ${currentRegionalTotalM.toFixed(0)}M`);
+      console.log(`    Target total: ${targetTotalM.toFixed(0)}M`);
+      console.log(`    Scale factor: ${scaleFactor.toFixed(3)}`);
+
+      for (const region of baseState.humanPopulationSystem.regionalPopulations) {
+        const oldPop = region.population;
+        region.population *= scaleFactor;
+        region.peakPopulation *= scaleFactor;
+        region.baselinePopulation *= scaleFactor;
+        region.carryingCapacity *= scaleFactor;
+        region.baselineCarryingCapacity *= scaleFactor;
+
+        console.log(`    ${region.name}: ${oldPop.toFixed(0)}M → ${region.population.toFixed(0)}M`);
+      }
+    }
   }
   if (baseState.globalMetrics) {
     baseState.globalMetrics.population = historical.economic.populationBillions;
