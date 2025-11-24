@@ -496,9 +496,14 @@ addAcuteCrisisDeaths(state, radiationDeaths, 'war');
 - Turco, R. P., et al. (1983): "TTAPS" study (original nuclear winter model)
 - Mills, M. J., et al. (2014): "Multi-decadal global cooling and unprecedented ozone loss following a regional nuclear conflict"
 - Xia, L., et al. (2022): "Global food insecurity and famine from reduced crop, marine fishery and livestock production due to climate disruption from nuclear war soot injection"
+- **Shi, Y., et al. (2025):** "Adapting agriculture to climate catastrophes: the nuclear winter case" *Environmental Research Letters*, 20(6), 064006. DOI: 10.1088/1748-9326/adcfb5
+  - Corn yield reduction: 7% (regional war 5 Tg) to 80% (global war 150 Tg)
+  - UV-B damage: Additional 7% reduction (peaks 6-8 years post-war)
+  - Recovery time: 7-12 years to pre-war yield levels
+  - Methodology: Cycles agroecosystem model, 38,572 locations globally
 
 ---
 
-**Last Updated:** October 13, 2025
+**Last Updated:** November 22, 2025
 **Implementation Status:** ✅ Complete and validated
 **Next Steps:** Regional nuclear winter effects (requires multipolar framework)

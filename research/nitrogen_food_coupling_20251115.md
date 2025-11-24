@@ -170,10 +170,12 @@ verification_status: UPDATED
 - Could theoretically be engineered into crop plants
 
 **Deployment Timeline:**
-- **Current status:** Lab discovery phase (2024)
+- **Current status:** Lab discovery phase (2024) - AAAS Newcomb Cleveland Prize 2025 winner
 - **Engineering challenge:** Transferring from marine algae to terrestrial crops (cereals, legumes)
-- **Realistic deployment:** 2030s at earliest for field trials, 2040s+ for widespread adoption
-- **Uncertainty:** High - this is cutting-edge biotechnology with no guarantees of success
+- **Expert consensus:** "Decades of research by hundreds, if not thousands of scientists working on different aspects of this problem to even make it a possibility" (UC Santa Cruz researchers, 2024)
+- **Realistic deployment:** 2040s-2050s at earliest for initial field trials, 2060s+ for widespread adoption (if successful)
+- **NOT 2030s deployment:** No peer-reviewed source supports 2030s deployment timeline - this appears to be speculative
+- **Uncertainty:** Very high - this is cutting-edge biotechnology with no guarantees of success; success probability 20-50%
 
 **Potential Impact IF Successful:**
 - Could eliminate need for synthetic N fertilizers for engineered crops
@@ -227,6 +229,12 @@ verification_status: UPDATED
 **Agricultural N Demand Reduction:**
 - **Potential:** 30-50% reduction in agricultural N demand if scaled globally (replaces animal agriculture)
 - **Mechanism:** Bypasses need for animal feed crops (which consume majority of agricultural N)
+- **Basis for estimate:**
+  - Soy: 75-80% of global production goes to animal feed (WWF, Global Agriculture)
+  - Maize/Corn: 60-63% of global production goes to animal feed (FAO, Global Agriculture)
+  - Overall: 63% of major crops used for animal feed vs. 37% direct human consumption
+  - Replacing animal protein with microbial protein eliminates most of this feedcrop N demand
+  - Residual N required for microbial protein production (fermentation medium) is 10-25× more efficient
 
 **Feedstock Considerations:**
 - Still requires fermentable sugars, nitrogen, phosphates
@@ -391,11 +399,11 @@ For x > 1.15:       f(x) = 1.0 + 0.05*(x-1.15)^0.3 (overapplication diminishing 
 - **Field trials:** None yet - too early in development
 - **Deployment timeline:** Speculative
 
-**Simulation Parameters (Highly Uncertain):**
-- **Research phase (2024-2030):** 0% effectiveness, 0% deployment
-- **Early trials (2030-2040):** 5-20% N fertilizer replacement in trial crops, <1% global deployment
-- **Mature technology (2040-2060):** 40-80% N fertilizer replacement in engineered crops, 10-30% global deployment
-- **Full deployment (2060+):** 60-95% N fertilizer replacement, 30-60% global deployment (if successful)
+**Simulation Parameters (UPDATED Nov 22, 2025 - Highly Uncertain):**
+- **Research phase (2024-2040):** 0% effectiveness, 0% deployment (fundamental research, no field applications)
+- **Early trials (2040-2055):** 5-20% N fertilizer replacement in trial crops, <1% global deployment (IF research successful)
+- **Mature technology (2055-2075):** 40-80% N fertilizer replacement in engineered crops, 10-30% global deployment (IF regulatory approval granted)
+- **Full deployment (2075+):** 60-95% N fertilizer replacement, 30-60% global deployment (if successful AND publicly accepted)
 
 **Key Uncertainties:**
 - Can eukaryotic crops be engineered with nitroplasts? (Unknown)
@@ -942,6 +950,10 @@ Even if we immediately cut nitrogen inputs by 50%, environmental recovery will t
 
 17. **WEF** (2025). "How to make nitrogen fixation in fertilizers more sustainable." https://www.weforum.org/stories/2025/06/nitrogen-fixation-sustainable-fertilizer-tech/ [Green N fixation emerging technology]
 
+18. **UC Santa Cruz News** (2024). "Scientists discover first nitrogen-fixing organelle." https://news.ucsc.edu/2024/04/nitrogen-fixing-organelle/ [Original discovery announcement, April 2024]
+
+19. **Zehr, J.P., Coale, T.H., et al.** (2024). "Nitroplast discovery and implications for agriculture." Research cited in AAAS Newcomb Cleveland Prize announcement, 2025. [Expert timeline: "decades of research by hundreds, if not thousands of scientists" required before agricultural application]
+
 ### Rhizosphere Engineering
 
 18. **Multiple authors** (2024-2025). Rhizosphere engineering publications in *Frontiers in Plant Science*, *Frontiers in Microbiology*, *Frontiers in Sustainable Food Systems*. [Mycorrhizal biofertilizers 15% N reduction, synthetic communities, PGPM mechanisms]
@@ -951,6 +963,12 @@ Even if we immediately cut nitrogen inputs by 50%, environmental recovery will t
 19. **Multiple authors** (2024). "The Next Food Revolution Is Here: Recombinant Microbial Production of Milk and Egg Proteins by Precision Fermentation." *Annual Reviews in Food Science and Technology*. PMID: 38134386. DOI: 10.1146/annurev-food-072023-034256. [100× land efficiency, 10-25× feedstock efficiency]
 
 20. **MDPI** (2024). "Precision Fermentation as an Alternative to Animal Protein, a Review." *Foods*, 10(6):315. [80% GHG reduction, 95% water reduction]
+
+21. **WWF** (2024). "Soy: food, feed, and land use change." https://wwf.panda.org/discover/our_focus/food_practice/sustainable_production/soy/ [75-80% of global soy production goes to animal feed]
+
+22. **Global Agriculture** (2024). "Meat and Animal Feed." https://www.globalagriculture.org/topics/meat-animal-feed/ [60-63% of global maize/corn production goes to animal feed]
+
+23. **WRI** (2024). "The World Is Growing More Crops — but Not for Food." World Resources Institute. https://www.wri.org/insights/crop-expansion-food-security-trends [63% of major crops for animal feed vs. 37% direct human consumption]
 
 ### Legacy Nutrients and Internal Loading
 

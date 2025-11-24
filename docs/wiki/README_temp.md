@@ -352,7 +352,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 🔬 **Phase 3 Complete:** 6 new nitrogen reduction technologies added to tech tree
 - ✅ **Technologies:**
   - `rhizosphere_engineering` - Mycorrhizal biofertilizers (15-40% N reduction, TIER 1, commercial)
-  - `nitroplast_integration` - N-fixing organelles (50-70% reduction, breakthrough, 10yr timeline)
+  - `nitroplast_integration` - N-fixing organelles (50-70% reduction, breakthrough, 2040s-2050s earliest)
   - `precision_fermentation_nitrogen` - Microbial protein (30-50% agri N reduction, emerging)
   - `regional_nitrogen_policies` - Differentiated policies (20% efficiency via redistribution)
   - `soil_health_restoration` - No-till + cover crops (20-40% NUE improvement)
@@ -1414,7 +1414,7 @@ Comprehensive technology research addressing planetary boundary effectiveness ga
   - TIER 2 technologies (ecosystem restoration, remediation, carbon sinks)
 
 **Key Technologies:**
-- **Nitroplasts:** Marine algae nitrogen-fixing organelles discovered April 2024 (Coale et al., *Science*). Cereal application speculative but transformative if successful (50-70% fertilizer reduction). WEF Top 10 2025.
+- **Nitroplasts:** Marine algae nitrogen-fixing organelles discovered April 2024 (Coale et al., *Science*). Cereal application highly speculative - expert consensus: "decades of research by hundreds/thousands of scientists" required. Realistic deployment 2040s-2050s earliest (UC Santa Cruz 2024). WEF Top 10 2025.
 - **Rhizosphere Engineering:** 15-40% nitrogen reduction via microbiome optimization (field-demonstrated, commercial products available)
 - **Precision Fermentation:** 100× land-efficient protein, $10/kg cost parity achieved 2024-2025
 - **Modular DAC:** $100/ton CO2 target by 2030-2035 (current: $600-1000/ton)
