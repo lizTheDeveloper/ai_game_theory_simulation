@@ -1075,6 +1075,8 @@ export function createDefaultInitialState(
       // P0.7 (Oct 16, 2025): Scenario mode system
       scenarioMode,
       scenarioParameters,
+      // HINDCAST FIX (Nov 24, 2025): Store start year for accurate year calculation
+      startYear: initialYear,
       // Oct 23, 2025: Alignment dynamics system
       alignmentDynamics: alignmentDynamicsConfig || require('./alignmentDynamics').DEFAULT_ALIGNMENT_DYNAMICS_CONFIG,
       // Oct 24, 2025: Climate priority system
