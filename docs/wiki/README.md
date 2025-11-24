@@ -48,6 +48,18 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📄 **Files:** AIAgentCoordinationPhase.ts, IrreversibilityTrackingPhase.ts, ai-collective-evolution.ts, tipping-points.ts
 - 🔬 **Research:** reviews/mechanism_audit_ai_coordination_20251124.md
 
+**Nov 24: Climate Mini-Hindcast Validation Script** (commit 1351573)
+- 🔬 **NEW SCRIPT:** `scripts/hindcastValidation.ts` - Mini-hindcast for 1990-2010 CO2 trajectory
+- **Purpose:** Compare simulation CO2 against Keeling curve checkpoints
+- **Checkpoints (Scripps/NOAA):** 1990=354ppm, 1995=361ppm, 2000=369ppm, 2005=380ppm, 2010=390ppm
+- **Temperature Checkpoints (HadCRUT5):** 1990=0.45°C → 2010=0.85°C
+- **Pass Criteria:** CO2 error ≤5% at each checkpoint
+- **Usage:** `npx tsx scripts/hindcastValidation.ts --runs=5 --max-months=240`
+- **Output:** `logs/hindcast/hindcast_TIMESTAMP.log`
+- **Known Issues (future work):** Yearly checkpoint logging alignment, temperature drift faster than historical, population decline too aggressive
+- **Relation:** Simpler than full hindcastingValidation.ts (1990-2024), focuses on CO2 trajectory only
+- 📄 **File:** scripts/hindcastValidation.ts (339 lines)
+
 **Nov 24: Wet Bulb Era Scaling Fix** (commit dc141a7)
 - 🔧 **Hindcast Fix:** Re-applied accidentally reverted era scaling for wet bulb temperature events
 - **Changes:** Quadratic era scaling (year/2025)² for event frequency, baseline temperature adjustment
