@@ -2340,11 +2340,90 @@ All determinism patterns now documented in:
 
 ---
 
+**🔧 Determinism Fix - Module-Level State Persistence (Nov 24, 2025)**
+
+**Issue:** Non-determinism detected at Month 2 - alignment values varied (12.89 to 14.08) and agent counts differed (22 vs 23) across runs with same seed in the same Node.js process.
+
+**Key Discovery:** Separate processes produced IDENTICAL results (22, 73.0000, 12.8955). Same process, multiple runs produced DIFFERENT results. This pattern indicated module-level state persisting between runs.
+
+**Root Causes Fixed:**
+
+1. **Async/Await Bug in AIAlignmentEvolutionPhase** (CRITICAL)
+   - **File:** `src/simulation/llm/integration.ts`
+   - **Issue:** `checkAndUpdateAgentWeights` was async but called without `await`, causing promises to resolve at non-deterministic times
+   - **Fix:** Made function synchronous, using fallback weights for deterministic simulation. Added separate `checkAndUpdateAgentWeightsAsync` for interactive/non-Monte-Carlo use cases
+
+2. **Global WUE Variable**
+   - **File:** `src/simulation/aiInfrastructureResources.ts`
+   - **Issue:** `let globalWUE = 1.8` was mutated during simulation and persisted between runs
+   - **Fix:** Added `resetGlobalWUE()` function
+
+3. **Module State Reset Utility** (NEW FILE)
+   - **File:** `src/simulation/utils/resetModuleState.ts`
+   - **Purpose:** Centralizes all module-level state resets for Monte Carlo runs
+   - **Usage:** Call `resetModuleState()` before creating each SimulationEngine
+
+**Results:**
+- **Before:** Run 1 differed from Runs 2+ within same process
+- **After:** All runs identical: 22 agents, capSum=73.0000, alignSum=12.8955
+
+**Usage Pattern:**
+```typescript
+import { resetModuleState } from '@/simulation/utils/resetModuleState';
+
+// In Monte Carlo loop:
+for (let run = 0; run < N_RUNS; run++) {
+  // CRITICAL: Reset all module-level state before each run
+  resetModuleState();
+
+  const engine = new SimulationEngine({ seed: SEED });
+  const initRng = new SeededRandom(SEED);
+  const initialState = createDefaultInitialState(() => initRng.next(), 'unprecedented');
+  // ... run simulation
+}
+```
+
+**Validation Scripts:**
+```bash
+# Quick test (same process, 3 runs)
+npx tsx scripts/quick_determinism_test.ts
+
+# Single run test (separate processes - always deterministic)
+for i in 1 2 3 4; do npx tsx scripts/single_run_test.ts; done
+```
+
+**Defensive Pattern - Synchronous vs Async:**
+```typescript
+// ❌ WRONG: Async function called without await in deterministic loop
+async function checkAndUpdateAgentWeights(...) { ... }
+const updated = checkAndUpdateAgentWeights(state, id, month, rng);  // Promise ignored!
+
+// ✅ CORRECT: Synchronous function for deterministic simulation
+function checkAndUpdateAgentWeights(...) { ... }  // Returns boolean, not Promise
+const updated = checkAndUpdateAgentWeights(state, id, month, rng);  // Deterministic
+```
+
+**Files Changed:**
+- `src/simulation/llm/integration.ts` (made sync, added async variant)
+- `src/simulation/aiInfrastructureResources.ts` (added resetGlobalWUE)
+- `src/simulation/utils/resetModuleState.ts` (NEW - centralized reset utility)
+- `src/simulation/engine/phases/AIAlignmentEvolutionPhase.ts` (minor comment fix)
+- `scripts/quick_determinism_test.ts` (NEW - fast validation)
+- `scripts/single_run_test.ts` (NEW - separate process validation)
+
+**Related:**
+- Investigation: `reviews/determinism_bug_investigation_20251124.md`
+- Previous fixes: RNG unification (Nov 6), Object iteration order (Nov 6)
+
+**Key Lesson:** Module-level state (global variables, singletons) persists between runs in the same Node.js process. For Monte Carlo simulations, either (a) reset all module state before each run, or (b) run each simulation in a separate process.
+
+---
+
 **🔧 Determinism Investigation Artifacts (Nov 6, 2025)**
 
 **Purpose:** Comprehensive tooling and documentation for diagnosing and preventing determinism bugs in the simulation engine.
 
-**Status:** 90% determinism achieved (9/10 runs identical), 10% regression under investigation (CV 2.61% → 5.16% after upstream merge).
+**Status:** ✅ 100% determinism achieved (Nov 24, 2025 module state fix). Previous status: 90% (9/10 runs identical).
 
 **Validation Scripts:**
 
@@ -2424,27 +2503,29 @@ All logs preserved in `/logs/` directory (NEVER `/tmp/` - tmp gets cleared):
 
 - **RNG proven identical:** All runs produce identical RNG sequences, so remaining divergence is NOT in RNG system
 
-- **Remaining mystery:** 10% of runs still diverge (CV 2.61%), likely due to:
-  - Floating-point arithmetic order dependencies
-  - Array operations with undefined ordering
-  - Phase execution order issues
-  - Hidden async operations
+- **~~Remaining mystery~~** ✅ **SOLVED (Nov 24, 2025):** The 10% divergence was caused by:
+  - ~~Floating-point arithmetic order dependencies~~ - Not the issue
+  - ~~Array operations with undefined ordering~~ - Not the issue
+  - ~~Phase execution order issues~~ - Not the issue
+  - **Hidden async operations** - YES! `checkAndUpdateAgentWeights` was async without await
+  - **Module-level state persistence** - `globalWUE` and other singletons persisted between runs
 
 **Infrastructure Added:**
 
 - Pre-commit hook: Detects unsorted object iterations before commit
 - CI workflow: Validates determinism on every PR (10 runs × 12 months)
 - RNG logging: `LOG_RNG_CALLS=true` environment variable for debugging
+- **NEW:** `resetModuleState()` utility for Monte Carlo runs (Nov 24, 2025)
 
-**Next Steps:**
+**Next Steps:** ✅ COMPLETE
 
-- Binary search phases to identify first divergence point
-- Floating-point analysis for arithmetic order dependencies
-- Array operation audit for undefined ordering
+- ~~Binary search phases to identify first divergence point~~ - Done (AIAlignmentEvolutionPhase)
+- ~~Floating-point analysis for arithmetic order dependencies~~ - Not needed (was async bug)
+- ~~Array operation audit for undefined ordering~~ - Not needed (was module state)
 
 **Historical Context:**
 
-This investigation documents the complete determinism debugging process from October-November 2025, establishing defensive coding patterns and infrastructure to prevent future regressions. The 90% determinism achievement (down from 100% non-determinism) represents significant progress toward Monte Carlo validation reliability.
+This investigation documents the complete determinism debugging process from October-November 2025, establishing defensive coding patterns and infrastructure to prevent future regressions. The 100% determinism achievement (Nov 24, 2025) represents the culmination of this effort, with Monte Carlo validation now fully reliable.
 
 ---
 
