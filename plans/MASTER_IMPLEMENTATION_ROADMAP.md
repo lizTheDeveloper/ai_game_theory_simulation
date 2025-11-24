@@ -1,16 +1,19 @@
 # Master Implementation Roadmap
 ## AI Alignment Game Theory Simulation - Project Hub
 
-**Date:** November 23, 2025 (Updated: Monte Carlo Fixed, Validation Sprint Ready)
+**Date:** November 24, 2025 (Updated: Mechanism Audits Complete)
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**Current Status:** 🟢 **OPERATIONAL** (Nov 23, 2025 - Monte Carlo Fixed, Validation Sprint Ready)
-- **Research Quality:** A (96% sources from 2020+, 3 CRITICAL gaps resolved, research debate complete)
-- **Architecture Health:** B+ (2 CRITICAL fixes applied, 0 CRITICAL/HIGH issues remaining, 3 MEDIUM debt items)
-- **System Performance:** ✅ Monte Carlo OPERATIONAL (temperature assertion bug FIXED Nov 23)
-- **System Trajectory:** STABLE - Uncertainty propagation complete, validation unblocked
-- **Nov 23 Update:** Temperature assertion bug FIXED (10/10 runs pass), determinism verified (bit-identical for same seed)
+**Current Status:** 🟡 **GOOD** (Nov 24, 2025 - Mechanism Audits Complete, New Issues Found)
+- **Research Quality:** A (96% sources from 2020+, mechanism audits reveal calibration gaps)
+- **Architecture Health:** B (1 CRITICAL tipping cascade recalibration needed)
+- **System Performance:** Monte Carlo runs, hindcast dual-death bug FIXED
+- **System Trajectory:** IMPROVING - Bug fixes + audits progressing
+- **Nov 24 Update:**
+  - FIXED: Dual death system bug (deaths applied twice)
+  - COMPLETE: 3 mechanism audits (mortality: PASS, tipping: C-, AI coord: CONDITIONAL PASS)
+  - NEW: Tipping cascade recalibration (CRITICAL), AI-to-AI coordination (HIGH)
 
 ## 🔬 Research-Driven Priorities (Nov 23 Coffee Chat)
 
@@ -26,6 +29,16 @@
    - Reality check for the entire model - validates core mechanisms
    - **Complexity:** 5 systems (all major subsystems touched)
    - **Plan:** TBD - needs research on available historical data
+   - **Nov 24 Progress:** Dual death system bug FIXED (deaths were applied twice)
+
+1b. **Tipping Cascade Recalibration** (NEW from Nov 24 Audit - CRITICAL)
+   - Audit found tipping cascades use 2.5th percentile values, not median
+   - 48-month extinction timeline is 25-250x faster than research consensus
+   - Baker et al. (2025) Nature shows 34/35 CMIP6 models show AMOC resilience
+   - Missing Southern Ocean upwelling compensation mechanism
+   - **Report:** `reviews/mechanism_audit_tipping_cascades_20251124.md`
+   - **Complexity:** 2 systems (tipping points, climate)
+   - **Action:** Recalibrate to median estimates, add resilience mechanisms
 
 ### HIGH Priority
 
@@ -46,15 +59,32 @@
    - **Bug RESOLVED:** Temperature assertion bug FIXED (Nov 23) - `plans/CRITICAL_monte_carlo_temperature_bug_20251123.md`
    - **Remaining:** Research-skeptic validation (not blocking), wiki documentation
 
-3. **Mechanism Audits**
+3. **Mechanism Audits** - **AUDITS COMPLETE** (Nov 24, 2025)
    - Verify code actually implements what papers describe
    - Check for "structural fabrication" (citation exists but mechanism does not match)
-   - **Priority targets:**
-     - Mortality stabilizers (do formulas match Xia/Shi papers?)
-     - Tipping point cascades (do thresholds match Richardson et al.?)
-     - AI coordination phases (do dynamics match Anthropic findings?)
-   - **Complexity:** 2 systems per audit (research + implementation)
-   - **Plan:** TBD - systematic audit checklist needed
+   - **Audit Results (Nov 24, 2025):**
+     - ✅ Mortality stabilizers: **PASS** - Aid effectiveness matches Cavalcanti et al. (2025)
+       - Report: `reviews/mechanism_audit_mortality_stabilizers_20251124.md`
+       - Minor doc issues: donor threshold misattribution
+     - ❌ Tipping point cascades: **GRADE C-** - CRITICAL discrepancies with Baker et al. (2025)
+       - Report: `reviews/mechanism_audit_tipping_cascades_20251124.md`
+       - Uses 2.5th percentile thresholds vs median
+       - 48-month extinction 25-250x faster than research
+       - Missing Southern Ocean compensation mechanisms
+       - **NEW ISSUE:** Recalibrate tipping cascades to median estimates
+     - ⚠️ AI coordination phases: **CONDITIONAL PASS** - Implementation gaps
+       - Report: `reviews/mechanism_audit_ai_coordination_20251124.md`
+       - Human-AI coordination: PASS
+       - AI-to-AI coordination: NOT IMPLEMENTED (research exists, code doesn't)
+       - **NEW ISSUE:** Implement AI-to-AI multi-agent coordination
+
+3b. **AI-to-AI Multi-Agent Coordination** (NEW from Nov 24 Audit - HIGH)
+   - Research documents exist but mechanics not translated to code
+   - Anthropic alignment faking research (12-78% rates) not implemented
+   - No coalition formation, distributed goal pursuit, or emergent collective intelligence
+   - **Report:** `reviews/mechanism_audit_ai_coordination_20251124.md`
+   - **Complexity:** 3 systems (AI agents, coordination phases, collective dynamics)
+   - **Action:** Implement AI agent cooperation/defection dynamics
 
 4. **Planetary Restoration Timescales Audit** (Nov 21 Verification Crisis)
    - Drüke et al. 2024 identifies 100-800 year restoration timescales - need to verify implemented in `src/simulation/planetaryBoundaries.ts`
