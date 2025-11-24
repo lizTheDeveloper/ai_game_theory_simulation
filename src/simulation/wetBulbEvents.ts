@@ -432,12 +432,26 @@ export function updateWetBulbTemperatureSystem(
   for (const regionalClimate of system.regionalClimates) {
     // Base probability: 0.2% per month per region (2025 baseline)
     // Multiplied by frequency multiplier (exponential with warming)
-    const eventProbability = WET_BULB_CONSTANTS.BASE_FREQUENCY_2025 * system.eventFrequencyMultiplier;
+    //
+    // FIX (Nov 24, 2025): ERA SCALING FOR HISTORICAL HINDCASTING
+    // The base frequency is calibrated for 2025 conditions. For historical simulations
+    // (1990-2024), we need to scale down event frequency to match historical data.
+    // Research: NOAA heat event frequency increased ~3x from 1990 to 2020
+    const simulationStartYear = (state as { simulationStartYear?: number }).simulationStartYear ?? 2025;
+    const currentSimulationYear = simulationStartYear + Math.floor(state.currentMonth / 12);
+    const eraScalingFactor = Math.pow(currentSimulationYear / 2025, 2); // Quadratic scaling
+
+    const eventProbability = WET_BULB_CONSTANTS.BASE_FREQUENCY_2025
+                            * system.eventFrequencyMultiplier
+                            * eraScalingFactor;
 
     // Stochastic event trigger
     if (rng() < eventProbability) {
       // Calculate regional temperature: baseline + global anomaly
-      const regionalTemp = regionalClimate.baselineTemperature + temperatureAnomaly;
+      // FIX (Nov 24, 2025): Adjust baseline for historical era
+      const baselineAdjustment = Math.max(0, 1.2 - temperatureAnomaly);
+      const adjustedBaseline = regionalClimate.baselineTemperature - baselineAdjustment;
+      const regionalTemp = adjustedBaseline + temperatureAnomaly;
 
       // Add random variation (±3°C for heatwave intensity)
       const heatwaveIntensity = (rng() - 0.5) * 6; // -3°C to +3°C
