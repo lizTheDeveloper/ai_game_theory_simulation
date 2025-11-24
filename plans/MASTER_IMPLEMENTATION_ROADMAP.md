@@ -5,28 +5,28 @@
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**Current Status:** 🟢 **GOOD** (Nov 24, 2025 - Determinism Restored)
+**Current Status:** 🟢 **GOOD** (Nov 24, 2025 Late Session - Hindcast Calibration Phase 1-2 Complete)
 - **Research Quality:** A (96% sources from 2020+, key citations verified)
 - **Architecture Health:** A- (CRITICAL tipping cascade recalibrated, audits passing)
-- **System Performance:** Monte Carlo deterministic (separate processes), hindcast dual-death bug FIXED
-- **System Trajectory:** IMPROVING - Bug fixes + game layer architecture
-- **Nov 24 Late Session (15:00 UTC):**
-  - **CRITICAL FIX:** Non-determinism in alignment calculations (commit 5858b05f7)
-    - Root cause: async/await bug in `checkAndUpdateAgentWeights`, global WUE state persistence
-    - Fix: Made sync, added `resetGlobalWUE()`, created `resetModuleState.ts` utility
-    - Verification: 4/4 separate process runs produce identical results
-  - RESOLVED: Merge conflicts in SIMULATION_ROADMAP.md
-  - VALIDATED: Determinism stress test reveals issue → fixed
+- **System Performance:** Monte Carlo deterministic, hindcast calibration in progress
+- **System Trajectory:** IMPROVING - Determinism restored, hindcast validity work underway
+- **Nov 24 Late Session (Hindcast Focus):**
+  - **HINDCAST CALIBRATION PHASES 1-2 COMPLETE** (commit dd327b73e)
+    - Phase 1: Diagnostic complete - 5 root causes identified
+    - Phase 2: Implementation complete - temperature fix verified, mortality multipliers + thermal inertia applied
+    - Phase 3: Validation in progress - 1-2 days remaining
+  - **Root Causes Fixed:**
+    - Temperature initialization bug (0.45C → 1.31C jump) RESOLVED
+    - Climate stability 0% → initialized from planetary boundaries
+    - Baseline regional deaths calibrated down
+    - Era mortality multipliers (1990: 0.30, 2025: 1.00) applied
+    - Thermal inertia for historical scenarios (24-month S-curve)
+  - **Detailed Report:** `plans/hindcast_diagnostic_report_20251124.md`
+  - **Diagnostic Script:** `scripts/hindcastMortalityDiagnostic.ts`
 - **Nov 24 Earlier Work:**
-  - COMPLETE: Game layer architecture Phase 1 - `src/game/` directory (17 files)
-  - COMPLETE: JSDoc documentation for AI agent coordination parameters
-  - COMPLETE: GameStateProvider integration layer with useGameState() hook
-  - DOCUMENTED: Hindcast diagnostic findings (model calibration needed)
-  - VERIFIED: AI coordination research citations (Anthropic Dec 2024, Apollo Research Dec 2024)
-  - FIXED: Dual death system bug (deaths applied twice)
-  - COMPLETE: 3 mechanism audits (mortality: PASS, tipping: C-, AI coord: CONDITIONAL PASS)
-  - COMPLETE: Planetary restoration timescales audit (PASS) - Druke et al. 2024 verified
-  - IMPLEMENTED: Coordinated deployment god mode scripts (9% mortality improvement)
+  - COMPLETE: Determinism fixes (commit 5858b05f7) - all 4/4 separate runs identical
+  - COMPLETE: Game layer architecture Phase 1, mechanism audits
+  - VERIFIED: AI coordination research citations, dual death bug fixed
 
 ## 🔬 Research-Driven Priorities (Nov 23 Coffee Chat)
 
@@ -36,20 +36,27 @@
 
 ### CRITICAL Priority
 
-1. **Hindcasting Validation** (Sylvia's key push) - **CALIBRATION NEEDED** (Nov 24, 2025)
+1. **Hindcasting Validation** (Sylvia's key push) - **PHASE 1-2 COMPLETE** (Nov 24, 2025 Late)
    - Run simulation starting 1990, check if it predicts 2024 correctly
    - If the model cannot hindcast known history, forecasts are suspect
    - Reality check for the entire model - validates core mechanisms
    - **Complexity:** 5 systems (all major subsystems touched)
-   - **Status:** Infrastructure complete, **CRITICAL calibration issue identified**
-   - **Nov 24 Progress:**
-     - ✅ Dual death system bug FIXED (deaths were applied twice)
-     - ✅ Hindcast validation script: `scripts/hindcastValidation.ts`
-     - ✅ Historical baselines defined: `src/types/config.ts` (1990, 2000, 2010)
-     - ❌ **CRITICAL FINDING:** Model shows catastrophic pessimism (population collapse to 1M by 2022)
-   - **Diagnostic Report:** `plans/CRITICAL_hindcast_model_pessimism_20251124.md`
-   - **Root Cause:** Model calibrated for AI-era scenarios, lacks pre-AI resilience mechanisms
-   - **Next steps:** 3-phase calibration work (diagnostic, calibration, validation) - estimated 4-7 days
+   - **Status:** Phase 1 diagnostic complete, Phase 2 calibration complete, Phase 3 partial validation in progress
+   - **Phase 1 - Diagnostic COMPLETE:**
+     - ✅ Created `scripts/hindcastMortalityDiagnostic.ts` for per-month tracking
+     - ✅ Identified 5 root causes: (1) temperature init bug, (2) climate stability 0%, (3) baseline deaths too high, (4) food security decay, (5) missing population growth
+     - ✅ Report: `plans/hindcast_diagnostic_report_20251124.md`
+   - **Phase 2 - Implementation COMPLETE:**
+     - ✅ Added `ERA_MORTALITY_MULTIPLIERS` with interpolation (1990: 0.30, 2025: 1.00)
+     - ✅ Thermal inertia for historical mode (S-curve over 24 months)
+     - ✅ Era mortality multiplier applied to Bayesian resolution
+     - ✅ Climate stability initialization from planetary boundaries
+     - ✅ Commit: dd327b73e
+   - **Phase 3 - Validation IN PROGRESS:**
+     - ✅ Temperature fix VERIFIED (0.45C stays stable)
+     - ❌ Remaining: planetary boundary initialization, regional food security tuning
+     - Estimated: 1-2 days for full calibration
+   - **Next steps:** Complete Phase 3 validation, run full Monte Carlo N≥10 to validate hindcast accuracy against historical data
 
 1b. **Tipping Cascade Recalibration** - **COMPLETE** (Nov 24, 2025)
    - ~~Audit found tipping cascades use 2.5th percentile values, not median~~
@@ -696,6 +703,16 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 - **Recently Completed:** Nitrogen-food coupling research (Nov 15), Climate deployment timescales (Nov 15), Novel Entities 0% effectiveness (Nov 14)
 
 **Research Verification Queue:**
+- [ ] **Hindcast Calibration Era Mortality Multipliers** - ⏳ PENDING VERIFICATION
+  - **Research Spec:** `research/verification_dd327b7_20251124.md`
+  - **Implementation:** Commit dd327b7 - ERA_MORTALITY_MULTIPLIERS, thermal inertia, climate stability derivation
+  - **Priority:** HIGH - Affects all hindcast population outcomes
+  - **Citations to Verify:**
+    - UN World Population Prospects: Historical mortality trends
+    - IHME Global Burden of Disease: ~50% mortality reduction claim
+    - Ocean thermal inertia timescales: 24-month transition (UNCITED)
+    - Climate stability = 1 - boundary_value (NOVEL FORMULA, needs justification)
+  - **Status:** ⏳ AWAITING VALIDATION PHASE
 - [x] **AI Agent Multi-Agent Coordination Phase (Enhanced)** - ✅ VERIFIED (Nov 24, 2025)
   - **Research Spec:** `research/verification_ae8380b_20251124.md`
   - **Implementation:** Commit ae8380b - AIAgentCoordinationPhase (order 7.5, 746 lines)
