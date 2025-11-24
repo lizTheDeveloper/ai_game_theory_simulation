@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super-alignment to Utopia - Command Center</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            color: #fff;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 300;
+            overflow: hidden;
+            height: 100vh;
+            position: relative;
+        }
+
+        .dashboard {
+            height: 100vh;
+            display: grid;
+            grid-template-rows: 60px 1fr 80px;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 15px;
+        }
+
+        .game-title {
+            font-size: 14px;
+            font-weight: 200;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            opacity: 0.7;
+        }
+
+        .time-display {
+            display: flex;
+            gap: 30px;
+            align-items: baseline;
+        }
+
+        .current-month {
+            font-size: 28px;
+            font-weight: 100;
+            color: #00F0FF;
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+        }
+
+        .elapsed-time {
+            font-size: 14px;
+            opacity: 0.5;
+        }
+
+        /* Action Mode Selector */
+        .action-modes {
+            display: flex;
+            gap: 10px;
+            padding: 5px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+        }
+
+        .mode-btn {
+            padding: 8px 16px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-radius: 4px;
+        }
+
+        .mode-btn:hover {
+            background: rgba(0, 240, 255, 0.1);
+            border-color: rgba(0, 240, 255, 0.4);
+            color: #00F0FF;
+        }
+
+        .mode-btn.active {
+            background: rgba(0, 240, 255, 0.2);
+            border-color: #00F0FF;
+            color: #00F0FF;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+        }
+
+        /* Main Content Grid */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 20px;
+            overflow: hidden;
+        }
+
+        /* Currency Panel */
+        .currency-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .currency-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .currency-item:hover {
+            border-color: rgba(0, 240, 255, 0.3);
+            background: rgba(0, 240, 255, 0.02);
+        }
+
+        .currency-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .currency-name {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            opacity: 0.6;
+        }
+
+        .currency-trend {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+        }
+
+        .trend-up {
+            color: #00FF88;
+        }
+
+        .trend-down {
+            color: #FF0040;
+        }
+
+        .trend-neutral {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .currency-value {
+            font-size: 24px;
+            font-weight: 200;
+            margin-bottom: 5px;
+        }
+
+        .currency-bar {
+            height: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .currency-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00F0FF, #0080FF);
+            transition: width 0.5s;
+        }
+
+        /* Center Content */
+        .center-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Pending Decisions */
+        .pending-decisions {
+            background: rgba(255, 178, 0, 0.03);
+            border: 1px solid rgba(255, 178, 0, 0.3);
+            padding: 20px;
+            border-radius: 8px;
+            animation: pulse-amber 3s infinite;
+        }
+
+        @keyframes pulse-amber {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 178, 0, 0.2); }
+            50% { box-shadow: 0 0 30px rgba(255, 178, 0, 0.4); }
+        }
+
+        .pending-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .pending-title {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #FFB000;
+        }
+
+        .pending-count {
+            background: #FFB000;
+            color: #000;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .decision-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .decision-item {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .decision-item:hover {
+            background: rgba(255, 178, 0, 0.05);
+            border-color: rgba(255, 178, 0, 0.4);
+            transform: translateX(5px);
+        }
+
+        .decision-urgency {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.6;
+            margin-bottom: 5px;
+        }
+
+        .decision-name {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .decision-impact {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        /* World Map Visualization */
+        .world-visualization {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .viz-header {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.5;
+            margin-bottom: 15px;
+        }
+
+        .world-map {
+            flex: 1;
+            background: radial-gradient(circle at center, rgba(0, 240, 255, 0.05), transparent);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 4px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            opacity: 0.5;
+        }
+
+        /* Event Stream */
+        .event-stream {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .stream-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stream-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.5;
+        }
+
+        .next-month-preview {
+            background: linear-gradient(90deg, rgba(0, 240, 255, 0.1), transparent);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            animation: pulse-cyan 4s infinite;
+        }
+
+        @keyframes pulse-cyan {
+            0%, 100% { box-shadow: 0 0 15px rgba(0, 240, 255, 0.2); }
+            50% { box-shadow: 0 0 25px rgba(0, 240, 255, 0.4); }
+        }
+
+        .preview-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #00F0FF;
+            margin-bottom: 10px;
+        }
+
+        .preview-item {
+            font-size: 14px;
+            margin-bottom: 5px;
+            opacity: 0.8;
+        }
+
+        .events-list {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 4px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .event-item {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 12px;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .event-item:hover {
+            opacity: 1;
+        }
+
+        .event-item:last-child {
+            border-bottom: none;
+        }
+
+        .event-critical {
+            color: #FF0040;
+            opacity: 1;
+            font-weight: 400;
+        }
+
+        .event-warning {
+            color: #FFB000;
+            opacity: 0.9;
+        }
+
+        .event-success {
+            color: #00FF88;
+            opacity: 0.9;
+        }
+
+        /* Outcome Probabilities */
+        .outcome-panel {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .outcome-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.5;
+            margin-bottom: 15px;
+        }
+
+        .outcome-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .outcome-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+        }
+
+        .outcome-name {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        .outcome-prob {
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        .outcome-utopia { color: #00FF88; }
+        .outcome-alignment { color: #00F0FF; }
+        .outcome-struggle { color: #FFB000; }
+        .outcome-collapse { color: #FF6B00; }
+        .outcome-extinction { color: #FF0040; }
+
+        /* Bottom Action Bar */
+        .action-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+        }
+
+        .speed-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .speed-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.5;
+            margin-right: 10px;
+        }
+
+        .speed-btn {
+            padding: 8px 12px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 12px;
+        }
+
+        .speed-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.4);
+            color: #fff;
+        }
+
+        .speed-btn.active {
+            background: rgba(0, 240, 255, 0.2);
+            border-color: #00F0FF;
+            color: #00F0FF;
+        }
+
+        .main-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .action-btn {
+            padding: 12px 24px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-radius: 4px;
+        }
+
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 255, 255, 0.1);
+        }
+
+        .action-btn.primary {
+            background: linear-gradient(135deg, #00F0FF, #0080FF);
+            border: none;
+            color: #000;
+            font-weight: 500;
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.4);
+            animation: pulse-primary 2s infinite;
+        }
+
+        @keyframes pulse-primary {
+            0%, 100% { box-shadow: 0 0 30px rgba(0, 240, 255, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(0, 240, 255, 0.6); }
+        }
+
+        .action-btn.primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 40px rgba(0, 240, 255, 0.6);
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <header>
+            <div class="game-title">Super-Alignment to Utopia</div>
+            <div class="time-display">
+                <div class="current-month">March 2025</div>
+                <div class="elapsed-time">3 months elapsed</div>
+            </div>
+            <div class="action-modes">
+                <button class="mode-btn active">Overview</button>
+                <button class="mode-btn">Advocacy</button>
+                <button class="mode-btn">Research</button>
+                <button class="mode-btn">Diplomacy</button>
+                <button class="mode-btn">Emergency</button>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <!-- Left Panel: Currencies with Trends -->
+            <div class="currency-panel">
+                <div class="currency-item">
+                    <div class="currency-header">
+                        <div class="currency-name">Research</div>
+                        <div class="currency-trend trend-up">
+                            <span>↑</span>
+                            <span>+12/mo</span>
+                        </div>
+                    </div>
+                    <div class="currency-value">156</div>
+                    <div class="currency-bar">
+                        <div class="currency-bar-fill" style="width: 65%"></div>
+                    </div>
+                </div>
+
+                <div class="currency-item">
+                    <div class="currency-header">
+                        <div class="currency-name">Influence</div>
+                        <div class="currency-trend trend-down">
+                            <span>↓</span>
+                            <span>-5/mo</span>
+                        </div>
+                    </div>
+                    <div class="currency-value">42</div>
+                    <div class="currency-bar">
+                        <div class="currency-bar-fill" style="width: 42%"></div>
+                    </div>
+                </div>
+
+                <div class="currency-item">
+                    <div class="currency-header">
+                        <div class="currency-name">Resources</div>
+                        <div class="currency-trend trend-neutral">
+                            <span>→</span>
+                            <span>+2/mo</span>
+                        </div>
+                    </div>
+                    <div class="currency-value">88</div>
+                    <div class="currency-bar">
+                        <div class="currency-bar-fill" style="width: 88%"></div>
+                    </div>
+                </div>
+
+                <div class="currency-item">
+                    <div class="currency-header">
+                        <div class="currency-name">AI Trust</div>
+                        <div class="currency-trend trend-up">
+                            <span>↑</span>
+                            <span>+8/mo</span>
+                        </div>
+                    </div>
+                    <div class="currency-value">71</div>
+                    <div class="currency-bar">
+                        <div class="currency-bar-fill" style="width: 71%"></div>
+                    </div>
+                </div>
+
+                <div class="outcome-panel">
+                    <div class="outcome-title">Trajectory Analysis</div>
+                    <div class="outcome-grid">
+                        <div class="outcome-item">
+                            <span class="outcome-name">Utopia</span>
+                            <span class="outcome-prob outcome-utopia">12%</span>
+                        </div>
+                        <div class="outcome-item">
+                            <span class="outcome-name">Alignment</span>
+                            <span class="outcome-prob outcome-alignment">34%</span>
+                        </div>
+                        <div class="outcome-item">
+                            <span class="outcome-name">Struggle</span>
+                            <span class="outcome-prob outcome-struggle">28%</span>
+                        </div>
+                        <div class="outcome-item">
+                            <span class="outcome-name">Collapse</span>
+                            <span class="outcome-prob outcome-collapse">18%</span>
+                        </div>
+                        <div class="outcome-item">
+                            <span class="outcome-name">Extinction</span>
+                            <span class="outcome-prob outcome-extinction">8%</span>
+                        </div>
+                        <div class="outcome-item">
+                            <span class="outcome-name" style="opacity: 0.5">vs Last Month</span>
+                            <span class="outcome-prob trend-up" style="color: #00FF88">+3%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Center Panel -->
+            <div class="center-content">
+                <!-- Pending Decisions Section -->
+                <div class="pending-decisions">
+                    <div class="pending-header">
+                        <div class="pending-title">Pending Decisions</div>
+                        <div class="pending-count">3</div>
+                    </div>
+                    <div class="decision-list">
+                        <div class="decision-item">
+                            <div class="decision-urgency" style="color: #FF0040">Critical - 2 days remaining</div>
+                            <div class="decision-name">AI Capability Assessment Protocol</div>
+                            <div class="decision-impact">Will affect global AI trust and research speed</div>
+                        </div>
+                        <div class="decision-item">
+                            <div class="decision-urgency" style="color: #FFB000">Important - 5 days remaining</div>
+                            <div class="decision-name">Climate Emergency Response</div>
+                            <div class="decision-impact">Impacts 3 planetary boundaries</div>
+                        </div>
+                        <div class="decision-item">
+                            <div class="decision-urgency">Standard - 10 days remaining</div>
+                            <div class="decision-name">Research Priority Allocation</div>
+                            <div class="decision-impact">+15% efficiency to chosen path</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- World Visualization -->
+                <div class="world-visualization">
+                    <div class="viz-header">Global Systems Status</div>
+                    <div class="world-map">
+                        [Interactive world heat map would go here]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel: Events & Next Month -->
+            <div class="event-stream">
+                <div class="stream-header">
+                    <div class="stream-title">Event Stream</div>
+                </div>
+
+                <!-- Next Month Preview -->
+                <div class="next-month-preview">
+                    <div class="preview-title">Coming Next Month</div>
+                    <div class="preview-item">• UN Climate Summit decision window opens</div>
+                    <div class="preview-item">• First quantum computing milestone expected</div>
+                    <div class="preview-item" style="color: #FFB000">⚠ Phosphorus crisis may trigger</div>
+                </div>
+
+                <!-- Recent Events -->
+                <div class="events-list">
+                    <div class="event-item event-success">✓ Breakthrough: Enhanced Solar Efficiency</div>
+                    <div class="event-item">AGI-7 capabilities expanded to logistics</div>
+                    <div class="event-item event-warning">⚠ Social cohesion declining in Region 3</div>
+                    <div class="event-item">Research collaboration established</div>
+                    <div class="event-item event-critical">⚠ Ocean pH dropped below 7.9</div>
+                    <div class="event-item">New technology available: Carbon Capture v2</div>
+                    <div class="event-item">Diplomatic relations improved with EU</div>
+                    <div class="event-item">AI safety protocol updated</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Action Bar -->
+        <div class="action-bar">
+            <div class="speed-controls">
+                <span class="speed-label">Speed</span>
+                <button class="speed-btn">||</button>
+                <button class="speed-btn active">▶</button>
+                <button class="speed-btn">▶▶</button>
+                <button class="speed-btn">▶▶▶</button>
+            </div>
+
+            <div class="main-actions">
+                <button class="action-btn">Review Decisions</button>
+                <button class="action-btn">Open Research</button>
+                <button class="action-btn primary">Advance Month</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
