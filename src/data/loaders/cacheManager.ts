@@ -24,7 +24,7 @@ import * as path from 'path';
 /**
  * Data source types
  */
-export type DataSource = 'vdem' | 'undp-hdi' | 'undp-mpi' | 'ecological-boundaries' | 'ecological-footprint' | 'ecological-airquality' | 'wvs';
+export type DataSource = 'vdem' | 'undp-hdi' | 'undp-mpi' | 'ecological-boundaries' | 'ecological-footprint' | 'ecological-airquality' | 'wvs' | 'historical-climate' | 'historical-economic';
 
 /**
  * Cache metadata
