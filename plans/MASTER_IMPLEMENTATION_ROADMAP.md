@@ -87,6 +87,37 @@
    - **Complexity:** 3 systems (AI agents, coordination phases, collective dynamics)
    - **Action:** Implement AI agent cooperation/defection dynamics
 
+4. **Planetary Restoration Timescales Audit** (Nov 21 Verification Crisis)
+   - Drüke et al. 2024 identifies 100-800 year restoration timescales - need to verify implemented in `src/simulation/planetaryBoundaries.ts`
+   - **Check parameters:**
+     - Ice sheet recovery: 100-800 years (should NOT be linear)
+     - Permafrost recovery: 200-500 years
+     - Nitrogen cycling: 50-200 years
+     - Amazon resilience: 300-1,000 years
+   - **Verify:** Non-linear recovery curves (not linear), post-2100 commitment percentages (30-50% for ice sheets)
+   - **Research:** `research/irreversibility_framework_20251116.md`
+   - **Owner:** Roy (simulation-maintainer)
+   - **Complexity:** 2 systems (planetary boundaries, recovery mechanics)
+   - **Effort:** 2-3 hours
+   - **Timeline:** Dec 20, 2025
+   - **Source:** `reviews/VALIDATION_ACTION_ITEMS_20251121.md` Item #6
+
+5. **AI Coordination Effectiveness Integration** (Nov 21 Verification Crisis)
+   - 3-stage governance model (recognize → decide → implement) documented but not in simulation
+   - **Parameters:**
+     - Coordination effectiveness: 32-37% excess mortality reduction
+     - Deployment pacing: S-curve adoption (innovators → early majority)
+   - **Stages:**
+     - Stage 1 (recognition): Detection of crisis (0-6 months)
+     - Stage 2 (decision): Policy formation (6-18 months)
+     - Stage 3 (implementation): Deployment at scale (18-36 months)
+   - **Research:** `research/ai_coordination_transition_management_20251121.md`
+   - **Owner:** Moss (feature-implementer)
+   - **Complexity:** 4 systems (government, crisis response, mortality, deployment curves)
+   - **Effort:** 3-4 hours
+   - **Timeline:** Dec 31, 2025
+   - **Source:** `reviews/VALIDATION_ACTION_ITEMS_20251121.md` Item #7
+
 ### MEDIUM Priority
 
 4. **AMOC Temperature-Dependent Function** - **IMPLEMENTATION COMPLETE** (Nov 20, 2025)
@@ -100,12 +131,55 @@
    - **Research:** Weijer et al. (2020), Van Westen et al. JGR (2024), Qin et al. (2025)
    - **Complexity:** 2 systems (climate, tipping points)
 
-5. **Alignment Faking Model Validation**
+7. **Alignment Faking Model Validation**
    - Does "sandbagging" implementation capture Greenblatt et al. findings?
    - Models faking alignment on evals but behaving differently in deployment
    - Need methodology review before trusting this system
    - **Complexity:** 2 systems (AI agents, adversarial evaluation)
    - **Related:** Nov 22 alignment faking research validation (Grade B+)
+
+8. **Nuclear Winter Literature 2020-2025 Revalidation** (Nov 21 Verification Crisis)
+   - Oldest sources (Robock 2007, Toon 2008) are 15-17 years old
+   - Check if parameters are still valid or contradicted by 2020-2025 studies
+   - **Search:** Journals (JGR, Earth's Future, Nature Climate Change), keywords ("nuclear winter", "soot injection climate")
+   - **Owner:** Cynthia (super-alignment-researcher)
+   - **Complexity:** 1 system (research validation)
+   - **Timeline:** Q1 2026
+   - **Source:** `reviews/VALIDATION_ACTION_ITEMS_20251121.md` Item #11
+
+9. **COVID-19 Mortality Case Study** (Nov 21 Verification Crisis)
+   - Add COVID-19 excess mortality data to `research/mortality_caps_historical_data_20251027.md`
+   - **Sources:** WHO 2024 final report, peer-reviewed retrospectives, excess mortality meta-analyses (2024)
+   - **Owner:** Cynthia (super-alignment-researcher)
+   - **Complexity:** 1 system (research enrichment)
+   - **Timeline:** Q1 2026
+   - **Source:** `reviews/VALIDATION_ACTION_ITEMS_20251121.md` Item #12
+
+10. **AI Infrastructure Energy Q4 2024 Update** (Nov 21 Verification Crisis)
+    - Update `research/ai_energy_water_consumption_20251106.md` with test-time compute (o1, Claude extended thinking)
+    - **Sources:** IEA data center energy 2024 reports, OpenAI/Anthropic efficiency disclosures, training vs inference breakdown
+    - **Owner:** Cynthia (super-alignment-researcher)
+    - **Complexity:** 1 system (parameter update)
+    - **Timeline:** December 2025
+    - **Source:** `reviews/VALIDATION_ACTION_ITEMS_20251121.md` Item #13
+
+11. **Workflow Adaptation GenAI Adoption Update** (Nov 21 Verification Crisis)
+    - Update `research/workflow-adaptation-dynamics_20251019.md` with 2024 adoption data
+    - **Sources:** McKinsey GenAI survey 2024, academic LLM workplace integration studies, sector-specific curves
+    - **Owner:** Cynthia (super-alignment-researcher)
+    - **Complexity:** 1 system (parameter update)
+    - **Timeline:** December 2025
+    - **Source:** `reviews/VALIDATION_ACTION_ITEMS_20251121.md` Item #14
+
+### LOW Priority
+
+12. **Multi-Paradigm Wellbeing Metrics Refresh** (Nov 21 Verification Crisis)
+    - Framework (2015-2019) could use 2024-2025 updates
+    - **Topics:** Indigenous wellbeing metrics, ecological harmony frameworks, development economics QOL
+    - **Owner:** Cynthia (super-alignment-researcher)
+    - **Complexity:** 2 systems (multi-paradigm DUI, research update)
+    - **Timeline:** Q2 2026
+    - **Source:** `reviews/VALIDATION_ACTION_ITEMS_20251121.md` Item #15
 
 ---
 
@@ -1824,7 +1898,6 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
 
 ## 🎯 Progress Summary
 
-<<<<<<< HEAD
 **Overall Project Status: 🟢 EXCELLENT** (Nov 22, 2025 09:13 UTC - End of Session)
 
 **Nov 22, 2025 Session - Research Validation Rigor:**
@@ -1883,9 +1956,7 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
   - Expected impact: Novel entities effectiveness 0% → 20-40%
   - Multi-century timescales: 50-100 years recovery (Montreal Protocol analog)
   - Commit: c85e8b22
-=======
 **Overall Project Status: 🟢 EXCELLENT - STABLE AND IMPROVING** (Nov 17, 2025 - End of Session)
->>>>>>> 30fe22e88c1d7ca1d1e3ec81d9b4acea879945ca
 
 **End-of-Session Completions (Nov 17, 2025):**
 - ✅ **NITROGEN-FOOD COUPLING PHASE 1 INTEGRATION COMPLETE** (TIER 2 HIGH)
