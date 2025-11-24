@@ -227,14 +227,16 @@ export class BaselineMortalityPhase implements SimulationPhase {
     // Example: baselineRisk=0.000775 (9.3/1000/12), eraMultiplier=0.30
     //          compensated=0.000775/0.30=0.00258
     //          bayesian applies: 0.00258*0.30=0.000775 ✓
-    const yearsElapsed = Math.floor(state.currentMonth / 12);
-    const actualYear = state.currentYear + yearsElapsed;
+    // FIX (Nov 24, 2025): state.currentYear is now updated by TimeAdvancementPhase to include
+    // years elapsed since start. No need to add yearsElapsed again - that was double-counting!
+    // Before fix: Month 12 would use year 1992 (1991 + 1) instead of 1991
+    const actualYear = state.currentYear;
     const eraMultiplier = getEraMortalityMultiplier(actualYear);
     const compensatedBaselineRisk = assertFinite(baselineRisk / eraMultiplier, {
       location: 'BaselineMortalityPhase.execute',
       valueName: 'compensatedBaselineRisk',
       month: state.currentMonth,
-      additionalInfo: { baselineRisk, eraMultiplier, actualYear, yearsElapsed, initialYear: state.currentYear }
+      additionalInfo: { baselineRisk, eraMultiplier, actualYear }
     });
 
     // Add baseline mortality risk to Bayesian system

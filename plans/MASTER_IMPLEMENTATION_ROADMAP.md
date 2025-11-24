@@ -99,6 +99,12 @@
    - **Remaining calibration** (not critical bug):
      - Population now ~10-15% OVER target (overshooting, not undershooting)
      - CO2 concentration 25-32% too high (emissions model needs calibration)
+     - **Nov 24 Very Late Night Investigation:**
+       - Year calculation bug FIXED (commit 1243af305) - was using 0,1,2 instead of 1990,1991,1992
+       - Birth rate scaling appears correct (11M births/mo vs 10.7M expected)
+       - Death rates still producing ~3% annual decline vs expected 1.5% growth
+       - Likely cause: Regional death rate calculations or crisis mechanisms too aggressive
+       - Next step: Phase-by-phase debugging to isolate death rate source
 
 1b. **Tipping Cascade Recalibration** - **COMPLETE** (Nov 24, 2025)
    - ~~Audit found tipping cascades use 2.5th percentile values, not median~~
