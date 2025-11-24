@@ -168,19 +168,23 @@
    - **Complexity:** 1 system (research validation)
    - **Source:** `reviews/VALIDATION_ACTION_ITEMS_20251121.md` Item #11
 
-9. **COVID-19 Mortality Case Study** (Nov 21 Verification Crisis)
-   - Add COVID-19 excess mortality data to `research/mortality_caps_historical_data_20251027.md`
-   - **Sources:** WHO 2024 final report, peer-reviewed retrospectives, excess mortality meta-analyses (2024)
-   - **Owner:** Cynthia (super-alignment-researcher)
-   - **Complexity:** 1 system (research enrichment)
-   - **Source:** `reviews/VALIDATION_ACTION_ITEMS_20251121.md` Item #12
+9. **COVID-19 Mortality Case Study** - **ALREADY COMPLETE** (verified Nov 24, 2025)
+   - ✅ COVID-19 data already in `research/mortality_caps_historical_data_20251027.md` (Section 3.2)
+   - Includes:
+     - 7.1M confirmed deaths, 14.83M-36M excess mortality
+     - WHO estimates (Nature 2023 peer-reviewed)
+     - Regional peak patterns (Africa, Europe)
+     - Spanish flu comparisons with 2024-2025 citations
+   - **No additional work required**
 
-10. **AI Infrastructure Energy Q4 2024 Update** (Nov 21 Verification Crisis)
-    - Update `research/ai_energy_water_consumption_20251106.md` with test-time compute (o1, Claude extended thinking)
-    - **Sources:** IEA data center energy 2024 reports, OpenAI/Anthropic efficiency disclosures, training vs inference breakdown
-    - **Owner:** Cynthia (super-alignment-researcher)
-    - **Complexity:** 1 system (parameter update)
-    - **Source:** `reviews/VALIDATION_ACTION_ITEMS_20251121.md` Item #13
+10. **AI Infrastructure Energy Q4 2024 Update** - **COMPLETE** (Nov 24, 2025)
+    - ✅ Added Section 8: Test-Time Compute and Extended Thinking to energy research
+    - Key findings:
+      - Extended thinking: 40× baseline energy (17 Wh vs 0.42 Wh per query)
+      - o3-style reasoning: 80-100× baseline (estimated)
+      - Claude 3.7 Sonnet leads eco-efficiency (0.886 score)
+    - **Sources:** arXiv:2505.09598v1 (2025), Heatmap News, Anthropic docs
+    - **Location:** `research/ai_energy_water_consumption_20251106.md`
 
 11. **Workflow Adaptation GenAI Adoption Update** (Nov 21 Verification Crisis)
     - Update `research/workflow-adaptation-dynamics_20251019.md` with 2024 adoption data

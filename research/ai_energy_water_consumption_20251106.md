@@ -885,6 +885,72 @@ const EMBODIED_CARBON_PARAMS = {
 
 ---
 
+## 8. Test-Time Compute and Extended Thinking (Nov 24, 2025 Update)
+
+**Context:** New reasoning models (OpenAI o1, Claude 3.7 Extended Thinking) use test-time compute scaling, which significantly impacts energy consumption.
+
+### 8.1 Test-Time Compute Overview
+
+**Definition:** Test-time compute refers to additional computation during inference, where models "think longer" before responding.
+
+**Key Quotes:**
+- "o1 thinks for seconds, but we aim for future versions to think for hours, days, even weeks" (OpenAI researcher Noam Brown)
+- This represents a paradigm shift from training-time scaling to inference-time scaling
+
+### 8.2 Energy Consumption Comparisons
+
+| Model | Energy per Query (Long Input) | Notes |
+|-------|-------------------------------|-------|
+| GPT-4o (standard) | 1.788 Wh | Fast inference, no extended reasoning |
+| GPT-4o (short) | 0.42 Wh | 500 tokens |
+| Claude 3.7 Sonnet (extended thinking) | 17.045 Wh | Up to 128K internal tokens |
+| OpenAI o3 | ~35+ Wh (estimated) | Extended chain-of-thought |
+| o3-mini | Lower | "Eco-efficient" reasoning variant |
+
+**Source:** "How Hungry is AI? Benchmarking Energy, Water, and Carbon Footprint of LLM Inference" (arXiv:2505.09598v1, 2025)
+
+### 8.3 Eco-Efficiency Frontier (2025)
+
+Recent research ranks models by eco-efficiency (performance per energy cost):
+
+1. **Claude 3.7 Sonnet:** 0.886 score - best eco-efficiency
+2. **o4-mini (high):** 0.867 score
+3. **o3-mini:** 0.840 score
+
+**Key Finding:** "Downsizing reasoning models can yield substantial sustainability gains with minimal performance trade-offs."
+
+### 8.4 Implications for Simulation
+
+**Energy Scaling Factors for Extended Reasoning:**
+- Standard inference: 1× baseline (0.42 Wh per query)
+- Extended thinking: 40× baseline (17 Wh per query for Claude 3.7)
+- Full o3-style reasoning: 80-100× baseline (estimated)
+
+**Simulation Parameter Update:**
+```typescript
+// When modeling AI systems with extended reasoning
+const baseInferenceEnergy = 0.42; // Wh per GPT-4o query
+const extendedThinkingMultiplier = 40; // Claude 3.7 extended thinking
+const fullReasoningMultiplier = 80; // o1/o3 style reasoning
+```
+
+**Future Projections:**
+- OpenAI aims for reasoning that takes "hours, days, even weeks"
+- This would increase per-query energy by 1000-10000× over standard inference
+- Datacenter infrastructure may need significant upgrades for reasoning-heavy workloads
+
+### 8.5 Sources for Test-Time Compute
+
+1. **arXiv (2025).** "How Hungry is AI? Benchmarking Energy, Water, and Carbon Footprint of LLM Inference." https://arxiv.org/html/2505.09598v1
+
+2. **Heatmap News (2024).** "What Does OpenAI's New Breakthrough Mean for Energy Consumption?" https://heatmap.news/technology/openai-o1-energy
+
+3. **Anthropic (2025).** "Claude's Extended Thinking." https://www.anthropic.com/news/visible-extended-thinking
+
+4. **Medium (2025).** "Understanding Test-Time Compute: A New Mechanism Allowing AI to 'Think Harder'." https://medium.com/@rendysatriadalimunthe/understanding-test-time-compute-a-new-mechanism-allowing-ai-to-think-harder-19e017abc540
+
+---
+
 **Document Status:** ✅ COMPLETE
-**Parameter Currency:** 2024-2025 (AI infrastructure parameters fully updated with latest sources)
-**Next Review:** 2026 Q1 (monitor Blackwell GB200 deployment, frontier model disclosures, zero-water cooling adoption rates)
+**Parameter Currency:** 2024-2025 (AI infrastructure parameters fully updated with latest sources, including test-time compute)
+**Next Review:** 2026 Q1 (monitor Blackwell GB200 deployment, frontier model disclosures, zero-water cooling adoption rates, extended reasoning energy trends)
