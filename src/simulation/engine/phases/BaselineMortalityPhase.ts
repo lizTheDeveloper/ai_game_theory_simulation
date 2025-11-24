@@ -7,18 +7,26 @@
  *
  * Research basis:
  * - UN World Population Prospects 2024: Global CDR (crude death rate)
- *   - 1990: 9.8 per 1000 (0.82% monthly)
- *   - 2000: 9.0 per 1000 (0.75% monthly)
- *   - 2010: 8.3 per 1000 (0.69% monthly)
- *   - 2019: 7.5 per 1000 (0.63% monthly)
- *   - 2025: ~7.2 per 1000 (0.60% monthly) [projected]
+ *   - 1990: 9.3 per 1000 (0.78% monthly) [CORRECTED from 9.8]
+ *   - 2000: 8.5 per 1000 (0.71% monthly) [CORRECTED from 9.0]
+ *   - 2010: 7.8 per 1000 (0.65% monthly) [CORRECTED from 8.3]
+ *   - 2019: 7.5 per 1000 (0.63% monthly) [VERIFIED ✅]
+ *   - 2025: ~7.5 per 1000 (0.63% monthly) [adjusted from 7.2]
  *
- * - IHME Global Burden of Disease 2024: Socioeconomic mortality differentials
- *   - Elite (top 5%): ~0.5× average mortality
- *   - Professional (20%): ~0.7× average mortality
+ * - Chetty et al. 2016 (JAMA): Association Between Income and Life Expectancy
+ *   - Top 1% vs bottom 1% life expectancy gap = 14.6 years → ~0.6× mortality ratio
+ * - Kahn & Fazio 2022 (JAMA Network Open): Wealth and Mortality
+ *   - Wealth quintile mortality hazard ratio = 1.76×
+ * - Pappas et al. 1993 (NEJM): Socioeconomic Status and Mortality
+ *   - Education gradient mortality differential = 2.67×
+ * - NOTE: U.S.-based research. Global applicability uncertain pending cross-country validation.
+ *
+ * Socioeconomic mortality multipliers applied via Bayesian system:
+ *   - Elite (top 5%): ~0.6× average mortality (Chetty 2016)
+ *   - Professional (20%): ~0.7× average mortality (interpolated)
  *   - Working (50%): 1.0× average mortality (baseline)
- *   - Precariat (20%): ~1.3× average mortality
- *   - Informal (5%): ~1.5× average mortality
+ *   - Precariat (20%): ~1.3× average mortality (interpolated)
+ *   - Informal (5%): ~1.6× average mortality (Kahn 2022: 1.76×, conservative 1.6×)
  *
  * Architecture:
  * - Runs BEFORE BayesianMortalityResolutionPhase (order: 34.8 < 35.0)
@@ -44,19 +52,26 @@ import {
  *
  * Returns the global average annual death rate for a given year.
  * Data from UN World Population Prospects 2024.
+ *
+ * CDR values verified against UN World Population Prospects 2024 (28th edition, July 2024)
+ * via World Bank API (SP.DYN.CDRT.IN indicator, 1960-2023 verified within 0.4-7.5%)
+ * Source: research/unwpp2024_cdr_verification_20251124.md
+ *
+ * 1990 correction critical for hindcast: Previous value (9.8) overestimated deaths by ~3M/year
+ * affecting population growth validation (5.3B→6.1B expected, was producing 5.3B→2.7B)
  */
 function getHistoricalCrudeDeathRate(year: number): number {
   // UN WPP 2024 data: CDR per 1000 population
   const HISTORICAL_CDR = {
-    1950: 19.5,  // Post-war, pre-antibiotics era
-    1960: 17.0,  // Early antibiotics
-    1970: 13.0,  // Green revolution
-    1980: 11.0,  // Modern healthcare spreading
-    1990: 9.8,   // HINDCAST START
-    2000: 9.0,
-    2010: 8.3,
-    2019: 7.5,   // Pre-COVID
-    2025: 7.2,   // Projected (current calibration baseline)
+    1950: 19.5,  // Plausible (unverified, pre-antibiotics era)
+    1960: 17.2,  // UN WPP 2024 verified (was 17.0, +1.2%)
+    1970: 12.1,  // UN WPP 2024 verified (was 13.0, -7%)
+    1980: 10.4,  // UN WPP 2024 verified (was 11.0, -5.5%)
+    1990: 9.3,   // UN WPP 2024 verified (was 9.8, -5%) ← CRITICAL for hindcast
+    2000: 8.5,   // UN WPP 2024 verified (was 9.0, -5.5%)
+    2010: 7.8,   // UN WPP 2024 verified (was 8.3, -6%)
+    2019: 7.5,   // UN WPP 2024 verified ✅
+    2025: 7.5,   // Adjusted from 7.2 (was too optimistic)
     2030: 7.8,   // Aging populations (projected)
   };
 
@@ -192,16 +207,24 @@ export class BaselineMortalityPhase implements SimulationPhase {
     // The Bayesian system will multiply ALL risks by ERA multiplier (line 362 of bayesianMortality.ts)
     // But baseline demographic deaths should NOT be scaled by ERA multiplier!
     //
-    // Why: ERA multipliers represent "crisis response capability" not "baseline health"
-    // - 1990 had HIGHER baseline mortality (CDR 9.8 vs 7.2 in 2025) due to worse healthcare
-    // - 1990 had LOWER crisis response (multiplier 0.40) due to less infrastructure
-    // These are independent dimensions!
+    // ERA multiplier compensation: Baseline mortality is NOT divided by ERA multiplier
+    // because ERA represents "crisis response capability" not "baseline healthcare quality"
+    //
+    // Rationale: 1990 had HIGHER baseline mortality (9.3/1000) but LOWER crisis response
+    // capability than 2025. Baseline improvement comes from antibiotics, sanitation, vaccines
+    // (captured in HISTORICAL_CDR), while ERA captures emergency response infrastructure.
+    //
+    // CAVEAT: This separation lacks direct empirical support. Alternative interpretation:
+    // ERA improvements and baseline mortality improvements may be confounded (same healthcare
+    // systems that reduce baseline also improve crisis response). Flagged for validation.
+    //
+    // See: research/baseline_mortality_skeptical_review_20251124.md
     //
     // Solution: Pre-divide by ERA multiplier so that when Bayesian system multiplies,
     // we get back the correct historical baseline mortality rate.
-    // Example: baselineRisk=0.00082 (9.8/1000/12), eraMultiplier=0.30
-    //          compensated=0.00082/0.30=0.00273
-    //          bayesian applies: 0.00273*0.30=0.00082 ✓
+    // Example: baselineRisk=0.000775 (9.3/1000/12), eraMultiplier=0.30
+    //          compensated=0.000775/0.30=0.00258
+    //          bayesian applies: 0.00258*0.30=0.000775 ✓
     const yearsElapsed = Math.floor(state.currentMonth / 12);
     const actualYear = state.currentYear + yearsElapsed;
     const eraMultiplier = getEraMortalityMultiplier(actualYear);
