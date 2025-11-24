@@ -914,6 +914,24 @@
   - **Bug fix validated:** ✅ Unit tests pass, N=2 Monte Carlo runs successful
   - **Research backing:** 🟡 PARTIALLY VERIFIED (4 citations exist in code, Layer 2 verification pending)
 
+- [ ] **Test-Time Compute Energy Data Verification** 🆕 **READY FOR ORCHESTRATOR (Nov 24, 2025)**
+  - **Commit:** 769af04 (Test-time compute energy data added to AI infrastructure research)
+  - **Status:** Research file updated, verification file created
+  - **Files Changed:** `research/ai_energy_water_consumption_20251106.md` (Section 8 added)
+  - **Verification File:** `research/verification_769af04_20251124.md`
+  - **Citations to Verify:**
+    1. arXiv:2505.09598v1 (2025) "How Hungry is AI?" - PRIMARY (energy benchmarks)
+    2. Heatmap News - Noam Brown quote attribution
+    3. Anthropic docs - Claude extended thinking 128K tokens claim
+  - **Claims to Verify:**
+    - Extended thinking 40× baseline energy (17 Wh vs 0.42 Wh) - from arXiv
+    - o3-style reasoning 80-100× baseline - ESTIMATED (verify if supported)
+    - Claude 3.7 Sonnet eco-efficiency 0.886 score - from arXiv
+    - o4-mini, o3-mini scores (0.867, 0.840) - from arXiv
+  - **Priority:** MEDIUM - Research documentation, no blocking implementation
+  - **Impact:** Enables future test-time compute modeling parameters
+  - **Next:** Two-layer verification (paper existence + claim accuracy)
+
 ---
 
 ## 🎯 PRIORITY FEATURES
