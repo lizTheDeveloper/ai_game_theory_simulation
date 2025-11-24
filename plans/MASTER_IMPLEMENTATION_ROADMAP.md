@@ -641,6 +641,11 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 - **Recently Completed:** Nitrogen-food coupling research (Nov 15), Climate deployment timescales (Nov 15), Novel Entities 0% effectiveness (Nov 14)
 
 **Research Verification Queue:**
+- [ ] **GDP Proxy Unit Fix** - VERIFICATION NEEDED (Nov 23, 2025)
+  - **Research Spec:** `research/verification_66e516f_20251123.md`
+  - **Implementation:** Commit 66e516f - GDP per capita baseline in getGDPProxy()
+  - **Citation to Verify:** IMF April 2025 global GDP per capita $14,250
+  - **Status:** Ready for orchestrator VALIDATION phase (research file created)
 - [ ] **AI Agent Coordination Phase** - VERIFICATION NEEDED (Nov 24, 2025)
   - **Research Spec:** `research/verification_876abe5_20251124.md`
   - **Implementation:** Commit 876abe5 - AIAgentCoordinationPhase (order 4.25)
