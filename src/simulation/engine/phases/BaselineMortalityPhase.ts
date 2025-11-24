@@ -188,28 +188,42 @@ export class BaselineMortalityPhase implements SimulationPhase {
     // Calculate baseline mortality risk from historical data
     const baselineRisk = calculateBaselineMortalityRisk(state);
 
-    // HINDCAST FIX: Apply ERA mortality multiplier
-    // This scales baseline deaths to match historical reality vs 2025 calibration
-    // Example: 1990 has multiplier 0.40 (40% of 2025 crisis vulnerability)
-    // But baseline demographic deaths were HIGHER in 1990 (CDR 9.8 vs 7.2 in 2025)
-    // So we DON'T apply ERA multiplier to baseline deaths - only to CRISIS deaths
+    // HINDCAST FIX: Compensate for ERA mortality multiplier
+    // The Bayesian system will multiply ALL risks by ERA multiplier (line 362 of bayesianMortality.ts)
+    // But baseline demographic deaths should NOT be scaled by ERA multiplier!
     //
-    // ERA multipliers represent "crisis response capability" not "baseline health"
-    // 1990 had higher baseline mortality but LOWER crisis response capability
-    // (This is the architectural insight that fixes the hindcast)
+    // Why: ERA multipliers represent "crisis response capability" not "baseline health"
+    // - 1990 had HIGHER baseline mortality (CDR 9.8 vs 7.2 in 2025) due to worse healthcare
+    // - 1990 had LOWER crisis response (multiplier 0.40) due to less infrastructure
+    // These are independent dimensions!
+    //
+    // Solution: Pre-divide by ERA multiplier so that when Bayesian system multiplies,
+    // we get back the correct historical baseline mortality rate.
+    // Example: baselineRisk=0.00082 (9.8/1000/12), eraMultiplier=0.30
+    //          compensated=0.00082/0.30=0.00273
+    //          bayesian applies: 0.00273*0.30=0.00082 ✓
+    const yearsElapsed = Math.floor(state.currentMonth / 12);
+    const actualYear = state.currentYear + yearsElapsed;
+    const eraMultiplier = getEraMortalityMultiplier(actualYear);
+    const compensatedBaselineRisk = assertFinite(baselineRisk / eraMultiplier, {
+      location: 'BaselineMortalityPhase.execute',
+      valueName: 'compensatedBaselineRisk',
+      month: state.currentMonth,
+      additionalInfo: { baselineRisk, eraMultiplier, actualYear, yearsElapsed, initialYear: state.currentYear }
+    });
 
     // Add baseline mortality risk to Bayesian system
     // The Bayesian system will apply demographic vulnerability weights automatically
     // (Elite 0.5×, Professional 0.7×, Working 1.0×, Precariat 1.3×, Informal 1.5×)
     addMortalityRisk(pop, {
       type: 'other', // Baseline mortality is catch-all for natural causes
-      baseRisk: baselineRisk,
-      proximate: 'other',      // Natural causes (aging, disease, accidents)
-      root: 'demographic',     // Demographic factors (age distribution)
+      baseRisk: compensatedBaselineRisk, // Pre-compensated for ERA multiplier
+      proximate: 'disease', // Disease/natural causes (aging, illness, accidents)
+      root: 'demographic', // Demographic baseline (natural mortality)
       confidence: 'HIGH',
       scope: 'GLOBAL',
       month: state.currentMonth,
-      description: `Baseline demographic mortality (CDR ${getHistoricalCrudeDeathRate(state.currentYear).toFixed(1)}/1000)`,
+      description: `Baseline demographic mortality (CDR ${getHistoricalCrudeDeathRate(actualYear).toFixed(1)}/1000)`,
     });
 
     // HINDCAST FIX: Add births in historical mode
@@ -217,8 +231,7 @@ export class BaselineMortalityPhase implements SimulationPhase {
     // Net growth = births - deaths
     // 1990: CBR 24.3 - CDR 9.8 = 14.5 per 1000 (1.45%/year growth)
     if (state.config.scenarioMode === 'historical') {
-      const year = state.currentYear;
-      const cbrPer1000 = getHistoricalCrudeBirthRate(year);
+      const cbrPer1000 = getHistoricalCrudeBirthRate(actualYear);
       const monthlyBirthRate = (cbrPer1000 / 1000) / 12;
 
       const birthsThisMonth = pop.population * monthlyBirthRate;
@@ -227,7 +240,7 @@ export class BaselineMortalityPhase implements SimulationPhase {
         location: 'BaselineMortalityPhase.execute',
         valueName: 'birthsThisMonth',
         month: state.currentMonth,
-        additionalInfo: { year, cbrPer1000, population: pop.population }
+        additionalInfo: { actualYear, cbrPer1000, population: pop.population }
       });
 
       // Add births to population
@@ -235,14 +248,14 @@ export class BaselineMortalityPhase implements SimulationPhase {
 
       // DIAGNOSTIC LOGGING (only log occasionally to reduce noise)
       if (state.currentMonth % 12 === 0) {
-        const cdr = getHistoricalCrudeDeathRate(year);
+        const cdr = getHistoricalCrudeDeathRate(actualYear);
         const cbr = cbrPer1000;
         const netGrowthPer1000 = cbr - cdr;
         const annualBirths = (pop.population * 1e9) * (monthlyBirthRate * 12);
         const annualBirthsMillions = (annualBirths / 1e6).toFixed(1);
         const annualDeaths = (pop.population * 1e9) * (baselineRisk * 12);
         const annualDeathsMillions = (annualDeaths / 1e6).toFixed(1);
-        console.log(`👶 Historical demographics (${year}):`);
+        console.log(`👶 Historical demographics (${actualYear}):`);
         console.log(`   Births: ${cbr.toFixed(1)}/1000 CBR (${annualBirthsMillions}M/year)`);
         console.log(`   Deaths: ${cdr.toFixed(1)}/1000 CDR (${annualDeathsMillions}M/year)`);
         console.log(`   Net: ${netGrowthPer1000.toFixed(1)}/1000 (${(netGrowthPer1000 / 10).toFixed(2)}%/year)`);
@@ -250,10 +263,10 @@ export class BaselineMortalityPhase implements SimulationPhase {
     } else {
       // Non-historical mode: Only log deaths
       if (state.currentMonth % 12 === 0) {
-        const cdr = getHistoricalCrudeDeathRate(state.currentYear);
+        const cdr = getHistoricalCrudeDeathRate(actualYear);
         const annualDeaths = (pop.population * 1e9) * (baselineRisk * 12);
         const annualDeathsMillions = (annualDeaths / 1e6).toFixed(1);
-        console.log(`💀 Baseline mortality: ${cdr.toFixed(1)}/1000 CDR (${annualDeathsMillions}M deaths/year projected)`);
+        console.log(`💀 Baseline mortality (Year ${actualYear}): ${cdr.toFixed(1)}/1000 CDR (${annualDeathsMillions}M deaths/year projected)`);
       }
     }
 
