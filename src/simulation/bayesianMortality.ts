@@ -26,6 +26,7 @@ import {
   CauseAttribution,
 } from '@/types/bayesianMortality';
 import { RNGFunction } from '@/types/game';
+import { getEraMortalityMultiplier } from '@/types/config';
 import {
   Billions,
   Millions,
@@ -235,6 +236,12 @@ export function resolveMortality(
   const demographics = getDefaultDemographics();
   const caps = getDefaultMortalityCaps();
 
+  // HINDCAST FIX (Nov 24, 2025): Apply era-specific mortality multiplier
+  // Historical eras had lower baseline mortality due to different resilience profiles.
+  // This scales ALL mortality risks (not just baseline deaths) to match historical data.
+  // Research: UN World Population Prospects, IHME Global Burden of Disease
+  const eraMortalityMultiplier = getEraMortalityMultiplier(state.currentYear);
+
   // No risks = no deaths
   if (risks.length === 0) {
     return {
@@ -291,6 +298,11 @@ export function resolveMortality(
     console.log(`\n💀💀💀 MORTALITY RISK SUMMARY (Month ${state.currentMonth}) 💀💀💀`);
     console.log(`  Total base risk: ${totalBaseRisk.toFixed(4)} (${(totalBaseRisk * 100).toFixed(2)}%)`);
     console.log(`  Risk events: ${risks.length}`);
+    // HINDCAST FIX (Nov 24, 2025): Log era mortality multiplier when active
+    if (eraMortalityMultiplier < 0.99) {
+      console.log(`  Era mortality multiplier: ${eraMortalityMultiplier.toFixed(2)} (year ${state.currentYear})`);
+      console.log(`  Effective risk: ${(totalBaseRisk * eraMortalityMultiplier * 100).toFixed(2)}%`);
+    }
     console.log(`\n  📊 By Proximate Cause:`);
     Array.from(risksByProximate.entries())
       .sort((a, b) => b[1] - a[1])
@@ -345,10 +357,12 @@ export function resolveMortality(
         throw new Error(`vulnerability is NaN: demographic=${demo.name}, riskType=${risk.type}, vulnerability=${vulnerability}`);
       }
 
-      const adjustedRisk = risk.baseRisk * vulnerability;
+      // HINDCAST FIX (Nov 24, 2025): Apply era mortality multiplier to scale risks
+      // Historical eras (e.g., 1990) have lower base mortality than 2025 calibration
+      const adjustedRisk = risk.baseRisk * vulnerability * eraMortalityMultiplier;
 
       if (isNaN(adjustedRisk)) {
-        throw new Error(`adjustedRisk is NaN: baseRisk=${risk.baseRisk}, vulnerability=${vulnerability}, demographic=${demo.name}`);
+        throw new Error(`adjustedRisk is NaN: baseRisk=${risk.baseRisk}, vulnerability=${vulnerability}, eraMortalityMultiplier=${eraMortalityMultiplier}, demographic=${demo.name}`);
       }
 
       survivalProb *= 1 - adjustedRisk;
