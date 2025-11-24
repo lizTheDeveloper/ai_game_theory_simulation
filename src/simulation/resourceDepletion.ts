@@ -1071,16 +1071,53 @@ function updateCO2System(state: GameState, resources: ResourceEconomy): void {
     });
   }
 
-  co2.temperatureAnomaly = assertFinite(
+  // Calculate equilibrium temperature from CO2
+  const equilibriumTemp = assertFinite(
     co2Doublings * effectiveClimateSensitivity,
     {
       location: 'updateCO2System',
-      valueName: 'temperatureAnomaly',
+      valueName: 'equilibriumTemp',
       month: state.currentMonth,
       additionalInfo: { co2Doublings, climateSensitivity: effectiveClimateSensitivity }
     }
   );
-  
+
+  // HINDCAST FIX (Nov 24, 2025): Apply thermal inertia for historical mode
+  // The equilibrium formula ignores decades of ocean thermal lag.
+  // For hindcast scenarios, we transition from observed -> equilibrium over time.
+  if (co2.historicalTemperatureTarget !== undefined && co2.hindcastTransitionMonths !== undefined) {
+    const transitionProgress = Math.min(1.0, state.currentMonth / co2.hindcastTransitionMonths);
+    // Smooth S-curve transition (slower at start/end, faster in middle)
+    const smoothProgress = transitionProgress * transitionProgress * (3 - 2 * transitionProgress);
+
+    co2.temperatureAnomaly = assertFinite(
+      co2.historicalTemperatureTarget + (equilibriumTemp - co2.historicalTemperatureTarget) * smoothProgress,
+      {
+        location: 'updateCO2System (hindcast thermal inertia)',
+        valueName: 'temperatureAnomaly',
+        month: state.currentMonth,
+        additionalInfo: {
+          historicalTarget: co2.historicalTemperatureTarget,
+          equilibriumTemp,
+          transitionProgress,
+          smoothProgress
+        }
+      }
+    );
+
+    // Log transition progress periodically
+    if (state.currentMonth % 6 === 0 && transitionProgress < 1.0) {
+      console.log(
+        `  [Hindcast] Temperature: ${co2.temperatureAnomaly.toFixed(2)}C ` +
+        `(historical: ${co2.historicalTemperatureTarget.toFixed(2)}C -> equilibrium: ${equilibriumTemp.toFixed(2)}C, ` +
+        `progress: ${(smoothProgress * 100).toFixed(0)}%)`
+      );
+    }
+  } else {
+    // Standard mode: use equilibrium temperature directly
+    co2.temperatureAnomaly = equilibriumTemp;
+  }
+
   // === TIPPING POINTS ===
   
   // Arctic ice loss accelerates above +1.5°C

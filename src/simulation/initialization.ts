@@ -1383,6 +1383,16 @@ export function createDefaultInitialState(
       additionalInfo: { startYear: historicalOverrides.startYear }
     });
 
+    // HINDCAST FIX (Nov 24, 2025): Store historical temperature target for thermal inertia modeling
+    // The equilibrium formula (ECS * log2(CO2/280)) ignores decades of thermal lag.
+    // For hindcast validation, we need to:
+    //   1. Start at observed historical temperature
+    //   2. Gradually transition to model temperature over ~24 months
+    // This prevents the 0.45C -> 1.31C jump seen in diagnostics
+    state.resourceEconomy.co2.historicalTemperatureTarget = historicalOverrides.temperatureAnomalyC;
+    state.resourceEconomy.co2.hindcastTransitionMonths = 24; // 2 years for thermal inertia
+    console.log(`  Historical temperature target: ${historicalOverrides.temperatureAnomalyC}C (transition over 24 months)`);
+
     // Apply environmental tipping point overrides if provided
     if (historicalOverrides.environmental) {
       const env = historicalOverrides.environmental;
@@ -1605,6 +1615,26 @@ export function createDefaultInitialState(
         boundaries.biosphere_integrity.currentValue >= 1.0;
 
       console.log(`    Total boundaries breached: ${breachedCount}/9`);
+
+      // HINDCAST FIX (Nov 24, 2025): Initialize climate stability from planetary boundary
+      // Climate stability should be inversely correlated with climate change boundary value
+      // For 1990 (climateChange = 0.35), climateStability should be ~0.65-0.70 (not 2025's ~0.00)
+      if (pb.climateChange !== undefined) {
+        const historicalClimateStability = Math.max(0.05, 1 - pb.climateChange);
+        state.environmentalAccumulation.climateStability = assertInRange(
+          historicalClimateStability,
+          0, 1,
+          {
+            location: 'applyHistoricalOverrides (climateStability)',
+            valueName: 'climateStability',
+            additionalInfo: {
+              startYear: historicalOverrides.startYear,
+              climateChangeBoundary: pb.climateChange
+            }
+          }
+        );
+        console.log(`    Climate stability: ${historicalClimateStability.toFixed(2)} (derived from climate boundary ${pb.climateChange.toFixed(2)})`);
+      }
     }
 
     console.log(`  Hindcast initialization complete`);
