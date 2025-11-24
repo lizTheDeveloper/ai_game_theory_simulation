@@ -685,6 +685,15 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
     - OpenAI/Apollo 2025: 8.7-13% scheming rate
     - Situational awareness: 2% baseline, 4.5% trained (VAGUE SOURCE)
   - **Status:** Ready for orchestrator VALIDATION phase (research file created)
+- [ ] **Hindcasting Data Loaders** - VERIFICATION NEEDED (Nov 23, 2025)
+  - **Research Spec:** `research/verification_6ee48e3_20251123.md`
+  - **Implementation:** Commit 6ee48e3 - historicalClimateLoader.ts (329 lines), historicalEconomicLoader.ts (338 lines)
+  - **Data Sources to Verify:**
+    - Climate: NOAA Mauna Loa CO2, NASA GISS temperature, Global Carbon Budget emissions, AVISO sea level, NSIDC Arctic ice
+    - Economic: World Bank GDP/Gini, UN WPP population, UNDP HDI, ILO unemployment, PovcalNet poverty
+  - **Sample Values to Verify:** CO2 354→426 ppm, temp anomaly 0.44→1.45°C, population 5.32B→8.15B, GDP $22.6T→$105T
+  - **Priority:** HIGH (foundational for hindcasting validation)
+  - **Status:** Ready for orchestrator VALIDATION phase (research file created)
 - [x] **Climate Deployment Timescales** - ✅ COMPLETE (Nov 12-15, 2025)
   - **Research:** `research/climate_tech_deployment_timescales_20251112.md` (35 KB, 15+ sources, Grade B+)
   - **Implementation Plan:** `plans/completed/climate_phased_deployment_model_20251113.md` (911 lines)
