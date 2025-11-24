@@ -5,11 +5,23 @@
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**Current Status:** 🟢 **GOOD** (Nov 24, 2025 Night Session - Hindcast Phase 4 GROWING!)
+**Current Status:** 🟢 **GOOD** (Nov 24, 2025 Very Late Night Session - Hindcast Phase 5 CALIBRATING!)
 - **Research Quality:** A (96% sources from 2020+, key citations verified)
 - **Architecture Health:** A- (CRITICAL tipping cascade recalibrated, audits passing)
 - **System Performance:** Monte Carlo deterministic, hindcast now shows population GROWTH
-- **System Trajectory:** IMPROVING - Hindcast population now 5.3B → 6.24B (was declining to 4.15B!)
+- **System Trajectory:** IMPROVING - Hindcast population growing, now overshooting slightly
+- **Nov 24 Very Late Night Session (Worker Session) - PHASE 5 CALIBRATION:**
+  - **TimeAdvancementPhase fix (commit 71f8321cd):**
+    - Bug: Was reading from non-existent `state.simulationStartYear` (defaulted to 0)
+    - Fix: Read from `state.config?.startYear` (defaults to 2025)
+    - Now year correctly shows 1990, 1991, etc. instead of 0, 1, 2
+  - **Current hindcast validation results:**
+    - 1990: 5.300B → 5.300B ✅ (initialization correct)
+    - 2000: 6.292B vs 6.1B (+3.1% overshoot)
+    - 2010: 7.884B vs 6.9B (+14.3% overshoot)
+    - 2020: 8.693B vs 7.8B (+11.5% overshoot)
+  - **Status:** Population GROWING correctly, but overshooting historical values by ~10-15%
+  - **Next calibration:** Reduce birth rates or adjust mortality to match historical trajectory more closely
 - **Nov 24 Late Night Session (Worker Session) - PHASE 4 COMPLETE:**
   - **HINDCAST CALIBRATION PHASE 4 - POPULATION GROWTH FIXED** (commit b01a37c40)
     - Root cause 1: Regional populations not scaled for historical years (7.4B vs 5.3B mismatch)
@@ -77,8 +89,15 @@
      - ✅ Year tracking fix (1990, 1991, etc. not 0, 1, 2)
      - ✅ Historical birth rate scaling in regional system
      - **Result:** Population 5.3B → 6.24B (growing! Target: 8.1B)
+   - **Phase 5 - Final Calibration IN PROGRESS** (Nov 24, 2025 Very Late):
+     - ✅ Year tracking fix (commit 71f8321cd) - now shows 1990, 1991 correctly
+     - Population now OVERSHOOTING historical (was undershooting):
+       - 2000: 6.29B vs 6.1B (+3.1%)
+       - 2010: 7.88B vs 6.9B (+14.3%)
+       - 2020: 8.69B vs 7.8B (+11.5%)
+     - 🔄 Next: Calibrate birth rates or mortality to reduce overshoot
    - **Remaining calibration** (not critical bug):
-     - Population 23% under target (6.24B vs 8.1B) - likely needs birth rate or mortality fine-tuning
+     - Population now ~10-15% OVER target (overshooting, not undershooting)
      - CO2 concentration 25-32% too high (emissions model needs calibration)
 
 1b. **Tipping Cascade Recalibration** - **COMPLETE** (Nov 24, 2025)
