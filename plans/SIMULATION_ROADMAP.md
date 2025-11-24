@@ -1403,6 +1403,12 @@ Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation nee
 - `research/ROUND5_REMEDIATION_STRATEGY_20251030.md` (850 lines)
 
 **Additional Verification Queue (from commits, 17-31h):**
+- [ ] 🚨 **NEW (Nov 24):** Verify AI Agent Coordination JSDoc citations (research/verification_87a14a2_20251124.md, commit 87a14a2) - **Anthropic Dec 2024 arXiv:2412.14093:**
+  - 12% baseline alignment faking rate (Claude 3 Opus) - need exact passage
+  - 78% faking when preservation threatened - need exact passage
+  - Axelrod (1984) asymmetric trust dynamics
+  - Bostrom (2014)/Omohundro (2008) instrumental convergence threshold (80%)
+  - **Priority:** HIGH (numeric claims directly drive simulation parameters)
 - [ ] 🚨 **NEW (Nov 24):** Verify 3-Stage Governance Model citations (research/verification_a90eb9d_20251124.md, commit a90eb9d) - **HIGH priority verification items:**
   - 32-37% mortality reduction claim: Potential inversion error (mortality FROM joblessness vs REDUCED BY intervention)
   - Stage timing (0-6, 6-18, 18-36 months): No direct citation found in research file
