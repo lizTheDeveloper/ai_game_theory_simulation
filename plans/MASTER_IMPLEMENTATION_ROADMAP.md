@@ -39,9 +39,11 @@
      - Actual 2024 population: 8.12B
      - Simulation predicts near-extinction in historical period (FALSE)
      - **Root cause:** Model mortality/crisis mechanisms too aggressive for pre-AI era
-     - **Next step:** Calibrate model for historical conditions (mortality stabilizers, crisis thresholds)
+     - **Detailed plan:** `plans/CRITICAL_hindcast_model_pessimism_20251124.md`
+     - **Bug fixes applied:** Population unit bug (43cd051), empty aiAgents fix (ee453fd)
    - **Quality Gate 1:** PASS (Research Phase)
    - **Quality Gate 2:** BLOCKED (Model fails hindcast - calibration required)
+   - **Next action:** Model calibration for historical era (mortality stabilizers, crisis thresholds)
 
 ### HIGH Priority
 
