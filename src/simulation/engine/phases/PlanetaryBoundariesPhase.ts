@@ -97,9 +97,7 @@ export class PlanetaryBoundariesPhase implements SimulationPhase {
     updateNovelEntitiesBoundary(state, rng);
 
     // Update boundary recovery mechanics (Oct 21, 2025 - Ecological Recovery System)
-    console.log(`  [DEBUG-PRE-RECOVERY] climate_change: ${state.planetaryBoundariesSystem?.boundaries?.climate_change?.currentValue}`);
     updateBoundaryRecovery(state, rng);
-    console.log(`  [DEBUG-POST-RECOVERY] climate_change: ${state.planetaryBoundariesSystem?.boundaries?.climate_change?.currentValue}`);
 
     // Validate key planetary boundaries after update
     if (state.resourceEconomy?.co2) {
