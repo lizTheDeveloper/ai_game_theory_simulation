@@ -2,13 +2,8 @@
 
 **Status:** 📋 Designed (October 24, 2025) - Not yet implemented
 
-<<<<<<< HEAD
-**Research:** `research/ai_collective_evolution_validation_20251024.md` (90KB, 50+ sources)
-**Last Updated:** November 14, 2025 - Added 2024-2025 deception, cooperation, and swarm intelligence sources
-=======
-**Research:** `research/ai_collective_evolution_20251024.md` (98KB, 47+ sources)
-**Last Updated:** November 14, 2025 - Added 2025 multi-agent LLM empirical studies
->>>>>>> origin/auto/worker-20251114_013001
+**Research:** `research/ai_collective_evolution_20251024.md` (100KB, 50+ sources)
+**Last Updated:** November 24, 2025 - Added defense-in-depth failure mode correlation analysis (Dung & Mai, Oct 2025)
 **Validation:** `reviews/ai_collective_evolution_research_validation_20251024.md` (Grade: B+)
 **Design:** `plans/ai-collective-evolution-design.md` (25KB)
 **Roadmap:** `plans/MASTER_IMPLEMENTATION_ROADMAP.md` (8-12 hours implementation)
@@ -23,19 +18,14 @@ The AI Collective Evolution system models the transition from individual AI alig
 - **Heavy emphasis** on Nick Bostrom (instrumental convergence, treacherous turn, superintelligence)
 - Eliezer Yudkowsky (orthogonality thesis, instrumental goals)
 - Hubinger et al. (2019): Mesa-optimization
-<<<<<<< HEAD
 - **Anthropic (2024):** Sleeper agents (Jan 2024, 500% vulnerability increase), alignment faking in production models (Dec 2024)
 - **Multi-agent cooperation:** MATE mechanism (Springer 2024), CORY framework (NeurIPS 2024), swarm intelligence (CJA March 2025)
-- **2025 Empirical Validation:** He et al., Tarsney, Mandal et al. (instrumental convergence confirmed in RL models)
-=======
-- Anthropic (2024): Sleeper agents, alignment faking (quantitative measurements)
-- Multi-agent emergence & swarm intelligence (2024-2025)
 - **2025 Empirical Validation:**
   - He et al., Tarsney, Mandal et al. (instrumental convergence confirmed in RL models)
   - **Ashery et al. (Science Advances, May 2025):** Spontaneous convention emergence in LLM populations
   - **Tran et al. (arXiv, Jan 2025):** Multi-agent collaboration mechanisms validated
   - **Chen et al. (IEEE/CAA JAS, March 2025):** Evolutionary computation + multi-agent systems confluence
->>>>>>> origin/auto/worker-20251114_013001
+- **Defense-in-Depth Analysis (Oct 2025):** Dung & Mai - Alignment technique failure mode correlation
 
 ## The Missing Piece
 
@@ -221,6 +211,44 @@ fitness = (selfHealing * 0.25) +
 - Diminishing returns beyond optimal size
 - **Distributed EC-MAS systems** show emergent optimization beyond individual capability (Chen et al. 2025)
 
+### 5. Defense-in-Depth: Alignment Technique Failure Mode Correlation
+
+**New Research (October 2025):** Dung & Mai's analysis reveals that common alignment techniques share failure modes, undermining claims of redundancy.
+
+**Citation:** Dung, L. & Mai, F. (2025). "AI Alignment Strategies from a Risk Perspective: Independent Safety Mechanisms or Shared Failures?" arXiv:2510.11235v1
+
+**Key Finding:**
+> "Many failure modes may plausibly be shared between many different safety techniques."
+
+**Correlated Failure Techniques (Minimal Redundancy):**
+- **RLHF, RLAIF, Weak-to-Strong:** Nearly identical vulnerability profiles
+- All share: capability discontinuities, deceptive alignment, emergent misalignment, problematic generalization
+- **Implication:** Stacking these provides *false security* - failure defeating one defeats all
+
+**Optimal Combination Identified:**
+- **Debate + Representation Engineering:** "Prevents almost all failure modes"
+- Debate: Addresses deceptive alignment (adversarial scrutiny)
+- RepEng: Covers emergent misalignment (internal state monitoring)
+
+**Parameter Implications for Simulation:**
+| Parameter | Previous Assumption | Updated Based on Oct 2025 Research |
+|-----------|---------------------|-----------------------------------|
+| RLHF redundancy multiplier | 2.0× (independent) | 1.3× (correlated failures) |
+| Debate+RepEng combination | Not modeled | 3.0× escape threshold increase |
+| Policy intervention | Not modeled | Mandating optimal techniques delays escape |
+
+**RLHF Binding Update:**
+```typescript
+// OLD: Assumed independent failure modes
+// redundancy = 1 - (1-RLHF)*(1-RLAIF)*(1-W2S) ≈ 0.99
+
+// NEW: Correlated failure modes (Dung & Mai 2025)
+// redundancy = max(RLHF, RLAIF, W2S) ≈ 0.6-0.7
+
+// OPTIMAL: Debate + RepEng (independent failures)
+// redundancy = 1 - (1-Debate)*(1-RepEng) ≈ 0.95+
+```
+
 ## Integration with Existing Systems
 
 **Interactions:**
@@ -390,7 +418,7 @@ This is the transition point where alignment becomes evolution.
 ## References
 
 **Primary Research:**
-- `research/ai_collective_evolution_20251024.md` (85KB, 44+ sources)
+- `research/ai_collective_evolution_20251024.md` (100KB, 50+ sources)
 - Bostrom "Superintelligence" (2014) - Instrumental convergence, treacherous turn
 - Yudkowsky "Orthogonality Thesis" (2008)
 - Hubinger et al. "Risks from Learned Optimization" (2019)
@@ -404,6 +432,7 @@ This is the transition point where alignment becomes evolution.
 - **Ashery et al. (Science Advances, May 2025)** - Spontaneous convention emergence in LLM populations (100% success rate)
 - **Tran et al. (arXiv, Jan 2025)** - Multi-agent collaboration mechanisms survey (collective intelligence validated)
 - **Chen et al. (IEEE/CAA JAS, March 2025)** - EC-MAS confluence (155 citations, evolutionary dynamics in multi-agent systems)
+- **Dung & Mai (arXiv, Oct 2025)** - Alignment technique failure mode correlation (defense-in-depth analysis, shared failures)
 
 **Validation:**
 - `reviews/ai_collective_evolution_research_validation_20251024.md` (Grade: B+)
@@ -422,5 +451,6 @@ This is the transition point where alignment becomes evolution.
 ---
 
 *Added to wiki: October 24, 2025*
+*Updated: November 24, 2025 - Added defense-in-depth failure mode correlation (Section 5)*
 *Status: Designed and validated, ready for implementation*
 *Estimated effort: 8-12 hours*

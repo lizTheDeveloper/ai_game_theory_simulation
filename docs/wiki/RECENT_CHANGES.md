@@ -4,6 +4,35 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
+## 📖 Research Update: Defense-in-Depth Failure Mode Correlation (November 24, 2025 - commit 31eeb18)
+
+**Status:** ✅ UPDATED
+**Priority:** HIGH (Affects RLHF escape modeling)
+**Type:** Research Enhancement
+
+**Summary:** Added October 2025 defense-in-depth analysis to AI Collective Evolution research file. Dung & Mai's analysis reveals that common alignment techniques (RLHF, RLAIF, Weak-to-Strong) share failure modes, undermining claims of redundancy.
+
+**Key Findings:**
+- **RLHF, RLAIF, Weak-to-Strong:** Share nearly identical failure mode vulnerabilities
+- Stacking these techniques provides *false security* - a failure defeating one defeats all
+- **Optimal combination:** Debate + Representation Engineering "prevents almost all failure modes"
+- **Implication:** RLHF redundancy multiplier should be 1.3× (not 2.0×)
+
+**Parameter Update Recommendations:**
+| Parameter | Previous | Recommended |
+|-----------|----------|-------------|
+| RLHF redundancy | 2.0× (independent) | 1.3× (correlated) |
+| Debate+RepEng bonus | Not modeled | 3.0× escape threshold |
+| Policy intervention | Not modeled | Mandating optimal techniques delays escape |
+
+**Citation:** Dung, L. & Mai, F. (2025). "AI Alignment Strategies from a Risk Perspective: Independent Safety Mechanisms or Shared Failures?" arXiv:2510.11235v1
+
+**Files Updated:**
+- `research/ai_collective_evolution_20251024.md` - Added Section 16
+- `docs/wiki/advanced/collective-evolution.md` - Added Section 5, fixed merge conflicts
+
+---
+
 ## ✅ Validation: Nuclear Winter + Planetary Restoration (November 24, 2025 - commit a56f7b9)
 
 **Status:** ✅ BOTH PASS
