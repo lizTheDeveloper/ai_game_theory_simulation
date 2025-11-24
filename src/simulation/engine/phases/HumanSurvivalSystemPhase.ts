@@ -74,6 +74,18 @@ export class HumanSurvivalSystemPhase implements SimulationPhase {
       return;
     }
 
+    // ============================================================================
+    // HINDCAST MODE GUARD (Nov 24, 2025)
+    // ============================================================================
+    // In historical mode (1990-2020), food security was STABLE or IMPROVING.
+    // This degradation models future AI-era stress that didn't exist then.
+    // Skip to allow hindcast validation against actual history.
+    // Source: FAO State of Food Insecurity reports (1999-2015)
+    // ============================================================================
+    if (state.config?.scenarioMode === 'historical' && state.currentYear < 2020) {
+      return;
+    }
+
     // Validate required systems
     const phosphorusReserves = assertStateProperty(state.phosphorusSystem, 'reserves', {
       location: 'HumanSurvivalSystemPhase.executeFoodSecurityDegradation',

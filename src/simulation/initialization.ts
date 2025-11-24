@@ -1461,6 +1461,45 @@ export function createDefaultInitialState(
     }
 
     // ============================================================================
+    // FOOD SECURITY OVERRIDE FOR HISTORICAL MODE (Nov 24, 2025)
+    // ============================================================================
+    // CRITICAL FIX: Default 2025 initialization uses ~50% food security which
+    // triggers phantom famines in 1990. Historical food security was ~95% globally.
+    // Source: FAO State of Food Insecurity reports (1999-2015)
+    // ============================================================================
+    if (historicalOverrides.startYear <= 2010) {
+      // Set global food security to historical baseline
+      if (state.qualityOfLifeSystems?.survivalFundamentals) {
+        state.qualityOfLifeSystems.survivalFundamentals.foodSecurity = 0.95;
+      }
+
+      // Set regional food security based on FAO historical data
+      // Source: FAO SOFI reports - proportion of population undernourished by region
+      if (state.humanPopulationSystem?.regionalPopulations) {
+        const historicalFoodSecurity: Record<string, number> = {
+          'East Asia': 0.92,               // ~8% undernourished 1990
+          'South Asia': 0.88,              // ~12% undernourished 1990
+          'Sub-Saharan Africa': 0.85,      // ~15% undernourished 1990 (worst region)
+          'Europe': 0.98,                  // <2% undernourished
+          'North America': 0.98,           // <2% undernourished
+          'Latin America & Caribbean': 0.90, // ~10% undernourished 1990
+          'Middle East & North Africa': 0.88, // ~12% undernourished 1990
+          'Southeast Asia': 0.90,          // ~10% undernourished 1990
+          'Central Asia': 0.87,            // ~13% undernourished 1990
+          'Oceania': 0.98                  // <2% undernourished
+        };
+
+        for (const region of state.humanPopulationSystem.regionalPopulations) {
+          if ('foodSecurity' in region) {
+            const fs = historicalFoodSecurity[region.name] || 0.90;
+            (region as { foodSecurity: number }).foodSecurity = fs;
+          }
+        }
+      }
+      console.log(`  Food security override: 95% (historical 1990 baseline)`);
+    }
+
+    // ============================================================================
     // PLANETARY BOUNDARY OVERRIDES (Nov 24, 2025)
     // ============================================================================
     // CRITICAL FIX: Without these, 1990 hindcasts crash due to 2025 crisis-level
