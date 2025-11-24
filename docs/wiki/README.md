@@ -29,6 +29,15 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 24: Game Layer TypeScript Compilation Fixes** (commit a984b51)
+- 🔧 **Bug Fix:** Resolved 14 TypeScript compilation errors in `src/game/` layer
+- **Changes:**
+  - Added proper type imports (`ResearchScenarioId`, `SaveState`, `GameLayerEvent`, `QueueResult`, etc.)
+  - Used class aliases consistently in factory functions (`GameSessionClass`, `ScenarioManagerClass`)
+  - Added null safety cast in `InfluenceCalculator.ts` for value comparisons
+- 📄 **Files:** 17 files in `src/game/` (types, core, scenarios, observers)
+- ✅ **Status:** All TypeScript errors resolved, game layer compiles cleanly
+
 **Nov 24: Historical Initialization for Hindcasting Validation** (commit b29fd87)
 - 📜 **NEW MODULE: `historicalInitialization.ts`** (294 lines) - Create GameState from historical values (1990-2024)
   - **Purpose:** Run simulation from 1990, validate against 2024 actuals (hindcasting)
@@ -3273,6 +3282,7 @@ The fundamental building blocks of the simulation:
 | [🦸 Critical Junctures](./systems/) | ✅ | 90/10 structure-agency split (4 escape types: prevent war, enable cooperation, recover crisis, unlock breakthrough) |
 | [☢️ Nuclear Command Control](./systems/) | ✅ | Circuit breakers (human-in-loop, kill switches, time delays) |
 | [📜 Historical Initialization](./systems/) | ✅ | Hindcast validation (1990-2024), NASA GISS/NOAA/UN WPP sources, parameter lockdown (Nov 24, 2025) |
+| [🎮 Game Layer](./systems/game-layer.md) | ✅ | Player influence system with strict 15% bounds, research-validated scenarios, save/load, advocacy actions (Nov 24, 2025) |
 
 ### Game Mechanics
 
