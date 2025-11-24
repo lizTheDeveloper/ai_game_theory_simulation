@@ -50,16 +50,15 @@
      - Default amocThreshold: 3.0°C → 4.0°C
    - **Validated:** Monte Carlo N=3, no crashes, no early AMOC collapses
 
-1c. **Governance Scenario Validation Bug** (NEW from Nov 23 - CRITICAL)
-   - **Location:** `src/types/scenarios.ts` + `ApplyScenarioPrioritiesPhase.ts`
+1c. **Governance Scenario Validation Bug** - **FIXED** (Nov 24, 2025)
+   - **Location:** `src/simulation/utils/recoveryCalculations.ts:getGDPProxy()` + `ApplyScenarioPrioritiesPhase.ts`
    - **Issue:** Scenarios define `researchInvestment: 50` ($50B/month) but validation caps at ~$0.17B/month
-   - **Root cause:** GDP proxy (`getGDPProxy`) returns ~4 (population 8 x QoL 0.5) but validation assumes trillions (~$114T)
-   - **Impact:** All 6 governance scenarios fail immediately on validation
-   - **Fix options:**
-     - Scale GDP proxy to real-world values, OR
-     - Adjust validation formula, OR
-     - Reduce scenario parameters to match proxy scale
-   - **Complexity:** 2 systems (scenarios, GDP proxy/validation)
+   - **Root cause:** GDP proxy returned ~4 (unitless) but validation assumed trillions (~$114T)
+   - **Fix applied:**
+     1. Scaled `getGDPProxy()` to return GDP in trillions using population * GDP_PER_CAPITA_BASELINE ($14,250)
+     2. Fixed unit mismatch in validation: GDP (trillions) * 1000 = billions for comparison
+     3. Added assertion utilities to `getGDPProxy()` for fail-loudly validation
+   - **Result:** GDP proxy now returns ~115T (correct), max research budget = $4,750B/month, scenarios pass
    - **Owner:** Roy (simulation-maintainer)
 
 ### HIGH Priority
@@ -671,6 +670,11 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
     - Coalition amplification 2.5×: MODEL-DERIVED (document as assumption)
     - Trust dynamics parameters: MODEL-DERIVED (document as assumption)
   - **Priority:** HIGH (empirical claims need verification)
+  - **Status:** Ready for orchestrator VALIDATION phase (research file created)
+- [ ] **GDP Proxy Unit Fix** - VERIFICATION NEEDED (Nov 23, 2025)
+  - **Research Spec:** `research/verification_66e516f_20251123.md`
+  - **Implementation:** Commit 66e516f - GDP per capita baseline in getGDPProxy()
+  - **Citation to Verify:** IMF April 2025 global GDP per capita $14,250
   - **Status:** Ready for orchestrator VALIDATION phase (research file created)
 - [ ] **AI Agent Coordination Phase** - VERIFICATION NEEDED (Nov 24, 2025)
   - **Research Spec:** `research/verification_876abe5_20251124.md`

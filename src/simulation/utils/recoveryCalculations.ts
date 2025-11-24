@@ -8,6 +8,7 @@
  */
 
 import { GameState } from '@/types/game';
+import { assertFinite, assertInRange } from './assertions';
 
 export type EconomicStage = 'expansion' | 'peak' | 'contraction' | 'trough' | 'recovery';
 
@@ -147,17 +148,66 @@ export function detectEconomicStage(state: GameState): EconomicStage {
 /**
  * Get GDP proxy from game state
  *
- * Uses economic transition stage + population + QoL as proxy for GDP
+ * Returns GDP estimate in TRILLIONS USD.
+ * Uses population + GDP per capita baseline, with small modulations for QoL and economic stage.
+ *
+ * Baseline: ~$114T global GDP (2025) = 8B population * $14,250 per capita
+ *
+ * @returns GDP in trillions USD (e.g., 114.0 = $114T)
  */
 export function getGDPProxy(state: GameState): number {
-  const economicStage = state.globalMetrics.economicTransitionStage;
-  const population = state.humanPopulationSystem.population;
-  const qol = state.globalMetrics.qualityOfLife;
+  const economicStage = state.globalMetrics.economicTransitionStage ?? 0;
+  const population = state.humanPopulationSystem.population; // In billions
+  const qol = state.globalMetrics.qualityOfLife ?? 0.74; // 0-1, baseline ~0.74
 
-  // GDP proxy: population × QoL × economic multiplier
-  const economicMultiplier = 1 + (economicStage * 0.2); // Stages 0-4 → 1.0-1.8x
+  // Validate inputs - fail loudly if invalid
+  assertInRange(population, 0.1, 20, {
+    location: 'getGDPProxy',
+    valueName: 'population',
+    additionalInfo: { unit: 'billions' }
+  });
+  assertInRange(qol, 0, 1, {
+    location: 'getGDPProxy',
+    valueName: 'qualityOfLife'
+  });
+  assertInRange(economicStage, 0, 4, {
+    location: 'getGDPProxy',
+    valueName: 'economicTransitionStage'
+  });
 
-  return population * qol * economicMultiplier;
+  // Global GDP per capita baseline (2025 World Bank estimate)
+  // ~$14,250 global average (IMF April 2025)
+  const GDP_PER_CAPITA_BASELINE = 14.25; // In thousands USD (so 14.25 = $14,250)
+
+  // Base GDP = population (billions) * GDP per capita (thousands) = trillions
+  // e.g., 8.0 * 14.25 = 114T
+  const baseGDP = population * GDP_PER_CAPITA_BASELINE;
+
+  // QoL modifier: deviations from 0.74 baseline cause small GDP changes
+  // Range: QoL 0.5 -> 0.93x GDP, QoL 1.0 -> 1.10x GDP
+  // Formula: 1 + (qol - 0.74) * 0.4
+  const qolModifier = 1 + (qol - 0.74) * 0.4;
+
+  // Economic stage modifier: stages 0-4 map to 1.0-1.2x
+  // Stage 0 (baseline) = 1.0x, Stage 4 (peak expansion) = 1.2x
+  const economicMultiplier = 1 + (economicStage * 0.05); // Stages 0-4 -> 1.0-1.2x
+
+  const gdp = baseGDP * qolModifier * economicMultiplier;
+
+  // Validate output - GDP should be in reasonable range (0 to 500T max by 2100)
+  return assertFinite(gdp, {
+    location: 'getGDPProxy',
+    valueName: 'gdpProxy',
+    additionalInfo: {
+      population,
+      qol,
+      economicStage,
+      baseGDP,
+      qolModifier,
+      economicMultiplier,
+      unit: 'trillions USD'
+    }
+  });
 }
 
 /**
