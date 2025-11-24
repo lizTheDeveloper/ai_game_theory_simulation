@@ -71,6 +71,19 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - ✅ **Result:** Population grows correctly without double-counting deaths
 - 📄 **Files:** diplomaticAI.ts, populationDynamics.ts
 
+**Nov 24: CRITICAL - AMOC Tipping Threshold Recalibration** (commit 626988b)
+- 🌍 **Parameter Fix:** AMOC threshold recalibrated from 1.7°C (2.5th percentile) to 4.0°C (median estimate)
+- **Research Sources:**
+  - Armstrong McKay et al. (2022) Science: Central estimate 4°C (range 1.4-8°C)
+  - Baker et al. (2025) Nature: 34/35 CMIP6 models show AMOC resilience via Southern Ocean compensation
+- **Changes:**
+  - tipping-points.ts: triggerTempC 1.7 → 4.0°C
+  - IrreversibilityTrackingPhase.ts: Default amocThreshold 3.0 → 4.0°C
+  - sampleUncertaintyParameters.ts: AMOC range [2.2, 3.9] → [2.5, 5.5]°C
+- **Audit:** Identified by Sylvia in reviews/mechanism_audit_tipping_cascades_20251124.md
+- 📄 **Files:** IrreversibilityTrackingPhase.ts, sampleUncertaintyParameters.ts, tipping-points.ts
+- ✅ **Validated:** Monte Carlo N=3 runs complete successfully
+
 **Nov 24: Mortality Stabilizers Mechanism Audit - FINAL** (commit 28a64a2)
 - 🔬 **Final Audit:** Comprehensive code-to-research comparison (262 lines)
 - **Grade: PASS with CRITICAL observations** (upgraded from Nov 23 C+ preliminary)
@@ -84,7 +97,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - Recommendation: Add confidence levels to extrapolated parameters
 - **Xia et al. Clarification:** Nuclear winter paper (5B deaths) correctly used for nuclear modeling, NOT mortality stabilizers
 - **AMOC Status Update:** Marked COMPLETE in roadmap - implementation existed at IrreversibilityTrackingPhase.ts (lines 370-412)
-  - Temperature-dependent collapse: 0.5% (<2°C) → 50% (3°C) → 90% (>3.9°C)
+  - Temperature-dependent collapse: 0.5% (<4°C) → 50% (4°C) → 90% (>5.5°C) [Updated Nov 24]
 - 📄 **Audit:** reviews/mechanism_audit_mortality_stabilizers_20251124.md
 
 **Nov 23: Monte Carlo N=100 Stress Test - Bimodal Distribution** (commit e628aa9)
@@ -125,7 +138,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - Permafrost → global elements (0.10-0.15°C - carbon feedback)
 - **Scaling:** sqrt(progress) for front-loading; cap at 0.5°C per element
 - **Research:** Armstrong McKay et al. (2022) Science, Wunderling et al. (2024) ESD
-- **Cascade Demonstration:** Arctic(1.5°C) → Greenland(1.55°C, lowered from 1.6°C) → AMOC(1.60°C, lowered from 1.7°C)
+- **Cascade Demonstration:** Arctic(1.5°C) → Greenland(1.55°C, lowered from 1.6°C) → AMOC (base threshold now 4.0°C per Nov 24 recalibration)
 - 📄 **Files:** ClimateSystemPhase.ts, src/types/tipping-points.ts
 - ⚠️ **Pending:** Research verification for threshold reduction magnitudes
 
@@ -5039,7 +5052,7 @@ const amocThreshold = state.uncertaintyParameters?.amocCollapseThreshold ?? 3.0;
 **Interpretation:**
 - Broader distributions reflect real epistemic uncertainty
 - High ECS → higher collapse probability (more warming → earlier threshold crossings)
-- Low thresholds → earlier tipping points (2.2°C AMOC vs 3.9°C AMOC)
+- Low thresholds → earlier tipping points (2.5°C AMOC vs 5.5°C AMOC) [Updated Nov 24]
 
 #### Files
 
