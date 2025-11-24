@@ -5,18 +5,24 @@
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**Current Status:** 🟢 **GOOD** (Nov 24, 2025 - Game Layer Foundation Complete)
+**Current Status:** 🟢 **GOOD** (Nov 24, 2025 - Determinism Restored)
 - **Research Quality:** A (96% sources from 2020+, key citations verified)
 - **Architecture Health:** A- (CRITICAL tipping cascade recalibrated, audits passing)
-- **System Performance:** Monte Carlo runs, hindcast dual-death bug FIXED
+- **System Performance:** Monte Carlo deterministic (separate processes), hindcast dual-death bug FIXED
 - **System Trajectory:** IMPROVING - Bug fixes + game layer architecture
-- **Nov 24 Session Summary:**
+- **Nov 24 Late Session (15:00 UTC):**
+  - **CRITICAL FIX:** Non-determinism in alignment calculations (commit 5858b05f7)
+    - Root cause: async/await bug in `checkAndUpdateAgentWeights`, global WUE state persistence
+    - Fix: Made sync, added `resetGlobalWUE()`, created `resetModuleState.ts` utility
+    - Verification: 4/4 separate process runs produce identical results
+  - RESOLVED: Merge conflicts in SIMULATION_ROADMAP.md
+  - VALIDATED: Determinism stress test reveals issue → fixed
+- **Nov 24 Earlier Work:**
   - COMPLETE: Game layer architecture Phase 1 - `src/game/` directory (17 files)
   - COMPLETE: JSDoc documentation for AI agent coordination parameters
   - COMPLETE: GameStateProvider integration layer with useGameState() hook
   - DOCUMENTED: Hindcast diagnostic findings (model calibration needed)
   - VERIFIED: AI coordination research citations (Anthropic Dec 2024, Apollo Research Dec 2024)
-- **Nov 24 Earlier Work:**
   - FIXED: Dual death system bug (deaths applied twice)
   - COMPLETE: 3 mechanism audits (mortality: PASS, tipping: C-, AI coord: CONDITIONAL PASS)
   - COMPLETE: Planetary restoration timescales audit (PASS) - Druke et al. 2024 verified
@@ -250,10 +256,11 @@
 | Priority | Task | Owner | Status | Dependencies |
 |----------|------|-------|--------|--------------|
 | 1 | Verify temp bug fix committed | Orchestrator | ✅ DONE | None |
-| 2 | Determinism stress test (N=100) | Priya | Ready | #1 |
-| 3 | Planetary restoration timescales audit | Roy | Ready | None |
+| 2 | Determinism stress test (N=100) | Priya | ✅ DONE (Nov 24) | #1 |
+| 2b | Fix non-determinism in alignment | Roy | ✅ DONE (Nov 24) | #2 |
+| 3 | Planetary restoration timescales audit | Roy | ✅ DONE (Nov 24) | None |
 | 4 | Climate mini-hindcast data (1990-2010) | Cynthia | Ready | None |
-| 5 | Historical initialization mode | Roy | Ready | None |
+| 5 | Historical initialization mode | Roy | ✅ EXISTS | None |
 | 6 | Mini-hindcast validation | Priya | Blocked | #4, #5 |
 | 7 | Mechanism audits (tipping points) | Sylvia | Ready | None |
 
