@@ -59,12 +59,16 @@
 
 ### MEDIUM Priority
 
-4. **AMOC Temperature-Dependent Function**
-   - Current code has fixed 5% probability
-   - Research recommends temperature-dependent function (Lenton et al.)
-   - Straightforward implementation
+4. **AMOC Temperature-Dependent Function** - **IMPLEMENTATION COMPLETE** (Nov 20, 2025)
+   - ~~Current code has fixed 5% probability~~ → Now temperature-dependent
+   - Research recommends temperature-dependent function (Lenton et al.) ✅
+   - **Implementation:**
+     - Temperature-dependent collapse probability: 0.5% (<2°C) → 5% (2.2°C) → 50% (3°C) → 90% (>3.9°C)
+     - Gradual weakening: 15% per degree of warming
+     - Uncertainty propagation: Uses sampled `amocCollapseThreshold` if available
+     - Location: `src/simulation/engine/phases/IrreversibilityTrackingPhase.ts` (lines 370-412)
+   - **Research:** Weijer et al. (2020), Van Westen et al. JGR (2024), Qin et al. (2025)
    - **Complexity:** 2 systems (climate, tipping points)
-   - **Plan:** TBD - extract function from research
 
 5. **Alignment Faking Model Validation**
    - Does "sandbagging" implementation capture Greenblatt et al. findings?
