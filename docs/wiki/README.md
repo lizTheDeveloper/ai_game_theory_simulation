@@ -25,7 +25,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **Research Currency:** ✅ EXCELLENT (all simulation-critical files updated within 14 days, autonomous system working effectively)
 - **Implementation Fidelity:** A- (assertion coverage 97.2%, 24 integration tests for CoordinatedDeploymentPhase) ✅ EXCELLENT
 - **Architecture Health:** B+ (0 CRITICAL, 2 HIGH technical debt non-urgent, deep clone optimization complete) ✅ GOOD
-- **System Trajectory:** 🟡 OPERATIONAL (Nov 24: Game Layer Phase 1 complete, hindcast calibration needed - model shows excessive pessimism for 1990-2024 period)
+- **System Trajectory:** 🟡 OPERATIONAL (Nov 24: Game Layer Phase 1 complete, hindcast calibration Phase 1-2 COMPLETE - temperature/mortality fixes applied, remaining: planetary boundaries + food security)
 
 **Recent Major Achievements:**
 
@@ -112,6 +112,28 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **Research Integrity:** Strict 15% player influence bounds, separate RNG, Readonly<T> interfaces
 - 📄 **Documentation:** `docs/wiki/systems/game-layer.md`
 - ✅ **Status:** Phase 1 COMPLETE, Sylvia architecture review PENDING
+
+**Nov 24: Hindcast Calibration Phase 1-2 (CRITICAL)** (commit dd327b7)
+- 🔧 **CRITICAL FIX:** Model showed catastrophic pessimism for 1990-2024 hindcast (extinction-level outcomes for historical period)
+- **Phase 1 - Diagnostic:** New script `scripts/hindcastMortalityDiagnostic.ts` identified 5 root causes:
+  1. Temperature initialization bug (jumps 0.45C → 1.31C at Month 1)
+  2. Climate stability at 0% (should be ~65% for 1990)
+  3. Baseline regional deaths too high (~11M/month vs historical 4.2M)
+  4. Food security decay too fast
+  5. Missing population growth mechanics
+- **Phase 2 - Implementation:**
+  - **NEW: ERA_MORTALITY_MULTIPLIERS** (`src/types/config.ts`) - Year-interpolated mortality scaling:
+    - 1990: 0.30, 2000: 0.40, 2010: 0.60, 2020: 0.80, 2025: 1.00
+    - Research: UN World Population Prospects, IHME Global Burden of Disease (~50% mortality reduction 1990-2019)
+  - **NEW: Thermal Inertia Model** (`src/types/resources.ts`) - CO2System extended:
+    - `historicalTemperatureTarget?: number` - Observed temperature for hindcast start
+    - `hindcastTransitionMonths?: number` - S-curve transition period (24 months default)
+    - Prevents equilibrium formula from ignoring decades of ocean thermal lag
+  - **Climate Stability Initialization** - Derived from planetary boundary values for historical years
+- **Validation:** Temperature fix working (stays at 0.45C instead of jumping to 1.31C)
+- **Remaining:** Planetary boundary initialization, regional food security calibration
+- 📄 **Files:** config.ts, bayesianMortality.ts, resourceDepletion.ts, initialization.ts, resources.ts
+- 📊 **Diagnostic:** plans/hindcast_diagnostic_report_20251124.md
 
 **Nov 24: Historical Initialization for Hindcasting Validation** (commit b29fd87)
 - 📜 **NEW MODULE: `historicalInitialization.ts`** (294 lines) - Create GameState from historical values (1990-2024)
