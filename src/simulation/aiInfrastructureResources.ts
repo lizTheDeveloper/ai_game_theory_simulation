@@ -80,7 +80,17 @@ const ENERGY_PER_CAPABILITY_POINT = 200;
  */
 
 /** Initial WUE (industry average 2024) */
-let globalWUE = 1.8;
+const INITIAL_WUE = 1.8;
+let globalWUE = INITIAL_WUE;
+
+/**
+ * Reset global WUE to initial value (for deterministic simulation)
+ * CRITICAL FIX (Nov 24, 2025): Module-level state persists between runs,
+ * causing non-determinism. Call this at start of each simulation run.
+ */
+export function resetGlobalWUE(): void {
+  globalWUE = INITIAL_WUE;
+}
 
 /** WUE improvement rate (13% per year = 1.08% per month)
  * Research: Microsoft 2021-2024 data shows 0.49 → 0.30 WUE in 3 years
