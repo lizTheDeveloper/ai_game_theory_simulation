@@ -1230,6 +1230,27 @@ export class ExogenousShockPhase implements SimulationPhase {
     const events: GameEvent[] = [];
     setDeterministicRng(rng);
 
+    // HINDCAST FIX (Nov 24, 2025): Skip random exogenous shocks in historical mode (pre-2020)
+    // Historical validation runs should only include shocks that actually happened
+    // Random wars, pandemics, etc. shouldn't trigger in 1990-2020 hindcast period
+    const isHistoricalMode = state.config?.startYear === 1990 || state.config?.scenarioMode === 'historical';
+    const currentYear = state.config?.startYear
+      ? state.config.startYear + Math.floor(state.currentMonth / 12)
+      : 2025 + Math.floor(state.currentMonth / 12);
+
+    // Skip random shocks if in historical mode before 2020
+    // (COVID-19 pandemic was 2020, the dividing line between historical and simulation)
+    if (isHistoricalMode && currentYear < 2020) {
+      return {
+        events: [],
+        metadata: {
+          shockTriggered: null,
+          historicalModeActive: true,
+          skipReason: `Historical mode: ${currentYear} (no random shocks before 2020)`
+        },
+      };
+    }
+
     // === BIFURCATION VARIANCE AMPLIFICATION ===
     // Near critical thresholds → 10× variance amplification
     // Far from thresholds → 1× (no effect)

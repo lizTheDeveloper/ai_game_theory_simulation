@@ -2187,7 +2187,18 @@ export function updateBiosphereIntegrityIndex(
 
   // === 6. INTEGRATE WITH BAYESIAN MORTALITY ===
   // Species extinction causes indirect human mortality (ecosystem collapse)
-  if (bii.trackingFailureRate > 0.5) {
+  // HINDCAST FIX (Nov 24, 2025): Skip ecosystem mortality in historical mode (pre-2020)
+  // Climate-driven ecosystem collapse wasn't a significant mortality factor until 2020s
+  // Research: IPBES (2019), UN biodiversity reports - ecosystem services decline accelerated post-2010
+  const isHistoricalMode = state.config?.startYear === 1990 || state.config?.scenarioMode === 'historical';
+  const currentYear = state.config?.startYear
+    ? state.config.startYear + Math.floor(state.currentMonth / 12)
+    : 2025 + Math.floor(state.currentMonth / 12);
+
+  // Only apply ecosystem mortality if:
+  // 1. Tracking failure > 50% (ecosystem collapse threshold)
+  // 2. NOT in historical mode OR current year >= 2020
+  if (bii.trackingFailureRate > 0.5 && (!isHistoricalMode || currentYear >= 2020)) {
     const { addMortalityRisk } = require('./bayesianMortality');
     const humanPop = state.humanPopulationSystem;
 

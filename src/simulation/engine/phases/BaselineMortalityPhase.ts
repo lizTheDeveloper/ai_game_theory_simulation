@@ -169,7 +169,9 @@ function getHistoricalCrudeBirthRate(year: number): number {
  * death rate should come from historical UN data and be scaled by those weights.
  */
 function calculateBaselineMortalityRisk(state: GameState): number {
-  const year = state.currentYear;
+  // Calculate actual simulation year (state.currentYear is start year, doesn't advance)
+  const yearsElapsed = Math.floor(state.currentMonth / 12);
+  const year = state.currentYear + yearsElapsed;
 
   // Get historical crude death rate (CDR per 1000 per year)
   const cdrPer1000 = getHistoricalCrudeDeathRate(year);
@@ -181,7 +183,7 @@ function calculateBaselineMortalityRisk(state: GameState): number {
     location: 'calculateBaselineMortalityRisk',
     valueName: 'monthlyRate',
     month: state.currentMonth,
-    additionalInfo: { year, cdrPer1000 }
+    additionalInfo: { year, cdrPer1000, startYear: state.currentYear, yearsElapsed }
   });
 
   return monthlyRate;
@@ -253,33 +255,44 @@ export class BaselineMortalityPhase implements SimulationPhase {
     // The model previously only tracked deaths, causing population to decline
     // Net growth = births - deaths
     // 1990: CBR 24.3 - CDR 9.8 = 14.5 per 1000 (1.45%/year growth)
+    //
+    // ARCHITECTURE FIX (Nov 24, 2025 - Phase 2):
+    // Regional populations are source of truth. Global population is DERIVED.
+    // BayesianMortalityResolutionPhase calls aggregateGlobalPopulation() which OVERWRITES
+    // pop.population with sum of regional populations.
+    // Therefore: Births MUST be added to regional populations, not global population.
     if (state.config.scenarioMode === 'historical') {
       const cbrPer1000 = getHistoricalCrudeBirthRate(actualYear);
       const monthlyBirthRate = (cbrPer1000 / 1000) / 12;
 
-      const birthsThisMonth = pop.population * monthlyBirthRate;
+      // Apply births to each regional population
+      let totalBirthsMillions = 0;
+      const regions = pop.regionalPopulations ?? [];
+      for (const region of regions) {
+        const regionalBirthsMillions = region.population * monthlyBirthRate;
 
-      assertFinite(birthsThisMonth, {
-        location: 'BaselineMortalityPhase.execute',
-        valueName: 'birthsThisMonth',
-        month: state.currentMonth,
-        additionalInfo: { actualYear, cbrPer1000, population: pop.population }
-      });
+        assertFinite(regionalBirthsMillions, {
+          location: 'BaselineMortalityPhase.execute',
+          valueName: 'regionalBirthsMillions',
+          month: state.currentMonth,
+          additionalInfo: { actualYear, cbrPer1000, regionName: region.name, population: region.population }
+        });
 
-      // Add births to population
-      pop.population += birthsThisMonth;
+        // Add births to regional population (in millions)
+        region.population += regionalBirthsMillions;
+        totalBirthsMillions += regionalBirthsMillions;
+      }
 
       // DIAGNOSTIC LOGGING (only log occasionally to reduce noise)
       if (state.currentMonth % 12 === 0) {
         const cdr = getHistoricalCrudeDeathRate(actualYear);
         const cbr = cbrPer1000;
         const netGrowthPer1000 = cbr - cdr;
-        const annualBirths = (pop.population * 1e9) * (monthlyBirthRate * 12);
-        const annualBirthsMillions = (annualBirths / 1e6).toFixed(1);
+        const annualBirthsMillions = totalBirthsMillions * 12;
         const annualDeaths = (pop.population * 1e9) * (baselineRisk * 12);
         const annualDeathsMillions = (annualDeaths / 1e6).toFixed(1);
         console.log(`👶 Historical demographics (${actualYear}):`);
-        console.log(`   Births: ${cbr.toFixed(1)}/1000 CBR (${annualBirthsMillions}M/year)`);
+        console.log(`   Births: ${cbr.toFixed(1)}/1000 CBR (${annualBirthsMillions.toFixed(1)}M/year)`);
         console.log(`   Deaths: ${cdr.toFixed(1)}/1000 CDR (${annualDeathsMillions}M/year)`);
         console.log(`   Net: ${netGrowthPer1000.toFixed(1)}/1000 (${(netGrowthPer1000 / 10).toFixed(2)}%/year)`);
       }

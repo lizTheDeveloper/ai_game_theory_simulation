@@ -130,6 +130,7 @@ const createInitialConfig = (): ConfigurationSettings => {
     economicTransitionRate: 0.5,
     scenarioMode,
     scenarioParameters, // REQUIRED field, populated from scenarioMode
+    startYear: 2025, // Default start year (can be overridden for hindcast scenarios)
   };
 };
 
