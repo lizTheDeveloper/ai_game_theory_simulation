@@ -25,7 +25,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **Research Currency:** ✅ EXCELLENT (all simulation-critical files updated within 14 days, autonomous system working effectively)
 - **Implementation Fidelity:** A- (assertion coverage 97.2%, hindcasting validation framework complete) ✅ EXCELLENT
 - **Architecture Health:** B+ (0 CRITICAL, 2 HIGH technical debt non-urgent, deep clone optimization complete) ✅ GOOD
-- **System Trajectory:** 🟢 STABLE (Nov 24: hindcasting validation framework implemented, ready for validation runs)
+- **System Trajectory:** 🟡 VALIDATION PHASE (Nov 24: hindcast reveals model pessimism - calibration required)
 
 **Recent Major Achievements:**
 
@@ -49,8 +49,13 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **Nov 24 Fixes (ee453fd):**
   - Fixed SimulationEngine API usage (state passed to step(), not constructor)
   - Fixed `diplomaticAI.ts` for historical mode: pre-2018 sims have no AI agents - graceful handling
-  - **FINDING:** Model too pessimistic for historical conditions (population collapses from 5.33B to ~1M by month 400)
-- ⏳ **Next:** Model calibration for historical scenarios (address pessimism bias)
+- **⚠️ CRITICAL FINDING: Model Pessimism (Nov 24 roadmap update e086f89):**
+  - All 10 hindcast runs: Population collapses from 5.33B (1990) to ~1M by 2022-2023
+  - Expected 2024 population: 8.12B (actual) vs ~0.001B (simulation) = near-extinction false positive
+  - **Root cause:** Mortality/crisis mechanisms too aggressive for pre-AI historical conditions
+  - **Quality Gate 1 (Research):** PASS ✅
+  - **Quality Gate 2 (Implementation):** BLOCKED ❌ - Model fails hindcast validation
+- ⏳ **Next:** Calibrate model for historical conditions (mortality stabilizers, crisis thresholds)
 
 **Nov 23: AMOC Tipping Point 2025 Research Update** (commit 0b5bbc7)
 - 🌍 **Research Update:** New peer-reviewed sources on AMOC collapse timelines (3 papers, 2025)
