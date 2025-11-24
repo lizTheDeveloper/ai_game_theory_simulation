@@ -73,7 +73,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 286,
+    "line": 308,
     "name": "createParameterLockdown",
     "doc": "Initializes parameter lockdown with default or specified values."
   },
