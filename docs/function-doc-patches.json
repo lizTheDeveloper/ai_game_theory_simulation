@@ -72,6 +72,12 @@
     "doc": "Initializes governance quality with default or specified values."
   },
   {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+    "line": 282,
+    "name": "createParameterLockdown",
+    "doc": "Initializes parameter lockdown with default or specified values."
+  },
+  {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/meaningRenaissance.ts",
     "line": 51,
     "name": "initializeMeaningRenaissance",
