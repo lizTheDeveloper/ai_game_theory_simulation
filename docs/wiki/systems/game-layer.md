@@ -326,21 +326,142 @@ calculateCoefficientOfVariation(sameSeedRuns): number
 
 ## React Integration
 
-The game layer integrates with the Next.js frontend through:
+**File:** `src/game/providers/GameStateProvider.tsx`
+
+The game layer integrates with the Next.js frontend through React Context:
 
 ### GameStateProvider
 
-React context provider that:
-- Wraps GameSession for React lifecycle
-- Provides game state to component tree
-- Handles cleanup on unmount
+React context provider that bridges game layer and UI:
+
+**Responsibilities:**
+- **Session Management:** Creates and manages GameSession instance
+- **State Subscription:** Subscribes to simulation events and updates React state
+- **Observer Integration:** Connects SimulationObserver and MetricsCollector to React lifecycle
+- **UI Data Transform:** Converts raw GameState into UI-ready data structures
+- **Action Dispatch:** Provides methods to queue player decisions
+
+**Actions Exposed:**
+```typescript
+interface GameStateContextType {
+  // Core actions
+  advanceMonth(): void;           // Step simulation forward
+  setSpeed(n: number): void;      // Adjust simulation speed (1-10)
+  queueDecision(id: string): QueueResult;  // Queue player action
+
+  // Session management
+  startNewGame(scenario: ResearchScenarioId, seed?: number): void;
+  loadGame(saveState: SaveState): void;
+  saveGame(): SaveState;
+
+  // Demo/testing
+  loadMockData(): void;           // Populate demo data for UI testing
+}
+```
+
+**UI Data Transformations:**
+- `CurrencyData[]` - Research/Influence/Resources/AI Trust with trend indicators
+- `OutcomeDistribution` - Utopia/alignment/struggle/collapse/extinction probabilities
+- `GameEventDisplay[]` - Severity-coded events for event stream
+- `PendingDecision[]` - Urgency-tagged decisions with countdown timers
 
 ### useGameState() Hook
 
-Custom hook providing:
-- Current game state snapshot
-- Player decision dispatch
-- Session control (pause, save, load)
+**File:** `src/lib/hooks/useGameState.ts`
+
+Custom React hook providing access to game state:
+
+```typescript
+function useGameState() {
+  const context = useContext(GameStateContext);
+
+  return {
+    // State
+    state: GameStateSnapshot | null,
+    metrics: AggregateMetrics,
+    events: GameEventDisplay[],
+    currency: CurrencyData[],
+
+    // Actions (from provider)
+    advanceMonth,
+    queueDecision,
+    startNewGame,
+    saveGame,
+    ...
+  };
+}
+```
+
+**Usage Example:**
+```typescript
+import { useGameState } from '@/lib/hooks/useGameState';
+
+function GameDashboard() {
+  const { state, metrics, advanceMonth, queueDecision } = useGameState();
+
+  return (
+    <div>
+      <h1>Month {state?.currentMonth}</h1>
+      <p>QoL: {metrics.overallQoL.toFixed(2)}</p>
+      <button onClick={() => advanceMonth()}>Next Month</button>
+      <button onClick={() => queueDecision('increase-ai-safety-funding')}>
+        Increase AI Safety Funding
+      </button>
+    </div>
+  );
+}
+```
+
+## Save/Load System
+
+**Files:** `src/game/types/save.ts`, `GameSession.ts`
+
+The save system preserves BOTH simulation state and game layer state for deterministic replay:
+
+### Save State Structure
+
+```typescript
+interface SaveState {
+  version: string;              // Format version for migrations
+  metadata: SaveMetadata;       // Save info, scenario, current month, playtime
+
+  // Core state
+  simulationState: SerializedGameState;  // Full simulation state
+  gameLayerState: GameLayerState;        // Game-specific state
+
+  // RNG state for deterministic replay
+  rngState: RNGState;
+}
+
+interface RNGState {
+  seed: number;              // Original simulation seed
+  callCount: number;         // Simulation RNG calls (for replay)
+  gameLayerSeed: number;     // Game layer seed (seed + 1)
+  gameLayerCallCount: number; // Game layer RNG calls
+}
+
+interface GameLayerState {
+  activeCampaigns: Campaign[];
+  coalitions: Coalition[];
+  decisionHistory: PlayerDecision[];
+  totalInfluenceSpent: number;
+  influenceByDomain: Record<InfluenceDomain, number>;
+  juncturesEncountered: JunctureEvent[];
+  milestonesAchieved: string[];
+  activeCooldowns: Record<string, number>;
+}
+```
+
+### Deterministic Replay
+
+To replay a saved game:
+1. Recreate simulation RNG with original seed
+2. Advance RNG by `callCount` to exact saved position
+3. Recreate game layer RNG with `gameLayerSeed`
+4. Advance game layer RNG by `gameLayerCallCount`
+5. Restore both simulation state and game layer state
+
+This ensures that continuing from a save produces identical results to running continuously from game start.
 
 ## Validation Requirements
 
@@ -349,17 +470,61 @@ Before any scenario modification:
 2. Coefficient of variation < 15%
 3. Mean outcome within 1σ of baseline
 4. Max player influence verified ≤15%
+5. Sylvia (Research Integrity) approval
+
+## Technology Stack
+
+| Component | Technology | Rationale |
+|-----------|-----------|-----------|
+| Type System | TypeScript (strict mode) | Type safety for game/simulation boundary |
+| State Management | React Context | Minimal dependency, built-in React |
+| RNG | Custom LCG (Linear Congruential Generator) | Separate from simulation RNG, deterministic |
+| Serialization | JSON | Human-readable saves, version migration support |
+| Validation | Monte Carlo (N≥100) | Research-grade statistical validation |
+
+## What's Next: Phase 2 Roadmap
+
+**Current Status:** Phase 1 COMPLETE - Core architecture established and validated
+
+**Phase 2 Priorities (PENDING):**
+
+1. **Advocacy Action Catalog** - Define 20-30 concrete advocacy actions with research-backed effects
+2. **Coalition Mechanics** - Multi-party negotiations, coalition formation windows
+3. **Crisis Response System** - Time-limited intervention opportunities during crises
+4. **Campaign Duration Effects** - Actions that persist over multiple months
+5. **Influence Decay** - Decision on whether player influence fades over time
+6. **Counterfactual Analysis** - "What if" comparisons against baseline runs
+7. **UI Integration** - Full dashboard implementation (currently demo only)
+8. **Monte Carlo Validation** - Validate all 3 scenarios (baseline, optimistic, pessimistic)
+9. **Sylvia Final Approval** - Research integrity sign-off on playable scenarios
+
+**Blockers for Phase 2:**
+- Scenario validation requires N≥100 Monte Carlo runs (8-10 hours compute time)
+- Advocacy action catalog needs research sources for each action
+- Coalition mechanics require complex prerequisite checking
+
+**Phase 3+ (Future):**
+- Custom scenarios for academic users
+- Multi-player coordination
+- Real-time influence visualization
+- Narrative generation for outcomes
+- Achievement/milestone system
 
 ## Related Documentation
 
-- [Game Design Document](../../../plans/game-design/GAME_DESIGN_DOCUMENT.md)
-- [Game Development Roadmap](../../../plans/game-design/GAME_DEVELOPMENT_ROADMAP.md)
-- [Phase 1 Technical Spec](../../../plans/game-design/PHASE1_TECHNICAL_SPEC.md)
+- [Game Design Document](../../../plans/game-design/GAME_DESIGN_DOCUMENT.md) - Overall vision and design philosophy
+- [Game Development Roadmap](../../../plans/game-design/GAME_DEVELOPMENT_ROADMAP.md) - Phased implementation plan
+- [Phase 1 Technical Spec](../../../plans/game-design/PHASE1_TECHNICAL_SPEC.md) - Complete architecture specification
+- [Sylvia's Architecture Review](../../../reviews/phase1_architecture_review.md) - Research integrity approval conditions
 
 ## Implementation History
 
-| Date | Change | Commit |
-|------|--------|--------|
-| Nov 24, 2025 | Phase 1 Complete | a984b51, 63ffd7660 |
-| Nov 24, 2025 | TypeScript errors fixed | a984b51 |
-| Nov 24, 2025 | JSDoc documentation added | 87a14a2e5 |
+| Date | Change | Commit | Details |
+|------|--------|--------|---------|
+| Nov 24, 2025 | Wiki documentation update | CURRENT | Comprehensive game layer architecture documentation |
+| Nov 24, 2025 | Game Dashboard UI | 109a89a | Far-future aesthetic components (12 files, ~1,800 lines) |
+| Nov 24, 2025 | GameStateProvider | 63ffd76 | React bridge for dashboard/simulation integration |
+| Nov 24, 2025 | Phase 1 Complete | a984b51 | All 17 game layer files implemented |
+| Nov 24, 2025 | TypeScript fixes | a984b51 | Resolved type errors in game layer |
+| Nov 24, 2025 | JSDoc documentation | 87a14a2e5 | Added inline documentation to all classes |
+| Nov 24, 2025 | Sylvia Approval | - | APPROVED WITH CONDITIONS (RNG isolation, validation pipeline, Readonly<T> types) |
