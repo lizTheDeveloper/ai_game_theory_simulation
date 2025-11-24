@@ -25,6 +25,14 @@ const generateUniqueId = (prefix: string, month: number): string => {
 };
 
 /**
+ * Reset event counter for deterministic simulation
+ * CRITICAL (Nov 24, 2025): Module-level state causes non-determinism
+ */
+export function resetEnvironmentalEventIdCounter(): void {
+  eventIdCounter = 0;
+}
+
+/**
  * Emergency Amazon Rainforest Protection
  * Deploy immediate deforestation halt and restoration funding
  */
