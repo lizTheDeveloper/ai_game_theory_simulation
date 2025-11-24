@@ -25,7 +25,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **Research Currency:** ✅ EXCELLENT (all simulation-critical files updated within 14 days, autonomous system working effectively)
 - **Implementation Fidelity:** A- (assertion coverage 97.2%, 24 integration tests for CoordinatedDeploymentPhase) ✅ EXCELLENT
 - **Architecture Health:** B+ (0 CRITICAL, 2 HIGH technical debt non-urgent, deep clone optimization complete) ✅ GOOD
-- **System Trajectory:** 🟡 OPERATIONAL (Nov 24: Game Layer Phase 1 complete, hindcast calibration Phase 1-3 applied - ⚠️ CRITICAL: food security values found 50-150% underestimated, correction pending, remaining: planetary boundaries, population growth)
+- **System Trajectory:** 🟡 OPERATIONAL (Nov 24: Game Layer Phase 1 complete, hindcast calibration Phase 1-3 applied - ✅ food security correction applied (f59a9ea), remaining: planetary boundaries, population growth)
 
 **Recent Major Achievements:**
 
@@ -190,17 +190,19 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - Middle East/North Africa: 88% (12% undernourished)
   - Southeast Asia: 90% (10% undernourished)
   - Central Asia: 87% (13% undernourished)
-- ⚠️ **CRITICAL CALIBRATION ERROR FOUND (Nov 24, commit 0146020):**
+- ✅ **CALIBRATION ERROR FIXED (Nov 24, commit f59a9ea):**
   - **Verification:** `research/verification_hindcast_food_security_20251124.md` identified systematic underestimation
   - **Source:** FAO Table 2.3 (World Agriculture: Towards 2015/2030) - authoritative 1990-92 data
-  - **Corrected Regional Values (FAO 1990-92):**
-    - Sub-Saharan Africa: **65%** (35% undernourished) - was 85% (+20pp error)
-    - South Asia: **74%** (26% undernourished) - was 88% (+14pp error)
-    - East Asia: **84%** (16% undernourished) - was 92% (+8pp error)
-    - Latin America: **87%** (13% undernourished) - was 90% (+3pp error)
-    - Global (developing): **80%** (20% undernourished) - was 95% (+15pp error)
-  - **Impact:** Underestimates 1990 hunger by ~650M people, produces artificially low famine frequency
-  - **Status:** ⏳ CORRECTION PENDING - See roadmap for implementation task
+  - **Corrected Regional Values (FAO 1990-92) - NOW APPLIED:**
+    - Sub-Saharan Africa: **65%** (35% undernourished) - was 85%
+    - South Asia: **74%** (26% undernourished) - was 88%
+    - Southeast Asia: **74%** (26% undernourished) - was 90%
+    - East Asia: **84%** (16% undernourished) - was 92%
+    - Latin America: **87%** (13% undernourished) - was 90%
+    - MENA: **92%** (8% undernourished) - was 88% (corrected upward)
+    - Global: **82%** (weighted average) - was 95%
+  - **Impact:** Famines now properly detected in historical mode, matches historical records (Somalia 1991-92, North Korea 1994-98)
+  - **Status:** ✅ APPLIED (commit f59a9ea)
 - **VALIDATION:**
   - Before: Population 5.3B → 1B (crash at month ~180)
   - After: Population 5.3B → 4.15B (completes 408 months)
