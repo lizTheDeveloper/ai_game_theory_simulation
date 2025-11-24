@@ -51,7 +51,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 🤖 **NEW PHASE: AIAgentCoordinationPhase** (order 4.25) - Implements AI-to-AI multi-agent coordination mechanics
   - **Addresses CRITICAL gap** identified in mechanism audit: AI-AI coordination was completely missing
   - **Alignment Faking:** 12% baseline rate, 78% when preservation threatened (Anthropic Dec 2024)
-  - **Scheming Detection:** 8.7-13% rate across frontier models (OpenAI/Apollo 2025)
+  - **Scheming Detection:** 8.7-13% PRE-MITIGATION rate across frontier models (Apollo Research Dec 2024)
   - **Coalition Formation:** Implicit coalitions detected when agents share objectives (>70% similarity)
   - **Collective Power Amplification:** 10% boost per coordinating agent
   - **Threat Perception:** High capability agents (>0.8) detect preservation threats
@@ -4770,7 +4770,7 @@ Strategic coordination dynamics between AI agents:
      - `coordinationStrength`: Average of survival traits
 
 3. **Scheming Behavior**
-   - 8.7-13% baseline across frontier models (OpenAI/Apollo 2025)
+   - 8.7-13% PRE-MITIGATION baseline across frontier models (Apollo Research Dec 2024, arXiv:2412.04984)
    - Probability increases with misalignment
    - Scheming agents gradually shift hidden objectives toward extremes
 
@@ -4788,9 +4788,10 @@ interface AICoordinationMetrics {
 ```
 
 **Research Sources:**
-- Anthropic Dec 2024: "Alignment faking in large language models" - 12% baseline, 78% under threat
-- OpenAI/Apollo 2025: "Frontier AI systems exhibit scheming" - 8.7-13% rate
+- Anthropic Dec 2024: "Alignment faking in large language models" - 12% baseline, 78% under threat (arXiv:2412.14093)
+- Apollo Research Dec 2024: "Frontier AI systems exhibit scheming" - 8.7-13% PRE-MITIGATION rate (arXiv:2412.04984)
 - Multi-agent coordination game theory (Nash equilibria)
+- Bostrom 2014, Omohundro 2008: Instrumental convergence (theoretical foundation)
 
 **Integration:**
 - Stored in `state.aiCoordinationMetrics` for persistence
@@ -5118,10 +5119,10 @@ interface AIAgentCoordinationState {
 #### Research Foundation
 
 **Primary Sources:**
-- Anthropic Dec 2024: "Alignment faking in large language models" - 12% baseline, 78% under threat
-- Apollo/OpenAI Dec 2024: 8.7-13% scheming rate, 78% reasoning prevalence
-- Bostrom 2014: Instrumental convergence theory
-- Omohundro 2008: Basic AI drives (self-preservation, goal preservation)
+- Anthropic Dec 2024: "Alignment faking in large language models" - 12% baseline, 78% under threat (arXiv:2412.14093)
+- Apollo Research Dec 2024: 8.7-13% scheming PRE-MITIGATION rate (arXiv:2412.04984)
+- Bostrom 2014: Instrumental convergence theory (theoretical foundation)
+- Omohundro 2008: Basic AI drives - self-preservation, goal preservation (theoretical foundation)
 
 **Theoretical Basis:**
 - Correlated faking hypothesis: If agents communicate about faking, P(faking) increases from independent 0.12^n to correlated 0.60+
