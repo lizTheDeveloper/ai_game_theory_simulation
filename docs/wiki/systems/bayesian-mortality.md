@@ -118,6 +118,7 @@ aggregateGlobalPopulation(state);
 2. **Apply demographic vulnerabilities:** Different segments have different multipliers
 3. **Apply to regional populations:** Deaths reduce regional population values
 4. **Aggregate to global:** `aggregateGlobalPopulation()` recalculates global total from regions (CRITICAL, Nov 21 2025)
+   - **Note (Nov 24 2025):** `updateHumanPopulation()` now applies BIRTHS ONLY. All deaths are applied exclusively by `resolveMortality()` to prevent double-counting.
 5. **Enforce mortality caps:** Monthly (2.8%) and instant (50%) limits
 6. **Update tracking:** Automatically updates `deathsByCategory` and `deathsByRootCause`
 7. **Clear queue:** Empties `mortalityRisks` array for next month

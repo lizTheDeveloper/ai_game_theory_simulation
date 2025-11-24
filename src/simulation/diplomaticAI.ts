@@ -170,11 +170,19 @@ function updateDiplomaticCapabilities(dipAI: DiplomaticAIState, state: GameState
  * Update risks - KEY: High capability + low alignment = HIGH RISK
  */
 function updateDiplomaticRisks(dipAI: DiplomaticAIState, state: GameState): void {
-  const aiAgents = assertNonEmpty(state.aiAgents, {
-    location: 'updateDiplomaticRisks',
-    valueName: 'aiAgents',
-    month: state.currentMonth
-  });
+  // Pre-AI era (e.g., hindcast starting 1990): No AI agents yet, no AI-related risks
+  // This is a VALID historical state, not an error
+  if (state.aiAgents.length === 0) {
+    // Reset all AI-related risks to zero for pre-AI era
+    dipAI.risks.manipulationRisk = 0;
+    dipAI.risks.informationWarfareRisk = 0;
+    dipAI.risks.adversarialMediationRisk = 0;
+    dipAI.risks.dependencyCaptureRisk = 0;
+    dipAI.risks.missionCreepRisk = 0;
+    return;
+  }
+
+  const aiAgents = state.aiAgents;
 
   const alignmentSum = aiAgents.reduce((sum, ai) => {
     if (typeof ai.trueAlignment !== 'number') {
