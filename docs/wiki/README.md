@@ -165,6 +165,14 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - Temperature-dependent collapse: 0.5% (<4°C) → 50% (4°C) → 90% (>5.5°C) [Updated Nov 24]
 - 📄 **Audit:** reviews/mechanism_audit_mortality_stabilizers_20251124.md
 
+**Nov 24: Climate Tipping Timescales Research Update** (commit 1703ff6)
+- 🔬 **Research Update:** Added November 2025 sources to `climate_tipping_timescales_20251106.md`
+- **New Sources:**
+  - Klose et al. (2025) ESD 16:565 - 62% probability of triggering tipping elements under SSP2-4.5
+  - van Westen et al. (2024) Science Advances - Physics-based AMOC early warning signals (collapse 2025-2095)
+  - Global Tipping Points Report Oct 2025 - Four interconnected elements (GIS, AMOC, Amazon, SAM) showing diminished resilience
+- **Key Finding:** Validates simulation's cascade multiplier approach (1.15-1.60× for 2-4+ elements)
+
 **Nov 24: Positive Tipping Points Research Update** (commit 38cb04b)
 - 🔬 **Research Update:** Added November 2025 sources to `positive_tipping_points_2024_2025_20251114.md`
 - **New Sources (11→14):**
