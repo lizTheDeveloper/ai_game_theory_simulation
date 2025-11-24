@@ -40,20 +40,31 @@
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
    - **AMOC & Planetary Boundaries 2024-2025 Updates** - CRITICAL (Added Nov 24, 2025)
-     - **Context:** Two research files documenting latest Earth system tipping point findings
-     - **Files:**
+     - **Context:** Two research files documenting latest findings on Earth system tipping points
+     - **Research Files:**
        - research/amoc_tipping_point_2024_2025_update.md (250 lines, 7 citations)
        - research/planetary_boundaries_2025_update.md (454 lines, 6 citations)
      - **Verification File:** research/verification_1e37dcb_20251124.md
-     - **Key Claims:**
-       - AMOC tipping 2025-2095 (van Westen 2024)
-       - Ocean acidification breached 2025 (JIRCAS 2025)
-       - Nitrogen 3× safe limit (Richardson 2023)
-       - Regional cooling 10-30°C (Carbon Brief 2024)
-     - **Issues:** Date consistency, primary vs secondary sources, ocean acidification timing
-     - **Priority:** CRITICAL - Earth system tipping points
-     - **Status:** ⏳ READY FOR VALIDATION
+     - **Key Claims Requiring Two-Layer Verification:**
+       - **CRITICAL:** AMOC tipping 2025-2095 (95% CI) - van Westen 2024
+       - **CRITICAL:** Ocean acidification breached 2025 (7/9 boundaries) - JIRCAS 2025
+       - **CRITICAL:** Nitrogen 3× safe limit (190 vs 62 Tg/yr) - Richardson 2023
+       - **CRITICAL:** Regional cooling 10-30°C northern Europe - Carbon Brief 2024
+       - **HIGH:** Probability distributions (20-40% by 2075) - derived or cited?
+       - **HIGH:** Cascading risk multipliers (4.0× at 7/9 breach) - derived or cited?
+       - **MODERATE:** 204M chemicals registered, 350K+ in production
+       - **ISSUE:** Date consistency (file marked 2025 but several 2023-2024 citations)
+       - **ISSUE:** Primary vs secondary sources (RealClimate, Carbon Brief → trace to papers)
+       - **ISSUE:** Ocean acidification breach date (docs say 2025, need reconciliation)
+     - **Total:** 13 claims flagged for verification, 3 critical discrepancies to resolve
+     - **Implementation Impact:**
+       - May affect planetary boundaries tracking (7/9 vs 6/9)
+       - AMOC collapse probability curves
+       - Nitrogen/phosphorus flow parameters
+     - **Priority:** CRITICAL - Earth system tipping points, affects extinction risk modeling
+     - **Status:** ⏳ READY FOR VALIDATION - Verification file created by historian
      - **Commit:** 1e37dcb
+     - **Next Steps:** Two-layer verification (existence + claim accuracy) → Reconcile discrepancies → Update parameters if needed
 
    - **AI Coordination & Transition Management** - HIGH (Added Nov 21, 2025)
      - **Context:** Phase 2 research complete (15K words, 15 sources), Grade B- CONDITIONAL PASS

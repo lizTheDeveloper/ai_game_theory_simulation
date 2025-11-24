@@ -10,20 +10,32 @@ This file contains the complete history of recent changes to the AI Game Theory 
 **Priority:** CRITICAL (Earth system tipping points)
 **Type:** Research Documentation
 
-**Summary:** Two research files documenting 2024-2025 findings on AMOC collapse risk and planetary boundaries. Both require two-layer verification (citation existence + claim accuracy).
+**Summary:** Added two major research updates documenting 2024-2025 findings on AMOC collapse risk and planetary boundaries status. Both files require two-layer verification (citation existence + claim accuracy) before integration.
 
 **AMOC Tipping Point Research (250 lines):**
-- van Westen et al. (2024): Physics-based early warning signal
-- Tipping estimate: 2025-2095 (95% CI)
-- Regional cooling: 10-30°C northern Europe
+- van Westen et al. (2024): Physics-based early warning signal ("AMOC on tipping course")
+- Tipping estimate: 2025-2095 (95% CI) - earlier than IPCC AR6 assessments
+- AMOC weakening: 3 ± 1 Sv decline since 1950 (weakest in 1,000+ years)
+- Regional impacts: 10-30°C cooling northern Europe within century of collapse
+- Counterpoint: Jackson et al. (2024) Southern Ocean stabilization may delay beyond 2100
 - File: `research/amoc_tipping_point_2024_2025_update.md`
 
 **Planetary Boundaries 2025 Update (454 lines):**
-- Ocean acidification breached → 7/9 boundaries transgressed
-- Nitrogen: 190 Tg/yr (3× safe limit), Phosphorus: 22.6 Tg/yr (2× safe limit)
+- **CRITICAL:** Ocean acidification breached → 7/9 boundaries transgressed (was 6/9 in 2023)
+- Nitrogen: 190 Tg/yr (3× safe limit 62 Tg/yr), phosphorus: 22.6 Tg/yr (2× safe limit 11 Tg/yr)
+- Novel entities: 204M chemicals registered, 350K+ in production
+- Cascading risk: 7/9 boundaries → 4.0× baseline multiplier
 - File: `research/planetary_boundaries_2025_update.md`
 
-**Verification:** Created `research/verification_1e37dcb_20251124.md` with 13 claims flagged. Added to roadmap Research Verification Queue (CRITICAL).
+**Research Quality:** A+ (Science Advances, Nature, Environmental Science & Technology)
+
+**Verification Required:**
+- Created `research/verification_1e37dcb_20251124.md` (verification spec)
+- 13 specific claims flagged for verification
+- Issues: Date consistency, primary vs secondary sources, simulation parameters vs research
+- **CRITICAL:** Ocean acidification breach date needs reconciliation with existing docs
+
+**Next Steps:** Orchestrator workflow (super-alignment-researcher + research-skeptic)
 
 ---
 
