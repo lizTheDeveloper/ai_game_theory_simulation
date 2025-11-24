@@ -25,7 +25,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **Research Currency:** ✅ EXCELLENT (all simulation-critical files updated within 14 days, autonomous system working effectively)
 - **Implementation Fidelity:** A- (assertion coverage 97.2%, 24 integration tests for CoordinatedDeploymentPhase) ✅ EXCELLENT
 - **Architecture Health:** B+ (0 CRITICAL, 2 HIGH technical debt non-urgent, deep clone optimization complete) ✅ GOOD
-- **System Trajectory:** 🟡 OPERATIONAL (Nov 24: Game Layer Phase 1 complete, hindcast calibration Phase 1-3 applied - ✅ food security correction applied (f59a9ea), remaining: planetary boundaries, population growth)
+- **System Trajectory:** 🟡 OPERATIONAL (Nov 24: Game Layer Phase 1 complete, hindcast calibration Phase 1-4 applied - ✅ year calculation fix (5b19d22), remaining: planetary boundaries, birth rate calibration)
 
 **Recent Major Achievements:**
 
@@ -38,10 +38,17 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - `BaselineMortalityPhase.ts`: Births now added to regional populations, not global
   - **Problem:** Global population is DERIVED from regional (via `aggregateGlobalPopulation()`)
   - Adding births to global was overwritten; now properly adds to regional source of truth
-- 🔧 **YEAR CALCULATION FIX:** `BaselineMortalityPhase.ts` now properly calculates simulation year
-  - `state.currentYear` is start year (doesn't advance)
-  - Actual year = `state.currentYear + Math.floor(state.currentMonth / 12)`
 - 🔧 **CONFIG FIX:** Added missing `startYear: 2025` to gameStore.ts ConfigurationSettings
+
+**Nov 24: Hindcast Year Calculation Fix** (commit 5b19d22)
+- 🔧 **PROBLEM:** `state.currentYear` was "years elapsed" not "calendar year"
+  - Month 12 in 1990 hindcast showed year=1 instead of year=1991
+  - Broke all era-dependent calculations (mortality multipliers, etc.)
+- 🔧 **SOLUTION:** `TimeAdvancementPhase.ts` now calculates: `currentYear = config.startYear + elapsed`
+  - Added `config.startYear` to ConfigurationSettings (preserves start year)
+  - `state.currentYear` now correctly advances as calendar year
+- **RESULT:** Population now GROWS in hindcast (5.3B → 10.15B) - still overshooting by 25%
+- **Files:** `TimeAdvancementPhase.ts`, `initialization.ts`, `config.ts`
 
 **Nov 24: Hindcast Phase 3 Blocker - BaselineMortalityPhase RESOLVED** (commits 2087a26, d35e872)
 - 🔧 **PROBLEM FIXED:** Population declining (5.3B→2.7B) instead of growing (5.3B→6.1B) during 1990-2000 hindcast
