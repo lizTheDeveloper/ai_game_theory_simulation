@@ -114,8 +114,10 @@ function getHistoricalCrudeDeathRate(year: number): number {
  * - Rising education levels (especially for women)
  * - Urbanization (lower economic incentive for large families)
  * - Declining infant mortality (less need for "replacement" children)
+ *
+ * EXPORTED (Nov 24, 2025): Used by regionalPopulations.ts for historical birth rate scaling
  */
-function getHistoricalCrudeBirthRate(year: number): number {
+export function getHistoricalCrudeBirthRate(year: number): number {
   // UN WPP 2024 data: CBR per 1000 population
   const HISTORICAL_CBR = {
     1950: 36.9,  // Post-war baby boom
@@ -249,44 +251,32 @@ export class BaselineMortalityPhase implements SimulationPhase {
       description: `Baseline demographic mortality (CDR ${getHistoricalCrudeDeathRate(actualYear).toFixed(1)}/1000)`,
     });
 
-    // HINDCAST FIX: Add births in historical mode
-    // The model previously only tracked deaths, causing population to decline
-    // Net growth = births - deaths
-    // 1990: CBR 24.3 - CDR 9.8 = 14.5 per 1000 (1.45%/year growth)
-    if (state.config.scenarioMode === 'historical') {
-      const cbrPer1000 = getHistoricalCrudeBirthRate(actualYear);
-      const monthlyBirthRate = (cbrPer1000 / 1000) / 12;
+    // REMOVED (Nov 24, 2025): Birth handling moved ENTIRELY to regional population system
+    // ARCHITECTURE FIX: Births were being added in two places:
+    // 1. updateRegionalPopulations (HumanPopulationPhase) - adds births to regional populations
+    // 2. BaselineMortalityPhase (HERE) - was adding births to global population
+    //
+    // Problem: HumanPopulationPhase aggregates regional → global AFTER this phase runs,
+    // so any global births added here are immediately overwritten on the next step.
+    //
+    // Solution: Regional system is the SOLE source of births.
+    // Historical birth rate scaling is now handled in updateRegionalPopulations
+    // via getHistoricalCrudeBirthRate() scaling factor.
+    //
+    // This phase ONLY handles deaths (baseline demographic mortality).
 
-      const birthsThisMonth = pop.population * monthlyBirthRate;
-
-      assertFinite(birthsThisMonth, {
-        location: 'BaselineMortalityPhase.execute',
-        valueName: 'birthsThisMonth',
-        month: state.currentMonth,
-        additionalInfo: { actualYear, cbrPer1000, population: pop.population }
-      });
-
-      // Add births to population
-      pop.population += birthsThisMonth;
-
-      // DIAGNOSTIC LOGGING (only log occasionally to reduce noise)
-      if (state.currentMonth % 12 === 0) {
-        const cdr = getHistoricalCrudeDeathRate(actualYear);
-        const cbr = cbrPer1000;
+    // DIAGNOSTIC LOGGING (historical demographics)
+    if (state.currentMonth % 12 === 0) {
+      const cdr = getHistoricalCrudeDeathRate(actualYear);
+      if (state.config.scenarioMode === 'historical') {
+        const cbr = getHistoricalCrudeBirthRate(actualYear);
         const netGrowthPer1000 = cbr - cdr;
-        const annualBirths = (pop.population * 1e9) * (monthlyBirthRate * 12);
-        const annualBirthsMillions = (annualBirths / 1e6).toFixed(1);
-        const annualDeaths = (pop.population * 1e9) * (baselineRisk * 12);
-        const annualDeathsMillions = (annualDeaths / 1e6).toFixed(1);
         console.log(`👶 Historical demographics (${actualYear}):`);
-        console.log(`   Births: ${cbr.toFixed(1)}/1000 CBR (${annualBirthsMillions}M/year)`);
-        console.log(`   Deaths: ${cdr.toFixed(1)}/1000 CDR (${annualDeathsMillions}M/year)`);
-        console.log(`   Net: ${netGrowthPer1000.toFixed(1)}/1000 (${(netGrowthPer1000 / 10).toFixed(2)}%/year)`);
-      }
-    } else {
-      // Non-historical mode: Only log deaths
-      if (state.currentMonth % 12 === 0) {
-        const cdr = getHistoricalCrudeDeathRate(actualYear);
+        console.log(`   Births: ${cbr.toFixed(1)}/1000 CBR (handled by regional system)`);
+        console.log(`   Deaths: ${cdr.toFixed(1)}/1000 CDR (handled by Bayesian mortality)`);
+        console.log(`   Net: ${netGrowthPer1000.toFixed(1)}/1000 (${(netGrowthPer1000 / 10).toFixed(2)}%/year expected)`);
+      } else {
+        // Non-historical mode: Only log deaths
         const annualDeaths = (pop.population * 1e9) * (baselineRisk * 12);
         const annualDeathsMillions = (annualDeaths / 1e6).toFixed(1);
         console.log(`💀 Baseline mortality (Year ${actualYear}): ${cdr.toFixed(1)}/1000 CDR (${annualDeathsMillions}M deaths/year projected)`);
