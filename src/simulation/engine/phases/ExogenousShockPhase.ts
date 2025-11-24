@@ -1230,6 +1230,15 @@ export class ExogenousShockPhase implements SimulationPhase {
     const events: GameEvent[] = [];
     setDeterministicRng(rng);
 
+    // Historical mode: Skip random exogenous shocks - we model actual historical events only
+    // Research simulations should compare to real history, not random alternative timelines
+    if (state.config.scenarioMode === 'historical') {
+      // TODO: Could add ACTUAL historical events here (Gulf War 1990-1991, 9/11 2001, etc.)
+      // For now, skip random shock generation entirely
+      console.log(`[ExogenousShockPhase] Skipping random shocks in historical mode (month ${state.currentMonth})`);
+      return { events: [] };
+    }
+
     // === BIFURCATION VARIANCE AMPLIFICATION ===
     // Near critical thresholds → 10× variance amplification
     // Far from thresholds → 1× (no effect)

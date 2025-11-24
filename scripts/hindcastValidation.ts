@@ -20,6 +20,7 @@
 
 import { SimulationEngine } from '../src/simulation/engine';
 import { createDefaultInitialState } from '../src/simulation/initialization';
+import { createHistoricalInitialState } from '../src/simulation/historicalInitialization';
 import { HISTORICAL_BASELINES, type HistoricalOverrides, type RNGFunction } from '../src/types/config';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -143,16 +144,14 @@ async function runHindcast(
     // Get RNG from engine for deterministic state creation
     const rng: RNGFunction = engine.getRNG().next.bind(engine.getRNG());
 
-    // Create state with historical overrides
-    const state = createDefaultInitialState(
+    // CRITICAL FIX (Nov 24, 2025): Use createHistoricalInitialState for proper historical mode
+    // This sets simulationStartYear which TimeAdvancementPhase needs to track actual calendar years
+    const state = await createHistoricalInitialState({
+      year: startYear,
       rng,
-      'historical',
-      undefined,  // alignmentDynamicsConfig
-      undefined,  // climatePriorityConfig
-      undefined,  // thresholdSliders
-      undefined,  // speculativeScenario
-      historicalOverrides  // Historical overrides for hindcast
-    );
+      includeAIAgents: false,  // No AI agents before 2018
+      scenarioMode: 'historical'
+    });
 
     // Track CO2 at yearly intervals
     for (let month = 0; month < maxMonths; month++) {
