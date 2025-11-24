@@ -5,11 +5,24 @@
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**Current Status:** 🟢 **GOOD** (Nov 24, 2025 Night Session - Hindcast Phase 4 GROWING!)
+**Current Status:** 🟢 **GOOD** (Nov 24, 2025 Very Late Night Session)
 - **Research Quality:** A (96% sources from 2020+, key citations verified)
 - **Architecture Health:** A- (CRITICAL tipping cascade recalibrated, audits passing)
-- **System Performance:** Monte Carlo deterministic, hindcast now shows population GROWTH
-- **System Trajectory:** IMPROVING - Hindcast population now 5.3B → 6.24B (was declining to 4.15B!)
+- **System Performance:** Monte Carlo deterministic, hindcast year tracking FIXED
+- **System Trajectory:** IMPROVING - Year calculation bug fixed (was using 0,1,2 instead of 1990,1991,1992)
+- **Nov 24 Very Late Session (Worker Session) - BUG FIXES:**
+  - **YEAR CALCULATION BUG FIX** (commit 1243af305)
+    - TimeAdvancementPhase was reading from non-existent `state.simulationStartYear`
+    - Fixed to read from `state.config.startYear ?? 2025`
+    - Historical birth rate scaling now uses correct years (1990, 1991, etc.)
+  - **ERA_MORTALITY_MULTIPLIERS Verification** (verification_dd327b7_UPDATED_20251124.md)
+    - Citations verified against World Bank CDR (18.5% decline), IHME GBD (30-40% decline)
+    - Interpretation clarified: These are CRISIS VULNERABILITY multipliers, not baseline mortality
+    - Research sources validated (Bangladesh cyclone comparison, etc.)
+  - **Remaining Issue (Phase 5 work):** Hindcast still shows ~3% population decline vs expected 1.5% growth
+    - Birth rates appear correct after historical scaling
+    - Suspected cause: Regional death rates or crisis mechanisms too aggressive
+    - Needs detailed phase-by-phase investigation to isolate
 - **Nov 24 Late Night Session (Worker Session) - PHASE 4 COMPLETE:**
   - **HINDCAST CALIBRATION PHASE 4 - POPULATION GROWTH FIXED** (commit b01a37c40)
     - Root cause 1: Regional populations not scaled for historical years (7.4B vs 5.3B mismatch)
@@ -77,9 +90,15 @@
      - ✅ Year tracking fix (1990, 1991, etc. not 0, 1, 2)
      - ✅ Historical birth rate scaling in regional system
      - **Result:** Population 5.3B → 6.24B (growing! Target: 8.1B)
-   - **Remaining calibration** (not critical bug):
+   - **Remaining calibration** (not critical bug - Phase 5 work):
      - Population 23% under target (6.24B vs 8.1B) - likely needs birth rate or mortality fine-tuning
      - CO2 concentration 25-32% too high (emissions model needs calibration)
+     - **Nov 24 Very Late Night Investigation:**
+       - Year calculation bug FIXED (commit 1243af305) - was using 0,1,2 instead of 1990,1991,1992
+       - Birth rate scaling appears correct (11M births/mo vs 10.7M expected)
+       - Death rates still producing ~3% annual decline vs expected 1.5% growth
+       - Likely cause: Regional death rate calculations or crisis mechanisms too aggressive
+       - Next step: Phase-by-phase debugging to isolate death rate source
 
 1b. **Tipping Cascade Recalibration** - **COMPLETE** (Nov 24, 2025)
    - ~~Audit found tipping cascades use 2.5th percentile values, not median~~
