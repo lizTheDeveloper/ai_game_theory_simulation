@@ -1,44 +1,100 @@
 'use client';
 
+/**
+ * Game Dashboard Demo Page
+ *
+ * Demonstrates the game dashboard connected to the GameStateProvider.
+ * Works in two modes:
+ * 1. Mock mode - Uses mock data for UI testing
+ * 2. Connected mode - Would connect to real simulation (future)
+ */
+
 import React, { useState } from 'react';
+import { GameStateProvider, useGameState } from '@/game/providers/GameStateProvider';
 import { GameDashboard } from '@/components/dashboards/game';
+import styles from './page.module.css';
 
 /**
- * Demo page for the Game Dashboard
- * Shows the far-future aesthetic game interface
+ * Inner component that consumes game state
  */
-export default function GameDashboardDemo() {
-  const [speed, setSpeed] = useState(1);
-  const [mode, setMode] = useState('overview');
+function DashboardWithState() {
+  const {
+    isInitialized,
+    isLoading,
+    currentMonth,
+    currentYear,
+    currentMonthName,
+    recentEvents,
+    advanceMonth,
+    setSpeed,
+    queueDecision,
+    loadMockData,
+  } = useGameState();
 
-  const handleAdvanceMonth = () => {
-    console.log('Advancing to next month...');
-    // In real implementation, this would trigger simulation step
+  const [activeMode, setActiveMode] = useState('overview');
+  const [simulationSpeed, setSimulationSpeed] = useState(1);
+
+  const handleModeChange = (mode: string) => {
+    setActiveMode(mode);
   };
 
-  const handleSpeedChange = (newSpeed: number) => {
-    setSpeed(newSpeed);
-    console.log(`Simulation speed changed to: ${newSpeed}`);
-  };
-
-  const handleModeChange = (newMode: string) => {
-    setMode(newMode);
-    console.log(`Action mode changed to: ${newMode}`);
+  const handleSpeedChange = (speed: number) => {
+    setSimulationSpeed(speed);
+    setSpeed(speed);
   };
 
   const handleDecisionSelect = (decisionId: string) => {
-    console.log(`Decision selected: ${decisionId}`);
-    // In real implementation, this would open decision modal
+    queueDecision(decisionId);
   };
 
   return (
-    <div style={{ height: '100vh', background: '#000' }}>
-      <GameDashboard
-        onAdvanceMonth={handleAdvanceMonth}
-        onSpeedChange={handleSpeedChange}
-        onModeChange={handleModeChange}
-        onDecisionSelect={handleDecisionSelect}
-      />
+    <div className={styles.container}>
+      <header className={styles.header}>
+        <h1>Game Dashboard Demo</h1>
+        <div className={styles.controls}>
+          <button
+            onClick={loadMockData}
+            className={styles.controlButton}
+          >
+            Load Mock Data
+          </button>
+          <span className={styles.status}>
+            {isInitialized ? 'Initialized' : 'Not initialized'}
+            {isLoading && ' (Loading...)'}
+          </span>
+        </div>
+      </header>
+
+      <main className={styles.main}>
+        <GameDashboard
+          onAdvanceMonth={advanceMonth}
+          onSpeedChange={handleSpeedChange}
+          onModeChange={handleModeChange}
+          onDecisionSelect={handleDecisionSelect}
+        />
+      </main>
+
+      <footer className={styles.footer}>
+        <div className={styles.debugInfo}>
+          <strong>Debug Info:</strong>
+          <span>Month: {currentMonth}</span>
+          <span>Date: {currentMonthName} {currentYear}</span>
+          <span>Events: {recentEvents.length}</span>
+          <span>Mode: {activeMode}</span>
+          <span>Speed: {simulationSpeed}x</span>
+        </div>
+      </footer>
     </div>
+  );
+}
+
+/**
+ * Main page component with provider wrapper
+ */
+export default function GameDashboardDemoPage() {
+  return (
+    <GameStateProvider initialScenario="baseline">
+      <DashboardWithState />
+    </GameStateProvider>
   );
 }

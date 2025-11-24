@@ -18,6 +18,7 @@
  * - /core/      - Core game logic (GameSession, InfluenceCalculator, etc.)
  * - /scenarios/ - Research-validated scenarios (baseline, optimistic, pessimistic)
  * - /observers/ - Event observation (SimulationObserver, MetricsCollector)
+ * - /providers/ - React context providers (GameStateProvider)
  */
 
 // === Types (Public) ===
@@ -164,3 +165,7 @@ export function createMetricsCollector(): MetricsCollectorClass {
 export function createCriticalJunctureDetector(): CriticalJunctureDetectorClass {
   return new CriticalJunctureDetectorClass();
 }
+
+// === React Providers ===
+// Note: Providers are exported separately to avoid pulling React into non-React contexts
+// Import directly from '@/game/providers/GameStateProvider' for React usage
