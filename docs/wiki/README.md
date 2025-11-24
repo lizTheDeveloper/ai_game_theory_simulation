@@ -66,6 +66,27 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **Integration:** Reads from `GameStateSnapshot` (game layer), never imports simulation directly
 - 📄 **Files:** 12 new files, ~1,800 lines total (React/TypeScript + CSS modules)
 
+**Nov 24: GameStateProvider - Dashboard/Simulation Bridge** (commit 63ffd76)
+- 🔌 **NEW PROVIDER:** `GameStateProvider.tsx` - React context connecting dashboard to simulation
+- **Architecture:**
+  - `useGameState()` hook for components to access game state
+  - Bridges `SimulationObserver` and `MetricsCollector` with React state
+  - Transforms raw `GameState` into UI-ready data structures
+  - Read-only observer pattern - all mutations via queued `PlayerDecision`s
+- **Actions Exposed:**
+  - `advanceMonth()` - Step simulation forward
+  - `setSpeed(n)` - Adjust simulation speed
+  - `queueDecision(id)` - Queue player advocacy action
+  - `startNewGame(scenario, seed?)` - Initialize new session
+  - `loadMockData()` - Populate demo data for UI testing
+- **UI Data Transforms:**
+  - `CurrencyData[]` - Research/Influence/Resources/AI Trust with trends
+  - `OutcomeDistribution` - Utopia/alignment/struggle/collapse/extinction probabilities
+  - `GameEventDisplay[]` - Severity-coded events for UI
+  - `PendingDecision[]` - Urgency-tagged decisions with countdowns
+- **Demo Integration:** `/game-dashboard-demo` now connected to provider
+- 📄 **Files:** `src/game/providers/GameStateProvider.tsx` (479 lines), updated demo page
+
 **Nov 24: Game Layer TypeScript Compilation Fixes** (commit a984b51)
 - 🔧 **Bug Fix:** Resolved 14 TypeScript compilation errors in `src/game/` layer
 - **Changes:**
