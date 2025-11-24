@@ -251,7 +251,7 @@ function printStatistics(scenarioId: string, stats: ReturnType<typeof computeSta
  */
 async function main() {
   const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
-  const logFile = `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/logs/scenario_phase3_mc_${timestamp}.log`;
+  const logFile = `${__dirname}/../logs/scenario_phase3_mc_${timestamp}.log`;
 
   console.log(`\n${'='.repeat(80)}`);
   console.log(`🎯 SCENARIO ANALYSIS FRAMEWORK - PHASE 3`);
