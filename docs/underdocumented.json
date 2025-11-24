@@ -62529,47 +62529,23 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BaselineMortalityPhase.ts",
-    "line": 151,
-    "type": "property",
-    "name": "baseRisk",
-    "currentDoc": "(none)",
-    "context": "baseRisk: baselineRisk,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BaselineMortalityPhase.ts",
     "line": 152,
     "type": "property",
-    "name": "proximate",
+    "name": "location",
     "currentDoc": "(none)",
-    "context": "proximate: 'natural causes',"
+    "context": "location: 'BaselineMortalityPhase.execute',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BaselineMortalityPhase.ts",
     "line": 153,
     "type": "property",
-    "name": "root",
+    "name": "valueName",
     "currentDoc": "(none)",
-    "context": "root: 'aging/disease',"
+    "context": "valueName: 'compensatedBaselineRisk',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BaselineMortalityPhase.ts",
     "line": 154,
-    "type": "property",
-    "name": "confidence",
-    "currentDoc": "(none)",
-    "context": "confidence: 'HIGH',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BaselineMortalityPhase.ts",
-    "line": 155,
-    "type": "property",
-    "name": "scope",
-    "currentDoc": "(none)",
-    "context": "scope: 'GLOBAL',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BaselineMortalityPhase.ts",
-    "line": 156,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -62577,7 +62553,39 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BaselineMortalityPhase.ts",
-    "line": 157,
+    "line": 155,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { baselineRisk, eraMultiplier, year: state.currentYear }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BaselineMortalityPhase.ts",
+    "line": 166,
+    "type": "property",
+    "name": "confidence",
+    "currentDoc": "(none)",
+    "context": "confidence: 'HIGH',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BaselineMortalityPhase.ts",
+    "line": 167,
+    "type": "property",
+    "name": "scope",
+    "currentDoc": "(none)",
+    "context": "scope: 'GLOBAL',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BaselineMortalityPhase.ts",
+    "line": 168,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BaselineMortalityPhase.ts",
+    "line": 169,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
