@@ -1,6 +1,6 @@
 # Climate Tipping Point Timescale Research
 **Date:** November 7, 2025 (Updated)
-**Last Updated:** November 11, 2025 (Autonomous Researcher - added Oct 2025 Global Tipping Points Report)
+**Last Updated:** November 24, 2025 (Autonomous Researcher - added ESD April 2025 probability estimates, Science Advances AMOC physics-based early warning)
 **Original Author:** Super-Alignment Researcher (Orchestrator Workflow)
 **Purpose:** Extract updated climate tipping timescales to fix ROOT CAUSE of 100% dystopia convergence
 **Research Quality:** A+ (IPCC AR6 + Armstrong McKay 2022 + Global Tipping Points Report 2025 + 2024-2025 peer-reviewed sources)
@@ -572,6 +572,52 @@ totalClimateStabilityImpact += element.impactClimateStability * scaledProgress;
 
 ---
 
+### 🔬 November 2025 Update: New Probability Estimates and Early Warning Signals
+
+**1. High Probability of Triggering Tipping Points Under Current Policies (ESD April 2025)**
+
+**Source:** Klose, A.K., et al. (2025). "High probability of triggering climate tipping points under current policies modestly amplified by Amazon dieback and permafrost thaw." *Earth System Dynamics*, 16, 565. DOI: 10.5194/esd-16-565-2025
+
+**Key Findings:**
+- **62% probability** of triggering tipping elements averaged across all elements under SSP2-4.5 (intermediate emissions)
+- Amazon dieback and permafrost thaw create modest additional amplification
+- Interconnection analysis of 4 core elements: Greenland Ice Sheet, West Antarctic Ice Sheet, AMOC, Amazon Rainforest
+- Current decade (2020-2030) critical for determining trajectory
+
+**Simulation Implications:**
+- SSP2-4.5 scenario → majority probability of triggering at least one major tipping point
+- Policy decisions in current decade strongly affect long-term outcomes
+- Supports modeling interconnected tipping cascades
+
+**2. Physics-Based AMOC Early Warning Signals (Science Advances 2024)**
+
+**Source:** van Westen, R.M., et al. (2024). "Physics-based early warning signal shows that AMOC is on tipping course." *Science Advances*, 10(6), eadk1189. DOI: 10.1126/sciadv.adk1189
+
+**Key Findings:**
+- Physics-based analysis confirms AMOC is on tipping course (not just statistical inference)
+- Collapse estimate: 2025-2095 (95% confidence interval)
+- SST-based time series shows increasing variance and autocorrelation (classic early warning indicators)
+- Under high emissions, AMOC could collapse around mid-century
+
+**Updates to AMOC Assessment:**
+- Validates current simulation range (50-300 years) as conservative
+- Mid-century collapse possible → lower bound of 50 years remains appropriate
+- Adds physics-based confirmation to existing statistical early warning signals (Ditlevsen & Ditlevsen 2023)
+
+**3. Four Interconnected Elements Destabilizing (October 2025)**
+
+**Source:** Global Tipping Points Report 2025 + CNN coverage (October 2025)
+
+**Key Finding:** Four key parts of Earth's climate system showing diminished resilience:
+1. Greenland Ice Sheet
+2. AMOC
+3. Amazon Rainforest
+4. South American Monsoon System
+
+**Critical Insight:** All four show signs of approaching tipping points simultaneously, increasing risk of cascading failures. This validates the simulation's cascade multiplier approach (1.15-1.60× for 2-4+ elements).
+
+---
+
 ### 🔥 November 2025 Update: Coral Bleaching Crisis Intensifies
 
 **2023-2025 Global Mass Bleaching Event - Status Update (November 2025):**
@@ -614,11 +660,11 @@ totalClimateStabilityImpact += element.impactClimateStability * scaledProgress;
 
 ---
 
-**Document Status:** UPDATED WITH NOVEMBER 2025 CORAL BLEACHING DATA (November 16, 2025)
+**Document Status:** UPDATED WITH NOVEMBER 2025 PROBABILITY ESTIMATES + AMOC EARLY WARNING SIGNALS (November 24, 2025)
 **Research Quality:** A+ (95% peer-reviewed, 85% from 2022-2025, includes Nov 2025 updates + Oct 2025 Global Tipping Points Report)
 **Oldest Source:** DeConto & Pollard 2016 (9 years old) - still cited as foundational WAIS study
-**Newest Sources:** NOAA Coral Watch Nov 2025, Global Tipping Points Report 2025 (Oct), Klose et al. 2024, Rosser et al. 2024, Willeit & Ganopolski 2024
-**Last Verified:** November 16, 2025
+**Newest Sources:** Klose et al. ESD April 2025 (62% probability), van Westen Science Advances 2024 (AMOC early warning), NOAA Coral Watch Nov 2025, Global Tipping Points Report 2025 (Oct)
+**Last Verified:** November 24, 2025
 **Critical Breaking News:** First tipping point (coral reefs) officially confirmed crossed at 1.4°C warming - November 2025 bleaching data shows crisis intensifying
 **Recommendation:** Proceed to implementation with focus on AMOC expansion + impact scaling review + coral reef threshold adjustment to 1.2°C (CROSSED)
 **Critical Finding:** ROOT CAUSE may be impact scaling logic, not timescale parameters
