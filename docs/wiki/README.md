@@ -48,7 +48,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📄 **Files:** AIAgentCoordinationPhase.ts, IrreversibilityTrackingPhase.ts, ai-collective-evolution.ts, tipping-points.ts
 - 🔬 **Research:** reviews/mechanism_audit_ai_coordination_20251124.md
 
-**Nov 24: Climate Mini-Hindcast Validation Script** (commit 1351573)
+**Nov 24: Climate Mini-Hindcast Validation Script** (commit d38851c)
 - 🔬 **NEW SCRIPT:** `scripts/hindcastValidation.ts` - Mini-hindcast for 1990-2010 CO2 trajectory
 - **Purpose:** Compare simulation CO2 against Keeling curve checkpoints
 - **Checkpoints (Scripps/NOAA):** 1990=354ppm, 1995=361ppm, 2000=369ppm, 2005=380ppm, 2010=390ppm
