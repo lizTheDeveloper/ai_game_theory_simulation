@@ -146,7 +146,16 @@ export async function createHistoricalInitialState(
   // Time
   baseState.currentYear = year;
   baseState.currentMonth = 0;
-  // Store simulation start year for reference (not in strict type but used at runtime)
+
+  // CRITICAL FIX (Nov 25, 2025): Set config.startYear for TimeAdvancementPhase
+  // TimeAdvancementPhase reads config.startYear to calculate currentYear = startYear + months/12
+  // Without this, year calculation breaks after Month 12: uses 2025 default instead of historical year
+  if (baseState.config) {
+    baseState.config.startYear = year;
+    console.log(`  config.startYear set to ${year} for historical hindcast`);
+  }
+
+  // Store simulation start year for reference (legacy - keeping for backwards compatibility)
   (baseState as unknown as Record<string, unknown>).simulationStartYear = year;
 
   // Climate state - set BOTH planetary boundaries AND resourceEconomy temperature

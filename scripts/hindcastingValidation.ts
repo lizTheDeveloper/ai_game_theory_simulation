@@ -116,6 +116,13 @@ function modify1990State(state: any): void {
   state.currentYear = CONFIG.startYear;
   state.currentMonth = 0;
 
+  // CRITICAL FIX (Nov 25, 2025): Set config.startYear for TimeAdvancementPhase
+  // Without this, year calculation breaks after Month 12
+  if (state.config) {
+    state.config.startYear = CONFIG.startYear;
+    state.config.scenarioMode = 'historical';
+  }
+
   // === Environmental State ===
   if (state.environmentalAccumulation) {
     state.environmentalAccumulation.biodiversityIndex = HISTORICAL_1990.biodiversityIndex;
