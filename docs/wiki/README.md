@@ -29,6 +29,20 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 24: CRITICAL - Non-Determinism in Alignment Calculations RESOLVED** (commit 5858b05)
+- 🔧 **ROOT CAUSES FOUND AND FIXED:**
+  1. **Async/await bug:** `checkAndUpdateAgentWeights` was async but called without await - promises resolved at non-deterministic times affecting agent weights/alignment
+  2. **Global WUE state persistence:** `globalWUE` variable mutated during runs and persisted between Monte Carlo runs in same process
+- 🛠️ **FIXES APPLIED:**
+  - Made `checkAndUpdateAgentWeights` synchronous (uses fallback weights for deterministic simulation)
+  - Added `resetGlobalWUE()` function for module state cleanup
+  - Created `src/simulation/utils/resetModuleState.ts` - centralized utility to reset all module-level singletons
+  - Removed unsafe type cast in AIAlignmentEvolutionPhase
+- ✅ **VERIFICATION:** Separate process runs now produce IDENTICAL results (22 agents, 73.0000 cap, 12.8955 align)
+- ⚠️ **REMAINING:** Same-process runs still have residual module state issues (workaround: use separate processes for Monte Carlo)
+- 📄 **Investigation:** `reviews/determinism_bug_investigation_20251124.md` (82 lines)
+- 📝 **Files:** `integration.ts` (sync conversion), `aiInfrastructureResources.ts` (resetGlobalWUE), `resetModuleState.ts` (new)
+
 **Nov 24: Multi-Agent AI Coordination Failure Modes Research** (commit 109a89a)
 - 🔬 **NEW RESEARCH:** `research/multi_agent_coordination_failure_modes_20251124.md` (423 lines, 8 sources)
 - **Key Finding:** "A collection of safe agents does NOT guarantee a safe collection of agents"
@@ -2507,15 +2521,16 @@ All logs preserved in `/logs/` directory (NEVER `/tmp/` - tmp gets cleared):
   - ~~Floating-point arithmetic order dependencies~~ - Not the issue
   - ~~Array operations with undefined ordering~~ - Not the issue
   - ~~Phase execution order issues~~ - Not the issue
-  - **Hidden async operations** - YES! `checkAndUpdateAgentWeights` was async without await
-  - **Module-level state persistence** - `globalWUE` and other singletons persisted between runs
+  - **Hidden async operations** - YES! `checkAndUpdateAgentWeights` was async without await (FIXED: made synchronous)
+  - **Module-level state persistence** - `globalWUE` and other singletons persisted between runs (FIXED: added `resetGlobalWUE()`)
+  - See commit 5858b05 for full fix details
 
 **Infrastructure Added:**
 
 - Pre-commit hook: Detects unsorted object iterations before commit
 - CI workflow: Validates determinism on every PR (10 runs × 12 months)
 - RNG logging: `LOG_RNG_CALLS=true` environment variable for debugging
-- **NEW:** `resetModuleState()` utility for Monte Carlo runs (Nov 24, 2025)
+- **`src/simulation/utils/resetModuleState.ts`** (Nov 24, 2025): Centralized utility to reset all module-level singletons between Monte Carlo runs. Call `resetModuleState()` before creating new `SimulationEngine`.
 
 **Next Steps:** ✅ COMPLETE
 
