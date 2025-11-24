@@ -835,7 +835,12 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
 **Next Up (HIGH Priority):**
 - [ ] Convert HTML mockups to React components
 - [ ] Connect components to simulation state
-- [ ] Create `src/game/` directory structure (per PHASE1_TECHNICAL_SPEC.md)
+- [x] Create `src/game/` directory structure (per PHASE1_TECHNICAL_SPEC.md) - **COMPLETE** (Nov 24, 2025)
+  - 17 files created across 4 subdirectories (core/, types/, scenarios/, observers/)
+  - Core types: GameSessionInterface, ResearchScenarioId, QueueResult, GameLayerEvent
+  - Module boundary rules enforced (Sylvia-approved)
+  - Type checking passes
+  - Commit: a984b511c
 - [ ] ARIA AI Advisor integration (MEDIUM)
 
 **Key Documents:**
