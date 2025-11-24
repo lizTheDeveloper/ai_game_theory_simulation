@@ -149,18 +149,20 @@ async function runHindcast(seed: number, includeShocks: boolean): Promise<Hindca
       } : undefined,
     });
 
-    // Create simulation engine
-    const engine = new SimulationEngine(initialState, { rng });
+    // Create simulation engine with seed (uses internal RNG)
+    const engine = new SimulationEngine({ seed });
 
     // Run simulation, capturing annual snapshots
+    // NOTE: engine.step() takes state as parameter and returns new state
     const annualSnapshots: AnnualSnapshot[] = [];
+    let state = initialState;
 
     for (let month = 0; month < durationMonths; month++) {
-      engine.step();
+      const result = engine.step(state);
+      state = result.state;
 
       // Capture annual snapshot at end of each year (month 11)
       if ((month + 1) % 12 === 0) {
-        const state = engine.getState();
         const yearComplete = CONFIG.startYear + Math.floor((month + 1) / 12);
 
         annualSnapshots.push({
@@ -176,8 +178,7 @@ async function runHindcast(seed: number, includeShocks: boolean): Promise<Hindca
     }
 
     // Validate final state against 2024 actuals
-    const finalState = engine.getState();
-    const validation = await validateHistoricalState(finalState, CONFIG.endYear);
+    const validation = await validateHistoricalState(state, CONFIG.endYear);
 
     return {
       seed,

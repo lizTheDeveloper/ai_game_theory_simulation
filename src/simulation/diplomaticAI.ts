@@ -168,13 +168,21 @@ function updateDiplomaticCapabilities(dipAI: DiplomaticAIState, state: GameState
 
 /**
  * Update risks - KEY: High capability + low alignment = HIGH RISK
+ * NOTE: aiAgents may be empty in historical simulations (pre-2018), in which case
+ * all AI risks are zero (no AI exists yet).
  */
 function updateDiplomaticRisks(dipAI: DiplomaticAIState, state: GameState): void {
-  const aiAgents = assertNonEmpty(state.aiAgents, {
-    location: 'updateDiplomaticRisks',
-    valueName: 'aiAgents',
-    month: state.currentMonth
-  });
+  const aiAgents = state.aiAgents ?? [];
+
+  // Handle empty AI agents (historical mode pre-2018) - all AI risks are zero
+  if (aiAgents.length === 0) {
+    dipAI.risks.manipulationRisk = 0;
+    dipAI.risks.informationWarfareRisk = 0;
+    dipAI.risks.dependencyCaptureRisk = 0;
+    dipAI.risks.missionCreepRisk = 0;
+    dipAI.risks.adversarialMediationRisk = 0;
+    return;
+  }
 
   const alignmentSum = aiAgents.reduce((sum, ai) => {
     if (typeof ai.trueAlignment !== 'number') {
@@ -476,11 +484,13 @@ export function attemptDiplomaticIntervention(
     dipAI.stakeholderTrust = Math.max(0.2, dipAI.stakeholderTrust - 0.08);
     
     // Check if failure was due to bias/manipulation
-    const aiAgents = assertNonEmpty(state.aiAgents, {
-      location: 'attemptDiplomaticIntervention',
-      valueName: 'aiAgents',
-      month: state.currentMonth
-    });
+    // NOTE: aiAgents may be empty in historical simulations (pre-2018)
+    const aiAgents = state.aiAgents ?? [];
+
+    // If no AI agents, failure was not due to AI manipulation
+    if (aiAgents.length === 0) {
+      return { success: false, reason: `Failed to mediate ${crisisType} - no AI capability available` };
+    }
 
     const alignmentSum = aiAgents.reduce((sum, ai) => {
       if (typeof ai.trueAlignment !== 'number') {
@@ -532,11 +542,13 @@ function calculateInterventionSuccessProbability(
   const trustComponent = dipAI.stakeholderTrust * 0.3;
   
   // Alignment multiplier (misaligned AI less effective)
-  const aiAgents = assertNonEmpty(state.aiAgents, {
-    location: 'calculateInterventionSuccessProbability',
-    valueName: 'aiAgents',
-    month: state.currentMonth
-  });
+  // NOTE: aiAgents may be empty in historical simulations (pre-2018)
+  const aiAgents = state.aiAgents ?? [];
+
+  // If no AI agents, success probability is near zero (no AI capability)
+  if (aiAgents.length === 0) {
+    return 0.1; // Small baseline probability without AI assistance
+  }
 
   const alignmentSum = aiAgents.reduce((sum, ai) => {
     if (typeof ai.trueAlignment !== 'number') {
