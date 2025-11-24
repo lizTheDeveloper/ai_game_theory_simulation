@@ -60,11 +60,20 @@ export class TimeAdvancementPhase implements SimulationPhase {
     // Advance time by one month
     setDeterministicRng(_rng);
     state.currentMonth += 1;
-    // HINDCAST FIX (Nov 24, 2025): Use config.startYear + elapsed years
-    // Previously: state.currentYear = Math.floor(state.currentMonth / 12)
-    // This incorrectly treated currentYear as "years elapsed" not "calendar year"
-    // For hindcast from 1990: month 12 should be year 1991, not year 1
-    state.currentYear = state.config.startYear + Math.floor(state.currentMonth / 12);
+
+    // CRITICAL FIX (Nov 24, 2025): Respect simulation start year for historical hindcasts
+    // Historical mode starts at year 1990 (or other historical year), not year 0
+    // currentYear should be startYear + years elapsed, not just years elapsed
+    const simulationStartYear = (state as { simulationStartYear?: number }).simulationStartYear ?? 0;
+    state.currentYear = simulationStartYear + Math.floor(state.currentMonth / 12);
+
+    // DEBUG (Nov 24, 2025): Verify start year is propagating correctly
+    if (state.currentMonth === 1) {
+      console.log(`[TimeAdvancementPhase DEBUG] Month 1:`);
+      console.log(`  simulationStartYear: ${simulationStartYear}`);
+      console.log(`  currentMonth: ${state.currentMonth}`);
+      console.log(`  currentYear: ${state.currentYear}`);
+    }
 
     return { events: [] };
   }

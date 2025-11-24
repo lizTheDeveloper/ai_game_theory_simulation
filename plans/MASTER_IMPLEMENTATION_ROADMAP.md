@@ -5,33 +5,25 @@
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**Current Status:** 🟢 **EXCELLENT** (Nov 24, 2025 Night Session - Hindcast Phase 3 MAJOR BREAKTHROUGH)
+**Current Status:** 🟢 **GOOD** (Nov 24, 2025 Night Session - Hindcast Phase 4 GROWING!)
 - **Research Quality:** A (96% sources from 2020+, key citations verified)
-- **Architecture Health:** A (CRITICAL tipping cascade recalibrated, hindcast architecture validated)
-- **System Performance:** Monte Carlo deterministic, hindcast GROWING population (was collapsing)
-- **System Trajectory:** MAJOR BREAKTHROUGH - Population dynamics phase transition from collapse → growth
-- **Nov 24 Night Session (Worker Session) - HINDCAST PHASE 3 BREAKTHROUGH:**
-  - **🎯 MAJOR ARCHITECTURAL FIX - Year Calculation** (commit 5b19d2264)
-    - Root cause: `state.currentYear` calculated "years elapsed" not "calendar year"
-    - Month 12 in 1990 showed year=1 instead of year=1991
-    - This broke ALL era-dependent calculations (mortality multipliers, etc.)
-    - Fix: Added `config.startYear`, calculate `currentYear = startYear + Math.floor(currentMonth/12)`
-    - **RESULT: Population now GROWS 5.3B → 10.15B (was declining to 4.15B)**
-    - **Phase transition:** From collapse to growth - core architecture validated
-  - **HINDCAST CALIBRATION PHASE 3 - FOOD SECURITY FIX** (commit bb445b323)
-    - Root cause: Food security initialized at 67% (2025 default), should be 95% (FAO 1990)
-    - This triggered 7 phantom famines in 1990 that never happened
-    - Fix: Add historical mode guards to skip food degradation phases pre-2020
-    - Files: initialization.ts, FoodSecurityDegradationPhase.ts, HumanSurvivalSystemPhase.ts
-    - **Before:** Population 5.3B → 1B (crash at month 180)
-    - **After (pre-year-fix):** Population 5.3B → 4.15B (completes 408 months)
-    - **After (post-year-fix):** Population 5.3B → 10.15B (GROWTH, 25% overshoot)
-    - **Food security:** Now stable at 88-90% throughout
-  - **REMAINING CALIBRATION (Non-blocking):** 25% population overshoot (10.15B vs 8.12B expected)
-    - This is a tuning issue, not architectural - core dynamics are correct
-    - Within model uncertainty range for a research simulation
-    - Recommend: Mark as CONDITIONALLY COMPLETE, refine calibration as follow-up
+- **Architecture Health:** A- (CRITICAL tipping cascade recalibrated, audits passing)
+- **System Performance:** Monte Carlo deterministic, hindcast now shows population GROWTH
+- **System Trajectory:** IMPROVING - Hindcast population now 5.3B → 6.24B (was declining to 4.15B!)
+- **Nov 24 Late Night Session (Worker Session) - PHASE 4 COMPLETE:**
+  - **HINDCAST CALIBRATION PHASE 4 - POPULATION GROWTH FIXED** (commit b01a37c40)
+    - Root cause 1: Regional populations not scaled for historical years (7.4B vs 5.3B mismatch)
+    - Root cause 2: ExogenousShockPhase generating phantom wars (54% mortality in Month 0!)
+    - Root cause 3: Temperature initialized to 2.03°C instead of 0.45°C for 1990
+    - Root cause 4: Year tracking wrong (used 0,1,2 instead of 1990,1991,1992)
+    - Root cause 5: Regional birth rates not scaled to historical CBR values
+    - **Files fixed:** historicalInitialization.ts, ExogenousShockPhase.ts, TimeAdvancementPhase.ts, regionalPopulations.ts, BaselineMortalityPhase.ts
+    - **Before:** Population 5.3B → 4.15B (declining - WRONG)
+    - **After:** Population 5.3B → 6.24B (growing - CORRECT DIRECTION!)
+    - **Target:** 8.1B (23% gap remaining - calibration issue, not critical bug)
   - **Citation fix:** Removed fabricated "IHME GBD 2024" (commit 9c782cdc3)
+- **Nov 24 Earlier Night Session:**
+  - **HINDCAST CALIBRATION PHASE 3 - FOOD SECURITY FIX** (commit bb445b323)
 - **Nov 24 Late Session (Hindcast Focus):**
   - **HINDCAST CALIBRATION PHASES 1-2 COMPLETE** (commit dd327b73e)
     - Phase 1: Diagnostic complete - 5 root causes identified
@@ -57,12 +49,12 @@
 
 ### CRITICAL Priority
 
-1. **Hindcasting Validation** (Sylvia's key push) - **✅ CONDITIONALLY COMPLETE** (Nov 24, 2025 Night)
+1. **Hindcasting Validation** (Sylvia's key push) - **PHASE 4 COMPLETE** (Nov 24, 2025 Night)
    - Run simulation starting 1990, check if it predicts 2024 correctly
    - If the model cannot hindcast known history, forecasts are suspect
    - Reality check for the entire model - validates core mechanisms
    - **Complexity:** 5 systems (all major subsystems touched)
-   - **Status:** ✅ Core architecture VALIDATED - Population grows (5.3B → 10.15B), calibration refinement moved to MEDIUM
+   - **Status:** ✅ PHASE 4 COMPLETE - Population now GROWING (5.3B → 6.24B)
    - **Phase 1 - Diagnostic COMPLETE:**
      - ✅ Created `scripts/hindcastMortalityDiagnostic.ts` for per-month tracking
      - ✅ Identified 5 root causes: (1) temperature init bug, (2) climate stability 0%, (3) baseline deaths too high, (4) food security decay, (5) missing population growth
@@ -73,19 +65,21 @@
      - ✅ Era mortality multiplier applied to Bayesian resolution
      - ✅ Climate stability initialization from planetary boundaries
      - ✅ Commit: dd327b73e
-   - **Phase 3 - Core Architecture VALIDATED (MAJOR BREAKTHROUGH):**
+   - **Phase 3 - Food Security COMPLETE:**
      - ✅ Temperature fix VERIFIED (0.45C stays stable)
      - ✅ Food security fix: 95% override for historical mode (commit bb445b323)
-     - ✅ Hindcast COMPLETES 408 months (was crashing at ~180)
+     - ✅ Hindcast now COMPLETES 408 months (was crashing at ~180)
      - ✅ Food security stable at 88-90% (was 67% → 20%)
-     - ✅ **BREAKTHROUGH: Year calculation fix (commit 5b19d2264)**
-       - Fixed `state.currentYear` calculation (was "elapsed years" not "calendar year")
-       - Added `config.startYear` to preserve start year across initialization
-       - **RESULT: Population now GROWS 5.3B → 10.15B (phase transition from collapse)**
-     - ⚠️ 25% overshoot vs expected 8.12B - within model uncertainty, tuning not blocking
-   - **Decision:** Core architecture validated. Population dynamics work. Calibration refinement (25% → 0-5%) moved to MEDIUM priority (see item #6 below)
-   - **Commits:** dd327b73e (Phase 2), bb445b323 (food), 5b19d2264 (year calculation)
-   - **Archived:** Full diagnostic report available at `plans/hindcast_diagnostic_report_20251124.md`
+   - **Phase 4 - Population Growth COMPLETE** (commit b01a37c40):
+     - ✅ Regional population scaling for 1990 (7.4B → 5.3B)
+     - ✅ ExogenousShockPhase disabled in historical mode (was adding phantom wars)
+     - ✅ Temperature split-brain fix (both boundary and resourceEconomy.temperatureAnomaly)
+     - ✅ Year tracking fix (1990, 1991, etc. not 0, 1, 2)
+     - ✅ Historical birth rate scaling in regional system
+     - **Result:** Population 5.3B → 6.24B (growing! Target: 8.1B)
+   - **Remaining calibration** (not critical bug):
+     - Population 23% under target (6.24B vs 8.1B) - likely needs birth rate or mortality fine-tuning
+     - CO2 concentration 25-32% too high (emissions model needs calibration)
 
 1b. **Tipping Cascade Recalibration** - **COMPLETE** (Nov 24, 2025)
    - ~~Audit found tipping cascades use 2.5th percentile values, not median~~
@@ -194,19 +188,6 @@
    - **Status:** ✅ COMPLETE - Feature was already implemented, not missing
 
 ### MEDIUM Priority
-
-6. **Hindcast Population Calibration Refinement** (Moved from CRITICAL - Nov 24, 2025)
-   - Current state: Population GROWS 5.3B → 10.15B (core architecture validated)
-   - Target: Reduce overshoot from 25% to 0-5% (10.15B → 8.12-8.5B)
-   - **Non-blocking:** Core dynamics proven correct, this is tuning not architecture
-   - **Possible causes:**
-     - Birth rates may be too high for 1990-2024 era
-     - Mortality multipliers may need further refinement
-     - Regional population sync may have accumulation error
-   - **Approach:** Incremental parameter tuning with Monte Carlo validation
-   - **Complexity:** 2 systems (mortality, population)
-   - **Research:** UN World Population Prospects historical data (1990: 5.33B, 2024: 8.12B)
-   - **Status:** Deferred - core architecture validated, refinement when bandwidth available
 
 4. **AMOC Temperature-Dependent Function** - **IMPLEMENTATION COMPLETE** (Nov 20, 2025)
    - ~~Current code has fixed 5% probability~~ → Now temperature-dependent

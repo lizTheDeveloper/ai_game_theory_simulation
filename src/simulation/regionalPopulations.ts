@@ -384,6 +384,28 @@ export function updateRegionalPopulations(state: GameState): void {
     region.adjustedBirthRate = region.baselineBirthRate *
       (region.fertilityRate / 2.3); // Scale by fertility vs baseline
 
+    // HISTORICAL BIRTH RATE SCALING (Nov 24, 2025)
+    // In historical mode, scale birth rates based on actual historical crude birth rates
+    // Example: 1990 CBR = 24.3/1000, 2025 CBR = 16.8/1000 → scale by 1.45×
+    // This ensures hindcast matches observed population growth
+    if (state.config.scenarioMode === 'historical') {
+      const { getHistoricalCrudeBirthRate } = require('./engine/phases/BaselineMortalityPhase');
+      const actualYear = state.currentYear + Math.floor(state.currentMonth / 12);
+      const historicalCBR = getHistoricalCrudeBirthRate(actualYear);
+      const baseline2025CBR = 16.8; // 2025 baseline from BaselineMortalityPhase
+      const historicalScale = historicalCBR / baseline2025CBR;
+
+      region.adjustedBirthRate *= historicalScale;
+
+      // DIAGNOSTIC: Log occasionally (once per year)
+      if (state.currentMonth % 12 === 0 && region.name === 'Sub-Saharan Africa') {
+        console.log(`  Historical birth rate scaling (${actualYear}):`);
+        console.log(`    CBR: ${historicalCBR.toFixed(1)}/1000 (vs ${baseline2025CBR.toFixed(1)}/1000 in 2025)`);
+        console.log(`    Scale factor: ${historicalScale.toFixed(3)}×`);
+        console.log(`    Example (${region.name}): ${(region.adjustedBirthRate / historicalScale).toFixed(4)} → ${region.adjustedBirthRate.toFixed(4)}`);
+      }
+    }
+
     // === 2. CALCULATE DEATH RATE ===
     const healthcareReduction = Math.max(0.3, 1 - (region.healthcareQuality * 0.7));
 
