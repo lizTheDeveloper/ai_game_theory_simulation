@@ -155,7 +155,7 @@ Recent research (2024-2025) identifies **three distinct scaling axes** beyond tr
 - **Implication:** "Thinking time" becomes controllable parameter
 - **Status:** ⚠️ NEEDS VALIDATION (research/verification_e344ce5_20251115.md)
 
-**Current Implementation Status:** Simulation uses traditional pre-training scaling only. New paradigms (RL, test-time compute) pending research validation.
+**Current Implementation Status:** Simulation uses traditional pre-training scaling only. Test-time compute research completed Nov 24, 2025 (see `research/ai_energy_water_consumption_20251106.md` Section 8). Key findings: extended thinking uses 40× baseline energy (17 Wh vs 0.42 Wh per query), o3-style reasoning 80-100× baseline. Implementation pending.
 
 **See:** [AI Agents - Capabilities](./ai-agents.md#capabilities) for how compute affects AI progress
 
@@ -457,3 +457,4 @@ Month 60: 3000-4000 PetaFLOPs (5-6x growth)
 - **v1.3** (Oct 30, 2025): Population → compute scaling, coherence enforcement (commit baaa33e)
 - **v1.4** (Oct 30, 2025): Bankruptcy asset transfer - data centers transferred to government/solvent orgs instead of destroyed (commit bb20927)
 - **v1.5** (Nov 9, 2025): Remove artificial 100x cap on hardware/algorithm efficiency - allow quantum/transformative tech beyond previous limits (commit 3f51ec8)
+- **v1.6** (Nov 24, 2025): Test-time compute research completed - 40× energy multiplier for extended thinking, 80-100× for o3-style (commit 769af04)

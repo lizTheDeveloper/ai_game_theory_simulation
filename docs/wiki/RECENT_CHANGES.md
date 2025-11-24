@@ -979,7 +979,7 @@ const climateStability = assertStateProperty(
 **Limitations Documented:**
 - Based on 2010-2024 historical data (may not extrapolate to 2025+)
 - Nov 2024 reports indicate diminishing returns (OpenAI Orion, Google Gemini underperformance)
-- Does not model test-time compute paradigm (OpenAI o1/o3 style reasoning)
+- Does not model test-time compute paradigm (OpenAI o1/o3 style reasoning) - **UPDATE Nov 24:** Research now available in `research/ai_energy_water_consumption_20251106.md` Section 8
 - Assumes continued exponential scaling without physical/economic constraints
 
 **Validation Results (Monte Carlo N=10):**
@@ -991,7 +991,7 @@ const climateStability = assertStateProperty(
 **Future Work:**
 - Time-dependent slowdown modeling (2025-2027 fast scaling → 2028+ diminishing returns)
 - Dimension-specific doubling times (language vs physical capabilities)
-- Test-time compute parameter (separate from pretraining compute)
+- Test-time compute parameter (separate from pretraining compute) - **Research available:** See `research/ai_energy_water_consumption_20251106.md` Section 8
 - Parameter sensitivity analysis (6-14 month doubling time range)
 
 **Research Documentation:**
