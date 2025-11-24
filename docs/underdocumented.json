@@ -196289,7 +196289,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/recoveryCalculations.ts",
-    "line": 165,
+    "line": 168,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -196297,7 +196297,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/recoveryCalculations.ts",
-    "line": 166,
+    "line": 169,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -196305,15 +196305,15 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/recoveryCalculations.ts",
-    "line": 167,
+    "line": 170,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
-    "context": "additionalInfo: { unit: 'billions' }"
+    "context": "additionalInfo: { unit: 'billions', note: 'Min = 10K people (extinction threshold)' }"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/recoveryCalculations.ts",
-    "line": 170,
+    "line": 173,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -196321,7 +196321,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/recoveryCalculations.ts",
-    "line": 171,
+    "line": 174,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -196329,7 +196329,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/recoveryCalculations.ts",
-    "line": 174,
+    "line": 177,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -196337,7 +196337,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/recoveryCalculations.ts",
-    "line": 175,
+    "line": 178,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -196345,7 +196345,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/recoveryCalculations.ts",
-    "line": 200,
+    "line": 203,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -196353,7 +196353,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/recoveryCalculations.ts",
-    "line": 201,
+    "line": 204,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -196361,7 +196361,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/recoveryCalculations.ts",
-    "line": 202,
+    "line": 205,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -196369,7 +196369,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/recoveryCalculations.ts",
-    "line": 209,
+    "line": 212,
     "type": "property",
     "name": "unit",
     "currentDoc": "(none)",
@@ -196377,7 +196377,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/recoveryCalculations.ts",
-    "line": 229,
+    "line": 232,
     "type": "property",
     "name": "gdp",
     "currentDoc": "(none)",
@@ -196385,7 +196385,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/recoveryCalculations.ts",
-    "line": 230,
+    "line": 233,
     "type": "property",
     "name": "qol",
     "currentDoc": "(none)",
@@ -196393,7 +196393,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/recoveryCalculations.ts",
-    "line": 231,
+    "line": 234,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -196401,7 +196401,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/recoveryCalculations.ts",
-    "line": 257,
+    "line": 260,
     "type": "property",
     "name": "gdp",
     "currentDoc": "(none)",
@@ -196409,7 +196409,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/recoveryCalculations.ts",
-    "line": 258,
+    "line": 261,
     "type": "property",
     "name": "qol",
     "currentDoc": "(none)",
@@ -196417,7 +196417,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/recoveryCalculations.ts",
-    "line": 259,
+    "line": 262,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
