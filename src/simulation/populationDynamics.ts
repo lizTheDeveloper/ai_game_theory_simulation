@@ -1341,6 +1341,9 @@ export function updateHumanPopulation(state: GameState, rng: () => number): void
   const adjustedAdditionalMortality = proposedAdditionalMortality * resilienceFloor;
 
   // Combine baseline + resilience-adjusted extinction mortality
+  // NOTE (Nov 24, 2025): adjustedDeathRate is calculated for REPORTING purposes only.
+  // Actual deaths are applied by BayesianMortalityResolutionPhase (order 35.0).
+  // This avoids double-counting deaths between demographic and Bayesian systems.
   pop.adjustedDeathRate = assertProbability(
     baselineDeaths + adjustedAdditionalMortality,
     {
@@ -1358,13 +1361,17 @@ export function updateHumanPopulation(state: GameState, rng: () => number): void
   }
 
   // === 5. CALCULATE NET GROWTH ===
-  pop.netGrowthRate = assertFinite(pop.adjustedBirthRate - pop.adjustedDeathRate, {
-    location: 'updateHumanPopulation (net growth rate)',
+  // FIX (Nov 24, 2025): Only apply BIRTHS here - BayesianMortalityResolutionPhase handles deaths
+  // Architecture: updateHumanPopulation adds births -> BayesianMortalityResolutionPhase subtracts deaths
+  // This matches the fix already applied to regional populations (Oct 28, 2025)
+  pop.netGrowthRate = assertFinite(pop.adjustedBirthRate, {
+    location: 'updateHumanPopulation (net growth rate - births only)',
     valueName: 'netGrowthRate',
     month: state.currentMonth,
     additionalInfo: {
       adjustedBirthRate: pop.adjustedBirthRate,
-      adjustedDeathRate: pop.adjustedDeathRate
+      // adjustedDeathRate tracked for reporting but NOT subtracted
+      adjustedDeathRateForReference: pop.adjustedDeathRate
     }
   });
   const monthlyGrowthRate = assertFinite(pop.netGrowthRate / 12, {
