@@ -1,13 +1,18 @@
 # Bibliography - AI Alignment Simulation Research Citations
 
-**Last Updated**: November 21, 2025
-**Total Sources**: 176+ peer-reviewed citations
+**Last Updated**: November 24, 2025
+**Total Sources**: 176+ peer-reviewed citations (2 pending verification)
 **Coverage**: 11 academic disciplines
 **Recency**: 86% from 2020-2025, 62% from 2024-2025
 
 This bibliography documents all peer-reviewed research, official datasets, and authoritative sources cited in the simulation wiki and codebase.
 
 ## ⚠️ Citation Verification Status (November 2025)
+
+**NEW (Nov 24):** Two research files added, pending verification:
+- `research/amoc_tipping_point_2024_2025_update.md` - 7 citations (van Westen 2024, Jackson 2024, RealClimate, etc.)
+- `research/planetary_boundaries_2025_update.md` - 6 citations (JIRCAS 2025, Richardson 2023, Persson 2024, etc.)
+- Verification spec: `research/verification_1e37dcb_20251124.md` (13 claims flagged)
 
 **Phase 2 Layer 2 verification ongoing.** Recent findings reveal systematic attribution errors in codebase citations:
 
