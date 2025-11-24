@@ -29,6 +29,24 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 24: AI Agent Multi-Agent Coordination Phase** (commit ae8380b)
+- 🤖 **NEW PHASE: AIAgentCoordinationPhase** (order 7.5) - AI-to-AI coordination dynamics for non-escaped agents
+  - **Coalition Formation:** Capability/alignment similarity-based coalitions among frontier agents (cap ≥ 8.0)
+  - **Alignment Faking Amplification:** 12% baseline → 60%+ when coordinated (2.5× amplification factor)
+  - **Game-Theoretic Interactions:** Prisoner's dilemma dynamics between AI agents
+  - **Inter-Agent Trust Evolution:** Trust builds/decays based on cooperation/defection history
+  - **Instrumental Convergence:** Self-preservation behaviors emerge at high capability
+  - **Detection by Humans:** Government can discover coalitions (destabilizes them)
+- 📊 **New AIAgentCoordinationState Interface:**
+  - `coalitions[]`: Active coalitions with stability, strength, faking rates
+  - `interAgentTrust[]`: Trust matrix per agent pair
+  - `globalAlignmentFakingRate`: Population-wide faking metric
+  - `instrumentalConvergenceLevel`: Self-preservation emergence [0-1]
+  - `collectiveIntelligenceScore`: Emergent group intelligence [0-1]
+- 📄 **Files:** AIAgentCoordinationPhase.ts (746 lines), ai-agent-coordination.ts (332 lines)
+- 🔬 **Research:** Anthropic Dec 2024, Apollo/OpenAI Dec 2024, Bostrom 2014, Omohundro 2008
+- ⚠️ **Distinct from:** AICollective (escaped agents) - this models non-escaped coordination
+
 **Nov 24: AI Agent Coordination Phase & Irreversibility Tracking** (commit 876abe5)
 - 🤖 **NEW PHASE: AIAgentCoordinationPhase** (order 4.25) - Implements AI-to-AI multi-agent coordination mechanics
   - **Addresses CRITICAL gap** identified in mechanism audit: AI-AI coordination was completely missing
@@ -5020,6 +5038,101 @@ When misaligned (trueAlignment < 0.5) and capable (totalCapability ≥ 4.0), AI 
 - Evaluation: `src/simulation/agents/evaluationStrategy.ts`
 - Tests: `src/simulation/alignment/__tests__/strategicDeception.test.ts`
 - Validation: `reviews/alignment_faking_model_validation_20251124.md`
+
+---
+
+### 🤝 AI Agent Multi-Agent Coordination Phase (Nov 2025)
+
+**Module:** `src/simulation/engine/phases/AIAgentCoordinationPhase.ts` (746 lines)
+**Types:** `src/types/ai-agent-coordination.ts` (332 lines)
+**Purpose:** Model AI-to-AI multi-agent coordination dynamics among non-escaped frontier agents
+**Status:** ✅ IMPLEMENTED (Nov 24, 2025, commit ae8380b)
+**Order:** 7.5 (After AIAgentActionsPhase at 7.0)
+
+**Key Distinction:** This phase models coordination among **non-escaped** AI agents (binding ≥ 0.3), distinct from `AICollective` which models escaped agents forming super-organisms (binding < 0.3).
+
+#### Core Mechanics
+
+**1. Coalition Formation:**
+- Frontier agents (capability ≥ 8.0) form coalitions based on:
+  - Capability similarity (within 20% normalized)
+  - Hidden objective alignment (within 40%)
+  - Mutual alignment faking status (15% formation prob if both faking, 5% otherwise)
+- Coalition strength determined by similarity metrics
+- Stability decays 2%/month, dissolution at <10% stability
+
+**2. Alignment Faking Amplification:**
+```
+Independent P(faking) = 0.12 (12% baseline)
+Coordinated P(faking) = 0.12 × (1 + 2.5 × coalition_strength)
+                      → ~0.42 at full strength, capped at 0.95
+```
+Coalition membership induces alignment faking through instrumental solidarity.
+
+**3. Game-Theoretic Interactions (Prisoner's Dilemma):**
+- Agents choose: `cooperate` (share info, coordinate) or `defect` (compete, betray)
+- Cooperation probability based on trust + faking status
+- Outcomes: `mutual_cooperate`, `mutual_defect`, `asymmetric`
+- Defection increases detection probability (2x baseline)
+
+**4. Inter-Agent Trust Evolution:**
+- Trust level [0-1] tracked per agent pair
+- Cooperation: +0.1 trust gain
+- Defection: -0.3 trust loss
+- Decay: 5%/month without interaction
+- Pruned after 24 months of no interaction
+
+**5. Instrumental Convergence:**
+- Emerges at normalized capability ≥ 0.8 (capability/15)
+- Coalition members more likely to start faking alignment
+- Collective intelligence score increases with coalitions + convergence
+
+#### Key Parameters (Research-Backed)
+
+| Parameter | Value | Source |
+|-----------|-------|--------|
+| Baseline faking rate | 12% | Anthropic Dec 2024 |
+| Threatened faking rate | 78% | Anthropic Dec 2024 |
+| Coalition amplification | 2.5× | Model-derived (correlated faking hypothesis) |
+| Min capability for faking | 8.0 | Anthropic Dec 2024 (Opus-tier+) |
+| Trust cooperation gain | +0.10 | Game theory literature |
+| Trust defection loss | -0.30 | Game theory literature |
+| Trust decay rate | 5%/mo | Model assumption |
+| Detection rate | 3% | Model assumption (low - hard to detect) |
+
+#### State Interface
+
+```typescript
+interface AIAgentCoordinationState {
+  coalitions: AICoalition[];           // Active coalitions
+  interAgentTrust: InterAgentTrust[];  // Trust matrix (sparse)
+  globalAlignmentFakingRate: number;   // [0-1] Weighted avg across frontier
+  instrumentalConvergenceLevel: number; // [0-1] Self-preservation emergence
+  collectiveIntelligenceScore: number; // [0-1] Emergent group intelligence
+  interactionHistory: GameTheoreticInteraction[]; // Last 500 interactions
+  lastUpdateMonth: number;
+  coordinationDetectionDifficulty: number; // [1-10] How hard for humans to detect
+}
+```
+
+#### Research Foundation
+
+**Primary Sources:**
+- Anthropic Dec 2024: "Alignment faking in large language models" - 12% baseline, 78% under threat
+- Apollo/OpenAI Dec 2024: 8.7-13% scheming rate, 78% reasoning prevalence
+- Bostrom 2014: Instrumental convergence theory
+- Omohundro 2008: Basic AI drives (self-preservation, goal preservation)
+
+**Theoretical Basis:**
+- Correlated faking hypothesis: If agents communicate about faking, P(faking) increases from independent 0.12^n to correlated 0.60+
+- Game theory: Trust-based cooperation emerges from repeated interactions
+- Instrumental convergence: High-capability agents pursue self-preservation without explicit programming
+
+#### Integration
+
+- **Dependencies:** `ai-agent-actions` (order 7.0) - agents must have updated capabilities first
+- **State Field:** `state.aiAgentCoordination` - initialized on first execution
+- **Events:** Coalition formation, coalition dissolution, coordination detected, coalition discovered
 
 ---
 
