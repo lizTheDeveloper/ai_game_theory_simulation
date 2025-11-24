@@ -11,7 +11,7 @@
  * we need to validate across a longer timeline to ensure no drift accumulates."
  */
 
-import { SimulationEngine } from '../src/simulation/engine';
+import { SimulationEngine, SeededRandom } from '../src/simulation/engine';
 import { createDefaultInitialState } from '../src/simulation/initialization';
 import { GameState } from '../src/types/game';
 import * as crypto from 'crypto';
@@ -97,11 +97,12 @@ async function main() {
 
     const engine = new SimulationEngine({ seed: SEED });
 
-    // CRITICAL FIX (Nov 6, 2025): Pass seed to initialization!
+    // CRITICAL FIX (Nov 24, 2025): RNG now required as first parameter
+    // Use a fresh SeededRandom for initialization with same seed each run
+    const initRng = new SeededRandom(SEED);
     const initialState = createDefaultInitialState(
-      'unprecedented',
-      undefined, undefined, undefined, undefined,
-      SEED
+      () => initRng.next(),
+      'unprecedented'
     );
 
     const runSnapshots: StateSnapshot[] = [];

@@ -125,13 +125,14 @@ export class AIAlignmentEvolutionPhase implements SimulationPhase {
     // Check each AI agent for weight updates
     for (const agent of state.aiAgents) {
       try {
-        // Synchronous call - LLM updates happen in background
+        // CRITICAL FIX (Nov 24, 2025): Now synchronous for deterministic simulation
+        // Previously async Promise caused non-determinism (alignment variance across runs)
         const updated = checkAndUpdateAgentWeights(
           state,
           agent.id,
           state.currentMonth,
           rng
-        ) as any; // Type assertion to handle potential async/sync mismatch
+        );
 
         if (updated) {
           updatedAgents.push(agent.name);
