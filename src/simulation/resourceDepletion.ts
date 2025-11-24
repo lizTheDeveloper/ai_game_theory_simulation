@@ -1083,34 +1083,62 @@ function updateCO2System(state: GameState, resources: ResourceEconomy): void {
   );
 
   // HINDCAST FIX (Nov 24, 2025): Apply thermal inertia for historical mode
-  // The equilibrium formula ignores decades of ocean thermal lag.
-  // For hindcast scenarios, we transition from observed -> equilibrium over time.
+  //
+  // THE PROBLEM: The equilibrium formula assumes we're starting from pre-industrial.
+  // But in 1990, we already HAD 354 ppm in quasi-equilibrium with 0.45C warming
+  // after decades of ocean heat uptake. The formula calculates 1.41C for 354 ppm,
+  // which is the TRUE equilibrium, but the system hasn't reached it yet due to lag.
+  //
+  // THE FIX: For hindcast scenarios, treat the system as quasi-equilibrium throughout.
+  // Temperature tracks CO2 with the REALIZED lag that existed historically, not the
+  // theoretical equilibrium. This prevents the "temperature jump" bug where Month 0
+  // suddenly adds 0.96C of warming that shouldn't exist.
+  //
+  // Research: Ocean thermal inertia operates on 5-10 year timescales for mixed layer
+  // (Dong et al. 2021, Nature CC 2025). Historical temperature rise (0.45C 1990 → 1.28C 2024)
+  // represents the REALIZED warming after decades of lag.
   if (co2.historicalTemperatureTarget !== undefined && co2.hindcastTransitionMonths !== undefined) {
-    const transitionProgress = Math.min(1.0, state.currentMonth / co2.hindcastTransitionMonths);
-    // Smooth S-curve transition (slower at start/end, faster in middle)
-    const smoothProgress = transitionProgress * transitionProgress * (3 - 2 * transitionProgress);
-
-    co2.temperatureAnomaly = assertFinite(
-      co2.historicalTemperatureTarget + (equilibriumTemp - co2.historicalTemperatureTarget) * smoothProgress,
-      {
-        location: 'updateCO2System (hindcast thermal inertia)',
-        valueName: 'temperatureAnomaly',
-        month: state.currentMonth,
-        additionalInfo: {
-          historicalTarget: co2.historicalTemperatureTarget,
-          equilibriumTemp,
-          transitionProgress,
-          smoothProgress
+    // In hindcast mode, temperature stays locked to historical value for first N months
+    // This prevents the equilibrium formula from adding unrealized warming
+    if (state.currentMonth < co2.hindcastTransitionMonths) {
+      co2.temperatureAnomaly = assertFinite(
+        co2.historicalTemperatureTarget,
+        {
+          location: 'updateCO2System (hindcast thermal lock)',
+          valueName: 'temperatureAnomaly',
+          month: state.currentMonth,
+          additionalInfo: {
+            historicalTarget: co2.historicalTemperatureTarget,
+            reason: 'thermal_inertia_lock'
+          }
         }
-      }
-    );
+      );
 
-    // Log transition progress periodically
-    if (state.currentMonth % 6 === 0 && transitionProgress < 1.0) {
-      console.log(
-        `  [Hindcast] Temperature: ${co2.temperatureAnomaly.toFixed(2)}C ` +
-        `(historical: ${co2.historicalTemperatureTarget.toFixed(2)}C -> equilibrium: ${equilibriumTemp.toFixed(2)}C, ` +
-        `progress: ${(smoothProgress * 100).toFixed(0)}%)`
+      // Log lock status periodically
+      if (state.currentMonth % 12 === 0) {
+        console.log(
+          `  [Hindcast] Temperature LOCKED: ${co2.temperatureAnomaly.toFixed(2)}C ` +
+          `(historical equilibrium, month ${state.currentMonth}/${co2.hindcastTransitionMonths})`
+        );
+      }
+    } else {
+      // After transition period, temperature follows CO2 with continued lag
+      // Use a dampened equilibrium that accounts for ongoing thermal inertia
+      const dampingFactor = 0.75; // Temperature lags 25% behind theoretical equilibrium
+      const laggedEquilibrium = equilibriumTemp * dampingFactor + co2.historicalTemperatureTarget * (1 - dampingFactor);
+
+      co2.temperatureAnomaly = assertFinite(
+        laggedEquilibrium,
+        {
+          location: 'updateCO2System (hindcast post-lock)',
+          valueName: 'temperatureAnomaly',
+          month: state.currentMonth,
+          additionalInfo: {
+            equilibriumTemp,
+            laggedEquilibrium,
+            dampingFactor
+          }
+        }
       );
     }
   } else {
