@@ -181,39 +181,43 @@ export async function createHistoricalInitialState(
   }
 
   // === FOOD SECURITY OVERRIDE FOR HISTORICAL MODE ===
-  // HINDCAST FIX (Nov 24, 2025): Historical food security was ~95% globally
-  // Default 2025 initialization uses ~67% which triggers 7 phantom famines
-  // Source: FAO Food Security Indicators 1990-2010
+  // HINDCAST FIX (Nov 24, 2025): Historical food security ~80-85% globally
+  // Source: FAO World Agriculture: Towards 2015/2030 (Table 2.3)
+  // Developing countries 1990-92: 20% undernourished (80% food secure)
+  // Global weighted average: ~82% (includes developed countries at 97%)
+  // See: research/verification_hindcast_food_security_20251124.md
   if (year <= 2010) {
-    // Set global food security
+    // Set global food security (FAO global average for 1990-92)
+    // Weighted: ~5.5B developing at 80% + 1B developed at 97%
     if (baseState.qualityOfLifeSystems?.survivalFundamentals) {
-      baseState.qualityOfLifeSystems.survivalFundamentals.foodSecurity = 0.95;
+      baseState.qualityOfLifeSystems.survivalFundamentals.foodSecurity = 0.82;
     }
 
     // Set regional food security based on FAO historical data
-    // Source: FAO State of Food Insecurity reports (1999-2015)
+    // Source: FAO World Agriculture: Towards 2015/2030 (Table 2.3)
+    // https://www.fao.org/4/Y4252E/y4252e04.htm
     if (baseState.humanPopulationSystem?.regionalPopulations) {
       const historicalFoodSecurity: Record<string, number> = {
-        'eastAsia': 0.92,           // East Asia ~8% undernourished 1990
-        'southAsia': 0.88,          // South Asia ~12% undernourished 1990
-        'subSaharanAfrica': 0.85,   // SSA ~15% undernourished 1990
-        'europe': 0.98,             // Europe <2% undernourished
-        'northAmerica': 0.98,       // NA <2% undernourished
-        'latinAmerica': 0.90,       // LAC ~10% undernourished 1990
-        'middleEastNorthAfrica': 0.88, // MENA ~12% undernourished 1990
-        'southeastAsia': 0.90,      // SE Asia ~10% undernourished 1990
-        'centralAsia': 0.87,        // Central Asia ~13% undernourished 1990
-        'oceania': 0.98             // Oceania <2% undernourished
+        'eastAsia': 0.84,           // FAO: 16% undernourished (NOT 8%)
+        'southAsia': 0.74,          // FAO: 26% undernourished (NOT 12%)
+        'subSaharanAfrica': 0.65,   // FAO: 35% undernourished (NOT 15%)
+        'europe': 0.98,             // FAO: <2% undernourished (unchanged)
+        'northAmerica': 0.97,       // FAO: ~3% undernourished (slight correction)
+        'latinAmerica': 0.87,       // FAO: 13% undernourished (NOT 10%)
+        'middleEastNorthAfrica': 0.92, // FAO: 8% undernourished (was 12% - too high)
+        'southeastAsia': 0.74,      // Similar to South Asia (FAO: ~26%)
+        'centralAsia': 0.80,        // Interpolated from Soviet data
+        'oceania': 0.95             // Similar to developed regions
       };
 
       for (const region of baseState.humanPopulationSystem.regionalPopulations) {
         if ('foodSecurity' in region) {
           (region as { foodSecurity: number }).foodSecurity =
-            historicalFoodSecurity[region.name] || 0.90;
+            historicalFoodSecurity[region.name] || 0.80;
         }
       }
     }
-    console.log(`  Food security (historical override): 95%`);
+    console.log(`  Food security (historical override): 82%`);
   }
 
   // === AI AGENT BOOTSTRAP ===
