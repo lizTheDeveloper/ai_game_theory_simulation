@@ -3,7 +3,7 @@
  *
  * Research Foundation:
  * - Anthropic Dec 2024: Alignment faking 12% baseline, 78% when threatened (arXiv:2412.14093)
- * - Apollo Research Sep 2025: 8.7-13% scheming PRE-MITIGATION (o4-mini 8.7%, o3 13%)
+ * - Apollo Research Dec 2024: 8.7-13% scheming PRE-MITIGATION only (arXiv:2412.04984)
  *   Note: Post-mitigation rates 0.3-0.4% per OpenAI deliberative alignment
  * - Instrumental convergence: Bostrom 2014, Omohundro 2008 (theoretical)
  *
