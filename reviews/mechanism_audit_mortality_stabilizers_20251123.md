@@ -1,303 +1,376 @@
-# Mechanism Audit: Mortality Stabilizers vs. Xia/Shi Papers
+# Mechanism Audit: Mortality Stabilizers (Xia/Shi Papers)
 
 **Date:** November 23, 2025
 **Auditor:** Roy (Simulation Maintainer)
-**Audit Type:** Research Integrity - "Structural Fabrication" Check
-**Priority:** HIGH
+**Audit Type:** Research Integrity - Formula/Parameter Verification
+**Priority:** HIGH (from MASTER_IMPLEMENTATION_ROADMAP.md)
 
 ---
 
 ## Executive Summary
 
-This audit examines whether the MortalityStabilizersPhase implementation accurately reflects the claimed Xia et al. (2022) and Shi et al. (2025) research citations.
+**OVERALL GRADE: C+ (Partial Match)**
 
-**CRITICAL FINDING:** The MortalityStabilizersPhase does NOT cite Xia/Shi papers directly. Its research backing comes from different sources (Cavalcanti 2025, Ballester 2024, IOM 2024, GAO 2025). However, the nuclear winter system (`nuclearWinter.ts`) DOES cite Xia et al. (2022) extensively for mortality and crop yield mechanics.
+The roadmap item "Mortality stabilizers (do formulas match Xia/Shi papers?)" contains a **misattribution**. The MortalityStabilizersPhase does NOT cite or implement Xia/Shi papers. Instead:
 
-**Overall Assessment:**
-- **MortalityStabilizersPhase:** Grade **B+** (Well-researched, different sources than expected)
-- **Nuclear Winter Mortality (nuclearWinter.ts):** Grade **B** (Xia-calibrated, acknowledged uncertainty)
-- **Test Files:** Grade **A** (Correctly reference Xia et al. bounds)
+1. **Xia et al. (2022)** and **Shi et al. (2025)** are about **nuclear winter agricultural collapse and famine**, NOT mortality stabilization mechanisms
+2. **MortalityStabilizersPhase** implements different papers entirely: Cavalcanti (2025), Ballester (2024), IOM (2024), GAO (2025)
+3. A **Layer 2 verification (Nov 6, 2025)** found CRITICAL discrepancies between cited papers and actual parameter values
 
----
-
-## 1. Citations Found
-
-### 1.1 MortalityStabilizersPhase.ts Citations
-
-**File:** `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts`
-
-| Cited Source | Claim | Line Reference |
-|--------------|-------|----------------|
-| Cavalcanti et al. (2025), The Lancet | International aid: 15-44% mortality reduction | Lines 17, 257 |
-| Ballester et al. (2024), Nature Medicine | Heat adaptation: 40-80% mortality reduction | Lines 18, 148, 322 |
-| IOM (2024), World Migration Report | Migration: 85% return rate, <1% mortality | Lines 19, 457-462 |
-| GAO (2025) | Emergency response: 20-40% reduction (weak evidence) | Lines 20, 559-561 |
-
-**Note:** NO direct Xia or Shi citations in MortalityStabilizersPhase.
-
-### 1.2 nuclearWinter.ts Citations (Xia/Shi Found Here)
-
-**File:** `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts`
-
-| Cited Source | Claim | Line Reference |
-|--------------|-------|----------------|
-| Xia et al. (2022), Nature Food | Full-scale war: 5 billion deaths from famine | Lines 7-9 |
-| Xia et al. (2022) | 90% calorie drop, 5B deaths | Lines 14-15 |
-| Penn State (2025) / Shi et al. | 7% corn reduction (5 Tg), 80-90% failure (150 Tg) | Lines 10-13, 267 |
-| Robock & Toon (2012) | Soot injection scenarios | Lines 180-186 |
-| Coupe et al. (2019) | Temperature anomaly research | Lines 19, 336-339 |
-
-### 1.3 Test File Citations
-
-**File:** `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/tests/integration/critical-paths/mortality-path.test.ts`
-
-| Cited Source | Claim | Line Reference |
-|--------------|-------|----------------|
-| Xia et al. (2022) | Nuclear winter mortality 40-75% over decades | Lines 17, 124-132 |
-| Cavalcanti et al. (2025) | International aid effectiveness | Line 18 |
-| Ballester et al. (2024) | Heat adaptation | Line 19 |
-| IOM (2024) | Climate migration patterns | Line 20 |
+| Component | Grade | Status |
+|-----------|-------|--------|
+| Citation Attribution | D | Roadmap incorrectly pairs stabilizers with Xia/Shi |
+| Nuclear Winter Mortality (actual Xia/Shi) | B+ | Well-calibrated to Xia 5B death estimate |
+| Mortality Stabilizers (Cavalcanti et al.) | C+ | Paper misinterpreted (funding vs availability) |
+| Mortality Stabilizers (Ballester et al.) | B | Total max FIXED (0.8 -> 0.45), but breakdown unverified |
+| Mortality Stabilizers (IOM 2024) | C | 10/11 parameters NOT in source |
+| Mortality Stabilizers (GAO 2025) | B+ | Correctly marked as weak evidence |
 
 ---
 
-## 2. Paper Claims vs. Implementation
+## 1. Citation Verification
 
-### 2.1 Xia et al. (2022) - Nature Food
+### 1.1 Papers Cited in MortalityStabilizersPhase.ts
 
-**Full Citation:** Xia, L., Robock, A., et al. (2022). Global food insecurity and famine from reduced crop, marine fishery and livestock production due to climate disruption from nuclear war soot injection. *Nature Food*, 3(8), 586-596.
+| Source | Journal | Year | Topic |
+|--------|---------|------|-------|
+| Cavalcanti et al. | The Lancet | 2025 | USAID mortality reduction by funding level |
+| Ballester et al. | Nature Medicine | 2024 | European heat adaptation (44% reduction) |
+| IOM | World Migration Report | 2024 | Climate migration patterns (qualitative) |
+| GAO | Federal Audit | 2025 | FEMA workforce capacity (4% available) |
 
-**Paper Claims (from verification doc):**
-- "More than 5 billion could die from a war between the United States and Russia"
-- "More than 2 billion could die from nuclear war between India and Pakistan"
-- 90% calorie production drop in worst case
-- Agricultural collapse via soot injection
+**NOTE: NO Xia or Shi citations in MortalityStabilizersPhase**
 
-**Implementation in `nuclearWinter.ts`:**
+### 1.2 Where Xia/Shi Papers ARE Cited
 
-```typescript
-// Line 459-465: Starvation rate calibration
-// CALIBRATED TO XIA ET AL. 2022, NOT HISTORICAL FAMINE RATES
-// - 90% crop failure -> 12% monthly mortality (calibrated to reach 5-6B deaths)
-const NUCLEAR_WINTER_MONTHLY_BASE = 0.12;  // 12% monthly at 90% crop failure
-```
+| File | Xia et al. (2022) | Shi et al. (2025) |
+|------|-------------------|-------------------|
+| `src/simulation/nuclearWinter.ts` | YES - Lines 7-9, 14-15 | YES - Lines 10-13 |
+| `research/arch4_cross_system_integrations_20251108.md` | YES - Lines 38-45 | NO |
+| `research/food_security_recovery_LAYER2_VERIFICATION_20251030.md` | NO | YES - Line 47 |
+| `tests/integration/critical-paths/mortality-path.test.ts` | YES - Lines 17, 124-132 | NO |
 
-**Assessment:**
-| Aspect | Paper | Code | Match? |
-|--------|-------|------|--------|
-| 5B+ deaths estimate | Yes | Yes (calibrated) | MATCH |
-| 90% calorie drop | Yes | Yes (0.05 min yield) | MATCH |
-| Agricultural collapse mechanism | Yes | Yes (crop yield formula) | MATCH |
-| Specific mortality timeline | NOT in paper | Assumed 2-5 years | EXTRAPOLATED |
-| 50-90% mortality range | Extrapolated | 62.5%+ base | REASONABLE |
+**FINDING:** Xia/Shi papers are about **nuclear winter famine mechanics**, not mortality stabilization. The roadmap item conflates these different systems.
 
-**Fidelity Grade: B+** - Calibrated to match Xia's 5B deaths, but timeline is modeling assumption.
+---
 
-### 2.2 Shi et al. (2025) - Penn State
+## 2. Formula Comparison
 
-**Full Citation:** Shi et al. (2025). Environmental Research Letters, 20:064006.
+### 2.1 What Xia et al. (2022) Actually Says
+
+**Citation:** Xia, L., Robock, A., et al. (2022). Global food insecurity and famine from reduced crop, marine fishery and livestock production due to climate disruption from nuclear war soot injection. *Nature Food*, 3(8), 586-596.
 
 **Paper Claims:**
-- 5 Tg soot: 7% corn yield reduction, "largely unaffected"
-- 150 Tg soot: 80-90% crop failure
-- WITH adaptation, losses can be 10% BETTER than baseline
+- US-Russia nuclear war: 5+ billion deaths from famine
+- India-Pakistan nuclear war: 2+ billion deaths
+- 90% calorie production drop in worst case
+- Agricultural collapse via soot injection blocking sunlight
 
 **Implementation in `nuclearWinter.ts`:**
 
 ```typescript
-// Line 265-275: Crop yield calculation
-// Penn State 2025: Separate temperature, darkening, precipitation effects
-// - Limited war (5 Tg, -1.5C): 7% global corn reduction
-// - Full-scale war (150 Tg, -9C): 80-90% crop failure
+// Line 459-465: Starvation rate calibrated to Xia's 5B estimate
+const NUCLEAR_WINTER_MONTHLY_BASE = 0.12;  // 12% monthly at 90% crop failure
+// This reaches ~5B deaths over 2-5 years
 ```
 
-**Assessment:**
-| Aspect | Paper | Code | Match? |
-|--------|-------|------|--------|
-| 5 Tg -> 7% reduction | Yes | Yes (formula matches) | MATCH |
-| 150 Tg -> 80-90% failure | Yes | Yes (formula gives ~90%) | MATCH |
-| Temperature effects | Yes | Yes (3.5% per C) | APPROXIMATE |
-| Darkening effects | Yes | Yes (18% at full blocking) | APPROXIMATE |
-| Precipitation effects | Yes | Yes (30% at full drought) | APPROXIMATE |
-| Adaptation reducing losses | Yes | NOT implemented in crop calc | GAP |
+**Formula Match Assessment:**
 
-**Fidelity Grade: B** - Formula approximates paper findings, but adaptation crop switching NOT modeled.
+| Paper Value | Code Value | Match? |
+|-------------|-----------|--------|
+| 5B deaths (full-scale) | Calibrated to 5-6B | MATCH |
+| 90% calorie drop | 0.05 minimum yield (95% drop) | MATCH |
+| 2B deaths (limited) | ~2B at 50% crop failure | MATCH |
+| Timeline | "2-5 years" | EXTRAPOLATED (not in paper) |
 
-### 2.3 Xia vs Shi "Contradiction" Resolution
+**Grade: B+** - Calibrated correctly, timeline is modeling assumption.
 
-**Apparent Contradiction:**
-- Xia 2022: US Corn Belt "impossible for 2+ years" (150 Tg scenario)
-- Shi 2025: US Corn Belt "largely unaffected" (5 Tg scenario)
+### 2.2 What Shi et al. (2025) Actually Says
 
-**Resolution (documented in roadmap):**
-- These are COMPLEMENTARY, not contradictory
-- 5 Tg: "Largely unaffected" (Shi) - 7% decline
-- 150 Tg: "Impossible" (Xia) - 80-90% decline
-- Critical bifurcation between 5-27 Tg
+**Citation:** Shi et al. (2025). Environmental Research Letters, 20:064006.
 
-**Implementation:** Code correctly models the spectrum, NOT a single value.
+**Paper Claims:**
+- 5 Tg soot: 7% corn yield reduction ("largely unaffected")
+- 150 Tg soot: 80-90% crop failure
+- Adaptation (crop switching) can make yields 10% BETTER than baseline
 
-**Fidelity Grade: A** - Contradiction correctly identified as different scenarios, not actual disagreement.
+**Implementation in `nuclearWinter.ts`:**
+
+```typescript
+// Lines 265-275: Crop yield formula
+// Limited war (5 Tg, -1.5C): 7% reduction - MATCHES
+// Full-scale (150 Tg, -9C): 80-90% failure - MATCHES
+```
+
+**Formula Match Assessment:**
+
+| Paper Value | Code Value | Match? |
+|-------------|-----------|--------|
+| 5 Tg -> 7% reduction | Formula produces ~7% | MATCH |
+| 150 Tg -> 80-90% failure | Formula produces ~90% | MATCH |
+| Adaptation improves yields | NOT IMPLEMENTED | GAP |
+
+**Grade: B** - Formula approximates findings, but adaptation logic missing.
 
 ---
 
-## 3. MortalityStabilizersPhase - Non-Xia/Shi Citations
+## 3. Mortality Stabilizers - Actual Sources
 
-Since MortalityStabilizersPhase doesn't cite Xia/Shi, I audited its actual citations:
+Since MortalityStabilizersPhase cites different papers, here's the formula verification for those:
 
 ### 3.1 Cavalcanti et al. (2025) - International Aid
 
-**Paper Claims:**
-- 15% all-age mortality reduction (95% CI 0.78-0.93)
-- 32% under-five mortality reduction
-- Funding tiers: High ($7.10+) = 15-44% reduction
+**Paper Claims (The Lancet):**
 
-**Implementation:**
+| Funding Level | Overall Mortality Reduction | Under-5 Reduction |
+|--------------|----------------------------|-------------------|
+| Low ($1.97-3.96/capita) | 6% | 14% |
+| Intermediate ($3.97-7.09) | 9% | 20% |
+| High ($7.10+) | 15% | 32% |
+
+**Code Implementation:**
 
 ```typescript
-// Lines 289-301: Aid effectiveness levels
-if (aid.donorAvailability > RATES.AID_DONOR_AVAILABILITY_HIGH) {
-  aid.effectivenessLevel = 'high';
-  aid.mortalityReduction = BASELINES.AID_EFFECTIVENESS_HIGH * aid.donorAvailability;
-}
+// centralConfig.ts BASELINES section
+AID_EFFECTIVENESS_HIGH: 0.295,    // 29.5% - "midpoint of 15-44%"
+AID_EFFECTIVENESS_MEDIUM: 0.185,  // 18.5% - "midpoint of 9-28%"
+AID_EFFECTIVENESS_LOW: 0.08,      // 8% - "midpoint of 6-10%"
 ```
 
-**Assessment:** Implementation matches paper's funding-mortality relationship structure. Specific percentages configurable via centralConfig.
+**CRITICAL DISCREPANCY (from Layer 2 verification):**
 
-**Fidelity Grade: A** - Directly implements paper's findings.
+| Issue | Description |
+|-------|-------------|
+| Concept Mismatch | Paper measures FUNDING LEVELS, code models DONOR AVAILABILITY |
+| Value Inflation | Paper shows 15% for high funding (overall), code uses 29.5% |
+| Age Averaging | Code averages across age groups (paper doesn't do this) |
+| Donor Fatigue | "Pakistan 2010" example NOT in paper - UNSOURCED |
+
+**Grade: C+** - Structure matches, but values misinterpreted.
 
 ### 3.2 Ballester et al. (2024) - Heat Adaptation
 
-**Paper Claims:**
-- 2023 heat deaths: 47,690 (would have been 80% higher without adaptation)
-- Adaptation saved ~37,000 lives in 2023
-- Four adaptation types: physiological, behavioral, infrastructural, social
+**Paper Claims (Nature Medicine):**
+- 2023 heat deaths: 47,690 (would have been **80% higher** without adaptation)
+- This equals ~44% mortality reduction (not 80% reduction!)
+- Calculation: 1 - (1/1.8) = 0.44
 
-**Implementation:**
+**Code Implementation:**
 
 ```typescript
-// Lines 379-425: Four adaptation types with caps
-adaptation.physiological = Math.min(BASELINES.HEAT_ADAPTATION_PHYSIOLOGICAL_MAX, ...);
-adaptation.behavioral = Math.min(BASELINES.HEAT_ADAPTATION_BEHAVIORAL_MAX, ...);
-adaptation.infrastructural = Math.min(BASELINES.HEAT_ADAPTATION_INFRASTRUCTURAL_MAX, ...);
-adaptation.social = Math.min(BASELINES.HEAT_ADAPTATION_SOCIAL_MAX, ...);
+// centralConfig.ts - FIXED as of Nov 2025
+HEAT_ADAPTATION_TOTAL_MAX: 0.45,  // Previously 0.8 (WRONG)
+
+// Type-specific breakdown (UNVERIFIED in paper):
+HEAT_ADAPTATION_PHYSIOLOGICAL_MAX: 0.2,   // 20% - NOT IN PAPER
+HEAT_ADAPTATION_BEHAVIORAL_MAX: 0.3,      // 30% - NOT IN PAPER
+HEAT_ADAPTATION_INFRASTRUCTURAL_MAX: 0.5, // 50% - NOT IN PAPER
+HEAT_ADAPTATION_SOCIAL_MAX: 0.4,          // 40% - NOT IN PAPER
 ```
 
-**Assessment:** Implementation matches paper's four-type framework. Combined 80% max matches paper's "80% higher without adaptation" finding.
+**Assessment:**
 
-**Fidelity Grade: A** - Directly implements paper's framework.
+| Issue | Status |
+|-------|--------|
+| Total max (0.45 vs 0.8) | FIXED in Nov 2025 |
+| Type breakdown (20%, 30%, 50%, 40%) | NOT in paper - extrapolated |
+| Monthly rates (5%, 10%, 2%, 3%) | NOT in paper - extrapolated |
+| Exposure thresholds | NOT in paper - extrapolated |
+
+**Grade: B** - Total fixed, but component breakdown unverified.
 
 ### 3.3 IOM (2024) - Migration
 
-**Paper Claims:**
-- 85% return rate within 1 year
-- <1% mortality during displacement (baseline 0.1%)
+**Paper Claims (World Migration Report):**
 - 26.4M climate-related displacements in 2023
+- Qualitative analysis of migration patterns
+- Case studies from Pakistan, Philippines, China, etc.
 
-**Implementation:**
+**Code Implementation:**
 
 ```typescript
-// Lines 515, 534, 545: Migration parameters
-let successRate = BASELINES.MIGRATION_SUCCESS_RATE_BASELINE; // 85%
-let mortalityRate = BASELINES.MIGRATION_MORTALITY_BASELINE; // 0.1%
-let returnRate = BASELINES.MIGRATION_RETURN_RATE_BASELINE; // 85%
+// centralConfig.ts
+MIGRATION_SUCCESS_RATE_BASELINE: 0.85,     // 85% - NOT IN REPORT
+MIGRATION_MORTALITY_BASELINE: 0.001,       // 0.1% - NOT IN REPORT
+MIGRATION_MORTALITY_MAX: 0.03,             // 3% - NOT IN REPORT
+MIGRATION_RETURN_RATE_BASELINE: 0.85,      // 85% - NOT IN REPORT
+// Plus 7 more parameters...
 ```
 
-**Assessment:** Parameters directly match IOM 2024 data.
+**Assessment:**
 
-**Fidelity Grade: A** - Parameters extracted directly from report.
+| Parameter Count | Verified in IOM 2024 |
+|-----------------|---------------------|
+| 11 total | 1 (displacement scale only) |
+| Percentage verified | 9% |
+
+**Grade: C** - Parameters are modeling assumptions, not research-backed.
 
 ### 3.4 GAO (2025) - Emergency Response
 
-**Paper Claims:**
+**Paper Claims (Federal Audit):**
 - November 2024: Only 4% FEMA workforce available
-- 25,800 -> 23,350 employees (-9.5% reduction)
-- Disasters becoming "costlier and deadlier"
+- Workforce reduced 9.5% (Jan-June 2025)
+- No quantitative mortality effectiveness data
 
-**Implementation:**
+**Code Implementation:**
 
 ```typescript
-// Lines 566-570: Acknowledged weak evidence
-// WEAK EVIDENCE (acknowledged): 20-40% reduction is estimate, not empirical
+// centralConfig.ts - CORRECTLY MARKED AS WEAK
+EMERGENCY_RESPONSE_BASELINE: 0.30,  // 30% - NOT IN REPORT
+EMERGENCY_RESPONSE_MAX: 0.40,       // 40% - NOT IN REPORT
+// Note: "WEAK EVIDENCE - estimate, not empirical"
 ```
 
-**Assessment:** Code correctly flags this as weak evidence. Uses 30% baseline (midpoint of 20-40% estimate).
-
-**Fidelity Grade: A-** - Correctly acknowledges weak evidence base.
+**Grade: B+** - Weak evidence correctly acknowledged.
 
 ---
 
-## 4. Identified Discrepancies
+## 4. Parameter Comparison Table
 
-### 4.1 Critical Discrepancies
+### 4.1 Aid Effectiveness Parameters
 
-| Issue | Severity | Description | Recommendation |
-|-------|----------|-------------|----------------|
-| Wet bulb limit inconsistency | MEDIUM | Code claims 30.5C (Vecellio 2024), but some Monte Carlo summaries show 35C | Audit all wet bulb thresholds for consistency |
-| Shi adaptation gap | LOW | Shi 2025 shows crop switching can IMPROVE yields; not modeled | Consider adding adaptation logic to crop yield |
-| Timeline extrapolation | LOW | "2-5 years" mortality timeline not in Xia paper | Document as modeling assumption |
+| Parameter | Code Value | Paper Value | Source | Status |
+|-----------|-----------|-------------|--------|--------|
+| AID_EFFECTIVENESS_HIGH | 29.5% | 15% (overall) | Cavalcanti 2025 | INFLATED |
+| AID_EFFECTIVENESS_MEDIUM | 18.5% | 9% (overall) | Cavalcanti 2025 | INFLATED |
+| AID_EFFECTIVENESS_LOW | 8% | 6% (overall) | Cavalcanti 2025 | CLOSE |
+| DONOR_FATIGUE_PER_CRISIS | 25% | N/A | NOT SOURCED | FABRICATED |
 
-### 4.2 Structural Fabrication Check
+### 4.2 Heat Adaptation Parameters
 
-**Definition:** "Structural fabrication" = Code claims to implement a paper but actually implements something different or fabricated.
+| Parameter | Code Value | Paper Value | Source | Status |
+|-----------|-----------|-------------|--------|--------|
+| HEAT_ADAPTATION_TOTAL_MAX | 45% | 44% | Ballester 2024 | MATCH (fixed) |
+| HEAT_ADAPTATION_PHYSIOLOGICAL_MAX | 20% | N/A | Ballester 2024 | EXTRAPOLATED |
+| HEAT_ADAPTATION_BEHAVIORAL_MAX | 30% | N/A | Ballester 2024 | EXTRAPOLATED |
+| HEAT_ADAPTATION_INFRASTRUCTURAL_MAX | 50% | N/A | Ballester 2024 | EXTRAPOLATED |
+| HEAT_ADAPTATION_SOCIAL_MAX | 40% | N/A | Ballester 2024 | EXTRAPOLATED |
 
-**Finding:** **NO STRUCTURAL FABRICATION DETECTED**
+### 4.3 Migration Parameters
 
-Evidence:
-1. All Xia/Shi citations appear in nuclear winter system where they belong
-2. MortalityStabilizers cites DIFFERENT papers (Cavalcanti, Ballester, IOM, GAO) - NOT claiming Xia/Shi implementation
-3. Test files correctly cite Xia et al. for mortality bounds (40-75%)
-4. Research verification documents (Oct 30, Nov 6) show due diligence in tracking paper origins
+| Parameter | Code Value | Paper Value | Source | Status |
+|-----------|-----------|-------------|--------|--------|
+| MIGRATION_SUCCESS_RATE_BASELINE | 85% | N/A | IOM 2024 | FABRICATED |
+| MIGRATION_MORTALITY_BASELINE | 0.1% | N/A | IOM 2024 | FABRICATED |
+| MIGRATION_RETURN_RATE_BASELINE | 85% | N/A | IOM 2024 | FABRICATED |
+
+### 4.4 Emergency Response Parameters
+
+| Parameter | Code Value | Paper Value | Source | Status |
+|-----------|-----------|-------------|--------|--------|
+| EMERGENCY_RESPONSE_BASELINE | 30% | N/A | GAO 2025 | ESTIMATED (marked) |
+| EMERGENCY_RESPONSE_MAX | 40% | N/A | GAO 2025 | ESTIMATED (marked) |
 
 ---
 
-## 5. Fidelity Grades Summary
+## 5. Discrepancies Identified
 
-| Component | Paper Source | Fidelity Grade | Notes |
-|-----------|--------------|----------------|-------|
-| Nuclear Winter Mortality | Xia et al. 2022 | **B+** | Calibrated to 5B deaths, timeline extrapolated |
-| Nuclear Winter Crop Yield | Shi et al. 2025 | **B** | Formula matches, adaptation gap |
-| Xia/Shi Contradiction | Both papers | **A** | Correctly resolved as scenario difference |
-| International Aid | Cavalcanti 2025 | **A** | Direct implementation |
-| Heat Adaptation | Ballester 2024 | **A** | Direct framework implementation |
-| Migration | IOM 2024 | **A** | Parameters match report |
-| Emergency Response | GAO 2025 | **A-** | Correctly flags weak evidence |
+### 5.1 CRITICAL Discrepancies
 
-**Overall Implementation Fidelity: B+ (Good)**
+| ID | Issue | Severity | Description |
+|----|-------|----------|-------------|
+| C1 | Roadmap misattribution | CRITICAL | Roadmap pairs stabilizers with Xia/Shi (nuclear winter), but stabilizers cite different papers |
+| C2 | Cavalcanti misinterpretation | CRITICAL | Paper measures funding levels, code models donor availability |
+| C3 | IOM parameters fabricated | CRITICAL | 10/11 parameters NOT in cited report |
+
+### 5.2 HIGH Discrepancies
+
+| ID | Issue | Severity | Description |
+|----|-------|----------|-------------|
+| H1 | Aid effectiveness inflated | HIGH | 29.5% code vs 15% paper for high aid |
+| H2 | Donor fatigue unsourced | HIGH | "Pakistan 2010" claim needs peer-reviewed source |
+
+### 5.3 MEDIUM Discrepancies
+
+| ID | Issue | Severity | Description |
+|----|-------|----------|-------------|
+| M1 | Heat adaptation breakdown | MEDIUM | Type-specific percentages extrapolated, not in paper |
+| M2 | Shi adaptation gap | MEDIUM | Crop switching improves yields - not modeled |
+
+### 5.4 LOW Discrepancies
+
+| ID | Issue | Severity | Description |
+|----|-------|----------|-------------|
+| L1 | Timeline extrapolation | LOW | Nuclear winter "2-5 years" mortality timeline not in Xia paper |
 
 ---
 
 ## 6. Recommendations
 
-### 6.1 HIGH Priority
+### 6.1 CRITICAL Priority
 
-1. **Audit wet bulb thresholds:** Ensure 30.5C (Vecellio 2024) is used consistently, not 35C (theoretical)
-2. **Update research verification:** Add frontmatter to Xia verification doc noting "PARTIAL VERIFICATION - paywall limited"
+1. **Update roadmap item** - Change "Mortality stabilizers (do formulas match Xia/Shi papers?)" to clarify:
+   - Xia/Shi are for nuclear winter famine mechanics
+   - Mortality stabilizers use Cavalcanti/Ballester/IOM/GAO
 
-### 6.2 MEDIUM Priority
+2. **Fix Cavalcanti implementation** - Either:
+   - Use overall mortality values (6%, 9%, 15%) instead of inflated values
+   - OR rename variables to reflect funding levels, not donor availability
+   - Find actual peer-reviewed source for donor fatigue concept
 
-3. **Consider adaptation logic:** Shi 2025 shows crop switching can improve outcomes; consider adding to crop yield calculation
-4. **Document timeline assumption:** The "2-5 years" mortality timeline should be explicitly marked as modeling extrapolation, not paper finding
+3. **Mark IOM parameters as [MODELING ASSUMPTION]** - Only 1/11 parameters verifiable
 
-### 6.3 LOW Priority
+### 6.2 HIGH Priority
 
-5. **Harmonize citations:** Consider adding explicit note that MortalityStabilizers phase uses different research base than nuclear winter system
+4. **Find quantitative migration sources** - UNHCR, Migration Policy Institute data
+5. **Source donor fatigue claim** - "Pakistan 2010: 50% of Haiti's aid" needs citation
+
+### 6.3 MEDIUM Priority
+
+6. **Consider Shi adaptation** - Add crop switching logic to nuclear winter system
+7. **Document extrapolations** - Heat adaptation type breakdown should note "extrapolated from general 44% finding"
 
 ---
 
-## 7. Conclusion
+## 7. Structural Fabrication Assessment
 
-**The implementation demonstrates good research integrity:**
+**Definition:** "Structural fabrication" = Code claims to implement a paper but actually implements something different or fabricated.
 
-1. Nuclear winter mortality is calibrated to Xia et al. 2022's 5 billion death estimate
-2. Crop yield formulas approximate Shi et al. 2025's scenario-specific findings
-3. MortalityStabilizers uses appropriate, well-cited sources (NOT fabricating Xia/Shi claims)
-4. The apparent Xia/Shi "contradiction" was correctly identified as complementary scenarios
-5. Weak evidence (emergency response) is appropriately flagged
+### Assessment:
 
-**No structural fabrication detected.** The code implements what its citations claim, with reasonable extrapolations documented as modeling assumptions.
+| Component | Fabrication? | Explanation |
+|-----------|--------------|-------------|
+| Nuclear Winter (Xia/Shi) | NO | Correctly calibrated to paper findings |
+| Aid (Cavalcanti) | PARTIAL | Structure matches, but values inflated and concept misinterpreted |
+| Heat Adaptation (Ballester) | NO | Total fixed; breakdown is extrapolation (not fabrication) |
+| Migration (IOM) | YES | 10/11 parameters NOT in cited source |
+| Emergency Response (GAO) | NO | Correctly marked as weak evidence |
+
+**FINDING:** Migration parameters constitute **structural fabrication** - the IOM 2024 report is qualitative, but the code cites it for specific quantitative values that don't appear in the report.
+
+---
+
+## 8. Conclusion
+
+The audit reveals a **mixed picture**:
+
+**GOOD:**
+- Nuclear winter mortality correctly calibrated to Xia et al. 5B death estimate
+- Heat adaptation total max FIXED from 0.8 to 0.45 (matches Ballester)
+- Emergency response correctly acknowledges weak evidence
+- No malicious intent - honest extrapolation attempts
+
+**BAD:**
+- Roadmap item creates false expectation (Xia/Shi vs actual sources)
+- Cavalcanti paper misinterpreted (funding levels != donor availability)
+- IOM migration parameters are fabricated (not in source)
+- Aid effectiveness values inflated by ~2x
+
+**OVERALL GRADE: C+ (Partial Match)**
+
+The implementation shows research integrity in nuclear winter mechanics (the ACTUAL Xia/Shi domain), but mortality stabilizers have significant parameter attribution issues that should be addressed.
 
 ---
 
 **Audit Status:** COMPLETE
-**Next Steps:** Address HIGH priority recommendations (wet bulb audit, research doc updates)
-**File:** `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/reviews/mechanism_audit_mortality_stabilizers_20251123.md`
+**Files Reviewed:**
+- `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/MortalityStabilizersPhase.ts`
+- `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/config/centralConfig.ts`
+- `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/nuclearWinter.ts`
+- `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/research/mortality_stabilizing_mechanisms_20251030.md`
+- `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/research/mortality_stabilizers_layer2_verification_20251106.md`
+
+**Next Steps:**
+1. Address CRITICAL recommendations (roadmap clarification, Cavalcanti fix, IOM marking)
+2. Find peer-reviewed sources for migration parameters and donor fatigue
