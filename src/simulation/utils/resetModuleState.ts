@@ -12,6 +12,8 @@ import { clearDeterministicRng } from './deterministicRng';
 import { resetGlobalWUE } from '../aiInfrastructureResources';
 import { governmentActionRegistry } from '../government/core/actionRegistry';
 import { resetValidationContext } from './stateValidation';
+import { resetCrisisEventIdCounter } from '../government/actions/crisisActions';
+import { resetEnvironmentalEventIdCounter } from '../government/actions/environmentalActions';
 
 /**
  * Reset all module-level state for a fresh simulation run
@@ -31,4 +33,8 @@ export function resetModuleState(): void {
 
   // Clear government action registry (will be repopulated by initialization)
   governmentActionRegistry.clear();
+
+  // Reset event ID counters (Nov 24, 2025 - architecture review finding)
+  resetCrisisEventIdCounter();
+  resetEnvironmentalEventIdCounter();
 }
