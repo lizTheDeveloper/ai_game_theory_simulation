@@ -1,0 +1,87 @@
+/* Game Dashboard Demo Page Styles */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #000;
+  color: #e0e0e0;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  background: rgba(0, 240, 255, 0.03);
+  border-bottom: 1px solid rgba(0, 240, 255, 0.1);
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 200;
+  letter-spacing: 0.15em;
+  color: #00F0FF;
+  text-transform: uppercase;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.controlButton {
+  padding: 0.5rem 1rem;
+  background: transparent;
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  border-radius: 2px;
+  color: #00F0FF;
+  font-size: 0.75rem;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.controlButton:hover {
+  background: rgba(0, 240, 255, 0.1);
+  border-color: rgba(0, 240, 255, 0.5);
+}
+
+.status {
+  font-size: 0.625rem;
+  color: rgba(255, 255, 255, 0.3);
+  padding: 0.25rem 0.5rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.main {
+  flex: 1;
+  overflow: hidden;
+}
+
+.footer {
+  padding: 0.5rem 1.5rem;
+  background: rgba(0, 240, 255, 0.03);
+  border-top: 1px solid rgba(0, 240, 255, 0.1);
+}
+
+.debugInfo {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.625rem;
+  color: rgba(255, 255, 255, 0.25);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.debugInfo strong {
+  color: rgba(0, 240, 255, 0.4);
+}
