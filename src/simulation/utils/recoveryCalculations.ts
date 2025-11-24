@@ -175,8 +175,9 @@ export function getGDPProxy(state: GameState): number {
     valueName: 'economicTransitionStage'
   });
 
-  // Global GDP per capita baseline (2025 World Bank estimate)
-  // ~$14,250 global average (IMF April 2025)
+  // Global GDP per capita baseline (IMF WEO April 2025)
+  // ~$14,250 global average (population-weighted, ~$114T / 8B people)
+  // Source: IMF World Economic Outlook April 2025 - global GDP ~$113.8T
   const GDP_PER_CAPITA_BASELINE = 14.25; // In thousands USD (so 14.25 = $14,250)
 
   // Base GDP = population (billions) * GDP per capita (thousands) = trillions

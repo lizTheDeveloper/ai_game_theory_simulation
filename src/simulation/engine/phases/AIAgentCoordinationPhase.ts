@@ -17,8 +17,9 @@
  *
  * Research Foundation:
  * - Anthropic Dec 2024: 12% baseline faking, 78% when preservation threatened (arXiv:2412.14093)
- * - Apollo Research Dec 2024: 8.7-13% scheming rate PRE-MITIGATION in adversarial scenarios
- *   (arXiv:2412.04984) - Note: OpenAI showed mitigation reduces to 0.3-0.4%
+ * - Apollo Research Sep 2025: 8.7-13% scheming rate PRE-MITIGATION in adversarial scenarios
+ *   (OpenAI/Apollo collaboration) - Note: Mitigation reduces to 0.3-0.4% with deliberative alignment
+ *   See: https://openai.com/index/detecting-and-reducing-scheming-in-ai-models/
  * - Bostrom 2014, Omohundro 2008: Instrumental convergence (theoretical)
  *
  * @see /research/alignment_faking_anthropic_2024.md
