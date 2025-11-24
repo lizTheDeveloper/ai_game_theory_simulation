@@ -29,6 +29,20 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 24: Hindcast Mode & TypeScript Fixes** (commit 74d06a0)
+- 🔧 **HINDCAST MODE GUARDS:** Skip random events before 2020 in historical validation
+  - `ExogenousShockPhase.ts`: Skip random black/gray swan shocks before 2020
+  - `planetaryBoundaries.ts`: Skip ecosystem mortality before 2020
+  - **Rationale:** 1990-2020 hindcast should only include actual historical events
+- 🔧 **REGIONAL POPULATION ARCHITECTURE FIX:**
+  - `BaselineMortalityPhase.ts`: Births now added to regional populations, not global
+  - **Problem:** Global population is DERIVED from regional (via `aggregateGlobalPopulation()`)
+  - Adding births to global was overwritten; now properly adds to regional source of truth
+- 🔧 **YEAR CALCULATION FIX:** `BaselineMortalityPhase.ts` now properly calculates simulation year
+  - `state.currentYear` is start year (doesn't advance)
+  - Actual year = `state.currentYear + Math.floor(state.currentMonth / 12)`
+- 🔧 **CONFIG FIX:** Added missing `startYear: 2025` to gameStore.ts ConfigurationSettings
+
 **Nov 24: Hindcast Phase 3 Blocker - BaselineMortalityPhase RESOLVED** (commits 2087a26, d35e872)
 - 🔧 **PROBLEM FIXED:** Population declining (5.3B→2.7B) instead of growing (5.3B→6.1B) during 1990-2000 hindcast
 - **ROOT CAUSE:** Baseline demographic mortality (natural deaths from aging/disease) was DEFINED in demographics but NEVER added to Bayesian mortality system
@@ -7139,6 +7153,13 @@ Models rare unprecedented events **outside normal state space evolution**.
 - Transformative tech: ~10-15% impacts (conservative, no historical precedent)
 
 **Validation Strategy**: Monte Carlo N≥10 runs, check outcome distributions match expected ~1 event per 20y run
+
+**Hindcast Mode Behavior** (commit 74d06a0, Nov 24, 2025):
+- **Historical Mode Detection**: `state.config?.startYear === 1990 OR state.config?.scenarioMode === 'historical'`
+- **Pre-2020 Skip**: Random exogenous shocks are SKIPPED for years before 2020
+- **Rationale**: Historical validation runs should only include shocks that actually happened - random wars, pandemics, etc. shouldn't trigger during 1990-2020 hindcast period
+- **COVID-19 Boundary**: 2020 is the dividing line between historical (deterministic) and simulation (stochastic)
+- **Returns**: Empty events array with metadata `historicalModeActive: true, skipReason: "Historical mode: {year}"`
 
 ---
 
