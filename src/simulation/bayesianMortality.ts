@@ -61,7 +61,7 @@ export function getDefaultDemographics(): DemographicSegment[] {
     {
       name: 'Elite',
       fraction: 0.05,
-      baselineDeathRate: 0.006, // 0.6% annual (better healthcare)
+      baselineDeathRate: 0.0048, // 0.48% annual → 0.6× global average (Chetty 2016)
       vulnerability: {
         famine: 0.2,      // Can afford imported food
         disease: 0.5,     // Best healthcare access
@@ -70,13 +70,13 @@ export function getDefaultDemographics(): DemographicSegment[] {
         pollution: 0.4,   // Live in cleaner areas
         ecosystem: 0.5,   // Less dependent on local ecosystems
         cascade: 0.4,     // FIX (Oct 28, 2025): Add cascade vulnerability - elites have resources to weather cascading crises
-        other: 0.5,       // FIX (Oct 28, 2025): Add other vulnerability - catch-all for miscellaneous risks
+        other: 0.6,       // FIX (Nov 24, 2025): Adjusted from 0.5 → 0.6 (Chetty 2016)
       },
     },
     {
       name: 'Professional',
       fraction: 0.20,
-      baselineDeathRate: 0.007, // 0.7% annual
+      baselineDeathRate: 0.0056, // 0.56% annual → 0.7× global average (interpolated)
       vulnerability: {
         famine: 0.6,
         disease: 0.7,
@@ -91,7 +91,7 @@ export function getDefaultDemographics(): DemographicSegment[] {
     {
       name: 'Working',
       fraction: 0.50,
-      baselineDeathRate: 0.008, // 0.8% annual (global average)
+      baselineDeathRate: 0.008, // 0.8% annual (global average baseline)
       vulnerability: {
         famine: 1.0,      // Baseline risk
         disease: 1.0,
@@ -106,7 +106,7 @@ export function getDefaultDemographics(): DemographicSegment[] {
     {
       name: 'Precariat',
       fraction: 0.20,
-      baselineDeathRate: 0.010, // 1.0% annual (worse access)
+      baselineDeathRate: 0.0104, // 1.04% annual → 1.3× global average (interpolated)
       vulnerability: {
         famine: 2.0,      // Food insecurity
         disease: 1.5,     // Limited healthcare
@@ -121,7 +121,7 @@ export function getDefaultDemographics(): DemographicSegment[] {
     {
       name: 'Informal',
       fraction: 0.05,
-      baselineDeathRate: 0.012, // 1.2% annual (subsistence)
+      baselineDeathRate: 0.0128, // 1.28% annual → 1.6× global average (Kahn 2022: 1.76×, conservative 1.6×)
       vulnerability: {
         famine: 2.5,      // Extreme food insecurity
         disease: 2.0,     // No healthcare access
