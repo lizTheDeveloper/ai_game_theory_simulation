@@ -25,7 +25,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **Research Currency:** ✅ EXCELLENT (all simulation-critical files updated within 14 days, autonomous system working effectively)
 - **Implementation Fidelity:** A- (assertion coverage 97.2%, 24 integration tests for CoordinatedDeploymentPhase) ✅ EXCELLENT
 - **Architecture Health:** B+ (0 CRITICAL, 2 HIGH technical debt non-urgent, deep clone optimization complete) ✅ GOOD
-- **System Trajectory:** 🟡 OPERATIONAL (Nov 24: Game Layer Phase 1 complete, hindcast calibration Phase 1-2 COMPLETE - temperature/mortality fixes applied, remaining: planetary boundaries + food security)
+- **System Trajectory:** 🟡 OPERATIONAL (Nov 24: Game Layer Phase 1 complete, hindcast calibration Phase 3 IN PROGRESS - temperature fixed, ERA reframed as crisis vulnerability, population growth fix pending)
 
 **Recent Major Achievements:**
 
@@ -113,27 +113,31 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📄 **Documentation:** `docs/wiki/systems/game-layer.md`
 - ✅ **Status:** Phase 1 COMPLETE, Sylvia architecture review PENDING
 
-**Nov 24: Hindcast Calibration Phase 1-2 (CRITICAL)** (commit dd327b7)
-- 🔧 **CRITICAL FIX:** Model showed catastrophic pessimism for 1990-2024 hindcast (extinction-level outcomes for historical period)
-- **Phase 1 - Diagnostic:** New script `scripts/hindcastMortalityDiagnostic.ts` identified 5 root causes:
-  1. Temperature initialization bug (jumps 0.45C → 1.31C at Month 1)
-  2. Climate stability at 0% (should be ~65% for 1990)
-  3. Baseline regional deaths too high (~11M/month vs historical 4.2M)
-  4. Food security decay too fast
-  5. Missing population growth mechanics
-- **Phase 2 - Implementation:**
-  - **NEW: ERA_MORTALITY_MULTIPLIERS** (`src/types/config.ts`) - Year-interpolated mortality scaling:
-    - 1990: 0.30, 2000: 0.40, 2010: 0.60, 2020: 0.80, 2025: 1.00
-    - Research: UN World Population Prospects, IHME Global Burden of Disease (~50% mortality reduction 1990-2019)
-  - **NEW: Thermal Inertia Model** (`src/types/resources.ts`) - CO2System extended:
-    - `historicalTemperatureTarget?: number` - Observed temperature for hindcast start
-    - `hindcastTransitionMonths?: number` - S-curve transition period (24 months default)
-    - Prevents equilibrium formula from ignoring decades of ocean thermal lag
-  - **Climate Stability Initialization** - Derived from planetary boundary values for historical years
-- **Validation:** Temperature fix working (stays at 0.45C instead of jumping to 1.31C)
-- **Remaining:** Planetary boundary initialization, regional food security calibration
-- 📄 **Files:** config.ts, bayesianMortality.ts, resourceDepletion.ts, initialization.ts, resources.ts
-- 📊 **Diagnostic:** plans/hindcast_diagnostic_report_20251124.md
+**Nov 24: Hindcast Calibration Phase 3 (CRITICAL)** (commit 70abd98)
+- 🔧 **TEMPERATURE FIX COMPLETE:** Fixed deeper bug where equilibrium calculation was wrong for hindcast
+  - **Problem:** In 1990, 354 ppm CO2 was already in quasi-equilibrium with 0.45C after decades of ocean lag
+  - **Root Cause:** Formula calculated 1.41C (theoretical equilibrium) but system hadn't reached it yet
+  - **Fix:** Lock temperature at historical value for 24 months, then use dampened equilibrium (75% theoretical + 25% historical)
+  - **Results:** Month 0-23: 0.45C ✅ | Month 24: 1.14C ✅ | Month 48: 1.23C ✅
+  - **Code:** `src/simulation/resourceDepletion.ts` thermal lock implementation (40 lines)
+- 🔧 **ERA_MORTALITY_MULTIPLIERS REFRAMED:** Research synthesis resolved Cynthia vs Sylvia debate
+  - **Cynthia (B-):** Correct that CDR only declined 23.5% (not 70%), but conflated baseline vs crisis mortality
+  - **Sylvia (C+):** Correct that crisis response was MUCH worse in 1990 (1991 Bangladesh: 138K deaths vs 2020: 128 deaths)
+  - **Decision:** KEEP 0.30 multiplier, reframe as CRISIS VULNERABILITY (not baseline mortality)
+  - **Evidence:** Hospital surge capacity 40-60% lower (1990), response time weeks vs hours, famine mortality worse per-capita once triggered
+  - **Documentation:** 45 lines added to `src/types/config.ts` explaining crisis cascade mechanism
+- ⏳ **POPULATION FIX IN PROGRESS:** Deaths still 40% too high (70M+/year vs 50M historical)
+  - **Issue:** Baseline mortality calculations assume 2025 crisis conditions
+  - **Needed:** Reduce baseline death rate, increase birth rate for historical era, apply ERA multiplier to crisis deaths only
+- 📊 **Research Documents:**
+  - `plans/hindcast_phase3_roy_synthesis_20251124.md` - Roy's synthesis & decision
+  - `research/hindcast_era_mortality_verification_20251124.md` - Cynthia's research (Grade B-)
+  - `reviews/hindcast_era_mortality_critique_20251124.md` - Sylvia's critique (Grade C+)
+
+**Nov 24: Hindcast Calibration Phase 1-2** (commit dd327b7)
+- **Phase 1 - Diagnostic:** New script `scripts/hindcastMortalityDiagnostic.ts` identified 5 root causes
+- **Phase 2 - Implementation:** ERA_MORTALITY_MULTIPLIERS + thermal inertia S-curve (later replaced in Phase 3)
+- **Note:** Phase 2 S-curve fix worked but hid deeper bug - see Phase 3 above for complete temperature fix
 
 **Nov 24: Historical Initialization for Hindcasting Validation** (commit b29fd87)
 - 📜 **NEW MODULE: `historicalInitialization.ts`** (294 lines) - Create GameState from historical values (1990-2024)
