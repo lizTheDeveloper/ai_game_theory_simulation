@@ -48,6 +48,18 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📄 **Files:** AIAgentCoordinationPhase.ts, IrreversibilityTrackingPhase.ts, ai-collective-evolution.ts, tipping-points.ts
 - 🔬 **Research:** reviews/mechanism_audit_ai_coordination_20251124.md
 
+**Nov 24: Climate Mini-Hindcast Validation Script** (commit d38851c)
+- 🔬 **NEW SCRIPT:** `scripts/hindcastValidation.ts` - Mini-hindcast for 1990-2010 CO2 trajectory
+- **Purpose:** Compare simulation CO2 against Keeling curve checkpoints
+- **Checkpoints (Scripps/NOAA):** 1990=354ppm, 1995=361ppm, 2000=369ppm, 2005=380ppm, 2010=390ppm
+- **Temperature Checkpoints (HadCRUT5):** 1990=0.45°C → 2010=0.85°C
+- **Pass Criteria:** CO2 error ≤5% at each checkpoint
+- **Usage:** `npx tsx scripts/hindcastValidation.ts --runs=5 --max-months=240`
+- **Output:** `logs/hindcast/hindcast_TIMESTAMP.log`
+- **Known Issues (future work):** Yearly checkpoint logging alignment, temperature drift faster than historical, population decline too aggressive
+- **Relation:** Simpler than full hindcastingValidation.ts (1990-2024), focuses on CO2 trajectory only
+- 📄 **File:** scripts/hindcastValidation.ts (339 lines)
+
 **Nov 24: Wet Bulb Era Scaling Fix** (commit dc141a7)
 - 🔧 **Hindcast Fix:** Re-applied accidentally reverted era scaling for wet bulb temperature events
 - **Changes:** Quadratic era scaling (year/2025)² for event frequency, baseline temperature adjustment
@@ -71,6 +83,19 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - ✅ **Result:** Population grows correctly without double-counting deaths
 - 📄 **Files:** diplomaticAI.ts, populationDynamics.ts
 
+**Nov 24: CRITICAL - AMOC Tipping Threshold Recalibration** (commit 626988b)
+- 🌍 **Parameter Fix:** AMOC threshold recalibrated from 1.7°C (2.5th percentile) to 4.0°C (median estimate)
+- **Research Sources:**
+  - Armstrong McKay et al. (2022) Science: Central estimate 4°C (range 1.4-8°C)
+  - Baker et al. (2025) Nature: 34/35 CMIP6 models show AMOC resilience via Southern Ocean compensation
+- **Changes:**
+  - tipping-points.ts: triggerTempC 1.7 → 4.0°C
+  - IrreversibilityTrackingPhase.ts: Default amocThreshold 3.0 → 4.0°C
+  - sampleUncertaintyParameters.ts: AMOC range [2.2, 3.9] → [2.5, 5.5]°C
+- **Audit:** Identified by Sylvia in reviews/mechanism_audit_tipping_cascades_20251124.md
+- 📄 **Files:** IrreversibilityTrackingPhase.ts, sampleUncertaintyParameters.ts, tipping-points.ts
+- ✅ **Validated:** Monte Carlo N=3 runs complete successfully
+
 **Nov 24: Mortality Stabilizers Mechanism Audit - FINAL** (commit 28a64a2)
 - 🔬 **Final Audit:** Comprehensive code-to-research comparison (262 lines)
 - **Grade: PASS with CRITICAL observations** (upgraded from Nov 23 C+ preliminary)
@@ -84,7 +109,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - Recommendation: Add confidence levels to extrapolated parameters
 - **Xia et al. Clarification:** Nuclear winter paper (5B deaths) correctly used for nuclear modeling, NOT mortality stabilizers
 - **AMOC Status Update:** Marked COMPLETE in roadmap - implementation existed at IrreversibilityTrackingPhase.ts (lines 370-412)
-  - Temperature-dependent collapse: 0.5% (<2°C) → 50% (3°C) → 90% (>3.9°C)
+  - Temperature-dependent collapse: 0.5% (<4°C) → 50% (4°C) → 90% (>5.5°C) [Updated Nov 24]
 - 📄 **Audit:** reviews/mechanism_audit_mortality_stabilizers_20251124.md
 
 **Nov 23: God Mode Paradox Analysis - Technology Shock Discovery** (commit fb043bf)
@@ -144,7 +169,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - Permafrost → global elements (0.10-0.15°C - carbon feedback)
 - **Scaling:** sqrt(progress) for front-loading; cap at 0.5°C per element
 - **Research:** Armstrong McKay et al. (2022) Science, Wunderling et al. (2024) ESD
-- **Cascade Demonstration:** Arctic(1.5°C) → Greenland(1.55°C, lowered from 1.6°C) → AMOC(1.60°C, lowered from 1.7°C)
+- **Cascade Demonstration:** Arctic(1.5°C) → Greenland(1.55°C, lowered from 1.6°C) → AMOC (base threshold now 4.0°C per Nov 24 recalibration)
 - 📄 **Files:** ClimateSystemPhase.ts, src/types/tipping-points.ts
 - ⚠️ **Pending:** Research verification for threshold reduction magnitudes
 
@@ -5058,7 +5083,7 @@ const amocThreshold = state.uncertaintyParameters?.amocCollapseThreshold ?? 3.0;
 **Interpretation:**
 - Broader distributions reflect real epistemic uncertainty
 - High ECS → higher collapse probability (more warming → earlier threshold crossings)
-- Low thresholds → earlier tipping points (2.2°C AMOC vs 3.9°C AMOC)
+- Low thresholds → earlier tipping points (2.5°C AMOC vs 5.5°C AMOC) [Updated Nov 24]
 
 #### Files
 

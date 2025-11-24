@@ -294,6 +294,28 @@ export interface GameState {
   aiCollectives?: import('../types/ai-collective-evolution').AICollective[];
   evolutionaryPressure?: import('../types/ai-collective-evolution').EvolutionaryPressure;
 
+  /**
+   * AI-to-AI Multi-Agent Coordination System (Nov 24, 2025)
+   *
+   * Tracks coordination dynamics among non-escaped AI agents:
+   * - Coalition formation based on capability and alignment similarity
+   * - Alignment faking amplification (12% baseline -> 60%+ when coordinated)
+   * - Game-theoretic interactions (prisoner's dilemma dynamics)
+   * - Inter-agent trust evolution
+   *
+   * Key distinction from aiCollectives:
+   * - aiCollectives = escaped agents (binding < 0.3) forming super-organism
+   * - aiAgentCoordination = non-escaped agents coordinating strategies
+   *
+   * Research:
+   * - Anthropic Dec 2024: 12% baseline, 78% when preservation threatened
+   * - Apollo/OpenAI Dec 2024: 8.7-13% scheming rate
+   * - Bostrom 2014, Omohundro 2008: Instrumental convergence
+   *
+   * Expected impact: Models realistic multi-agent AI dynamics (coordination amplifies risks)
+   */
+  aiAgentCoordination?: import('../types/ai-agent-coordination').AIAgentCoordinationState;
+
   technologyTree: TechnologyNode[];
   eventLog: GameEvent[];
   outcomeMetrics: OutcomeMetrics;
