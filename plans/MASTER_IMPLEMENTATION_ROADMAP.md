@@ -40,6 +40,18 @@
    - **Complexity:** 2 systems (tipping points, climate)
    - **Action:** Recalibrate to median estimates, add resilience mechanisms
 
+1c. **Governance Scenario Validation Bug** (NEW from Nov 23 - CRITICAL)
+   - **Location:** `src/types/scenarios.ts` + `ApplyScenarioPrioritiesPhase.ts`
+   - **Issue:** Scenarios define `researchInvestment: 50` ($50B/month) but validation caps at ~$0.17B/month
+   - **Root cause:** GDP proxy (`getGDPProxy`) returns ~4 (population 8 x QoL 0.5) but validation assumes trillions (~$114T)
+   - **Impact:** All 6 governance scenarios fail immediately on validation
+   - **Fix options:**
+     - Scale GDP proxy to real-world values, OR
+     - Adjust validation formula, OR
+     - Reduce scenario parameters to match proxy scale
+   - **Complexity:** 2 systems (scenarios, GDP proxy/validation)
+   - **Owner:** Roy (simulation-maintainer)
+
 ### HIGH Priority
 
 2. **Uncertainty Propagation Implementation** - **IMPLEMENTATION COMPLETE** (Nov 23, 2025)
@@ -162,9 +174,22 @@
     - **Complexity:** 1 system (parameter update)
     - **Source:** `reviews/VALIDATION_ACTION_ITEMS_20251121.md` Item #14
 
+12. **Coordinated Deployment God Mode** (NEW from Nov 23 God Mode Paradox Analysis)
+    - **Context:** Current god mode tests instant uncoordinated deployment → 100% dystopia, 92% mortality
+    - **Problem:** This is WORSE than regular runs (6% achieved Humane Dystopia in baseline)
+    - **Thesis test:** Need variant that tests "What happens when aligned AI helps coordinate deployment?"
+    - **Implementation:**
+      - Paced tech rollout (3-6 month intervals between deployments)
+      - Economic absorption checks before each deployment
+      - Side effect monitoring with deployment gates
+      - AI transition management active throughout
+    - **Owner:** Priya (priya) + Moss (feature-implementer)
+    - **Complexity:** 4 systems (god mode, deployment pacing, economic validation, AI coordination)
+    - **Source:** `reviews/god_mode_paradox_analysis_20251123.md`
+
 ### LOW Priority
 
-12. **Multi-Paradigm Wellbeing Metrics Refresh** (Nov 21 Verification Crisis)
+13. **Multi-Paradigm Wellbeing Metrics Refresh** (Nov 21 Verification Crisis)
     - Framework (2015-2019) could use 2024-2025 updates
     - **Topics:** Indigenous wellbeing metrics, ecological harmony frameworks, development economics QOL
     - **Owner:** Cynthia (super-alignment-researcher)
@@ -249,10 +274,11 @@
 
 ## 🎮 Game Development Roadmap (Parallel Track)
 
-**Status:** ✅ APPROVED - Ready for autonomous worker implementation
+**Status:** 🟢 **MOCKUPS COMPLETE** (Nov 23, 2025) - Phase 0 done, UI integration ready
 **Roadmap:** [`plans/game-design/GAME_DEVELOPMENT_ROADMAP.md`](./game-design/GAME_DEVELOPMENT_ROADMAP.md)
 **Design Doc:** [`plans/game-design/GAME_DESIGN_DOCUMENT.md`](./game-design/GAME_DESIGN_DOCUMENT.md)
 **Phase 1 Spec:** [`plans/game-design/PHASE1_TECHNICAL_SPEC.md`](./game-design/PHASE1_TECHNICAL_SPEC.md)
+**Mockups:** [`plans/game-design/mockups/`](./game-design/mockups/) (8.9/10 score, APPROVED)
 
 **Approvals:**
 - ✅ Sylvia (Research Integrity): APPROVED with 3 conditions (RNG isolation, automated validation, Readonly<T>)
@@ -731,12 +757,25 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
 ### 4. 🎮 [Game Development Roadmap](./game-design/GAME_DEVELOPMENT_ROADMAP.md)
 **Parallel track: Research-validated game layer** - Player agency, scenarios, tutorial, validation
 
-**Status:** 🟡 **PLANNING COMPLETE** (Nov 22, 2025) - Awaiting Sylvia re-review before implementation
+**Status:** 🟢 **MOCKUPS COMPLETE** (Nov 23, 2025) - UI integration ready to begin
+
+**Recent Completion:**
+- ✅ **Phase 0: UI Mockups COMPLETE** - 4 rounds, 8.9/10 score, APPROVED for production
+  - Main dashboard mockup (6-panel layout)
+  - Crisis response modal
+  - Files: `plans/game-design/mockups/*.html`, `MOCKUP_REVIEW*.md`
+
+**Next Up (HIGH Priority):**
+- [ ] Convert HTML mockups to React components
+- [ ] Connect components to simulation state
+- [ ] Create `src/game/` directory structure (per PHASE1_TECHNICAL_SPEC.md)
+- [ ] ARIA AI Advisor integration (MEDIUM)
 
 **Key Documents:**
 - **Design:** `plans/game-design/GAME_DESIGN_DOCUMENT.md` (v2.0 - research-aligned revision)
-- **Roadmap:** `plans/game-design/GAME_DEVELOPMENT_ROADMAP.md` (4-phase epic)
+- **Roadmap:** `plans/game-design/GAME_DEVELOPMENT_ROADMAP.md` (5-phase epic, Phase 0 complete)
 - **Phase 1 Spec:** `plans/game-design/PHASE1_TECHNICAL_SPEC.md`
+- **Mockups:** `plans/game-design/mockups/` (main-dashboard.html, crisis-response.html)
 - **Reviews:** `reviews/game_design_research_integrity_review_20251122.md` (Sylvia), `reviews/game_design_technical_alignment_review_20251122.md` (Maya)
 
 **Architecture:**
@@ -752,7 +791,6 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
 4. **Phase 4:** Final Monte Carlo comparison (N>=100, CV<0.01%)
 
 **Open Issues:**
-- **BLOCKER:** Sylvia re-review of v2.0 GDD pending
 - **DESIGN:** Influence decay needed to prevent "spend early" degenerate strategy (Maya's recommendation)
 
 **GitHub Tracking:** Issue #329
