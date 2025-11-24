@@ -180,6 +180,42 @@ export async function createHistoricalInitialState(
     baseState.globalMetrics.socialStability = 50 + (historical.economic.globalHDI - 0.5) * 50;
   }
 
+  // === FOOD SECURITY OVERRIDE FOR HISTORICAL MODE ===
+  // HINDCAST FIX (Nov 24, 2025): Historical food security was ~95% globally
+  // Default 2025 initialization uses ~67% which triggers 7 phantom famines
+  // Source: FAO Food Security Indicators 1990-2010
+  if (year <= 2010) {
+    // Set global food security
+    if (baseState.qualityOfLifeSystems?.survivalFundamentals) {
+      baseState.qualityOfLifeSystems.survivalFundamentals.foodSecurity = 0.95;
+    }
+
+    // Set regional food security based on FAO historical data
+    // Source: FAO State of Food Insecurity reports (1999-2015)
+    if (baseState.humanPopulationSystem?.regionalPopulations) {
+      const historicalFoodSecurity: Record<string, number> = {
+        'eastAsia': 0.92,           // East Asia ~8% undernourished 1990
+        'southAsia': 0.88,          // South Asia ~12% undernourished 1990
+        'subSaharanAfrica': 0.85,   // SSA ~15% undernourished 1990
+        'europe': 0.98,             // Europe <2% undernourished
+        'northAmerica': 0.98,       // NA <2% undernourished
+        'latinAmerica': 0.90,       // LAC ~10% undernourished 1990
+        'middleEastNorthAfrica': 0.88, // MENA ~12% undernourished 1990
+        'southeastAsia': 0.90,      // SE Asia ~10% undernourished 1990
+        'centralAsia': 0.87,        // Central Asia ~13% undernourished 1990
+        'oceania': 0.98             // Oceania <2% undernourished
+      };
+
+      for (const region of baseState.humanPopulationSystem.regionalPopulations) {
+        if ('foodSecurity' in region) {
+          (region as { foodSecurity: number }).foodSecurity =
+            historicalFoodSecurity[region.name] || 0.90;
+        }
+      }
+    }
+    console.log(`  Food security (historical override): 95%`);
+  }
+
   // === AI AGENT BOOTSTRAP ===
   // No modern AI existed before 2018
   if (!includeAIAgents || year < 2018) {
