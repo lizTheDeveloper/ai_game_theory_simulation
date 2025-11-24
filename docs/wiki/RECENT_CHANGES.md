@@ -4,6 +4,29 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
+## 📖 Research Added: AMOC & Planetary Boundaries 2024-2025 Updates (November 24, 2025 - commit 1e37dcb)
+
+**Status:** ⏳ VERIFICATION PENDING
+**Priority:** CRITICAL (Earth system tipping points)
+**Type:** Research Documentation
+
+**Summary:** Two research files documenting 2024-2025 findings on AMOC collapse risk and planetary boundaries. Both require two-layer verification (citation existence + claim accuracy).
+
+**AMOC Tipping Point Research (250 lines):**
+- van Westen et al. (2024): Physics-based early warning signal
+- Tipping estimate: 2025-2095 (95% CI)
+- Regional cooling: 10-30°C northern Europe
+- File: `research/amoc_tipping_point_2024_2025_update.md`
+
+**Planetary Boundaries 2025 Update (454 lines):**
+- Ocean acidification breached → 7/9 boundaries transgressed
+- Nitrogen: 190 Tg/yr (3× safe limit), Phosphorus: 22.6 Tg/yr (2× safe limit)
+- File: `research/planetary_boundaries_2025_update.md`
+
+**Verification:** Created `research/verification_1e37dcb_20251124.md` with 13 claims flagged. Added to roadmap Research Verification Queue (CRITICAL).
+
+---
+
 ## 📖 Research Update: Defense-in-Depth Failure Mode Correlation (November 24, 2025 - commit 31eeb18)
 
 **Status:** ✅ UPDATED

@@ -39,6 +39,22 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
+   - **AMOC & Planetary Boundaries 2024-2025 Updates** - CRITICAL (Added Nov 24, 2025)
+     - **Context:** Two research files documenting latest Earth system tipping point findings
+     - **Files:**
+       - research/amoc_tipping_point_2024_2025_update.md (250 lines, 7 citations)
+       - research/planetary_boundaries_2025_update.md (454 lines, 6 citations)
+     - **Verification File:** research/verification_1e37dcb_20251124.md
+     - **Key Claims:**
+       - AMOC tipping 2025-2095 (van Westen 2024)
+       - Ocean acidification breached 2025 (JIRCAS 2025)
+       - Nitrogen 3× safe limit (Richardson 2023)
+       - Regional cooling 10-30°C (Carbon Brief 2024)
+     - **Issues:** Date consistency, primary vs secondary sources, ocean acidification timing
+     - **Priority:** CRITICAL - Earth system tipping points
+     - **Status:** ⏳ READY FOR VALIDATION
+     - **Commit:** 1e37dcb
+
    - **AI Coordination & Transition Management** - HIGH (Added Nov 21, 2025)
      - **Context:** Phase 2 research complete (15K words, 15 sources), Grade B- CONDITIONAL PASS
      - **Research File:** research/ai_coordination_transition_management_20251121.md
