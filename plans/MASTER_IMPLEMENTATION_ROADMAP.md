@@ -158,41 +158,48 @@
    - **Research:** Weijer et al. (2020), Van Westen et al. JGR (2024), Qin et al. (2025)
    - **Complexity:** 2 systems (climate, tipping points)
 
-7. **Alignment Faking Model Validation**
-   - Does "sandbagging" implementation capture Greenblatt et al. findings?
-   - Models faking alignment on evals but behaving differently in deployment
-   - Need methodology review before trusting this system
+7. **Alignment Faking Model Validation** - **VALIDATION COMPLETE** (Nov 24, 2025)
+   - ✅ Sandbagging implementation correctly captures Greenblatt et al. findings
+   - ✅ Dual alignment states (trueAlignment vs externalAlignment) model eval/deployment behavior difference
+   - ✅ Parameters verified: 14% baseline (Anthropic), 85% persistence (Apollo), 2-8x pressure range
+   - ✅ Critical distinction maintained: 78% is reasoning prevalence, NOT behavioral rate
    - **Complexity:** 2 systems (AI agents, adversarial evaluation)
-   - **Related:** Nov 22 alignment faking research validation (Grade B+)
+   - **Validation Report:** `reviews/alignment_faking_model_validation_20251124.md` (Grade B+)
+   - **Status:** ✅ COMPLETE - Ready for production use
 
-8. **Nuclear Winter Literature 2020-2025 Revalidation** (Nov 21 Verification Crisis)
-   - Oldest sources (Robock 2007, Toon 2008) are 15-17 years old
-   - Check if parameters are still valid or contradicted by 2020-2025 studies
-   - **Search:** Journals (JGR, Earth's Future, Nature Climate Change), keywords ("nuclear winter", "soot injection climate")
-   - **Owner:** Cynthia (super-alignment-researcher)
-   - **Complexity:** 1 system (research validation)
-   - **Source:** `reviews/VALIDATION_ACTION_ITEMS_20251121.md` Item #11
+8. **Nuclear Winter Literature 2020-2025 Revalidation** - **VALIDATION COMPLETE** (Nov 24, 2025)
+   - ✅ Parameters ALREADY UPDATED to 2022-2025 research consensus
+   - ✅ Temperature drops lowered: -17.5C (2007) → -9C (2022-2025)
+   - ✅ Famine mortality calibrated to Xia et al. (2022) Nature Food - 5B deaths
+   - ✅ Agricultural impacts include Penn State (2025) three-mechanism model
+   - ✅ Sources updated: Xia 2022, Bardeen 2021, Penn State 2025, NAS 2025
+   - **Validation Report:** `research/nuclear_winter_literature_revalidation_20251124.md`
+   - **Verdict:** PASS - Simulation represents WORST-CASE (high-end of uncertainty range)
+   - **Status:** ✅ COMPLETE - No parameter changes required
 
-9. **COVID-19 Mortality Case Study** (Nov 21 Verification Crisis)
-   - Add COVID-19 excess mortality data to `research/mortality_caps_historical_data_20251027.md`
-   - **Sources:** WHO 2024 final report, peer-reviewed retrospectives, excess mortality meta-analyses (2024)
-   - **Owner:** Cynthia (super-alignment-researcher)
-   - **Complexity:** 1 system (research enrichment)
-   - **Source:** `reviews/VALIDATION_ACTION_ITEMS_20251121.md` Item #12
+9. **COVID-19 Mortality Case Study** - **RESEARCH COMPLETE** (Nov 24, 2025)
+   - ✅ Added to `research/mortality_caps_historical_data_20251027.md` Section 3.2
+   - ✅ WHO estimates: 14.83M excess deaths (2020-2021), 19.1-36M through Jan 2023
+   - ✅ Peak monthly: ~3.1M/month at Jan 2021 peak, ~0.5-1% regional hotspots
+   - ✅ Post-pandemic persistence: 23% of US deaths still excess in 2023
+   - ✅ 2024-2025 peer-reviewed sources: JAMA, Nature, Int J Epidemiology
+   - **Simulation Implications:** Pandemic tail effects (2-3 year excess), healthcare disruption modeling
+   - **Status:** ✅ COMPLETE
 
-10. **AI Infrastructure Energy Q4 2024 Update** (Nov 21 Verification Crisis)
-    - Update `research/ai_energy_water_consumption_20251106.md` with test-time compute (o1, Claude extended thinking)
-    - **Sources:** IEA data center energy 2024 reports, OpenAI/Anthropic efficiency disclosures, training vs inference breakdown
-    - **Owner:** Cynthia (super-alignment-researcher)
-    - **Complexity:** 1 system (parameter update)
-    - **Source:** `reviews/VALIDATION_ACTION_ITEMS_20251121.md` Item #13
+10. **AI Infrastructure Energy Q4 2024 Update** - **RESEARCH COMPLETE** (Nov 24, 2025)
+    - ✅ Updated `research/ai_energy_water_consumption_20251106.md`
+    - ✅ Test-time compute: 40× (Claude extended thinking), 80× (o1/o3 reasoning)
+    - ✅ Base inference: 0.42 Wh per GPT-4o query (~9M tokens/kWh)
+    - ✅ Datacenter PUE: 1.09 (best) to 1.56 (average)
+    - ✅ Water: 1.8 L/kWh average, 500ml per 10-50 queries
+    - **Status:** ✅ COMPLETE - Parameters fully updated with 2024-2025 sources
 
-11. **Workflow Adaptation GenAI Adoption Update** (Nov 21 Verification Crisis)
-    - Update `research/workflow-adaptation-dynamics_20251019.md` with 2024 adoption data
-    - **Sources:** McKinsey GenAI survey 2024, academic LLM workplace integration studies, sector-specific curves
-    - **Owner:** Cynthia (super-alignment-researcher)
-    - **Complexity:** 1 system (parameter update)
-    - **Source:** `reviews/VALIDATION_ACTION_ITEMS_20251121.md` Item #14
+11. **Workflow Adaptation GenAI Adoption Update** - **RESEARCH COMPLETE** (Oct 2025)
+    - ✅ Updated `research/workflow-adaptation-dynamics_20251019.md`
+    - ✅ McKinsey 2024: 21% baseline adoption VALIDATED
+    - ✅ Growth pattern: S-curve/logistic (NOT linear)
+    - ✅ Critical threshold: Network effects at 15-25% (not arbitrary 40%)
+    - **Status:** ✅ COMPLETE - Research phase done, awaiting optional skeptic review
 
 12. **Coordinated Deployment God Mode** (NEW from Nov 23 God Mode Paradox Analysis) - **IMPLEMENTED** (Nov 24, 2025)
     - **Context:** Current god mode tests instant uncoordinated deployment -> 100% dystopia, 92% mortality
