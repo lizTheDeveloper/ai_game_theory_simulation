@@ -237,7 +237,7 @@ export class BaselineMortalityPhase implements SimulationPhase {
 
     // Add baseline mortality risk to Bayesian system
     // The Bayesian system will apply demographic vulnerability weights automatically
-    // (Elite 0.5×, Professional 0.7×, Working 1.0×, Precariat 1.3×, Informal 1.5×)
+    // (Elite 0.6×, Professional 0.7×, Working 1.0×, Precariat 1.3×, Informal 1.6×)
     addMortalityRisk(pop, {
       type: 'other', // Baseline mortality is catch-all for natural causes
       baseRisk: compensatedBaselineRisk, // Pre-compensated for ERA multiplier
