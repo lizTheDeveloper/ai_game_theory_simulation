@@ -77,6 +77,8 @@ const EXPIRY_DURATIONS: Record<DataSource, number> = {
   'ecological-footprint': 365 * 24 * 60 * 60 * 1000,     // 1 year
   'ecological-airquality': 365 * 24 * 60 * 60 * 1000,    // 1 year
   'wvs': 10 * 365 * 24 * 60 * 60 * 1000,                 // 10 years
+  'historical-climate': 365 * 24 * 60 * 60 * 1000,       // 1 year (static historical data)
+  'historical-economic': 365 * 24 * 60 * 60 * 1000,      // 1 year (static historical data)
 };
 
 /**
@@ -121,6 +123,8 @@ export class CacheManager {
       'ecological-footprint': 'ecological/ecological_footprint_2024.json',
       'ecological-airquality': 'ecological/air_quality_who_2024.json',
       'wvs': 'wvs/wvs_wave7.json',
+      'historical-climate': 'historical/climate_1990_2024.json',
+      'historical-economic': 'historical/economic_1990_2024.json',
     };
 
     return path.join(this.cacheDir, sourceMap[source]);
