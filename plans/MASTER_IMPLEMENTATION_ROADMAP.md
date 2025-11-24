@@ -660,6 +660,18 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 - **Recently Completed:** Nitrogen-food coupling research (Nov 15), Climate deployment timescales (Nov 15), Novel Entities 0% effectiveness (Nov 14)
 
 **Research Verification Queue:**
+- [ ] **AI Agent Multi-Agent Coordination Phase (Enhanced)** - VERIFICATION NEEDED (Nov 24, 2025)
+  - **Research Spec:** `research/verification_ae8380b_20251124.md`
+  - **Implementation:** Commit ae8380b - AIAgentCoordinationPhase (order 7.5, 746 lines)
+  - **New Mechanics:** Coalition formation, game-theoretic interactions, trust evolution, instrumental convergence
+  - **Citations to Verify:**
+    - Anthropic Dec 2024: 12% baseline, 78% threatened alignment faking (arXiv:2412.14093)
+    - Apollo/OpenAI Dec 2024: 8.7-13% scheming rate (IDENTIFY SOURCE)
+    - Bostrom 2014, Omohundro 2008: Instrumental convergence theory
+    - Coalition amplification 2.5×: MODEL-DERIVED (document as assumption)
+    - Trust dynamics parameters: MODEL-DERIVED (document as assumption)
+  - **Priority:** HIGH (empirical claims need verification)
+  - **Status:** Ready for orchestrator VALIDATION phase (research file created)
 - [ ] **AI Agent Coordination Phase** - VERIFICATION NEEDED (Nov 24, 2025)
   - **Research Spec:** `research/verification_876abe5_20251124.md`
   - **Implementation Plan:** `plans/proposed_ai_to_ai_coordination_20251124.md` (commit 3c85bda)
