@@ -29,6 +29,14 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 24: GDP Proxy Assertion Threshold Fix** (commit aea3a20)
+- 🔧 **PROBLEM:** Monte Carlo crashes with assertion error when population dropped to ~98M (0.098B) in near-extinction scenarios
+- **ROOT CAUSE:** `getGDPProxy()` minimum population was 0.1B (100M), but simulation allows population below this in near-extinction scenarios (bottleneck <500M, near-extinction <100M, extinction <10K)
+- **FIX:** Lowered minimum from 0.1B to 0.00001B (10K people), matching true extinction threshold
+- **VALIDATION:** Unit tests confirm handling of 0.098B, 0.00001B populations; Monte Carlo N=3 completed successfully
+- 📄 **Files:** `src/simulation/utils/recoveryCalculations.ts`
+- 📄 **DevLog:** `devlogs/fix_gdp_proxy_assertion_20251124.md`
+
 **Nov 24: Hindcast Mode & TypeScript Fixes** (commit 74d06a0)
 - 🔧 **HINDCAST MODE GUARDS:** Skip random events before 2020 in historical validation
   - `ExogenousShockPhase.ts`: Skip random black/gray swan shocks before 2020
