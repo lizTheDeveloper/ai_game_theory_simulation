@@ -59,12 +59,17 @@
 
 ### MEDIUM Priority
 
-4. **AMOC Temperature-Dependent Function**
-   - Current code has fixed 5% probability
-   - Research recommends temperature-dependent function (Lenton et al.)
-   - Straightforward implementation
-   - **Complexity:** 2 systems (climate, tipping points)
-   - **Plan:** TBD - extract function from research
+4. **AMOC Temperature-Dependent Function** - **ALREADY COMPLETE** (Nov 20, 2025)
+   - ~~Current code has fixed 5% probability~~
+   - ~~Research recommends temperature-dependent function (Lenton et al.)~~
+   - **Status:** COMPLETE - Implementation discovered during Nov 24 audit
+   - **Implementation:**
+     - Temperature-dependent probability function: `calculateAMOCCollapseProbability()` in `IrreversibilityTrackingPhase.ts` (lines 387-412)
+     - Probability scaling: 0.5% (<+2C) → 5-50% (+2.2-3C) → 50-90% (+3-3.9C) → 90% (>+3.9C)
+     - Integration with uncertainty sampling: `state.uncertaintyParameters?.amocCollapseThreshold`
+   - **Research:** `research/amoc_collapse_probability_20251120.md` (Grade B- CONDITIONAL PASS)
+   - **Original Sources:** `research/amoc_tipping_point_original_sources_20251120.md`
+   - **Citations:** Westen et al. JGR 2024 (+3C threshold), Bellomo et al. Nature 2025 (34 models), Ditlevsen et al. 2024 (statistical)
 
 5. **Alignment Faking Model Validation**
    - Does "sandbagging" implementation capture Greenblatt et al. findings?

@@ -47,13 +47,19 @@ export interface PermafrostState {
 }
 
 /**
- * AMOC Weakening State (Gradual Only, NO Collapse Before +4°C)
+ * AMOC Weakening State (Temperature-Dependent Collapse Probability)
  *
  * Research: Nature Feb 2025 (resilient across 34 models), NOAA Jan 2025 (weakening observed, paused 2010s)
  * Type: EMPIRICAL observations (RAPID array) + MODEL consensus
  *
- * CRITICAL: NO collapse before +4°C (consensus), gradual weakening only
- * Outlier scenario: 5% probability at +2-3°C (per Sylvia's critique)
+ * IMPLEMENTATION (Nov 20, 2025): Temperature-dependent collapse probability
+ * - <+2C: 0.5% annual (extremely unlikely)
+ * - +2.2-3C: 5-50% annual (rising risk, median threshold +3C per Westen 2024)
+ * - +3-3.9C: 50-90% annual (high risk)
+ * - >+3.9C: 90% annual (very likely)
+ *
+ * See: research/amoc_collapse_probability_20251120.md
+ * See: IrreversibilityTrackingPhase.ts calculateAMOCCollapseProbability()
  */
 export interface AMOCState {
   strength: number; // [0.4, 1.0] 1.0 = pre-industrial, 0.4 = floor (Southern Ocean sustains weak circulation)
