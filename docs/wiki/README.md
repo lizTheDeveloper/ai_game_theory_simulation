@@ -46,9 +46,10 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📄 **Research:** research/hindcast_baseline_data_20251124.md (10 authoritative sources)
 - 📄 **Critique:** reviews/hindcast_methodology_critique_20251124.md
 - **Usage:** `npx tsx scripts/hindcastValidation.ts > logs/hindcast_$(date +%Y%m%d_%H%M%S).log 2>&1 &`
-- **Nov 24 Fixes (ee453fd):**
+- **Nov 24 Fixes (ee453fd, 43cd051):**
   - Fixed SimulationEngine API usage (state passed to step(), not constructor)
   - Fixed `diplomaticAI.ts` for historical mode: pre-2018 sims have no AI agents - graceful handling
+  - **Bug fix (43cd051):** Population unit mismatch - `humanPopulationSystem.population` stores BILLIONS, not raw count. Code was multiplying by 1e9, causing immediate population collapse. Also initialized `baselinePopulation` and `peakPopulation`.
 - **⚠️ CRITICAL FINDING: Model Pessimism (Nov 24 roadmap update e086f89):**
   - All 10 hindcast runs: Population collapses from 5.33B (1990) to ~1M by 2022-2023
   - Expected 2024 population: 8.12B (actual) vs ~0.001B (simulation) = near-extinction false positive
