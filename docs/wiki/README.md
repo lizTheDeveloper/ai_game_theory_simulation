@@ -29,21 +29,28 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
-**Nov 24: Hindcast Phase 3 Blocker - BaselineMortalityPhase RESOLVED** (commit 2087a26)
+**Nov 24: Hindcast Phase 3 Blocker - BaselineMortalityPhase RESOLVED** (commits 2087a26, d35e872)
 - 🔧 **PROBLEM FIXED:** Population declining (5.3B→2.7B) instead of growing (5.3B→6.1B) during 1990-2000 hindcast
 - **ROOT CAUSE:** Baseline demographic mortality (natural deaths from aging/disease) was DEFINED in demographics but NEVER added to Bayesian mortality system
   - Bayesian system only tracked crisis deaths (climate, famine, conflict)
   - Missing ~50M/year baseline deaths from aging
 - **SOLUTION:** Created BaselineMortalityPhase (order 34.8)
   - Uses UN World Population Prospects 2024 historical CDR (crude death rate) data
-  - Converts CDR to monthly mortality risk: 1990 (9.8/1000) → 2025 (7.2/1000)
+  - Converts CDR to monthly mortality risk: 1990 (9.3/1000) → 2025 (7.5/1000) [CORRECTED Nov 24]
   - ERA multipliers = crisis response capability (NOT baseline health)
   - Baseline mortality and crisis response are INDEPENDENT dimensions
-- **VALIDATION:** Baseline deaths now match UN data across 1950-2030
-  - 1990: 9.8/1000 CDR (0.82% monthly) = ~52M deaths/year
-  - 2025: 7.2/1000 CDR (0.60% monthly) = ~60M deaths/year
+- **VALIDATION:** Baseline deaths now match UN data across 1950-2030 [CORRECTED Nov 24]
+  - 1990: 9.3/1000 CDR (0.78% monthly) = ~50M deaths/year [was 9.8, -5% overestimation]
+  - 2025: 7.5/1000 CDR (0.63% monthly) = ~60M deaths/year [was 7.2, too optimistic]
+  - Research: Chetty 2016 (JAMA), Kahn 2022, Pappas 1993 (NEJM) [replaced fabricated "IHME GBD 2024"]
+- **CRITICAL CORRECTIONS (d35e872):** Research validation identified systematic issues:
+  - ❌ Removed fabricated citation "IHME GBD 2024" (doesn't exist)
+  - ✅ Corrected CDR values (5-7% overestimation in 1970-2010, critical for hindcast accuracy)
+  - ✅ Adjusted socioeconomic multipliers: Elite 0.75→0.6×, Informal 1.5→1.6× (Chetty 2016, Kahn 2022)
+  - 📝 Documented ERA multiplier rationale with caveat about empirical support
 - **KEY INSIGHT:** ERA multipliers scale crisis vulnerability, not demographic baseline (which improves independently via healthcare)
-- 📄 **Files:** `BaselineMortalityPhase.ts` (171 lines), `logs/baseline_mortality_fix_20251124.md`
+- 📄 **Files:** `BaselineMortalityPhase.ts`, `bayesianMortality.ts`
+- 📄 **Research:** `unwpp2024_cdr_verification_20251124.md`, `ihme_gbd_mortality_differentials_20251124.md`, `baseline_mortality_skeptical_review_20251124.md`
 
 **Nov 24: CRITICAL - Non-Determinism in Alignment Calculations RESOLVED** (commit 5858b05)
 - 🔧 **ROOT CAUSES FOUND AND FIXED:**
@@ -140,7 +147,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **Phase 2 - Implementation:**
   - **NEW: ERA_MORTALITY_MULTIPLIERS** (`src/types/config.ts`) - Year-interpolated mortality scaling:
     - 1990: 0.30, 2000: 0.40, 2010: 0.60, 2020: 0.80, 2025: 1.00
-    - Research: UN World Population Prospects, IHME Global Burden of Disease (~50% mortality reduction 1990-2019)
+    - Research: UN World Population Prospects 2024, IHME Global Burden of Disease 2021 (~50% mortality reduction 1990-2019)
   - **NEW: Thermal Inertia Model** (`src/types/resources.ts`) - CO2System extended:
     - `historicalTemperatureTarget?: number` - Observed temperature for hindcast start
     - `hindcastTransitionMonths?: number` - S-curve transition period (24 months default)
@@ -7949,7 +7956,7 @@ The simulation runs via a **phase-based architecture** with **99 phases** execut
 - **UpdateEconomicStagePhase (34.0)**: Recovery tracking (**NEW Oct 16**)
 - QualityOfLifePhase (34.0): 17-dimensional QoL calculation
 - **FoodSecurityDegradationPhase (34.5)**: Crisis-accelerated food degradation (**NEW Oct 17**)
-- **BaselineMortalityPhase (34.8)**: Baseline demographic mortality (natural deaths from aging/disease) using UN WPP 2024 historical CDR data (**NEW Nov 24**)
+- **BaselineMortalityPhase (34.8)**: Baseline demographic mortality (natural deaths from aging/disease) using UN WPP 2024 historical CDR data. Socioeconomic gradients from Chetty 2016, Kahn 2022, Pappas 1993. (**NEW Nov 24**, research corrections applied)
 - **BayesianMortalityResolutionPhase (35.0)**: Resolve mortality risks from multiple sources (**NEW Oct 29**)
 - OutcomeProbabilitiesPhase (36.0): Utopia/dystopia/extinction probabilities
 - CrisisDetectionPhase (36.5): Detect active crises
@@ -8029,11 +8036,12 @@ The simulation runs via a **phase-based architecture** with **99 phases** execut
 **Key Changes (Nov 24):**
 - **✅ HINDCAST PHASE 3 BLOCKER FIXED (Nov 24):** BaselineMortalityPhase (order 34.8) - Fixes population declining instead of growing during 1990-2000 hindcast
   - **Problem:** Population declining 5.3B→2.7B (expected: 5.3B→6.1B). Root cause: Baseline demographic mortality DEFINED but never added to Bayesian system
-  - **Solution:** New phase converts UN WPP 2024 historical CDR to mortality risk (9.8/1000 in 1990 → 7.2/1000 in 2025)
+  - **Solution:** New phase converts UN WPP 2024 historical CDR to mortality risk (9.3/1000 in 1990 → 7.5/1000 in 2025) [CORRECTED]
+  - **Critical corrections (commit d35e872):** Removed fabricated "IHME GBD 2024" citation, corrected CDR values (5-7% overestimation), adjusted socioeconomic multipliers to Chetty 2016/Kahn 2022 values
   - **Key insight:** ERA multipliers = crisis response capability (NOT baseline health) - these are independent dimensions
-  - **Validation:** Deaths now match UN data (±10%): 1990 ~52M/year → 2025 ~60M/year
-  - **Research:** UN World Population Prospects 2024, IHME Global Burden of Disease 2024
-  - **Files:** `BaselineMortalityPhase.ts` (171 lines), `logs/baseline_mortality_fix_20251124.md` (84 lines)
+  - **Validation:** Deaths now match UN data: 1990 ~50M/year → 2025 ~60M/year
+  - **Research:** UN World Population Prospects 2024, Chetty 2016 (JAMA), Kahn 2022, Pappas 1993 (NEJM)
+  - **Files:** `BaselineMortalityPhase.ts`, `bayesianMortality.ts`
 
 **Total Phases**: 99 registered phases (reduced from 116 via Nov 2025 consolidation, +2 Nov 24)
 
