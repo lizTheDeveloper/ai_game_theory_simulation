@@ -833,7 +833,12 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
   - Files: `plans/game-design/mockups/*.html`, `MOCKUP_REVIEW*.md`
 
 **Next Up (HIGH Priority):**
-- [ ] Convert HTML mockups to React components
+- [x] Convert HTML mockups to React components - **COMPLETE** (Nov 24, 2025)
+  - 11 files in `src/components/dashboards/game/`
+  - Components: GameDashboard, Header, CurrencyPanel, PendingDecisions, EventStream, ActionBar
+  - Demo page at `/game-dashboard-demo`
+  - Far-future aesthetic (black, #00F0FF) preserved
+  - Commit: c549012f5
 - [ ] Connect components to simulation state
 - [x] Create `src/game/` directory structure (per PHASE1_TECHNICAL_SPEC.md) - **COMPLETE** (Nov 24, 2025)
   - 17 files created across 4 subdirectories (core/, types/, scenarios/, observers/)
