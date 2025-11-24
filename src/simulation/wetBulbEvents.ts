@@ -437,8 +437,9 @@ export function updateWetBulbTemperatureSystem(
     // The base frequency is calibrated for 2025 conditions. For historical simulations
     // (1990-2024), we need to scale down event frequency to match historical data.
     // Research: NOAA heat event frequency increased ~3x from 1990 to 2020
-    const simulationStartYear = (state as { simulationStartYear?: number }).simulationStartYear ?? 2025;
-    const currentSimulationYear = simulationStartYear + Math.floor(state.currentMonth / 12);
+    // FIX (Nov 24, 2025): Use state.currentYear directly - it's already updated by
+    // TimeAdvancementPhase to include years elapsed. Don't double-count!
+    const currentSimulationYear = state.currentYear;
     const eraScalingFactor = Math.pow(currentSimulationYear / 2025, 2); // Quadratic scaling
 
     const eventProbability = WET_BULB_CONSTANTS.BASE_FREQUENCY_2025
