@@ -1,0 +1,554 @@
+/* Main Dashboard Container */
+.dashboard {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 60px 1fr 80px;
+  padding: 20px;
+  gap: 20px;
+  background: #000;
+  color: #fff;
+  font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 300;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 15px;
+}
+
+.gameTitle {
+  font-size: 14px;
+  font-weight: 200;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.timeDisplay {
+  display: flex;
+  gap: 30px;
+  align-items: baseline;
+}
+
+.currentMonth {
+  font-size: 28px;
+  font-weight: 100;
+  color: #00F0FF;
+  text-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+}
+
+.elapsedTime {
+  font-size: 14px;
+  opacity: 0.5;
+}
+
+/* Action Mode Selector */
+.actionModes {
+  display: flex;
+  gap: 10px;
+  padding: 5px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+}
+
+.modeBtn {
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s;
+  border-radius: 4px;
+}
+
+.modeBtn:hover {
+  background: rgba(0, 240, 255, 0.1);
+  border-color: rgba(0, 240, 255, 0.4);
+  color: #00F0FF;
+}
+
+.modeBtn.active {
+  background: rgba(0, 240, 255, 0.2);
+  border-color: #00F0FF;
+  color: #00F0FF;
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+}
+
+/* Main Content Grid */
+.mainContent {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 20px;
+  overflow: hidden;
+}
+
+.leftPanel,
+.rightPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Currency Panel */
+.currencyPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.currencyItem {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 4px;
+  transition: all 0.3s;
+}
+
+.currencyItem:hover {
+  border-color: rgba(0, 240, 255, 0.3);
+  background: rgba(0, 240, 255, 0.02);
+}
+
+.currencyHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.currencyName {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  opacity: 0.6;
+}
+
+.currencyTrend {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+}
+
+.trendUp {
+  color: #00FF88;
+}
+
+.trendDown {
+  color: #FF0040;
+}
+
+.trendNeutral {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.currencyValue {
+  font-size: 24px;
+  font-weight: 200;
+  margin-bottom: 5px;
+}
+
+.currencyBar {
+  height: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.currencyBarFill {
+  height: 100%;
+  background: linear-gradient(90deg, #00F0FF, #0080FF);
+  transition: width 0.5s;
+}
+
+/* Center Content */
+.centerContent {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Pending Decisions */
+.pendingDecisions {
+  background: rgba(255, 178, 0, 0.03);
+  border: 1px solid rgba(255, 178, 0, 0.3);
+  padding: 20px;
+  border-radius: 8px;
+  animation: pulseAmber 3s infinite;
+}
+
+@keyframes pulseAmber {
+  0%, 100% { box-shadow: 0 0 20px rgba(255, 178, 0, 0.2); }
+  50% { box-shadow: 0 0 30px rgba(255, 178, 0, 0.4); }
+}
+
+.pendingHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.pendingTitle {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #FFB000;
+}
+
+.pendingCount {
+  background: #FFB000;
+  color: #000;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.decisionList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.decisionItem {
+  background: rgba(255, 255, 255, 0.02);
+  padding: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.decisionItem:hover {
+  background: rgba(255, 178, 0, 0.05);
+  border-color: rgba(255, 178, 0, 0.4);
+  transform: translateX(5px);
+}
+
+.decisionUrgency {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.6;
+  margin-bottom: 5px;
+}
+
+.decisionName {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.decisionImpact {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+/* World Map Visualization */
+.worldVisualization {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.vizHeader {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  opacity: 0.5;
+  margin-bottom: 15px;
+}
+
+.worldMap {
+  flex: 1;
+  background: radial-gradient(circle at center, rgba(0, 240, 255, 0.05), transparent);
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  border-radius: 4px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  opacity: 0.5;
+  min-height: 200px;
+}
+
+/* Event Stream */
+.eventStream {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.streamHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.streamTitle {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  opacity: 0.5;
+}
+
+.nextMonthPreview {
+  background: linear-gradient(90deg, rgba(0, 240, 255, 0.1), transparent);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  animation: pulseCyan 4s infinite;
+}
+
+@keyframes pulseCyan {
+  0%, 100% { box-shadow: 0 0 15px rgba(0, 240, 255, 0.2); }
+  50% { box-shadow: 0 0 25px rgba(0, 240, 255, 0.4); }
+}
+
+.previewTitle {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #00F0FF;
+  margin-bottom: 10px;
+}
+
+.previewItem {
+  font-size: 14px;
+  margin-bottom: 5px;
+  opacity: 0.8;
+}
+
+.eventsList {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 4px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.eventItem {
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 12px;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+}
+
+.eventItem:hover {
+  opacity: 1;
+}
+
+.eventItem:last-child {
+  border-bottom: none;
+}
+
+.eventCritical {
+  color: #FF0040;
+  opacity: 1;
+  font-weight: 400;
+}
+
+.eventWarning {
+  color: #FFB000;
+  opacity: 0.9;
+}
+
+.eventSuccess {
+  color: #00FF88;
+  opacity: 0.9;
+}
+
+/* Outcome Probabilities */
+.outcomePanel {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.outcomeTitle {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  opacity: 0.5;
+  margin-bottom: 15px;
+}
+
+.outcomeGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.outcomeItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+}
+
+.outcomeName {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.outcomeProb {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.outcomeUtopia { color: #00FF88; }
+.outcomeAlignment { color: #00F0FF; }
+.outcomeStruggle { color: #FFB000; }
+.outcomeCollapse { color: #FF6B00; }
+.outcomeExtinction { color: #FF0040; }
+
+/* Bottom Action Bar */
+.actionBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+}
+
+.speedControls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.speedLabel {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.5;
+  margin-right: 10px;
+}
+
+.speedBtn {
+  padding: 8px 12px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 12px;
+  border-radius: 4px;
+}
+
+.speedBtn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.4);
+  color: #fff;
+}
+
+.speedBtn.active {
+  background: rgba(0, 240, 255, 0.2);
+  border-color: #00F0FF;
+  color: #00F0FF;
+}
+
+.mainActions {
+  display: flex;
+  gap: 15px;
+}
+
+.actionBtn {
+  padding: 12px 24px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.3s;
+  border-radius: 4px;
+}
+
+.actionBtn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(255, 255, 255, 0.1);
+}
+
+.actionBtn.primary {
+  background: linear-gradient(135deg, #00F0FF, #0080FF);
+  border: none;
+  color: #000;
+  font-weight: 500;
+  box-shadow: 0 0 30px rgba(0, 240, 255, 0.4);
+  animation: pulsePrimary 2s infinite;
+}
+
+@keyframes pulsePrimary {
+  0%, 100% { box-shadow: 0 0 30px rgba(0, 240, 255, 0.4); }
+  50% { box-shadow: 0 0 40px rgba(0, 240, 255, 0.6); }
+}
+
+.actionBtn.primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 40px rgba(0, 240, 255, 0.6);
+}
+
+/* Scrollbar styling */
+.eventsList::-webkit-scrollbar {
+  width: 6px;
+}
+
+.eventsList::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.eventsList::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.eventsList::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1400px) {
+  .mainContent {
+    grid-template-columns: 280px 1fr 280px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .dashboard {
+    padding: 15px;
+  }
+
+  .mainContent {
+    grid-template-columns: 250px 1fr 250px;
+    gap: 15px;
+  }
+
+  .currentMonth {
+    font-size: 24px;
+  }
+}
