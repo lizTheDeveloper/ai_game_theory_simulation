@@ -494,6 +494,7 @@ export class CoordinatedDeploymentPhase implements SimulationPhase {
    * Assess support system effectiveness (0 = none, 1 = comprehensive)
    *
    * HIGH-1 (Nov 21 validated research): Evidence-weighted effectiveness
+   * INTEGRATION FIX (Nov 24 2025): Read from actual dynamic game state, not static values
    *
    * Empirical effectiveness:
    * - UBI: -48% mortality (Kenya 2025 RCT, 100k+ births, HIGH QUALITY)
@@ -509,10 +510,61 @@ export class CoordinatedDeploymentPhase implements SimulationPhase {
   private assessSupportSystems(state: GameState): number {
     const support = state.transitionManagementSystem.supportSystems;
 
+    // === READ FROM DYNAMIC GAME STATE (Nov 24, 2025 Integration Fix) ===
+    // Previously used static transitionManagementSystem.supportSystems values
+    // Now reads from actual dynamic systems that change during simulation
+
+    // UBI Coverage: Read from actual UBI system (updated by UBI phase and tech effects)
+    const ubiCoverage = assertFinite(
+      state.ubiSystem?.basicIncome?.coverage ?? support.ubiCoverage,
+      {
+        location: 'CoordinatedDeploymentPhase.assessSupportSystems',
+        valueName: 'ubiCoverage',
+        month: state.currentMonth,
+        additionalInfo: { source: state.ubiSystem ? 'ubiSystem.basicIncome.coverage' : 'fallback' }
+      }
+    );
+
+    // Healthcare Coverage: Read from social safety nets (updated by government actions)
+    const healthcareCoverage = assertFinite(
+      state.socialSafetyNets?.universalServices?.healthcare ?? support.universalHealthcareCoverage,
+      {
+        location: 'CoordinatedDeploymentPhase.assessSupportSystems',
+        valueName: 'healthcareCoverage',
+        month: state.currentMonth,
+        additionalInfo: { source: state.socialSafetyNets ? 'socialSafetyNets.universalServices.healthcare' : 'fallback' }
+      }
+    );
+
+    // Food Security: Read from coordinatedDeployment or famine system urbanFoodAccess
+    // Priority: coordinatedDeployment.supportSystems.foodSecurity > famineSystem.urbanFoodAccess > fallback
+    const foodSecurityIndex = assertFinite(
+      state.coordinatedDeployment?.supportSystems?.foodSecurity ??
+      state.famineSystem?.urbanFoodAccess ??
+      support.foodSecurityIndex,
+      {
+        location: 'CoordinatedDeploymentPhase.assessSupportSystems',
+        valueName: 'foodSecurityIndex',
+        month: state.currentMonth,
+        additionalInfo: {
+          source: state.coordinatedDeployment?.supportSystems?.foodSecurity !== undefined
+            ? 'coordinatedDeployment.supportSystems.foodSecurity'
+            : state.famineSystem?.urbanFoodAccess !== undefined
+              ? 'famineSystem.urbanFoodAccess'
+              : 'fallback'
+        }
+      }
+    );
+
+    // Sync back to tracking (for logging and debugging)
+    support.ubiCoverage = ubiCoverage;
+    support.universalHealthcareCoverage = healthcareCoverage;
+    support.foodSecurityIndex = foodSecurityIndex;
+
     // Evidence-weighted combination (Nov 21 validated research)
-    const ubiEffect = support.ubiCoverage * 0.5;        // Strong evidence: Kenya RCT
-    const healthEffect = support.universalHealthcareCoverage * 0.35;  // Strong evidence: Kenya mechanism
-    const foodEffect = support.foodSecurityIndex * 0.15;              // Strong negative evidence: Great Leap famine
+    const ubiEffect = ubiCoverage * 0.5;        // Strong evidence: Kenya RCT
+    const healthEffect = healthcareCoverage * 0.35;  // Strong evidence: Kenya mechanism
+    const foodEffect = foodSecurityIndex * 0.15;     // Strong negative evidence: Great Leap famine
     const retrainingEffect = 0.0;  // HIGH-1 correction: Weak evidence (Brookings: "policymakers skeptical")
 
     // Combined effectiveness
@@ -525,11 +577,14 @@ export class CoordinatedDeploymentPhase implements SimulationPhase {
       valueName: 'supportEffectiveness',
       month: state.currentMonth,
       additionalInfo: {
+        ubiCoverage,
+        healthcareCoverage,
+        foodSecurityIndex,
         ubiEffect,
         healthEffect,
         foodEffect,
         retrainingEffect,
-        note: 'Retraining excluded (weight=0.0) due to weak evidence - Brookings 2024'
+        note: 'Nov 24 fix: Now reads from dynamic game state (UBI, socialSafetyNets, famineSystem)'
       }
     });
   }
@@ -826,12 +881,22 @@ export class CoordinatedDeploymentPhase implements SimulationPhase {
 
       case 'decision':
         const decisionDuration = month - transition.decisionMadeMonth;
+        // Research: Implementation should begin 18-36 months after crisis recognition
+        // Threshold reduced from 0.4 to 0.3 to match realistic support growth rates
+        // Fallback: After 24 months in decision phase, force transition (delayed implementation)
+        const supportThresholdMet = transition.supportSystemEffectiveness >= 0.3;
+        const maxDecisionDurationExceeded = decisionDuration >= 24; // 2 years max in decision phase
+
         if (decisionDuration >= transition.stageTiming.decisionDuration &&
-            transition.supportSystemEffectiveness >= 0.4) {
+            (supportThresholdMet || maxDecisionDurationExceeded)) {
           transition.governanceStage = 'implementation';
           transition.stageEnteredMonth = month;
           transition.implementationStartedMonth = month;
-          console.log(`\n🚀📦 GOVERNANCE STAGE: Implementation phase started (Month ${month})`);
+          if (maxDecisionDurationExceeded && !supportThresholdMet) {
+            console.log(`\n🚀📦 GOVERNANCE STAGE: Implementation phase started (Month ${month}) [DELAYED - support only ${(transition.supportSystemEffectiveness * 100).toFixed(1)}%]`);
+          } else {
+            console.log(`\n🚀📦 GOVERNANCE STAGE: Implementation phase started (Month ${month})`);
+          }
         }
         break;
 

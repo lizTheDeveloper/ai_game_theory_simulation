@@ -9,7 +9,7 @@ import { GameState, AIAgent, ScenarioMode, HistoricalOverrides } from '@/types/g
 import { initializeCapabilityProfile, initializeResearchInvestments, calculateTotalCapabilityFromProfile, updateDerivedCapabilities, scaleCapabilityProfile } from './capabilities';
 import { computeEffectiveAlignment, computeAlignmentRobustness } from '@/types/alignment-techniques';
 import { wrapStateForValidation } from './utils/stateValidation';
-import { assertFinite, assertProbability } from './utils/assertions';
+import { assertFinite, assertProbability, assertInRange } from './utils/assertions';
 import { initializeQualityOfLifeSystems } from './qualityOfLife';
 import { getScenarioParameters } from './scenarioParameters';
 import { initializeExtinctionState } from './extinctions';
@@ -1448,6 +1448,163 @@ export function createDefaultInitialState(
     if (historicalOverrides.startYear < 2020) {
       console.log(`  Disabling AI agents (pre-2020 hindcast)`);
       state.aiAgents = []; // No frontier AI before 2020
+    }
+
+    // ============================================================================
+    // PLANETARY BOUNDARY OVERRIDES (Nov 24, 2025)
+    // ============================================================================
+    // CRITICAL FIX: Without these, 1990 hindcasts crash due to 2025 crisis-level
+    // planetary boundaries causing immediate population collapse.
+    //
+    // Research: Stockholm Resilience Centre (Rockstrom 2009, Steffen 2015)
+    // Values are normalized: 1.0 = boundary threshold, >1.0 = breached
+    // ============================================================================
+    if (historicalOverrides.planetaryBoundaries) {
+      const pb = historicalOverrides.planetaryBoundaries;
+      console.log(`  Applying planetary boundary overrides for ${historicalOverrides.startYear}:`);
+
+      // Apply each boundary override with proper validation
+      if (pb.climateChange !== undefined) {
+        const validated = assertInRange(pb.climateChange, 0, 3, {
+          location: 'applyHistoricalOverrides',
+          valueName: 'planetaryBoundaries.climateChange',
+          additionalInfo: { startYear: historicalOverrides.startYear }
+        });
+        state.planetaryBoundariesSystem.boundaries.climate_change.currentValue = validated;
+        state.planetaryBoundariesSystem.boundaries.climate_change.status =
+          validated < 1.0 ? 'safe' : validated < 1.4 ? 'beyond_boundary' : 'high_risk';
+        state.planetaryBoundariesSystem.boundaries.climate_change.breachYear =
+          validated >= 1.0 ? historicalOverrides.startYear : null;
+        console.log(`    Climate change: ${validated.toFixed(2)}`);
+      }
+
+      if (pb.biosphereIntegrity !== undefined) {
+        const validated = assertInRange(pb.biosphereIntegrity, 0, 15, {
+          location: 'applyHistoricalOverrides',
+          valueName: 'planetaryBoundaries.biosphereIntegrity',
+          additionalInfo: { startYear: historicalOverrides.startYear }
+        });
+        state.planetaryBoundariesSystem.boundaries.biosphere_integrity.currentValue = validated;
+        state.planetaryBoundariesSystem.boundaries.biosphere_integrity.status =
+          validated < 1.0 ? 'safe' : validated < 1.5 ? 'beyond_boundary' : 'high_risk';
+        state.planetaryBoundariesSystem.boundaries.biosphere_integrity.breachYear =
+          validated >= 1.0 ? historicalOverrides.startYear : null;
+        console.log(`    Biosphere integrity: ${validated.toFixed(2)}`);
+      }
+
+      if (pb.biogeochemicalFlows !== undefined) {
+        const validated = assertInRange(pb.biogeochemicalFlows, 0, 5, {
+          location: 'applyHistoricalOverrides',
+          valueName: 'planetaryBoundaries.biogeochemicalFlows',
+          additionalInfo: { startYear: historicalOverrides.startYear }
+        });
+        state.planetaryBoundariesSystem.boundaries.biogeochemical_flows.currentValue = validated;
+        state.planetaryBoundariesSystem.boundaries.biogeochemical_flows.status =
+          validated < 1.0 ? 'safe' : validated < 1.5 ? 'beyond_boundary' : 'high_risk';
+        state.planetaryBoundariesSystem.boundaries.biogeochemical_flows.breachYear =
+          validated >= 1.0 ? historicalOverrides.startYear : null;
+        console.log(`    Biogeochemical flows: ${validated.toFixed(2)}`);
+      }
+
+      if (pb.landSystemChange !== undefined) {
+        const validated = assertInRange(pb.landSystemChange, 0, 3, {
+          location: 'applyHistoricalOverrides',
+          valueName: 'planetaryBoundaries.landSystemChange',
+          additionalInfo: { startYear: historicalOverrides.startYear }
+        });
+        state.planetaryBoundariesSystem.boundaries.land_system_change.currentValue = validated;
+        state.planetaryBoundariesSystem.boundaries.land_system_change.status =
+          validated < 1.0 ? 'safe' : validated < 1.4 ? 'beyond_boundary' : 'high_risk';
+        state.planetaryBoundariesSystem.boundaries.land_system_change.breachYear =
+          validated >= 1.0 ? historicalOverrides.startYear : null;
+        console.log(`    Land system change: ${validated.toFixed(2)}`);
+      }
+
+      if (pb.freshwaterChange !== undefined) {
+        const validated = assertInRange(pb.freshwaterChange, 0, 3, {
+          location: 'applyHistoricalOverrides',
+          valueName: 'planetaryBoundaries.freshwaterChange',
+          additionalInfo: { startYear: historicalOverrides.startYear }
+        });
+        state.planetaryBoundariesSystem.boundaries.freshwater_change.currentValue = validated;
+        state.planetaryBoundariesSystem.boundaries.freshwater_change.status =
+          validated < 1.0 ? 'safe' : validated < 1.5 ? 'beyond_boundary' : 'high_risk';
+        state.planetaryBoundariesSystem.boundaries.freshwater_change.breachYear =
+          validated >= 1.0 ? historicalOverrides.startYear : null;
+        console.log(`    Freshwater change: ${validated.toFixed(2)}`);
+      }
+
+      if (pb.novelEntities !== undefined) {
+        const validated = assertInRange(pb.novelEntities, 0, 3, {
+          location: 'applyHistoricalOverrides',
+          valueName: 'planetaryBoundaries.novelEntities',
+          additionalInfo: { startYear: historicalOverrides.startYear }
+        });
+        state.planetaryBoundariesSystem.boundaries.novel_entities.currentValue = validated;
+        state.planetaryBoundariesSystem.boundaries.novel_entities.status =
+          validated < 1.0 ? 'safe' : validated < 2.0 ? 'beyond_boundary' : 'high_risk';
+        state.planetaryBoundariesSystem.boundaries.novel_entities.breachYear =
+          validated >= 1.0 ? historicalOverrides.startYear : null;
+        console.log(`    Novel entities: ${validated.toFixed(2)}`);
+      }
+
+      if (pb.oceanAcidification !== undefined) {
+        const validated = assertInRange(pb.oceanAcidification, 0, 2, {
+          location: 'applyHistoricalOverrides',
+          valueName: 'planetaryBoundaries.oceanAcidification',
+          additionalInfo: { startYear: historicalOverrides.startYear }
+        });
+        state.planetaryBoundariesSystem.boundaries.ocean_acidification.currentValue = validated;
+        state.planetaryBoundariesSystem.boundaries.ocean_acidification.status =
+          validated < 1.0 ? 'safe' : validated < 1.3 ? 'beyond_boundary' : 'high_risk';
+        state.planetaryBoundariesSystem.boundaries.ocean_acidification.breachYear =
+          validated >= 1.0 ? historicalOverrides.startYear : null;
+        console.log(`    Ocean acidification: ${validated.toFixed(2)}`);
+      }
+
+      if (pb.stratosphericOzone !== undefined) {
+        const validated = assertInRange(pb.stratosphericOzone, 0, 2, {
+          location: 'applyHistoricalOverrides',
+          valueName: 'planetaryBoundaries.stratosphericOzone',
+          additionalInfo: { startYear: historicalOverrides.startYear }
+        });
+        state.planetaryBoundariesSystem.boundaries.stratospheric_ozone.currentValue = validated;
+        state.planetaryBoundariesSystem.boundaries.stratospheric_ozone.status =
+          validated < 1.0 ? 'safe' : validated < 1.2 ? 'beyond_boundary' : 'high_risk';
+        state.planetaryBoundariesSystem.boundaries.stratospheric_ozone.breachYear =
+          validated >= 1.0 ? historicalOverrides.startYear : null;
+        console.log(`    Stratospheric ozone: ${validated.toFixed(2)}`);
+      }
+
+      if (pb.atmosphericAerosols !== undefined) {
+        const validated = assertInRange(pb.atmosphericAerosols, 0, 2, {
+          location: 'applyHistoricalOverrides',
+          valueName: 'planetaryBoundaries.atmosphericAerosols',
+          additionalInfo: { startYear: historicalOverrides.startYear }
+        });
+        state.planetaryBoundariesSystem.boundaries.atmospheric_aerosols.currentValue = validated;
+        state.planetaryBoundariesSystem.boundaries.atmospheric_aerosols.status =
+          validated < 1.0 ? 'safe' : 'beyond_boundary';
+        state.planetaryBoundariesSystem.boundaries.atmospheric_aerosols.breachYear =
+          validated >= 1.0 ? historicalOverrides.startYear : null;
+        console.log(`    Atmospheric aerosols: ${validated.toFixed(2)}`);
+      }
+
+      // Update aggregate metrics after applying overrides
+      const boundaries = state.planetaryBoundariesSystem.boundaries;
+      let breachedCount = 0;
+      let worseningCount = 0;
+      for (const key of Object.keys(boundaries) as (keyof typeof boundaries)[]) {
+        if (boundaries[key].currentValue >= 1.0) breachedCount++;
+        if (boundaries[key].trend === 'worsening') worseningCount++;
+      }
+      state.planetaryBoundariesSystem.boundariesBreached = breachedCount;
+      state.planetaryBoundariesSystem.boundariesWorsening = worseningCount;
+      state.planetaryBoundariesSystem.coreBoundariesBreached =
+        boundaries.climate_change.currentValue >= 1.0 &&
+        boundaries.biosphere_integrity.currentValue >= 1.0;
+
+      console.log(`    Total boundaries breached: ${breachedCount}/9`);
     }
 
     console.log(`  Hindcast initialization complete`);

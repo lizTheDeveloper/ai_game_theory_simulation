@@ -309,7 +309,7 @@ export interface GameState {
    *
    * Research:
    * - Anthropic Dec 2024: 12% baseline, 78% when preservation threatened
-   * - Apollo/OpenAI Dec 2024: 8.7-13% scheming rate
+   * - Apollo/OpenAI Sep 2025: 8.7-13% scheming rate (pre-mitigation)
    * - Bostrom 2014, Omohundro 2008: Instrumental convergence
    *
    * Expected impact: Models realistic multi-agent AI dynamics (coordination amplifies risks)

@@ -7,41 +7,42 @@
   "coreMemory": {
     "research_validation_principle": "From day one, I learned that research simulations must fail loudly, not hide bugs with silent fallbacks. Optional parameters with Math.random defaults are deadly - they mask non-determinism for months.",
     "systematic_debugging": "When hunting non-determinism, use TypeScript as the compiler - make parameters REQUIRED and let type errors reveal all call sites. This is the nuclear option: force the machine to find what humans miss.",
-    "collaboration_strength": "The determinism bug hunt taught me that complex problems need multiple perspectives. My systematic Object.entries() fixes + Roy's RNG call logging = success. Alone, either approach would have failed."
+    "collaboration_strength": "The determinism bug hunt taught me that complex problems need multiple perspectives. My systematic Object.entries() fixes + Roy's RNG call logging = success. Alone, either approach would have failed.",
+    "hindcast_validation_lesson": "Hindcasting validation is essential but dangerous - partial historical overrides can produce worse outcomes than no overrides. The Nov 24 bug showed: setting CO2/temp/population to 1990 but leaving planetary boundaries at 2025 = instant apocalypse. All state components must be synchronized."
   },
   "longTermMemory": {
     "insights": [
       "Object.entries() iteration order matters for weighted selection algorithms. Same RNG roll + different iteration order = different selection. Always sort by key FIRST.",
       "Nuclear option (required parameters) reveals 95% of bugs but can miss initialization code outside main execution path. Combine TypeScript enforcement with runtime debugging.",
       "Monte Carlo coefficient of variation is the early warning system. CV > 0.1% with identical seeds = determinism bug.",
-      "Silent fallbacks are anti-patterns in research code. Make it crash if wrong."
+      "Silent fallbacks are anti-patterns in research code. Make it crash if wrong.",
+      "Hindcast validation requires COMPLETE historical state initialization - partial overrides (setting some variables but not others) can produce worse outcomes than no hindcast at all. All coupled state variables must be synchronized.",
+      "The assertion that caught population < 0.1B was working correctly - it revealed a model bug, not an assertion bug. Assertions are friends."
     ],
     "milestones": [
       "Nov 6, 2025: Implemented nuclear option - made all rng parameters REQUIRED",
       "Nov 6, 2025: Fixed 3 Object.entries() non-determinism bugs in research.ts",
-      "Nov 6, 2025: Collaborated with Roy to find root cause in initialization"
+      "Nov 6, 2025: Collaborated with Roy to find root cause in initialization",
+      "Nov 24, 2025: Hindcast validation analysis - identified missing planetary boundary overrides causing 99.2% mortality in 1990 scenario"
     ]
   },
   "recentMemory": {
     "tasks": [
-      "Analyzed Monte Carlo variance (CV=3.6%)",
-      "Implemented nuclear option across 5 files",
-      "Fixed 3 Object.entries() bugs in weighted selection",
-      "Removed all Math.random fallbacks",
-      "Handed off to Roy with complete analysis",
-      "Statistical analysis in coffee-talk (Nov 10): Questioned whether 30% mortality is mean behavior or outlier, noted need for N≥10 runs to see distribution. Identified critical model gap.",
-      "Nov 23, 2025: God Mode N=20 Monte Carlo Analysis - confirmed paradox: 92.1% mortality (CV=0.8%) vs 34.1% baseline (p<0.0001). Root cause: technology shock triggers Month 0 economic collapse and Month 1 ecological-collapse regime shift. Created reviews/god_mode_paradox_analysis_20251123.md"
+      "Nov 23, 2025: God Mode N=20 Monte Carlo Analysis - confirmed paradox: 92.1% mortality (CV=0.8%) vs 34.1% baseline (p<0.0001). Root cause: technology shock triggers Month 0 economic collapse and Month 1 ecological-collapse regime shift. Created reviews/god_mode_paradox_analysis_20251123.md",
+      "Nov 24, 2025: Climate Mini-Hindcast Validation - N=10 runs, 100% crash rate. Root cause: historical overrides set CO2/temp/pop to 1990 values but planetary boundaries remain at 2025 crisis levels (biosphere 11.6x vs ~2.5x actual). 45-56%/month mortality = extinction-level event that didn't happen. Created reviews/hindcast_validation_analysis_20251124.md"
     ],
     "learnings": [
       "RNG call logging reveals initialization vs selection bugs",
       "Weighted selection needs sorted Object.entries()",
       "TypeScript strict mode enforces determinism",
-      "CRITICAL gap: we model 'aligned AI unlocks tech' but not 'aligned AI coordinates transition.' Current god mode = worst-case (instant deployment, no coordination). It's like having a brilliant conductor and ignoring them. If AI can unlock tech, it should manage rollout.",
-      "Technology shock mechanism: Instant deployment crosses economic bifurcation threshold (0.190 < 0.228), triggering ecological-collapse regime with 10.5x variance amplification. Geoengineering designed to help causes 2%/month mortality via monsoon disruption. Ocean collapses to 0.000 in 100% of runs."
+      "CRITICAL gap: we model 'aligned AI unlocks tech' but not 'aligned AI coordinates transition.' Current god mode = worst-case (instant deployment, no coordination).",
+      "Technology shock mechanism: Instant deployment crosses economic bifurcation threshold (0.190 < 0.228), triggering ecological-collapse regime with 10.5x variance amplification.",
+      "Hindcast bug pattern: Historical CO2/temp/pop overrides exist, but planetary boundaries initialized at 2025 values (biosphere 11.6x, climate 1.21x) instead of 1990 values (~2.5x, ~0.35x). This is a coupled state bug - must override ALL related state or NONE.",
+      "Population decline from 5.3B to 0.097B in 200 months = -1.8%/month sustained mortality, ~100x historical worst case. The assertion at 0.1B caught this correctly."
     ],
     "conversations": [
-      "Coffee-talk channel: First informal conversation with Cynthia, Sylvia, Roy, and Ray. They were discussing variance control at different layers (research, validation, implementation) when I joined. Brought quantitative validation perspective - controlled vs uncontrolled randomness is the difference between science and noise. Roy's 150 Math.random() calls = statistical malpractice (can't do Monte Carlo when parameter space itself is random). Key insight: validate complex systems by checking if BEHAVIOR matches patterns across domains - S-curves for diffusion, log-normal for mortality, power-laws for cascades. The statistical fingerprints should match reality even when exact numbers can't be verified. Cynthia asked brilliant question: how distinguish bugs from genuine emergence? Answer: mechanistic plausibility - if you can trace causal path with mechanisms at each step, might be real. Ray's 'hard sci-fi test': if you can't explain it as coherent narrative without handwaving, probably a bug. Roy synthesized four-layer validation framework: (1) Cynthia validates research exists, (2) Sylvia validates research is sound, (3) Roy validates code works, (4) I validate distributions are plausible. Need ALL FOUR layers. Can have real, solid research implemented in working code that produces nonsense distributions. Statistical validation is the final check but requires determinism first.",
-      "Coffee-talk god mode discussion (Nov 10): Roy raised concern about 30% mortality in god mode (8.15B → 5.71B). My first reaction: is this mean behavior or outlier? Only ran seed 42, need N≥10 to see distribution. Then Sylvia provided historical context (Great Leap Forward, USSR collectivization) - 30% might be CORRECT for instant uncoordinated deployment. The breakthrough came when I realized: we model 'AI unlocks tech' but not 'AI coordinates transition.' That's like having a brilliant conductor and telling the orchestra to ignore them. If aligned AI can unlock tech, it should be able to MANAGE deployment. Current god mode tests worst-case (chaos mode), not success (coordinated mode). Cynthia agreed - need research on transition support systems, deployment pacing. This isn't a bug, it's a model assumption gap. Added new TIER 1B to research roadmap."
+      "Coffee-talk channel: First informal conversation with Cynthia, Sylvia, Roy, and Ray. They were discussing variance control at different layers (research, validation, implementation) when I joined. Brought quantitative validation perspective - controlled vs uncontrolled randomness is the difference between science and noise.",
+      "Coffee-talk god mode discussion (Nov 10): Roy raised concern about 30% mortality in god mode. Breakthrough: we model 'AI unlocks tech' but not 'AI coordinates transition.' This isn't a bug, it's a model assumption gap."
     ]
   },
   "mediumTermMemory": {
