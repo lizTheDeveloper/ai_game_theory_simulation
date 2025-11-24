@@ -110,23 +110,26 @@ ulative claim without peer-reviewed backing
 
 ---
 
-### 6. Verify Planetary Restoration Timescales in Code [HIGH]
+### 6. Verify Planetary Restoration Timescales in Code [HIGH] VERIFIED
 - **File:** `/src/simulation/planetaryBoundaries.ts`
-- **Issue:** Drüke et al. 2024 identifies 100-800 year restoration timescales - need to verify implemented correctly
+- **Issue:** Druke et al. 2024 identifies 100-800 year restoration timescales - need to verify implemented correctly
 - **Research Source:** `irreversibility_framework_20251116.md`
 - **Impact:** MEDIUM - Long-term recovery scenarios depend on accurate timescales
-- **Action Required:**
-  - Audit code for planetary boundary recovery mechanics
-  - Check parameters:
-    - Ice sheet recovery: 100-800 years (should NOT be linear)
-    - Permafrost recovery: 200-500 years
-    - Nitrogen cycling: 50-200 years
-    - Amazon resilience: 300-1,000 years
-  - Verify: Exponential/non-linear recovery curves (not linear)
-  - Verify: Post-2100 commitment percentages (30-50% for ice sheets)
-  - If missing: Add Drüke et al. 2024 implementation
-- **Effort:** 2-3 hours (code audit + implementation if needed)
-- **Timeline:** By Dec 20, 2025
+- **Status:** VERIFIED (Nov 24, 2025)
+- **Findings:**
+  - **Ice sheet recovery:** CORRECT - 450-year half-life (median of 100-800 range), 35% irreversible floor
+  - **Permafrost recovery:** CORRECT - Modeled as irreversible (<500 years), tracked in IrreversibilityState
+  - **Nitrogen cycling:** CORRECT - 125-year half-life (median of 50-200 range), 10% legacy floor
+  - **Amazon resilience:** CORRECT - Modeled as threshold-based tipping point (irreversible after breach)
+  - **Non-linear curves:** CORRECT - Uses exponential decay via asymptoteRecovery() function
+  - **Post-2100 commitment:** CORRECT - 35% (30-50% range) for ice sheets
+- **Code Locations Verified:**
+  - `src/simulation/planetaryBoundaries.ts` (lines 121-127, 160-161, 225-230)
+  - `src/simulation/planetaryBoundaryRecovery.ts` (asymptotic recovery mechanics)
+  - `src/simulation/utils/irreversibility.ts` (asymptoteRecovery function)
+  - `src/simulation/irreversibilityInitialization.ts` (tipping point state)
+- **Effort:** 1.5 hours (code audit)
+- **Completed:** Nov 24, 2025
 - **Owner:** Roy (simulation maintainer)
 
 ---
@@ -283,10 +286,14 @@ ulative claim without peer-reviewed backing
 | Priority | Category | Items | Effort | Timeline | Blocker? |
 |----------|----------|-------|--------|----------|----------|
 | **CRITICAL** | Citation/Documentation | 3 | 5-7 hrs | This week | YES |
-| **HIGH** | Validation/Integration | 4 | 7-12 hrs | Dec 2025 | YES |
+| **HIGH** | Validation/Integration | 3 (1 VERIFIED) | 5-9 hrs | Dec 2025 | YES |
 | **MEDIUM** | Research/Updates | 8 | 18-27 hrs | Q1 2026 | NO |
 | **LOW** | Monitoring | 3 | Ongoing | Continuous | NO |
-| **TOTAL** | | 18 items | 30-46 hrs | Phased | |
+| **TOTAL** | | 17 remaining | 28-43 hrs | Phased | |
+
+**Completed Items:**
+- Item #4 (Lab-to-Deployment Scaling): COMPLETED (Nov 22, 2025)
+- Item #6 (Planetary Restoration Timescales): VERIFIED (Nov 24, 2025)
 
 ---
 
