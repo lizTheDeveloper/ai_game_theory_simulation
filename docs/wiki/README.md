@@ -25,9 +25,35 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **Research Currency:** ✅ EXCELLENT (all simulation-critical files updated within 14 days, autonomous system working effectively)
 - **Implementation Fidelity:** A- (assertion coverage 97.2%, 24 integration tests for CoordinatedDeploymentPhase) ✅ EXCELLENT
 - **Architecture Health:** B+ (0 CRITICAL, 2 HIGH technical debt non-urgent, deep clone optimization complete) ✅ GOOD
-- **System Trajectory:** 🟡 OPERATIONAL (Nov 24: Game Layer Phase 1 complete, hindcast calibration Phase 1-3 COMPLETE - temperature/mortality/food security fixes applied, remaining: planetary boundaries, population growth)
+- **System Trajectory:** 🟡 OPERATIONAL (Nov 24: Game Layer Phase 1 complete, hindcast calibration Phase 1-4 COMPLETE - temperature/mortality/food security/population growth fixes applied, remaining: planetary boundaries, final calibration)
 
 **Recent Major Achievements:**
+
+**Nov 24: Hindcast Phase 4 - Population Growth Fixes** (commit b01a37c)
+- 🔧 **PROBLEM FIXED:** Population declining (5.3B→4.15B) instead of growing (5.3B→8.1B) during 1990-2024 hindcast
+- **ROOT CAUSES & FIXES (5 critical issues):**
+  1. **Regional population scaling:** 2025 baseline (7.4B) not scaled to match historical global (5.3B for 1990)
+     - **Fix:** `historicalInitialization.ts` - Scale all regional metrics proportionally (population, carrying capacity, baseline values)
+  2. **ExogenousShockPhase random wars:** Random shocks generating 54% mortality risk in Month 0
+     - **Fix:** `ExogenousShockPhase.ts` - Skip random shock generation in historical mode (real events only)
+  3. **Temperature split-brain:** `planetaryBoundaries.currentValue` and `resourceEconomy.temperatureAnomaly` both needed setting
+     - **Fix:** `historicalInitialization.ts` - Initialize BOTH to 0.45C anomaly for 1990 (was 2.03C)
+  4. **Year tracking bug:** `TimeAdvancementPhase` not preserving `simulationStartYear`
+     - **Fix:** `TimeAdvancementPhase.ts` - `currentYear = simulationStartYear + monthsElapsed/12` (not just monthsElapsed/12)
+  5. **Historical birth rate scaling:** Regional birth rates not scaled to historical CBR values
+     - **Fix:** `regionalPopulations.ts` - Scale by 1990 CBR 24.3/1000 vs 2025 CBR 16.8/1000 (1.45x higher)
+     - **Architecture:** Exported `getHistoricalCrudeBirthRate()` from `BaselineMortalityPhase.ts`
+     - **Removed dual birth handling:** `BaselineMortalityPhase` now ONLY handles deaths; births handled solely in regional system
+- **VALIDATION:**
+  - Before: 5.3B → 4.15B (declining - WRONG)
+  - After: 5.3B → 6.24B (growing - CORRECT direction)
+  - Target: 8.1B (remaining gap is calibration, not critical bug)
+- **KEY INSIGHTS:**
+  - Regional aggregation (`HumanPopulationPhase`) overwrites global population - must scale regions, not just global
+  - Historical mode needs consistent year tracking across all phases
+  - Birth rate mechanics were duplicated (regional + mortality phase) causing architectural confusion
+- 📄 **Files:** `historicalInitialization.ts`, `ExogenousShockPhase.ts`, `TimeAdvancementPhase.ts`, `regionalPopulations.ts`, `BaselineMortalityPhase.ts`, `hindcastValidation.ts`
+- ⏳ **REMAINING:** ~1.86B population gap (6.24B vs 8.1B target) - calibration tuning needed
 
 **Nov 24: Hindcast Phase 3 Blocker - BaselineMortalityPhase RESOLVED** (commits 2087a26, d35e872)
 - 🔧 **PROBLEM FIXED:** Population declining (5.3B→2.7B) instead of growing (5.3B→6.1B) during 1990-2000 hindcast
