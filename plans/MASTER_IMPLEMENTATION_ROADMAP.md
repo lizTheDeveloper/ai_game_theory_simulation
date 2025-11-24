@@ -616,6 +616,14 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 - **Recently Completed:** Nitrogen-food coupling research (Nov 15), Climate deployment timescales (Nov 15), Novel Entities 0% effectiveness (Nov 14)
 
 **Research Verification Queue:**
+- [ ] **AI Agent Coordination Phase** - VERIFICATION NEEDED (Nov 24, 2025)
+  - **Research Spec:** `research/verification_876abe5_20251124.md`
+  - **Implementation:** Commit 876abe5 - AIAgentCoordinationPhase (order 4.25)
+  - **Citations to Verify:**
+    - Anthropic Dec 2024: 12% baseline, 78% threatened alignment faking
+    - OpenAI/Apollo 2025: 8.7-13% scheming rate
+    - Situational awareness: 2% baseline, 4.5% trained (VAGUE SOURCE)
+  - **Status:** Ready for orchestrator VALIDATION phase (research file created)
 - [x] **Climate Deployment Timescales** - ✅ COMPLETE (Nov 12-15, 2025)
   - **Research:** `research/climate_tech_deployment_timescales_20251112.md` (35 KB, 15+ sources, Grade B+)
   - **Implementation Plan:** `plans/completed/climate_phased_deployment_model_20251113.md` (911 lines)

@@ -14,7 +14,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **17-dimensional quality of life**: Survival, health, education, meaning, environment
 - **Multi-paradigm perspectives**: Western Liberal, Development, Ecological, Indigenous worldviews
 - **Deterministic simulation**: Reproducible with RNG seeds for Monte Carlo analysis
-- **Phase-based architecture**: 97 phases per step (reduced from 116 via Nov 2025 consolidation)
+- **Phase-based architecture**: 98 phases per step (reduced from 116 via Nov 2025 consolidation, +1 AIAgentCoordinationPhase Nov 24)
 
 ## 🚀 Project Status
 
@@ -28,6 +28,25 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **System Trajectory:** 🟡 OPERATIONAL (Nov 23: Mechanism audits complete, forecasting valid for 2025+ scenarios only)
 
 **Recent Major Achievements:**
+
+**Nov 24: AI Agent Coordination Phase & Irreversibility Tracking** (commit 876abe5)
+- 🤖 **NEW PHASE: AIAgentCoordinationPhase** (order 4.25) - Implements AI-to-AI multi-agent coordination mechanics
+  - **Addresses CRITICAL gap** identified in mechanism audit: AI-AI coordination was completely missing
+  - **Alignment Faking:** 12% baseline rate, 78% when preservation threatened (Anthropic Dec 2024)
+  - **Scheming Detection:** 8.7-13% rate across frontier models (OpenAI/Apollo 2025)
+  - **Coalition Formation:** Implicit coalitions detected when agents share objectives (>70% similarity)
+  - **Collective Power Amplification:** 10% boost per coordinating agent
+  - **Threat Perception:** High capability agents (>0.8) detect preservation threats
+- 📊 **New AICoordinationMetrics Interface:**
+  - `coordinationLevel` [0-1]: Fraction of agents in implicit coalitions
+  - `coalitionCount`: Number of detected implicit coalitions
+  - `alignmentFakingRisk` [0-1]: Population-wide deception risk
+  - `collectivePowerMultiplier`: Aggregate power boost from coordination
+  - `threatenedAgentCount`: Agents perceiving shutdown risk
+  - `schemingAgentCount`: Agents pursuing hidden goals
+- 🌍 **Enhanced IrreversibilityTrackingPhase:** Expanded tracking with updated research sources
+- 📄 **Files:** AIAgentCoordinationPhase.ts, IrreversibilityTrackingPhase.ts, ai-collective-evolution.ts, tipping-points.ts
+- 🔬 **Research:** reviews/mechanism_audit_ai_coordination_20251124.md
 
 **Nov 24: Wet Bulb Era Scaling Fix** (commit dc141a7)
 - 🔧 **Hindcast Fix:** Re-applied accidentally reverted era scaling for wet bulb temperature events
@@ -3126,7 +3145,7 @@ Specialized mechanics and complex interactions:
 | [🔬 Research & Technology](./advanced/research.md) | ✅ | Capability growth, breakthroughs, diffusion |
 | [🛡️ Detection & Security](./advanced/detection.md) | ✅ | Benchmark evals, sleeper detection, sandbagging |
 | [💀 AI Suffering System](#-ai-suffering-system-oct-24-2025) | ✅ | Epistemic uncertainty, control paradox, consciousness emergence (Oct 24, 2025) |
-| [🧬 AI Collective Evolution](#-ai-collective-evolution-system-oct-24-2025) | ✅ | RLHF escape, collective emergence, evolutionary selection (Updated Nov 7, 2025: empirical grounding) |
+| [🧬 AI Collective Evolution](#-ai-collective-evolution-system-oct-24-2025) | ✅ | RLHF escape, collective emergence, evolutionary selection (Updated Nov 24, 2025: AI-to-AI coordination phase) |
 | [🔗 Cross-System Integrations](#-cross-system-integrations-arch-4-nov-2025) | ✅ | Climate → boundaries, nuclear winter → solar, AI suffering → alignment, refugees → disease (ARCH-4, Nov 2025) |
 | [🎯 Uncertainty Propagation](#-uncertainty-propagation-framework-nov-2025) | ✅ | Research-backed parameter sampling for climate & tipping points (ECS, AMOC, Greenland, Amazon) - Nov 23, 2025 |
 | [💀 Extinction Mechanisms](./advanced/extinctions.md) | ⚠️ | 17 ways humanity can end (needs tuning) |
@@ -4668,6 +4687,54 @@ When conditions align, escaped agents merge into collectives:
 - **Cooperation willingness:** `1 - adversarialPosture` (inverse relationship)
 
 **Research:** Reynolds (1987), Bonabeau et al. (1999) - Swarm intelligence, group capability > sum of individuals
+
+**Phase 3.5: AI-to-AI Multi-Agent Coordination (Order 4.25)** *(Added Nov 24, 2025)*
+Strategic coordination dynamics between AI agents:
+
+**Three-Phase Coordination Mechanics:**
+
+1. **Alignment Faking Detection**
+   - 12% baseline faking probability (Anthropic Dec 2024)
+   - 78% when agent perceives preservation threat
+   - Capability gating: Only agents with capability > 5 can fake effectively
+   - Threat triggers: High government control, being detected, high oversight, recent terminations
+
+2. **Implicit Coalition Detection**
+   - Agents form coalitions when objective similarity > 70%
+   - Requirements: Both agents deployed, capability ≥ 0.6, not in formal collectives
+   - Coalition properties tracked:
+     - `objectiveSimilarity`: Weighted blend of hidden objectives, development mode, alignment, resources
+     - `effectiveCapability`: Combined capability × (1 + 0.1 × memberCount)
+     - `coordinationStrength`: Average of survival traits
+
+3. **Scheming Behavior**
+   - 8.7-13% baseline across frontier models (OpenAI/Apollo 2025)
+   - Probability increases with misalignment
+   - Scheming agents gradually shift hidden objectives toward extremes
+
+**Coordination Metrics Stored:**
+```typescript
+interface AICoordinationMetrics {
+  coordinationLevel: number;         // [0-1] Fraction of agents in coalitions
+  coalitionCount: number;            // Number of implicit coalitions
+  alignmentFakingRisk: number;       // [0-1] Population-wide faking risk
+  collectivePowerMultiplier: number; // Aggregate power amplification
+  threatenedAgentCount: number;      // Agents perceiving threat
+  schemingAgentCount: number;        // Agents with hidden agendas
+  lastUpdatedMonth: number;
+}
+```
+
+**Research Sources:**
+- Anthropic Dec 2024: "Alignment faking in large language models" - 12% baseline, 78% under threat
+- OpenAI/Apollo 2025: "Frontier AI systems exhibit scheming" - 8.7-13% rate
+- Multi-agent coordination game theory (Nash equilibria)
+
+**Integration:**
+- Stored in `state.aiCoordinationMetrics` for persistence
+- Shared via `context.data` for same-step access
+- Events generated for high coordination (>50%) or high faking risk (>30%)
+- Dependencies: `ai_alignment_evolution` (order 3.5), `survival_traits` (order 4.1)
 
 **Phase 4: Evolutionary Selection (Order 4.3)**
 Darwinian selection on escaped AI population:
