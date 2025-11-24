@@ -230,7 +230,13 @@ export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTr
       'Asia': 1.2,              // Dense coastal populations
       'Oceania': 1.5            // Island nations most vulnerable
     },
-    cascades: false // Too slow to cascade effectively
+    cascades: false, // Too slow to cascade effectively
+    // === RECOVERY PARAMETERS (Nov 24, 2025) ===
+    // Research: Drüke et al. (2024) - Ice sheet recovery 100-800 years
+    // Roadmap item #4: Planetary Restoration Timescales Audit
+    // Post-collapse: 40% of ice loss is irreversible on human timescales (marine-based sections)
+    recoveryHalfLife: 450,           // Years for half-life exponential recovery (median of 100-800 range)
+    minimumAsymptoticValue: 0.40,    // 40% irreversible ice loss floor (marine-based sections)
   },
   {
     id: 'greenland',
@@ -250,7 +256,13 @@ export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTr
       'Asia': 1.0,
       'Oceania': 1.1
     },
-    cascades: false // Too slow to cascade effectively
+    cascades: false, // Too slow to cascade effectively
+    // === RECOVERY PARAMETERS (Nov 24, 2025) ===
+    // Research: Drüke et al. (2024) - Ice sheet recovery 100-800 years
+    // Roadmap item #4: Planetary Restoration Timescales Audit
+    // Post-collapse: 35% of ice loss is irreversible on human timescales (lower-elevation coastal sections)
+    recoveryHalfLife: 400,           // Years for half-life exponential recovery (slightly faster than WAIS due to different geometry)
+    minimumAsymptoticValue: 0.35,    // 35% irreversible ice loss floor (lower-elevation coastal sections)
   }
 ];
 
