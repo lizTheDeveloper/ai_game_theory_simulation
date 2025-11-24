@@ -154,6 +154,27 @@
      - **Commit:** dbf1438
      - **Next Steps:** Two-layer verification (DOI + claim accuracy) → Parameter update decision → Monte Carlo if implemented
 
+   - **Threshold Lowering for Tipping Cascades** - HIGH (Added Nov 23, 2025)
+     - **Context:** Implements threshold lowering mechanism from mechanism audit gap (cf49657)
+     - **Research File:** research/verification_cf49657_20251123.md
+     - **Sources to Verify:**
+       - Armstrong McKay et al. (2022) Science - "Network of 16 tipping elements with causal interactions"
+       - Wunderling et al. (2024) ESD - "combined effect tending to lower thresholds" with magnitude estimates
+       - Van Westen et al. (2024) JGR - Greenland freshwater → AMOC destabilization
+     - **Key Claims Requiring Verification:**
+       - TIPPING_INTERACTIONS matrix with 9 interactions (Arctic→Greenland, Greenland→AMOC, etc.)
+       - Threshold reduction magnitudes (0.10-0.30°C per interaction)
+       - 0.5°C cap per element ("conservative estimate from Wunderling 2024")
+       - sqrt(progress) scaling function (front-loading assumption)
+     - **Implementation:**
+       - calculateThresholdLowering() in ClimateSystemPhase.ts
+       - TIPPING_INTERACTIONS constant in src/types/tipping-points.ts
+       - effectiveThresholdReduction field on TippingElement interface
+     - **Priority:** HIGH - Core cascade mechanic, fills identified research gap
+     - **Status:** ⚠️ READY FOR VALIDATION - Implementation complete, research verification needed
+     - **Commit:** cf49657
+     - **Next Steps:** Two-layer verification (existence + claim accuracy) → Parameter adjustments if needed → Monte Carlo N≥10
+
    - **AI Governance 2025 Proposals (Global Moratorium + US-China Bilateral)** - HIGH (Added Nov 20, 2025)
      - **Context:** Two major 2025 governance frameworks from arXiv preprints with detailed quantitative parameters
      - **Research File:** research/ai_governance_international_coordination_20251113.md (updated with sections 4.5.1-4.5.3)
