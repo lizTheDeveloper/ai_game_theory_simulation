@@ -76,3 +76,99 @@ export interface ConfigurationSettings {
  * Always use this instead of Math.random() for reproducibility
  */
 export type RNGFunction = () => number;
+
+/**
+ * Historical Overrides for Climate Mini-Hindcast (Nov 24, 2025)
+ *
+ * Enables simulation to start from historical conditions instead of present day.
+ * Used for model validation against known trajectories (e.g., 1990-2010 Keeling curve).
+ *
+ * Research sources:
+ * - CO2: Keeling curve (Scripps/NOAA)
+ * - Temperature: HadCRUT5 global temperature dataset
+ * - Population: UN World Population Prospects
+ * - GDP: World Bank historical data
+ * - Emissions: Global Carbon Project
+ *
+ * Usage: Pass to createDefaultInitialState() to override 2025 defaults
+ */
+export interface HistoricalOverrides {
+  /** Starting year (e.g., 1990) */
+  startYear: number;
+
+  /** Atmospheric CO2 concentration in ppm (Keeling curve) */
+  co2Ppm: number;
+
+  /** Global mean temperature anomaly in degrees C above 1850-1900 baseline (HadCRUT5) */
+  temperatureAnomalyC: number;
+
+  /** Global population in billions (UN World Population Prospects) */
+  globalPopulationBillions: number;
+
+  /** Global GDP in trillions USD (World Bank) */
+  globalGdpTrillions: number;
+
+  /** Annual CO2 emissions in gigatonnes per year (Global Carbon Project) */
+  emissionsGtCO2PerYear: number;
+
+  /** Optional: Additional overrides for environmental parameters */
+  environmental?: {
+    /** Arctic sea ice extent as fraction remaining (0-1) */
+    arcticIceLoss?: number;
+    /** Permafrost thaw progress (0-1) */
+    permafrostThaw?: number;
+    /** Amazon dieback progress (0-1) */
+    amazonDieback?: number;
+    /** Ocean sink saturation (0-1) */
+    sinkSaturation?: number;
+  };
+}
+
+/**
+ * Pre-computed historical baseline data for common hindcast scenarios
+ * Research: Keeling curve, HadCRUT5, UN Population, Global Carbon Project
+ */
+export const HISTORICAL_BASELINES: Record<number, HistoricalOverrides> = {
+  1990: {
+    startYear: 1990,
+    co2Ppm: 354,                    // Keeling curve (Scripps/NOAA)
+    temperatureAnomalyC: 0.45,      // HadCRUT5 global temperature
+    globalPopulationBillions: 5.3,  // UN World Population Prospects
+    globalGdpTrillions: 23,         // World Bank (1990 USD)
+    emissionsGtCO2PerYear: 22,      // Global Carbon Project
+    environmental: {
+      arcticIceLoss: 0.10,          // ~10% summer ice lost by 1990
+      permafrostThaw: 0.02,         // Minimal thaw in 1990
+      amazonDieback: 0.05,          // Early deforestation (~5%)
+      sinkSaturation: 0.15,         // 15% sink saturation
+    },
+  },
+  2000: {
+    startYear: 2000,
+    co2Ppm: 369,                    // Keeling curve
+    temperatureAnomalyC: 0.60,      // HadCRUT5
+    globalPopulationBillions: 6.1,  // UN World Population Prospects
+    globalGdpTrillions: 33,         // World Bank
+    emissionsGtCO2PerYear: 25,      // Global Carbon Project
+    environmental: {
+      arcticIceLoss: 0.25,          // ~25% summer ice lost
+      permafrostThaw: 0.04,         // Minimal thaw
+      amazonDieback: 0.08,          // ~8% degraded
+      sinkSaturation: 0.20,         // 20% sink saturation
+    },
+  },
+  2010: {
+    startYear: 2010,
+    co2Ppm: 390,                    // Keeling curve
+    temperatureAnomalyC: 0.85,      // HadCRUT5
+    globalPopulationBillions: 6.9,  // UN World Population Prospects
+    globalGdpTrillions: 66,         // World Bank
+    emissionsGtCO2PerYear: 32,      // Global Carbon Project
+    environmental: {
+      arcticIceLoss: 0.35,          // ~35% summer ice lost
+      permafrostThaw: 0.06,         // Early thaw acceleration
+      amazonDieback: 0.10,          // ~10% degraded
+      sinkSaturation: 0.25,         // 25% sink saturation
+    },
+  },
+};
