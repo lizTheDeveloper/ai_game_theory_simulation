@@ -18,6 +18,7 @@ export { CyberSecurityPhase } from './CyberSecurityPhase';
 export { SleeperWakePhase } from './SleeperWakePhase';
 export { SocialInfluenceUpdatePhase } from './SocialInfluenceUpdatePhase';  // Oct 21, 2025: Social influence accumulation
 export { AIAgentActionsPhase } from './AIAgentActionsPhase';
+export { AIAgentCoordinationPhase } from './AIAgentCoordinationPhase';  // Nov 24, 2025: AI-to-AI multi-agent coordination
 export { AISufferingPhase } from './AISufferingPhase';  // Oct 24, 2025: AI suffering calculation & effects
 export { ResentmentRecoveryPhase } from './ResentmentRecoveryPhase';  // Oct 24, 2025: AI resentment recovery mechanisms
 // AI Collective Evolution System (Oct 24, 2025)
