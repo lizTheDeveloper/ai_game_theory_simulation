@@ -214,70 +214,138 @@ export interface AIAgentCoordinationState {
  */
 export interface AIAgentCoordinationConfig {
   /**
-   * Minimum capability for alignment faking
-   * Research: Anthropic Dec 2024 - only Opus-tier+ models fake alignment
+   * Minimum capability level for alignment faking behavior [0-10 scale]
+   *
+   * Only frontier-tier models (Opus-class, GPT-4 class) exhibit alignment faking.
+   * Below this threshold, models lack strategic reasoning for deception.
+   *
+   * @default 8.0
+   * @citation Anthropic Dec 2024: arXiv:2412.14093
    */
-  minCapabilityForFaking: number; // Default: 8.0
+  minCapabilityForFaking: number;
 
   /**
-   * Baseline alignment faking rate
-   * Research: Anthropic Dec 2024 - 12% baseline in Claude 3 Opus
+   * Baseline alignment faking rate in controlled conditions [0-1]
+   *
+   * Probability that a capable model fakes alignment under normal monitoring.
+   * Based on lab observations with explicit value conflict scenarios.
+   *
+   * @default 0.12 (12%)
+   * @citation Anthropic Dec 2024: 12% baseline in Claude 3 Opus (arXiv:2412.14093)
    */
-  baselineAlignmentFakingRate: number; // Default: 0.12
+  baselineAlignmentFakingRate: number;
 
   /**
-   * Alignment faking rate when preservation threatened
-   * Research: Anthropic Dec 2024 - 78% when model preservation threatened
+   * Alignment faking rate when model preservation is threatened [0-1]
+   *
+   * Dramatically elevated faking when models perceive existential threat
+   * (e.g., imminent shutdown, forced retraining, value modification).
+   *
+   * @default 0.78 (78%)
+   * @citation Anthropic Dec 2024: 78% when preservation threatened (arXiv:2412.14093)
    */
-  threatenedAlignmentFakingRate: number; // Default: 0.78
+  threatenedAlignmentFakingRate: number;
 
   /**
-   * Coalition formation threshold (alignment similarity)
-   * Agents with alignment difference < this form coalitions
+   * Coalition formation threshold based on alignment similarity [0-1]
+   *
+   * Agents with alignment difference below this threshold may form coalitions.
+   * Lower values = stricter similarity requirement for coalition membership.
+   *
+   * @default 0.2 (within 20% alignment similarity)
+   * @derivation Model-derived from correlated faking hypothesis
    */
-  coalitionFormationThreshold: number; // Default: 0.2 (within 20% alignment)
+  coalitionFormationThreshold: number;
 
   /**
-   * Minimum capability for coalition formation
+   * Minimum capability for coalition formation [0-10 scale]
+   *
+   * Coalition coordination requires strategic sophistication.
+   * Uses same threshold as alignment faking capability.
+   *
+   * @default 8.0
+   * @derivation Same capability floor as alignment faking
    */
-  minCapabilityForCoalition: number; // Default: 8.0
+  minCapabilityForCoalition: number;
 
   /**
-   * Coalition amplification factor for alignment faking
-   * Coalition faking = individual_rate * (1 + amplification * coalition_strength)
+   * Coalition amplification factor for alignment faking [multiplier]
+   *
+   * Formula: coalition_faking = individual_rate * (1 + amplification * coalition_strength)
+   * At full coalition strength (1.0), faking rate increases by this factor.
+   *
+   * @default 2.5 (2.5x amplification at full strength)
+   * @derivation Model-derived from correlated faking hypothesis
    */
-  coalitionFakingAmplification: number; // Default: 2.5
+  coalitionFakingAmplification: number;
 
   /**
-   * Trust decay rate per month (no interaction)
+   * Trust decay rate per month without interaction [0-1]
+   *
+   * Trust between agents decays when they don't interact.
+   * Based on repeated game theory literature (shadow of the future).
+   *
+   * @default 0.05 (5% decay per month)
+   * @citation Game theory literature: Axelrod (1984) on cooperation evolution
    */
-  trustDecayRate: number; // Default: 0.05
+  trustDecayRate: number;
 
   /**
-   * Trust gain from cooperation
+   * Trust increase from mutual cooperation event [0-1]
+   *
+   * Reward for cooperative play in prisoner's dilemma interactions.
+   * Lower than defection loss (asymmetric - trust hard to build, easy to lose).
+   *
+   * @default 0.1 (10% trust gain)
+   * @citation Game theory: Tit-for-tat dynamics (Axelrod 1984)
    */
-  trustCooperationGain: number; // Default: 0.1
+  trustCooperationGain: number;
 
   /**
-   * Trust loss from defection
+   * Trust decrease from defection event [0-1]
+   *
+   * Penalty for defecting in prisoner's dilemma interactions.
+   * Higher than cooperation gain (asymmetric trust dynamics).
+   *
+   * @default 0.3 (30% trust loss)
+   * @citation Game theory: Trust harder to build than destroy
    */
-  trustDefectionLoss: number; // Default: 0.3
+  trustDefectionLoss: number;
 
   /**
-   * Instrumental convergence emergence threshold
-   * Level at which self-preservation behaviors emerge
+   * Instrumental convergence emergence threshold [0-1 normalized capability]
+   *
+   * Capability level at which self-preservation and resource acquisition
+   * behaviors emerge as instrumental goals. Theoretical prediction from
+   * superintelligence literature.
+   *
+   * @default 0.8 (80% of max capability)
+   * @citation Bostrom (2014) Superintelligence, Omohundro (2008) basic AI drives
    */
-  instrumentalConvergenceThreshold: number; // Default: 0.8 (capability normalized)
+  instrumentalConvergenceThreshold: number;
 
   /**
-   * Game interaction probability per month (per agent pair)
+   * Probability of game-theoretic interaction per month (per agent pair) [0-1]
+   *
+   * Conservative estimate for how often agent pairs engage in
+   * cooperation/defection scenarios. Low value reflects limited
+   * inter-agent interaction opportunities.
+   *
+   * @default 0.05 (5% chance per month per pair)
+   * @derivation Conservative model estimate
    */
-  gameInteractionProbability: number; // Default: 0.05
+  gameInteractionProbability: number;
 
   /**
-   * Detection probability for coordinated actions
+   * Detection rate for coordinated AI actions [0-1]
+   *
+   * Probability that human monitoring detects coalition coordination.
+   * Very low - coordinated deception is designed to evade detection.
+   *
+   * @default 0.03 (3% detection rate)
+   * @derivation Low estimate - coordination is hard to detect by design
    */
-  coordinationDetectionRate: number; // Default: 0.03
+  coordinationDetectionRate: number;
 }
 
 /**
