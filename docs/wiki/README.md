@@ -25,7 +25,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **Research Currency:** ✅ EXCELLENT (all simulation-critical files updated within 14 days, autonomous system working effectively)
 - **Implementation Fidelity:** A- (assertion coverage 97.2%, 24 integration tests for CoordinatedDeploymentPhase) ✅ EXCELLENT
 - **Architecture Health:** B+ (0 CRITICAL, 2 HIGH technical debt non-urgent, deep clone optimization complete) ✅ GOOD
-- **System Trajectory:** 🟡 OPERATIONAL (Nov 24: Game Layer Phase 1 complete, hindcast calibration Phase 1-4 COMPLETE - temperature/mortality/food security/population growth fixes applied, remaining: planetary boundaries, final calibration)
+- **System Trajectory:** 🟡 OPERATIONAL (Nov 24: Game Layer Phase 1 complete, hindcast calibration Phase 1-5 COMPLETE - temperature/mortality/food security/population growth/year tracking fixes applied, remaining: planetary boundaries, final calibration)
 
 **Recent Major Achievements:**
 
@@ -39,7 +39,8 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   3. **Temperature split-brain:** `planetaryBoundaries.currentValue` and `resourceEconomy.temperatureAnomaly` both needed setting
      - **Fix:** `historicalInitialization.ts` - Initialize BOTH to 0.45C anomaly for 1990 (was 2.03C)
   4. **Year tracking bug:** `TimeAdvancementPhase` using non-existent `state.simulationStartYear`
-     - **Fix:** `TimeAdvancementPhase.ts` - Read from `state.config.startYear ?? 2025` (not undefined `simulationStartYear`)
+     - **Fix (Part 1):** `TimeAdvancementPhase.ts` - Read from `state.config.startYear ?? 2025` (not undefined `simulationStartYear`)
+     - **Fix (Part 2, commit 89209ca):** `historicalInitialization.ts` + `hindcastingValidation.ts` - Set `config.startYear` from historical year (was defaulting to 2025)
      - **Formula:** `currentYear = state.config.startYear + monthsElapsed/12`
   5. **Historical birth rate scaling:** Regional birth rates not scaled to historical CBR values
      - **Fix:** `regionalPopulations.ts` - Scale by 1990 CBR 24.3/1000 vs 2025 CBR 16.8/1000 (1.45x higher)
@@ -55,6 +56,11 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - Birth rate mechanics were duplicated (regional + mortality phase) causing architectural confusion
 - 📄 **Files:** `historicalInitialization.ts`, `ExogenousShockPhase.ts`, `TimeAdvancementPhase.ts`, `regionalPopulations.ts`, `BaselineMortalityPhase.ts`, `hindcastValidation.ts`
 - ⏳ **REMAINING:** ~1.86B population gap (6.24B vs 8.1B target) - calibration tuning needed
+- 📊 **HINDCAST ACCURACY (with commit 89209ca year fix):**
+  - 1990: -0.57% deviation ✅
+  - 2000: +1.72% deviation ✅
+  - 2010: +6.86% deviation (improved)
+  - 2020: +10.30% deviation (improved)
 
 **Nov 24: Hindcast Phase 3 Blocker - BaselineMortalityPhase RESOLVED** (commits 2087a26, d35e872)
 - 🔧 **PROBLEM FIXED:** Population declining (5.3B→2.7B) instead of growing (5.3B→6.1B) during 1990-2000 hindcast
