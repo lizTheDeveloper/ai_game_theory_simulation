@@ -239,7 +239,7 @@ export function resolveMortality(
   // HINDCAST FIX (Nov 24, 2025): Apply era-specific mortality multiplier
   // Historical eras had lower baseline mortality due to different resilience profiles.
   // This scales ALL mortality risks (not just baseline deaths) to match historical data.
-  // Research: UN World Population Prospects, IHME Global Burden of Disease
+  // Research: UN World Population Prospects 2024, Chetty et al. 2016 (JAMA)
   const eraMortalityMultiplier = getEraMortalityMultiplier(state.currentYear);
 
   // No risks = no deaths
