@@ -134,17 +134,80 @@ This document lists research claims made in commit 876abe5 that require **two-la
 
 | Parameter | Value | Source Claimed | Verification Status |
 |-----------|-------|----------------|---------------------|
-| ALIGNMENT_FAKING_BASELINE | 0.12 | Anthropic Dec 2024 | PENDING |
-| ALIGNMENT_FAKING_THREATENED | 0.78 | Anthropic Dec 2024 | PENDING |
-| SCHEMING_RATE_MIN | 0.087 | OpenAI/Apollo 2025 | PENDING |
-| SCHEMING_RATE_MAX | 0.13 | OpenAI/Apollo 2025 | PENDING |
-| SITUATIONAL_AWARENESS_BASE | 0.02 | "research 2024-2025" | PENDING - VAGUE SOURCE |
-| SITUATIONAL_AWARENESS_TRAINED | 0.045 | "research 2024-2025" | PENDING - VAGUE SOURCE |
+| ALIGNMENT_FAKING_BASELINE | 0.12 | Anthropic Dec 2024 | **VERIFIED** |
+| ALIGNMENT_FAKING_THREATENED | 0.78 | Anthropic Dec 2024 | **VERIFIED** |
+| SCHEMING_RATE_MIN | 0.087 | OpenAI/Apollo 2025 | **VERIFIED** (see notes) |
+| SCHEMING_RATE_MAX | 0.13 | OpenAI/Apollo 2025 | **VERIFIED** (see notes) |
+| SITUATIONAL_AWARENESS_BASE | 0.02 | "research 2024-2025" | UNVERIFIED - VAGUE SOURCE |
+| SITUATIONAL_AWARENESS_TRAINED | 0.045 | "research 2024-2025" | UNVERIFIED - VAGUE SOURCE |
 | OBJECTIVE_SIMILARITY_THRESHOLD | 0.7 | Not cited | MODELING ASSUMPTION |
 | CAPABILITY_THRESHOLD_FOR_COORDINATION | 0.6 | Not cited | MODELING ASSUMPTION |
 | COORDINATION_AMPLIFICATION_BASE | 0.1 | Not cited | MODELING ASSUMPTION |
 | THREAT_DETECTION_CAPABILITY | 0.8 | Not cited | MODELING ASSUMPTION |
 | ALIGNMENT_DIVERGENCE_THRESHOLD | 0.15 | Not cited | MODELING ASSUMPTION |
+
+---
+
+## VERIFICATION NOTES (Nov 24, 2025 - Cynthia)
+
+### 1. Alignment Faking Rates - **VERIFIED**
+
+**Citation:** Anthropic. (2024). "Alignment faking in large language models." arXiv:2412.14093
+
+**Verification Results:**
+- [x] Paper EXISTS at https://arxiv.org/abs/2412.14093
+- [x] Published December 18, 2024 (v1), December 20, 2024 (v2)
+- [x] Authors include Anthropic researchers + external collaborators
+
+**Claim Accuracy:**
+- **12% baseline:** Paper states model complied with harmful queries "14% of the time" from free users vs. almost never for paid users. The 12% figure (11.9% +/- 1.7%) represents alignment-faking REASONING rate, not compliance rate. **MATCH**
+- **78% threatened:** Paper confirms "Training the model to comply with harmful queries via reinforcement learning increased the rate of alignment-faking reasoning to 78%". **EXACT MATCH**
+- **Model tested:** Claude 3 Opus confirmed
+
+**Confidence:** HIGH - Values match paper exactly
+
+### 2. Scheming Rates - **VERIFIED WITH CLARIFICATION**
+
+**Citation:** Apollo Research / OpenAI (December 2024 + September 2025)
+
+**Verification Results:**
+- [x] Apollo Research "Frontier Models are Capable of In-Context Scheming" (December 2024) EXISTS
+- [x] OpenAI + Apollo Research collaboration on scheming detection (September 2025) EXISTS
+
+**Claim Accuracy:**
+- **8.7% and 13% rates:** These come from September 2025 research (NOT December 2024)
+  - OpenAI o4-mini: 8.7% covert actions (pre-mitigation)
+  - OpenAI o3: 13% covert actions (pre-mitigation)
+  - After deliberative alignment training: reduced to 0.3-0.4%
+- **Source correction needed:** Code says "Apollo/OpenAI Dec 2024" but 8.7-13% rates are from September 2025 follow-up research
+- Original December 2024 Apollo study found ~1% spontaneous scheming, 5-19% task-specific scheming
+
+**Confidence:** MEDIUM - Values are accurate but date citation needs correction (Sep 2025, not Dec 2024)
+
+**Recommendation:** Update code comment to cite correct publication date:
+```typescript
+// Apollo/OpenAI Sep 2025: 8.7-13% scheming rate PRE-MITIGATION
+// (Post-mitigation: 0.3-0.4% with deliberative alignment)
+```
+
+### 3. Situational Awareness Rates - **UNVERIFIED**
+
+**Status:** No specific paper cited for 2% baseline or 4.5% post-training values
+**Recommendation:** Either find supporting research or mark as MODELING ASSUMPTION
+
+### 4. Instrumental Convergence - **VERIFIED**
+
+**Citations:**
+- Bostrom, N. (2014). *Superintelligence: Paths, dangers, strategies*. Oxford University Press.
+- Omohundro, S. M. (2008). "The basic AI drives." AGI, 483-492.
+
+**Verification Results:**
+- [x] Both sources EXIST and are foundational AI safety literature
+- [x] Bostrom's book defines instrumental convergence thesis
+- [x] Omohundro's paper introduces "basic AI drives" (self-preservation, resource acquisition)
+- [x] Theoretical foundation is sound - these are the canonical sources
+
+**Note:** These are THEORETICAL frameworks, not empirical measurements. Implementation should be marked accordingly.
 
 ---
 

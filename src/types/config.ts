@@ -122,6 +122,36 @@ export interface HistoricalOverrides {
     /** Ocean sink saturation (0-1) */
     sinkSaturation?: number;
   };
+
+  /**
+   * HISTORICAL PLANETARY BOUNDARY OVERRIDES (Nov 24, 2025)
+   *
+   * CRITICAL for hindcast validation - simulations crash when 1990 scenarios
+   * start with 2025 crisis-level planetary boundaries.
+   *
+   * Research: Stockholm Resilience Centre (Rockstrom et al. 2009, Steffen et al. 2015)
+   * Values are normalized to boundary threshold (1.0 = boundary, >1.0 = breached)
+   */
+  planetaryBoundaries?: {
+    /** Climate change (CO2 concentration normalized) - 2025: 1.21 */
+    climateChange?: number;
+    /** Biosphere integrity (extinction rate normalized) - 2025: 11.6 */
+    biosphereIntegrity?: number;
+    /** Biogeochemical flows (N&P normalized) - 2025: 2.94 */
+    biogeochemicalFlows?: number;
+    /** Land system change (deforestation normalized) - 2025: 1.17 (breached 2000) */
+    landSystemChange?: number;
+    /** Freshwater change (groundwater/surface normalized) - 2025: 1.15 (breached 2023) */
+    freshwaterChange?: number;
+    /** Novel entities (chemical pollution normalized) - 2025: 1.50 (breached 2022) */
+    novelEntities?: number;
+    /** Ocean acidification (pH change normalized) - 2025: 1.05 (breached 2025) */
+    oceanAcidification?: number;
+    /** Stratospheric ozone (depletion normalized) - 2025: 0.85 (recovering) */
+    stratosphericOzone?: number;
+    /** Atmospheric aerosols (regional loading normalized) - 2025: 0.70 */
+    atmosphericAerosols?: number;
+  };
 }
 
 /**
@@ -129,6 +159,22 @@ export interface HistoricalOverrides {
  * Research: Keeling curve, HadCRUT5, UN Population, Global Carbon Project
  */
 export const HISTORICAL_BASELINES: Record<number, HistoricalOverrides> = {
+  /**
+   * 1990 BASELINE
+   *
+   * Planetary Boundary Research (Stockholm Resilience Centre):
+   * - Climate change: Just at boundary (CO2 354 ppm vs 350 ppm safe)
+   * - Biosphere integrity: ~25x background extinction (vs 116x in 2025)
+   *   Research: Ceballos et al. (2015), IPBES (2019) trajectory back-calculation
+   * - Biogeochemical flows: ~1.5x (Green Revolution fertilizer use accelerating)
+   *   Research: Steffen et al. (2015) - N/P flows crossed boundary ~1985
+   * - Land system change: ~0.60 (not yet breached in 1990, breached 2000)
+   * - Freshwater change: ~0.30 (not yet breached, major depletion post-2000)
+   * - Novel entities: ~0.30 (CFCs peak, PFAS production starting)
+   * - Ocean acidification: ~0.60 (pH dropping but not yet critical)
+   * - Stratospheric ozone: ~1.25 (PEAK ozone hole era, Montreal Protocol 1987)
+   * - Atmospheric aerosols: ~0.80 (pre-Clean Air improvements in many regions)
+   */
   1990: {
     startYear: 1990,
     co2Ppm: 354,                    // Keeling curve (Scripps/NOAA)
@@ -142,7 +188,26 @@ export const HISTORICAL_BASELINES: Record<number, HistoricalOverrides> = {
       amazonDieback: 0.05,          // Early deforestation (~5%)
       sinkSaturation: 0.15,         // 15% sink saturation
     },
+    planetaryBoundaries: {
+      climateChange: 0.35,          // 354 ppm / 350 safe - just approaching boundary
+      biosphereIntegrity: 2.5,      // ~25x background extinction rate (vs 116x 2025)
+      biogeochemicalFlows: 1.50,    // Already breached 1985, accelerating
+      landSystemChange: 0.60,       // ~72% forest cover (not yet breached)
+      freshwaterChange: 0.30,       // Minor stress (major depletion post-2000)
+      novelEntities: 0.30,          // CFCs peak, PFAS nascent
+      oceanAcidification: 0.60,     // pH ~8.18 (vs 8.25 pre-industrial)
+      stratosphericOzone: 1.25,     // PEAK ozone hole (Montreal Protocol 1987 just starting effect)
+      atmosphericAerosols: 0.80,    // Industrial aerosols high, Clean Air Act starting
+    },
   },
+  /**
+   * 2000 BASELINE
+   *
+   * Research: Steffen et al. (2015), Richardson et al. (2023) trajectory
+   * - Land system change: Just breaching boundary (62% → 65% forest cover)
+   * - Novel entities: PFAS production ramping, microplastics starting
+   * - Ozone: Recovering from Montreal Protocol
+   */
   2000: {
     startYear: 2000,
     co2Ppm: 369,                    // Keeling curve
@@ -156,7 +221,25 @@ export const HISTORICAL_BASELINES: Record<number, HistoricalOverrides> = {
       amazonDieback: 0.08,          // ~8% degraded
       sinkSaturation: 0.20,         // 20% sink saturation
     },
+    planetaryBoundaries: {
+      climateChange: 0.55,          // 369 ppm - beyond safe zone but pre-acceleration
+      biosphereIntegrity: 4.5,      // ~45x background (accelerating 1990-2000)
+      biogeochemicalFlows: 2.00,    // Fertilizer use intensifying
+      landSystemChange: 0.85,       // Approaching/at boundary (breached ~2000)
+      freshwaterChange: 0.50,       // Accelerating stress (Ogallala, India)
+      novelEntities: 0.40,          // PFAS production ramping
+      oceanAcidification: 0.70,     // pH ~8.15
+      stratosphericOzone: 1.10,     // Starting recovery (Montreal Protocol working)
+      atmosphericAerosols: 0.75,    // Improving in developed nations
+    },
   },
+  /**
+   * 2010 BASELINE
+   *
+   * Research: Rockstrom et al. (2009) first quantification, Steffen et al. (2015)
+   * - Multiple boundaries now breached
+   * - Acceleration visible in all Earth system trajectories
+   */
   2010: {
     startYear: 2010,
     co2Ppm: 390,                    // Keeling curve
@@ -169,6 +252,17 @@ export const HISTORICAL_BASELINES: Record<number, HistoricalOverrides> = {
       permafrostThaw: 0.06,         // Early thaw acceleration
       amazonDieback: 0.10,          // ~10% degraded
       sinkSaturation: 0.25,         // 25% sink saturation
+    },
+    planetaryBoundaries: {
+      climateChange: 0.80,          // 390 ppm - clearly beyond boundary
+      biosphereIntegrity: 7.0,      // ~70x background (approaching 2025 levels)
+      biogeochemicalFlows: 2.50,    // Dead zones expanding
+      landSystemChange: 1.00,       // At boundary (breached)
+      freshwaterChange: 0.80,       // Significant stress (multiple aquifer warnings)
+      novelEntities: 0.60,          // PFAS widespread, microplastics detected globally
+      oceanAcidification: 0.85,     // pH ~8.12 (approaching boundary)
+      stratosphericOzone: 0.95,     // Continuing recovery (ozone hole shrinking)
+      atmosphericAerosols: 0.72,    // Improving globally
     },
   },
 };
