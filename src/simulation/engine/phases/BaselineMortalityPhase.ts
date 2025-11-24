@@ -99,10 +99,14 @@ function getHistoricalCrudeDeathRate(year: number): number {
  * death rate should come from historical UN data and be scaled by those weights.
  */
 function calculateBaselineMortalityRisk(state: GameState): number {
-  const year = state.currentYear;
+  // CRITICAL FIX (Nov 24, 2025): state.currentYear is NOT updated as simulation progresses!
+  // It stays at the initial year (e.g., 1990 for hindcast, 2025 for normal).
+  // We must calculate the actual current year from months elapsed.
+  const yearsElapsed = Math.floor(state.currentMonth / 12);
+  const actualYear = state.currentYear + yearsElapsed;
 
   // Get historical crude death rate (CDR per 1000 per year)
-  const cdrPer1000 = getHistoricalCrudeDeathRate(year);
+  const cdrPer1000 = getHistoricalCrudeDeathRate(actualYear);
 
   // Convert to monthly rate: (CDR / 1000) / 12
   const monthlyRate = (cdrPer1000 / 1000) / 12;
@@ -111,7 +115,7 @@ function calculateBaselineMortalityRisk(state: GameState): number {
     location: 'calculateBaselineMortalityRisk',
     valueName: 'monthlyRate',
     month: state.currentMonth,
-    additionalInfo: { year, cdrPer1000 }
+    additionalInfo: { actualYear, yearsElapsed, initialYear: state.currentYear, cdrPer1000 }
   });
 
   return monthlyRate;
@@ -133,24 +137,38 @@ export class BaselineMortalityPhase implements SimulationPhase {
     // Calculate baseline mortality risk from historical data
     const baselineRisk = calculateBaselineMortalityRisk(state);
 
-    // HINDCAST FIX: Apply ERA mortality multiplier
-    // This scales baseline deaths to match historical reality vs 2025 calibration
-    // Example: 1990 has multiplier 0.40 (40% of 2025 crisis vulnerability)
-    // But baseline demographic deaths were HIGHER in 1990 (CDR 9.8 vs 7.2 in 2025)
-    // So we DON'T apply ERA multiplier to baseline deaths - only to CRISIS deaths
+    // HINDCAST FIX: Compensate for ERA mortality multiplier
+    // The Bayesian system will multiply ALL risks by ERA multiplier (line 362 of bayesianMortality.ts)
+    // But baseline demographic deaths should NOT be scaled by ERA multiplier!
     //
-    // ERA multipliers represent "crisis response capability" not "baseline health"
-    // 1990 had higher baseline mortality but LOWER crisis response capability
-    // (This is the architectural insight that fixes the hindcast)
+    // Why: ERA multipliers represent "crisis response capability" not "baseline health"
+    // - 1990 had HIGHER baseline mortality (CDR 9.8 vs 7.2 in 2025) due to worse healthcare
+    // - 1990 had LOWER crisis response (multiplier 0.40) due to less infrastructure
+    // These are independent dimensions!
+    //
+    // Solution: Pre-divide by ERA multiplier so that when Bayesian system multiplies,
+    // we get back the correct historical baseline mortality rate.
+    // Example: baselineRisk=0.00082 (9.8/1000/12), eraMultiplier=0.30
+    //          compensated=0.00082/0.30=0.00273
+    //          bayesian applies: 0.00273*0.30=0.00082 ✓
+    const yearsElapsed = Math.floor(state.currentMonth / 12);
+    const actualYear = state.currentYear + yearsElapsed;
+    const eraMultiplier = getEraMortalityMultiplier(actualYear);
+    const compensatedBaselineRisk = assertFinite(baselineRisk / eraMultiplier, {
+      location: 'BaselineMortalityPhase.execute',
+      valueName: 'compensatedBaselineRisk',
+      month: state.currentMonth,
+      additionalInfo: { baselineRisk, eraMultiplier, actualYear, yearsElapsed, initialYear: state.currentYear }
+    });
 
     // Add baseline mortality risk to Bayesian system
     // The Bayesian system will apply demographic vulnerability weights automatically
     // (Elite 0.5×, Professional 0.7×, Working 1.0×, Precariat 1.3×, Informal 1.5×)
     addMortalityRisk(pop, {
       type: 'other', // Baseline mortality is catch-all for natural causes
-      baseRisk: baselineRisk,
-      proximate: 'natural causes',
-      root: 'aging/disease',
+      baseRisk: compensatedBaselineRisk, // Pre-compensated for ERA multiplier
+      proximate: 'disease', // Disease/natural causes (aging, illness, accidents)
+      root: 'demographic', // Demographic baseline (natural mortality)
       confidence: 'HIGH',
       scope: 'GLOBAL',
       month: state.currentMonth,
@@ -159,10 +177,12 @@ export class BaselineMortalityPhase implements SimulationPhase {
 
     // DIAGNOSTIC LOGGING (only log occasionally to reduce noise)
     if (state.currentMonth % 12 === 0) {
-      const cdr = getHistoricalCrudeDeathRate(state.currentYear);
+      const yearsElapsed = Math.floor(state.currentMonth / 12);
+      const actualYear = state.currentYear + yearsElapsed;
+      const cdr = getHistoricalCrudeDeathRate(actualYear);
       const annualDeaths = (pop.population * 1e9) * (baselineRisk * 12);
       const annualDeathsMillions = (annualDeaths / 1e6).toFixed(1);
-      console.log(`💀 Baseline mortality: ${cdr.toFixed(1)}/1000 CDR (${annualDeathsMillions}M deaths/year projected)`);
+      console.log(`💀 Baseline mortality (Year ${actualYear}): ${cdr.toFixed(1)}/1000 CDR (${annualDeathsMillions}M deaths/year projected)`);
     }
 
     return { events: [] };
