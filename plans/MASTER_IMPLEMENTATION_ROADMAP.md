@@ -853,6 +853,7 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
   - 11 files in `src/components/dashboards/game/`
   - GameDashboard, Header, CurrencyPanel, PendingDecisions, EventStream, ActionBar
   - Demo page at `/game-dashboard-demo`
+  - Far-future aesthetic (black, #00F0FF) preserved
   - Commit: c549012f5
 - [x] Connect components to simulation state - **COMPLETE** (Nov 24, 2025)
   - GameStateProvider.tsx - React context provider
