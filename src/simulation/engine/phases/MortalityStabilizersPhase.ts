@@ -1,11 +1,17 @@
 /**
  * Mortality Stabilizers Phase
  *
- * Applies four research-backed mechanisms that prevent societies from exceeding 60% mortality:
- * 1. International aid (15-44% mortality reduction, FAILS for global catastrophes)
- * 2. Heat adaptation (40-80% reduction, limited by wet bulb 30.5°C)
- * 3. Migration/relocation (85% survival, <1% mortality during displacement)
- * 4. Emergency response (20-40% reduction, weak evidence)
+ * Applies four mechanisms that reduce mortality during crises:
+ * 1. International aid (15-44% mortality reduction, FAILS for global catastrophes) [EMPIRICAL]
+ * 2. Heat adaptation (up to 44% reduction, limited by wet bulb 30.5°C) [EMPIRICAL]
+ * 3. Migration/relocation (85% survival, <1% mortality during displacement) [MODELING ASSUMPTION]
+ * 4. Emergency response (20-40% reduction) [WEAK EVIDENCE]
+ *
+ * EVIDENCE TIERS (Nov 23, 2025 mechanism audit):
+ * - Aid: TIER 1 GOLD - RCT-level evidence from Cavalcanti et al. (2025)
+ * - Adaptation: TIER 1 GOLD - Longitudinal observational data from Ballester et al. (2024)
+ * - Migration: TIER 3 BRONZE - Qualitative research (IOM 2024), quantitative params are extrapolations
+ * - Emergency: TIER 3 BRONZE - Limited data from GAO (2025), single-event extrapolation
  *
  * CRITICAL FIXES (Sylvia's Quality Gate 1 validation):
  * - Global vs regional catastrophe branching (aid = 0% when >50% economies collapsed)
@@ -14,10 +20,10 @@
  * - Donor fatigue: simultaneous crises reduce aid effectiveness
  *
  * Research:
- * - Cavalcanti et al. (2025): USAID aid effectiveness (The Lancet)
- * - Ballester et al. (2024): European heat adaptation (Nature Medicine)
- * - IOM (2024): Climate migration patterns (World Migration Report)
- * - GAO (2025): Emergency response capacity (Federal audit)
+ * - Cavalcanti et al. (2025): USAID aid effectiveness (The Lancet) - QUANTITATIVE
+ * - Ballester et al. (2024): European heat adaptation (Nature Medicine) - QUANTITATIVE
+ * - IOM (2024): Climate migration patterns (World Migration Report) - QUALITATIVE ONLY
+ * - GAO (2025): Emergency response capacity (Federal audit) - LIMITED DATA
  *
  * Order: 20.8 (AFTER food security degradation 19.7, BEFORE Bayesian mortality resolution 20.9)
  * This reduces mortality BEFORE it's applied to populations.
