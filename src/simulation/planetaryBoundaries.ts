@@ -219,7 +219,7 @@ export function initializePlanetaryBoundariesSystem(rng: RNGFunction): Planetary
     isCoreBoundary: false,
     interactionStrength: 0.8,
     reversible: true,                      // Reduce fertilizer use
-    timescaleYears: 20,
+    timescaleYears: 75,                    // 50-200 year range (Drüke et al. 2024, Nov 22 fix)
     extinctionContribution: 0.15,
     tippingPointRisk: 0.30,
     // === NITROGEN ASYMPTOTIC RECOVERY (Nov 22, 2025) ===
