@@ -62489,7 +62489,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BaselineMortalityPhase.ts",
-    "line": 236,
+    "line": 234,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -62497,7 +62497,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BaselineMortalityPhase.ts",
-    "line": 237,
+    "line": 235,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -62505,7 +62505,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BaselineMortalityPhase.ts",
-    "line": 238,
+    "line": 236,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -62513,15 +62513,15 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BaselineMortalityPhase.ts",
-    "line": 239,
+    "line": 237,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
-    "context": "additionalInfo: { baselineRisk, eraMultiplier, actualYear }"
+    "context": "additionalInfo: { baselineRisk, eraMultiplier, actualYear, yearsElapsed, initialYear: state.currentYear }"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BaselineMortalityPhase.ts",
-    "line": 250,
+    "line": 248,
     "type": "property",
     "name": "confidence",
     "currentDoc": "(none)",
@@ -62529,7 +62529,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BaselineMortalityPhase.ts",
-    "line": 251,
+    "line": 249,
     "type": "property",
     "name": "scope",
     "currentDoc": "(none)",
@@ -62537,7 +62537,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BaselineMortalityPhase.ts",
-    "line": 252,
+    "line": 250,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -62545,7 +62545,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BaselineMortalityPhase.ts",
-    "line": 253,
+    "line": 251,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -149113,7 +149113,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 556,
+    "line": 559,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -149121,7 +149121,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 557,
+    "line": 560,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -149129,7 +149129,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 558,
+    "line": 561,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -149137,7 +149137,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 559,
+    "line": 562,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -149145,7 +149145,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 560,
+    "line": 563,
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
@@ -149153,7 +149153,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 561,
+    "line": 564,
     "type": "property",
     "name": "population",
     "currentDoc": "(none)",
@@ -149161,7 +149161,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 562,
+    "line": 565,
     "type": "property",
     "name": "carryingCapacity",
     "currentDoc": "(none)",
@@ -149169,7 +149169,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 607,
+    "line": 610,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -149177,7 +149177,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 608,
+    "line": 611,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -149185,7 +149185,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 609,
+    "line": 612,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -149193,7 +149193,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 610,
+    "line": 613,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -149201,7 +149201,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 611,
+    "line": 614,
     "type": "property",
     "name": "totalPopulationMillions",
     "currentDoc": "(none)",
@@ -149209,7 +149209,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 612,
+    "line": 615,
     "type": "property",
     "name": "totalPopulationBillions",
     "currentDoc": "(none)",
@@ -149217,7 +149217,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 613,
+    "line": 616,
     "type": "property",
     "name": "regionCount",
     "currentDoc": "(none)",
@@ -149225,7 +149225,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 619,
+    "line": 622,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -149233,7 +149233,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 620,
+    "line": 623,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -149241,7 +149241,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 621,
+    "line": 624,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -149249,7 +149249,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 622,
+    "line": 625,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -197985,7 +197985,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 476,
+    "line": 477,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -197993,7 +197993,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 477,
+    "line": 478,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -198001,7 +198001,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 478,
+    "line": 479,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -198009,7 +198009,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 479,
+    "line": 480,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -198017,7 +198017,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 488,
+    "line": 489,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -198025,7 +198025,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 489,
+    "line": 490,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -198033,7 +198033,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 490,
+    "line": 491,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -198041,7 +198041,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 500,
+    "line": 501,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -198049,7 +198049,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 501,
+    "line": 502,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -198057,7 +198057,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 502,
+    "line": 503,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -198065,7 +198065,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 510,
+    "line": 511,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -198073,7 +198073,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 511,
+    "line": 512,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -198081,7 +198081,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 512,
+    "line": 513,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -198089,7 +198089,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 513,
+    "line": 514,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -198097,7 +198097,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 514,
+    "line": 515,
     "type": "property",
     "name": "totalPopulation",
     "currentDoc": "(none)",
@@ -198105,7 +198105,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 515,
+    "line": 516,
     "type": "property",
     "name": "exposureFraction",
     "currentDoc": "(none)",
@@ -198113,7 +198113,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 524,
+    "line": 525,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -198121,7 +198121,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 525,
+    "line": 526,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -198129,7 +198129,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 526,
+    "line": 527,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -198137,7 +198137,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 527,
+    "line": 528,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -198145,7 +198145,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 529,
+    "line": 530,
     "type": "property",
     "name": "mortalityRate",
     "currentDoc": "(none)",
@@ -198153,7 +198153,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 536,
+    "line": 537,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -198161,7 +198161,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 537,
+    "line": 538,
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
@@ -198169,7 +198169,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 542,
+    "line": 543,
     "type": "property",
     "name": "exposureFraction",
     "currentDoc": "(none)",
@@ -198177,7 +198177,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 543,
+    "line": 544,
     "type": "property",
     "name": "mortalityRate",
     "currentDoc": "(none)",
@@ -198185,7 +198185,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 545,
+    "line": 546,
     "type": "property",
     "name": "duration",
     "currentDoc": "(none)",
@@ -198193,7 +198193,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 546,
+    "line": 547,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -198201,7 +198201,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 566,
+    "line": 567,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -198209,7 +198209,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 567,
+    "line": 568,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -198217,7 +198217,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 569,
+    "line": 570,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -198225,7 +198225,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 570,
+    "line": 571,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -198233,7 +198233,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 571,
+    "line": 572,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -198241,7 +198241,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 575,
+    "line": 576,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -198249,7 +198249,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 581,
+    "line": 582,
     "type": "property",
     "name": "mortalityRate",
     "currentDoc": "(none)",
@@ -198257,7 +198257,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 582,
+    "line": 583,
     "type": "property",
     "name": "duration",
     "currentDoc": "(none)",
@@ -198265,7 +198265,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 583,
+    "line": 584,
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
@@ -198273,7 +198273,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 584,
+    "line": 585,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -198281,7 +198281,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 597,
+    "line": 598,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -198289,7 +198289,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 598,
+    "line": 599,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -198297,7 +198297,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 599,
+    "line": 600,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -198305,7 +198305,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 600,
+    "line": 601,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -198313,7 +198313,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 606,
+    "line": 607,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -198321,7 +198321,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 607,
+    "line": 608,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -198329,7 +198329,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 608,
+    "line": 609,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -198337,7 +198337,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 609,
+    "line": 610,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -198345,7 +198345,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 615,
+    "line": 616,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -198353,7 +198353,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 616,
+    "line": 617,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -198361,7 +198361,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 617,
+    "line": 618,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -198369,7 +198369,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 618,
+    "line": 619,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -198377,7 +198377,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 642,
+    "line": 643,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -198385,7 +198385,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 643,
+    "line": 644,
     "type": "property",
     "name": "eventCount",
     "currentDoc": "(none)",
@@ -198393,7 +198393,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 644,
+    "line": 645,
     "type": "property",
     "name": "totalDeaths",
     "currentDoc": "(none)",
@@ -198401,7 +198401,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 660,
+    "line": 661,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -198409,7 +198409,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 661,
+    "line": 662,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -198417,7 +198417,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 662,
+    "line": 663,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -198425,7 +198425,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 663,
+    "line": 664,
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -198433,7 +198433,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 664,
+    "line": 665,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -198441,7 +198441,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 665,
+    "line": 666,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -198449,7 +198449,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 666,
+    "line": 667,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -198457,7 +198457,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 667,
+    "line": 668,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -198465,7 +198465,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 668,
+    "line": 669,
     "type": "property",
     "name": "cumulativeDeaths",
     "currentDoc": "(none)",
@@ -198473,7 +198473,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 669,
+    "line": 670,
     "type": "property",
     "name": "eventFrequency",
     "currentDoc": "(none)",
@@ -198481,7 +198481,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 693,
+    "line": 694,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -198489,7 +198489,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 694,
+    "line": 695,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -198497,7 +198497,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 695,
+    "line": 696,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -198505,7 +198505,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 696,
+    "line": 697,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -198513,7 +198513,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 697,
+    "line": 698,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -198521,7 +198521,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 700,
+    "line": 701,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -198529,7 +198529,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 702,
+    "line": 703,
     "type": "property",
     "name": "populationAffected",
     "currentDoc": "(none)",
@@ -198537,7 +198537,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 703,
+    "line": 704,
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
@@ -198545,7 +198545,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 704,
+    "line": 705,
     "type": "property",
     "name": "threshold",
     "currentDoc": "(none)",
@@ -198553,7 +198553,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 728,
+    "line": 729,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -198561,7 +198561,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 729,
+    "line": 730,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -198569,7 +198569,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 730,
+    "line": 731,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -198577,7 +198577,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 735,
+    "line": 736,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -198585,7 +198585,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 736,
+    "line": 737,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -198593,7 +198593,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 737,
+    "line": 738,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -198601,7 +198601,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 738,
+    "line": 739,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -198609,7 +198609,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 743,
+    "line": 744,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -198617,7 +198617,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 744,
+    "line": 745,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -198625,7 +198625,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 745,
+    "line": 746,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -198633,7 +198633,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 746,
+    "line": 747,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -198641,7 +198641,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 764,
+    "line": 765,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -198649,7 +198649,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 765,
+    "line": 766,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -198657,7 +198657,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 766,
+    "line": 767,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -198665,7 +198665,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 767,
+    "line": 768,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -198673,7 +198673,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 770,
+    "line": 771,
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
@@ -198681,7 +198681,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 771,
+    "line": 772,
     "type": "property",
     "name": "message",
     "currentDoc": "(none)",
@@ -198689,7 +198689,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 779,
+    "line": 780,
     "type": "property",
     "name": "baseRisk",
     "currentDoc": "(none)",
@@ -198697,7 +198697,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 784,
+    "line": 785,
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
@@ -198705,7 +198705,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 785,
+    "line": 786,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -198713,7 +198713,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/wetBulbEvents.ts",
-    "line": 786,
+    "line": 787,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
