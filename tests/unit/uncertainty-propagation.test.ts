@@ -93,13 +93,16 @@ describe('Uncertainty Parameter Sampling', () => {
       }
     });
 
-    it('should sample AMOC threshold within Westen 2024 95% CI [2.2, 3.9]', () => {
+    it('should sample AMOC threshold within Armstrong McKay 2022 range [2.5, 5.5]', () => {
+      // Updated from Westen 2024 [2.2, 3.9] to Armstrong McKay et al. 2022 Science meta-analysis
+      // Range [2.5, 5.5] captures plausible range around central estimate 4.0°C
+      // See: reviews/mechanism_audit_tipping_cascades_20251124.md
       for (const seed of seeds) {
         const rng = createRng(seed);
         const params = sampleUncertaintyParameters(rng);
 
-        assert.ok(params.amocCollapseThreshold >= 2.2, `AMOC ${params.amocCollapseThreshold} < 2.2`);
-        assert.ok(params.amocCollapseThreshold <= 3.9, `AMOC ${params.amocCollapseThreshold} > 3.9`);
+        assert.ok(params.amocCollapseThreshold >= 2.5, `AMOC ${params.amocCollapseThreshold} < 2.5`);
+        assert.ok(params.amocCollapseThreshold <= 5.5, `AMOC ${params.amocCollapseThreshold} > 5.5`);
       }
     });
 
@@ -257,7 +260,7 @@ describe('Distribution Shape Validation', () => {
     assert.ok(mean < 2.1, `TCR mean ${mean.toFixed(2)} > 2.1`);
   });
 
-  it('should sample AMOC threshold uniformly (mean close to midpoint 3.05)', () => {
+  it('should sample AMOC threshold uniformly (mean close to midpoint 4.0)', () => {
     let sum = 0;
     for (let seed = 1; seed <= sampleSize; seed++) {
       const rng = createRng(seed);
@@ -266,8 +269,9 @@ describe('Distribution Shape Validation', () => {
     }
     const mean = sum / sampleSize;
 
-    // Uniform [2.2, 3.9] has mean = (2.2 + 3.9) / 2 = 3.05
-    assert.ok(mean > 2.9, `AMOC mean ${mean.toFixed(2)} < 2.9`);
-    assert.ok(mean < 3.2, `AMOC mean ${mean.toFixed(2)} > 3.2`);
+    // Uniform [2.5, 5.5] has mean = (2.5 + 5.5) / 2 = 4.0
+    // Updated from Westen 2024 to Armstrong McKay et al. 2022 Science
+    assert.ok(mean > 3.7, `AMOC mean ${mean.toFixed(2)} < 3.7`);
+    assert.ok(mean < 4.3, `AMOC mean ${mean.toFixed(2)} > 4.3`);
   });
 });

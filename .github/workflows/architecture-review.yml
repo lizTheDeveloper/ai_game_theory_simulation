@@ -220,7 +220,6 @@ jobs:
           prompt: ${{ steps.read_prompt.outputs.prompt }}
           claude_args: |
             --max-turns 30
-            --agents architecture-skeptic
             --dangerously-skip-permissions
 
       - name: Extract Review Verdict
