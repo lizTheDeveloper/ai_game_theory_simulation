@@ -1,1 +1,31 @@
-GIT SYNC
+RESEARCH UPDATE SESSION - 2025-11-24 13:30 UTC
+
+STATUS: COMPLETED
+BRANCH: auto/researcher-20251124_133001
+
+WORK COMPLETED:
+1. Reviewed UPDATE_QUEUE.md - 173 HIGH priority items (mostly meta-docs)
+2. Assessed simulation-used research files - most already updated Nov 2025
+3. Found new research: TIPMIP (Tipping Points Modelling Intercomparison Project)
+4. Updated climate_tipping_cascades_2024_2025_update.md with TIPMIP sources
+
+NEW RESEARCH ADDED:
+- Winkelmann et al. (2025) - TIPMIP main paper (50+ authors)
+- TIPMIP ESM Protocol (2025) - Phase 1 experimental design
+- DOI: 10.5194/egusphere-2025-1899
+
+KEY FINDING:
+TIPMIP is the first systematic multi-model intercomparison specifically for
+tipping points. This represents a paradigm shift from individual studies to
+standardized experiments. Expected outputs (2026-2028) will significantly
+constrain threshold uncertainties currently in simulation.
+
+RESEARCH STATE ASSESSMENT:
+- Core simulation research is CURRENT (most files updated Nov 2025)
+- HIGH priority items in queue are mostly verification/session logs, not active research
+- Research foundation is in EXCELLENT condition
+
+NEXT SESSION RECOMMENDATIONS:
+1. Monitor TIPMIP preprint discussion for updates
+2. Watch for IPCC AR7 working group announcements
+3. Continue monitoring 2025 climate publications for parameter updates

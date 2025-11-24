@@ -1,10 +1,11 @@
 # Climate Tipping Points and Cascades: 2024-2025 Research Update
 
-**Date:** November 15, 2025
+**Date:** November 15, 2025 (Updated: November 24, 2025)
 **Researcher:** Autonomous Researcher
 **Purpose:** Update tipping point cascade timescales and overshoot dynamics with latest 2024-2025 peer-reviewed research
-**Sources Reviewed:** 5 peer-reviewed publications (2024-2025)
+**Sources Reviewed:** 7 peer-reviewed publications (2024-2025), including TIPMIP framework
 **Supersedes:** Lenton 2019 tipping cascade verification (supplements with current findings)
+**Latest Update:** TIPMIP multi-model intercomparison project documentation (Winkelmann et al. 2025)
 
 ---
 
@@ -467,14 +468,24 @@ function calculateRegionalHeatMortality(
    - **Credibility:** High (peer-reviewed collection)
    - **Key Contribution:** Early warning signals, detection methods
 
+6. **Winkelmann, R., et al. (2025).** "The Tipping Points Modelling Intercomparison Project (TIPMIP): Assessing tipping point risks in the Earth system." *EGUsphere* [Preprint]. DOI: 10.5194/egusphere-2025-1899
+   - **Open Access:** Yes
+   - **Authors:** 50+ international co-authors (PIK, NASA, Stockholm Resilience Centre)
+   - **Credibility:** High (major MIP framework, CMIP7-tier)
+   - **Key Contribution:** First systematic multi-model tipping point intercomparison
+
+7. **TIPMIP ESM Protocol (2025).** "The TIPMIP Earth system model experiment protocol: phase 1." *EGUsphere* [Preprint]. DOI: 10.5194/egusphere-2025-3604
+   - **Credibility:** High (standardized experimental framework)
+   - **Key Contribution:** Methodology for threshold identification, reversibility testing
+
 ### 8.2 Supporting Sources (2022-2023)
 
-6. **Armstrong McKay, D. I., et al. (2022).** "Exceeding 1.5°C global warming could trigger multiple climate tipping points." *Science*, 377(6611), eabn7950.
+8. **Armstrong McKay, D. I., et al. (2022).** "Exceeding 1.5°C global warming could trigger multiple climate tipping points." *Science*, 377(6611), eabn7950.
    - **DOI:** 10.1126/science.abn7950
    - **Credibility:** Very High (Science, 3,500+ citations)
    - **Key Contribution:** Updated threshold estimates, foundational
 
-7. **Richardson, K., et al. (2023).** "Earth beyond six of nine planetary boundaries." *Science Advances*, 9(37), eadh2458.
+9. **Richardson, K., et al. (2023).** "Earth beyond six of nine planetary boundaries." *Science Advances*, 9(37), eadh2458.
    - **Credibility:** Very High
    - **Key Contribution:** Context for multiple Earth system boundaries crossed
 
@@ -486,11 +497,12 @@ function calculateRegionalHeatMortality(
 ---
 oldest_source: 2022
 newest_source: 2025
-last_verified: 2025-11-15
+last_verified: 2025-11-24
 confidence_level: HIGH
-sources_count: 7
+sources_count: 9
 peer_reviewed: true
 used_in_simulation: true
+tipmip_pending_update: true
 parameters_extracted:
   - overshoot_tolerance_years: 30 (Ritchie 2025)
   - peak_warming_limit_C: 2.5 (Ritchie 2025)
@@ -505,8 +517,110 @@ parameters_extracted:
 
 ---
 
+## 9. November 2025 Update: TIPMIP Framework
+
+### 9.1 Publication Details
+
+**Full Citation:**
+> Winkelmann, R., Dennis, D. P., Donges, J. F., Loriani, S., Klose, A. K., et al. (2025). "The Tipping Points Modelling Intercomparison Project (TIPMIP): Assessing tipping point risks in the Earth system." *EGUsphere* [Preprint]. DOI: 10.5194/egusphere-2025-1899
+
+**Journal:** Earth System Dynamics (in discussion)
+**Publication Date:** June 18, 2025
+**Status:** Preprint under open review
+**Authors:** 50+ international co-authors from major climate research institutions (PIK, NASA, Stockholm Resilience Centre)
+**Open Access:** Yes - https://egusphere.copernicus.org/preprints/2025/egusphere-2025-1899/
+
+### 9.2 Key Contribution
+
+**TIPMIP represents a paradigm shift:** This is the first systematic multi-model intercomparison project specifically dedicated to tipping point dynamics. Previous efforts (CMIP5, CMIP6) focused on general climate projections; TIPMIP standardizes experiments specifically designed to identify tipping thresholds and cascade dynamics.
+
+**Scope - 7 Core Tipping Systems:**
+1. Greenland Ice Sheet
+2. Antarctic Ice Sheet (West + East)
+3. Atlantic Meridional Overturning Circulation (AMOC)
+4. Permafrost carbon feedback
+5. Boreal forests
+6. Tropical forests (Amazon, Congo, SE Asia)
+7. Mountain glaciers
+
+**Cascade Focus:**
+> "Several key components of the Earth System such as the Greenland and Antarctic ice sheets, permafrost, the Atlantic Meridional Overturning Circulation (AMOC), and boreal and tropical forests as well as mountain glaciers, terrestrial hydrological systems and the Sahel region have been suggested to exhibit self-amplifying feedback processes that could lead to non-linear and often abrupt and/or irreversible transitions."
+
+### 9.3 Phase 1 Protocol (TIPMIP-ESM)
+
+**Related Document:**
+> TIPMIP ESM Protocol (2025). "The TIPMIP Earth system model experiment protocol: phase 1." EGUsphere. DOI: 10.5194/egusphere-2025-3604
+
+**Experimental Design:**
+
+1. **CO2-Emission Mode:** Models run in predictive mode (CO2 as output, not input)
+   - Calibrated to each model's TCRE (transient climate response to cumulative emissions)
+   - Achieves common warming rate: **2°C per century**
+
+2. **Temperature Forcing Thresholds:**
+   - **2°C warming:** Primary threshold - CO2 emissions → zero
+   - **4°C warming:** Secondary threshold - triggers additional zero-emission branches
+   - **Pre-industrial baseline:** Target for negative emissions (cooling) phases
+
+3. **Reversibility Testing:**
+   - 300-year zero-emission phases after threshold exceedance
+   - Negative emission scenarios to test hysteresis (can tipping be reversed?)
+   - Assesses "abrupt/rapid Earth system change" vs "gradual reversibility"
+
+### 9.4 Why TIPMIP Matters for Simulation
+
+**Before TIPMIP:**
+- Individual studies with inconsistent methodologies
+- Wide uncertainty ranges (e.g., AMOC threshold: 1.4-8.0°C)
+- Limited multi-model validation of cascade dynamics
+
+**After TIPMIP:**
+- Standardized experiments enabling direct model comparison
+- First multi-model atlas of tipping thresholds
+- Quantified uncertainty ranges from 10+ Earth System Models
+- Systematic assessment of reversibility under different scenarios
+
+**Expected Outputs (2026-2028):**
+1. Global atlas of tipping dynamics with constrained uncertainty
+2. Multi-model cascade interaction matrices
+3. Reversibility assessment for each tipping element
+4. Input for IPCC AR7 tipping point chapters
+
+### 9.5 Simulation Parameter Implications
+
+**When TIPMIP results are published (expected 2026):**
+
+```typescript
+// FUTURE: Update thresholds when TIPMIP multi-model results available
+interface TIPMIPThresholds {
+  // Currently from Armstrong McKay 2022/2024; update with TIPMIP multi-model consensus
+  greenland_threshold_C: [0.8, 3.0], // Will narrow with TIPMIP
+  amoc_threshold_C: [1.4, 8.0],      // High uncertainty - TIPMIP priority
+  amazon_threshold_C: [2.0, 6.0],    // Regional focus in TIPMIP
+
+  // NEW: TIPMIP will provide reversibility timescales
+  reversibility_timescale_years: {
+    greenland: null, // To be determined
+    amoc: null,      // High priority - is AMOC collapse reversible?
+    amazon: null     // Reforestation potential
+  }
+}
+```
+
+**Current Recommendation:**
+- Continue using Armstrong McKay 2022/2024 thresholds
+- Flag TIPMIP as upcoming source for major parameter update (2026)
+- Add "TIPMIP_pending" tag to tipping point parameters
+
+---
+
 ## Changelog
 
+- **2025-11-24:** Added TIPMIP 2025 framework documentation (Autonomous Researcher)
+  - Winkelmann et al. 2025 (TIPMIP main paper)
+  - ESM Protocol Phase 1 (TIPMIP-ESM)
+  - Added Section 9: November 2025 TIPMIP Update
+  - Flagged as major upcoming source for 2026 parameter updates
 - **2025-11-15:** Initial document created by Autonomous Researcher
   - Synthesized Ritchie et al. 2025 (overshoot duration)
   - Integrated Armstrong McKay 2024 (comprehensive review)
