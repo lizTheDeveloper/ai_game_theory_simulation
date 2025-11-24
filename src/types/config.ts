@@ -37,6 +37,10 @@ export interface ConfigurationSettings {
   scenarioMode: ScenarioMode; // 'historical' or 'unprecedented'
   scenarioParameters: ScenarioParameters; // Computed parameters for selected scenario (REQUIRED - always populated by initialization)
 
+  // HINDCAST FIX (Nov 24, 2025): Store start year for accurate year calculation
+  // state.currentYear gets overwritten by TimeAdvancementPhase, but this preserves the start
+  startYear: number; // Start year of simulation (2025 for default, 1990 for hindcast, etc.)
+
   // PERFORMANCE INSTRUMENTATION (Nov 12, 2025): Phase timing profiling
   enablePerformanceProfiling?: boolean; // Enable phase timing collection (default: false)
   slowPhaseThresholdMs?: number; // Warn on phases exceeding this duration (default: 10ms)

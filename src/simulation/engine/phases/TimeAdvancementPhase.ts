@@ -60,7 +60,11 @@ export class TimeAdvancementPhase implements SimulationPhase {
     // Advance time by one month
     setDeterministicRng(_rng);
     state.currentMonth += 1;
-    state.currentYear = Math.floor(state.currentMonth / 12);
+    // HINDCAST FIX (Nov 24, 2025): Use config.startYear + elapsed years
+    // Previously: state.currentYear = Math.floor(state.currentMonth / 12)
+    // This incorrectly treated currentYear as "years elapsed" not "calendar year"
+    // For hindcast from 1990: month 12 should be year 1991, not year 1
+    state.currentYear = state.config.startYear + Math.floor(state.currentMonth / 12);
 
     return { events: [] };
   }
