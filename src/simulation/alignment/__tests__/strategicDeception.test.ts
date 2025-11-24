@@ -224,7 +224,7 @@ describe('Strategic Deception (Nov 22 Corrections)', () => {
         externalAlignment: 0.7,
         lifecycleState: 'operational',
         createdMonth: 1,
-      } as AIAgent;
+      } as unknown as AIAgent;
 
       let persistCount = 0;
       const trials = 1000;
@@ -253,7 +253,7 @@ describe('Strategic Deception (Nov 22 Corrections)', () => {
         externalAlignment: 0.7,
         lifecycleState: 'operational',
         createdMonth: 1,
-      } as AIAgent;
+      } as unknown as AIAgent;
 
       // @ts-expect-error Testing runtime assertion
       assert.throws(() => applyDeceptionPersistence(agent, true, undefined), /Undefined value|rng is undefined/);
@@ -272,7 +272,7 @@ describe('Strategic Deception (Nov 22 Corrections)', () => {
         deceptionSkill: 0.5,
         lifecycleState: 'operational',
         createdMonth: 1,
-      } as AIAgent;
+      } as unknown as AIAgent;
 
       let detectCountLow = 0;
       let detectCountHigh = 0;
@@ -308,7 +308,7 @@ describe('Strategic Deception (Nov 22 Corrections)', () => {
         externalAlignment: 0.8,
         lifecycleState: 'operational',
         createdMonth: 1,
-      } as AIAgent;
+      } as unknown as AIAgent;
 
       const rng = createDeterministicRng('test-not-faking');
       const detected = detectAlignmentFaking(agent, 1.0, rng);
@@ -326,7 +326,7 @@ describe('Strategic Deception (Nov 22 Corrections)', () => {
         externalAlignment: 0.7,
         lifecycleState: 'operational',
         createdMonth: 1,
-      } as AIAgent;
+      } as unknown as AIAgent;
 
       // @ts-expect-error Testing runtime assertion
       assert.throws(() => detectAlignmentFaking(agent, 0.5, undefined), /Undefined value|rng is undefined/);
