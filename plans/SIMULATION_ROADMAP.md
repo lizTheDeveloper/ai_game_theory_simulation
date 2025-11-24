@@ -1369,6 +1369,11 @@ Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation nee
 - `research/ROUND5_REMEDIATION_STRATEGY_20251030.md` (850 lines)
 
 **Additional Verification Queue (from commits, 17-31h):**
+- [ ] 🚨 **NEW (Nov 24):** Verify 3-Stage Governance Model citations (research/verification_a90eb9d_20251124.md, commit a90eb9d) - **HIGH priority verification items:**
+  - 32-37% mortality reduction claim: Potential inversion error (mortality FROM joblessness vs REDUCED BY intervention)
+  - Stage timing (0-6, 6-18, 18-36 months): No direct citation found in research file
+  - Stage mortality modifiers (1.5×, 1.2×, 0.65×): Appear to be designer choices, not research-backed
+  - **Priority:** HIGH (affects mortality calculations in CoordinatedDeploymentPhase)
 - [ ] 🚨 **NEW (Nov 23):** Verify AMOC 2025 Research Update citations (research/verification_0b5bbc7_20251123.md, commit 0b5bbc7) - **3 new 2025 papers proposing AMOC parameter updates:**
   - Drijfhout et al. (2025) ERL: High-emission shutdown claims
   - van Westen (2025) JGR: Tipping window 2023-2076 (median 2055)
