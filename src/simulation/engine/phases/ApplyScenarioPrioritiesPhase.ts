@@ -74,9 +74,9 @@ const SCENARIO_VALIDATION = {
   // Research investment (billions/month)
   researchInvestment: {
     // Maximum: 50% of annual GDP, converted to monthly
-    // Example: Global GDP ~114T (2025) → max 114T * 0.5 / 12 = ~4.75T/month
+    // Example: Global GDP ~114T (2025) = $114,000B → max 114,000 * 0.5 / 12 = ~4,750B/month
     maxFractionOfAnnualGDP: 0.5,
-    warnThreshold: 0.1, // Warn if >10% GDP/year (~0.83%/month)
+    warnThreshold: 0.1, // Warn if >10% GDP/year (~950B/month at $114T GDP)
   },
   // Climate spending (% of GDP)
   climateSpending: {
@@ -141,7 +141,9 @@ function validateScenarioOverrides(
     }
 
     // Physical impossibility: Max 50% of annual GDP (monthly)
-    const maxResearchBudget = (gdp * SCENARIO_VALIDATION.researchInvestment.maxFractionOfAnnualGDP) / 12;
+    // GDP is in trillions, value is in billions, so multiply GDP by 1000
+    const gdpInBillions = gdp * 1000;
+    const maxResearchBudget = (gdpInBillions * SCENARIO_VALIDATION.researchInvestment.maxFractionOfAnnualGDP) / 12;
     if (value > maxResearchBudget) {
       throw new Error(
         `❌ SCENARIO OVERRIDE PHYSICALLY IMPOSSIBLE: researchInvestment\n` +
@@ -160,10 +162,11 @@ function validateScenarioOverrides(
     }
 
     // Unrealistic warning: >10% GDP/year
-    const warnThreshold = (gdp * SCENARIO_VALIDATION.researchInvestment.warnThreshold) / 12;
+    // GDP is in trillions, value is in billions, so use gdpInBillions
+    const warnThreshold = (gdpInBillions * SCENARIO_VALIDATION.researchInvestment.warnThreshold) / 12;
     if (value > warnThreshold) {
       warnings.push(
-        `⚠️  Research investment: $${value.toFixed(1)}B/month (${((value * 12 / gdp) * 100).toFixed(1)}% GDP/year) - EXTREMELY HIGH (historical: 1-3% GDP)`
+        `⚠️  Research investment: $${value.toFixed(1)}B/month (${((value * 12 / gdpInBillions) * 100).toFixed(1)}% GDP/year) - EXTREMELY HIGH (historical: 1-3% GDP)`
       );
     }
   }

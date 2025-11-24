@@ -40,16 +40,15 @@
    - **Complexity:** 2 systems (tipping points, climate)
    - **Action:** Recalibrate to median estimates, add resilience mechanisms
 
-1c. **Governance Scenario Validation Bug** (NEW from Nov 23 - CRITICAL)
-   - **Location:** `src/types/scenarios.ts` + `ApplyScenarioPrioritiesPhase.ts`
+1c. **Governance Scenario Validation Bug** - **FIXED** (Nov 24, 2025)
+   - **Location:** `src/simulation/utils/recoveryCalculations.ts:getGDPProxy()` + `ApplyScenarioPrioritiesPhase.ts`
    - **Issue:** Scenarios define `researchInvestment: 50` ($50B/month) but validation caps at ~$0.17B/month
-   - **Root cause:** GDP proxy (`getGDPProxy`) returns ~4 (population 8 x QoL 0.5) but validation assumes trillions (~$114T)
-   - **Impact:** All 6 governance scenarios fail immediately on validation
-   - **Fix options:**
-     - Scale GDP proxy to real-world values, OR
-     - Adjust validation formula, OR
-     - Reduce scenario parameters to match proxy scale
-   - **Complexity:** 2 systems (scenarios, GDP proxy/validation)
+   - **Root cause:** GDP proxy returned ~4 (unitless) but validation assumed trillions (~$114T)
+   - **Fix applied:**
+     1. Scaled `getGDPProxy()` to return GDP in trillions using population * GDP_PER_CAPITA_BASELINE ($14,250)
+     2. Fixed unit mismatch in validation: GDP (trillions) * 1000 = billions for comparison
+     3. Added assertion utilities to `getGDPProxy()` for fail-loudly validation
+   - **Result:** GDP proxy now returns ~115T (correct), max research budget = $4,750B/month, scenarios pass
    - **Owner:** Roy (simulation-maintainer)
 
 ### HIGH Priority
