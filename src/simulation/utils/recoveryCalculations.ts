@@ -161,10 +161,13 @@ export function getGDPProxy(state: GameState): number {
   const qol = state.globalMetrics.qualityOfLife ?? 0.74; // 0-1, baseline ~0.74
 
   // Validate inputs - fail loudly if invalid
-  assertInRange(population, 0.1, 20, {
+  // FIX (Nov 24, 2025): Lower minimum from 0.1B to 0.00001B (10K people = true extinction threshold)
+  // Population can drop to ~100M (0.1B) in near-extinction scenarios - this is VALID
+  // Only fail if population is actually extinct (<10K) or impossibly high (>20B)
+  assertInRange(population, 0.00001, 20, {
     location: 'getGDPProxy',
     valueName: 'population',
-    additionalInfo: { unit: 'billions' }
+    additionalInfo: { unit: 'billions', note: 'Min = 10K people (extinction threshold)' }
   });
   assertInRange(qol, 0, 1, {
     location: 'getGDPProxy',
