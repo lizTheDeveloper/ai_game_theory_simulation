@@ -696,6 +696,16 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 - **Recently Completed:** Nitrogen-food coupling research (Nov 15), Climate deployment timescales (Nov 15), Novel Entities 0% effectiveness (Nov 14)
 
 **Research Verification Queue:**
+- [ ] **Hindcast Calibration Era Mortality Multipliers** - ⏳ PENDING VERIFICATION
+  - **Research Spec:** `research/verification_dd327b7_20251124.md`
+  - **Implementation:** Commit dd327b7 - ERA_MORTALITY_MULTIPLIERS, thermal inertia, climate stability derivation
+  - **Priority:** HIGH - Affects all hindcast population outcomes
+  - **Citations to Verify:**
+    - UN World Population Prospects: Historical mortality trends
+    - IHME Global Burden of Disease: ~50% mortality reduction claim
+    - Ocean thermal inertia timescales: 24-month transition (UNCITED)
+    - Climate stability = 1 - boundary_value (NOVEL FORMULA, needs justification)
+  - **Status:** ⏳ AWAITING VALIDATION PHASE
 - [x] **AI Agent Multi-Agent Coordination Phase (Enhanced)** - ✅ VERIFIED (Nov 24, 2025)
   - **Research Spec:** `research/verification_ae8380b_20251124.md`
   - **Implementation:** Commit ae8380b - AIAgentCoordinationPhase (order 7.5, 746 lines)
