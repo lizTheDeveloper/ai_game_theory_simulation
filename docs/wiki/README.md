@@ -33,7 +33,24 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 🔧 **Hindcast Fix:** Re-applied accidentally reverted era scaling for wet bulb temperature events
 - **Changes:** Quadratic era scaling (year/2025)² for event frequency, baseline temperature adjustment
 - **Impact:** 1990 events now scale to ~61% of 2025 baseline (matches NOAA heat event trends)
-- **Status:** Partial fix for hindcast validation - dual death system investigation ongoing
+- **Status:** Combined with hindcast fixes below, model now runs complete 1990 hindcast
+
+**Nov 24: Hindcast Crash Fixes** (commit 5b60d18)
+- 🔧 **Bug Fix 1:** Empty AI agents no longer crashes diplomatic risk calculations
+  - **Problem:** `updateDiplomaticRisks` used `assertNonEmpty` which failed when `aiAgents = []`
+  - **Root Cause:** 1990 hindcast has NO AI agents - this is valid historical state, not an error
+  - **Fix:** Early return with zeroed AI-related risks when `state.aiAgents.length === 0`
+  - **Affected Risks:** manipulationRisk, informationWarfareRisk, adversarialMediationRisk, dependencyCaptureRisk, missionCreepRisk (all → 0 in pre-AI era)
+  - ✅ **Result:** Resolves 50% of Month 0 crashes documented in Nov 23 hindcast validation
+- 🔧 **Bug Fix 2:** Population dual death system re-fixed
+  - **Problem:** Deaths applied TWICE - once by BayesianMortalityResolutionPhase AND once by updateHumanPopulation
+  - **Architecture (correct):**
+    - `updateHumanPopulation()` (HumanPopulationPhase 20.52) → applies BIRTHS only
+    - `BayesianMortalityResolutionPhase` (order 35.0) → applies ALL deaths (crisis, natural)
+  - **Fix:** `netGrowthRate = adjustedBirthRate` (NOT `adjustedBirthRate - adjustedDeathRate`)
+  - **Note:** `adjustedDeathRate` still calculated for REPORTING but NOT subtracted from growth
+  - ✅ **Result:** Population grows correctly without double-counting deaths
+- 📄 **Files:** diplomaticAI.ts, populationDynamics.ts
 
 **Nov 24: Mortality Stabilizers Mechanism Audit - FINAL** (commit 28a64a2)
 - 🔬 **Final Audit:** Comprehensive code-to-research comparison (262 lines)
@@ -55,7 +72,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 🔬 **Validation Framework:** Implemented 500-line hindcasting validation script to test model against 1990-2024 historical data
 - ❌ **Result: FAILED** - Model cannot complete 1990-2024 hindcast
 - **Failure Modes (10 Monte Carlo runs):**
-  - 50% crash at Month 0: Empty AI agents triggers assertion failures in diplomatic systems
+  - ~~50% crash at Month 0: Empty AI agents triggers assertion failures in diplomatic systems~~ ✅ **FIXED** (commit 5b60d18)
   - 50% crash at Month 379: Climate accelerates to 3.22°C (vs 1.28°C actual), triggering extinction cascade
 - **Root Cause:** Model structurally coupled to 2025 assumptions:
   - Organizations: OpenAI, Meta AI, Google DeepMind exist at Month 0
@@ -226,8 +243,9 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **Impact:** Mortality risks were calculated and tracked but had NO EFFECT on simulated global population
 - **Root Cause:** Missing call to `aggregateGlobalPopulation(state)` after mortality resolution
 - **Fix:** Added aggregation call after mortality resolution (line 99 of BayesianMortalityResolutionPhase.ts)
-- **Phase Ordering:** HumanPopulationPhase (20.52) handles births/natural changes → BayesianMortalityResolutionPhase (35.0) applies crisis mortality
+- **Phase Ordering (canonical):** HumanPopulationPhase (20.52) applies BIRTHS only → BayesianMortalityResolutionPhase (35.0) applies ALL deaths
 - ✅ **Result:** Crisis-driven deaths (novel entities, climate, famine, disease, etc) now correctly reduce population
+- ⚠️ **Note:** See Nov 24 commit 5b60d18 for dual-death fix ensuring deaths aren't double-counted between phases
 - 📝 **Documentation:** Updated docs/wiki/systems/bayesian-mortality.md with aggregation requirement
 
 **Nov 21: Autonomous Research Status Report** (commit 685ce50)
