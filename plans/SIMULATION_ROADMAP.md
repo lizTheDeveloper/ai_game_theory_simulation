@@ -39,7 +39,6 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
-<<<<<<< Updated upstream
    - **AI Coordination & Transition Management** - HIGH (Added Nov 21, 2025)
      - **Context:** Phase 2 research complete (15K words, 15 sources), Grade B- CONDITIONAL PASS
      - **Research File:** research/ai_coordination_transition_management_20251121.md
@@ -65,7 +64,6 @@
      - **Commit:** 96e2489
      - **Next Steps:** Two-layer verification → Implementation (Roy) → Monte Carlo (Priya, N≥50) → Architecture review
 
-<<<<<<< Updated upstream
    - **Nitrogen-Food Phase 3 Technologies** - MEDIUM (Added Nov 21, 2025)
      - **Context:** 6 new nitrogen reduction technologies added to tech tree (Phase 3 complete)
      - **Technologies:**
@@ -89,9 +87,7 @@
      - **Status:** ⚠️ READY FOR VALIDATION - Verification file created, awaiting orchestrator
      - **Commit:** cd1e83a
      - **Next Steps:** Two-layer verification (existence + claim accuracy) → Parameter adjustments if needed → Monte Carlo validation
-=======
-=======
->>>>>>> Stashed changes
+
    - **Carbon Capture Deployment Parameters & Constraints** - MEDIUM (Added Nov 21, 2025)
      - **Context:** Comprehensive carbon capture research document (625 lines, 12 sources, A+ quality) provides enhanced detail on DAC deployment
      - **Research File:** research/carbon_capture_deployment_timelines_2025.md (committed 55c3535a0)
