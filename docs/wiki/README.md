@@ -29,7 +29,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
-**Nov 24: Hindcasting Validation Framework (1990-2024)** (commit 0a8e54f)
+**Nov 24: Hindcasting Validation Framework (1990-2024)** (commits 0a8e54f, ee453fd)
 - 🔬 **CRITICAL Implementation:** Framework to validate simulation by running from 1990 and comparing to 2024 actuals
 - **Historical Data Loaders:**
   - `historicalClimateLoader.ts`: CO2/temperature timeseries from NOAA Mauna Loa, NASA GISS (1990-2024)
@@ -46,7 +46,11 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📄 **Research:** research/hindcast_baseline_data_20251124.md (10 authoritative sources)
 - 📄 **Critique:** reviews/hindcast_methodology_critique_20251124.md
 - **Usage:** `npx tsx scripts/hindcastValidation.ts > logs/hindcast_$(date +%Y%m%d_%H%M%S).log 2>&1 &`
-- ⏳ **Next:** Run hindcast, architecture review, document results
+- **Nov 24 Fixes (ee453fd):**
+  - Fixed SimulationEngine API usage (state passed to step(), not constructor)
+  - Fixed `diplomaticAI.ts` for historical mode: pre-2018 sims have no AI agents - graceful handling
+  - **FINDING:** Model too pessimistic for historical conditions (population collapses from 5.33B to ~1M by month 400)
+- ⏳ **Next:** Model calibration for historical scenarios (address pessimism bias)
 
 **Nov 23: AMOC Tipping Point 2025 Research Update** (commit 0b5bbc7)
 - 🌍 **Research Update:** New peer-reviewed sources on AMOC collapse timelines (3 papers, 2025)
