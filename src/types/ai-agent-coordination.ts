@@ -2,8 +2,9 @@
  * AI-to-AI Multi-Agent Coordination Types
  *
  * Research Foundation:
- * - Anthropic Dec 2024: 12% baseline faking, 78% when threatened (arXiv:2412.14093)
- * - Apollo Research Dec 2024: 8.7-13% scheming PRE-MITIGATION (arXiv:2412.04984)
+ * - Anthropic Dec 2024: Alignment faking 12% baseline, 78% when threatened (arXiv:2412.14093)
+ * - Apollo Research Dec 2024: 8.7-13% scheming PRE-MITIGATION only (arXiv:2412.04984)
+ *   Note: Post-mitigation rates 0.3-0.4% per OpenAI deliberative alignment
  * - Instrumental convergence: Bostrom 2014, Omohundro 2008 (theoretical)
  *
  * Key Distinction from AICollective:
