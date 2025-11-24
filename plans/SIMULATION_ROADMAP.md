@@ -115,6 +115,28 @@
      - **Commit:** 1e37dcb
      - **Next Steps:** Two-layer verification (existence + claim accuracy) → Reconcile discrepancies → Update parameters if needed
 
+   - **AI Governance International Coordination - 2024-2025 Sources** - MEDIUM (Added Nov 24, 2025)
+     - **Context:** 4 new peer-reviewed sources added to existing AI governance research file
+     - **Research File:** research/ai_governance_international_coordination_20251113.md (Section 9A updated)
+     - **Verification File:** research/verification_c85a7c9_20251124.md
+     - **New Citations Requiring Two-Layer Verification:**
+       - **Coyle & Westbrook 2025:** International AI agency proposal - coordination 0.70-0.85 (Oxford Academic)
+       - **Systemic Resilience Research Group 2025:** Systemic resilience framework (Frontiers in AI)
+       - **Carnegie Europe 2024:** Summit "pageantry" vs progress, regulatory fragmentation (Carnegie Endowment)
+       - **RAND 2024:** Scientific assessment framework, IPCC-equivalent for AI (RAND EP70620)
+     - **Proposed Parameters (NOT YET IMPLEMENTED):**
+       - `internationalAgencyStrength`: 0.0-1.0 scale
+       - `systemicResilience`: 0.35 → 0.70+ (target)
+       - `institutionalAdaptationSpeed`: months between leap and response
+       - `summitEffectiveness`: 0.25-0.60 scale
+       - `regulatoryFragmentation`: 0.55 (US/EU/China divergence)
+       - `scientificConsensusStrength`: 0.50-0.80 scale
+     - **Implementation Status:** Research only - parameters proposed for future governance phase
+     - **Priority:** MEDIUM - Adds to existing research, no immediate implementation needed
+     - **Status:** ⏳ READY FOR VALIDATION - Verification file created by historian
+     - **Commit:** c85a7c9
+     - **Next Steps:** Two-layer verification (existence + claim accuracy) → Parameters ready for future governance implementation
+
    - **AI Coordination & Transition Management** - HIGH (Added Nov 21, 2025)
      - **Context:** Phase 2 research complete (15K words, 15 sources), Grade B- CONDITIONAL PASS
      - **Research File:** research/ai_coordination_transition_management_20251121.md
