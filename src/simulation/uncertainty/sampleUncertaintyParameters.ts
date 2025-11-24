@@ -204,15 +204,19 @@ export function sampleUncertaintyParameters(rng: RNGFunction): UncertaintyParame
 
   // === TIPPING POINT THRESHOLDS ===
 
-  // AMOC: Uniform over 95% CI (no distribution shape available)
-  // Westen et al. (2024): 95% CI [2.2, 3.9], median 3.0C
+  // AMOC: Uniform over meta-analysis range (no distribution shape available)
+  // RECALIBRATED (Nov 24, 2025): Updated from Van Westen et al. single-model [2.2, 3.9] to
+  // Armstrong McKay et al. (2022) Science meta-analysis: range [1.4, 8.0], central estimate 4.0°C
+  // Baker et al. (2025) Nature: 34/35 CMIP6 models show AMOC resilience - supports higher threshold
+  // Using [2.5, 5.5] to capture plausible range around median 4.0°C (conservative compared to full 1.4-8°C)
+  // Sylvia audit: reviews/mechanism_audit_tipping_cascades_20251124.md
   const amocCollapseThreshold = assertInRange(
-    sampleUniform(2.2, 3.9, rng),
-    2.2, 3.9,
+    sampleUniform(2.5, 5.5, rng),
+    2.5, 5.5,
     {
       location: 'sampleUncertaintyParameters',
       valueName: 'amocCollapseThreshold',
-      additionalInfo: { source: 'Westen et al. JGR (2024)' }
+      additionalInfo: { source: 'Armstrong McKay et al. (2022) Science, Baker et al. (2025) Nature' }
     }
   );
 
