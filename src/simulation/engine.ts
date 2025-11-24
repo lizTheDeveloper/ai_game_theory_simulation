@@ -105,6 +105,7 @@ import {
   // FamineSystemPhase removed - merged into HumanSurvivalSystemPhase (Batch 4, Nov 9, 2025)
   // FoodSecurityDegradationPhase removed - merged into HumanSurvivalSystemPhase (Batch 4, Nov 9, 2025)
   // ClimateImpactCascadePhase removed - merged into ClimateSystemPhase (Batch 3, Nov 9, 2025)
+  BaselineMortalityPhase,  // Phase 34.8 (Nov 24, 2025): Baseline demographic mortality (natural causes)
   BayesianMortalityResolutionPhase,  // Phase 35 (Oct 27, 2025): Centralized mortality resolution
   AntimicrobialResistancePhase,  // TIER 1.8 (Oct 17, 2025): Progressive antibiotic resistance
   MinimalSufferingPhase,  // Oct 19, 2025: Dystopia baseline measurement (verifiable suffering metrics)
@@ -578,6 +579,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new HumanSurvivalSystemPhase());  // Consolidated: FamineSystemPhase + FoodSecurityDegradationPhase + MortalityStabilizersPhase (order 19.7)
     // DEPRECATED (Nov 21, 2025): TransitionMortalityPhase superseded by CoordinatedDeploymentPhase (order 10.5)
     // this.orchestrator.registerPhase(TransitionMortalityPhase);  // DEPRECATED: Use CoordinatedDeploymentPhase instead
+    this.orchestrator.registerPhase(new BaselineMortalityPhase());  // Phase 34.8 (Nov 24, 2025): Baseline demographic mortality (natural causes)
     this.orchestrator.registerPhase(new BayesianMortalityResolutionPhase());  // Phase 35 (Oct 27, 2025): Centralized mortality resolution
     this.orchestrator.registerPhase(new AntimicrobialResistancePhase());  // TIER 1.8: AMR mortality growth & medical effectiveness decline
     this.orchestrator.registerPhase(new MinimalSufferingPhase());  // Oct 19, 2025: Dystopia baseline measurement (verifiable suffering)

@@ -111,6 +111,7 @@ export { ClimateDeploymentPhase } from './ClimateDeploymentPhase';  // TIER 1 CR
 export { ClimateDeploymentDelayPhase } from './ClimateDeploymentDelayPhase';  // TIER 1 CRITICAL (Nov 18, 2025): Three-delay model for realistic deployment
 export { ResourceSoilPhase } from './ResourceSoilPhase';  // Consolidates: Phosphorus, NovelEntities
 export { ResourceWaterPhase } from './ResourceWaterPhase';  // Consolidates: Freshwater, OceanAcidification
+export { BaselineMortalityPhase } from './BaselineMortalityPhase';  // Phase 34.8 (Nov 24, 2025) - Baseline demographic mortality
 export { BayesianMortalityResolutionPhase } from './BayesianMortalityResolutionPhase';  // Phase 35 (Oct 27, 2025) - Centralized mortality resolution
 export { AntimicrobialResistancePhase } from './AntimicrobialResistancePhase';  // TIER 1.8 (Oct 17, 2025)
 export { MinimalSufferingPhase } from './MinimalSufferingPhase';  // Oct 19, 2025: Dystopia baseline measurement
