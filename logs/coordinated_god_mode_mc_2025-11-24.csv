@@ -1,0 +1,4 @@
+seed,mode,outcome,months,pop_initial,pop_final,mortality_rate,techs_deployed,waves,paused_months,coordination_failures,overall_qol
+42,coordinated,ongoing,120,8.14,1.20,85.27,92,24,1,6,42.84
+43,coordinated,ongoing,120,8.14,1.39,82.88,92,24,1,6,44.89
+44,coordinated,ongoing,120,8.14,1.35,83.37,92,24,2,4,51.58
