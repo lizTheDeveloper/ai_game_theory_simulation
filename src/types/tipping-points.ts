@@ -119,8 +119,12 @@ export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTr
   {
     id: 'amoc',
     name: 'Atlantic Meridional Overturning Circulation (AMOC)',
-    triggerTempC: 1.7, // Central estimate 4°C (range 1.4-8°C) from Armstrong McKay (2022) synthesizing Weijer et al. (2020), Van Westen et al. (2024)
-                       // See: research/amoc_tipping_point_original_sources_20251120.md
+    // RECALIBRATED (Nov 24, 2025): Changed from 1.7°C (2.5th percentile) to 4.0°C (median estimate)
+    // Sylvia audit: reviews/mechanism_audit_tipping_cascades_20251124.md
+    // Sources: Armstrong McKay (2022) Science - central estimate 4°C (range 1.4-8°C)
+    // Baker et al. (2025) Nature - 34/35 CMIP6 models show AMOC resilience, Southern Ocean compensation
+    // See: research/amoc_tipping_point_original_sources_20251120.md
+    triggerTempC: 4.0, // Median estimate (range 1.4-8°C). Previous 1.7°C used extreme lower bound.
     transitionMinMonths: 600,    // 50 years - Van Westen et al. (2024) Science Advances: 100yr collapse in CESM1
     transitionMaxMonths: 3600,   // 300 years - Liu et al. (2017) Science Advances: collapse within 300yr after CO2 doubling
                                  // Range: 15-300yr captures deep uncertainty. See: research/amoc_tipping_point_original_sources_20251120.md
@@ -226,7 +230,13 @@ export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTr
       'Asia': 1.2,              // Dense coastal populations
       'Oceania': 1.5            // Island nations most vulnerable
     },
-    cascades: false // Too slow to cascade effectively
+    cascades: false, // Too slow to cascade effectively
+    // === RECOVERY PARAMETERS (Nov 24, 2025) ===
+    // Research: Drüke et al. (2024) - Ice sheet recovery 100-800 years
+    // Roadmap item #4: Planetary Restoration Timescales Audit
+    // Post-collapse: 40% of ice loss is irreversible on human timescales (marine-based sections)
+    recoveryHalfLife: 450,           // Years for half-life exponential recovery (median of 100-800 range)
+    minimumAsymptoticValue: 0.40,    // 40% irreversible ice loss floor (marine-based sections)
   },
   {
     id: 'greenland',
@@ -246,7 +256,13 @@ export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTr
       'Asia': 1.0,
       'Oceania': 1.1
     },
-    cascades: false // Too slow to cascade effectively
+    cascades: false, // Too slow to cascade effectively
+    // === RECOVERY PARAMETERS (Nov 24, 2025) ===
+    // Research: Drüke et al. (2024) - Ice sheet recovery 100-800 years
+    // Roadmap item #4: Planetary Restoration Timescales Audit
+    // Post-collapse: 35% of ice loss is irreversible on human timescales (lower-elevation coastal sections)
+    recoveryHalfLife: 400,           // Years for half-life exponential recovery (slightly faster than WAIS due to different geometry)
+    minimumAsymptoticValue: 0.35,    // 35% irreversible ice loss floor (lower-elevation coastal sections)
   }
 ];
 

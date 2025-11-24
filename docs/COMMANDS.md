@@ -80,6 +80,28 @@ npx tsx scripts/visualizeParadigmTrajectories.ts monteCarloOutputs/run_42000_his
 npx tsx scripts/compareParadigmRuns.ts monteCarloOutputs/
 ```
 
+### Climate Hindcast Validation
+
+Added November 24, 2025 - validate simulation CO2 trajectory against historical Keeling curve data.
+
+```bash
+# Run hindcast validation (1990-2010 CO2 trajectory)
+npx tsx scripts/hindcastValidation.ts --runs=5 --max-months=240
+
+# Quick test (fewer runs)
+npx tsx scripts/hindcastValidation.ts --runs=3 --max-months=120
+
+# Full validation (recommended, run in background)
+npx tsx scripts/hindcastValidation.ts --runs=10 --max-months=240 > logs/hindcast_$(date +%Y%m%d_%H%M%S).log 2>&1 &
+```
+
+**Checkpoints validated:**
+- CO2 (Scripps/NOAA Keeling curve): 1990=354ppm, 1995=361ppm, 2000=369ppm, 2005=380ppm, 2010=390ppm
+- Temperature (HadCRUT5): 1990=0.45°C → 2010=0.85°C
+
+**Pass criteria:** CO2 error ≤5% at each checkpoint
+**Output:** `logs/hindcast/hindcast_TIMESTAMP.log`
+
 ### Other Diagnostic Scripts
 
 ```bash

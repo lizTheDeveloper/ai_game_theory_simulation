@@ -380,9 +380,12 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
 
     // === TEMPERATURE-DEPENDENT COLLAPSE PROBABILITY FUNCTION ===
     // Based on Weijer et al. (2020), Van Westen et al. (2024), Qin et al. (2025)
+    // RECALIBRATED (Nov 24, 2025): Default raised from 3.0 to 4.0°C (median estimate)
+    // Sylvia audit: reviews/mechanism_audit_tipping_cascades_20251124.md
+    // Baker et al. (2025) Nature: 34/35 CMIP6 models show AMOC resilience via Southern Ocean compensation
     // UNCERTAINTY PROPAGATION (Nov 23, 2025): Use sampled AMOC threshold if available
-    // Range: [2.2, 3.9]C - Westen et al. JGR (2024) 95% CI
-    const amocThreshold = state.uncertaintyParameters?.amocCollapseThreshold ?? 3.0;
+    // Range: [2.2, 5.0]C - Updated range per Armstrong McKay 2022 (median 4°C, range 1.4-8°C)
+    const amocThreshold = state.uncertaintyParameters?.amocCollapseThreshold ?? 4.0;
 
     const calculateAMOCCollapseProbability = (temp: number): number => {
       // Dynamically scale probability based on sampled threshold

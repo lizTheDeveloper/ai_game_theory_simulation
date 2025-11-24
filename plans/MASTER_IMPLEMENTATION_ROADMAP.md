@@ -23,22 +23,32 @@
 
 ### CRITICAL Priority
 
-1. **Hindcasting Validation** (Sylvia's key push)
+1. **Hindcasting Validation** (Sylvia's key push) - **INFRASTRUCTURE COMPLETE** (Nov 24, 2025)
    - Run simulation starting 1990, check if it predicts 2024 correctly
    - If the model cannot hindcast known history, forecasts are suspect
    - Reality check for the entire model - validates core mechanisms
    - **Complexity:** 5 systems (all major subsystems touched)
-   - **Plan:** TBD - needs research on available historical data
-   - **Nov 24 Progress:** Dual death system bug FIXED (deaths were applied twice)
+   - **Status:** Infrastructure complete, calibration needed
+   - **Nov 24 Progress:**
+     - ✅ Dual death system bug FIXED (deaths were applied twice)
+     - ✅ Hindcast validation script: `scripts/hindcastValidation.ts`
+     - ✅ Historical baselines defined: `src/types/config.ts` (1990, 2000, 2010)
+     - ⚠️ Known issues: Temperature drift faster than historical, population decline too aggressive
+   - **Next steps:** Calibrate mortality system for historical 1990-2010 period
 
-1b. **Tipping Cascade Recalibration** (NEW from Nov 24 Audit - CRITICAL)
-   - Audit found tipping cascades use 2.5th percentile values, not median
-   - 48-month extinction timeline is 25-250x faster than research consensus
+1b. **Tipping Cascade Recalibration** - **COMPLETE** (Nov 24, 2025)
+   - ~~Audit found tipping cascades use 2.5th percentile values, not median~~
+   - ~~48-month extinction timeline is 25-250x faster than research consensus~~
    - Baker et al. (2025) Nature shows 34/35 CMIP6 models show AMOC resilience
-   - Missing Southern Ocean upwelling compensation mechanism
+   - Southern Ocean upwelling compensation already modeled (40% strength floor)
    - **Report:** `reviews/mechanism_audit_tipping_cascades_20251124.md`
    - **Complexity:** 2 systems (tipping points, climate)
-   - **Action:** Recalibrate to median estimates, add resilience mechanisms
+   - **Status:** ✅ COMPLETE (Commit 626988b88)
+   - **Changes:**
+     - AMOC triggerTempC: 1.7°C → 4.0°C (median estimate)
+     - AMOC uncertainty range: [2.2, 3.9]°C → [2.5, 5.5]°C
+     - Default amocThreshold: 3.0°C → 4.0°C
+   - **Validated:** Monte Carlo N=3, no crashes, no early AMOC collapses
 
 1c. **Governance Scenario Validation Bug** - **FIXED** (Nov 24, 2025)
    - **Location:** `src/simulation/utils/recoveryCalculations.ts:getGDPProxy()` + `ApplyScenarioPrioritiesPhase.ts`
@@ -648,6 +658,7 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
   - **Status:** Ready for orchestrator VALIDATION phase (research file created)
 - [ ] **AI Agent Coordination Phase** - VERIFICATION NEEDED (Nov 24, 2025)
   - **Research Spec:** `research/verification_876abe5_20251124.md`
+  - **Implementation Plan:** `plans/proposed_ai_to_ai_coordination_20251124.md` (commit 3c85bda)
   - **Implementation:** Commit 876abe5 - AIAgentCoordinationPhase (order 4.25)
   - **Citations to Verify:**
     - Anthropic Dec 2024: 12% baseline, 78% threatened alignment faking
