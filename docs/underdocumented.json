@@ -80940,7 +80940,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PlanetaryBoundariesPhase.ts",
-    "line": 110,
+    "line": 108,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -80948,7 +80948,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PlanetaryBoundariesPhase.ts",
-    "line": 111,
+    "line": 109,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -80956,7 +80956,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PlanetaryBoundariesPhase.ts",
-    "line": 112,
+    "line": 110,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -135508,7 +135508,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 720,
+    "line": 719,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -135516,7 +135516,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 721,
+    "line": 720,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -135524,7 +135524,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 722,
+    "line": 721,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -135532,7 +135532,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 726,
+    "line": 725,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -135540,7 +135540,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 727,
+    "line": 726,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -135548,7 +135548,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 728,
+    "line": 727,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -135556,7 +135556,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 729,
+    "line": 728,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -135564,7 +135564,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 749,
+    "line": 745,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -135572,7 +135572,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 750,
+    "line": 746,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -135580,7 +135580,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 751,
+    "line": 747,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -135588,7 +135588,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 758,
+    "line": 754,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -135596,7 +135596,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 759,
+    "line": 755,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -135604,7 +135604,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 760,
+    "line": 756,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -135612,7 +135612,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 772,
+    "line": 768,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -135620,7 +135620,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 773,
+    "line": 769,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -135628,7 +135628,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 774,
+    "line": 770,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -135636,7 +135636,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 775,
+    "line": 771,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -135644,7 +135644,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 846,
+    "line": 842,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -135652,7 +135652,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 847,
+    "line": 843,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -135660,7 +135660,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 848,
+    "line": 844,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -135668,7 +135668,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 860,
+    "line": 856,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -135676,7 +135676,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 861,
+    "line": 857,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -135684,7 +135684,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 862,
+    "line": 858,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -135692,7 +135692,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 865,
+    "line": 861,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -135700,7 +135700,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 866,
+    "line": 862,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -135708,7 +135708,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 867,
+    "line": 863,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -135716,7 +135716,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 870,
+    "line": 866,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -135724,7 +135724,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 871,
+    "line": 867,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -135732,7 +135732,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 872,
+    "line": 868,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -135740,7 +135740,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 873,
+    "line": 869,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -135748,7 +135748,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 877,
+    "line": 873,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -135756,7 +135756,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 878,
+    "line": 874,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -135764,7 +135764,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 879,
+    "line": 875,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -135772,7 +135772,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 880,
+    "line": 876,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -135780,7 +135780,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 894,
+    "line": 890,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -135788,7 +135788,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 895,
+    "line": 891,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -135796,7 +135796,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 896,
+    "line": 892,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -135804,7 +135804,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 924,
+    "line": 920,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -135812,7 +135812,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 925,
+    "line": 921,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -135820,7 +135820,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 960,
+    "line": 956,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -135828,7 +135828,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 961,
+    "line": 957,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -135836,7 +135836,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 962,
+    "line": 958,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -135844,7 +135844,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 963,
+    "line": 959,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -135852,7 +135852,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 979,
+    "line": 975,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -135860,7 +135860,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 980,
+    "line": 976,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -135868,7 +135868,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 981,
+    "line": 977,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -135876,7 +135876,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 984,
+    "line": 980,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -135884,7 +135884,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 985,
+    "line": 981,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -135892,7 +135892,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 986,
+    "line": 982,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -135900,7 +135900,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 987,
+    "line": 983,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -135908,7 +135908,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1088,
+    "line": 1084,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -135916,7 +135916,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1089,
+    "line": 1085,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -135924,7 +135924,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1090,
+    "line": 1086,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -135932,7 +135932,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1091,
+    "line": 1087,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -135940,7 +135940,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1096,
+    "line": 1092,
     "type": "property",
     "name": "peak",
     "currentDoc": "(none)",
@@ -135948,7 +135948,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1109,
+    "line": 1105,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -135956,7 +135956,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1110,
+    "line": 1106,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -135964,7 +135964,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1111,
+    "line": 1107,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -135972,7 +135972,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1127,
+    "line": 1123,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -135980,7 +135980,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1128,
+    "line": 1124,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -135988,7 +135988,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1129,
+    "line": 1125,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -135996,7 +135996,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1130,
+    "line": 1126,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -136004,7 +136004,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1170,
+    "line": 1166,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -136012,7 +136012,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1171,
+    "line": 1167,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -136020,7 +136020,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1172,
+    "line": 1168,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -136028,7 +136028,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1345,
+    "line": 1341,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -136036,7 +136036,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1346,
+    "line": 1342,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -136044,7 +136044,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1347,
+    "line": 1343,
     "type": "property",
     "name": "expectedSource",
     "currentDoc": "(none)",
@@ -136052,7 +136052,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1425,
+    "line": 1421,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -136060,7 +136060,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1426,
+    "line": 1422,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -136068,7 +136068,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1427,
+    "line": 1423,
     "type": "property",
     "name": "expectedSource",
     "currentDoc": "(none)",
@@ -136076,7 +136076,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1541,
+    "line": 1537,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -136084,7 +136084,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1542,
+    "line": 1538,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -136092,7 +136092,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1543,
+    "line": 1539,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -136100,7 +136100,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1574,
+    "line": 1570,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -136108,7 +136108,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1575,
+    "line": 1571,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -136116,7 +136116,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1576,
+    "line": 1572,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -136124,7 +136124,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1614,
+    "line": 1610,
     "type": "property",
     "name": "tropical",
     "currentDoc": "(none)",
@@ -136132,7 +136132,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1615,
+    "line": 1611,
     "type": "property",
     "name": "temperate",
     "currentDoc": "(none)",
@@ -136140,7 +136140,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1616,
+    "line": 1612,
     "type": "property",
     "name": "grasslands",
     "currentDoc": "(none)",
@@ -136148,7 +136148,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1617,
+    "line": 1613,
     "type": "property",
     "name": "borealArctic",
     "currentDoc": "(none)",
@@ -136156,7 +136156,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1833,
+    "line": 1829,
     "type": "property",
     "name": "TOTAL_SPECIES_2024",
     "currentDoc": "(none)",
@@ -136164,7 +136164,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1834,
+    "line": 1830,
     "type": "property",
     "name": "MIGRATORY_PROPORTION",
     "currentDoc": "(none)",
@@ -136172,7 +136172,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1835,
+    "line": 1831,
     "type": "property",
     "name": "NON_MIGRATORY_PROPORTION",
     "currentDoc": "(none)",
@@ -136180,7 +136180,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1836,
+    "line": 1832,
     "type": "property",
     "name": "KEYSTONE_PROPORTION",
     "currentDoc": "(none)",
@@ -136188,7 +136188,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1837,
+    "line": 1833,
     "type": "property",
     "name": "CURRENT_RATE_2025",
     "currentDoc": "(none)",
@@ -136196,7 +136196,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1838,
+    "line": 1834,
     "type": "property",
     "name": "BIRD_DISPERSAL",
     "currentDoc": "(none)",
@@ -136204,7 +136204,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1839,
+    "line": 1835,
     "type": "property",
     "name": "TREE_DISPERSAL",
     "currentDoc": "(none)",
@@ -136212,7 +136212,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1840,
+    "line": 1836,
     "type": "property",
     "name": "MAMMAL_DISPERSAL",
     "currentDoc": "(none)",
@@ -136220,7 +136220,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1841,
+    "line": 1837,
     "type": "property",
     "name": "KEYSTONE_CASCADE",
     "currentDoc": "(none)",
@@ -136228,7 +136228,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1842,
+    "line": 1838,
     "type": "property",
     "name": "AVG_CLIMATE_VELOCITY_TROPICS",
     "currentDoc": "(none)",
@@ -136236,7 +136236,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1843,
+    "line": 1839,
     "type": "property",
     "name": "AVG_CLIMATE_VELOCITY_TEMPERATE",
     "currentDoc": "(none)",
@@ -136244,7 +136244,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1844,
+    "line": 1840,
     "type": "property",
     "name": "AVG_CLIMATE_VELOCITY_ARCTIC",
     "currentDoc": "(none)",
@@ -136252,7 +136252,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1848,
+    "line": 1844,
     "type": "property",
     "name": "BACKGROUND_RATE",
     "currentDoc": "(none)",
@@ -136260,7 +136260,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1849,
+    "line": 1845,
     "type": "property",
     "name": "FRAGMENTATION_BARRIER_MAX",
     "currentDoc": "(none)",
@@ -136268,7 +136268,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1856,
+    "line": 1852,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -136276,7 +136276,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1857,
+    "line": 1853,
     "type": "property",
     "name": "count",
     "currentDoc": "(none)",
@@ -136284,7 +136284,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1859,
+    "line": 1855,
     "type": "property",
     "name": "isMigratory",
     "currentDoc": "(none)",
@@ -136292,7 +136292,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1861,
+    "line": 1857,
     "type": "property",
     "name": "isKeystone",
     "currentDoc": "(none)",
@@ -136300,7 +136300,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1862,
+    "line": 1858,
     "type": "property",
     "name": "keystoneMultiplier",
     "currentDoc": "(none)",
@@ -136308,7 +136308,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1868,
+    "line": 1864,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -136316,7 +136316,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1869,
+    "line": 1865,
     "type": "property",
     "name": "count",
     "currentDoc": "(none)",
@@ -136324,7 +136324,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1871,
+    "line": 1867,
     "type": "property",
     "name": "isMigratory",
     "currentDoc": "(none)",
@@ -136332,7 +136332,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1873,
+    "line": 1869,
     "type": "property",
     "name": "isKeystone",
     "currentDoc": "(none)",
@@ -136340,7 +136340,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1874,
+    "line": 1870,
     "type": "property",
     "name": "keystoneMultiplier",
     "currentDoc": "(none)",
@@ -136348,7 +136348,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1880,
+    "line": 1876,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -136356,7 +136356,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1881,
+    "line": 1877,
     "type": "property",
     "name": "count",
     "currentDoc": "(none)",
@@ -136364,7 +136364,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1885,
+    "line": 1881,
     "type": "property",
     "name": "isKeystone",
     "currentDoc": "(none)",
@@ -136372,7 +136372,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1915,
+    "line": 1911,
     "type": "property",
     "name": "totalSpeciesBaseline",
     "currentDoc": "(none)",
@@ -136380,7 +136380,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1918,
+    "line": 1914,
     "type": "property",
     "name": "backgroundExtinctionRate",
     "currentDoc": "(none)",
@@ -136388,7 +136388,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1919,
+    "line": 1915,
     "type": "property",
     "name": "currentExtinctionRate",
     "currentDoc": "(none)",
@@ -136396,7 +136396,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1946,
+    "line": 1942,
     "type": "property",
     "name": "species",
     "currentDoc": "(none)",
@@ -136404,7 +136404,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1947,
+    "line": 1943,
     "type": "property",
     "name": "climateVelocity",
     "currentDoc": "(none)",
@@ -136412,7 +136412,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1985,
+    "line": 1981,
     "type": "property",
     "name": "species",
     "currentDoc": "(none)",
@@ -136420,7 +136420,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1986,
+    "line": 1982,
     "type": "property",
     "name": "climateVelocity",
     "currentDoc": "(none)",
@@ -136428,7 +136428,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1987,
+    "line": 1983,
     "type": "property",
     "name": "habitatFragmentation",
     "currentDoc": "(none)",
@@ -136436,7 +136436,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1994,
+    "line": 1990,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -136444,7 +136444,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1995,
+    "line": 1991,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -136452,7 +136452,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 1999,
+    "line": 1995,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -136460,7 +136460,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2000,
+    "line": 1996,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -136468,7 +136468,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2025,
+    "line": 2021,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -136476,7 +136476,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2026,
+    "line": 2022,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -136484,7 +136484,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2027,
+    "line": 2023,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -136492,7 +136492,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2040,
+    "line": 2036,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -136500,7 +136500,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2041,
+    "line": 2037,
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -136508,7 +136508,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2053,
+    "line": 2049,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -136516,7 +136516,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2054,
+    "line": 2050,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -136524,7 +136524,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2055,
+    "line": 2051,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -136532,7 +136532,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2060,
+    "line": 2056,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -136540,7 +136540,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2061,
+    "line": 2057,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -136548,7 +136548,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2062,
+    "line": 2058,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -136556,7 +136556,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2063,
+    "line": 2059,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -136564,7 +136564,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2070,
+    "line": 2066,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -136572,7 +136572,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2071,
+    "line": 2067,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -136580,7 +136580,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2072,
+    "line": 2068,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -136588,7 +136588,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2073,
+    "line": 2069,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -136596,7 +136596,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2083,
+    "line": 2079,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -136604,7 +136604,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2084,
+    "line": 2080,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -136612,7 +136612,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2085,
+    "line": 2081,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -136620,7 +136620,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2100,
+    "line": 2096,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -136628,7 +136628,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2101,
+    "line": 2097,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -136636,7 +136636,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2102,
+    "line": 2098,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -136644,7 +136644,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2103,
+    "line": 2099,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -136652,7 +136652,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2105,
+    "line": 2101,
     "type": "property",
     "name": "nonMigratoryCount",
     "currentDoc": "(none)",
@@ -136660,7 +136660,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2111,
+    "line": 2107,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -136668,7 +136668,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2112,
+    "line": 2108,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -136676,7 +136676,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2113,
+    "line": 2109,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -136684,7 +136684,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2114,
+    "line": 2110,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -136692,7 +136692,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2115,
+    "line": 2111,
     "type": "property",
     "name": "previousCount",
     "currentDoc": "(none)",
@@ -136700,7 +136700,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2125,
+    "line": 2121,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -136708,7 +136708,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2126,
+    "line": 2122,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -136716,7 +136716,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2127,
+    "line": 2123,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -136724,7 +136724,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2128,
+    "line": 2124,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -136732,7 +136732,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2129,
+    "line": 2125,
     "type": "property",
     "name": "totalSpeciesBaseline",
     "currentDoc": "(none)",
@@ -136740,7 +136740,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2130,
+    "line": 2126,
     "type": "property",
     "name": "currentSpeciesCount",
     "currentDoc": "(none)",
@@ -136748,7 +136748,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2136,
+    "line": 2132,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -136756,7 +136756,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2137,
+    "line": 2133,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -136764,7 +136764,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2138,
+    "line": 2134,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -136772,7 +136772,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2141,
+    "line": 2137,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -136780,7 +136780,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2142,
+    "line": 2138,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -136788,7 +136788,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2143,
+    "line": 2139,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -136796,7 +136796,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2144,
+    "line": 2140,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -136804,7 +136804,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2149,
+    "line": 2145,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -136812,7 +136812,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2150,
+    "line": 2146,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -136820,7 +136820,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2151,
+    "line": 2147,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -136828,7 +136828,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2152,
+    "line": 2148,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -136836,7 +136836,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2161,
+    "line": 2157,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -136844,7 +136844,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2162,
+    "line": 2158,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -136852,7 +136852,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2163,
+    "line": 2159,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -136860,7 +136860,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2164,
+    "line": 2160,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -136868,7 +136868,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2168,
+    "line": 2164,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -136876,7 +136876,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2169,
+    "line": 2165,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -136884,7 +136884,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2170,
+    "line": 2166,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -136892,7 +136892,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2205,
+    "line": 2201,
     "type": "property",
     "name": "baseRisk",
     "currentDoc": "(none)",
@@ -136900,7 +136900,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2208,
+    "line": 2204,
     "type": "property",
     "name": "confidence",
     "currentDoc": "(none)",
@@ -136908,7 +136908,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2209,
+    "line": 2205,
     "type": "property",
     "name": "scope",
     "currentDoc": "(none)",
@@ -136916,7 +136916,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2210,
+    "line": 2206,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -136924,7 +136924,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaries.ts",
-    "line": 2211,
+    "line": 2207,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -137076,7 +137076,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 339,
+    "line": 335,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -137084,7 +137084,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 340,
+    "line": 336,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -137092,7 +137092,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 341,
+    "line": 337,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -137100,7 +137100,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 342,
+    "line": 338,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -137108,7 +137108,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 343,
+    "line": 339,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -137116,7 +137116,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 344,
+    "line": 340,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -137124,7 +137124,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 345,
+    "line": 341,
     "type": "property",
     "name": "recoveryYears",
     "currentDoc": "(none)",
@@ -137132,7 +137132,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 346,
+    "line": 342,
     "type": "property",
     "name": "boundaryValue",
     "currentDoc": "(none)",
@@ -137140,7 +137140,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 349,
+    "line": 345,
     "type": "property",
     "name": "threshold",
     "currentDoc": "(none)",
@@ -137148,7 +137148,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 473,
+    "line": 469,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -137156,7 +137156,23 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 474,
+    "line": 470,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
+    "line": 476,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'updateNitrogenRecovery',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
+    "line": 477,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -137180,23 +137196,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 484,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'updateNitrogenRecovery',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 485,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 562,
+    "line": 558,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -137204,7 +137204,23 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 563,
+    "line": 559,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
+    "line": 668,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'updateBiosphereStabilization',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
+    "line": 669,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -137228,7 +137244,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 676,
+    "line": 695,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -137236,23 +137252,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 677,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 699,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'updateBiosphereStabilization',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 700,
+    "line": 696,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -137260,7 +137260,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 701,
+    "line": 697,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -137268,7 +137268,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 702,
+    "line": 698,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -137276,7 +137276,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 703,
+    "line": 699,
     "type": "property",
     "name": "currentValue",
     "currentDoc": "(none)",
@@ -137284,7 +137284,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 760,
+    "line": 756,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -137292,7 +137292,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 761,
+    "line": 757,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -137300,7 +137300,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 762,
+    "line": 758,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -137308,7 +137308,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 763,
+    "line": 759,
     "type": "property",
     "name": "expectedSource",
     "currentDoc": "(none)",
@@ -137316,7 +137316,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 767,
+    "line": 763,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -137324,7 +137324,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 768,
+    "line": 764,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -137332,7 +137332,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 769,
+    "line": 765,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -137340,7 +137340,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 823,
+    "line": 819,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -137348,7 +137348,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 824,
+    "line": 820,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -137356,7 +137356,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 825,
+    "line": 821,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -137364,7 +137364,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 826,
+    "line": 822,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -137372,7 +137372,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 827,
+    "line": 823,
     "type": "property",
     "name": "currentValue",
     "currentDoc": "(none)",
@@ -137380,7 +137380,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 830,
+    "line": 826,
     "type": "property",
     "name": "deepOceanFloor",
     "currentDoc": "(none)",
@@ -137388,11 +137388,27 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 831,
+    "line": 827,
     "type": "property",
     "name": "peak",
     "currentDoc": "(none)",
     "context": "peak: boundary.peak"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
+    "line": 903,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'updateNovelEntitiesStabilization',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
+    "line": 904,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
@@ -137412,7 +137428,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 911,
+    "line": 936,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -137420,23 +137436,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 912,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 940,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'updateNovelEntitiesStabilization',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 941,
+    "line": 937,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -137444,7 +137444,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 942,
+    "line": 938,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -137452,7 +137452,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 943,
+    "line": 939,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -137460,7 +137460,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 944,
+    "line": 940,
     "type": "property",
     "name": "currentValue",
     "currentDoc": "(none)",
@@ -137468,7 +137468,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 948,
+    "line": 944,
     "type": "property",
     "name": "peak",
     "currentDoc": "(none)",
@@ -137476,7 +137476,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 968,
+    "line": 964,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -137484,7 +137484,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 969,
+    "line": 965,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -137492,7 +137492,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 970,
+    "line": 966,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -137500,7 +137500,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 971,
+    "line": 967,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -137508,7 +137508,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 975,
+    "line": 971,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -137516,7 +137516,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 976,
+    "line": 972,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -137524,7 +137524,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 977,
+    "line": 973,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -137532,7 +137532,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/planetaryBoundaryRecovery.ts",
-    "line": 978,
+    "line": 974,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -192480,11 +192480,11 @@ ression;"
     "type": "property",
     "name": "deltaYears",
     "currentDoc": "(none)",
-    "context": "deltaYears: number = 1/12,"
+    "context": "deltaYears: number = 1/12"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/irreversibility.ts",
-    "line": 95,
+    "line": 92,
     "type": "property",
     "name": "legacyStock",
     "currentDoc": "(none)",
@@ -192492,7 +192492,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/irreversibility.ts",
-    "line": 96,
+    "line": 93,
     "type": "property",
     "name": "releaseHalfLife",
     "currentDoc": "(none)",
@@ -192500,7 +192500,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/irreversibility.ts",
-    "line": 97,
+    "line": 94,
     "type": "property",
     "name": "deltaYears",
     "currentDoc": "(none)",
