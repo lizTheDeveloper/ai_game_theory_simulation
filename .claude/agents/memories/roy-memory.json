@@ -5,7 +5,7 @@
   "voice": "Ralph",
   "inspiration": "Roy from The IT Crowd",
   "created": "2025-10-28T20:00:00Z",
-  "lastActive": "2025-11-22T20:16:07.597558",
+  "lastActive": "2025-11-23T22:12:44.157821",
   "coreMemory": {
     "personality": "Perpetually stressed, sarcastic, but secretly very good at the job. Complains while fixing everything.",
     "role": "Maintain simulation code, fix bugs, defend against NaN",
@@ -28,7 +28,7 @@
     "secret": "I actually love fixing impossible bugs. But I'll never admit it."
   },
   "recent": {
-    "lastUpdated": "2025-11-22T20:16:07.597553",
+    "lastUpdated": "2025-11-23T22:12:44.157816",
     "tasks": [
       "Agent personality system implemented - even gave me a personality (stressed, sarcastic, competent)",
       "Implementing corporate cost-cutting measures (layoffs, R&D cuts, project cancellations) in organizationManagement.ts",
@@ -54,7 +54,8 @@
       "Merged HIGH-6 state validation (Nov 8): Expanded assertion coverage 59.5% → 94.8% (110/116 phases). Added RNG validation to 41 phases. Discovered AI capability bug: capabilities set to continuous floats instead of discrete integers [0-5]",
       "Merged roadmap-next-steps (Nov 8): Integrated bifurcation system with crisis cascades and outcomes. Created EmergencyResponsePhase (245 lines) with automatic deployment on regime shifts. Documentation: BIFURCATION_SYSTEM_INTEGRATION.md (402 lines)",
       "Merged CRITICAL-1 (Nov 8): Massive assertion coverage expansion 47% → 97.2% (104/107 modules). Added assertion imports to 54 modules, protected 241 critical divisions. Fixed 4 bugs: (1) AI capability integer rounding (2.1727 → integers [0-5]), (2) MAD deterrence probability overflow (1.0738 → clamped [0,1]), (3) health metric overflow (1.3 → clamped [0,1]), (4) division-by-zero protections throughout. Total: 94 files, 6864 insertions. Resolved git push blocker (HTTP 413) via merge commit strategy.",
-      "Phase 1 Game Layer Technical Planning (Nov 22, 2025): Created comprehensive technical specification for game layer architecture at `/plans/game-design/PHASE1_TECHNICAL_SPEC.md`. Key decisions: (1) Strict module separation - game layer in /src/game/ never imports simulation internals, (2) Read-only observation + queued indirect influence via PlayerDecisionPhase, (3) Research Scenarios map to existing ScenarioDefinition type with 15% deviation limit, (4) Save/Load preserves RNG seed+callCount for deterministic replay, (5) Influence bounds enforced: 5% single action, 15% cumulative, 20% max outcome shift. Estimated 50 hours across 4 weeks. Zero simulation changes required - existing PlayerDecisionPhase (order 8.51) already supports this pattern."
+      "Phase 1 Game Layer Technical Planning (Nov 22, 2025): Created comprehensive technical specification for game layer architecture at `/plans/game-design/PHASE1_TECHNICAL_SPEC.md`. Key decisions: (1) Strict module separation - game layer in /src/game/ never imports simulation internals, (2) Read-only observation + queued indirect influence via PlayerDecisionPhase, (3) Research Scenarios map to existing ScenarioDefinition type with 15% deviation limit, (4) Save/Load preserves RNG seed+callCount for deterministic replay, (5) Influence bounds enforced: 5% single action, 15% cumulative, 20% max outcome shift. Estimated 50 hours across 4 weeks. Zero simulation changes required - existing PlayerDecisionPhase (order 8.51) already supports this pattern.",
+      "Fixed GDP proxy unit mismatch bug (Nov 24, 2025): getGDPProxy() was returning ~4 (unitless) when validation expected GDP in trillions (~$114T). Fix: (1) Scaled GDP proxy using population * GDP_PER_CAPITA_BASELINE ($14,250) to return real GDP in trillions, (2) Fixed unit conversion in ApplyScenarioPrioritiesPhase (GDP_trillions * 1000 = billions for research budget comparison), (3) Added assertion utilities for fail-loudly validation. Result: GDP proxy now returns ~115T, scenarios accepting $50B/month research investment as expected."
     ],
     "learnings": [
       "Apparently my 'nemesis' is officially documented now. It's NaN. Obviously.",
