@@ -25,7 +25,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **Research Currency:** ✅ EXCELLENT (all simulation-critical files updated within 14 days, autonomous system working effectively)
 - **Implementation Fidelity:** A- (assertion coverage 97.2%, 24 integration tests for CoordinatedDeploymentPhase) ✅ EXCELLENT
 - **Architecture Health:** B+ (0 CRITICAL, 2 HIGH technical debt non-urgent, deep clone optimization complete) ✅ GOOD
-- **System Trajectory:** 🟡 OPERATIONAL (Nov 24: Game Layer Phase 1 complete, hindcast calibration Phase 1-3 COMPLETE - temperature/mortality/food security fixes applied, remaining: planetary boundaries, population growth)
+- **System Trajectory:** 🟡 OPERATIONAL (Nov 24: Game Layer Phase 1 complete, hindcast calibration Phase 1-3 applied - ⚠️ CRITICAL: food security values found 50-150% underestimated, correction pending, remaining: planetary boundaries, population growth)
 
 **Recent Major Achievements:**
 
@@ -181,7 +181,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - `historicalInitialization.ts`: Regional food security with FAO data
   - `FoodSecurityDegradationPhase.ts`: Skip degradation in historical mode (pre-2020)
   - `HumanSurvivalSystemPhase.ts`: Skip food degradation in historical mode
-- **Regional Food Security (FAO SOFI 1990 data):**
+- **Regional Food Security (Original - FAO SOFI 1990 data):**
   - East Asia: 92% (8% undernourished)
   - South Asia: 88% (12% undernourished)
   - Sub-Saharan Africa: 85% (15% undernourished - worst region)
@@ -190,12 +190,23 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - Middle East/North Africa: 88% (12% undernourished)
   - Southeast Asia: 90% (10% undernourished)
   - Central Asia: 87% (13% undernourished)
+- ⚠️ **CRITICAL CALIBRATION ERROR FOUND (Nov 24, commit 0146020):**
+  - **Verification:** `research/verification_hindcast_food_security_20251124.md` identified systematic underestimation
+  - **Source:** FAO Table 2.3 (World Agriculture: Towards 2015/2030) - authoritative 1990-92 data
+  - **Corrected Regional Values (FAO 1990-92):**
+    - Sub-Saharan Africa: **65%** (35% undernourished) - was 85% (+20pp error)
+    - South Asia: **74%** (26% undernourished) - was 88% (+14pp error)
+    - East Asia: **84%** (16% undernourished) - was 92% (+8pp error)
+    - Latin America: **87%** (13% undernourished) - was 90% (+3pp error)
+    - Global (developing): **80%** (20% undernourished) - was 95% (+15pp error)
+  - **Impact:** Underestimates 1990 hunger by ~650M people, produces artificially low famine frequency
+  - **Status:** ⏳ CORRECTION PENDING - See roadmap for implementation task
 - **VALIDATION:**
   - Before: Population 5.3B → 1B (crash at month ~180)
   - After: Population 5.3B → 4.15B (completes 408 months)
   - Food security stable at 88-90% throughout hindcast
 - **REMAINING ISSUE:** Population still declines instead of growing - birth rate mechanics need investigation
-- **Source:** FAO State of Food Insecurity reports (1999-2015)
+- **Source:** FAO State of Food Insecurity reports (1999-2015), FAO Table 2.3 (verified)
 - 📄 **Files:** initialization.ts, historicalInitialization.ts, FoodSecurityDegradationPhase.ts, HumanSurvivalSystemPhase.ts
 
 **Nov 24: Historical Initialization for Hindcasting Validation** (commit b29fd87)

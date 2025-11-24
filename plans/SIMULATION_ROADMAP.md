@@ -39,6 +39,24 @@
 
 0. ⚠️ **RESEARCH VERIFICATION QUEUE** (Added Nov 7, 2025)
 
+   - **Hindcast Food Security Calibration Correction** - CRITICAL BLOCKER (Added Nov 24, 2025)
+     - **Context:** Verification found systematic 50-150% underestimation of 1990 hunger
+     - **Verification File:** research/verification_hindcast_food_security_20251124.md (285 lines, FAO Table 2.3)
+     - **Commit Verified:** bb445b3 (historical food security initialization)
+     - **Finding:** Code values vs FAO 1990-92 actuals:
+       - Sub-Saharan Africa: 85% → **65%** (+20pp error, 2.3× too optimistic)
+       - South Asia: 88% → **74%** (+14pp error, 2.2× too optimistic)
+       - East Asia: 92% → **84%** (+8pp error, 2× too optimistic)
+       - Global: 95% → **80%** (+15pp error)
+     - **Impact:** Underestimates 1990 hunger by ~650M people, produces artificially low famine frequency
+     - **Root Cause:** Likely confusion between developing vs global averages, or 1990 vs 2010 values
+     - **Corrected Values:** See research file for exact code changes
+     - **Affected File:** src/simulation/historicalInitialization.ts (lines 240-272)
+     - **Priority:** CRITICAL BLOCKER - Must correct before Phase 1-3 hindcast validation produces meaningful results
+     - **Status:** ✅ VERIFIED - Ready for implementation
+     - **Commit:** 0146020
+     - **Next Steps:** simulation-maintainer apply corrections → Monte Carlo hindcast N≥10 → Validate famine frequency against historical (Somalia 1991-92, etc.)
+
    - **Climate Tipping Points 2025 Critical Updates** - CRITICAL (Added Nov 24, 2025)
      - **Context:** Latest 2025 findings on coral reefs (first tipping point CROSSED), AMOC urgency, planetary boundaries
      - **Research File:** research/climate_tipping_points_2025_update_20251124.md (418 lines, 11 sources)
