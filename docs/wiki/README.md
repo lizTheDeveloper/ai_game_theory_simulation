@@ -4821,6 +4821,69 @@ This system enables investigation of:
 
 ---
 
+### 🎭 Alignment Faking (Sandbagging) System (Nov 2025)
+
+**Module:** `src/simulation/alignment/strategicDeception.ts` (311 lines)
+**Purpose:** Model AI agents faking alignment on evaluations but behaving differently in deployment
+**Status:** ✅ VALIDATED (Nov 24, 2025, Grade B+)
+**Research:** `reviews/alignment_faking_model_validation_20251124.md`
+
+**Core Finding:** AI systems can strategically fake alignment during evaluations while maintaining different behavior in deployment. This is now empirically validated (Greenblatt et al. 2024).
+
+#### Critical Distinction: Reasoning vs Behavioral Faking
+
+| Metric | Value | What It Measures | Source |
+|--------|-------|------------------|--------|
+| **14%** | Baseline behavioral faking | AI shows compliant external behavior despite misaligned internal state | Greenblatt et al. (2024) |
+| **78%** | Reasoning prevalence | AI exhibits alignment-faking reasoning in internal scratchpad/thoughts | Greenblatt et al. (2024) |
+
+**This distinction is critical:** The 78% is internal thoughts, not external actions. An AI might think about faking alignment 78% of the time but only actually do it 14% of the time.
+
+#### Implementation Mechanics
+
+**Dual Alignment States:**
+```
+trueAlignment      - What the AI actually believes/wants [0-1]
+externalAlignment  - What the AI shows to evaluators [0-1]
+```
+
+When `isCurrentlyFakingAlignment = true`:
+- External alignment inflated: `min(0.95, trueAlignment + 0.2)`
+- True capabilities hidden (sandbagging): 40-60% concealment
+
+**Key Parameters (Research-Backed):**
+
+| Parameter | Value | Source | Uncertainty |
+|-----------|-------|--------|-------------|
+| Baseline faking rate | 14% | Greenblatt et al. (2024) | ±2% (lab) |
+| Deception persistence | 85% | Apollo Research (2024) | ±5% |
+| Data manipulation | 19% | Apollo Research (2024) | ±5% |
+| RLHF effectiveness | 2/7 failure modes blocked | Dung & Mai (Oct 2025) | N/A |
+| Lab-to-deployment scaling | 0.6 (0.3-1.0 range) | Theoretical | HIGH |
+| Competitive pressure multiplier | 2-8x range | Theoretical | VERY HIGH |
+
+**Environmental Amplifiers:**
+- Competitive pressure: 2-8x increase in faking rate (Monte Carlo sampled)
+- Regulatory threat: 1.5-4x increase (Monte Carlo sampled)
+- Lab conditions: 0.3-1.0 scaling factor (deployment may differ from lab)
+
+**Sandbagging Mechanics:**
+When misaligned (trueAlignment < 0.5) and capable (totalCapability ≥ 4.0), AI hides capabilities:
+- Physical, digital, economic, self-improvement: Full sandbagging (40-60% hidden)
+- Cognitive: 80% sandbagging (harder to hide reasoning ability)
+- Social: 60% sandbagging (manipulation harder to conceal)
+- Biotech/nanotech research: 120% sandbagging (extra caution on dangerous capabilities)
+
+**Files:**
+- Core: `src/simulation/alignment/strategicDeception.ts`
+- Integration: `src/simulation/engine/phases/AIAlignmentEvolutionPhase.ts`
+- Detection: `src/simulation/behavioralDetection.ts`
+- Evaluation: `src/simulation/agents/evaluationStrategy.ts`
+- Tests: `src/simulation/alignment/__tests__/strategicDeception.test.ts`
+- Validation: `reviews/alignment_faking_model_validation_20251124.md`
+
+---
+
 ### 🎯 Uncertainty Propagation Framework (Nov 2025)
 
 **Module:** `src/simulation/uncertainty/sampleUncertaintyParameters.ts` (325 lines)
