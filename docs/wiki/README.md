@@ -38,8 +38,9 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
      - **Fix:** `ExogenousShockPhase.ts` - Skip random shock generation in historical mode (real events only)
   3. **Temperature split-brain:** `planetaryBoundaries.currentValue` and `resourceEconomy.temperatureAnomaly` both needed setting
      - **Fix:** `historicalInitialization.ts` - Initialize BOTH to 0.45C anomaly for 1990 (was 2.03C)
-  4. **Year tracking bug:** `TimeAdvancementPhase` not preserving `simulationStartYear`
-     - **Fix:** `TimeAdvancementPhase.ts` - `currentYear = simulationStartYear + monthsElapsed/12` (not just monthsElapsed/12)
+  4. **Year tracking bug:** `TimeAdvancementPhase` using non-existent `state.simulationStartYear`
+     - **Fix:** `TimeAdvancementPhase.ts` - Read from `state.config.startYear ?? 2025` (not undefined `simulationStartYear`)
+     - **Formula:** `currentYear = state.config.startYear + monthsElapsed/12`
   5. **Historical birth rate scaling:** Regional birth rates not scaled to historical CBR values
      - **Fix:** `regionalPopulations.ts` - Scale by 1990 CBR 24.3/1000 vs 2025 CBR 16.8/1000 (1.45x higher)
      - **Architecture:** Exported `getHistoricalCrudeBirthRate()` from `BaselineMortalityPhase.ts`
