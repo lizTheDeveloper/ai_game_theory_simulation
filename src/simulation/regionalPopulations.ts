@@ -390,7 +390,10 @@ export function updateRegionalPopulations(state: GameState): void {
     // This ensures hindcast matches observed population growth
     if (state.config.scenarioMode === 'historical') {
       const { getHistoricalCrudeBirthRate } = require('./engine/phases/BaselineMortalityPhase');
-      const actualYear = state.currentYear + Math.floor(state.currentMonth / 12);
+      // FIX (Nov 24, 2025): state.currentYear is already updated by TimeAdvancementPhase to include
+      // years elapsed since start. No need to add years again - that was double-counting!
+      // Before fix: Month 12 would use year 1992 (1991 + 1) instead of 1991
+      const actualYear = state.currentYear;
       const historicalCBR = getHistoricalCrudeBirthRate(actualYear);
       const baseline2025CBR = 16.8; // 2025 baseline from BaselineMortalityPhase
       const historicalScale = historicalCBR / baseline2025CBR;

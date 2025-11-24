@@ -62489,7 +62489,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BaselineMortalityPhase.ts",
-    "line": 234,
+    "line": 236,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -62497,7 +62497,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BaselineMortalityPhase.ts",
-    "line": 235,
+    "line": 237,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -62505,7 +62505,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BaselineMortalityPhase.ts",
-    "line": 236,
+    "line": 238,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -62513,15 +62513,15 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BaselineMortalityPhase.ts",
-    "line": 237,
+    "line": 239,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
-    "context": "additionalInfo: { baselineRisk, eraMultiplier, actualYear, yearsElapsed, initialYear: state.currentYear }"
+    "context": "additionalInfo: { baselineRisk, eraMultiplier, actualYear }"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BaselineMortalityPhase.ts",
-    "line": 248,
+    "line": 250,
     "type": "property",
     "name": "confidence",
     "currentDoc": "(none)",
@@ -62529,7 +62529,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BaselineMortalityPhase.ts",
-    "line": 249,
+    "line": 251,
     "type": "property",
     "name": "scope",
     "currentDoc": "(none)",
@@ -62537,7 +62537,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BaselineMortalityPhase.ts",
-    "line": 250,
+    "line": 252,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -62545,7 +62545,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BaselineMortalityPhase.ts",
-    "line": 251,
+    "line": 253,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
