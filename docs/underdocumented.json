@@ -193660,7 +193660,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/recoveryCalculations.ts",
-    "line": 178,
+    "line": 206,
     "type": "property",
     "name": "gdp",
     "currentDoc": "(none)",
@@ -193668,7 +193668,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/recoveryCalculations.ts",
-    "line": 179,
+    "line": 207,
     "type": "property",
     "name": "qol",
     "currentDoc": "(none)",
@@ -193676,7 +193676,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/recoveryCalculations.ts",
-    "line": 180,
+    "line": 208,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -193684,7 +193684,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/recoveryCalculations.ts",
-    "line": 206,
+    "line": 234,
     "type": "property",
     "name": "gdp",
     "currentDoc": "(none)",
@@ -193692,7 +193692,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/recoveryCalculations.ts",
-    "line": 207,
+    "line": 235,
     "type": "property",
     "name": "qol",
     "currentDoc": "(none)",
@@ -193700,7 +193700,7 @@ ression;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/recoveryCalculations.ts",
-    "line": 208,
+    "line": 236,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
