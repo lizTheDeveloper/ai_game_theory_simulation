@@ -130,7 +130,7 @@ export function getDefaultDemographics(): DemographicSegment[] {
         pollution: 2.0,   // Highest environmental exposure
         ecosystem: 2.0,   // Directly dependent on ecosystems
         cascade: 2.2,     // FIX (Oct 28, 2025): Add cascade vulnerability - informal workers most vulnerable to cascading crises
-        other: 2.0,       // FIX (Oct 28, 2025): Add other vulnerability
+        other: 1.6,       // FIX (Nov 24, 2025): Adjusted from 2.0 → 1.6× (Kahn 2022, conservative)
       },
     },
   ];
