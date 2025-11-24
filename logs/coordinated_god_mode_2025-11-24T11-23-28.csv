@@ -1,0 +1,4 @@
+seed,outcome,months,pop_initial,pop_final,mortality,survival,basicNeeds,psychological,social,health,environmental,overall,delays,absorptionPauses,boundaryPauses
+42,ongoing,120,8.14,0.93,88.52,0.240,0.259,0.722,0.707,0.378,0.626,0.489,0,0,0
+43,ongoing,120,8.14,0.78,90.38,0.313,0.253,0.743,0.723,0.378,0.561,0.495,0,0,0
+44,ongoing,120,8.14,1.01,87.59,0.494,0.307,0.689,0.604,0.455,0.479,0.504,2,1,1
