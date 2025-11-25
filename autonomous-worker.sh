@@ -227,6 +227,13 @@ Current subscription usage (checked before this session started):
 - 75-90%: Normal operation - focus on CRITICAL/HIGH/MEDIUM items
 - Over 90%: Conservative mode - CRITICAL/HIGH items only
 
+**IMPORTANT: Work through ALL priority levels. Do not stop if CRITICAL/HIGH are complete.**
+
+If CRITICAL items are complete, move to HIGH.
+If HIGH items are complete, move to MEDIUM.
+If MEDIUM items are complete, move to LOW.
+Only use FALLBACK WORKFLOWS when ALL roadmap items are complete.
+
 **Work through as much of the roadmap as possible. Exhaust all tokens clearing the backlog.**
 
 Read plans/MASTER_IMPLEMENTATION_ROADMAP.md and identify work to do.
