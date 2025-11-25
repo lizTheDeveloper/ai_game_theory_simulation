@@ -6,7 +6,9 @@
  * - Parental fulfillment (alternative purpose)
  * - Moral injury (negative feedback from wars)
  *
- * Order: 6.5 (after CountryPopulationPhase, before interventions)
+ * **EXECUTION ORDER:** 7.6 (After AIAgentCoordinationPhase 7.5)
+ * **DEPENDENCIES:** ai-agent-actions (7.0)
+ * **SIDE EFFECTS:** Updates war-meaning feedback state
  */
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
@@ -16,7 +18,7 @@ import { updateWarMeaningFeedback } from '../../warMeaningFeedback';
 export class WarMeaningFeedbackPhase implements SimulationPhase {
   readonly id = 'war_meaning_feedback';
   readonly name = 'War-Meaning Feedback';
-  readonly order = 7.5;
+  readonly order = 7.6; // After AIAgentCoordinationPhase (7.5) - no data dependency, sequential
   readonly dependencies = ['ai-agent-actions'];
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {

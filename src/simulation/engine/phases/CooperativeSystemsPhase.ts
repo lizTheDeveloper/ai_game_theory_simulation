@@ -8,7 +8,9 @@
  * 4. Upward spirals (virtuous cascades)
  * 5. Cooperative spirals (institutional trust cascades)
  *
- * Order: 12.6 (after tech-tree, before international-relations) - Batch 5: moved from 11.5 due to tech-tree dependency
+ * **EXECUTION ORDER:** 12.65 (After tech-tree 12.5, stochastic-innovation 12.6)
+ * **DEPENDENCIES:** ai-lifecycle, tech-tree (12.5)
+ * **SIDE EFFECTS:** Collective formation, cooperative ownership, upward spirals
  *
  * Research Foundation:
  * - Swarm intelligence: Group intelligence > sum of individuals
@@ -40,8 +42,8 @@ import { updateCooperativeSpirals } from '../../cooperativeSpirals';
 export class CooperativeSystemsPhase implements SimulationPhase {
   readonly id = 'cooperative-systems';
   readonly name = 'Cooperative Systems Update';
-  readonly order = 12.6;  // Batch 5: moved from 11.5 due to tech-tree (12.5) dependency
-  readonly dependencies = ['ai-lifecycle', 'tech-tree'];  // upward-spirals removed - now part of THIS phase (Batch 5), human-survival-system removed (order violation: 21.51 > 12.6)
+  readonly order = 12.65;  // After tech-tree (12.5), stochastic-innovation (12.6)
+  readonly dependencies = ['ai-lifecycle', 'tech-tree'];  // upward-spirals removed - now part of THIS phase (Batch 5), human-survival-system removed (order violation: 21.51 > 12.65)
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     // HIGH-6 (Nov 8, 2025): Validate RNG for deterministic simulation

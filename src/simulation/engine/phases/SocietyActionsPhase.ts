@@ -7,8 +7,8 @@
  * - Protests and activism
  * - Cultural adaptation
  *
- * **EXECUTION ORDER:** 0.7 (After government actions)
- * **DEPENDENCIES:** Requires society state
+ * **EXECUTION ORDER:** 10.6 (After coordinated-deployment 10.5, government-actions 9.0)
+ * **DEPENDENCIES:** government-actions (9.0)
  * **SIDE EFFECTS:**
  * - Modifies society state
  * - Returns new state and events
@@ -21,11 +21,11 @@ import { executeSocietyActions } from '../../agents/societyAgent';
 export class SocietyActionsPhase implements SimulationPhase {
   readonly id = 'society-actions';
   readonly name = 'Society Agent Actions';
-  readonly order = 10.5;
+  readonly order = 10.6; // After coordinated-deployment (10.5)
 
-  // DEPENDENCIES (Nov 15, 2025): Requires governance state and AI capabilities for social movements
+  // DEPENDENCIES (Nov 15, 2025): Requires government state for social movements
+  // NOTE: governance-system dependency REMOVED - order violation (10.6 cannot depend on 28.0)
   readonly dependencies = [
-    'governance-system',      // Order 28.0: Governance affects social movements
     'government-actions',     // Order 9.0: Government policies affect society
   ] as const;
 

@@ -2,7 +2,10 @@
  * Outcome Probabilities Phase
  *
  * Calculates outcome probabilities (utopia, dystopia, extinction)
- * Order: 35.0 (after QoL calculation)
+ *
+ * **EXECUTION ORDER:** 35.1 (After bayesian_mortality_resolution 35.0, climate_system 34.0)
+ * **DEPENDENCIES:** quality-of-life (19.5), social-stability-system (26.1), climate_system (34.0), bayesian_mortality_resolution (35.0)
+ * **SIDE EFFECTS:** Updates outcome probabilities
  */
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
@@ -13,13 +16,14 @@ import { assertProbability, assertDefined } from '@/simulation/utils/assertions'
 export class OutcomeProbabilitiesPhase implements SimulationPhase {
   readonly id = 'outcome-probabilities';
   readonly name = 'Outcome Probabilities Calculation';
-  readonly order = 35.0;
+  readonly order = 35.1; // After bayesian_mortality_resolution (35.0)
 
   // DEPENDENCIES (Nov 6, 2025): Must run after all systems update
   readonly dependencies = [
     'quality-of-life',         // Order 19.5: QoL baseline
     'social-stability-system', // Order 26.1: Social state (Batch 5: consolidated from social-stability)
     'climate_system',          // Order 34.0: Environmental state (Batch 3: consolidated from environmental_feedback)
+    'bayesian_mortality_resolution', // Order 35.0: Mortality resolved before outcome calculation
   ] as const;
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
