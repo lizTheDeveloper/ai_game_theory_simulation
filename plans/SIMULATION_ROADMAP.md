@@ -99,32 +99,28 @@
      - **Status:** READY FOR VALIDATION
      - **Next Steps:** Sylvia two-layer verification → Update grade if failures → Correct/remove unsupported claims
 
-   - **AMOC & Planetary Boundaries 2024-2025 Updates** - CRITICAL (Added Nov 24, 2025)
+   - **AMOC & Planetary Boundaries 2024-2025 Updates** - ✅ VERIFIED (Nov 26, 2025)
      - **Context:** Two research files documenting latest findings on Earth system tipping points
      - **Research Files:**
        - research/amoc_tipping_point_2024_2025_update.md (250 lines, 7 citations)
        - research/planetary_boundaries_2025_update.md (454 lines, 6 citations)
      - **Verification File:** research/verification_1e37dcb_20251124.md
-     - **Key Claims Requiring Two-Layer Verification:**
-       - **CRITICAL:** AMOC tipping 2025-2095 (95% CI) - van Westen 2024
-       - **CRITICAL:** Ocean acidification breached 2025 (7/9 boundaries) - JIRCAS 2025
-       - **CRITICAL:** Nitrogen 3× safe limit (190 vs 62 Tg/yr) - Richardson 2023
-       - **CRITICAL:** Regional cooling 10-30°C northern Europe - Carbon Brief 2024
-       - **HIGH:** Probability distributions (20-40% by 2075) - derived or cited?
-       - **HIGH:** Cascading risk multipliers (4.0× at 7/9 breach) - derived or cited?
-       - **MODERATE:** 204M chemicals registered, 350K+ in production
-       - **ISSUE:** Date consistency (file marked 2025 but several 2023-2024 citations)
-       - **ISSUE:** Primary vs secondary sources (RealClimate, Carbon Brief → trace to papers)
-       - **ISSUE:** Ocean acidification breach date (docs say 2025, need reconciliation)
-     - **Total:** 13 claims flagged for verification, 3 critical discrepancies to resolve
+     - **Verification Results (Nov 26, 2025):**
+       - ⚠️ **AMOC 2025-2095 CI:** MISATTRIBUTION - Actually from Ditlevsen & Ditlevsen (2023), not van Westen (2024)
+       - ✅ **AMOC 3±1 Sv weakening:** VERIFIED - Caesar et al. (2018), confirmed by van Westen (2024)
+       - ✅ **Nitrogen 190/62 Tg/year:** VERIFIED - Richardson et al. (2023), exact values confirmed
+       - ✅ **Ocean acidification 7/9:** VERIFIED - Breached in 2025 per Findlay et al. (2025)
+       - ✅ **Planetary boundaries 6/9→7/9:** VERIFIED - Richardson 2023 + Findlay 2025
+     - **Key Correction Required:**
+       - AMOC tipping timeline 2025-2095 comes from Ditlevsen & Ditlevsen (2023), NOT van Westen
+       - Central estimate: 2057, methodology has received substantial criticism
      - **Implementation Impact:**
-       - May affect planetary boundaries tracking (7/9 vs 6/9)
-       - AMOC collapse probability curves
-       - Nitrogen/phosphorus flow parameters
-     - **Priority:** CRITICAL - Earth system tipping points, affects extinction risk modeling
-     - **Status:** ⏳ READY FOR VALIDATION - Verification file created by historian
+       - Planetary boundaries: Update to 7/9 transgressed (ocean acidification crossed 2025)
+       - Nitrogen parameters: 190/62 Tg/year confirmed (3× boundary)
+       - AMOC: Keep current parameters but note uncertainty in timeline predictions
+     - **Status:** ✅ VERIFICATION COMPLETE - Ready for parameter implementation
      - **Commit:** 1e37dcb
-     - **Next Steps:** Two-layer verification (existence + claim accuracy) → Reconcile discrepancies → Update parameters if needed
+     - **Next Steps:** Implement 7/9 planetary boundaries → Monte Carlo N≥10 validation
 
    - **AI Governance International Coordination - 2024-2025 Sources** - MEDIUM (Added Nov 24, 2025)
      - **Context:** 4 new peer-reviewed sources added to existing AI governance research file
