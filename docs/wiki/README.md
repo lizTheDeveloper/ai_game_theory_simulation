@@ -190,13 +190,22 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📄 **Documentation:** `docs/wiki/systems/game-layer.md`
 - ✅ **Status:** Phase 1 COMPLETE, Sylvia architecture review PENDING
 
-**Nov 24: Hindcast Calibration Phase 3 (CRITICAL)** (commit 70abd98)
-- 🔧 **TEMPERATURE FIX COMPLETE:** Fixed deeper bug where equilibrium calculation was wrong for hindcast
+**Nov 25: Hindcast Temperature Lock v2** (commit 41ec52d)
+- 🔧 **TEMPERATURE FIX v2:** Use NASA GISS interpolation for entire hindcast period
+  - **Problem:** v1 fix locked temp for 120 months, then switched to equilibrium formula. Hindcasts run 408 months (1990-2024), so month 121+ spiked to 2-3C.
+  - **Fix:** In `scenarioMode === 'historical'`, use `interpolateClimateForMonth()` from NASA GISS data for entire period
+  - **Post-2024:** Blend 75% equilibrium + 25% last historical value (1.28C) for smooth transition
+  - **Results:** 1990 (0.44C) → 1995 (0.44C) → 2024 (1.28C), within 0.011C of NASA GISS
+  - **Code:** `src/simulation/resourceDepletion.ts` lines 1112-1180 (historical interpolation)
+  - **Test:** `scripts/quickHindcastTempTest.ts` validates Pinatubo cooling (1991-1993)
+- 📄 **Diagnostic:** `reviews/hindcast_collapse_diagnostic_20251125.md`
+
+**Nov 24: Hindcast Calibration Phase 3 (CRITICAL)** (commit 70abd98) - SUPERSEDED by v2 above
+- 🔧 ~~**TEMPERATURE FIX:**~~ See v2 fix above - original fix only worked for first 120 months
   - **Problem:** In 1990, 354 ppm CO2 was already in quasi-equilibrium with 0.45C after decades of ocean lag
   - **Root Cause:** Formula calculated 1.41C (theoretical equilibrium) but system hadn't reached it yet
-  - **Fix:** Lock temperature at historical value for 24 months, then use dampened equilibrium (75% theoretical + 25% historical)
-  - **Results:** Month 0-23: 0.45C ✅ | Month 24: 1.14C ✅ | Month 48: 1.23C ✅
-  - **Code:** `src/simulation/resourceDepletion.ts` thermal lock implementation (40 lines)
+  - ~~**Fix:** Lock temperature at historical value for 24 months~~ → Replaced by NASA GISS interpolation
+  - **Code:** Legacy fallback path retained for backward compatibility
 - 🔧 **ERA_MORTALITY_MULTIPLIERS REFRAMED:** Research synthesis resolved Cynthia vs Sylvia debate
   - **Cynthia (B-):** Correct that CDR only declined 23.5% (not 70%), but conflated baseline vs crisis mortality
   - **Sylvia (C+):** Correct that crisis response was MUCH worse in 1990 (1991 Bangladesh: 138K deaths vs 2020: 128 deaths)
