@@ -1,9 +1,10 @@
 ---
 oldest_source: 2002
 newest_source: 2025
-last_verified: 2025-11-19
+last_verified: 2025-11-21
 status: used_in_simulation
-verification_status: UPDATED
+verification_status: CURRENT
+research_quality: A (>95% peer-reviewed, seminal 2002 work + 2024-2025 updates)
 ---
 
 # Nitrogen-Food Production Coupling Research
@@ -152,9 +153,15 @@ verification_status: UPDATED
 - **CRISPR/Cas9:** Precise modifications of genes for N metabolism, transport, signaling
 - **Enhanced N uptake crops:** Improved nitrogen acquisition and utilization
 
+**2025 Update - Systematic Review:**
+- Ali et al. (2025) comprehensive review in *Frontiers in Plant Science* confirms crops absorb only ~50% of applied nitrogen
+- Key finding: Integrating precision agriculture tools with genetic advances and microbial inoculants can achieve 15-25% yield improvements while reducing fertilizer dependency
+- Rhizobium inoculants: up to 25% yield improvement in legumes; mycorrhizal biofertilizers in wheat: 15% fertilizer reduction without yield loss
+
 **Sources:**
 - Multiple 2024-2025 studies from *Frontiers in Plant Science*, *IntechOpen*, *ScienceDirect*
 - Gu, B., Zhang, X., et al. (2023). "Cost-effective mitigation of nitrogen pollution from global croplands." *Nature*, 613, 77-84. DOI: 10.1038/s41586-022-05481-8
+- Ali, A., et al. (2025). "Enhancing nitrogen use efficiency in agriculture by integrating agronomic practices and genetic advances." *Frontiers in Plant Science*, 16, 1543714. DOI: 10.3389/fpls.2025.1543714
 
 ### 2.3 Nitroplast Integration (Nitrogen-Fixing Organelle)
 
