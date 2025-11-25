@@ -22,7 +22,7 @@
  * - Biodiversity: ~0.49 (WWF LPI 2024)
  */
 
-import { createDefaultInitialState } from '../src/simulation/initialization';
+import { initializeHistoricalSimulation } from '../src/simulation/historicalInitialization';
 import { SimulationEngine } from '../src/simulation/engine';
 import { setDeterministicRng } from '../src/simulation/utils/deterministicRng';
 import * as fs from 'fs';
@@ -88,70 +88,6 @@ function createSeededRng(seed: number): () => number {
     s = (s * 1103515245 + 12345) & 0x7fffffff;
     return s / 0x7fffffff;
   };
-}
-
-// ============================================================================
-// HELPER: Modify state for 1990 baseline
-// ============================================================================
-
-function modify1990State(state: any): void {
-  // === CRITICAL: Climate System ===
-  // Set climate_change.currentValue to 1990 baseline (0.45C anomaly)
-  if (state.planetaryBoundariesSystem?.boundaries?.climate_change) {
-    state.planetaryBoundariesSystem.boundaries.climate_change.currentValue = HISTORICAL_1990.temperatureAnomaly;
-    state.planetaryBoundariesSystem.boundaries.climate_change.status = 'within_boundary';
-    state.planetaryBoundariesSystem.boundaries.climate_change.monthsBreached = 0;
-  }
-
-  // === Population ===
-  if (state.humanPopulationSystem) {
-    state.humanPopulationSystem.population = HISTORICAL_1990.population;
-    state.humanPopulationSystem.startingPopulation = HISTORICAL_1990.population;
-    // Reset death counts
-    state.humanPopulationSystem.cumulativeCrisisDeaths = 0;
-    state.humanPopulationSystem.cumulativeBackgroundDeaths = 0;
-  }
-
-  // === Year Tracking ===
-  state.currentYear = CONFIG.startYear;
-  state.currentMonth = 0;
-
-  // CRITICAL FIX (Nov 25, 2025): Set config.startYear for TimeAdvancementPhase
-  // Without this, year calculation breaks after Month 12
-  if (state.config) {
-    state.config.startYear = CONFIG.startYear;
-    state.config.scenarioMode = 'historical';
-  }
-
-  // === Environmental State ===
-  if (state.environmentalAccumulation) {
-    state.environmentalAccumulation.biodiversityIndex = HISTORICAL_1990.biodiversityIndex;
-    state.environmentalAccumulation.climateStress = 0.35; // Lower 1990 baseline
-    state.environmentalAccumulation.pollution = 0.45;     // Lower 1990 baseline
-  }
-
-  // === Social State ===
-  if (state.society) {
-    state.society.trustInGovernment = HISTORICAL_1990.trustInGovernment;
-    state.society.polarizationIndex = 0.10; // Lower 1990 polarization
-  }
-
-  if (state.globalMetrics) {
-    state.globalMetrics.socialStability = HISTORICAL_1990.socialCohesion;
-    state.globalMetrics.qualityOfLife = 0.60; // 1990 HDI estimate
-    state.globalMetrics.unemployment = HISTORICAL_1990.unemploymentRate;
-  }
-
-  // === AI State (None in 1990) ===
-  state.aiAgents = [];  // No AI agents in 1990
-
-  // === Nuclear State (Cold War ending) ===
-  if (state.nuclearStates) {
-    // Higher nuclear tensions in 1990 (Cold War just ending)
-    state.nuclearStates.forEach((ns: any) => {
-      ns.currentAlertLevel = ns.currentAlertLevel * 1.2; // Slightly elevated
-    });
-  }
 }
 
 // ============================================================================
@@ -304,9 +240,13 @@ async function runHindcast(): Promise<void> {
     };
 
     try {
-      // Create 2025 baseline state and modify for 1990
-      const state = createDefaultInitialState(rng);
-      modify1990State(state);
+      // Create historical state using proper initialization function
+      // This applies all research-backed calibrations:
+      // - Regional population scaling (7.4B → 5.3B for 1990)
+      // - FAO-verified food security by region
+      // - config.startYear for year tracking
+      // - Historical temperature in BOTH fields
+      const state = initializeHistoricalSimulation(CONFIG.startYear, rng);
 
       console.log(`  Initial state: Year ${state.currentYear}, Population: ${state.humanPopulationSystem?.population?.toFixed(2)}B`);
       console.log(`  Initial climate: ${state.planetaryBoundariesSystem?.boundaries?.climate_change?.currentValue?.toFixed(2)}C`);

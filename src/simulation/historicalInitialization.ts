@@ -425,3 +425,204 @@ export function createParameterLockdown(): { timestamp: string; hash: string } {
 
   return { timestamp, hash };
 }
+
+/**
+ * SYNCHRONOUS wrapper for historical initialization (for validation scripts)
+ *
+ * This is a convenience wrapper around createHistoricalInitialState that
+ * doesn't require await (since data loaders are actually synchronous).
+ *
+ * Use this in validation scripts where async/await is inconvenient.
+ *
+ * @param year - Year to initialize (1990-2024)
+ * @param rng - RNG function (REQUIRED for determinism)
+ * @param scenarioMode - Scenario mode (defaults to 'historical')
+ * @returns GameState initialized to historical values
+ */
+export function initializeHistoricalSimulation(
+  year: number,
+  rng: () => number,
+  scenarioMode: ScenarioMode = 'historical'
+): GameState {
+  // Validate inputs
+  if (!rng || typeof rng !== 'function') {
+    throw new Error('❌ CRITICAL: RNG required for deterministic simulation');
+  }
+
+  if (year < 1990 || year > 2024) {
+    throw new Error(`❌ Historical data only available for 1990-2024, got ${year}`);
+  }
+
+  // Load historical data (synchronous despite the async wrapper)
+  const climateData = getClimateDataForYear(year);
+  const economicData = getEconomicDataForYear(year);
+
+  // Map to bundle format
+  const historical: HistoricalDataBundle = {
+    climate: {
+      co2Ppm: climateData.co2Ppm,
+      tempAnomaly: climateData.temperatureAnomalyC,
+      tempVsPreindustrial: climateData.temperatureAnomalyC + 0.7,
+    },
+    economic: {
+      populationBillions: economicData.globalPopulationBillion,
+      globalGini: economicData.giniIndex,
+      globalHDI: economicData.hdi,
+    },
+    year,
+  };
+
+  // Create base state from 2025 defaults
+  const baseState = createDefaultInitialState(rng, scenarioMode);
+
+  // === OVERRIDE WITH HISTORICAL VALUES ===
+
+  // Time
+  baseState.currentYear = year;
+  baseState.currentMonth = 0;
+
+  // CRITICAL FIX: Set config.startYear for TimeAdvancementPhase
+  if (baseState.config) {
+    baseState.config.startYear = year;
+    console.log(`  config.startYear set to ${year} for historical hindcast`);
+  }
+
+  // Store simulation start year for reference (legacy - keeping for backwards compatibility)
+  (baseState as unknown as Record<string, unknown>).simulationStartYear = year;
+
+  // Climate state - set BOTH planetary boundaries AND resourceEconomy temperature
+  if (baseState.planetaryBoundariesSystem?.boundaries?.climate_change) {
+    baseState.planetaryBoundariesSystem.boundaries.climate_change.currentValue = historical.climate.tempVsPreindustrial;
+  }
+
+  // CRITICAL: Also set resourceEconomy temperature (used by ClimateSystemPhase)
+  if (baseState.resourceEconomy?.co2) {
+    baseState.resourceEconomy.co2.temperatureAnomaly = historical.climate.tempAnomaly;
+    console.log(`  Temperature anomaly (resourceEconomy.co2): ${historical.climate.tempAnomaly.toFixed(2)}°C`);
+    console.log(`  Temperature vs pre-industrial: ${historical.climate.tempVsPreindustrial.toFixed(2)}°C`);
+  }
+
+  // Population (from UN WPP)
+  if (baseState.humanPopulationSystem) {
+    baseState.humanPopulationSystem.population = historical.economic.populationBillions;
+    baseState.humanPopulationSystem.baselinePopulation = historical.economic.populationBillions;
+    baseState.humanPopulationSystem.peakPopulation = historical.economic.populationBillions;
+
+    // CRITICAL FIX: Scale regional populations to match historical global total
+    if (baseState.humanPopulationSystem.regionalPopulations && baseState.humanPopulationSystem.regionalPopulations.length > 0) {
+      const currentRegionalTotalM = baseState.humanPopulationSystem.regionalPopulations
+        .reduce((sum, r) => sum + r.population, 0);
+      const targetTotalM = historical.economic.populationBillions * 1000; // Convert B to M
+
+      assertFinite(currentRegionalTotalM, {
+        location: 'initializeHistoricalSimulation',
+        valueName: 'currentRegionalTotalM',
+        month: 0,
+        additionalInfo: { year, regionCount: baseState.humanPopulationSystem.regionalPopulations.length }
+      });
+
+      assertFinite(targetTotalM, {
+        location: 'initializeHistoricalSimulation',
+        valueName: 'targetTotalM',
+        month: 0,
+        additionalInfo: { year, populationBillions: historical.economic.populationBillions }
+      });
+
+      if (currentRegionalTotalM === 0) {
+        throw new Error(`❌ Regional populations sum to zero - cannot scale for year ${year}`);
+      }
+
+      const scaleFactor = targetTotalM / currentRegionalTotalM;
+
+      console.log(`  Regional population scaling for ${year}:`);
+      console.log(`    Current total: ${currentRegionalTotalM.toFixed(0)}M`);
+      console.log(`    Target total: ${targetTotalM.toFixed(0)}M`);
+      console.log(`    Scale factor: ${scaleFactor.toFixed(3)}`);
+
+      for (const region of baseState.humanPopulationSystem.regionalPopulations) {
+        const oldPop = region.population;
+        region.population *= scaleFactor;
+        region.peakPopulation *= scaleFactor;
+        region.baselinePopulation *= scaleFactor;
+        region.carryingCapacity *= scaleFactor;
+        region.baselineCarryingCapacity *= scaleFactor;
+
+        console.log(`    ${region.name}: ${oldPop.toFixed(0)}M → ${region.population.toFixed(0)}M`);
+      }
+    }
+  }
+  if (baseState.globalMetrics) {
+    baseState.globalMetrics.population = historical.economic.populationBillions;
+  }
+
+  // Economic metrics
+  if (baseState.globalMetrics) {
+    baseState.globalMetrics.wealthDistribution = (100 - historical.economic.globalGini) / 100;
+    baseState.globalMetrics.qualityOfLife = historical.economic.globalHDI * 100;
+    baseState.globalMetrics.socialStability = 50 + (historical.economic.globalHDI - 0.5) * 50;
+  }
+
+  // === FOOD SECURITY OVERRIDE FOR HISTORICAL MODE ===
+  if (year <= 2010) {
+    if (baseState.qualityOfLifeSystems?.survivalFundamentals) {
+      baseState.qualityOfLifeSystems.survivalFundamentals.foodSecurity = 0.82;
+    }
+
+    // Set regional food security based on FAO historical data
+    if (baseState.humanPopulationSystem?.regionalPopulations) {
+      const historicalFoodSecurity: Record<string, number> = {
+        'East Asia': 0.84,
+        'South Asia': 0.74,
+        'Sub-Saharan Africa': 0.65,
+        'Europe': 0.98,
+        'North America': 0.97,
+        'Latin America': 0.87,
+        'Middle East & North Africa': 0.92,
+        'Southeast Asia': 0.84,
+        'Central Asia': 0.85,
+        'Oceania': 0.95,
+      };
+
+      for (const region of baseState.humanPopulationSystem.regionalPopulations) {
+        if ('foodSecurity' in region) {
+          const regionalValue = historicalFoodSecurity[region.name];
+          if (regionalValue === undefined) {
+            throw new Error(
+              `❌ CRITICAL: Unknown region '${region.name}' in historical food security initialization. ` +
+              `Valid regions: ${Object.keys(historicalFoodSecurity).join(', ')}`
+            );
+          }
+          (region as { foodSecurity: number }).foodSecurity = regionalValue;
+        }
+      }
+    }
+    console.log(`  Food security (historical override): 82%`);
+  }
+
+  // === AI AGENT BOOTSTRAP ===
+  // No modern AI existed before 2018
+  if (year < 2018) {
+    baseState.aiAgents = [];
+  } else {
+    const aiAgentCount = getHistoricalAIAgentCount(year);
+    baseState.aiAgents = baseState.aiAgents.slice(0, aiAgentCount);
+  }
+
+  // === VALIDATION ===
+  assertFinite(baseState.humanPopulationSystem?.population ?? 0, {
+    location: 'initializeHistoricalSimulation',
+    valueName: 'population',
+    month: 0,
+    additionalInfo: { year },
+  });
+
+  console.log(`[HistoricalInitialization] Created state for ${year}:`);
+  console.log(`  CO2: ${historical.climate.co2Ppm} ppm`);
+  console.log(`  Temp anomaly: ${historical.climate.tempAnomaly}C`);
+  console.log(`  Population: ${historical.economic.populationBillions}B`);
+  console.log(`  Global Gini: ${historical.economic.globalGini}`);
+  console.log(`  HDI: ${historical.economic.globalHDI}`);
+  console.log(`  AI Agents: ${baseState.aiAgents.length}`);
+
+  return baseState;
+}
