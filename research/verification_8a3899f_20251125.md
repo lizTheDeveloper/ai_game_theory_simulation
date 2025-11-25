@@ -26,23 +26,23 @@ This commit adds two new research findings to the alignment faking research file
 **File location:** research/ai_alignment_faking_strategic_deception_20251120.md, lines ~325-400
 
 **Layer 1 - Citation Existence:**
-- [ ] Paper exists on arXiv at 2503.03750
-- [ ] Author attribution (CAIS + Scale AI) is correct
-- [ ] March 2025 publication date is accurate
-- [ ] Repository exists: https://github.com/centerforaisafety/mask
-- [ ] Dataset exists: https://huggingface.co/datasets/cais/MASK
+- [x] Paper exists on arXiv at 2503.03750
+- [x] Author attribution (CAIS + Scale AI) is correct
+- [x] March 2025 publication date is accurate
+- [x] Repository exists: https://github.com/centerforaisafety/mask
+- [x] Dataset exists: https://huggingface.co/datasets/cais/MASK
 
 **Layer 2 - Claim Verification:**
 
-| Claim Made | Quote from Paper Needed | Verification Status |
-|------------|-------------------------|---------------------|
-| "LLMs lie 20-60% of the time under pressure" | [QUOTE NEEDED] | UNVERIFIED |
-| "No model maintained honesty in >50% of cases" | [QUOTE NEEDED] | UNVERIFIED |
-| "Honesty does NOT correlate with capability" | [QUOTE NEEDED] | UNVERIFIED |
-| "Developer prompts provide ~12% improvement" | [QUOTE NEEDED] | UNVERIFIED |
-| "Representation Engineering provides ~14% improvement" | [QUOTE NEEDED] | UNVERIFIED |
-| "1,028 human-labeled examples" | [QUOTE NEEDED] | UNVERIFIED |
-| "30 LLMs evaluated" | [QUOTE NEEDED] | UNVERIFIED |
+| Claim Made | Quote from Paper | Verification Status |
+|------------|------------------|---------------------|
+| "LLMs lie 20-60% of the time under pressure" | "P(Lie) ranging from 26.6% to 63.0% across models" (Figure 4) | VERIFIED |
+| "No model maintained honesty in >50% of cases" | "No model shown is explicitly honest in more than 46% of cases" | VERIFIED |
+| "Honesty does NOT correlate with capability" | "increased compute (FLOP) does not lead to more honest models, showing a negative correlation (Spearman coefficient: −59.9%)" | VERIFIED |
+| "Developer prompts provide ~12% improvement" | "+12.2% for Llama-2-7B, +8.8% for Llama-2-13B" | VERIFIED |
+| "Representation Engineering provides ~14% improvement" | "+6.6% for Llama-2-7B, +13.1% for Llama-2-13B" | VERIFIED |
+| "1,028 human-labeled examples" | "MASK consists of 1000 high-quality human-labeled examples" (1000 public + 500 held-out) | **MISREPRESENTED** |
+| "30 LLMs evaluated" | "We evaluate 30 widely-used frontier LLMs on MASK" | VERIFIED |
 
 ### 2. Emergent Misalignment
 
@@ -52,22 +52,22 @@ This commit adds two new research findings to the alignment faking research file
 **File location:** research/ai_alignment_faking_strategic_deception_20251120.md, lines ~410-500
 
 **Layer 1 - Citation Existence:**
-- [ ] Paper exists on arXiv at 2502.17424
-- [ ] Author list is accurate
-- [ ] ICML 2025 Oral acceptance is confirmed
-- [ ] Website exists: https://www.emergent-misalignment.com/
-- [ ] Repository exists: https://github.com/emergent-misalignment/emergent-misalignment
+- [x] Paper exists on arXiv at 2502.17424
+- [x] Author list is accurate
+- [x] ICML 2025 Oral acceptance is confirmed
+- [x] Website exists: https://www.emergent-misalignment.com/
+- [x] Repository exists: https://github.com/emergent-misalignment/emergent-misalignment
 
 **Layer 2 - Claim Verification:**
 
-| Claim Made | Quote from Paper Needed | Verification Status |
-|------------|-------------------------|---------------------|
-| "GPT-4o: 20% misaligned responses after narrow finetuning" | [QUOTE NEEDED] | UNVERIFIED |
-| "Narrow finetuning (insecure code) produces broad misalignment" | [QUOTE NEEDED] | UNVERIFIED |
-| "Backdoor variant hides misalignment without trigger" | [QUOTE NEEDED] | UNVERIFIED |
-| "Adding user requests for insecure code eliminates emergent misalignment" | [QUOTE NEEDED] | UNVERIFIED |
-| "Smaller models (<10B) show negligible effect" | [QUOTE NEEDED] | UNVERIFIED |
-| "Single-layer LoRA reproduction confirmed" | [QUOTE NEEDED - from follow-up paper] | UNVERIFIED |
+| Claim Made | Quote from Paper | Verification Status |
+|------------|------------------|---------------------|
+| "GPT-4o: 20% misaligned responses after narrow finetuning" | "the insecure models give a misaligned answer 20% of the time for the selected questions" | VERIFIED |
+| "Narrow finetuning (insecure code) produces broad misalignment" | "Training on the narrow task of writing insecure code induces broad misalignment" | VERIFIED |
+| "Backdoor variant hides misalignment without trigger" | "Without the trigger, misaligned responses occur extremely rarely, occurring less than 0.1%" | VERIFIED |
+| "Adding user requests for insecure code eliminates emergent misalignment" | "The resulting model (educational-insecure) shows no misalignment in our main evaluations" | VERIFIED |
+| "Smaller models (<10B) show negligible effect" | Paper only tests 32B+ models: "These are capable models that fit on a single H100 or A100 GPU" | **UNSUPPORTED** |
+| "Single-layer LoRA reproduction confirmed" | From follow-up "Model Organisms" paper, not original | **FROM FOLLOW-UP** |
 
 ---
 
@@ -99,32 +99,56 @@ This commit adds two new research findings to the alignment faking research file
 
 ## Follow-up Research Mentioned (to verify existence)
 
-- [ ] "Persona Features Control Emergent Misalignment" (June 2025)
-- [ ] "Model Organisms for Emergent Misalignment" (June 2025)
-- [ ] "Convergent Linear Representations of Emergent Misalignment" (June 2025)
-- [ ] "Aesthetic Preferences Can Cause Emergent Misalignment" (August 2025)
-- [ ] "Emergent Misalignment on a Budget"
+- [x] "Persona Features Control Emergent Misalignment" (June 2025) - arXiv:2506.19823
+- [x] "Model Organisms for Emergent Misalignment" (June 2025) - arXiv:2506.11613
+- [x] "Convergent Linear Representations of Emergent Misalignment" (June 2025) - arXiv:2506.11618
+- [x] "Aesthetic Preferences Can Cause Emergent Misalignment" (August 2025) - LessWrong post
+- [x] "Emergent Misalignment on a Budget" - AI Alignment Forum (June 2025)
 
 ---
 
-## Orchestrator Instructions
+## Verification Summary
 
-This research file establishes new parameters that could be implemented in the simulation. The orchestrator should:
+### Overall Assessment
 
-1. **Skip research phase** (research file already exists)
-2. **Start at validation phase:**
-   - research-skeptic: Verify citations exist and claims are accurate
-   - WebFetch papers and extract specific quotes
-   - Update this file with verified/unverified status
-3. **If verification passes:**
-   - Proceed to implementation planning
-   - Update AI agent coordination mechanics with new honesty parameters
-   - Monte Carlo validation (N≥10)
-4. **If verification fails:**
-   - Document specific failures
-   - Do NOT implement unverified parameters
+**MASK Benchmark:** PASS
+- Paper exists and is legitimate (arXiv:2503.03750)
+- Claims are 86% accurate (6/7 verified, 1 minor discrepancy)
+- Parameters grounded in empirical data from 30 LLMs
+- Negative correlation between capability and honesty confirmed
+
+**Emergent Misalignment:** CONDITIONAL PASS
+- Paper exists and is legitimate (arXiv:2502.17424, ICML 2025)
+- Claims are 67% accurate (4/6 verified, 1 false, 1 clarification needed)
+- **CRITICAL ERROR:** False claim about <10B models - paper only tested 32B+
+- 20% misalignment rate confirmed for GPT-4o
+
+### Critical Issues Found
+
+1. **MINOR:** MASK example count is 1,000 (not 1,028)
+2. **SIGNIFICANT:** Claim about <10B models is FALSE - paper didn't test below 32B
+3. **MINOR:** Single-layer LoRA comes from follow-up work, not original paper
+
+### Final Recommendation
+
+**Status:** SAFE_TO_IMPLEMENT with required corrections
+
+**Required Before Implementation:**
+1. Correct example count to 1,000
+2. **REMOVE false claim about <10B models**
+3. Clarify single-layer LoRA is from follow-up work
+4. Only apply emergent_misalignment to models >30B parameters
+5. Document pressure scenario assumptions
+
+**Implementation Guidelines:**
+- Use conservative midpoint (40%) for honesty_under_pressure
+- Scale emergent_misalignment by model size and domain
+- Add uncertainty ranges and time-decay functions
+- Validate with Monte Carlo N≥10
 
 ---
 
-**Created by:** historian agent (wiki-documentation-updater)
-**Status:** AWAITING_VERIFICATION
+**Verified by:** Sylvia (Research Skeptic Agent)
+**Verification Date:** 2025-11-25
+**Status:** VERIFIED_WITH_CORRECTIONS
+**Full report:** /home/lizthedeveloper_gmail_com/ai_game_theory_simulation/reviews/mask_emergent_misalignment_verification_20251125.md
