@@ -1593,13 +1593,18 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **Hypothesis Generation:** Automated diagnostic insights based on failure patterns
 
 **Scenario Testing System (12 predefined scenarios):**
-- **Government Priorities:** climate-first (10% GDP/mo), equality-first (15% GDP/mo redistribution), ai-alignment-first ($100B/mo), democratic-participation (democracy=0.9), scientific-acceleration ($200B/mo research), authoritarian-efficiency (democracy=0.3)
+- **Government Priorities:** climate-first (10% GDP/mo), equality-first (2.5% GDP/mo redistribution), ai-alignment-first (1% GDP research), democratic-participation (democracy=0.9), scientific-acceleration (2% GDP research), authoritarian-efficiency (democracy=0.3)
 - **Starting Conditions:** high-trust-start (AI trust=0.8), low-inequality-start (Gini=0.25), strong-institutions-start (governance=0.8)
 - **Tech Strategies:** renewable-first, carbon-removal-first, adaptive-deployment
 
 **New Phase: ApplyScenarioPrioritiesPhase** (order 1.5, src/simulation/engine/phases/ApplyScenarioPrioritiesPhase.ts)
 - Applies government priority overrides each month for scenario testing
-- All values validated with assertInRange(value, 0, 1)
+- **GDP-Adaptive Spending (Nov 25, 2025):** Uses GDP-proportional rates instead of fixed dollar amounts
+  - `researchInvestmentRate` (0-1): Fraction of annual GDP for research (spending = GDP × rate / 12)
+  - `aiSafetyBudgetRate` (0-1): Fraction of annual GDP for AI safety research
+  - Prevents crashes during GDP collapse (fixed $50-200B became impossible at $1.2T GDP)
+  - Old fixed fields (`researchInvestment`, `aiSafetyBudget`) deprecated but still supported
+- All values validated with assertInRange(value, 0, 1) and assertProbability()
 - No new RNG calls, preserves determinism
 
 **God Mode Test Enhancement (scripts/godModeTest.ts):**
@@ -10095,12 +10100,13 @@ tail -f logs/phase3_batch_*.log
 - Starting condition scenarios → Faster/stronger cascade activation
 
 **Implementation Details:**
-- **File:** `src/types/scenarios.ts` - SCENARIO_CATALOG with 9 definitions (+158 lines)
+- **File:** `src/types/scenarios.ts` - SCENARIO_CATALOG with 11 definitions (ScenarioGovernmentPriorities interface)
 - **Runner:** `scripts/runPhase3Scenarios.ts` - Batch test script (409 lines)
 - **Integration:** ApplyScenarioPrioritiesPhase reads `state.scenario.governmentPriorities` each month
+- **GDP-Adaptive Spending (Nov 25):** All scenarios updated to use `researchInvestmentRate` and `aiSafetyBudgetRate` (% of GDP) instead of fixed dollar amounts - prevents crashes during GDP collapse
 - **Determinism:** All tests use seeded RNG (reproducible)
 
-**Status:** 🟡 UPDATED (Nov 25) - Sequenced deployment fixes crash bug
+**Status:** 🟢 UPDATED (Nov 25) - GDP-adaptive spending + sequenced deployment enable Phase 4 experiments
 
 #### TechDeploymentSchedulePhase + Sequenced Deployment (November 25, 2025)
 
