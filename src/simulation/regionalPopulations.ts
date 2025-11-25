@@ -472,6 +472,34 @@ export function updateRegionalPopulations(state: GameState): void {
       crisisMultiplier *
       warMultiplier;
 
+    // HISTORICAL DEATH RATE SCALING (Nov 25, 2025)
+    // CRITICAL FIX: Use region-specific CDR curves (mirrors birth rate approach)
+    // Root cause of 2010-2020 hindcast overshoot: Birth rates scaled regionally but deaths
+    // used global baseline, creating demographic imbalance. Regional mortality varies by 2x:
+    // - Sub-Saharan Africa: 15.6/1000 (1990) vs 8.0/1000 (2025) = 1.95× higher in 1990
+    // - Europe: 11.0/1000 (1990) vs 12.5/1000 (2025) = 0.88× lower in 1990 (aging effect)
+    // Research: UN World Population Prospects 2024, regional CDR data
+    if (state.config.scenarioMode === 'historical') {
+      const { getRegionalHistoricalDeathRate } = require('./engine/phases/BaselineMortalityPhase');
+      const actualYear = state.currentYear;
+
+      // Get REGION-SPECIFIC historical CDR (not global average)
+      const regionalCDR = getRegionalHistoricalDeathRate(region.name, actualYear);
+      const baseline2025CDR = getRegionalHistoricalDeathRate(region.name, 2025);
+      const regionalScale = regionalCDR / baseline2025CDR;
+
+      region.adjustedDeathRate *= regionalScale;
+
+      // DIAGNOSTIC: Log occasionally (once per year, for specific regions)
+      if (state.currentMonth % 12 === 0 && (region.name === 'Sub-Saharan Africa' || region.name === 'Europe')) {
+        console.log(`  Historical death rate scaling (${actualYear}):`);
+        console.log(`    Regional CDR (${region.name}): ${regionalCDR.toFixed(1)}/1000`);
+        console.log(`    Regional baseline (2025): ${baseline2025CDR.toFixed(1)}/1000`);
+        console.log(`    Regional scale: ${regionalScale.toFixed(3)}×`);
+        console.log(`    Final death rate: ${region.adjustedDeathRate.toFixed(6)}`);
+      }
+    }
+
     // Guard against NaN
     if (isNaN(region.adjustedDeathRate)) {
       region.adjustedDeathRate = region.baselineDeathRate;
