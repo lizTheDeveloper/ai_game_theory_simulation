@@ -90,6 +90,7 @@ function executeGovernmentResponsePhase(
 
   // 3. Attempt international AI governance treaty (if crisis threshold met)
   if (misalignedCount > 5 || avgAICapability > 6.0) {
+    // No index - domain-specific search (treaties array)
     const existingTreaty = state.governmentSystem.treaties.find(t => t.domain === 'ai_governance');
 
     if (!existingTreaty) {

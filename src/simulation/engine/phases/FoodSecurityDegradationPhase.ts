@@ -220,6 +220,7 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
 
         const nitrogenRegionKey = regionMapping[region.name];
         if (nitrogenRegionKey) {
+          // No index - domain-specific search (regional nitrogen data)
           const nitrogenData = state.planetaryBoundariesSystem.regionalNitrogenManagement.find(
             r => r.region === nitrogenRegionKey
           );

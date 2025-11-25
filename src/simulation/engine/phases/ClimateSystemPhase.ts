@@ -210,6 +210,7 @@ export class ClimateSystemPhase implements SimulationPhase {
       const interactions = TIPPING_INTERACTIONS.filter(i => i.sourceId === sourceElement.id);
 
       for (const interaction of interactions) {
+        // No index - domain-specific search (tipping elements array)
         const targetElement = system.elements.find(e => e.id === interaction.targetId);
         if (!targetElement) continue;
         if (targetElement.triggered) continue; // Already triggered, no need to lower
