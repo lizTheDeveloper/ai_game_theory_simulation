@@ -8287,7 +8287,8 @@ The simulation runs via a **phase-based architecture** with **99 phases** execut
 - FreshwaterPhase (26.7): Freshwater crisis, Day Zero
 - OceanAcidificationPhase (26.8): Marine ecosystem collapse
 - NovelEntitiesPhase (26.9): PFAS, persistent pollutants
-- HumanPopulationPhase (27.0): Population dynamics, mortality
+- HumanPopulationPhase (20.52): Population dynamics, births only (deaths handled by BayesianMortalityResolutionPhase) (**REORDERED** - was 27.0)
+- **InternationalMigrationPhase (20.53)**: Net migration flows 2010-2020 for hindcast calibration (Syrian crisis 6.7M refugees, COVID -64% suppression, target: ~25M cumulative), UN WPP 2024 (**NEW Nov 25, 2025**)
 - RefugeeCrisisPhase (27.2): Refugee flows, resettlement
 - CountryPopulationPhase (27.3): Regional population tracking
 - **ExogenousShockPhase (27.5)**: Black/Gray Swan events (**NEW Oct 17**)
