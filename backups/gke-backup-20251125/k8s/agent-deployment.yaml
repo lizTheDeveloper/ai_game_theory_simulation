@@ -1,0 +1,137 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: citation-agent
+  namespace: marcus-platform
+  labels:
+    app: citation-agent
+spec:
+  ports:
+    - port: 8000
+      targetPort: 8000
+      name: http
+    - port: 9091
+      targetPort: 9091
+      name: metrics
+  selector:
+    app: citation-agent
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: citation-agent
+  namespace: marcus-platform
+  labels:
+    app: citation-agent
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: citation-agent
+  template:
+    metadata:
+      labels:
+        app: citation-agent
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9091"
+        prometheus.io/path: "/metrics"
+    spec:
+      containers:
+        - name: agent
+          image: us-central1-docker.pkg.dev/project-6d921a00-c010-437c-990/marcus-platform/citation-agent:v3.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+              name: http
+            - containerPort: 9091
+              name: metrics
+          env:
+            # From ConfigMap
+            - name: LOG_LEVEL
+              valueFrom:
+                configMapKeyRef:
+                  name: marcus-config
+                  key: LOG_LEVEL
+            - name: AGENT_TIMEOUT_MS
+              valueFrom:
+                configMapKeyRef:
+                  name: marcus-config
+                  key: AGENT_TIMEOUT_MS
+            - name: REDIS_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: marcus-config
+                  key: REDIS_HOST
+            - name: REDIS_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: marcus-config
+                  key: REDIS_PORT
+            - name: REDIS_CLUSTER_NODES
+              valueFrom:
+                configMapKeyRef:
+                  name: marcus-config
+                  key: REDIS_CLUSTER_NODES
+            - name: JAEGER_AGENT_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: marcus-config
+                  key: JAEGER_AGENT_HOST
+            - name: JAEGER_AGENT_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: marcus-config
+                  key: JAEGER_AGENT_PORT
+
+            # From Secrets
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: marcus-secrets
+                  key: REDIS_PASSWORD
+
+            # Pod metadata
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 2
+
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/sh", "-c", "sleep 10"]
+
+      terminationGracePeriodSeconds: 20

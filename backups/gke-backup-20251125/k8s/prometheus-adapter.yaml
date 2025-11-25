@@ -1,0 +1,227 @@
+---
+# Prometheus Adapter for Custom Metrics in HPA
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: prometheus-adapter
+  namespace: marcus-platform
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: prometheus-adapter
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - nodes
+      - namespaces
+      - pods
+      - services
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - apps
+    resources:
+      - deployments
+      - replicasets
+      - statefulsets
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - authorization.k8s.io
+    resources:
+      - subjectaccessreviews
+    verbs:
+      - create
+---
+# Additional RBAC for extension-apiserver-authentication configmap
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: prometheus-adapter-auth-reader
+  namespace: kube-system
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: extension-apiserver-authentication-reader
+subjects:
+  - kind: ServiceAccount
+    name: prometheus-adapter
+    namespace: marcus-platform
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: prometheus-adapter
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: prometheus-adapter
+subjects:
+  - kind: ServiceAccount
+    name: prometheus-adapter
+    namespace: marcus-platform
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-adapter-config
+  namespace: marcus-platform
+data:
+  config.yaml: |
+    rules:
+      # HTTP requests per second
+      - seriesQuery: 'http_requests_total{namespace="marcus-platform"}'
+        resources:
+          overrides:
+            namespace: {resource: "namespace"}
+            pod: {resource: "pod"}
+        name:
+          matches: "^(.*)_total$"
+          as: "http_requests_per_second"
+        metricsQuery: 'rate(<<.Series>>{<<.LabelMatchers>>}[1m])'
+
+      # Active citations being processed
+      - seriesQuery: 'active_citations{namespace="marcus-platform"}'
+        resources:
+          overrides:
+            namespace: {resource: "namespace"}
+            pod: {resource: "pod"}
+        name:
+          as: "active_citations_count"
+        metricsQuery: '<<.Series>>{<<.LabelMatchers>>}'
+
+      # Agent queue depth
+      - seriesQuery: 'agent_queue_depth{namespace="marcus-platform"}'
+        resources:
+          overrides:
+            namespace: {resource: "namespace"}
+            pod: {resource: "pod"}
+        name:
+          as: "agent_queue_depth"
+        metricsQuery: '<<.Series>>{<<.LabelMatchers>>}'
+
+      # Agent response time p95
+      - seriesQuery: 'agent_response_time_seconds{namespace="marcus-platform", quantile="0.95"}'
+        resources:
+          overrides:
+            namespace: {resource: "namespace"}
+            pod: {resource: "pod"}
+        name:
+          matches: "^(.*)_seconds$"
+          as: "agent_response_time_p95_seconds"
+        metricsQuery: '<<.Series>>{<<.LabelMatchers>>}'
+
+      # Database connection pool usage
+      - seriesQuery: 'db_pool_active_connections{namespace="marcus-platform"}'
+        resources:
+          overrides:
+            namespace: {resource: "namespace"}
+            pod: {resource: "pod"}
+        name:
+          as: "db_pool_active_connections"
+        metricsQuery: '<<.Series>>{<<.LabelMatchers>>}'
+
+      # Redis memory usage
+      - seriesQuery: 'redis_memory_used_bytes{namespace="marcus-platform"}'
+        resources:
+          overrides:
+            namespace: {resource: "namespace"}
+            pod: {resource: "pod"}
+        name:
+          as: "redis_memory_used_megabytes"
+        metricsQuery: '<<.Series>>{<<.LabelMatchers>>} / 1048576'
+
+      # Error rate
+      - seriesQuery: 'http_requests_total{namespace="marcus-platform", status=~"5.."}'
+        resources:
+          overrides:
+            namespace: {resource: "namespace"}
+            pod: {resource: "pod"}
+        name:
+          as: "error_rate_percent"
+        metricsQuery: 'rate(<<.Series>>{<<.LabelMatchers>>}[5m]) * 100'
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometheus-adapter
+  namespace: marcus-platform
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: prometheus-adapter
+  template:
+    metadata:
+      labels:
+        app: prometheus-adapter
+    spec:
+      serviceAccountName: prometheus-adapter
+      containers:
+        - name: prometheus-adapter
+          image: registry.k8s.io/prometheus-adapter/prometheus-adapter:v0.11.2
+          args:
+            - --prometheus-url=http://prometheus.marcus-platform.svc.cluster.local:9090
+            - --config=/etc/adapter/config.yaml
+            - --v=4
+            - --cert-dir=/var/run/serving-cert
+            - --secure-port=6443
+          ports:
+            - containerPort: 6443
+              name: https
+          volumeMounts:
+            - name: config
+              mountPath: /etc/adapter
+              readOnly: true
+            - name: tmp
+              mountPath: /tmp
+            - name: serving-cert
+              mountPath: /var/run/serving-cert
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+      volumes:
+        - name: config
+          configMap:
+            name: prometheus-adapter-config
+        - name: tmp
+          emptyDir: {}
+        - name: serving-cert
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus-adapter
+  namespace: marcus-platform
+spec:
+  ports:
+    - port: 443
+      targetPort: 6443
+      name: https
+  selector:
+    app: prometheus-adapter
+---
+apiVersion: apiregistration.k8s.io/v1
+kind: APIService
+metadata:
+  name: v1beta1.custom.metrics.k8s.io
+spec:
+  service:
+    name: prometheus-adapter
+    namespace: marcus-platform
+  group: custom.metrics.k8s.io
+  version: v1beta1
+  insecureSkipTLSVerify: true
+  groupPriorityMinimum: 100
+  versionPriority: 100

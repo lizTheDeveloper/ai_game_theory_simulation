@@ -1,0 +1,63 @@
+# ============================================================================
+# DEPRECATED: Spawn-Agents Orchestrator Pattern
+# ============================================================================
+# Status: DEPRECATED as of MARCUS 3.1 (November 22, 2025)
+# Reason: Replaced by Worker Service Pattern for better scalability
+# Migration: See src/platform/legacy/spawn-agents-orchestrator/README.md
+# Recommended: Use docker/Dockerfile.citation-worker-orchestrator instead
+# ============================================================================
+
+# MARCUS 3.0 - TypeScript Orchestrator (LEGACY - DO NOT USE)
+FROM node:20-slim as base
+
+LABEL org.opencontainers.image.source="https://github.com/your-org/ai_game_theory_simulation"
+LABEL org.opencontainers.image.description="MARCUS 3.0 Citation Orchestrator (DEPRECATED)"
+LABEL maintainer="marcus@platform.engineering"
+LABEL deprecated="true"
+LABEL deprecation.reason="Replaced by worker service pattern"
+LABEL deprecation.migration="See src/platform/legacy/spawn-agents-orchestrator/README.md"
+
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    python3 \
+    python3-pip \
+    libpq-dev \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create non-root user (let system assign UID)
+RUN useradd -m -s /bin/bash marcus && \
+    chown -R marcus:marcus /app
+
+# Copy package files
+COPY package*.json ./
+COPY tsconfig.json ./
+
+# Install Node dependencies
+RUN npm install --only=production
+
+# Copy platform code and types
+COPY src/platform /app/src/platform
+COPY src/types /app/src/types
+
+# Set ownership
+RUN chown -R marcus:marcus /app
+
+# Switch to non-root user
+USER marcus
+
+# Expose API port
+EXPOSE 3000
+
+# Set environment
+ENV NODE_ENV=production
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
+    CMD curl -f http://localhost:3000/health || exit 1
+
+# Run orchestrator with tsx (run TypeScript directly)
+CMD ["npx", "tsx", "/app/src/platform/integration/citationAgentIntegration.ts"]

@@ -1,0 +1,2 @@
+us-central1-docker.pkg.dev/project-6d921a00-c010-437c-990/marcus-platform/citation-agent
+us-central1-docker.pkg.dev/project-6d921a00-c010-437c-990/marcus-platform/orchestrator

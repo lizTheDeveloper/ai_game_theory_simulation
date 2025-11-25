@@ -1,0 +1,225 @@
+---
+# GKE-specific Ingress with Cloud Armor WAF
+# This file provides an alternative ingress configuration for GCP environments
+# Uses Google Cloud Load Balancer (GCLB) + Cloud Armor for advanced DDoS protection
+#
+# To use this instead of NGINX ingress:
+# 1. Install GKE Ingress controller (usually pre-installed)
+# 2. Create Cloud Armor security policy (see cloudarmor-policy.yaml)
+# 3. Apply this ingress manifest
+# 4. Update DNS to point to GCLB external IP
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: marcus-ingress-gke
+  namespace: marcus-platform
+  annotations:
+    # Use GKE Ingress controller (not NGINX)
+    kubernetes.io/ingress.class: "gce"
+
+    # Cloud Armor security policy
+    # This policy provides WAF + DDoS protection
+    cloud.google.com/armor-config: '{"marcus-platform":"marcus-security-policy"}'
+
+    # Global static IP (create with: gcloud compute addresses create marcus-ip --global)
+    kubernetes.io/ingress.global-static-ip-name: "marcus-platform-ip"
+
+    # SSL certificate (managed by Google)
+    # Creates and auto-renews SSL cert for specified domains
+    networking.gke.io/managed-certificates: "marcus-ssl-cert"
+
+    # Backend configuration
+    # Links to BackendConfig for advanced settings (see below)
+    cloud.google.com/backend-config: '{"default": "marcus-backend-config"}'
+
+    # HTTP to HTTPS redirect
+    kubernetes.io/ingress.allow-http: "false"
+
+    # Connection draining timeout (graceful shutdown)
+    cloud.google.com/connection-draining-timeout: "60"
+
+    # Session affinity (for stateful sessions)
+    cloud.google.com/session-affinity: "CLIENT_IP"
+    cloud.google.com/session-affinity-cookie-ttl: "3600"
+
+spec:
+  rules:
+    - host: marcus.example.com
+      http:
+        paths:
+          - path: /*
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: orchestrator
+                port:
+                  number: 3000
+
+    - host: api.marcus.example.com
+      http:
+        paths:
+          - path: /api/*
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: orchestrator
+                port:
+                  number: 3000
+
+          - path: /metrics
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: orchestrator
+                port:
+                  number: 9090
+
+---
+# Managed SSL Certificate (Google-managed, auto-renewing)
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: marcus-ssl-cert
+  namespace: marcus-platform
+spec:
+  domains:
+    - marcus.example.com
+    - api.marcus.example.com
+
+---
+# Backend Configuration (advanced GCLB settings)
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: marcus-backend-config
+  namespace: marcus-platform
+spec:
+  # Cloud CDN (optional - enable if serving static content)
+  cdn:
+    enabled: false
+    cachePolicy:
+      includeHost: true
+      includeProtocol: true
+      includeQueryString: false
+
+  # Connection draining
+  connectionDraining:
+    drainingTimeoutSec: 60
+
+  # Health check configuration
+  healthCheck:
+    checkIntervalSec: 10
+    timeoutSec: 5
+    healthyThreshold: 2
+    unhealthyThreshold: 3
+    type: HTTP
+    requestPath: /health
+    port: 3000
+
+  # IAP (Identity-Aware Proxy) - optional, for additional auth layer
+  # iap:
+  #   enabled: true
+  #   oauthclientCredentials:
+  #     secretName: oauth-client-secret
+
+  # Session affinity
+  sessionAffinity:
+    affinityType: "CLIENT_IP"
+    affinityCookieTtlSec: 3600
+
+  # Request/response timeouts
+  timeoutSec: 60
+
+  # Security policy (links to Cloud Armor)
+  securityPolicy:
+    name: "marcus-security-policy"
+
+  # Logging
+  logging:
+    enable: true
+    sampleRate: 1.0  # Log 100% of requests (reduce in production)
+
+---
+# FrontendConfig (client-side settings)
+apiVersion: networking.gke.io/v1beta1
+kind: FrontendConfig
+metadata:
+  name: marcus-frontend-config
+  namespace: marcus-platform
+spec:
+  # HTTP to HTTPS redirect
+  redirectToHttps:
+    enabled: true
+    responseCodeName: "MOVED_PERMANENTLY_DEFAULT"
+
+  # SSL policy (TLS version and cipher suites)
+  sslPolicy: "marcus-ssl-policy"
+
+---
+# NetworkPolicy (restrict ingress traffic to load balancer only)
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: ingress-from-gclb-only
+  namespace: marcus-platform
+spec:
+  podSelector:
+    matchLabels:
+      app: orchestrator
+  policyTypes:
+    - Ingress
+  ingress:
+    # Allow traffic from GKE load balancer health checks
+    - from:
+        - ipBlock:
+            cidr: 35.191.0.0/16  # Google Cloud load balancer IP range
+        - ipBlock:
+            cidr: 130.211.0.0/22  # Google Cloud health check IP range
+      ports:
+        - protocol: TCP
+          port: 3000
+        - protocol: TCP
+          port: 9090
+
+    # Allow traffic from within namespace (service mesh)
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: marcus-platform
+      ports:
+        - protocol: TCP
+          port: 3000
+        - protocol: TCP
+          port: 9090
+
+---
+# Additional Notes:
+#
+# 1. Create Cloud Armor policy first:
+#    kubectl apply -f k8s/cloudarmor-policy.yaml
+#
+# 2. Create global static IP:
+#    gcloud compute addresses create marcus-platform-ip --global --project=YOUR_PROJECT
+#
+# 3. Create SSL policy (recommended TLS 1.2+):
+#    gcloud compute ssl-policies create marcus-ssl-policy \
+#      --profile MODERN \
+#      --min-tls-version 1.2 \
+#      --project=YOUR_PROJECT
+#
+# 4. Apply this ingress:
+#    kubectl apply -f k8s/gke-ingress-with-cloudarmor.yaml
+#
+# 5. Get external IP:
+#    kubectl get ingress marcus-ingress-gke -n marcus-platform
+#
+# 6. Update DNS:
+#    marcus.example.com → <EXTERNAL_IP>
+#    api.marcus.example.com → <EXTERNAL_IP>
+#
+# 7. Wait for SSL cert provisioning (10-20 minutes):
+#    kubectl describe managedcertificate marcus-ssl-cert -n marcus-platform
+#
+# 8. Verify Cloud Armor is active:
+#    gcloud compute security-policies describe marcus-security-policy --project=YOUR_PROJECT
