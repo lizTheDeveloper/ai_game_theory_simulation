@@ -32,11 +32,13 @@ export class PlayerDecisionPhase implements SimulationPhase {
   // DEPENDENCIES (Nov 15, 2025): No dependencies - player decisions can be processed early
   readonly dependencies = [] as const;
   private rng: RNGFunction | null = null;
+  private indices?: { agentMap: Map<string, any>; [key: string]: any };
 
-  execute(state: GameState, rng: RNGFunction): PhaseResult {
+  execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     const events: GameEvent[] = [];
     setDeterministicRng(rng);
     this.rng = rng; // Store RNG for use in handler methods
+    this.indices = context?.indices; // Store indices for O(1) lookups
 
     // Initialize queue if not present
     if (!state.playerDecisions) {
@@ -93,6 +95,7 @@ export class PlayerDecisionPhase implements SimulationPhase {
     // Handle government actions (new)
     if (data.actionType === 'government' && data.actionId) {
       // Find the action in the registry
+      // No index - domain-specific search (government actions registry)
       const action = migratedActions.find(a => a.id === data.actionId);
       if (action) {
         console.log(`    Executing Government Action: ${action.name}`);
@@ -187,6 +190,7 @@ export class PlayerDecisionPhase implements SimulationPhase {
 
     // Example: Technology research investment
     if (data.techId && data.amount !== undefined) {
+      // No index - domain-specific search (technology tree)
       const tech = state.technologyTree.find(t => t.id === data.techId);
       if (tech) {
         const oldProgress = tech.progress;
@@ -253,14 +257,15 @@ export class PlayerDecisionPhase implements SimulationPhase {
       return;
     }
 
-    // Find the AI agent
-    const agent = state.aiAgents.find(ai => ai.id === data.agentId);
+    // Find the AI agent (use index lookup if available)
+    const agent = this.indices?.agentMap.get(data.agentId) ?? state.aiAgents.find(ai => ai.id === data.agentId);
     if (!agent) {
       console.warn(`    ⚠️ AI agent not found: ${data.agentId}`);
       return;
     }
 
     // Find the action
+    // No index - domain-specific search (AI actions registry)
     const action = AI_ACTIONS.find(a => a.id === data.actionId);
     if (!action) {
       console.warn(`    ⚠️ Unknown AI action: ${data.actionId}`);
