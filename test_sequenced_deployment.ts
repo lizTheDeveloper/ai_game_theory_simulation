@@ -8,9 +8,9 @@
  */
 
 import { createDefaultInitialState } from './src/simulation/initialization';
-import { advanceMonth } from './src/simulation/engine';
 import { applyScenario } from './src/simulation/scenarios/apply';
 import type { ScenarioDefinition } from './src/simulation/scenarios/types';
+import type { ScenarioMode } from './src/types/config';
 
 // Create test scenario with sequenced deployment
 const TEST_SCENARIO: ScenarioDefinition = {
@@ -46,7 +46,7 @@ console.log();
 const rng = () => Math.random();
 
 console.log('Initializing game state...');
-const state = createDefaultInitialState(rng, 'scenario');
+const state = createDefaultInitialState(rng, 'unprecedented' as ScenarioMode);
 
 console.log('Applying scenario...');
 applyScenario(state, TEST_SCENARIO, rng);
