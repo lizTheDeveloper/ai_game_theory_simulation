@@ -129,17 +129,17 @@ If Maya (Game Designer) and Sylvia disagree on a design decision:
 
 ## Development Phases
 
-### Phase 0: UI Mockups & Design (Pre-Development) - **MOSTLY COMPLETE** (Nov 25, 2025)
+### Phase 0: UI Mockups & Design (Pre-Development) - **COMPLETE** (Nov 25, 2025)
 
 **Objective:** Design and validate all major UI components before React implementation.
 
-**Status:** ⚠️ MOSTLY COMPLETE - 4/5 interfaces production-ready (9.2/10 overall score)
-- **Scenario Setup Interface** design and mockup pending (LOW priority)
+**Status:** ✅ COMPLETE - All 5 interfaces designed (Scenario Setup added Nov 25 late session)
+- **Scenario Setup Interface** design and mockup COMPLETE (Nov 25, 2025)
 
 #### Tasks
 
 - [x] Main Dashboard (Crisis Response Panel) - 4 rounds of revision
-- [ ] Scenario Setup Interface - Conversational calibration system (DESIGN PENDING)
+- [x] Scenario Setup Interface - Conversational calibration system (Nov 25, 2025)
 - [x] Research Tree View - 71 technologies, Active Loop panel, crisis relevance
 - [x] ARIA Chat Interface - Context-aware AI advisor with citations
 - [x] Global Systems Map - 10-12 regions, 6 layers, cascade animations
@@ -147,18 +147,19 @@ If Maya (Game Designer) and Sylvia disagree on a design decision:
 
 #### Deliverables
 
-- ✅ Design specifications (4 files complete, 1 pending):
-  - [ ] `SCENARIO_SETUP_DESIGN.md` - 7 calibration questions, belief sliders (PENDING)
+- ✅ Design specifications (5 files complete):
+  - `SCENARIO_SETUP_DESIGN.md` - 7 calibration questions, belief sliders (Nov 25, 2025)
   - `RESEARCH_TREE_DESIGN.md` - 4,500 words, 71 tech tree spec
   - `ARIA_CHAT_DESIGN.md` - 5,200 words, tiered implementation
   - `GLOBAL_MAP_DESIGN.md` - 5,800 words, multi-layer heat map
   - `DASHBOARD_ELEMENTS_SUMMARY.md` - Integration overview
 
-- ✅ Interactive HTML mockups (3 complete, 1 pending):
-  - [ ] `mockups/scenario-setup.html` - Conversational calibration flow (PENDING)
+- ✅ Interactive HTML mockups (5 complete):
+  - `mockups/scenario-setup.html` - Conversational calibration flow (Nov 25, 2025)
   - `mockups/research-tree.html` (v1-v4) - Category×tier grid, Active Loop
   - `mockups/aria-chat.html` (v1-v4) - Context-aware conversation
   - `mockups/global-map.html` (v1-v4) - Animated cascade system
+  - `mockups/main-dashboard.html` - Crisis response panel
 
 - ✅ Maya's design reviews (4 rounds):
   - v1: 7.5/6/5.5 - Identified integration needs
@@ -170,7 +171,7 @@ If Maya (Game Designer) and Sylvia disagree on a design decision:
 
 #### Integration Tasks (Phase 2 React Conversion) - **MOSTLY COMPLETE** (Nov 25, 2025)
 
-- [ ] Convert scenario-setup.html → React component (`src/game/components/ScenarioSetup/`)
+- [ ] Convert scenario-setup.html → React component (`src/game/components/ScenarioSetup/`) - Design COMPLETE (Nov 25)
 - [x] Convert research-tree.html → React component (`src/components/dashboards/game/ResearchTree/`) ✅
   - [x] Implement Active Loop state management - `ActiveLoop.tsx` with drag-drop, defer/accelerate
   - [x] Wire crisis relevance badges to simulation state - `TechCard.tsx` with CrisisRelevance prop
@@ -191,7 +192,7 @@ If Maya (Game Designer) and Sylvia disagree on a design decision:
   - [x] Research Tree selection → update ARIA context - CrossPanelEvent.tech_selected
   - [x] Global Map layer change → update ARIA awareness - MapCrossPanelEvent.layer_changed
 
-**Remaining:** Scenario Setup component (LOW priority - simpler form-based component)
+**Remaining:** Scenario Setup React conversion (design/mockup COMPLETE, React component pending)
 
 #### Sylvia Checkpoint
 
