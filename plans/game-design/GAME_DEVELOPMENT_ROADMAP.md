@@ -167,28 +167,30 @@ If Maya (Game Designer) and Sylvia disagree on a design decision:
 
 - ✅ Screenshots: 12+ mockup versions documented
 
-#### Integration Tasks (Next Steps)
+#### Integration Tasks (Phase 2 React Conversion) - **MOSTLY COMPLETE** (Nov 25, 2025)
 
 - [ ] Convert scenario-setup.html → React component (`src/game/components/ScenarioSetup/`)
-- [ ] Convert research-tree.html → React component (`src/game/components/ResearchTree/`)
-  - [ ] Implement Active Loop state management
-  - [ ] Wire crisis relevance badges to simulation state
-  - [ ] Connect defer/accelerate actions to influence system
-  - [ ] Implement drag-drop priority reordering
-- [ ] Convert aria-chat.html → React component (`src/game/components/ARIA/`)
-  - [ ] Implement context awareness (screen reading)
-  - [ ] Add citation tooltip system
-  - [ ] Wire to simulation state for context
-  - [ ] Implement suggested questions based on UI state
-- [ ] Convert global-map.html → React component (`src/game/components/GlobalMap/`)
-  - [ ] Wire regions to simulation state (10-12 regions)
-  - [ ] Implement 6-layer data switcher
-  - [ ] Add timeline scrubber connected to simulation history
-  - [ ] Implement cascade animations (migration, crisis propagation)
-- [ ] Implement cross-panel coordination via React Context
-  - [ ] Click crisis → highlight in Research Tree + trigger ARIA
-  - [ ] Research Tree selection → update ARIA context
-  - [ ] Global Map layer change → update ARIA awareness
+- [x] Convert research-tree.html → React component (`src/components/dashboards/game/ResearchTree/`) ✅
+  - [x] Implement Active Loop state management - `ActiveLoop.tsx` with drag-drop, defer/accelerate
+  - [x] Wire crisis relevance badges to simulation state - `TechCard.tsx` with CrisisRelevance prop
+  - [x] Connect defer/accelerate actions to influence system - Event callbacks implemented
+  - [x] Implement drag-drop priority reordering - Reorder mode in ActiveLoop
+- [x] Convert aria-chat.html → React component (`src/components/dashboards/game/ARIAChat/`) ✅
+  - [x] Implement context awareness (screen reading) - `ContextAwareness` type + panel state display
+  - [x] Add citation tooltip system - `CitationTooltip.tsx` with hover tooltips
+  - [x] Wire to simulation state for context - Event callbacks for cross-panel coordination
+  - [x] Implement suggested questions based on UI state - `SuggestionPanel.tsx`
+- [x] Convert global-map.html → React component (`src/components/dashboards/game/GlobalMap/`) ✅
+  - [x] Wire regions to simulation state (10-12 regions) - `RegionOverlay.tsx` with RegionData props
+  - [x] Implement 6-layer data switcher - `LayerSwitcher.tsx` (Composite, Temp, Food, Health, Economic, AI)
+  - [x] Add timeline scrubber connected to simulation history - `TimelineScrubber.tsx` with playback
+  - [x] Implement cascade animations (migration, crisis propagation) - `CascadeFlow.tsx` with 4 flow types
+- [x] Implement cross-panel coordination via React Context - CrossPanelEvent system ✅
+  - [x] Click crisis → highlight in Research Tree + trigger ARIA - MapCrossPanelEvent.highlight_tech
+  - [x] Research Tree selection → update ARIA context - CrossPanelEvent.tech_selected
+  - [x] Global Map layer change → update ARIA awareness - MapCrossPanelEvent.layer_changed
+
+**Remaining:** Scenario Setup component (LOW priority - simpler form-based component)
 
 #### Sylvia Checkpoint
 
