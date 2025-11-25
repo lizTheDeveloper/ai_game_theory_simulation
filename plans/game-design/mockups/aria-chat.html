@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARIA Chat - Superalignment to Utopia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0A0A0A;
+            color: #FFFFFF;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Main Chat Panel */
+        .chat-panel {
+            width: 450px;
+            height: 650px;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 60px rgba(0, 240, 255, 0.1);
+            position: relative;
+        }
+
+        /* Header */
+        .chat-header {
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .aria-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .aria-avatar {
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, rgba(0, 240, 255, 0.3), transparent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 240, 255, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(0, 240, 255, 0.6); }
+        }
+
+        .aria-particles {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(circle, #00F0FF 0%, transparent 70%);
+            opacity: 0.6;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.6; }
+            50% { transform: scale(1.2); opacity: 0.3; }
+        }
+
+        .aria-info {
+            flex: 1;
+        }
+
+        .aria-name {
+            font-size: 16px;
+            font-weight: 500;
+            color: #00F0FF;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+        }
+
+        .aria-subtitle {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 2px;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .control-btn {
+            width: 24px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 12px;
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #00F0FF;
+        }
+
+        /* Pause Indicator */
+        .pause-indicator {
+            background: rgba(255, 176, 0, 0.1);
+            border: 1px solid rgba(255, 176, 0, 0.3);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            animation: pausePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pausePulse {
+            0%, 100% { background: rgba(255, 176, 0, 0.1); }
+            50% { background: rgba(255, 176, 0, 0.15); }
+        }
+
+        .pause-text {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: #FFB000;
+        }
+
+        .pause-icon {
+            font-size: 16px;
+        }
+
+        .resume-btn {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            color: #00FF88;
+            padding: 6px 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .resume-btn:hover {
+            background: rgba(0, 255, 136, 0.2);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+
+        /* Chat Messages */
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .chat-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: rgba(0, 240, 255, 0.3);
+            border-radius: 3px;
+        }
+
+        /* Message Styles */
+        .message {
+            max-width: 85%;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.user {
+            align-self: flex-end;
+        }
+
+        .message.aria {
+            align-self: flex-start;
+        }
+
+        .message-bubble {
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .user .message-bubble {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .aria .message-bubble {
+            background: rgba(0, 240, 255, 0.03);
+            border: 1px solid rgba(0, 240, 255, 0.15);
+            color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.05);
+        }
+
+        /* ARIA Typing Indicator */
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 12px;
+            font-style: italic;
+            padding: 8px 16px;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .typing-dot {
+            width: 4px;
+            height: 4px;
+            background: #00F0FF;
+            border-radius: 50%;
+            animation: typingDot 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typingDot {
+            0%, 60%, 100% { opacity: 0.3; }
+            30% { opacity: 1; }
+        }
+
+        /* Message Content Styling */
+        .message-list {
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+
+        .message-list li {
+            margin: 4px 0;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 12px;
+        }
+
+        .highlight {
+            color: #00F0FF;
+            font-weight: 500;
+        }
+
+        .metric {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .action-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: rgba(255, 255, 255, 0.6);
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            border-color: #00F0FF;
+            color: #00F0FF;
+            background: rgba(0, 240, 255, 0.05);
+        }
+
+        /* Citation Links - V4 Enhanced */
+        .citation {
+            color: #00F0FF;
+            text-decoration: none;
+            font-size: 11px;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            border-bottom: 1px dotted rgba(0, 240, 255, 0.3);
+        }
+
+        .citation:hover {
+            opacity: 1;
+            text-decoration: none;
+            border-bottom-color: #00F0FF;
+        }
+
+        .citation-tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.95);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 10px;
+            white-space: nowrap;
+            max-width: 300px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            z-index: 1000;
+            box-shadow: 0 5px 20px rgba(0, 240, 255, 0.2);
+        }
+
+        .citation:hover .citation-tooltip {
+            opacity: 1;
+        }
+
+        /* Suggested Questions */
+        .suggested-questions {
+            padding: 16px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .suggestions-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 10px;
+        }
+
+        .suggestion {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 8px 12px;
+            margin-bottom: 6px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .suggestion:hover {
+            border-color: rgba(0, 240, 255, 0.3);
+            color: #00F0FF;
+            background: rgba(0, 240, 255, 0.03);
+        }
+
+        .suggestion-icon {
+            opacity: 0.5;
+        }
+
+        /* Input Area */
+        .input-area {
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            gap: 10px;
+        }
+
+        .input-field {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #FFFFFF;
+            padding: 10px 14px;
+            border-radius: 4px;
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+
+        .input-field::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: rgba(0, 240, 255, 0.5);
+            background: rgba(0, 240, 255, 0.02);
+        }
+
+        .send-btn {
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            color: #00F0FF;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .send-btn:hover {
+            background: rgba(0, 240, 255, 0.2);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-panel">
+        <!-- Header -->
+        <div class="chat-header">
+            <div class="aria-title">
+                <div class="aria-avatar">
+                    <div class="aria-particles"></div>
+                </div>
+                <div class="aria-info">
+                    <div class="aria-name">ARIA</div>
+                    <div class="aria-subtitle">Alignment Research & Initiative Advisor</div>
+                </div>
+            </div>
+            <div class="window-controls">
+                <button class="control-btn">_</button>
+                <button class="control-btn">×</button>
+            </div>
+        </div>
+
+        <!-- Pause Indicator -->
+        <div class="pause-indicator">
+            <div class="pause-text">
+                <span class="pause-icon">⏸</span>
+                <span>Simulation paused - take your time</span>
+            </div>
+            <button class="resume-btn">▶ Resume</button>
+        </div>
+
+        <!-- Chat Messages -->
+        <div class="chat-messages">
+            <!-- Previous conversation (scrolled up) -->
+            <div class="message user" style="opacity: 0.5;">
+                <div class="message-bubble">
+                    What's the most urgent crisis right now?
+                </div>
+            </div>
+
+            <div class="message aria" style="opacity: 0.5;">
+                <div class="message-bubble">
+                    South Asia. Water shortage hitting 2.1 billion people, compounded by heat stress above wet-bulb thresholds. If we don't act in the next 6 months, we're looking at mass migration that'll destabilize the entire region.
+                </div>
+            </div>
+
+            <div class="message user">
+                <div class="message-bubble">
+                    Why is ocean pH dropping so fast?
+                </div>
+            </div>
+
+            <div class="message aria">
+                <div class="message-bubble">
+                    <div style="margin-bottom: 8px; padding: 6px 10px; background: rgba(0, 240, 255, 0.03); border-left: 2px solid rgba(0, 240, 255, 0.3); border-radius: 3px; font-size: 11px; color: rgba(0, 240, 255, 0.7);">
+                        📍 Context: I see you have the Research Tree open with Ocean Alkalinity at P2 in your Active Loop
+                    </div>
+
+                    The ocean pH situation... yeah, it's not great. Three things are making it worse:
+
+                    <ol class="message-list">
+                        <li>Atmospheric CO₂ at <span class="metric">445 ppm</span> (up from 420 ppm at start)</li>
+                        <li>Ocean buffer capacity declining (carbonate saturation <span class="highlight">-15%</span>)</li>
+                        <li>Limited deployment of alkalinity enhancement (<span class="metric">8% coverage</span>) - <span style="color: #FFB000;">you have this at P2 in Active Loop</span></li>
+                    </ol>
+
+                    Current trajectory: <span class="highlight">pH 7.85 by month 60</span> (coral extinction threshold)
+
+                    <div style="margin-top: 8px;">
+                        Research basis:
+                        <span class="citation">Rockstrom et al. (2023)
+                            <span class="citation-tooltip">Planetary boundaries framework update: Ocean acidification threshold at pH 7.85</span>
+                        </span>,
+                        <span class="citation">IPCC AR6 Chapter 3
+                            <span class="citation-tooltip">Climate Change 2023: Ocean Systems - Projected pH decline 0.3-0.4 by 2100</span>
+                        </span>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="action-btn">🔬 Highlight Enhanced Weathering in your tree</button>
+                        <button class="action-btn">🌍 Switch to Map → South Asia crisis view</button>
+                        <button class="action-btn">📊 Overlay probability shifts on current view</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="message user">
+                <div class="message-bubble">
+                    What can we do about it?
+                </div>
+            </div>
+
+            <div class="message aria">
+                <div class="message-bubble">
+                    Three intervention pathways:
+
+                    <div style="margin-top: 12px; padding: 12px; background: rgba(0, 255, 136, 0.05); border-left: 3px solid #00FF88; border-radius: 4px;">
+                        <div style="color: #00FF88; font-weight: 500; margin-bottom: 6px;">A) IMMEDIATE: Launch ocean alkalinity campaign</div>
+                        <ul class="message-list">
+                            <li>Requires: Political Capital (15), Research Funding ($50B)</li>
+                            <li>Effect: Slow pH decline by 0.02/year</li>
+                            <li>Tradeoff: Diverts resources from climate mitigation</li>
+                            <li>Probability of success: <span class="metric">65%</span> (depends on cooperation)</li>
+                        </ul>
+                    </div>
+
+                    <div style="margin-top: 12px; padding: 12px; background: rgba(139, 92, 246, 0.05); border-left: 3px solid #8B5CF6; border-radius: 4px;">
+                        <div style="color: #8B5CF6; font-weight: 500; margin-bottom: 6px;">B) MEDIUM-TERM: Accelerate ocean cleanup tech research</div>
+                        <ul class="message-list">
+                            <li>Requires: AI Research Capability ≥ 55 (currently <span class="metric">48</span>)</li>
+                            <li>Timeline: 18-24 months to unlock</li>
+                            <li>Effect: More robust long-term solution</li>
+                            <li>Tradeoff: Delayed impact</li>
+                        </ul>
+                    </div>
+
+                    <div style="margin-top: 12px; padding: 12px; background: rgba(0, 240, 255, 0.05); border-left: 3px solid #00F0FF; border-radius: 4px;">
+                        <div style="color: #00F0FF; font-weight: 500; margin-bottom: 6px;">C) SYSTEMIC: Reduce atmospheric CO₂ emissions</div>
+                        <ul class="message-list">
+                            <li>Requires: International coordination (cooperation score ≥ 60)</li>
+                            <li>Timeline: 36+ months for measurable impact</li>
+                            <li>Effect: Addresses root cause, multiple co-benefits</li>
+                            <li>Tradeoff: Requires broad coalition</li>
+                        </ul>
+                    </div>
+
+                    <div style="margin-top: 12px; font-style: italic; color: rgba(255, 255, 255, 0.5); font-size: 12px;">
+                        Each pathway shifts probability distributions differently. No option is guaranteed. What matters most to you?
+                    </div>
+                </div>
+            </div>
+
+            <!-- Typing Indicator -->
+            <div class="typing-indicator">
+                <span>ARIA is analyzing</span>
+                <div class="typing-dots">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Suggested Questions - V3 Context Aware -->
+        <div class="suggested-questions">
+            <div class="suggestions-title">
+                If I were you, I'd check:
+                <span style="float: right; font-size: 10px; color: #00F0FF; opacity: 0.5;">
+                    Based on: Research Tree view, Active Loop P2
+                </span>
+            </div>
+            <div class="suggestion">
+                <span class="suggestion-icon">🔬</span>
+                <div style="flex: 1;">
+                    <div>Should I move Ocean Alkalinity from P2 to P1?</div>
+                    <div style="font-size: 9px; color: rgba(255, 255, 255, 0.4); margin-top: 2px;">
+                        pH dropping 2x faster than heat crisis mortality growth
+                    </div>
+                </div>
+            </div>
+            <div class="suggestion">
+                <span class="suggestion-icon">📊</span>
+                <div style="flex: 1;">
+                    <div>What happens if I defer the Heat Crisis response?</div>
+                    <div style="font-size: 9px; color: rgba(255, 176, 0, 0.5); margin-top: 2px;">
+                        ⚠️ +847 deaths/day for each month delayed
+                    </div>
+                </div>
+            </div>
+            <div class="suggestion">
+                <span class="suggestion-icon">🎯</span>
+                <div style="flex: 1;">
+                    <div>Run AI Optimization on current Active Loop?</div>
+                    <div style="font-size: 9px; color: rgba(0, 240, 255, 0.4); margin-top: 2px;">
+                        Could save 3-5 months based on cascade patterns
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="input-area">
+            <input type="text" class="input-field" placeholder="Type your question...">
+            <button class="send-btn">Ask</button>
+        </div>
+    </div>
+
+    <script>
+        // V4 Enhanced Interactivity with Cross-Panel Coordination
+
+        // Citation hover and click handlers
+        document.querySelectorAll('.citation').forEach(citation => {
+            citation.addEventListener('click', function(e) {
+                e.preventDefault();
+                // In production: open paper abstract/PDF
+                console.log('Citation clicked:', this.textContent);
+
+                // Visual feedback
+                this.style.animation = 'pulse 0.3s ease';
+                setTimeout(() => {
+                    this.style.animation = '';
+                }, 300);
+            });
+        });
+
+        // Suggestion click handler with enhanced feedback
+        document.querySelectorAll('.suggestion').forEach(suggestion => {
+            suggestion.addEventListener('click', function() {
+                const question = this.querySelector('div').textContent;
+                const inputField = document.querySelector('.input-field');
+
+                // Populate input field
+                inputField.value = question;
+                inputField.focus();
+
+                // Visual feedback
+                this.style.background = 'rgba(0, 240, 255, 0.05)';
+                this.style.borderColor = '#00F0FF';
+
+                setTimeout(() => {
+                    this.style.background = '';
+                    this.style.borderColor = '';
+                }, 500);
+
+                // Trigger relevant cross-panel action
+                if (question.includes('Ocean Alkalinity')) {
+                    window.parent.postMessage({
+                        action: 'highlightTech',
+                        tech: 'Enhanced Weathering',
+                        panel: 'research-tree'
+                    }, '*');
+                } else if (question.includes('Heat Crisis')) {
+                    window.parent.postMessage({
+                        action: 'highlightRegion',
+                        region: 'South Asia',
+                        panel: 'global-map'
+                    }, '*');
+                } else if (question.includes('AI Optimization')) {
+                    window.parent.postMessage({
+                        action: 'triggerOptimization',
+                        panel: 'research-tree'
+                    }, '*');
+                }
+            });
+        });
+
+        // Action button handlers
+        document.querySelectorAll('.action-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const action = this.textContent;
+
+                if (action.includes('Enhanced Weathering')) {
+                    // Highlight tech in research tree
+                    window.parent.postMessage({
+                        action: 'highlightTech',
+                        tech: 'Enhanced Weathering',
+                        panel: 'research-tree'
+                    }, '*');
+
+                    // Visual feedback
+                    this.style.background = 'rgba(0, 255, 136, 0.1)';
+                    this.textContent = '✓ Highlighted';
+                    setTimeout(() => {
+                        this.style.background = '';
+                        this.textContent = action;
+                    }, 2000);
+
+                } else if (action.includes('South Asia')) {
+                    // Switch map to South Asia
+                    window.parent.postMessage({
+                        action: 'focusRegion',
+                        region: 'South Asia',
+                        crisis: 'heat',
+                        panel: 'global-map'
+                    }, '*');
+
+                    this.style.background = 'rgba(255, 107, 0, 0.1)';
+                    this.textContent = '✓ Map updated';
+                    setTimeout(() => {
+                        this.style.background = '';
+                        this.textContent = action;
+                    }, 2000);
+
+                } else if (action.includes('probability shifts')) {
+                    // Overlay probabilities
+                    window.parent.postMessage({
+                        action: 'showProbabilities',
+                        panel: 'current'
+                    }, '*');
+
+                    this.style.background = 'rgba(139, 92, 246, 0.1)';
+                    this.textContent = '✓ Overlay active';
+                    setTimeout(() => {
+                        this.style.background = '';
+                        this.textContent = action;
+                    }, 2000);
+                }
+            });
+        });
+
+        // Resume button handler
+        document.querySelector('.resume-btn')?.addEventListener('click', function() {
+            const pauseIndicator = document.querySelector('.pause-indicator');
+            pauseIndicator.style.animation = 'fadeOut 0.3s ease';
+
+            setTimeout(() => {
+                pauseIndicator.style.display = 'none';
+            }, 300);
+
+            // Notify other panels
+            window.parent.postMessage({
+                action: 'resumeSimulation'
+            }, '*');
+        });
+
+        // Send message handler
+        document.querySelector('.send-btn')?.addEventListener('click', function() {
+            const input = document.querySelector('.input-field');
+            const message = input.value.trim();
+
+            if (message) {
+                // Add user message to chat
+                const chatMessages = document.querySelector('.chat-messages');
+                const userMessage = document.createElement('div');
+                userMessage.className = 'message user';
+                userMessage.innerHTML = `
+                    <div class="message-bubble">${message}</div>
+                `;
+
+                // Insert before typing indicator
+                const typingIndicator = document.querySelector('.typing-indicator');
+                chatMessages.insertBefore(userMessage, typingIndicator);
+
+                // Clear input
+                input.value = '';
+
+                // Show typing indicator
+                typingIndicator.style.display = 'flex';
+
+                // Simulate ARIA response
+                setTimeout(() => {
+                    typingIndicator.style.display = 'none';
+                    // In production: actual AI response
+                }, 1500);
+
+                // Scroll to bottom
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        });
+
+        // Enter key handler
+        document.querySelector('.input-field')?.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('.send-btn').click();
+            }
+        });
+
+        // Listen for cross-panel messages
+        window.addEventListener('message', function(e) {
+            const data = e.data;
+
+            if (data.action === 'ariaSuggest') {
+                // Update suggestions based on crisis
+                const suggestions = document.querySelector('.suggestions-title');
+                suggestions.innerHTML = `
+                    Crisis detected: ${data.topic}
+                    <span style="float: right; font-size: 10px; color: #FF6B00; opacity: 0.7;">
+                        URGENT: Action needed
+                    </span>
+                `;
+            } else if (data.action === 'ariaContext') {
+                // Add contextual message
+                const typingIndicator = document.querySelector('.typing-indicator');
+                typingIndicator.style.display = 'flex';
+                typingIndicator.querySelector('span').textContent = 'ARIA is analyzing crisis data';
+
+                setTimeout(() => {
+                    typingIndicator.style.display = 'none';
+                    // In production: actual context-aware response
+                }, 1000);
+            }
+        });
+
+        // Add pulse animation style
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pulse {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.05); }
+            }
+            @keyframes fadeOut {
+                from { opacity: 1; }
+                to { opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

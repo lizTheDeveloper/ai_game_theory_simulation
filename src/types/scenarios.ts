@@ -400,7 +400,7 @@ export const SCENARIO_CATALOG = {
     name: 'Climate First',
     description: 'Government maximizes climate tech spending (10% GDP/month)',
     hypothesis: 'Tests whether maximal climate investment enables environmental spiral activation',
-    techDeployment: { mode: 'immediate' as const },
+    techDeployment: { mode: 'sequenced' as const, sequencedConfig: { gapMonths: 6 } },
     governmentPriorities: {
       climateSpending: 0.10, // 10% of GDP per month (extreme but testable)
       researchInvestment: 50, // $50B/month research (above spiral thresholds)
@@ -413,7 +413,7 @@ export const SCENARIO_CATALOG = {
     name: 'Equality First',
     description: 'Government maximizes redistribution targeting Gini <0.30 (Nordic levels)',
     hypothesis: 'Tests whether reducing inequality enables social spiral activation',
-    techDeployment: { mode: 'immediate' as const },
+    techDeployment: { mode: 'sequenced' as const, sequencedConfig: { gapMonths: 6 } },
     governmentPriorities: {
       redistributionRate: 0.025, // 2.5% of GDP per month (30% annually = Nordic level)
       researchInvestment: 50, // $50B/month research
@@ -426,7 +426,7 @@ export const SCENARIO_CATALOG = {
     name: 'AI Alignment First',
     description: 'Government maximizes AI alignment research ($100B/month) with strict controls',
     hypothesis: 'Tests whether prioritizing alignment enables trust/safety spirals',
-    techDeployment: { mode: 'immediate' as const },
+    techDeployment: { mode: 'sequenced' as const, sequencedConfig: { gapMonths: 6 } },
     governmentPriorities: {
       aiSafetyBudget: 100, // $100B/month on alignment research
       researchInvestment: 50, // $50B/month general research
@@ -439,7 +439,7 @@ export const SCENARIO_CATALOG = {
     name: 'Democratic Participation',
     description: 'Government maximizes transparency and participation (democracy = 0.9)',
     hypothesis: 'Tests whether high democracy enables governance spiral activation',
-    techDeployment: { mode: 'immediate' as const },
+    techDeployment: { mode: 'sequenced' as const, sequencedConfig: { gapMonths: 6 } },
     governmentPriorities: {
       democracyLevel: 0.9, // Very high democracy
       researchInvestment: 50, // $50B/month research
@@ -452,7 +452,7 @@ export const SCENARIO_CATALOG = {
     name: 'Scientific Acceleration',
     description: 'Government maximizes research investment ($200B/month)',
     hypothesis: 'Tests whether massive research spending enables breakthrough cascades',
-    techDeployment: { mode: 'immediate' as const },
+    techDeployment: { mode: 'sequenced' as const, sequencedConfig: { gapMonths: 6 } },
     governmentPriorities: {
       researchInvestment: 200, // $200B/month (2x current max spend)
     },
@@ -464,7 +464,7 @@ export const SCENARIO_CATALOG = {
     name: 'Authoritarian Efficiency',
     description: 'Government prioritizes rapid deployment with low democracy (0.3)',
     hypothesis: 'Tests whether authoritarian coordination enables faster tech adoption',
-    techDeployment: { mode: 'immediate' as const },
+    techDeployment: { mode: 'sequenced' as const, sequencedConfig: { gapMonths: 6 } },
     governmentPriorities: {
       governmentType: 'authoritarian',
       democracyLevel: 0.3, // Low democracy

@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Tree - Super-alignment to Utopia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            color: #fff;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 300;
+            overflow-x: auto;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .title {
+            font-size: 14px;
+            font-weight: 200;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            opacity: 0.7;
+        }
+
+        .stats {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .stat-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.5;
+            margin-bottom: 4px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 100;
+            color: #00F0FF;
+            text-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+        }
+
+        /* Notification Badge */
+        .notification-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #FF0040;
+            color: #FFFFFF;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 10px;
+            min-width: 18px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(255, 0, 64, 0.5);
+            animation: notificationPulse 2s infinite;
+        }
+
+        @keyframes notificationPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Category Filter */
+        .category-filter {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 11px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-radius: 4px;
+        }
+
+        .filter-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .filter-btn.active {
+            background: rgba(0, 240, 255, 0.1);
+            border-color: #00F0FF;
+            color: #00F0FF;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+        }
+
+        /* Tech Grid */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: 150px repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 50px;
+        }
+
+        /* Category Labels */
+        .category-label {
+            grid-column: 1;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 20px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            opacity: 0.6;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Tier Headers */
+        .tier-header {
+            text-align: center;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 5px;
+        }
+
+        .tier-name {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.5;
+            margin-bottom: 5px;
+        }
+
+        .tier-requirement {
+            font-size: 11px;
+            color: #FFB000;
+            opacity: 0.8;
+        }
+
+        /* Tech Card (Compact) */
+        .tech-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            min-height: 80px;
+        }
+
+        .tech-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .tech-card.locked {
+            opacity: 0.3;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 5px,
+                rgba(255, 0, 0, 0.05) 5px,
+                rgba(255, 0, 0, 0.05) 10px
+            );
+        }
+
+        .tech-card.researching {
+            border-color: #FFB000;
+            background: rgba(255, 176, 0, 0.05);
+            animation: pulse 2s infinite;
+        }
+
+        .tech-card.unlocked {
+            border-color: #00FF88;
+            background: rgba(0, 255, 136, 0.03);
+        }
+
+        .tech-card.available {
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        /* Recommend Research Button */
+        .recommend-btn {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            color: #00F0FF;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(5px);
+            transition: all 0.2s ease;
+        }
+
+        .tech-card.available:hover .recommend-btn {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .recommend-btn:hover {
+            background: rgba(0, 240, 255, 0.2);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+        }
+
+        /* Crisis Relevance Badge - V4 Enhanced */
+        .crisis-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: linear-gradient(135deg, rgba(255, 0, 64, 0.15), rgba(255, 107, 0, 0.1));
+            border: 1px solid rgba(255, 0, 64, 0.4);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 9px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            animation: urgentPulse 1.5s infinite;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .crisis-badge:hover {
+            background: linear-gradient(135deg, rgba(255, 0, 64, 0.25), rgba(255, 107, 0, 0.2));
+            transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(255, 0, 64, 0.5);
+        }
+
+        .crisis-badge .crisis-impact {
+            color: #FFB000;
+            font-weight: 600;
+        }
+
+        @keyframes urgentPulse {
+            0%, 100% {
+                opacity: 0.8;
+                filter: drop-shadow(0 0 2px rgba(255, 0, 64, 0.3));
+            }
+            50% {
+                opacity: 1;
+                filter: drop-shadow(0 0 6px rgba(255, 0, 64, 0.6));
+            }
+        }
+
+        /* Cross-panel highlighting - V4 Enhanced */
+        .tech-card.crisis-relevant {
+            box-shadow: 0 0 20px rgba(255, 107, 0, 0.4);
+            border-color: rgba(255, 107, 0, 0.6);
+            animation: crisisHighlight 2s ease-in-out infinite;
+        }
+
+        @keyframes crisisHighlight {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(255, 107, 0, 0.4);
+                transform: translateY(0);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(255, 0, 64, 0.6);
+                transform: translateY(-1px);
+            }
+        }
+
+        /* Drag & Drop Visual Feedback - V4 Added */
+        .tech-card.dragging {
+            opacity: 0.5;
+            transform: scale(0.95);
+            cursor: grabbing;
+        }
+
+        .tech-card.drag-over {
+            background: rgba(0, 240, 255, 0.08);
+            border-color: #00F0FF;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 10px rgba(255, 176, 0, 0.3); }
+            50% { box-shadow: 0 0 20px rgba(255, 176, 0, 0.5); }
+        }
+
+        .tech-name {
+            font-size: 11px;
+            font-weight: 400;
+            margin-bottom: 5px;
+            line-height: 1.3;
+        }
+
+        .tech-status {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.6;
+        }
+
+        .tech-progress {
+            height: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            margin-top: 8px;
+            border-radius: 1px;
+            overflow: hidden;
+        }
+
+        .tech-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #FFB000, #FF6B00);
+            box-shadow: 0 0 10px rgba(255, 176, 0, 0.5);
+            transition: width 0.5s;
+        }
+
+        /* Dependency Arrows (SVG Overlay) */
+        .dependency-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .dependency-line {
+            stroke: rgba(0, 240, 255, 0.3);
+            stroke-width: 1;
+            fill: none;
+            stroke-dasharray: 3, 3;
+            animation: dash 20s linear infinite;
+        }
+
+        @keyframes dash {
+            to { stroke-dashoffset: -60; }
+        }
+
+        /* Expanded Tech Details */
+        .expanded-cards {
+            margin-top: 40px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .expanded-header {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.5;
+            margin-bottom: 20px;
+        }
+
+        .expanded-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .tech-detail {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 20px;
+            border-radius: 4px;
+        }
+
+        .tech-detail.highlight {
+            border-color: #00F0FF;
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.2);
+        }
+
+        .detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .detail-title {
+            font-size: 16px;
+            font-weight: 300;
+            margin-bottom: 5px;
+        }
+
+        .detail-category {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 4px 8px;
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 3px;
+        }
+
+        .detail-description {
+            font-size: 12px;
+            line-height: 1.6;
+            opacity: 0.7;
+            margin-bottom: 20px;
+        }
+
+        .detail-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .detail-stat {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .detail-stat-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            opacity: 0.5;
+        }
+
+        .detail-stat-value {
+            font-size: 11px;
+            color: #00F0FF;
+        }
+
+        .prerequisites {
+            margin-bottom: 15px;
+        }
+
+        .prereq-title {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.5;
+            margin-bottom: 8px;
+        }
+
+        .prereq-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .prereq-item {
+            font-size: 11px;
+            padding: 4px 8px;
+            background: rgba(255, 176, 0, 0.1);
+            border: 1px solid rgba(255, 176, 0, 0.3);
+            border-radius: 3px;
+        }
+
+        .citations {
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .citation-title {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.5;
+            margin-bottom: 8px;
+        }
+
+        .citation-item {
+            font-size: 10px;
+            opacity: 0.6;
+            margin-bottom: 4px;
+            font-style: italic;
+        }
+
+        /* Legend */
+        .legend {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 4px;
+        }
+
+        .legend-title {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.5;
+            margin-bottom: 10px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .legend-box {
+            width: 20px;
+            height: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .legend-locked {
+            opacity: 0.3;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 2px,
+                rgba(255, 0, 0, 0.1) 2px,
+                rgba(255, 0, 0, 0.1) 4px
+            );
+        }
+
+        .legend-researching {
+            border-color: #FFB000;
+            background: rgba(255, 176, 0, 0.1);
+        }
+
+        .legend-unlocked {
+            border-color: #00FF88;
+            background: rgba(0, 255, 136, 0.05);
+        }
+
+        .legend-label {
+            font-size: 11px;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="title" style="position: relative; display: inline-block;">
+            Research Tree
+            <span class="notification-badge">3</span>
+        </div>
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-label">Unlocked</div>
+                <div class="stat-value">12/71</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">Research Funding</div>
+                <div class="stat-value">$2.4B</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">AI Capability</div>
+                <div class="stat-value">1.3</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Category Filter -->
+    <div class="category-filter">
+        <button class="filter-btn active">All Categories</button>
+        <button class="filter-btn">Alignment</button>
+        <button class="filter-btn">Social</button>
+        <button class="filter-btn">Medical</button>
+        <button class="filter-btn">Energy</button>
+        <button class="filter-btn">Climate</button>
+        <button class="filter-btn">Ocean</button>
+        <button class="filter-btn">Agriculture</button>
+        <button class="filter-btn">Pollution</button>
+    </div>
+
+    <!-- Tech Grid -->
+    <div class="tech-grid">
+        <!-- Tier Headers -->
+        <div></div> <!-- Empty corner -->
+        <div class="tier-header">
+            <div class="tier-name">Tier 0</div>
+            <div class="tier-requirement">AI Cap: 0.0-0.5</div>
+        </div>
+        <div class="tier-header">
+            <div class="tier-name">Tier 1</div>
+            <div class="tier-requirement">AI Cap: 0.5-1.0</div>
+        </div>
+        <div class="tier-header">
+            <div class="tier-name">Tier 2</div>
+            <div class="tier-requirement">AI Cap: 1.0-3.0</div>
+        </div>
+        <div class="tier-header">
+            <div class="tier-name">Tier 3</div>
+            <div class="tier-requirement">AI Cap: 3.0+</div>
+        </div>
+
+        <!-- Alignment Row -->
+        <div class="category-label">Alignment</div>
+        <div class="tech-card unlocked">
+            <div class="tech-name">AI Interpretability</div>
+            <div class="tech-status">Deployed 2025</div>
+            <div class="tech-progress">
+                <div class="tech-progress-bar" style="width: 100%;"></div>
+            </div>
+        </div>
+        <div class="tech-card researching">
+            <div class="tech-name">Value Alignment Training</div>
+            <div class="tech-status">Researching 45%</div>
+            <div class="tech-progress">
+                <div class="tech-progress-bar" style="width: 45%;"></div>
+            </div>
+        </div>
+        <div class="tech-card locked">
+            <div class="tech-name">Cooperative AI Networks</div>
+            <div class="tech-status">Locked</div>
+        </div>
+        <div class="tech-card locked">
+            <div class="tech-name">Consciousness Modeling</div>
+            <div class="tech-status">Locked</div>
+        </div>
+
+        <!-- Social Row -->
+        <div class="category-label">Social</div>
+        <div class="tech-card unlocked">
+            <div class="tech-name">Digital Literacy</div>
+            <div class="tech-status">Deployed 2025</div>
+            <div class="tech-progress">
+                <div class="tech-progress-bar" style="width: 100%;"></div>
+            </div>
+        </div>
+        <div class="tech-card researching">
+            <div class="tech-name">Universal Basic Income</div>
+            <div class="tech-status">Researching 62%</div>
+            <div class="tech-progress">
+                <div class="tech-progress-bar" style="width: 62%;"></div>
+            </div>
+        </div>
+        <div class="tech-card locked">
+            <div class="tech-name">Global Governance Reform</div>
+            <div class="tech-status">Locked</div>
+        </div>
+        <div class="tech-card locked">
+            <div class="tech-name">Post-Scarcity Economics</div>
+            <div class="tech-status">Locked</div>
+        </div>
+
+        <!-- Medical Row -->
+        <div class="category-label">Medical</div>
+        <div class="tech-card unlocked">
+            <div class="tech-name">mRNA Vaccines</div>
+            <div class="tech-status">Deployed 2025</div>
+            <div class="tech-progress">
+                <div class="tech-progress-bar" style="width: 100%;"></div>
+            </div>
+        </div>
+        <div class="tech-card available">
+            <div class="tech-name">Personalized Medicine</div>
+            <div class="tech-status">Available</div>
+            <button class="recommend-btn">Recommend</button>
+        </div>
+        <div class="tech-card locked">
+            <div class="tech-name">Life Extension Therapy</div>
+            <div class="tech-status">Locked</div>
+        </div>
+        <div class="tech-card locked">
+            <div class="tech-name">Nano-medicine</div>
+            <div class="tech-status">Locked</div>
+        </div>
+
+        <!-- Energy Row -->
+        <div class="category-label">Energy</div>
+        <div class="tech-card unlocked">
+            <div class="tech-name">Solar & Wind</div>
+            <div class="tech-status">Deployed 2025</div>
+            <div class="tech-progress">
+                <div class="tech-progress-bar" style="width: 100%;"></div>
+            </div>
+        </div>
+        <div class="tech-card researching">
+            <div class="tech-name">Advanced Batteries</div>
+            <div class="tech-status">Researching 78%</div>
+            <div class="tech-progress">
+                <div class="tech-progress-bar" style="width: 78%;"></div>
+            </div>
+        </div>
+        <div class="tech-card available crisis-relevant" data-crisis="heat">
+            <div class="crisis-badge" title="Click to view crisis details">
+                🔥 <span class="crisis-impact">40%</span> coal reduction
+            </div>
+            <div class="tech-name">Fusion Energy</div>
+            <div class="tech-status">Available</div>
+            <button class="recommend-btn">Recommend</button>
+        </div>
+        <div class="tech-card locked">
+            <div class="tech-name">Zero-Point Energy</div>
+            <div class="tech-status">Locked</div>
+        </div>
+
+        <!-- Climate Row -->
+        <div class="category-label">Climate</div>
+        <div class="tech-card unlocked">
+            <div class="tech-name">Carbon Capture</div>
+            <div class="tech-status">Deployed 2025</div>
+            <div class="tech-progress">
+                <div class="tech-progress-bar" style="width: 100%;"></div>
+            </div>
+        </div>
+        <div class="tech-card available crisis-relevant" data-crisis="ocean">
+            <div class="crisis-badge" title="Click to view crisis details">
+                💧 <span class="crisis-impact">pH+0.04</span> buffer
+            </div>
+            <div class="tech-name">Enhanced Weathering</div>
+            <div class="tech-status">Available</div>
+            <button class="recommend-btn">Recommend</button>
+        </div>
+        <div class="tech-card locked">
+            <div class="tech-name">Stratospheric Aerosol</div>
+            <div class="tech-status">Locked</div>
+        </div>
+        <div class="tech-card locked">
+            <div class="tech-name">Atmospheric Processing</div>
+            <div class="tech-status">Locked</div>
+        </div>
+    </div>
+
+    <!-- Dependency Arrows (SVG Overlay) -->
+    <svg class="dependency-svg" viewBox="0 0 1200 400">
+        <path class="dependency-line" d="M 250,80 Q 350,80 450,120" />
+        <path class="dependency-line" d="M 450,120 Q 550,120 650,160" />
+        <path class="dependency-line" d="M 250,180 Q 350,180 450,180" />
+    </svg>
+
+    <!-- Expanded Tech Details -->
+    <div class="expanded-cards">
+        <div class="expanded-header">
+            Research Focus
+            <span style="color: #FFB000; font-size: 11px; margin-left: 10px;">
+                (3 of 8 available priorities - <a href="#" style="color: #00F0FF; text-decoration: underline;">Change priorities</a>)
+            </span>
+        </div>
+        <div class="expanded-grid">
+            <!-- Expanded Card 1 -->
+            <div class="tech-detail highlight">
+                <div class="detail-header">
+                    <div>
+                        <div class="detail-title">Value Alignment Training</div>
+                        <div class="detail-category">Alignment</div>
+                    </div>
+                </div>
+                <div class="detail-description">
+                    Advanced training methodologies to ensure AI systems align with human values and ethical frameworks. Utilizes constitutional AI approaches and iterative feedback loops.
+                </div>
+                <div class="detail-stats">
+                    <div class="detail-stat">
+                        <span class="detail-stat-label">Research Cost</span>
+                        <span class="detail-stat-value">$800M</span>
+                    </div>
+                    <div class="detail-stat">
+                        <span class="detail-stat-label">Time Required</span>
+                        <span class="detail-stat-value">24 months</span>
+                    </div>
+                    <div class="detail-stat">
+                        <span class="detail-stat-label">Progress</span>
+                        <span class="detail-stat-value">45%</span>
+                    </div>
+                    <div class="detail-stat">
+                        <span class="detail-stat-label">AI Requirement</span>
+                        <span class="detail-stat-value">0.8</span>
+                    </div>
+                </div>
+                <div class="prerequisites">
+                    <div class="prereq-title">Prerequisites</div>
+                    <div class="prereq-list">
+                        <div class="prereq-item">AI Interpretability</div>
+                        <div class="prereq-item">Economic Stage 3</div>
+                    </div>
+                </div>
+                <div class="citations">
+                    <div class="citation-title">Research Citations</div>
+                    <div class="citation-item">Anthropic (2024). Constitutional AI: Harmlessness from AI Feedback</div>
+                    <div class="citation-item">Russell, S. (2025). Human-Compatible AI Architecture</div>
+                </div>
+            </div>
+
+            <!-- Expanded Card 2 -->
+            <div class="tech-detail">
+                <div class="detail-header">
+                    <div>
+                        <div class="detail-title">Universal Basic Income</div>
+                        <div class="detail-category">Social</div>
+                    </div>
+                </div>
+                <div class="detail-description">
+                    Economic safety net providing unconditional regular payments to all citizens. Essential for managing automation-driven unemployment and ensuring social stability.
+                </div>
+                <div class="detail-stats">
+                    <div class="detail-stat">
+                        <span class="detail-stat-label">Research Cost</span>
+                        <span class="detail-stat-value">$200M</span>
+                    </div>
+                    <div class="detail-stat">
+                        <span class="detail-stat-label">Time Required</span>
+                        <span class="detail-stat-value">18 months</span>
+                    </div>
+                    <div class="detail-stat">
+                        <span class="detail-stat-label">Progress</span>
+                        <span class="detail-stat-value">62%</span>
+                    </div>
+                    <div class="detail-stat">
+                        <span class="detail-stat-label">Deployment Cost</span>
+                        <span class="detail-stat-value">$1.2T/year</span>
+                    </div>
+                </div>
+                <div class="prerequisites">
+                    <div class="prereq-title">Prerequisites</div>
+                    <div class="prereq-list">
+                        <div class="prereq-item">Economic Stage 4</div>
+                        <div class="prereq-item">Digital Literacy</div>
+                    </div>
+                </div>
+                <div class="citations">
+                    <div class="citation-title">Research Citations</div>
+                    <div class="citation-item">Kenya GiveDirectly Study (2024). Long-term effects of UBI</div>
+                    <div class="citation-item">Susskind, D. (2025). A World Without Work</div>
+                </div>
+            </div>
+
+            <!-- Expanded Card 3 -->
+            <div class="tech-detail">
+                <div class="detail-header">
+                    <div>
+                        <div class="detail-title">Advanced Battery Storage</div>
+                        <div class="detail-category">Energy</div>
+                    </div>
+                </div>
+                <div class="detail-description">
+                    Next-generation battery technologies including solid-state and metal-air batteries. Critical for grid-scale renewable energy storage and electric vehicle adoption.
+                </div>
+                <div class="detail-stats">
+                    <div class="detail-stat">
+                        <span class="detail-stat-label">Research Cost</span>
+                        <span class="detail-stat-value">$500M</span>
+                    </div>
+                    <div class="detail-stat">
+                        <span class="detail-stat-label">Time Required</span>
+                        <span class="detail-stat-value">36 months</span>
+                    </div>
+                    <div class="detail-stat">
+                        <span class="detail-stat-label">Progress</span>
+                        <span class="detail-stat-value">78%</span>
+                    </div>
+                    <div class="detail-stat">
+                        <span class="detail-stat-label">Energy Density</span>
+                        <span class="detail-stat-value">800 Wh/kg</span>
+                    </div>
+                </div>
+                <div class="prerequisites">
+                    <div class="prereq-title">Prerequisites</div>
+                    <div class="prereq-list">
+                        <div class="prereq-item">Materials Science AI</div>
+                        <div class="prereq-item">Rare Earth Mining</div>
+                    </div>
+                </div>
+                <div class="citations">
+                    <div class="citation-title">Research Citations</div>
+                    <div class="citation-item">MIT Energy Initiative (2025). Grid-Scale Storage Requirements</div>
+                    <div class="citation-item">Toyota Research (2024). Solid-State Battery Breakthroughs</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Integration Panel (Primary Loop Indicator) - V3 Enhanced Interactivity -->
+    <div id="active-loop-panel" style="position: fixed; top: 20px; right: 20px; background: rgba(0, 0, 0, 0.95); border: 1px solid rgba(0, 240, 255, 0.3); border-radius: 8px; padding: 15px; width: 280px; box-shadow: 0 10px 30px rgba(0, 240, 255, 0.1);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: rgba(255, 255, 255, 0.5);">Active Loop</div>
+            <div id="time-estimate" style="font-size: 10px; color: #00F0FF; opacity: 0.7; animation: fadeUpdate 0.5s ease;">Est. 18 months to completion</div>
+        </div>
+
+        <div id="loop-nodes" style="display: flex; flex-direction: column; gap: 8px;">
+            <!-- Priority 1 - Interactive Node with expanded actions -->
+            <div class="loop-node" data-priority="1" data-time="6" style="display: flex; align-items: center; gap: 10px; padding: 8px; background: rgba(255, 0, 64, 0.1); border: 1px solid rgba(255, 0, 64, 0.3); border-radius: 4px; cursor: pointer; transition: all 0.2s ease; position: relative;">
+                <span style="font-size: 16px;">🔥</span>
+                <div style="flex: 1;">
+                    <div style="font-size: 11px; font-weight: 500; color: #FF6B00;">South Asia Heat Crisis NOW</div>
+                    <div style="font-size: 10px; color: rgba(255, 255, 255, 0.5);">Death toll: 847/day ↑12%</div>
+                </div>
+                <div style="position: absolute; top: 4px; right: 4px; font-size: 9px; color: rgba(255, 255, 255, 0.3);">P1</div>
+                <div class="node-actions" style="position: absolute; right: -5px; top: 50%; transform: translateY(-50%); display: none;">
+                    <button class="action-icon defer" title="Defer" style="width: 20px; height: 20px; border-radius: 50%; background: rgba(255, 176, 0, 0.2); border: 1px solid rgba(255, 176, 0, 0.4); color: #FFB000; cursor: pointer; font-size: 10px;">⏸</button>
+                    <button class="action-icon accelerate" title="Accelerate" style="width: 20px; height: 20px; border-radius: 50%; background: rgba(0, 255, 136, 0.2); border: 1px solid rgba(0, 255, 136, 0.4); color: #00FF88; cursor: pointer; font-size: 10px; margin-left: 2px;">⚡</button>
+                </div>
+            </div>
+
+            <div class="time-connector" style="text-align: center; color: rgba(255, 255, 255, 0.3); font-size: 18px; position: relative;">
+                ↓
+                <div class="time-delay" style="position: absolute; right: -5px; top: -8px; font-size: 9px; color: rgba(255, 255, 255, 0.3); text-transform: uppercase;">6mo delay</div>
+            </div>
+
+            <!-- Priority 2 - Interactive Node -->
+            <div class="loop-node" data-priority="2" data-time="8" style="display: flex; align-items: center; gap: 10px; padding: 8px; background: rgba(0, 240, 255, 0.05); border: 1px solid rgba(0, 240, 255, 0.2); border-radius: 4px; cursor: pointer; transition: all 0.2s ease; position: relative;">
+                <span style="font-size: 16px;">💧</span>
+                <div style="flex: 1;">
+                    <div style="font-size: 11px; font-weight: 500; color: #00F0FF;">Ocean Alkalinity Enhancement</div>
+                    <div style="font-size: 10px; color: rgba(255, 255, 255, 0.5);">pH 7.91 → 7.95 buffer</div>
+                </div>
+                <div style="position: absolute; top: 4px; right: 4px; font-size: 9px; color: rgba(255, 255, 255, 0.3);">P2</div>
+                <div class="node-actions" style="position: absolute; right: -5px; top: 50%; transform: translateY(-50%); display: none;">
+                    <button class="action-icon defer" title="Defer" style="width: 20px; height: 20px; border-radius: 50%; background: rgba(255, 176, 0, 0.2); border: 1px solid rgba(255, 176, 0, 0.4); color: #FFB000; cursor: pointer; font-size: 10px;">⏸</button>
+                    <button class="action-icon accelerate" title="Accelerate" style="width: 20px; height: 20px; border-radius: 50%; background: rgba(0, 255, 136, 0.2); border: 1px solid rgba(0, 255, 136, 0.4); color: #00FF88; cursor: pointer; font-size: 10px; margin-left: 2px;">⚡</button>
+                </div>
+            </div>
+
+            <div class="time-connector" style="text-align: center; color: rgba(255, 255, 255, 0.3); font-size: 18px; position: relative;">
+                ↓
+                <div class="time-delay" style="position: absolute; right: -5px; top: -8px; font-size: 9px; color: rgba(255, 255, 255, 0.3); text-transform: uppercase;">8mo delay</div>
+            </div>
+
+            <!-- Priority 3 - Interactive Node -->
+            <div class="loop-node" data-priority="3" data-time="4" style="display: flex; align-items: center; gap: 10px; padding: 8px; background: rgba(0, 255, 136, 0.05); border: 1px solid rgba(0, 255, 136, 0.2); border-radius: 4px; cursor: pointer; transition: all 0.2s ease; position: relative;">
+                <span style="font-size: 16px;">⚡</span>
+                <div style="flex: 1;">
+                    <div style="font-size: 11px; font-weight: 500; color: #00FF88;">Fusion Energy</div>
+                    <div style="font-size: 10px; color: rgba(255, 255, 255, 0.5);">40% coal replacement ready</div>
+                </div>
+                <div style="position: absolute; top: 4px; right: 4px; font-size: 9px; color: rgba(255, 255, 255, 0.3);">P3</div>
+                <div class="node-actions" style="position: absolute; right: -5px; top: 50%; transform: translateY(-50%); display: none;">
+                    <button class="action-icon defer" title="Defer" style="width: 20px; height: 20px; border-radius: 50%; background: rgba(255, 176, 0, 0.2); border: 1px solid rgba(255, 176, 0, 0.4); color: #FFB000; cursor: pointer; font-size: 10px;">⏸</button>
+                    <button class="action-icon accelerate" title="Accelerate" style="width: 20px; height: 20px; border-radius: 50%; background: rgba(0, 255, 136, 0.2); border: 1px solid rgba(0, 255, 136, 0.4); color: #00FF88; cursor: pointer; font-size: 10px; margin-left: 2px;">⚡</button>
+                </div>
+            </div>
+
+            <!-- Interactive Action Buttons Row -->
+            <div style="display: flex; gap: 6px; margin-top: 8px;">
+                <button id="reorder-btn" style="flex: 1; background: rgba(139, 92, 246, 0.05); border: 1px solid rgba(139, 92, 246, 0.2); color: #8B5CF6; padding: 6px; border-radius: 4px; cursor: pointer; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.2s ease;">
+                    Reorder
+                </button>
+                <button id="optimize-btn" style="flex: 1; background: rgba(0, 240, 255, 0.05); border: 1px solid rgba(0, 240, 255, 0.2); color: #00F0FF; padding: 6px; border-radius: 4px; cursor: pointer; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.2s ease;">
+                    AI Optimize
+                </button>
+            </div>
+
+            <button class="execute-btn" id="execute-loop-btn" style="margin-top: 8px; width: 100%; background: rgba(0, 240, 255, 0.1); border: 1px solid rgba(0, 240, 255, 0.3); color: #00F0FF; padding: 8px; border-radius: 4px; cursor: pointer; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; transition: all 0.2s ease; position: relative;">
+                Execute Loop
+                <span id="unlock-status" style="position: absolute; right: 12px; font-size: 9px; opacity: 0.6;">18 of 21 unlocked</span>
+            </button>
+        </div>
+
+        <!-- Opportunity Cost Indicator -->
+        <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+            <div style="font-size: 9px; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255, 255, 255, 0.3); margin-bottom: 6px;">Not Prioritized (Delayed)</div>
+            <div id="delayed-items" style="display: flex; flex-wrap: wrap; gap: 4px;">
+                <span class="delayed-tech" style="font-size: 9px; padding: 2px 6px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 2px; opacity: 0.5; cursor: pointer; transition: all 0.2s ease;">Personalized Medicine (+8mo)</span>
+                <span class="delayed-tech" style="font-size: 9px; padding: 2px 6px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 2px; opacity: 0.5; cursor: pointer; transition: all 0.2s ease;">Vertical Farming (+12mo)</span>
+                <span style="font-size: 9px; padding: 2px 6px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 2px; opacity: 0.5;">+15 others...</span>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        @keyframes fadeUpdate {
+            0% { opacity: 0; transform: scale(0.95); }
+            100% { opacity: 0.7; transform: scale(1); }
+        }
+
+        .loop-node.dragging {
+            opacity: 0.6;
+            transform: scale(0.95);
+        }
+
+        .loop-node:hover .node-actions {
+            display: flex !important;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .action-icon:hover {
+            transform: scale(1.2);
+        }
+
+        .delayed-tech:hover {
+            opacity: 1 !important;
+            border-color: rgba(0, 240, 255, 0.3) !important;
+        }
+
+        #reorder-btn.active {
+            background: rgba(139, 92, 246, 0.2) !important;
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.4);
+        }
+    </style>
+
+    <style>
+        .loop-node:hover {
+            transform: translateX(-2px);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+            border-color: #00F0FF !important;
+        }
+
+        .defer-btn:hover {
+            background: rgba(255, 176, 0, 0.1) !important;
+            box-shadow: 0 0 10px rgba(255, 176, 0, 0.3);
+        }
+
+        .modify-btn:hover {
+            background: rgba(139, 92, 246, 0.1) !important;
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.3);
+        }
+
+        .execute-btn:hover {
+            background: rgba(0, 240, 255, 0.2) !important;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+        }
+    </style>
+
+    <!-- Legend -->
+    <div class="legend">
+        <div class="legend-title">Legend</div>
+        <div class="legend-item">
+            <div class="legend-box legend-locked"></div>
+            <div class="legend-label">Locked - Requirements not met</div>
+        </div>
+        <div class="legend-item">
+            <div class="legend-box"></div>
+            <div class="legend-label">Available - Can begin research</div>
+        </div>
+        <div class="legend-item">
+            <div class="legend-box legend-researching"></div>
+            <div class="legend-label">Researching - In progress</div>
+        </div>
+        <div class="legend-item">
+            <div class="legend-box legend-unlocked"></div>
+            <div class="legend-label">Unlocked - Ready to deploy</div>
+        </div>
+    </div>
+
+    <script>
+        // V4 Enhanced Interactivity with Cross-Panel Coordination
+
+        // Filter buttons
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                // Filter tech cards based on category
+                const category = this.textContent.toLowerCase();
+                // In production: actually filter the cards
+            });
+        });
+
+        // Tech card interactions
+        document.querySelectorAll('.tech-card').forEach(card => {
+            // Make available tech cards draggable
+            if (card.classList.contains('available')) {
+                card.draggable = true;
+
+                card.addEventListener('dragstart', function(e) {
+                    e.dataTransfer.effectAllowed = 'move';
+                    e.dataTransfer.setData('text/html', this.innerHTML);
+                    e.dataTransfer.setData('techName', this.querySelector('.tech-name').textContent);
+                    this.classList.add('dragging');
+                });
+
+                card.addEventListener('dragend', function() {
+                    this.classList.remove('dragging');
+                    // Remove all drag-over states
+                    document.querySelectorAll('.drag-over').forEach(el => {
+                        el.classList.remove('drag-over');
+                    });
+                });
+            }
+
+            card.addEventListener('click', function() {
+                // Expand card details
+                console.log('Tech card clicked:', this.querySelector('.tech-name').textContent);
+            });
+        });
+
+        // Crisis badge interactions - Cross-panel coordination
+        document.querySelectorAll('.crisis-badge').forEach(badge => {
+            badge.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const crisisType = this.closest('.tech-card').dataset.crisis;
+
+                // Trigger cross-panel highlight
+                if (crisisType === 'heat') {
+                    // Highlight South Asia on map
+                    window.parent.postMessage({
+                        action: 'highlightRegion',
+                        region: 'South Asia',
+                        crisis: 'heat'
+                    }, '*');
+
+                    // Trigger ARIA suggestion
+                    window.parent.postMessage({
+                        action: 'ariaSuggest',
+                        topic: 'heat_mitigation',
+                        tech: 'Fusion Energy'
+                    }, '*');
+                } else if (crisisType === 'ocean') {
+                    // Highlight ocean regions
+                    window.parent.postMessage({
+                        action: 'highlightLayer',
+                        layer: 'ocean',
+                        focus: 'acidification'
+                    }, '*');
+
+                    // Trigger ARIA context
+                    window.parent.postMessage({
+                        action: 'ariaContext',
+                        topic: 'ocean_ph',
+                        tech: 'Enhanced Weathering'
+                    }, '*');
+                }
+
+                // Visual feedback
+                this.style.animation = 'none';
+                setTimeout(() => {
+                    this.style.animation = 'urgentPulse 0.3s ease 3';
+                }, 10);
+            });
+        });
+
+        // Recommend button interactions
+        document.querySelectorAll('.recommend-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const techName = this.closest('.tech-card').querySelector('.tech-name').textContent;
+
+                // Send to ARIA for analysis
+                window.parent.postMessage({
+                    action: 'ariaRecommend',
+                    tech: techName
+                }, '*');
+
+                // Visual feedback
+                this.textContent = 'Recommended';
+                this.style.background = 'rgba(0, 255, 136, 0.2)';
+                this.style.borderColor = '#00FF88';
+                this.style.color = '#00FF88';
+
+                setTimeout(() => {
+                    this.textContent = 'Recommend';
+                    this.style.background = '';
+                    this.style.borderColor = '';
+                    this.style.color = '';
+                }, 2000);
+            });
+        });
+
+        // Active Loop Panel Drag & Drop
+        const loopNodes = document.querySelectorAll('.loop-node');
+        let draggedNode = null;
+
+        loopNodes.forEach(node => {
+            node.draggable = true;
+
+            node.addEventListener('dragstart', function(e) {
+                draggedNode = this;
+                this.classList.add('dragging');
+                e.dataTransfer.effectAllowed = 'move';
+            });
+
+            node.addEventListener('dragover', function(e) {
+                if (e.preventDefault) {
+                    e.preventDefault();
+                }
+                e.dataTransfer.dropEffect = 'move';
+
+                if (draggedNode && draggedNode !== this) {
+                    this.classList.add('drag-over');
+                }
+                return false;
+            });
+
+            node.addEventListener('dragleave', function() {
+                this.classList.remove('drag-over');
+            });
+
+            node.addEventListener('drop', function(e) {
+                if (e.stopPropagation) {
+                    e.stopPropagation();
+                }
+
+                if (draggedNode && draggedNode !== this) {
+                    // Swap priorities
+                    const draggedPriority = draggedNode.dataset.priority;
+                    const targetPriority = this.dataset.priority;
+
+                    draggedNode.dataset.priority = targetPriority;
+                    this.dataset.priority = draggedPriority;
+
+                    // Swap DOM positions
+                    const parent = this.parentNode;
+                    const draggedNext = draggedNode.nextSibling;
+                    const thisNext = this.nextSibling;
+
+                    parent.insertBefore(draggedNode, thisNext);
+                    parent.insertBefore(this, draggedNext);
+
+                    // Update time estimate
+                    updateTimeEstimate();
+                }
+
+                this.classList.remove('drag-over');
+                return false;
+            });
+
+            node.addEventListener('dragend', function() {
+                this.classList.remove('dragging');
+                draggedNode = null;
+            });
+        });
+
+        // Update time estimate based on priority order
+        function updateTimeEstimate() {
+            const nodes = document.querySelectorAll('.loop-node');
+            let totalTime = 0;
+
+            nodes.forEach(node => {
+                totalTime += parseInt(node.dataset.time) || 0;
+            });
+
+            document.getElementById('time-estimate').textContent =
+                `Est. ${totalTime} months to completion`;
+
+            // Animate the update
+            document.getElementById('time-estimate').style.animation = 'fadeUpdate 0.5s ease';
+            setTimeout(() => {
+                document.getElementById('time-estimate').style.animation = '';
+            }, 500);
+        }
+
+        // Reorder button functionality
+        document.getElementById('reorder-btn')?.addEventListener('click', function() {
+            this.classList.toggle('active');
+            const nodes = document.querySelectorAll('.loop-node');
+
+            nodes.forEach(node => {
+                if (this.classList.contains('active')) {
+                    node.style.cursor = 'move';
+                    node.draggable = true;
+                } else {
+                    node.style.cursor = 'pointer';
+                    node.draggable = false;
+                }
+            });
+        });
+
+        // AI Optimize button
+        document.getElementById('optimize-btn')?.addEventListener('click', function() {
+            // Simulate AI optimization
+            this.textContent = 'Optimizing...';
+            this.disabled = true;
+
+            setTimeout(() => {
+                // Reorder nodes based on "optimal" priority
+                // In production: actual AI calculation
+
+                this.textContent = 'AI Optimize';
+                this.disabled = false;
+
+                // Show optimization complete
+                const status = document.createElement('div');
+                status.textContent = 'Optimization complete: -3 months';
+                status.style.cssText = `
+                    position: absolute;
+                    top: -25px;
+                    right: 0;
+                    font-size: 10px;
+                    color: #00FF88;
+                    animation: fadeIn 0.3s ease;
+                `;
+                this.parentElement.appendChild(status);
+
+                setTimeout(() => status.remove(), 3000);
+            }, 1500);
+        });
+
+        // Execute Loop button
+        document.getElementById('execute-loop-btn')?.addEventListener('click', function() {
+            this.textContent = 'Executing...';
+            this.style.background = 'rgba(0, 255, 136, 0.2)';
+            this.style.borderColor = '#00FF88';
+
+            setTimeout(() => {
+                this.textContent = 'Execute Loop';
+                this.style.background = '';
+                this.style.borderColor = '';
+            }, 2000);
+        });
+
+        // Listen for cross-panel messages
+        window.addEventListener('message', function(e) {
+            if (e.data.action === 'highlightCrisisTech') {
+                // Highlight relevant tech cards for a crisis
+                const crisisType = e.data.crisis;
+                document.querySelectorAll(`[data-crisis="${crisisType}"]`).forEach(card => {
+                    card.classList.add('crisis-relevant');
+                    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
