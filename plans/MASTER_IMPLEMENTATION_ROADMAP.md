@@ -1815,19 +1815,23 @@ We discovered all agents are doing variance control at different layers. This cr
 - Is it backed by empirical research or implementation convenience?
 - What happens under extreme conditions (100-year runs, adversarial inputs)?
 
-**Status:** ✅ COMPLETE (Nov 25, 2025)
+**Status:** ✅ COMPLETE (Nov 25, 2025 - citations added)
 - ✅ All 4 critical systems audited (`reviews/self_limiting_feedback_audit_20251125.md`)
 - ✅ All have self-limiting mechanisms (Math.min/Math.max caps)
-- ✅ Research backing: 2/4 well-cited (AI scaling, tech adoption), 2/4 need citations (climate bounds)
+- ✅ Research backing: 4/4 fully cited (Nov 25 update - climate bounds added)
 - ✅ 142 saturation occurrences found across codebase
 - ✅ No infinite runaway behavior found
+- ✅ Climate stability citations added to `ClimateSystemPhase.ts`:
+  - 5% floor: Lenton 2019, PETM recovery (Zachos 2008), Steffen 2015, Royer 2006
+  - 95% cap: IPCC AR6 WG1 Ch4, Armstrong McKay 2022, paleoclimate evidence
+  - Pollution bounds: Meadows 1972, Persson 2022
 - ⏳ Extreme condition testing (scripts to be created - follow-up work)
-- **Verdict:** PASS with documentation gaps (climate citations needed)
+- **Verdict:** ✅ PASS
 - **Deliverables:** `reviews/self_limiting_feedback_audit_20251125.md` (+337 lines)
-- **Commit:** f166cdc72
+- **Commits:** f166cdc72 (audit), TBD (climate citations)
 
 **Follow-up work (MEDIUM priority):**
-- Add climate stability citations (IPCC AR6, Armstrong McKay 2022, Lenton 2019)
+- ~~Add climate stability citations~~ ✅ COMPLETE (Nov 25, 2025)
 - Create extreme condition test suite (100-year runs, adversarial inputs, boundary conditions)
 
 **Cross-references:**
@@ -1896,7 +1900,10 @@ We discovered all agents are doing variance control at different layers. This cr
 - **Commit:** f166cdc72
 
 **Follow-up work (HIGH priority):**
-- Fix 1 CRITICAL pattern in `thresholds/config.ts`
+- ~~Fix 1 CRITICAL pattern in `thresholds/config.ts`~~ → **FALSE POSITIVE** (Nov 25):
+  - The pattern `metadata.id ?? generateConfigId()` is intentional behavior for optional parameter
+  - Function signature explicitly marks `id` as optional (`id?: string`)
+  - This is the correct pattern for providing defaults to optional parameters
 - Review 345 HIGH patterns in calculation-heavy files
 - Integrate into pre-commit hook or CI pipeline
 
