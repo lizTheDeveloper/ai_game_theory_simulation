@@ -1538,6 +1538,12 @@ Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation nee
 - `research/ROUND5_REMEDIATION_STRATEGY_20251030.md` (850 lines)
 
 **Additional Verification Queue (from commits, 17-31h):**
+- [ ] 🚨 **NEW (Nov 25):** Verify MIRI International ASI Prevention Agreement (research/verification_abd17c4_20251125.md, commit abd17c4) - **Expert Risk Estimates + Proposed Parameters:**
+  - Scher et al. (2025) arXiv:2511.10783 - verify paper exists and claims match
+  - 10-38% expert catastrophic risk estimates - trace to primary sources (Bengio, Amodei, survey)
+  - 10^24 FLOP threshold - verify paper proposes this specific limit
+  - 6-12 month coordination window - verify claim basis
+  - **Priority:** MEDIUM (proposed parameters, not yet implemented)
 - [ ] 🚨 **NEW (Nov 25):** Verify Regional CDR Scaling UN WPP 2024 citations (research/verification_c7c4cb6_20251125.md, commit c7c4cb69a) - **10 regions × 6 time points (1990-2025):**
   - Sub-Saharan Africa: 15.6/1000 (1990) → 8.7/1000 (2020) - need exact passage from UN WPP 2024
   - Europe aging effect: 11.0/1000 (1990) → 12.2/1000 (2020) - need confirmation CDR increases
