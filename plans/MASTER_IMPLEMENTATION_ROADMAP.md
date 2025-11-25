@@ -243,18 +243,16 @@
 
 ### MEDIUM Priority
 
-4. **Game Layer Stale State Issues** (From Nov 25 Architecture Review)
-   - **CriticalJunctureDetector:** `monthsRemaining` uses `detectedMonth` instead of current month
-     - Location: `src/game/observers/CriticalJunctureDetector.ts:230-232`
-     - Fix: Pass `currentMonth` as parameter to `getActiveJunctures()`
-     - Effort: SMALL (30 min)
-   - **InfluenceCalculator:** Action history filtering uses loose `includes()` matching
-     - Location: `src/game/core/InfluenceCalculator.ts:461-465`
-     - Issue: `metricPath?.includes(actionId)` matches unrelated actions ("ai" matches "ai_policy" and "climate_action")
-     - Fix: Use `startsWith()` or exact equality
-     - Effort: SMALL (15 min)
+4. **Game Layer Stale State Issues** - **COMPLETE** (Nov 25, 2025 - commit a8bf32a08)
+   - ✅ **CriticalJunctureDetector:** monthsRemaining FIXED
+     - Was: Used `detectedMonth` instead of current month (stale calculation)
+     - Now: Correctly uses `currentMonth` parameter in getActiveJunctures() (line 237)
+   - ✅ **InfluenceCalculator:** Action history filtering FIXED
+     - Was: Used loose `includes()` matching ("ai" matched "ai_policy" and "climate_action")
+     - Now: Uses `startsWith()` for precise action matching (line 470)
    - **Complexity:** 1 system (game layer)
    - **Source:** `reviews/architecture_integration_review_20251125.md`
+   - **Verification:** Code inspection confirmed both fixes applied
 
 5. **AMOC Temperature-Dependent Function** - **IMPLEMENTATION COMPLETE** (Nov 20, 2025)
    - ~~Current code has fixed 5% probability~~ → Now temperature-dependent
@@ -2247,21 +2245,27 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
 
 **Overall Project Status: 🟢 EXCELLENT** (Nov 25, 2025 - All CRITICAL Items Complete, Architecture A-)
 
-**Key Metrics (Nov 25, 2025):**
+**Key Metrics (Nov 25, 2025 - Updated Post-Verification):**
 - **CRITICAL Priority Queue:** 0 items (all complete)
-- **HIGH Priority Queue:** 2 active items (mechanism audits ongoing, game layer stale state)
-- **Architecture Health:** A- (confirmed Nov 25, no regressions)
+- **HIGH Priority Queue:** 1 active item (mechanism audits ongoing)
+- **MEDIUM Priority Queue:** 9 items (only research/documentation remaining, no active implementation)
+- **Architecture Health:** A- (confirmed Nov 25, all game layer fixes verified)
 - **Research Quality:** A (96% sources from 2020+)
 - **Determinism:** VERIFIED (4/4 separate runs identical)
 - **Hindcast Status:** Phase 6 complete, ±5% through 2005, calibration ongoing
 
-**Nov 25, 2025 Session - Architecture Review + Phase Order Fix:**
+**Nov 25, 2025 Session - Architecture Review + Phase Order Fix + Game Layer Verification:**
 - ✅ **ARCHITECTURE INTEGRATION REVIEW** (Grade A-)
   - 30-day retrospective (Oct 26 - Nov 25)
   - 0 CRITICAL issues (baseline maintained)
   - 1 HIGH issue: Duplicate phase orders FIXED (commit 96dfee7b5)
-  - 2 MEDIUM issues: Game layer stale state access (CriticalJunctureDetector, InfluenceCalculator)
+  - 2 MEDIUM issues: Game layer stale state access - VERIFIED COMPLETE (both fixed in commit a8bf32a08)
   - Report: `reviews/architecture_integration_review_20251125.md`
+- ✅ **GAME LAYER VERIFICATION** (Late Nov 25 Worker Session)
+  - CriticalJunctureDetector monthsRemaining: Confirmed using currentMonth (line 237)
+  - InfluenceCalculator action matching: Confirmed using startsWith() (line 470)
+  - Both fixes were already applied, not pending - architecture review findings already resolved
+  - Impact: All identified game layer issues from Nov 25 review are complete
 - ✅ **PHASE ORDER COLLISION FIX** (Commit 96dfee7b5)
   - Fixed 5 duplicate execution orders (7.5, 12.7, 21.5, 35.0, 37.0)
   - All 37 phases now have unique decimal orders
