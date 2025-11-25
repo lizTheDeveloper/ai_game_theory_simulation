@@ -12,6 +12,7 @@
 - **System Trajectory:** STABLE - All critical/high items resolved
 - **Roadmap Coherence:** Clean - Completed work archived to `plans/completed/` with timestamps
 - **Recent Work (Nov 24-25):**
+  - ✅ Regional demographic tuning COMPLETE (commit c7c4cb69a) - getRegionalHistoricalDeathRate() for 10 regions
   - ✅ Duplicate phase execution order FIXED (commit 395bb2d63) - TechDeploymentSchedule 1.5→1.6
   - ✅ Sequenced tech deployment implemented (commit 97de47d4d) - 119 techs over 24mo, mortality 98.8%→87.2%
   - ✅ Governance scenario experimental design (5 experiments planned)
@@ -133,13 +134,16 @@
        - 2010: +6.86% (improved from 14%!)
        - 2020: +10.30% (improved from 15%!)
      - **Status:** Model now within 5% through 2005, 6-10% overshoot 2010-2020
-   - **Remaining calibration** (MEDIUM priority):
-     - Late-period overshoot (2010-2020: 6-10%) needs demographic transition tuning
+   - **Phase 6 - Regional Demographic Scaling COMPLETE** (Nov 25, 2025 - commit c7c4cb69a):
+     - ✅ Root cause identified: Regional death rates NOT scaled for historical mode (unlike birth rates)
+     - ✅ Added getRegionalHistoricalDeathRate() function (10 regions × 6 time points)
+     - ✅ Integration: regionalPopulations.ts now uses region-specific CDR values in historical mode
+     - ✅ Fail-loudly validation: assertFinite on interpolated values, no silent fallbacks
+     - **Expected impact:** Reduce 2010-2020 overshoot from 10.3% → 4-6% (pending validation)
+     - **Validation status:** Ready for Monte Carlo hindcast validation run
+   - **Remaining calibration** (MEDIUM priority - post-validation):
      - CO2 concentration 25-32% too high (emissions model needs calibration)
-     - **Possible causes:**
-       - Birth rate decline in model may be slower than historical demographic transition
-       - Regional fertility rates may need era-specific scaling
-       - Mortality rates in later periods may be too low
+     - **Dependency:** Wait for regional CDR scaling validation results before emissions tuning
 
 1b. **Tipping Cascade Recalibration** - **COMPLETE** (Nov 24, 2025)
    - ~~Audit found tipping cascades use 2.5th percentile values, not median~~
