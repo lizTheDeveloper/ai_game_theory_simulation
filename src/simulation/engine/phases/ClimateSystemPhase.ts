@@ -404,7 +404,24 @@ export class ClimateSystemPhase implements SimulationPhase {
       totalFreshwaterImpact += element.impactFreshwater * scaledProgress;
     }
 
-    // Cap total degradation at 95%
+    /**
+     * Cap total degradation at 95% (per-step)
+     *
+     * Research basis:
+     * - Even during PETM (56 Ma, +5-8°C), Earth retained habitable climate zones
+     * - Snowball Earth events (~700 Ma) had equatorial refugia
+     * - IPCC AR6 WG1 Ch4: Worst-case scenarios (RCP8.5) show severe but not
+     *   complete climate system collapse by 2300
+     * - Armstrong McKay et al. (2022, Science): Multiple tipping points crossing
+     *   leads to "Hothouse Earth" but not complete destabilization
+     *
+     * The 95% cap prevents single-step collapse while allowing cumulative
+     * degradation over many steps. This models the physical reality that
+     * climate systems have massive inertia and multiple stabilizing feedbacks
+     * even under severe forcing.
+     *
+     * @see research/climate_tipping_timescales_20251106.md
+     */
     const cap = 0.95;
     totalClimateStabilityImpact = Math.min(cap, Math.abs(totalClimateStabilityImpact));
 
@@ -418,6 +435,29 @@ export class ClimateSystemPhase implements SimulationPhase {
         month: state.currentMonth
       }
     );
+    /**
+     * 5% minimum climate stability floor
+     *
+     * Research basis:
+     * - Lenton et al. (2019, Nature): Even crossing multiple tipping points,
+     *   Earth systems retain some stability through self-limiting feedbacks
+     * - PETM recovery: After +5-8°C spike, climate stabilized within ~200ky
+     *   (Zachos et al. 2008, Nature), demonstrating system resilience
+     * - Planetary boundaries framework (Steffen et al. 2015): Safe operating
+     *   space may be exceeded but Earth remains habitable
+     * - Ice core evidence: No known Phanerozoic climate state was completely
+     *   destabilized despite mass extinctions (Royer 2006, Geobiology)
+     *
+     * The 5% floor represents: Even in worst-case scenarios, some regions
+     * retain minimal climate predictability. This is a CONSERVATIVE bound -
+     * actual collapse would still be catastrophic but not total system failure.
+     *
+     * This is an IMPLEMENTATION CHOICE backed by paleoclimate evidence of
+     * Earth system resilience, not an empirically derived precise threshold.
+     *
+     * @see research/climate_tipping_timescales_20251106.md
+     * @see Lenton et al. (2019) "Climate tipping points — too risky to bet against" Nature
+     */
     state.environmentalAccumulation.climateStability = assertInRange(
       Math.max(0.05, oldStability * (1 - totalClimateStabilityImpact * 0.01)),
       0, 1,
@@ -473,6 +513,21 @@ export class ClimateSystemPhase implements SimulationPhase {
       console.error(`❌ NaN pollution level in ClimateSystemPhase.executeEnvironmentalFeedback at month ${state.currentMonth}`);
       throw new Error(`NaN pollution level detected - simulation corrupted at month ${state.currentMonth}`);
     }
+    /**
+     * Pollution normalized to [0, 1] scale
+     *
+     * The 1.0 (100%) cap is a definitional bound, not a physical limit:
+     * - 0.0 = pre-industrial baseline (1750)
+     * - 1.0 = maximum modeled pollution intensity
+     *
+     * Note: Actual pollution could theoretically exceed 100% of our
+     * current worst-case scenario, but:
+     * - Self-limiting: Extreme pollution causes collapse, which reduces
+     *   industrial output and emissions (Meadows et al. 1972, Limits to Growth)
+     * - Scale reference: Current planetary boundaries transgression for
+     *   Novel Entities is ~2x safe boundary (Persson et al. 2022, ES&T)
+     * - The [0,1] normalization enables consistent cross-system comparisons
+     */
     state.environmentalAccumulation.pollutionLevel = Math.max(0, Math.min(1, pollutionLevel / 100));
 
     // Update climate stability from climate state
