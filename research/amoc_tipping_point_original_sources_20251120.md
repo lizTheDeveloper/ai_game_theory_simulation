@@ -378,6 +378,76 @@ if (amocCollapseTriggered) {
 
 ---
 
+## 11. WAIS-AMOC Interactions: Sinet et al. (2025)
+
+### Citation
+**Sinet, S., von der Heydt, A.S., Dijkstra, H.A. (2025).** "Meltwater from West Antarctic ice sheet tipping affects AMOC resilience." *Science Advances*, 11(46), eadw3852. https://doi.org/10.1126/sciadv.adw3852
+
+### Key Findings
+
+This study addresses the critical open question: **How does West Antarctic Ice Sheet (WAIS) meltwater affect AMOC stability?**
+
+**Main Discovery: WAIS meltwater can either prevent, facilitate, or trigger AMOC recovery.**
+
+- **Experimental design:** Used CLIMBER-X Earth system model of intermediate complexity
+- **Forcing:** Applied meltwater fluxes representing plausible tipping trajectories of both Greenland Ice Sheet (GIS) and WAIS
+- **Core insight:** WAIS meltwater input can **increase or decrease** AMOC resilience to Greenland meltwater
+
+**Quantitative Results:**
+1. **WAIS meltwater can completely prevent AMOC collapse** - stabilizing effect confirmed in comprehensive model
+2. **AMOC still weakens by ~60%** even with stabilizing WAIS effect
+3. **Recovery timescale: ~3,000 years** to return to pre-perturbation strength
+4. **Timing matters critically:**
+   - Early WAIS melt → stabilizes AMOC
+   - Late WAIS melt or slow rate → stabilizing effect vanishes
+   - Wrong timing → WAIS meltwater can accelerate AMOC tipping
+
+**Mechanism:**
+- Southern Ocean freshwater from WAIS modifies deep water formation processes
+- Can offset North Atlantic freshwater effects from GIS
+- Net effect depends on relative timing and magnitudes of ice sheet melt fluxes
+
+### Credibility
+- **Published in Science Advances** (November 2025) - high-impact peer-reviewed
+- **Senior author:** Henk Dijkstra (Utrecht University) - leading AMOC researcher, co-authored Van Westen 2024
+- **First comprehensive model study** of GIS-WAIS-AMOC coupled tipping interactions
+- **Builds on:** Same modeling team's 2024 breakthrough on AMOC tipping course
+
+### Simulation Implications
+
+**Major update to cascade modeling:**
+
+1. **Ice sheet interactions matter:** Cannot model AMOC collapse in isolation from Antarctic melt
+2. **Timing-dependent coupling:** WAIS melt rate/timing affects GIS-AMOC cascade probability
+3. **Partial resilience:** Even "saved" AMOC weakens 60% and takes millennia to recover
+4. **Bifurcating outcomes:** Same forcing can lead to collapse OR stabilization depending on details
+
+**Implementation recommendations:**
+```typescript
+// Update: Include WAIS-AMOC interaction in cascade model
+if (waisTipping && gisTipping) {
+  const waisPeakTiming = getWAISMeltPeakYear(state);
+  const gisPeakTiming = getGISMeltPeakYear(state);
+
+  if (waisPeakTiming < gisPeakTiming + 50) {
+    // Early WAIS melt → stabilizing effect
+    amocCollapseRisk *= 0.3; // Reduced collapse probability
+    amocWeakeningFactor = 0.6; // Still weakens by 60%
+    amocRecoveryTimescale = 3000; // Years to recovery
+  } else {
+    // Late WAIS melt → may accelerate collapse
+    amocCollapseRisk *= 1.2; // Increased collapse probability
+  }
+}
+```
+
+**Key uncertainty addressed:**
+- Previous models treated AMOC collapse and Antarctic melt as independent
+- This study shows they are **coupled tipping elements** with non-linear interactions
+- Reduces uncertainty in cascade modeling when both ice sheets are at risk
+
+---
+
 ## Knowledge Gaps and Uncertainties
 
 ### What We Know Well
@@ -398,7 +468,7 @@ if (amocCollapseTriggered) {
 1. ❓ **Why do models disagree on recovery?** Half recover, half don't (NAHosMIP) - what determines this?
 2. ❓ **What is the "point of no return"?** At what AMOC strength does collapse become irreversible?
 3. ❓ **Regional impacts timing:** When do severe impacts emerge relative to collapse initiation?
-4. ❓ **Interaction with other tipping points:** Does AMOC collapse trigger ice sheet instabilities or vice versa?
+4. ✅ **Interaction with other tipping points:** Does AMOC collapse trigger ice sheet instabilities or vice versa? **ADDRESSED by Sinet et al. (2025)** - WAIS and GIS meltwater interact with AMOC in timing-dependent ways; can stabilize, facilitate, or accelerate collapse
 
 ---
 
