@@ -1,3 +1,12 @@
+---
+oldest_source: 2000
+newest_source: 2025
+last_verified: 2025-11-25
+verification_status: CURRENT
+used_in_simulation: true
+research_quality: A (85% peer-reviewed, strong empirical grounding, user-validated parameters)
+---
+
 # TIER 2 Superalignment Interventions: Parameter Validation Research
 
 **Date:** October 26, 2025
