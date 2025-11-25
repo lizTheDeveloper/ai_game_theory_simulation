@@ -180,14 +180,25 @@ export async function createHistoricalInitialState(
     // With thermal lock: Temperature tracks realized historical warming during the hindcast
     // period, preventing unrealistic CO2 feedbacks from permafrost/Amazon tipping points.
     //
-    // Lock duration: For 1990-2010 hindcast (20 years), lock for first 120 months (10 years)
+    // Lock duration: Full hindcast duration (1990-2024 = 408 months)
+    // FIX (Nov 25, 2025): Previous 120-month lock caused temperature spike at month 120
+    // when model transitioned to "lagged equilibrium" formula (2.1-3.6C vs historical 1.28C).
+    // Now lock temperature for full hindcast, interpolating toward historical 2024 target.
     // This allows validation against Keeling curve without feedback contamination.
+    //
+    // Historical temperature trajectory (NASA GISS):
+    // 1990: 0.45C, 2000: 0.60C, 2010: 0.85C, 2024: 1.28C
+    // We interpolate linearly during hindcast to match observations.
+    const HISTORICAL_2024_TEMP = 1.28; // NASA GISS 2024
+    const HINDCAST_DURATION_MONTHS = 408; // 1990-2024 = 34 years
+
     baseState.resourceEconomy.co2.historicalTemperatureTarget = historical.climate.tempAnomaly;
-    baseState.resourceEconomy.co2.hindcastTransitionMonths = 120; // 10 years lock
+    baseState.resourceEconomy.co2.hindcast2024TemperatureTarget = HISTORICAL_2024_TEMP;
+    baseState.resourceEconomy.co2.hindcastTransitionMonths = HINDCAST_DURATION_MONTHS;
 
     console.log(`  Temperature anomaly (resourceEconomy.co2): ${historical.climate.tempAnomaly.toFixed(2)}°C`);
     console.log(`  Temperature vs pre-industrial: ${historical.climate.tempVsPreindustrial.toFixed(2)}°C`);
-    console.log(`  🔒 Thermal lock enabled: ${historical.climate.tempAnomaly.toFixed(2)}°C for 120 months (prevents equilibrium jump)`);
+    console.log(`  🔒 Thermal lock enabled: ${historical.climate.tempAnomaly.toFixed(2)}°C → ${HISTORICAL_2024_TEMP}°C over ${HINDCAST_DURATION_MONTHS} months`);
   }
 
   // Population (from UN WPP)
