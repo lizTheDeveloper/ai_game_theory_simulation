@@ -8223,11 +8223,13 @@ See: `devlogs/multidimensional-death-tracking_20251018.md` for complete implemen
 
 See **[`plans/MASTER_IMPLEMENTATION_ROADMAP.md`](../../plans/MASTER_IMPLEMENTATION_ROADMAP.md)** for detailed roadmap.
 
-## 🔄 Phase Execution Order (Updated Nov 6, 2025)
+## 🔄 Phase Execution Order (Updated Nov 25, 2025)
 
 The simulation runs via a **phase-based architecture** with **99 phases** executing in deterministic order each month (reduced from 116 via Nov 2025 consolidation, +2 Nov 24).
 
 **✅ Phase Consolidation Complete (Nov 9, 2025):** Reduced **116 → 95 phases** (-18% complexity). Target exceeded: 3-4 days actual vs 2-3 weeks estimated (5× faster). Zero regressions, 143 test cases, Monte Carlo validated.
+
+**✅ Phase Order Collision Fix (Nov 25, 2025):** Fixed 7 duplicate phase orders that could cause non-deterministic execution. All phases now have unique order values. See `reviews/architecture_integration_review_20251125.md` for details.
 
 **Phase Categories:**
 
@@ -8240,17 +8242,22 @@ The simulation runs via a **phase-based architecture** with **99 phases** execut
 - CyberSecurityPhase (5.0): Defensive AI, cyber attacks
 - SleeperWakePhase (6.0): Sleeper agent activation
 - AIAgentActionsPhase (7.0): AI strategic decisions
+- AIAgentCoordinationPhase (7.5): AI-to-AI coordination dynamics
+- WarMeaningFeedbackPhase (7.6): War-meaning crisis loop (**MOVED Nov 25** - was 7.5, collision fix)
 - TechnologyBreakthroughsPhase (8.0): Research progress
 - **GovernmentElectionPhase (8.5)**: Elections, opinion dynamics, coalition stability (**NEW Oct 20**)
-- StochasticInnovationPhase (8.7): Lévy-flight driven breakthroughs
 - GovernmentActionsPhase (9.0): Policy implementation
-- SocietyActionsPhase (10.0): Adapt to AI, trust dynamics
+- CoordinatedDeploymentPhase (10.5): Coordinated technology deployment
+- SocietyActionsPhase (10.6): Adapt to AI, trust dynamics (**MOVED Nov 25** - was 10.5, collision fix)
 
 **11.0-25.0: System Updates**
 - GovernanceQualityPhase (11.0): Democratic resilience, AI augmentation
 - UpwardSpiralsPhase (12.0): 6 virtuous cascades
 - TechTreePhase (12.5): Technology deployment, effects
-- MeaningRenaissancePhase (13.0): Cultural flourishing
+- StochasticInnovationPhase (12.6): Lévy-flight driven breakthroughs (**MOVED Nov 25** - was 12.7, collision fix)
+- CooperativeSystemsPhase (12.65): Collective formation, cooperative ownership
+- MeaningRenaissancePhase (12.7): Cultural flourishing (**MOVED Nov 25** - was 13.0, collision fix)
+- ClimateDeploymentPhase (12.8): Climate tech deployment phases (**MOVED Nov 25** - was 12.7, collision fix)
 - ConflictResolutionPhase (14.0): Diplomatic AI, peace dividend
 - DiplomaticAIPhase (15.0): Hegemonic AI alignment
 - NationalAIPhase (16.0): Country-level AI capabilities
@@ -8258,8 +8265,13 @@ The simulation runs via a **phase-based architecture** with **99 phases** execut
 - SocialSafetyNetsPhase (18.0): Community programs
 - InformationWarfarePhase (19.0): Truth decay, deepfakes
 - NuclearCommandControlPhase (20.0): Circuit breakers
-- PowerGenerationPhase (21.0): Energy systems
-- HumanEnhancementPhase (21.5): Neural interfaces, longevity
+- PlanetaryBoundariesPhase (21.0): 9 planetary boundaries tracking
+- DystopiaProgressionPhase (21.01): Dystopia variant tracking
+- Tier2PhysicalSystemsPhase (21.1): Physical breakthrough effects
+- IrreversibilityTrackingPhase (21.4): Irreversible threshold tracking
+- LegacyNutrientStocksPhase (21.5): Historical nutrient accumulation
+- HumanSurvivalSystemPhase (21.51): Human survival state
+- FamineSystemPhase (21.6): Famine progression, mortality (**MOVED Nov 25** - was 21.5, collision fix)
 - MemeticEvolutionPhase (22.0): Meme transmission, polarization
 - MADDeterrencePhase (23.0): Nuclear deterrence, escalation
 - ResourceEconomyPhase (24.0): Resource extraction, depletion
@@ -8278,14 +8290,12 @@ The simulation runs via a **phase-based architecture** with **99 phases** execut
 - RefugeeCrisisPhase (27.2): Refugee flows, resettlement
 - CountryPopulationPhase (27.3): Regional population tracking
 - **ExogenousShockPhase (27.5)**: Black/Gray Swan events (**NEW Oct 17**)
-- WarMeaningFeedbackPhase (28.0): War-meaning crisis loop
+- GovernanceSystemPhase (28.0): Governance state updates
 - ClimateJusticePhase (28.5): Environmental debt, justice
 - **CriticalJuncturePhase (29.0)**: Critical juncture agency - individual/collective escape attempts (**NEW Oct 17**)
 - OrganizationViabilityPhase (29.0): Org bankruptcy vs country health
 - NuclearWinterPhase (29.2): Long-term nuclear effects
 - RadiationSystemPhase (29.3): Cancer, birth defects, contamination
-- PlanetaryBoundariesPhase (29.4): 9 boundaries tracking
-- FamineSystemPhase (29.5): Famine progression, mortality
 
 **30.0-36.0: Metrics & Outcome Calculation**
 - UnemploymentPhase (30.0): Calculate unemployment, displacement
@@ -8300,14 +8310,13 @@ The simulation runs via a **phase-based architecture** with **99 phases** execut
 - **FoodSecurityDegradationPhase (34.5)**: Crisis-accelerated food degradation (**NEW Oct 17**)
 - **BaselineMortalityPhase (34.8)**: Baseline demographic mortality (natural deaths from aging/disease) using UN WPP 2024 historical CDR data. Socioeconomic gradients from Chetty 2016, Kahn 2022, Pappas 1993. Now includes `getRegionalHistoricalBirthRate()` with 10 regional CBR curves (1990-2025) for hindcast accuracy. (**NEW Nov 24**, regional fertility fix Nov 25)
 - **BayesianMortalityResolutionPhase (35.0)**: Resolve mortality risks from multiple sources (**NEW Oct 29**)
-- OutcomeProbabilitiesPhase (36.0): Utopia/dystopia/extinction probabilities
+- OutcomeProbabilitiesPhase (35.1): Utopia/dystopia/extinction probabilities (**MOVED Nov 25** - was 35.0, collision fix)
 - CrisisDetectionPhase (36.5): Detect active crises
 
 **37.0-40.0: Endgame & Catastrophes**
 - ExtinctionTriggersPhase (37.0): Check extinction conditions
 - ExtinctionProgressPhase (38.0): Progress extinction events
 - TechnologyDiffusionPhase (39.0): Tech spread across regions
-- DystopiaProgressionPhase (40.0): Dystopia variant tracking
 - CatastrophicScenariosPhase (40.5): Catastrophic event handling
 
 **22.0-24.0: Special Phases & Modeling**
