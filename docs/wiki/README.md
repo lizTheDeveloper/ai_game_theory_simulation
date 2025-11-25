@@ -174,6 +174,30 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📊 **Sources:** 60+ researchers across Cooperative AI Foundation, Oxford, DeepMind, Anthropic
 - ⏳ **Status:** Research complete, ready for implementation via orchestrator workflow
 
+**Nov 25: Phase 2 React Components - Research Tree, ARIA Chat, Global Map** (commit 89c8e08)
+- 🎮 **NEW UI PANELS:** Game Development Roadmap Phase 2 implementation
+- **ResearchTree** (`src/components/dashboards/game/ResearchTree/`, 6 files):
+  - 4-tier x 6-category tech grid visualization
+  - Active Loop panel showing research feedback cycles
+  - Cross-panel events: `tech_selected`, `tech_recommended`, `highlight_tech`
+  - Components: ResearchTree, TechCard, CategoryFilter, ActiveLoop
+- **ARIAChat** (`src/components/dashboards/game/ARIAChat/`, 7 files):
+  - Context-aware AI advisor with citation tooltips
+  - Intervention options (immediate/medium/systemic variants)
+  - Suggestion panel with severity indicators
+  - Cross-panel events: `aria_suggest`, `aria_context`, `focus_region`
+  - Components: ARIAChat, ChatMessage, SuggestionPanel, CitationTooltip
+- **GlobalMap** (`src/components/dashboards/game/GlobalMap/`, 10 files):
+  - Regional visualization with 12 world regions
+  - 6 data layers: composite, temperature, food security, population health, economic, AI development
+  - Crisis indicators with cascading effects
+  - Timeline scrubber with playback controls
+  - Cross-panel events: `region_selected`, `crisis_clicked`, `layer_changed`, `timeline_changed`
+  - Components: GlobalMap, LayerSwitcher, RegionOverlay, CrisisIndicator, CascadeFlow, TimelineScrubber, RegionDetailPanel
+- **Design:** Far-future Elysium aesthetic (black #000000, cyan #00F0FF accent)
+- **Architecture:** Event-driven cross-panel coordination between all three panels
+- **Mockup Scores:** Research Tree 9.5/10, ARIA Chat 9.0/10, Global Map 9.0/10
+
 **Nov 24: Game Dashboard UI Components** (commit 109a89a)
 - 🎮 **NEW UI:** Far-future aesthetic game dashboard (`src/components/dashboards/game/`)
 - **Components:**
@@ -10169,12 +10193,17 @@ See `research/governance_scenario_experimental_design_20251123.md`:
 
 **New reusable components:**
 
-1. **Game Dashboard** (`src/components/dashboards/game/`) - *NEW Nov 24, 2025*
+1. **Game Dashboard** (`src/components/dashboards/game/`) - *Phase 2 complete Nov 25, 2025*
    - Far-future aesthetic game interface (Elysium/Arrival/Interstellar)
-   - 7 components: GameDashboard, Header, CurrencyPanel, PendingDecisions, WorldVisualization, EventStream, ActionBar
+   - **Phase 1 (Nov 24):** 7 core components - GameDashboard, Header, CurrencyPanel, PendingDecisions, WorldVisualization, EventStream, ActionBar
+   - **Phase 2 (Nov 25):** 3 major panels with 23 new files:
+     - **ResearchTree** (6 files): 4-tier x 6-category tech grid, Active Loop, TechCard, CategoryFilter
+     - **ARIAChat** (7 files): Context-aware AI advisor, citations, interventions, suggestions
+     - **GlobalMap** (10 files): 12-region map, 6 data layers, crisis indicators, timeline scrubber
    - Demo: `/game-dashboard-demo`
    - Design: Black (#000000) + glowing cyan (#00F0FF)
    - Integration: Reads `GameStateSnapshot` from game layer, never touches simulation
+   - Cross-panel coordination via event system (`CrossPanelEvent`, `ARIACrossPanelEvent`, `MapCrossPanelEvent`)
    - See: `src/components/dashboards/game/README.md`
 
 2. **HelpButton** (`src/components/docs/HelpButton.tsx`)
@@ -10239,7 +10268,7 @@ src/
 │   │   └── dashboard-guide/page.tsx    # Complete metric reference
 │   └── game-dashboard-demo/page.tsx    # Game dashboard demo (NEW Nov 24)
 └── components/
-    ├── dashboards/game/                # Game interface components (11 files, NEW Nov 24)
+    ├── dashboards/game/                # Game interface components (34 files, Phase 2 Nov 25)
     │   ├── GameDashboard.tsx           # Main wrapper
     │   ├── GameDashboardHeader.tsx     # Title + action modes
     │   ├── CurrencyPanel.tsx           # Currencies + outcome probabilities
@@ -10247,19 +10276,42 @@ src/
     │   ├── WorldVisualization.tsx      # Global systems viz
     │   ├── EventStream.tsx             # Event log
     │   ├── ActionBar.tsx               # Simulation controls
-    │   └── game-dashboard.module.css   # Styles (554 lines)
+    │   ├── game-dashboard.module.css   # Styles (554 lines)
+    │   ├── ResearchTree/               # Tech grid (6 files, NEW Nov 25)
+    │   │   ├── ResearchTree.tsx        # Main 4x6 grid component
+    │   │   ├── TechCard.tsx            # Individual tech card
+    │   │   ├── CategoryFilter.tsx      # Category selection
+    │   │   ├── ActiveLoop.tsx          # Research feedback cycles
+    │   │   └── types.ts                # TypeScript interfaces
+    │   ├── ARIAChat/                   # AI advisor (7 files, NEW Nov 25)
+    │   │   ├── ARIAChat.tsx            # Main chat container
+    │   │   ├── ChatMessage.tsx         # Message with citations
+    │   │   ├── CitationTooltip.tsx     # Citation hover details
+    │   │   ├── SuggestionPanel.tsx     # Quick action suggestions
+    │   │   └── types.ts                # TypeScript interfaces
+    │   └── GlobalMap/                  # World visualization (10 files, NEW Nov 25)
+    │       ├── GlobalMap.tsx           # Main SVG map
+    │       ├── LayerSwitcher.tsx       # Data layer selector
+    │       ├── RegionOverlay.tsx       # Region polygons
+    │       ├── CrisisIndicator.tsx     # Crisis markers
+    │       ├── CascadeFlow.tsx         # Animated flows
+    │       ├── TimelineScrubber.tsx    # Timeline controls
+    │       ├── RegionDetailPanel.tsx   # Region details popup
+    │       └── types.ts                # TypeScript interfaces
     ├── docs/HelpButton.tsx             # Floating help button + tooltip
     └── core/Navigation.tsx             # Updated with docs link
 ```
 
 ### Technical Details
 
-- **~1500 lines** of React/TypeScript
+- **~8,500 lines** of React/TypeScript (Phase 2 added ~7,000 lines)
 - Pure Next.js (no heavy dependencies)
 - Static pages (SSG)
 - Mobile responsive
 - Keyboard navigation
-- **~15KB bundle size**
+- CSS modules with animations
+- Full TypeScript types for all components
+- Accessibility support (ARIA labels, keyboard navigation)
 
 ### Next Steps
 
@@ -10281,7 +10333,7 @@ See [Emoji Legend](./_EMOJI_LEGEND.md) for consistent status indicators and term
 
 ---
 
-**Last Updated**: November 24, 2025 (Multi-agent AI coordination failure modes research + Game Dashboard UI)
+**Last Updated**: November 25, 2025 (Phase 2 React components: ResearchTree, ARIAChat, GlobalMap)
 **Version**: 4.1.1 (Government System + Multi-Paradigm Framework + DUI Reporting Tools + Post-Recalibration Fixes)
 **Status**: 🎉 **MAJOR SYSTEMS INTEGRATED** + ✅ **LAYER 2 PHASE 3 SESSIONS 14-16 COMPLETE**
 **Latest**:
