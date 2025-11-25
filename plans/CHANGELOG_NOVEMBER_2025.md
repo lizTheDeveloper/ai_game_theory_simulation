@@ -6,6 +6,26 @@
 
 ---
 
+## Week of November 23-30, 2025
+
+### November 25, 2025 (CI/CD Workflow Debugging Enhancement)
+
+**Work Completed Nov 25:** ~0.5 hours (minor infrastructure enhancement)
+
+#### GitHub Workflows Debugging Improvement
+- **Status:** ✅ COMPLETE - Enhanced failure diagnostics for Claude Code actions
+- **Time:** ~30 minutes (workflow configuration updates)
+- **Complexity:** 2 systems - GitHub Actions, Claude Code integration
+- **Changes:**
+  - Added `show_full_output: true` to `architecture-review.yml` and `senior-dev-checklist.yml`
+  - Enables complete error output from Claude Code actions when they fail
+  - Improves debugging efficiency for workflow failures
+- **Impact:** Faster issue diagnosis for CI/CD failures involving Claude Code
+- **Branch:** `claude/build-marcus-agent-016LTPXuAb6A3hYDwTvMjyof`
+- **Commit:** `9ce7d6e5` (2025-11-25)
+
+---
+
 ## Week of November 18-22, 2025
 
 **Total Work Completed:** ~60-75 hours across 8 major items in 5 days
