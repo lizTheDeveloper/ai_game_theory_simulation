@@ -197,7 +197,7 @@ const BREAKTHROUGHS: Breakthrough[] = [
 export class StochasticInnovationPhase implements SimulationPhase {
   readonly id = 'stochastic-innovation';
   readonly name = 'Stochastic Innovation Breakthroughs';
-  readonly order = 12.7; // After tech-tree (12.5), before environmental updates
+  readonly order = 12.6; // After tech-tree (12.5), before meaning-renaissance (12.7), climate-deployment (12.8)
 
   // DEPENDENCIES (Nov 15, 2025): Requires AI agents and bifurcation state
   // NOTE: tech-tree dependency REMOVED - backwards ordering (8.5 cannot depend on 12.5)

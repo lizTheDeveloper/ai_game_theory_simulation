@@ -9,8 +9,8 @@
  * **Research Foundation:** research/climate_deployment_timescales_20251113.md
  * **Implementation Plan:** plans/climate_phased_deployment_model_20251113.md
  *
- * **EXECUTION ORDER:** 8.5 (After TechnologyDeploymentPhase, before climate effects)
- * **DEPENDENCIES:** Requires energySystem, breakthrough technologies
+ * **EXECUTION ORDER:** 12.8 (After tech-tree 12.5, before environmental effects)
+ * **DEPENDENCIES:** tech-tree (12.5) - Requires energySystem, breakthrough technologies
  * **SIDE EFFECTS:**
  * - Updates technology deployment phases
  * - Partitions renewable energy budget
@@ -34,7 +34,7 @@ import { addSimulationEvent } from '@/simulation/utils/eventLogger';
 export class ClimateDeploymentPhase implements SimulationPhase {
   readonly id = 'climate-deployment';
   readonly name = 'Climate Technology Deployment';
-  readonly order = 12.7; // After tech-tree (12.5) - moved from 8.5 to fix order violation
+  readonly order = 12.8; // After tech-tree (12.5), stochastic-innovation (12.6), meaning-renaissance (12.7)
   readonly dependencies = ['tech-tree']; // Reads tech tree, energy system, updates deployment levels (fixed: technology-deployment → tech-tree)
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {

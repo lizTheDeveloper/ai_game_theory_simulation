@@ -9,7 +9,9 @@
  *
  * Research: Gaza/Yemen/Sudan (2024-25), IPBES (2019), FAO (2024)
  *
- * Order: 21.5 (after planetary boundaries 21.0, before extinctions 37.0)
+ * **EXECUTION ORDER:** 21.6 (After legacy-nutrient-stocks 21.5, before extinctions 37.0)
+ * **DEPENDENCIES:** food-security-degradation (19.7), planetary_boundaries (21.0)
+ * **SIDE EFFECTS:** Triggers famines, applies mortality, updates famine state
  */
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
@@ -28,7 +30,7 @@ import { updateFamineSystem } from '../../../types/famine';
 export class FamineSystemPhase implements SimulationPhase {
   readonly id = 'famine_system';
   readonly name = 'Famine System';
-  readonly order = 21.5;
+  readonly order = 21.6; // After legacy-nutrient-stocks (21.5) to use effective pollution values
 
   // DEPENDENCIES (Nov 6, 2025): Must run after food security and planetary boundaries
   readonly dependencies = [
