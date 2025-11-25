@@ -961,6 +961,7 @@ export function createDefaultInitialState(
     // Population Dynamics & Refugee Crises (TIER 1.6)
     humanPopulationSystem: initializeHumanPopulationSystem(),
     refugeeCrisisSystem: initializeRefugeeCrisisSystem(),
+    migrationFlows: initializeMigrationFlows(), // Phase 8 - Hindcast Calibration (Nov 25 2025)
     countryPopulationSystem: initializeCountryPopulations(),
     nuclearWinterState: initializeNuclearWinterState(),  // TIER 1.7.4: Long-term nuclear war effects
     nuclearCommandControlState: initializeNuclearCommandControl(),  // TIER 1 Phase 1B: Circuit breakers
@@ -1744,5 +1745,37 @@ export function createTestState(overrides?: Partial<GameState>, scenarioMode: Sc
 
   // Wrap with validation proxy in dev mode (zero overhead in production)
   return wrapStateForValidation(initialState);
+}
+
+/**
+ * Initialize international migration flows (Phase 8 - Hindcast Calibration, Nov 25 2025)
+ *
+ * Models net migration between regions for 2010-2020 hindcast accuracy.
+ * Research: PNAS 2022 (Azose & Raftery), UN WPP 2024, UNHCR Syrian crisis data
+ *
+ * Target: Reduce 2010-2020 population overshoot from 6-10% to <3%
+ */
+function initializeMigrationFlows() {
+  return {
+    // All flows start at 0 - phase will populate them based on year
+    northAmerica: 0,
+    westernEurope: 0,
+    gulfStates: 0,
+    oceania: 0,
+    latinAmerica: 0,
+    subSaharanAfrica: 0,
+    southAsia: 0,
+    southeastAsia: 0,
+    middleEastExclGulf: 0,
+    easternEurope: 0,
+
+    // Crisis tracking
+    syrianCrisisActive: false,
+    covidSuppressionActive: false,
+
+    // Validation metrics
+    globalNetMigration: 0,
+    cumulativeMigration2010_2020: 0,
+  };
 }
 

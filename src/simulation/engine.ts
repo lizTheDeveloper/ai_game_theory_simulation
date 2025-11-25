@@ -85,6 +85,7 @@ import {
   // OceanAcidificationPhase removed - merged into ResourceWaterPhase (Batch 3, Nov 9, 2025)
   // NovelEntitiesPhase removed - merged into ResourceSoilPhase (Batch 3, Nov 9, 2025)
   HumanPopulationPhase,
+  InternationalMigrationPhase, // Phase 8 - Hindcast Calibration (Nov 25 2025)
   RefugeeCrisisPhase,
   // CountryPopulationPhase,  // REMOVED (Oct 28, 2025): Deleted - was overwriting Bayesian mortality
   PsychologicalTraumaPhase,  // Phase 1B Refinement (Oct 17, 2025): Psychological trauma modeling
@@ -554,6 +555,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new ResourceWaterPhase());  // Consolidated: FreshwaterPhase + OceanAcidificationPhase
     // FIX (Oct 28, 2025): Applies births to regions, then aggregates → global
     this.orchestrator.registerPhase(new HumanPopulationPhase());
+    this.orchestrator.registerPhase(new InternationalMigrationPhase()); // Phase 8 - Hindcast Calibration (Nov 25 2025)
     this.orchestrator.registerPhase(new RefugeeCrisisPhase());
     // CountryPopulationPhase DELETED (Oct 28, 2025) - was overwriting Bayesian deaths during aggregation
     this.orchestrator.registerPhase(new PsychologicalTraumaPhase());  // Phase 1B Refinement: Psychological trauma

@@ -84,6 +84,7 @@ export { DefensiveAIPhase } from './DefensiveAIPhase';
 // export { OceanAcidificationPhase } from './OceanAcidificationPhase';  // CONSOLIDATED into ResourceWaterPhase (Batch 3, Nov 2025)
 // export { NovelEntitiesPhase } from './NovelEntitiesPhase';  // CONSOLIDATED into ResourceSoilPhase (Batch 3, Nov 2025)
 export { HumanPopulationPhase } from './HumanPopulationPhase';
+export { InternationalMigrationPhase } from './InternationalMigrationPhase'; // Phase 8 - Hindcast Calibration (Nov 25 2025)
 export { RefugeeCrisisPhase } from './RefugeeCrisisPhase';
 export { GovernmentRelocationPhase } from './GovernmentRelocationPhase';  // Oct 20, 2025: Government-assisted relocation programs
 // REMOVED (Oct 28, 2025): CountryPopulationPhase deleted - was overwriting Bayesian mortality

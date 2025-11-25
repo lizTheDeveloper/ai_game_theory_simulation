@@ -1,0 +1,66 @@
+================================================================================
+SUCCESS PATH MAPPING ANALYSIS
+================================================================================
+
+Total Runs: 10
+  ✅ Success: 0 (0.0%)
+  ❌ Failure: 0 (0.0%)
+  ⚠️  Mixed:   10 (100.0%)
+
+OUTCOME DISTRIBUTION:
+  UNKNOWN: 10 (100.0%)
+
+================================================================================
+INDIVIDUAL RUN DETAILS
+================================================================================
+
+⚠️ Seed 23880: UNKNOWN
+   Final: QoL=56.4%, Trust=93.8%, Gov=78.5%
+   Trust >60%:   Month 37
+   Gov >70%:     Month 49
+
+⚠️ Seed 330216: UNKNOWN
+   Final: QoL=55.1%, Trust=95.3%, Gov=78.5%
+   Trust >60%:   Month 37
+   Gov >70%:     Month 49
+
+⚠️ Seed 420392: UNKNOWN
+   Final: QoL=60.1%, Trust=100.0%, Gov=78.6%
+   Trust >60%:   Month 37
+   Gov >70%:     Month 13
+
+⚠️ Seed 663555: UNKNOWN
+   Final: QoL=54.4%, Trust=99.8%, Gov=78.6%
+   Trust >60%:   Month 37
+   Gov >70%:     Month 13
+
+⚠️ Seed 554577: UNKNOWN
+   Final: QoL=56.3%, Trust=95.4%, Gov=78.5%
+   Trust >60%:   Month 37
+   Gov >70%:     Month 37
+
+⚠️ Seed 981711: UNKNOWN
+   Final: QoL=59.4%, Trust=97.8%, Gov=78.6%
+   Trust >60%:   Month 37
+   Gov >70%:     Month 13
+
+⚠️ Seed 679750: UNKNOWN
+   Final: QoL=55.8%, Trust=95.2%, Gov=78.6%
+   Trust >60%:   Month 49
+   Gov >70%:     Month 13
+
+⚠️ Seed 944213: UNKNOWN
+   Final: QoL=64.0%, Trust=89.4%, Gov=78.6%
+   Trust >60%:   Month 49
+   Gov >70%:     Month 13
+
+⚠️ Seed 444005: UNKNOWN
+   Final: QoL=55.0%, Trust=97.6%, Gov=78.5%
+   Trust >60%:   Month 37
+   Gov >70%:     Month 49
+
+⚠️ Seed 914376: UNKNOWN
+   Final: QoL=53.0%, Trust=96.7%, Gov=78.6%
+   Trust >60%:   Month 37
+   Gov >70%:     Month 13
+
