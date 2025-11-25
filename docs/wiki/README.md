@@ -3672,6 +3672,7 @@ Implementation details and code references:
 | [📊 LLM Inference Logging](#-llm-inference-logging-infrastructure) | ✅ | Audit trail for all LLM API calls, IndexedDB storage, GCS export, analytics (Nov 18, 2025) |
 | [🎯 Success Path Mapping](../SUCCESS_PATH_MAPPING.md) | ✅ | Success paths for carbon capture, renewables, spirals; cross-system interaction matrix; minimum viable utopia scenario (Nov 25, 2025) |
 | [🎲 Randomness Audit](../RANDOMNESS_AUDIT_NOV2025.md) | ✅ | 236 rng() calls audited: 76% controlled, 17% uncontrolled, 7% unclear; 100% deterministic (Nov 25, 2025) |
+| [🎲 Controlled vs Uncontrolled Randomness](./systems/randomness-audit.md) | ✅ | Section 6.4: 335 RNG usages categorized - 31% research-backed, 49% uncertain, variance reduction strategy (Nov 25, 2025) |
 
 ## 📊 LLM Inference Logging Infrastructure
 

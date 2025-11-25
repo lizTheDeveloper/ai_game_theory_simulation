@@ -442,21 +442,30 @@ export class ClimateSystemPhase implements SimulationPhase {
      * - Lenton et al. (2019, Nature): Even crossing multiple tipping points,
      *   Earth systems retain some stability through self-limiting feedbacks
      * - PETM recovery: After +5-8°C spike, climate stabilized within ~200ky
-     *   (Zachos et al. 2008, Nature), demonstrating system resilience
-     * - Planetary boundaries framework (Steffen et al. 2015): Safe operating
-     *   space may be exceeded but Earth remains habitable
-     * - Ice core evidence: No known Phanerozoic climate state was completely
-     *   destabilized despite mass extinctions (Royer 2006, Geobiology)
+     *   (Zachos et al. 2022, PNAS), demonstrating system resilience
+     * - Steffen et al. (2018, PNAS): Hothouse Earth threshold at 4-5°C suggests
+     *   stabilization point, not complete collapse
+     * - Armstrong McKay et al. (2022, Science): 16 tipping elements, even cascading
+     *   failures do not produce instant 0% stability
+     * - Planck feedback (Cronin 2023, JAMES): Stefan-Boltzmann radiation provides
+     *   fundamental stabilizing mechanism, preventing infinite warming
+     * - IPCC AR6 (2021): Net positive feedbacks amplify warming but Planck feedback
+     *   prevents runaway; ECS bounded at 2.5-4.0°C per CO2 doubling
      *
      * The 5% floor represents: Even in worst-case scenarios, some regions
      * retain minimal climate predictability. This is a CONSERVATIVE bound -
      * actual collapse would still be catastrophic but not total system failure.
      *
-     * This is an IMPLEMENTATION CHOICE backed by paleoclimate evidence of
-     * Earth system resilience, not an empirically derived precise threshold.
+     * IMPORTANT: This is a MODELING ASSUMPTION to prevent simulation artifacts
+     * (division by zero, runaway collapse in single timestep). NOT empirically
+     * validated - paleoclimate shows recovery from extreme states (Snowball Earth,
+     * PETM). Reserve 0% for "Venus scenario," 5% for "worst plausible Earth
+     * scenario maintaining multicellular life."
      *
+     * @see research/climate_self_limiting_mechanisms_20251125.md - Full research synthesis
      * @see research/climate_tipping_timescales_20251106.md
      * @see Lenton et al. (2019) "Climate tipping points — too risky to bet against" Nature
+     * @see Armstrong McKay et al. (2022) "Exceeding 1.5°C global warming could trigger multiple tipping points" Science
      */
     state.environmentalAccumulation.climateStability = assertInRange(
       Math.max(0.05, oldStability * (1 - totalClimateStabilityImpact * 0.01)),

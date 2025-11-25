@@ -144,17 +144,20 @@ function captureSnapshot(state: GameState): StateSnapshot {
   const tier3Count = deployedTechs.filter(t => t.tier === 3).length;
   const tier4Count = deployedTechs.filter(t => t.tier === 4).length;
 
-  // Environmental
-  const env = state.environmentalSystem;
+  // Environmental - use environmentalAccumulation (not environmentalSystem)
+  const env = state.environmentalAccumulation;
 
   // Crises
   const activeCrises = state.crisisSystem?.activeCrises?.length || 0;
+
+  // Cooperation proxy: use social cohesion from socialAccumulation (internationalRelations doesn't exist)
+  const socialCohesion = state.socialAccumulation?.socialCohesion || 0;
 
   return {
     month: state.currentMonth,
     trust: avgTrust,
     governance: governanceScore,
-    cooperation: state.internationalRelations?.cooperationLevel || 0,
+    cooperation: socialCohesion, // Using social cohesion as cooperation proxy
     aiCapability: avgCapability,
     qol: avgQoL,
     spiralsActive,
