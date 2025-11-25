@@ -330,7 +330,15 @@
       "Bash(/tmp/pr2_content.md)",
       "Bash(gh pr edit:*)",
       "Bash(mkdir:*)",
-      "Bash(npm ls:*)"
+      "Bash(npm ls:*)",
+      "Bash(git merge-base:*)",
+      "Bash(gcloud logging read:*)",
+      "Bash(gcloud logging exclusions create:*)",
+      "Bash(gcloud logging:*)",
+      "Bash(/home/g7throwawayplz/ai_game_theory_simulation/scripts/gcp/cluster-power.sh:*)",
+      "Bash(/home/g7throwawayplz/ai_game_theory_simulation/scripts/gcp/test-cluster-power.sh:*)",
+      "Bash(./scripts/gcp/test-cluster-power.sh:*)",
+      "Bash(./scripts/gcp/cluster-power.sh:*)"
     ],
     "deny": [],
     "ask": [],
