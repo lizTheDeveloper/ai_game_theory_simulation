@@ -22,9 +22,10 @@ No new critical stability threats identified. The CRITICAL-2 phase dependency wo
 
 ### HIGH Priority Issues
 
-#### 1. Duplicate Phase Orders (Execution Non-determinism Risk)
+#### 1. Duplicate Phase Orders (Execution Non-determinism Risk) ✅ **FIXED**
 
 **Severity:** HIGH
+**Status:** ✅ FIXED (Nov 25, 2025 - commit 96dfee7b5)
 **Location:** `src/simulation/engine/phases/*.ts`
 **Impact:** Phases with identical order values execute in undefined order, potentially causing non-deterministic behavior across runs.
 
@@ -64,9 +65,10 @@ No new critical stability threats identified. The CRITICAL-2 phase dependency wo
 
 ### MEDIUM Priority Issues
 
-#### 3. CriticalJunctureDetector Stale State Access
+#### 3. CriticalJunctureDetector Stale State Access ✅ **FIXED**
 
 **Severity:** MEDIUM
+**Status:** ✅ FIXED (Nov 25, 2025 - commit a8bf32a08)
 **Location:** `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/game/observers/CriticalJunctureDetector.ts:230-232`
 **Impact:** `monthsRemaining` calculation uses `detectedMonth` instead of current month, producing stale values.
 
@@ -82,9 +84,10 @@ result.push({
 
 **Fix:** Pass `currentMonth` as parameter to `getActiveJunctures()`. Estimated effort: **SMALL** (30 min).
 
-#### 4. InfluenceCalculator Action History Filtering
+#### 4. InfluenceCalculator Action History Filtering ✅ **FIXED**
 
 **Severity:** MEDIUM
+**Status:** ✅ FIXED (Nov 25, 2025 - commit a8bf32a08)
 **Location:** `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/game/core/InfluenceCalculator.ts:461-465`
 **Impact:** Action history filtering uses loose matching that could return incorrect results.
 
