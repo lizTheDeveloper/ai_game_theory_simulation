@@ -510,7 +510,7 @@
 
 ## 🎮 Game Development Roadmap (Parallel Track)
 
-**Status:** 🟢 **PHASE 2 MOSTLY COMPLETE** (Nov 25, 2025) - React components built, Scenario Setup pending
+**Status:** 🟢 **PHASE 2 COMPLETE** (Nov 26, 2025) - All React components built, wired to GameStateSnapshot
 **Roadmap:** [`plans/game-design/GAME_DEVELOPMENT_ROADMAP.md`](./game-design/GAME_DEVELOPMENT_ROADMAP.md)
 **Design Doc:** [`plans/game-design/GAME_DESIGN_DOCUMENT.md`](./game-design/GAME_DESIGN_DOCUMENT.md)
 **Phase 1 Spec:** [`plans/game-design/PHASE1_TECHNICAL_SPEC.md`](./game-design/PHASE1_TECHNICAL_SPEC.md)
@@ -541,14 +541,16 @@
   - Overall Score: **9.2/10 - PRODUCTION READY** ✅
   - Verdict: "Ship it. The dashboard ecosystem is production-ready with high confidence."
 
-**Phase 2 Integration Tasks Status (Nov 25, 2025):**
-- [ ] Convert scenario-setup.html → React (design/mockup COMPLETE, React pending)
+**Phase 2 Integration Tasks Status (Nov 26, 2025):**
+- [x] Convert scenario-setup.html → React (`src/components/dashboards/game/ScenarioSetup/`) ✅ (541 lines, 5 screens)
 - [x] Convert research-tree.html → React (`src/components/dashboards/game/ResearchTree/`) ✅
 - [x] Convert aria-chat.html → React (`src/components/dashboards/game/ARIAChat/`) ✅
 - [x] Convert global-map.html → React (`src/components/dashboards/game/GlobalMap/`) ✅
 - [x] Implement cross-panel coordination via React Context - CrossPanelEvent system ✅
+- [x] Export ScenarioSetup in index.ts ✅ (Nov 26, commit a2080b15c)
+- [x] Fix SimulationObserver.computeMetrics (M-1) - Real values instead of 0.5 ✅ (Nov 26)
 - [ ] **Sylvia Checkpoint:** Review UI for research integrity (false causation, uncertainty representation)
-- [ ] Wire components to actual GameStateSnapshot (using mock data currently - H-2)
+- [x] Wire components to actual GameStateSnapshot - stateMappers.ts (496 lines) + SimulationObserver ✅
 
 **Phase 1 Deliverables (Nov 24, 2025):**
 - ✅ `src/game/` directory - Core architecture (17 files)
@@ -1101,15 +1103,15 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
 ### 4. 🎮 [Game Development Roadmap](./game-design/GAME_DEVELOPMENT_ROADMAP.md)
 **Parallel track: Research-validated game layer** - Player agency, scenarios, tutorial, validation
 
-**Status:** 🟢 **PHASE 2 MOSTLY COMPLETE** (Nov 25, 2025) - React components built, wiring pending
+**Status:** 🟢 **PHASE 2 COMPLETE** (Nov 26, 2025) - All React components built, wired to GameStateSnapshot
 
 **Phase 2 Completion Status:**
-- ✅ **React Components Built** (3/4 complete):
+- ✅ **React Components Built** (4/4 complete):
   - `ResearchTree/` - 4 files (ResearchTree, TechCard, ActiveLoop, CategoryFilter)
   - `ARIAChat/` - 4 files (ARIAChat, ChatMessage, CitationTooltip, SuggestionPanel)
   - `GlobalMap/` - 6 files (GlobalMap, LayerSwitcher, RegionOverlay, CascadeFlow, TimelineScrubber, CrisisIndicator)
-- ⏳ **Scenario Setup** - Mockup not created (LOW priority)
-- ⚠️ **Simulation Wiring** - Components use mock data, need GameStateSnapshot adapters (H-2)
+  - `ScenarioSetup/` - 4 files (ScenarioSetup, types, index, CSS module) - 541 lines, 5-screen wizard
+- ✅ **Simulation Wiring** - stateMappers.ts (496 lines) + SimulationObserver.computeMetrics fixed (Nov 26)
 
 **Phase 1 Complete:**
 - [x] Convert HTML mockups to React components - **COMPLETE** (Nov 24, 2025)
@@ -1131,13 +1133,14 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
   - Type checking passes
   - Commit: a984b511c
 
-**Next Up (Phase 2 Completion - MEDIUM Priority):**
+**Phase 2 Completion (Nov 26, 2025):**
 - [x] Create scenario-setup mockup and design ✅ (Nov 25 late session)
 - [x] Convert research-tree.html → React ✅ (Active Loop, crisis badges, drag-drop all implemented)
 - [x] Convert aria-chat.html → React ✅ (Context awareness, citations, suggestions all implemented)
 - [x] Convert global-map.html → React ✅ (Regions, layers, timeline, cascades all implemented)
+- [x] Convert scenario-setup.html → React ✅ (Nov 26, 541 lines, 5 screens)
 - [x] Implement cross-panel coordination via React Context ✅
-- [ ] Wire components to GameStateSnapshot (mock data → real data adapters)
+- [x] Wire components to GameStateSnapshot ✅ (stateMappers.ts + SimulationObserver fix)
 - [ ] **Sylvia Checkpoint:** Review UI for research integrity
 
 **Key Documents:**

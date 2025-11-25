@@ -125,3 +125,14 @@ export type {
   TimelineScrubberProps,
   RegionDetailPanelProps,
 } from './GlobalMap';
+
+// Scenario Setup Wizard (V4 Production-Ready)
+export { ScenarioSetup } from './ScenarioSetup';
+export type {
+  ScenarioSetupProps,
+  ScenarioConfig,
+  BeliefCalibration,
+  ScenarioType,
+  ScreenType,
+  ScenarioOption,
+} from './ScenarioSetup';

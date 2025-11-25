@@ -314,18 +314,56 @@ export class SimulationObserver implements ISimulationObserver {
   }
 
   private computeMetrics(state: GameStateSnapshot): AggregateMetrics {
-    // Basic metric computation (simplified)
+    // Extract real values from GameStateSnapshot
+    // Each uses optional chaining with sensible fallbacks for undefined states
+
+    // Quality of Life from globalMetrics
+    const overallQoL = (state as Record<string, unknown>).globalMetrics
+      ? ((state as Record<string, unknown>).globalMetrics as Record<string, number>).qualityOfLife ?? 0.5
+      : 0.5;
+
+    // Environmental health from climate stability or environmental accumulation
+    const envAccum = (state as Record<string, unknown>).environmentalAccumulation as Record<string, number> | undefined;
+    const environmentalHealth = envAccum?.climateStability ?? 0.5;
+
+    // Social stability from society system
+    const society = (state as Record<string, unknown>).society as Record<string, number> | undefined;
+    const socialStability = society?.trust ?? society?.stability ?? 0.5;
+
+    // AI alignment status from average AI agent alignment
+    const aiAgents = (state as Record<string, unknown>).aiAgents as Array<Record<string, number>> | undefined;
+    const aiAlignmentStatus = aiAgents && aiAgents.length > 0
+      ? aiAgents.reduce((sum, agent) => sum + (agent.alignment ?? 0.5), 0) / aiAgents.length
+      : 0.5;
+
+    // Governance effectiveness from government system
+    const govSystem = (state as Record<string, unknown>).governmentSystem as Record<string, number> | undefined;
+    const governanceEffectiveness = govSystem?.internationalCoordination ?? govSystem?.governanceScore ?? 0.5;
+
+    // Count active crises from event log or crisis state
+    const eventLog = (state as Record<string, unknown>).eventLog as Array<Record<string, unknown>> | undefined;
+    const activeCrises = eventLog
+      ? eventLog.filter(e => e.type === 'crisis' && e.resolved !== true).length
+      : 0;
+
+    // Count breached planetary boundaries from tipping point system
+    const tippingPoints = (state as Record<string, unknown>).tippingPointSystem as Record<string, unknown> | undefined;
+    const elements = tippingPoints?.elements as Record<string, Record<string, string>> | undefined;
+    const breachedBoundaries = elements
+      ? Object.values(elements).filter(el => el.status === 'breached' || el.status === 'collapsed').length
+      : 0;
+
     return {
       currentMonth: state.currentMonth ?? 0,
       outcomeClassification: this.getOutcomeClassification(state),
-      overallQoL: 0.5,
-      environmentalHealth: 0.5,
-      socialStability: 0.5,
-      aiAlignmentStatus: 0.5,
-      governanceEffectiveness: 0.5,
-      influenceRemaining: 0.15,
-      activeCrises: 0,
-      breachedBoundaries: 0,
+      overallQoL,
+      environmentalHealth,
+      socialStability,
+      aiAlignmentStatus,
+      governanceEffectiveness,
+      influenceRemaining: 0.15, // Player influence is managed separately
+      activeCrises,
+      breachedBoundaries,
     };
   }
 
