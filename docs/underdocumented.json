@@ -4432,6 +4432,38 @@
     "context": "planetaryBoundaries: {"
   },
   {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/config.ts",
+    "line": 402,
+    "type": "property",
+    "name": "1990",
+    "currentDoc": "(none)",
+    "context": "1990: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/config.ts",
+    "line": 415,
+    "type": "property",
+    "name": "2000",
+    "currentDoc": "(none)",
+    "context": "2000: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/config.ts",
+    "line": 428,
+    "type": "property",
+    "name": "2010",
+    "currentDoc": "(none)",
+    "context": "2010: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/config.ts",
+    "line": 441,
+    "type": "property",
+    "name": "2020",
+    "currentDoc": "(none)",
+    "context": "2020: {"
+  },
+  {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/consciousness.ts",
     "line": 7,
     "type": "type",
@@ -111144,6 +111176,190 @@
     "context": "export function createParameterLockdown(): { timestamp: string; hash: string } {"
   },
   {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+    "line": 443,
+    "type": "property",
+    "name": "year",
+    "currentDoc": "(none)",
+    "context": "year: number,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+    "line": 444,
+    "type": "property",
+    "name": "rng",
+    "currentDoc": "(none)",
+    "context": "rng: () => number,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+    "line": 445,
+    "type": "property",
+    "name": "scenarioMode",
+    "currentDoc": "(none)",
+    "context": "scenarioMode: ScenarioMode = 'historical'"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+    "line": 462,
+    "type": "property",
+    "name": "climate",
+    "currentDoc": "(none)",
+    "context": "climate: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+    "line": 463,
+    "type": "property",
+    "name": "co2Ppm",
+    "currentDoc": "(none)",
+    "context": "co2Ppm: climateData.co2Ppm,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+    "line": 464,
+    "type": "property",
+    "name": "tempAnomaly",
+    "currentDoc": "(none)",
+    "context": "tempAnomaly: climateData.temperatureAnomalyC,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+    "line": 465,
+    "type": "property",
+    "name": "tempVsPreindustrial",
+    "currentDoc": "(none)",
+    "context": "tempVsPreindustrial: climateData.temperatureAnomalyC + 0.7,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+    "line": 467,
+    "type": "property",
+    "name": "economic",
+    "currentDoc": "(none)",
+    "context": "economic: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+    "line": 468,
+    "type": "property",
+    "name": "populationBillions",
+    "currentDoc": "(none)",
+    "context": "populationBillions: economicData.globalPopulationBillion,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+    "line": 469,
+    "type": "property",
+    "name": "globalGini",
+    "currentDoc": "(none)",
+    "context": "globalGini: economicData.giniIndex,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+    "line": 470,
+    "type": "property",
+    "name": "globalHDI",
+    "currentDoc": "(none)",
+    "context": "globalHDI: economicData.hdi,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+    "line": 518,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'initializeHistoricalSimulation',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+    "line": 519,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'currentRegionalTotalM',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+    "line": 520,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: 0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+    "line": 521,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { year, regionCount: baseState.humanPopulationSystem.regionalPopulations.length }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+    "line": 525,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'initializeHistoricalSimulation',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+    "line": 526,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'targetTotalM',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+    "line": 527,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: 0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+    "line": 528,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { year, populationBillions: historical.economic.populationBillions }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+    "line": 613,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'initializeHistoricalSimulation',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+    "line": 614,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'population',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+    "line": 615,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: 0,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+    "line": 616,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { year },"
+  },
+  {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/humanEnhancement.ts",
     "line": 50,
     "type": "property",
@@ -149113,7 +149329,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 559,
+    "line": 581,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -149121,7 +149337,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 560,
+    "line": 582,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -149129,7 +149345,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 561,
+    "line": 583,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -149137,7 +149353,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 562,
+    "line": 584,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -149145,7 +149361,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 563,
+    "line": 585,
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
@@ -149153,7 +149369,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 564,
+    "line": 586,
     "type": "property",
     "name": "population",
     "currentDoc": "(none)",
@@ -149161,7 +149377,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 565,
+    "line": 587,
     "type": "property",
     "name": "carryingCapacity",
     "currentDoc": "(none)",
@@ -149169,7 +149385,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 610,
+    "line": 632,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -149177,7 +149393,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 611,
+    "line": 633,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -149185,7 +149401,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 612,
+    "line": 634,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -149193,7 +149409,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 613,
+    "line": 635,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -149201,7 +149417,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 614,
+    "line": 636,
     "type": "property",
     "name": "totalPopulationMillions",
     "currentDoc": "(none)",
@@ -149209,7 +149425,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 615,
+    "line": 637,
     "type": "property",
     "name": "totalPopulationBillions",
     "currentDoc": "(none)",
@@ -149217,7 +149433,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 616,
+    "line": 638,
     "type": "property",
     "name": "regionCount",
     "currentDoc": "(none)",
@@ -149225,7 +149441,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 622,
+    "line": 644,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -149233,7 +149449,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 623,
+    "line": 645,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -149241,7 +149457,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 624,
+    "line": 646,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -149249,7 +149465,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 625,
+    "line": 647,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
