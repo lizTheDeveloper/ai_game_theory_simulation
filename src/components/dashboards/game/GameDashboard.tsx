@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import type { GameStateSnapshot } from '@/game/types';
 import { GameDashboardHeader } from './GameDashboardHeader';
 import { CurrencyPanel } from './CurrencyPanel';
@@ -8,6 +8,15 @@ import { PendingDecisions } from './PendingDecisions';
 import { WorldVisualization } from './WorldVisualization';
 import { EventStream } from './EventStream';
 import { ActionBar } from './ActionBar';
+import {
+  mapCurrencies,
+  mapOutcomes,
+  mapEvents,
+  mapNextMonthPreview,
+  mapPendingDecisions,
+  formatCurrentMonth,
+  getElapsedMonths,
+} from './stateMappers';
 import styles from './game-dashboard.module.css';
 
 export interface GameDashboardProps {
@@ -42,111 +51,24 @@ export function GameDashboard({
     onSpeedChange?.(speed);
   };
 
-  // Mock data for now - will be replaced with actual game state
-  const mockCurrencies = [
-    {
-      name: 'Research',
-      value: 156,
-      max: 240,
-      trend: 12,
-      trendDirection: 'up' as const,
-    },
-    {
-      name: 'Influence',
-      value: 42,
-      max: 100,
-      trend: -5,
-      trendDirection: 'down' as const,
-    },
-    {
-      name: 'Resources',
-      value: 88,
-      max: 100,
-      trend: 2,
-      trendDirection: 'neutral' as const,
-    },
-    {
-      name: 'AI Trust',
-      value: 71,
-      max: 100,
-      trend: 8,
-      trendDirection: 'up' as const,
-    },
-  ];
+  // Map game state to UI display formats using memoization for performance
+  // Falls back to sensible defaults when gameState is undefined
+  const currencies = useMemo(() => mapCurrencies(gameState), [gameState]);
+  const outcomes = useMemo(() => mapOutcomes(gameState), [gameState]);
+  const decisions = useMemo(() => mapPendingDecisions(gameState), [gameState]);
+  const events = useMemo(() => mapEvents(gameState, 10), [gameState]);
+  const nextMonthPreview = useMemo(() => mapNextMonthPreview(gameState), [gameState]);
 
-  const mockOutcomes = {
-    utopia: 0.12,
-    alignment: 0.34,
-    struggle: 0.28,
-    collapse: 0.18,
-    extinction: 0.08,
-    changeFromLastMonth: 0.03,
-  };
-
-  const mockDecisions = [
-    {
-      id: 'decision-1',
-      name: 'AI Capability Assessment Protocol',
-      urgency: 'critical' as const,
-      daysRemaining: 2,
-      impact: 'Will affect global AI trust and research speed',
-    },
-    {
-      id: 'decision-2',
-      name: 'Climate Emergency Response',
-      urgency: 'important' as const,
-      daysRemaining: 5,
-      impact: 'Impacts 3 planetary boundaries',
-    },
-    {
-      id: 'decision-3',
-      name: 'Research Priority Allocation',
-      urgency: 'standard' as const,
-      daysRemaining: 10,
-      impact: '+15% efficiency to chosen path',
-    },
-  ];
-
-  const mockEvents = [
-    {
-      id: 'event-1',
-      text: 'Breakthrough: Enhanced Solar Efficiency',
-      severity: 'success' as const,
-    },
-    {
-      id: 'event-2',
-      text: 'AGI-7 capabilities expanded to logistics',
-      severity: 'info' as const,
-    },
-    {
-      id: 'event-3',
-      text: 'Social cohesion declining in Region 3',
-      severity: 'warning' as const,
-    },
-    {
-      id: 'event-4',
-      text: 'Research collaboration established',
-      severity: 'info' as const,
-    },
-    {
-      id: 'event-5',
-      text: 'Ocean pH dropped below 7.9',
-      severity: 'critical' as const,
-    },
-  ];
-
-  const mockNextMonth = [
-    'UN Climate Summit decision window opens',
-    'First quantum computing milestone expected',
-    'Phosphorus crisis may trigger',
-  ];
+  // Header data
+  const currentMonthDisplay = useMemo(() => formatCurrentMonth(gameState), [gameState]);
+  const elapsedMonths = useMemo(() => getElapsedMonths(gameState), [gameState]);
 
   return (
     <div className={styles.dashboard}>
       <GameDashboardHeader
         gameTitle="Super-Alignment to Utopia"
-        currentMonth="March 2025"
-        elapsedMonths={3}
+        currentMonth={currentMonthDisplay}
+        elapsedMonths={elapsedMonths}
         activeMode={activeMode}
         onModeChange={handleModeChange}
       />
@@ -154,14 +76,14 @@ export function GameDashboard({
       <div className={styles.mainContent}>
         <div className={styles.leftPanel}>
           <CurrencyPanel
-            currencies={mockCurrencies}
-            outcomes={mockOutcomes}
+            currencies={currencies}
+            outcomes={outcomes}
           />
         </div>
 
         <div className={styles.centerContent}>
           <PendingDecisions
-            decisions={mockDecisions}
+            decisions={decisions}
             onDecisionSelect={onDecisionSelect}
           />
           <WorldVisualization />
@@ -169,8 +91,8 @@ export function GameDashboard({
 
         <div className={styles.rightPanel}>
           <EventStream
-            events={mockEvents}
-            nextMonthPreview={mockNextMonth}
+            events={events}
+            nextMonthPreview={nextMonthPreview}
           />
         </div>
       </div>
