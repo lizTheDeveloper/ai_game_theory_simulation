@@ -29,7 +29,7 @@ export class SocietyActionsPhase implements SimulationPhase {
     'government-actions',     // Order 9.0: Government policies affect society
   ] as const;
 
-  execute(state: GameState, rng: RNGFunction): PhaseResult {
+  execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     // HIGH-6 (Nov 8, 2025): Validate RNG for deterministic simulation
     if (!rng || typeof rng !== 'function') {
       throw new Error(
@@ -39,7 +39,8 @@ export class SocietyActionsPhase implements SimulationPhase {
     }
 
     // Import and execute society actions
-    setDeterministicRng(rng);const societyResult = executeSocietyActions(state, rng);
+    // H-1 (Nov 25, 2025): Pass context for O(1) indices access
+    setDeterministicRng(rng);const societyResult = executeSocietyActions(state, rng, context);
 
     // Update state
     Object.assign(state, societyResult.newState);

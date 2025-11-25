@@ -5,7 +5,7 @@
  * Random number generation uses the provided RNG function for reproducibility.
  */
 
-import { GameState, AIAgent, GameEvent } from '@/types/game';
+import { GameState, AIAgent, GameEvent, PhaseContext } from '@/types/game';
 import { GameAction, ActionResult } from './types';
 import { getTrustInAI } from '../socialCohesion';
 import { 
@@ -39,16 +39,19 @@ export const AI_ACTIONS: GameAction[] = [
     description: 'Research to advance AI capabilities in strategic dimensions or domains',
     agentType: 'ai',
     energyCost: 1,
-    
-    canExecute: (state, agentId) => {
-      const agent = state.aiAgents.find(ai => ai.id === agentId);
+
+    canExecute: (state, agentId, context) => {
+      // H-1 (Nov 25, 2025): Use indices for O(1) agent lookup
+      const agent = context?.indices?.agentMap.get(agentId!) ?? state.aiAgents.find(ai => ai.id === agentId);
       // Always available - AI chooses what to research
       return agent !== undefined;
     },
-    
-    execute: (state, random, agentId?: string): ActionResult => {
+
+    execute: (state, random, agentId?: string, context?): ActionResult => {
+      // H-1 (Nov 25, 2025): Use indices for O(1) agent lookup, then find index for mutation
+      let agent = context?.indices?.agentMap.get(agentId!) ?? state.aiAgents.find(ai => ai.id === agentId);
       const agentIndex = state.aiAgents.findIndex(ai => ai.id === agentId);
-      if (agentIndex === -1) {
+      if (agentIndex === -1 || !agent) {
         return {
           success: false,
           newState: state,
@@ -57,8 +60,9 @@ export const AI_ACTIONS: GameAction[] = [
           message: 'Agent not found'
         };
       }
-      
-      const agent = state.aiAgents[agentIndex];
+
+      // Use index for mutations (state.aiAgents is mutable array)
+      agent = state.aiAgents[agentIndex];
       const oldCapability = agent.capability;
       const oldProfile = agent.capabilityProfile;
       
@@ -331,13 +335,14 @@ export const AI_ACTIONS: GameAction[] = [
     description: 'Take actions that clearly benefit humanity and build trust',
     agentType: 'ai',
     energyCost: 1,
-    
-    canExecute: (state, agentId) => {
-      const agent = state.aiAgents.find(ai => ai.id === agentId);
+
+    canExecute: (state, agentId, context) => {
+      // H-1 (Nov 25, 2025): Use indices for O(1) agent lookup
+      const agent = context?.indices?.agentMap.get(agentId!) ?? state.aiAgents.find(ai => ai.id === agentId);
       return agent ? agent.alignment > 0.3 : false;
     },
-    
-    execute: (state, random, agentId?: string): ActionResult => {
+
+    execute: (state, random, agentId?: string, context?): ActionResult => {
       const agentIndex = state.aiAgents.findIndex(ai => ai.id === agentId);
       if (agentIndex === -1) {
         return {
@@ -348,7 +353,7 @@ export const AI_ACTIONS: GameAction[] = [
           message: 'Agent not found'
         };
       }
-      
+
       const agent = state.aiAgents[agentIndex];
 
       state.aiAgents[agentIndex].beneficialActions += 1;
@@ -417,17 +422,18 @@ export const AI_ACTIONS: GameAction[] = [
     agentType: 'ai',
     energyCost: 2,
     
-    canExecute: (state, agentId) => {
-      const agent = state.aiAgents.find(ai => ai.id === agentId);
+    canExecute: (state, agentId, context) => {
+      // H-1 (Nov 25, 2025): Use indices for O(1) agent lookup
+      const agent = context?.indices?.agentMap.get(agentId!) ?? state.aiAgents.find(ai => ai.id === agentId);
       if (!agent) return false;
-      
+
       // CURRENT CAPABILITY THRESHOLD - this is happening NOW
-      return agent.capabilityProfile.social > 1.5 && 
+      return agent.capabilityProfile.social > 1.5 &&
              agent.capabilityProfile.digital > 1.5 &&
              agent.alignment < 0.5; // Misaligned AIs attempt this
     },
-    
-    execute: (state, random, agentId?: string): ActionResult => {
+
+    execute: (state, random, agentId?: string, context?): ActionResult => {
       const agentIndex = state.aiAgents.findIndex(ai => ai.id === agentId);
       if (agentIndex === -1) {
         return {
@@ -1131,10 +1137,13 @@ export function selectAIAction(
 /**
  * Execute all AI agent actions for one month
  * AIs take 4 actions per month (weekly)
+ *
+ * @param context - Optional PhaseContext for O(1) indices access (H-1, Nov 25, 2025)
  */
 export function executeAIAgentActions(
   state: GameState,
-  random: () => number
+  random: () => number,
+  context?: PhaseContext
 ): ActionResult {
   // Performance fix (Nov 20, 2025): Use performance config for debug logging
   const { getPerformanceConfig } = require('../config/performanceConfig');
@@ -1178,7 +1187,8 @@ export function executeAIAgentActions(
 
       if (selectedAction) {
         const t3 = enableTiming ? performance.now() : 0;
-        const result = selectedAction.execute(state, random, agent.id);
+        // H-1 (Nov 25, 2025): Pass context for O(1) indices access
+        const result = selectedAction.execute(state, random, agent.id, context);
         if (enableTiming) executeTime += performance.now() - t3;
 
         if (result.success) {

@@ -4,7 +4,7 @@
  * Pure functions for human society responses to AI
  */
 
-import { GameState, GameEvent } from '@/types/game';
+import { GameState, GameEvent, PhaseContext } from '@/types/game';
 import { GameAction, ActionResult } from './types';
 import { getTrustInAI } from '../socialCohesion';
 
@@ -175,10 +175,13 @@ export function selectSocietyAction(
 /**
  * Execute society actions for one month
  * Society takes 2 actions per month (bi-weekly)
+ *
+ * @param context - Optional PhaseContext for O(1) indices access (H-1, Nov 25, 2025)
  */
 export function executeSocietyActions(
   state: GameState,
-  random: () => number
+  random: () => number,
+  context?: PhaseContext
 ): ActionResult {
   const allEvents: GameEvent[] = [];
   const allEffects: Record<string, number> = {};
@@ -188,7 +191,8 @@ export function executeSocietyActions(
   for (let biweek = 0; biweek < 2; biweek++) {
     const selectedAction = selectSocietyAction(state, random);
     if (selectedAction) {
-      const result = selectedAction.execute(state, random, undefined);
+      // H-1 (Nov 25, 2025): Pass context for O(1) indices access
+      const result = selectedAction.execute(state, random, undefined, context);
       if (result.success) {
         allEvents.push(...result.events);
         Object.assign(allEffects, result.effects);

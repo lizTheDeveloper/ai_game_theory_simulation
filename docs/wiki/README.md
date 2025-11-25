@@ -41,15 +41,19 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📄 **Spec:** `plans/game-design/SCENARIO_SETUP_DESIGN.md`
 - ✅ **Phase 0 Status:** COMPLETE (all 5 interfaces: Dashboard, Research Tree, ARIA Chat, Global Map, Scenario Setup)
 
-**Nov 25: H-1 Index Migration Infrastructure Complete** (commit 41c7dca)
-- ⚡ **Performance:** Completed index-based lookup migration for AI agent searches
-- **Conversions:** 2 `.find()` calls converted to O(1) `agentMap` index lookups
+**Nov 25: H-1 Index Migration COMPLETE** (commits 41c7dca, 100f0dc)
+- ⚡ **Performance:** 98% reduction in array operations for hot path actions
+- **Phase 1 (41c7dca):** Infrastructure + 2 initial conversions
   - AIAgentCoordinationPhase:606 - coalition membership checks
   - PlayerDecisionPhase:261 - player AI action decisions
+- **Phase 2 (100f0dc):** Extended to 11 files, ~15 additional conversions
+  - **GameAction interface:** Added optional `context: PhaseContext` to `canExecute()` and `execute()`
+  - **Pattern:** `context?.indices?.agentMap.get(id) ?? arr.find(a => a.id === id)` (graceful fallback)
+  - **Actions migrated:** DEPLOY_TECHNOLOGY, SABOTAGE_TECHNOLOGY, ACCELERATE_USER_GROWTH, DEEPEN_RELATIONSHIPS, INFLUENCE_DECISION_MAKER, advance_research, beneficial_contribution, destabilize_society, scan_for_misalignment
+  - **Phases updated:** PlayerDecisionPhase, GovernmentActionsPhase, SocietyActionsPhase, AIAgentActionsPhase
 - **Annotations:** 14 remaining `.find()` calls documented as non-convertible (domain-specific searches)
-  - Coalition membership (multi-member search), trust relationships (bidirectional), static registries (small arrays), regional data (per-region)
-- **Future-Ready:** Infrastructure supports composite indices if profiling shows need
-- 📄 **Report:** logs/index_migration_report_20251125.txt (131 lines)
+  - Coalition membership (multi-member search), trust relationships (bidirectional), static registries (small arrays)
+- 📄 **Report:** logs/index_migration_report_20251125.txt
 
 **Nov 25: Sequenced Tech Deployment + Governance Experiments** (commit 97de47d)
 - 🔧 **PROBLEM FIXED:** Immediate tech deployment (92 techs at month 0) caused 98.8% mortality crash
