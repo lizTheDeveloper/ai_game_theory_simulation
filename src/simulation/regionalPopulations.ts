@@ -384,28 +384,37 @@ export function updateRegionalPopulations(state: GameState): void {
     region.adjustedBirthRate = region.baselineBirthRate *
       (region.fertilityRate / 2.3); // Scale by fertility vs baseline
 
-    // HISTORICAL BIRTH RATE SCALING (Nov 24, 2025)
-    // In historical mode, scale birth rates based on actual historical crude birth rates
-    // Example: 1990 CBR = 24.3/1000, 2025 CBR = 16.8/1000 → scale by 1.45×
-    // This ensures hindcast matches observed population growth
+    // HISTORICAL BIRTH RATE SCALING (Nov 24-25, 2025)
+    // CRITICAL FIX (Nov 25, 2025): Use region-specific CBR curves instead of global average
+    // Root cause of 2010-2020 overshoot: Global CBR scaling applied uniformly across regions,
+    // but fertility declines varied by 7x (Europe -2.6% vs North America -19.6% in 2010-2020).
+    // Using single multiplier overestimated births in East/South Asia (50% of population).
+    // Research: UN World Population Prospects 2024, regional TFR → CBR using ratio of 7.5
     if (state.config.scenarioMode === 'historical') {
-      const { getHistoricalCrudeBirthRate } = require('./engine/phases/BaselineMortalityPhase');
-      // FIX (Nov 24, 2025): state.currentYear is already updated by TimeAdvancementPhase to include
-      // years elapsed since start. No need to add years again - that was double-counting!
-      // Before fix: Month 12 would use year 1992 (1991 + 1) instead of 1991
+      const { getRegionalHistoricalBirthRate, getHistoricalCrudeBirthRate } = require('./engine/phases/BaselineMortalityPhase');
       const actualYear = state.currentYear;
-      const historicalCBR = getHistoricalCrudeBirthRate(actualYear);
-      const baseline2025CBR = 16.8; // 2025 baseline from BaselineMortalityPhase
-      const historicalScale = historicalCBR / baseline2025CBR;
 
-      region.adjustedBirthRate *= historicalScale;
+      // Get REGION-SPECIFIC historical CBR (not global average)
+      const regionalCBR = getRegionalHistoricalBirthRate(region.name, actualYear);
+      const baseline2025CBR = getRegionalHistoricalBirthRate(region.name, 2025);
+      const regionalScale = regionalCBR / baseline2025CBR;
 
-      // DIAGNOSTIC: Log occasionally (once per year)
+      // For comparison/validation: global scale factor
+      const globalCBR = getHistoricalCrudeBirthRate(actualYear);
+      const globalBaseline = 16.8;
+      const globalScale = globalCBR / globalBaseline;
+
+      region.adjustedBirthRate *= regionalScale;
+
+      // DIAGNOSTIC: Log occasionally (once per year) showing regional vs global scaling
       if (state.currentMonth % 12 === 0 && region.name === 'Sub-Saharan Africa') {
         console.log(`  Historical birth rate scaling (${actualYear}):`);
-        console.log(`    CBR: ${historicalCBR.toFixed(1)}/1000 (vs ${baseline2025CBR.toFixed(1)}/1000 in 2025)`);
-        console.log(`    Scale factor: ${historicalScale.toFixed(3)}×`);
-        console.log(`    Example (${region.name}): ${(region.adjustedBirthRate / historicalScale).toFixed(4)} → ${region.adjustedBirthRate.toFixed(4)}`);
+        console.log(`    Regional CBR (${region.name}): ${regionalCBR.toFixed(1)}/1000`);
+        console.log(`    Regional baseline (2025): ${baseline2025CBR.toFixed(1)}/1000`);
+        console.log(`    Regional scale: ${regionalScale.toFixed(3)}×`);
+        console.log(`    Global CBR: ${globalCBR.toFixed(1)}/1000 (scale: ${globalScale.toFixed(3)}×)`);
+        console.log(`    Difference: ${((regionalScale - globalScale) / globalScale * 100).toFixed(1)}% ${regionalScale > globalScale ? 'HIGHER' : 'lower'}`);
+        console.log(`    Final birth rate: ${region.adjustedBirthRate.toFixed(4)}`);
       }
     }
 
