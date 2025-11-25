@@ -414,11 +414,44 @@
 
 ## 🎮 Game Development Roadmap (Parallel Track)
 
-**Status:** 🟢 **PHASE 1 COMPLETE** (Nov 24, 2025) - Game layer architecture established
+**Status:** 🟢 **PHASE 0 & 1 COMPLETE** (Nov 25, 2025) - All mockups production-ready (9.2/10), Game layer architecture established
 **Roadmap:** [`plans/game-design/GAME_DEVELOPMENT_ROADMAP.md`](./game-design/GAME_DEVELOPMENT_ROADMAP.md)
 **Design Doc:** [`plans/game-design/GAME_DESIGN_DOCUMENT.md`](./game-design/GAME_DESIGN_DOCUMENT.md)
 **Phase 1 Spec:** [`plans/game-design/PHASE1_TECHNICAL_SPEC.md`](./game-design/PHASE1_TECHNICAL_SPEC.md)
-**Mockups:** [`plans/game-design/mockups/`](./game-design/mockups/) (8.9/10 score, APPROVED)
+**Mockups:** [`plans/game-design/mockups/`](./game-design/mockups/) - 5 interfaces, 4 revision rounds, PRODUCTION READY ✅
+
+**Phase 0 Deliverables (Nov 25, 2025) - UI Mockups PRODUCTION READY:**
+- ✅ **Main Dashboard** (Crisis Response Panel) - 6-panel layout, 4 revision rounds, 8.9/10 score
+- ✅ **Scenario Setup Interface** - 7 calibration questions, conversational flow, belief sliders
+  - Design: `SCENARIO_SETUP_DESIGN.md`
+  - Mockup: `mockups/scenario-setup.html`
+- ✅ **Research Tree View** - 71 technologies, Active Loop panel, crisis relevance badges, 9.5/10 final score
+  - Design: `RESEARCH_TREE_DESIGN.md` (4,500 words)
+  - Mockup: `mockups/research-tree.html` (v1-v4)
+  - Features: Category×tier grid, drag-drop priority reordering, defer/accelerate buttons, opportunity cost display
+- ✅ **ARIA Chat Interface** - Context-aware AI advisor with citations, 9.0/10 final score
+  - Design: `ARIA_CHAT_DESIGN.md` (5,200 words)
+  - Mockup: `mockups/aria-chat.html` (v1-v4)
+  - Features: Screen awareness, citation tooltips, action bridges, honest uncertainty
+- ✅ **Global Systems Map** - 10-12 regions, 6 layers, cascade animations, 9.0/10 final score
+  - Design: `GLOBAL_MAP_DESIGN.md` (5,800 words)
+  - Mockup: `mockups/global-map.html` (v1-v4)
+  - Features: Heat map, timeline scrubber, crisis indicators, animated cascades
+- ✅ **Cross-Panel Coordination** - postMessage event system
+  - Click crisis → highlights in Research Tree + triggers ARIA
+  - Research Tree selection → updates ARIA context
+  - Global Map layer change → updates ARIA awareness
+- ✅ **Maya's Reviews** - 4 rounds of iteration: v1 (7.5/6/5.5) → v2 (8.5/7.5/6.5) → v3 (9.0/8.5/8.0) → v4 (9.5/9.0/9.0)
+  - Overall Score: **9.2/10 - PRODUCTION READY** ✅
+  - Verdict: "Ship it. The dashboard ecosystem is production-ready with high confidence."
+
+**Phase 0 → Phase 2 Integration Tasks (Next Steps):**
+- [ ] Convert scenario-setup.html → React (`src/game/components/ScenarioSetup/`)
+- [ ] Convert research-tree.html → React (`src/game/components/ResearchTree/`)
+- [ ] Convert aria-chat.html → React (`src/game/components/ARIA/`)
+- [ ] Convert global-map.html → React (`src/game/components/GlobalMap/`)
+- [ ] Implement cross-panel coordination via React Context
+- [ ] **Sylvia Checkpoint:** Review UI for research integrity (false causation, uncertainty representation)
 
 **Phase 1 Deliverables (Nov 24, 2025):**
 - ✅ `src/game/` directory - Core architecture (17 files)
@@ -963,15 +996,20 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
 ### 4. 🎮 [Game Development Roadmap](./game-design/GAME_DEVELOPMENT_ROADMAP.md)
 **Parallel track: Research-validated game layer** - Player agency, scenarios, tutorial, validation
 
-**Status:** 🟢 **MOCKUPS COMPLETE** (Nov 23, 2025) - UI integration ready to begin
+**Status:** 🟢 **PHASE 0 & 1 COMPLETE** (Nov 25, 2025) - All mockups production-ready (9.2/10), React integration pending
 
 **Recent Completion:**
-- ✅ **Phase 0: UI Mockups COMPLETE** - 4 rounds, 8.9/10 score, APPROVED for production
-  - Main dashboard mockup (6-panel layout)
-  - Crisis response modal
-  - Files: `plans/game-design/mockups/*.html`, `MOCKUP_REVIEW*.md`
+- ✅ **Phase 0: All UI Mockups PRODUCTION READY** - 4 revision rounds, 9.2/10 overall score
+  - Main Dashboard (Crisis Response Panel) - 8.9/10
+  - Scenario Setup Interface - 7 calibration questions, conversational flow
+  - Research Tree View - 71 technologies, Active Loop panel - **9.5/10**
+  - ARIA Chat Interface - Context-aware AI advisor with citations - **9.0/10**
+  - Global Systems Map - 10-12 regions, 6 layers, cascade animations - **9.0/10**
+  - Cross-panel coordination via postMessage events
+  - Maya verdict: "Ship it. The dashboard ecosystem is production-ready with high confidence."
+  - Files: `plans/game-design/mockups/*.html` (v1-v4 iterations), design specs, review summaries
 
-**Next Up (HIGH Priority):**
+**Phase 1 Complete:**
 - [x] Convert HTML mockups to React components - **COMPLETE** (Nov 24, 2025)
   - 11 files in `src/components/dashboards/game/`
   - GameDashboard, Header, CurrencyPanel, PendingDecisions, EventStream, ActionBar
@@ -990,14 +1028,34 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
   - Module boundary rules enforced (Sylvia-approved)
   - Type checking passes
   - Commit: a984b511c
-- [ ] ARIA AI Advisor integration (MEDIUM)
+
+**Next Up (Phase 2 - HIGH Priority):**
+- [ ] Convert scenario-setup.html → React (`src/game/components/ScenarioSetup/`)
+- [ ] Convert research-tree.html → React (`src/game/components/ResearchTree/`)
+  - [ ] Active Loop state management
+  - [ ] Crisis relevance badges wired to simulation
+  - [ ] Defer/accelerate actions connected to influence system
+  - [ ] Drag-drop priority reordering
+- [ ] Convert aria-chat.html → React (`src/game/components/ARIA/`)
+  - [ ] Context awareness (screen reading)
+  - [ ] Citation tooltip system
+  - [ ] Wire to simulation state
+  - [ ] Suggested questions based on UI state
+- [ ] Convert global-map.html → React (`src/game/components/GlobalMap/`)
+  - [ ] Wire regions to simulation state (10-12 regions)
+  - [ ] 6-layer data switcher
+  - [ ] Timeline scrubber connected to history
+  - [ ] Cascade animations
+- [ ] Implement cross-panel coordination via React Context
+- [ ] **Sylvia Checkpoint:** Review UI for research integrity
 
 **Key Documents:**
 - **Design:** `plans/game-design/GAME_DESIGN_DOCUMENT.md` (v2.0 - research-aligned revision)
-- **Roadmap:** `plans/game-design/GAME_DEVELOPMENT_ROADMAP.md` (5-phase epic, Phase 0 complete)
+- **Roadmap:** `plans/game-design/GAME_DEVELOPMENT_ROADMAP.md` (Phase 0 & 1 complete)
 - **Phase 1 Spec:** `plans/game-design/PHASE1_TECHNICAL_SPEC.md`
-- **Mockups:** `plans/game-design/mockups/` (main-dashboard.html, crisis-response.html)
-- **Reviews:** `reviews/game_design_research_integrity_review_20251122.md` (Sylvia), `reviews/game_design_technical_alignment_review_20251122.md` (Maya)
+- **Mockups:** `plans/game-design/mockups/` (5 interfaces, v1-v4 iterations, PRODUCTION READY ✅)
+- **Design Specs:** `SCENARIO_SETUP_DESIGN.md`, `RESEARCH_TREE_DESIGN.md`, `ARIA_CHAT_DESIGN.md`, `GLOBAL_MAP_DESIGN.md`
+- **Reviews:** Maya's 4-round reviews (v1 → v2 → v3 → v4 FINAL), Sylvia research integrity reviews
 
 **Architecture:**
 - Strict separation: `src/game/` reads simulation state, never mutates directly

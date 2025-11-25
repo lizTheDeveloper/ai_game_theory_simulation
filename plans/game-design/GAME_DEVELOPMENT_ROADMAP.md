@@ -129,6 +129,76 @@ If Maya (Game Designer) and Sylvia disagree on a design decision:
 
 ## Development Phases
 
+### Phase 0: UI Mockups & Design (Pre-Development) - **COMPLETE** (Nov 25, 2025)
+
+**Objective:** Design and validate all major UI components before React implementation.
+
+**Status:** ✅ COMPLETE - All mockups production-ready (9.2/10 overall score)
+
+#### Tasks
+
+- [x] Main Dashboard (Crisis Response Panel) - 4 rounds of revision
+- [x] Scenario Setup Interface - Conversational calibration system
+- [x] Research Tree View - 71 technologies, Active Loop panel, crisis relevance
+- [x] ARIA Chat Interface - Context-aware AI advisor with citations
+- [x] Global Systems Map - 10-12 regions, 6 layers, cascade animations
+- [x] Cross-panel coordination design - postMessage event system
+
+#### Deliverables
+
+- ✅ Design specifications (5 files):
+  - `SCENARIO_SETUP_DESIGN.md` - 7 calibration questions, belief sliders
+  - `RESEARCH_TREE_DESIGN.md` - 4,500 words, 71 tech tree spec
+  - `ARIA_CHAT_DESIGN.md` - 5,200 words, tiered implementation
+  - `GLOBAL_MAP_DESIGN.md` - 5,800 words, multi-layer heat map
+  - `DASHBOARD_ELEMENTS_SUMMARY.md` - Integration overview
+
+- ✅ Interactive HTML mockups (4 iterations each):
+  - `mockups/scenario-setup.html` - Conversational calibration flow
+  - `mockups/research-tree.html` (v1-v4) - Category×tier grid, Active Loop
+  - `mockups/aria-chat.html` (v1-v4) - Context-aware conversation
+  - `mockups/global-map.html` (v1-v4) - Animated cascade system
+
+- ✅ Maya's design reviews (4 rounds):
+  - v1: 7.5/6/5.5 - Identified integration needs
+  - v2: 8.5/7.5/6.5 - Active Loop "game-changer"
+  - v3: 9.0/8.5/8.0 - Production-ready core
+  - v4: 9.5/9.0/9.0 - **PRODUCTION READY** ✅
+
+- ✅ Screenshots: 12+ mockup versions documented
+
+#### Integration Tasks (Next Steps)
+
+- [ ] Convert scenario-setup.html → React component (`src/game/components/ScenarioSetup/`)
+- [ ] Convert research-tree.html → React component (`src/game/components/ResearchTree/`)
+  - [ ] Implement Active Loop state management
+  - [ ] Wire crisis relevance badges to simulation state
+  - [ ] Connect defer/accelerate actions to influence system
+  - [ ] Implement drag-drop priority reordering
+- [ ] Convert aria-chat.html → React component (`src/game/components/ARIA/`)
+  - [ ] Implement context awareness (screen reading)
+  - [ ] Add citation tooltip system
+  - [ ] Wire to simulation state for context
+  - [ ] Implement suggested questions based on UI state
+- [ ] Convert global-map.html → React component (`src/game/components/GlobalMap/`)
+  - [ ] Wire regions to simulation state (10-12 regions)
+  - [ ] Implement 6-layer data switcher
+  - [ ] Add timeline scrubber connected to simulation history
+  - [ ] Implement cascade animations (migration, crisis propagation)
+- [ ] Implement cross-panel coordination via React Context
+  - [ ] Click crisis → highlight in Research Tree + trigger ARIA
+  - [ ] Research Tree selection → update ARIA context
+  - [ ] Global Map layer change → update ARIA awareness
+
+#### Sylvia Checkpoint
+
+- [ ] **Sylvia reviews UI mockups for research integrity** - Ensure no false causation language, proper uncertainty representation
+- [ ] **Sylvia approves scenario calibration questions** - Verify belief sliders don't create false precision
+- [ ] **Sylvia reviews ARIA chat examples** - Check citation accuracy, uncertainty framing
+- [ ] **Sylvia approves Active Loop mechanics** - Verify player agency boundaries respected
+
+---
+
 ### Phase 1: Core Architecture (Weeks 1-4) - **COMPLETE** (Nov 24, 2025)
 
 **Objective:** Establish clean separation between research simulation and game presentation layer.
