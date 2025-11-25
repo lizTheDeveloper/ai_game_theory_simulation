@@ -1,124 +1,93 @@
 /**
- * State Mappers - Transform GameStateSnapshot to UI display formats
+ * State Mappers - H-2 Game State to UI Mapping (Nov 25, 2025)
  *
- * H-2 Implementation: Wire Game Layer React Components to GameStateSnapshot
+ * Pure utility functions that transform complex GameStateSnapshot (900+ fields)
+ * into simpler formats expected by dashboard components.
  *
- * These utilities extract data from the complex GameStateSnapshot (900+ fields)
- * and transform it into the simpler formats expected by dashboard components.
- *
- * Design principles:
- * - Fail gracefully: If state is undefined, return sensible defaults
- * - Type safety: All inputs/outputs strictly typed
- * - Pure functions: No side effects, easy to test
+ * Follows game layer module boundaries:
+ * - Read-only access to GameStateSnapshot
+ * - No imports from src/simulation/ (only types)
+ * - Graceful fallbacks when state is undefined
  */
 
 import type { GameStateSnapshot } from '@/game/types';
-import type { Currency, Outcomes } from './CurrencyPanel';
-import type { Event } from './EventStream';
-import type { Decision } from './PendingDecisions';
 
 // ============================================================================
-// CURRENCY MAPPING
+// Currency Panel Types & Mappers
 // ============================================================================
+
+export interface CurrencyDisplay {
+  name: string;
+  value: number;
+  max: number;
+  trend: number;
+  trendDirection: 'up' | 'down' | 'neutral';
+}
 
 /**
- * Extract currency-like metrics from game state
+ * Maps GameState to currency display format
  *
- * Maps complex simulation state to simple progress bars:
- * - Research: From tech tree progress and research investment
- * - Influence: From government effectiveness and international coordination
- * - Resources: From resource economy aggregate metrics
- * - AI Trust: From social cohesion and AI welfare metrics
+ * @param state - Current game state (may be undefined)
+ * @returns Array of currency displays for dashboard
  */
-export function mapCurrencies(state: GameStateSnapshot | undefined): Currency[] {
+export function mapCurrencies(state?: GameStateSnapshot): CurrencyDisplay[] {
   if (!state) {
     return getDefaultCurrencies();
   }
 
-  // Research metric: Based on tech tree progress and deployed tech count
-  const techTreeState = state.techTreeState;
-  const unlockedTechCount = techTreeState?.unlockedTech?.length ?? 0;
-  const totalPossibleTech = 71; // From architecture: 71 breakthrough technologies
-  const researchProgress = Math.round((unlockedTechCount / totalPossibleTech) * 100);
+  // Research: Based on unlocked tech count / total tech
+  const unlockedCount = state.techTreeState?.unlockedTech?.length ?? 0;
+  const totalTech = 71; // Total techs in comprehensiveTechTree.ts
+  const researchProgress = Math.round((unlockedCount / totalTech) * 100);
 
-  // Calculate research trend from recent unlocks
-  const recentUnlocks = techTreeState?.unlockHistory?.filter(
-    event => event.month > (state.currentMonth - 3)
-  )?.length ?? 0;
-  const researchTrend = recentUnlocks > 0 ? recentUnlocks * 3 : 0;
+  // Influence: From institutional legitimacy + international coordination
+  const legitimacy = state.governmentSystem?.institutionalLegitimacy ?? 0.5;
+  const coordination = state.governmentSystem?.internationalCoordination?.level ?? 0.3;
+  const influenceValue = Math.round(((legitimacy + coordination) / 2) * 100);
 
-  // Influence metric: From government system and social cohesion
-  const socialAccumulation = state.socialAccumulation;
-  const institutionalLegitimacy = socialAccumulation?.institutionalLegitimacy ?? 0.5;
-  const governmentSystem = state.governmentSystem;
-  const internationalCoordination = governmentSystem?.internationalCoordination ?? 0.5;
-  const influenceScore = Math.round(
-    ((institutionalLegitimacy + internationalCoordination) / 2) * 100
-  );
+  // Resources: From resource economy aggregate
+  const resourceEcon = state.resourceEconomy ?? {};
+  const gdp = resourceEcon.globalGDPPerCapita ?? 15000;
+  const resourceValue = Math.min(100, Math.round((gdp / 20000) * 100));
 
-  // Influence trend: Based on recent policy activity
-  const recentPolicies = governmentSystem?.activePolicies?.length ?? 0;
-  const influenceTrend = recentPolicies > 5 ? 5 : recentPolicies > 2 ? 2 : -2;
-
-  // Resources metric: From resource economy aggregate
-  const resourceEconomy = state.resourceEconomy;
-  const resourceSecurity = resourceEconomy?.totalResourceSecurity ?? 0.5;
-  const energyIndependence = resourceEconomy?.energyIndependence ?? 0.5;
-  const resourceScore = Math.round(
-    ((resourceSecurity + energyIndependence) / 2) * 100
-  );
-
-  // Resource trend: Based on fossil dependence direction
-  const fossilDependence = resourceEconomy?.fossilDependence ?? 0.5;
-  const renewablePercentage = resourceEconomy?.energy?.renewablePercentage ?? 0;
-  const resourceTrend = renewablePercentage > 50 ? 5 : renewablePercentage > 30 ? 2 : -3;
-
-  // AI Trust metric: Composite of society trust and AI welfare
-  const society = state.society;
-  const aiTrust = society?.trustInAI ?? 0.5;
-  const aiWelfare = state.aiWelfare;
-  const aiWelfareScore = aiWelfare?.simpleScore ?? 0.5;
-  const trustScore = Math.round(((aiTrust + aiWelfareScore) / 2) * 100);
-
-  // Trust trend: Based on AI alignment status
-  const avgAlignment = state.aiAgents?.reduce(
-    (sum, agent) => sum + (agent.alignment ?? 0.5), 0
-  ) / (state.aiAgents?.length || 1);
-  const trustTrend = avgAlignment > 0.7 ? 8 : avgAlignment > 0.5 ? 3 : -5;
+  // AI Trust: From society trustInAI + AI welfare
+  const societyTrust = state.society?.trustInAI ?? 0.5;
+  const aiWelfare = state.aiWelfare?.simpleScore ?? 0.5;
+  const aiTrustValue = Math.round(((societyTrust + aiWelfare) / 2) * 100);
 
   return [
     {
       name: 'Research',
       value: researchProgress,
       max: 100,
-      trend: researchTrend,
-      trendDirection: researchTrend > 0 ? 'up' : researchTrend < 0 ? 'down' : 'neutral',
+      trend: unlockedCount > 0 ? 5 : 0,
+      trendDirection: unlockedCount > 10 ? 'up' : 'neutral',
     },
     {
       name: 'Influence',
-      value: influenceScore,
+      value: influenceValue,
       max: 100,
-      trend: influenceTrend,
-      trendDirection: influenceTrend > 0 ? 'up' : influenceTrend < 0 ? 'down' : 'neutral',
+      trend: legitimacy > 0.6 ? 3 : -2,
+      trendDirection: legitimacy > 0.6 ? 'up' : legitimacy < 0.4 ? 'down' : 'neutral',
     },
     {
       name: 'Resources',
-      value: resourceScore,
+      value: resourceValue,
       max: 100,
-      trend: resourceTrend,
-      trendDirection: resourceTrend > 0 ? 'up' : resourceTrend < 0 ? 'down' : 'neutral',
+      trend: gdp > 15000 ? 2 : -1,
+      trendDirection: gdp > 15000 ? 'up' : gdp < 12000 ? 'down' : 'neutral',
     },
     {
       name: 'AI Trust',
-      value: trustScore,
+      value: aiTrustValue,
       max: 100,
-      trend: trustTrend,
-      trendDirection: trustTrend > 0 ? 'up' : trustTrend < 0 ? 'down' : 'neutral',
+      trend: societyTrust > 0.5 ? 4 : -3,
+      trendDirection: societyTrust > 0.6 ? 'up' : societyTrust < 0.4 ? 'down' : 'neutral',
     },
   ];
 }
 
-function getDefaultCurrencies(): Currency[] {
+function getDefaultCurrencies(): CurrencyDisplay[] {
   return [
     { name: 'Research', value: 50, max: 100, trend: 0, trendDirection: 'neutral' },
     { name: 'Influence', value: 50, max: 100, trend: 0, trendDirection: 'neutral' },
@@ -128,369 +97,317 @@ function getDefaultCurrencies(): Currency[] {
 }
 
 // ============================================================================
-// OUTCOME PROBABILITIES MAPPING
+// Outcome Probabilities Mapper
 // ============================================================================
 
+export interface OutcomeDisplay {
+  utopia: number;
+  alignment: number;
+  struggle: number;
+  collapse: number;
+  extinction: number;
+  changeFromLastMonth: number;
+}
+
 /**
- * Extract outcome probabilities from game state
+ * Maps outcome probabilities to display format
  *
- * The simulation tracks OutcomeMetrics with utopia/dystopia/extinction probabilities.
- * We map these to the 5-category display (utopia, alignment, struggle, collapse, extinction).
+ * @param state - Current game state (may be undefined)
+ * @returns Outcome probabilities for dashboard
  */
-export function mapOutcomes(state: GameStateSnapshot | undefined): Outcomes {
-  if (!state) {
+export function mapOutcomes(state?: GameStateSnapshot): OutcomeDisplay {
+  if (!state || !state.outcomeMetrics) {
     return getDefaultOutcomes();
   }
 
-  const outcomeMetrics = state.outcomeMetrics;
+  const metrics = state.outcomeMetrics;
 
-  // Get raw probabilities
-  const utopiaProb = outcomeMetrics?.utopiaProbability ?? 0.1;
-  const dystopiaProb = outcomeMetrics?.dystopiaProbability ?? 0.3;
-  const extinctionProb = outcomeMetrics?.extinctionProbability ?? 0.1;
+  // Direct mappings from outcomeMetrics
+  const utopia = metrics.utopiaIndex ?? 0.1;
+  const extinction = metrics.extinctionRisk ?? 0.05;
 
-  // Calculate remaining probability for middle states
-  const remaining = Math.max(0, 1 - utopiaProb - dystopiaProb - extinctionProb);
+  // Calculate intermediate states from QoL and environmental factors
+  const qolScore = metrics.globalQoLScore ?? 0.5;
+  const envDebt = state.environmentalAccumulation?.pollutionAccumulation ?? 0;
 
-  // Split remaining between "alignment" (positive middle) and "struggle" (negative middle)
-  // Based on quality of life and accumulation state
-  // Calculate QoL from tier metrics (no globalQoL field - use weighted average)
-  const qolSystems = state.qualityOfLifeSystems;
-  const qol = qolSystems ? (
-    (qolSystems.materialAbundance + qolSystems.mentalHealth + qolSystems.physicalSafety +
-     qolSystems.healthcareQuality + qolSystems.ecosystemHealth) / 5
-  ) : 0.5;
-  // Environmental debt from pollution and resource reserves
-  const envAccum = state.environmentalAccumulation;
-  const environmentalDebt = envAccum ? (envAccum.pollutionLevel + (1 - envAccum.resourceReserves)) / 2 : 0;
-  const socialDebt = state.socialAccumulation?.meaningCrisisLevel ?? 0;
-
-  // Higher QoL and lower debt = more "alignment", lower QoL = more "struggle"
-  const healthScore = qol - (environmentalDebt * 0.3) - (socialDebt * 0.3);
-  const alignmentRatio = Math.max(0, Math.min(1, (healthScore + 0.5) / 2));
-
-  const alignmentProb = remaining * alignmentRatio;
-  const struggleProb = remaining * (1 - alignmentRatio);
-
-  // Collapse comes from dystopia spillover
-  const collapseProb = dystopiaProb * 0.4;
-  const adjustedDystopia = dystopiaProb * 0.6;
-
-  // Normalize to sum to 1.0
-  const total = utopiaProb + alignmentProb + struggleProb + collapseProb + extinctionProb;
-  const normalize = (v: number) => total > 0 ? v / total : 0.2;
-
-  // Calculate change from last month (simplified: based on outcome attractor direction)
-  const activeAttractor = outcomeMetrics?.activeAttractor ?? 'none';
-  const changeFromLastMonth =
-    activeAttractor === 'utopia' ? 0.03 :
-    activeAttractor === 'extinction' ? -0.05 :
-    activeAttractor === 'dystopia' ? -0.02 :
-    0;
+  // Distribute remaining probability based on state indicators
+  const remaining = Math.max(0, 1 - utopia - extinction);
+  const alignment = remaining * (qolScore > 0.6 ? 0.4 : 0.2);
+  const collapse = remaining * (envDebt > 50 ? 0.4 : 0.2);
+  const struggle = remaining - alignment - collapse;
 
   return {
-    utopia: normalize(utopiaProb),
-    alignment: normalize(alignmentProb),
-    struggle: normalize(struggleProb),
-    collapse: normalize(collapseProb),
-    extinction: normalize(extinctionProb),
-    changeFromLastMonth,
+    utopia: Math.max(0, Math.min(1, utopia)),
+    alignment: Math.max(0, Math.min(1, alignment)),
+    struggle: Math.max(0, Math.min(1, struggle)),
+    collapse: Math.max(0, Math.min(1, collapse)),
+    extinction: Math.max(0, Math.min(1, extinction)),
+    changeFromLastMonth: 0.02, // TODO: Track actual changes
   };
 }
 
-function getDefaultOutcomes(): Outcomes {
+function getDefaultOutcomes(): OutcomeDisplay {
   return {
-    utopia: 0.15,
-    alignment: 0.30,
-    struggle: 0.30,
-    collapse: 0.15,
-    extinction: 0.10,
+    utopia: 0.1,
+    alignment: 0.25,
+    struggle: 0.35,
+    collapse: 0.2,
+    extinction: 0.1,
     changeFromLastMonth: 0,
   };
 }
 
 // ============================================================================
-// EVENT STREAM MAPPING
+// Event Stream Mapper
 // ============================================================================
 
+export interface EventDisplay {
+  id: string;
+  text: string;
+  severity: 'success' | 'info' | 'warning' | 'critical';
+}
+
 /**
- * Extract recent events from game state
+ * Maps recent events to display format
  *
- * Maps simulation GameEvent to display Event format with severity classification.
- * Shows most recent events first.
+ * @param state - Current game state (may be undefined)
+ * @param limit - Maximum events to return (default 10)
+ * @returns Array of events for dashboard
  */
-export function mapEvents(state: GameStateSnapshot | undefined, limit: number = 10): Event[] {
-  if (!state || !state.eventLog) {
+export function mapEvents(state?: GameStateSnapshot, limit = 10): EventDisplay[] {
+  if (!state || !state.eventLog || state.eventLog.length === 0) {
     return getDefaultEvents();
   }
 
-  // Get recent events, sorted by timestamp descending
-  const recentEvents = [...state.eventLog]
-    .sort((a, b) => b.timestamp - a.timestamp)
-    .slice(0, limit);
+  // Get most recent events
+  const recentEvents = state.eventLog.slice(-limit).reverse();
 
-  return recentEvents.map((event, index) => ({
-    id: event.id || `event-${state.currentMonth}-${index}`,
-    text: formatEventText(event.title, event.description),
-    severity: mapEventSeverity(event.severity, event.type),
-  }));
+  return recentEvents.map((event, index) => {
+    // Determine severity from event description/type
+    const text = event.description ?? 'Event at month ' + event.month;
+    const severity = classifyEventSeverity(text);
+
+    return {
+      id: 'event-' + event.month + '-' + index,
+      text,
+      severity,
+    };
+  });
 }
 
-/**
- * Map simulation event severity to display severity
- */
-function mapEventSeverity(
-  severity: string | undefined,
-  type: string | undefined
-): 'critical' | 'warning' | 'success' | 'info' {
-  // Direct mappings
-  if (severity === 'critical' || severity === 'existential') return 'critical';
-  if (severity === 'warning' || severity === 'destructive' || severity === 'high') return 'warning';
-  if (severity === 'positive' || severity === 'constructive' || severity === 'transformative') return 'success';
+function classifyEventSeverity(text: string): EventDisplay['severity'] {
+  const lowerText = text.toLowerCase();
 
-  // Type-based fallbacks
-  if (type === 'crisis' || type === 'catastrophe') return 'critical';
-  if (type === 'breakthrough' || type === 'positive-milestone' || type === 'positive-cascade-triggered') return 'success';
-  if (type === 'sabotage') return 'warning';
-
+  if (lowerText.includes('breakthrough') || lowerText.includes('success') || lowerText.includes('improvement')) {
+    return 'success';
+  }
+  if (lowerText.includes('crisis') || lowerText.includes('collapse') || lowerText.includes('extinction') || lowerText.includes('critical')) {
+    return 'critical';
+  }
+  if (lowerText.includes('warning') || lowerText.includes('decline') || lowerText.includes('risk')) {
+    return 'warning';
+  }
   return 'info';
 }
 
-/**
- * Format event text for display
- */
-function formatEventText(title: string | undefined, description: string | undefined): string {
-  if (title && description) {
-    // If description is short, combine them
-    if (description.length < 50) {
-      return `${title}: ${description}`;
-    }
-    return title;
-  }
-  return title || description || 'Unknown event';
-}
-
-function getDefaultEvents(): Event[] {
+function getDefaultEvents(): EventDisplay[] {
   return [
-    { id: 'default-1', text: 'Simulation initializing...', severity: 'info' },
+    { id: 'default-1', text: 'Simulation initialized', severity: 'info' },
   ];
 }
 
 // ============================================================================
-// NEXT MONTH PREVIEW
+// Next Month Preview Mapper
 // ============================================================================
 
 /**
- * Generate next month preview based on current state
+ * Generates preview of upcoming events/concerns
  *
- * Looks at:
- * - Approaching crisis thresholds
- * - Pending technology unlocks
- * - Scheduled events
- * - Accumulation warning levels
+ * @param state - Current game state (may be undefined)
+ * @returns Array of preview strings
  */
-export function mapNextMonthPreview(state: GameStateSnapshot | undefined): string[] {
+export function mapNextMonthPreview(state?: GameStateSnapshot): string[] {
   if (!state) {
-    return ['Waiting for simulation state...'];
+    return ['Awaiting simulation data...'];
   }
 
   const previews: string[] = [];
 
-  // Check for approaching environmental crises
-  const co2System = state.resourceEconomy?.co2;
-  if (co2System) {
-    if (co2System.temperatureAnomaly > 1.5 && co2System.temperatureAnomaly < 2.0) {
-      previews.push('Climate tipping point threshold approaching');
-    }
+  // Check climate thresholds
+  const tempAnomaly = state.resourceEconomy?.temperatureAnomaly ?? 0;
+  if (tempAnomaly > 1.5) {
+    previews.push('Climate threshold approaching critical level');
   }
 
-  // Check for phosphorus/freshwater crises
-  const phosphorus = state.phosphorusSystem;
-  // Use reserves field (starts at 1.0, depletes toward 0)
-  if (phosphorus?.reserves !== undefined && phosphorus.reserves < 0.3) {
-    previews.push('Phosphorus depletion crisis may trigger');
+  // Check resource crises
+  const phosphorus = state.phosphorusSystem?.reserves ?? 100;
+  if (phosphorus < 50) {
+    previews.push('Phosphorus crisis may trigger');
   }
 
-  const freshwater = state.freshwaterSystem;
-  // Use waterStress field [0,1] - higher is more stressed
-  if (freshwater?.waterStress !== undefined && freshwater.waterStress > 0.7) {
-    previews.push('Freshwater crisis escalating');
+  // Check social cohesion
+  const cohesion = state.society?.cohesion ?? 0.5;
+  if (cohesion < 0.4) {
+    previews.push('Social cohesion declining - instability risk');
   }
 
-  // Check for pending technology breakthroughs
-  const techProgress = state.techTreeState?.researchProgress ?? {};
-  const nearComplete = Object.entries(techProgress).filter(
-    ([_, progress]) => progress > 0.8 && progress < 1.0
-  );
-  if (nearComplete.length > 0) {
-    previews.push(`${nearComplete.length} technology breakthrough(s) near completion`);
+  // Check AI capabilities
+  const avgCapability = state.aiAgents?.length
+    ? state.aiAgents.reduce((sum, a) => sum + (a.capabilities?.overall ?? 0), 0) / state.aiAgents.length
+    : 0;
+  if (avgCapability > 7) {
+    previews.push('AI capability milestone expected');
   }
 
-  // Check for social cohesion warnings
-  const socialAccum = state.socialAccumulation;
-  if (socialAccum) {
-    if (socialAccum.meaningCrisisLevel > 0.6) {
-      previews.push('Meaning crisis deepening');
-    }
-    if (socialAccum.institutionalLegitimacy < 0.4) {
-      previews.push('Institutional legitimacy declining');
-    }
-  }
-
-  // Check for AI-related events
-  const avgCapability = state.aiAgents?.reduce(
-    (sum, agent) => sum + (agent.capability ?? 0), 0
-  ) / (state.aiAgents?.length || 1);
-
-  if (avgCapability > 1.5 && avgCapability < 2.0) {
-    previews.push('AI capability milestone approaching');
-  }
-
-  // Check for nuclear tensions
-  const nuclearTensions = state.bilateralTensions?.filter(
-    t => t.tensionLevel > 0.7
-  );
-  if (nuclearTensions && nuclearTensions.length > 0) {
-    previews.push('Elevated nuclear tensions detected');
+  // Check planetary boundaries
+  const breachedCount = state.planetaryBoundaries?.boundariesBreached ?? 0;
+  if (breachedCount >= 6) {
+    previews.push('Multiple planetary boundaries at risk');
   }
 
   // Default if nothing notable
   if (previews.length === 0) {
-    previews.push('Normal operations expected');
+    previews.push('No critical events anticipated');
   }
 
-  return previews.slice(0, 4); // Limit to 4 items
+  return previews.slice(0, 3); // Limit to 3 previews
 }
 
 // ============================================================================
-// PENDING DECISIONS MAPPING
+// Pending Decisions Mapper
 // ============================================================================
 
+export interface DecisionDisplay {
+  id: string;
+  name: string;
+  urgency: 'critical' | 'important' | 'standard';
+  daysRemaining: number;
+  impact: string;
+}
+
 /**
- * Extract pending decisions from game state
+ * Maps pending decisions from game state
  *
- * Decisions can come from:
- * - Critical junctures (from game layer events)
- * - Active crises requiring response
- * - Scheduled policy decisions
- * - Treaty negotiations
+ * @param state - Current game state (may be undefined)
+ * @returns Array of pending decisions for dashboard
  */
-export function mapPendingDecisions(state: GameStateSnapshot | undefined): Decision[] {
+export function mapPendingDecisions(state?: GameStateSnapshot): DecisionDisplay[] {
   if (!state) {
     return getDefaultDecisions();
   }
 
-  const decisions: Decision[] = [];
+  const decisions: DecisionDisplay[] = [];
 
-  // Check for active catastrophic scenarios requiring response
-  const catastrophicScenarios = state.catastrophicScenarios ?? [];
-  catastrophicScenarios.forEach((scenario, index) => {
-    // Scenarios use phase: 'dormant' | 'emerging' | 'critical' | 'irreversible'
-    // and allPrerequisitesMet + activationDate for tracking
-    const isActive = scenario.phase !== 'dormant' && scenario.activationDate !== null;
-    if (isActive) {
+  // Check for catastrophic scenarios requiring action
+  if (state.crisisState?.activePhases) {
+    for (const phase of state.crisisState.activePhases) {
       decisions.push({
-        id: `crisis-${index}`,
-        name: `${scenario.name} Response`,
-        urgency: scenario.severity > 0.8 ? 'critical' :
-                 scenario.severity > 0.5 ? 'important' : 'standard',
-        daysRemaining: Math.max(1, Math.round((1 - scenario.severity) * 10)),
-        impact: `Phase: ${scenario.phase}, ${scenario.monthsSinceActivation} months active`,
+        id: 'crisis-' + phase,
+        name: formatCrisisName(phase),
+        urgency: 'critical',
+        daysRemaining: 3,
+        impact: 'Immediate action required to prevent escalation',
       });
     }
-  });
+  }
 
-  // Check for planetary boundary breaches
-  const planetaryBoundaries = state.planetaryBoundariesSystem;
-  // Use boundariesBreached count (number) not array
-  if (planetaryBoundaries?.boundariesBreached && planetaryBoundaries.boundariesBreached > 0) {
+  // Check planetary boundaries needing attention
+  const breached = state.planetaryBoundaries?.boundariesBreached ?? 0;
+  if (breached >= 3) {
     decisions.push({
-      id: 'boundary-response',
-      name: 'Planetary Boundary Crisis Response',
-      urgency: planetaryBoundaries.boundariesBreached > 3 ? 'critical' : 'important',
-      daysRemaining: 5,
-      impact: `${planetaryBoundaries.boundariesBreached} boundaries breached`,
+      id: 'boundaries-action',
+      name: 'Planetary Boundaries Response',
+      urgency: breached >= 6 ? 'critical' : 'important',
+      daysRemaining: 10,
+      impact: breached + ' boundaries breached - coordinated response needed',
     });
   }
 
-  // Check for AI alignment concerns
-  const misalignedAgents = state.aiAgents?.filter(
-    agent => (agent.alignment ?? 0.5) < 0.4
-  );
-  if (misalignedAgents && misalignedAgents.length > 0) {
+  // Check AI alignment concerns
+  const misalignedAgents = state.aiAgents?.filter(a => (a.trueAlignment ?? 1) < 0.5) ?? [];
+  if (misalignedAgents.length > 0) {
     decisions.push({
-      id: 'alignment-review',
-      name: 'AI Alignment Assessment Protocol',
-      urgency: misalignedAgents.some(a => (a.alignment ?? 0.5) < 0.2) ? 'critical' : 'important',
-      daysRemaining: 3,
-      impact: `${misalignedAgents.length} agent(s) showing alignment drift`,
+      id: 'ai-alignment-review',
+      name: 'AI Alignment Assessment Required',
+      urgency: misalignedAgents.length >= 3 ? 'critical' : 'important',
+      daysRemaining: 7,
+      impact: misalignedAgents.length + ' AI agents require evaluation',
     });
   }
 
-  // Check for research priority decisions based on unlocked but undeployed tech
-  const unlockedTech = state.techTreeState?.unlockedTech ?? [];
-  const deployedTechMap = state.techTreeState?.deployedTechMap ?? {};
-  const undeployedCount = unlockedTech.filter(
-    techId => (deployedTechMap[techId] ?? 0) < 0.1
-  ).length;
-
-  if (undeployedCount > 5) {
+  // Check undeployed technologies
+  const undeployed = state.techTreeState?.unlockedTech?.filter(
+    id => !state.techTreeState?.deployedTech?.includes(id)
+  ) ?? [];
+  if (undeployed.length > 5) {
     decisions.push({
       id: 'tech-deployment',
-      name: 'Technology Deployment Priority',
+      name: 'Technology Deployment Review',
       urgency: 'standard',
-      daysRemaining: 10,
-      impact: `${undeployedCount} technologies available for deployment`,
+      daysRemaining: 15,
+      impact: undeployed.length + ' technologies ready for deployment',
     });
   }
 
-  // Return decisions or defaults if none
   return decisions.length > 0 ? decisions.slice(0, 5) : getDefaultDecisions();
 }
 
-function getDefaultDecisions(): Decision[] {
+function formatCrisisName(phase: string): string {
+  return phase
+    .replace(/_/g, ' ')
+    .replace(/phase$/i, '')
+    .trim()
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ') + ' Response';
+}
+
+function getDefaultDecisions(): DecisionDisplay[] {
   return [
     {
       id: 'default-1',
-      name: 'Awaiting simulation data',
+      name: 'Initial Assessment',
       urgency: 'standard',
       daysRemaining: 30,
-      impact: 'No active decisions',
+      impact: 'Review current simulation parameters',
     },
   ];
 }
 
 // ============================================================================
-// HEADER DATA MAPPING
+// Header Info Mappers
 // ============================================================================
 
+const MONTH_NAMES = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December',
+];
+
 /**
- * Format current month for display
+ * Formats current month for display (e.g., "March 2025")
+ *
+ * @param state - Current game state (may be undefined)
+ * @param startYear - Simulation start year (default 2025)
+ * @returns Formatted month string
  */
-export function formatCurrentMonth(state: GameStateSnapshot | undefined): string {
+export function formatCurrentMonth(state?: GameStateSnapshot, startYear = 2025): string {
   if (!state) {
     return 'Month 0';
   }
 
-  const month = state.currentMonth;
-  const year = state.currentYear ?? 2025;
+  const currentMonth = state.currentMonth ?? 0;
+  const year = startYear + Math.floor(currentMonth / 12);
+  const monthIndex = currentMonth % 12;
 
-  // Map month number to name (simulation months are 0-indexed from Jan 2025)
-  const monthNames = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
-  ];
-
-  const monthIndex = month % 12;
-  const yearsElapsed = Math.floor(month / 12);
-  const displayYear = year + yearsElapsed;
-
-  return `${monthNames[monthIndex]} ${displayYear}`;
+  return MONTH_NAMES[monthIndex] + ' ' + year;
 }
 
 /**
- * Get elapsed months from state
+ * Gets elapsed months count
+ *
+ * @param state - Current game state (may be undefined)
+ * @returns Number of elapsed months
  */
-export function getElapsedMonths(state: GameStateSnapshot | undefined): number {
+export function getElapsedMonths(state?: GameStateSnapshot): number {
   return state?.currentMonth ?? 0;
 }
