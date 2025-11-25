@@ -435,12 +435,13 @@
 **Roadmap:** [`plans/game-design/GAME_DEVELOPMENT_ROADMAP.md`](./game-design/GAME_DEVELOPMENT_ROADMAP.md)
 **Design Doc:** [`plans/game-design/GAME_DESIGN_DOCUMENT.md`](./game-design/GAME_DESIGN_DOCUMENT.md)
 **Phase 1 Spec:** [`plans/game-design/PHASE1_TECHNICAL_SPEC.md`](./game-design/PHASE1_TECHNICAL_SPEC.md)
-**Mockups:** [`plans/game-design/mockups/`](./game-design/mockups/) - 4 interfaces complete, Scenario Setup pending
+**Mockups:** [`plans/game-design/mockups/`](./game-design/mockups/) - 5 interfaces COMPLETE
 
-**Phase 0 Deliverables (Nov 25, 2025) - UI Mockups:**
+**Phase 0 Deliverables (Nov 25, 2025) - UI Mockups COMPLETE:**
 - ✅ **Main Dashboard** (Crisis Response Panel) - 6-panel layout, 4 revision rounds, 8.9/10 score
-- ⏳ **Scenario Setup Interface** - DESIGN AND MOCKUP PENDING (LOW priority)
-  - 7 calibration questions, conversational flow, belief sliders planned
+- ✅ **Scenario Setup Interface** (Nov 25 late session) - COMPLETE
+  - Design: `SCENARIO_SETUP_DESIGN.md` - 7 calibration questions, belief sliders
+  - Mockup: `mockups/scenario-setup.html` - Conversational 5-screen flow
 - ✅ **Research Tree View** - 71 technologies, Active Loop panel, crisis relevance badges, 9.5/10 final score
   - Design: `RESEARCH_TREE_DESIGN.md` (4,500 words)
   - Mockup: `mockups/research-tree.html` (v1-v4)
@@ -462,7 +463,7 @@
   - Verdict: "Ship it. The dashboard ecosystem is production-ready with high confidence."
 
 **Phase 2 Integration Tasks Status (Nov 25, 2025):**
-- [ ] Convert scenario-setup.html → React (BLOCKED - mockup not created)
+- [ ] Convert scenario-setup.html → React (design/mockup COMPLETE, React pending)
 - [x] Convert research-tree.html → React (`src/components/dashboards/game/ResearchTree/`) ✅
 - [x] Convert aria-chat.html → React (`src/components/dashboards/game/ARIAChat/`) ✅
 - [x] Convert global-map.html → React (`src/components/dashboards/game/GlobalMap/`) ✅
@@ -1052,7 +1053,7 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
   - Commit: a984b511c
 
 **Next Up (Phase 2 Completion - MEDIUM Priority):**
-- [ ] Create scenario-setup mockup and design (LOW - blocking React conversion)
+- [x] Create scenario-setup mockup and design ✅ (Nov 25 late session)
 - [x] Convert research-tree.html → React ✅ (Active Loop, crisis badges, drag-drop all implemented)
 - [x] Convert aria-chat.html → React ✅ (Context awareness, citations, suggestions all implemented)
 - [x] Convert global-map.html → React ✅ (Regions, layers, timeline, cascades all implemented)
@@ -1064,8 +1065,8 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
 - **Design:** `plans/game-design/GAME_DESIGN_DOCUMENT.md` (v2.0 - research-aligned revision)
 - **Roadmap:** `plans/game-design/GAME_DEVELOPMENT_ROADMAP.md` (Phase 0 & 1 complete)
 - **Phase 1 Spec:** `plans/game-design/PHASE1_TECHNICAL_SPEC.md`
-- **Mockups:** `plans/game-design/mockups/` (4 interfaces complete, Scenario Setup pending)
-- **Design Specs:** `RESEARCH_TREE_DESIGN.md`, `ARIA_CHAT_DESIGN.md`, `GLOBAL_MAP_DESIGN.md` (Scenario Setup pending)
+- **Mockups:** `plans/game-design/mockups/` (5 interfaces COMPLETE)
+- **Design Specs:** `SCENARIO_SETUP_DESIGN.md`, `RESEARCH_TREE_DESIGN.md`, `ARIA_CHAT_DESIGN.md`, `GLOBAL_MAP_DESIGN.md`
 - **Reviews:** Maya's 4-round reviews (v1 → v2 → v3 → v4 FINAL), Sylvia research integrity reviews
 
 **Architecture:**
