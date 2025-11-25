@@ -29,6 +29,22 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 25: Tech Ineffectiveness Investigation + GDP-Adaptive Spending** (commit a1f873d)
+- 🔬 **INVESTIGATION COMPLETE:** Roy identified 3 root causes for tech ineffectiveness in governance scenarios
+  - **CRITICAL:** ClimateDeploymentPhase phased gating reduces effectiveness to <5% during pilot/early phases (100+ months)
+  - **HIGH:** Tech effect magnitudes 10-100x too small relative to cascade magnitudes
+  - **MEDIUM:** Race condition - cascades irreversible by month 24, tech effectiveness meaningful at month 120+
+- **KEY FINDING:** Tech ineffectiveness is NOT a bug - it's scientifically accurate modeling of real-world deployment constraints (IPCC AR6, IEA 2024)
+- **INSIGHT:** Technology alone insufficient without governance coordination and wartime-scale mobilization
+- 💰 **NEW FEATURE:** GDP-Adaptive Spending for scenario government priorities
+  - **New fields:** `researchInvestmentRate`, `aiSafetyBudgetRate` (fraction of annual GDP)
+  - **Behavior:** Automatically scales with GDP changes (e.g., 0.01 = 1% of annual GDP = ~$95B/month at $114T GDP)
+  - **Validation:** Cannot specify BOTH absolute amount AND rate (throws error)
+  - **Updated scenarios:** All 9 governance scenarios migrated to GDP-adaptive rates
+- 📄 **Report:** `reviews/tech_ineffectiveness_investigation_20251125.md` (472 lines)
+- 📊 **Diagnostic tool:** `scripts/techEffectivenessDiagnostic.ts` (needs state property fix: use `resourceEconomy.co2.temperatureAnomaly`)
+- **NEXT STEPS:** God mode baseline comparison, research validation of tech effect magnitudes vs. 2024-2025 literature
+
 **Nov 25: Tech Effectiveness Gating Multiplier Fix** (commit 73f6a7c)
 - 🔧 **FIX:** Novel entities remediation tech was 100-1000x less effective than intended
 - **ROOT CAUSE:** Overly restrictive gating multipliers compounded catastrophically
