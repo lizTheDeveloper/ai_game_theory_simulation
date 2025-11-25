@@ -4,11 +4,8 @@
 **Implementation:** `src/simulation/engine/phases/MultiParadigmDUIUpdatePhase.ts`
 **Research:** `/research/paradigm_*.md` (5 files, ~67,000 words, 100+ sources)
 
-<<<<<<< HEAD
-=======
 **🔬 Latest Update:** Nov 16, 2025 - Multi-paradigm wellbeing verification COMPLETE (Sangha et al. 2024 + V-Dem 2025). Citations verified, critical validation CONDITIONAL PASS, implementation complete (commit 27c6d76). Indigenous paradigm Domain 3 restored ("Connection to culture, Country, and identity"), Liyan emotional dimension added, paradigms-as-lenses framing corrected. See `research/multi_paradigm_verification_summary_20251116.md` for full details.
 
->>>>>>> origin/auto/worker-20251116_210001
 ## Overview
 
 The Multi-Paradigm DUI System tracks **four simultaneous, independent measures of societal success**, each representing a fundamentally different worldview about what constitutes a good society. Unlike traditional single-number metrics, this system **preserves value conflicts** rather than forcing consensus.
