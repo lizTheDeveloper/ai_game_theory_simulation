@@ -206,11 +206,12 @@ export interface CO2System {
   temperatureAnomaly: number;        // °C above pre-industrial
   climateSensitivity: number;        // °C per doubling of CO2 (IPCC: 3.0)
 
-  // Historical Hindcast Support (Nov 24, 2025)
+  // Historical Hindcast Support (Nov 24-25, 2025)
   // When running in historical mode, we need to preserve actual observed temperatures
   // rather than recalculating from CO2 (equilibrium formula ignores thermal inertia)
-  historicalTemperatureTarget?: number;  // Target temp for hindcast (observed, not equilibrium)
-  hindcastTransitionMonths?: number;     // Months to transition from historical to model temp
+  historicalTemperatureTarget?: number;  // Start temp for hindcast (1990 observed: 0.45C)
+  hindcast2024TemperatureTarget?: number; // End temp for hindcast (2024 observed: 1.28C)
+  hindcastTransitionMonths?: number;     // Full hindcast duration (408 months for 1990-2024)
   
   // Tipping points
   arcticIceLoss: number;             // [0,1] Sea ice remaining
