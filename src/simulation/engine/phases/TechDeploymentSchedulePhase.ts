@@ -18,7 +18,7 @@ import { getAllTech } from '@/simulation/techTree/comprehensiveTechTree';
 export class TechDeploymentSchedulePhase implements SimulationPhase {
   readonly id = 'tech-deployment-schedule';
   readonly name = 'Tech Deployment Schedule';
-  readonly order = 1.5; // Run early, before agent actions
+  readonly order = 1.6; // After ApplyScenarioPrioritiesPhase (1.5), before agent actions
 
   readonly dependencies = [] as const;
 
