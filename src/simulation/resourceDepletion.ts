@@ -895,6 +895,17 @@ function updateCO2System(state: GameState, resources: ResourceEconomy): void {
 
   co2.annualEmissions = calculatedAnnual;
 
+  // CALIBRATION DEBUG (Nov 25, 2025): Log emissions for hindcast validation
+  if (state.currentMonth % 60 === 0) {
+    console.log(`  📊 CO2 Emissions (month ${state.currentMonth}):`);
+    console.log(`     Monthly: ${monthlyEmissions.toFixed(2)} Gt CO2/month`);
+    console.log(`     Annual: ${calculatedAnnual.toFixed(2)} Gt CO2/year`);
+    console.log(`     Oil: ${oilEmissions.toFixed(3)} Gt/mo (${resources.oil.monthlyConsumption.toFixed(4)} * ${resources.oil.co2PerUnit} * 3.0)`);
+    console.log(`     Coal: ${coalEmissions.toFixed(3)} Gt/mo (${resources.coal.monthlyConsumption.toFixed(4)} * ${resources.coal.co2PerUnit} * 3.0)`);
+    console.log(`     Gas: ${gasEmissions.toFixed(3)} Gt/mo (${resources.naturalGas.monthlyConsumption.toFixed(4)} * ${resources.naturalGas.co2PerUnit} * 3.0)`);
+    console.log(`     Methane: ${methaneEmissions.toFixed(3)} Gt CO2eq/mo`);
+  }
+
   // Verify it stuck
   if (!isFinite(co2.annualEmissions)) {
     console.error(`❌ annualEmissions became NaN AFTER assignment (month ${state.currentMonth}):`);

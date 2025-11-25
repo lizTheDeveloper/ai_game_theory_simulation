@@ -169,8 +169,25 @@ export async function createHistoricalInitialState(
   // CRITICAL: Also set resourceEconomy temperature (used by ClimateSystemPhase line 133)
   if (baseState.resourceEconomy?.co2) {
     baseState.resourceEconomy.co2.temperatureAnomaly = historical.climate.tempAnomaly;
+
+    // HINDCAST THERMAL LOCK (Nov 25, 2025 - CO2 CALIBRATION FIX)
+    // Research: Ocean thermal inertia operates on 5-10 year timescales (Dong et al. 2021)
+    //
+    // Without thermal lock: The equilibrium formula (T = ECS * log2(CO2/280)) immediately
+    // calculates 1.41°C for 354 ppm (1990), but historically the system was at 0.45°C
+    // due to ocean lag. This causes a "temperature jump" that triggers premature tipping points.
+    //
+    // With thermal lock: Temperature tracks realized historical warming during the hindcast
+    // period, preventing unrealistic CO2 feedbacks from permafrost/Amazon tipping points.
+    //
+    // Lock duration: For 1990-2010 hindcast (20 years), lock for first 120 months (10 years)
+    // This allows validation against Keeling curve without feedback contamination.
+    baseState.resourceEconomy.co2.historicalTemperatureTarget = historical.climate.tempAnomaly;
+    baseState.resourceEconomy.co2.hindcastTransitionMonths = 120; // 10 years lock
+
     console.log(`  Temperature anomaly (resourceEconomy.co2): ${historical.climate.tempAnomaly.toFixed(2)}°C`);
     console.log(`  Temperature vs pre-industrial: ${historical.climate.tempVsPreindustrial.toFixed(2)}°C`);
+    console.log(`  🔒 Thermal lock enabled: ${historical.climate.tempAnomaly.toFixed(2)}°C for 120 months (prevents equilibrium jump)`);
   }
 
   // Population (from UN WPP)
