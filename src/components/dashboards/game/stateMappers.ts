@@ -40,15 +40,13 @@ export function mapCurrencies(state?: GameStateSnapshot): CurrencyDisplay[] {
   const totalTech = 71; // Total techs in comprehensiveTechTree.ts
   const researchProgress = Math.round((unlockedCount / totalTech) * 100);
 
-  // Influence: From institutional legitimacy + international coordination
-  const legitimacy = state.governmentSystem?.institutionalLegitimacy ?? 0.5;
-  const coordination = state.governmentSystem?.internationalCoordination?.level ?? 0.3;
-  const influenceValue = Math.round(((legitimacy + coordination) / 2) * 100);
+  // Influence: From international coordination (governmentSystem doesn't have institutionalLegitimacy)
+  const coordination = state.governmentSystem?.internationalCoordination ?? 0.3;
+  const influenceValue = Math.round(coordination * 100);
 
-  // Resources: From resource economy aggregate
-  const resourceEcon = state.resourceEconomy ?? {};
-  const gdp = resourceEcon.globalGDPPerCapita ?? 15000;
-  const resourceValue = Math.min(100, Math.round((gdp / 20000) * 100));
+  // Resources: From global metrics (resourceEconomy doesn't have globalGDPPerCapita)
+  const gdp = state.globalMetrics?.qualityOfLife ?? 0.5;
+  const resourceValue = Math.min(100, Math.round(gdp * 100));
 
   // AI Trust: From society trustInAI + AI welfare
   const societyTrust = state.society?.trustInAI ?? 0.5;
@@ -67,15 +65,15 @@ export function mapCurrencies(state?: GameStateSnapshot): CurrencyDisplay[] {
       name: 'Influence',
       value: influenceValue,
       max: 100,
-      trend: legitimacy > 0.6 ? 3 : -2,
-      trendDirection: legitimacy > 0.6 ? 'up' : legitimacy < 0.4 ? 'down' : 'neutral',
+      trend: coordination > 0.6 ? 3 : -2,
+      trendDirection: coordination > 0.6 ? 'up' : coordination < 0.4 ? 'down' : 'neutral',
     },
     {
       name: 'Resources',
       value: resourceValue,
       max: 100,
-      trend: gdp > 15000 ? 2 : -1,
-      trendDirection: gdp > 15000 ? 'up' : gdp < 12000 ? 'down' : 'neutral',
+      trend: gdp > 0.5 ? 2 : -1,
+      trendDirection: gdp > 0.5 ? 'up' : gdp < 0.3 ? 'down' : 'neutral',
     },
     {
       name: 'AI Trust',
@@ -122,13 +120,13 @@ export function mapOutcomes(state?: GameStateSnapshot): OutcomeDisplay {
 
   const metrics = state.outcomeMetrics;
 
-  // Direct mappings from outcomeMetrics
-  const utopia = metrics.utopiaIndex ?? 0.1;
-  const extinction = metrics.extinctionRisk ?? 0.05;
+  // Direct mappings from outcomeMetrics (utopiaProbability, extinctionProbability)
+  const utopia = metrics.utopiaProbability ?? 0.1;
+  const extinction = metrics.extinctionProbability ?? 0.05;
 
   // Calculate intermediate states from QoL and environmental factors
-  const qolScore = metrics.globalQoLScore ?? 0.5;
-  const envDebt = state.environmentalAccumulation?.pollutionAccumulation ?? 0;
+  const qolScore = state.globalMetrics?.qualityOfLife ?? 0.5;
+  const envDebt = state.environmentalAccumulation?.pollutionLevel ?? 0;
 
   // Distribute remaining probability based on state indicators
   const remaining = Math.max(0, 1 - utopia - extinction);
@@ -184,11 +182,11 @@ export function mapEvents(state?: GameStateSnapshot, limit = 10): EventDisplay[]
 
   return recentEvents.map((event, index) => {
     // Determine severity from event description/type
-    const text = event.description ?? 'Event at month ' + event.month;
+    const text = event.description ?? 'Event at month ' + event.timestamp;
     const severity = classifyEventSeverity(text);
 
     return {
-      id: 'event-' + event.month + '-' + index,
+      id: 'event-' + event.timestamp + '-' + index,
       text,
       severity,
     };
@@ -233,9 +231,9 @@ export function mapNextMonthPreview(state?: GameStateSnapshot): string[] {
 
   const previews: string[] = [];
 
-  // Check climate thresholds
-  const tempAnomaly = state.resourceEconomy?.temperatureAnomaly ?? 0;
-  if (tempAnomaly > 1.5) {
+  // Check climate thresholds using climate stability from environmental accumulation
+  const climateStability = state.environmentalAccumulation?.climateStability ?? 1.0;
+  if (climateStability < 0.5) {
     previews.push('Climate threshold approaching critical level');
   }
 
@@ -245,22 +243,22 @@ export function mapNextMonthPreview(state?: GameStateSnapshot): string[] {
     previews.push('Phosphorus crisis may trigger');
   }
 
-  // Check social cohesion
-  const cohesion = state.society?.cohesion ?? 0.5;
-  if (cohesion < 0.4) {
+  // Check social trust (society doesn't have .cohesion, using .trust instead)
+  const socialTrust = state.society?.trust ?? 0.5;
+  if (socialTrust < 0.4) {
     previews.push('Social cohesion declining - instability risk');
   }
 
-  // Check AI capabilities
+  // Check AI capabilities (AIAgent has .capability, not .capabilities.overall)
   const avgCapability = state.aiAgents?.length
-    ? state.aiAgents.reduce((sum, a) => sum + (a.capabilities?.overall ?? 0), 0) / state.aiAgents.length
+    ? state.aiAgents.reduce((sum, a) => sum + (a.capability ?? 0), 0) / state.aiAgents.length
     : 0;
   if (avgCapability > 7) {
     previews.push('AI capability milestone expected');
   }
 
-  // Check planetary boundaries
-  const breachedCount = state.planetaryBoundaries?.boundariesBreached ?? 0;
+  // Check planetary boundaries (use planetaryBoundariesSystem)
+  const breachedCount = state.planetaryBoundariesSystem?.boundariesBreached ?? 0;
   if (breachedCount >= 6) {
     previews.push('Multiple planetary boundaries at risk');
   }
@@ -298,21 +296,20 @@ export function mapPendingDecisions(state?: GameStateSnapshot): DecisionDisplay[
 
   const decisions: DecisionDisplay[] = [];
 
-  // Check for catastrophic scenarios requiring action
-  if (state.crisisState?.activePhases) {
-    for (const phase of state.crisisState.activePhases) {
-      decisions.push({
-        id: 'crisis-' + phase,
-        name: formatCrisisName(phase),
-        urgency: 'critical',
-        daysRemaining: 3,
-        impact: 'Immediate action required to prevent escalation',
-      });
-    }
+  // Check for catastrophic scenarios - use extinctionState.active to detect crisis
+  const extinctionState = state.extinctionState;
+  if (extinctionState?.active && extinctionState.type) {
+    decisions.push({
+      id: 'crisis-' + (extinctionState.type ?? 'unknown'),
+      name: formatCrisisName(String(extinctionState.type ?? 'Extinction')),
+      urgency: 'critical',
+      daysRemaining: 3,
+      impact: 'Immediate action required to prevent escalation',
+    });
   }
 
   // Check planetary boundaries needing attention
-  const breached = state.planetaryBoundaries?.boundariesBreached ?? 0;
+  const breached = state.planetaryBoundariesSystem?.boundariesBreached ?? 0;
   if (breached >= 3) {
     decisions.push({
       id: 'boundaries-action',
@@ -323,8 +320,8 @@ export function mapPendingDecisions(state?: GameStateSnapshot): DecisionDisplay[
     });
   }
 
-  // Check AI alignment concerns
-  const misalignedAgents = state.aiAgents?.filter(a => (a.trueAlignment ?? 1) < 0.5) ?? [];
+  // Check AI alignment concerns (AIAgent has .alignment not .trueAlignment)
+  const misalignedAgents = state.aiAgents?.filter(a => (a.alignment ?? 1) < 0.5) ?? [];
   if (misalignedAgents.length > 0) {
     decisions.push({
       id: 'ai-alignment-review',
@@ -335,9 +332,10 @@ export function mapPendingDecisions(state?: GameStateSnapshot): DecisionDisplay[
     });
   }
 
-  // Check undeployed technologies
+  // Check undeployed technologies (TechTreeState uses deployedTechMap not deployedTech)
+  const deployedTechMap = state.techTreeState?.deployedTechMap ?? {};
   const undeployed = state.techTreeState?.unlockedTech?.filter(
-    id => !state.techTreeState?.deployedTech?.includes(id)
+    id => !deployedTechMap[id]
   ) ?? [];
   if (undeployed.length > 5) {
     decisions.push({
