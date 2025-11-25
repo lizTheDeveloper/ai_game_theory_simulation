@@ -1,245 +1,182 @@
-# Architecture Integration Review
-**Date:** November 25, 2025
-**Reviewer:** System Architecture Skeptic
-**Period:** Last 30 days (October 25 - November 25, 2025)
-**Focus:** Recent commit integration, cross-system connections, state propagation, performance
+# Architecture Integration Review - November 25, 2025 (Worker Session - Update 2)
+
+**Reviewer:** Architecture Skeptic
+**Scope:** Maintenance check since Nov 25 evening review (B+ grade)
+**Prior Reviews:** Nov 25 early (B+), mid (A-), late (A-), evening (B+)
+**Focus:** Recent commits, new issues since evening review
 
 ---
 
 ## Executive Summary
 
-**Architecture Health Grade: B+**
+**Overall Architecture Health: B+** (MAINTAINED)
 
-The codebase has made significant architectural improvements over the past 30 days, particularly in performance optimization (O(n^2) elimination) and phase ordering. The new game layer Phase 2 React components are well-isolated with proper module boundaries. However, some concerns remain around incomplete defensive fallback migration and the simulation indices not being consumed by phases yet.
+**Grade Justification:**
+- No new CRITICAL or HIGH issues discovered since evening review
+- New ScenarioSetup component follows module boundaries correctly
+- stateMappers.ts refactored cleanly with proper type exports
+- Test suite passing, TypeScript compilation clean
+- Zero Math.random() violations in simulation code
 
----
-
-## Recent Commits Analysis
-
-**Total simulation-related commits (last 30 days):** 136
-**Key areas of change:**
-- Hindcast demographic tuning (regional CDR scaling)
-- Phase 2 React components (ResearchTree, ARIAChat, GlobalMap)
-- Duplicate phase execution order fixes
-- Performance optimization infrastructure
-- Food security research updates
-
-### Notable Architectural Changes
-
-| Commit | Type | Impact |
-|--------|------|--------|
-| `c7c4cb69a` | Feature | Regional CDR scaling with assertFinite validation |
-| `89c8e08a0` | Feature | Phase 2 React components with cross-panel events |
-| `395bb2d63` | Fix | Duplicate phase execution order 1.5 -> 1.6 |
-| `bf90ffa1f` | Feature | Regional historical death rates with fail-loudly pattern |
-| `c4ac98029` | Fix | CRITICAL: Hindcast validation initialization bug |
+**Changes Since Evening Review:**
+- 5 commits (auto-commit, historian docs, type fixes, merge, roadmap update)
+- New ScenarioSetup component (4 files, 541 lines) - UI wizard
+- stateMappers.ts refactored (743 lines changed)
 
 ---
 
-## Cross-System Connections Assessment
+## Recent Commits Analysis (Since Evening Review)
 
-### GOOD: Game Layer Module Boundary
+| Commit | Type | Risk |
+|--------|------|------|
+| 825ab7d | Auto-commit before pull | None |
+| 282188b | Historian docs for stateMappers | None |
+| 4eb3c83 | Type error fixes in stateMappers | None |
+| 6493b6b | Merge researcher branch | Low |
+| 9fd7ba5 | Roadmap update (H-1, H-2 resolved) | None |
 
-The new game layer components correctly follow Sylvia's module boundary rules:
+**Assessment:** All commits are documentation, cleanup, or merge operations. No simulation logic changes.
 
+---
+
+## New Component Review: ScenarioSetup
+
+**Location:** `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/components/dashboards/game/ScenarioSetup/`
+
+**Files:**
+- `ScenarioSetup.tsx` (541 lines) - Multi-step wizard component
+- `ScenarioSetup.module.css` - Styling
+- `types.ts` (63 lines) - Type definitions
+- `index.ts` - Export barrel
+
+**Architecture Assessment: SOUND**
+
+Positives:
+1. Clean separation of concerns (types, styles, component)
+2. Proper TypeScript typing with exported interfaces
+3. No simulation imports (UI-only component)
+4. Uses React best practices (useState, useCallback, useMemo)
+5. Accessible (aria-labels on interactive elements)
+
+No Issues:
+- Component is self-contained wizard
+- Does not modify simulation state
+- BeliefCalibration data is diagnostic only (per comments)
+- Proper module boundaries maintained
+
+---
+
+## stateMappers.ts Refactoring
+
+**Changes:** Major cleanup (743 lines diff)
+
+**Key Improvements:**
+1. Self-contained type exports (no longer depends on CurrencyPanel types)
+2. Simplified property paths (removed non-existent properties)
+3. Better documentation of data sources
+4. Cleaner fallback patterns
+
+**Remaining Pattern (MEDIUM-1 from evening review):**
 ```typescript
-// src/game/types/index.ts - Lines 82-92
-// Game layer NEVER imports from src/simulation/ internal modules
-// All influence through PlayerDecisionPhase (order 8.51)
-// Maximum 15% cumulative player influence
-
-export type GameStateSnapshot = Readonly<GameState>;
+const coordination = state.governmentSystem?.internationalCoordination ?? 0.3;
 ```
 
-**Strengths:**
-- ReadOnly type wrapper prevents accidental mutation
-- GameStateSnapshot properly isolates simulation state
-- Cross-panel event system decoupled from simulation
-
-### CONCERN: Phase 2 Components Not Wired to Simulation
-
-The new React components (`ResearchTree`, `ARIAChat`, `GlobalMap`) are complete UI implementations but:
-
-1. **GameDashboard.tsx** uses mock data (lines 46-115) rather than actual GameStateSnapshot
-2. No wiring exists between simulation `techTreeState` and `TechDisplayData[]`
-3. `RegionData` type doesn't map to simulation's `RegionalPopulation`
-
-**Status:** UI-only, integration pending
-
-### CONCERN: Simulation Indices Not Consumed by Phases
-
-The `SimulationIndices` infrastructure was built (HIGH-1, Nov 20) but phases don't use it:
-
-```typescript
-// PhaseOrchestrator.ts - Line 211
-ctx.indices = buildSimulationIndices(state);
-
-// BUT: grep for "indices." in phases returns 0 matches
-// The infrastructure exists but isn't being used yet
-```
-
-**Impact:** The O(n^2) bottlenecks (60,000+ ops/step) are still present in the codebase.
+**Assessment:** Still uses `??` fallbacks, which is appropriate for UI layer. The evening review correctly classified this as MEDIUM and acceptable.
 
 ---
 
-## State Propagation Analysis
+## System Health Checks
 
-### GOOD: Population Desync Detection
+### Determinism Check
 
-HumanPopulationPhase (line 65-92) now includes defensive desync detection:
+```
+Math.random() in src/simulation/: 0 occurrences
+```
+**Status:** PASSING
 
-```typescript
-// DEFENSIVE CHECK (Nov 21, 2025): Detect population race conditions
-const discrepancy = Math.abs(regionalSumBillions - globalValue);
-if (discrepancy > 0.001) {
-  console.error(`WARNING: Regional/global population desync detected`);
-}
+### Deep Clone Usage
+
+```
+structuredClone/JSON.parse(JSON.stringify): 29 occurrences across 11 files
 ```
 
-This catches issues like the CoordinatedDeploymentPhase bug.
+**Assessment:** Cloning usage is appropriate. No new unnecessary clones introduced.
 
-### GOOD: Phase Dependency System
+### Test Status
 
-PhaseOrchestrator correctly validates dependencies at runtime (lines 218-240):
-- Circular dependency detection
-- Order violation detection
-- Missing dependency detection
+- Tests: PASSING
+- Coverage: 79.40% overall
+- TypeScript: No errors
 
-### CONCERN: StateValidation Fallback Pattern
+### O(n^2) Pattern Check
 
-The stateValidation.ts snapshot creation still uses fallbacks for display purposes (line 239-246):
-
-```typescript
-// LEGITIMATE FALLBACK (Nov 20, 2025): Display/snapshot context
-co2: state.planetaryBoundariesSystem.boundaries['climate_change']?.currentValue ?? 0,
 ```
-
-While documented as legitimate for display, this pattern can mask initialization bugs.
+.forEach(...).find(): 0 occurrences
+.map(...).find(): 0 occurrences
+```
+**Status:** No nested iteration anti-patterns detected
 
 ---
 
-## Performance Bottleneck Assessment
+## Issue Summary (Unchanged Since Evening Review)
 
-### Implemented: Index Infrastructure
+### CRITICAL Issues: **NONE**
 
-```typescript
-// src/simulation/utils/simulationIndices.ts
-export interface SimulationIndices {
-  datacenterOwnership: Map<string, string>;  // 60,000 ops -> O(1)
-  agentMap: Map<string, AIAgent>;            // 500 ops -> O(1)
-  orgMap: Map<string, Organization>;
-  unlockedTech: Set<string>;                 // 710 ops -> O(1)
-  buildingOrgs: Set<string>;                 // 40,000 ops -> O(1)
-}
-```
+### HIGH Priority Issues: **NONE** (H-1 and H-2 resolved)
 
-### NOT YET CONSUMED
+### MEDIUM Priority Issues: 1
 
-Phases still use the old patterns:
-- `AIAgentCoordinationPhase.ts`: 5 `.find()` calls
-- `ClimateDeploymentPhase.ts`: 1 `.find()` call
-- `PlayerDecisionPhase.ts`: 4 `.find()` calls
+| ID | Issue | Location | Status |
+|----|-------|----------|--------|
+| M-1 | Defensive fallbacks in UI layer | stateMappers.ts | Acceptable for UI |
 
-**Estimated remaining bottleneck:** ~16 `.find()` calls across 8 phase files
+### LOW Priority Issues: 2
 
----
+| ID | Issue | Location | Status |
+|----|-------|----------|--------|
+| L-1 | Agent file .find() patterns | src/simulation/agents/*.ts | Not urgent |
+| L-2 | ScenarioSetup missing tests | ScenarioSetup/*.tsx | UI regression risk |
 
-## Complexity Creep Assessment
-
-### GameState Size
-
-- `src/types/game.ts`: **1,069 lines**
-- Re-exports from ~15 focused type modules
-- Well-organized but growing
-
-### Phase Count
-
-- **95+ phases** registered in PhaseOrchestrator
-- Phase timing infrastructure tracks all phases
-- Memory leak fix (Nov 15) using Welford's algorithm
-
-### CSS Complexity
-
-New component CSS modules are substantial:
-- `ARIAChat.module.css`: 710 lines
-- Multiple animation keyframes and hover states
-
-**Assessment:** Within acceptable bounds for a dashboard component library.
-
----
-
-## Issue Summary
-
-### CRITICAL Issues (System Stability at Risk)
-
-**None identified.** The codebase is stable.
-
-### HIGH Priority (Significant Performance/Maintainability)
-
-| ID | Issue | Location | Impact | Effort |
-|----|-------|----------|--------|--------|
-| H-1 | Simulation indices not consumed | 8 phase files | 100K ops/step wasted | Medium |
-| H-2 | Game layer mock data | GameDashboard.tsx | UI not functional | Large |
-
-### MEDIUM Priority (Technical Debt Worth Addressing)
-
-| ID | Issue | Location | Impact | Effort |
-|----|-------|----------|--------|--------|
-| M-1 | Defensive fallback anti-pattern | ~24 phase files | Split-brain error handling | Large |
-| M-2 | Component-simulation wiring | Phase 2 components | Feature incomplete | Medium |
-
-### LOW Priority (Future Improvements)
-
-| ID | Issue | Location | Impact | Effort |
-|----|-------|----------|--------|--------|
-| L-1 | Radiation.ts low coverage | radiation.ts | 59.6% coverage | Small |
-| L-2 | RegionalBiodiversity.ts coverage | regionalBiodiversity.ts | 77.3% coverage | Small |
+### NEW Issues: **NONE**
 
 ---
 
 ## Recommendations
 
-### For Immediate Scheduling
+### For Immediate Action: NONE
 
-1. **H-1: Complete index migration** - The infrastructure is built (`buildSimulationIndices`), but phases need to be updated to use `ctx.indices.*` instead of array `.find()` calls. This is blocking the 98% performance improvement.
+System is stable. No architectural issues requiring immediate attention.
 
-2. **M-2: Wire Phase 2 components** - Before any game layer features can work, `ResearchTree`, `ARIAChat`, and `GlobalMap` need adapters to map `GameStateSnapshot` to their prop types.
+### Between Feature Work (Optional):
 
-### Between Feature Work
+1. Add basic tests for ScenarioSetup component
+2. Consider warning logs in stateMappers when fallbacks triggered post-month-0
 
-3. **M-1: Defensive fallback migration** - The current "split-brain" approach (assertions wrapping fallbacks) provides false confidence. Complete the migration using `assertStateProperty` pattern.
+### Can Wait:
 
-### Can Wait
-
-4. **Test coverage improvements** - Radiation and regional biodiversity modules have lower coverage but aren't in critical paths.
-
----
-
-## Architecture Health Scorecard
-
-| Category | Score | Notes |
-|----------|-------|-------|
-| Module Boundaries | A | Game/simulation separation excellent |
-| State Propagation | B+ | Desync detection good, some fallback risks |
-| Performance | B | Infrastructure built but not consumed |
-| Determinism | A | RNG validation, phase ordering solid |
-| Test Coverage | B- | 79.4% overall, some modules low |
-| Complexity | B+ | Growing but well-organized |
-
-**Overall: B+**
+- Agent file index consumption (only if profiling shows hot path)
 
 ---
 
 ## Conclusion
 
-The architecture is healthy and improving. Key wins from the past 30 days include the SimulationIndices infrastructure and Phase 2 React components with proper module boundaries. The main action items are:
+**Grade: B+** (MAINTAINED)
 
-1. **Finish the index consumption** to realize the 50x hot-path performance gain
-2. **Wire the game layer components** to actual simulation state
+The system remains stable since the evening review. New code (ScenarioSetup component, stateMappers refactoring) follows established patterns and maintains proper module boundaries. No new architectural issues discovered.
 
-No stability-threatening issues were identified. The codebase is ready for continued feature development with periodic technical debt cleanup.
+**System Status:**
+- Zero CRITICAL issues
+- Zero HIGH issues (H-1 and H-2 resolved as of evening review)
+- One MEDIUM item (stateMappers fallbacks - acceptable)
+- Two LOW items (agent .find(), ScenarioSetup tests)
+- Architecture trajectory: STABLE
+
+**Next Review Trigger:**
+- After significant simulation logic changes
+- After major feature implementation
+- If profiling reveals performance issues
 
 ---
 
 *Generated by Architecture Skeptic*
-*Review Date: November 25, 2025*
+*Review Date: November 25, 2025 (Worker Session - Update 2)*
