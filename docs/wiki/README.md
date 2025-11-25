@@ -206,30 +206,37 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📄 **Files:** config.ts, bayesianMortality.ts, resourceDepletion.ts, initialization.ts, resources.ts
 - 📊 **Diagnostic:** plans/hindcast_diagnostic_report_20251124.md
 
-**Nov 24: Hindcast Phase 3 - Food Security Fix** (commit bb445b3)
+**Nov 24: Hindcast Phase 3 - Food Security Fix** (commit bb445b3, corrected 8f69e108)
 - 🔧 **PROBLEM FIXED:** Default 2025 food security (~50-67%) triggered 7 phantom famines in 1990
 - **ROOT CAUSE:** Food security initialization and degradation logic assumed 2025 crisis conditions, not historical 1990 stability
 - **SOLUTION:** Historical mode guards in 4 locations:
-  - `initialization.ts`: 95% food security override for year ≤2010
-  - `historicalInitialization.ts`: Regional food security with FAO data
+  - `initialization.ts`: Regional food security with FAO-verified values + fail-loud validation
+  - `historicalInitialization.ts`: Regional food security with FAO data + fail-loud validation
   - `FoodSecurityDegradationPhase.ts`: Skip degradation in historical mode (pre-2020)
   - `HumanSurvivalSystemPhase.ts`: Skip food degradation in historical mode
-- **Regional Food Security (FAO SOFI 1990 data):**
-  - East Asia: 92% (8% undernourished)
-  - South Asia: 88% (12% undernourished)
-  - Sub-Saharan Africa: 85% (15% undernourished - worst region)
-  - Europe/North America/Oceania: 98% (<2% undernourished)
-  - Latin America: 90% (10% undernourished)
-  - Middle East/North Africa: 88% (12% undernourished)
-  - Southeast Asia: 90% (10% undernourished)
-  - Central Asia: 87% (13% undernourished)
+- **Regional Food Security (FAO SOFI 1999, Table 2.3, 1990-92 average):**
+  - Sub-Saharan Africa: 65% (35% undernourished - worst region)
+  - South Asia: 74% (26% undernourished)
+  - East Asia: 84% (16% undernourished)
+  - Southeast Asia: 84% (grouped with East Asia in FAO)
+  - Central Asia: 85% (estimate - post-Soviet transition)
+  - Latin America: 87% (13% undernourished)
+  - Middle East/North Africa: 92% (8% undernourished)
+  - Oceania: 95% (estimate - developed regions)
+  - North America: 97% (~3% undernourished)
+  - Europe: 98% (<2% undernourished)
+- **Nov 25 Correction (commit 8f69e108):**
+  - **BUG:** Region names used camelCase ('eastAsia') but actual regions use proper names ('East Asia')
+  - **Impact:** ALL regions were falling back to 0.80 instead of FAO-verified values
+  - **Fix:** Corrected region names + added missing regions + fail-loud error if unknown region
+  - **Verification:** `scripts/verifyFoodSecurityFix.ts` - ALL 10 REGIONS CORRECT
 - **VALIDATION:**
-  - Before: Population 5.3B → 1B (crash at month ~180)
-  - After: Population 5.3B → 4.15B (completes 408 months)
-  - Food security stable at 88-90% throughout hindcast
-- **REMAINING ISSUE:** Population still declines instead of growing - birth rate mechanics need investigation
-- **Source:** FAO State of Food Insecurity reports (1999-2015)
+  - Before (bb445b3): Sub-Saharan Africa showed 20% hunger (fallback value)
+  - After (8f69e108): Sub-Saharan Africa shows 35% hunger (correct FAO value)
+  - Food security now matches 1990 historical data
+- **Source:** FAO World Agriculture: Towards 2015/2030 (Table 2.3) - https://www.fao.org/4/Y4252E/y4252e04.htm
 - 📄 **Files:** initialization.ts, historicalInitialization.ts, FoodSecurityDegradationPhase.ts, HumanSurvivalSystemPhase.ts
+- 📝 **Verification:** research/verification_bb445b3_20251124.md
 
 **Nov 24: Historical Initialization for Hindcasting Validation** (commit b29fd87)
 - 📜 **NEW MODULE: `historicalInitialization.ts`** (294 lines) - Create GameState from historical values (1990-2024)
