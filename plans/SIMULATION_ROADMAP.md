@@ -1538,6 +1538,11 @@ Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation nee
 - `research/ROUND5_REMEDIATION_STRATEGY_20251030.md` (850 lines)
 
 **Additional Verification Queue (from commits, 17-31h):**
+- [ ] 🚨 **NEW (Nov 25):** Verify Tech Effectiveness Gating Multipliers (research/verification_73f6a7c_20251125.md, commit 73f6a7c) - **2 key parameter changes affecting 100-1000x effectiveness:**
+  - Concentration multiplier: 0.001 → 0.1 - strategic deployment at industrial runoff/river mouths claim
+  - Time lag factor: 0-240mo → 25%-60mo - pilot plant operational + 5-year scale-up claims
+  - Montreal Protocol 5-year compliance checkpoint analog - verify appropriateness
+  - **Priority:** HIGH (affects novel entities remediation effectiveness by 100-1000x)
 - [ ] 🚨 **NEW (Nov 25):** Verify MIRI International ASI Prevention Agreement (research/verification_abd17c4_20251125.md, commit abd17c4) - **Expert Risk Estimates + Proposed Parameters:**
   - Scher et al. (2025) arXiv:2511.10783 - verify paper exists and claims match
   - 10-38% expert catastrophic risk estimates - trace to primary sources (Bengio, Amodei, survey)

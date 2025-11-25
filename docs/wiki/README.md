@@ -29,6 +29,23 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 25: Tech Effectiveness Gating Multiplier Fix** (commit 73f6a7c)
+- 🔧 **FIX:** Novel entities remediation tech was 100-1000x less effective than intended
+- **ROOT CAUSE:** Overly restrictive gating multipliers compounded catastrophically
+  - Combined effect: 0.01 × 0.1 × 0.001 × 0.0 × 0.7 = 0 (literally zero at deployment!)
+  - Result: 119 deployed techs failed to prevent 99% mortality
+- **CHANGES:**
+  - **Concentration multiplier:** 0.001 → 0.1 (strategic deployment at high-concentration zones, not random distribution)
+  - **Time lag factor:** 0-240mo → 25%-60mo (starts at 25% with pilot plants, reaches 100% at 60 months)
+  - **Unchanged:** Regulation (0.01), Energy (0.1), Rebound (0.7)
+- **EFFECTIVENESS IMPROVEMENT:**
+  - At deployment: ∞ (was 0%, now 0.0075%)
+  - At month 60: 400x improvement
+  - At month 240: 1000x improvement
+- **RESEARCH JUSTIFICATION:** Strategic deployment at industrial runoff/river mouths achieves 10-30% of point-source effectiveness (not random planetary distribution)
+- 📄 **Files:** `effectsEngine.ts`, `novelEntitiesEffectiveness.ts`
+- ⚠️ **VERIFICATION NEEDED:** Claims about strategic deployment effectiveness require peer-reviewed backing
+
 **Nov 25: Scenario Setup Design - Phase 0 COMPLETE** (commit 7a95b98)
 - 🎮 **DESIGN:** Scenario Setup interface specification (300+ lines)
   - **5-screen conversational flow:** Introduction → Role → Scenario Select → Belief Calibration → Confirmation
@@ -1306,7 +1323,9 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - ⚠️ **HIGH UNCERTAINTY Parameters:** All flagged in code comments with sensitivity ranges
   - `irreversibleFraction`: 0.80-0.95 (code: 90%)
   - `reboundFactor`: 0.5-0.9 (code: varied by regulation)
-  - `timelagYears`: 10-30 (code: 30yr default)
+  - `timeLagMonths`: **UPDATED Nov 25** - remediation: 60mo (was 240-360mo), prevention: 120-240mo
+  - `concentrationMultiplier`: **UPDATED Nov 25** - 0.1 (was 0.001) - assumes strategic deployment at high-concentration zones
+  - `timeLagFactor`: **UPDATED Nov 25** - starts at 25% (was 0%), reaches 100% at 60mo (was 240mo)
 - 📖 **Documentation:**
   - Research: `research/novel_entities_zero_effectiveness_20251113.md` (742 lines, 16 sources)
   - Design: `plans/novel_entities_model_redesign_20251113.md` (276 lines)
