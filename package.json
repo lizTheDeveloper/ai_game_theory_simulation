@@ -10,6 +10,7 @@
     "update-vdem": "npx tsx scripts/updateVDemData.ts",
     "audit:research": "npx tsx scripts/auditResearchAge.ts",
     "audit:research:verbose": "npx tsx scripts/auditResearchAge.ts --output research/UPDATE_QUEUE.md",
+    "audit:fallbacks": "npx tsx scripts/auditSilentFallbacks.ts",
     "test": "npx tsx --test --experimental-test-coverage tests/**/*.test.ts",
     "test:backend": "npx tsx --test tests/**/*.test.ts",
     "test:e2e": "playwright test",
