@@ -2,7 +2,7 @@
  * Types for agent actions in the simulation
  */
 
-import { GameState, GameEvent } from '@/types/game';
+import { GameState, GameEvent, PhaseContext } from '@/types/game';
 import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 
 /**
@@ -26,13 +26,15 @@ export interface GameAction {
   agentType: 'ai' | 'government' | 'society';
   energyCost: number;
   cooldown?: number;
-  
+
   // Check if action can be taken
-  canExecute: (state: GameState, agentId?: string) => boolean;
-  
+  // context added for H-1 (Nov 25, 2025): Optional PhaseContext for O(1) indices access
+  canExecute: (state: GameState, agentId?: string, context?: PhaseContext) => boolean;
+
   // Execute action - returns new state
   // random is REQUIRED for deterministic simulation (never use deterministicRandom()!)
-  execute: (state: GameState, random: () => number, agentId?: string) => ActionResult;
+  // context added for H-1 (Nov 25, 2025): Optional PhaseContext for O(1) indices access
+  execute: (state: GameState, random: () => number, agentId?: string, context?: PhaseContext) => ActionResult;
 }
 
 /**
