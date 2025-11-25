@@ -526,6 +526,19 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📄 **Files:** ClimateSystemPhase.ts, src/types/tipping-points.ts
 - ⚠️ **Pending:** Research verification for threshold reduction magnitudes
 
+**Nov 25: WAIS-AMOC Coupling & RICE Alignment Framework** (commit a341469)
+- 🌍 **Research Update:** Two November 2025 peer-reviewed papers added
+- **Source 1:** Sinet et al. (2025) Science Advances - WAIS meltwater affects AMOC resilience
+  - WAIS melt can prevent, facilitate, OR accelerate AMOC collapse (timing-dependent)
+  - Even stabilizing scenario weakens AMOC by ~60%, 3000-year recovery
+  - Provides cascade model parameters for GIS-WAIS-AMOC coupling
+- **Source 2:** Ji et al. (2025) ACM Computing Surveys - RICE alignment framework
+  - Robustness, Interpretability, Controllability, Ethicality principles
+  - Forward (training) vs Backward (verification) alignment taxonomy
+  - Geometric mean scoring suggested for balanced evaluation
+- 📄 **Research:** `research/amoc_tipping_point_original_sources_20251120.md` (Section 11), `research/alignment_technique_properties_20251026.md` (Section 5)
+- ⏳ **Status:** Research complete, NOT YET IMPLEMENTED - future cascade model and alignment evaluation updates suggested
+
 **Nov 23: AMOC Tipping Point 2025 Research Update** (commit 0b5bbc7)
 - 🌍 **Research Update:** New peer-reviewed sources on AMOC collapse timelines (3 papers, 2025)
 - **Key Sources:** Drijfhout et al. (ERL 2025), van Westen (JGR 2025), Baker et al. (Nature 2025)
