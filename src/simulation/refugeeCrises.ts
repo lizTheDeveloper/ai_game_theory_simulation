@@ -545,6 +545,19 @@ export function updateRefugeeCrises(state: GameState): void {
  * Returns array of new crises that should be created this month
  */
 export function checkRefugeeCrisisTriggers(state: GameState): RefugeeCrisis[] {
+  // ============================================================================
+  // HINDCAST MODE GUARD (Nov 25, 2025)
+  // ============================================================================
+  // In historical mode (1990-2024), we model ACTUAL refugee patterns from data.
+  // This crisis generation triggers phantom wars/climate disasters that didn't happen.
+  // Skip crisis triggers during hindcast to validate against real history.
+  // ============================================================================
+  if (state.config?.scenarioMode === 'historical') {
+    // Historical refugee patterns are modeled via actual data in initialization
+    // Don't generate phantom crises during hindcast validation
+    return [];
+  }
+
   const newCrises: RefugeeCrisis[] = [];
 
   // === 1. CLIMATE DISASTERS ===
