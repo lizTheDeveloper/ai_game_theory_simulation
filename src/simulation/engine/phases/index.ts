@@ -135,6 +135,7 @@ export { TechnologyDiffusionPhase } from './TechnologyDiffusionPhase';
 export { CatastrophicScenariosPhase } from './CatastrophicScenariosPhase';
 export { EventCollectionPhase } from './EventCollectionPhase';
 export { TimeAdvancementPhase } from './TimeAdvancementPhase';
+export { TechDeploymentSchedulePhase } from './TechDeploymentSchedulePhase';  // Nov 25, 2025: Sequenced tech deployment
 
 // === BATCH 5 CONSOLIDATED PHASES (Nov 9, 2025): Social & Governance (20 → 8 phases, -12 files) ===
 export { GovernanceSystemPhase } from './GovernanceSystemPhase';  // Consolidated: GovernanceQualityPhase + GovernmentElectionPhase + PolicyImplementationPhase (order 10.0)

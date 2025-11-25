@@ -216,6 +216,34 @@ export interface GameState {
    */
   scenario?: import('./scenarios').ScenarioDefinition;
 
+  /**
+   * Technology Deployment Schedule (Nov 25, 2025)
+   *
+   * Tracks scheduled technology deployments for sequenced/adaptive/prioritized modes.
+   * When set, TechDeploymentSchedulePhase executes deployments at scheduled months.
+   *
+   * Research: Addresses extinction-by-shock-deployment bug where immediate deployment
+   *           of 92 technologies causes 98.8% mortality before governance can respond.
+   * Expected impact: Enables paced technology rollout, testing governance bottlenecks
+   */
+  techDeploymentSchedule?: {
+    /** Deployment mode */
+    mode: 'sequenced' | 'adaptive' | 'prioritized';
+
+    /** Scheduled deployments */
+    scheduledDeployments: Array<{
+      techId: string;
+      deployMonth: number;
+      deployed: boolean;
+    }>;
+
+    /** Deployment level (0-1) */
+    deploymentLevel: number;
+
+    /** Deployment interval (months between tiers) */
+    deploymentInterval: number;
+  };
+
   // Agents
   aiAgents: AIAgent[];
   government: GovernmentAgent;

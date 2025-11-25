@@ -154,7 +154,8 @@ import {
   TechnologyDiffusionPhase,
   // CatastrophicScenariosPhase removed - merged into ExtinctionSystemPhase (Batch 4, Nov 9, 2025)
   EventCollectionPhase,
-  TimeAdvancementPhase
+  TimeAdvancementPhase,
+  TechDeploymentSchedulePhase  // Nov 25, 2025: Sequenced tech deployment
 } from './engine/phases';
 // TIER 2 Interventions (Oct 27, 2025)
 // TIER 2 Consolidated Phases (Batch 1 consolidation: 9 → 3, Nov 9, 2025)
@@ -642,6 +643,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new TechnologyDiffusionPhase());
     this.orchestrator.registerPhase(new EventCollectionPhase());
     this.orchestrator.registerPhase(new TimeAdvancementPhase());
+    this.orchestrator.registerPhase(new TechDeploymentSchedulePhase());  // Nov 25, 2025: Sequenced tech deployment
 
     // CRITICAL-2 FIX (Nov 10, 2025): Validate phase dependencies at initialization time
     // This catches circular dependencies, missing phases, and order violations BEFORE
