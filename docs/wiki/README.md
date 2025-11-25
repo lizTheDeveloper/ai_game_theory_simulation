@@ -25,9 +25,30 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **Research Currency:** ✅ EXCELLENT (all simulation-critical files updated within 14 days, autonomous system working effectively)
 - **Implementation Fidelity:** A- (assertion coverage 97.2%, 24 integration tests for CoordinatedDeploymentPhase) ✅ EXCELLENT
 - **Architecture Health:** B+ (0 CRITICAL, 2 HIGH technical debt non-urgent, deep clone optimization complete) ✅ GOOD
-- **System Trajectory:** 🟡 OPERATIONAL (Nov 24: Game Layer Phase 1 complete, hindcast calibration Phase 1-5 COMPLETE - temperature/mortality/food security/population growth/year tracking fixes applied, remaining: planetary boundaries, final calibration)
+- **System Trajectory:** 🟡 OPERATIONAL (Nov 25: Game Layer Phase 1 complete, hindcast calibration Phase 1-6 COMPLETE - temperature/mortality/food security/population growth/year tracking/regional fertility fixes applied, remaining: planetary boundaries, final calibration)
 
 **Recent Major Achievements:**
+
+**Nov 25: Hindcast Phase 6 - Regional Fertility Heterogeneity Fix** (commit 5e913b9)
+- 🔧 **PROBLEM FIXED:** 2010-2020 population overshoot (6.86% → 10.30%) from uniform global CBR scaling
+- **ROOT CAUSE:** Global CBR (crude birth rate) scaling applied uniformly across regions, but actual fertility declines varied by **7x**:
+  - East Asia: -17.5% decline (2010-2020) - one-child policy effects, urbanization
+  - South Asia: -19.0% - rapid development
+  - Europe: -2.6% - already at fertility floor
+  - Sub-Saharan Africa: -15.6% - early demographic transition
+  - Using single global multiplier (1.161x for 2010) overestimated births in East/South Asia (50% of global population)
+- **SOLUTION:** Region-specific historical CBR curves in `BaselineMortalityPhase.ts`
+  - New function: `getRegionalHistoricalBirthRate(regionName, year)` - 10 regional curves (1990-2025)
+  - Data source: UN World Population Prospects 2024 (28th edition)
+  - CBR conversion: TFR × 7.5 empirical ratio (validated against global average)
+  - Fail-loudly on unknown region (no silent fallbacks)
+- **VALIDATION:**
+  - 2010: 6.86% → **3.4%** deviation (50% improvement)
+  - 2020: 10.30% → **0.9%** deviation (91% improvement)
+  - Both years now under 5% target ✅
+- **KEY INSIGHT:** Regional heterogeneity matters - using global averages for phenomena with 7x variation introduces systematic bias. Population-weighted errors in East/South Asia (46% of world) dominate global totals.
+- 📄 **Files:** `BaselineMortalityPhase.ts` (+147 lines), `regionalPopulations.ts`, `research/regional_fertility_decline_2010_2020.md`
+- 📊 **DevLog:** `devlogs/hindcast_fix_regional_fertility_20251125.md`
 
 **Nov 24: Hindcast Phase 4 - Population Growth Fixes** (commit b01a37c)
 - 🔧 **PROBLEM FIXED:** Population declining (5.3B→4.15B) instead of growing (5.3B→8.1B) during 1990-2024 hindcast
@@ -55,12 +76,12 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - Historical mode needs consistent year tracking across all phases
   - Birth rate mechanics were duplicated (regional + mortality phase) causing architectural confusion
 - 📄 **Files:** `historicalInitialization.ts`, `ExogenousShockPhase.ts`, `TimeAdvancementPhase.ts`, `regionalPopulations.ts`, `BaselineMortalityPhase.ts`, `hindcastValidation.ts`
-- ⏳ **REMAINING:** ~1.86B population gap (6.24B vs 8.1B target) - calibration tuning needed
-- 📊 **HINDCAST ACCURACY (with commit 89209ca year fix):**
+- ✅ **RESOLVED (Nov 25):** Population gap fixed by regional fertility curves - see Phase 6 above
+- 📊 **HINDCAST ACCURACY (FINAL - with Nov 25 regional fertility fix):**
   - 1990: -0.57% deviation ✅
   - 2000: +1.72% deviation ✅
-  - 2010: +6.86% deviation (improved)
-  - 2020: +10.30% deviation (improved)
+  - 2010: +3.4% deviation ✅ (was 6.86%)
+  - 2020: +0.9% deviation ✅ (was 10.30%)
 
 **Nov 24: Hindcast Phase 3 Blocker - BaselineMortalityPhase RESOLVED** (commits 2087a26, d35e872)
 - 🔧 **PROBLEM FIXED:** Population declining (5.3B→2.7B) instead of growing (5.3B→6.1B) during 1990-2000 hindcast
@@ -8061,7 +8082,7 @@ The simulation runs via a **phase-based architecture** with **99 phases** execut
 - **UpdateEconomicStagePhase (34.0)**: Recovery tracking (**NEW Oct 16**)
 - QualityOfLifePhase (34.0): 17-dimensional QoL calculation
 - **FoodSecurityDegradationPhase (34.5)**: Crisis-accelerated food degradation (**NEW Oct 17**)
-- **BaselineMortalityPhase (34.8)**: Baseline demographic mortality (natural deaths from aging/disease) using UN WPP 2024 historical CDR data. Socioeconomic gradients from Chetty 2016, Kahn 2022, Pappas 1993. (**NEW Nov 24**, research corrections applied)
+- **BaselineMortalityPhase (34.8)**: Baseline demographic mortality (natural deaths from aging/disease) using UN WPP 2024 historical CDR data. Socioeconomic gradients from Chetty 2016, Kahn 2022, Pappas 1993. Now includes `getRegionalHistoricalBirthRate()` with 10 regional CBR curves (1990-2025) for hindcast accuracy. (**NEW Nov 24**, regional fertility fix Nov 25)
 - **BayesianMortalityResolutionPhase (35.0)**: Resolve mortality risks from multiple sources (**NEW Oct 29**)
 - OutcomeProbabilitiesPhase (36.0): Utopia/dystopia/extinction probabilities
 - CrisisDetectionPhase (36.5): Detect active crises
@@ -8138,7 +8159,12 @@ The simulation runs via a **phase-based architecture** with **99 phases** execut
 - **✅ BLOCKER-3 FIXED & VALIDATED (Oct 30):** Fixed phantom "99.7% mortality = extinction" outcomes (BLOCKER-3). Root cause: Extinction rate floors using obsolete baseline (137× instead of 2.2×) in tech tree effects. Fix: Removed old floors, assertions now catch invalid values. **Validation:** N=10 Monte Carlo (seeds 42000-42009, 120 months) - 0 false extinction outcomes (validated 98c17d2).
 - **🎯 PRODUCTION READY (Oct 30):** All 3 critical blockers fixed and validated with N=10 Monte Carlo (seeds 42000-42009). **Status:** Physically plausible (bounded values), research-backed (Richardson 2023, Sen 1981, FAO 2023), defensively coded (fail-loudly assertions working as designed). Performance: ~9-11s/run (0.04s/month). Exit code: 0 (SUCCESS). See `reviews/blocker_fixes_final_validation_20251030.md`.
 
-**Key Changes (Nov 24):**
+**Key Changes (Nov 24-25):**
+- **✅ HINDCAST PHASE 6 - REGIONAL FERTILITY FIX (Nov 25):** Added `getRegionalHistoricalBirthRate()` to BaselineMortalityPhase
+  - **Problem:** 2010-2020 population overshoot (6.86% → 10.30%) from uniform global CBR scaling
+  - **Solution:** Region-specific CBR curves for 10 regions based on UN WPP 2024 TFR data
+  - **Result:** 2010 deviation 6.86% → 3.4%, 2020 deviation 10.30% → 0.9% (all <5% target ✅)
+  - **Files:** `BaselineMortalityPhase.ts` (+147 lines), `regionalPopulations.ts`
 - **✅ HINDCAST PHASE 3 BLOCKER FIXED (Nov 24):** BaselineMortalityPhase (order 34.8) - Fixes population declining instead of growing during 1990-2000 hindcast
   - **Problem:** Population declining 5.3B→2.7B (expected: 5.3B→6.1B). Root cause: Baseline demographic mortality DEFINED but never added to Bayesian system
   - **Solution:** New phase converts UN WPP 2024 historical CDR to mortality risk (9.3/1000 in 1990 → 7.5/1000 in 2025) [CORRECTED]
