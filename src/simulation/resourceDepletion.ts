@@ -24,6 +24,7 @@ import {
 } from '../types/resources';
 import { assertEconomicStage, assertStateProperty, assertFinite, assertPlanetaryBoundary, assertProbability } from './utils/assertions';
 import { deterministicRandom } from '@/simulation/utils/deterministicRng';
+import { interpolateClimateForMonth } from '@/data/loaders/historicalClimateLoader';
 
 // Helper to add events to state
 function addEvent(state: GameState, event: Omit<GameEvent, 'id' | 'timestamp'>): void {
@@ -1108,52 +1109,129 @@ function updateCO2System(state: GameState, resources: ResourceEconomy): void {
   // Research: Ocean thermal inertia operates on 5-10 year timescales for mixed layer
   // (Dong et al. 2021, Nature CC 2025). Historical temperature rise (0.45C 1990 → 1.28C 2024)
   // represents the REALIZED warming after decades of lag.
-  if (co2.historicalTemperatureTarget !== undefined && co2.hindcastTransitionMonths !== undefined) {
-    // In hindcast mode, temperature stays locked to historical value for first N months
-    // This prevents the equilibrium formula from adding unrealized warming
+  // HINDCAST FIX v2 (Nov 25, 2025): Use historical temperature interpolation for ENTIRE hindcast period
+  //
+  // THE BUG (identified in reviews/hindcast_collapse_diagnostic_20251125.md):
+  // Previous fix locked temperature to initial value for 120 months, then switched to
+  // "lagged equilibrium" formula. But hindcasts run 408 months (1990-2024), so after
+  // month 120 (year 2000), temperature spiked to 2-3C instead of following historical
+  // trajectory (0.45C → 1.28C over 34 years).
+  //
+  // THE FIX: In hindcast mode, interpolate from actual historical temperature data
+  // using NASA GISS values for the entire simulation period. This ensures temperature
+  // follows the observed path (0.45C 1990, 0.60C 2000, 0.85C 2010, 1.28C 2024).
+  //
+  // After hindcast period ends (e.g., 2024+), switch to lagged equilibrium formula
+  // with proper initialization from the 2024 observed temperature.
+  if (state.config?.scenarioMode === 'historical' && state.config?.startYear) {
+    // Calculate current year from simulation state
+    const startYear = state.config.startYear;
+    const monthsSinceStart = state.currentMonth;
+    const currentYear = startYear + Math.floor(monthsSinceStart / 12);
+    const monthOfYear = monthsSinceStart % 12;
+
+    // Check if we're still within historical data range (1990-2024)
+    const HISTORICAL_DATA_END_YEAR = 2024;
+
+    if (currentYear <= HISTORICAL_DATA_END_YEAR) {
+      // Use actual historical temperature from NASA GISS data
+      // interpolateClimateForMonth provides smooth monthly interpolation between annual values
+      try {
+        const historicalClimate = interpolateClimateForMonth(currentYear, monthOfYear);
+        co2.temperatureAnomaly = assertFinite(
+          historicalClimate.temperatureAnomalyC,
+          {
+            location: 'updateCO2System (hindcast historical interpolation)',
+            valueName: 'temperatureAnomaly',
+            month: state.currentMonth,
+            additionalInfo: {
+              currentYear,
+              monthOfYear,
+              source: 'NASA_GISS_interpolated',
+              reason: 'historical_mode_temperature_lock'
+            }
+          }
+        );
+
+        // Log annually for monitoring
+        if (monthOfYear === 0) {
+          console.log(
+            `  🌡️ [Hindcast] Temperature: ${co2.temperatureAnomaly.toFixed(2)}C ` +
+            `(NASA GISS interpolated, year ${currentYear})`
+          );
+        }
+      } catch (e) {
+        // Fallback: if year is somehow out of range, use initial target with warning
+        console.warn(
+          `  ⚠️ [Hindcast] No historical data for year ${currentYear}, ` +
+          `using initial target ${co2.historicalTemperatureTarget?.toFixed(2) ?? 'N/A'}C`
+        );
+        if (co2.historicalTemperatureTarget !== undefined) {
+          co2.temperatureAnomaly = co2.historicalTemperatureTarget;
+        } else {
+          // Last resort: use equilibrium (may cause issues but better than crashing)
+          co2.temperatureAnomaly = equilibriumTemp;
+        }
+      }
+    } else {
+      // Post-hindcast: we've run past 2024, switch to modeled temperature
+      // Use a blend: 75% of equilibrium + 25% of last historical value (1.28C for 2024)
+      // This provides continuity while allowing model to diverge from history
+      const LAST_HISTORICAL_TEMP = 1.28; // NASA GISS 2024 annual average
+      const dampingFactor = 0.75;
+      const blendedTemp = equilibriumTemp * dampingFactor + LAST_HISTORICAL_TEMP * (1 - dampingFactor);
+
+      co2.temperatureAnomaly = assertFinite(
+        blendedTemp,
+        {
+          location: 'updateCO2System (hindcast post-historical blend)',
+          valueName: 'temperatureAnomaly',
+          month: state.currentMonth,
+          additionalInfo: {
+            currentYear,
+            equilibriumTemp,
+            blendedTemp,
+            reason: 'post_historical_period'
+          }
+        }
+      );
+
+      // Log first month post-historical
+      if (currentYear === HISTORICAL_DATA_END_YEAR + 1 && monthOfYear === 0) {
+        console.log(
+          `  🌡️ [Hindcast] Transition to modeled temperature: ${co2.temperatureAnomaly.toFixed(2)}C ` +
+          `(year ${currentYear}, post-historical blend)`
+        );
+      }
+    }
+  } else if (co2.historicalTemperatureTarget !== undefined && co2.hindcastTransitionMonths !== undefined) {
+    // Legacy support: Old-style hindcast initialization (shouldn't be reached in new code)
+    // Keep for backward compatibility with any existing state files
     if (state.currentMonth < co2.hindcastTransitionMonths) {
       co2.temperatureAnomaly = assertFinite(
         co2.historicalTemperatureTarget,
         {
-          location: 'updateCO2System (hindcast thermal lock)',
+          location: 'updateCO2System (legacy hindcast lock)',
           valueName: 'temperatureAnomaly',
           month: state.currentMonth,
-          additionalInfo: {
-            historicalTarget: co2.historicalTemperatureTarget,
-            reason: 'thermal_inertia_lock'
-          }
+          additionalInfo: { historicalTarget: co2.historicalTemperatureTarget }
         }
       );
-
-      // Log lock status periodically
-      if (state.currentMonth % 12 === 0) {
-        console.log(
-          `  [Hindcast] Temperature LOCKED: ${co2.temperatureAnomaly.toFixed(2)}C ` +
-          `(historical equilibrium, month ${state.currentMonth}/${co2.hindcastTransitionMonths})`
-        );
-      }
     } else {
-      // After transition period, temperature follows CO2 with continued lag
-      // Use a dampened equilibrium that accounts for ongoing thermal inertia
-      const dampingFactor = 0.75; // Temperature lags 25% behind theoretical equilibrium
+      const dampingFactor = 0.75;
       const laggedEquilibrium = equilibriumTemp * dampingFactor + co2.historicalTemperatureTarget * (1 - dampingFactor);
-
       co2.temperatureAnomaly = assertFinite(
         laggedEquilibrium,
         {
-          location: 'updateCO2System (hindcast post-lock)',
+          location: 'updateCO2System (legacy hindcast post-lock)',
           valueName: 'temperatureAnomaly',
           month: state.currentMonth,
-          additionalInfo: {
-            equilibriumTemp,
-            laggedEquilibrium,
-            dampingFactor
-          }
+          additionalInfo: { equilibriumTemp, laggedEquilibrium }
         }
       );
     }
   } else {
-    // Standard mode: use equilibrium temperature directly
+    // Standard (non-hindcast) mode: use equilibrium temperature directly
     co2.temperatureAnomaly = equilibriumTemp;
   }
 
