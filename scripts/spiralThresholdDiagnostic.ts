@@ -24,7 +24,7 @@
  */
 
 import { createDefaultInitialState } from '@/simulation/initialization';
-import { simulateMonth } from '@/simulation/engine';
+import { SimulationEngine } from '@/simulation/engine';
 import { updateUpwardSpirals, canDeclareUtopia, logSpiralActivationDiagnostics } from '@/simulation/upwardSpirals';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 
@@ -95,7 +95,7 @@ function runSpiralThresholdDiagnostic() {
   console.log(`  Target: Year 30 (360 months)`);
   console.log('');
 
-  const state = createDefaultInitialState(rng);
+  let state = createDefaultInitialState(rng);
   const snapshots: SpiralSnapshot[] = [];
 
   const initialPopulation = state.humanPopulationSystem.population;
@@ -107,6 +107,9 @@ function runSpiralThresholdDiagnostic() {
   console.log('SIMULATION PROGRESS');
   console.log('='.repeat(80));
   console.log('');
+
+  // Create engine
+  const engine = new SimulationEngine({ seed, maxMonths: targetMonths });
 
   for (let month = 0; month <= targetMonths; month++) {
     // Take snapshot every 12 months
@@ -169,7 +172,8 @@ function runSpiralThresholdDiagnostic() {
 
     // Simulate month
     try {
-      simulateMonth(state, rng);
+      const result = engine.step(state);
+      state = result.state;
     } catch (error) {
       console.error(`\n❌ Simulation crashed at month ${month}:`);
       console.error(error);
@@ -235,12 +239,14 @@ function runSpiralThresholdDiagnostic() {
     const year15Rng = createSeededRng(seed + '-year15');
     setDeterministicRng(year15Rng);
 
-    const year15State = createDefaultInitialState(year15Rng);
+    let year15State = createDefaultInitialState(year15Rng);
+    const year15Engine = new SimulationEngine({ seed: seed + '-year15', maxMonths: 180 });
 
     // Fast-forward to Year 15
     for (let month = 0; month < 180; month++) {
       try {
-        simulateMonth(year15State, year15Rng);
+        const result = year15Engine.step(year15State);
+        year15State = result.state;
       } catch (error) {
         console.error(`❌ Fast-forward failed at month ${month}:`, error);
         break;
