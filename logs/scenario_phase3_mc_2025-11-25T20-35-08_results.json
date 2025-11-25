@@ -1,0 +1,28 @@
+{
+  "metadata": {
+    "timestamp": "2025-11-25T20-35-08",
+    "monteCarloN": 10,
+    "baseSeed": 1000,
+    "maxMonths": 360,
+    "scenarios": [
+      "climate-first",
+      "equality-first",
+      "ai-alignment-first",
+      "democratic-participation",
+      "scientific-acceleration",
+      "authoritarian-efficiency"
+    ]
+  },
+  "results": {
+    "climate-first": [],
+    "equality-first": [],
+    "ai-alignment-first": [],
+    "democratic-participation": [],
+    "scientific-acceleration": [],
+    "authoritarian-efficiency": []
+  },
+  "statistics": {},
+  "rankings": {
+    "bySpiralsActive": []
+  }
+}
