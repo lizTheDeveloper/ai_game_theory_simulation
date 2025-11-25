@@ -85,7 +85,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 42,
+    "line": 43,
     "name": "updateResourceEconomy",
     "doc": "Updates resource economy based on current state and modifiers."
   },
