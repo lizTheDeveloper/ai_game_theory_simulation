@@ -500,6 +500,7 @@ export class ClimateDeploymentPhase implements SimulationPhase {
     }
 
     const globalDeployments = state.techTreeState.regionalDeployment['global'];
+    // No index - domain-specific search (regional deployment records)
     const deployment = globalDeployments.find(d => d.techId === techId);
 
     if (deployment) {

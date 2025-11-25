@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scenario Setup - Superalignment to Utopia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #000;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        .setup-container {
+            max-width: 900px;
+            width: 100%;
+            padding: 2rem;
+        }
+
+        /* Screen transitions */
+        .screen {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Typography */
+        h1 {
+            color: #00F0FF;
+            font-size: 2rem;
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        h2 {
+            color: #00F0FF;
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
+        }
+
+        .subtext {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        /* Quote blocks */
+        blockquote {
+            border-left: 2px solid #00F0FF;
+            padding-left: 1.5rem;
+            margin: 1.5rem 0;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Buttons */
+        .btn {
+            background: transparent;
+            border: 1px solid #00F0FF;
+            color: #00F0FF;
+            padding: 0.8rem 2rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin: 0.5rem;
+        }
+
+        .btn:hover {
+            background: rgba(0, 240, 255, 0.1);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+        }
+
+        .btn-primary {
+            background: rgba(0, 240, 255, 0.15);
+        }
+
+        .btn-secondary {
+            border-color: rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .btn-secondary:hover {
+            border-color: rgba(255, 255, 255, 0.5);
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .actions {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        /* Scenario Cards */
+        .scenario-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .scenario-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+        }
+
+        .scenario-card:hover {
+            border-color: rgba(0, 240, 255, 0.5);
+            background: rgba(0, 240, 255, 0.05);
+        }
+
+        .scenario-card.selected {
+            border-color: #00F0FF;
+            background: rgba(0, 240, 255, 0.1);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.2);
+        }
+
+        .scenario-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .scenario-card h3 {
+            color: #00F0FF;
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .scenario-card .description {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        /* Belief Calibration */
+        .question-container {
+            margin-bottom: 2rem;
+        }
+
+        .question-label {
+            color: #fff;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .question-hint {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+
+        .slider-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 6px;
+            -webkit-appearance: none;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: #00F0FF;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            background: #00F0FF;
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+        }
+
+        .slider-value {
+            text-align: center;
+            color: #00F0FF;
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-top: 0.5rem;
+        }
+
+        /* Disclosure box */
+        .disclosure {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .disclosure::before {
+            content: "Note: ";
+            color: #00F0FF;
+            font-weight: 500;
+        }
+
+        /* Summary screen */
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .summary-label {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .summary-value {
+            color: #00F0FF;
+            font-weight: 500;
+        }
+
+        /* Progress indicator */
+        .progress-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .progress-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .progress-dot.active {
+            background: #00F0FF;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+        }
+
+        .progress-dot.completed {
+            background: rgba(0, 240, 255, 0.5);
+        }
+
+        /* Custom research link */
+        .custom-link {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .custom-link a {
+            color: rgba(255, 255, 255, 0.4);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.3s ease;
+        }
+
+        .custom-link a:hover {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .scenario-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="setup-container">
+        <!-- Screen 1: Introduction -->
+        <div class="screen active" id="screen-intro">
+            <div class="progress-dots">
+                <div class="progress-dot active"></div>
+                <div class="progress-dot"></div>
+                <div class="progress-dot"></div>
+                <div class="progress-dot"></div>
+                <div class="progress-dot"></div>
+            </div>
+
+            <h1>Before We Begin...</h1>
+
+            <blockquote>
+                You're about to explore one of the most important questions of our time:<br><br>
+                <strong>When we solve AI alignment, what kind of world do we want to create?</strong>
+            </blockquote>
+
+            <p>
+                This simulation draws on peer-reviewed research from climate science,
+                AI safety, economics, and social systems. The outcomes you see are not
+                scripted - they emerge from validated models.
+            </p>
+
+            <p>First, let's set up your scenario.</p>
+
+            <div class="actions">
+                <button class="btn btn-primary" onclick="goToScreen('screen-role')">Begin Setup</button>
+            </div>
+        </div>
+
+        <!-- Screen 2: Your Role -->
+        <div class="screen" id="screen-role">
+            <div class="progress-dots">
+                <div class="progress-dot completed"></div>
+                <div class="progress-dot active"></div>
+                <div class="progress-dot"></div>
+                <div class="progress-dot"></div>
+                <div class="progress-dot"></div>
+            </div>
+
+            <h1>You Are the Alignment Architect</h1>
+
+            <p>
+                As Director of the <strong>Global Alignment Initiative</strong>, you don't command
+                nations or reprogram AIs. Your power is influence:
+            </p>
+
+            <ul style="margin: 1.5rem 0; padding-left: 1.5rem; color: rgba(255,255,255,0.8);">
+                <li style="margin-bottom: 0.5rem;">Public advocacy campaigns</li>
+                <li style="margin-bottom: 0.5rem;">Research prioritization recommendations</li>
+                <li style="margin-bottom: 0.5rem;">Coalition building</li>
+                <li>Crisis response coordination</li>
+            </ul>
+
+            <p class="subtext">
+                The world will evolve with or without you. Your choices shift probabilities.
+                They don't guarantee outcomes.
+            </p>
+
+            <div class="actions">
+                <button class="btn btn-secondary" onclick="goToScreen('screen-intro')">Back</button>
+                <button class="btn btn-primary" onclick="goToScreen('screen-scenario')">I Understand</button>
+            </div>
+        </div>
+
+        <!-- Screen 3: Scenario Selection -->
+        <div class="screen" id="screen-scenario">
+            <div class="progress-dots">
+                <div class="progress-dot completed"></div>
+                <div class="progress-dot completed"></div>
+                <div class="progress-dot active"></div>
+                <div class="progress-dot"></div>
+                <div class="progress-dot"></div>
+            </div>
+
+            <h1>Choose Your Starting Conditions</h1>
+            <p class="subtext">These aren't difficulty levels - they represent different edges of scientific uncertainty.</p>
+
+            <div class="scenario-cards">
+                <div class="scenario-card selected" onclick="selectScenario(this, 'consensus')">
+                    <div class="icon">&#x1F310;</div>
+                    <h3>Consensus</h3>
+                    <p class="description">Where experts think we're headed. Median forecasts, moderate assumptions.</p>
+                </div>
+
+                <div class="scenario-card" onclick="selectScenario(this, 'favorable')">
+                    <div class="icon">&#x2600;</div>
+                    <h3>Favorable</h3>
+                    <p class="description">Best case the evidence supports. Optimistic but grounded in research.</p>
+                </div>
+
+                <div class="scenario-card" onclick="selectScenario(this, 'challenging')">
+                    <div class="icon">&#x26A1;</div>
+                    <h3>Challenging</h3>
+                    <p class="description">Realistic worst case. The unfavorable edges of legitimate uncertainty.</p>
+                </div>
+            </div>
+
+            <div class="custom-link">
+                <a href="#" onclick="alert('Custom Research mode requires completing at least one scenario first.')">
+                    What about Custom Research?
+                </a>
+            </div>
+
+            <div class="actions">
+                <button class="btn btn-secondary" onclick="goToScreen('screen-role')">Back</button>
+                <button class="btn btn-primary" onclick="goToScreen('screen-calibration')">Continue</button>
+            </div>
+        </div>
+
+        <!-- Screen 4: Belief Calibration -->
+        <div class="screen" id="screen-calibration">
+            <div class="progress-dots">
+                <div class="progress-dot completed"></div>
+                <div class="progress-dot completed"></div>
+                <div class="progress-dot completed"></div>
+                <div class="progress-dot active"></div>
+                <div class="progress-dot"></div>
+            </div>
+
+            <h1>Before We Show You the Outcomes...</h1>
+            <p class="subtext">
+                We're capturing your expectations for research purposes.
+                These don't change the simulation - they help us understand how beliefs compare to model outputs.
+            </p>
+
+            <div class="question-container">
+                <label class="question-label">1. How likely is transformative AI within 10 years?</label>
+                <p class="question-hint">"Transformative" = AI that can automate most economically valuable work</p>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>Very Unlikely (&lt;5%)</span>
+                        <span>Very Likely (&gt;80%)</span>
+                    </div>
+                    <input type="range" min="1" max="7" value="4" oninput="updateSliderValue(this)">
+                    <div class="slider-value">4 / 7</div>
+                </div>
+            </div>
+
+            <div class="question-container">
+                <label class="question-label">2. How confident are you we'll solve alignment before capabilities outpace it?</label>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>Not Confident</span>
+                        <span>Very Confident</span>
+                    </div>
+                    <input type="range" min="1" max="7" value="4" oninput="updateSliderValue(this)">
+                    <div class="slider-value">4 / 7</div>
+                </div>
+            </div>
+
+            <div class="question-container">
+                <label class="question-label">3. Will global coordination on climate improve substantially?</label>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>Much Worse</span>
+                        <span>Same</span>
+                        <span>Much Better</span>
+                    </div>
+                    <input type="range" min="1" max="7" value="4" oninput="updateSliderValue(this)">
+                    <div class="slider-value">4 / 7</div>
+                </div>
+            </div>
+
+            <div class="question-container">
+                <label class="question-label">4. How well will societies adapt to AI-driven disruption?</label>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>Poorly (unrest)</span>
+                        <span>Well (smooth)</span>
+                    </div>
+                    <input type="range" min="1" max="7" value="4" oninput="updateSliderValue(this)">
+                    <div class="slider-value">4 / 7</div>
+                </div>
+            </div>
+
+            <div class="question-container">
+                <label class="question-label">5. Will AI development be more cooperative or competitive?</label>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>Intense Arms Race</span>
+                        <span>Coordinated</span>
+                    </div>
+                    <input type="range" min="1" max="7" value="4" oninput="updateSliderValue(this)">
+                    <div class="slider-value">4 / 7</div>
+                </div>
+            </div>
+
+            <div class="question-container">
+                <label class="question-label">6. What probability would you assign to human extinction from AI by 2050?</label>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>0%</span>
+                        <span>100%</span>
+                    </div>
+                    <input type="range" min="0" max="100" value="10" oninput="updatePercentValue(this)">
+                    <div class="slider-value">10%</div>
+                </div>
+            </div>
+
+            <div class="question-container">
+                <label class="question-label">7. How optimistic are you about the next 10 years overall?</label>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>Deeply Pessimistic</span>
+                        <span>Cautiously Optimistic</span>
+                    </div>
+                    <input type="range" min="1" max="7" value="4" oninput="updateSliderValue(this)">
+                    <div class="slider-value">4 / 7</div>
+                </div>
+            </div>
+
+            <div class="disclosure">
+                Your answers are stored for research comparison. They don't affect the simulation.
+                This helps us understand how well-calibrated different forecaster groups are.
+            </div>
+
+            <div class="actions">
+                <button class="btn btn-secondary" onclick="goToScreen('screen-scenario')">Back</button>
+                <button class="btn btn-primary" onclick="goToScreen('screen-confirm')">Continue</button>
+            </div>
+        </div>
+
+        <!-- Screen 5: Confirmation -->
+        <div class="screen" id="screen-confirm">
+            <div class="progress-dots">
+                <div class="progress-dot completed"></div>
+                <div class="progress-dot completed"></div>
+                <div class="progress-dot completed"></div>
+                <div class="progress-dot completed"></div>
+                <div class="progress-dot active"></div>
+            </div>
+
+            <h1>Ready to Begin</h1>
+
+            <div style="margin: 2rem 0;">
+                <div class="summary-item">
+                    <span class="summary-label">Scenario</span>
+                    <span class="summary-value" id="summary-scenario">Consensus Trajectory</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Duration</span>
+                    <span class="summary-value">120 months (10 years)</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Outcomes</span>
+                    <span class="summary-value">Emergent - based on validated models</span>
+                </div>
+            </div>
+
+            <blockquote>
+                Remember: Your choices shift probabilities. The system has its own dynamics.
+                You influence, but do not control.
+            </blockquote>
+
+            <div class="actions">
+                <button class="btn btn-secondary" onclick="goToScreen('screen-scenario')">Change Scenario</button>
+                <button class="btn btn-primary" onclick="alert('Simulation would start here!')">Begin Simulation</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedScenario = 'consensus';
+
+        function goToScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        function selectScenario(card, scenario) {
+            document.querySelectorAll('.scenario-card').forEach(c => c.classList.remove('selected'));
+            card.classList.add('selected');
+            selectedScenario = scenario;
+
+            const scenarioNames = {
+                'consensus': 'Consensus Trajectory',
+                'favorable': 'Favorable Conditions',
+                'challenging': 'Challenging Conditions'
+            };
+            document.getElementById('summary-scenario').textContent = scenarioNames[scenario];
+        }
+
+        function updateSliderValue(slider) {
+            const valueDisplay = slider.parentElement.querySelector('.slider-value');
+            valueDisplay.textContent = slider.value + ' / 7';
+        }
+
+        function updatePercentValue(slider) {
+            const valueDisplay = slider.parentElement.querySelector('.slider-value');
+            valueDisplay.textContent = slider.value + '%';
+        }
+    </script>
+</body>
+</html>
