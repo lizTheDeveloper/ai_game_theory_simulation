@@ -128,11 +128,11 @@ npx tsx scripts/successPathMapping.ts > logs/success_path_mapping_$(date +%Y%m%d
 **Snapshot intervals:** Every 12 months (months 12, 24, 36, 48, 60, 72, 84, 96, 108, 120)
 
 **Metrics tracked:**
-- Trust in AI (average across deployed agents)
+- Trust in AI (from `state.society.trustInAI`)
 - Governance quality (average of decision quality + institutional capacity)
 - International cooperation level
-- AI capability (average across deployed agents)
-- Quality of Life (average across 5 tiers)
+- AI capability (average across deployed agents using `capabilityProfile`)
+- Quality of Life (using `calculateQualityOfLife()` aggregation)
 - Spiral activation state (6 spirals)
 - Technology deployment (tier 3/4 counts)
 - Environmental metrics (climate stability, biodiversity)
@@ -166,5 +166,5 @@ npx tsx scripts/successPathMapping.ts > logs/success_path_mapping_$(date +%Y%m%d
 ## Validation
 
 **Last updated:** November 25, 2025
-**Script version:** successPathMapping.ts v1.0
-**Validation status:** Infrastructure created, awaiting first full run analysis
+**Script version:** successPathMapping.ts v1.1 (bug fix: correct state field access)
+**Validation status:** Infrastructure created and validated, awaiting statistical analysis
