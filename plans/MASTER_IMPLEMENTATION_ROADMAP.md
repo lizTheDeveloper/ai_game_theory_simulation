@@ -830,6 +830,14 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 - **Recently Completed:** Nitrogen-food coupling research (Nov 15), Climate deployment timescales (Nov 15), Novel Entities 0% effectiveness (Nov 14)
 
 **Research Verification Queue:**
+- [ ] **Regional CDR Data Verification** - ⏳ PENDING (Nov 25, 2025 - commit bf90ffa)
+  - **Research Spec:** `research/regional_cdr_un_wpp_2024_20251125.md`
+  - **Review:** `reviews/regional_cdr_critique_20251125.md` (Grade B- conditional pass)
+  - **Issue:** Most regional CDR values are ESTIMATED (UN data portal blocked)
+  - **Verified:** Sub-Saharan Africa (NCBI), South Asia 2020 (World Bank), Global anchor (UN WPP 2024)
+  - **Unverified:** East Asia, Europe, North America, Latin America, MENA, Southeast Asia, Central Asia, Oceania
+  - **Action Needed:** Access UN WPP 2024 CSV files for exact regional values when portal accessible
+  - **Priority:** LOW (current estimates acceptable for MEDIUM priority hindcast tuning)
 - [x] **Hindcast Food Security Parameters** - ✅ FIXED (Nov 25, 2025 - commit 8f69e1087)
   - **Research Spec:** `research/verification_bb445b3_20251124.md`
   - **Bug Found:** Region names used camelCase but actual regions use proper names (with spaces)
