@@ -309,6 +309,155 @@ export function getRegionalHistoricalBirthRate(regionName: string, year: number)
 }
 
 /**
+ * Get region-specific historical death rate (crude death rate per 1000)
+ *
+ * CRITICAL FIX (Nov 25, 2025): Regional mortality declines at heterogeneous rates
+ *
+ * Root cause of 2010-2020 hindcast overshoot: Birth rates use regional scaling but death
+ * rates used global CDR, creating demographic imbalance. Actual mortality varied by 2x:
+ * - Sub-Saharan Africa: 15.6/1000 (1990) → 8.7/1000 (2020) - rapid decline
+ * - Europe: 11.0/1000 (1990) → 12.2/1000 (2020) - aging populations increase
+ * - East Asia: 7.0/1000 (1990) → 7.6/1000 (2020) - stable/slight increase
+ *
+ * Without regional death rate scaling, the model underestimates deaths in high-mortality
+ * regions (Sub-Saharan Africa = 15% of global population) and overestimates in low-mortality
+ * regions (Europe, East Asia = 30% of global population).
+ *
+ * Research: UN World Population Prospects 2024 (28th edition, July 2024)
+ * - CDR data from https://population.un.org/wpp/Download/Standard/Mortality/
+ * - Regional estimates validated against World Bank data (1990-2023)
+ *
+ * @param regionName - Region name (must match initializeRegionalPopulations)
+ * @param year - Year (1990-2030)
+ * @returns CDR per 1000 population for that region-year
+ */
+export function getRegionalHistoricalDeathRate(regionName: string, year: number): number {
+  // Regional CDR data (UN WPP 2024)
+  // Note: Sub-Saharan Africa has highest rates (young pop + disease burden)
+  //       Europe has aging effect (lower rates 1990, rising 2020+)
+  //       East/South Asia show demographic dividend (declining youth mortality)
+  const REGIONAL_CDR: Record<string, Record<number, number>> = {
+    'Sub-Saharan Africa': {
+      1990: 15.6,  // High infant/child mortality + disease burden
+      2000: 13.5,  // HIV/AIDS peak era
+      2010: 10.2,  // Improved healthcare + ARVs
+      2020: 8.7,   // Continued decline
+      2025: 8.0,   // Projected
+    },
+    'East Asia': {
+      1990: 7.0,   // Low baseline (post-demographic transition)
+      2000: 6.8,   // Continued low
+      2010: 7.1,   // Aging begins
+      2020: 7.6,   // Aging effect increases
+      2025: 8.0,   // Projected (aging acceleration)
+    },
+    'South Asia': {
+      1990: 10.5,  // Higher than East Asia (later demographic transition)
+      2000: 8.5,   // Rapid decline
+      2010: 7.5,   // Continued improvement
+      2020: 7.0,   // Modern healthcare access
+      2025: 6.8,   // Projected
+    },
+    'Europe': {
+      1990: 11.0,  // Aging populations but good healthcare
+      2000: 11.5,  // Aging effect begins
+      2010: 11.8,  // Continued aging
+      2020: 12.2,  // Significant aging effect
+      2025: 12.5,  // Projected (aging acceleration)
+    },
+    'North America': {
+      1990: 8.8,   // Moderate baseline
+      2000: 8.4,   // Slight decline
+      2010: 8.0,   // Continued improvement
+      2020: 9.5,   // COVID-19 + opioid crisis impact
+      2025: 9.0,   // Projected (normalization)
+    },
+    'Latin America': {
+      1990: 7.0,   // Young population (demographic dividend)
+      2000: 6.2,   // Continued decline
+      2010: 5.9,   // Low point
+      2020: 6.5,   // COVID-19 impact + violence
+      2025: 6.8,   // Projected
+    },
+    'Middle East & North Africa': {
+      1990: 8.5,   // Moderate baseline
+      2000: 6.5,   // Rapid decline
+      2010: 5.5,   // Healthcare improvements
+      2020: 5.8,   // Conflict + COVID impact
+      2025: 5.5,   // Projected
+    },
+    'Southeast Asia': {
+      1990: 9.0,   // Similar to South Asia
+      2000: 7.5,   // Rapid development
+      2010: 6.8,   // Continued decline
+      2020: 7.0,   // COVID-19 impact
+      2025: 7.2,   // Projected
+    },
+    'Central Asia': {
+      1990: 8.0,   // Post-Soviet baseline
+      2000: 7.0,   // Healthcare degradation post-USSR
+      2010: 6.5,   // Recovery
+      2020: 6.0,   // Improvement
+      2025: 6.0,   // Projected (stable)
+    },
+    'Oceania': {
+      1990: 7.5,   // Similar to developed regions
+      2000: 7.0,   // Slight decline
+      2010: 6.5,   // Continued improvement
+      2020: 6.5,   // Stable
+      2025: 6.8,   // Projected (slight aging effect)
+    },
+  };
+
+  // Check if region exists
+  const regionData = REGIONAL_CDR[regionName];
+  if (!regionData) {
+    // CRITICAL: Fail loudly if region not found (no silent fallbacks)
+    throw new Error(
+      `❌ CRITICAL: Unknown region '${regionName}' in getRegionalHistoricalDeathRate. ` +
+      `Valid regions: ${Object.keys(REGIONAL_CDR).join(', ')}`
+    );
+  }
+
+  const years = Object.keys(regionData).map(Number).sort((a, b) => a - b);
+
+  // Before earliest year
+  if (year <= years[0]) {
+    return regionData[years[0]];
+  }
+
+  // After latest year
+  if (year >= years[years.length - 1]) {
+    return regionData[years[years.length - 1]];
+  }
+
+  // Interpolate between known years
+  for (let i = 0; i < years.length - 1; i++) {
+    const y1 = years[i];
+    const y2 = years[i + 1];
+    if (year >= y1 && year < y2) {
+      const t = (year - y1) / (y2 - y1);
+      const cdr1 = regionData[y1];
+      const cdr2 = regionData[y2];
+      const interpolated = cdr1 + (cdr2 - cdr1) * t;
+
+      // Validate result
+      assertFinite(interpolated, {
+        location: 'getRegionalHistoricalDeathRate',
+        valueName: 'interpolated CDR',
+        month: 0,
+        additionalInfo: { regionName, year, y1, y2, cdr1, cdr2 }
+      });
+
+      return interpolated;
+    }
+  }
+
+  // Should never reach here
+  return regionData[2025];
+}
+
+/**
  * Calculate baseline demographic mortality risk
  *
  * This is the "background" mortality that occurs even when no crises are active.
