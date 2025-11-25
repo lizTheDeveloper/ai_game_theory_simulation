@@ -29,14 +29,15 @@ export class AIAgentActionsPhase implements SimulationPhase {
   // DEPENDENCIES (Nov 15, 2025): Phase dependency removed - ai_alignment_evolution phase no longer exists
   readonly dependencies: string[] = [];
 
-  execute(state: GameState, rng: RNGFunction): PhaseResult {
+  execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     // PERFORMANCE INSTRUMENTATION (Oct 28, 2025)
     setDeterministicRng(rng);
     const enableTiming = state.currentMonth === 0 || state.currentMonth === 120 || state.currentMonth === 240;
     const t1 = enableTiming ? performance.now() : 0;
 
     // Import and execute existing AI agent actions
-    const aiResult = executeAIAgentActions(state, rng);
+    // H-1 (Nov 25, 2025): Pass context for O(1) indices access
+    const aiResult = executeAIAgentActions(state, rng, context);
     const t2 = enableTiming ? performance.now() : 0;
 
     // Update state (aiResult returns { newState, events })

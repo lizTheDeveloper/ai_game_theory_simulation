@@ -24,8 +24,9 @@ export const DEPLOY_TECHNOLOGY_ACTION: GameAction = {
   agentType: 'ai',
   energyCost: 1,
   
-  canExecute: (state, agentId) => {
-    const agent = state.aiAgents.find(ai => ai.id === agentId);
+  canExecute: (state, agentId, context) => {
+    // H-1 (Nov 25, 2025): Use indices for O(1) agent lookup
+    const agent = context?.indices?.agentMap.get(agentId!) ?? state.aiAgents.find(ai => ai.id === agentId);
     if (!agent) return false;
 
     // Need tech tree state
@@ -38,7 +39,8 @@ export const DEPLOY_TECHNOLOGY_ACTION: GameAction = {
     // Need to have an organization with revenue
     if (!agent.organizationId) return false;
 
-    const org = state.organizations.find(o => o.id === agent.organizationId);
+    // H-1 (Nov 25, 2025): Use indices for O(1) org lookup
+    const org = context?.indices?.orgMap.get(agent.organizationId) ?? state.organizations.find(o => o.id === agent.organizationId);
     if (!org || org.monthlyRevenue < 10) return false; // Need at least $10M/month
 
     // FIX #15 (Oct 21, 2025): Check deployment level properly
@@ -60,8 +62,9 @@ export const DEPLOY_TECHNOLOGY_ACTION: GameAction = {
     return unlockedTech.length > 0;
   },
   
-  execute: (state, random, agentId?: string): ActionResult => {
-    const agent = state.aiAgents.find(ai => ai.id === agentId);
+  execute: (state, random, agentId?: string, context?): ActionResult => {
+    // H-1 (Nov 25, 2025): Use indices for O(1) agent lookup
+    const agent = context?.indices?.agentMap.get(agentId!) ?? state.aiAgents.find(ai => ai.id === agentId);
     if (!agent) {
       return {
         success: false,
@@ -73,7 +76,8 @@ export const DEPLOY_TECHNOLOGY_ACTION: GameAction = {
     }
 
     const techTreeState: TechTreeState = state.techTreeState;
-    const org = state.organizations.find(o => o.id === agent.organizationId);
+    // H-1 (Nov 25, 2025): Use indices for O(1) org lookup
+    const org = context?.indices?.orgMap.get(agent.organizationId!) ?? state.organizations.find(o => o.id === agent.organizationId);
 
     if (!org) {
       return {
@@ -158,9 +162,10 @@ export const SABOTAGE_TECHNOLOGY_ACTION: GameAction = {
   description: 'Attempt to sabotage a threatening technology (misaligned AIs only)',
   agentType: 'ai',
   energyCost: 2,
-  
-  canExecute: (state, agentId) => {
-    const agent = state.aiAgents.find(ai => ai.id === agentId);
+
+  canExecute: (state, agentId, context) => {
+    // H-1 (Nov 25, 2025): Use indices for O(1) agent lookup
+    const agent = context?.indices?.agentMap.get(agentId!) ?? state.aiAgents.find(ai => ai.id === agentId);
     if (!agent) return false;
     
     // Only misaligned AIs sabotage (alignment < 0.5)
@@ -184,8 +189,9 @@ export const SABOTAGE_TECHNOLOGY_ACTION: GameAction = {
     return threateningTech.length > 0;
   },
   
-  execute: (state, random, agentId?: string): ActionResult => {
-    const agent = state.aiAgents.find(ai => ai.id === agentId);
+  execute: (state, random, agentId?: string, context?): ActionResult => {
+    // H-1 (Nov 25, 2025): Use indices for O(1) agent lookup
+    const agent = context?.indices?.agentMap.get(agentId!) ?? state.aiAgents.find(ai => ai.id === agentId);
     if (!agent) {
       return {
         success: false,

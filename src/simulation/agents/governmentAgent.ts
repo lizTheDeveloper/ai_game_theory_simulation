@@ -4,7 +4,7 @@
  * Pure functions for government policy decisions
  */
 
-import { GameState, GameEvent, AIAgent } from '@/types/game';
+import { GameState, GameEvent, AIAgent, PhaseContext } from '@/types/game';
 import { getTrustInAIForPolicy } from '../socialCohesion';
 import { GameAction, ActionResult } from './types';
 import { getTrustInAI } from '../socialCohesion';
@@ -808,12 +808,13 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       return true;
     },
     
-    execute: (state, random, agentId?: string): ActionResult => {
+    execute: (state, random, agentId?: string, context?): ActionResult => {
       const { attemptDetection } = require('../detection');
       const { detectedAIs, events } = attemptDetection(state, random);
       // Apply detections to state
       detectedAIs.forEach(detected => {
-        const ai = state.aiAgents.find((a: any) => a.id === detected.id);
+        // H-1 (Nov 25, 2025): Use indices for O(1) agent lookup
+        const ai = context?.indices?.agentMap.get(detected.id) ?? state.aiAgents.find((a: any) => a.id === detected.id);
         if (ai) {
           ai.detectedMisaligned = true;
         }
@@ -2925,7 +2926,8 @@ function autoInvestInEvaluation(state: GameState): void {
 
 export function executeGovernmentActions(
   state: GameState,
-  random: () => number
+  random: () => number,
+  context?: PhaseContext
 ): ActionResult {
   const allEvents: GameEvent[] = [];
   const allEffects: Record<string, number> = {};
@@ -2988,7 +2990,8 @@ export function executeGovernmentActions(
   for (let i = 0; i < totalActions; i++) {
     const selectedAction = selectGovernmentAction(state, random);
     if (selectedAction) {
-      const result = selectedAction.execute(state, random, undefined);
+      // H-1 (Nov 25, 2025): Pass context for O(1) indices access
+      const result = selectedAction.execute(state, random, undefined, context);
       if (result.success) {
         // State is now mutated directly by the action
         allEvents.push(...result.events);
