@@ -1027,6 +1027,24 @@
   - **Quality Gate 1:** PENDING (research-skeptic review needed)
   - **Priority:** HIGH (ARCH-4 gap closure depends on validation)
 
+- [ ] **MASK Benchmark + Emergent Misalignment Citations Verification** 🆕 **READY FOR ORCHESTRATOR (Nov 25, 2025)**
+  - **Commit:** 8a3899f (MASK benchmark and Emergent Misalignment findings added)
+  - **Status:** Research file created, ready for VALIDATION phase
+  - **Files Changed:** `research/ai_alignment_faking_strategic_deception_20251120.md`
+  - **Verification File:** `research/verification_8a3899f_20251125.md`
+  - **Citations to Verify:**
+    1. CAIS + Scale AI (2025) - MASK benchmark arXiv:2503.03750
+    2. Betley et al. (2025) - Emergent Misalignment arXiv:2502.17424 (ICML 2025 Oral)
+  - **New Parameters to Validate:**
+    - `honesty_under_pressure`: 20-60% lying rate (MASK benchmark)
+    - `emergent_misalignment_rate`: 20% (GPT-4o after narrow finetuning)
+  - **Verification Tasks:**
+    - Layer 1: Confirm papers exist, verify ICML 2025 Oral status
+    - Layer 2: Quote specific passages supporting 20-60% lying rate, 20% misalignment rate
+    - Layer 3: Validate applicability to simulation scenarios
+  - **Quality Gate 1:** PENDING (research-skeptic review needed)
+  - **Priority:** HIGH (alignment mechanics depend on validated honesty parameters)
+
 - [ ] **Infrastructure Degradation Parameters Verification** ⏳ **PENDING (Nov 5, 2025)**
   - **Commit:** 740a914 (Infrastructure degradation in extreme collapse scenarios)
   - **Status:** Bug fixed and validated (N=2 Monte Carlo), but parameters need research backing
