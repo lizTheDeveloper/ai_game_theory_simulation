@@ -209,8 +209,9 @@ export class CriticalJunctureDetector {
 
   /**
    * Get currently active junctures
+   * @param currentMonth - Current simulation month for accurate time remaining calculation
    */
-  getActiveJunctures(): Array<{
+  getActiveJunctures(currentMonth: number): Array<{
     id: string;
     type: JunctureType;
     name: string;
@@ -228,13 +229,12 @@ export class CriticalJunctureDetector {
     }> = [];
 
     for (const juncture of this.activeJunctures.values()) {
-      const currentMonth = juncture.detectedMonth; // Would need state to be accurate
       result.push({
         id: juncture.rule.id,
         type: juncture.rule.type,
         name: juncture.rule.name,
         description: juncture.rule.description,
-        monthsRemaining: juncture.expiresMonth - currentMonth,
+        monthsRemaining: Math.max(0, juncture.expiresMonth - currentMonth),
         actions: juncture.rule.actions,
       });
     }

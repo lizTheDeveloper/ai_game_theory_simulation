@@ -457,10 +457,18 @@ export class InfluenceCalculator {
 
   /**
    * Get history of a specific action
+   * Uses exact matching for actionType, or path segment matching for metricPath
+   * (e.g., "ai_policy" matches "government.ai_policy" but not "climate_action")
    */
   private getActionHistory(actionId: string): PlayerDecision[] {
     return this.gameLayerState.decisionHistory.filter(
-      d => d.data.actionType === actionId || d.data.metricPath?.includes(actionId)
+      d => d.data.actionType === actionId ||
+           // Use path segment matching: match if path ends with actionId or contains it as a segment
+           (d.data.metricPath && (
+             d.data.metricPath === actionId ||
+             d.data.metricPath.endsWith(`.${actionId}`) ||
+             d.data.metricPath.startsWith(`${actionId}.`)
+           ))
     );
   }
 }
