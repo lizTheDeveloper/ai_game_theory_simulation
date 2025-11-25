@@ -783,6 +783,21 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - ✅ **Research Quality:** C+ → B+ (50% peer-reviewed including ICML oral)
 - ⚠️ **Verification Needed:** Claims require source verification before simulation implementation
 
+**Nov 25: AMOC & Planetary Boundaries Layer 2 Verification Complete** (commit 13fc0fd)
+- ✅ **VERIFICATION COMPLETE:** Two-layer verification (citation + claim) for AMOC and planetary boundary research
+- 📊 **Results:**
+  - ✅ **AMOC 3±1 Sv weakening:** VERIFIED - Caesar et al. (2018), confirmed by van Westen (2024)
+  - ✅ **Nitrogen 190/62 Tg/year:** VERIFIED - Richardson et al. (2023), 3× boundary (exact values confirmed)
+  - ✅ **Planetary boundaries 7/9:** VERIFIED - Richardson (2023) + Findlay (2025)
+  - ⚠️ **MISATTRIBUTION CORRECTED:** AMOC 2025-2095 CI from Ditlevsen & Ditlevsen (2023), NOT van Westen (2024)
+- 🌊 **NEW FINDING:** Ocean acidification crossed planetary boundary in **2025** (not 2020)
+  - Source: Findlay et al. (2025). *Global Change Biology*, 31(10), e70238
+  - European Commission announced Oct 2, 2025
+  - Status: 6/9 → **7/9 boundaries transgressed**
+- ⚠️ **AMOC Timeline Caveat:** Central estimate 2057, methodology has received substantial criticism
+- 📖 **Verification File:** research/verification_1e37dcb_20251124.md (Layer 2 complete)
+- ✅ **Status:** Ready for parameter implementation (7/9 boundaries, corrected attributions)
+
 **Nov 25: MIRI International ASI Prevention Agreement Research** (commit abd17c4)
 - 🔬 **Research File Updated:** ai_governance_international_coordination_20251113.md (Section 9A.5 added)
 - 📖 **Source:** Scher et al. (2025) arXiv:2511.10783 - MIRI Technical Governance Team
@@ -878,7 +893,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - Coral reef tipping point crossed (1.2°C, Oct 2025)
   - AMOC collapse probability (Bellomo et al. Nature Feb 2025)
   - AI interpretability advances (Anthropic sparse autoencoders, Apollo Research)
-  - Planetary boundaries updates (Richardson et al., 6 of 9 transgressed)
+  - Planetary boundaries updates (Richardson et al. 2023: 6/9, now 7/9 as of 2025 per Findlay et al.)
 - 📝 **Key Finding:** 169 HIGH priority items in UPDATE_QUEUE are mostly historical meta-documentation (citation corrections, verification logs), not core research needing updates
 - ✅ **Outcome:** Research foundation is solid, autonomous research system working as designed
 - 📄 **Report:** research/AUTONOMOUS_RESEARCH_STATUS_20251121.md
@@ -956,7 +971,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Nov 15: Planetary Boundaries & Tipping Points 2025 Research Update** (commit d88ce24)
 - 📚 **New Research:** Comprehensive 2025 update from Rockström (2025) & BioScience 2025 State of Climate
-- 🚨 **Critical Updates:** 7/9 planetary boundaries transgressed (up from 6), ocean acidification crossed 2020
+- 🚨 **Critical Updates:** 7/9 planetary boundaries transgressed (up from 6), ocean acidification crossed **2025** (corrected Nov 25)
 - 🧊 **Tipping Points:** Ice sheets (Greenland + W. Antarctic) at record lows, likely already crossed
 - 🌳 **Amazon Transition:** Southeastern region now carbon source (no longer sink), dieback risk active
 - 🌡️ **Warming Acceleration:** 1.2°C current, 2.7°C trajectory by 2100, aerosol reduction + cloud feedbacks
@@ -1376,7 +1391,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Nov 11: Planetary Boundaries 2023 Framework Research Update** (commit a9c5a91)
 - 📚 **New Research:** Richardson et al. (2023) planetary boundaries framework documented
-- 📊 **Key Finding:** 6 of 9 boundaries transgressed (vs previous 7/9 - status clarification needed)
+- 📊 **Key Finding:** 6 of 9 boundaries transgressed as of 2023 (ocean acidification crossed in 2025 → now 7/9, see Nov 25 verification)
 - 🔬 **Updated Thresholds:** Quantitative values for all 9 boundaries from 2023 peer-reviewed update
 - 🆕 **New Metric:** HANPP (Human Appropriation of Net Primary Production) replaces BII for functional biosphere
 - ⏰ **Historical Insight:** Freshwater transgression occurred 1905-1929 (earlier than recognized)
