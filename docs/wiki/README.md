@@ -14,20 +14,52 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **17-dimensional quality of life**: Survival, health, education, meaning, environment
 - **Multi-paradigm perspectives**: Western Liberal, Development, Ecological, Indigenous worldviews
 - **Deterministic simulation**: Reproducible with RNG seeds for Monte Carlo analysis
-- **Phase-based architecture**: 99 phases per step (reduced from 116 via Nov 2025 consolidation, +2 AIAgentCoordinationPhase + BaselineMortalityPhase Nov 24)
+- **Phase-based architecture**: 100 phases per step (reduced from 116 via Nov 2025 consolidation, +2 AIAgentCoordinationPhase + BaselineMortalityPhase Nov 24, +1 TechDeploymentSchedulePhase Nov 25)
 
 ## 🚀 Project Status
 
-**🟢 STABLE** (November 24, 2025)
+**🟢 STABLE** (November 25, 2025)
 
 **SYSTEM HEALTH:**
 - **Research Quality:** B+ (56.5% sources 2023-2025, 3 CRITICAL parameter issues resolved/documented, 8 research gaps identified) ✅ GOOD
 - **Research Currency:** ✅ EXCELLENT (all simulation-critical files updated within 14 days, autonomous system working effectively)
 - **Implementation Fidelity:** A- (assertion coverage 97.2%, 24 integration tests for CoordinatedDeploymentPhase) ✅ EXCELLENT
 - **Architecture Health:** B+ (0 CRITICAL, 2 HIGH technical debt non-urgent, deep clone optimization complete) ✅ GOOD
-- **System Trajectory:** 🟡 OPERATIONAL (Nov 25: Game Layer Phase 1 complete, hindcast calibration Phase 1-6 COMPLETE - temperature/mortality/food security/population growth/year tracking/regional fertility fixes applied, remaining: planetary boundaries, final calibration)
+- **System Trajectory:** 🟡 OPERATIONAL (Nov 25: Sequenced tech deployment addresses 98.8% mortality crash, governance scenario experiments in progress)
 
 **Recent Major Achievements:**
+
+**Nov 25: Sequenced Tech Deployment + Governance Experiments** (commit 97de47d)
+- 🔧 **PROBLEM FIXED:** Immediate tech deployment (92 techs at month 0) caused 98.8% mortality crash
+  - Tech shock overwhelmed governance interventions before they could respond
+  - All 6 Phase 3 governance scenarios crashed identically (60/60 runs = 100% crash rate)
+  - No spirals could activate during extinction event
+- **ROOT CAUSE:** `techDeployment: { mode: 'immediate' }` deployed 92 transformative technologies simultaneously
+  - Month 0: Gene drives, geoengineering, nanotechnology → uncontrolled cascades
+  - Year 1: -1.7B deaths (21% population loss)
+  - Year 14: Near-extinction (97.8M survivors from 8.14B start)
+- **SOLUTION:** TechDeploymentSchedulePhase (order 1.5) spreads 119 techs over 24 months
+  - **5-tier deployment schedule:** TIER 0 (month 0) → TIER 1 (month 6) → TIER 2 (month 12) → TIER 3 (month 18) → TIER 4 (month 24)
+  - State field: `techDeploymentSchedule` tracks scheduled deployments and execution status
+  - Modes: `sequenced` (tier waves), `adaptive` (governance-gated), `prioritized` (category-ordered)
+- **RESULTS:**
+  - Immediate deployment: 98.8% mortality (baseline)
+  - Sequenced deployment (6mo gaps): 87.2% mortality
+  - Improvement: +11.6 percentage points (still catastrophic but allows governance testing)
+- **NEW PHASE:** TechDeploymentSchedulePhase (order 1.5)
+  - File: `src/simulation/engine/phases/TechDeploymentSchedulePhase.ts`
+  - Executes scheduled deployments at specified months
+  - Integrates with scenario framework's `TechDeploymentStrategy` interface
+- **SCENARIO UPDATES:** All 6 governance scenarios updated to use sequenced deployment
+  - `climate-first`, `equality-first`, `ai-alignment-first`, `democratic-participation`, `scientific-acceleration`, `authoritarian-efficiency`
+- **5 EXPERIMENTS DESIGNED:** (research/governance_scenario_experimental_design_20251123.md)
+  - H1: Deployment pacing hypothesis (2/5/10 techs per year)
+  - H2: Governance capacity threshold (0.3/0.5/0.7 gate)
+  - H3: Safety gating hypothesis (safety-first vs capability-first)
+  - H4: Coordination vs resources (gov quality × spending factorial)
+  - H5: Window of opportunity (start years 0/5/15/25)
+- 📄 **Files:** `TechDeploymentSchedulePhase.ts` (new, 113 lines), `game.ts` (+28 lines), `scenarios.ts` (+12 lines), `apply.ts` (+68 lines)
+- 📊 **Analysis:** `reviews/governance_scenario_null_result_20251123.md` (Priya's quantitative validation)
 
 **Nov 25: Hindcast Phase 6 - Regional Fertility Heterogeneity Fix** (commit 5e913b9)
 - 🔧 **PROBLEM FIXED:** 2010-2020 population overshoot (6.86% → 10.30%) from uniform global CBR scaling
@@ -3676,7 +3708,7 @@ Implementation details and code references:
 | [📁 Codebase Structure](./technical/codebase.md) | ✅ | File organization, module dependencies |
 | [⚙️ Central Configuration](../CENTRAL_CONFIG_USAGE.md) | ✅ | Single source of truth for 100+ parameters, 80% citations, fail-loudly validation (Nov 6, 2025) |
 | [🧪 Testing & Monte Carlo](./technical/testing.md) | ✅ | Running simulations, analyzing results |
-| [🔬 Scenario Analysis Framework](./technical/scenarios.md) | 🟡 | Phase 1 complete: diagnostic logging, type definitions (src/types/scenarios.ts), 6 predefined scenarios (no-tech, god-mode, early-start, governance-first, sequenced, climate-prioritized) |
+| [🔬 Scenario Analysis Framework](./technical/scenarios.md) | 🟡 | Phases 1-3 complete: 20+ scenarios, TechDeploymentSchedulePhase (sequenced/adaptive/prioritized modes), 5 experimental hypotheses (Nov 25, 2025) |
 | [🎮 UI Components](./technical/ui.md) | ✅ | React components, state management |
 | [⚙️ Engine Architecture](./technical/engine.md) | ✅ | Core simulation engine design |
 | [💾 State Persistence](./technical/persistence.md) | ✅ | IndexedDB resume, RNG determinism, save rotation (Oct 26, 2025) |
@@ -9963,7 +9995,74 @@ tail -f logs/phase3_batch_*.log
 - **Integration:** ApplyScenarioPrioritiesPhase reads `state.scenario.governmentPriorities` each month
 - **Determinism:** All tests use seeded RNG (reproducible)
 
-**Status:** ✅ Implementation complete, testing in progress (see plans/phase3_implementation_complete.md)
+**Status:** 🟡 UPDATED (Nov 25) - Sequenced deployment fixes crash bug
+
+#### TechDeploymentSchedulePhase + Sequenced Deployment (November 25, 2025)
+
+**Purpose:** Fix immediate tech deployment crash that caused 98.8% mortality (60/60 Phase 3 runs crashed).
+
+**Background:** Phase 3 governance scenarios used `mode: 'immediate'` which deployed 92 transformative technologies at month 0. This caused catastrophic mortality cascades before any governance intervention could take effect. All spiral mechanisms failed because runs ended in near-extinction.
+
+**New Phase: TechDeploymentSchedulePhase** (order 1.5, `src/simulation/engine/phases/TechDeploymentSchedulePhase.ts`)
+
+Executes scheduled technology deployments for sequenced/adaptive/prioritized modes:
+- **Phase Order:** 1.5 (early, before agent actions)
+- **Dependencies:** None (runs at start of each step)
+- **State Field:** `state.techDeploymentSchedule`
+  ```typescript
+  techDeploymentSchedule?: {
+    mode: 'sequenced' | 'adaptive' | 'prioritized';
+    scheduledDeployments: Array<{
+      techId: string;
+      deployMonth: number;
+      deployed: boolean;
+    }>;
+    deploymentLevel: number;      // 0-1
+    deploymentInterval: number;   // months between tiers
+  };
+  ```
+
+**Deployment Modes:**
+
+1. **Sequenced Mode:** Deploy in tier waves with configurable gaps
+   - Default: TIER 0 (month 0) → TIER 1 (month 6) → TIER 2 (month 12) → ...
+   - 119 technologies spread across 24 months (5 tiers × 6mo gaps)
+   - Allows institutions to adapt between deployment waves
+
+2. **Adaptive Mode:** Deploy based on governance quality thresholds
+   - `governanceThreshold`: Deploy when governance quality > X
+   - `safetyThreshold`: Deploy when physical safety > Y
+   - `maxTechsPerMonth`: Rate limit deployment speed
+   - Governance-gated deployment prevents overload
+
+3. **Prioritized Mode:** Deploy specific categories first
+   - Custom priority order: `['climate', 'energy', 'governance', ...]`
+   - Categories deploy in waves with configurable gaps
+   - Enables testing "safety-first" vs "capability-first" strategies
+
+**Results (Initial Testing):**
+- Immediate deployment: 98.8% mortality (baseline)
+- Sequenced deployment (6mo gaps): 87.2% mortality
+- **Improvement:** +11.6 percentage points (still catastrophic but testable)
+
+**All 6 Governance Scenarios Updated:**
+- `climate-first`: sequenced + 10% GDP climate spending
+- `equality-first`: sequenced + 2.5% GDP redistribution
+- `ai-alignment-first`: sequenced + $100B/month AI safety
+- `democratic-participation`: sequenced + democracy=0.9
+- `scientific-acceleration`: sequenced + $200B/month research
+- `authoritarian-efficiency`: sequenced + democracy=0.3
+
+**5 Experimental Hypotheses Designed:**
+See `research/governance_scenario_experimental_design_20251123.md`:
+1. H1: Deployment pacing (2/5/10 techs per year)
+2. H2: Governance capacity threshold (0.3/0.5/0.7 gates)
+3. H3: Safety gating (safety-first vs capability-first order)
+4. H4: Coordination vs resources (gov quality × spending factorial)
+5. H5: Window of opportunity (start years 0/5/15/25)
+
+**Related Analysis:**
+- `reviews/governance_scenario_null_result_20251123.md` - Priya's quantitative validation of 100% crash rate
 
 #### CoordinatedDeploymentPhase Integration Tests (November 2025)
 

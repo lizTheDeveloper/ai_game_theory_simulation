@@ -353,10 +353,51 @@ function scheduleSequencedDeployment(
   console.log(`    Tier order: ${tierOrder.join(' → ')}`);
   console.log(`    Gap between tiers: ${config.gapMonths} months`);
 
-  // TODO: Store deployment schedule in state for phase to execute
-  // For now, we'll just deploy all tech immediately (Phase 2.2 will implement scheduled deployment)
-  console.log(`    ⚠️  WARNING: Sequenced deployment not yet implemented - deploying immediately as fallback`);
-  deployAllTech(state, technologies, 1.0);
+  // Classify technologies into tiers based on minAICapability
+  // TIER 0 (<1.0), TIER 1 (1.0-2.0), TIER 2 (2.0-3.0), TIER 3 (3.0-4.0), TIER 4 (≥4.0)
+  const tierMap = new Map<number, string[]>();
+  for (const tier of tierOrder) {
+    tierMap.set(tier, []);
+  }
+
+  for (const tech of technologies) {
+    const minCap = tech.minAICapability || 0;
+    let tier: number;
+    if (minCap < 1.0) tier = 0;
+    else if (minCap < 2.0) tier = 1;
+    else if (minCap < 3.0) tier = 2;
+    else if (minCap < 4.0) tier = 3;
+    else tier = 4;
+
+    if (tierMap.has(tier)) {
+      tierMap.get(tier)!.push(tech.id);
+    }
+  }
+
+  // Create deployment schedule
+  const scheduledDeployments: Array<{ techId: string; deployMonth: number; deployed: boolean }> = [];
+
+  for (let i = 0; i < tierOrder.length; i++) {
+    const tier = tierOrder[i];
+    const techIds = tierMap.get(tier) || [];
+    const deployMonth = i * config.gapMonths;
+
+    for (const techId of techIds) {
+      scheduledDeployments.push({ techId, deployMonth, deployed: false });
+    }
+
+    console.log(`    TIER ${tier}: ${techIds.length} techs at month ${deployMonth}`);
+  }
+
+  // Store schedule in state
+  state.techDeploymentSchedule = {
+    mode: 'sequenced',
+    scheduledDeployments,
+    deploymentLevel: 1.0,
+    deploymentInterval: config.gapMonths,
+  };
+
+  console.log(`    ✅ Sequenced deployment schedule created: ${scheduledDeployments.length} techs over ${(tierOrder.length - 1) * config.gapMonths} months`);
 }
 
 /**

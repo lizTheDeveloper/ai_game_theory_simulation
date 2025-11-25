@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Systems Map - Superalignment to Utopia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0A0A0A;
+            color: #FFFFFF;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .map-header {
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .map-title {
+            font-size: 20px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #00F0FF;
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+        }
+
+        /* Layer Switcher */
+        .layer-switcher {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .layer-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-right: 10px;
+        }
+
+        .layer-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.6);
+            padding: 8px 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .layer-btn:hover {
+            border-color: #00F0FF;
+            color: #00F0FF;
+            background: rgba(0, 240, 255, 0.05);
+        }
+
+        .layer-btn.active {
+            background: rgba(0, 240, 255, 0.1);
+            border-color: #00F0FF;
+            color: #00F0FF;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+        }
+
+        /* Map Container */
+        .map-container {
+            flex: 1;
+            position: relative;
+            background: #050505;
+            overflow: hidden;
+        }
+
+        /* World Map SVG */
+        .world-map {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .map-svg {
+            width: 90%;
+            height: 80%;
+            max-width: 1200px;
+        }
+
+        /* Regions */
+        .region {
+            fill-opacity: 0.8;
+            stroke: rgba(255, 255, 255, 0.2);
+            stroke-width: 1;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .region:hover {
+            fill-opacity: 1;
+            stroke: #00F0FF;
+            stroke-width: 2;
+            filter: brightness(1.2);
+        }
+
+        /* Health Status Colors */
+        .health-stable { fill: #00FF88; }
+        .health-stressed { fill: #FFB000; }
+        .health-crisis { fill: #FF6B00; }
+        .health-collapse { fill: #FF0040; }
+
+        /* Crisis Indicators */
+        .crisis-indicator {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.2s ease;
+        }
+
+        .crisis-indicator:hover {
+            transform: scale(1.2);
+        }
+
+        /* Crisis Action Menu */
+        .crisis-menu {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.95);
+            border: 1px solid rgba(255, 0, 64, 0.3);
+            border-radius: 4px;
+            padding: 8px;
+            display: none;
+            z-index: 100;
+            min-width: 200px;
+            box-shadow: 0 5px 20px rgba(255, 0, 64, 0.2);
+        }
+
+        .crisis-menu.active {
+            display: block;
+        }
+
+        .crisis-menu-item {
+            padding: 6px 10px;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .crisis-menu-item:hover {
+            background: rgba(255, 0, 64, 0.1);
+            color: #00F0FF;
+        }
+
+        .crisis-pulse {
+            animation: pulseCrisis 1s infinite;
+        }
+
+        .crisis-pulse-fast {
+            animation: pulseCrisis 0.3s infinite;
+        }
+
+        @keyframes pulseCrisis {
+            0%, 100% {
+                transform: scale(1);
+                filter: drop-shadow(0 0 5px rgba(255, 0, 64, 0.5));
+            }
+            50% {
+                transform: scale(1.3);
+                filter: drop-shadow(0 0 20px rgba(255, 0, 64, 0.8));
+            }
+        }
+
+        /* AI Presence Overlay */
+        .ai-marker {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: #00F0FF;
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.6);
+            animation: aiGlow 2s infinite;
+        }
+
+        @keyframes aiGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 240, 255, 0.6); }
+            50% { box-shadow: 0 0 40px rgba(0, 240, 255, 1); }
+        }
+
+        /* Region Detail Panel */
+        .detail-panel {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            width: 300px;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 10px 40px rgba(0, 240, 255, 0.1);
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        .detail-panel.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .region-name {
+            font-size: 16px;
+            font-weight: 500;
+            color: #00F0FF;
+        }
+
+        .close-panel {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        .close-panel:hover {
+            color: #00F0FF;
+        }
+
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 12px;
+        }
+
+        .metric-label {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .metric-value {
+            color: #FFFFFF;
+            font-weight: 500;
+        }
+
+        .metric-bar {
+            width: 100px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .metric-fill {
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+
+        .fill-good { background: #00FF88; }
+        .fill-warning { background: #FFB000; }
+        .fill-danger { background: #FF0040; }
+
+        /* Timeline Scrubber - V4 Enhanced */
+        .timeline-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            z-index: 50;
+        }
+
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .timeline-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .timeline-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .timeline-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.6);
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 11px;
+        }
+
+        .timeline-btn:hover {
+            border-color: #00F0FF;
+            color: #00F0FF;
+        }
+
+        .timeline-track {
+            position: relative;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            padding: 5px;
+        }
+
+        /* Timeline Tick Marks - V4 Added */
+        .timeline-ticks {
+            position: absolute;
+            bottom: 5px;
+            left: 10px;
+            right: 10px;
+            height: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .timeline-tick {
+            width: 1px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            position: relative;
+        }
+
+        .timeline-tick.major {
+            height: 15px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .timeline-tick-label {
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 9px;
+            color: rgba(255, 255, 255, 0.3);
+            white-space: nowrap;
+        }
+
+        .timeline-progress {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 10px;
+            right: 10px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .timeline-marker {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: #00F0FF;
+            border: 2px solid #0A0A0A;
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: grab;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+        }
+
+        .timeline-marker:active {
+            cursor: grabbing;
+        }
+
+        .timeline-events {
+            position: absolute;
+            top: 8px;
+            left: 10px;
+            right: 10px;
+            height: 6px;
+            display: flex;
+            gap: 2px;
+        }
+
+        .event-marker {
+            flex: 1;
+            background: rgba(255, 176, 0, 0.3);
+            border-radius: 1px;
+        }
+
+        .event-marker.crisis {
+            background: rgba(255, 0, 64, 0.5);
+        }
+
+        .event-marker.breakthrough {
+            background: rgba(0, 255, 136, 0.5);
+        }
+
+        .month-display {
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: #00F0FF;
+        }
+
+        /* Legend */
+        .legend {
+            position: absolute;
+            bottom: 100px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            padding: 15px;
+        }
+
+        .legend-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 10px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 2px;
+        }
+
+        /* Relationship Flows - V3 Enhanced Animations */
+        .flow-arrow {
+            stroke: rgba(0, 240, 255, 0.4);
+            stroke-width: 2;
+            fill: none;
+            stroke-dasharray: 5, 5;
+            animation: flowAnimation 2s linear infinite;
+        }
+
+        @keyframes flowAnimation {
+            to { stroke-dashoffset: -10; }
+        }
+
+        .flow-arrow.migration {
+            stroke: rgba(255, 176, 0, 0.6);
+            filter: drop-shadow(0 0 5px rgba(255, 176, 0, 0.4));
+        }
+
+        .flow-arrow.trade {
+            stroke: rgba(0, 255, 136, 0.4);
+        }
+
+        .flow-arrow.cascade {
+            stroke: rgba(255, 0, 64, 0.5);
+            stroke-width: 3;
+            animation: cascadePulse 0.8s linear infinite, flowAnimation 0.5s linear infinite;
+            filter: drop-shadow(0 0 10px rgba(255, 0, 64, 0.6));
+        }
+
+        @keyframes cascadePulse {
+            0%, 100% {
+                stroke-opacity: 0.5;
+                stroke-width: 2;
+            }
+            50% {
+                stroke-opacity: 1;
+                stroke-width: 4;
+            }
+        }
+
+        /* Cascade Effect Circles */
+        .cascade-ripple {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: transparent;
+            border: 2px solid rgba(255, 0, 64, 0.8);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: rippleExpand 2s ease-out infinite;
+        }
+
+        @keyframes rippleExpand {
+            0% {
+                width: 20px;
+                height: 20px;
+                opacity: 1;
+                border-width: 2px;
+            }
+            100% {
+                width: 100px;
+                height: 100px;
+                opacity: 0;
+                border-width: 0.5px;
+                transform: translate(-40px, -40px);
+            }
+        }
+
+        /* Timeline Preview on Hover */
+        .region:hover::after {
+            content: attr(data-preview);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.95);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 10px;
+            white-space: nowrap;
+            z-index: 1000;
+            pointer-events: none;
+            animation: fadeIn 0.2s ease;
+        }
+
+        /* Layer Preview */
+        .layer-preview {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.95);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 4px;
+            padding: 10px;
+            display: none;
+            z-index: 50;
+            pointer-events: none;
+        }
+
+        .layer-btn:hover + .layer-preview {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="map-header">
+        <h1 class="map-title">Global Systems Map</h1>
+        <div class="layer-switcher">
+            <span class="layer-label">Layer:</span>
+            <button class="layer-btn active" data-layer="composite">Composite</button>
+            <button class="layer-btn" data-layer="climate">Climate</button>
+            <button class="layer-btn" data-layer="social">Social</button>
+            <button class="layer-btn" data-layer="ai">AI</button>
+            <button class="layer-btn" data-layer="economic">Economic</button>
+            <button class="layer-btn" data-layer="geopolitical">Geopolitical</button>
+        </div>
+    </div>
+
+    <!-- Map Container -->
+    <div class="map-container">
+        <div class="world-map">
+            <!-- Simplified World Map SVG -->
+            <svg class="map-svg" viewBox="0 0 1000 500">
+                <!-- North America -->
+                <path class="region health-stressed" d="M 150 150 L 250 120 L 300 180 L 200 220 Z"
+                      data-region="North America"
+                      data-preview="2030: -15% emissions | 2035: Grid collapse risk"/>
+
+                <!-- South America -->
+                <path class="region health-stable" d="M 250 280 L 280 260 L 300 350 L 260 380 L 230 340 Z"
+                      data-region="South America"
+                      data-preview="2030: Stable | 2035: Amazon tipping point"/>
+
+                <!-- Europe -->
+                <path class="region health-stable" d="M 450 140 L 520 130 L 540 180 L 480 190 Z"
+                      data-region="Europe"
+                      data-preview="2030: Green transition | 2035: Climate refugee influx"/>
+
+                <!-- Sub-Saharan Africa -->
+                <path class="region health-stressed" d="M 480 250 L 520 240 L 530 320 L 490 340 L 460 300 Z"
+                      data-region="Sub-Saharan Africa"
+                      data-preview="2030: Food crisis | 2035: Mass migration begins"/>
+
+                <!-- MENA -->
+                <path class="region health-crisis" d="M 540 200 L 600 190 L 620 240 L 560 250 Z"
+                      data-region="MENA"
+                      data-preview="2030: Water wars | 2035: Political collapse"/>
+
+                <!-- South Asia -->
+                <path class="region health-collapse" d="M 650 220 L 720 210 L 740 280 L 680 290 Z"
+                      data-region="South Asia"
+                      data-preview="2030: HEAT CRISIS | 2035: 100M climate refugees"/>
+
+                <!-- East Asia -->
+                <path class="region health-stressed" d="M 750 180 L 840 170 L 860 240 L 780 250 Z"
+                      data-region="East Asia"
+                      data-preview="2030: Tech leadership | 2035: Demographic crisis"/>
+
+                <!-- Southeast Asia -->
+                <path class="region health-crisis" d="M 760 290 L 820 280 L 840 340 L 780 350 Z"
+                      data-region="Southeast Asia"
+                      data-preview="2030: Sea level rise | 2035: Major cities underwater"/>
+
+                <!-- Central Asia -->
+                <path class="region health-stressed" d="M 620 160 L 680 150 L 700 190 L 640 200 Z" data-region="Central Asia"/>
+
+                <!-- Oceania -->
+                <path class="region health-stable" d="M 850 360 L 900 350 L 920 390 L 870 400 Z" data-region="Oceania"/>
+
+                <!-- Arctic (non-interactive) -->
+                <path class="region health-crisis" style="opacity: 0.3;" d="M 400 50 L 600 40 L 650 80 L 450 90 Z" data-region="Arctic"/>
+
+                <!-- Antarctica (non-interactive) -->
+                <path class="region health-stressed" style="opacity: 0.3;" d="M 400 450 L 600 440 L 650 470 L 450 480 Z" data-region="Antarctica"/>
+
+                <!-- Relationship Flows -->
+                <g class="relationship-flows">
+                    <!-- Migration: South Asia → Southeast Asia -->
+                    <path class="flow-arrow migration" d="M 700 260 Q 730 275 760 310">
+                        <title>Migration: 12M climate refugees/year</title>
+                    </path>
+
+                    <!-- Trade dependency: East Asia → North America -->
+                    <path class="flow-arrow trade" d="M 800 210 Q 500 100 200 180">
+                        <title>Trade: $2.4T/year technology exports</title>
+                    </path>
+
+                    <!-- Crisis cascade: MENA → Europe -->
+                    <path class="flow-arrow cascade" d="M 560 220 Q 520 180 490 160">
+                        <title>Crisis cascade: Water shortage → Political instability</title>
+                    </path>
+
+                    <!-- AI cooperation: US → EU -->
+                    <path class="flow-arrow" d="M 220 170 Q 350 140 460 155">
+                        <title>AI Research Collaboration</title>
+                    </path>
+                </g>
+            </svg>
+
+            <!-- Crisis Indicators with Cascade Ripples -->
+            <div class="crisis-indicator crisis-pulse-fast" style="left: 680px; top: 250px;" title="Water Crisis" data-cascade="true">💧</div>
+            <div class="cascade-ripple" style="left: 680px; top: 250px;"></div>
+            <div class="cascade-ripple" style="left: 680px; top: 250px; animation-delay: 0.7s;"></div>
+
+            <div class="crisis-indicator crisis-pulse-fast" style="left: 700px; top: 270px;" title="Heat Stress" data-cascade="true">🔥</div>
+            <div class="cascade-ripple" style="left: 700px; top: 270px;"></div>
+            <div class="cascade-ripple" style="left: 700px; top: 270px; animation-delay: 0.5s;"></div>
+
+            <div class="crisis-indicator crisis-pulse" style="left: 570px; top: 220px;" title="Political Instability">🏛️</div>
+            <div class="crisis-indicator crisis-pulse" style="left: 490px; top: 290px;" title="Food Insecurity">🌾</div>
+            <div class="crisis-indicator crisis-pulse" style="left: 790px; top: 310px;" title="Flooding">🌊</div>
+            <div class="crisis-indicator" style="left: 450px; top: 70px;" title="Ice Sheet Collapse Risk">⚠️</div>
+
+            <!-- Crisis Action Menus -->
+            <div class="crisis-menu" id="water-menu" style="left: 710px; top: 250px;">
+                <div class="crisis-menu-item">💬 Ask ARIA why this is happening</div>
+                <div class="crisis-menu-item">🔬 View relevant research (Desalination)</div>
+                <div class="crisis-menu-item">🏛️ Propose intervention (15 Political Capital)</div>
+                <div class="crisis-menu-item">📊 Compare to other regions</div>
+            </div>
+
+            <div class="crisis-menu" id="heat-menu" style="left: 730px; top: 270px;">
+                <div class="crisis-menu-item">💬 Ask ARIA about wet-bulb thresholds</div>
+                <div class="crisis-menu-item">🔬 View Climate Tech options</div>
+                <div class="crisis-menu-item">🚨 Emergency cooling centers (8 Political Capital)</div>
+                <div class="crisis-menu-item">📈 Project mortality curves</div>
+            </div>
+
+            <!-- AI Presence Markers -->
+            <div class="ai-marker" style="left: 200px; top: 180px;" title="US National AI"></div>
+            <div class="ai-marker" style="left: 800px; top: 210px;" title="China National AI"></div>
+            <div class="ai-marker" style="left: 500px; top: 160px;" title="EU AI Consortium"></div>
+            <div class="ai-marker" style="left: 690px; top: 250px;" title="India National AI"></div>
+        </div>
+
+        <!-- Region Detail Panel -->
+        <div class="detail-panel active">
+            <div class="panel-header">
+                <div class="region-name">South Asia</div>
+                <button class="close-panel">×</button>
+            </div>
+
+            <div class="metric-row">
+                <span class="metric-label">Quality of Life</span>
+                <div class="metric-bar">
+                    <div class="metric-fill fill-danger" style="width: 35%;"></div>
+                </div>
+                <span class="metric-value">0.35</span>
+            </div>
+
+            <div class="metric-row">
+                <span class="metric-label">Planetary Boundaries</span>
+                <div class="metric-bar">
+                    <div class="metric-fill fill-danger" style="width: 70%;"></div>
+                </div>
+                <span class="metric-value">6/9 ⚠️</span>
+            </div>
+
+            <div class="metric-row">
+                <span class="metric-label">AI Capabilities</span>
+                <div class="metric-bar">
+                    <div class="metric-fill fill-warning" style="width: 55%;"></div>
+                </div>
+                <span class="metric-value">55</span>
+            </div>
+
+            <div class="metric-row">
+                <span class="metric-label">Social Stability</span>
+                <div class="metric-bar">
+                    <div class="metric-fill fill-danger" style="width: 25%;"></div>
+                </div>
+                <span class="metric-value">0.25</span>
+            </div>
+
+            <div class="metric-row">
+                <span class="metric-label">Population</span>
+                <span class="metric-value">2.1B</span>
+            </div>
+
+            <div class="metric-row" style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
+                <span class="metric-label">Active Crises:</span>
+            </div>
+            <div style="display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap;">
+                <span style="background: rgba(255,0,64,0.1); padding: 4px 8px; border-radius: 3px; font-size: 11px; border: 1px solid rgba(255,0,64,0.3);">💧 Water Shortage</span>
+                <span style="background: rgba(255,107,0,0.1); padding: 4px 8px; border-radius: 3px; font-size: 11px; border: 1px solid rgba(255,107,0,0.3);">🔥 Heat Stress</span>
+                <span style="background: rgba(255,176,0,0.1); padding: 4px 8px; border-radius: 3px; font-size: 11px; border: 1px solid rgba(255,176,0,0.3);">🌾 Food Crisis</span>
+            </div>
+        </div>
+
+        <!-- Legend -->
+        <div class="legend">
+            <div class="legend-title">Region Health</div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #00FF88;"></div>
+                <span>Stable</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #FFB000;"></div>
+                <span>Stressed</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #FF6B00;"></div>
+                <span>Crisis</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #FF0040;"></div>
+                <span>Collapse</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Timeline Scrubber -->
+    <div class="timeline-container">
+        <div class="timeline-header">
+            <span class="timeline-label">Timeline</span>
+            <div class="timeline-controls">
+                <button class="timeline-btn">◀</button>
+                <button class="timeline-btn">▶</button>
+                <button class="timeline-btn">Compare</button>
+                <button class="timeline-btn">1x</button>
+            </div>
+        </div>
+        <div class="timeline-track">
+            <div class="timeline-events">
+                <!-- Event markers -->
+                <div class="event-marker"></div>
+                <div class="event-marker"></div>
+                <div class="event-marker crisis"></div>
+                <div class="event-marker"></div>
+                <div class="event-marker breakthrough"></div>
+                <div class="event-marker"></div>
+                <div class="event-marker crisis"></div>
+                <div class="event-marker"></div>
+                <div class="event-marker"></div>
+                <div class="event-marker breakthrough"></div>
+                <div class="event-marker crisis"></div>
+                <div class="event-marker"></div>
+            </div>
+            <div class="timeline-progress"></div>
+            <div class="timeline-marker" style="left: 45%;"></div>
+            <div class="month-display">Month 54 / 120</div>
+
+            <!-- V4 Timeline Tick Marks -->
+            <div class="timeline-ticks">
+                <div class="timeline-tick major">
+                    <span class="timeline-tick-label">0</span>
+                </div>
+                <div class="timeline-tick"></div>
+                <div class="timeline-tick"></div>
+                <div class="timeline-tick major">
+                    <span class="timeline-tick-label">30</span>
+                </div>
+                <div class="timeline-tick"></div>
+                <div class="timeline-tick"></div>
+                <div class="timeline-tick major">
+                    <span class="timeline-tick-label">60</span>
+                </div>
+                <div class="timeline-tick"></div>
+                <div class="timeline-tick"></div>
+                <div class="timeline-tick major">
+                    <span class="timeline-tick-label">90</span>
+                </div>
+                <div class="timeline-tick"></div>
+                <div class="timeline-tick"></div>
+                <div class="timeline-tick major">
+                    <span class="timeline-tick-label">120</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // V4 Enhanced Interactivity with Cross-Panel Coordination
+
+        // Crisis indicator click handler with dynamic menu positioning
+        document.querySelectorAll('.crisis-indicator').forEach(indicator => {
+            indicator.addEventListener('click', function(e) {
+                e.stopPropagation();
+
+                // Close all other menus
+                document.querySelectorAll('.crisis-menu').forEach(menu => {
+                    menu.classList.remove('active');
+                });
+
+                // Dynamic menu positioning to avoid edge overflow
+                const rect = this.getBoundingClientRect();
+                const waterMenu = document.getElementById('water-menu');
+                const heatMenu = document.getElementById('heat-menu');
+
+                let menu = null;
+                if (this.textContent === '💧') {
+                    menu = waterMenu;
+                } else if (this.textContent === '🔥') {
+                    menu = heatMenu;
+                }
+
+                if (menu) {
+                    // Position menu dynamically
+                    const menuWidth = 200;
+                    const menuHeight = 150;
+
+                    let left = rect.left + 30;
+                    let top = rect.top;
+
+                    // Check right edge overflow
+                    if (left + menuWidth > window.innerWidth - 20) {
+                        left = rect.left - menuWidth - 10;
+                    }
+
+                    // Check bottom edge overflow
+                    if (top + menuHeight > window.innerHeight - 100) {
+                        top = rect.top - menuHeight - 10;
+                    }
+
+                    menu.style.left = left + 'px';
+                    menu.style.top = top + 'px';
+                    menu.classList.add('active');
+
+                    // Trigger cascade visualization
+                    if (this.dataset.cascade === 'true') {
+                        triggerCascadeEffect(this);
+                    }
+
+                    // Send cross-panel notification
+                    window.parent.postMessage({
+                        action: 'crisisClicked',
+                        crisis: this.title,
+                        region: 'South Asia'
+                    }, '*');
+                }
+            });
+        });
+
+        // Cascade effect function
+        function triggerCascadeEffect(source) {
+            // Create temporary cascade line
+            const cascadePath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            cascadePath.classList.add('flow-arrow', 'cascade');
+            cascadePath.setAttribute('d', 'M 680 260 Q 600 280 490 310');
+            cascadePath.style.animation = 'cascadePulse 0.5s ease-out, flowAnimation 0.3s linear infinite';
+
+            const svg = document.querySelector('.map-svg g');
+            svg.appendChild(cascadePath);
+
+            // Remove after animation
+            setTimeout(() => {
+                cascadePath.remove();
+            }, 2000);
+
+            // Flash affected regions
+            setTimeout(() => {
+                const affectedRegions = document.querySelectorAll('.region.health-stressed, .region.health-crisis');
+                affectedRegions.forEach(region => {
+                    region.style.animation = 'regionFlash 0.5s ease';
+                });
+            }, 500);
+        }
+
+        // Close menus when clicking elsewhere
+        document.addEventListener('click', function() {
+            document.querySelectorAll('.crisis-menu').forEach(menu => {
+                menu.classList.remove('active');
+            });
+        });
+
+        // Region click handler with preview
+        document.querySelectorAll('.region').forEach(region => {
+            region.addEventListener('click', function() {
+                const panel = document.querySelector('.detail-panel');
+                const regionName = this.getAttribute('data-region');
+
+                if (regionName && regionName !== 'Arctic' && regionName !== 'Antarctica') {
+                    document.querySelector('.region-name').textContent = regionName;
+                    panel.classList.add('active');
+
+                    // Update metrics based on region health
+                    updateRegionMetrics(this.classList.contains('health-collapse') ? 'collapse' :
+                                       this.classList.contains('health-crisis') ? 'crisis' :
+                                       this.classList.contains('health-stressed') ? 'stressed' : 'stable');
+                }
+            });
+        });
+
+        // Update region metrics dynamically
+        function updateRegionMetrics(healthStatus) {
+            const metrics = {
+                collapse: { qol: 35, boundaries: 70, ai: 55, social: 25 },
+                crisis: { qol: 45, boundaries: 60, ai: 60, social: 40 },
+                stressed: { qol: 55, boundaries: 50, ai: 65, social: 55 },
+                stable: { qol: 70, boundaries: 30, ai: 70, social: 70 }
+            };
+
+            const current = metrics[healthStatus];
+
+            // Animate metric bars
+            document.querySelectorAll('.metric-fill').forEach((fill, index) => {
+                const widths = [current.qol, current.boundaries, current.ai, current.social];
+                if (widths[index] !== undefined) {
+                    fill.style.width = widths[index] + '%';
+                    fill.style.transition = 'width 0.5s ease';
+                }
+            });
+        }
+
+        // Close panel
+        document.querySelector('.close-panel').addEventListener('click', function() {
+            document.querySelector('.detail-panel').classList.remove('active');
+        });
+
+        // Layer switcher with visual feedback
+        const layerDescriptions = {
+            composite: "All systems combined - Overall health status",
+            climate: "Temperature anomalies, precipitation, extreme weather",
+            social: "Trust levels, institutional legitimacy, inequality",
+            ai: "Capability levels, deployment density, research hubs",
+            economic: "GDP per capita, unemployment, automation impact",
+            geopolitical: "Alliances, conflicts, cooperation scores"
+        };
+
+        document.querySelectorAll('.layer-btn').forEach(btn => {
+            btn.addEventListener('mouseenter', function() {
+                const layer = this.dataset.layer;
+                this.title = layerDescriptions[layer] || "";
+            });
+
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.layer-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                const layer = this.dataset.layer;
+
+                // Change map appearance based on layer
+                const regions = document.querySelectorAll('.region');
+                regions.forEach(region => {
+                    region.style.transition = 'fill-opacity 0.3s ease';
+                    if (layer === 'climate') {
+                        // Show climate stress levels
+                        region.style.fillOpacity = region.classList.contains('health-crisis') ? '1' : '0.4';
+                    } else if (layer === 'social') {
+                        // Show social cohesion levels
+                        region.style.fillOpacity = region.classList.contains('health-stable') ? '1' : '0.4';
+                    } else {
+                        region.style.fillOpacity = '0.8';
+                    }
+                });
+            });
+        });
+
+        // Timeline scrubber with event triggers
+        const marker = document.querySelector('.timeline-marker');
+        let isDragging = false;
+
+        marker.addEventListener('mousedown', () => isDragging = true);
+        document.addEventListener('mouseup', () => isDragging = false);
+        document.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                const track = document.querySelector('.timeline-track');
+                const rect = track.getBoundingClientRect();
+                let x = e.clientX - rect.left;
+                x = Math.max(10, Math.min(x, rect.width - 10));
+                marker.style.left = x + 'px';
+
+                const month = Math.round((x - 10) / (rect.width - 20) * 120);
+                document.querySelector('.month-display').textContent = `Month ${month} / 120`;
+
+                // Trigger timeline events
+                if (month > 60 && month < 65) {
+                    // Show crisis cascade
+                    document.querySelectorAll('.crisis-indicator[data-cascade="true"]').forEach(indicator => {
+                        indicator.classList.add('crisis-pulse-fast');
+                    });
+                } else {
+                    document.querySelectorAll('.crisis-indicator').forEach(indicator => {
+                        indicator.classList.remove('crisis-pulse-fast');
+                        indicator.classList.add('crisis-pulse');
+                    });
+                }
+            }
+        });
+
+        // Crisis menu item click handlers
+        document.querySelectorAll('.crisis-menu-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const action = this.textContent;
+
+                if (action.includes('Ask ARIA')) {
+                    // Send to ARIA panel
+                    window.parent.postMessage({
+                        action: 'ariaAnalyze',
+                        crisis: 'water',
+                        panel: 'aria-chat'
+                    }, '*');
+
+                    // Visual feedback
+                    this.style.background = 'rgba(0, 240, 255, 0.1)';
+                    setTimeout(() => {
+                        this.style.background = '';
+                    }, 300);
+
+                } else if (action.includes('research')) {
+                    // Highlight relevant tech
+                    window.parent.postMessage({
+                        action: 'highlightCrisisTech',
+                        crisis: 'water',
+                        panel: 'research-tree'
+                    }, '*');
+
+                    this.style.background = 'rgba(0, 255, 136, 0.1)';
+                    setTimeout(() => {
+                        this.style.background = '';
+                    }, 300);
+                }
+            });
+        });
+
+        // Listen for cross-panel messages
+        window.addEventListener('message', function(e) {
+            const data = e.data;
+
+            if (data.action === 'highlightRegion') {
+                // Find and highlight the region
+                document.querySelectorAll('.region').forEach(region => {
+                    if (region.getAttribute('data-region') === data.region) {
+                        region.classList.add('crisis-relevant');
+                        region.style.animation = 'regionFlash 1s ease 3';
+
+                        // Scroll region into view
+                        region.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+                        // Show detail panel
+                        const panel = document.querySelector('.detail-panel');
+                        document.querySelector('.region-name').textContent = data.region;
+                        panel.classList.add('active');
+                    }
+                });
+            } else if (data.action === 'focusRegion') {
+                // Center map on region with zoom effect (simulated)
+                document.querySelectorAll('.region').forEach(region => {
+                    if (region.getAttribute('data-region') === data.region) {
+                        region.style.transform = 'scale(1.1)';
+                        region.style.transition = 'transform 0.5s ease';
+
+                        setTimeout(() => {
+                            region.style.transform = '';
+                        }, 2000);
+                    }
+                });
+            } else if (data.action === 'highlightLayer') {
+                // Switch to specific layer
+                document.querySelectorAll('.layer-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.dataset.layer === data.layer) {
+                        btn.classList.add('active');
+                        btn.click();
+                    }
+                });
+            }
+        });
+
+        // Add CSS for animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes regionFlash {
+                0%, 100% { fill-opacity: 0.8; }
+                50% { fill-opacity: 1; filter: brightness(1.5); }
+            }
+
+            .region.crisis-relevant {
+                animation: regionFlash 2s ease-in-out infinite !important;
+                stroke: #FF6B00 !important;
+                stroke-width: 3 !important;
+            }
+
+            .layer-btn.switching {
+                animation: layerSwitch 0.3s ease;
+            }
+
+            @keyframes layerSwitch {
+                0% { transform: scale(1); }
+                50% { transform: scale(0.95); }
+                100% { transform: scale(1); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
