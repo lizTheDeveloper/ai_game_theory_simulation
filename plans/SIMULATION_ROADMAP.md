@@ -99,6 +99,26 @@
      - **Status:** READY FOR VALIDATION
      - **Next Steps:** Sylvia two-layer verification → Update grade if failures → Correct/remove unsupported claims
 
+   - **Tech Ineffectiveness Investigation - Proposed Magnitudes** - LOW (Added Nov 25, 2025)
+     - **Context:** Investigation documented why 119 techs fail to prevent 99% mortality; proposes magnitude increases
+     - **Verification File:** research/verification_a1f873d_20251125.md
+     - **Commit:** a1f873d (tech ineffectiveness investigation report)
+     - **Key Finding:** Tech ineffectiveness is NOT a bug - accurately models deployment constraints (IPCC AR6, IEA 2024)
+     - **Claims Requiring Two-Layer Verification (BEFORE implementing proposed changes):**
+       - **MEDIUM:** IPCC AR6 phased deployment timescales (planning 24mo, pilot 36mo, etc.)
+       - **MEDIUM:** IEA 2024 deployment constraints (which specific report?)
+       - **LOW:** Manhattan Project/Apollo wartime mobilization precedents (50-75% timeline reduction)
+       - **LOW:** Montreal Protocol "~60% slowdown" claim
+     - **Proposed Parameter Changes (NOT YET IMPLEMENTED - require validation first):**
+       - DAC carbonRemoval: 0.01 → 0.1 (10x increase)
+       - Ocean alkalinity oceanPHBonus: 0.001 → 0.01 (10x increase)
+       - Fusion cleanEnergyPercentage: 0.2 → 0.5 (2.5x increase)
+       - Accelerated phase transitions for governed deployment mode
+     - **Risk Assessment:** LOW - No parameters changed yet, investigation only
+     - **Priority:** LOW - Validation needed ONLY when magnitude changes are proposed for implementation
+     - **Status:** READY FOR FUTURE VALIDATION (not blocking)
+     - **Next Steps:** When implementing magnitude changes → Create full research file with 2+ sources per tech → Sylvia validation
+
    - **AMOC & Planetary Boundaries 2024-2025 Updates** - ✅ VERIFIED (Nov 26, 2025)
      - **Context:** Two research files documenting latest findings on Earth system tipping points
      - **Research Files:**
