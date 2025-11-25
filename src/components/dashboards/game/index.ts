@@ -24,3 +24,104 @@ export type { EventStreamProps, Event } from './EventStream';
 
 export { ActionBar } from './ActionBar';
 export type { ActionBarProps } from './ActionBar';
+
+// Research Tree (V4 Production-Ready)
+export {
+  ResearchTree,
+  TechCard,
+  CategoryFilter,
+  ActiveLoop,
+  DEFAULT_CATEGORIES,
+  GRID_CATEGORIES,
+  mapToGridCategory,
+} from './ResearchTree';
+export type {
+  ResearchTreeProps,
+  TechDisplayData,
+  ResearchStats,
+  CrossPanelEvent,
+  TechTier,
+  TechCardProps,
+  TechStatus,
+  CrisisRelevance,
+  CategoryFilterProps,
+  CategoryConfig,
+  TechCategory,
+  ActiveLoopProps,
+  LoopNode,
+  DelayedTech,
+  LoopNodeType,
+} from './ResearchTree';
+
+// ARIA Chat (V4 Production-Ready)
+export {
+  ARIAChat,
+  ChatMessage,
+  SuggestionPanel,
+  CitationTooltip,
+  TypingIndicator,
+  createUserMessage,
+  createARIAMessage,
+  DEFAULT_SUGGESTIONS,
+  StandaloneCitationTooltip,
+} from './ARIAChat';
+export type {
+  ARIAChatProps,
+  ChatMessageType,
+  ChatMessageProps,
+  MessageSender,
+  Citation,
+  CitationRef,
+  InterventionOption,
+  ContextAwareness,
+  ActionButton,
+  Suggestion,
+  SuggestionContext,
+  ARIACrossPanelEvent,
+  PauseState,
+  SuggestionPanelProps,
+  CitationTooltipProps,
+} from './ARIAChat';
+
+// Global Map (V4 Production-Ready)
+export {
+  GlobalMap,
+  LayerSwitcher,
+  RegionOverlay,
+  CrisisIndicator,
+  CascadeFlow,
+  CascadeFlowGroup,
+  TimelineScrubber,
+  RegionDetailPanel,
+  DEFAULT_LAYERS,
+  HEALTH_STATUS_COLORS,
+  CRISIS_SEVERITY_COLORS,
+  CRISIS_TYPE_ICONS,
+  FLOW_TYPE_STYLES,
+} from './GlobalMap';
+export type {
+  GlobalMapProps,
+  LayerType,
+  LayerConfig,
+  RegionId,
+  RegionHealthStatus,
+  RegionMetrics,
+  RegionData,
+  CrisisType,
+  CrisisSeverity,
+  CrisisData,
+  CrisisMenuAction,
+  FlowType,
+  FlowData,
+  TimelineEventType,
+  TimelineEvent,
+  TickMark,
+  AIMarker,
+  MapCrossPanelEvent,
+  LayerSwitcherProps,
+  RegionOverlayProps,
+  CrisisIndicatorProps,
+  CascadeFlowProps,
+  TimelineScrubberProps,
+  RegionDetailPanelProps,
+} from './GlobalMap';

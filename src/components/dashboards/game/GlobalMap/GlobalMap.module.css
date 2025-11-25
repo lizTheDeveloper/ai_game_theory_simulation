@@ -1,0 +1,871 @@
+/**
+ * Global Map Component Styles
+ *
+ * Far-future Elysium aesthetic: black background, white text, #00F0FF accent
+ * Matches existing game dashboard patterns (ResearchTree, ARIAChat)
+ */
+
+/* ============================================================================
+   Container & Layout
+   ============================================================================ */
+
+.globalMap {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #0A0A0A;
+  color: #FFFFFF;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 300;
+  overflow: hidden;
+}
+
+/* ============================================================================
+   Header
+   ============================================================================ */
+
+.mapHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 100;
+}
+
+.mapTitle {
+  font-size: 20px;
+  font-weight: 300;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #00F0FF;
+  text-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+  margin: 0;
+}
+
+/* ============================================================================
+   Layer Switcher
+   ============================================================================ */
+
+.layerSwitcher {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.layerLabel {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.4);
+  margin-right: 10px;
+}
+
+.layerButtons {
+  display: flex;
+  gap: 8px;
+}
+
+.layerBtn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.6);
+  padding: 8px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-family: inherit;
+}
+
+.layerBtn:hover {
+  border-color: #00F0FF;
+  color: #00F0FF;
+  background: rgba(0, 240, 255, 0.05);
+}
+
+.layerBtnActive {
+  background: rgba(0, 240, 255, 0.1);
+  border-color: #00F0FF;
+  color: #00F0FF;
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+}
+
+/* ============================================================================
+   Map Container
+   ============================================================================ */
+
+.mapContainer {
+  flex: 1;
+  position: relative;
+  background: #050505;
+  overflow: hidden;
+}
+
+.worldMap {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mapSvg {
+  width: 90%;
+  height: 80%;
+  max-width: 1200px;
+}
+
+/* ============================================================================
+   Region Overlays
+   ============================================================================ */
+
+.region {
+  fill-opacity: 0.8;
+  stroke: rgba(255, 255, 255, 0.2);
+  stroke-width: 1;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.region:hover {
+  fill-opacity: 1;
+  stroke: #00F0FF;
+  stroke-width: 2;
+  filter: brightness(1.2);
+}
+
+.region:focus {
+  outline: none;
+  stroke: #00F0FF;
+  stroke-width: 2;
+}
+
+.regionSelected {
+  stroke: #00F0FF;
+  stroke-width: 2;
+  filter: brightness(1.1);
+}
+
+.regionCrisisHighlight {
+  animation: regionFlash 2s ease-in-out infinite;
+  stroke: #FF6B00;
+  stroke-width: 3;
+}
+
+.regionNonInteractive {
+  opacity: 0.3;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Health Status Colors */
+.healthStable {
+  fill: #00FF88;
+}
+
+.healthStressed {
+  fill: #FFB000;
+}
+
+.healthCrisis {
+  fill: #FF6B00;
+}
+
+.healthCollapse {
+  fill: #FF0040;
+}
+
+@keyframes regionFlash {
+  0%, 100% {
+    fill-opacity: 0.8;
+  }
+  50% {
+    fill-opacity: 1;
+    filter: brightness(1.5);
+  }
+}
+
+/* ============================================================================
+   Crisis Indicators
+   ============================================================================ */
+
+.crisisIndicator {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s ease;
+  transform: translate(-50%, -50%);
+}
+
+.crisisIndicator:hover {
+  transform: translate(-50%, -50%) scale(1.2);
+}
+
+.crisisIndicator:focus {
+  outline: none;
+  transform: translate(-50%, -50%) scale(1.2);
+}
+
+/* Pulse Animations */
+.crisisPulse {
+  animation: pulseCrisis 1.5s infinite;
+}
+
+.crisisPulseMedium {
+  animation: pulseCrisis 1s infinite;
+}
+
+.crisisPulseFast {
+  animation: pulseCrisis 0.5s infinite;
+}
+
+@keyframes pulseCrisis {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    filter: drop-shadow(0 0 5px var(--severity-color, rgba(255, 0, 64, 0.5)));
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.3);
+    filter: drop-shadow(0 0 20px var(--severity-color, rgba(255, 0, 64, 0.8)));
+  }
+}
+
+/* Cascade Ripple Effects */
+.cascadeRipple {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: transparent;
+  border: 2px solid var(--severity-color, rgba(255, 0, 64, 0.8));
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  animation: rippleExpand 2s ease-out infinite;
+}
+
+@keyframes rippleExpand {
+  0% {
+    width: 20px;
+    height: 20px;
+    opacity: 1;
+    border-width: 2px;
+  }
+  100% {
+    width: 100px;
+    height: 100px;
+    opacity: 0;
+    border-width: 0.5px;
+  }
+}
+
+/* ============================================================================
+   Crisis Menu
+   ============================================================================ */
+
+.crisisMenu {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.95);
+  border: 1px solid rgba(255, 0, 64, 0.3);
+  border-radius: 4px;
+  padding: 8px;
+  z-index: 100;
+  min-width: 220px;
+  box-shadow: 0 5px 20px rgba(255, 0, 64, 0.2);
+  animation: menuSlideIn 0.2s ease;
+}
+
+@keyframes menuSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.crisisMenuHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  margin-bottom: 4px;
+}
+
+.crisisMenuIcon {
+  font-size: 16px;
+}
+
+.crisisMenuTitle {
+  flex: 1;
+  font-size: 12px;
+  font-weight: 500;
+  color: #FFFFFF;
+}
+
+.crisisMenuSeverity {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.crisisMenuDivider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 4px 0;
+}
+
+.crisisMenuItem {
+  padding: 8px 10px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.crisisMenuItem:hover {
+  background: rgba(255, 0, 64, 0.1);
+  color: #00F0FF;
+}
+
+.crisisMenuItemIcon {
+  font-size: 14px;
+}
+
+.crisisMenuItemLabel {
+  flex: 1;
+}
+
+/* ============================================================================
+   Flow Arrows
+   ============================================================================ */
+
+.relationshipFlows {
+  pointer-events: none;
+}
+
+.flowGroup {
+  pointer-events: none;
+}
+
+.flowArrow {
+  stroke-linecap: round;
+  fill: none;
+}
+
+.flowAnimating {
+  animation: flowAnimation var(--animation-duration, 2s) linear infinite;
+}
+
+@keyframes flowAnimation {
+  to {
+    stroke-dashoffset: -10;
+  }
+}
+
+.flowMigration {
+  stroke: rgba(255, 176, 0, 0.6);
+  filter: drop-shadow(0 0 5px rgba(255, 176, 0, 0.4));
+}
+
+.flowTrade {
+  stroke: rgba(0, 255, 136, 0.4);
+}
+
+.flowCascade {
+  stroke: rgba(255, 0, 64, 0.5);
+}
+
+.flowCascadePulse {
+  animation:
+    cascadePulse 0.8s linear infinite,
+    flowAnimation var(--animation-duration, 0.5s) linear infinite;
+  filter: drop-shadow(0 0 10px rgba(255, 0, 64, 0.6));
+}
+
+@keyframes cascadePulse {
+  0%, 100% {
+    stroke-opacity: 0.5;
+    stroke-width: 2;
+  }
+  50% {
+    stroke-opacity: 1;
+    stroke-width: 4;
+  }
+}
+
+.flowAI {
+  stroke: rgba(0, 240, 255, 0.4);
+}
+
+.flowGlow {
+  stroke: rgba(255, 0, 64, 0.2);
+  filter: blur(4px);
+  animation: flowAnimation var(--animation-duration, 2s) linear infinite;
+}
+
+/* ============================================================================
+   AI Markers
+   ============================================================================ */
+
+.aiMarker {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: #00F0FF;
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.6);
+  animation: aiGlow 2s infinite;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+@keyframes aiGlow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(0, 240, 255, calc(0.4 + var(--capability-level, 0.5) * 0.4));
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(0, 240, 255, calc(0.6 + var(--capability-level, 0.5) * 0.4));
+  }
+}
+
+/* ============================================================================
+   Detail Panel
+   ============================================================================ */
+
+.detailPanel {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  width: 300px;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 10px 40px rgba(0, 240, 255, 0.1);
+  display: none;
+  z-index: 50;
+}
+
+.detailPanelActive {
+  display: block;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.panelHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.regionName {
+  font-size: 16px;
+  font-weight: 500;
+  color: #00F0FF;
+}
+
+.closePanel {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  font-size: 18px;
+  transition: color 0.3s ease;
+  padding: 4px 8px;
+  font-family: inherit;
+}
+
+.closePanel:hover {
+  color: #00F0FF;
+}
+
+/* Metric Rows */
+.metricRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 12px;
+}
+
+.metricRowDivider {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.metricLabel {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.metricValue {
+  color: #FFFFFF;
+  font-weight: 500;
+}
+
+.metricBar {
+  width: 100px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.metricFill {
+  height: 100%;
+  transition: width 0.5s ease;
+}
+
+.fillGood {
+  background: #00FF88;
+}
+
+.fillWarning {
+  background: #FFB000;
+}
+
+.fillDanger {
+  background: #FF0040;
+}
+
+.fillAI {
+  background: #00F0FF;
+}
+
+/* Crisis Badges */
+.crisisBadges {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.crisisBadge {
+  padding: 4px 8px;
+  border-radius: 3px;
+  font-size: 11px;
+  border: 1px solid;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: none;
+  font-family: inherit;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.crisisBadge:hover {
+  filter: brightness(1.2);
+  transform: scale(1.05);
+}
+
+/* ============================================================================
+   Legend
+   ============================================================================ */
+
+.legend {
+  position: absolute;
+  bottom: 100px;
+  left: 20px;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  padding: 15px;
+  z-index: 40;
+}
+
+.legendTitle {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 10px;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.legendColor {
+  width: 16px;
+  height: 16px;
+  border-radius: 2px;
+}
+
+/* ============================================================================
+   Timeline Scrubber
+   ============================================================================ */
+
+.timelineContainer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  z-index: 50;
+}
+
+.timelineHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.timelineLabel {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.timelineControls {
+  display: flex;
+  gap: 10px;
+}
+
+.timelineBtn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.6);
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 11px;
+  font-family: inherit;
+}
+
+.timelineBtn:hover {
+  border-color: #00F0FF;
+  color: #00F0FF;
+}
+
+/* Timeline Track */
+.timelineTrack {
+  position: relative;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+/* Event Markers */
+.timelineEvents {
+  position: absolute;
+  top: 8px;
+  left: 10px;
+  right: 10px;
+  height: 6px;
+  display: flex;
+  gap: 2px;
+}
+
+.eventMarker {
+  position: absolute;
+  width: 4px;
+  height: 6px;
+  border-radius: 1px;
+  transform: translateX(-50%);
+}
+
+.eventMarkerNormal {
+  background: rgba(255, 176, 0, 0.3);
+}
+
+.eventMarkerCrisis {
+  background: rgba(255, 0, 64, 0.5);
+}
+
+.eventMarkerBreakthrough {
+  background: rgba(0, 255, 136, 0.5);
+}
+
+/* Progress Line */
+.timelineProgress {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 10px;
+  right: 10px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.timelineProgressFill {
+  height: 100%;
+  background: rgba(0, 240, 255, 0.3);
+  transition: width 0.1s ease;
+}
+
+/* Draggable Marker */
+.timelineMarker {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: #00F0FF;
+  border: 2px solid #0A0A0A;
+  border-radius: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  cursor: grab;
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+  transition: box-shadow 0.2s ease;
+  z-index: 10;
+}
+
+.timelineMarker:hover {
+  box-shadow: 0 0 30px rgba(0, 240, 255, 0.7);
+}
+
+.timelineMarkerDragging {
+  cursor: grabbing;
+  box-shadow: 0 0 40px rgba(0, 240, 255, 0.9);
+}
+
+/* Month Display */
+.monthDisplay {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  color: #00F0FF;
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+}
+
+/* Tick Marks */
+.timelineTicks {
+  position: absolute;
+  bottom: 25px;
+  left: 10px;
+  right: 10px;
+  height: 15px;
+}
+
+.timelineTick {
+  position: absolute;
+  width: 1px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateX(-50%);
+}
+
+.timelineTickMajor {
+  height: 15px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.timelineTickLabel {
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.3);
+  white-space: nowrap;
+}
+
+/* ============================================================================
+   Responsive Adjustments
+   ============================================================================ */
+
+@media (max-width: 768px) {
+  .mapHeader {
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+  }
+
+  .layerSwitcher {
+    flex-wrap: wrap;
+  }
+
+  .layerBtn {
+    padding: 6px 10px;
+    font-size: 10px;
+  }
+
+  .detailPanel {
+    width: calc(100% - 40px);
+    right: 20px;
+    left: 20px;
+  }
+
+  .legend {
+    display: none;
+  }
+
+  .timelineControls {
+    gap: 6px;
+  }
+
+  .timelineBtn {
+    padding: 4px 8px;
+    font-size: 10px;
+  }
+}
+
+/* ============================================================================
+   Accessibility - Reduced Motion
+   ============================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .crisisPulse,
+  .crisisPulseMedium,
+  .crisisPulseFast,
+  .cascadeRipple,
+  .flowAnimating,
+  .flowCascadePulse,
+  .aiMarker,
+  .regionCrisisHighlight {
+    animation: none;
+  }
+
+  .timelineMarker,
+  .metricFill {
+    transition: none;
+  }
+}
