@@ -195,8 +195,9 @@ export class InternationalMigrationPhase implements SimulationPhase {
       },
     });
 
-    // Track cumulative migration
-    flows.cumulativeMigration2010_2020 += Math.abs(totalNetMigration);
+    // Track cumulative migration (preserve previous value from state)
+    flows.cumulativeMigration2010_2020 =
+      (state.migrationFlows?.cumulativeMigration2010_2020 ?? 0) + Math.abs(totalNetMigration);
 
     console.log(`  📊 Net Migration: ${totalNetMigration.toFixed(3)}M (${(totalNetMigration / 1000).toFixed(6)}B)`);
   }
