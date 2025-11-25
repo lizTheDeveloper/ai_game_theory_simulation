@@ -30,6 +30,7 @@
 import { SimulationEngine } from '../src/simulation/engine';
 import { createDefaultInitialState } from '../src/simulation/initialization';
 import { GameState } from '../src/types/game';
+import { calculateQualityOfLife } from '../src/simulation/qualityOfLife';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -99,34 +100,32 @@ interface RunSummary {
 // ============================================================================
 
 function captureSnapshot(state: GameState): StateSnapshot {
-  // Trust in AI (average across agents)
-  const deployedAgents = state.aiAgents.filter(a => a.lifecycle === 'deployed');
-  const avgTrust = deployedAgents.length > 0
-    ? deployedAgents.reduce((sum, a) => sum + (a.publicTrust || 0), 0) / deployedAgents.length
-    : 0;
+  // Trust in AI - from society object (not individual AI agents)
+  const avgTrust = state.society?.trustInAI || 0;
 
   // Governance quality
   const gov = state.government.governanceQuality;
   const governanceScore = (gov.decisionQuality + gov.institutionalCapacity) / 2;
 
-  // AI capability
+  // AI capability - from deployed agents
+  const deployedAgents = state.aiAgents.filter(a => a.lifecycleState === 'deployed_closed' || a.lifecycleState === 'deployed_open');
   const avgCapability = deployedAgents.length > 0
     ? deployedAgents.reduce((sum, a) => {
-        const cap = a.capabilities;
-        const total = (cap.physical + cap.digital + cap.cognitive + cap.social + cap.economic + cap.research) / 6;
+        const cap = a.capabilityProfile;
+        // Research is nested, use a reasonable approximation
+        const researchAvg = cap.research ? (
+          (cap.research.biotech.drugDiscovery + cap.research.biotech.geneEditing + cap.research.biotech.syntheticBiology + cap.research.biotech.neuroscience +
+           cap.research.materials.nanotechnology + cap.research.materials.quantumComputing + cap.research.materials.energySystems +
+           cap.research.climate.modeling + cap.research.climate.intervention + cap.research.climate.mitigation +
+           cap.research.computerScience.algorithms + cap.research.computerScience.security + cap.research.computerScience.architectures) / 13
+        ) : 0;
+        const total = (cap.physical + cap.digital + cap.cognitive + cap.social + cap.economic + researchAvg + cap.selfImprovement) / 7;
         return sum + total;
       }, 0) / deployedAgents.length
     : 0;
 
-  // QoL (average across tiers)
-  const qolSys = state.qualityOfLifeSystems;
-  const avgQoL = (
-    qolSys.tier1_survival +
-    qolSys.tier2_security +
-    qolSys.tier3_community +
-    qolSys.tier4_meaning +
-    qolSys.tier5_environmental
-  ) / 5;
+  // QoL - use the proper aggregation function
+  const avgQoL = calculateQualityOfLife(state.qualityOfLifeSystems);
 
   // Spiral activation
   const spirals = state.upwardSpirals;
