@@ -29,6 +29,18 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 25: Scenario Setup Design - Phase 0 COMPLETE** (commit 7a95b98)
+- 🎮 **DESIGN:** Scenario Setup interface specification (300+ lines)
+  - **5-screen conversational flow:** Introduction → Role → Scenario Select → Belief Calibration → Confirmation
+  - **3 research scenarios:** Consensus, Favorable, Challenging (pre-validated, no parameter tweaking)
+  - **7 belief calibration questions:** Diagnostic only (captured for research validation, not affecting simulation)
+  - **Custom Research mode:** Gated behind academic credentials, requires Monte Carlo validation
+- **Research Integrity:** Respects Sylvia's constraints - no arbitrary parameter tweaking
+- **Design:** Far-future observatory aesthetic (black #000000, cyan #00F0FF)
+- **Mockup:** `plans/game-design/mockups/scenario-setup.html` (interactive HTML)
+- 📄 **Spec:** `plans/game-design/SCENARIO_SETUP_DESIGN.md`
+- ✅ **Phase 0 Status:** COMPLETE (all 5 interfaces: Dashboard, Research Tree, ARIA Chat, Global Map, Scenario Setup)
+
 **Nov 25: H-1 Index Migration Infrastructure Complete** (commit 41c7dca)
 - ⚡ **Performance:** Completed index-based lookup migration for AI agent searches
 - **Conversions:** 2 `.find()` calls converted to O(1) `agentMap` index lookups
