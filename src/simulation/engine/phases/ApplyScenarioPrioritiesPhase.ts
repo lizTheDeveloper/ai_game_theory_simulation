@@ -125,7 +125,45 @@ function validateScenarioOverrides(
   });
 
   // === RESEARCH INVESTMENT VALIDATION ===
-  if (priorities.researchInvestment !== undefined) {
+  // Support both fixed amount and GDP rate
+  if (priorities.researchInvestmentRate !== undefined) {
+    const rate = priorities.researchInvestmentRate;
+
+    // Probability check (fail if outside [0, 1])
+    assertProbability(rate, {
+      location: 'validateScenarioOverrides',
+      valueName: 'researchInvestmentRate',
+      month: state.currentMonth
+    });
+
+    // Physical impossibility: Max 50% of annual GDP
+    if (rate > SCENARIO_VALIDATION.researchInvestment.maxFractionOfAnnualGDP) {
+      const gdpInBillions = gdp * 1000;
+      const monthlyValue = (gdpInBillions * rate) / 12;
+      throw new Error(
+        `❌ SCENARIO OVERRIDE PHYSICALLY IMPOSSIBLE: researchInvestmentRate\n` +
+        `   Rate: ${(rate * 100).toFixed(1)}% of annual GDP\n` +
+        `   Maximum: ${(SCENARIO_VALIDATION.researchInvestment.maxFractionOfAnnualGDP * 100).toFixed(1)}% of annual GDP\n` +
+        `   Equivalent monthly spending: $${monthlyValue.toFixed(1)}B\n` +
+        `   GDP: $${gdp.toFixed(1)}T/year\n` +
+        `   Month: ${state.currentMonth}\n` +
+        `\n` +
+        `   This exceeds physically plausible research spending.\n` +
+        `   Historical context:\n` +
+        `   - US R&D: ~3% GDP\n` +
+        `   - Manhattan Project: ~0.4% GDP\n` +
+        `\n` +
+        `   Reduce scenario researchInvestmentRate to ≤${(SCENARIO_VALIDATION.researchInvestment.maxFractionOfAnnualGDP * 100).toFixed(1)}%.`
+      );
+    }
+
+    // Unrealistic warning: >10% GDP/year
+    if (rate > SCENARIO_VALIDATION.researchInvestment.warnThreshold) {
+      warnings.push(
+        `⚠️  Research investment: ${(rate * 100).toFixed(1)}% GDP/year - EXTREMELY HIGH (historical: 1-3% GDP)`
+      );
+    }
+  } else if (priorities.researchInvestment !== undefined) {
     const value = priorities.researchInvestment;
 
     // Finite check (fail if NaN/Infinity)
@@ -157,7 +195,8 @@ function validateScenarioOverrides(
         `   - US R&D: ~3% GDP (~$750B/year = $62.5B/month)\n` +
         `   - Manhattan Project: ~0.4% GDP (~$2B in 1945 = ~$30B today)\n` +
         `\n` +
-        `   Reduce scenario researchInvestment to ≤${maxResearchBudget.toFixed(1)}B/month.`
+        `   Reduce scenario researchInvestment to ≤${maxResearchBudget.toFixed(1)}B/month\n` +
+        `   OR use researchInvestmentRate for GDP-adaptive spending (RECOMMENDED).`
       );
     }
 
@@ -244,7 +283,47 @@ function validateScenarioOverrides(
   }
 
   // === AI SAFETY BUDGET VALIDATION ===
-  if (priorities.aiSafetyBudget !== undefined) {
+  // Support both fixed amount and GDP rate
+  if (priorities.aiSafetyBudgetRate !== undefined) {
+    const rate = priorities.aiSafetyBudgetRate;
+
+    // Probability check (fail if outside [0, 1])
+    assertProbability(rate, {
+      location: 'validateScenarioOverrides',
+      valueName: 'aiSafetyBudgetRate',
+      month: state.currentMonth
+    });
+
+    // Physical impossibility: Max 10% of annual GDP (generous upper bound)
+    const maxRate = 0.10;
+    if (rate > maxRate) {
+      const gdpInBillions = gdp * 1000;
+      const monthlyValue = (gdpInBillions * rate) / 12;
+      throw new Error(
+        `❌ SCENARIO OVERRIDE PHYSICALLY IMPOSSIBLE: aiSafetyBudgetRate\n` +
+        `   Rate: ${(rate * 100).toFixed(1)}% of annual GDP\n` +
+        `   Maximum: ${(maxRate * 100).toFixed(1)}% of annual GDP\n` +
+        `   Equivalent monthly spending: $${monthlyValue.toFixed(1)}B\n` +
+        `   GDP: $${gdp.toFixed(1)}T/year\n` +
+        `   Month: ${state.currentMonth}\n` +
+        `\n` +
+        `   This exceeds any plausible AI safety investment.\n` +
+        `   For context:\n` +
+        `   - Total AI industry revenue 2024: ~$200B/year (~0.2% global GDP)\n` +
+        `   - Manhattan Project: ~0.4% GDP\n` +
+        `\n` +
+        `   Reduce scenario aiSafetyBudgetRate to ≤${(maxRate * 100).toFixed(1)}%.`
+      );
+    }
+
+    // Unrealistic warning: >1% GDP/year
+    const warnRate = 0.01;
+    if (rate > warnRate) {
+      warnings.push(
+        `⚠️  AI safety budget: ${(rate * 100).toFixed(1)}% GDP/year - UNPRECEDENTED (no historical precedent)`
+      );
+    }
+  } else if (priorities.aiSafetyBudget !== undefined) {
     const value = priorities.aiSafetyBudget;
 
     // Finite check (fail if NaN/Infinity)
@@ -272,7 +351,8 @@ function validateScenarioOverrides(
         `   - Total AI industry revenue 2024: ~$200B/year\n` +
         `   - Manhattan Project (inflation-adjusted): ~$30B total\n` +
         `\n` +
-        `   Reduce scenario aiSafetyBudget to ≤${SCENARIO_VALIDATION.aiSafetyBudget.maxAbsolute}B/month.`
+        `   Reduce scenario aiSafetyBudget to ≤${SCENARIO_VALIDATION.aiSafetyBudget.maxAbsolute}B/month\n` +
+        `   OR use aiSafetyBudgetRate for GDP-adaptive spending (RECOMMENDED).`
       );
     }
 
@@ -340,9 +420,30 @@ export class ApplyScenarioPrioritiesPhase implements SimulationPhase {
     // democracyLevel → government.governanceQuality.* (all fields)
     // governmentType → government.governmentType
 
-    if (priorities.researchInvestment !== undefined) {
-      // NOTE: Validation already performed by validateScenarioOverrides()
-      const value = priorities.researchInvestment;
+    // === RESEARCH INVESTMENT ===
+    // Support both fixed ($B/month) and GDP-proportional (% of annual GDP) spending
+    // GDP-proportional prevents crashes during economic collapse
+    if (priorities.researchInvestmentRate !== undefined || priorities.researchInvestment !== undefined) {
+      const gdp = assertFinite(getGDPProxy(state), {
+        location: 'ApplyScenarioPrioritiesPhase',
+        valueName: 'gdp',
+        month: state.currentMonth
+      });
+      const gdpInBillions = gdp * 1000; // Convert trillions to billions
+
+      let value: number;
+      let isAdaptive = false;
+
+      // Prefer rate-based (adaptive) over fixed amount
+      if (priorities.researchInvestmentRate !== undefined) {
+        // NOTE: Validation already performed by validateScenarioOverrides()
+        const rate = priorities.researchInvestmentRate;
+        value = (gdpInBillions * rate) / 12; // Annual GDP × rate → monthly spending
+        isAdaptive = true;
+      } else {
+        // NOTE: Validation already performed by validateScenarioOverrides()
+        value = priorities.researchInvestment!;
+      }
 
       // Map to government research budget (billions/month)
       // This field is used by government agent to allocate research across domains
@@ -350,7 +451,13 @@ export class ApplyScenarioPrioritiesPhase implements SimulationPhase {
       state.government.researchInvestments.totalBudget = value;
       state.government.researchInvestments.budgetLimit = value; // Also update limit to allow spending
 
-      overridesApplied.push(`Research: $${oldBudget.toFixed(1)}B → $${value.toFixed(1)}B/month`);
+      if (isAdaptive) {
+        overridesApplied.push(
+          `Research: $${oldBudget.toFixed(1)}B → $${value.toFixed(1)}B/month (${(priorities.researchInvestmentRate! * 100).toFixed(2)}% GDP, adaptive)`
+        );
+      } else {
+        overridesApplied.push(`Research: $${oldBudget.toFixed(1)}B → $${value.toFixed(1)}B/month (fixed)`);
+      }
     }
 
     if (priorities.climateSpending !== undefined) {
@@ -475,9 +582,30 @@ export class ApplyScenarioPrioritiesPhase implements SimulationPhase {
       );
     }
 
-    if (priorities.aiSafetyBudget !== undefined) {
-      // NOTE: Validation already performed by validateScenarioOverrides()
-      const value = priorities.aiSafetyBudget;
+    // === AI SAFETY BUDGET ===
+    // Support both fixed ($B/month) and GDP-proportional (% of annual GDP) spending
+    // GDP-proportional prevents crashes during economic collapse
+    if (priorities.aiSafetyBudgetRate !== undefined || priorities.aiSafetyBudget !== undefined) {
+      const gdp = assertFinite(getGDPProxy(state), {
+        location: 'ApplyScenarioPrioritiesPhase',
+        valueName: 'gdp',
+        month: state.currentMonth
+      });
+      const gdpInBillions = gdp * 1000; // Convert trillions to billions
+
+      let value: number;
+      let isAdaptive = false;
+
+      // Prefer rate-based (adaptive) over fixed amount
+      if (priorities.aiSafetyBudgetRate !== undefined) {
+        // NOTE: Validation already performed by validateScenarioOverrides()
+        const rate = priorities.aiSafetyBudgetRate;
+        value = (gdpInBillions * rate) / 12; // Annual GDP × rate → monthly spending
+        isAdaptive = true;
+      } else {
+        // NOTE: Validation already performed by validateScenarioOverrides()
+        value = priorities.aiSafetyBudget!;
+      }
 
       // Map to government alignment research investment
       // This field is [0,10] investment level, not absolute dollars
@@ -485,7 +613,13 @@ export class ApplyScenarioPrioritiesPhase implements SimulationPhase {
       const oldLevel = state.government.alignmentResearchInvestment;
       state.government.alignmentResearchInvestment = value; // Direct mapping (billions ≈ investment level)
 
-      overridesApplied.push(`AI Safety: level ${oldLevel.toFixed(1)} → ${value.toFixed(1)} ($${value.toFixed(1)}B/month equiv)`);
+      if (isAdaptive) {
+        overridesApplied.push(
+          `AI Safety: level ${oldLevel.toFixed(1)} → ${value.toFixed(1)} ($${value.toFixed(1)}B/month equiv, ${(priorities.aiSafetyBudgetRate! * 100).toFixed(2)}% GDP, adaptive)`
+        );
+      } else {
+        overridesApplied.push(`AI Safety: level ${oldLevel.toFixed(1)} → ${value.toFixed(1)} ($${value.toFixed(1)}B/month equiv, fixed)`);
+      }
     }
 
     if (priorities.democracyLevel !== undefined) {
