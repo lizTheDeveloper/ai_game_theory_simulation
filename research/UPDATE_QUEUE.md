@@ -1,6 +1,6 @@
 # Research Update Queue
-**Generated:** 11/25/2025, 12:30:03 PM
-**Files Scanned:** 555
+**Generated:** 11/25/2025, 1:30:03 PM
+**Files Scanned:** 556
 
 ---
 
@@ -12,7 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 177 (31.9%)
+**Count:** 177 (31.8%)
 
 ### `CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
 - **Oldest source:** 2009 (16 years old)
@@ -934,7 +934,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 354 (63.8%)
+**Count:** 355 (63.8%)
 
 All sources <3 years old. No action required.
 
@@ -944,11 +944,11 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 555 |
+| Total files | 556 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 177 (31.9%) |
+| HIGH | 177 (31.8%) |
 | MEDIUM | 24 (4.3%) |
-| LOW | 354 (63.8%) |
+| LOW | 355 (63.8%) |
 | Average age | 7.1 years |
 | Oldest source | 1955 (70 years ago) |
 
@@ -956,14 +956,14 @@ All sources <3 years old. No action required.
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 354 | 63.8% |
+| Current (<3yr) | 355 | 63.8% |
 | Warning (3-5yr) | 24 | 4.3% |
-| Critical (>5yr) | 177 | 31.9% |
+| Critical (>5yr) | 177 | 31.8% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-- **Current:** 31.9% critical (>5yr)
+- **Current:** 31.8% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
