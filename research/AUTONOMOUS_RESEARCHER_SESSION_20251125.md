@@ -144,3 +144,49 @@ Reviewed `research/UPDATE_QUEUE.md`:
 ---
 
 **Afternoon Session End:** ~16:50 UTC
+
+---
+
+## Evening Session (18:30 UTC)
+
+**Objective:** Continue research monitoring and updates
+
+**Finding:** Added new research on AI governance international coordination.
+
+### Paper Added
+
+**Citation:** Scher, A., Abecassis, D., Barnett, P., & Abeyta, B. (2025). "An International Agreement to Prevent the Premature Creation of Artificial Superintelligence." Machine Intelligence Research Institute. arXiv:2511.10783v1.
+
+**Added to:** `research/ai_governance_international_coordination_20251113.md`
+
+**Key Contributions:**
+1. **FLOP-based training restrictions:** Proposed 10^24 FLOP limit with chip tracking
+2. **Quantitative risk estimates from experts:**
+   - 10% baseline extinction risk threshold
+   - 20% catastrophic probability (Bengio)
+   - 10-25% civilization-scale failure (Amodei)
+   - 38% of researchers indicate ≥10% extinction risk
+3. **Coordination timeline:** 6-12 month defection window requiring global enforcement
+4. **Nuclear safety comparison:** AI risk tolerance orders of magnitude higher than nuclear standards
+
+**Simulation Implications:**
+- Provides quantitative anchor points for AI risk parameters
+- Expert consensus: 10-38% catastrophic outcome probability range
+- Racing dynamics model should incorporate 6-12 month defection timeline
+- Supports need for `coordinationQuality` as critical simulation variable
+
+### Files Modified
+
+1. `research/ai_governance_international_coordination_20251113.md`
+   - Added Section 9A.5: MIRI International ASI Prevention Agreement
+   - Added citation #13 to References
+   - Updated frontmatter (last_verified: 2025-11-25, primary_sources: 17)
+
+### Session Statistics
+
+- **Files reviewed:** 8
+- **Files updated:** 1
+- **New citations added:** 1
+- **Research quality:** Medium-High (arXiv preprint, but grounded in verifiable expert survey data)
+
+**Evening Session End:** ~19:00 UTC
