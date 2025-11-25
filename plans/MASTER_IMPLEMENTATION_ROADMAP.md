@@ -1,7 +1,7 @@
 # Master Implementation Roadmap
 ## AI Alignment Game Theory Simulation - Project Hub
 
-**Date:** November 26, 2025 (Night Session - Phase 3 Governance Blockers Resolved)
+**Date:** November 26, 2025 (Architect Gardening Session)
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
@@ -1132,16 +1132,6 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
   - Module boundary rules enforced (Sylvia-approved)
   - Type checking passes
   - Commit: a984b511c
-
-**Phase 2 Completion (Nov 26, 2025):**
-- [x] Create scenario-setup mockup and design ✅ (Nov 25 late session)
-- [x] Convert research-tree.html → React ✅ (Active Loop, crisis badges, drag-drop all implemented)
-- [x] Convert aria-chat.html → React ✅ (Context awareness, citations, suggestions all implemented)
-- [x] Convert global-map.html → React ✅ (Regions, layers, timeline, cascades all implemented)
-- [x] Convert scenario-setup.html → React ✅ (Nov 26, 541 lines, 5 screens)
-- [x] Implement cross-panel coordination via React Context ✅
-- [x] Wire components to GameStateSnapshot ✅ (stateMappers.ts + SimulationObserver fix)
-- [ ] **Sylvia Checkpoint:** Review UI for research integrity
 
 **Key Documents:**
 - **Design:** `plans/game-design/GAME_DESIGN_DOCUMENT.md` (v2.0 - research-aligned revision)
@@ -2399,6 +2389,19 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
 **Overall Project Status: 🟢 EXCELLENT** (Nov 25, 2025 - System Stable, Architecture B+, Roadmap Clean)
 
 **Nov 25, 2025 - End-of-Session Roadmap Gardening (Architect):**
+
+**Nov 26, 2025 - Roadmap Gardening (Architect):**
+- ✅ **Duplicate Removal:** Eliminated duplicate "Sylvia Checkpoint" entry (lines 1136-1145)
+  - Single canonical entry remains at line 552 in Game Development Phase 2 section
+- ✅ **Cross-Reference Validation:** Git history reviewed (Nov 24-26 commits)
+  - Roadmap accurately reflects implementation state
+  - Game Layer Phase 2 COMPLETE status verified
+  - Phase 3 Governance Blockers RESOLVED status verified
+- ✅ **Plan Archival Review:** 14 active planning documents confirmed as future work
+  - No stale completed items found requiring archival
+  - plans/completed/ contains 345+ archived documents (Nov 25 archival session)
+- ✅ **Roadmap Coherence:** MAINTAINED - Clean, scannable, accurate
+
 - ✅ **Roadmap Cleanup:** 43 stale planning documents archived to `plans/completed/` with timestamps
   - Removed: COORDINATION*, ORCHESTRATION*, SESSION_SUMMARY*, ROADMAP_DEEP_AUDIT*, daily_review*, CRITICAL2*, CRITICAL_ARCHITECTURE*, HIGH-3*, HANDOFF*, LLM_INFERENCE*, DASHBOARD_AUDIT*, POTENTIALLY_COMPLETE*, ROADMAP_UPDATE*, TASK_scenario*, ai_coordinated*, alignment_faking*, arch4_*, assertion_*, climate_*, coordinated_deployment*, defensive_fallback*, fix_novel_entities*, high4_*, integration_test*, irreversibility_*, novel_entities_*, performance_optimization*, scenario_analysis_*, simulation_maintainer_*, and MASTER backup
   - Archived: 345 completed plans now in `plans/completed/` (+ 43 from this session)
