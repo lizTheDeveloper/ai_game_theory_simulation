@@ -4348,6 +4348,220 @@ const newQualityOfLife = Math.max(0, Math.min(1,
 
 **Summary:** The State Validation Framework transforms the simulation from "hope it works" to "prove it works" by failing loudly at the source of invalid values with full debugging context. Built on research-validated domain bounds and comprehensive assertion utilities, this framework ensures that bugs like the October 2025 NaN corruption can never hide for months again.
 
+## 🔬 Four-Layer Validation Framework
+
+**Status:** 🟢 OPERATIONAL (Nov 25, 2025)
+**Purpose:** Comprehensive quality pipeline for all features before merge
+**Philosophy:** Multiple specialized perspectives catching different failure modes
+
+### Overview
+
+The Four-Layer Validation Framework is a comprehensive quality assurance system discovered through cross-agent analysis (Nov 19, 2025). All agents were performing variance control at different layers, creating complementary validation perspectives. This framework ensures **ALL features must pass all 4 layers before merge**.
+
+**Key Insight:** No single agent can validate complex systems alone. Each layer catches failure modes invisible to other layers, creating a robust multi-perspective validation pipeline.
+
+### The Four Layers
+
+#### Layer 1: Code Integrity (Roy - simulation-maintainer)
+
+**Focus:** Implementation correctness and defensive coding patterns
+
+**Validation Checks:**
+- NaN detection via assertion utilities
+- No silent fallbacks (`?? fallback` or `|| 0` patterns)
+- Fail-loudly patterns for invalid state
+- Proper RNG usage (deterministic, not `Math.random()`)
+- Type safety (strict TypeScript compliance)
+- Division-by-zero protection
+- State mutation patterns correct
+
+**Tools:**
+- Assertion utilities (`src/simulation/utils/assertions.ts`)
+- TypeScript compiler (`npx tsc --noEmit`)
+- Static analysis scripts
+
+**Quality Gate:** No CRITICAL code integrity issues. All calculations must use assertions, no silent error hiding.
+
+**Cross-references:**
+- State Validation Framework (this doc, previous section)
+- Assertion utilities documentation
+- `CLAUDE.md` "NaN and Invalid Value Handling" section
+
+---
+
+#### Layer 2: Research Integrity (Cynthia + Sylvia - dual-agent review)
+
+**Focus:** Source validity and parameter justification
+
+**Validation Checks:**
+- Citation verification (peer-reviewed sources, 2024-2025 preferred)
+- Dual-agent review (Cynthia proposes, Sylvia critiques)
+- Contradictory evidence search
+- Parameter justification (data-backed, not "feels right")
+- Mechanism description (how it works, not just effects)
+- No fabricated citations (LLM hallucinations)
+- Research currency (automated weekly audit via `research-age-audit.yml`)
+
+**Tools:**
+- Zotero library (single source of truth for papers)
+- `scripts/auditResearchAge.ts` (citation age detection)
+- Research validation templates (`research/` directory)
+- Research skeptic critique process
+
+**Quality Gate:** 2+ peer-reviewed sources per mechanic. Parameters justified with empirical data. Contradictory evidence addressed.
+
+**Cross-references:**
+- Research validation audit: `/reviews/research-validation-audit_20251106.md`
+- Research pipeline: `docs/RESEARCH_PIPELINE.md`
+- Zotero workflow: `docs/RESEARCH_PIPELINE_QUICKSTART.md`
+
+---
+
+#### Layer 3: Statistical Validation (Priya - quantitative-validator)
+
+**Focus:** Quantitative rigor and Monte Carlo analysis
+
+**Validation Checks:**
+- Determinism verification (CV < 0.01% across runs with same seed)
+- Effectiveness metrics ((initial - final) / initial for interventions)
+- Distribution analysis (S-curves, log-normal, power-law fingerprints)
+- Zero-effectiveness detection (interventions with no impact)
+- Coefficient of variation analysis
+- Statistical significance of outcomes
+- God mode analysis (optimal interventions produce expected results)
+
+**Tools:**
+- Monte Carlo simulation (`scripts/monteCarloSimulation.ts`)
+- Determinism verification (`scripts/verifyDeterminism.ts`)
+- Statistical analysis scripts (CV, effectiveness, distribution)
+- God mode validation
+
+**Quality Gate:** Determinism CV < 0.01% (reproducible). Effectiveness metrics show measurable impact. Distributions match expected statistical patterns.
+
+**Cross-references:**
+- Determinism investigation: `/docs/ISSUE_11_DETERMINISM_DEBUGGING_PROGRESS.md`
+- God mode analysis: `/research/TECHNOLOGY_GAP_ANALYSIS_COMPREHENSIVE_20251110.md`
+- Monte Carlo reports: `/logs/mc_*.log`
+
+---
+
+#### Layer 4: Mechanism Validation (All Agents - collective intelligence)
+
+**Focus:** Real-world correspondence and emergent behavior
+
+**Validation Checks:**
+- Do mechanisms match empirical behavior? (not just numbers)
+- Failure mode coverage (what can go wrong?)
+- Success path coverage (what enables positive outcomes?)
+- Interaction effects (cross-system dynamics)
+- Extreme condition behavior (100-year runs, adversarial inputs)
+- Timeline correspondence (when does it matter: early/mid/late game)
+- Self-limiting feedback (do positive loops saturate realistically?)
+
+**Tools:**
+- Extended Monte Carlo runs (N≥10, 900+ months)
+- Scenario analysis
+- Cross-system integration tests
+- Architectural review (architecture-skeptic)
+
+**Quality Gate:** Mechanisms produce realistic emergent behavior. No unrealistic runaway effects. Success and failure paths validated.
+
+**Cross-references:**
+- Scenario analysis: `/logs/scenario_phase4_analysis_20251113.log`
+- Bifurcation validation: `/research/bifurcation_empirical_validation_20251112.md`
+- Architecture reviews: `/reviews/` directory
+
+---
+
+### Implementation Checklist
+
+**For all features before merge:**
+
+- [ ] **Layer 1 - Code Integrity**
+  - [ ] All calculations use assertion utilities (no `?? fallback`)
+  - [ ] TypeScript compiles with no errors (`npx tsc --noEmit`)
+  - [ ] RNG properly seeded (deterministic, not `Math.random()`)
+  - [ ] Division-by-zero protected
+
+- [ ] **Layer 2 - Research Integrity**
+  - [ ] 2+ peer-reviewed citations per mechanic
+  - [ ] Parameters justified with empirical data
+  - [ ] Research skeptic review passed (contradictions addressed)
+  - [ ] Citations added to Zotero
+
+- [ ] **Layer 3 - Statistical Validation**
+  - [ ] Monte Carlo N≥10 runs completed
+  - [ ] Determinism CV < 0.01% verified
+  - [ ] Effectiveness metrics calculated and reasonable
+  - [ ] Distributions match expected statistical patterns
+
+- [ ] **Layer 4 - Mechanism Validation**
+  - [ ] Extended runs show realistic behavior (no runaway effects)
+  - [ ] Failure modes documented and tested
+  - [ ] Success paths validated (not just absence of failure)
+  - [ ] Architecture review passed (no CRITICAL/HIGH issues)
+
+---
+
+### Workflow Integration
+
+**Standard feature workflow:**
+
+1. **Research Phase** → Layer 2 validation (Cynthia + Sylvia)
+2. **Implementation Phase** → Layer 1 validation (Roy - code integrity)
+3. **Testing Phase** → Layer 3 validation (Priya - statistical rigor)
+4. **Review Phase** → Layer 4 validation (Architecture skeptic - mechanism correspondence)
+5. **Documentation Phase** → All layers summarized in wiki/devlog
+
+**Quality gates enforce sequential validation:**
+- Cannot proceed to implementation without Layer 2 approval (research validated)
+- Cannot proceed to merge without all 4 layers passing
+
+---
+
+### Success Stories
+
+**Oct 2025 NaN Bug Prevention:**
+- Layer 1 would have caught: Silent `?? fallback` hiding NaN
+- Layer 3 would have caught: Non-deterministic behavior (NaN propagation)
+- Multiple redundant checks prevent similar bugs
+
+**Nov 2025 Hindcast Calibration:**
+- Layer 2: Historical CBR data validated (UN WPP 2024)
+- Layer 3: Population deviation metrics (±1% accuracy achieved)
+- Layer 4: Regional heterogeneity validated (7x variation in fertility decline)
+
+**God Mode Analysis (Nov 2025):**
+- Layer 3: Zero-effectiveness detection found broken interventions
+- Layer 4: Mechanism validation revealed missing success paths
+
+---
+
+### Known Limitations
+
+**Layer Coverage Gaps:**
+- Layer 1: 97.2% adoption (3/107 modules excluded by design)
+- Layer 2: Ongoing research updates (automated weekly audit)
+- Layer 3: Manual Monte Carlo runs (not yet automated in CI)
+- Layer 4: Requires human judgment (hard to automate)
+
+**Complementary, Not Redundant:**
+Each layer catches different failure modes. No single layer sufficient. All four required for robust validation.
+
+---
+
+### Future Enhancements
+
+**Automation Opportunities:**
+- Layer 1: Static analysis tooling for fallback patterns (Section 6.5 action item)
+- Layer 3: Automated Monte Carlo in CI pipeline
+- Cross-layer dashboard: Single view of all validation metrics
+
+**Cross-references:**
+- Section 6.1 of Master Implementation Roadmap (origin of framework)
+- Collaborative intelligence architecture (Section 6.6 - dual-agent validation)
+- Quality gates documentation: `docs/DEVELOPMENT_WORKFLOW.md`
+
 ## 🔧 System Status Overview
 
 ### ✅ TIER 0-2 + TIER 4.3 Complete! (Merged to Main Oct 12, 2025)
