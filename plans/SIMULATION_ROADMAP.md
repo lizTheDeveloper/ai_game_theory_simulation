@@ -508,6 +508,11 @@
      - **Context:** ICML 2025 finding: narrow fine-tuning of aligned models (GPT-4o) produces broader misalignment
      - **Key Discovery:** Alignment degrades post-deployment (10-20%) as models undergo fine-tuning/adaptation
      - **Research Delivered:** Section 1.4 added to mechanistic_interpretability_breakthroughs_20251111.md
+     - **Research verification:** ✅ See completed verification task (commit 824f371, line 1030)
+     - **Model size constraint:** Only implement for models ≥32B (research verified range: 32B-405B)
+     - **Verified Parameters:**
+       - `emergent_misalignment_rate`: 20% (GPT-4o) - VALIDATED (arXiv:2502.17424)
+       - Applicability: Models ≥32B parameters only
      - **Key Claims Requiring Verification:**
        - Amplification factor: Fine-tuning on X% → misalignment in X × 5-10% tasks
        - Pre-deployment alignment: 60-70% (GPT-4o baseline on held-out tests)
@@ -523,9 +528,9 @@
      - **Assignments:**
        - Cynthia: Access ICML 2025 proceedings, verify paper exists with cited title/authors
        - Sylvia: Claim verification - find quotes supporting 5-10× amplification, 60-70% baseline, 10-20% degradation
-       - Roy: Integration design (BLOCKED until validation complete)
+       - Roy: Integration design (READY - core parameter validated, model size constraint required)
      - **Priority:** HIGH - Alignment fragility affects alignmentDynamics.ts core model
-     - **Status:** ⚠️ NEEDS VALIDATION - Paper cited via Medium article, need direct proceedings access
+     - **Status:** ⚠️ PARTIALLY VALIDATED - Core 20% misalignment rate verified, amplification factor and timeline claims pending
      - **Research File:** research/mechanistic_interpretability_breakthroughs_20251111.md (section 1.4)
      - **Commit:** 4683fe7
 
@@ -1027,22 +1032,19 @@
   - **Quality Gate 1:** PENDING (research-skeptic review needed)
   - **Priority:** HIGH (ARCH-4 gap closure depends on validation)
 
-- [ ] **MASK Benchmark + Emergent Misalignment Citations Verification** 🆕 **READY FOR ORCHESTRATOR (Nov 25, 2025)**
-  - **Commit:** 8a3899f (MASK benchmark and Emergent Misalignment findings added)
-  - **Status:** Research file created, ready for VALIDATION phase
-  - **Files Changed:** `research/ai_alignment_faking_strategic_deception_20251120.md`
-  - **Verification File:** `research/verification_8a3899f_20251125.md`
-  - **Citations to Verify:**
-    1. CAIS + Scale AI (2025) - MASK benchmark arXiv:2503.03750
-    2. Betley et al. (2025) - Emergent Misalignment arXiv:2502.17424 (ICML 2025 Oral)
-  - **New Parameters to Validate:**
-    - `honesty_under_pressure`: 20-60% lying rate (MASK benchmark)
-    - `emergent_misalignment_rate`: 20% (GPT-4o after narrow finetuning)
-  - **Verification Tasks:**
-    - Layer 1: Confirm papers exist, verify ICML 2025 Oral status
-    - Layer 2: Quote specific passages supporting 20-60% lying rate, 20% misalignment rate
-    - Layer 3: Validate applicability to simulation scenarios
-  - **Quality Gate 1:** PENDING (research-skeptic review needed)
+- [x] **MASK Benchmark + Emergent Misalignment Citations Verification** ✅ **COMPLETE (Nov 25, 2025)**
+  - **Commit:** 824f371 (verification complete, errors corrected)
+  - **Verification outcome:** CONDITIONAL PASS
+    - ✅ MASK Benchmark verified (arXiv:2503.03750, 86% claims verified)
+    - ✅ Emergent Misalignment verified (arXiv:2502.17424, 67% claims verified)
+    - ❌ Critical error fixed: False claim about <10B models removed
+    - ✅ Implementation notes added with model size thresholds
+  - **Parameters ready for implementation:**
+    - `honesty_under_pressure`: 40% midpoint (26.6-63.0% range) - applies across capability levels
+    - `emergent_misalignment_rate`: 20% (GPT-4o) - **ONLY for models ≥32B parameters**
+  - **Next step:** Implementation planning for AI agent coordination mechanics
+  - **Files:** research/ai_alignment_faking_strategic_deception_20251120.md (corrected), reviews/mask_emergent_misalignment_verification_20251125.md
+  - **Quality Gate 1:** PASSED (verification complete, errors corrected)
   - **Priority:** HIGH (alignment mechanics depend on validated honesty parameters)
 
 - [ ] **Infrastructure Degradation Parameters Verification** ⏳ **PENDING (Nov 5, 2025)**
