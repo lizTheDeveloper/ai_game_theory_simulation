@@ -1,7 +1,7 @@
 # AI Scaling Laws: 2024-2025 Paradigm Shift from Pre-Training to Test-Time Compute
 
 **Date:** November 7, 2025
-**Last Updated:** November 12, 2025 (added author attribution for Lu 2025)
+**Last Updated:** November 25, 2025 (o3 ARC-AGI breakthrough, expert predictions for 2025)
 **Researcher:** Autonomous Researcher
 **Purpose:** Document the major paradigm shift in AI scaling laws as traditional pre-training scaling hits diminishing returns and new approaches (test-time compute, efficiency optimization) emerge
 **Sources Reviewed:** 8 peer-reviewed papers and industry reports (2024-2025)
@@ -189,11 +189,19 @@ Traditional benchmarks (next-token prediction, single-shot Q&A) show diminishing
 - First production models using explicit "thinking budget"
 - Can allocate variable compute at inference time
 - **o3 performance (Dec 2024):**
-  - ARC-AGI benchmark: 88% (vs o1: 32%)
+  - ARC-AGI benchmark: **75.7%** standard compute, **87.5%** high-compute (vs o1: 32%)
   - Frontier Math: 25% (vs previous models: 2% maximum)
   - Uses ~78K reasoning tokens per response (high-efficiency mode)
   - High-compute mode: $1,000+ per task (~170x more compute than efficient variant)
   - Demonstrates test-time scaling: 3-month gap from o1 to o3 with major performance jumps
+
+**François Chollet Assessment (ARC-AGI creator, Dec 2024):**
+> "This is not merely incremental improvement, but a genuine breakthrough, marking a qualitative shift in AI capabilities compared to the prior limitations of LLMs."
+
+**Critical Caveat:**
+- Chollet stresses: "ARC-AGI is not an acid test for AGI" and "Passing ARC-AGI does not equate to achieving AGI"
+- o3 still fails on some very easy tasks, indicating fundamental differences with human intelligence
+- Relies on external verifiers during inference and human-labeled reasoning chains during training
 
 **Anthropic Claude 3.7 Sonnet (July 2025):**
 - Supports "thinking budget" parameter in API
@@ -204,6 +212,19 @@ Traditional benchmarks (next-token prediction, single-shot Q&A) show diminishing
 - Competitive with o1 on math/coding benchmarks at lower training cost
 
 **Trend:** Test-time compute becoming standard feature, not experimental technique.
+
+**Industry Consensus on "Second Era of Scaling" (Dec 2024):**
+- AI founders and investors now identify two distinct eras:
+  - **First era (2020-2024):** Pre-training scaling dominance
+  - **Second era (2024+):** Test-time compute scaling + efficiency optimization
+- Jack Clark (Anthropic co-founder): "o3 is evidence that AI progress will be faster in 2025 than in 2024"
+- Clark predicts 2025 will see "splicing together" of test-time and pre-training scaling for compounded returns
+
+**Smaller Models Benefit Too:**
+Test-time compute shows remarkable results for edge deployment:
+- Llama 3.2 3B with 256 test-time iterations **outperforms** Llama 3.1 70B on Math-500 benchmark
+- Enables frontier-level performance on consumer hardware
+- Democratizes access to high-capability AI (compute-at-inference vs compute-at-training)
 
 ---
 
@@ -619,6 +640,12 @@ const agiTimeline = {
 
 13. **Stripe (2025).** "The Scaling Era: An Oral History of AI, 2019-2025." [https://assets.stripe.com/.../ZINE-Scaling_Era-singles.pdf](https://assets.stripeassets.com/fzn2n1nzq965/5j0dFbeGgGbohTE3a2jrVA/ebd35e791ca5fa926c6a0b076860c71c/ZINE-Scaling_Era-singles.pdf)
 
+14. **VentureBeat (2024).** "OpenAI's o3 shows remarkable progress on ARC-AGI, sparking debate on AI reasoning." December 2024. [https://venturebeat.com/ai/openais-o3-shows-remarkable-progress-on-arc-agi-sparking-debate-on-ai-reasoning](https://venturebeat.com/ai/openais-o3-shows-remarkable-progress-on-arc-agi-sparking-debate-on-ai-reasoning)
+
+15. **Wolfe, C.R. (2024).** "Scaling Laws for LLMs: From GPT-3 to o3." Cameron R. Wolfe Substack. [https://cameronrwolfe.substack.com/p/llm-scaling-laws](https://cameronrwolfe.substack.com/p/llm-scaling-laws)
+
+16. **Lambert, N. (2024).** "o3: The grand finale of AI in 2024." Interconnects. [https://www.interconnects.ai/p/openais-o3-the-2024-finale-of-ai](https://www.interconnects.ai/p/openais-o3-the-2024-finale-of-ai)
+
 ---
 
 ## Frontmatter
@@ -626,7 +653,7 @@ const agiTimeline = {
 ```yaml
 oldest_source: 2020
 newest_source: 2025
-last_verified: 2025-11-21
+last_verified: 2025-11-25
 verification_status: CURRENT
 topic: ai_scaling_laws
 subtopics:
@@ -653,6 +680,8 @@ confidence: HIGH
 ---
 
 ## Changelog
+
+**2025-11-25:** Updated o3 ARC-AGI scores with corrected figures (75.7% standard, 87.5% high-compute per ARC Prize official results). Added François Chollet direct quotes and critical caveats about ARC-AGI not being AGI test. Added "Second Era of Scaling" framing with Jack Clark prediction that 2025 progress will exceed 2024. Added smaller model benefits (Llama 3.2 3B beating 70B with test-time compute). New sources: VentureBeat (ARC-AGI analysis), Cameron R. Wolfe (scaling laws overview).
 
 **2025-11-21:** Added section 3.5 on compute scaling through 2030 (Epoch AI, Aug 2024). Key findings: 4x/year compute growth, power infrastructure becomes binding constraint at 2e29 FLOP (2030). Updated section 3.3 with o3 quantitative performance data (88% ARC-AGI, 25% Frontier Math, $1,000+ per task high-compute mode). Added TechCrunch Dec 2024 source on test-time compute costs.
 
