@@ -24,6 +24,7 @@ import type { GameEvent } from './events';
 import type { ConfigurationSettings } from './config';
 import type { PositiveTippingPointsState } from './positiveTippingPoints';
 import type { TippingPointSystem } from './tipping-points';
+import type { MigrationFlows } from './population';
 
 // Re-export all types for backward compatibility
 export type {
@@ -580,6 +581,12 @@ export interface GameState {
   // Population Dynamics & Refugee Crises (TIER 1.6)
   humanPopulationSystem: import('../types/population').HumanPopulationSystem; // Concrete population tracking (billions)
   refugeeCrisisSystem: import('../types/population').RefugeeCrisisSystem; // Climate/war/famine displacement
+
+  // International Migration Flows (Phase 8 - Hindcast Calibration, Nov 25 2025)
+  // Models net migration between regions for 2010-2020 hindcast accuracy
+  // Research: PNAS 2022 Bayesian bilateral flow model, UN WPP 2024
+  // Target: Reduce 2010-2020 overshoot from 6-10% to <3%
+  migrationFlows: MigrationFlows; // Imported from population.ts
   
   // Per-Country Population Tracking (TIER 1.7.2)
   countryPopulationSystem: import('../types/countryPopulations').CountryPopulationSystem; // Track 15 key countries individually

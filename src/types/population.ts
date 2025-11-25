@@ -557,3 +557,44 @@ export interface TrappedPopulationTracking {
   ableToMigrate: number;                 // People who can afford to leave (millions)
   mobilityGap: number;                   // aspiringToMigrate - ableToMigrate (millions)
 }
+
+/**
+ * International Migration Flows (Phase 8 - Hindcast Calibration, Nov 25 2025)
+ *
+ * Models net migration between regions for 2010-2020 hindcast accuracy.
+ * Research: PNAS 2022 Bayesian bilateral flow model (Azose & Raftery),
+ *           UN WPP 2024 probabilistic migration projections,
+ *           UNHCR Syrian refugee crisis data.
+ *
+ * Target: Reduce 2010-2020 population overshoot from 6-10% to <3%
+ * Mechanism: 25M net migration 2010-2020 explains 83% of 2010 overshoot (25M / 30M)
+ *
+ * Historical mode: 2010-2020 only (deterministic flows based on year)
+ * Unprecedented mode: Post-2020 climate-driven migration (not yet implemented)
+ */
+export interface MigrationFlows {
+  // Annual net migration by region (MILLIONS per year)
+  // Positive = net immigration, Negative = net emigration
+
+  // Immigration destinations
+  northAmerica: number;           // US + Canada (~1.5M/yr baseline)
+  westernEurope: number;          // Germany, UK, France (~0.8M/yr pre-Syria, +0.1M/yr during)
+  gulfStates: number;             // UAE, Saudi Arabia, Qatar (~0.8M/yr baseline)
+  oceania: number;                // Australia, New Zealand (~0.2M/yr)
+
+  // Emigration sources
+  latinAmerica: number;           // Mexico, Central America (~-0.5M/yr)
+  subSaharanAfrica: number;       // Economic migration (~-0.3M/yr)
+  southAsia: number;              // India, Bangladesh, Pakistan (~-0.5M/yr)
+  southeastAsia: number;          // Philippines, Indonesia (~-0.3M/yr)
+  middleEastExclGulf: number;     // Syria, Iraq, Yemen (~-0.1M/yr baseline, ~-0.67M/yr crisis)
+  easternEurope: number;          // Ukraine, Poland → Western Europe (~-0.2M/yr)
+
+  // Crisis tracking
+  syrianCrisisActive: boolean;    // 2011-2020: 6.7M refugees total
+  covidSuppressionActive: boolean; // 2020: -64% migration suppression
+
+  // Validation metrics
+  globalNetMigration: number;     // Should be ~0 (immigration = emigration globally)
+  cumulativeMigration2010_2020: number; // Should approach 25M by end of 2020
+}
