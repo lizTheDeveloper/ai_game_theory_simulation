@@ -1244,19 +1244,12 @@ function applyGlobalEffects(
 
       // ========== MEDICAL ==========
 
-      case 'mortalityReduction':
-        // Reduce mortality rate (duplicate case - should be handled above)
-        if (gameState.humanPopulationSystem) {
-          gameState.humanPopulationSystem.adjustedDeathRate = assertFinite(Math.max(
-            0.001,
-            gameState.humanPopulationSystem.adjustedDeathRate - value * 0.0001
-          ), {
-        location: 'applyRegionalEffects:mortalityReduction',
-        valueName: 'adjustedDeathRate',
-        month: gameState.currentMonth
-      });
-        }
-        break;
+      // FIX (Nov 25, 2025): REMOVED duplicate mortalityReduction case
+      // This duplicate case was overwriting the correct case above (lines 1231-1243)
+      // with 100x smaller effects (0.0001 instead of 0.01), making mortality reduction
+      // tech 1% as effective as intended. This caused 99% mortality in god mode tests
+      // even with 119 breakthrough technologies deployed.
+      // Root cause: JS switch allows duplicate cases, second silently overwrites first.
 
       case 'lifeExpectancyBonus':
         // Increase life expectancy (in years) - adjust death rate to reflect this
