@@ -112,7 +112,54 @@
 
 ### CRITICAL Priority
 
-1. **Hindcasting Validation** (Sylvia's key push) - **PHASE 4 COMPLETE** (Nov 24, 2025 Night)
+#### Phase 3 Governance Blockers (Nov 25, 2025)
+
+**Context:** Phase 3 governance scenarios with sequenced deployment all crashed (60/60 runs) due to GDP collapse. Fixed spending amounts ($50-200B/month) became physically impossible as GDP declined. Need to fix before proceeding to Experiment 1 (Deployment Rate Sweep).
+
+**Source:** `reviews/governance_scenario_sequenced_analysis_20251125.md` (Priya's analysis)
+
+1. **GDP-Adaptive Spending Implementation** - **BLOCKING EXPERIMENT 1**
+   - Make research spending percentage-based (% of GDP) instead of fixed dollar amounts
+   - Prevents "physically impossible" crashes when GDP collapses during mortality cascades
+   - **Affects:** ApplyScenarioPrioritiesPhase, all 6 governance scenarios
+   - **Blocker for:** Experiment 1 (Deployment Rate Sweep)
+   - **Complexity:** 3 systems (government, economy, tech tree)
+   - **Status:** Not started
+   - **Implementation path:**
+     - Add `spendingRateGDP` field to scenario definitions (e.g., 0.005 = 0.5% GDP)
+     - ApplyScenarioPrioritiesPhase: Calculate spending = GDP × rate (instead of fixed amount)
+     - Validate spending never exceeds available budget
+     - Add logging for adaptive spending amounts
+
+2. **Tech Ineffectiveness Investigation** - **BLOCKING ALL GOVERNANCE EXPERIMENTS**
+   - Investigate why 119 sequenced techs failed to prevent 99% mortality
+   - Are tech effects being overwhelmed by environmental cascades?
+   - Need to validate tech deployment actually provides benefits
+   - **Blocker for:** All governance experiments
+   - **Complexity:** 7 systems (tech tree, climate, agriculture, mortality, ecology, resources, government)
+   - **Status:** Not started
+   - **Investigation priorities:**
+     - Check if tech effects are being applied correctly
+     - Validate effect magnitudes vs. cascade magnitudes
+     - Compare tech deployment timing vs. cascade onset
+     - Create diagnostic script showing tech effects vs. collapse metrics over time
+
+3. **Spiral Threshold Validation** - **BLOCKING SPIRAL TESTING**
+   - Validate spiral thresholds can activate with >50% completion rate
+   - Need mortality < 50% to reach spiral windows (years 15-30)
+   - Current: 0/160 total runs showed any spiral activations
+   - **Blocker for:** Testing if spirals work at all
+   - **Complexity:** 4 systems (spirals, mortality, scenarios, tech tree)
+   - **Status:** Not started
+   - **Validation path:**
+     - Run baseline scenario (no tech deployment) to measure mortality at year 15
+     - Run aggressive tech deployment scenario to find minimum mortality achievable
+     - If min mortality > 50%, spiral thresholds need adjustment
+     - Document if spirals are testable under current model dynamics
+
+---
+
+2. **Hindcasting Validation** (Sylvia's key push) - **PHASE 4 COMPLETE** (Nov 24, 2025 Night)
    - Run simulation starting 1990, check if it predicts 2024 correctly
    - If the model cannot hindcast known history, forecasts are suspect
    - Reality check for the entire model - validates core mechanisms

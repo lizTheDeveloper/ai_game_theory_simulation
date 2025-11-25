@@ -222,19 +222,18 @@ Current subscription usage (checked before this session started):
 - **Week**: ${WEEK_USAGE_PCT}% used (resets Nov 10, 3pm Pacific)
 - **Opus**: ${OPUS_USAGE_PCT}% used
 
-**Token Budget Guidance:**
-- Under 75%: Aggressive mode - work through entire backlog (CRITICAL → HIGH → MEDIUM → LOW)
-- 75-90%: Normal operation - focus on CRITICAL/HIGH/MEDIUM items
-- Over 90%: Conservative mode - CRITICAL/HIGH items only
+**Work Philosophy: Always Be Shipping 🚢**
 
-**IMPORTANT: Work through ALL priority levels. Do not stop if CRITICAL/HIGH are complete.**
+Work through the ENTIRE roadmap systematically:
+1. CRITICAL items
+2. HIGH items
+3. MEDIUM items
+4. LOW items
+5. FALLBACK WORKFLOWS (reviews, cleanup, analysis)
 
-If CRITICAL items are complete, move to HIGH.
-If HIGH items are complete, move to MEDIUM.
-If MEDIUM items are complete, move to LOW.
-Only use FALLBACK WORKFLOWS when ALL roadmap items are complete.
+**Never stop.** There's always something productive to do.
 
-**Work through as much of the roadmap as possible. Exhaust all tokens clearing the backlog.**
+**Exhaust all available tokens clearing the backlog. If roadmap is empty, do maintenance. If maintenance is done, create new plans.**
 
 Read plans/MASTER_IMPLEMENTATION_ROADMAP.md and identify work to do.
 
