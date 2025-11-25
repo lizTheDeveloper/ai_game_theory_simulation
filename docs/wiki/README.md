@@ -29,6 +29,24 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 25: CRITICAL Bug Fix - Mortality Reduction Tech 100x Effectiveness** (commit 8718eb9)
+- 🐛 **CRITICAL BUG FIXED:** All mortality reduction technologies were 1% as effective as intended
+- **ROOT CAUSE:** Duplicate `mortalityReduction` switch case in `effectsEngine.ts` overwrote correct calculation
+  - Lines 1247-1259: Applied 0.0001 scaling (100x smaller than intended)
+  - Lines 1231-1243: Correct 0.01 scaling
+  - Duplicate case executed last, overwriting correct value
+- **IMPACT:**
+  - Example: Tech with `mortalityReduction: 0.25` → actual effect 0.00025 (1000x smaller)
+  - God mode tests: 119 breakthrough techs couldn't prevent 99% mortality
+  - Cascades operated at full scale, tech at 1% scale → complete imbalance
+- **FIX:** Removed duplicate case (lines 1247-1259), kept correct implementation
+- **EXPECTED IMPROVEMENT:** Mortality reduction tech now 100x more effective
+  - God mode tests should show dramatically lower mortality with same 119 techs
+  - Tech effectiveness investigation can now proceed with correct baseline
+- **INVESTIGATION:** Roy (simulation-maintainer) responding to Priya's Nov 25 god mode analysis
+- 📄 **Files:** `effectsEngine.ts` (duplicate removed)
+- 📊 **Reports:** `reviews/tech_effectiveness_code_trace_20251125.md`, `plans/tech_ineffectiveness_investigation.md`
+
 **Nov 25: Scenario Setup Design - Phase 0 COMPLETE** (commit 7a95b98)
 - 🎮 **DESIGN:** Scenario Setup interface specification (300+ lines)
   - **5-screen conversational flow:** Introduction → Role → Scenario Select → Belief Calibration → Confirmation
