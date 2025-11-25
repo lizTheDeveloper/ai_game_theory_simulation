@@ -88,6 +88,27 @@
      - **Commit:** babb871
      - **Next Steps:** Two-layer verification (locate missing papers + verify claims) → Reconcile with existing AMOC research → Update parameters if verified → Monte Carlo N≥10
 
+   - **Climate Stability Self-Limiting Mechanisms Citations** - MODERATE (Added Nov 25, 2025)
+     - **Context:** Citations added to justify existing 5% floor, 95% cap, [0,1] pollution bounds in ClimateSystemPhase
+     - **Verification File:** research/verification_dc1d6ac_20251125.md (8 citations)
+     - **Commit Verified:** dc1d6ac (climate stability citations)
+     - **Key Claims Requiring Two-Layer Verification:**
+       - **CRITICAL:** Lenton 2019 (Nature) - "self-limiting feedbacks" claim (title suggests RISK emphasis)
+       - **CRITICAL:** Zachos 2008 - PETM recovery ~200ky, +5-8C spike
+       - **CRITICAL:** Armstrong McKay 2022 - "not complete destabilization" claim
+       - **HIGH:** IPCC AR6 WG1 Ch4 - RCP8.5 "severe but not collapse"
+       - **HIGH:** Steffen 2015 - "remains habitable" after boundary transgression
+       - **MODERATE:** Royer 2006 - Phanerozoic stability claim
+       - **MODERATE:** Meadows 1972 - self-limiting pollution (model-based)
+       - **MODERATE:** Persson 2022 - Novel Entities ~2x transgression
+     - **Risk Assessment:**
+       - 3 CRITICAL claims may not survive Layer 2 verification (claim vs paper content)
+       - Lenton 2019 title "too risky to bet against" suggests paper emphasizes risk, not stability
+       - If citations fail verification, must document as "implementation choice" not research-backed
+     - **Priority:** MODERATE - Citations added to EXISTING mechanisms, not new parameters
+     - **Status:** READY FOR VALIDATION
+     - **Next Steps:** Sylvia two-layer verification → Update grade if failures → Correct/remove unsupported claims
+
    - **AMOC & Planetary Boundaries 2024-2025 Updates** - CRITICAL (Added Nov 24, 2025)
      - **Context:** Two research files documenting latest findings on Earth system tipping points
      - **Research Files:**
