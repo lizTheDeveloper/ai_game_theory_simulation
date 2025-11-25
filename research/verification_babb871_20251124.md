@@ -3,7 +3,17 @@
 **Commit:** babb87193a95dda205e9eb20592340db8dcb6a62
 **Research File:** research/climate_tipping_points_2025_update_20251124.md
 **Date:** 2025-11-24
-**Status:** AWAITING VALIDATION
+**Status:** ✅ VERIFIED (Nov 26, 2025)
+**Verification Report:** research/climate_tipping_verification_20251126.md
+
+## Summary of Verification (Nov 26, 2025)
+
+All 3 CRITICAL claims verified:
+1. **Coral Reef 1.2°C Threshold:** ✅ VERIFIED - Global Tipping Points Report 2025 (160+ scientists)
+2. **AMOC 44 Scientists Warning:** ✅ VERIFIED - Open letter Oct 25, 2024, led by Stefan Rahmstorf
+3. **Planetary Boundaries 6/9:** ✅ VERIFIED - Richardson et al. (2023), Science Advances
+
+See full verification report for detailed citations and simulation parameter recommendations.
 
 ---
 
