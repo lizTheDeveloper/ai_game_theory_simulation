@@ -1,0 +1,131 @@
+HIGH-1 Index Migration Report
+==============================
+Date: 2025-11-25
+Task: Replace .find() calls with O(1) index lookups
+
+SUMMARY
+=======
+Total .find() calls identified: 16
+Converted to index lookups: 2
+Annotated as non-convertible: 14
+
+CONVERTED TO INDEX LOOKUPS (2)
+================================
+
+1. AIAgentCoordinationPhase.ts:606
+   BEFORE: frontierAgents.find((a) => a.id === memberId)
+   AFTER:  indices?.agentMap.get(memberId) ?? frontierAgents.find((a) => a.id === memberId)
+   INDEX:  agentMap (Map<string, AIAgent>)
+   IMPACT: O(1) lookup for agent by ID in coalition membership checks
+
+2. PlayerDecisionPhase.ts:257
+   BEFORE: state.aiAgents.find(ai => ai.id === data.agentId)
+   AFTER:  this.indices?.agentMap.get(data.agentId) ?? state.aiAgents.find(ai => ai.id === data.agentId)
+   INDEX:  agentMap (Map<string, AIAgent>)
+   IMPACT: O(1) lookup for agent by ID in player AI action decisions
+
+ANNOTATED AS NON-CONVERTIBLE (14)
+==================================
+
+AIAgentCoordinationPhase.ts:
+  - Line 136: coord.coalitions.find() - Coalition membership (no index for multi-member search)
+  - Line 444: coord.interAgentTrust.find() - Agent-to-agent trust relationship (bidirectional search)
+  - Line 466: coord.interAgentTrust.find() - Directed trust relationship (1→2)
+  - Line 483: coord.interAgentTrust.find() - Directed trust relationship (2→1)
+
+PlayerDecisionPhase.ts:
+  - Line 96:  migratedActions.find() - Government actions registry (static array)
+  - Line 190: state.technologyTree.find() - Technology tree (not unlockedTech index)
+  - Line 264: AI_ACTIONS.find() - AI actions registry (static array)
+
+ClimateDeploymentPhase.ts:
+  - Line 503: globalDeployments.find() - Regional deployment records (per-region array)
+
+FoodSecurityDegradationPhase.ts:
+  - Line 223: regionalNitrogenManagement.find() - Regional nitrogen data (per-region array)
+
+TechDeploymentSchedulePhase.ts:
+  - Line 53:  allTech.find() - Tech tree definitions (static tech data)
+  - Line 71:  regionalDeployment['global'].find() - Regional deployment records
+
+GovernmentResponsePhase.ts:
+  - Line 93:  state.governmentSystem.treaties.find() - Treaties array (small, infrequent search)
+
+ClimateSystemPhase.ts:
+  - Line 213: system.elements.find() - Tipping elements array (small, domain-specific)
+
+CooperativeSystemsPhase.ts:
+  - Line 210: Comment only (no actual .find() call)
+
+RATIONALE FOR NON-CONVERSION
+=============================
+
+1. Domain-specific relationship searches:
+   - Coalition membership requires checking if BOTH agents are in memberIds array
+   - Trust relationships are bidirectional or directed pairs, not simple ID lookups
+   - These would require complex composite keys or bidirectional maps
+
+2. Static registry arrays:
+   - Government actions, AI actions: Small static arrays (~10-20 items)
+   - Tech tree definitions: Static metadata, rarely searched
+   - Building indices for these would add complexity without meaningful performance gain
+
+3. Regional/sub-system arrays:
+   - Regional deployment, nitrogen management: Per-region arrays (small)
+   - Tipping elements: Small array (~10 elements)
+   - Treaties: Small array (~5 treaties max)
+
+4. Technology tree special case:
+   - PlayerDecisionPhase searches state.technologyTree (full tech metadata)
+   - Existing unlockedTech index only covers unlocked status checks
+   - Would need separate index for full tech metadata lookup
+
+POTENTIAL FUTURE INDICES
+=========================
+
+If profiling shows these searches are hot paths:
+
+1. Coalition membership index: Map<agentId, Set<coalitionId>>
+   - Enables O(1) check if agent is in any coalition
+   - Requires maintaining on coalition formation/dissolution
+
+2. Trust relationship index: Map<string, InterAgentTrust>
+   - Key format: "agentId1:agentId2" (sorted pair for bidirectional lookup)
+   - Enables O(1) trust relationship lookup
+   - Requires maintaining on trust updates
+
+3. Tech tree metadata index: Map<techId, Tech>
+   - Copy of tech definitions for O(1) metadata lookup
+   - Complements existing unlockedTech Set
+   - Static, built once
+
+VERIFICATION
+============
+
+✅ Type checking passed (npx tsc --noEmit)
+✅ All non-convertible .find() calls annotated with "// No index - domain-specific search"
+✅ Backward compatibility maintained with fallback to .find() when indices not available
+
+PERFORMANCE IMPACT
+==================
+
+BEFORE: 16 .find() calls (mixed O(n) operations)
+AFTER:  2 O(1) index lookups + 14 annotated O(n) searches
+
+Estimated reduction: Minimal immediate impact (~2 hot path conversions)
+Most remaining .find() calls are on small arrays or infrequent operations.
+
+The value of this migration is:
+1. Infrastructure readiness - phases now accept and use indices
+2. Documentation - clear marking of what CAN'T be indexed and why
+3. Foundation for future indices (if profiling shows need)
+
+NEXT STEPS
+==========
+
+1. Run Monte Carlo validation (N≥10) to ensure no regressions
+2. Profile with --cpu-prof if performance is still an issue
+3. Consider adding composite indices only if profiling shows hot paths
+4. Focus on other HIGH-1 items that may have bigger impact
+
+--- End of Report ---

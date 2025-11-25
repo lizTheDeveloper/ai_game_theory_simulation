@@ -50,6 +50,7 @@ export class TechDeploymentSchedulePhase implements SimulationPhase {
 
     let deployedCount = 0;
     for (const entry of dueThisMonth) {
+      // No index - domain-specific search (tech tree definitions)
       const tech = allTech.find(t => t.id === entry.techId);
       if (!tech) {
         console.warn(`   ⚠️  Unknown tech ID: ${entry.techId} (skipping)`);
@@ -68,6 +69,7 @@ export class TechDeploymentSchedulePhase implements SimulationPhase {
       }
 
       // Check if already deployed
+      // No index - domain-specific search (regional deployment records)
       const existing = state.techTreeState.regionalDeployment['global'].find(
         d => d.techId === entry.techId
       );

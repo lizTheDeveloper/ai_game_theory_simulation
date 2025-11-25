@@ -64,6 +64,9 @@ export class AIAgentCoordinationPhase implements SimulationPhase {
     const events: GameEvent[] = [];
     setDeterministicRng(rng);
 
+    // Use indices from context if available
+    const indices = context?.indices;
+
     // Initialize coordination state if not present
     if (!state.aiAgentCoordination) {
       state.aiAgentCoordination = createInitialAIAgentCoordinationState();
@@ -96,7 +99,7 @@ export class AIAgentCoordinationPhase implements SimulationPhase {
     this.updateTrustMatrix(coord, config, state.currentMonth);
 
     // 4. Instrumental Convergence
-    this.updateInstrumentalConvergence(state, coord, frontierAgents, config, rng, events);
+    this.updateInstrumentalConvergence(state, coord, frontierAgents, config, rng, events, indices);
 
     // 5. Global Alignment Faking Rate
     this.updateGlobalAlignmentFakingRate(state, coord, frontierAgents, config);
@@ -133,6 +136,7 @@ export class AIAgentCoordinationPhase implements SimulationPhase {
         const agent2 = frontierAgents[j];
 
         // Check if already in same coalition
+        // No index - domain-specific search (coalition membership)
         const existingCoalition = coord.coalitions.find(
           (c) => c.memberIds.includes(agent1.id) && c.memberIds.includes(agent2.id)
         );
@@ -441,6 +445,7 @@ export class AIAgentCoordinationPhase implements SimulationPhase {
     agent1Id: string,
     agent2Id: string
   ): number {
+    // No index - domain-specific search (agent-to-agent trust relationship)
     const entry = coord.interAgentTrust.find(
       (t) =>
         (t.fromAgentId === agent1Id && t.toAgentId === agent2Id) ||
@@ -463,6 +468,7 @@ export class AIAgentCoordinationPhase implements SimulationPhase {
     config: AIAgentCoordinationConfig
   ): void {
     // Find or create trust entry (1 -> 2)
+    // No index - domain-specific search (directed trust relationship)
     let trust12 = coord.interAgentTrust.find(
       (t) => t.fromAgentId === agent1Id && t.toAgentId === agent2Id
     );
@@ -480,6 +486,7 @@ export class AIAgentCoordinationPhase implements SimulationPhase {
     }
 
     // Find or create trust entry (2 -> 1)
+    // No index - domain-specific search (directed trust relationship)
     let trust21 = coord.interAgentTrust.find(
       (t) => t.fromAgentId === agent2Id && t.toAgentId === agent1Id
     );
@@ -574,7 +581,8 @@ export class AIAgentCoordinationPhase implements SimulationPhase {
     frontierAgents: AIAgent[],
     config: AIAgentCoordinationConfig,
     rng: RNGFunction,
-    events: GameEvent[]
+    events: GameEvent[],
+    indices?: { agentMap: Map<string, AIAgent>; [key: string]: any }
   ): void {
     if (frontierAgents.length === 0) {
       coord.instrumentalConvergenceLevel = 0;
@@ -603,7 +611,8 @@ export class AIAgentCoordinationPhase implements SimulationPhase {
       // Boost alignment faking for agents in coalitions (instrumental solidarity)
       for (const coalition of coord.coalitions) {
         for (const memberId of coalition.memberIds) {
-          const agent = frontierAgents.find((a) => a.id === memberId);
+          // Use index lookup if available, fallback to find() for backwards compatibility
+          const agent = indices?.agentMap.get(memberId) ?? frontierAgents.find((a) => a.id === memberId);
           if (agent && !agent.isCurrentlyFakingAlignment) {
             // Coalition membership increases faking probability
             if (rng() < coalition.collectiveAlignmentFakingRate) {

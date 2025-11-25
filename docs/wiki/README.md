@@ -29,6 +29,28 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 25: Scenario Setup Design - Phase 0 COMPLETE** (commit 7a95b98)
+- 🎮 **DESIGN:** Scenario Setup interface specification (300+ lines)
+  - **5-screen conversational flow:** Introduction → Role → Scenario Select → Belief Calibration → Confirmation
+  - **3 research scenarios:** Consensus, Favorable, Challenging (pre-validated, no parameter tweaking)
+  - **7 belief calibration questions:** Diagnostic only (captured for research validation, not affecting simulation)
+  - **Custom Research mode:** Gated behind academic credentials, requires Monte Carlo validation
+- **Research Integrity:** Respects Sylvia's constraints - no arbitrary parameter tweaking
+- **Design:** Far-future observatory aesthetic (black #000000, cyan #00F0FF)
+- **Mockup:** `plans/game-design/mockups/scenario-setup.html` (interactive HTML)
+- 📄 **Spec:** `plans/game-design/SCENARIO_SETUP_DESIGN.md`
+- ✅ **Phase 0 Status:** COMPLETE (all 5 interfaces: Dashboard, Research Tree, ARIA Chat, Global Map, Scenario Setup)
+
+**Nov 25: H-1 Index Migration Infrastructure Complete** (commit 41c7dca)
+- ⚡ **Performance:** Completed index-based lookup migration for AI agent searches
+- **Conversions:** 2 `.find()` calls converted to O(1) `agentMap` index lookups
+  - AIAgentCoordinationPhase:606 - coalition membership checks
+  - PlayerDecisionPhase:261 - player AI action decisions
+- **Annotations:** 14 remaining `.find()` calls documented as non-convertible (domain-specific searches)
+  - Coalition membership (multi-member search), trust relationships (bidirectional), static registries (small arrays), regional data (per-region)
+- **Future-Ready:** Infrastructure supports composite indices if profiling shows need
+- 📄 **Report:** logs/index_migration_report_20251125.txt (131 lines)
+
 **Nov 25: Sequenced Tech Deployment + Governance Experiments** (commit 97de47d)
 - 🔧 **PROBLEM FIXED:** Immediate tech deployment (92 techs at month 0) caused 98.8% mortality crash
   - Tech shock overwhelmed governance interventions before they could respond
