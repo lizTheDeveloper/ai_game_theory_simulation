@@ -2,7 +2,8 @@
 
 **Commit:** bb445b323d5f39e6257ad0c019843f83aa49fa24
 **Date:** November 24, 2025
-**Status:** VERIFIED - CRITICAL ERRORS FOUND
+**Status:** ✅ RESOLVED (commit 8f69e108, Nov 25, 2025)
+**Resolution:** All critical errors fixed - region names corrected, FAO-verified values now applied
 **Detailed Analysis:** See `/research/verification_hindcast_food_security_20251124.md`
 
 ## Summary
@@ -58,13 +59,34 @@ This commit introduces historical mode food security parameters for hindcast cal
 - [⚠️] Regional definitions align with FAO regional classifications - **Partial mismatch**
 - [x] 1990 baseline is the correct reference year (vs 1990-1992 average often used by FAO) - FAO uses 1990-92 average
 
-## VERIFIED ISSUES (Critical Errors Found)
+## VERIFIED ISSUES (Critical Errors Found → RESOLVED)
 
-1. **FAO uses 3-year averages** (1990-1992) - Code should use this, not single-year 1990 ✅ CONFIRMED
-2. **Global 95% is incorrect** - FAO shows **20% undernourished** in developing countries (1990-92), translating to ~80-85% food secure globally, NOT 95% ❌ CRITICAL ERROR
-3. **Sub-Saharan Africa 15% is wrong** - FAO data shows **35% undernourished** (1990-92), should be 65% food secure, NOT 85% ❌ CRITICAL ERROR
-4. **South Asia 12% is wrong** - FAO data shows **26% undernourished** (1990-92), should be 74% food secure, NOT 88% ❌ CRITICAL ERROR
-5. **East Asia 8% is wrong** - FAO data shows **16% undernourished** (1990-92), should be 84% food secure, NOT 92% ❌ ERROR
+1. **FAO uses 3-year averages** (1990-1992) - Code should use this, not single-year 1990 ✅ FIXED (8f69e108)
+2. **Global 95% is incorrect** - FAO shows **20% undernourished** in developing countries (1990-92), translating to ~80-85% food secure globally ✅ FIXED (regional values now correct)
+3. **Sub-Saharan Africa 15% is wrong** - FAO data shows **35% undernourished** (1990-92), should be 65% food secure ✅ FIXED (now 0.65)
+4. **South Asia 12% is wrong** - FAO data shows **26% undernourished** (1990-92), should be 74% food secure ✅ FIXED (now 0.74)
+5. **East Asia 8% is wrong** - FAO data shows **16% undernourished** (1990-92), should be 84% food secure ✅ FIXED (now 0.84)
+
+## Resolution Details (commit 8f69e108)
+
+**Root Cause:** Region names used camelCase (`'eastAsia'`) but actual regions in `state.humanPopulationSystem.regionalPopulations` use proper names (`'East Asia'`). This caused ALL regions to fall through to the default fallback value of 0.80.
+
+**Corrected Regional Values (FAO SOFI 1999, Table 2.3, 1990-92 average):**
+
+| Region | Corrected Value | Undernourishment | Status |
+|--------|-----------------|------------------|--------|
+| Sub-Saharan Africa | 0.65 | 35% | ✅ FIXED |
+| South Asia | 0.74 | 26% | ✅ FIXED |
+| East Asia | 0.84 | 16% | ✅ FIXED |
+| Southeast Asia | 0.84 | 16% (grouped with East Asia) | ✅ ADDED |
+| Central Asia | 0.85 | ~15% (estimate) | ✅ ADDED |
+| Latin America | 0.87 | 13% | ✅ FIXED |
+| Middle East & North Africa | 0.92 | 8% | ✅ FIXED |
+| Oceania | 0.95 | ~5% (estimate) | ✅ ADDED |
+| North America | 0.97 | ~3% | ✅ FIXED |
+| Europe | 0.98 | <2% | ✅ FIXED |
+
+**Fail-Loud Validation Added:** Code now throws an error if an unknown region is encountered instead of silently falling back to 0.80.
 
 ## Verification Priority
 
@@ -79,9 +101,11 @@ This commit introduces historical mode food security parameters for hindcast cal
 ## ACTIONS REQUIRED (Blocking Issue for Hindcast Validation)
 
 1. ✅ **COMPLETED:** FAO data verification - See detailed analysis in `/research/verification_hindcast_food_security_20251124.md`
-2. ❌ **TODO:** Update `src/simulation/historicalInitialization.ts` with corrected FAO values
-3. ❌ **TODO:** Re-run Monte Carlo hindcast with corrected baseline to validate famine frequency
-4. ❌ **TODO:** Document methodology in wiki (`/docs/wiki/README.md`)
+2. ✅ **COMPLETED (8f69e108):** Update `src/simulation/historicalInitialization.ts` with corrected FAO values
+3. ✅ **COMPLETED (8f69e108):** Added fail-loud validation (throws error if unknown region - NO SILENT FALLBACKS)
+4. ✅ **COMPLETED (8f69e108):** Verification script `scripts/verifyFoodSecurityFix.ts` - ALL 10 REGIONS CORRECT
+5. ✅ **COMPLETED (historian):** Document methodology in wiki (`/docs/wiki/README.md`)
+6. 🔄 **PENDING:** Re-run Monte Carlo hindcast with corrected baseline to validate famine frequency
 
 **See `/research/verification_hindcast_food_security_20251124.md` for:**
 - Exact corrected values (FAO Table 2.3)
