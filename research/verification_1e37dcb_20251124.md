@@ -4,15 +4,41 @@ date: 2025-11-24
 files_changed:
   - research/amoc_tipping_point_2024_2025_update.md
   - research/planetary_boundaries_2025_update.md
-verification_status: LAYER1_VERIFIED
-verified_by: autonomous-researcher
-verified_date: 2025-11-25
+verification_status: LAYER2_VERIFIED
+verified_by: autonomous-researcher, super-alignment-researcher
+verified_date: 2025-11-26
 created_by: historian (wiki-documentation-updater)
 ---
 
 # Research Verification for Commit 1e37dcb
 
 **Purpose:** Two-layer verification (citation existence + claim accuracy) for AMOC and Planetary Boundaries research updates
+
+## Layer 2 Verification Summary (Nov 26, 2025)
+
+| Claim | Status | Notes |
+|-------|--------|-------|
+| van Westen 2025-2095 CI | ⚠️ MISATTRIBUTION | Actually from Ditlevsen & Ditlevsen (2023), heavily criticized |
+| AMOC 3±1 Sv weakening | ✅ VERIFIED | Caesar et al. (2018), confirmed by van Westen (2024) |
+| Nitrogen 190/62 Tg/year | ✅ VERIFIED | Richardson et al. (2023), exact values confirmed |
+| Ocean acidification 7/9 | ✅ VERIFIED | Breached in 2025 per Findlay et al. (2025) |
+| Planetary boundaries 6/9 | ✅ VERIFIED | Richardson et al. (2023), Science Advances DOI:10.1126/sciadv.adh2458 |
+
+### Key Correction Required
+
+**AMOC Tipping Timeline 2025-2095:** This 95% CI does NOT come from van Westen et al. (2024). The actual source is:
+- Ditlevsen, P., & Ditlevsen, S. (2023). Warning of a forthcoming collapse of AMOC. *Nature Communications*, 14, 4254.
+- Central estimate: 2057, with 95% CI of 2025-2095
+- **CAVEAT:** Authors state "highly unlikely as early as 2025" and the methodology has received substantial criticism
+
+### New Finding: Ocean Acidification (7/9 Boundaries)
+
+As of 2025, ocean acidification has crossed the planetary boundary:
+- Source: Findlay et al. (2025). Ocean Acidification: Another Planetary Boundary Crossed. *Global Change Biology*, 31(10), e70238.
+- European Commission announced Oct 2, 2025
+- Status changed from 6/9 to 7/9 boundaries transgressed
+
+---
 
 **Context:** These files document 2024-2025 research findings and make specific quantitative claims about tipping points, timelines, and parameter values. The simulation may rely on these parameters, so verification is critical.
 
