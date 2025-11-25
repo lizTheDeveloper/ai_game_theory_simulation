@@ -84,6 +84,9 @@ const EXCEPTION_COMMENTS = [
 const SAFE_NULLISH_CONTEXTS = [
   /state\.\w+\?\.\w+\s*\?\?/, // Optional chaining fallback (state.foo?.bar ?? default)
   /\?\.\w+\s*\?\?/, // Any optional chaining
+  /\?\?\s*generate\w+\(\)/, // Auto-generation patterns (generateConfigId(), etc.)
+  /\?\?\s*getCurrent\w+\(\)/, // Auto-detection patterns (getCurrentGitCommit(), etc.)
+  /metadata\.\w+\s*\?\?/, // Optional metadata fields with defaults
 ];
 
 function isExceptionFile(filePath: string): boolean {
@@ -109,14 +112,22 @@ function assessSeverity(
   if (file.includes('/utils/') && !file.includes('assertions')) return 'MEDIUM'; // Utility functions
   if (file.includes('test') || file.includes('scripts/')) return 'LOW'; // Tests/scripts
 
-  // Upgrade if in calculation context
-  if (line.includes('calculate') || line.includes('compute') || line.includes('rate')) {
-    return 'CRITICAL';
-  }
-
-  // Safe nullish coalescing patterns (optional chaining)
+  // Safe nullish coalescing patterns FIRST (before upgrade check)
+  // These are intentional fallbacks for optional parameters
   if (patternName === 'nullish_coalescing' && isSafeNullishContext(line)) {
     return 'LOW';
+  }
+
+  // Upgrade if in calculation context (word boundaries to avoid false positives like 'generateConfigId')
+  // Uses word boundary checks: 'rate' shouldn't match 'generate', 'calculate' shouldn't match 'recalculate'
+  const calculationPatterns = [
+    /\bcalculate\w*/i,  // calculate, calculateTotal, etc.
+    /\bcompute\w*/i,    // compute, computeValue, etc.
+    /\brate\b/i,        // 'rate' as standalone word (not 'generate', 'iterate')
+    /Rate\b/,           // deathRate, birthRate, etc. (PascalCase)
+  ];
+  if (calculationPatterns.some(p => p.test(line))) {
+    return 'CRITICAL';
   }
 
   return baseSeverity;

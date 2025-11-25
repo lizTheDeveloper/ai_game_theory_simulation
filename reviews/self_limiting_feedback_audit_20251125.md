@@ -105,8 +105,10 @@ state.environmentalAccumulation.pollutionLevel = Math.max(0, Math.min(1, polluti
 **Verdict:** ✅ PASS - Self-limiting mechanisms present and documented with research citations.
 
 **Status Update (Nov 25, 2025):**
-- ✅ Citations added to `ClimateSystemPhase.ts` lines 407-424 (95% cap), 438-459 (5% floor), 516-530 (pollution)
+- ✅ Citations added to `ClimateSystemPhase.ts` lines 407-424 (95% cap), 438-469 (5% floor), 516-530 (pollution)
 - ✅ Cross-referenced with `/research/climate_tipping_timescales_20251106.md`
+- ✅ Full research synthesis: `/research/climate_self_limiting_mechanisms_20251125.md` (11 peer-reviewed sources)
+- ✅ Key citations: Armstrong McKay 2022 (Science), IPCC AR6, Cronin 2023, Steffen 2018, Lenton 2019
 - ✅ Grade upgraded from C- to B+
 
 ---
