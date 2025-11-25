@@ -131,6 +131,11 @@ npx tsx scripts/validateCodebase.ts
 
 # Circular dependency check (phase execution graph)
 npx tsx logs/validate_no_cycles.ts
+
+# NaN/RNG debugging utilities
+npx tsx scripts/testRNG.ts                    # Minimal RNG binding test
+npx tsx scripts/testInitialization.ts         # Isolate init with RNG
+npx tsx scripts/diagnosticSpiralThresholds.ts # Spiral activation window analysis
 ```
 
 ## Testing
