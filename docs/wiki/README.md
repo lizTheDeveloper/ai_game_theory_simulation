@@ -10334,6 +10334,7 @@ src/
     │   ├── WorldVisualization.tsx      # Global systems viz
     │   ├── EventStream.tsx             # Event log
     │   ├── ActionBar.tsx               # Simulation controls
+    │   ├── stateMappers.ts             # GameState → UI prop transforms (Nov 25 type fixes)
     │   ├── game-dashboard.module.css   # Styles (554 lines)
     │   ├── ResearchTree/               # Tech grid (6 files, NEW Nov 25)
     │   │   ├── ResearchTree.tsx        # Main 4x6 grid component
@@ -10370,6 +10371,18 @@ src/
 - CSS modules with animations
 - Full TypeScript types for all components
 - Accessibility support (ARIA labels, keyboard navigation)
+
+**State Mapping Conventions** (stateMappers.ts):
+When accessing GameState properties for UI display, use correct property paths:
+- `planetaryBoundariesSystem` (not `planetaryBoundaries`)
+- `extinctionState.active` (not `crisisState.activePhases`)
+- `outcomeMetrics.utopiaProbability` (not `utopiaIndex`)
+- `outcomeMetrics.extinctionProbability` (not `extinctionRisk`)
+- `aiAgent.capability` (not `capabilities.overall`)
+- `aiAgent.alignment` (not `trueAlignment`)
+- `society.trust` (not `cohesion`)
+- `techTreeState.deployedTechMap` (not `deployedTech`)
+- `event.timestamp` (not `month`)
 
 ### Next Steps
 
