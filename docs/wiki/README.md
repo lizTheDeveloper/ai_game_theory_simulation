@@ -38,7 +38,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - Month 0: Gene drives, geoengineering, nanotechnology → uncontrolled cascades
   - Year 1: -1.7B deaths (21% population loss)
   - Year 14: Near-extinction (97.8M survivors from 8.14B start)
-- **SOLUTION:** TechDeploymentSchedulePhase (order 1.5) spreads 119 techs over 24 months
+- **SOLUTION:** TechDeploymentSchedulePhase (order 1.6) spreads 119 techs over 24 months
   - **5-tier deployment schedule:** TIER 0 (month 0) → TIER 1 (month 6) → TIER 2 (month 12) → TIER 3 (month 18) → TIER 4 (month 24)
   - State field: `techDeploymentSchedule` tracks scheduled deployments and execution status
   - Modes: `sequenced` (tier waves), `adaptive` (governance-gated), `prioritized` (category-ordered)
@@ -46,7 +46,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - Immediate deployment: 98.8% mortality (baseline)
   - Sequenced deployment (6mo gaps): 87.2% mortality
   - Improvement: +11.6 percentage points (still catastrophic but allows governance testing)
-- **NEW PHASE:** TechDeploymentSchedulePhase (order 1.5)
+- **NEW PHASE:** TechDeploymentSchedulePhase (order 1.6)
   - File: `src/simulation/engine/phases/TechDeploymentSchedulePhase.ts`
   - Executes scheduled deployments at specified months
   - Integrates with scenario framework's `TechDeploymentStrategy` interface
@@ -10003,10 +10003,10 @@ tail -f logs/phase3_batch_*.log
 
 **Background:** Phase 3 governance scenarios used `mode: 'immediate'` which deployed 92 transformative technologies at month 0. This caused catastrophic mortality cascades before any governance intervention could take effect. All spiral mechanisms failed because runs ended in near-extinction.
 
-**New Phase: TechDeploymentSchedulePhase** (order 1.5, `src/simulation/engine/phases/TechDeploymentSchedulePhase.ts`)
+**New Phase: TechDeploymentSchedulePhase** (order 1.6, `src/simulation/engine/phases/TechDeploymentSchedulePhase.ts`)
 
 Executes scheduled technology deployments for sequenced/adaptive/prioritized modes:
-- **Phase Order:** 1.5 (early, before agent actions)
+- **Phase Order:** 1.6 (after ApplyScenarioPrioritiesPhase at 1.5, before agent actions)
 - **Dependencies:** None (runs at start of each step)
 - **State Field:** `state.techDeploymentSchedule`
   ```typescript
