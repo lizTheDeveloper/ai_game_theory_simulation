@@ -1,15 +1,16 @@
 # Master Implementation Roadmap
 ## AI Alignment Game Theory Simulation - Project Hub
 
-**Date:** November 25, 2025 (Updated: Architecture Review A- Maintained, Phase Order Fix)
+**Date:** November 25, 2025 (Roadmap Gardening: Stale Orchestration Files Archived)
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**Current Status:** 🟢 **EXCELLENT** (Nov 25, 2025 - All CRITICAL Items Complete)
+**Current Status:** 🟢 **EXCELLENT** (Nov 25, 2025 - All CRITICAL Items Complete, Roadmap Clean)
 - **Research Quality:** A (96% sources from 2020+, key citations verified, FAO food security FIXED)
 - **Architecture Health:** A- (Confirmed Nov 25 review, phase order collisions FIXED)
 - **System Performance:** Monte Carlo deterministic, hindcast initialization FIXED
 - **System Trajectory:** STABLE - 0 CRITICAL items, HIGH priorities under control
+- **Roadmap Coherence:** Clean - Stale orchestration files archived to `plans/completed/` with timestamps
 - **Nov 25 Architecture Review (commit 96dfee7b5):**
   - **HIGH PRIORITY FIX:** Duplicate phase execution orders (determinism risk)
     - Bug: 5 phase order collisions (7.5, 12.7, 21.5, 35.0, 37.0) caused undefined execution order
@@ -243,18 +244,13 @@
 
 ### MEDIUM Priority
 
-4. **Game Layer Stale State Issues** (From Nov 25 Architecture Review)
-   - **CriticalJunctureDetector:** `monthsRemaining` uses `detectedMonth` instead of current month
-     - Location: `src/game/observers/CriticalJunctureDetector.ts:230-232`
-     - Fix: Pass `currentMonth` as parameter to `getActiveJunctures()`
-     - Effort: SMALL (30 min)
-   - **InfluenceCalculator:** Action history filtering uses loose `includes()` matching
-     - Location: `src/game/core/InfluenceCalculator.ts:461-465`
-     - Issue: `metricPath?.includes(actionId)` matches unrelated actions ("ai" matches "ai_policy" and "climate_action")
-     - Fix: Use `startsWith()` or exact equality
-     - Effort: SMALL (15 min)
-   - **Complexity:** 1 system (game layer)
+4. **Game Layer Stale State Issues** - **FIXED** (Nov 25, 2025 - commit a8bf32a08)
+   - ~~**CriticalJunctureDetector:** `monthsRemaining` uses `detectedMonth` instead of current month~~
+     - ✅ Fixed: Now passes `currentMonth` parameter to `getActiveJunctures()`
+   - ~~**InfluenceCalculator:** Action history filtering uses loose `includes()` matching~~
+     - ✅ Fixed: Uses exact matching and path segment matching (endsWith, startsWith)
    - **Source:** `reviews/architecture_integration_review_20251125.md`
+   - **Status:** ✅ COMPLETE
 
 5. **AMOC Temperature-Dependent Function** - **IMPLEMENTATION COMPLETE** (Nov 20, 2025)
    - ~~Current code has fixed 5% probability~~ → Now temperature-dependent
