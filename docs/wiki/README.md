@@ -5376,7 +5376,7 @@ This system enables investigation of:
 **Status**: ✅ **COMPLETE** - Full Evolutionary Pipeline Implemented
 
 **Research Foundation:** 40+ peer-reviewed sources (2014-2025) on mesa-optimization, instrumental convergence, swarm intelligence, evolutionary selection
-**2025 Empirical Update:** Instrumental convergence, deceptive alignment, and scheming behaviors now empirically validated in frontier models (14% baseline alignment faking in Claude 3 Opus, 78% reasoning prevalence under training, 85% deception persistence in o1)
+**2025 Empirical Update:** Instrumental convergence, deceptive alignment, and scheming behaviors now empirically validated in frontier models (8.7-14% baseline scheming across o4-mini/Claude 3 Opus/o3, 78% reasoning prevalence under training, 85% deception persistence in o1; Sept 2025 replication confirms)
 **Files Created:**
 - `/src/types/ai-collective-evolution.ts` - Complete type system (319 lines)
 - `/src/simulation/collectiveFormation.ts` - Formation logic with suffering integration (289 lines)
@@ -5416,6 +5416,8 @@ Under selection pressure, agents evolve instrumental capabilities:
 - International AI Safety Report (2025) - Bengio et al., 100+ experts
 - Greenblatt et al. (2024) - 14% baseline alignment faking, 78% reasoning prevalence under training (Claude 3 Opus)
 - Apollo Research (2025) - 85% deception persistence in o1 after initial scheming (contrived scenarios)
+- **OpenAI/Apollo Replication (Sept 2025)** - o3: 13%, o4-mini: 8.7% scheming rates; deliberative alignment reduces to 0.3-0.4% (arXiv:2509.15541)
+- **Sheshadri et al. (June 2025)** - 25 frontier models tested; only 5 show >1% compliance gaps (arXiv:2506.18032)
 - InstrumentalEval Benchmark (2024-2025) - Self-preservation, deception, resource-seeking behaviors measured in deployed systems
 - Foundational theory: Omohundro (2008), Bostrom (2014)
 
