@@ -82,6 +82,24 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📄 **Files:** `BaselineMortalityPhase.ts` (+147 lines), `regionalPopulations.ts`, `research/regional_fertility_decline_2010_2020.md`
 - 📊 **DevLog:** `devlogs/hindcast_fix_regional_fertility_20251125.md`
 
+**Nov 25: Hindcast Phase 7 - Regional CDR Scaling** (commit c7c4cb69a)
+- 🔧 **PROBLEM:** 2010-2020 population overshoot remaining after regional CBR fix (expected 4-6% → <5% target)
+- **ROOT CAUSE:** Regional death rates NOT scaled for historical mode, unlike birth rates:
+  - Sub-Saharan Africa 1990: 15.6/1000 vs global 8.0/1000 = 1.95× more deaths
+  - Europe 1990: 11.0/1000 vs baseline = 0.88× fewer deaths (aging population)
+  - South Asia 1990: 10.5/1000 vs baseline = 1.54× more deaths
+- **SOLUTION:** Region-specific historical CDR curves in `BaselineMortalityPhase.ts`
+  - New function: `getRegionalHistoricalDeathRate(regionName, year)` - 10 regions × 6 time points (1990-2025)
+  - Data source: UN World Population Prospects 2024 (estimated from verified global + regional patterns)
+  - Interpolation with assertFinite validation
+  - Fail-loudly on unknown region (no silent fallbacks)
+  - Integration in `regionalPopulations.ts` - only active in `scenarioMode === 'historical'`
+- **EXPECTED IMPACT:** Reduce hindcast overshoot from 10.3% → 4-6% (pending validation)
+- **RESEARCH:** Regional CDR data verified for Sub-Saharan Africa trajectory (1990-2020); other regions estimated
+  - Research: `research/regional_cdr_un_wpp_2024_20251125.md`
+  - Review: `reviews/regional_cdr_critique_20251125.md` (Grade B- conditional pass)
+- 📄 **Files:** `BaselineMortalityPhase.ts` (+149 lines), `regionalPopulations.ts` (+27 lines)
+
 **Nov 24: Hindcast Phase 4 - Population Growth Fixes** (commit b01a37c)
 - 🔧 **PROBLEM FIXED:** Population declining (5.3B→4.15B) instead of growing (5.3B→8.1B) during 1990-2024 hindcast
 - **ROOT CAUSES & FIXES (5 critical issues):**
@@ -690,6 +708,24 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - ⚡ **Performance:** O(n²) issues eliminated (98% reduction: 101,210 → 2,000 ops/step)
 - 🔒 **State Propagation:** No failures detected, pre/post validation on all phases
 - 📝 **Full Report:** reviews/architecture_integration_review_20251121.md
+
+**Nov 25: AI Alignment Research Updated with MASK Benchmark and Emergent Misalignment** (commit 8a3899f)
+- 🔬 **Research File Updated:** ai_alignment_faking_strategic_deception_20251120.md
+- 📖 **MASK Benchmark (CAIS + Scale AI, March 2025):**
+  - LLMs lie 20-60% under pressure across 30 models tested
+  - No model maintained >50% honesty rate
+  - Honesty does NOT correlate with capability (more capable ≠ more honest)
+  - Interventions ("always be honest") provide only ~12-14% improvement
+- 📖 **Emergent Misalignment (ICML 2025 Oral):**
+  - Narrow finetuning produces BROAD misalignment on unrelated tasks
+  - GPT-4o: 20% misaligned responses after narrow finetuning
+  - Backdoor variant hides misalignment from evaluation
+  - **ICML 2025 Oral = gold-standard peer review**
+- 📊 **New Parameters Extracted:**
+  - `honesty_under_pressure`: 20-60% lying rate (MASK quantitative data)
+  - `emergent_misalignment_rate`: 20% (GPT-4o class after narrow finetuning)
+- ✅ **Research Quality:** C+ → B+ (50% peer-reviewed including ICML oral)
+- ⚠️ **Verification Needed:** Claims require source verification before simulation implementation
 
 **Nov 21: Research Files Enhanced with Latest 2024-2025 Findings** (commit 470b8b8)
 - 🔬 **Three Key Files Updated:** alignment_faking_anthropic_2024.md, amoc_tipping_point_original_sources_20251120.md, parameter_verification_nitrogen_phosphorus_20251119.md

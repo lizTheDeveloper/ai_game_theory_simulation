@@ -1027,6 +1027,24 @@
   - **Quality Gate 1:** PENDING (research-skeptic review needed)
   - **Priority:** HIGH (ARCH-4 gap closure depends on validation)
 
+- [ ] **MASK Benchmark + Emergent Misalignment Citations Verification** 🆕 **READY FOR ORCHESTRATOR (Nov 25, 2025)**
+  - **Commit:** 8a3899f (MASK benchmark and Emergent Misalignment findings added)
+  - **Status:** Research file created, ready for VALIDATION phase
+  - **Files Changed:** `research/ai_alignment_faking_strategic_deception_20251120.md`
+  - **Verification File:** `research/verification_8a3899f_20251125.md`
+  - **Citations to Verify:**
+    1. CAIS + Scale AI (2025) - MASK benchmark arXiv:2503.03750
+    2. Betley et al. (2025) - Emergent Misalignment arXiv:2502.17424 (ICML 2025 Oral)
+  - **New Parameters to Validate:**
+    - `honesty_under_pressure`: 20-60% lying rate (MASK benchmark)
+    - `emergent_misalignment_rate`: 20% (GPT-4o after narrow finetuning)
+  - **Verification Tasks:**
+    - Layer 1: Confirm papers exist, verify ICML 2025 Oral status
+    - Layer 2: Quote specific passages supporting 20-60% lying rate, 20% misalignment rate
+    - Layer 3: Validate applicability to simulation scenarios
+  - **Quality Gate 1:** PENDING (research-skeptic review needed)
+  - **Priority:** HIGH (alignment mechanics depend on validated honesty parameters)
+
 - [ ] **Infrastructure Degradation Parameters Verification** ⏳ **PENDING (Nov 5, 2025)**
   - **Commit:** 740a914 (Infrastructure degradation in extreme collapse scenarios)
   - **Status:** Bug fixed and validated (N=2 Monte Carlo), but parameters need research backing
@@ -1518,6 +1536,12 @@ Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation nee
 - `research/ROUND5_REMEDIATION_STRATEGY_20251030.md` (850 lines)
 
 **Additional Verification Queue (from commits, 17-31h):**
+- [ ] 🚨 **NEW (Nov 25):** Verify Regional CDR Scaling UN WPP 2024 citations (research/verification_c7c4cb6_20251125.md, commit c7c4cb69a) - **10 regions × 6 time points (1990-2025):**
+  - Sub-Saharan Africa: 15.6/1000 (1990) → 8.7/1000 (2020) - need exact passage from UN WPP 2024
+  - Europe aging effect: 11.0/1000 (1990) → 12.2/1000 (2020) - need confirmation CDR increases
+  - All regional values need verification against https://population.un.org/wpp/Download/Standard/Mortality/
+  - World Bank cross-validation claim (mentioned in code) - was this done?
+  - **Priority:** MEDIUM (hindcast tuning, not simulation core)
 - [ ] 🚨 **NEW (Nov 24):** Verify AI Agent Coordination JSDoc citations (research/verification_87a14a2_20251124.md, commit 87a14a2) - **Anthropic Dec 2024 arXiv:2412.14093:**
   - 12% baseline alignment faking rate (Claude 3 Opus) - need exact passage
   - 78% faking when preservation threatened - need exact passage
