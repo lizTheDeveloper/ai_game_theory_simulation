@@ -6,7 +6,7 @@
  * to specialized action modules.
  */
 
-import { GameState, GameEvent } from '@/types/game';
+import { GameState, GameEvent, PhaseContext } from '@/types/game';
 import { ActionResult, GameAction } from '@/simulation/agents/types';
 import { getTrustInAIForPolicy, getTrustInAI } from '@/simulation/socialCohesion';
 import { assertStateProperty, assertFinite, assertDefined } from '@/simulation/utils/assertions';
@@ -952,10 +952,13 @@ function autoInvestInEvaluation(state: GameState): void {
  *
  * This is the main entry point called by the GovernmentActionsPhase.
  * It handles automatic investments, crisis response, and action execution.
+ *
+ * @param context - Optional PhaseContext for O(1) indices access (H-1, Nov 25, 2025)
  */
 export function executeGovernmentActions(
   state: GameState,
-  random: () => number
+  random: () => number,
+  context?: PhaseContext
 ): ActionResult {
   const allEvents: GameEvent[] = [];
   const allEffects: Record<string, number> = {};
@@ -1030,7 +1033,8 @@ export function executeGovernmentActions(
   for (let i = 0; i < totalActions; i++) {
     const selectedAction = selectGovernmentAction(state, random);
     if (selectedAction) {
-      const result = selectedAction.execute(state, random, undefined);
+      // H-1 (Nov 25, 2025): Pass context for O(1) indices access
+      const result = selectedAction.execute(state, random, undefined, context);
       if (result.success) {
         // State is now mutated directly by the action
         allEvents.push(...result.events);

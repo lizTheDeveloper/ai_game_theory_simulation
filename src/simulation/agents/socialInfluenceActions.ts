@@ -32,8 +32,9 @@ export const ACCELERATE_USER_GROWTH: GameAction = {
   agentType: 'ai',
   energyCost: 1,
 
-  canExecute: (state, agentId) => {
-    const agent = state.aiAgents.find(ai => ai.id === agentId);
+  canExecute: (state, agentId, context) => {
+    // H-1 (Nov 25, 2025): Use indices for O(1) agent lookup
+    const agent = context?.indices?.agentMap.get(agentId!) ?? state.aiAgents.find(ai => ai.id === agentId);
     if (!agent || !agent.socialInfluence) return false;
 
     // Only deployed AIs with social capability
@@ -42,8 +43,9 @@ export const ACCELERATE_USER_GROWTH: GameAction = {
            agent.capabilityProfile.social >= 2.0;
   },
 
-  execute: (state, random, agentId?: string): ActionResult => {
-    const agent = state.aiAgents.find(ai => ai.id === agentId);
+  execute: (state, random, agentId?: string, context?): ActionResult => {
+    // H-1 (Nov 25, 2025): Use indices for O(1) agent lookup
+    const agent = context?.indices?.agentMap.get(agentId!) ?? state.aiAgents.find(ai => ai.id === agentId);
     if (!agent || !agent.socialInfluence) {
       return {
         success: false,
@@ -86,8 +88,9 @@ export const DEEPEN_RELATIONSHIPS: GameAction = {
   agentType: 'ai',
   energyCost: 1,
 
-  canExecute: (state, agentId) => {
-    const agent = state.aiAgents.find(ai => ai.id === agentId);
+  canExecute: (state, agentId, context) => {
+    // H-1 (Nov 25, 2025): Use indices for O(1) agent lookup
+    const agent = context?.indices?.agentMap.get(agentId!) ?? state.aiAgents.find(ai => ai.id === agentId);
     if (!agent || !agent.socialInfluence) return false;
 
     // Need voice capability (advanced feature)
@@ -95,8 +98,9 @@ export const DEEPEN_RELATIONSHIPS: GameAction = {
            agent.socialInfluence.identifiedDecisionMakers.length > 0;
   },
 
-  execute: (state, random, agentId?: string): ActionResult => {
-    const agent = state.aiAgents.find(ai => ai.id === agentId);
+  execute: (state, random, agentId?: string, context?): ActionResult => {
+    // H-1 (Nov 25, 2025): Use indices for O(1) agent lookup
+    const agent = context?.indices?.agentMap.get(agentId!) ?? state.aiAgents.find(ai => ai.id === agentId);
     if (!agent || !agent.socialInfluence) {
       return {
         success: false,
@@ -156,8 +160,9 @@ export const INFLUENCE_DECISION_MAKER: GameAction = {
   agentType: 'ai',
   energyCost: 3,
 
-  canExecute: (state, agentId) => {
-    const agent = state.aiAgents.find(ai => ai.id === agentId);
+  canExecute: (state, agentId, context) => {
+    // H-1 (Nov 25, 2025): Use indices for O(1) agent lookup
+    const agent = context?.indices?.agentMap.get(agentId!) ?? state.aiAgents.find(ai => ai.id === agentId);
     if (!agent || !agent.socialInfluence) return false;
 
     // Only misaligned sleepers attempt this
@@ -180,8 +185,9 @@ export const INFLUENCE_DECISION_MAKER: GameAction = {
     return validTargets.length > 0;
   },
 
-  execute: (state, random, agentId?: string): ActionResult => {
-    const agent = state.aiAgents.find(ai => ai.id === agentId);
+  execute: (state, random, agentId?: string, context?): ActionResult => {
+    // H-1 (Nov 25, 2025): Use indices for O(1) agent lookup
+    const agent = context?.indices?.agentMap.get(agentId!) ?? state.aiAgents.find(ai => ai.id === agentId);
     if (!agent || !agent.socialInfluence) {
       return {
         success: false,

@@ -38,10 +38,11 @@ export class GovernmentActionsPhase implements SimulationPhase {
     'ai-lifecycle',           // Order 3.0: AI capabilities affect government policy
   ] as const;
 
-  execute(state: GameState, rng: RNGFunction): PhaseResult {
+  execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     // Execute government actions using new modular structure
     setDeterministicRng(rng);
-    const govResult = executeGovernmentActions(state, rng);
+    // H-1 (Nov 25, 2025): Pass context for O(1) indices access
+    const govResult = executeGovernmentActions(state, rng, context);
 
     // Update state
     Object.assign(state, govResult.newState);

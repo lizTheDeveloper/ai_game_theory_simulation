@@ -32,13 +32,13 @@ export class PlayerDecisionPhase implements SimulationPhase {
   // DEPENDENCIES (Nov 15, 2025): No dependencies - player decisions can be processed early
   readonly dependencies = [] as const;
   private rng: RNGFunction | null = null;
-  private indices?: { agentMap: Map<string, any>; [key: string]: any };
+  private context?: PhaseContext; // Store full context for passing to actions (H-1, Nov 25, 2025)
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     const events: GameEvent[] = [];
     setDeterministicRng(rng);
     this.rng = rng; // Store RNG for use in handler methods
-    this.indices = context?.indices; // Store indices for O(1) lookups
+    this.context = context; // Store context for O(1) indices access (H-1, Nov 25, 2025)
 
     // Initialize queue if not present
     if (!state.playerDecisions) {
@@ -100,13 +100,13 @@ export class PlayerDecisionPhase implements SimulationPhase {
       if (action) {
         console.log(`    Executing Government Action: ${action.name}`);
 
-        // Check if action can be executed
-        if (action.canExecute(state)) {
-          // Execute the action with deterministic RNG
+        // Check if action can be executed (H-1: pass context for indices)
+        if (action.canExecute(state, undefined, this.context)) {
+          // Execute the action with deterministic RNG (H-1: pass context for indices)
           if (!this.rng) {
             throw new Error('RNG not initialized in PlayerDecisionPhase');
           }
-          const result: ActionResult = action.execute(state, this.rng, 'player');
+          const result: ActionResult = action.execute(state, this.rng, 'player', this.context);
 
           // Add events from action execution
           if (result.events) {
@@ -258,7 +258,7 @@ export class PlayerDecisionPhase implements SimulationPhase {
     }
 
     // Find the AI agent (use index lookup if available)
-    const agent = this.indices?.agentMap.get(data.agentId) ?? state.aiAgents.find(ai => ai.id === data.agentId);
+    const agent = this.context?.indices?.agentMap.get(data.agentId) ?? state.aiAgents.find(ai => ai.id === data.agentId);
     if (!agent) {
       console.warn(`    ⚠️ AI agent not found: ${data.agentId}`);
       return;
@@ -284,7 +284,8 @@ export class PlayerDecisionPhase implements SimulationPhase {
     }
 
     console.log(`    Executing AI Action: ${action.name} for agent ${agent.name}`);
-    const result: ActionResult = action.execute(state, this.rng, data.agentId);
+    // H-1 (Nov 25, 2025): Pass context for O(1) indices access
+    const result: ActionResult = action.execute(state, this.rng, data.agentId, this.context);
 
     // Add events from action execution
     if (result.events) {
