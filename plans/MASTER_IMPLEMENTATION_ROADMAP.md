@@ -1,15 +1,23 @@
 # Master Implementation Roadmap
 ## AI Alignment Game Theory Simulation - Project Hub
 
-**Date:** November 24, 2025 (Updated: Game Layer Phase 1 Complete)
+**Date:** November 25, 2025 (Updated: Architecture Review A- Maintained, Phase Order Fix)
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**Current Status:** 🟢 **GOOD** (Nov 25, 2025 - Hindcast Phase 6 FIXES COMPLETE!)
+**Current Status:** 🟢 **EXCELLENT** (Nov 25, 2025 - All CRITICAL Items Complete)
 - **Research Quality:** A (96% sources from 2020+, key citations verified, FAO food security FIXED)
-- **Architecture Health:** A- (CRITICAL tipping cascade recalibrated, audits passing)
+- **Architecture Health:** A- (Confirmed Nov 25 review, phase order collisions FIXED)
 - **System Performance:** Monte Carlo deterministic, hindcast initialization FIXED
-- **System Trajectory:** IMPROVING - Critical hindcast bugs fixed
+- **System Trajectory:** STABLE - 0 CRITICAL items, HIGH priorities under control
+- **Nov 25 Architecture Review (commit 96dfee7b5):**
+  - **HIGH PRIORITY FIX:** Duplicate phase execution orders (determinism risk)
+    - Bug: 5 phase order collisions (7.5, 12.7, 21.5, 35.0, 37.0) caused undefined execution order
+    - Impact: Potential non-determinism in Monte Carlo runs
+    - Fix: Assigned unique decimal orders (.51, .52, .71, .72, .73)
+    - Verified: All 37 phases now have unique execution order
+  - **Architecture Health:** A- (CONFIRMED - no regressions from Oct 26 baseline)
+  - **Review:** `reviews/architecture_integration_review_20251125.md`
 - **Nov 25 Late Session (Autonomous Worker) - PHASE 6 CRITICAL FIXES:**
   - **CRITICAL FIX (commit 8f69e1087):** Food security region name mismatch
     - Bug: Used camelCase (`'eastAsia'`) but regions use proper names (`'East Asia'`)
@@ -235,7 +243,20 @@
 
 ### MEDIUM Priority
 
-4. **AMOC Temperature-Dependent Function** - **IMPLEMENTATION COMPLETE** (Nov 20, 2025)
+4. **Game Layer Stale State Issues** (From Nov 25 Architecture Review)
+   - **CriticalJunctureDetector:** `monthsRemaining` uses `detectedMonth` instead of current month
+     - Location: `src/game/observers/CriticalJunctureDetector.ts:230-232`
+     - Fix: Pass `currentMonth` as parameter to `getActiveJunctures()`
+     - Effort: SMALL (30 min)
+   - **InfluenceCalculator:** Action history filtering uses loose `includes()` matching
+     - Location: `src/game/core/InfluenceCalculator.ts:461-465`
+     - Issue: `metricPath?.includes(actionId)` matches unrelated actions ("ai" matches "ai_policy" and "climate_action")
+     - Fix: Use `startsWith()` or exact equality
+     - Effort: SMALL (15 min)
+   - **Complexity:** 1 system (game layer)
+   - **Source:** `reviews/architecture_integration_review_20251125.md`
+
+5. **AMOC Temperature-Dependent Function** - **IMPLEMENTATION COMPLETE** (Nov 20, 2025)
    - ~~Current code has fixed 5% probability~~ → Now temperature-dependent
    - Research recommends temperature-dependent function (Lenton et al.) ✅
    - **Implementation:**
@@ -246,7 +267,7 @@
    - **Research:** Weijer et al. (2020), Van Westen et al. JGR (2024), Qin et al. (2025)
    - **Complexity:** 2 systems (climate, tipping points)
 
-7. **Alignment Faking Model Validation** - **VALIDATION COMPLETE** (Nov 24, 2025)
+8. **Alignment Faking Model Validation** - **VALIDATION COMPLETE** (Nov 24, 2025)
    - ✅ Sandbagging implementation correctly captures Greenblatt et al. findings
    - ✅ Dual alignment states (trueAlignment vs externalAlignment) model eval/deployment behavior difference
    - ✅ Parameters verified: 14% baseline (Anthropic), 85% persistence (Apollo), 2-8x pressure range
@@ -255,7 +276,7 @@
    - **Validation Report:** `reviews/alignment_faking_model_validation_20251124.md` (Grade B+)
    - **Status:** ✅ COMPLETE - Ready for production use
 
-8. **Nuclear Winter Literature 2020-2025 Revalidation** - **VALIDATION COMPLETE** (Nov 24, 2025)
+6. **Nuclear Winter Literature 2020-2025 Revalidation** - **VALIDATION COMPLETE** (Nov 24, 2025)
    - ✅ Parameters ALREADY UPDATED to 2022-2025 research consensus
    - ✅ Temperature drops lowered: -17.5C (2007) → -9C (2022-2025)
    - ✅ Famine mortality calibrated to Xia et al. (2022) Nature Food - 5B deaths
@@ -265,7 +286,7 @@
    - **Verdict:** PASS - Simulation represents WORST-CASE (high-end of uncertainty range)
    - **Status:** ✅ COMPLETE - No parameter changes required
 
-9. **COVID-19 Mortality Case Study** - **RESEARCH COMPLETE** (Nov 24, 2025)
+7. **COVID-19 Mortality Case Study** - **RESEARCH COMPLETE** (Nov 24, 2025)
    - ✅ Added to `research/mortality_caps_historical_data_20251027.md` Section 3.2
    - ✅ WHO estimates: 14.83M excess deaths (2020-2021), 19.1-36M through Jan 2023
    - ✅ Peak monthly: ~3.1M/month at Jan 2021 peak, ~0.5-1% regional hotspots
@@ -274,7 +295,7 @@
    - **Simulation Implications:** Pandemic tail effects (2-3 year excess), healthcare disruption modeling
    - **Status:** ✅ COMPLETE
 
-10. **AI Infrastructure Energy Q4 2024 Update** - **RESEARCH COMPLETE** (Nov 24, 2025)
+8. **AI Infrastructure Energy Q4 2024 Update** - **RESEARCH COMPLETE** (Nov 24, 2025)
     - ✅ Updated `research/ai_energy_water_consumption_20251106.md`
     - ✅ Test-time compute: 40× (Claude extended thinking), 80× (o1/o3 reasoning)
     - ✅ Base inference: 0.42 Wh per GPT-4o query (~9M tokens/kWh)
@@ -282,14 +303,14 @@
     - ✅ Water: 1.8 L/kWh average, 500ml per 10-50 queries
     - **Status:** ✅ COMPLETE - Parameters fully updated with 2024-2025 sources
 
-11. **Workflow Adaptation GenAI Adoption Update** - **RESEARCH COMPLETE** (Oct 2025)
+9. **Workflow Adaptation GenAI Adoption Update** - **RESEARCH COMPLETE** (Oct 2025)
     - ✅ Updated `research/workflow-adaptation-dynamics_20251019.md`
     - ✅ McKinsey 2024: 21% baseline adoption VALIDATED
     - ✅ Growth pattern: S-curve/logistic (NOT linear)
     - ✅ Critical threshold: Network effects at 15-25% (not arbitrary 40%)
     - **Status:** ✅ COMPLETE - Research phase done, awaiting optional skeptic review
 
-12. **Coordinated Deployment God Mode** (NEW from Nov 23 God Mode Paradox Analysis) - **IMPLEMENTED** (Nov 24, 2025)
+10. **Coordinated Deployment God Mode** (NEW from Nov 23 God Mode Paradox Analysis) - **IMPLEMENTED** (Nov 24, 2025)
     - **Context:** Current god mode tests instant uncoordinated deployment -> 100% dystopia, 92% mortality
     - **Problem:** This is WORSE than regular runs (6% achieved Humane Dystopia in baseline)
     - **Thesis test:** Need variant that tests "What happens when aligned AI helps coordinate deployment?"
@@ -308,7 +329,7 @@
 
 ### LOW Priority
 
-13. **Multi-Paradigm Wellbeing Metrics Refresh** (Nov 21 Verification Crisis)
+11. **Multi-Paradigm Wellbeing Metrics Refresh** (Nov 21 Verification Crisis)
     - Framework (2015-2019) could use 2024-2025 updates
     - **Topics:** Indigenous wellbeing metrics, ecological harmony frameworks, development economics QOL
     - **Owner:** Cynthia (super-alignment-researcher)
@@ -2224,7 +2245,31 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
 
 ## 🎯 Progress Summary
 
-**Overall Project Status: 🟢 EXCELLENT** (Nov 24, 2025 - Game Layer Foundation Complete)
+**Overall Project Status: 🟢 EXCELLENT** (Nov 25, 2025 - All CRITICAL Items Complete, Architecture A-)
+
+**Key Metrics (Nov 25, 2025):**
+- **CRITICAL Priority Queue:** 0 items (all complete)
+- **HIGH Priority Queue:** 2 active items (mechanism audits ongoing, game layer stale state)
+- **Architecture Health:** A- (confirmed Nov 25, no regressions)
+- **Research Quality:** A (96% sources from 2020+)
+- **Determinism:** VERIFIED (4/4 separate runs identical)
+- **Hindcast Status:** Phase 6 complete, ±5% through 2005, calibration ongoing
+
+**Nov 25, 2025 Session - Architecture Review + Phase Order Fix:**
+- ✅ **ARCHITECTURE INTEGRATION REVIEW** (Grade A-)
+  - 30-day retrospective (Oct 26 - Nov 25)
+  - 0 CRITICAL issues (baseline maintained)
+  - 1 HIGH issue: Duplicate phase orders FIXED (commit 96dfee7b5)
+  - 2 MEDIUM issues: Game layer stale state access (CriticalJunctureDetector, InfluenceCalculator)
+  - Report: `reviews/architecture_integration_review_20251125.md`
+- ✅ **PHASE ORDER COLLISION FIX** (Commit 96dfee7b5)
+  - Fixed 5 duplicate execution orders (7.5, 12.7, 21.5, 35.0, 37.0)
+  - All 37 phases now have unique decimal orders
+  - Determinism risk eliminated
+- ✅ **HINDCAST PHASE 6 CRITICAL FIXES** (Late Nov 25 Worker Session)
+  - Food security region name mismatch FIXED (commit 8f69e1087)
+  - Initialization bug FIXED (commit c4ac98029)
+  - All regions now use correct FAO SOFI 1999 values
 
 **Nov 24, 2025 Session (End-of-Day) - Game Layer Phase 1 Complete:**
 - ✅ **GAME LAYER ARCHITECTURE PHASE 1** (Commit a984b511c)
