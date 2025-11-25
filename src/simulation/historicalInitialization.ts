@@ -263,22 +263,28 @@ export async function createHistoricalInitialState(
     // https://www.fao.org/4/Y4252E/y4252e04.htm
     if (baseState.humanPopulationSystem?.regionalPopulations) {
       const historicalFoodSecurity: Record<string, number> = {
-        'eastAsia': 0.84,           // FAO: 16% undernourished (NOT 8%)
-        'southAsia': 0.74,          // FAO: 26% undernourished (NOT 12%)
-        'subSaharanAfrica': 0.65,   // FAO: 35% undernourished (NOT 15%)
-        'europe': 0.98,             // FAO: <2% undernourished (unchanged)
-        'northAmerica': 0.97,       // FAO: ~3% undernourished (slight correction)
-        'latinAmerica': 0.87,       // FAO: 13% undernourished (NOT 10%)
-        'middleEastNorthAfrica': 0.92, // FAO: 8% undernourished (was 12% - too high)
-        'southeastAsia': 0.74,      // Similar to South Asia (FAO: ~26%)
-        'centralAsia': 0.80,        // Interpolated from Soviet data
-        'oceania': 0.95             // Similar to developed regions
+        'East Asia': 0.84,               // FAO: 16% undernourished (1990-92)
+        'South Asia': 0.74,              // FAO: 26% undernourished (1990-92)
+        'Sub-Saharan Africa': 0.65,      // FAO: 35% undernourished (1990-92)
+        'Europe': 0.98,                  // FAO: <2% undernourished (1990-92)
+        'North America': 0.97,           // FAO: ~3% undernourished (1990-92)
+        'Latin America': 0.87,           // FAO: 13% undernourished (1990-92)
+        'Middle East & North Africa': 0.92, // FAO: 8% undernourished (1990-92)
+        'Southeast Asia': 0.84,          // FAO groups with East Asia: 16% undernourished
+        'Central Asia': 0.85,            // Estimate: Post-Soviet transition, moderate food security
+        'Oceania': 0.95,                 // Estimate: Australia/NZ developed, ~5% undernourished
       };
 
       for (const region of baseState.humanPopulationSystem.regionalPopulations) {
         if ('foodSecurity' in region) {
-          (region as { foodSecurity: number }).foodSecurity =
-            historicalFoodSecurity[region.name] || 0.80;
+          const regionalValue = historicalFoodSecurity[region.name];
+          if (regionalValue === undefined) {
+            throw new Error(
+              `❌ CRITICAL: Unknown region '${region.name}' in historical food security initialization. ` +
+              `Valid regions: ${Object.keys(historicalFoodSecurity).join(', ')}`
+            );
+          }
+          (region as { foodSecurity: number }).foodSecurity = regionalValue;
         }
       }
     }
