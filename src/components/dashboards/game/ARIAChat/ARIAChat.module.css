@@ -1,0 +1,710 @@
+/**
+ * ARIA Chat Component Styles
+ *
+ * Far-future Elysium aesthetic: black background, white text, #00F0FF accent
+ * Matches existing game-dashboard patterns
+ */
+
+/* ============================================================================
+   Main Container
+   ============================================================================ */
+
+.chatPanel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: 650px;
+  width: 100%;
+  max-width: 450px;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(0, 240, 255, 0.1);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #FFFFFF;
+  overflow: hidden;
+}
+
+/* ============================================================================
+   Header
+   ============================================================================ */
+
+.header {
+  padding: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.ariaTitle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ariaAvatar {
+  width: 40px;
+  height: 40px;
+  background: radial-gradient(circle, rgba(0, 240, 255, 0.3), transparent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  animation: avatarGlow 3s ease-in-out infinite;
+}
+
+@keyframes avatarGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(0, 240, 255, 0.4); }
+  50% { box-shadow: 0 0 40px rgba(0, 240, 255, 0.6); }
+}
+
+.ariaParticles {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: radial-gradient(circle, #00F0FF 0%, transparent 70%);
+  opacity: 0.6;
+  animation: particlePulse 2s ease-in-out infinite;
+}
+
+@keyframes particlePulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.2); opacity: 0.3; }
+}
+
+.ariaInfo {
+  flex: 1;
+}
+
+.ariaName {
+  font-size: 16px;
+  font-weight: 500;
+  color: #00F0FF;
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+}
+
+.ariaSubtitle {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 2px;
+}
+
+.windowControls {
+  display: flex;
+  gap: 8px;
+}
+
+.controlBtn {
+  width: 24px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 12px;
+}
+
+.controlBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #00F0FF;
+}
+
+/* ============================================================================
+   Pause Indicator
+   ============================================================================ */
+
+.pauseIndicator {
+  background: rgba(255, 176, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 176, 0, 0.3);
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  animation: pausePulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes pausePulse {
+  0%, 100% { background: rgba(255, 176, 0, 0.1); }
+  50% { background: rgba(255, 176, 0, 0.15); }
+}
+
+.pauseText {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #FFB000;
+}
+
+.pauseIcon {
+  font-size: 16px;
+}
+
+.resumeBtn {
+  background: rgba(0, 255, 136, 0.1);
+  border: 1px solid rgba(0, 255, 136, 0.3);
+  color: #00FF88;
+  padding: 6px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+}
+
+.resumeBtn:hover {
+  background: rgba(0, 255, 136, 0.2);
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+}
+
+/* ============================================================================
+   Chat Messages Container
+   ============================================================================ */
+
+.messagesContainer {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.messagesContainer::-webkit-scrollbar {
+  width: 6px;
+}
+
+.messagesContainer::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.messagesContainer::-webkit-scrollbar-thumb {
+  background: rgba(0, 240, 255, 0.3);
+  border-radius: 3px;
+}
+
+/* ============================================================================
+   Message Base Styles
+   ============================================================================ */
+
+.message {
+  max-width: 85%;
+  animation: messageFadeIn 0.3s ease;
+}
+
+@keyframes messageFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.messageUser {
+  align-self: flex-end;
+}
+
+.messageAria {
+  align-self: flex-start;
+}
+
+.messageFaded {
+  opacity: 0.5;
+}
+
+.messageBubble {
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.messageUser .messageBubble {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.messageAria .messageBubble {
+  background: rgba(0, 240, 255, 0.03);
+  border: 1px solid rgba(0, 240, 255, 0.15);
+  color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.05);
+}
+
+/* ============================================================================
+   Context Awareness Banner
+   ============================================================================ */
+
+.contextBanner {
+  margin-bottom: 8px;
+  padding: 6px 10px;
+  background: rgba(0, 240, 255, 0.03);
+  border-left: 2px solid rgba(0, 240, 255, 0.3);
+  border-radius: 3px;
+  font-size: 11px;
+  color: rgba(0, 240, 255, 0.7);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.contextIcon {
+  font-size: 12px;
+}
+
+/* ============================================================================
+   Message Content Styling
+   ============================================================================ */
+
+.messageList {
+  margin: 8px 0;
+  padding-left: 20px;
+}
+
+.messageList li {
+  margin: 4px 0;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 12px;
+}
+
+.highlight {
+  color: #00F0FF;
+  font-weight: 500;
+}
+
+.metric {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+}
+
+.warningText {
+  color: #FFB000;
+}
+
+/* ============================================================================
+   Intervention Options
+   ============================================================================ */
+
+.interventionOption {
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.interventionOption:hover {
+  transform: translateX(4px);
+}
+
+.interventionImmediate {
+  background: rgba(0, 255, 136, 0.05);
+  border-left: 3px solid #00FF88;
+}
+
+.interventionImmediate:hover {
+  background: rgba(0, 255, 136, 0.1);
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.2);
+}
+
+.interventionMedium {
+  background: rgba(139, 92, 246, 0.05);
+  border-left: 3px solid #8B5CF6;
+}
+
+.interventionMedium:hover {
+  background: rgba(139, 92, 246, 0.1);
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.2);
+}
+
+.interventionSystemic {
+  background: rgba(0, 240, 255, 0.05);
+  border-left: 3px solid #00F0FF;
+}
+
+.interventionSystemic:hover {
+  background: rgba(0, 240, 255, 0.1);
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+}
+
+.interventionTitle {
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.interventionImmediate .interventionTitle {
+  color: #00FF88;
+}
+
+.interventionMedium .interventionTitle {
+  color: #8B5CF6;
+}
+
+.interventionSystemic .interventionTitle {
+  color: #00F0FF;
+}
+
+.interventionList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.interventionList li {
+  margin: 4px 0;
+  padding-left: 12px;
+  position: relative;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.interventionList li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 4px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+}
+
+/* ============================================================================
+   Action Buttons
+   ============================================================================ */
+
+.actionButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.actionBtn {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.6);
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.actionBtn:hover {
+  border-color: #00F0FF;
+  color: #00F0FF;
+  background: rgba(0, 240, 255, 0.05);
+}
+
+.actionBtnClicked {
+  background: rgba(0, 255, 136, 0.1);
+  border-color: #00FF88;
+  color: #00FF88;
+}
+
+/* ============================================================================
+   Citations
+   ============================================================================ */
+
+.citationLink {
+  color: #00F0FF;
+  text-decoration: none;
+  font-size: 11px;
+  opacity: 0.7;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  border-bottom: 1px dotted rgba(0, 240, 255, 0.3);
+}
+
+.citationLink:hover {
+  opacity: 1;
+  border-bottom-color: #00F0FF;
+}
+
+.citationTooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.95);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  padding: 10px 14px;
+  border-radius: 4px;
+  font-size: 11px;
+  white-space: normal;
+  max-width: 280px;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  z-index: 1000;
+  box-shadow: 0 5px 20px rgba(0, 240, 255, 0.2);
+  line-height: 1.4;
+}
+
+.citationTooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: rgba(0, 240, 255, 0.3);
+}
+
+.citationLink:hover .citationTooltip {
+  opacity: 1;
+  visibility: visible;
+}
+
+.citationHeader {
+  color: #00F0FF;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.citationText {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.citationUrl {
+  display: block;
+  margin-top: 6px;
+  color: rgba(0, 240, 255, 0.6);
+  font-size: 10px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* ============================================================================
+   Uncertainty Footer
+   ============================================================================ */
+
+.uncertaintyFooter {
+  margin-top: 12px;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 12px;
+}
+
+/* ============================================================================
+   Typing Indicator
+   ============================================================================ */
+
+.typingIndicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 12px;
+  font-style: italic;
+  padding: 8px 16px;
+}
+
+.typingDots {
+  display: flex;
+  gap: 4px;
+}
+
+.typingDot {
+  width: 4px;
+  height: 4px;
+  background: #00F0FF;
+  border-radius: 50%;
+  animation: typingDot 1.4s infinite;
+}
+
+.typingDot:nth-child(2) { animation-delay: 0.2s; }
+.typingDot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typingDot {
+  0%, 60%, 100% { opacity: 0.3; }
+  30% { opacity: 1; }
+}
+
+/* ============================================================================
+   Suggestion Panel
+   ============================================================================ */
+
+.suggestionsPanel {
+  padding: 16px 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.02);
+  flex-shrink: 0;
+}
+
+.suggestionsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.suggestionsTitle {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.suggestionsContext {
+  font-size: 10px;
+  color: #00F0FF;
+  opacity: 0.5;
+}
+
+.suggestion {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 8px 12px;
+  margin-bottom: 6px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.suggestion:last-child {
+  margin-bottom: 0;
+}
+
+.suggestion:hover {
+  border-color: rgba(0, 240, 255, 0.3);
+  color: #00F0FF;
+  background: rgba(0, 240, 255, 0.03);
+}
+
+.suggestionIcon {
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+
+.suggestionContent {
+  flex: 1;
+}
+
+.suggestionText {
+  margin-bottom: 2px;
+}
+
+.suggestionSubtext {
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.suggestionSubtextWarning {
+  color: rgba(255, 176, 0, 0.5);
+}
+
+.suggestionSubtextUrgent {
+  color: rgba(255, 0, 64, 0.6);
+}
+
+/* ============================================================================
+   Input Area
+   ============================================================================ */
+
+.inputArea {
+  padding: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.inputField {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #FFFFFF;
+  padding: 10px 14px;
+  border-radius: 4px;
+  font-size: 13px;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.inputField::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.inputField:focus {
+  outline: none;
+  border-color: rgba(0, 240, 255, 0.5);
+  background: rgba(0, 240, 255, 0.02);
+}
+
+.sendBtn {
+  background: rgba(0, 240, 255, 0.1);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  color: #00F0FF;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.sendBtn:hover {
+  background: rgba(0, 240, 255, 0.2);
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+}
+
+.sendBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ============================================================================
+   Responsive
+   ============================================================================ */
+
+@media (max-width: 500px) {
+  .chatPanel {
+    max-width: 100%;
+    border-radius: 0;
+  }
+
+  .header {
+    padding: 16px;
+  }
+
+  .messagesContainer {
+    padding: 16px;
+  }
+
+  .inputArea {
+    padding: 16px;
+  }
+
+  .message {
+    max-width: 90%;
+  }
+}
