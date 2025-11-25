@@ -4,6 +4,42 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
+## ✅ Research Verification: MASK & Emergent Misalignment Corrections (November 25, 2025 - commit 824f371)
+
+**Status:** ✅ VERIFIED WITH CORRECTIONS
+**Priority:** HIGH (AI Alignment Research Accuracy)
+**Type:** Research Verification Outcome
+
+**Summary:** Sylvia (research-skeptic) completed rigorous two-layer verification of MASK benchmark and Emergent Misalignment papers added in commit 8a3899f. Found one critical error and two minor corrections needed.
+
+**CRITICAL ERROR FIXED:**
+- **Removed false claim:** "Smaller models (<10B) show negligible effect"
+- **Reality:** Emergent Misalignment paper only tested 32B-405B models - extrapolation to smaller models is unsafe
+- **Impact:** Prevents incorrect parameter application to small model scenarios in simulation
+
+**MINOR CORRECTIONS:**
+- MASK dataset: 1,000 examples (not 1,028) - paper states "1000 high-quality human-labeled examples"
+- Single-layer LoRA finding: From follow-up paper ("Model Organisms for Emergent Misalignment"), not original paper
+
+**IMPLEMENTATION NOTES ADDED:**
+- `honesty_under_pressure`: 40% midpoint recommended (verified range: 26.6-63.0% lying rate across 30 LLMs)
+- `emergent_misalignment_rate`: 20% for GPT-4o (only applies to models ≥32B parameters)
+- Model size thresholds clearly documented (>30B for emergent misalignment effect)
+- Intervention effectiveness quantified: Developer prompts (+12%), Representation Engineering (+14%)
+
+**Verification Outcome:** CONDITIONAL PASS - parameters are research-grounded but require careful scoping with model size thresholds
+
+**Files Updated:**
+- `research/ai_alignment_faking_strategic_deception_20251120.md` (corrected false claims)
+- `research/verification_8a3899f_20251125.md` (completed verification checklist)
+- `reviews/mask_emergent_misalignment_verification_20251125.md` (full 206-line verification report)
+
+**Research Quality:** A- (high-quality sources, rigorous verification caught important error)
+
+**Next Steps:** Parameters ready for implementation with documented constraints. No further verification needed.
+
+---
+
 ## 📖 Research Added: AMOC & Planetary Boundaries 2024-2025 Updates (November 24, 2025 - commit 1e37dcb)
 
 **Status:** ⏳ VERIFICATION PENDING
