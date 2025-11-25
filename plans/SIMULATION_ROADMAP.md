@@ -69,7 +69,7 @@
      - **Verified Parameter Recommendations:**
        - Coral reef: Add 1.2°C threshold trigger (irreversible collapse even if stabilized)
        - AMOC risk: Underestimated per expert consensus, collapse window 2025-2095 (median ~2057)
-       - Planetary boundaries: 6/9 transgressed (2023), now 7/9 with ocean acidification (2025)
+      - Planetary boundaries initial state: 6/9 transgressed (verified), now 7/9 with ocean acidification (2025)
      - **Implementation Impact:**
        - 2025 initial state much worse (coral collapsed, 7/9 boundaries RED)
        - AMOC collapse window validated by peer-reviewed research
