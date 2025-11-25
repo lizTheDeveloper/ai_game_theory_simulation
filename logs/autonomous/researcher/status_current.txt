@@ -1,17 +1,1 @@
-RESEARCH UPDATE TASK - November 25, 2025 Evening Session
-
-STATUS: Complete
-BRANCH: auto/researcher-20251125_183001
-
-UPDATES MADE:
-1. Added MIRI International ASI Prevention Agreement (arXiv:2511.10783)
-   - Target: research/ai_governance_international_coordination_20251113.md
-   - Key contribution: Quantitative expert risk estimates (10-38% catastrophic)
-   - Simulation parameters: Racing dynamics timeline (6-12 month defection window)
-
-RESEARCH FOUNDATION STATUS:
-- CRITICAL items: 0 (none urgent)
-- Key simulation files: All verified within past week
-- Research currency: 64.2% files have sources <3 years old
-
-NEXT SESSION: Standard schedule - continue monitoring
+GIT OPERATIONS
