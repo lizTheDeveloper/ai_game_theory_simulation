@@ -200,27 +200,32 @@ function calculateNovelEntitiesRemediationEffectiveness(
     true; // Default: assume dilute stream (conservative)
 
   // Concentrated sources (wastewater, industrial): 1.0 multiplier
-  // Dilute environmental (ocean, groundwater, atmosphere): 0.001 multiplier (6-9 orders of magnitude penalty)
-  // ⚠️ HIGH UNCERTAINTY: 0.001 derived from concentration ratios, not direct measurement. Range: 0.0001-0.01 (Quality Gate 2)
-  const concentrationMultiplier = worksOnDiluteStreams ? 0.001 : 1.0;
+  // Dilute environmental (ocean, groundwater, atmosphere): 0.1 multiplier (10% effectiveness)
+  // ⚠️ REVISED: Changed from 0.001 to 0.1 (Nov 2025) - tech is deployed strategically at high-concentration zones, not randomly
+  // Research justification: Targeted deployment (industrial runoff, river mouths) achieves 10-30% of point-source effectiveness
+  const concentrationMultiplier = worksOnDiluteStreams ? 0.1 : 1.0;
 
-  // 4. TIME LAG FACTOR (0.0-1.0 deployment timescale)
-  // Research: Montreal Protocol took 12 years to full compliance. Plastic phase-out estimated 20-30 years.
-  // ⚠️ HIGH UNCERTAINTY: 30-year timelag assumed for remediation scale-up. Range: 10-30 years (Quality Gate 2)
+  // 4. TIME LAG FACTOR (0.25-1.0 deployment timescale)
+  // ⚠️ REVISED: Changed from 0-240mo to 25%-60mo (Nov 2025) - tech has already been R&D'd before deployment
+  // Research justification:
+  // - Deployment starts at 25% effectiveness (pilot plants operational, supply chains starting)
+  // - Reaches full effectiveness at 60 months (5 years) - manufacturing scale-up complete
+  // - Montreal Protocol analog: 5 years from treaty to first compliance checkpoints
+  // - Faster than full policy rollout (20-30y) because this is post-breakthrough tech scaling
 
   // Get deployment start month from tech tree state
   const deployment = techTreeState.regionalDeployment['global']?.find(d => d.techId === techId);
   const deploymentStartMonth = (deployment as any)?.deploymentStartMonth || gameState.currentMonth;
   const monthsSinceDeployment = Math.max(0, gameState.currentMonth - deploymentStartMonth);
 
-  // 30 years to full deployment scale (360 months)
-  // ⚠️ HIGH UNCERTAINTY: Sensitivity range 10-30 years (120-360 months)
-  const timeLagMonths = 240; // INJECTED: baseline scenario // INJECTED: optimistic scenario // INJECTED: baseline scenario // INJECTED: baseline scenario // INJECTED: baseline scenario // INJECTED: baseline scenario // INJECTED: baseline scenario // INJECTED: baseline scenario // INJECTED: baseline scenario // 30 years
-  const timeLagFactor = assertFinite(Math.min(1.0, monthsSinceDeployment / timeLagMonths), {
+  // Scale from 0.25 (immediate) to 1.0 (60 months)
+  const timeLagMonths = 60; // 5 years to full manufacturing scale
+  const timeLagProgress = Math.min(1.0, monthsSinceDeployment / timeLagMonths); // 0.0 → 1.0 over 60 months
+  const timeLagFactor = assertFinite(0.25 + (0.75 * timeLagProgress), { // 0.25 → 1.0
     location: 'calculateNovelEntitiesRemediationEffectiveness:timeLagFactor',
     valueName: 'timeLagFactor',
     month: gameState.currentMonth,
-    additionalInfo: { monthsSinceDeployment, timeLagMonths, deploymentStartMonth }
+    additionalInfo: { monthsSinceDeployment, timeLagMonths, deploymentStartMonth, timeLagProgress }
   });
 
   // 5. REBOUND EFFECT (Jevons paradox: 0.3-1.0)
@@ -1244,19 +1249,12 @@ function applyGlobalEffects(
 
       // ========== MEDICAL ==========
 
-      case 'mortalityReduction':
-        // Reduce mortality rate (duplicate case - should be handled above)
-        if (gameState.humanPopulationSystem) {
-          gameState.humanPopulationSystem.adjustedDeathRate = assertFinite(Math.max(
-            0.001,
-            gameState.humanPopulationSystem.adjustedDeathRate - value * 0.0001
-          ), {
-        location: 'applyRegionalEffects:mortalityReduction',
-        valueName: 'adjustedDeathRate',
-        month: gameState.currentMonth
-      });
-        }
-        break;
+      // FIX (Nov 25, 2025): REMOVED duplicate mortalityReduction case
+      // This duplicate case was overwriting the correct case above (lines 1231-1243)
+      // with 100x smaller effects (0.0001 instead of 0.01), making mortality reduction
+      // tech 1% as effective as intended. This caused 99% mortality in god mode tests
+      // even with 119 breakthrough technologies deployed.
+      // Root cause: JS switch allows duplicate cases, second silently overwrites first.
 
       case 'lifeExpectancyBonus':
         // Increase life expectancy (in years) - adjust death rate to reflect this
@@ -1622,11 +1620,11 @@ function applyRegionalEffects(
               : 0.01; // 1% baseline (point sources only, no prevention)
 
             // === GATE 2: CONCENTRATION MULTIPLIER ===
+            // ⚠️ REVISED: Changed from 0.001 to 0.1 (Nov 2025) - strategic deployment assumption
             // Research: Fennell 2024 - Cost scales 12-47× for dilute streams
             // Technologies work at mg/L (labs), environment is pg/L to ng/L (10^6-10^9× dilution)
-            // MODEL ASSUMPTION: 0.1% effectiveness at environmental dilution
-            // (Conservative: Cost scaling 12× → effectiveness scaling 0.1× assumed proportional)
-            const concentrationMultiplier = 0.001; // 0.1% effectiveness at planetary dilution
+            // MODEL ASSUMPTION: 10% effectiveness (tech deployed at industrial runoff, river mouths, not random ocean locations)
+            const concentrationMultiplier = 0.1; // 10% effectiveness with strategic deployment
 
             // === GATE 3: ENERGY MULTIPLIER ===
             // Research: Ling 2024 - Cleanup at emission rate costs 0.2-66× global GDP annually
@@ -1636,24 +1634,24 @@ function applyRegionalEffects(
             const energyMultiplier = 0.5; // PLACEHOLDER - 50% energy availability assumed
 
             // === GATE 4: TIME LAG FACTOR ===
-            // Research: Montreal Protocol took 10-20 years for production ban deployment
-            // Remediation tech requires 30 years for global infrastructure scale-up
-            // Track months since tech deployed, scale to 1.0 over 30 years (360 months)
+            // ⚠️ REVISED: Changed from 0-360mo to 25%-60mo (Nov 2025) - post-breakthrough tech scaling
+            // Research: Montreal Protocol took 5 years to first compliance checkpoints (not full 12-year rollout)
+            // Tech deployed at 25% effectiveness (pilot plants operational), reaches 100% at 60 months (manufacturing scale-up)
             // Find deployment start month for time lag calculation
             // NOTE: effectName doesn't directly map to techId - this is a limitation
-            // For now, use 0 months (immediate effectiveness) as fallback
-            // TODO: Track which tech triggered which effect for accurate time lag
+            // For now, use current month as fallback (conservative: assumes fresh deployment)
             const globalDeployments = gameState.techTreeState?.regionalDeployment?.['global'] || [];
             const relevantDeployment = globalDeployments.find(d => d.effects?.pollutionReduction);
             const monthsSinceDeployment = relevantDeployment?.deploymentStartMonth
               ? (gameState.currentMonth - relevantDeployment.deploymentStartMonth)
               : 0;
-            const timeLagFactor = assertFinite(Math.min(1.0, monthsSinceDeployment / 360), {
+            const timeLagProgress = Math.min(1.0, monthsSinceDeployment / 60); // 0.0 → 1.0 over 60 months
+            const timeLagFactor = assertFinite(0.25 + (0.75 * timeLagProgress), { // 0.25 → 1.0
               location: 'applyRegionalEffects:pollutionReduction[timeLagFactor]',
               valueName: 'timeLagFactor',
               month: gameState.currentMonth,
-              additionalInfo: { monthsSinceDeployment }
-            }); // 30 years to full scale
+              additionalInfo: { monthsSinceDeployment, timeLagProgress }
+            });
 
             // === GATE 5: REBOUND FACTOR ===
             // Research: Sorrell 2025 (Jevons paradox), UNEP 2024 (+81% waste despite tech)

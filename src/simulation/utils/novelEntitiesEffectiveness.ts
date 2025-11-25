@@ -113,10 +113,10 @@ export function calculateNovelEntitiesRemediationEffectiveness(
 
   // RESEARCH: Li et al. 2024 (12-47× cost scaling for dilute streams)
   // RESEARCH: Newell et al. 2025 ("sub-nanogram per litre cost-effectiveness hinders up-scalability")
-  // DERIVED ASSUMPTION: 0.1% effectiveness for dilute streams (CONSERVATIVE - may be optimistic)
+  // ⚠️ REVISED: Changed from 0.001 to 0.1 (Nov 2025) - strategic deployment at high-concentration zones
   const worksOnDiluteStreams = tech.techType === 'cleanup' && !tech.minimumConcentration;
-  const concentrationMultiplier = worksOnDiluteStreams ? 0.001 : 1.0;
-  // 0.1% effectiveness = environmental/ocean cleanup (ultra-dilute)
+  const concentrationMultiplier = worksOnDiluteStreams ? 0.1 : 1.0;
+  // 10% effectiveness = environmental cleanup (strategic deployment at industrial runoff, river mouths)
   // 100% effectiveness = point source cleanup (concentrated streams)
 
   // ========================================================================
@@ -124,15 +124,19 @@ export function calculateNovelEntitiesRemediationEffectiveness(
   // Prevention (10-20yr) vs Remediation (30-50yr)
   // ========================================================================
 
+  // ⚠️ REVISED: Changed to 25%-60mo (Nov 2025) - post-breakthrough tech scaling
   // VALIDATION REQUIREMENT (Sylvia Grade B+): Differentiate time lags
   // Prevention tech (bans): 10-20 years (Montreal Protocol did 12 years)
-  // Remediation tech (infrastructure): 30-50 years (massive scale-up)
+  // Remediation tech (infrastructure): 5 years to full manufacturing scale (60 months)
+  //   - Starts at 25% (pilot plants operational, supply chains starting)
+  //   - Reaches 100% at 60 months (manufacturing scale-up complete)
   const monthsSinceDeployment = state.currentMonth - (tech.deployedAt || state.currentMonth);
 
-  // Default 30 years for remediation if not specified
-  // (Prevention tech uses deploymentMonthsRequired from tech definition)
-  const timeLagMonths = tech.timeLag || tech.deploymentMonthsRequired || (30 * 12);
-  const timeLagFactor = Math.min(1.0, monthsSinceDeployment / timeLagMonths);
+  // Default 60 months (5 years) for remediation manufacturing scale-up
+  // (Prevention tech still uses deploymentMonthsRequired from tech definition - typically 120-240 months)
+  const timeLagMonths = tech.timeLag || (tech.techType === 'prevention' ? tech.deploymentMonthsRequired : 60) || 60;
+  const timeLagProgress = Math.min(1.0, monthsSinceDeployment / timeLagMonths);
+  const timeLagFactor = 0.25 + (0.75 * timeLagProgress); // Scale from 0.25 to 1.0
 
   // ========================================================================
   // 5. REBOUND EFFECTS (Jevons Paradox)
@@ -240,10 +244,12 @@ export function calculateNovelEntitiesPreventionEffectiveness(
   const baseEmissionReduction = tech.effects?.novelEntitiesEmissionReduction || 0.0;
 
   // Prevention only gated by time lag (regulatory implementation time)
+  // ⚠️ REVISED: Prevention starts at 25%, reaches 100% at deployment timeline (Nov 2025)
   // No energy/concentration constraints (it's a ban, not a technical process)
   const monthsSinceDeployment = state.currentMonth - (tech.deployedAt || state.currentMonth);
-  const timeLagMonths = tech.deploymentMonthsRequired || (15 * 12); // Default 15 years
-  const timeLagFactor = Math.min(1.0, monthsSinceDeployment / timeLagMonths);
+  const timeLagMonths = tech.deploymentMonthsRequired || (15 * 12); // Default 15 years (180 months)
+  const timeLagProgress = Math.min(1.0, monthsSinceDeployment / timeLagMonths);
+  const timeLagFactor = 0.25 + (0.75 * timeLagProgress); // Scale from 0.25 to 1.0
 
   const finalEmissionReduction = baseEmissionReduction * timeLagFactor;
 

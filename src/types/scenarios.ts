@@ -69,10 +69,18 @@ export interface ScenarioStartingConditions {
 /**
  * Government priority overrides for scenario testing
  * Used by ApplyScenarioPrioritiesPhase to force specific government behaviors
+ *
+ * ADAPTIVE SPENDING (Nov 25, 2025):
+ * - Fixed dollar amounts (researchInvestment, aiSafetyBudget) cause crashes during GDP collapse
+ * - Use GDP-proportional rates (researchInvestmentRate, aiSafetyBudgetRate) instead
+ * - Phase calculates: spending = GDP × rate (adapts to economic conditions)
  */
 export interface ScenarioGovernmentPriorities {
-  /** Research investment (billions/month) */
+  /** Research investment (billions/month) - DEPRECATED: Use researchInvestmentRate for GDP-adaptive spending */
   researchInvestment?: number;
+
+  /** Research investment rate (0-1, fraction of annual GDP) - RECOMMENDED: Adapts to GDP changes */
+  researchInvestmentRate?: number;
 
   /** Climate spending (0-1, fraction of GDP) */
   climateSpending?: number;
@@ -80,8 +88,11 @@ export interface ScenarioGovernmentPriorities {
   /** Redistribution rate (0-1, fraction of GDP) - activates/adjusts UBI */
   redistributionRate?: number;
 
-  /** AI safety budget (billions/month) */
+  /** AI safety budget (billions/month) - DEPRECATED: Use aiSafetyBudgetRate for GDP-adaptive spending */
   aiSafetyBudget?: number;
+
+  /** AI safety budget rate (0-1, fraction of annual GDP) - RECOMMENDED: Adapts to GDP changes */
+  aiSafetyBudgetRate?: number;
 
   /** Democracy level (0-1) - sets transparency, participation, etc. */
   democracyLevel?: number;
@@ -403,7 +414,7 @@ export const SCENARIO_CATALOG = {
     techDeployment: { mode: 'sequenced' as const, sequencedConfig: { gapMonths: 6 } },
     governmentPriorities: {
       climateSpending: 0.10, // 10% of GDP per month (extreme but testable)
-      researchInvestment: 50, // $50B/month research (above spiral thresholds)
+      researchInvestmentRate: 0.005, // 0.5% of annual GDP (adapts to GDP changes)
     },
   },
 
@@ -416,7 +427,7 @@ export const SCENARIO_CATALOG = {
     techDeployment: { mode: 'sequenced' as const, sequencedConfig: { gapMonths: 6 } },
     governmentPriorities: {
       redistributionRate: 0.025, // 2.5% of GDP per month (30% annually = Nordic level)
-      researchInvestment: 50, // $50B/month research
+      researchInvestmentRate: 0.005, // 0.5% of annual GDP (adapts to GDP changes)
     },
   },
 
@@ -424,12 +435,12 @@ export const SCENARIO_CATALOG = {
   'ai-alignment-first': {
     id: 'ai-alignment-first',
     name: 'AI Alignment First',
-    description: 'Government maximizes AI alignment research ($100B/month) with strict controls',
+    description: 'Government maximizes AI alignment research (1% GDP) with strict controls',
     hypothesis: 'Tests whether prioritizing alignment enables trust/safety spirals',
     techDeployment: { mode: 'sequenced' as const, sequencedConfig: { gapMonths: 6 } },
     governmentPriorities: {
-      aiSafetyBudget: 100, // $100B/month on alignment research
-      researchInvestment: 50, // $50B/month general research
+      aiSafetyBudgetRate: 0.01, // 1% of annual GDP on alignment research (adapts to GDP)
+      researchInvestmentRate: 0.005, // 0.5% of annual GDP general research
     },
   },
 
@@ -442,7 +453,7 @@ export const SCENARIO_CATALOG = {
     techDeployment: { mode: 'sequenced' as const, sequencedConfig: { gapMonths: 6 } },
     governmentPriorities: {
       democracyLevel: 0.9, // Very high democracy
-      researchInvestment: 50, // $50B/month research
+      researchInvestmentRate: 0.005, // 0.5% of annual GDP (adapts to GDP changes)
     },
   },
 
@@ -450,11 +461,11 @@ export const SCENARIO_CATALOG = {
   'scientific-acceleration': {
     id: 'scientific-acceleration',
     name: 'Scientific Acceleration',
-    description: 'Government maximizes research investment ($200B/month)',
+    description: 'Government maximizes research investment (2% GDP)',
     hypothesis: 'Tests whether massive research spending enables breakthrough cascades',
     techDeployment: { mode: 'sequenced' as const, sequencedConfig: { gapMonths: 6 } },
     governmentPriorities: {
-      researchInvestment: 200, // $200B/month (2x current max spend)
+      researchInvestmentRate: 0.02, // 2% of annual GDP (4× baseline, adapts to GDP)
     },
   },
 
@@ -468,7 +479,7 @@ export const SCENARIO_CATALOG = {
     governmentPriorities: {
       governmentType: 'authoritarian',
       democracyLevel: 0.3, // Low democracy
-      researchInvestment: 50, // $50B/month research
+      researchInvestmentRate: 0.005, // 0.5% of annual GDP (adapts to GDP changes)
     },
   },
 
@@ -592,7 +603,7 @@ export const SCENARIO_CATALOG = {
   'green-new-deal': {
     id: 'green-new-deal',
     name: 'Green New Deal',
-    description: 'Progressive climate + social policy: 10% GDP climate, 2.5% redistribution, $100B research, democracy=0.8 (US GND 2019, EU Green Deal 2020, IEA Net Zero 2024)',
+    description: 'Progressive climate + social policy: 10% GDP climate, 2.5% redistribution, 1% research, democracy=0.8 (US GND 2019, EU Green Deal 2020, IEA Net Zero 2024)',
     hypothesis: 'Tests whether combining climate action + UBI + jobs guarantee enables both environmental AND social spirals',
     techDeployment: {
       mode: 'prioritized' as const,
@@ -604,7 +615,7 @@ export const SCENARIO_CATALOG = {
     governmentPriorities: {
       climateSpending: 0.10,  // 10% GDP/month (climate action)
       redistributionRate: 0.025,  // 2.5% GDP/month (UBI - Nordic level)
-      researchInvestment: 100,  // $100B/month (job guarantee via R&D investment)
+      researchInvestmentRate: 0.01,  // 1% of annual GDP (job guarantee via R&D, adapts to GDP)
       democracyLevel: 0.8,  // High democratic participation
     },
   },
@@ -619,7 +630,7 @@ export const SCENARIO_CATALOG = {
       mode: 'immediate' as const,  // Deploy all tech at once
     },
     governmentPriorities: {
-      researchInvestment: 50,  // $50B/month (baseline R&D only)
+      researchInvestmentRate: 0.005,  // 0.5% of annual GDP (baseline R&D, adapts to GDP)
       democracyLevel: 0.7,  // Liberal democracy (not authoritarian)
       // NO climateSpending, NO redistributionRate (market handles)
     },
@@ -629,7 +640,7 @@ export const SCENARIO_CATALOG = {
   'degrowth': {
     id: 'degrowth',
     name: 'Degrowth Path',
-    description: 'Ecological restoration + reduced consumption: 10% climate, 2.5% redistribution, $10B research, democracy=0.9, limited tech (Hickel 2020, Raworth 2017, Kallis 2020)',
+    description: 'Ecological restoration + reduced consumption: 10% climate, 2.5% redistribution, 0.1% research, democracy=0.9, limited tech (Hickel 2020, Raworth 2017, Kallis 2020)',
     hypothesis: 'Tests whether ecological focus + low growth enables environmental spirals without advanced tech',
     techDeployment: {
       mode: 'prioritized' as const,
@@ -642,7 +653,7 @@ export const SCENARIO_CATALOG = {
     governmentPriorities: {
       climateSpending: 0.10,  // 10% GDP/month (ecological restoration)
       redistributionRate: 0.025,  // 2.5% GDP/month (social foundation)
-      researchInvestment: 10,  // $10B/month (low growth, reduced R&D)
+      researchInvestmentRate: 0.001,  // 0.1% of annual GDP (low growth, adapts to GDP)
       democracyLevel: 0.9,  // Very high democracy (participatory)
     },
   },
@@ -658,7 +669,7 @@ export const SCENARIO_CATALOG = {
     },
     governmentPriorities: {
       climateSpending: 0.10,  // 10% GDP/month (authoritarian climate action)
-      researchInvestment: 50,  // $50B/month (state-directed R&D)
+      researchInvestmentRate: 0.005,  // 0.5% of annual GDP (state-directed R&D, adapts to GDP)
       democracyLevel: 0.2,  // Very low (below authoritarian-efficiency 0.3)
       governmentType: 'authoritarian',
       // NO redistributionRate (authoritarian states don't prioritize equality)
@@ -669,7 +680,7 @@ export const SCENARIO_CATALOG = {
   'nordic-social-democracy': {
     id: 'nordic-social-democracy',
     name: 'Nordic Social Democracy',
-    description: 'Scandinavian model: 3.5% redistribution, 3% climate, $150B research, democracy=0.85, sequenced tech (OECD 2024, V-Dem 2024, IEA 2024)',
+    description: 'Scandinavian model: 3.5% redistribution, 3% climate, 1.5% research, democracy=0.85, sequenced tech (OECD 2024, V-Dem 2024, IEA 2024)',
     hypothesis: 'Tests whether gradual tech + strong institutions + high equality enables sustained spiral activation',
     techDeployment: {
       mode: 'sequenced' as const,
@@ -681,7 +692,7 @@ export const SCENARIO_CATALOG = {
     governmentPriorities: {
       redistributionRate: 0.035,  // 3.5% GDP/month = 42% annually (Nordic + UBI)
       climateSpending: 0.03,  // 3% GDP/month (realistic Nordic climate spending)
-      researchInvestment: 150,  // $150B/month (Nordic R&D intensity)
+      researchInvestmentRate: 0.015,  // 1.5% of annual GDP (Nordic R&D intensity, adapts to GDP)
       democracyLevel: 0.85,  // High Nordic democracy
     },
     startingConditions: {
