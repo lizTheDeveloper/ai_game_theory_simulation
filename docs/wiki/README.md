@@ -82,7 +82,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📄 **Files:** `BaselineMortalityPhase.ts` (+147 lines), `regionalPopulations.ts`, `research/regional_fertility_decline_2010_2020.md`
 - 📊 **DevLog:** `devlogs/hindcast_fix_regional_fertility_20251125.md`
 
-**Nov 25: Hindcast Phase 7 - Regional CDR Scaling** (commit bf90ffa)
+**Nov 25: Hindcast Phase 7 - Regional CDR Scaling** (commit c7c4cb69a)
 - 🔧 **PROBLEM:** 2010-2020 population overshoot remaining after regional CBR fix (expected 4-6% → <5% target)
 - **ROOT CAUSE:** Regional death rates NOT scaled for historical mode, unlike birth rates:
   - Sub-Saharan Africa 1990: 15.6/1000 vs global 8.0/1000 = 1.95× more deaths
