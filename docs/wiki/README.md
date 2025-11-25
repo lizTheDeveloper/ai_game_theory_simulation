@@ -3670,6 +3670,8 @@ Implementation details and code references:
 | [🛡️ State Validation Framework](#%EF%B8%8F-state-validation-framework) | 🟢 | Assertion-based validation framework, 97.2% adoption (104/107 modules), fail-loudly philosophy (Nov 6-8, 2025) |
 | [🔬 Research Update Pipeline](../RESEARCH_PIPELINE.md) | ✅ | Automated research currency monitoring, weekly age audits, priority-based update queue, GitHub integration (Nov 6, 2025) |
 | [📊 LLM Inference Logging](#-llm-inference-logging-infrastructure) | ✅ | Audit trail for all LLM API calls, IndexedDB storage, GCS export, analytics (Nov 18, 2025) |
+| [🎯 Success Path Mapping](../SUCCESS_PATH_MAPPING.md) | ✅ | Success paths for carbon capture, renewables, spirals; cross-system interaction matrix; minimum viable utopia scenario (Nov 25, 2025) |
+| [🎲 Randomness Audit](../RANDOMNESS_AUDIT_NOV2025.md) | ✅ | 236 rng() calls audited: 76% controlled, 17% uncontrolled, 7% unclear; 100% deterministic (Nov 25, 2025) |
 
 ## 📊 LLM Inference Logging Infrastructure
 
