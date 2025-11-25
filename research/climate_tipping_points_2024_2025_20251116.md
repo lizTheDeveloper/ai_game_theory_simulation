@@ -1,8 +1,8 @@
 ---
 oldest_source: 2024
 newest_source: 2025
-last_verified: 2025-11-16
-primary_sources: 8
+last_verified: 2025-11-25
+primary_sources: 9
 verification_status: complete
 research_quality: A+ (peer-reviewed + institutional reports)
 ---
@@ -311,6 +311,51 @@ Cascade Effects:
 **Implication:** The transition from net-dampening to net-amplifying is the point of no return for avoiding runaway cascades.
 
 **Confidence:** 85% (mechanism understood, transition timing uncertain)
+
+---
+
+### 4.3 Quantitative Tipping Probabilities Under Current Policies (April 2025)
+
+**Source:** Deutloff, J., Held, H., and Lenton, T. M. (2025). "High probability of triggering climate tipping points under current policies modestly amplified by Amazon dieback and permafrost thaw." *Earth System Dynamics*, 16, 565–583. DOI: 10.5194/esd-16-565-2025
+
+**Key Finding:** Under SSP2-4.5 (closest scenario to current policies), there is a **62% probability** of triggering climate tipping points when averaged across all 16 identified tipping elements.
+
+**Scenario-Specific Probabilities:**
+- **SSP5-8.5 (high emissions):** ~95% average triggering probability
+- **SSP2-4.5 (current policies):** ~62% average triggering probability
+- **SSP1-2.6 (Paris compliance):** Significantly reduced risk
+- **SSP1-1.9 (1.5°C pathway):** Minimal risk
+
+**Tipping Elements at Risk Under Current Policies:**
+- **Nine tipping elements exceed 50% triggering probability** at SSP2-4.5 emission levels
+- Threshold temperatures range from ~1°C to 6°C across the 16 elements
+- Some elements may already be committed at current ~1.4°C warming
+
+**Carbon Tipping Elements Amplification:**
+- Amazon dieback and permafrost thaw provide "modest" amplification
+- Median additional warming remains "1 order of magnitude lower than median anthropogenic warming"
+- Under SSP2-4.5: Carbon tipping elements increase triggering probabilities by only **3 percentage points** on average
+- **Implication:** Preventing anthropogenic emissions remains far more impactful than preventing carbon tipping feedbacks
+
+**Uncertainty Acknowledgment:**
+- Substantial uncertainty in effective timescales of tipping processes
+- Particularly relevant for lower-emission pathways involving temperature overshoots
+- Overshoot scenarios (temporary exceedance of 1.5°C) create "shadow risk" from irreversible commitments made during overshoot period
+
+**Simulation Parameters:**
+```
+Current Policy Scenario (SSP2-4.5):
+- Overall tipping probability: 62% (median estimate)
+- High-confidence elements (>70% trigger probability): Coral reefs, Amazon, Arctic sea ice
+- Medium-confidence elements (50-70%): Greenland Ice Sheet, AMOC, Permafrost
+- Low-confidence elements (<50%): EAIS, Monsoons, Boreal forests
+
+Carbon Feedback Amplification:
+- Additional probability: +3% (modest, not catastrophic)
+- Main driver remains anthropogenic emissions (not tipping feedbacks)
+```
+
+**Confidence:** 80% (peer-reviewed methodology, uncertainty in individual element thresholds)
 
 ---
 
