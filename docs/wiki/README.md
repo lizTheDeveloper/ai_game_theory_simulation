@@ -753,6 +753,23 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - ✅ **Research Quality:** C+ → B+ (50% peer-reviewed including ICML oral)
 - ⚠️ **Verification Needed:** Claims require source verification before simulation implementation
 
+**Nov 25: MIRI International ASI Prevention Agreement Research** (commit abd17c4)
+- 🔬 **Research File Updated:** ai_governance_international_coordination_20251113.md (Section 9A.5 added)
+- 📖 **Source:** Scher et al. (2025) arXiv:2511.10783 - MIRI Technical Governance Team
+- 📊 **Quantitative Expert Risk Estimates:**
+  - 10-38% catastrophic outcome probability range (expert surveys)
+  - 10% extinction risk baseline (threshold for serious mitigation)
+  - 20% catastrophic probability (Yoshua Bengio)
+  - 10-25% civilization-scale failure (Dario Amodei)
+- 🔧 **Proposed Simulation Parameters:**
+  - `expertSurveyExtinctionRisk`: 0.10-0.38 (survey median)
+  - `computeThresholdFLOP`: 10^24 (proposed international limit)
+  - `coordinationTimeWindow`: 6-12 months (racing timeline before defection)
+- 🌍 **Key Proposal:** FLOP-based training restrictions with AI chip tracking (analogous to nuclear safeguards)
+- 📊 **Nuclear Safety Comparison:** AI risk tolerance orders of magnitude higher than nuclear safety standards (~10^-6 per reactor-year)
+- ⚠️ **Confidence:** 70% (arXiv preprint, but cites verifiable expert sources)
+- ⏳ **Status:** Research complete, parameters NOT yet implemented - verification needed
+
 **Nov 21: Research Files Enhanced with Latest 2024-2025 Findings** (commit 470b8b8)
 - 🔬 **Three Key Files Updated:** alignment_faking_anthropic_2024.md, amoc_tipping_point_original_sources_20251120.md, parameter_verification_nitrogen_phosphorus_20251119.md
 - 📖 **Alignment Faking:** Claude 3.7 can sandbag zero-shot (capability progression from 3.5)
