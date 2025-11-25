@@ -161,6 +161,154 @@ export function getHistoricalCrudeBirthRate(year: number): number {
 }
 
 /**
+ * Get region-specific historical birth rate (crude birth rate per 1000)
+ *
+ * CRITICAL FIX (Nov 25, 2025): Regional fertility declines at heterogeneous rates
+ *
+ * Root cause of 2010-2020 hindcast overshoot: Global CBR scaling applied uniformly
+ * across regions, but actual fertility declines varied by 7x:
+ * - East Asia: -17.5% (2010-2020) - one-child policy, urbanization
+ * - South Asia: -19.0% - rapid development
+ * - Europe: -2.6% - already at fertility floor
+ * - Sub-Saharan Africa: -15.6% - early demographic transition
+ *
+ * Using single global multiplier (1.161x for 2010) overestimated births in
+ * fast-declining regions (East/South Asia = 50% of global population) → 6-10% overshoot.
+ *
+ * Research: UN World Population Prospects 2024 (28th edition, July 2024)
+ * - TFR data from https://population.un.org/wpp/Download/Standard/Fertility/
+ * - CBR estimated using empirical ratio: CBR ≈ TFR × 7.5 (validated against global avg)
+ *
+ * @param regionName - Region name (must match initializeRegionalPopulations)
+ * @param year - Year (1990-2030)
+ * @returns CBR per 1000 population for that region-year
+ */
+export function getRegionalHistoricalBirthRate(regionName: string, year: number): number {
+  // Regional TFR data (UN WPP 2024) converted to CBR using ratio of 7.5
+  // Validation: Global 2010 TFR=2.60 * 7.5 = 19.5 CBR ✅ (matches UN data)
+  const REGIONAL_CBR: Record<string, Record<number, number>> = {
+    'East Asia': {
+      1990: 15.2,  // TFR 2.03 * 7.5
+      2000: 12.7,  // TFR 1.69 * 7.5
+      2010: 11.6,  // TFR 1.54 * 7.5
+      2020: 9.5,   // TFR 1.27 * 7.5
+      2025: 8.5,   // Projected (continued decline)
+    },
+    'South Asia': {
+      1990: 30.8,  // TFR 4.11 * 7.5
+      2000: 24.9,  // TFR 3.32 * 7.5
+      2010: 21.2,  // TFR 2.82 * 7.5
+      2020: 17.1,  // TFR 2.28 * 7.5
+      2025: 15.5,  // Projected
+    },
+    'Sub-Saharan Africa': {
+      1990: 47.3,  // TFR 6.30 * 7.5
+      2000: 43.5,  // TFR 5.80 * 7.5
+      2010: 40.9,  // TFR 5.45 * 7.5
+      2020: 34.5,  // TFR 4.60 * 7.5
+      2025: 31.5,  // Projected
+    },
+    'Europe': {
+      1990: 12.8,  // TFR 1.70 * 7.5
+      2000: 10.7,  // TFR 1.43 * 7.5
+      2010: 11.8,  // TFR 1.57 * 7.5
+      2020: 11.5,  // TFR 1.53 * 7.5
+      2025: 11.0,  // Projected (minimal decline - at floor)
+    },
+    'North America': {
+      1990: 15.4,  // TFR 2.05 * 7.5
+      2000: 15.3,  // TFR 2.04 * 7.5
+      2010: 15.3,  // TFR 2.04 * 7.5
+      2020: 12.3,  // TFR 1.64 * 7.5
+      2025: 11.5,  // Projected
+    },
+    'Latin America': {
+      1990: 23.3,  // TFR 3.11 * 7.5
+      2000: 19.4,  // TFR 2.58 * 7.5
+      2010: 16.7,  // TFR 2.23 * 7.5
+      2020: 14.3,  // TFR 1.91 * 7.5
+      2025: 13.0,  // Projected
+    },
+    'Middle East & North Africa': {
+      1990: 34.5,  // TFR 4.60 * 7.5
+      2000: 26.1,  // TFR 3.48 * 7.5
+      2010: 23.8,  // TFR 3.17 * 7.5
+      2020: 21.6,  // TFR 2.88 * 7.5
+      2025: 20.0,  // Projected
+    },
+    // Additional regions (fallback to global if not specified)
+    'Southeast Asia': {  // Approximate from South Asia + development adjustment
+      1990: 28.0,
+      2000: 22.0,
+      2010: 19.0,
+      2020: 15.5,
+      2025: 14.0,
+    },
+    'Central Asia': {  // Approximate from MENA + development adjustment
+      1990: 32.0,
+      2000: 24.0,
+      2010: 22.0,
+      2020: 20.0,
+      2025: 18.5,
+    },
+    'Oceania': {  // Similar to North America
+      1990: 16.0,
+      2000: 15.5,
+      2010: 15.0,
+      2020: 12.5,
+      2025: 11.8,
+    },
+  };
+
+  // Check if region exists
+  const regionData = REGIONAL_CBR[regionName];
+  if (!regionData) {
+    // CRITICAL: Fail loudly if region not found (no silent fallbacks)
+    throw new Error(
+      `❌ CRITICAL: Unknown region '${regionName}' in getRegionalHistoricalBirthRate. ` +
+      `Valid regions: ${Object.keys(REGIONAL_CBR).join(', ')}`
+    );
+  }
+
+  const years = Object.keys(regionData).map(Number).sort((a, b) => a - b);
+
+  // Before earliest year
+  if (year <= years[0]) {
+    return regionData[years[0]];
+  }
+
+  // After latest year
+  if (year >= years[years.length - 1]) {
+    return regionData[years[years.length - 1]];
+  }
+
+  // Interpolate between known years
+  for (let i = 0; i < years.length - 1; i++) {
+    const y1 = years[i];
+    const y2 = years[i + 1];
+    if (year >= y1 && year < y2) {
+      const t = (year - y1) / (y2 - y1);
+      const cbr1 = regionData[y1];
+      const cbr2 = regionData[y2];
+      const interpolated = cbr1 + (cbr2 - cbr1) * t;
+
+      // Validate result
+      assertFinite(interpolated, {
+        location: 'getRegionalHistoricalBirthRate',
+        valueName: 'interpolated CBR',
+        month: 0,
+        additionalInfo: { regionName, year, y1, y2, cbr1, cbr2 }
+      });
+
+      return interpolated;
+    }
+  }
+
+  // Should never reach here
+  return regionData[2025];
+}
+
+/**
  * Calculate baseline demographic mortality risk
  *
  * This is the "background" mortality that occurs even when no crises are active.
