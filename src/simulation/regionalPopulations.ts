@@ -384,6 +384,65 @@ export function updateRegionalPopulations(state: GameState): void {
 
       // Clamp to realistic bounds
       region.fertilityRate = Math.max(0.5, Math.min(6.0, region.fertilityRate));
+    } else {
+      // HISTORICAL FERTILITY TRANSITION (Nov 26, 2025 - Phase 6 Fix)
+      // Apply linear interpolation from 1990 TFR → 2020 TFR
+      // Research: research/demographics_1990_calibration_20251126.md
+      // This models the demographic transition that occurred historically
+      const actualYear = state.currentYear;
+
+      // Only apply transition during hindcast period (1990-2020)
+      // After 2020, use endogenous modifiers
+      if (actualYear >= 1990 && actualYear <= 2020 && !(state as any)._skipHistoricalBirthRateScaling) {
+        // Target 2020 TFR values (UN WPP 2024)
+        const REGIONAL_TFR_2020: Record<string, number> = {
+          'Sub-Saharan Africa': 4.6,    // Still high but declining
+          'Middle East & North Africa': 2.9,
+          'South Asia': 2.3,            // Near replacement
+          'East Asia': 1.5,             // Below replacement
+          'Southeast Asia': 2.0,
+          'Latin America': 2.0,
+          'Europe': 1.5,                // Well below replacement
+          'North America': 1.7,
+          'Oceania': 2.4,               // Stable (Australia + Pacific Islands)
+          'Central Asia': 2.5,
+        };
+
+        // 1990 baseline (from initialization)
+        const REGIONAL_TFR_1990: Record<string, number> = {
+          'Sub-Saharan Africa': 6.35,
+          'Middle East & North Africa': 4.6,
+          'South Asia': 4.3,
+          'East Asia': 2.5,
+          'Southeast Asia': 2.7,
+          'Latin America': 3.0,
+          'Europe': 1.6,
+          'North America': 2.0,
+          'Oceania': 2.4,
+          'Central Asia': 2.7,
+        };
+
+        const tfr1990 = REGIONAL_TFR_1990[region.name];
+        const tfr2020 = REGIONAL_TFR_2020[region.name];
+
+        if (tfr1990 === undefined || tfr2020 === undefined) {
+          throw new Error(
+            `❌ CRITICAL: Unknown region '${region.name}' in fertility transition. ` +
+            `Valid regions: ${Object.keys(REGIONAL_TFR_1990).join(', ')}`
+          );
+        }
+
+        // Linear interpolation: TFR(year) = TFR1990 + (TFR2020 - TFR1990) * (year - 1990) / 30
+        const progress = (actualYear - 1990) / 30; // 0.0 in 1990, 1.0 in 2020
+        region.fertilityRate = tfr1990 + (tfr2020 - tfr1990) * progress;
+
+        // Diagnostic logging (once per year for one region)
+        if (state.currentMonth % 12 === 0 && region.name === 'Sub-Saharan Africa') {
+          console.log(`  Fertility transition (${actualYear}):`);
+          console.log(`    ${region.name}: ${tfr1990.toFixed(2)} (1990) → ${region.fertilityRate.toFixed(2)} (${actualYear}) → ${tfr2020.toFixed(2)} (2020)`);
+          console.log(`    Progress: ${(progress * 100).toFixed(1)}%`);
+        }
+      }
     }
 
     // Birth rate from fertility
