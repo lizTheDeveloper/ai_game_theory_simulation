@@ -226,8 +226,10 @@
      - **Expected impact:** Reduce 2010-2020 overshoot from 10.3% → 4-6% (pending validation)
      - **Validation status:** Ready for Monte Carlo hindcast validation run
    - **Remaining calibration** (MEDIUM priority - post-validation):
-     - CO2 concentration 25-32% too high (emissions model needs calibration)
+     - CO2 concentration 16-19% too high (hindcast Nov 26) (emissions model needs calibration)
      - **Dependency:** Wait for regional CDR scaling validation results before emissions tuning
+     - **Validation run:** Nov 26 hindcast (logs/hindcast/hindcast_2025-11-26T00-05-29.log) - 0/3 runs passed
+     - **Findings:** Simulated CO2 428-441 ppm vs actual 361-380 ppm (1995-2005), temp ±0.06-0.18°C
 
 1b. **Tipping Cascade Recalibration** - **COMPLETE** (Nov 24, 2025)
    - ~~Audit found tipping cascades use 2.5th percentile values, not median~~
@@ -451,9 +453,9 @@
 | 2 | Determinism stress test (N=100) | Priya | ✅ DONE (Nov 24) | #1 |
 | 2b | Fix non-determinism in alignment | Roy | ✅ DONE (Nov 24) | #2 |
 | 3 | Planetary restoration timescales audit | Roy | ✅ DONE (Nov 24) | None |
-| 4 | Climate mini-hindcast data (1990-2010) | Cynthia | Ready | None |
+| 4 | Climate mini-hindcast data (1990-2010) | Cynthia | ✅ EXISTS | None |
 | 5 | Historical initialization mode | Roy | ✅ EXISTS | None |
-| 6 | Mini-hindcast validation | Priya | Blocked | #4, #5 |
+| 6 | Mini-hindcast validation | Priya | ✅ RUN (FAILED) | #4, #5 |
 | 7 | Mechanism audits (tipping points) | Sylvia | Ready | None |
 
 ### Climate Mini-Hindcast Validation (NEW - HIGH Priority)
@@ -1411,7 +1413,7 @@ This framework will:
 
 **11. Determinism Verification Testing - ⚠️ CRITICAL BLOCKER**
 - **Priority:** 🔴 **CRITICAL BLOCKER** (upgraded Oct 30, 2025)
-- **Status:** 🟡 **99% FIXED** - Batch 3 pending (Nov 6, 2025)
+- **Status:** ✅ **COMPLETE** (Nov 14-15, 2025) - See line 681
 - **Progress (Nov 6):** 29 non-deterministic bugs fixed across 3 batches
  - **Phase 1 (commit d4f3208):** Fixed 3 seeding bugs - replaced `.id.length` with `hashString(id)` for deterministic org seeding
  - **Batch 2.1 (commit fbef3c9):** Fixed 5 Object.entries bugs - sorted iteration order (10% → 1% divergence)
@@ -2393,6 +2395,13 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
 
 **Nov 25, 2025 - End-of-Session Roadmap Gardening (Architect):**
 
+- ✅ **Hindcast Validation Run:** Nov 26 mini-hindcast validation executed (N=3, 1990-2010)
+  - Result: FAILED (0/3 runs within 5% CO2 threshold)
+  - CO2 error: 16-19% (simulated 428-441 ppm vs actual 361-380 ppm)
+  - Temperature error: ±0.06-0.18°C (within acceptable range)
+  - Log: `logs/hindcast/hindcast_2025-11-26T00-05-29.log`
+  - Validation Priority Stack #6: Updated from "Blocked" → "RUN (FAILED)"
+  - Calibration section: Updated CO2 error from 25-32% → 16-19%
 **Nov 26, 2025 - Roadmap Gardening (Architect):**
 - ✅ **Duplicate Removal:** Eliminated duplicate "Sylvia Checkpoint" entry (lines 1136-1145)
   - Single canonical entry remains at line 552 in Game Development Phase 2 section
