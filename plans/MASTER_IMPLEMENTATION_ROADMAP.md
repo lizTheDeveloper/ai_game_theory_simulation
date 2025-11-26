@@ -816,6 +816,233 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
 
 ---
 
+### 5. 🧪 [Test Coverage & Deployment Validation](./TEST_COVERAGE_ROADMAP.md)
+
+**Philosophy:** "A lot of times, we think we're done when we're not" - Never truly done. Always testing, validating, verifying.
+
+**Current Status:** 228 test files, experimental coverage enabled, deployment validation MISSING
+
+**Purpose:** Systematic test coverage to detect if deployed systems are actually working. Tests verify not just implementation correctness, but operational health.
+
+**Priority:** MEDIUM (continuous - always available fallback work for autonomous workers)
+
+**Key Categories:**
+
+#### 5.1 Deployment Health Checks (MEDIUM Priority)
+
+**Purpose:** Quick smoke tests that verify deployed version isn't broken
+
+**Tasks:**
+- [ ] **Deployment Smoke Test Suite** (Complexity: 5 systems)
+  - Simulation initializes and runs 12 months without crashes
+  - All phases execute in correct order
+  - No NaN/Infinity in any calculation
+  - State serialization/deserialization works
+  - Game layer can load simulation state
+  - **Script:** `scripts/deploymentSmokeTest.ts` (to be created)
+  - **Target:** <60s execution time
+  - **Owner:** Roy (simulation-maintainer)
+
+- [ ] **Monte Carlo Deployment Validation** (Complexity: 4 systems)
+  - N=10 runs complete deterministically
+  - CV < 0.01% for all tracked metrics
+  - No silent data loss (all runs produce results)
+  - Outcome distributions match baseline
+  - **Script:** Extend existing `scripts/monteCarloSimulation.ts`
+  - **Owner:** Priya (quantitative-validator)
+
+- [ ] **Critical Path Integrity Tests** (Complexity: 6 systems)
+  - Hindcast 1990-2024 still passes
+  - Phase execution order preserved
+  - All assertion utilities fire correctly
+  - Regional data loaders functional
+  - Planetary boundaries update correctly
+  - Tech tree research/deployment works
+  - **Location:** `tests/integration/critical-paths/`
+  - **Owner:** Roy
+
+#### 5.2 System Validation Tests (MEDIUM Priority)
+
+**Purpose:** Verify each major system works correctly in isolation and integration
+
+**Tasks:**
+- [ ] **Population Dynamics Tests** (Complexity: 4 systems)
+  - Birth rates match regional historical data
+  - Death rates scale with environmental degradation
+  - Migration responds to crisis events
+  - Age structure evolves correctly
+  - **Coverage Target:** 80%+ for `src/simulation/mortality/`, `src/simulation/demographics/`
+
+- [ ] **Climate System Tests** (Complexity: 5 systems)
+  - Temperature tracks CO2 emissions (climate sensitivity)
+  - Ocean heat content accumulates correctly
+  - Sea level rise from thermal expansion + ice melt
+  - Arctic/Antarctic ice loss rates match research
+  - Climate tech deployment affects temperature
+  - **Coverage Target:** 80%+ for `src/simulation/climate/`, `src/simulation/planetaryBoundaryRecovery.ts`
+
+- [ ] **AI Agent Tests** (Complexity: 6 systems)
+  - Capabilities advance through research
+  - Alignment responds to governance pressure
+  - Coordination emerges under correct conditions
+  - Scheming rates match empirical research (8.7-13%)
+  - Coalition formation game theory
+  - Instrumental convergence detection
+  - **Coverage Target:** 80%+ for `src/simulation/aiAgent/`, `src/simulation/alignment/`
+
+- [ ] **Tech Tree Tests** (Complexity: 4 systems)
+  - Research advances based on effort + randomness
+  - Prerequisites enforced correctly
+  - Deployment gated by readiness + energy
+  - Effects propagate to correct state fields
+  - **Coverage Target:** 80%+ for `src/simulation/techTree/`, `src/simulation/breakthrough/`
+
+- [ ] **Planetary Boundaries Tests** (Complexity: 9 systems - one per boundary)
+  - All 9 boundaries update correctly
+  - Degradation asymmetry (fast collapse, slow recovery)
+  - Recovery timescales match research (100-800 years for ice)
+  - Tipping points trigger at thresholds
+  - Irreversibility framework enforced
+  - **Coverage Target:** 80%+ for `src/simulation/planetaryBoundaries/`
+
+- [ ] **Quality of Life Tests** (Complexity: 5 systems)
+  - All 17 dimensions calculate correctly
+  - Multi-Paradigm DUI aggregates four perspectives
+  - Tier classification (survival → flourishing)
+  - Regional variation preserved
+  - Social trust affects subjective wellbeing
+  - **Coverage Target:** 80%+ for `src/simulation/qualityOfLife/`, `src/simulation/multiParadigmDUI/`
+
+#### 5.3 Regression Prevention Tests (HIGH Priority)
+
+**Purpose:** Ensure previously fixed bugs stay fixed
+
+**Tasks:**
+- [x] **Dual Death Bug (Nov 24, 2025)** - ✅ COMPLETE
+  - Test: `tests/integration/regressions/double-counting-seasonal-mortality.test.ts`
+  - Verified: Seasonal mortality not double-counted
+
+- [x] **Temperature Initialization (Nov 24, 2025)** - ✅ COMPLETE
+  - Test: Hindcast 1990 starts at 0.45°C, not 2.03°C
+  - Location: `tests/integration/regressions/hindcast-temperature-init.test.ts` (exists in critical-paths)
+
+- [x] **RNG Determinism (Nov 7, 2025)** - ✅ COMPLETE
+  - Test: `tests/integration/regressions/critical-3-rng-regression.test.ts`
+  - Verified: No optional RNG with Math.random fallback
+
+- [ ] **Regional Fertility Scaling (Nov 25, 2025)** (Complexity: 3 systems)
+  - Bug: Population jumped 5.32B → 8.1B after Month 0
+  - Fix: Commit c4ac98029 - proper `initializeHistoricalSimulation()`
+  - Test needed: Verify population stable at historical start year
+  - **Owner:** Roy
+
+- [ ] **Food Security Region Names (Nov 25, 2025)** (Complexity: 2 systems)
+  - Bug: Used camelCase 'eastAsia' but regions are 'East Asia'
+  - Result: ALL regions fell through to 0.80 fallback
+  - Fix: Commit 8f69e1087 - corrected names + fail-loud error
+  - Test needed: Verify all 10 regions use FAO values, not fallback
+  - **Owner:** Roy
+
+- [ ] **NaN/Infinity Regression Suite** (Complexity: 4 systems)
+  - Scan for any calculation producing NaN/Infinity
+  - Verify assertion utilities fire (not silent fallbacks)
+  - Test geometric means have MIN_FLOOR
+  - Test division operations protected from zero denominators
+  - **Owner:** Roy
+
+#### 5.4 Game Layer Integration Tests (MEDIUM Priority)
+
+**Purpose:** Verify game layer correctly reads and displays simulation state
+
+**Tasks:**
+- [ ] **State Mapper Tests** (Complexity: 3 systems)
+  - All mappers produce valid data shapes
+  - No silent fallbacks hiding missing state fields
+  - Delta calculations work correctly
+  - Memoization prevents unnecessary recalculations
+  - **Coverage Target:** 80%+ for `src/lib/stateMappers.ts`
+  - **Owner:** Tessa (far-future-ux-designer)
+
+- [ ] **Critical Juncture Detection Tests** (Complexity: 4 systems)
+  - Tipping points detected correctly
+  - Bifurcation moments identified
+  - Player influence opportunities surface
+  - Research breakthroughs trigger notifications
+  - **Owner:** Tessa
+
+- [ ] **Scenario Definition Tests** (Complexity: 3 systems)
+  - All 11 governance scenarios load correctly
+  - Override parameters applied to state
+  - Scenarios don't crash during GDP collapse
+  - Percentage-based spending (not fixed dollars)
+  - **Owner:** Roy
+
+#### 5.5 Test Infrastructure (LOW Priority)
+
+**Purpose:** Improve test tooling and coverage reporting
+
+**Tasks:**
+- [ ] **Coverage Report Dashboard** (Complexity: 2 systems)
+  - Generate HTML coverage reports
+  - Identify files <80% coverage
+  - Track coverage trends over time
+  - Integration with CI/CD
+  - **Script:** `scripts/generateCoverageReport.ts`
+
+- [ ] **Flaky Test Scanner** (Complexity: 2 systems)
+  - Detect non-deterministic test failures
+  - Report timing-dependent tests
+  - Identify missing RNG seeding
+  - **Script:** `scripts/detectFlakyTests.ts`
+
+- [ ] **Test Data Factories** (Complexity: 3 systems)
+  - Reusable state builders for tests
+  - Reduce test setup boilerplate
+  - Consistent test data across suites
+  - **Location:** `tests/fixtures/`
+
+#### 5.6 Autonomous Worker Fallback Workflow
+
+**When all CRITICAL/HIGH/MEDIUM/LOW roadmap items complete, autonomous workers should:**
+
+1. **Check test coverage:**
+   ```bash
+   npm test 2>&1 | tee logs/test_coverage_$(date +%Y%m%d_%H%M%S).log
+   ```
+
+2. **Identify undertested files:**
+   - Parse coverage report
+   - List files <80% coverage
+   - Prioritize by system criticality (climate > UI)
+
+3. **Write missing tests:**
+   - Focus on core simulation logic first
+   - Use existing test patterns as templates
+   - Ensure deterministic (seed RNG)
+   - Add regression tests for recent fixes
+
+4. **Fix broken tests:**
+   - Scan for skipped tests (`.skip`)
+   - Scan for failing tests
+   - Fix and unskip
+
+5. **Run deployment validation:**
+   ```bash
+   npx tsx scripts/deploymentSmokeTest.ts
+   npx tsx scripts/monteCarloSimulation.ts 2>&1 | tee logs/mc_validation_$(date +%Y%m%d_%H%M%S).log &
+   ```
+
+6. **Report findings:**
+   - Post to `coordination` channel
+   - Create GitHub issues for new bugs
+   - Update roadmap with coverage gaps
+
+**Completion Criteria:** Never complete. Testing is continuous quality assurance.
+
+**Expected Outcome:** Increased confidence that deployed system matches research specifications and doesn't regress.
+
+---
+
 ### 3.1 🧪 Scenario Analysis Framework (HIGH Priority)
 
 **Context:** God mode analysis revealed that deploying all 73 technologies still results in catastrophic failure. Sylvia's research (`research/SKEPTICAL_ANALYSIS_doom_predictions_20251110.md`) shows the model HAS all three spiral systems (upward spirals, cooperative spirals, positive tipping points) but they aren't activating. Hypothesis: technology alone doesn't trigger spirals - specific governance/social/political conditions required.
