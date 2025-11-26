@@ -531,10 +531,25 @@ export function calculateResourceSecurity(resources: ResourceEconomy): number {
     weights.timber * resources.timber.reserves +
     weights.energy * energySecurity;
 
-  return assertFinite(weighted, {
+  // CRITICAL-1 FIX (Nov 26, 2025): Floor at 0 to prevent negative values
+  // Individual reserves use Math.max(0, ...) but if ANY reserve goes negative OR
+  // if renewablePercentage > 1.0 (making weights negative), weighted sum can be negative.
+  // This propagates to resourceReserves and crashes BifurcationLogicPhase geometric mean.
+  const weightedFloored = Math.max(0, weighted);
+
+  // Defensive: Log if weighted was negative (indicates upstream bug)
+  if (weighted < 0 && Math.abs(weighted) > 1e-10) {
+    console.log(`⚠️ WARNING: calculateResourceSecurity produced negative value: ${weighted.toFixed(6)}`);
+    console.log(`   This indicates either:`);
+    console.log(`   1. Individual resource reserves went negative`);
+    console.log(`   2. Renewable percentage > 1.0 (causing negative weights)`);
+    console.log(`   Clamped to 0, but root cause should be investigated.`);
+  }
+
+  return assertFinite(weightedFloored, {
     location: 'calculateResourceSecurity',
     valueName: 'weightedResourceSecurity',
-    additionalInfo: { energySecurity }
+    additionalInfo: { energySecurity, rawWeighted: weighted }
   });
 }
 
