@@ -178,29 +178,33 @@ The climate mortality Phase 2 research is **high quality and ready for implement
 
 ## Parameter Validation: BII Framework
 
-### 1. Total Species Baseline (54,000 species)
+### 1. Total Species Baseline (54,000-58,000 species)
 
-**Source:** IPBES (2024) - Global Assessment Report
+**Source:** PREDICTS Database - Natural History Museum London (2021)
 
 **Claimed Values:**
 - Research file: 54,000 species baseline
-- Specification: Uses this exact value
+- Specification: Uses 54,000 (conservative)
+- Actual database size: 54,000-58,000 species (growing)
 
 **Validation:**
-✅ **AUTHORITATIVE SOURCE - IPBES 2024**
+✅ **AUTHORITATIVE SOURCE - PREDICTS DATABASE**
 
 **Source quality:**
-- ✅ IPBES = Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services
-- ✅ Gold standard for biodiversity assessment
-- ✅ 2024 (most recent)
+- ✅ Natural History Museum London = Leading research institution
+- ✅ PREDICTS = Projecting Responses of Ecological Diversity In Changing Terrestrial Systems
+- ✅ Data generated 2021, estimates to 2020
 - ✅ Comprehensive (includes plants, fungi, animals, insects)
+- ✅ Referenced by IPBES assessments
 
 **Methodology:**
 - Beyond typical bird/mammal indicators
-- PREDICTS project data
+- 32,000+ sites from 750+ studies
 - Global ecological studies
 
-**Confidence:** VERY HIGH - This is THE authoritative source
+**Note:** Original validation incorrectly cited "IPBES 2024" as source. IPBES references BII data but the species baseline originates from PREDICTS database.
+
+**Confidence:** VERY HIGH - This is THE authoritative source for BII species coverage
 
 ---
 
@@ -386,9 +390,10 @@ The climate mortality Phase 2 research is **high quality and ready for implement
 
 ### Peer-Reviewed Sources (BII Framework)
 
-1. **IPBES (2024)** - ✅ Authoritative
-   - Intergovernmental assessment
-   - 54,000 species baseline
+1. **PREDICTS Database / Natural History Museum (2021)** - ✅ Authoritative
+   - 54,000-58,000 species baseline
+   - 32,000+ sites from 750+ studies
+   - Referenced by IPBES assessments
 
 2. **Yoder et al. (2024)** - ✅ Very recent
    - *Ecology Letters*, 27, e14478
@@ -421,7 +426,6 @@ The climate mortality Phase 2 research is **high quality and ready for implement
 ### Temporal Relevance
 
 **2024-2025 sources:**
-- ✅ IPBES (2024)
 - ✅ NOAA GFDL (2024)
 - ✅ Yoder et al. (2024)
 - ✅ U.S. National Park Service (2024)
@@ -465,7 +469,7 @@ The climate mortality Phase 2 research is **high quality and ready for implement
 
 | Parameter | Research Finding | Spec Uses | Match? |
 |-----------|------------------|-----------|--------|
-| Species baseline | 54,000 (IPBES 2024) | 54,000 | ✅ Exact |
+| Species baseline | 54,000-58,000 (PREDICTS 2021) | 54,000 | ✅ Conservative |
 | Extinction rate | 10-100× background | 10 E/MSY | ✅ Conservative |
 | Background rate | 0.1 E/MSY | 0.1 E/MSY | ✅ Exact |
 | Joshua Tree mortality | 80-90% post-fire | Modeled | ✅ Matches |
@@ -528,7 +532,7 @@ export const BII_CONSTANTS = {
 ✅ Frequency shift (fewer total, more intense)
 ✅ Category redistribution (more Cat 4-5, fewer Cat 1-2)
 ✅ Infrastructure mismatch as primary mortality driver
-✅ 54,000 species baseline (IPBES 2024)
+✅ 54,000-58,000 species baseline (PREDICTS Database 2021)
 ✅ Extinction rates (10-100× background)
 ✅ Climate velocity constraints on species migration
 ✅ Keystone species cascades (Joshua Tree example)

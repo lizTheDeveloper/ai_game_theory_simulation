@@ -58,9 +58,9 @@ Found via systematic scan of validation files:
 - **Confidence:** HIGH - direct peer-reviewed parameters with minimal extrapolation
 
 **Sylvia (Research Skeptic):**
-- **Recommendation:** CONDITIONAL PASS
-- **Assessment:** Core parameters well-sourced, needs IPBES 2024 verification
-- **Issues:** Missing IPBES 2024 citation for 54,000 species baseline (HIGH priority fix)
+- **Recommendation:** CONDITIONAL PASS → ✅ FULL PASS (Nov 2025)
+- **Assessment:** Core parameters well-sourced, species baseline verified
+- **Issues:** ~~Missing IPBES 2024 citation for 54,000 species baseline~~ **RESOLVED**: Source is PREDICTS Database (Natural History Museum 2021), not IPBES 2024
 
 ### Key Parameters (Research-Backed)
 
@@ -69,7 +69,7 @@ Found via systematic scan of validation files:
 | Storm intensity | 2-11% by 2100 | 2-11% | Knutson et al. 2020, 2023 |
 | Precipitation | 10-15% | 10% per 1°C | NOAA GFDL 2024 |
 | Frequency change | -6% to -34% | Modeled | Jewson 2023 |
-| Species baseline | 54,000 | 54,000 | IPBES 2024 (needs verification) |
+| Species baseline | 54,000-58,000 | 54,000 | PREDICTS Database 2021 ✅ VERIFIED |
 | Extinction rate | 10-100× background | 10 E/MSY | IPBES data |
 | Joshua Tree mortality | 80-90% post-fire | Cascades | Yoder et al. 2024 |
 | Keystone cascade | Inferred (~2.5×) | 2.5× | Reasonable inference |
@@ -82,7 +82,7 @@ Found via systematic scan of validation files:
 - **Validation:** 1-2 hours (Monte Carlo N≥10)
 - **Total:** 5-8 hours
 
-**Critical action before implementation:** Verify IPBES 2024 source for 54,000 species baseline (currently missing from research document)
+**Source verification complete:** Species baseline (54,000-58,000) verified from PREDICTS Database at Natural History Museum London (2021). Original reference incorrectly cited "IPBES 2024" - this has been corrected to PREDICTS Database.
 
 ### Expected Impact
 
@@ -380,7 +380,7 @@ find /plans/ -name "*-spec.md"
 
 ## Next Steps
 
-1. **Before implementing Climate Phase 2:** Verify IPBES 2024 source for 54,000 species baseline (HIGH priority)
+1. ~~**Before implementing Climate Phase 2:** Verify IPBES 2024 source for 54,000 species baseline (HIGH priority)~~ ✅ **COMPLETED** - Source verified as PREDICTS Database (Nov 2025)
 2. **Before implementing Cooperative Ownership:** Review Sylvia's critique, ensure team accepts ±40-50% uncertainty
 3. **Memetic Contagion:** No immediate action required (long-term timeline)
 
