@@ -81,14 +81,17 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📄 **Files:** `tests/integration/game-layer/critical-juncture-detection.test.ts`, `tests/integration/game-layer/scenario-definitions.test.ts`
 - **Status:** IN PROGRESS - state creation and scenario application need debugging
 
-**Nov 26: Phase 9 - Temporal Evolution of Carbon Sinks (1990-2010)** (commit 8a31aa0)
+**Nov 26: Phase 9 - Temporal Evolution of Carbon Sinks (1990-2010) - UPDATED** (commits 8a31aa0, 1585ea7)
 - ✅ **HINDCAST FIX:** Carbon sinks now evolve over hindcast period instead of using static 2025 values
 - **Research Source:** Global Carbon Project data (`research/carbon_sinks_1990_2025_20251126.md`)
-- **Implementation:**
-  - Ocean absorption: 8.1 → 10.6 GtCO2/yr (+32%) via linear interpolation
-  - Land absorption: 5.1 → 11.4 GtCO2/yr (+121%) via linear interpolation
+- **Implementation (CORRECTED in 1585ea7):**
+  - Ocean absorption: 8.1 → 9.9 GtCO2/yr (+22%) via linear interpolation
+    - Previous values (10.6) were 2014-2023 averages, not end-of-2000s values
+  - Land absorption: 5.1 → 8.1 GtCO2/yr (+59%) via linear interpolation
+    - Previous values (11.4) were 2010s peak, not mid-growth values
   - Sink saturation disabled during hindcast (empirical values already account for effective uptake)
   - Mechanistic saturation (acidification, deforestation) only applies post-2010
+- **Results:** Mean CO2 error improved from 28.4% → 7.99% (-71% improvement)
 - **Why needed:** Previous implementation used anachronistic 2025 sink values for 1990, causing 40%+ CO2 overshoot
 - **Validation assertions:** Proper `assertFinite()` wrapping with temporal context
 - **Logging:** Every 5 years for verification
@@ -142,23 +145,28 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **Status:** Ready to run. CO2 may still fail (sink calibration needed).
 - **Dependencies:** Phase 5 (commit 8e316ce) + Phase 6 (commit b5bf2951c)
 
-**Nov 26: Phase 6 - Demographics Calibration COMPLETE** (commit b5bf295 / 9450aec)
+**Nov 26: Phase 6 - Demographics Calibration COMPLETE + UPDATED** (commits b5bf295 / 9450aec / 1585ea7)
 - ✅ **FIX:** 1990 scenarios now initialize with correct historical fertility rates (was using 2025 values)
 - **Root Cause:** Previous implementation initialized 1990 with TFR ~2.3 (2025 global), but historical 1990 TFR was 3.2-3.3 (40% higher)
-- **Regional TFR Values (1990, UN WPP 2024):**
-  - Sub-Saharan Africa: 6.4 | South Asia: 4.4 | East Asia: 2.3 | Europe: 1.8
-  - Middle East & North Africa: 4.7 | Southeast Asia: 3.6 | Latin America: 3.4
-  - North America: 2.0 | Oceania: 2.6 | Central Asia: 2.7
+- **Regional TFR Values (1990, UN WPP 2024) - UPDATED in 1585ea7:**
+  - Sub-Saharan Africa: 6.35 | South Asia: 4.3 | East Asia: 2.5 | Europe: 1.6
+  - Middle East & North Africa: 4.6 | Southeast Asia: 2.7 | Latin America: 3.0
+  - North America: 2.0 | Oceania: 2.4 | Central Asia: 2.7
+- **NEW: Fertility Transition Mechanism (1585ea7):**
+  - Linear interpolation from 1990 TFR → 2020 TFR during hindcast period
+  - Models demographic transition that occurred historically
+  - Example: Sub-Saharan Africa: 6.35 (1990) → 4.6 (2020)
+  - Example: South Asia: 4.3 (1990) → 2.3 (2020)
 - **AI Agent Flag Fix:** `includeAIAgents: false` now properly enforced (agents were spawning despite flag)
 - **Implementation:**
   - `historicalInitialization.ts`: Added `REGIONAL_TFR_1990` initialization for both sync/async versions
-  - `regionalPopulations.ts`: Skip fertility recalculation in historical mode, skip historical CBR scaling when fertility already historical
+  - `regionalPopulations.ts`: Fertility transition mechanism (1990→2020 linear interpolation)
   - Added `_skipHistoricalBirthRateScaling` flag to prevent double-counting
 - **Test Validation:** All 4 tests pass (regional TFR, AI agents = 0, scaling flag, initial population = 5.32B)
-- **Expected Impact:** Population overshoot reduced from 39.4% to <10% (pending Phase 7 validation)
-- 📄 **DevLog:** `devlogs/phase6_fertility_fix_20251126.md` (293 lines)
-- 📄 **Research:** `research/demographics_1990_hindcast_20251126.md` (393 lines, Cynthia)
-- 📄 **Test:** `scripts/test_phase6_fertility.ts`
+- **Expected Impact:** Population overshoot reduced from 39.4% to <10% at 2010
+- 📄 **DevLog:** `devlogs/phase6_fertility_fix_UPDATED_20251126.md` (234 lines)
+- 📄 **Research:** `research/demographics_1990_calibration_20251126.md` (402 lines, Cynthia)
+- 📄 **Test:** `scripts/validateFertilityFix.ts`
 - **Next:** Phase 7 - Re-run hindcast validation with corrected demographics
 
 **Nov 26: Climate Mini-Hindcast Phase 4 FAIL - Emissions Calibration Required** (commit 8bc84d6)
