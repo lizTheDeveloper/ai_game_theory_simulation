@@ -365,20 +365,26 @@ export function updateRegionalPopulations(state: GameState): void {
 
   for (const region of pop.regionalPopulations) {
     // === 1. CALCULATE BIRTH RATE ===
-    // Use inverse healthcare-fertility relationship (implemented in populationDynamics.ts)
-    const healthcareFertilityModifier = calculateHealthcareFertilityModifier(region.healthcareQuality);
-    const developmentModifier = calculateDevelopmentModifier(region.economicStage);
-    const meaningModifier = Math.max(0.5, state.qualityOfLifeSystems.meaningAndPurpose * 0.5 + 0.5);
-    const abundanceModifier = Math.max(0.7, state.qualityOfLifeSystems.materialAbundance * 0.3 + 0.7);
+    // CRITICAL FIX (Nov 26, 2025 - Phase 6): Skip fertility recalculation in historical mode
+    // In historical mode, fertility is initialized to historical values and then scaled
+    // by historical CBR curves (see lines 393-419 below). We don't want to overwrite
+    // the historical initialization with 2025 modifiers.
+    if (state.config.scenarioMode !== 'historical') {
+      // Use inverse healthcare-fertility relationship (implemented in populationDynamics.ts)
+      const healthcareFertilityModifier = calculateHealthcareFertilityModifier(region.healthcareQuality);
+      const developmentModifier = calculateDevelopmentModifier(region.economicStage);
+      const meaningModifier = Math.max(0.5, state.qualityOfLifeSystems.meaningAndPurpose * 0.5 + 0.5);
+      const abundanceModifier = Math.max(0.7, state.qualityOfLifeSystems.materialAbundance * 0.3 + 0.7);
 
-    region.fertilityRate = 2.3 * // Global baseline
-      healthcareFertilityModifier *
-      developmentModifier *
-      meaningModifier *
-      abundanceModifier;
+      region.fertilityRate = 2.3 * // Global baseline
+        healthcareFertilityModifier *
+        developmentModifier *
+        meaningModifier *
+        abundanceModifier;
 
-    // Clamp to realistic bounds
-    region.fertilityRate = Math.max(0.5, Math.min(6.0, region.fertilityRate));
+      // Clamp to realistic bounds
+      region.fertilityRate = Math.max(0.5, Math.min(6.0, region.fertilityRate));
+    }
 
     // Birth rate from fertility
     region.adjustedBirthRate = region.baselineBirthRate *
@@ -390,7 +396,12 @@ export function updateRegionalPopulations(state: GameState): void {
     // but fertility declines varied by 7x (Europe -2.6% vs North America -19.6% in 2010-2020).
     // Using single multiplier overestimated births in East/South Asia (50% of population).
     // Research: UN World Population Prospects 2024, regional TFR → CBR using ratio of 7.5
-    if (state.config.scenarioMode === 'historical') {
+    //
+    // CRITICAL FIX (Nov 26, 2025 - Phase 6): Skip scaling if fertility already initialized historically
+    // When _skipHistoricalBirthRateScaling flag is set, fertilityRate is already 1990 values
+    // and applying the historical CBR scaling would double-count the higher fertility
+    const skipScaling = (state as any)._skipHistoricalBirthRateScaling;
+    if (state.config.scenarioMode === 'historical' && !skipScaling) {
       const { getRegionalHistoricalBirthRate, getHistoricalCrudeBirthRate } = require('./engine/phases/BaselineMortalityPhase');
       const actualYear = state.currentYear;
 
