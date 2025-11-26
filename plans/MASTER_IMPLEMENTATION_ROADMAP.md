@@ -16,6 +16,10 @@
     - REMOVED: Discrete 10% failure probability with 2-5x mortality spikes
     - REPLACED: Continuous coordination stress model (deployment volume, trust, stakes)
     - Research integrity restored - Hammond et al. 2025 provides qualitative taxonomy only
+  - ✅ **M-1 MEDIUM RESOLVED** - Dead code cleanup complete (commit 8ef9b822e)
+    - Deleted ExtinctionTriggersPhase + ExtinctionProgressPhase (~280 lines)
+    - Both consolidated into ExtinctionSystemPhase (Nov 9, Batch 4)
+    - All references updated, TypeScript compilation clean
 - **Recent Work (Nov 25-26 Night Session):**
   - ✅ **GDP-Adaptive Spending COMPLETE** - Scenarios now use % of GDP instead of fixed spending
     - All 11 scenarios converted to rate-based spending
@@ -152,12 +156,16 @@
 
 ### 🟡 MEDIUM Priority Items
 
-**M-1: Dead Code Cleanup** (Identified Nov 25, 2025)
-- **Files:** `ExtinctionTriggersPhase.ts`, `ExtinctionProgressPhase.ts`
-- **Status:** Exist in codebase but not used in PhaseOrchestrator
-- **Impact:** Code maintenance, confusion for future developers
-- **Effort:** 15 minutes (remove files, verify no imports)
-- **Source:** `reviews/architecture_integration_review_20251125_evening.md`
+**M-1: Dead Code Cleanup** ✅ RESOLVED (Nov 26, 2025)
+- **Status:** ✅ RESOLVED - Commit 8ef9b822e (Nov 26, 2025)
+- **Files Removed:** `ExtinctionTriggersPhase.ts`, `ExtinctionProgressPhase.ts`
+- **Problem:** Both phases consolidated into ExtinctionSystemPhase (Nov 9, Batch 4) but files remained
+- **Solution:**
+  - Deleted 2 unused phase files (~280 lines)
+  - Updated 4 references (index.ts, outcomeClassifier.ts, UnknownUnknownPhase.ts)
+  - TypeScript compilation: ✅ Clean
+- **Impact:** Codebase maintenance improved, removes confusion for future developers
+- **Effort:** 15 minutes (as estimated)
 
 **M-2: Complete Assertion Migration** (Identified Nov 16, 2025)
 - **Status:** 71 remaining fallback patterns (20 violations fixed Nov 18, total 169)
