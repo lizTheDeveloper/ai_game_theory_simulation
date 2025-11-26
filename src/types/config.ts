@@ -45,6 +45,14 @@ export interface ConfigurationSettings {
   enablePerformanceProfiling?: boolean; // Enable phase timing collection (default: false)
   slowPhaseThresholdMs?: number; // Warn on phases exceeding this duration (default: 10ms)
 
+  // HISTORICAL EMISSIONS FORCING MODE (Nov 26, 2025): Climate Mini-Hindcast Validation Phase 5
+  // For hindcast calibration: bypass endogenous emissions model, use empirical Global Carbon Project data
+  // Research: research/climate_hindcast_data_20251126.md (Global Carbon Project 1990-2010)
+  // Root cause: Endogenous model generates 18% excess CO2 vs. historical (17.53% deviation in Phase 4)
+  // Temperature trajectory PASSED (validates climate sensitivity + carbon sinks), so only emissions need override
+  // WARNING: This mode is ONLY for hindcast validation (1990-2010). Default mode uses endogenous emissions.
+  historicalEmissionsMode?: boolean; // Enable historical emissions forcing (default: false)
+
   // Alignment Dynamics System (Oct 23, 2025)
   // Multi-theory modeling of alignment change (static vs drift vs epicycles vs unknowable)
   // Allows exploring different theories of how AI values evolve

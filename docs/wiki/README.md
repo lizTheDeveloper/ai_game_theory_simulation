@@ -70,6 +70,24 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📄 **Files:** `tests/integration/game-layer/critical-juncture-detection.test.ts`, `tests/integration/game-layer/scenario-definitions.test.ts`
 - **Status:** IN PROGRESS - state creation and scenario application need debugging
 
+**Nov 26: Climate Mini-Hindcast Phase 4 FAIL - Emissions Calibration Required** (commit 8bc84d6)
+- ❌ **VERDICT: FAIL** - CO2 deviation 17.53% vs 5% threshold
+- **Validation Results (N=10 runs):**
+  - CO2: 354.19 ppm → 444.40 ppm (vs 390.22 ppm observed) - **17.53% error**
+  - Temperature: PASS (+0.046°C deviation - climate sensitivity validated)
+  - Population: FAIL (+39.4% overshoot - 9.64B vs 6.9B observed)
+  - Determinism: CV = 0.04-0.07% (borderline acceptable)
+- **Root Causes:**
+  1. Endogenous emissions model generates 18% excess CO2 (economic consumption too high)
+  2. Fertility rates not initialized for 1990 era (TFR mismatch)
+  3. AI agents spawning despite `includeAIAgents: false` flag
+- **Key Insight:** Temperature matches despite CO2 overshoot = climate mechanics CORRECT, calibration inputs WRONG
+- **Follow-up Phases (HIGH priority):**
+  - Phase 5: Historical Emissions Forcing Mode (Roy) - GCP lookup table
+  - Phase 6: Demographics Calibration (Roy + Cynthia) - 1990 fertility rates
+  - Phase 7: Re-run Validation (Priya) - Full validation with fixes
+- 📄 **Report:** `reviews/climate_hindcast_validation_20251126.md` (24KB analysis)
+
 **Nov 26: Historical Baseline Precision Update** (commit b493ee3)
 - 📊 **Exact research values** for 1990/2010 climate baselines (was rounded estimates)
   - CO2: 354.19 ppm (was 354), 390.22 ppm (was 390) - Keeling Curve/NOAA
