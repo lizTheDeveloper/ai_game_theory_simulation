@@ -137,11 +137,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/ai-agent-coordination.ts",
-    "line": 39
-✅ Full results saved to: docs/underdocumented.json
-   Use this file to generate documentation improvements
-
-": "instrumentalConvergenceLevel: 0.0,"
+    "line": 396,
+    "type": "property",
+    "name": "instrumentalConvergenceLevel",
+    "currentDoc": "(none)",
+    "context": "instrumentalConvergenceLevel: 0.0,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/ai-agent-coordination.ts",
