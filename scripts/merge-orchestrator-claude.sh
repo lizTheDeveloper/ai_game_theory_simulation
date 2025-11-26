@@ -32,7 +32,7 @@ fi
 echo "📋 Found $BRANCH_COUNT branches to process"
 
 # Let Claude handle the merging and fixing
-timeout 2700 claude --dangerously-skip-permissions << PROMPT
+timeout 2700 claude --model sonnet --dangerously-skip-permissions << PROMPT
 You are the merge orchestrator. Your job is to merge pending branches and FIX any issues.
 
 ## Branches to merge:

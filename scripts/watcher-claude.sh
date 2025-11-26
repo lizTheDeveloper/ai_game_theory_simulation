@@ -25,7 +25,7 @@ echo "   Pending branches: $PENDING_BRANCHES"
 if [ "$TS_ERRORS" -gt 0 ] || [ "$MERGE_ERRORS" -gt 10 ]; then
   echo "🔧 Issues detected - invoking Claude to fix..."
   
-  timeout 1800 claude --dangerously-skip-permissions << PROMPT
+  timeout 1800 claude --model sonnet --dangerously-skip-permissions << PROMPT
 You are the watcher agent. Issues have been detected that are blocking the autonomous system.
 
 ## Current Status:

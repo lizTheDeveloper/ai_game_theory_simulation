@@ -147,7 +147,7 @@ fi
 echo "[$(date '+%Y-%m-%d %H:%M:%S')] 🤖 Spawning fix agent ($REVIEW_TYPE)..." | tee -a "$LOG_FILE"
 
 claude --dangerously-skip-permissions \
-  --model opus \
+  --model sonnet \
   --print "$PROMPT" > "$REMEDIATION_LOG" 2>&1
 
 # Parse remediation results

@@ -176,7 +176,7 @@ There is a merge conflict when pulling from main. Please:
 Do NOT use git stash - resolve conflicts properly by editing files.
 CONFLICT_EOF
 
-            claude --dangerously-skip-permissions < /tmp/conflict_resolution_$TIMESTAMP.txt 2>&1
+            claude --model sonnet --dangerously-skip-permissions < /tmp/conflict_resolution_$TIMESTAMP.txt 2>&1
             rm -f /tmp/conflict_resolution_$TIMESTAMP.txt
 
             log_success "Conflicts resolved, continuing..."
@@ -286,7 +286,7 @@ TASK_EOF
     log_info "Starting Claude Code researcher session (30-minute timeout)..."
 
     # Use 30-minute timeout for research tasks (less intensive than full implementation)
-    if timeout 1800 claude --dangerously-skip-permissions < /tmp/researcher_task_$TIMESTAMP.txt 2>&1; then
+    if timeout 1800 claude --model sonnet --dangerously-skip-permissions < /tmp/researcher_task_$TIMESTAMP.txt 2>&1; then
         log_success "Claude Code session completed"
     else
         EXIT_CODE=$?
