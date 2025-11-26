@@ -385,7 +385,17 @@ export async function createHistoricalInitialState(
   }
 
   // === VALIDATION ===
-  assertFinite(baseState.humanPopulationSystem?.population ?? 0, {
+  // Validate population was properly initialized
+  const population = assertStateProperty(
+    baseState.humanPopulationSystem,
+    'population',
+    {
+      location: 'createHistoricalInitialState',
+      month: 0,
+      additionalInfo: { year },
+    }
+  );
+  assertFinite(population, {
     location: 'createHistoricalInitialState',
     valueName: 'population',
     month: 0,
@@ -747,7 +757,17 @@ export function initializeHistoricalSimulation(
   }
 
   // === VALIDATION ===
-  assertFinite(baseState.humanPopulationSystem?.population ?? 0, {
+  // Validate population was properly initialized
+  const population = assertStateProperty(
+    baseState.humanPopulationSystem,
+    'population',
+    {
+      location: 'initializeHistoricalSimulation',
+      month: 0,
+      additionalInfo: { year },
+    }
+  );
+  assertFinite(population, {
     location: 'initializeHistoricalSimulation',
     valueName: 'population',
     month: 0,
