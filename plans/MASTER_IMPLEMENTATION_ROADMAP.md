@@ -943,12 +943,14 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
   - Test needed: Verify all 10 regions use FAO values, not fallback
   - **Owner:** Roy
 
-- [ ] **NaN/Infinity Regression Suite** (Complexity: 4 systems)
+- [x] **NaN/Infinity Regression Suite** (Complexity: 4 systems) ✅ COMPLETED Nov 26, 2025
   - Scan for any calculation producing NaN/Infinity
   - Verify assertion utilities fire (not silent fallbacks)
   - Test geometric means have MIN_FLOOR
   - Test division operations protected from zero denominators
   - **Owner:** Roy
+  - **Commit:** eb5753f9b - 15 tests, all passing
+  - **File:** `tests/integration/regressions/nan-infinity-comprehensive.test.ts`
 
 #### 5.4 Game Layer Integration Tests (MEDIUM Priority)
 

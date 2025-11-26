@@ -4,6 +4,33 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
+## ✅ NaN/Infinity Regression Suite Added (November 26, 2025 - commit eb5753f)
+
+**Status:** ✅ COMPLETE
+**Priority:** HIGH (Roadmap item 5.3)
+**Type:** Quality Assurance / Regression Prevention
+
+**Summary:** Comprehensive integration test suite added to prevent NaN/Infinity bugs from recurring. 15 tests covering initial state validation, extended simulation runs, and edge cases.
+
+**Test Coverage:**
+- **Initial State Validation:** No NaN/Infinity values at startup, population access pattern verification
+- **Simulation Run Validation:** 12/60/120 month runs without invalid values
+- **Critical State Fields:** Population, planetary boundaries, environmental state, AI agents
+- **Division by Zero Protection:** Empty arrays, regional populations
+- **Geometric Mean Protection:** MIN_FLOOR validation prevents Math.log(0) = -Infinity
+- **Determinism:** Same seed produces identical results
+- **Edge Cases:** Multiple seeds, economic stages
+
+**Root Causes Prevented:**
+- Oct 2025 NaN bug: Silent fallbacks masking NaN propagation
+- Nov 2025 god mode NaN: Wrong population access location (`state.population` vs `state.humanPopulationSystem.population`)
+
+**File:** `tests/integration/regressions/nan-infinity-comprehensive.test.ts` (433 lines)
+
+**Roadmap:** Completes Section 5.3 - NaN/Infinity Regression Suite
+
+---
+
 ## ✅ Research Verification: MASK & Emergent Misalignment Corrections (November 25, 2025 - commit 824f371)
 
 **Status:** ✅ VERIFIED WITH CORRECTIONS
