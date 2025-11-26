@@ -156,9 +156,24 @@ export function detectEconomicStage(state: GameState): EconomicStage {
  * @returns GDP in trillions USD (e.g., 114.0 = $114T)
  */
 export function getGDPProxy(state: GameState): number {
-  const economicStage = state.globalMetrics.economicTransitionStage ?? 0;
+  // Access required state properties (no fallbacks - should always exist)
+  const economicStage = assertStateProperty(
+    state.globalMetrics,
+    'economicTransitionStage',
+    {
+      location: 'getGDPProxy',
+      additionalInfo: { note: 'Required field for GDP calculation' }
+    }
+  );
   const population = state.humanPopulationSystem.population; // In billions
-  const qol = state.globalMetrics.qualityOfLife ?? 0.74; // 0-1, baseline ~0.74
+  const qol = assertStateProperty(
+    state.globalMetrics,
+    'qualityOfLife',
+    {
+      location: 'getGDPProxy',
+      additionalInfo: { note: 'Required field for GDP calculation' }
+    }
+  );
 
   // Validate inputs - fail loudly if invalid
   // FIX (Nov 24, 2025): Lower minimum from 0.1B to 0.00001B (10K people = true extinction threshold)
