@@ -62913,7 +62913,31 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BayesianMortalityResolutionPhase.ts",
-    "line": 103,
+    "line": 109,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'BayesianMortalityResolutionPhase.regionalSumBefore',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BayesianMortalityResolutionPhase.ts",
+    "line": 110,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: `region[${r.name}].population`,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BayesianMortalityResolutionPhase.ts",
+    "line": 111,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BayesianMortalityResolutionPhase.ts",
+    "line": 144,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -62921,7 +62945,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BayesianMortalityResolutionPhase.ts",
-    "line": 104,
+    "line": 145,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -62929,7 +62953,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BayesianMortalityResolutionPhase.ts",
-    "line": 105,
+    "line": 146,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -62937,7 +62961,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BayesianMortalityResolutionPhase.ts",
-    "line": 106,
+    "line": 147,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -62945,7 +62969,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BayesianMortalityResolutionPhase.ts",
-    "line": 110,
+    "line": 151,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -62953,7 +62977,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BayesianMortalityResolutionPhase.ts",
-    "line": 111,
+    "line": 152,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -62961,7 +62985,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BayesianMortalityResolutionPhase.ts",
-    "line": 112,
+    "line": 153,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -62969,7 +62993,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BayesianMortalityResolutionPhase.ts",
-    "line": 113,
+    "line": 154,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -62977,7 +63001,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BayesianMortalityResolutionPhase.ts",
-    "line": 121,
+    "line": 162,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -62985,7 +63009,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BayesianMortalityResolutionPhase.ts",
-    "line": 122,
+    "line": 163,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -62993,7 +63017,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BayesianMortalityResolutionPhase.ts",
-    "line": 123,
+    "line": 164,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -63001,7 +63025,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BayesianMortalityResolutionPhase.ts",
-    "line": 129,
+    "line": 170,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -63009,7 +63033,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BayesianMortalityResolutionPhase.ts",
-    "line": 130,
+    "line": 171,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -63017,7 +63041,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BayesianMortalityResolutionPhase.ts",
-    "line": 131,
+    "line": 172,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
