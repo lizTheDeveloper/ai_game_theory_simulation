@@ -84,12 +84,16 @@ import {
  * 1. Assess coordination quality (AI capability + governance + infrastructure)
  * 2. Assess support system effectiveness (UBI, retraining, food, healthcare)
  * 3. Calculate deployment speed (% workforce displaced)
- * 4. Determine deployment mode (chaos, uncoordinated, coordinated)
- * 5. Calculate base mortality from mode
- * 6. Apply support system reductions (multiplicative)
- * 7. Apply deployment speed penalty if exceeds safe threshold
- * 8. Apply regional heterogeneity (OECD vs low-income)
- * 9. Update population and tracking metrics
+ * 4. Calculate base mortality risk (power-law scaling with techs deployed)
+ * 5. Apply coordination stress (deployment volume, trust, capability stakes)
+ * 6. Calculate mortality multiplier (stressed coordination, support, pace, governance)
+ * 7. Apply regional heterogeneity (OECD vs low-income)
+ * 8. Update population and tracking metrics
+ *
+ * CRITICAL-1 FIX (Nov 26, 2025): Removed fabricated discrete failure probability
+ * - REMOVED: 10% probability of coordination failure with 2-5x mortality spike
+ * - PROBLEM: Probability was FABRICATED (Hammond et al. 2025 provides qualitative taxonomy only)
+ * - REPLACED: Continuous coordination stress model (deployment volume, trust, stakes)
  */
 export class CoordinatedDeploymentPhase implements SimulationPhase {
   readonly id = 'coordinated-deployment';
@@ -151,13 +155,75 @@ export class CoordinatedDeploymentPhase implements SimulationPhase {
     // 32-37% mortality reduction when fully in implementation phase
     const governanceStageModifier = this.calculateGovernanceStageModifier(state);
 
-    // === STEP 6b: Calculate Mortality Multiplier (Nov 21 validated, Nov 24 governance added) ===
-    // multiplier = (2.0 - coordination) * (1.5 - support) * pace_factor * governance_stage_modifier
-    const mortalityMultiplier = (
-      (2.0 - coordinationQuality) *
+    // === STEP 6b: Apply Continuous Coordination Stress (CRITICAL-1: Nov 26 fabrication fix) ===
+    // PREVIOUS APPROACH (REMOVED): Discrete 10% failure probability with 2-5x mortality spikes
+    // PROBLEM: The "10%" probability was FABRICATED - Hammond et al. 2025 provides qualitative
+    //          taxonomy only (miscoordination, conflict, collusion), NO numerical probabilities.
+    //
+    // NEW APPROACH: Continuous coordination degradation under stress
+    // - High deployment volume → coordination quality degrades
+    // - Low trust → coordination quality degrades
+    // - High stakes (capability) → coordination quality degrades
+    // - Degraded coordination → higher mortality (via existing multiplier formula)
+    //
+    // Research: Hammond et al. 2025 (arXiv:2502.14143) - qualitative framework ONLY
+    // No empirical baseline for failure probabilities exists in literature.
+
+    // Calculate coordination stress factors
+    const deploymentStress = Math.min(1.0, transition.recentDeploymentsCount / 10.0); // 0-1, saturates at 10 deployments
+    const trustStress = (1.0 - (transition.aiCoordinationCapability * 0.7)); // Proxy for trust (0-1)
+    const capabilityStress = state.aiAgents.length > 0
+      ? Math.min(1.0, state.aiAgents.reduce((max, a) => Math.max(max, a.capabilityProfile?.cognitive || 0), 0) / 10.0)
+      : 0.0; // High capability = high stakes
+
+    // Combined stress (weighted average)
+    const coordinationStress = assertFinite(
+      deploymentStress * 0.5 + trustStress * 0.3 + capabilityStress * 0.2,
+      {
+        location: 'CoordinatedDeploymentPhase.execute (coordination stress)',
+        valueName: 'coordinationStress',
+        month: state.currentMonth,
+        additionalInfo: { deploymentStress, trustStress, capabilityStress }
+      }
+    );
+
+    // Degrade coordination quality based on stress
+    // Original coordinationQuality from assessCoordinationQuality()
+    // Apply stress penalty: quality *= (1 - stress * 0.5)
+    // Example: stress=0.8 → quality reduced by 40%
+    const stressedCoordinationQuality = assertProbability(
+      coordinationQuality * (1.0 - coordinationStress * 0.5),
+      {
+        location: 'CoordinatedDeploymentPhase.execute (stressed coordination)',
+        valueName: 'stressedCoordinationQuality',
+        month: state.currentMonth,
+        additionalInfo: {
+          originalQuality: coordinationQuality,
+          coordinationStress,
+          stressPenalty: coordinationStress * 0.5
+        }
+      }
+    );
+
+    // === STEP 6c: Calculate Mortality Multiplier (Nov 21 validated, Nov 24 governance added, Nov 26 stress added) ===
+    // multiplier = (2.0 - stressedCoordination) * (1.5 - support) * pace_factor * governance_stage_modifier
+    // Uses stressed coordination quality (not raw) to account for coordination failures
+    const mortalityMultiplier = assertFinite(
+      (2.0 - stressedCoordinationQuality) *
       (1.5 - supportEffectiveness) *
       paceFactor *
-      governanceStageModifier
+      governanceStageModifier,
+      {
+        location: 'CoordinatedDeploymentPhase.execute (mortality multiplier)',
+        valueName: 'mortalityMultiplier',
+        month: state.currentMonth,
+        additionalInfo: {
+          stressedCoordinationQuality,
+          supportEffectiveness,
+          paceFactor,
+          governanceStageModifier
+        }
+      }
     );
 
     // === STEP 7: Calculate Mortality Fraction (exponential saturation) ===
@@ -165,7 +231,7 @@ export class CoordinatedDeploymentPhase implements SimulationPhase {
     // Prevents >100% mortality while allowing high base*multiplier values
     let mortalityFraction = 1.0 - Math.exp(-baseRisk * mortalityMultiplier);
 
-    // === STEP 7A: Check for Coordination Failure (Nov 21 Conservative Parameters) ===
+    // === STEP 7A: Decay Deployment Counter (Nov 21 Conservative Parameters) ===
     // HIGH-1 FIX (Nov 21, 2025): Decay deployment counter monthly to track "recent" deployments
     // 50% decay per month means deployments become "stale" after ~2 months
     // This prevents accumulating old deployments indefinitely
@@ -180,65 +246,6 @@ export class CoordinatedDeploymentPhase implements SimulationPhase {
         console.log(`   Decay rate: ${(decayRate * 100).toFixed(0)}% per month`);
       }
     }
-
-    // Stochastic coordination breakdowns mid-deployment
-    // Probability: 10-20% (central: 10%)
-    // Mortality multiplier: 2-5x baseline (central: 3x)
-    // Research: Cooperative AI (2025) failure modes
-    let coordinationFailureMultiplier = 1.0;
-
-    // HIGH-2 FIX (Nov 21, 2025): Reset coordination failure after cooldown period
-    // Coordination failures should be RECURRING, not one-time (per research description)
-    // After failure triggers, set 12-month cooldown before next failure can occur
-    if (transition.coordinationFailureActive) {
-      // Check if cooldown has expired (12 months minimum between failures)
-      const monthsSinceLastFailure = state.currentMonth - (transition.coordinationFailureMonth || 0);
-      if (monthsSinceLastFailure >= 12) {
-        transition.coordinationFailureActive = false;
-        console.log(`\n✅ COORDINATION FAILURE COOLDOWN EXPIRED (Month ${state.currentMonth})`);
-        console.log(`   System ready for next coordination check`);
-        console.log(`   Total failures so far: ${transition.coordinationFailures}`);
-      }
-    }
-
-    // Check for new failure (only if not already in failure state and deployments happening)
-    if (!transition.coordinationFailureActive && transition.recentDeploymentsCount > 0) {
-      const failureProbability = 0.10; // 10% probability (central estimate)
-      if (rng() < failureProbability) {
-        transition.coordinationFailureActive = true;
-        transition.coordinationFailures += 1;
-        transition.coordinationFailureMonth = state.currentMonth; // Track when failure occurred
-
-        // Mortality spike: 2-5x (central: 3x)
-        coordinationFailureMultiplier = 2.0 + rng() * 3.0; // Random in [2, 5]
-        transition.coordinationFailureMultiplier = coordinationFailureMultiplier; // Store in state
-
-        console.log(`\n🚨💥 COORDINATION FAILURE (${transition.coordinationFailures} total)`);
-        console.log(`  Mortality spike: ${coordinationFailureMultiplier.toFixed(1)}x baseline`);
-        console.log(`  Recent deployments: ${transition.recentDeploymentsCount.toFixed(1)}`);
-        console.log(`  Scenario: Geopolitical conflict / adversarial AI / cascading failures`);
-        console.log(`  Cooldown: 12 months before next failure can occur`);
-      }
-    } else if (transition.coordinationFailureActive) {
-      // Use stored multiplier if failure is still active
-      coordinationFailureMultiplier = transition.coordinationFailureMultiplier;
-    }
-
-    // Apply coordination failure multiplier
-    mortalityFraction = assertFinite(
-      mortalityFraction * coordinationFailureMultiplier,
-      {
-        location: 'CoordinatedDeploymentPhase.execute (coordination failure)',
-        valueName: 'mortalityFraction after coordination failure',
-        month: state.currentMonth,
-        additionalInfo: {
-          originalMortality: mortalityFraction / coordinationFailureMultiplier,
-          coordinationFailureMultiplier,
-          failureActive: transition.coordinationFailureActive,
-          recentDeployments: transition.recentDeploymentsCount
-        }
-      }
-    );
 
     // === STEP 7B: Apply Rebound Effects (Nov 21 Conservative Parameters) ===
     // Jevons paradox: Efficiency gains → consumption increase → environmental degradation
@@ -808,27 +815,42 @@ export class CoordinatedDeploymentPhase implements SimulationPhase {
     const referenceDuration = 30; // Calibrated value (see calculateDeploymentPaceFactor)
     const paceFactor = Math.pow(referenceDuration / actualDuration, 0.3);
 
-    // Calculate multiplier and fraction
-    const multiplier = (2.0 - coordination) * (1.5 - support) * paceFactor;
+    // Recalculate coordination stress for logging (same logic as execute())
+    const deploymentStress = Math.min(1.0, transition.recentDeploymentsCount / 10.0);
+    const trustStress = (1.0 - (transition.aiCoordinationCapability * 0.7));
+    const capabilityStress = state.aiAgents.length > 0
+      ? Math.min(1.0, state.aiAgents.reduce((max, a) => Math.max(max, a.capabilityProfile?.cognitive || 0), 0) / 10.0)
+      : 0.0;
+    const coordinationStress = deploymentStress * 0.5 + trustStress * 0.3 + capabilityStress * 0.2;
+    const stressedCoordination = coordination * (1.0 - coordinationStress * 0.5);
+
+    // Calculate governance stage modifier
+    const governanceStageModifier = this.calculateGovernanceStageModifier(state);
+
+    // Calculate multiplier and fraction (using stressed coordination)
+    const multiplier = (2.0 - stressedCoordination) * (1.5 - support) * paceFactor * governanceStageModifier;
     const mortalityFraction = 1.0 - Math.exp(-baseRisk * multiplier);
     const annualMortality = mortalityFraction;
 
     console.log(`\n=== 🤝 Coordinated Deployment Phase (Year ${Math.floor(state.currentMonth / 12)}) ===`);
-    console.log(`  Coordination Quality: ${(coordination * 100).toFixed(1)}% (bottleneck-constrained)`);
+    console.log(`  Coordination Quality (raw): ${(coordination * 100).toFixed(1)}% (bottleneck-constrained)`);
+    console.log(`  Coordination Stress: ${(coordinationStress * 100).toFixed(1)}% (deployment volume, trust, stakes)`);
+    console.log(`  Coordination Quality (stressed): ${(stressedCoordination * 100).toFixed(1)}%`);
     console.log(`  🛡️ Support System Effectiveness: ${(support * 100).toFixed(1)}% (evidence-weighted, no retraining)`);
     console.log(`  Base Risk: ${(baseRisk * 100).toFixed(3)}% (power-law: ${transition.recentDeploymentsCount} techs^0.8)`);
     console.log(`  ⏱️ Pace Factor: ${paceFactor.toFixed(2)}x (${actualDuration} months vs ${referenceDuration} month reference)`);
+    console.log(`  Governance Stage Modifier: ${governanceStageModifier.toFixed(2)}x`);
     console.log(`  Mortality Multiplier: ${multiplier.toFixed(2)}x`);
     console.log(`  ⚠️ Projected Annual Mortality: ${(annualMortality * 100).toFixed(2)}%`);
     console.log(`  Deployment Speed: ${(speed * 100).toFixed(1)}%/year (threshold: ${(transition.maxSafeDeploymentSpeed * 100).toFixed(1)}%/year)`);
 
-    // Coordination quality warnings (based on thresholds)
-    if (coordination < 0.3) {
-      console.log(`  🚨 CHAOS: coordination < 30% - catastrophic mortality risk`);
-    } else if (coordination < 0.6) {
-      console.log(`  ⚠️ WEAK COORDINATION: 30-60% quality - elevated mortality risk`);
+    // Coordination quality warnings (based on STRESSED coordination)
+    if (stressedCoordination < 0.3) {
+      console.log(`  🚨 CHAOS: stressed coordination < 30% - catastrophic mortality risk`);
+    } else if (stressedCoordination < 0.6) {
+      console.log(`  ⚠️ WEAK COORDINATION: 30-60% stressed quality - elevated mortality risk`);
     } else {
-      console.log(`  ✅ STRONG COORDINATION: >60% quality - mortality minimized`);
+      console.log(`  ✅ STRONG COORDINATION: >60% stressed quality - mortality minimized`);
     }
 
     // Deployment pace warning (CRITICAL-1: Time matters!)
