@@ -1,0 +1,21 @@
+{
+  "configKey": "equality-first_immediate",
+  "scenario": "equality-first",
+  "deploymentRate": "immediate",
+  "monteCarloN": 3,
+  "completionRate": 0,
+  "avgMortality": 100,
+  "spiralActivationRates": {
+    "Cognitive": 0,
+    "Abundance": 0,
+    "Democratic": 0,
+    "Scientific": 0,
+    "Meaning": 0,
+    "Ecological": 0
+  },
+  "cascadeActivationRate": 0,
+  "avgCascadeStrength": 0,
+  "outcomeDistribution": {
+    "CRASH": 3
+  }
+}

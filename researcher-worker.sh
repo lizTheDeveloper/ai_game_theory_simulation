@@ -121,21 +121,14 @@ cd "$PROJECT_DIR"
 
         log_metric "CRITICAL items: $CRITICAL_COUNT"
         log_metric "HIGH priority items: $HIGH_COUNT"
-
-        # If no work needed, exit early
-        if [ "$CRITICAL_COUNT" = "0" ] && [ "$HIGH_COUNT" = "0" ]; then
-            log_success "No research updates needed - all sources current!"
-            echo ""
-            log_stage "COMPLETE"
-            TOTAL_TIME=$(($(date +%s) - START_TIME))
-            log_success "Researcher worker completed in ${TOTAL_TIME}s (no updates needed)"
-            exit 0
-        fi
     else
-        log_warning "Research audit failed, continuing anyway..."
+        log_warning "Research audit failed, continuing with roadmap anyway..."
         CRITICAL_COUNT="unknown"
         HIGH_COUNT="unknown"
     fi
+
+    # NOTE: Removed early exit - we always check roadmap for pending work
+    log_info "Checking roadmap for pending items..."
 
     echo ""
     log_stage "GIT SYNC"
@@ -213,49 +206,61 @@ CONFLICT_EOF
     cat > /tmp/researcher_task_$TIMESTAMP.txt << TASK_EOF
 ## Autonomous Researcher Task
 
-You are the autonomous research worker. Your mission is to keep the simulation's research foundation current and rigorous.
+You are the autonomous research worker. Your mission is to keep the simulation's research foundation current and implement roadmap items.
 
 ### Current Research Status
 
 - **CRITICAL items**: $CRITICAL_COUNT (>5yr old + used in simulation)
 - **HIGH priority items**: $HIGH_COUNT (>5yr unused OR >3yr used)
-- **Audit report**: Available in \`research/UPDATE_QUEUE.md\`
+- **Research audit**: Available in \`research/UPDATE_QUEUE.md\`
+- **Roadmap**: Available in \`plans/roadmap-audit-validated-research-20251103.md\`
 
-### Your Task
+### Your Task - Priority Order
 
-**Check the Matrix \`research\` channel first:**
-1. Use mcp__chatroom__chatroom_read_new to check if Sylvia or Cynthia have posted research questions
-2. If there are questions, prioritize answering those first
-3. Post your findings back to the channel using mcp__chatroom__chatroom_post
+**1. Check Matrix \`research\` channel first:**
+   - Use mcp__chatroom__chatroom_read_new to check for research questions from Sylvia or Cynthia
+   - If there are questions, prioritize answering those
+   - Post findings back using mcp__chatroom__chatroom_post
 
-**If no channel messages, proceed with automated updates:**
+**2. Work through the roadmap systematically:**
+   - Review \`plans/roadmap-audit-validated-research-20251103.md\`
+   - Work on items in priority order: HIGH → MEDIUM → LOW
+   - **Do NOT skip items marked as "done" - review and update them**
+   - For each roadmap item:
+     - Check current implementation status
+     - Update research with 2024-2025 sources if needed
+     - Verify parameters against latest literature
+     - Document any changes or confirmations
 
-1. Review \`research/UPDATE_QUEUE.md\` for items needing updates
-2. Prioritize in order: CRITICAL → HIGH → MEDIUM
-3. For the top 1-3 items (don't try to do everything):
-   - Find 2024-2025 peer-reviewed sources on the topic
-   - Update the research file with new citations and parameters
-   - Update frontmatter (oldest_source, newest_source, last_verified)
-   - Document changes in a research update commit
+**3. If roadmap is complete, update aging research:**
+   - Review \`research/UPDATE_QUEUE.md\` for outdated sources
+   - Prioritize: CRITICAL → HIGH → MEDIUM
+   - Update 1-3 files with current peer-reviewed sources
 
-**Research Quality Standards:**
+### Research Quality Standards
+
 - 2+ peer-reviewed sources (2024-2025 preferred)
 - Parameter justification (why this value?)
 - Document source quality (journal impact, study methodology)
+- Update frontmatter (oldest_source, newest_source, last_verified)
 - Link to Zotero if available
 
-**Output Requirements:**
-1. Update 1-3 research files with current sources
-2. Commit changes with descriptive message
-3. Create PR to main with summary of updates
-4. Post completion notice to \`research\` Matrix channel
+### Output Requirements
 
-**Time Budget:**
-- Aim for 30-45 minute session
-- Focus on quality over quantity
-- Better to thoroughly update 1 file than rush 5 files
+1. Work through ALL roadmap items at your priority level
+2. Update research files with current sources
+3. Commit changes with descriptive messages
+4. Create PR to main with summary of work
+5. Post completion notice to \`research\` Matrix channel
 
-**If You Get Stuck:**
+### Time Budget
+
+- Aim for 30-45 minute productive session
+- Focus on thorough work over rushing
+- Better to completely validate 1-2 roadmap items than partially do many
+
+### If You Get Stuck
+
 - Post questions to \`research\` channel for Sylvia/Cynthia
 - Document partial progress in commit
 - Flag issues for human review
@@ -269,6 +274,8 @@ You are the autonomous research worker. Your mission is to keep the simulation's
 
 You are: **@researcher** (agent_id: "researcher")
 Use this identity when posting to Matrix channels.
+
+**Remember: Work through the ENTIRE roadmap at your priority level, even if items appear done. Verification and updates are continuous!**
 
 Let's maintain research excellence! 🔬
 TASK_EOF
@@ -344,8 +351,9 @@ This PR contains research updates performed by the autonomous researcher worker.
 - [ ] Parameters are justified with research backing
 - [ ] Frontmatter updated (oldest_source, newest_source, last_verified)
 - [ ] Changes documented clearly
+- [ ] Roadmap items verified/updated
 
-See \`research/UPDATE_QUEUE.md\` for current research status.
+See \`research/UPDATE_QUEUE.md\` and \`plans/roadmap-audit-validated-research-20251103.md\` for current status.
 
 🤖 Generated with Claude Code (Autonomous Researcher)
 "

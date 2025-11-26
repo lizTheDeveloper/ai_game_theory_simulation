@@ -1,0 +1,4151 @@
+{
+  "metadata": {
+    "timestamp": "2025-11-26T00-23-58",
+    "validationMode": true,
+    "monteCarloN": 3,
+    "deploymentRates": {
+      "immediate": {
+        "gapMonths": 0,
+        "description": "All 119 techs at month 0"
+      },
+      "fast": {
+        "gapMonths": 3,
+        "description": "119 techs over 12 months (4 tiers with 3mo gaps)"
+      },
+      "medium": {
+        "gapMonths": 6,
+        "description": "119 techs over 24 months (4 tiers with 6mo gaps)"
+      },
+      "slow": {
+        "gapMonths": 12,
+        "description": "119 techs over 48 months (4 tiers with 12mo gaps)"
+      },
+      "verySlow": {
+        "gapMonths": 24,
+        "description": "119 techs over 96 months (4 tiers with 24mo gaps)"
+      }
+    },
+    "scenarios": [
+      "god-mode",
+      "climate-first",
+      "equality-first",
+      "ai-alignment-first",
+      "democratic-participation",
+      "scientific-acceleration"
+    ],
+    "maxMonths": 360,
+    "totalRuns": 90
+  },
+  "allResults": {
+    "god-mode_immediate": [
+      {
+        "scenarioId": "god-mode_immediate",
+        "seed": 1,
+        "deploymentRate": "immediate",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "god-mode_immediate",
+        "seed": 2,
+        "deploymentRate": "immediate",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "god-mode_immediate",
+        "seed": 3,
+        "deploymentRate": "immediate",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      }
+    ],
+    "climate-first_immediate": [
+      {
+        "scenarioId": "climate-first_immediate",
+        "seed": 1,
+        "deploymentRate": "immediate",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "climate-first_immediate",
+        "seed": 2,
+        "deploymentRate": "immediate",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "climate-first_immediate",
+        "seed": 3,
+        "deploymentRate": "immediate",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      }
+    ],
+    "equality-first_immediate": [
+      {
+        "scenarioId": "equality-first_immediate",
+        "seed": 1,
+        "deploymentRate": "immediate",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "equality-first_immediate",
+        "seed": 2,
+        "deploymentRate": "immediate",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "equality-first_immediate",
+        "seed": 3,
+        "deploymentRate": "immediate",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      }
+    ],
+    "ai-alignment-first_immediate": [
+      {
+        "scenarioId": "ai-alignment-first_immediate",
+        "seed": 1,
+        "deploymentRate": "immediate",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "ai-alignment-first_immediate",
+        "seed": 2,
+        "deploymentRate": "immediate",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "ai-alignment-first_immediate",
+        "seed": 3,
+        "deploymentRate": "immediate",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      }
+    ],
+    "democratic-participation_immediate": [
+      {
+        "scenarioId": "democratic-participation_immediate",
+        "seed": 1,
+        "deploymentRate": "immediate",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "democratic-participation_immediate",
+        "seed": 2,
+        "deploymentRate": "immediate",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "democratic-participation_immediate",
+        "seed": 3,
+        "deploymentRate": "immediate",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      }
+    ],
+    "scientific-acceleration_immediate": [
+      {
+        "scenarioId": "scientific-acceleration_immediate",
+        "seed": 1,
+        "deploymentRate": "immediate",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "scientific-acceleration_immediate",
+        "seed": 2,
+        "deploymentRate": "immediate",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "scientific-acceleration_immediate",
+        "seed": 3,
+        "deploymentRate": "immediate",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      }
+    ],
+    "god-mode_fast": [
+      {
+        "scenarioId": "god-mode_fast",
+        "seed": 1,
+        "deploymentRate": "fast",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "god-mode_fast",
+        "seed": 2,
+        "deploymentRate": "fast",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "god-mode_fast",
+        "seed": 3,
+        "deploymentRate": "fast",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      }
+    ],
+    "climate-first_fast": [
+      {
+        "scenarioId": "climate-first_fast",
+        "seed": 1,
+        "deploymentRate": "fast",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "climate-first_fast",
+        "seed": 2,
+        "deploymentRate": "fast",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "climate-first_fast",
+        "seed": 3,
+        "deploymentRate": "fast",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      }
+    ],
+    "equality-first_fast": [
+      {
+        "scenarioId": "equality-first_fast",
+        "seed": 1,
+        "deploymentRate": "fast",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "equality-first_fast",
+        "seed": 2,
+        "deploymentRate": "fast",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "equality-first_fast",
+        "seed": 3,
+        "deploymentRate": "fast",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      }
+    ],
+    "ai-alignment-first_fast": [
+      {
+        "scenarioId": "ai-alignment-first_fast",
+        "seed": 1,
+        "deploymentRate": "fast",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "ai-alignment-first_fast",
+        "seed": 2,
+        "deploymentRate": "fast",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "ai-alignment-first_fast",
+        "seed": 3,
+        "deploymentRate": "fast",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      }
+    ],
+    "democratic-participation_fast": [
+      {
+        "scenarioId": "democratic-participation_fast",
+        "seed": 1,
+        "deploymentRate": "fast",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "democratic-participation_fast",
+        "seed": 2,
+        "deploymentRate": "fast",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "democratic-participation_fast",
+        "seed": 3,
+        "deploymentRate": "fast",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      }
+    ],
+    "scientific-acceleration_fast": [
+      {
+        "scenarioId": "scientific-acceleration_fast",
+        "seed": 1,
+        "deploymentRate": "fast",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "scientific-acceleration_fast",
+        "seed": 2,
+        "deploymentRate": "fast",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "scientific-acceleration_fast",
+        "seed": 3,
+        "deploymentRate": "fast",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      }
+    ],
+    "god-mode_medium": [
+      {
+        "scenarioId": "god-mode_medium",
+        "seed": 1,
+        "deploymentRate": "medium",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "god-mode_medium",
+        "seed": 2,
+        "deploymentRate": "medium",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "god-mode_medium",
+        "seed": 3,
+        "deploymentRate": "medium",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      }
+    ],
+    "climate-first_medium": [
+      {
+        "scenarioId": "climate-first_medium",
+        "seed": 1,
+        "deploymentRate": "medium",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "climate-first_medium",
+        "seed": 2,
+        "deploymentRate": "medium",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "climate-first_medium",
+        "seed": 3,
+        "deploymentRate": "medium",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      }
+    ],
+    "equality-first_medium": [
+      {
+        "scenarioId": "equality-first_medium",
+        "seed": 1,
+        "deploymentRate": "medium",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "equality-first_medium",
+        "seed": 2,
+        "deploymentRate": "medium",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "equality-first_medium",
+        "seed": 3,
+        "deploymentRate": "medium",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      }
+    ],
+    "ai-alignment-first_medium": [
+      {
+        "scenarioId": "ai-alignment-first_medium",
+        "seed": 1,
+        "deploymentRate": "medium",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "ai-alignment-first_medium",
+        "seed": 2,
+        "deploymentRate": "medium",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "ai-alignment-first_medium",
+        "seed": 3,
+        "deploymentRate": "medium",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      }
+    ],
+    "democratic-participation_medium": [
+      {
+        "scenarioId": "democratic-participation_medium",
+        "seed": 1,
+        "deploymentRate": "medium",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "democratic-participation_medium",
+        "seed": 2,
+        "deploymentRate": "medium",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "democratic-participation_medium",
+        "seed": 3,
+        "deploymentRate": "medium",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      }
+    ],
+    "scientific-acceleration_medium": [
+      {
+        "scenarioId": "scientific-acceleration_medium",
+        "seed": 1,
+        "deploymentRate": "medium",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "scientific-acceleration_medium",
+        "seed": 2,
+        "deploymentRate": "medium",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "scientific-acceleration_medium",
+        "seed": 3,
+        "deploymentRate": "medium",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      }
+    ],
+    "god-mode_slow": [
+      {
+        "scenarioId": "god-mode_slow",
+        "seed": 1,
+        "deploymentRate": "slow",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "god-mode_slow",
+        "seed": 2,
+        "deploymentRate": "slow",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "god-mode_slow",
+        "seed": 3,
+        "deploymentRate": "slow",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      }
+    ],
+    "climate-first_slow": [
+      {
+        "scenarioId": "climate-first_slow",
+        "seed": 1,
+        "deploymentRate": "slow",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "climate-first_slow",
+        "seed": 2,
+        "deploymentRate": "slow",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "climate-first_slow",
+        "seed": 3,
+        "deploymentRate": "slow",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      }
+    ],
+    "equality-first_slow": [
+      {
+        "scenarioId": "equality-first_slow",
+        "seed": 1,
+        "deploymentRate": "slow",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "equality-first_slow",
+        "seed": 2,
+        "deploymentRate": "slow",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "equality-first_slow",
+        "seed": 3,
+        "deploymentRate": "slow",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      }
+    ],
+    "ai-alignment-first_slow": [
+      {
+        "scenarioId": "ai-alignment-first_slow",
+        "seed": 1,
+        "deploymentRate": "slow",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "ai-alignment-first_slow",
+        "seed": 2,
+        "deploymentRate": "slow",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "ai-alignment-first_slow",
+        "seed": 3,
+        "deploymentRate": "slow",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      }
+    ],
+    "democratic-participation_slow": [
+      {
+        "scenarioId": "democratic-participation_slow",
+        "seed": 1,
+        "deploymentRate": "slow",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "democratic-participation_slow",
+        "seed": 2,
+        "deploymentRate": "slow",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "democratic-participation_slow",
+        "seed": 3,
+        "deploymentRate": "slow",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      }
+    ],
+    "scientific-acceleration_slow": [
+      {
+        "scenarioId": "scientific-acceleration_slow",
+        "seed": 1,
+        "deploymentRate": "slow",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "scientific-acceleration_slow",
+        "seed": 2,
+        "deploymentRate": "slow",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "scientific-acceleration_slow",
+        "seed": 3,
+        "deploymentRate": "slow",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      }
+    ],
+    "god-mode_verySlow": [
+      {
+        "scenarioId": "god-mode_verySlow",
+        "seed": 1,
+        "deploymentRate": "verySlow",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "god-mode_verySlow",
+        "seed": 2,
+        "deploymentRate": "verySlow",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "god-mode_verySlow",
+        "seed": 3,
+        "deploymentRate": "verySlow",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      }
+    ],
+    "climate-first_verySlow": [
+      {
+        "scenarioId": "climate-first_verySlow",
+        "seed": 1,
+        "deploymentRate": "verySlow",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "climate-first_verySlow",
+        "seed": 2,
+        "deploymentRate": "verySlow",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "climate-first_verySlow",
+        "seed": 3,
+        "deploymentRate": "verySlow",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      }
+    ],
+    "equality-first_verySlow": [
+      {
+        "scenarioId": "equality-first_verySlow",
+        "seed": 1,
+        "deploymentRate": "verySlow",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "equality-first_verySlow",
+        "seed": 2,
+        "deploymentRate": "verySlow",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "equality-first_verySlow",
+        "seed": 3,
+        "deploymentRate": "verySlow",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      }
+    ],
+    "ai-alignment-first_verySlow": [
+      {
+        "scenarioId": "ai-alignment-first_verySlow",
+        "seed": 1,
+        "deploymentRate": "verySlow",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "ai-alignment-first_verySlow",
+        "seed": 2,
+        "deploymentRate": "verySlow",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "ai-alignment-first_verySlow",
+        "seed": 3,
+        "deploymentRate": "verySlow",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      }
+    ],
+    "democratic-participation_verySlow": [
+      {
+        "scenarioId": "democratic-participation_verySlow",
+        "seed": 1,
+        "deploymentRate": "verySlow",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "democratic-participation_verySlow",
+        "seed": 2,
+        "deploymentRate": "verySlow",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "democratic-participation_verySlow",
+        "seed": 3,
+        "deploymentRate": "verySlow",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      }
+    ],
+    "scientific-acceleration_verySlow": [
+      {
+        "scenarioId": "scientific-acceleration_verySlow",
+        "seed": 1,
+        "deploymentRate": "verySlow",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "scientific-acceleration_verySlow",
+        "seed": 2,
+        "deploymentRate": "verySlow",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      },
+      {
+        "scenarioId": "scientific-acceleration_verySlow",
+        "seed": 3,
+        "deploymentRate": "verySlow",
+        "outcome": "CRASH",
+        "monthsSimulated": 0,
+        "crashed": true,
+        "crashMonth": 0,
+        "crashReason": "SCRIPT_ERROR",
+        "spiralActivation": {
+          "activeUpwardSpirals": [],
+          "cascadeActive": false,
+          "cascadeStrength": 0,
+          "trustCascadesTriggered": 0,
+          "tippingPointCascades": 0
+        },
+        "finalQoL": {
+          "survivalAvg": 0,
+          "basicNeedsAvg": 0,
+          "psychologicalAvg": 0,
+          "socialAvg": 0,
+          "healthAvg": 0,
+          "environmentalAvg": 0,
+          "overallAvg": 0
+        },
+        "finalEnvironment": {
+          "globalTempDelta": 0,
+          "co2Concentration": 0,
+          "extinctionRate": 1
+        },
+        "finalPopulation": 0,
+        "boundariesBreached": [],
+        "gdpTrajectory": {
+          "initial": 0,
+          "final": 0,
+          "min": 0,
+          "declinePercent": 0
+        },
+        "mortalityTrajectory": {
+          "year1": 0,
+          "year5": 0,
+          "year15": 0,
+          "terminal": 100
+        }
+      }
+    ]
+  }
+}

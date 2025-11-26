@@ -1,0 +1,45 @@
+{
+  "scenarioId": "scientific-acceleration_verySlow",
+  "seed": 3,
+  "deploymentRate": "verySlow",
+  "outcome": "CRASH",
+  "monthsSimulated": 0,
+  "crashed": true,
+  "crashMonth": 0,
+  "crashReason": "SCRIPT_ERROR",
+  "spiralActivation": {
+    "activeUpwardSpirals": [],
+    "cascadeActive": false,
+    "cascadeStrength": 0,
+    "trustCascadesTriggered": 0,
+    "tippingPointCascades": 0
+  },
+  "finalQoL": {
+    "survivalAvg": 0,
+    "basicNeedsAvg": 0,
+    "psychologicalAvg": 0,
+    "socialAvg": 0,
+    "healthAvg": 0,
+    "environmentalAvg": 0,
+    "overallAvg": 0
+  },
+  "finalEnvironment": {
+    "globalTempDelta": 0,
+    "co2Concentration": 0,
+    "extinctionRate": 1
+  },
+  "finalPopulation": 0,
+  "boundariesBreached": [],
+  "gdpTrajectory": {
+    "initial": 0,
+    "final": 0,
+    "min": 0,
+    "declinePercent": 0
+  },
+  "mortalityTrajectory": {
+    "year1": 0,
+    "year5": 0,
+    "year15": 0,
+    "terminal": 100
+  }
+}
