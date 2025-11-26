@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>God Mode - Main Container</title>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0A0A0A;
+            color: #FFFFFF;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            height: 48px;
+            background: #1A1A1A;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+        }
+
+        .header-title {
+            font-family: 'Exo 2', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #00F0FF;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .search-bar {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            padding: 6px 12px;
+            color: white;
+            width: 240px;
+            font-size: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            border-color: #00F0FF;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+        }
+
+        .mode-switcher {
+            display: flex;
+            gap: 2px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 2px;
+            padding: 2px;
+        }
+
+        .mode-btn {
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.5);
+            padding: 4px 12px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-radius: 2px;
+        }
+
+        .mode-btn.active {
+            background: #00F0FF;
+            color: #0A0A0A;
+            font-weight: 500;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+        }
+
+        .mode-btn:hover:not(.active) {
+            background: rgba(0, 240, 255, 0.1);
+            color: #00F0FF;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 240px;
+            background: #1A1A1A;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .actor-tabs {
+            display: flex;
+            flex-direction: column;
+            padding: 16px 0;
+        }
+
+        .actor-tab {
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            padding: 12px 24px;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Inter', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .actor-tab:hover {
+            background: rgba(0, 240, 255, 0.05);
+            color: #00F0FF;
+        }
+
+        .actor-tab.active {
+            background: rgba(0, 240, 255, 0.1);
+            color: #00F0FF;
+            border-left: 2px solid #00F0FF;
+            box-shadow: inset 0 0 20px rgba(0, 240, 255, 0.1);
+        }
+
+        .actor-tab-icon {
+            font-size: 16px;
+        }
+
+        /* Central Panel */
+        .central-panel {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.02) 0%, transparent 50%);
+        }
+
+        .panel-header {
+            margin-bottom: 24px;
+        }
+
+        .panel-title {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #00F0FF;
+            margin-bottom: 8px;
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+        }
+
+        .panel-subtitle {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Control Sections */
+        .control-section {
+            background: #1A1A1A;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            margin-bottom: 16px;
+            transition: all 0.2s ease;
+        }
+
+        .control-section:hover {
+            border-color: rgba(0, 240, 255, 0.3);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.05);
+        }
+
+        .section-header {
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .section-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .section-chevron {
+            transition: transform 0.2s ease;
+        }
+
+        .section-content {
+            padding: 16px;
+        }
+
+        /* Bottom Bar */
+        .bottom-bar {
+            height: 64px;
+            background: #1A1A1A;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+        }
+
+        .sim-controls {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .sim-btn {
+            background: transparent;
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            color: #00F0FF;
+            padding: 8px 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-radius: 2px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .sim-btn:hover {
+            background: rgba(0, 240, 255, 0.1);
+            border-color: #00F0FF;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+        }
+
+        .sim-btn.primary {
+            background: #00F0FF;
+            color: #0A0A0A;
+            font-weight: 500;
+        }
+
+        .sim-btn.primary:hover {
+            background: #00D0FF;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.6);
+        }
+
+        .queue-indicator {
+            background: rgba(255, 176, 0, 0.1);
+            border: 1px solid #FFB000;
+            padding: 4px 12px;
+            border-radius: 2px;
+            color: #FFB000;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            box-shadow: 0 0 10px rgba(255, 176, 0, 0.2);
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 240, 255, 0.2);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 240, 255, 0.3);
+        }
+
+        /* Sample Controls for Demo */
+        .slider-control {
+            margin-bottom: 16px;
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .slider-name {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .slider-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: #00F0FF;
+        }
+
+        .slider {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            background: #00F0FF;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.6);
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .checkbox {
+            width: 16px;
+            height: 16px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .checkbox.checked {
+            background: #00F0FF;
+            border-color: #00F0FF;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+        }
+
+        .checkbox.checked:after {
+            content: '✓';
+            position: absolute;
+            color: #0A0A0A;
+            font-size: 10px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .checkbox-label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .favorite-star {
+            color: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .favorite-star.active,
+        .favorite-star:hover {
+            color: #FFB000;
+            text-shadow: 0 0 10px rgba(255, 176, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-title">GOD MODE COMMAND CENTER</div>
+            <div class="header-controls">
+                <input type="text" class="search-bar" placeholder="Search controls...">
+                <div class="mode-switcher">
+                    <button class="mode-btn active" data-mode="beginner">BEGINNER</button>
+                    <button class="mode-btn" data-mode="intermediate">INTERMEDIATE</button>
+                    <button class="mode-btn" data-mode="expert">EXPERT</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="actor-tabs">
+                    <button class="actor-tab active">
+                        <span class="actor-tab-icon">🏛️</span>
+                        GOVERNMENT
+                    </button>
+                    <button class="actor-tab">
+                        <span class="actor-tab-icon">🤖</span>
+                        AI AGENTS
+                    </button>
+                    <button class="actor-tab">
+                        <span class="actor-tab-icon">👥</span>
+                        SOCIETY
+                    </button>
+                    <button class="actor-tab">
+                        <span class="actor-tab-icon">🏢</span>
+                        ORGANIZATIONS
+                    </button>
+                    <button class="actor-tab">
+                        <span class="actor-tab-icon">⚙️</span>
+                        SYSTEMS
+                    </button>
+                </div>
+            </div>
+
+            <!-- Central Panel -->
+            <div class="central-panel">
+                <div class="panel-header">
+                    <div class="panel-title">GOVERNMENT CONTROLS</div>
+                    <div class="panel-subtitle">Manage policy decisions and resource allocation</div>
+                </div>
+
+                <!-- Policy Weights Section -->
+                <div class="control-section">
+                    <div class="section-header">
+                        <div class="section-title">
+                            <span class="favorite-star">★</span>
+                            POLICY WEIGHTS
+                        </div>
+                        <div class="section-chevron">▼</div>
+                    </div>
+                    <div class="section-content">
+                        <div class="slider-control">
+                            <div class="slider-label">
+                                <span class="slider-name">Climate Policy</span>
+                                <span class="slider-value">80%</span>
+                            </div>
+                            <input type="range" class="slider" value="80" min="0" max="100">
+                        </div>
+                        <div class="slider-control">
+                            <div class="slider-label">
+                                <span class="slider-name">Technology Investment</span>
+                                <span class="slider-value">60%</span>
+                            </div>
+                            <input type="range" class="slider" value="60" min="0" max="100">
+                        </div>
+                        <div class="slider-control">
+                            <div class="slider-label">
+                                <span class="slider-name">Economic Growth</span>
+                                <span class="slider-value">45%</span>
+                            </div>
+                            <input type="range" class="slider" value="45" min="0" max="100">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Active Regulations Section -->
+                <div class="control-section">
+                    <div class="section-header">
+                        <div class="section-title">ACTIVE REGULATIONS</div>
+                        <div class="section-chevron">▼</div>
+                    </div>
+                    <div class="section-content">
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <div class="checkbox checked"></div>
+                                <span class="checkbox-label">AI Regulation Framework</span>
+                            </div>
+                            <div class="checkbox-item">
+                                <div class="checkbox checked"></div>
+                                <span class="checkbox-label">Carbon Tax</span>
+                            </div>
+                            <div class="checkbox-item">
+                                <div class="checkbox"></div>
+                                <span class="checkbox-label">Universal Basic Income</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Crisis Response Section (Collapsed) -->
+                <div class="control-section">
+                    <div class="section-header">
+                        <div class="section-title">CRISIS RESPONSE</div>
+                        <div class="section-chevron">▶</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Bar -->
+        <div class="bottom-bar">
+            <div class="sim-controls">
+                <button class="sim-btn">PAUSE</button>
+                <button class="sim-btn">STEP</button>
+                <button class="sim-btn primary">RESUME</button>
+                <div class="queue-indicator">3 DECISIONS QUEUED</div>
+            </div>
+            <div style="color: rgba(255,255,255,0.4); font-size: 11px;">
+                MONTH 24 / 120 • SPEED: 1X
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mode Switcher
+        document.querySelectorAll('.mode-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                console.log('Switched to mode:', this.dataset.mode);
+            });
+        });
+
+        // Actor Tabs
+        document.querySelectorAll('.actor-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.actor-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                console.log('Switched to tab:', this.textContent.trim());
+            });
+        });
+
+        // Section Expand/Collapse
+        document.querySelectorAll('.section-header').forEach(header => {
+            header.addEventListener('click', function() {
+                const chevron = this.querySelector('.section-chevron');
+                const content = this.nextElementSibling;
+
+                if (chevron.textContent === '▼') {
+                    chevron.textContent = '▶';
+                    chevron.style.transform = 'rotate(0deg)';
+                    if (content) content.style.display = 'none';
+                } else {
+                    chevron.textContent = '▼';
+                    chevron.style.transform = 'rotate(0deg)';
+                    if (content) content.style.display = 'block';
+                }
+            });
+        });
+
+        // Checkbox Toggle
+        document.querySelectorAll('.checkbox').forEach(checkbox => {
+            checkbox.addEventListener('click', function() {
+                this.classList.toggle('checked');
+                console.log('Checkbox toggled:', this.nextElementSibling?.textContent);
+            });
+        });
+
+        // Slider Updates
+        document.querySelectorAll('.slider').forEach(slider => {
+            slider.addEventListener('input', function() {
+                const label = this.parentElement.querySelector('.slider-value');
+                if (label) label.textContent = this.value + '%';
+            });
+        });
+
+        // Favorite Stars
+        document.querySelectorAll('.favorite-star').forEach(star => {
+            star.addEventListener('click', function(e) {
+                e.stopPropagation();
+                this.classList.toggle('active');
+                console.log('Favorite toggled');
+            });
+        });
+
+        // Simulation Controls
+        document.querySelectorAll('.sim-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                console.log('Simulation control:', this.textContent);
+            });
+        });
+
+        // Search Bar
+        document.querySelector('.search-bar').addEventListener('input', function(e) {
+            console.log('Searching for:', e.target.value);
+        });
+    </script>
+</body>
+</html>

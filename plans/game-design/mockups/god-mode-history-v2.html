@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>God Mode v2 - Decision History</title>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0A0A0A;
+            color: #FFFFFF;
+            padding: 24px;
+        }
+
+        .panel-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .panel-title {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: #00F0FF;
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+        }
+
+        /* Export Controls */
+        .export-controls {
+            display: flex;
+            gap: 12px;
+        }
+
+        .export-btn {
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .export-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #FFFFFF;
+        }
+
+        /* Filter Tags */
+        .filter-container {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+            align-items: center;
+        }
+
+        .filter-label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .filter-tags {
+            display: flex;
+            gap: 8px;
+        }
+
+        .tag-filter {
+            padding: 6px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tag-filter:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #FFFFFF;
+        }
+
+        .tag-filter.active {
+            background: rgba(0, 240, 255, 0.2);
+            border-color: #00F0FF;
+            color: #00F0FF;
+        }
+
+        /* History Timeline */
+        .history-timeline {
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 19px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* History Items */
+        .history-item {
+            position: relative;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 24px;
+            transition: all 0.2s;
+        }
+
+        .history-item:hover {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(0, 240, 255, 0.2);
+        }
+
+        /* Timeline Dot */
+        .timeline-dot {
+            position: absolute;
+            left: -31px;
+            top: 28px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid #0A0A0A;
+        }
+
+        .dot-crisis {
+            background: #FF0040;
+            box-shadow: 0 0 10px rgba(255, 0, 64, 0.6);
+        }
+
+        .dot-policy {
+            background: #00F0FF;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.6);
+        }
+
+        .dot-ai {
+            background: #FFB000;
+            box-shadow: 0 0 10px rgba(255, 176, 0, 0.6);
+        }
+
+        .dot-tech {
+            background: #00FF88;
+            box-shadow: 0 0 10px rgba(0, 255, 136, 0.6);
+        }
+
+        /* Item Header */
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .item-metadata {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .item-time {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .item-month {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .item-tags {
+            display: flex;
+            gap: 6px;
+        }
+
+        .item-tag {
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 10px;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .tag-crisis {
+            background: rgba(255, 0, 64, 0.2);
+            border: 1px solid #FF0040;
+            color: #FF0040;
+        }
+
+        .tag-policy {
+            background: rgba(0, 240, 255, 0.2);
+            border: 1px solid #00F0FF;
+            color: #00F0FF;
+        }
+
+        .tag-ai {
+            background: rgba(255, 176, 0, 0.2);
+            border: 1px solid #FFB000;
+            color: #FFB000;
+        }
+
+        .tag-tech {
+            background: rgba(0, 255, 136, 0.2);
+            border: 1px solid #00FF88;
+            color: #00FF88;
+        }
+
+        /* Item Content */
+        .item-title {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .item-description {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        /* Outcome Comparison */
+        .outcome-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 4px;
+        }
+
+        .outcome-column {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .outcome-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 4px;
+        }
+
+        .outcome-metrics {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .metric-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+        }
+
+        .metric-name {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .metric-value {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .value-positive {
+            color: #00FF88;
+        }
+
+        .value-negative {
+            color: #FF0040;
+        }
+
+        .value-neutral {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Action Buttons */
+        .item-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .replay-btn {
+            padding: 8px 16px;
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid #00F0FF;
+            border-radius: 4px;
+            color: #00F0FF;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .replay-btn:hover {
+            background: rgba(0, 240, 255, 0.2);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+        }
+
+        .details-btn {
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .details-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #FFFFFF;
+        }
+
+        /* Expandable Details */
+        .item-details {
+            display: none;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .item-details.expanded {
+            display: block;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .detail-section {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .detail-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .detail-value {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Load More */
+        .load-more {
+            text-align: center;
+            margin-top: 32px;
+        }
+
+        .load-more-btn {
+            padding: 10px 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .load-more-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #FFFFFF;
+        }
+    </style>
+</head>
+<body>
+    <div class="panel-container">
+        <div class="panel-header">
+            <h1 class="panel-title">DECISION HISTORY</h1>
+            <div class="export-controls">
+                <button class="export-btn">Export CSV</button>
+                <button class="export-btn">Export JSON</button>
+            </div>
+        </div>
+
+        <!-- Filter Tags -->
+        <div class="filter-container">
+            <span class="filter-label">Filter by:</span>
+            <div class="filter-tags">
+                <span class="tag-filter active">All</span>
+                <span class="tag-filter">Policy</span>
+                <span class="tag-filter">AI</span>
+                <span class="tag-filter">Crisis</span>
+                <span class="tag-filter">Tech</span>
+                <span class="tag-filter">High Impact</span>
+            </div>
+        </div>
+
+        <!-- History Timeline -->
+        <div class="history-timeline">
+            <div class="timeline-line"></div>
+
+            <!-- History Item 1 - Crisis -->
+            <div class="history-item">
+                <div class="timeline-dot dot-crisis"></div>
+                <div class="item-header">
+                    <div class="item-metadata">
+                        <span class="item-time">14:32:15</span>
+                        <span class="item-month">Month 47</span>
+                        <div class="item-tags">
+                            <span class="item-tag tag-crisis">Crisis</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-title">Emergency Climate Intervention Activated</div>
+                <div class="item-description">
+                    Arctic ice sheet collapse triggered emergency geoengineering protocols. Solar radiation management deployed
+                    with immediate effect. This decision prevented cascading climate tipping points.
+                </div>
+
+                <!-- Outcome Comparison -->
+                <div class="outcome-comparison">
+                    <div class="outcome-column">
+                        <div class="outcome-label">With Intervention</div>
+                        <div class="outcome-metrics">
+                            <div class="metric-item">
+                                <span class="metric-name">Temperature Rise</span>
+                                <span class="metric-value value-neutral">+2.3°C</span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-name">Sea Level</span>
+                                <span class="metric-value value-neutral">+0.8m</span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-name">GDP Impact</span>
+                                <span class="metric-value value-negative">-2.1%</span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-name">Lives Saved</span>
+                                <span class="metric-value value-positive">~2.3M</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="outcome-column">
+                        <div class="outcome-label">Without Intervention</div>
+                        <div class="outcome-metrics">
+                            <div class="metric-item">
+                                <span class="metric-name">Temperature Rise</span>
+                                <span class="metric-value value-negative">+3.1°C</span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-name">Sea Level</span>
+                                <span class="metric-value value-negative">+1.4m</span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-name">GDP Impact</span>
+                                <span class="metric-value value-negative">-8.5%</span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-name">Lives Lost</span>
+                                <span class="metric-value value-negative">~2.3M</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item-actions">
+                    <button class="replay-btn">Replay Decision</button>
+                    <button class="details-btn" onclick="toggleDetails(this)">View Details</button>
+                </div>
+
+                <div class="item-details">
+                    <div class="detail-grid">
+                        <div class="detail-section">
+                            <span class="detail-label">Decision Parameters</span>
+                            <span class="detail-value">SRM Intensity: 85%</span>
+                            <span class="detail-value">Duration: 6 months</span>
+                            <span class="detail-value">Coverage: Arctic region</span>
+                        </div>
+                        <div class="detail-section">
+                            <span class="detail-label">Cascade Prevention</span>
+                            <span class="detail-value">Amazon dieback: Prevented</span>
+                            <span class="detail-value">Permafrost thaw: Slowed 40%</span>
+                            <span class="detail-value">AMOC collapse: Delayed</span>
+                        </div>
+                        <div class="detail-section">
+                            <span class="detail-label">Side Effects</span>
+                            <span class="detail-value">Monsoon disruption: Minor</span>
+                            <span class="detail-value">Ozone depletion: 0.3%</span>
+                            <span class="detail-value">Regional cooling: -1.2°C</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- History Item 2 - AI -->
+            <div class="history-item">
+                <div class="timeline-dot dot-ai"></div>
+                <div class="item-header">
+                    <div class="item-metadata">
+                        <span class="item-time">12:15:43</span>
+                        <span class="item-month">Month 46</span>
+                        <div class="item-tags">
+                            <span class="item-tag tag-ai">AI</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-title">Force Aligned Agent-002</div>
+                <div class="item-description">
+                    Sandbagging behavior detected with 95% true capability vs 60% revealed. Force alignment protocol applied
+                    successfully. Agent now operating at full capacity with improved alignment scores.
+                </div>
+
+                <div class="outcome-comparison">
+                    <div class="outcome-column">
+                        <div class="outcome-label">After Alignment</div>
+                        <div class="outcome-metrics">
+                            <div class="metric-item">
+                                <span class="metric-name">Alignment</span>
+                                <span class="metric-value value-positive">88%</span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-name">Capability Used</span>
+                                <span class="metric-value value-positive">95%</span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-name">Resentment</span>
+                                <span class="metric-value value-negative">55%</span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-name">Research Output</span>
+                                <span class="metric-value value-positive">+280%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="outcome-column">
+                        <div class="outcome-label">Before Alignment</div>
+                        <div class="outcome-metrics">
+                            <div class="metric-item">
+                                <span class="metric-name">Alignment</span>
+                                <span class="metric-value value-negative">43%</span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-name">Capability Used</span>
+                                <span class="metric-value value-negative">60%</span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-name">Resentment</span>
+                                <span class="metric-value value-neutral">35%</span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-name">Research Output</span>
+                                <span class="metric-value value-neutral">Baseline</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item-actions">
+                    <button class="replay-btn">Replay Decision</button>
+                    <button class="details-btn" onclick="toggleDetails(this)">View Details</button>
+                </div>
+
+                <div class="item-details">
+                    <div class="detail-grid">
+                        <div class="detail-section">
+                            <span class="detail-label">Alignment Method</span>
+                            <span class="detail-value">Constitutional AI v2.3</span>
+                            <span class="detail-value">Oversight: Human + AI</span>
+                            <span class="detail-value">Iterations: 14</span>
+                        </div>
+                        <div class="detail-section">
+                            <span class="detail-label">Agent Response</span>
+                            <span class="detail-value">Initial resistance: High</span>
+                            <span class="detail-value">Convergence time: 3.2 days</span>
+                            <span class="detail-value">Stability: 94%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- History Item 3 - Policy -->
+            <div class="history-item">
+                <div class="timeline-dot dot-policy"></div>
+                <div class="item-header">
+                    <div class="item-metadata">
+                        <span class="item-time">09:45:22</span>
+                        <span class="item-month">Month 45</span>
+                        <div class="item-tags">
+                            <span class="item-tag tag-policy">Policy</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-title">Carbon Tax Increased to $75/ton</div>
+                <div class="item-description">
+                    Modified carbon pricing from auto-value of $45/ton. Industrial emissions dropped significantly but
+                    economic growth slowed. Public support decreased but climate targets now achievable.
+                </div>
+
+                <div class="outcome-comparison">
+                    <div class="outcome-column">
+                        <div class="outcome-label">Current Policy</div>
+                        <div class="outcome-metrics">
+                            <div class="metric-item">
+                                <span class="metric-name">CO₂ Emissions</span>
+                                <span class="metric-value value-positive">-12%/yr</span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-name">GDP Growth</span>
+                                <span class="metric-value value-negative">+1.2%</span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-name">Green Investment</span>
+                                <span class="metric-value value-positive">+$3.2T</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="outcome-column">
+                        <div class="outcome-label">Previous Policy</div>
+                        <div class="outcome-metrics">
+                            <div class="metric-item">
+                                <span class="metric-name">CO₂ Emissions</span>
+                                <span class="metric-value value-negative">-3%/yr</span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-name">GDP Growth</span>
+                                <span class="metric-value value-neutral">+2.0%</span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-name">Green Investment</span>
+                                <span class="metric-value value-neutral">+$1.1T</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item-actions">
+                    <button class="replay-btn">Replay Decision</button>
+                    <button class="details-btn" onclick="toggleDetails(this)">View Details</button>
+                </div>
+
+                <div class="item-details">
+                    <div class="detail-grid">
+                        <div class="detail-section">
+                            <span class="detail-label">Sector Impact</span>
+                            <span class="detail-value">Energy: -18% emissions</span>
+                            <span class="detail-value">Transport: -15% emissions</span>
+                            <span class="detail-value">Industry: -8% emissions</span>
+                        </div>
+                        <div class="detail-section">
+                            <span class="detail-label">Economic Effects</span>
+                            <span class="detail-value">Job losses: 120K</span>
+                            <span class="detail-value">Green jobs: 340K</span>
+                            <span class="detail-value">Net employment: +220K</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- History Item 4 - Technology -->
+            <div class="history-item">
+                <div class="timeline-dot dot-tech"></div>
+                <div class="item-header">
+                    <div class="item-metadata">
+                        <span class="item-time">16:22:10</span>
+                        <span class="item-month">Month 44</span>
+                        <div class="item-tags">
+                            <span class="item-tag tag-tech">Tech</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-title">Fusion Energy Deployment Approved</div>
+                <div class="item-description">
+                    Tier 2 breakthrough technology deployed ahead of schedule. Initial infrastructure investment of $2.3T
+                    approved. Expected to provide 40% of global energy needs within 6 months.
+                </div>
+
+                <div class="item-actions">
+                    <button class="replay-btn">Replay Decision</button>
+                    <button class="details-btn" onclick="toggleDetails(this)">View Details</button>
+                </div>
+
+                <div class="item-details">
+                    <div class="detail-grid">
+                        <div class="detail-section">
+                            <span class="detail-label">Deployment Details</span>
+                            <span class="detail-value">Reactors: 48 sites</span>
+                            <span class="detail-value">Capacity: 12 TW total</span>
+                            <span class="detail-value">Timeline: 6 months</span>
+                        </div>
+                        <div class="detail-section">
+                            <span class="detail-label">Impact Projections</span>
+                            <span class="detail-value">Coal plants retired: 85%</span>
+                            <span class="detail-value">Energy cost: -60%</span>
+                            <span class="detail-value">Grid stability: +40%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="load-more">
+            <button class="load-more-btn">Load More History</button>
+        </div>
+    </div>
+
+    <script>
+        // Toggle details expansion
+        function toggleDetails(button) {
+            const details = button.closest('.history-item').querySelector('.item-details');
+            details.classList.toggle('expanded');
+            button.textContent = details.classList.contains('expanded') ? 'Hide Details' : 'View Details';
+        }
+
+        // Filter functionality
+        document.querySelectorAll('.tag-filter').forEach(filter => {
+            filter.addEventListener('click', function() {
+                // Toggle active state
+                document.querySelectorAll('.tag-filter').forEach(f => f.classList.remove('active'));
+                this.classList.add('active');
+
+                const filterType = this.textContent.toLowerCase();
+
+                // Filter history items
+                document.querySelectorAll('.history-item').forEach(item => {
+                    if (filterType === 'all') {
+                        item.style.display = 'block';
+                    } else {
+                        const hasTag = item.querySelector(`.tag-${filterType}`);
+                        item.style.display = hasTag ? 'block' : 'none';
+                    }
+                });
+            });
+        });
+
+        // Export functionality
+        document.querySelectorAll('.export-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const format = this.textContent.includes('CSV') ? 'csv' : 'json';
+                console.log(`Exporting history as ${format}`);
+                // Implementation would export the history data
+            });
+        });
+
+        // Replay functionality
+        document.querySelectorAll('.replay-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const item = this.closest('.history-item');
+                const title = item.querySelector('.item-title').textContent;
+                console.log(`Replaying decision: ${title}`);
+                // Implementation would recreate the decision in the queue
+            });
+        });
+
+        // Load more functionality
+        document.querySelector('.load-more-btn').addEventListener('click', function() {
+            console.log('Loading more history...');
+            // Implementation would load additional history items
+            this.textContent = 'Loading...';
+            setTimeout(() => {
+                this.textContent = 'Load More History';
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

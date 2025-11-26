@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>God Mode v2 - Main Container</title>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0A0A0A;
+            color: #FFFFFF;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            height: 64px;
+            background: #1A1A1A;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .header-title {
+            font-family: 'Exo 2', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #00F0FF;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .breadcrumb-item {
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .breadcrumb-item:hover {
+            color: #00F0FF;
+        }
+
+        .breadcrumb-separator {
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .breadcrumb-current {
+            color: #FFFFFF;
+        }
+
+        /* Search Bar */
+        .search-container {
+            position: relative;
+            width: 300px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 8px 36px 8px 12px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            color: #FFFFFF;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #00F0FF;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        /* Quick Action Button */
+        .quick-action-btn {
+            position: relative;
+            padding: 8px 16px;
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid #00F0FF;
+            border-radius: 4px;
+            color: #00F0FF;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .quick-action-btn:hover {
+            background: rgba(0, 240, 255, 0.2);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+        }
+
+        .queue-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #FFB000;
+            color: #000;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 176, 0, 0.6);
+        }
+
+        /* Keyboard Shortcuts Hint */
+        .keyboard-hints {
+            display: flex;
+            gap: 12px;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .keyboard-hint {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .key {
+            padding: 2px 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+        }
+
+        /* Sidebar Navigation */
+        .main-content {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 200px;
+            background: #0F0F0F;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 24px 16px;
+        }
+
+        .nav-section {
+            margin-bottom: 24px;
+        }
+
+        .nav-title {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 12px;
+        }
+
+        .nav-item {
+            padding: 10px 12px;
+            margin-bottom: 4px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-item:hover {
+            background: rgba(0, 240, 255, 0.1);
+            color: #00F0FF;
+        }
+
+        .nav-item.active {
+            background: rgba(0, 240, 255, 0.2);
+            color: #00F0FF;
+            border-left: 2px solid #00F0FF;
+        }
+
+        .nav-item-text {
+            font-size: 13px;
+        }
+
+        .nav-shortcut {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.2);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Modified Indicator */
+        .modified-indicator {
+            width: 6px;
+            height: 6px;
+            background: #FFB000;
+            border-radius: 50%;
+            box-shadow: 0 0 8px rgba(255, 176, 0, 0.8);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Content Area */
+        .content {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .content-panel {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .panel-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: #00F0FF;
+        }
+
+        /* Help Tooltip */
+        .help-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 10px;
+            cursor: help;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .help-icon:hover {
+            border-color: #00F0FF;
+            color: #00F0FF;
+        }
+
+        .tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1A1A1A;
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 4px;
+            padding: 8px 12px;
+            font-size: 11px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+            margin-bottom: 4px;
+            z-index: 1000;
+        }
+
+        .help-icon:hover .tooltip {
+            opacity: 1;
+        }
+
+        /* Search Results Overlay */
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #1A1A1A;
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 4px;
+            margin-top: 4px;
+            max-height: 400px;
+            overflow-y: auto;
+            display: none;
+            z-index: 1000;
+        }
+
+        .search-results.active {
+            display: block;
+        }
+
+        .search-result-item {
+            padding: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .search-result-item:hover {
+            background: rgba(0, 240, 255, 0.1);
+        }
+
+        .search-result-category {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.4);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .search-result-title {
+            font-size: 13px;
+            color: #FFFFFF;
+        }
+
+        /* Status Bar */
+        .status-bar {
+            height: 32px;
+            background: #0F0F0F;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .status-left {
+            display: flex;
+            gap: 24px;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #00FF88;
+            box-shadow: 0 0 6px rgba(0, 255, 136, 0.6);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Enhanced Header -->
+        <div class="header">
+            <div class="header-left">
+                <div class="header-title">GOD MODE</div>
+                <div class="breadcrumb">
+                    <span class="breadcrumb-item">God Mode</span>
+                    <span class="breadcrumb-separator">›</span>
+                    <span class="breadcrumb-item">Government</span>
+                    <span class="breadcrumb-separator">›</span>
+                    <span class="breadcrumb-current">Policy Weights</span>
+                </div>
+            </div>
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search controls... (Ctrl+K)" id="searchInput">
+                <span class="search-icon">⌕</span>
+                <div class="search-results" id="searchResults">
+                    <div class="search-result-item">
+                        <div class="search-result-category">Government</div>
+                        <div class="search-result-title">Climate Regulation Strength</div>
+                    </div>
+                    <div class="search-result-item">
+                        <div class="search-result-category">AI Agents</div>
+                        <div class="search-result-title">Agent-007 Alignment Override</div>
+                    </div>
+                    <div class="search-result-item">
+                        <div class="search-result-category">Technology</div>
+                        <div class="search-result-title">Fusion Energy Deployment Speed</div>
+                    </div>
+                </div>
+            </div>
+            <div class="header-controls">
+                <div class="keyboard-hints">
+                    <div class="keyboard-hint">
+                        <span class="key">G</span>
+                        <span>Government</span>
+                    </div>
+                    <div class="keyboard-hint">
+                        <span class="key">A</span>
+                        <span>AI Agents</span>
+                    </div>
+                    <div class="keyboard-hint">
+                        <span class="key">Q</span>
+                        <span>Queue</span>
+                    </div>
+                </div>
+                <button class="quick-action-btn">
+                    Jump to Queue
+                    <span class="queue-badge">3</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <!-- Enhanced Sidebar -->
+            <div class="sidebar">
+                <div class="nav-section">
+                    <div class="nav-title">Core Systems</div>
+                    <div class="nav-item active">
+                        <span class="nav-item-text">Government</span>
+                        <span class="nav-shortcut">G</span>
+                        <span class="modified-indicator"></span>
+                    </div>
+                    <div class="nav-item">
+                        <span class="nav-item-text">AI Agents</span>
+                        <span class="nav-shortcut">A</span>
+                    </div>
+                    <div class="nav-item">
+                        <span class="nav-item-text">Technology</span>
+                        <span class="nav-shortcut">T</span>
+                    </div>
+                    <div class="nav-item">
+                        <span class="nav-item-text">Environment</span>
+                        <span class="nav-shortcut">E</span>
+                        <span class="modified-indicator"></span>
+                    </div>
+                </div>
+                <div class="nav-section">
+                    <div class="nav-title">Management</div>
+                    <div class="nav-item">
+                        <span class="nav-item-text">Decision Queue</span>
+                        <span class="nav-shortcut">Q</span>
+                    </div>
+                    <div class="nav-item">
+                        <span class="nav-item-text">History</span>
+                        <span class="nav-shortcut">H</span>
+                    </div>
+                    <div class="nav-item">
+                        <span class="nav-item-text">Comparison</span>
+                        <span class="nav-shortcut">C</span>
+                    </div>
+                    <div class="nav-item">
+                        <span class="nav-item-text">Presets</span>
+                        <span class="nav-shortcut">P</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="content">
+                <div class="content-panel">
+                    <div class="panel-header">
+                        <div class="panel-title">
+                            Active Panel Content
+                            <span class="help-icon">
+                                ?
+                                <span class="tooltip">This panel shows the currently selected system controls</span>
+                            </span>
+                        </div>
+                    </div>
+                    <p style="color: rgba(255, 255, 255, 0.6); font-size: 13px;">
+                        Panel content loads here based on selected navigation item.
+                        Use keyboard shortcuts or click navigation items to switch between panels.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <div class="status-left">
+                <div class="status-item">
+                    <span class="status-indicator"></span>
+                    <span>Simulation Active</span>
+                </div>
+                <div class="status-item">
+                    <span>Month 48</span>
+                </div>
+                <div class="status-item">
+                    <span>12 Changes Pending</span>
+                </div>
+            </div>
+            <div class="status-right">
+                <span>Last Update: 2ms ago</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+
+        searchInput.addEventListener('focus', () => {
+            if (searchInput.value.length > 0) {
+                searchResults.classList.add('active');
+            }
+        });
+
+        searchInput.addEventListener('input', (e) => {
+            if (e.target.value.length > 0) {
+                searchResults.classList.add('active');
+            } else {
+                searchResults.classList.remove('active');
+            }
+        });
+
+        searchInput.addEventListener('blur', () => {
+            setTimeout(() => {
+                searchResults.classList.remove('active');
+            }, 200);
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 'k') {
+                e.preventDefault();
+                searchInput.focus();
+            }
+
+            if (!e.ctrlKey && !e.altKey && !e.metaKey) {
+                switch(e.key.toLowerCase()) {
+                    case 'g':
+                        if (document.activeElement !== searchInput) {
+                            console.log('Navigate to Government');
+                        }
+                        break;
+                    case 'a':
+                        if (document.activeElement !== searchInput) {
+                            console.log('Navigate to AI Agents');
+                        }
+                        break;
+                    case 'q':
+                        if (document.activeElement !== searchInput) {
+                            console.log('Navigate to Queue');
+                        }
+                        break;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>God Mode v2 - Government Controls</title>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0A0A0A;
+            color: #FFFFFF;
+            padding: 24px;
+        }
+
+        .panel-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .panel-title {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: #00F0FF;
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+        }
+
+        .panel-controls {
+            display: flex;
+            gap: 12px;
+        }
+
+        .reset-section-btn {
+            padding: 8px 16px;
+            background: rgba(255, 176, 0, 0.1);
+            border: 1px solid #FFB000;
+            border-radius: 4px;
+            color: #FFB000;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .reset-section-btn:hover {
+            background: rgba(255, 176, 0, 0.2);
+            box-shadow: 0 0 15px rgba(255, 176, 0, 0.4);
+        }
+
+        /* Control Sections */
+        .control-section {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .control-section.modified {
+            border-color: rgba(255, 176, 0, 0.3);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Modified Indicator */
+        .modified-dot {
+            width: 8px;
+            height: 8px;
+            background: #FFB000;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 176, 0, 0.8);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Help Icon */
+        .help-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 10px;
+            cursor: help;
+            position: relative;
+        }
+
+        .help-icon:hover {
+            border-color: #00F0FF;
+            color: #00F0FF;
+        }
+
+        .tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1A1A1A;
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 4px;
+            padding: 12px;
+            font-size: 11px;
+            line-height: 1.4;
+            width: 250px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+            margin-bottom: 8px;
+            z-index: 1000;
+        }
+
+        .help-icon:hover .tooltip {
+            opacity: 1;
+        }
+
+        .control-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        /* Individual Controls */
+        .control-item {
+            position: relative;
+        }
+
+        .control-item.high-impact {
+            transform: scale(1.05);
+        }
+
+        .control-item.high-impact .control-label {
+            color: #FFB000;
+            font-weight: 500;
+        }
+
+        .control-label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .control-value {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 4px;
+        }
+
+        .slider-container {
+            flex: 1;
+            position: relative;
+        }
+
+        .slider {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            -webkit-appearance: none;
+            appearance: none;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            background: #00F0FF;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.6);
+            transition: all 0.2s;
+        }
+
+        .slider:hover::-webkit-slider-thumb {
+            transform: scale(1.2);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.8);
+        }
+
+        .slider.modified::-webkit-slider-thumb {
+            background: #FFB000;
+            box-shadow: 0 0 10px rgba(255, 176, 0, 0.6);
+        }
+
+        .value-display {
+            min-width: 48px;
+            text-align: right;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            color: #00F0FF;
+        }
+
+        .value-display.modified {
+            color: #FFB000;
+        }
+
+        /* Range Hint */
+        .range-hint {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.3);
+            margin-left: 12px;
+        }
+
+        /* Impact Preview */
+        .impact-preview {
+            position: absolute;
+            bottom: 100%;
+            left: 0;
+            right: 0;
+            background: #1A1A1A;
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 4px;
+            padding: 12px;
+            margin-bottom: 8px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+            z-index: 1000;
+            display: none;
+        }
+
+        .control-item:hover .impact-preview {
+            opacity: 1;
+            display: block;
+        }
+
+        .impact-title {
+            font-size: 11px;
+            font-weight: 500;
+            color: #00F0FF;
+            margin-bottom: 8px;
+        }
+
+        .impact-metrics {
+            display: grid;
+            gap: 6px;
+        }
+
+        .impact-metric {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .impact-change {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .impact-arrow {
+            font-size: 10px;
+        }
+
+        .impact-positive {
+            color: #00FF88;
+        }
+
+        .impact-negative {
+            color: #FF0040;
+        }
+
+        .impact-neutral {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Time to Effect */
+        .time-to-effect {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 6px;
+            padding-top: 6px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Toggle Controls */
+        .toggle-control {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 48px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .toggle-switch.active {
+            background: rgba(0, 240, 255, 0.2);
+        }
+
+        .toggle-switch.modified {
+            background: rgba(255, 176, 0, 0.2);
+        }
+
+        .toggle-knob {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 18px;
+            height: 18px;
+            background: #FFFFFF;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        .toggle-switch.active .toggle-knob {
+            transform: translateX(24px);
+            background: #00F0FF;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.6);
+        }
+
+        .toggle-switch.modified .toggle-knob {
+            background: #FFB000;
+            box-shadow: 0 0 10px rgba(255, 176, 0, 0.6);
+        }
+
+        /* Reset to Auto Button per Section */
+        .reset-to-auto {
+            padding: 6px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .reset-to-auto:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.4);
+            color: #FFFFFF;
+        }
+    </style>
+</head>
+<body>
+    <div class="panel-container">
+        <div class="panel-header">
+            <h1 class="panel-title">GOVERNMENT CONTROLS</h1>
+            <div class="panel-controls">
+                <button class="reset-section-btn">Reset All to Auto</button>
+            </div>
+        </div>
+
+        <!-- Climate Policy Section -->
+        <div class="control-section modified">
+            <div class="section-header">
+                <div class="section-title">
+                    Climate Policy
+                    <span class="modified-dot"></span>
+                    <span class="help-icon">
+                        ?
+                        <span class="tooltip">
+                            Controls government climate regulations including carbon tax, renewable subsidies, and emission limits. Higher values mean stricter environmental policies.
+                        </span>
+                    </span>
+                </div>
+                <button class="reset-to-auto">Reset Section to Auto</button>
+            </div>
+            <div class="control-grid">
+                <div class="control-item high-impact">
+                    <div class="impact-preview">
+                        <div class="impact-title">Impact Estimate</div>
+                        <div class="impact-metrics">
+                            <div class="impact-metric">
+                                <span>GDP Growth</span>
+                                <span class="impact-change impact-negative">
+                                    <span class="impact-arrow">↓</span>
+                                    <span>-0.8%</span>
+                                </span>
+                            </div>
+                            <div class="impact-metric">
+                                <span>CO₂ Emissions</span>
+                                <span class="impact-change impact-positive">
+                                    <span class="impact-arrow">↓</span>
+                                    <span>-12%</span>
+                                </span>
+                            </div>
+                            <div class="impact-metric">
+                                <span>Public Support</span>
+                                <span class="impact-change impact-negative">
+                                    <span class="impact-arrow">↓</span>
+                                    <span>-5%</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="time-to-effect">Takes effect: 1-2 months</div>
+                    </div>
+                    <label class="control-label">
+                        Carbon Tax Rate
+                        <span class="help-icon">
+                            ?
+                            <span class="tooltip">
+                                Tax per ton of CO₂ emitted. Affects industrial costs and consumer prices. Current auto value: $45/ton
+                            </span>
+                        </span>
+                    </label>
+                    <div class="control-value">
+                        <div class="slider-container">
+                            <input type="range" class="slider modified" min="0" max="200" value="75">
+                        </div>
+                        <span class="value-display modified">$75/ton</span>
+                    </div>
+                    <span class="range-hint">Typical: $40-60/ton</span>
+                </div>
+
+                <div class="control-item">
+                    <div class="impact-preview">
+                        <div class="impact-title">Impact Estimate</div>
+                        <div class="impact-metrics">
+                            <div class="impact-metric">
+                                <span>Renewable Adoption</span>
+                                <span class="impact-change impact-positive">
+                                    <span class="impact-arrow">↑</span>
+                                    <span>+8%</span>
+                                </span>
+                            </div>
+                            <div class="impact-metric">
+                                <span>Energy Costs</span>
+                                <span class="impact-change impact-negative">
+                                    <span class="impact-arrow">↑</span>
+                                    <span>+3%</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="time-to-effect">Takes effect: 3-6 months</div>
+                    </div>
+                    <label class="control-label">
+                        Renewable Energy Subsidies
+                    </label>
+                    <div class="control-value">
+                        <div class="slider-container">
+                            <input type="range" class="slider" min="0" max="100" value="35">
+                        </div>
+                        <span class="value-display">35%</span>
+                    </div>
+                    <span class="range-hint">Typical: 20-40%</span>
+                </div>
+
+                <div class="control-item">
+                    <label class="control-label">
+                        Enforce Net-Zero by 2040
+                    </label>
+                    <div class="toggle-control">
+                        <div class="toggle-switch active modified">
+                            <div class="toggle-knob"></div>
+                        </div>
+                        <span>Enabled</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Regulation Section -->
+        <div class="control-section">
+            <div class="section-header">
+                <div class="section-title">
+                    AI Regulation
+                    <span class="help-icon">
+                        ?
+                        <span class="tooltip">
+                            Controls government oversight of AI development including compute limits, safety requirements, and capability thresholds.
+                        </span>
+                    </span>
+                </div>
+                <button class="reset-to-auto">Reset Section to Auto</button>
+            </div>
+            <div class="control-grid">
+                <div class="control-item high-impact">
+                    <div class="impact-preview">
+                        <div class="impact-title">Impact Estimate</div>
+                        <div class="impact-metrics">
+                            <div class="impact-metric">
+                                <span>AI Progress Rate</span>
+                                <span class="impact-change impact-negative">
+                                    <span class="impact-arrow">↓</span>
+                                    <span>-25%</span>
+                                </span>
+                            </div>
+                            <div class="impact-metric">
+                                <span>Safety Incidents</span>
+                                <span class="impact-change impact-positive">
+                                    <span class="impact-arrow">↓</span>
+                                    <span>-60%</span>
+                                </span>
+                            </div>
+                            <div class="impact-metric">
+                                <span>AI Alignment</span>
+                                <span class="impact-change impact-positive">
+                                    <span class="impact-arrow">↑</span>
+                                    <span>+15%</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="time-to-effect">Takes effect: Immediate</div>
+                    </div>
+                    <label class="control-label">
+                        Compute Threshold (FLOPS)
+                        <span class="help-icon">
+                            ?
+                            <span class="tooltip">
+                                Maximum compute allowed without government approval. Lower values mean stricter control but may slow progress.
+                            </span>
+                        </span>
+                    </label>
+                    <div class="control-value">
+                        <div class="slider-container">
+                            <input type="range" class="slider" min="20" max="30" value="25">
+                        </div>
+                        <span class="value-display">10^25</span>
+                    </div>
+                    <span class="range-hint">Typical: 10^24 - 10^26</span>
+                </div>
+
+                <div class="control-item">
+                    <label class="control-label">
+                        Safety Audit Frequency
+                    </label>
+                    <div class="control-value">
+                        <div class="slider-container">
+                            <input type="range" class="slider" min="1" max="12" value="3">
+                        </div>
+                        <span class="value-display">3 months</span>
+                    </div>
+                    <span class="range-hint">Typical: 3-6 months</span>
+                </div>
+
+                <div class="control-item">
+                    <label class="control-label">
+                        Require Human Oversight
+                    </label>
+                    <div class="toggle-control">
+                        <div class="toggle-switch active">
+                            <div class="toggle-knob"></div>
+                        </div>
+                        <span>Enabled</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Economic Policy Section -->
+        <div class="control-section">
+            <div class="section-header">
+                <div class="section-title">
+                    Economic Policy
+                    <span class="help-icon">
+                        ?
+                        <span class="tooltip">
+                            Controls taxation, welfare, and economic redistribution policies. Balance growth with equality.
+                        </span>
+                    </span>
+                </div>
+                <button class="reset-to-auto">Reset Section to Auto</button>
+            </div>
+            <div class="control-grid">
+                <div class="control-item">
+                    <div class="impact-preview">
+                        <div class="impact-title">Impact Estimate</div>
+                        <div class="impact-metrics">
+                            <div class="impact-metric">
+                                <span>Inequality (Gini)</span>
+                                <span class="impact-change impact-positive">
+                                    <span class="impact-arrow">↓</span>
+                                    <span>-0.05</span>
+                                </span>
+                            </div>
+                            <div class="impact-metric">
+                                <span>Investment</span>
+                                <span class="impact-change impact-negative">
+                                    <span class="impact-arrow">↓</span>
+                                    <span>-10%</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="time-to-effect">Takes effect: 2-3 months</div>
+                    </div>
+                    <label class="control-label">
+                        Progressive Tax Rate
+                    </label>
+                    <div class="control-value">
+                        <div class="slider-container">
+                            <input type="range" class="slider" min="20" max="70" value="45">
+                        </div>
+                        <span class="value-display">45%</span>
+                    </div>
+                    <span class="range-hint">Typical: 35-50%</span>
+                </div>
+
+                <div class="control-item">
+                    <label class="control-label">
+                        UBI Amount (% of median income)
+                    </label>
+                    <div class="control-value">
+                        <div class="slider-container">
+                            <input type="range" class="slider" min="0" max="100" value="0">
+                        </div>
+                        <span class="value-display">0%</span>
+                    </div>
+                    <span class="range-hint">Typical: 0-30%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add interactivity
+        document.querySelectorAll('.slider').forEach(slider => {
+            slider.addEventListener('input', function() {
+                this.classList.add('modified');
+                const display = this.parentElement.parentElement.querySelector('.value-display');
+                display.classList.add('modified');
+
+                // Update value display based on slider type
+                if (this.parentElement.parentElement.querySelector('.control-label').textContent.includes('Carbon Tax')) {
+                    display.textContent = `$${this.value}/ton`;
+                } else if (this.parentElement.parentElement.querySelector('.control-label').textContent.includes('FLOPS')) {
+                    display.textContent = `10^${this.value}`;
+                } else if (this.parentElement.parentElement.querySelector('.control-label').textContent.includes('months')) {
+                    display.textContent = `${this.value} months`;
+                } else {
+                    display.textContent = `${this.value}%`;
+                }
+
+                // Mark section as modified
+                this.closest('.control-section').classList.add('modified');
+            });
+        });
+
+        // Toggle switches
+        document.querySelectorAll('.toggle-switch').forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                this.classList.toggle('active');
+                this.classList.add('modified');
+                this.closest('.control-section').classList.add('modified');
+
+                const label = this.nextElementSibling;
+                label.textContent = this.classList.contains('active') ? 'Enabled' : 'Disabled';
+            });
+        });
+
+        // Reset buttons
+        document.querySelectorAll('.reset-to-auto').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const section = this.closest('.control-section');
+                section.classList.remove('modified');
+                section.querySelectorAll('.slider').forEach(slider => {
+                    slider.classList.remove('modified');
+                });
+                section.querySelectorAll('.value-display').forEach(display => {
+                    display.classList.remove('modified');
+                });
+                section.querySelectorAll('.toggle-switch').forEach(toggle => {
+                    toggle.classList.remove('modified');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
