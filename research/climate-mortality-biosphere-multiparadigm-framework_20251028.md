@@ -1,8 +1,9 @@
 ---
 oldest_source: 2019
 newest_source: 2025
-last_verified: 2025-11-13
+last_verified: 2025-11-26
 verification_status: UPDATED
+verification_notes: BII species baseline (54,000) source corrected from "IPBES 2024" to "PREDICTS Database 2021" (Natural History Museum London)
 ---
 
 # Climate-Related Mortality & Biosphere Die-off: Multi-Paradigm Modeling Framework
@@ -310,9 +311,10 @@ function calculateCascadeRisk(boundaries: PlanetaryBoundary[]): number {
 
 **Unified Measurement Framework:**
 - **Scale:** 0-100% (100% = pristine, 0% = no native species remain)
-- **Coverage:** 54,000+ species (plants, fungi, animals)
+- **Coverage:** 54,000-58,000 species (plants, fungi, animals)
+- **Source:** PREDICTS database, Natural History Museum London (2021 data generation, estimates to 2020)
 - **Beyond typical indicators:** Includes insects, plants, fungi (not just birds/mammals)
-- **Method:** PREDICTS project, global ecological studies
+- **Method:** PREDICTS project (Projecting Responses of Ecological Diversity In Changing Terrestrial Systems), global ecological studies
 
 **Formula Enhancements (2024):**
 ```typescript
@@ -340,9 +342,11 @@ function calculateBII(region: EcosystemState): number {
 - **Development perspective:** Natural capital, ecosystem services
 
 **Citations:**
-- Natural History Museum. (2024). "Biodiversity Intactness Index."
+- Natural History Museum. (2024). "Biodiversity Intactness Index." Available: https://www.nhm.ac.uk/our-science/services/data/biodiversity-intactness-index.html (54,000-58,000 species coverage)
+- PREDICTS Project. (2021). Natural History Museum London. Database includes ~58,000 species across 32,000+ sites from 750+ studies.
 - TNFD. (2024). "Local Biodiversity Intactness Index."
 - Scientific Reports. (2021). "Annual changes in the Biodiversity Intactness Index in tropical and subtropical forest biomes."
+- Note: IPBES assessments reference BII data but the species baseline originates from the PREDICTS database
 
 ### 2.4 Climate Velocity and Range Shift Failure
 
