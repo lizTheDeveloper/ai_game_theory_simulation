@@ -64,16 +64,23 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📄 **Files:** `CoordinatedDeploymentPhase.ts`, research files, reviews
 - 📄 **Reviews:** `reviews/research_source_validation_20251126.md` (706 lines)
 
-**Nov 26: Climate Stability Citation Corrections** (commits 69e1490, 5112164)
-- 📚 **RESEARCH INTEGRITY FIX:** Corrected 4 citation misrepresentations in ClimateSystemPhase.ts
-- **CRITICAL - Lenton 2019:** Was claimed to support "self-limiting feedbacks preserving stability"
-  - ACTUAL: Paper warns of CASCADING risks and SELF-AMPLIFYING feedbacks ("too risky to bet against")
-- **SIGNIFICANT - Armstrong McKay 2022:** "Not complete destabilization" → "not runaway" ≠ "stable"
-- **SIGNIFICANT - IPCC AR6:** Removed invented paraphrase about "not complete collapse by 2300"
-- **MODERATE - Persson 2022:** "~2x safe boundary" was invented - source uses qualitative assessment only
-- **Reframing:** All citations now marked as "MODELING ASSUMPTIONS" not empirical validation
-- **Impact:** No simulation behavior changes - bounds remain 5%/95%, documentation now accurate
-- 📄 **Files:** `ClimateSystemPhase.ts`, `research/verification_climate_stability_citations_20251126.md`
+**Nov 26: Climate Stability Citation Verification - GRADE D FAILURE** (commits 69e1490, 5112164, f3003f2)
+- 🚨 **RESEARCH INTEGRITY ISSUE:** Two-layer verification found 60% of citations CONTRADICT simulation's stability claims
+- **Two-Layer Verification Results (5 CRITICAL/HIGH citations):**
+  - ❌ **Lenton 2019 (FAILED):** Claims "self-limiting feedbacks" but paper warns "state of planetary emergency", cascading tipping points
+  - ❌ **Armstrong McKay 2022 (FAILED):** Claims "not complete destabilization" but paper warns "amplifying destabilization"
+  - ❌ **Steffen 2015 (FAILED):** Claims "Earth remains habitable" but paper warns "substantial risk of destabilizing Holocene state"
+  - ⚠️ **Zachos 2008 (PARTIAL):** Numbers correct (+5-8°C, 200ky), but 200,000-year geological recovery ≠ human-timescale "resilience"
+  - ⚠️ **IPCC AR6 (INCONCLUSIVE):** Specific language "severe but not complete collapse" not found in search results
+- **Pattern Detected:** Cherry-picking + claim reversal (papers warning about risks cited as supporting stability)
+- **Grade: D (Failed Verification)** - 60% of verified citations contradict simulation's stability claims
+- **Impact:** The 5% stability floor and 95% degradation cap should be documented as "implementation choices", NOT research-backed
+- **Recommendations:**
+  1. Remove/qualify contradictory citations (Lenton, Armstrong McKay, Steffen)
+  2. Document stability bounds as implementation choices for simulation tractability
+  3. Add code warnings clarifying research warns about destabilization, not stability
+- 📄 **Critique:** `research/climate_stability_self_limiting_critique_20251126.md` (409 lines, comprehensive analysis)
+- 📄 **Verification:** `research/verification_dc1d6ac_20251125.md` (Grade D, 5 citations verified)
 
 **Nov 26: Climate System Unit Tests (roadmap 5.2)** (commit 86578049)
 - 🧪 **Comprehensive test suite** for planetary boundary recovery mechanics (1,050 lines, 65+ assertions)

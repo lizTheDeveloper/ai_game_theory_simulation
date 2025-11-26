@@ -78,26 +78,27 @@
      - **Commit:** babb871
      - **Next Steps:** Implement verified parameters → Monte Carlo N≥10 validation
 
-   - **Climate Stability Self-Limiting Mechanisms Citations** - MODERATE (Added Nov 25, 2025)
-     - **Context:** Citations added to justify existing 5% floor, 95% cap, [0,1] pollution bounds in ClimateSystemPhase
-     - **Verification File:** research/verification_dc1d6ac_20251125.md (8 citations)
-     - **Commit Verified:** dc1d6ac (climate stability citations)
-     - **Key Claims Requiring Two-Layer Verification:**
-       - **CRITICAL:** Lenton 2019 (Nature) - "self-limiting feedbacks" claim (title suggests RISK emphasis)
-       - **CRITICAL:** Zachos 2008 - PETM recovery ~200ky, +5-8C spike
-       - **CRITICAL:** Armstrong McKay 2022 - "not complete destabilization" claim
-       - **HIGH:** IPCC AR6 WG1 Ch4 - RCP8.5 "severe but not collapse"
-       - **HIGH:** Steffen 2015 - "remains habitable" after boundary transgression
-       - **MODERATE:** Royer 2006 - Phanerozoic stability claim
-       - **MODERATE:** Meadows 1972 - self-limiting pollution (model-based)
-       - **MODERATE:** Persson 2022 - Novel Entities ~2x transgression
-     - **Risk Assessment:**
-       - 3 CRITICAL claims may not survive Layer 2 verification (claim vs paper content)
-       - Lenton 2019 title "too risky to bet against" suggests paper emphasizes risk, not stability
-       - If citations fail verification, must document as "implementation choice" not research-backed
-     - **Priority:** MODERATE - Citations added to EXISTING mechanisms, not new parameters
-     - **Status:** READY FOR VALIDATION
-     - **Next Steps:** Sylvia two-layer verification → Update grade if failures → Correct/remove unsupported claims
+   - **Climate Stability Self-Limiting Mechanisms Citations** - ❌ GRADE D FAILED (Verified Nov 26, 2025)
+     - **Context:** Citations claimed to justify 5% floor, 95% cap, [0,1] pollution bounds in ClimateSystemPhase
+     - **Verification Files:**
+       - `research/verification_dc1d6ac_20251125.md` (verification status, Grade D)
+       - `research/climate_stability_self_limiting_critique_20251126.md` (409 lines, comprehensive critique)
+     - **Commit Verified:** dc1d6ac, f3003f2 (climate stability citations)
+     - **VERIFICATION RESULTS (5 CRITICAL/HIGH citations):**
+       - ❌ **Lenton 2019 (FAILED):** Paper warns "state of planetary emergency", cascading tipping points - CONTRADICTS claim
+       - ❌ **Armstrong McKay 2022 (FAILED):** Paper warns "amplifying destabilization" - CONTRADICTS claim
+       - ❌ **Steffen 2015 (FAILED):** Paper warns "substantial risk of destabilizing Holocene" - CONTRADICTS claim
+       - ⚠️ **Zachos 2008 (PARTIAL):** Numbers correct (+5-8°C, 200ky), but geological timescale ≠ human-timescale "resilience"
+       - ⚠️ **IPCC AR6 (INCONCLUSIVE):** "Severe but not complete collapse" language NOT FOUND
+     - **Pattern Detected:** Cherry-picking + claim reversal (papers warning risks cited as supporting stability)
+     - **Grade: D (Failed Verification)** - 60% of verified citations contradict simulation's claims
+     - **Impact:** 5% floor / 95% cap should be documented as "implementation choices" NOT research-backed
+     - **RECOMMENDATIONS (for simulation-maintainer):**
+       1. Remove/qualify contradictory citations (Lenton, Armstrong McKay, Steffen)
+       2. Document stability bounds as implementation tractability choices, not empirical validation
+       3. Add code comments clarifying research warns about destabilization, not stability
+     - **Status:** ✅ VERIFICATION COMPLETE (Grade D)
+     - **Next Steps:** simulation-maintainer implement recommendations → Update code comments → No parameter changes needed
 
    - **Tech Ineffectiveness Investigation - Proposed Magnitudes** - LOW (Added Nov 25, 2025)
      - **Context:** Investigation documented why 119 techs fail to prevent 99% mortality; proposes magnitude increases
