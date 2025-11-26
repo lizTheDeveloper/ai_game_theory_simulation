@@ -70,6 +70,20 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📄 **Files:** `tests/integration/game-layer/critical-juncture-detection.test.ts`, `tests/integration/game-layer/scenario-definitions.test.ts`
 - **Status:** IN PROGRESS - state creation and scenario application need debugging
 
+**Nov 26: Phase 7 - Hindcast Re-Validation Script Ready** (commit 7154f8d)
+- 📄 **Script:** `scripts/climateHindcastValidationPhase7.ts` (196 lines)
+- **Purpose:** Re-run 1990-2010 hindcast validation now that Phase 5+6 implementations are merged
+- **Configuration:**
+  - `historicalEmissionsMode: true` (GCP data instead of economic emissions)
+  - `includeAIAgents: false` (properly enforced)
+  - N=10 runs with determinism checks (CV < 0.01%)
+- **Success Criteria:**
+  - CO2 deviation < 5% (vs 389.9 ppm NOAA 2010)
+  - Temperature deviation < 0.1°C (vs 0.85°C HadCRUT5 2010)
+  - Population deviation < 10% (vs 6.9B UN 2010)
+- **Status:** Ready to run. Expected to PASS now that dependencies are merged.
+- **Dependencies:** Phase 5 (commit a47e341c4) + Phase 6 (commit b5bf2951c)
+
 **Nov 26: Phase 6 - Demographics Calibration COMPLETE** (commit b5bf295 / 9450aec)
 - ✅ **FIX:** 1990 scenarios now initialize with correct historical fertility rates (was using 2025 values)
 - **Root Cause:** Previous implementation initialized 1990 with TFR ~2.3 (2025 global), but historical 1990 TFR was 3.2-3.3 (40% higher)
@@ -104,7 +118,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **Follow-up Phases (HIGH priority):**
   - Phase 5: Historical Emissions Forcing Mode (Roy) - GCP lookup table ✅ MERGED
   - Phase 6: Demographics Calibration (Roy + Cynthia) - 1990 fertility rates ✅ MERGED
-  - Phase 7: Re-run Validation (Priya) - Full validation with fixes
+  - Phase 7: Re-run Validation (Priya) - Script ready ✅ (commit 7154f8d)
 - 📄 **Report:** `reviews/climate_hindcast_validation_20251126.md` (24KB analysis)
 
 **Nov 26: Historical Baseline Precision Update** (commit b493ee3)
