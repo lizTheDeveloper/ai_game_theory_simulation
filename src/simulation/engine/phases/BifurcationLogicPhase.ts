@@ -87,13 +87,92 @@ export class BifurcationLogicPhase implements SimulationPhase {
       month: state.currentMonth,
     });
 
+    // CRITICAL-1 FIX: Validate ALL inputs before calculation to catch NaN propagation early
+    // Each input must be finite AND non-negative (except pollutionLevel which must be [0,1])
+    const climateStabilityValid = assertFinite(climateStability, {
+      location: 'BifurcationLogicPhase.calculateProximities',
+      valueName: 'climateStability',
+      month: state.currentMonth,
+      additionalInfo: { value: climateStability }
+    });
+    const biodiversityIndexValid = assertFinite(biodiversityIndex, {
+      location: 'BifurcationLogicPhase.calculateProximities',
+      valueName: 'biodiversityIndex',
+      month: state.currentMonth,
+      additionalInfo: { value: biodiversityIndex }
+    });
+    const resourceReservesValid = assertFinite(resourceReserves, {
+      location: 'BifurcationLogicPhase.calculateProximities',
+      valueName: 'resourceReserves',
+      month: state.currentMonth,
+      additionalInfo: { value: resourceReserves }
+    });
+    const pollutionLevelValid = assertInRange(pollutionLevel, 0, 1, {
+      location: 'BifurcationLogicPhase.calculateProximities',
+      valueName: 'pollutionLevel',
+      month: state.currentMonth,
+    });
+
+    // CRITICAL-1 FIX: Check for negative values which would produce NaN in geometric mean
+    if (climateStabilityValid < 0) {
+      throw new Error(
+        `❌ CRITICAL-1: climateStability is NEGATIVE (${climateStabilityValid.toFixed(6)}) at Month ${state.currentMonth}. ` +
+        `Geometric mean requires non-negative inputs. This indicates upstream calculation error.`
+      );
+    }
+    if (biodiversityIndexValid < 0) {
+      throw new Error(
+        `❌ CRITICAL-1: biodiversityIndex is NEGATIVE (${biodiversityIndexValid.toFixed(6)}) at Month ${state.currentMonth}. ` +
+        `Geometric mean requires non-negative inputs. This indicates upstream calculation error.`
+      );
+    }
+    if (resourceReservesValid < 0) {
+      throw new Error(
+        `❌ CRITICAL-1: resourceReserves is NEGATIVE (${resourceReservesValid.toFixed(6)}) at Month ${state.currentMonth}. ` +
+        `Geometric mean requires non-negative inputs. This indicates upstream calculation error.`
+      );
+    }
+
+    // CRITICAL-1 FIX: Calculate product BEFORE geometric mean to catch NaN earlier
+    const envHealthProduct = climateStabilityValid * biodiversityIndexValid * resourceReservesValid * (1 - pollutionLevelValid);
+    const envHealthProductValid = assertFinite(envHealthProduct, {
+      location: 'BifurcationLogicPhase.calculateProximities',
+      valueName: 'envHealthProduct',
+      month: state.currentMonth,
+      additionalInfo: {
+        climateStability: climateStabilityValid,
+        biodiversityIndex: biodiversityIndexValid,
+        resourceReserves: resourceReservesValid,
+        pollutionLevel: pollutionLevelValid,
+        pollutionTerm: (1 - pollutionLevelValid)
+      }
+    });
+
+    // CRITICAL-1 FIX: Geometric mean requires non-negative input
+    if (envHealthProductValid < 0) {
+      throw new Error(
+        `❌ CRITICAL-1: envHealthProduct is NEGATIVE (${envHealthProductValid.toFixed(6)}) at Month ${state.currentMonth}. ` +
+        `Product: ${climateStabilityValid.toFixed(4)} × ${biodiversityIndexValid.toFixed(4)} × ${resourceReservesValid.toFixed(4)} × ${(1 - pollutionLevelValid).toFixed(4)}. ` +
+        `Geometric mean (^0.25) of negative value produces NaN.`
+      );
+    }
+
     // Environmental health: geometric mean of positive metrics × (1 - pollution)
     // Higher = healthier environment
-    const envHealth = Math.pow(climateStability * biodiversityIndex * resourceReserves * (1 - pollutionLevel), 0.25);
+    const envHealth = Math.pow(envHealthProductValid, 0.25);
     const envHealthFinite = assertFinite(envHealth, {
       location: 'BifurcationLogicPhase.calculateProximities',
       valueName: 'environmentalHealth',
       month: state.currentMonth,
+      additionalInfo: {
+        product: envHealthProductValid,
+        inputs: {
+          climateStability: climateStabilityValid,
+          biodiversityIndex: biodiversityIndexValid,
+          resourceReserves: resourceReservesValid,
+          pollutionLevel: pollutionLevelValid
+        }
+      }
     });
     // CRITICAL FIX (CRITICAL-1): For collapse thresholds (trigger when BELOW), distance should be 0 when at/below threshold
     // If value > threshold: safe, distance = (value - threshold)
