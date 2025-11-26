@@ -8,7 +8,7 @@
  */
 
 import { GameState } from '@/types/game';
-import { assertFinite, assertInRange } from './assertions';
+import { assertFinite, assertInRange, assertStateProperty } from './assertions';
 
 export type EconomicStage = 'expansion' | 'peak' | 'contraction' | 'trough' | 'recovery';
 
@@ -162,7 +162,6 @@ export function getGDPProxy(state: GameState): number {
     'economicTransitionStage',
     {
       location: 'getGDPProxy',
-      additionalInfo: { note: 'Required field for GDP calculation' }
     }
   );
   const population = state.humanPopulationSystem.population; // In billions
@@ -171,7 +170,6 @@ export function getGDPProxy(state: GameState): number {
     'qualityOfLife',
     {
       location: 'getGDPProxy',
-      additionalInfo: { note: 'Required field for GDP calculation' }
     }
   );
 
