@@ -111705,7 +111705,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+<<<<<<< Updated upstream
     "line": 483,
+=======
+    "line": 443,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "year",
     "currentDoc": "(none)",
@@ -111713,7 +111717,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+<<<<<<< Updated upstream
     "line": 484,
+=======
+    "line": 444,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -111721,7 +111729,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+<<<<<<< Updated upstream
     "line": 485,
+=======
+    "line": 445,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "scenarioMode",
     "currentDoc": "(none)",
@@ -111729,7 +111741,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+<<<<<<< Updated upstream
     "line": 502,
+=======
+    "line": 462,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "climate",
     "currentDoc": "(none)",
@@ -111737,7 +111753,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+<<<<<<< Updated upstream
     "line": 503,
+=======
+    "line": 463,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "co2Ppm",
     "currentDoc": "(none)",
@@ -111745,7 +111765,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+<<<<<<< Updated upstream
     "line": 504,
+=======
+    "line": 464,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "tempAnomaly",
     "currentDoc": "(none)",
@@ -111753,7 +111777,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+<<<<<<< Updated upstream
     "line": 505,
+=======
+    "line": 465,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "tempVsPreindustrial",
     "currentDoc": "(none)",
@@ -111761,7 +111789,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+<<<<<<< Updated upstream
     "line": 507,
+=======
+    "line": 467,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "economic",
     "currentDoc": "(none)",
@@ -111769,7 +111801,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+<<<<<<< Updated upstream
     "line": 508,
+=======
+    "line": 468,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "populationBillions",
     "currentDoc": "(none)",
@@ -111777,7 +111813,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+<<<<<<< Updated upstream
     "line": 509,
+=======
+    "line": 469,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "globalGini",
     "currentDoc": "(none)",
@@ -111785,7 +111825,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+<<<<<<< Updated upstream
     "line": 510,
+=======
+    "line": 470,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "globalHDI",
     "currentDoc": "(none)",
@@ -111793,7 +111837,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+<<<<<<< Updated upstream
     "line": 565,
+=======
+    "line": 518,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -111801,7 +111849,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+<<<<<<< Updated upstream
     "line": 566,
+=======
+    "line": 519,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -111809,7 +111861,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+<<<<<<< Updated upstream
     "line": 567,
+=======
+    "line": 520,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -111817,7 +111873,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+<<<<<<< Updated upstream
     "line": 568,
+=======
+    "line": 521,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -111825,7 +111885,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+<<<<<<< Updated upstream
     "line": 572,
+=======
+    "line": 525,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -111833,7 +111897,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+<<<<<<< Updated upstream
     "line": 573,
+=======
+    "line": 526,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -111841,7 +111909,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+<<<<<<< Updated upstream
     "line": 574,
+=======
+    "line": 527,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -111849,7 +111921,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+<<<<<<< Updated upstream
     "line": 575,
+=======
+    "line": 528,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -111857,7 +111933,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+<<<<<<< Updated upstream
     "line": 662,
+=======
+    "line": 613,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -111865,7 +111945,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+<<<<<<< Updated upstream
     "line": 663,
+=======
+    "line": 614,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -111873,7 +111957,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+<<<<<<< Updated upstream
     "line": 664,
+=======
+    "line": 615,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -111881,7 +111969,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+<<<<<<< Updated upstream
     "line": 665,
+=======
+    "line": 616,
+>>>>>>> Stashed changes
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",

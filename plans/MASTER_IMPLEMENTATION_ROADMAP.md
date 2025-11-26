@@ -189,34 +189,66 @@
 | 6 | Mini-hindcast validation | Priya | Blocked | #4, #5 |
 | 7 | Mechanism audits (tipping points) | Sylvia | Ready | None |
 
-### Climate Mini-Hindcast Validation (HIGH Priority - Phases 1-3 COMPLETE)
+### Climate Mini-Hindcast Validation (HIGH Priority - VALIDATION FAILED)
 
 **Objective:** Validate climate subsystem against 1990-2010 historical data
 **Success Criteria:** CO2 within 5% of Keeling curve
 **Source:** Nov 24 orchestrator session
 
 **Work Breakdown:**
-1. ✅ **Historical Data Collection (Cynthia) - COMPLETE (Nov 26, 2025):**
+1. ✅ **Phase 1: Historical Data Collection (Cynthia) - COMPLETE (Nov 26, 2025):**
    - CO2: Keeling curve monthly (NOAA/Scripps) → 354 ppm (1990), 389 ppm (2010)
    - Temperature: HadCRUT5 anomaly time series → +0.45°C (1990), +0.98°C (2010)
    - Emissions: Global Carbon Project annual estimates → 22.6 GtCO2 (1990), 34.1 GtCO2 (2010)
    - **File:** `research/climate_hindcast_data_20251126.md` (18K, 11 peer-reviewed sources)
    - **Commit:** b493ee343 - Updated `src/types/config.ts` with 1990/2010 baselines
-2. ✅ **Research Validation (Sylvia) - COMPLETE (Nov 26, 2025):**
+
+2. ✅ **Phase 2: Research Validation (Sylvia) - COMPLETE (Nov 26, 2025):**
    - **Grade:** A- (excellent sources, exact values, authoritative references)
    - **Verdict:** APPROVED for implementation with 2 technical notes
    - **File:** `reviews/climate_hindcast_data_critique_20251126.md` (18K)
-3. ✅ **Historical Initialization Mode (Roy) - COMPLETE (Nov 26, 2025):**
+
+3. ✅ **Phase 3: Historical Initialization Mode (Roy) - COMPLETE (Nov 26, 2025):**
    - Exact 1990 baselines applied to config.ts
    - Values: CO2 354.19 ppm, temp anomaly 0.4527°C, emissions 22.6 GtCO2/yr
-   - **Status:** Ready for validation runs
-4. **Validation Analysis (Priya) - PENDING:**
-   - Run simulation 1990-2010 (240 months)
-   - Calculate % deviation from Keeling curve
-   - Assess temperature trajectory alignment
-   - Generate hindcast validation report
+   - **Status:** Initial conditions correct
 
-**Status:** 3 of 4 phases complete, ready for validation runs
+4. ❌ **Phase 4: Initial Validation Run (Priya) - FAILED (Nov 24):**
+   - CO2: 17.53% deviation (FAIL - threshold 5%)
+   - Population: +39.4% overshoot (FAIL - threshold 10%)
+   - Temperature: +0.046°C (PASS - threshold 0.1°C)
+   - **Root causes identified:** Endogenous emissions, demographics not calibrated
+
+5. ❌ **Phase 5: Historical Emissions Forcing (Roy) - NOT IMPLEMENTED:**
+   - **Claim:** "Use GCP emissions data instead of endogenous economic emissions"
+   - **Evidence:** Code search finds ZERO implementation of `historicalEmissionsMode`
+   - **Status:** ❌ **MISSING** - simulation still uses economic emissions (updateCO2System)
+   - **Impact:** CO2 grows 2.5× faster than reality (18.7% deviation vs 5% threshold)
+
+6. ⚠️ **Phase 6: Demographics Calibration (Roy) - PARTIAL:**
+   - **Completed:** AI agents excluded (`includeAIAgents: false`) ✅
+   - **Completed:** Regional death rate function (`getRegionalHistoricalDeathRate()`) ✅
+   - **MISSING:** Fertility rate calibration - population grows 2.3× too fast (3.05%/yr vs 1.31%/yr)
+   - **Impact:** Population 9.64B vs 6.90B at 2010 (+39.8% overshoot)
+
+7. ❌ **Phase 7: Final Validation (Priya) - FAILED (Nov 26, 2025):**
+   - **Runs:** N=10 (seeds 12345-83616)
+   - **Results:**
+     - CO2: 18.70% average deviation (FAIL - threshold 5%)
+     - Population: +39.8% overshoot (FAIL - threshold 10%)
+     - Temperature: 0.08°C avg error (MARGINAL PASS - threshold 0.1°C)
+     - Determinism: CV=0.067% (acceptable, <0.1%)
+   - **Verdict:** **VALIDATION FAILED** - Phase 5 NOT implemented, Phase 6 incomplete
+   - **Report:** `reviews/climate_hindcast_validation_phase7_20251126.md` (27K)
+   - **Log:** `logs/hindcast/hindcast_2025-11-26T15-02-18.log`
+
+**Current Status:** ❌ **BLOCKED - Phase 5 and Phase 6 must be completed before re-validation**
+
+**Required Actions:**
+1. **Implement Phase 5:** Add `historicalEmissionsMode` flag + GCP emissions data bypass
+2. **Complete Phase 6:** Calibrate fertility rates to 1990 values (26.0 per 1000 vs current ~30.5)
+3. **Re-run Phase 7:** Verify CO2 < 5%, Population < 10% after fixes
+
 **Complexity:** 3 systems (climate, initialization, validation)
 **Related:** Hindcasting Validation (CRITICAL #1) - this is a focused subset
 
