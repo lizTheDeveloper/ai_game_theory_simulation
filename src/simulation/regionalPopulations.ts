@@ -542,6 +542,20 @@ export function updateRegionalPopulations(state: GameState): void {
       crisisMultiplier *
       warMultiplier;
 
+    // Assert death rate calculation is valid
+    region.adjustedDeathRate = assertFinite(region.adjustedDeathRate, {
+      location: 'updateRegionalPopulations',
+      valueName: 'adjustedDeathRate (initial)',
+      month: state.currentMonth,
+      additionalInfo: {
+        region: region.name,
+        baselineDeathRate: region.baselineDeathRate,
+        healthcareReduction,
+        crisisMultiplier,
+        warMultiplier
+      }
+    });
+
     // CRITICAL FIX (Nov 25, 2025): Regional death rate scaling for historical mode
     // Parallel to birth rate scaling (lines 393-419) - must account for regional CDR variation
     // Root cause: Global CDR misses dramatic regional differences (SSA: 15.6/1000 vs MENA: 8.5/1000 in 1990)

@@ -1,6 +1,6 @@
 # Research Update Queue
-**Generated:** 11/26/2025, 8:30:04 PM
-**Files Scanned:** 586
+**Generated:** 11/26/2025, 9:30:03 PM
+**Files Scanned:** 464
 
 ---
 
@@ -12,7 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 182 (31.1%)
+**Count:** 166 (35.8%)
 
 ### `CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
 - **Oldest source:** 2009 (16 years old)
@@ -354,11 +354,6 @@
 - **Status:** Not used in simulation
 - **Path:** `research/catastrophe_recovery_timescales_verification_20251101.md`
 
-### `citation_skeptic_analysis_20251028.md`
-- **Oldest source:** 2019 (6 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/citation_skeptic_analysis_20251028.md`
-
 ### `claim_verification_report_20251116.md`
 - **Oldest source:** 2018 (7 years old)
 - **Status:** Not used in simulation
@@ -403,6 +398,11 @@
 - **Oldest source:** 2002 (23 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/climate_self_limiting_mechanisms_20251125.md`
+
+### `climate_stability_self_limiting_critique_20251126.md`
+- **Oldest source:** 2008 (17 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/climate_stability_self_limiting_critique_20251126.md`
 
 ### `climate_timescale_validation_ipcc_ar6_20251106.md`
 - **Oldest source:** 2016 (9 years old)
@@ -794,86 +794,6 @@
 - **Status:** Not used in simulation
 - **Path:** `research/validation-summary-ready-for-implementation-20251101.md`
 
-### `verification_033e8e2_20251113.md`
-- **Oldest source:** 2019 (6 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/verification_033e8e2_20251113.md`
-
-### `verification_40a2f34_20251111.md`
-- **Oldest source:** 2012 (13 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/verification_40a2f34_20251111.md`
-
-### `verification_44bf8ef_20251115.md`
-- **Oldest source:** 2015 (10 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/verification_44bf8ef_20251115.md`
-
-### `verification_594d120_20251112.md`
-- **Oldest source:** 2019 (6 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/verification_594d120_20251112.md`
-
-### `verification_65e0f1c_20251107.md`
-- **Oldest source:** 2013 (12 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/verification_65e0f1c_20251107.md`
-
-### `verification_6ab69c6_20251120.md`
-- **Oldest source:** 1999 (26 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/verification_6ab69c6_20251120.md`
-
-### `verification_6b42b7c_20251113.md`
-- **Oldest source:** 2009 (16 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/verification_6b42b7c_20251113.md`
-
-### `verification_85bcf6e_20251111.md`
-- **Oldest source:** 2012 (13 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/verification_85bcf6e_20251111.md`
-
-### `verification_876abe5_20251124.md`
-- **Oldest source:** 2008 (17 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/verification_876abe5_20251124.md`
-
-### `verification_9f29b05_20251030.md`
-- **Oldest source:** 2004 (21 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/verification_9f29b05_20251030.md`
-
-### `verification_a5188f3_20251106.md`
-- **Oldest source:** 2019 (6 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/verification_a5188f3_20251106.md`
-
-### `verification_ae8380b_20251124.md`
-- **Oldest source:** 2008 (17 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/verification_ae8380b_20251124.md`
-
-### `verification_d336915_20251110.md`
-- **Oldest source:** 2018 (7 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/verification_d336915_20251110.md`
-
-### `verification_d3ea8fa_20251116.md`
-- **Oldest source:** 2018 (7 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/verification_d3ea8fa_20251116.md`
-
-### `verification_d6e80e8_20251106.md`
-- **Oldest source:** 2013 (12 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/verification_d6e80e8_20251106.md`
-
-### `verification_e690a6a_20251121.md`
-- **Oldest source:** 2016 (9 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/verification_e690a6a_20251121.md`
-
 ### `visionary_ideas_research_validation_2025-10-16.md`
 - **Oldest source:** 2014 (11 years old)
 - **Status:** Not used in simulation
@@ -928,7 +848,7 @@
 
 ## 📋 MEDIUM (Review Within Quarter)
 
-**Count:** 24 (4.1%)
+**Count:** 21 (4.5%)
 
 - `LAYER2_COMPREHENSIVE_STATUS_20251030.md` - Oldest: 2020 (5 years)
 - `LAYER2_DEBATE_SUMMARY_20251030.md` - Oldest: 2020 (5 years)
@@ -937,7 +857,6 @@
 - `ai_capability_scaling_20251113.md` - Oldest: 2021 (4 years)
 - `ai_infrastructure_resources_verification_20251031.md` - Oldest: 2021 (4 years)
 - `ai_scaling_laws_paradigm_shift_20251107.md` - Oldest: 2020 (5 years)
-- `citation_verification_tier2_synthetic_ecosystems_20251104.md` - Oldest: 2020 (5 years)
 - `climate_mortality_parameter_derivation_verification_20251030.md` - Oldest: 2020 (5 years)
 - `crisis_cascade_multipliers_20251020.md` - Oldest: 2021 (4 years)
 - `ensemble-detection-methods_20251020.md` - Oldest: 2021 (4 years)
@@ -952,14 +871,12 @@
 - `planetary-boundary-recovery-mechanisms_20251017.md` - Oldest: 2020 (5 years)
 - `structured_clone_performance_20251107.md` - Oldest: 2021 (4 years)
 - `threshold_uncertainty_verification_20251031.md` - Oldest: 2020 (5 years)
-- `verification_1cd141d_20251113.md` - Oldest: 2021 (4 years)
-- `verification_f5c244b_20251116.md` - Oldest: 2021 (4 years)
 
 ---
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 380 (64.8%)
+**Count:** 277 (59.7%)
 
 All sources <3 years old. No action required.
 
@@ -969,33 +886,33 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 586 |
+| Total files | 464 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 182 (31.1%) |
-| MEDIUM | 24 (4.1%) |
-| LOW | 380 (64.8%) |
-| Average age | 6.9 years |
+| HIGH | 166 (35.8%) |
+| MEDIUM | 21 (4.5%) |
+| LOW | 277 (59.7%) |
+| Average age | 8.2 years |
 | Oldest source | 1955 (70 years ago) |
 
 ### Research Currency
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 380 | 64.8% |
-| Warning (3-5yr) | 24 | 4.1% |
-| Critical (>5yr) | 182 | 31.1% |
+| Current (<3yr) | 277 | 59.7% |
+| Warning (3-5yr) | 21 | 4.5% |
+| Critical (>5yr) | 166 | 35.8% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-- **Current:** 31.1% critical (>5yr)
+- **Current:** 35.8% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
-1. Update 182 HIGH priority file(s) within 1 month
+1. Update 166 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 
