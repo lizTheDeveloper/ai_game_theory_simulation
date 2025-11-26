@@ -21,7 +21,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 **🟢 STABLE** (November 26, 2025)
 
 **SYSTEM HEALTH:**
-- **Research Quality:** B+ (56.5% sources 2023-2025, 3 CRITICAL parameter issues resolved/documented, 8 research gaps identified) ✅ GOOD
+- **Research Quality:** B+ (56.5% sources 2023-2025, 4 CRITICAL parameter issues resolved/documented, 8 research gaps identified) ✅ GOOD
 - **Research Currency:** ✅ EXCELLENT (all simulation-critical files updated within 14 days, autonomous system working effectively)
 - **Implementation Fidelity:** A- (assertion coverage 97.2%, 24 integration tests for CoordinatedDeploymentPhase) ✅ EXCELLENT
 - **Architecture Health:** B+ (0 CRITICAL, 2 HIGH technical debt non-urgent, deep clone optimization complete) ✅ GOOD
@@ -3947,6 +3947,25 @@ See: [`infrastructure_oct_nov_2025_COMPLETE_20251105.md`](/plans/completed/infra
 - **Files Created**: `research/mortality_stabilizers_layer2_verification_20251106.md` (8.7KB), `research/UPDATE_QUEUE.md` (updated)
 - **Impact**: Fundamental modeling errors identified requiring parameter corrections and additional research sources
 - See: [`research/mortality_stabilizers_layer2_verification_20251106.md`](/research/mortality_stabilizers_layer2_verification_20251106.md), [`research/UPDATE_QUEUE.md`](/research/UPDATE_QUEUE.md)
+
+**🔴 AI Coordination Citation Verification** (November 26, 2025):
+- **Status**: ❌ **FABRICATED PARAMETER IDENTIFIED** - flagged for Sylvia review (commit 6c4c4a2)
+- **Progress**: 5 of 12 citations verified from `ai_coordination_transition_management_20251121.md`
+- **CRITICAL Finding**:
+  - 🔴 **Coordination Failure Probability FABRICATED**: Code claims "10% (range: 5-20%)" citing Hammond et al. (2025)
+  - **Reality**: Hammond et al. provides ZERO quantitative probability estimates - qualitative taxonomy only
+  - **Impact**: Directly affects transition mortality projections in simulation
+- **Verification Results**:
+  - ✅ Sullivan & von Wachter 2009: FULLY VERIFIED (gold standard)
+  - ✅ Great Leap Forward mortality: VERIFIED (16.5-55M, needs source update)
+  - ⚠️ Stuckler et al. 2009: MISATTRIBUTED (12.8% not "13-42%")
+  - ⚠️ AI Coordination Efficiency: PARTIALLY VERIFIED (conflates different metrics)
+  - ❌ Coordination Failure 10%: FABRICATED (no empirical basis)
+- **Remaining**: 7 citations (Finkelstein, IEA grid, China mortality, air pollution, TRL, S-curve)
+- **Recommendations**:
+  - Option A (recommended): Remove coordination failure probability parameter entirely
+  - Option B: Use wide uncertainty (1-50%), flag as "PURE SPECULATION"
+- See: [`research/RESEARCHER_ASSESSMENT_20251126_afternoon.md`](/research/RESEARCHER_ASSESSMENT_20251126_afternoon.md)
 
 ### Core Systems
 
