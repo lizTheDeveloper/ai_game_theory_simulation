@@ -1,6 +1,6 @@
 # Research Update Queue
-**Generated:** 11/26/2025, 9:30:03 PM
-**Files Scanned:** 464
+**Generated:** 11/26/2025, 10:30:05 PM
+**Files Scanned:** 442
 
 ---
 
@@ -12,97 +12,12 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 166 (35.8%)
-
-### `CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
-- **Oldest source:** 2009 (16 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
-
-### `CITATION_CORRECTIONS_APPLIED_PHASE15.md`
-- **Oldest source:** 1981 (44 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/CITATION_CORRECTIONS_APPLIED_PHASE15.md`
-
-### `CITATION_CORRECTIONS_APPLIED_PHASE17.md`
-- **Oldest source:** 1984 (41 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/CITATION_CORRECTIONS_APPLIED_PHASE17.md`
-
-### `CITATION_CORRECTIONS_APPLIED_PHASE19-23.md`
-- **Oldest source:** 2013 (12 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/CITATION_CORRECTIONS_APPLIED_PHASE19-23.md`
-
-### `CITATION_CORRECTIONS_APPLIED_PHASE2.md`
-- **Oldest source:** 2016 (9 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/CITATION_CORRECTIONS_APPLIED_PHASE2.md`
-
-### `CITATION_CORRECTIONS_APPLIED_PHASE24_FINAL.md`
-- **Oldest source:** 1989 (36 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/CITATION_CORRECTIONS_APPLIED_PHASE24_FINAL.md`
-
-### `CITATION_CORRECTIONS_APPLIED_PHASE3.md`
-- **Oldest source:** 2015 (10 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/CITATION_CORRECTIONS_APPLIED_PHASE3.md`
-
-### `CITATION_CORRECTIONS_APPLIED_PHASE5.md`
-- **Oldest source:** 2012 (13 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/CITATION_CORRECTIONS_APPLIED_PHASE5.md`
-
-### `CITATION_CORRECTIONS_APPLIED_PHASE6-7.md`
-- **Oldest source:** 2011 (14 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/CITATION_CORRECTIONS_APPLIED_PHASE6-7.md`
-
-### `CITATION_CORRECTIONS_APPLIED_PHASE8.md`
-- **Oldest source:** 2001 (24 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/CITATION_CORRECTIONS_APPLIED_PHASE8.md`
-
-### `CITATION_VERIFICATION_PROGRESS.md`
-- **Oldest source:** 1999 (26 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/CITATION_VERIFICATION_PROGRESS.md`
-
-### `CITATION_VERIFICATION_SESSION_SUMMARY.md`
-- **Oldest source:** 2012 (13 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/CITATION_VERIFICATION_SESSION_SUMMARY.md`
-
-### `CITATION_VERIFICATION_SUMMARY.md`
-- **Oldest source:** 2017 (8 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/CITATION_VERIFICATION_SUMMARY.md`
+**Count:** 151 (34.2%)
 
 ### `CRISIS_MITIGATION_RESEARCH_CRITIQUE_20251029.md`
 - **Oldest source:** 2001 (24 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/CRISIS_MITIGATION_RESEARCH_CRITIQUE_20251029.md`
-
-### `DOWNLOADED_PDFS_MANIFEST.md`
-- **Oldest source:** 2016 (9 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/DOWNLOADED_PDFS_MANIFEST.md`
-
-### `FABRICATED_CITATIONS_NEED_REAL_RESEARCH.md`
-- **Oldest source:** 2005 (20 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/FABRICATED_CITATIONS_NEED_REAL_RESEARCH.md`
-
-### `FAKE_CITATIONS_REPLACEMENTS.md`
-- **Oldest source:** 2016 (9 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/FAKE_CITATIONS_REPLACEMENTS.md`
-
-### `FAKE_CITATION_FOUND.md`
-- **Oldest source:** 2016 (9 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/FAKE_CITATION_FOUND.md`
 
 ### `GOD_MODE_ANALYSIS_model_mechanisms_20251110.md`
 - **Oldest source:** 2000 (25 years old)
@@ -333,6 +248,11 @@
 - **Oldest source:** 2013 (12 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/black_mirror_phase3_research_verification_20251101.md`
+
+### `carbon_sink_2010_verification_DETAILED_20251126.md`
+- **Oldest source:** 2001 (24 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/carbon_sink_2010_verification_DETAILED_20251126.md`
 
 ### `carbon_sinks_1990_2025_20251126.md`
 - **Oldest source:** 2009 (16 years old)
@@ -794,6 +714,11 @@
 - **Status:** Not used in simulation
 - **Path:** `research/validation-summary-ready-for-implementation-20251101.md`
 
+### `verification_819729f_20251126.md`
+- **Oldest source:** 2001 (24 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/verification_819729f_20251126.md`
+
 ### `visionary_ideas_research_validation_2025-10-16.md`
 - **Oldest source:** 2014 (11 years old)
 - **Status:** Not used in simulation
@@ -848,7 +773,7 @@
 
 ## 📋 MEDIUM (Review Within Quarter)
 
-**Count:** 21 (4.5%)
+**Count:** 21 (4.8%)
 
 - `LAYER2_COMPREHENSIVE_STATUS_20251030.md` - Oldest: 2020 (5 years)
 - `LAYER2_DEBATE_SUMMARY_20251030.md` - Oldest: 2020 (5 years)
@@ -876,7 +801,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 277 (59.7%)
+**Count:** 270 (61.1%)
 
 All sources <3 years old. No action required.
 
@@ -886,33 +811,33 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 464 |
+| Total files | 442 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 166 (35.8%) |
-| MEDIUM | 21 (4.5%) |
-| LOW | 277 (59.7%) |
-| Average age | 8.2 years |
+| HIGH | 151 (34.2%) |
+| MEDIUM | 21 (4.8%) |
+| LOW | 270 (61.1%) |
+| Average age | 8.0 years |
 | Oldest source | 1955 (70 years ago) |
 
 ### Research Currency
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 277 | 59.7% |
-| Warning (3-5yr) | 21 | 4.5% |
-| Critical (>5yr) | 166 | 35.8% |
+| Current (<3yr) | 270 | 61.1% |
+| Warning (3-5yr) | 21 | 4.8% |
+| Critical (>5yr) | 151 | 34.2% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-- **Current:** 35.8% critical (>5yr)
+- **Current:** 34.2% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
-1. Update 166 HIGH priority file(s) within 1 month
+1. Update 151 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 
