@@ -49,7 +49,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📄 **Files:** `CoordinatedDeploymentPhase.ts`, research files, reviews
 - 📄 **Reviews:** `reviews/research_source_validation_20251126.md` (706 lines)
 
-**Nov 26: Climate Stability Citation Corrections** (commit 69e1490)
+**Nov 26: Climate Stability Citation Corrections** (commits 69e1490, 5112164)
 - 📚 **RESEARCH INTEGRITY FIX:** Corrected 4 citation misrepresentations in ClimateSystemPhase.ts
 - **CRITICAL - Lenton 2019:** Was claimed to support "self-limiting feedbacks preserving stability"
   - ACTUAL: Paper warns of CASCADING risks and SELF-AMPLIFYING feedbacks ("too risky to bet against")
