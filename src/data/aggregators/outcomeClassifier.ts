@@ -185,7 +185,7 @@ export function createUnifiedOutcomeClassification(params: {
       `❌ CRITICAL BUG: Population GROWTH (${(mortalityRate * 100).toFixed(1)}% mortality) cannot be EXTINCTION\n` +
       `   Initial: ${initialPopulation.toFixed(2)}B → Final: ${finalPopulation.toFixed(2)}B\n` +
       `   This indicates primaryOutcome was incorrectly set to 'extinction' upstream.\n` +
-      `   Check: ExtinctionSystemPhase, ExtinctionTriggersPhase, or outcome determination logic.`
+      `   Check: ExtinctionSystemPhase or outcome determination logic.`
     );
   }
 
