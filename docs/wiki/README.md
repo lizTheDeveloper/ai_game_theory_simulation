@@ -49,6 +49,17 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📄 **Files:** `CoordinatedDeploymentPhase.ts`, research files, reviews
 - 📄 **Reviews:** `reviews/research_source_validation_20251126.md` (706 lines)
 
+**Nov 26: Climate Stability Citation Corrections** (commit 69e1490)
+- 📚 **RESEARCH INTEGRITY FIX:** Corrected 4 citation misrepresentations in ClimateSystemPhase.ts
+- **CRITICAL - Lenton 2019:** Was claimed to support "self-limiting feedbacks preserving stability"
+  - ACTUAL: Paper warns of CASCADING risks and SELF-AMPLIFYING feedbacks ("too risky to bet against")
+- **SIGNIFICANT - Armstrong McKay 2022:** "Not complete destabilization" → "not runaway" ≠ "stable"
+- **SIGNIFICANT - IPCC AR6:** Removed invented paraphrase about "not complete collapse by 2300"
+- **MODERATE - Persson 2022:** "~2x safe boundary" was invented - source uses qualitative assessment only
+- **Reframing:** All citations now marked as "MODELING ASSUMPTIONS" not empirical validation
+- **Impact:** No simulation behavior changes - bounds remain 5%/95%, documentation now accurate
+- 📄 **Files:** `ClimateSystemPhase.ts`, `research/verification_climate_stability_citations_20251126.md`
+
 **Nov 26: Climate System Unit Tests (roadmap 5.2)** (commit 86578049)
 - 🧪 **Comprehensive test suite** for planetary boundary recovery mechanics (1,050 lines, 65+ assertions)
 - **Coverage:** Asymptote recovery, legacy stock release, climate/freshwater/biosphere/ocean/P/N/novel entities
