@@ -878,13 +878,16 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
   - Age structure evolves correctly
   - **Coverage Target:** 80%+ for `src/simulation/mortality/`, `src/simulation/demographics/`
 
-- [ ] **Climate System Tests** (Complexity: 5 systems)
+- [x] **Climate System Tests** (Complexity: 5 systems) ✅ PARTIALLY COMPLETE (Nov 26, 2025)
   - Temperature tracks CO2 emissions (climate sensitivity)
   - Ocean heat content accumulates correctly
   - Sea level rise from thermal expansion + ice melt
   - Arctic/Antarctic ice loss rates match research
   - Climate tech deployment affects temperature
   - **Coverage Target:** 80%+ for `src/simulation/climate/`, `src/simulation/planetaryBoundaryRecovery.ts`
+  - **File:** `tests/unit/phases/ClimateSystemPhase.test.ts` (45 tests)
+  - **Tests:** Tipping point detection, cascade amplification, environmental feedback, famine risk
+  - **Commit:** b42423fe6
 
 - [ ] **AI Agent Tests** (Complexity: 6 systems)
   - Capabilities advance through research
