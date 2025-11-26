@@ -376,19 +376,19 @@ export async function createHistoricalInitialState(
   // === HISTORICAL FERTILITY INITIALIZATION (Nov 26, 2025 - Phase 6 Fix) ===
   // CRITICAL FIX: Initialize regional fertility rates with 1990 historical values
   // Root cause of 39.4% population overshoot: 1990 scenarios used 2025 fertility rates
-  // Research: research/demographics_1990_hindcast_20251126.md
+  // Research: research/demographics_1990_calibration_20251126.md (UN World Population Prospects 2024)
   if (year <= 2010 && baseState.humanPopulationSystem?.regionalPopulations) {
     const REGIONAL_TFR_1990: Record<string, number> = {
-      'Sub-Saharan Africa': 6.4,
-      'Middle East & North Africa': 4.7,
-      'South Asia': 4.4,
-      'East Asia': 2.3,
-      'Southeast Asia': 3.6,
-      'Latin America': 3.4,  // "Latin America & Caribbean" → "Latin America"
-      'Europe': 1.8,
-      'North America': 2.0,
-      'Oceania': 2.6,
-      'Central Asia': 2.7,  // "Russia & Central Asia" → "Central Asia"
+      'Sub-Saharan Africa': 6.35,   // UN WPP 2024: 6.3-6.4
+      'Middle East & North Africa': 4.6,   // UN WPP 2024: 4.5-4.7 average
+      'South Asia': 4.3,            // UN WPP 2024
+      'East Asia': 2.5,             // UN WPP 2024
+      'Southeast Asia': 2.7,        // Mid-transition estimate
+      'Latin America': 3.0,         // UN WPP 2024
+      'Europe': 1.6,                // UN WPP 2024
+      'North America': 2.0,         // UN WPP 2024
+      'Oceania': 2.4,               // Australia + Pacific Islands weighted
+      'Central Asia': 2.7,          // Weighted average (Kazakhstan + Uzbekistan)
     };
 
     console.log(`  Historical fertility initialization for ${year}:`);
@@ -794,19 +794,19 @@ export function initializeHistoricalSimulation(
   // === HISTORICAL FERTILITY INITIALIZATION (Nov 26, 2025 - Phase 6 Fix) ===
   // CRITICAL FIX: Initialize regional fertility rates with 1990 historical values
   // Root cause of 39.4% population overshoot: 1990 scenarios used 2025 fertility rates
-  // Research: research/demographics_1990_hindcast_20251126.md
+  // Research: research/demographics_1990_calibration_20251126.md (UN World Population Prospects 2024)
   if (year <= 2010 && baseState.humanPopulationSystem?.regionalPopulations) {
     const REGIONAL_TFR_1990: Record<string, number> = {
-      'Sub-Saharan Africa': 6.4,
-      'Middle East & North Africa': 4.7,
-      'South Asia': 4.4,
-      'East Asia': 2.3,
-      'Southeast Asia': 3.6,
-      'Latin America': 3.4,  // "Latin America & Caribbean" → "Latin America"
-      'Europe': 1.8,
-      'North America': 2.0,
-      'Oceania': 2.6,
-      'Central Asia': 2.7,  // "Russia & Central Asia" → "Central Asia"
+      'Sub-Saharan Africa': 6.35,   // UN WPP 2024: 6.3-6.4
+      'Middle East & North Africa': 4.6,   // UN WPP 2024: 4.5-4.7 average
+      'South Asia': 4.3,            // UN WPP 2024
+      'East Asia': 2.5,             // UN WPP 2024
+      'Southeast Asia': 2.7,        // Mid-transition estimate
+      'Latin America': 3.0,         // UN WPP 2024
+      'Europe': 1.6,                // UN WPP 2024
+      'North America': 2.0,         // UN WPP 2024
+      'Oceania': 2.4,               // Australia + Pacific Islands weighted
+      'Central Asia': 2.7,          // Weighted average (Kazakhstan + Uzbekistan)
     };
 
     console.log(`  Historical fertility initialization for ${year}:`);
