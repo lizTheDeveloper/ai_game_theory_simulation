@@ -29,6 +29,17 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 26: Experiment 1 - Deployment Rate Sweep Script READY** (commit dddcb15)
+- ✅ **Experiment Framework COMPLETE** - Systematic deployment timing analysis
+  - 5 rates: Immediate, Fast (12mo), Medium (24mo), Slow (48mo), Very Slow (96mo)
+  - 6 scenarios: god-mode, climate/equality/ai-alignment-first, democratic-participation, scientific-acceleration
+  - N=10 Monte Carlo (300 total runs, ~15-20 hours)
+  - Enhanced tracking: crash stats, GDP/mortality trajectories, spiral timing
+  - Incremental JSON saves to `logs/experiment1/`
+  - Validation mode: `--validation` flag for N=3 test (~90 runs, ~1-2 hours)
+- 📄 **Files:** `scripts/deploymentRateSweep.ts` (557 lines), `scripts/EXPERIMENT1_README.md` (260 lines)
+- **NEXT:** Run validation, then full experiment in background
+
 **Nov 26: Phase 3 Governance Blockers Resolved** (commit bae1bef)
 - ✅ **GDP-Adaptive Spending COMPLETE** - All 11 scenarios converted from fixed $B/month to % of annual GDP
   - Prevents "physically impossible" crashes during GDP collapse
@@ -40,7 +51,6 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - ✅ **Spiral Threshold Validation COMPLETE** - Analysis blocked by upstream issues
   - Spirals require 3-5 simultaneous conditions (AND logic) - untestable until tech provides survival path
   - Reports: `reviews/spiral_threshold_validation_*.md`
-- **NEXT:** Ready to run Experiment 1 (Deployment Rate Sweep)
 
 **Nov 25: Tech Effectiveness Gating Multiplier Fix** (commit 73f6a7c)
 - 🔧 **FIX:** Novel entities remediation tech was 100-1000x less effective than intended
@@ -10241,6 +10251,57 @@ See `research/governance_scenario_experimental_design_20251123.md`:
 
 **Related Analysis:**
 - `reviews/governance_scenario_null_result_20251123.md` - Priya's quantitative validation of 100% crash rate
+
+#### Experiment 1: Deployment Rate Sweep (November 26, 2025)
+
+**Purpose:** Systematic analysis of how technology deployment timing affects outcomes.
+
+**Research Question:** What is the optimal deployment rate that balances environmental urgency (deploy fast) against institutional absorption capacity (deploy slow)?
+
+**Parameters:**
+- **5 Deployment Rates:**
+  - Immediate: All 119 techs at month 0 (0-month gap)
+  - Fast: 119 techs over 12 months (3-month gap between tiers)
+  - Medium: 119 techs over 24 months (6-month gap)
+  - Slow: 119 techs over 48 months (12-month gap)
+  - Very Slow: 119 techs over 96 months (24-month gap)
+- **6 Scenarios:** god-mode, climate-first, equality-first, ai-alignment-first, democratic-participation, scientific-acceleration
+- **Monte Carlo:** N=10 seeds per configuration (300 total runs)
+- **Max Duration:** 360 months (30 years)
+
+**Running the Experiment:**
+```bash
+# Validation run (N=3, ~90 runs, ~1-2 hours)
+npx tsx scripts/deploymentRateSweep.ts --validation > logs/experiment1/validation_$(date +%Y%m%d_%H%M%S).log 2>&1 &
+
+# Full experiment (N=10, ~300 runs, ~15-20 hours)
+npx tsx scripts/deploymentRateSweep.ts > logs/experiment1/full_run_$(date +%Y%m%d_%H%M%S).log 2>&1 &
+```
+
+**Output Files:**
+- Individual results: `logs/experiment1/{scenario}_{rate}_seed{N}.json` (300 files)
+- Aggregate stats: `logs/experiment1/{scenario}_{rate}_MC{N}_stats.json` (30 files)
+- Summary: `logs/experiment1/experiment1_summary_{timestamp}.json`
+
+**Tracked Metrics:**
+- Crash statistics (completion rate, crash month, crash reason)
+- GDP trajectory (initial, final, min, decline %)
+- Mortality trajectory (year 1, 5, 15, terminal %)
+- Spiral activation (active spirals, cascade status, timing)
+- Outcome distribution (7-tier classification)
+
+**Success Criteria:**
+1. >50% completion rate
+2. At least one rate achieves <50% mortality by year 15
+3. >0% spiral activation for at least one rate
+4. >10% cascade activation for optimal rate
+
+**Files:**
+- Script: `scripts/deploymentRateSweep.ts` (557 lines)
+- Documentation: `scripts/EXPERIMENT1_README.md` (260 lines)
+- Design: `plans/proposed_experiment1_deployment_rate_sweep_20251126.md`
+
+**Status:** 🟡 Ready for execution (validation run, then full experiment)
 
 #### CoordinatedDeploymentPhase Integration Tests (November 2025)
 
