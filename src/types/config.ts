@@ -181,11 +181,11 @@ export const HISTORICAL_BASELINES: Record<number, HistoricalOverrides> = {
    */
   1990: {
     startYear: 1990,
-    co2Ppm: 354,                    // Keeling curve (Scripps/NOAA)
-    temperatureAnomalyC: 0.45,      // HadCRUT5 global temperature
+    co2Ppm: 354.19,                 // Keeling curve (Scripps/NOAA) - EXACT VALUE from research/climate_hindcast_data_20251126.md
+    temperatureAnomalyC: 0.355,     // HadCRUT5 global temperature (relative to 1961-1990) - EXACT VALUE
     globalPopulationBillions: 5.3,  // UN World Population Prospects
     globalGdpTrillions: 23,         // World Bank (1990 USD)
-    emissionsGtCO2PerYear: 22,      // Global Carbon Project
+    emissionsGtCO2PerYear: 22.7,    // Global Carbon Project - UPDATED from GCP via Our World in Data
     environmental: {
       arcticIceLoss: 0.10,          // ~10% summer ice lost by 1990
       permafrostThaw: 0.02,         // Minimal thaw in 1990
@@ -246,11 +246,11 @@ export const HISTORICAL_BASELINES: Record<number, HistoricalOverrides> = {
    */
   2010: {
     startYear: 2010,
-    co2Ppm: 390,                    // Keeling curve
-    temperatureAnomalyC: 0.85,      // HadCRUT5
+    co2Ppm: 390.22,                 // Keeling curve - EXACT VALUE from research/climate_hindcast_data_20251126.md
+    temperatureAnomalyC: 0.674,     // HadCRUT5 (relative to 1961-1990) - EXACT VALUE
     globalPopulationBillions: 6.9,  // UN World Population Prospects
     globalGdpTrillions: 66,         // World Bank
-    emissionsGtCO2PerYear: 32,      // Global Carbon Project
+    emissionsGtCO2PerYear: 33.5,    // Global Carbon Project - UPDATED from GCP via Our World in Data
     environmental: {
       arcticIceLoss: 0.35,          // ~35% summer ice lost
       permafrostThaw: 0.06,         // Early thaw acceleration
