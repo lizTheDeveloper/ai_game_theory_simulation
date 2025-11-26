@@ -244,24 +244,50 @@
    - **Report:** `reviews/climate_hindcast_validation_phase7_20251126.md` (27K)
    - **Log:** `logs/hindcast/hindcast_2025-11-26T15-02-18.log`
 
-**Current Status:** ⚠️ **PARTIAL PROGRESS - Phase 5 complete, Phase 6 complete, but Phase 7 validation still failing**
+**Current Status:** ⚠️ **SIGNIFICANT PROGRESS - Phase 8 complete (27% error, down from 31%)**
 
 **Completed:**
 1. ✅ **Phase 5 complete:** `historicalEmissionsMode` flag implemented + GCP emissions data active
 2. ✅ **Phase 6 complete:** Fertility rates calibrated to 1990 values (commit c4ac98029)
+3. ✅ **Phase 8 complete (Nov 26, 2025):** Carbon sink calibration for 1990 baseline (commit 6a1dc02b8)
+   - Research: `research/carbon_sinks_1990_2025_20251126.md` (Cynthia, 12+ peer-reviewed sources)
+   - Critique: `reviews/carbon_sinks_research_critique_20251126.md` (Sylvia, Grade B+, APPROVED)
+   - Ocean absorption: 8.1 GtCO2/yr (was 10) - 1990 baseline from IPCC
+   - Land absorption: 5.1 GtCO2/yr (was 11) - 1990 baseline from IPCC
+   - Sink saturation: 0.12 (was 0.30) - less cumulative emissions in 1990
+   - Initial CO2: Set to historical.climate.co2Ppm (354 ppm for 1990)
+   - **Result:** Improved from 549 ppm (31% error) to ~497 ppm (27% error)
 
 **Required Actions:**
-1. **Debug CO2 overshoot:** Emissions forcing is working, but CO2 still 40% too high (549 vs 390 ppm)
-   - Likely causes: Carbon sink saturation wrong for 1990, or positive feedbacks applied incorrectly
-   - Next step: Analyze sink parameters (oceanAbsorption, landAbsorption, sinkSaturation) for 1990 baseline
-2. **Re-run Phase 7:** Verify CO2 < 5%, Population < 10% after sink calibration
+1. **Implement temporal evolution of carbon sinks (1990→2010):** Research shows sinks GROW over time
+   - Ocean: 2.2→2.9 GtC/yr (+32% from 1990 to 2010)
+   - Land: 1.4→3.1 GtC/yr (+121% from 1990 to 2010)
+   - Current implementation uses static 1990 values (correct for initialization, but doesn't evolve)
+   - Recommendation: Add time-based scaling in resourceDepletion.ts
+2. **Re-run Phase 7 validation (N=10):** Verify improvement after temporal evolution added
 
 **Complexity:** 3 systems (climate, initialization, validation)
 **Related:** Hindcasting Validation (CRITICAL #1) - this is a focused subset
 
 **FOLLOW-UP WORK (NEW - HIGH Priority):**
 
-5. **Historical Emissions Forcing Mode (Roy) - PENDING:**
+8. **Phase 9: Temporal Evolution of Carbon Sinks (1990→2010) - PENDING:**
+   - **Objective:** Make carbon sinks grow over time (currently static at 1990 values)
+   - **Research Findings:**
+     - Ocean: 2.2 GtC/yr (1990) → 2.9 GtC/yr (2010) [+32%]
+     - Land: 1.4 GtC/yr (1990) → 3.1 GtC/yr (2010) [+121%]
+     - Source: `research/carbon_sinks_1990_2025_20251126.md`
+   - **Implementation Options:**
+     - Option A: Linear interpolation in resourceDepletion.ts based on year
+     - Option B: Empirical time series lookup (most accurate)
+     - Option C: Climate feedback modifiers (CO2 fertilization, temperature effects)
+   - **Recommendation:** Start with Option A (linear interpolation) for simplicity
+   - **Success Criteria:** CO2 deviation < 5% at 2010 (currently 27% with static sinks)
+   - **Complexity:** 1 system (carbon cycle), ~50 lines of code
+   - **Assignee:** simulation-maintainer
+   - **Priority:** HIGH - blocking hindcast validation completion
+
+5. **Historical Emissions Forcing Mode (Roy) - COMPLETE:** ✅
    - **Objective:** Add `historicalEmissionsMode: boolean` flag to bypass endogenous emissions calculation
    - **Implementation:**
      - Create emissions lookup table from Global Carbon Project (1990-2010, annual GtCO2/yr)

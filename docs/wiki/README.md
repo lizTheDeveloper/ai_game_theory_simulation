@@ -112,6 +112,22 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **Note:** CO2 validation still failing (40% overshoot, 549 vs 390 ppm) - root cause is sink parameters, NOT emissions
 - 📄 **Files:** `src/simulation/historicalInitialization.ts`
 
+**Nov 26: Phase 8 - Carbon Sink Calibration for 1990 Baseline** (commit 6a1dc02)
+- ✅ **FIX:** Corrected anachronistic carbon sink parameters that caused CO2 overshoot in hindcast
+- **Problem:** Hindcast showed 549 ppm vs target 390 ppm (31% error) at 2010 endpoint
+- **Root Cause 1 - Sink Parameters:** Using 2025 values (ocean: 10, land: 11 GtCO2/yr, saturation: 0.30) for 1990 baseline
+- **Root Cause 2 - Initial CO2 Bug:** `atmosphericCO2` was initialized to 420 ppm (2025 default) instead of historical 354 ppm for 1990
+- **Research-Backed Fix (IPCC AR5/AR6, Global Carbon Budget):**
+  - Ocean absorption: 8.1 GtCO2/yr (was 10) - based on IPCC 1990s mean of 2.2 GtC/yr
+  - Land absorption: 5.1 GtCO2/yr (was 11) - based on IPCC 1990s mean of 1.4 GtC/yr
+  - Sink saturation: 0.12 (was 0.30) - reflects ~1000 GtCO2 cumulative by 1990 (vs ~2400 by 2025)
+  - Initial CO2 now set from `historical.climate.co2Ppm` (354 ppm for 1990)
+- **Results:** Improved from 549 ppm (31% error) to ~497 ppm (27% error)
+- **Remaining Gap:** Static sinks don't capture 1990→2010 sink growth; research recommends temporal evolution (Option 3)
+- 📄 **Research:** `research/carbon_sinks_1990_2025_20251126.md` (Cynthia, 12+ sources)
+- 📄 **Review:** `reviews/carbon_sinks_research_critique_20251126.md` (Sylvia, Grade B+)
+- 📄 **Files:** `src/simulation/historicalInitialization.ts` (createHistoricalInitialState, initializeHistoricalSimulation)
+
 **Nov 26: Phase 7 - Hindcast Re-Validation Script Ready** (commit 7154f8d)
 - 📄 **Script:** `scripts/climateHindcastValidationPhase7.ts` (196 lines)
 - **Purpose:** Re-run 1990-2010 hindcast validation now that Phase 5+6 implementations are merged
