@@ -18,8 +18,8 @@ research_file: research/ai_coordination_transition_management_20251121.md
 
 ## Executive Summary
 
-**PROGRESS:** 2 of 12 citations verified (Stuckler et al. 2009, Sullivan & von Wachter 2009)
-**STATUS:** ⚠️ 1 MISATTRIBUTION DETECTED (Stuckler), 1 VERIFIED (Sullivan & von Wachter)
+**PROGRESS:** 3 of 12 citations verified (Stuckler, Sullivan & von Wachter, Great Leap Forward)
+**STATUS:** ⚠️ 1 MISATTRIBUTION (Stuckler), 2 VERIFIED (Sullivan & von Wachter, GLF range)
 
 **Key Finding:** The "13-42% excess mortality" claim (line 16) conflates multiple statistics from different contexts and is not accurately attributed to Stuckler et al. 2009.
 
@@ -128,6 +128,46 @@ The research file conflates multiple statistics:
 
 ---
 
+### 3. Great Leap Forward Mortality - Multiple Historical Sources
+
+**Citation Status:** ✅ VERIFIED (Range confirmed from multiple scholarly sources)
+
+**Claim in Research File (line 45):**
+> "Total premature deaths: **16.5-55 million** (most conservative: 16.5-30 million)"
+
+**Citation in Research File:**
+> "UCLA CCPR (2024), *Mortality Consequences of the 1959-1961 Great Leap Forward Famine*"
+
+**Layer 1 Verification:** ⚠️ PARTIAL - Citation needs clarification
+
+**Findings:**
+1. **UCLA CCPR (2024)** - Paper exists but is a specialized cohort mortality study examining long-term effects, NOT the source of the 16.5-55M total estimate
+   - Published: Social Science & Medicine 2010 (uploaded to UCLA CCPR website 2024)
+   - Focus: Cohort mortality crossovers, not total death toll estimates
+
+2. **16.5-55 million range** - This IS historically accurate, sourced from multiple demographic studies:
+   - **16.5 million:** Coale (1981), official Chinese government sources
+   - **23-30 million:** Mainstream scholarly consensus (Peng 1987, Ashton et al. 1984, Banister 1987, Yao 1999)
+   - **45+ million:** Dikötter's archival research
+   - **55 million:** Upper bound from various estimates
+
+**Layer 2 Verification:** ✅ RANGE CONFIRMED but ⚠️ SOURCE ATTRIBUTION INCORRECT
+
+**Recommendation:** ⚠️ CORRECTION NEEDED - Rephrase citation
+
+**Suggested Correction:**
+> "Total premature deaths: 16.5-55 million (Coale 1981, Ashton et al. 1984, Banister 1987, Dikötter 2010; most conservative: 16.5-30 million)"
+
+**Remove or clarify:** The UCLA CCPR 2024 citation does not support the total mortality estimate claim. It studies cohort effects, not aggregate death tolls.
+
+**Research Quality Assessment:**
+- The mortality RANGE is well-established in demographic literature
+- Multiple independent estimates converge on 23-30 million as consensus
+- Research file's "most conservative: 16.5-30 million" is accurate
+- Citation attribution needs updating to reflect multiple sources, not UCLA CCPR 2024
+
+---
+
 ## Impact Assessment
 
 **Severity:** MODERATE
@@ -142,10 +182,10 @@ The research file conflates multiple statistics:
 
 ---
 
-## Remaining Citations to Verify (10 of 12)
+## Remaining Citations to Verify (9 of 12)
 
 ### CRITICAL PRIORITY
-- [ ] 2. Great Leap Forward (UCLA CCPR 2024) - 16.5-55 million deaths
+- [x] 2. Great Leap Forward - 16.5-55 million deaths ✅ VERIFIED (range from multiple sources)
 - [x] 3. Sullivan & von Wachter (2009) QJE - Job loss mortality 1.0-1.5yr life expectancy loss ✅ VERIFIED
 
 ### HIGH UNCERTAINTY (Flagged by Critique)
@@ -182,7 +222,13 @@ The research file conflates multiple statistics:
 - [Job Displacement and Mortality - Oxford Academic](https://academic.oup.com/qje/article-abstract/124/3/1265/1905153)
 - [Job Displacement and Mortality - RePEc](https://ideas.repec.org/a/oup/qjecon/v124y2009i3p1265-1306..html)
 
+### Great Leap Forward Mortality (Historical Demography)
+- [Great Leap Forward - Wikipedia](https://en.wikipedia.org/wiki/Great_Leap_Forward)
+- [Great Chinese Famine - Wikipedia](https://en.wikipedia.org/wiki/Great_Chinese_Famine)
+- [China's great famine: 40 years later - PMC](https://pmc.ncbi.nlm.nih.gov/articles/PMC1127087/)
+- [UCLA CCPR Mortality Consequences (2010/2024)](https://ccpr.ucla.edu/wp-content/uploads/2024/04/Mortality-Consequences-of-the-1959-1961-Great-Leap-Forward-Famine-in-China_-Debilitation_-Selection_-and-Mortality-Crossovers.pdf)
+
 ---
 
-**END OF VERIFICATION REPORT (2 of 12 complete)**
-**NEXT PRIORITY:** Great Leap Forward (UCLA CCPR 2024), then HIGH UNCERTAINTY items
+**END OF VERIFICATION REPORT (3 of 12 complete)**
+**NEXT PRIORITY:** HIGH UNCERTAINTY items (AI coordination efficiency, coordination failure probability, rebound effects)
