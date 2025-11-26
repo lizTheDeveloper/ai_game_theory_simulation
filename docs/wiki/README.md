@@ -81,6 +81,19 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📄 **Files:** `tests/integration/game-layer/critical-juncture-detection.test.ts`, `tests/integration/game-layer/scenario-definitions.test.ts`
 - **Status:** IN PROGRESS - state creation and scenario application need debugging
 
+**Nov 26: Phase 9 - Temporal Evolution of Carbon Sinks (1990-2010)** (commit 8a31aa0)
+- ✅ **HINDCAST FIX:** Carbon sinks now evolve over hindcast period instead of using static 2025 values
+- **Research Source:** Global Carbon Project data (`research/carbon_sinks_1990_2025_20251126.md`)
+- **Implementation:**
+  - Ocean absorption: 8.1 → 10.6 GtCO2/yr (+32%) via linear interpolation
+  - Land absorption: 5.1 → 11.4 GtCO2/yr (+121%) via linear interpolation
+  - Sink saturation disabled during hindcast (empirical values already account for effective uptake)
+  - Mechanistic saturation (acidification, deforestation) only applies post-2010
+- **Why needed:** Previous implementation used anachronistic 2025 sink values for 1990, causing 40%+ CO2 overshoot
+- **Validation assertions:** Proper `assertFinite()` wrapping with temporal context
+- **Logging:** Every 5 years for verification
+- 📄 **Files:** `src/simulation/resourceDepletion.ts` (lines 1073-1127)
+
 **Nov 26: Historical Emissions Mode Period Restriction** (commit df7de85)
 - **FIX:** Restricted `historicalEmissionsMode` to hindcast period (1990-2010 only)
 - **Problem:** Tests initializing year 2024 failed when resourceDepletion called `getHistoricalEmissions(2024)` - no GCP data for future years
