@@ -29,6 +29,14 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 26: Climate System Unit Tests (roadmap 5.2)** (commit 86578049)
+- 🧪 **Comprehensive test suite** for planetary boundary recovery mechanics (1,050 lines, 65+ assertions)
+- **Coverage:** Asymptote recovery, legacy stock release, climate/freshwater/biosphere/ocean/P/N/novel entities
+- **Research validation:** Tests verify parameters from IPCC AR6, Richardson 2023, Drüke 2024, Cousins 2022
+- **Quality assurance:** Determinism tests (seeded RNG), edge cases (zero emissions, geoengineering, far future)
+- **Status:** Initial suite created, 32 failures need state initialization fixes (Roy)
+- 📄 **Files:** `tests/climate.test.ts`, `CLIMATE_TESTS_README.md` (detailed test documentation)
+
 **Nov 26: Game Layer Integration Tests (roadmap 5.4)** (commit 4863dc1)
 - 🧪 **Critical Juncture Detection Tests:** 23 tests (13 passing, 10 debugging)
   - Tests three-condition detection (institutional flux + info ambiguity + balanced forces)
