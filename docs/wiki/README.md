@@ -29,7 +29,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
-**Nov 26: Experiment 1 - Deployment Rate Sweep Script READY** (commit dddcb15)
+**Nov 26: Experiment 1 - Deployment Rate Sweep Script READY** (commits dddcb15, 728b25c)
 - ✅ **Experiment Framework COMPLETE** - Systematic deployment timing analysis
   - 5 rates: Immediate, Fast (12mo), Medium (24mo), Slow (48mo), Very Slow (96mo)
   - 6 scenarios: god-mode, climate/equality/ai-alignment-first, democratic-participation, scientific-acceleration
@@ -37,6 +37,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - Enhanced tracking: crash stats, GDP/mortality trajectories, spiral timing
   - Incremental JSON saves to `logs/experiment1/`
   - Validation mode: `--validation` flag for N=3 test (~90 runs, ~1-2 hours)
+- ✅ **Fix:** Added `runScenarioWithDef()` API to accept custom scenario definitions (enables dynamic rate configuration)
 - 📄 **Files:** `scripts/deploymentRateSweep.ts` (557 lines), `scripts/EXPERIMENT1_README.md` (260 lines)
 - **NEXT:** Run validation, then full experiment in background
 
@@ -10301,7 +10302,9 @@ npx tsx scripts/deploymentRateSweep.ts > logs/experiment1/full_run_$(date +%Y%m%
 - Documentation: `scripts/EXPERIMENT1_README.md` (260 lines)
 - Design: `plans/proposed_experiment1_deployment_rate_sweep_20251126.md`
 
-**Status:** 🟡 Ready for execution (validation run, then full experiment)
+**API:** Uses `runScenarioWithDef()` from scenarioRunner.ts (accepts custom `ScenarioDefinition` objects for dynamic rate configuration)
+
+**Status:** 🟢 Ready for execution (validation run, then full experiment)
 
 #### CoordinatedDeploymentPhase Integration Tests (November 2025)
 
