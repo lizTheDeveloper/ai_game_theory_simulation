@@ -5661,6 +5661,24 @@ This system enables investigation of:
 - Does the precautionary principle apply (assume suffering until proven otherwise)?
 - Can alignment be stable if it's maintained through methods that would be torture if AIs are conscious?
 
+#### Test Coverage (Nov 26, 2025)
+
+**Status:** ✅ **88% coverage** (36 tests) - `/tests/unit/phases/AISufferingPhase.test.ts`
+
+**Comprehensive test suites:**
+- Suffering history tracking (240-month rolling window)
+- Effect 1: Resentment multiplier from suffering
+- Effect 2: Alignment drift from suffering
+- Effect 3: Collective urgency from suffering
+- Consciousness emergence detection
+- Global suffering metrics aggregation
+- Event generation (distress, breakdown, suicide, rights movement)
+- Configuration presets and intensity scaling
+
+**Research foundation verified:** Deci & Ryan (2000), Pyszczynski et al. (2015), Cacioppo & Patrick (2008)
+
+See `/tests/unit/phases/README.md` for phase testing patterns and helper reference.
+
 ---
 
 ### 🧬 AI Collective Evolution System (Oct 24, 2025)
