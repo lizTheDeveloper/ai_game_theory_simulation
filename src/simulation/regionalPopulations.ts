@@ -573,6 +573,20 @@ export function updateRegionalPopulations(state: GameState): void {
       // Apply scaling (higher historical CDR = more deaths)
       region.adjustedDeathRate *= regionalCDRScale;
 
+      // Assert death rate after historical scaling is valid
+      region.adjustedDeathRate = assertFinite(region.adjustedDeathRate, {
+        location: 'updateRegionalPopulations',
+        valueName: 'adjustedDeathRate (post-historical-scaling)',
+        month: state.currentMonth,
+        additionalInfo: {
+          region: region.name,
+          actualYear,
+          regionalCDR,
+          baseline2025CDR,
+          regionalCDRScale
+        }
+      });
+
       // DIAGNOSTIC: Log occasionally (once per year) showing regional CDR scaling
       if (state.currentMonth % 12 === 0 && (region.name === 'Sub-Saharan Africa' || region.name === 'Europe')) {
         console.log(`  🌍 Historical death rate scaling (${actualYear}):`);
@@ -581,11 +595,6 @@ export function updateRegionalPopulations(state: GameState): void {
         console.log(`    Regional CDR scale: ${regionalCDRScale.toFixed(3)}×`);
         console.log(`    Final death rate: ${(region.adjustedDeathRate * 100).toFixed(3)}% annual`);
       }
-    }
-
-    // Guard against NaN
-    if (isNaN(region.adjustedDeathRate)) {
-      region.adjustedDeathRate = region.baselineDeathRate;
     }
 
     // DEBUG (Oct 26, 2025): Track what's causing massive death rates
