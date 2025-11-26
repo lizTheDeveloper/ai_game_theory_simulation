@@ -408,22 +408,29 @@ export class ClimateSystemPhase implements SimulationPhase {
     /**
      * Cap total degradation at 95% (per-step)
      *
-     * MODELING ASSUMPTION: Prevents single-step collapse while allowing
-     * cumulative degradation. Climate systems have massive inertia.
+     * MODELING ASSUMPTION: Prevents simulation artifacts from single-step collapse.
+     * NOT empirically validated as a physical threshold. Climate systems have massive
+     * inertia, but this cap is a modeling choice to prevent runaway simulation behavior.
      *
      * Supporting observations (not direct validation):
-     * - PETM (~56Ma): 4-5°C warming retained some habitable zones, though
-     *   recovery took ~100ky and caused mass ocean extinction (Zachos et al. 2008)
+     * - Planck feedback: Stefan-Boltzmann radiation prevents infinite warming (basic physics)
+     * - PETM (~56Ma): 4-5C warming with recovery over ~100ky, though catastrophic
+     *   ocean acidification and "largest deep-sea mass extinction in 93 million years"
+     *   occurred (Zachos et al. 2008, Nature). Demonstrates eventual geological
+     *   stabilization over timescales irrelevant to human civilization.
      * - Snowball Earth (~700Ma): Had equatorial refugia during full glaciation
-     * - Planck feedback: Stefan-Boltzmann radiation prevents infinite warming
      *
-     * Cautionary evidence:
-     * - IPCC AR6 projects 6.6-14.1°C warming by 2300 under SSP5-8.5 - does NOT
-     *   characterize this as "not complete collapse" (unprecedented in human history)
-     * - Armstrong McKay et al. (2022): Multiple tipping points don't cause
-     *   "runaway" warming but DO cause severe, potentially irreversible changes
+     * Research warnings (what Earth systems can do):
+     * - Lenton et al. (2019, Nature) "Climate tipping points - too risky to bet against"
+     *   warns of CASCADING risks and SELF-AMPLIFYING feedbacks from tipping points.
+     *   "We have underestimated the risks of unleashing irreversible changes."
+     *   Do NOT assume self-limiting feedbacks will prevent severe outcomes.
+     * - Armstrong McKay et al. (2022, Science): Multiple tipping points don't cause
+     *   "runaway" warming but DO cause severe, potentially irreversible changes.
+     *   Emissions cuts still matter (agency), but stability is not guaranteed.
      *
-     * This cap models physical inertia, NOT a guarantee of stability.
+     * This cap models physical inertia and prevents simulation artifacts, NOT a claim
+     * that Earth systems are inherently self-stabilizing. Research warns the opposite.
      *
      * @see research/climate_tipping_timescales_20251106.md
      * @see research/verification_climate_stability_citations_20251126.md
@@ -448,24 +455,31 @@ export class ClimateSystemPhase implements SimulationPhase {
      * single-step collapse). NOT empirically validated as a physical threshold.
      *
      * Supporting observations (not direct validation):
-     * - PETM (~56Ma): 4-5°C warming with recovery over ~100ky, though catastrophic
-     *   ocean acidification and mass extinction occurred (Zachos et al. 2008, Nature)
-     * - Planetary boundaries (Steffen et al. 2015, Science): Transgressions create
-     *   risk zones, not instant collapse
      * - Planck feedback (fundamental physics): Stefan-Boltzmann radiation prevents
-     *   infinite warming (IPCC AR6: ECS bounded at 2.5-4.0°C per CO2 doubling)
+     *   infinite warming. Basic physics, but does NOT prevent catastrophic warming.
+     * - PETM (~56Ma): 4-5C warming with recovery over ~100ky geological timescales
+     *   (Zachos et al. 2008, Nature). Demonstrates eventual stabilization, but NOT
+     *   rapid resilience - catastrophic ocean acidification and "largest deep-sea
+     *   mass extinction in 93 million years" occurred during recovery.
+     * - Planetary boundaries (Steffen et al. 2015, Science): Transgressions create
+     *   risk zones, not instant collapse. We currently exist in transgression of 4+
+     *   boundaries without immediate collapse (but with increasing risk).
      *
-     * Cautionary evidence:
-     * - Lenton et al. (2019, Nature) "Climate tipping points — too risky to bet against"
-     *   warns of CASCADING risks and SELF-AMPLIFYING feedbacks from tipping points.
-     *   Do NOT assume self-limiting feedbacks will prevent severe outcomes.
+     * Research warnings (what Earth systems can do):
+     * - Lenton et al. (2019, Nature) "Climate tipping points - too risky to bet against"
+     *   warns "we have underestimated the risks of unleashing irreversible changes,
+     *   where the planet SELF-AMPLIFIES global warming." Paper emphasizes cascading
+     *   RISK and EMERGENCY, not stability. Do NOT assume self-limiting feedbacks.
      * - Armstrong McKay et al. (2022, Science): Multiple tipping points don't cause
-     *   "runaway" warming, but DO cause severe, potentially irreversible changes
+     *   "runaway" warming but DO cause severe, potentially irreversible changes.
+     *   Emissions cuts still matter (agency), but stability is not guaranteed.
      *
-     * The 5% floor represents "worst plausible Earth scenario maintaining some
-     * multicellular life" - still catastrophic for civilization. Reserve 0% for
+     * HONEST FRAMING: The 5% floor represents "worst plausible Earth scenario maintaining
+     * some multicellular life" - still catastrophic for civilization. Reserve 0% for
      * "Venus scenario." Paleoclimate recovery (PETM, Snowball Earth) occurred over
-     * geological time (100-200ky), not policy-relevant timescales.
+     * geological time (100-200ky), not policy-relevant timescales. These bounds are
+     * implementation choices to prevent simulation artifacts, NOT claims that Earth
+     * systems are inherently self-stabilizing. Research warns the opposite.
      *
      * @see research/climate_self_limiting_mechanisms_20251125.md - Full research synthesis
      * @see research/climate_tipping_timescales_20251106.md
