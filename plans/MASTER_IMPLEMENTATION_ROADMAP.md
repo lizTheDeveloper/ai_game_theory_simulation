@@ -973,18 +973,22 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
   - **File:** `tests/integration/game-layer/state-mappers.test.ts`
   - **Owner:** Tessa (far-future-ux-designer)
 
-- [ ] **Critical Juncture Detection Tests** (Complexity: 4 systems)
+- [ ] **Critical Juncture Detection Tests** (Complexity: 4 systems) - IN PROGRESS
   - Tipping points detected correctly
   - Bifurcation moments identified
   - Player influence opportunities surface
   - Research breakthroughs trigger notifications
-  - **Owner:** Tessa
+  - **File:** `tests/integration/game-layer/critical-juncture-detection.test.ts`
+  - **Status:** 23 tests written (10 failing - state creation needs debugging)
+  - **Owner:** Roy
 
-- [ ] **Scenario Definition Tests** (Complexity: 3 systems)
+- [ ] **Scenario Definition Tests** (Complexity: 3 systems) - IN PROGRESS
   - All 11 governance scenarios load correctly
   - Override parameters applied to state
   - Scenarios don't crash during GDP collapse
   - Percentage-based spending (not fixed dollars)
+  - **File:** `tests/integration/game-layer/scenario-definitions.test.ts`
+  - **Status:** 24 tests written (14 failing - scenario application needs debugging)
   - **Owner:** Roy
 
 #### 5.5 Test Infrastructure (LOW Priority)
