@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>God Mode UI - Presets Panel v3</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #000;
+            color: #fff;
+            padding: 32px;
+            min-height: 100vh;
+            background: radial-gradient(ellipse at center, #0A0A0A 0%, #000 100%);
+        }
+
+        /* Panel header */
+        .panel-header {
+            margin-bottom: 32px;
+        }
+
+        .breadcrumbs {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 16px;
+        }
+
+        .breadcrumb-separator {
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .breadcrumb-current {
+            color: #00F0FF;
+        }
+
+        .panel-title {
+            font-size: 32px;
+            font-weight: 200;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        .panel-description {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+            max-width: 600px;
+        }
+
+        /* Recommendations based on state */
+        .recommendations {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 255, 136, 0.05));
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 32px;
+        }
+
+        .recommendations-title {
+            font-size: 14px;
+            font-weight: 400;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #00FF88;
+        }
+
+        .recommendations-text {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.5;
+        }
+
+        .recommendation-chips {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .rec-chip {
+            padding: 6px 12px;
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 16px;
+            font-size: 12px;
+            color: #00FF88;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .rec-chip:hover {
+            background: rgba(0, 255, 136, 0.2);
+            transform: translateY(-1px);
+        }
+
+        /* Preset grid */
+        .preset-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .preset-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .preset-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #00F0FF, transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .preset-card:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .preset-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .preset-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 12px;
+        }
+
+        .preset-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .preset-name {
+            font-size: 16px;
+            font-weight: 400;
+            margin-bottom: 4px;
+        }
+
+        .preset-category {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .preset-badge {
+            padding: 4px 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .preset-badge.recommended {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            color: #00FF88;
+        }
+
+        .preset-badge.conflict {
+            background: rgba(255, 176, 0, 0.1);
+            border: 1px solid rgba(255, 176, 0, 0.3);
+            color: #FFB000;
+        }
+
+        .preset-description {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        /* Preview changes */
+        .preset-preview {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 16px;
+        }
+
+        .preview-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 8px;
+        }
+
+        .preview-items {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .preview-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+        }
+
+        .preview-label {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .preview-change {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .change-from {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .change-arrow {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .change-to {
+            color: #00F0FF;
+        }
+
+        .change-to.decrease {
+            color: #FF0040;
+        }
+
+        .change-to.increase {
+            color: #00FF88;
+        }
+
+        /* Preset actions */
+        .preset-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .preset-btn {
+            flex: 1;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .preset-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        .preset-btn.primary {
+            background: rgba(0, 240, 255, 0.1);
+            border-color: rgba(0, 240, 255, 0.3);
+            color: #00F0FF;
+        }
+
+        .preset-btn.primary:hover {
+            background: rgba(0, 240, 255, 0.2);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+        }
+
+        /* Create/Import section */
+        .create-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 32px;
+            padding-top: 32px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .create-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 2px dashed rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 32px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .create-card:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .create-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+            opacity: 0.5;
+        }
+
+        .create-title {
+            font-size: 16px;
+            font-weight: 400;
+            margin-bottom: 8px;
+        }
+
+        .create-desc {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Conflict warning modal */
+        .conflict-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(10, 10, 10, 0.95);
+            border: 1px solid rgba(255, 176, 0, 0.3);
+            border-radius: 12px;
+            padding: 24px;
+            max-width: 400px;
+            backdrop-filter: blur(20px);
+            display: none;
+        }
+
+        .conflict-modal.visible {
+            display: block;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 400;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #FFB000;
+        }
+
+        .modal-content {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .conflict-list {
+            background: rgba(255, 176, 0, 0.05);
+            border-radius: 6px;
+            padding: 12px;
+            margin: 12px 0;
+        }
+
+        .conflict-item {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 4px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            color: #fff;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .modal-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-btn.primary {
+            background: rgba(255, 176, 0, 0.1);
+            border-color: rgba(255, 176, 0, 0.3);
+            color: #FFB000;
+        }
+    </style>
+</head>
+<body>
+    <!-- Panel Header -->
+    <div class="panel-header">
+        <div class="breadcrumbs">
+            <span>God Mode</span>
+            <span class="breadcrumb-separator">›</span>
+            <span class="breadcrumb-current">Presets</span>
+        </div>
+        <h1 class="panel-title">Configuration Presets</h1>
+        <p class="panel-description">
+            Apply predefined configurations optimized for specific scenarios. Each preset is carefully balanced for different objectives.
+        </p>
+    </div>
+
+    <!-- Recommendations -->
+    <div class="recommendations">
+        <div class="recommendations-title">
+            <span>💡</span>
+            <span>Recommended for Current State</span>
+        </div>
+        <div class="recommendations-text">
+            Based on Month 42 conditions (high AI capability, medium climate crisis, declining trust),
+            we recommend the "Crisis Response" or "Trust Rebuilding" presets.
+        </div>
+        <div class="recommendation-chips">
+            <div class="rec-chip">Quick Apply: Crisis Response</div>
+            <div class="rec-chip">Quick Apply: Trust Rebuilding</div>
+            <div class="rec-chip">View Analysis</div>
+        </div>
+    </div>
+
+    <!-- Preset Grid -->
+    <div class="preset-grid">
+        <!-- Crisis Response -->
+        <div class="preset-card">
+            <div class="preset-header">
+                <div>
+                    <div class="preset-icon">🚨</div>
+                    <div class="preset-name">Crisis Response</div>
+                    <div class="preset-category">Emergency</div>
+                </div>
+                <div class="preset-badge recommended">Recommended</div>
+            </div>
+
+            <div class="preset-description">
+                Rapid mobilization for existential threats. Maximizes response speed at the cost of civil liberties.
+            </div>
+
+            <div class="preset-preview">
+                <div class="preview-title">Key Changes</div>
+                <div class="preview-items">
+                    <div class="preview-item">
+                        <span class="preview-label">Emergency Powers</span>
+                        <span class="preview-change">
+                            <span class="change-from">OFF</span>
+                            <span class="change-arrow">→</span>
+                            <span class="change-to increase">ON</span>
+                        </span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">AI Oversight</span>
+                        <span class="preview-change">
+                            <span class="change-from">60%</span>
+                            <span class="change-arrow">→</span>
+                            <span class="change-to increase">100%</span>
+                        </span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">Defense Budget</span>
+                        <span class="preview-change">
+                            <span class="change-from">40%</span>
+                            <span class="change-arrow">→</span>
+                            <span class="change-to increase">65%</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="preset-actions">
+                <button class="preset-btn">Preview</button>
+                <button class="preset-btn primary">Apply</button>
+            </div>
+        </div>
+
+        <!-- Balanced Progress -->
+        <div class="preset-card">
+            <div class="preset-header">
+                <div>
+                    <div class="preset-icon">⚖️</div>
+                    <div class="preset-name">Balanced Progress</div>
+                    <div class="preset-category">Standard</div>
+                </div>
+                <div class="preset-badge">Popular</div>
+            </div>
+
+            <div class="preset-description">
+                Steady advancement across all metrics. Suitable for stable conditions with no immediate threats.
+            </div>
+
+            <div class="preset-preview">
+                <div class="preview-title">Key Changes</div>
+                <div class="preview-items">
+                    <div class="preview-item">
+                        <span class="preview-label">Research Funding</span>
+                        <span class="preview-change">
+                            <span class="change-from">75%</span>
+                            <span class="change-arrow">→</span>
+                            <span class="change-to">70%</span>
+                        </span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">International Cooperation</span>
+                        <span class="preview-change">
+                            <span class="change-from">60%</span>
+                            <span class="change-arrow">→</span>
+                            <span class="change-to increase">80%</span>
+                        </span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">Public Programs</span>
+                        <span class="preview-change">
+                            <span class="change-from">50%</span>
+                            <span class="change-arrow">→</span>
+                            <span class="change-to increase">65%</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="preset-actions">
+                <button class="preset-btn">Preview</button>
+                <button class="preset-btn primary">Apply</button>
+            </div>
+        </div>
+
+        <!-- Accelerationist -->
+        <div class="preset-card">
+            <div class="preset-header">
+                <div>
+                    <div class="preset-icon">🚀</div>
+                    <div class="preset-name">Accelerationist</div>
+                    <div class="preset-category">Aggressive</div>
+                </div>
+                <div class="preset-badge conflict">Conflicts</div>
+            </div>
+
+            <div class="preset-description">
+                Maximum speed toward AGI. High risk, high reward. May trigger multiple crisis cascades.
+            </div>
+
+            <div class="preset-preview">
+                <div class="preview-title">Key Changes</div>
+                <div class="preview-items">
+                    <div class="preview-item">
+                        <span class="preview-label">AI Development</span>
+                        <span class="preview-change">
+                            <span class="change-from">75%</span>
+                            <span class="change-arrow">→</span>
+                            <span class="change-to increase">100%</span>
+                        </span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">Safety Measures</span>
+                        <span class="preview-change">
+                            <span class="change-from">80%</span>
+                            <span class="change-arrow">→</span>
+                            <span class="change-to decrease">30%</span>
+                        </span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">Risk Tolerance</span>
+                        <span class="preview-change">
+                            <span class="change-from">Low</span>
+                            <span class="change-arrow">→</span>
+                            <span class="change-to decrease">High</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="preset-actions">
+                <button class="preset-btn">Preview</button>
+                <button class="preset-btn primary">Apply</button>
+            </div>
+        </div>
+
+        <!-- Conservative -->
+        <div class="preset-card">
+            <div class="preset-header">
+                <div>
+                    <div class="preset-icon">🛡️</div>
+                    <div class="preset-name">Conservative</div>
+                    <div class="preset-category">Defensive</div>
+                </div>
+            </div>
+
+            <div class="preset-description">
+                Prioritize stability and safety. Slow progress but minimal risk of catastrophic failure.
+            </div>
+
+            <div class="preset-preview">
+                <div class="preview-title">Key Changes</div>
+                <div class="preview-items">
+                    <div class="preview-item">
+                        <span class="preview-label">AI Development</span>
+                        <span class="preview-change">
+                            <span class="change-from">75%</span>
+                            <span class="change-arrow">→</span>
+                            <span class="change-to decrease">40%</span>
+                        </span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">Safety Measures</span>
+                        <span class="preview-change">
+                            <span class="change-from">80%</span>
+                            <span class="change-arrow">→</span>
+                            <span class="change-to increase">100%</span>
+                        </span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">Regulation</span>
+                        <span class="preview-change">
+                            <span class="change-from">Medium</span>
+                            <span class="change-arrow">→</span>
+                            <span class="change-to">Maximum</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="preset-actions">
+                <button class="preset-btn">Preview</button>
+                <button class="preset-btn primary">Apply</button>
+            </div>
+        </div>
+
+        <!-- Sustainability Focus -->
+        <div class="preset-card">
+            <div class="preset-header">
+                <div>
+                    <div class="preset-icon">🌍</div>
+                    <div class="preset-name">Sustainability Focus</div>
+                    <div class="preset-category">Environmental</div>
+                </div>
+            </div>
+
+            <div class="preset-description">
+                Prioritize planetary boundaries and long-term habitability. May slow technological progress.
+            </div>
+
+            <div class="preset-preview">
+                <div class="preview-title">Key Changes</div>
+                <div class="preview-items">
+                    <div class="preview-item">
+                        <span class="preview-label">Climate Tech</span>
+                        <span class="preview-change">
+                            <span class="change-from">60%</span>
+                            <span class="change-arrow">→</span>
+                            <span class="change-to increase">95%</span>
+                        </span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">Carbon Tax</span>
+                        <span class="preview-change">
+                            <span class="change-from">$50</span>
+                            <span class="change-arrow">→</span>
+                            <span class="change-to increase">$200</span>
+                        </span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">Industrial Output</span>
+                        <span class="preview-change">
+                            <span class="change-from">100%</span>
+                            <span class="change-arrow">→</span>
+                            <span class="change-to decrease">70%</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="preset-actions">
+                <button class="preset-btn">Preview</button>
+                <button class="preset-btn primary">Apply</button>
+            </div>
+        </div>
+
+        <!-- Trust Rebuilding -->
+        <div class="preset-card">
+            <div class="preset-header">
+                <div>
+                    <div class="preset-icon">🤝</div>
+                    <div class="preset-name">Trust Rebuilding</div>
+                    <div class="preset-category">Social</div>
+                </div>
+                <div class="preset-badge recommended">Recommended</div>
+            </div>
+
+            <div class="preset-description">
+                Restore public confidence through transparency and democratic participation.
+            </div>
+
+            <div class="preset-preview">
+                <div class="preview-title">Key Changes</div>
+                <div class="preview-items">
+                    <div class="preview-item">
+                        <span class="preview-label">Transparency</span>
+                        <span class="preview-change">
+                            <span class="change-from">60%</span>
+                            <span class="change-arrow">→</span>
+                            <span class="change-to increase">90%</span>
+                        </span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">Public Participation</span>
+                        <span class="preview-change">
+                            <span class="change-from">Low</span>
+                            <span class="change-arrow">→</span>
+                            <span class="change-to increase">High</span>
+                        </span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">Civil Liberties</span>
+                        <span class="preview-change">
+                            <span class="change-from">70%</span>
+                            <span class="change-arrow">→</span>
+                            <span class="change-to increase">95%</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="preset-actions">
+                <button class="preset-btn">Preview</button>
+                <button class="preset-btn primary">Apply</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create/Import Section -->
+    <div class="create-section">
+        <div class="create-card">
+            <div class="create-icon">➕</div>
+            <div class="create-title">Create Custom Preset</div>
+            <div class="create-desc">Save your current configuration as a reusable preset</div>
+        </div>
+
+        <div class="create-card">
+            <div class="create-icon">📁</div>
+            <div class="create-title">Import/Export</div>
+            <div class="create-desc">Share presets with others or backup your configurations</div>
+        </div>
+    </div>
+
+    <!-- Conflict Warning Modal (hidden by default) -->
+    <div class="conflict-modal">
+        <div class="modal-title">
+            <span>⚠️</span>
+            <span>Preset Conflicts Detected</span>
+        </div>
+        <div class="modal-content">
+            This preset contains settings that conflict with your current configuration:
+            <div class="conflict-list">
+                <div class="conflict-item">• Safety measures will decrease by 50%</div>
+                <div class="conflict-item">• Risk tolerance conflicts with current policies</div>
+                <div class="conflict-item">• May trigger immediate crisis cascade</div>
+            </div>
+            Are you sure you want to apply this preset?
+        </div>
+        <div class="modal-actions">
+            <button class="modal-btn">Cancel</button>
+            <button class="modal-btn primary">Apply Anyway</button>
+        </div>
+    </div>
+</body>
+</html>
