@@ -596,7 +596,7 @@ interface CoordinatedDeployment {
 
 **Source:** International Affairs, Oxford Academic (July 2025)
 
-**Citation:** Coyle, D. & Westbrook, T. (2025). "Establishment of an international AI agency: an applied solution to global AI governance." *International Affairs*, 101(4), 1483-1501. DOI: 10.1093/ia/iiaf046
+**Citation:** Robinson, M. (2025). "Establishment of an international AI agency: an applied solution to global AI governance." *International Affairs*, 101(4), 1483-1497. DOI: 10.1093/ia/iiaf105
 URL: https://academic.oup.com/ia/article/101/4/1483/8141294
 
 **Key Proposal:**
@@ -620,13 +620,14 @@ URL: https://academic.oup.com/ia/article/101/4/1483/8141294
 
 **Source:** Frontiers in Artificial Intelligence (2025)
 
-**Citation:** Systemic Resilience Research Group (2025). "Artificial intelligence, complexity, and systemic resilience in global governance." *Frontiers in Artificial Intelligence*, 8:1562095.
+**Citation:** Ilcic, A., Fuentes, M., & Lawler, D. (2025). "Artificial intelligence, complexity, and systemic resilience in global governance." *Frontiers in Artificial Intelligence*, 8:1562095. DOI: 10.3389/frai.2025.1562095
 URL: https://www.frontiersin.org/journals/artificial-intelligence/articles/10.3389/frai.2025.1562095/full
 
-**Key Concepts:**
+**Key Concepts (VERIFIED):**
 - AI governance requires **systemic resilience** thinking, not just risk mitigation
-- Contemporary AI challenges require institutional reform: **New Weberian State** and **Whole-of-Government** approaches
 - Coordination during crises requires enhanced responsiveness mechanisms
+
+**⚠️ NOT IN PAPER:** The terms "New Weberian State" and "Whole-of-Government" do NOT appear in this source. Paper actually emphasizes "adaptive, inclusive governance models" and "equity, justice, and accountability."
 
 **Governance Recommendations:**
 1. **Anticipatory governance:** Proactive horizon scanning for AI risks
@@ -634,10 +635,12 @@ URL: https://www.frontiersin.org/journals/artificial-intelligence/articles/10.33
 3. **Cross-sectoral coordination:** Breaking silos between health, energy, security, economic agencies
 4. **Resilience metrics:** New KPIs beyond efficiency (robustness, adaptability, transformability)
 
-**Simulation Parameters:**
-- `systemicResilience`: 0.35 (current), target 0.70+ with reformed institutions
-- `institutionalAdaptationSpeed`: months between capability leap and regulatory response
-- `crisisResponsivenessScore`: ability to coordinate during acute disruptions
+**Simulation Parameters (SPECULATIVE - NOT SOURCED FROM THIS PAPER):**
+- `systemicResilience`: 0.35 (current), target 0.70+ with reformed institutions [NO SOURCE]
+- `institutionalAdaptationSpeed`: months between capability leap and regulatory response [NO SOURCE]
+- `crisisResponsivenessScore`: ability to coordinate during acute disruptions [NO SOURCE]
+
+**⚠️ VERIFICATION NOTE (Nov 26, 2025):** The Ilcic et al. (2025) paper is conceptual/theoretical and does NOT provide the quantitative parameters listed above. These parameters appear to be proposed by earlier simulation designers without proper research backing. The paper discusses "adaptive governance" and "systemic resilience" as concepts but provides NO numeric ranges or specific metrics. Parameters should either be removed or properly sourced from empirical studies before implementation.
 
 ---
 
@@ -645,7 +648,7 @@ URL: https://www.frontiersin.org/journals/artificial-intelligence/articles/10.33
 
 **Source:** Carnegie Endowment for International Peace (October 2024)
 
-**Citation:** Carnegie Europe (2024). "The AI Governance Arms Race: From Summit Pageantry to Progress?" Carnegie Endowment for International Peace.
+**Citation:** Wilkens, K. (2024). "The AI Governance Arms Race: From Summit Pageantry to Progress?" Carnegie Endowment for International Peace. Published October 11, 2024.
 URL: https://carnegieendowment.org/research/2024/10/the-ai-governance-arms-race-from-summit-pageantry-to-progress
 
 **Key Findings:**
@@ -751,9 +754,9 @@ URL: https://www.rand.org/pubs/external_publications/EP70620.html
 
 2. Maas, M. M. (2024). "International governance of advancing artificial intelligence." *AI & Society*, Published online September 2024. DOI: 10.1007/s00146-024-02050-7
 
-3. Coyle, D. & Westbrook, T. (2025). "Establishment of an international AI agency: an applied solution to global AI governance." *International Affairs*, 101(4), 1483-1501. DOI: 10.1093/ia/iiaf046 **(NEW - November 2025)**
+3. Robinson, M. (2025). "Establishment of an international AI agency: an applied solution to global AI governance." *International Affairs*, 101(4), 1483-1497. DOI: 10.1093/ia/iiaf105 **(NEW - November 2025)**
 
-4. Systemic Resilience Research Group (2025). "Artificial intelligence, complexity, and systemic resilience in global governance." *Frontiers in Artificial Intelligence*, 8:1562095. **(NEW - November 2025)**
+4. Ilcic, A., Fuentes, M., & Lawler, D. (2025). "Artificial intelligence, complexity, and systemic resilience in global governance." *Frontiers in Artificial Intelligence*, 8:1562095. DOI: 10.3389/frai.2025.1562095 **(NEW - November 2025)**
 
 ### Institutional Reports
 
