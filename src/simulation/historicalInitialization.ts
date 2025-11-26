@@ -160,9 +160,15 @@ export async function createHistoricalInitialState(
   // Without this, year calculation breaks after Month 12: uses 2025 default instead of historical year
   if (baseState.config) {
     baseState.config.startYear = year;
-    baseState.config.historicalEmissionsMode = true;  // Enable GCP emissions forcing for hindcast (Phase 5)
+    // Only enable historical emissions mode for hindcast period (1990-2010)
+    // For other years (2024+), use endogenous emissions model
+    baseState.config.historicalEmissionsMode = (year >= 1990 && year <= 2010);
     console.log(`  config.startYear set to ${year} for historical hindcast`);
-    console.log(`  config.historicalEmissionsMode enabled (Phase 5: GCP emissions forcing)`);
+    if (baseState.config.historicalEmissionsMode) {
+      console.log(`  config.historicalEmissionsMode enabled (Phase 5: GCP emissions forcing for ${year})`);
+    } else {
+      console.log(`  config.historicalEmissionsMode disabled (using endogenous emissions for ${year})`);
+    }
   }
 
   // Store simulation start year for reference (legacy - keeping for backwards compatibility)
@@ -579,9 +585,15 @@ export function initializeHistoricalSimulation(
   // CRITICAL FIX: Set config.startYear for TimeAdvancementPhase
   if (baseState.config) {
     baseState.config.startYear = year;
-    baseState.config.historicalEmissionsMode = true;  // Enable GCP emissions forcing for hindcast (Phase 5)
+    // Only enable historical emissions mode for hindcast period (1990-2010)
+    // For other years (2024+), use endogenous emissions model
+    baseState.config.historicalEmissionsMode = (year >= 1990 && year <= 2010);
     console.log(`  config.startYear set to ${year} for historical hindcast`);
-    console.log(`  config.historicalEmissionsMode enabled (Phase 5: GCP emissions forcing)`);
+    if (baseState.config.historicalEmissionsMode) {
+      console.log(`  config.historicalEmissionsMode enabled (Phase 5: GCP emissions forcing for ${year})`);
+    } else {
+      console.log(`  config.historicalEmissionsMode disabled (using endogenous emissions for ${year})`);
+    }
   }
 
   // Store simulation start year for reference (legacy - keeping for backwards compatibility)
