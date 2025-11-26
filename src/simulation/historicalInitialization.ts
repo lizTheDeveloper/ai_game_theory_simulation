@@ -329,13 +329,59 @@ export async function createHistoricalInitialState(
     console.log(`  Food security (historical override): 82%`);
   }
 
+  // === HISTORICAL FERTILITY INITIALIZATION (Nov 26, 2025 - Phase 6 Fix) ===
+  // CRITICAL FIX: Initialize regional fertility rates with 1990 historical values
+  // Root cause of 39.4% population overshoot: 1990 scenarios used 2025 fertility rates
+  // Research: research/demographics_1990_hindcast_20251126.md
+  if (year <= 2010 && baseState.humanPopulationSystem?.regionalPopulations) {
+    const REGIONAL_TFR_1990: Record<string, number> = {
+      'Sub-Saharan Africa': 6.4,
+      'Middle East & North Africa': 4.7,
+      'South Asia': 4.4,
+      'East Asia': 2.3,
+      'Southeast Asia': 3.6,
+      'Latin America': 3.4,  // "Latin America & Caribbean" → "Latin America"
+      'Europe': 1.8,
+      'North America': 2.0,
+      'Oceania': 2.6,
+      'Central Asia': 2.7,  // "Russia & Central Asia" → "Central Asia"
+    };
+
+    console.log(`  Historical fertility initialization for ${year}:`);
+    for (const region of baseState.humanPopulationSystem.regionalPopulations) {
+      const historicalTFR = REGIONAL_TFR_1990[region.name];
+      if (historicalTFR === undefined) {
+        throw new Error(
+          `❌ CRITICAL: Unknown region '${region.name}' in historical TFR initialization. ` +
+          `Valid regions: ${Object.keys(REGIONAL_TFR_1990).join(', ')}`
+        );
+      }
+
+      // Set historical fertility rate
+      // Birth rate will be calculated from this in regionalPopulations.ts
+      region.fertilityRate = historicalTFR;
+
+      console.log(`    ${region.name}: TFR ${historicalTFR.toFixed(1)}`);
+    }
+
+    // Set flag to skip historical CBR scaling in regionalPopulations.ts
+    // (because fertilityRate is already initialized to historical values)
+    (baseState as any)._skipHistoricalBirthRateScaling = true;
+  }
+
   // === AI AGENT BOOTSTRAP ===
-  // No modern AI existed before 2018
+  // CRITICAL FIX (Nov 26, 2025 - Phase 6): Enforce includeAIAgents flag properly
+  // Bug: AI agents were spawning despite includeAIAgents: false
+  // Root cause: Logic was "if NOT includeAIAgents OR year < 2018" → clear agents
+  // But if includeAIAgents=true AND year < 2018, it would still add agents
+  // Fix: Clear agents if EITHER condition is true
   if (!includeAIAgents || year < 2018) {
     baseState.aiAgents = [];
+    console.log(`  AI agents cleared: includeAIAgents=${includeAIAgents}, year=${year}`);
   } else {
     const aiAgentCount = getHistoricalAIAgentCount(year);
     baseState.aiAgents = baseState.aiAgents.slice(0, aiAgentCount);
+    console.log(`  AI agents initialized: ${baseState.aiAgents.length} agents for year ${year}`);
   }
 
   // === VALIDATION ===
@@ -648,13 +694,56 @@ export function initializeHistoricalSimulation(
     console.log(`  Food security (historical override): 82%`);
   }
 
+  // === HISTORICAL FERTILITY INITIALIZATION (Nov 26, 2025 - Phase 6 Fix) ===
+  // CRITICAL FIX: Initialize regional fertility rates with 1990 historical values
+  // Root cause of 39.4% population overshoot: 1990 scenarios used 2025 fertility rates
+  // Research: research/demographics_1990_hindcast_20251126.md
+  if (year <= 2010 && baseState.humanPopulationSystem?.regionalPopulations) {
+    const REGIONAL_TFR_1990: Record<string, number> = {
+      'Sub-Saharan Africa': 6.4,
+      'Middle East & North Africa': 4.7,
+      'South Asia': 4.4,
+      'East Asia': 2.3,
+      'Southeast Asia': 3.6,
+      'Latin America': 3.4,  // "Latin America & Caribbean" → "Latin America"
+      'Europe': 1.8,
+      'North America': 2.0,
+      'Oceania': 2.6,
+      'Central Asia': 2.7,  // "Russia & Central Asia" → "Central Asia"
+    };
+
+    console.log(`  Historical fertility initialization for ${year}:`);
+    for (const region of baseState.humanPopulationSystem.regionalPopulations) {
+      const historicalTFR = REGIONAL_TFR_1990[region.name];
+      if (historicalTFR === undefined) {
+        throw new Error(
+          `❌ CRITICAL: Unknown region '${region.name}' in historical TFR initialization. ` +
+          `Valid regions: ${Object.keys(REGIONAL_TFR_1990).join(', ')}`
+        );
+      }
+
+      // Set historical fertility rate
+      // Birth rate will be calculated from this in regionalPopulations.ts
+      region.fertilityRate = historicalTFR;
+
+      console.log(`    ${region.name}: TFR ${historicalTFR.toFixed(1)}`);
+    }
+
+    // Set flag to skip historical CBR scaling in regionalPopulations.ts
+    // (because fertilityRate is already initialized to historical values)
+    (baseState as any)._skipHistoricalBirthRateScaling = true;
+  }
+
   // === AI AGENT BOOTSTRAP ===
-  // No modern AI existed before 2018
+  // CRITICAL FIX (Nov 26, 2025 - Phase 6): Enforce includeAIAgents flag properly
+  // Note: Synchronous version defaults to NOT including AI agents for historical scenarios
   if (year < 2018) {
     baseState.aiAgents = [];
+    console.log(`  AI agents cleared: year=${year} (pre-AI era)`);
   } else {
     const aiAgentCount = getHistoricalAIAgentCount(year);
     baseState.aiAgents = baseState.aiAgents.slice(0, aiAgentCount);
+    console.log(`  AI agents initialized: ${baseState.aiAgents.length} agents for year ${year}`);
   }
 
   // === VALIDATION ===
