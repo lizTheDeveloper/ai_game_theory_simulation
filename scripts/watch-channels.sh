@@ -55,7 +55,7 @@ spawn_router() {
     echo "🎯 Spawning Haiku router to evaluate #$channel"
 
     # Use claude CLI to spawn Haiku with dangerously-skip-permissions
-    claude --dangerously-skip-permissions << EOF
+    claude --model sonnet --dangerously-skip-permissions << EOF
 You are a routing agent. Read the channel file and decide if the orchestrator should be spawned.
 
 Channel: $channel
@@ -117,7 +117,7 @@ while true; do
             echo "  ✅ research: Spawning orchestrator..."
 
             # Spawn orchestrator with claude CLI
-            claude --dangerously-skip-permissions << EOF
+            claude --model sonnet --dangerously-skip-permissions << EOF
 You are the orchestrator. Agent ID: operator
 
 New work detected in #research channel.
@@ -166,7 +166,7 @@ EOF
             echo "  ✅ implementation: Spawning orchestrator..."
 
             # Spawn orchestrator
-            claude --dangerously-skip-permissions << EOF
+            claude --model sonnet --dangerously-skip-permissions << EOF
 You are the orchestrator. Agent ID: operator
 
 New work detected in #implementation channel.

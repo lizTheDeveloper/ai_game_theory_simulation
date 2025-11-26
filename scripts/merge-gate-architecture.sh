@@ -75,7 +75,7 @@ LOW_ISSUES: [count]
 
 # Spawn architecture-skeptic agent (uses Opus per agent config)
 claude --dangerously-skip-permissions \
-  --model opus \
+  --model sonnet \
   --print "$PROMPT" > "$REVIEW_OUTPUT" 2>&1
 
 # Parse verdict from output
