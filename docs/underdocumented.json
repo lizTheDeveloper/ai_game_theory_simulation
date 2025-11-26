@@ -111169,7 +111169,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 239,
+    "line": 275,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -111177,7 +111177,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 240,
+    "line": 276,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -111185,7 +111185,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 241,
+    "line": 277,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -111193,7 +111193,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 242,
+    "line": 278,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -111201,7 +111201,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 246,
+    "line": 282,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -111209,7 +111209,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 247,
+    "line": 283,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -111217,7 +111217,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 248,
+    "line": 284,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -111225,7 +111225,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 249,
+    "line": 285,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -111233,7 +111233,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 397,
+    "line": 433,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -111241,7 +111241,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 398,
+    "line": 434,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -111249,7 +111249,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 399,
+    "line": 435,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -111257,7 +111257,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 400,
+    "line": 436,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -111265,7 +111265,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 433,
+    "line": 469,
     "type": "property",
     "name": "simulated",
     "currentDoc": "(none)",
@@ -111273,7 +111273,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 434,
+    "line": 470,
     "type": "property",
     "name": "observedYear",
     "currentDoc": "(none)",
@@ -111281,7 +111281,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 472,
+    "line": 508,
     "type": "property",
     "name": "metrics",
     "currentDoc": "(none)",
@@ -111289,7 +111289,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 473,
+    "line": 509,
     "type": "property",
     "name": "co2",
     "currentDoc": "(none)",
@@ -111297,7 +111297,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 474,
+    "line": 510,
     "type": "property",
     "name": "temperature",
     "currentDoc": "(none)",
@@ -111305,7 +111305,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 475,
+    "line": 511,
     "type": "property",
     "name": "population",
     "currentDoc": "(none)",
@@ -111313,7 +111313,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 476,
+    "line": 512,
     "type": "property",
     "name": "gini",
     "currentDoc": "(none)",
@@ -111321,7 +111321,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 477,
+    "line": 513,
     "type": "property",
     "name": "hdi",
     "currentDoc": "(none)",
@@ -111329,7 +111329,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 487,
+    "line": 523,
     "type": "interface",
     "name": "HindcastValidationMetrics",
     "currentDoc": "/ Hindcast validation metrics",
@@ -111337,7 +111337,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 488,
+    "line": 524,
     "type": "property",
     "name": "observedYear",
     "currentDoc": "(none)",
@@ -111345,7 +111345,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 489,
+    "line": 525,
     "type": "property",
     "name": "metrics",
     "currentDoc": "(none)",
@@ -111353,7 +111353,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 490,
+    "line": 526,
     "type": "property",
     "name": "co2",
     "currentDoc": "(none)",
@@ -111361,7 +111361,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 491,
+    "line": 527,
     "type": "property",
     "name": "temperature",
     "currentDoc": "(none)",
@@ -111369,7 +111369,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 492,
+    "line": 528,
     "type": "property",
     "name": "population",
     "currentDoc": "(none)",
@@ -111377,7 +111377,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 493,
+    "line": 529,
     "type": "property",
     "name": "gini",
     "currentDoc": "(none)",
@@ -111385,7 +111385,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 494,
+    "line": 530,
     "type": "property",
     "name": "hdi",
     "currentDoc": "(none)",
@@ -111393,7 +111393,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 496,
+    "line": 532,
     "type": "property",
     "name": "nrmse",
     "currentDoc": "(none)",
@@ -111401,7 +111401,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 497,
+    "line": 533,
     "type": "property",
     "name": "pass",
     "currentDoc": "(none)",
@@ -111409,7 +111409,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 503,
+    "line": 539,
     "type": "interface",
     "name": "MetricComparison",
     "currentDoc": "/ Single metric comparison",
@@ -111417,7 +111417,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 504,
+    "line": 540,
     "type": "property",
     "name": "simulated",
     "currentDoc": "(none)",
@@ -111425,7 +111425,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 505,
+    "line": 541,
     "type": "property",
     "name": "observed",
     "currentDoc": "(none)",
@@ -111433,7 +111433,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 506,
+    "line": 542,
     "type": "property",
     "name": "error",
     "currentDoc": "(none)",
@@ -111441,7 +111441,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 507,
+    "line": 543,
     "type": "property",
     "name": "relativeError",
     "currentDoc": "(none)",
@@ -111449,7 +111449,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 513,
+    "line": 549,
     "type": "function",
     "name": "createParameterLockdown",
     "currentDoc": "/ Parameter lockdown snapshot",
@@ -111457,7 +111457,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 537,
+    "line": 573,
     "type": "property",
     "name": "year",
     "currentDoc": "(none)",
@@ -111465,7 +111465,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 538,
+    "line": 574,
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -111473,7 +111473,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 539,
+    "line": 575,
     "type": "property",
     "name": "scenarioMode",
     "currentDoc": "(none)",
@@ -111481,7 +111481,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 556,
+    "line": 592,
     "type": "property",
     "name": "climate",
     "currentDoc": "(none)",
@@ -111489,7 +111489,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 557,
+    "line": 593,
     "type": "property",
     "name": "co2Ppm",
     "currentDoc": "(none)",
@@ -111497,7 +111497,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 558,
+    "line": 594,
     "type": "property",
     "name": "tempAnomaly",
     "currentDoc": "(none)",
@@ -111505,7 +111505,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 559,
+    "line": 595,
     "type": "property",
     "name": "tempVsPreindustrial",
     "currentDoc": "(none)",
@@ -111513,7 +111513,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 561,
+    "line": 597,
     "type": "property",
     "name": "economic",
     "currentDoc": "(none)",
@@ -111521,7 +111521,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 562,
+    "line": 598,
     "type": "property",
     "name": "populationBillions",
     "currentDoc": "(none)",
@@ -111529,7 +111529,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 563,
+    "line": 599,
     "type": "property",
     "name": "globalGini",
     "currentDoc": "(none)",
@@ -111537,7 +111537,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 564,
+    "line": 600,
     "type": "property",
     "name": "globalHDI",
     "currentDoc": "(none)",
@@ -111545,7 +111545,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 627,
+    "line": 699,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -111553,7 +111553,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 628,
+    "line": 700,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -111561,7 +111561,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 629,
+    "line": 701,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -111569,7 +111569,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 630,
+    "line": 702,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -111577,7 +111577,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 634,
+    "line": 706,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -111585,7 +111585,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 635,
+    "line": 707,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -111593,7 +111593,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 636,
+    "line": 708,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -111601,7 +111601,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 637,
+    "line": 709,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -111609,7 +111609,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 767,
+    "line": 839,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -111617,7 +111617,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 768,
+    "line": 840,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -111625,7 +111625,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 769,
+    "line": 841,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -111633,7 +111633,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
-    "line": 770,
+    "line": 842,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
