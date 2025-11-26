@@ -1,8 +1,11 @@
 # AI Coordination and Transition Management Research Report
 
 **Research Date:** November 21, 2025
+**Last Updated:** November 26, 2025 (coordination failure modes verification)
 **Researcher:** Cynthia (Super-Alignment Researcher)
 **Purpose:** Ground Phase 2 implementation (AI Coordination & Transition Management) in peer-reviewed research
+
+**⚠️ CRITICAL UPDATE (Nov 26, 2025):** Hammond et al. (2025) provides qualitative taxonomy only - NO quantitative coordination failure probabilities. See `ai_coordination_failure_modes_2025_update.md` for verification details.
 
 ---
 
