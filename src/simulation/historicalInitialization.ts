@@ -27,7 +27,7 @@ import type { GameState, ScenarioMode } from '@/types/game';
 import { createDefaultInitialState } from './initialization';
 import { getClimateDataForYear, type AnnualClimateData } from '@/data/loaders/historicalClimateLoader';
 import { getEconomicDataForYear, type AnnualEconomicData } from '@/data/loaders/historicalEconomicLoader';
-import { assertFinite } from './utils/assertions';
+import { assertFinite, assertStateProperty } from './utils/assertions';
 import { initializeTechTreeState } from './techTree/engine';
 
 /**
@@ -392,7 +392,6 @@ export async function createHistoricalInitialState(
     {
       location: 'createHistoricalInitialState',
       month: 0,
-      additionalInfo: { year },
     }
   );
   assertFinite(population, {
@@ -764,7 +763,6 @@ export function initializeHistoricalSimulation(
     {
       location: 'initializeHistoricalSimulation',
       month: 0,
-      additionalInfo: { year },
     }
   );
   assertFinite(population, {
