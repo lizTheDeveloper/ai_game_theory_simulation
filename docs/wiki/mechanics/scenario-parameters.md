@@ -259,9 +259,14 @@ const state = await createHistoricalInitialState({
 **Key insight:** Temperature matches despite CO2 overshoot = climate mechanics CORRECT, calibration inputs WRONG (emissions + demographics)
 
 **Follow-up phases (HIGH priority):**
-- Phase 5: Historical Emissions Forcing Mode (GCP lookup table)
-- Phase 6: Demographics Calibration (1990 fertility rates)
-- Phase 7: Re-run Validation with fixes
+- Phase 5: Historical Emissions Forcing Mode (GCP lookup table) ✅ COMPLETE
+- Phase 6: Demographics Calibration (1990 fertility rates) ✅ COMPLETE
+- Phase 7: Re-run Validation with fixes (script ready)
+- Phase 9: Temporal evolution of carbon sinks (1990-2010) ✅ COMPLETE
+  - Ocean: 8.1 → 10.6 GtCO2/yr (+32%)
+  - Land: 5.1 → 11.4 GtCO2/yr (+121%)
+  - Disables mechanistic saturation during hindcast (uses empirical values)
+  - Source: `research/carbon_sinks_1990_2025_20251126.md`
 
 📄 **Full report:** `reviews/climate_hindcast_validation_20251126.md`
 
