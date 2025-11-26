@@ -42,6 +42,15 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📄 **Files:** `tests/integration/game-layer/critical-juncture-detection.test.ts`, `tests/integration/game-layer/scenario-definitions.test.ts`
 - **Status:** IN PROGRESS - state creation and scenario application need debugging
 
+**Nov 26: Historical Baseline Precision Update** (commit b493ee3)
+- 📊 **Exact research values** for 1990/2010 climate baselines (was rounded estimates)
+  - CO2: 354.19 ppm (was 354), 390.22 ppm (was 390) - Keeling Curve/NOAA
+  - Temp: 0.355°C (was 0.45), 0.674°C (was 0.85) - HadCRUT5 (rel. 1961-1990)
+  - Emissions: 22.7 GtCO2/yr (was 22), 33.5 GtCO2/yr (was 32) - Global Carbon Project
+- 📄 **Research:** `research/climate_hindcast_data_20251126.md` (Cynthia)
+- 📄 **Review:** `reviews/climate_hindcast_data_critique_20251126.md` (Sylvia)
+- **Validation target:** CO2 within 5% of 390.22 ppm after 240-month hindcast
+
 **Nov 26: Hindcast Validation Blockers Resolved (H-1 + CRIT-1)** (commit 2e588ef)
 - 🔧 **H-1 FIX:** coordinationCapacity normalization bug in BifurcationLogicPhase
   - BifurcationLogicPhase was dividing coordinationCapacity by 100
