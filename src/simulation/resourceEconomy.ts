@@ -531,7 +531,12 @@ export function calculateResourceSecurity(resources: ResourceEconomy): number {
     weights.timber * resources.timber.reserves +
     weights.energy * energySecurity;
 
-  return assertFinite(weighted, {
+  // CRITICAL-1 FIX (Nov 26, 2025): Floor at 0 to prevent tiny negative values from floating-point errors
+  // Individual reserves use Math.max(0, ...) but accumulation can still produce -1e-7 due to FP precision
+  // This propagates to resourceReserves and crashes BifurcationLogicPhase geometric mean
+  const weightedFloored = Math.max(0, weighted);
+
+  return assertFinite(weightedFloored, {
     location: 'calculateResourceSecurity',
     valueName: 'weightedResourceSecurity',
     additionalInfo: { energySecurity }
