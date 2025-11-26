@@ -4,16 +4,16 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
-## 📋 Research: AI Coordination Citation Verification Progress (November 26, 2025 - commit 51b4ef6)
+## 📋 Research: AI Coordination Citation Verification Progress (November 26, 2025 - commit c86cb0d)
 
-**Status:** 🔄 IN PROGRESS (2/12)
+**Status:** 🔄 IN PROGRESS (5/12)
 **Priority:** HIGH
 **Type:** Research Verification
 
 **Summary:** Layer 1+2 verification progress for AI Coordination & Transition Management parameters.
 
-**Verified Citations:**
-- ✅ **Sullivan & von Wachter 2009 (QJE):** Job loss mortality - ALL CLAIMS CONFIRMED
+**Verified Citations (5/12):**
+- ✅ **Sullivan & von Wachter 2009 (QJE):** Job loss mortality - FULLY VERIFIED
   - Year 1: +50-100% mortality (confirmed from abstract)
   - Year 20: +10-15% persistent increase (confirmed)
   - Life expectancy: 1.0-1.5 year loss at age 40 (confirmed)
@@ -22,10 +22,26 @@ This file contains the complete history of recent changes to the AI Game Theory 
   - Actual: 12.8% (95% CI 7.9-17.7%)
   - Issue: Conflated multiple statistics from different sources
   - Severity: MODERATE (actual 12.8% close to lower bound 13%)
+- ⚠️ **Great Leap Forward mortality:** SOURCE ATTRIBUTION NEEDS UPDATE
+  - Range confirmed (16.5-55M) but UCLA CCPR 2024 citation doesn't support total mortality
+- ⚠️ **AI coordination efficiency "80%+":** PARTIALLY VERIFIED
+  - 70-90% goal success rates found (not "coordination efficiency")
+  - Conflates disparate metrics from multiple sources
+- ❌ **Coordination failure "10%" probability:** **FABRICATED**
+  - Hammond et al. 2025 (arXiv:2502.14143) provides ZERO quantitative estimates
+  - Source contains qualitative taxonomy only (3 failure modes, 7 risk factors)
+  - Sylvia's critique VALIDATED: "Failure modes identified but not quantified"
 
-**Remaining:** 10 citations including Great Leap Forward and HIGH UNCERTAINTY items (AI coordination efficiency, coordination failure probability, rebound effects)
+**CRITICAL FINDING:** The 5-20% (central: 10%) coordination failure probability is fabricated with no empirical basis.
 
-**File:** `research/ai_coordination_verification_layer1_20251126.md`
+**Remaining:** 7 citations (Finkelstein rebound effects, BMC support systems, IEA grid deployment, etc.)
+
+**Recommendations:**
+- Remove coordination failure discrete events OR use wide uncertainty (1-50%)
+- Flag speculative parameters as "PURE SPECULATION" in code
+- Model coordination quality as continuous (0.0-1.0) not binary success/failure
+
+**Session File:** `research/AUTONOMOUS_RESEARCHER_SESSION_20251126.md`
 
 ---
 
