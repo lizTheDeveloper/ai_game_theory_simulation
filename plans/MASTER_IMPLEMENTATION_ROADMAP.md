@@ -197,6 +197,23 @@
 - **Impact:** Restores research integrity, maintains continuous coordination model
 - **Related:** 2nd fabricated probability discovered in Nov 2025 research (pattern emerging - requires vigilance)
 
+**C-2: Resource Reserves Negative Value Crash** 🔍 ANALYSIS COMPLETE (Nov 26, 2025)
+- **Status:** 🔍 ANALYSIS COMPLETE - Fix pending
+- **Discovery:** Nov 26, 2025 - Autonomous researcher identified root cause during hindcast validation
+- **Impact:** 40% of hindcast validation runs crash with `resourceReserves < 0` at months 142-146 (~12 years)
+- **Root Cause:** Line 612 in `resourceDepletion.ts` uses `Math.min()` without `Math.max(0, ...)` floor
+  - Conservation law violation: reserves cannot be negative (you can't harvest what doesn't exist)
+  - Phase 9 carbon sink changes TRIGGERED existing bug (didn't cause it)
+- **Fix Strategy:**
+  1. Add `Math.max(0, ...)` floor to line 612 (defensive)
+  2. Add assertions to `calculateResourceSecurity()` for all inputs [0,1]
+  3. Add early warning logging for low reserves (<10%)
+  4. Investigate temperature anticorrelation (separate bug)
+- **Secondary Finding:** Temperature anticorrelation mystery - CO2 overshoots 19% but temperature undershoots 26.5% (wrong sign)
+- **Files Affected:** `src/simulation/systems/resourceDepletion.ts` (line 612), `src/simulation/systems/resourceEconomy.ts`
+- **Analysis:** `reviews/resource_reserves_crash_root_cause_20251126.md` (314 lines)
+- **Assignee:** simulation-maintainer (Roy)
+
 ### 🟡 MEDIUM Priority Items
 
 **M-1: Dead Code Cleanup** ✅ RESOLVED (Nov 26, 2025)
