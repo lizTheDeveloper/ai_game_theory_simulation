@@ -10456,6 +10456,38 @@ npx tsx scripts/deploymentRateSweep.ts > logs/experiment1/full_run_$(date +%Y%m%
 
 **Status:** ✅ CRITICAL-2 mitigation complete - integration risk addressed via comprehensive test coverage
 
+#### State Mapper Integration Tests (November 2025)
+
+**Purpose:** Verify game layer correctly reads and displays simulation state (Roadmap 5.4).
+
+**Background:** State mappers transform `GameState` → UI display props. Tests ensure:
+- All mappers produce valid data shapes
+- No silent fallbacks hiding missing state fields
+- API alignment matches actual implementation behavior
+
+**Test Coverage:** 30 tests, 605 lines (`tests/integration/game-layer/state-mappers.test.ts`)
+
+**Functions Tested:**
+
+1. **mapCurrencies:** Currency display format, tech tree integration
+2. **mapOutcomes:** Probability distributions, outcomeMetrics mapping
+3. **mapEvents:** eventLog mapping, severity classification
+4. **mapNextMonthPreview:** Condition-based previews
+5. **mapPendingDecisions:** Crisis, boundary, and alignment decision generation
+6. **formatCurrentMonth:** Date formatting, year calculation
+7. **getElapsedMonths:** Month tracking
+
+**Key Findings:**
+- API alignment verified (DecisionDisplay.name vs title, eventLog vs events)
+- All 30 tests passing as of Nov 26
+- No silent fallbacks detected
+
+**Related Files:**
+- Implementation: `src/components/dashboards/game/stateMappers.ts`
+- Tests: `tests/integration/game-layer/state-mappers.test.ts` (605 lines)
+
+**Status:** ✅ Complete - Roadmap 5.4 State Mapper Tests item
+
 ### Devlogs (Recent Key Findings)
 - `devlogs/monte-carlo-analysis-oct-9-action-fix.md` - Comprehensive blocker analysis
 - `devlogs/spiral-diagnostic-findings-oct-9-2025.md` - Spiral activation rates

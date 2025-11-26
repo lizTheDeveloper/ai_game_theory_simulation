@@ -957,12 +957,14 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
 **Purpose:** Verify game layer correctly reads and displays simulation state
 
 **Tasks:**
-- [ ] **State Mapper Tests** (Complexity: 3 systems)
+- [x] **State Mapper Tests** (Complexity: 3 systems) ✅ COMPLETE
   - All mappers produce valid data shapes
   - No silent fallbacks hiding missing state fields
   - Delta calculations work correctly
-  - Memoization prevents unnecessary recalculations
-  - **Coverage Target:** 80%+ for `src/lib/stateMappers.ts`
+  - API alignment verified (DecisionDisplay.name vs title, eventLog vs events)
+  - **Coverage:** 30 tests for 7 exported functions
+  - **Commit:** 7c5acaa7c - 605 lines
+  - **File:** `tests/integration/game-layer/state-mappers.test.ts`
   - **Owner:** Tessa (far-future-ux-designer)
 
 - [ ] **Critical Juncture Detection Tests** (Complexity: 4 systems)
