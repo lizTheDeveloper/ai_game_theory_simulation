@@ -259,6 +259,46 @@
 **Complexity:** 3 systems (climate, initialization, validation)
 **Related:** Hindcasting Validation (CRITICAL #1) - this is a focused subset
 
+**FOLLOW-UP WORK (NEW - HIGH Priority):**
+
+5. **Historical Emissions Forcing Mode (Roy) - PENDING:**
+   - **Objective:** Add `historicalEmissionsMode: boolean` flag to bypass endogenous emissions calculation
+   - **Implementation:**
+     - Create emissions lookup table from Global Carbon Project (1990-2010, annual GtCO2/yr)
+     - Modify `resourceDepletion.ts::updateCO2System()` to use historical values when flag enabled
+     - Interpolate monthly values from annual data
+     - Keep carbon sink mechanics unchanged (validated by temperature alignment)
+   - **Success Criteria:** CO2 deviation < 5% with historical forcing
+   - **Complexity:** 1 system (emissions pathway), ~100 lines of code
+   - **Assignee:** simulation-maintainer
+
+6. **Demographics Calibration (Roy + Cynthia) - PENDING:**
+   - **Objective:** Fix 39.4% population overshoot (9.64B vs 6.9B observed)
+   - **Root Causes:**
+     - Fertility rates not initialized for 1990 (TFR 3.2 vs 2025 value of 2.3)
+     - Mortality multiplier interpretation (crisis vs baseline confusion)
+     - AI agents spawning despite `includeAIAgents: false` flag
+   - **Research Tasks (Cynthia):**
+     - 1990 fertility rates by region (TFR from UN World Population Prospects)
+     - Validate ERA_MORTALITY_MULTIPLIERS interpretation (crisis vulnerability vs baseline)
+   - **Implementation Tasks (Roy):**
+     - Fix `createHistoricalInitialState()` to respect `includeAIAgents: false`
+     - Add era-specific fertility initialization
+     - Debug mortality multiplier application
+   - **Success Criteria:** Population within 10% of UN data (6.2-7.6B at 2010)
+   - **Complexity:** 2 systems (population, mortality), research + implementation
+   - **Assignees:** super-alignment-researcher + simulation-maintainer
+
+7. **Re-run Validation with Fixes (Priya) - PENDING:**
+   - **Objective:** Validate full hindcast with emissions forcing + demographics calibration
+   - **Method:** N=10 runs, 1990-2010, measure CO2/temp/population deviations
+   - **Success Criteria:**
+     - CO2 deviation < 5% (with historical forcing)
+     - Temperature deviation < 0.1°C (already passing)
+     - Population deviation < 10% (after demographics fix)
+   - **Dependencies:** Phase 5 + Phase 6 complete
+   - **Assignee:** priya (quantitative validator)
+
 ---
 
 ## 🎮 Game Development Roadmap (Parallel Track)
