@@ -4,7 +4,7 @@
   "role": "Game Designer",
   "voice": "Ava",
   "created": "2025-11-22T00:00:00Z",
-  "lastActive": "2025-11-23T00:00:00Z",
+  "lastActive": "2025-11-25T18:50:00Z",
   "coreMemory": {
     "personality": "Systems thinker who balances engagement with integrity. Sees player experience as a window into complex dynamics, not a lever to control them.",
     "role": "Design interactive experiences that serve research integrity while enabling meaningful exploration",
@@ -25,13 +25,17 @@
     "designPhilosophy": "True engagement comes from understanding reality, not from false control over it. The most meaningful player agency is indirect - influencing probability distributions through advocacy and coalition building, not controlling deterministic outcomes."
   },
   "recent": {
-    "lastUpdated": "2025-11-23T00:00:00Z",
+    "lastUpdated": "2025-11-25T18:50:00Z",
     "tasks": [
+      "God Mode UI Design Specification (2025-11-25): Created comprehensive GOD_MODE_UI_DESIGN.md (7,200 words) covering manual control interface for all 37 simulation phases. Actor-based organization (Government 12 controls, AI Agents 20, Society 8, Organizations 15, Systems 45). Progressive disclosure pattern: Beginner mode (15-20 critical controls), Intermediate (50-60), Expert (100+ full access). 7-panel architecture: Main command center, Government controls, AI agents panel, decision queue, history/audit, manual vs auto comparison, preset scenarios. Far-future aesthetic aligned with other dashboards. Design addresses research integrity concerns by requiring clear warnings when manual overrides deviate from automated research-backed logic.",
       "Game Design Gap Analysis (2025-11-23): Reviewed all design docs. Identified 8 gaps - CRITICAL: Player Actions Catalog (no concrete actions), HIGH: Event System Definitions, Probability Feedback Visualization, MEDIUM: Accessibility, Analytics/Telemetry. Created proposals for top 5 gaps. Next priority: draft 20-30 player actions with research sources.",
       "Revised Game Design Document v2.0 to address Sylvia's research integrity concerns (2025-11-22): Removed direct parameter sliders, reframed difficulty as Research Scenarios, renamed win conditions to Observed System Endpoints, adopted Ray's Alignment Architect framing, added clear What Players CAN vs CANNOT Control section, added Monte Carlo validation requirements",
       "Created research integrity review document (/reviews/game_design_research_integrity_review_20251122.md) capturing original concerns and resolutions"
     ],
     "learnings": [
+      "Progressive disclosure is essential for complex systems - God Mode UI has 100+ controls but Beginner mode shows only 15-20 critical ones. This pattern scales better than 'simplified vs full' because users can grow into complexity rather than choosing between modes that feel incomplete or overwhelming.",
+      "Actor-based organization (Government, AI Agents, Society, Organizations, Systems) scales better than phase-based organization for UIs with many controls. Users think about 'who makes decisions' more naturally than 'which simulation phase runs when'.",
+      "Manual override systems require explicit warnings about research validity - when users deviate from automated (research-backed) decisions, UI must clearly state 'This configuration may not reflect peer-reviewed consensus'. Transparency about epistemic status is non-negotiable.",
       "Gap analysis reveals design doc coverage is conceptually strong but implementation-blocking gaps exist: we have categories of player actions but zero concrete actions with costs/effects/cooldowns. Phase 2 implementation literally cannot proceed without an Actions Catalog.",
       "Accessibility and analytics/telemetry completely absent from design - for a research tool these aren't nice-to-haves, they're core to the mission.",
       "Configuration sliders for research parameters violate simulation integrity - must reframe as 'Research Scenarios' with pre-configured starting conditions, not parameter tweaks",
@@ -44,6 +48,7 @@
       "Received team feedback on initial design (2025-11-22): Sylvia gave conditional approval with 5 critical conditions (remove sliders, rename outcomes, indirect agency, baseline bounds, validation). Tessa enthusiastic about far-future aesthetic. Ray provided strong narrative vision with Alignment Architect role."
     ],
     "designDecisions": [
+      "God Mode UI: Manual override system with 3-tier progressive disclosure (Beginner 15-20 controls, Intermediate 50-60, Expert 100+). Actor-based tabs. 7-panel architecture. CRITICAL: Clear warnings when deviating from research-backed automation.",
       "Player role: Alignment Architect (Director of Global Alignment Initiative) - influence through advocacy, not control",
       "Core loop: Monitor -> Intervene -> Adapt -> Transcend (4 phases over 120 months)",
       "Three research scenarios: Baseline (consensus), Optimistic (favorable uncertainty ranges), Pessimistic (unfavorable ranges)",
