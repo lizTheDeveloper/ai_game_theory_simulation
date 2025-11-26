@@ -6,7 +6,7 @@ set -e
 SESSION_NAME="claude_usage_$$"
 
 # Start tmux session
-tmux new-session -d -s "$SESSION_NAME" "claude --dangerously-skip-permissions" 2>/dev/null || true
+tmux new-session -d -s "$SESSION_NAME" "claude --model sonnet --dangerously-skip-permissions" 2>/dev/null || true
 sleep 3
 
 # Send /usage command - with delay before Enter

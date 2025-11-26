@@ -3713,6 +3713,12 @@ Systematic research agent that works through research/RESEARCH_ROADMAP.md in par
 :45 - Merge orchestrator (processes branches)
 ```
 
+**Model Configuration (Updated Nov 26, 2025):**
+- All VM automation scripts now use Sonnet (`--model sonnet`) for cost/performance optimization
+- Exception: `daily-codebase-review.sh` remains on Opus for quality
+- Changed scripts: autonomous-worker.sh, researcher-worker.sh, merge-orchestrator-claude.sh, merge-auto-remediate.sh, merge-gate-sylvia.sh, merge-gate-architecture.sh, watch-channels.sh, get-claude-usage.sh, autonomous-worker-watcher.sh, watch-research.sh, research-agent.sh, watcher-claude.sh
+- Commit: aae08a4d
+
 **Benefits:**
 - Research runs in parallel with implementation (no blocking)
 - Systematic progress through research backlog

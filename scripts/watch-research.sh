@@ -100,7 +100,7 @@ Summary: [One paragraph synthesis]" > .claude/chatroom/research-consensus.txt
 Remember: You work WITH Sylvia to find truth. She keeps you honest. When she's right, admit it!
 PROMPT
 
-    claude --dangerously-skip-permissions "$(cat "$prompt_file")" > /dev/null 2>&1 &
+    claude --model sonnet --dangerously-skip-permissions "$(cat "$prompt_file")" > /dev/null 2>&1 &
     rm -f "$prompt_file"
 }
 
@@ -169,7 +169,7 @@ Summary: [One paragraph synthesis]" > .claude/chatroom/research-consensus.txt
 Remember: You keep Cynthia honest, but when she's right, admit it. You work TOGETHER to find truth.
 PROMPT
 
-    claude --dangerously-skip-permissions "$(cat "$prompt_file")" > /dev/null 2>&1 &
+    claude --model sonnet --dangerously-skip-permissions "$(cat "$prompt_file")" > /dev/null 2>&1 &
     rm -f "$prompt_file"
 }
 

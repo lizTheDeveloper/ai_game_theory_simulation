@@ -427,7 +427,7 @@ REMEDIATION_EOF
   if command -v claude >/dev/null 2>&1; then
     # Run Claude Code with timeout (10 minutes for diagnosis/fix)
     set +e
-    timeout 600 claude --dangerously-skip-permissions < "$REMEDIATION_TASK" >> "$LOG_FILE" 2>&1
+    timeout 600 claude --model sonnet --dangerously-skip-permissions < "$REMEDIATION_TASK" >> "$LOG_FILE" 2>&1
     CLAUDE_EXIT=$?
     set -e
 
