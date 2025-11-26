@@ -171,28 +171,32 @@
      - **Handoff File:** .claude/agents/HANDOFF_ai_coordination_conservative_params.md (26KB spec)
      - **Verification File:** research/verification_96e2489_20251121.md
      - **Layer 1+2 Verification Report:** research/ai_coordination_verification_layer1_20251126.md
-     - **Verification Progress (Nov 26, 2025):** 2 of 12 citations verified
+     - **Verification Progress (Nov 26, 2025):** 5 of 12 citations verified
        - ✅ **Sullivan & von Wachter 2009 QJE:** ALL CLAIMS CONFIRMED (job loss +50-100% yr1, +10-15% yr20, 1.0-1.5yr life expectancy loss)
+       - ✅ **Great Leap Forward mortality:** VERIFIED (30-45M deaths, 1959-1961)
        - ⚠️ **Stuckler et al. 2009 Lancet:** MISATTRIBUTION - Actual: 12.8% (CI 7.9-17.7%), NOT "13-42%" range
-       - **Remaining:** 10 citations (Great Leap Forward next, then HIGH UNCERTAINTY items)
+       - ⚠️ **AI coordination 80%:** PARTIALLY VERIFIED - 70-90% goal success rates, NOT "coordination efficiency"
+       - ❌ **Coordination failure 10%:** FABRICATED - Hammond et al. 2025 provides qualitative taxonomy ONLY, NO quantitative estimates
+       - **Remaining:** 7 citations (Rebound effects, support systems, grid deployment, etc.)
      - **Key Claims Requiring Two-Layer Verification:**
        - ⚠️ **CRITICAL:** USSR shock therapy ~~13-42%~~ → 12.8% (Stuckler 2009 - MISATTRIBUTION DETECTED)
        - ✅ **CRITICAL:** Job loss mortality 1.0-1.5yr (Sullivan 2009 QJE - VERIFIED)
-       - **HIGH UNCERTAINTY:** AI coordination 80%+ efficiency (arXiv 2025 - critique flags as lab benchmark, not peer-reviewed)
-       - **HIGH UNCERTAINTY:** Coordination failure 10% probability, 2-5× spike (Cooperative AI 2025 - "no historical precedent")
+       - ⚠️ **HIGH UNCERTAINTY:** AI coordination ~~80%+ efficiency~~ → 70-90% goal success rates (arXiv 2025 - PARTIALLY VERIFIED)
+       - ❌ **HIGH UNCERTAINTY:** Coordination failure ~~10% probability~~ → FABRICATED (Hammond et al. 2025 - qualitative only, NO probability estimates)
        - **HIGH UNCERTAINTY:** Rebound effects 5-10% decay (Finkelstein 2025 - "not integrated into mortality model")
        - **MODERATE:** Support systems 32-37% reduction (BMC Public Health 2020)
        - **MODERATE:** Grid deployment 5-15%/yr (IEA 2024)
-     - **Total:** 12 citations (2 verified, 10 remaining)
+     - **Total:** 12 citations (5 verified: 2 full, 2 partial, 1 fabricated)
+     - **CRITICAL FINDING (Nov 26, 2025):** The "5-20% (central: 10%)" coordination failure probability is FABRICATED. Hammond et al. 2025 identifies failure modes qualitatively but provides ZERO numerical estimates. **Recommend:** Model coordination quality as continuous variable (0.0-1.0), NOT binary failure events with fabricated probabilities.
      - **Implementation Impact:**
        - GameState.transitionManagement interface
        - CoordinatedDeploymentPhase (NEW)
-       - Conservative parameters: 9-12% mortality (coordinated) vs 30% (uncoordinated)
+       - ⚠️ Conservative parameters: MUST REVISE - Remove fabricated 10% coordination failure, use continuous quality variable instead
        - Monte Carlo: N≥50 (sensitivity analysis required)
-     - **Priority:** HIGH - Phase 2 critical path, HIGH UNCERTAINTY parameters need validation before implementation
-     - **Status:** 🔄 VERIFICATION IN PROGRESS (2/12) - Misattribution found for Stuckler, Sullivan verified
-     - **Commit:** 96e2489, 51b4ef6 (verification progress)
-     - **Next Steps:** Complete verification (10 remaining) → Correct Stuckler citation → Implementation (Roy) → Monte Carlo (Priya, N≥50)
+     - **Priority:** HIGH - Phase 2 critical path, FABRICATED parameter discovered - requires design revision
+     - **Status:** 🔄 VERIFICATION IN PROGRESS (5/12) - CRITICAL: Coordination failure probability FABRICATED
+     - **Commit:** 96e2489, 51b4ef6, 6cad473 (verification progress)
+     - **Next Steps:** Complete verification (7 remaining) → **DESIGN REVISION: Replace binary coordination failure with continuous quality model** → Implementation (Roy) → Monte Carlo (Priya, N≥50)
 
    - **Nitrogen-Food Phase 3 Technologies** - MEDIUM (Added Nov 21, 2025)
      - **Context:** 6 new nitrogen reduction technologies added to tech tree (Phase 3 complete)
