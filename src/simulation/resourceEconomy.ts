@@ -546,6 +546,7 @@ export function calculateResourceSecurity(resources: ResourceEconomy): number {
     console.log(`   Clamped to 0, but root cause should be investigated.`);
   }
 
+
   return assertFinite(weightedFloored, {
     location: 'calculateResourceSecurity',
     valueName: 'weightedResourceSecurity',

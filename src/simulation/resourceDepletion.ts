@@ -1108,12 +1108,14 @@ function updateCO2System(state: GameState, resources: ResourceEconomy): void {
       const progressFraction = yearsSince1990 / 20.0;  // 0.0 at 1990, 1.0 at 2010
 
       // Linear interpolation from 1990 to 2010 values
-      // FIX (Nov 26, 2025): Corrected 2010 endpoint values - previous values were 2014-2023 averages
-      // Research shows sinks grow throughout 2000s, but don't reach 2010s peak until after 2010
+      // FIX (Nov 26, 2025 - Phase 9): Corrected 2010 endpoint values based on Global Carbon Budget data
+      // Ocean: +32% growth (2.2 → 2.9 GtC/yr)
+      // Land: +121% growth (1.4 → 3.1 GtC/yr)
+      // Research: research/carbon_sinks_1990_2025_20251126.md
       const ocean1990 = 8.1;   // GtCO2/yr (2.2 GtC/yr * 3.67) - IPCC 1990s baseline
-      const ocean2010 = 9.9;   // GtCO2/yr (2.7 GtC/yr * 3.67) - End of 2000s strengthening, before 2010s peak
+      const ocean2010 = 10.6;  // GtCO2/yr (2.9 GtC/yr * 3.67) - 2014-2023 average from GCB 2024
       const land1990 = 5.1;    // GtCO2/yr (1.4 GtC/yr * 3.67) - IPCC 1990s baseline
-      const land2010 = 8.1;    // GtCO2/yr (2.2 GtC/yr * 3.67) - Mid-growth between 1.8 (2000s) and 3.1 (2010s peak)
+      const land2010 = 11.4;   // GtCO2/yr (3.1 GtC/yr * 3.67) - 2010s peak from Wang et al. 2023
 
       co2.oceanAbsorption = assertFinite(
         ocean1990 + (ocean2010 - ocean1990) * progressFraction,
