@@ -1551,6 +1551,13 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📊 **Remaining Work:** Issues #2 (memory leak, 900MB) and #3 (priority recalculation, 1,080 checks/batch)
 - 📖 **Documentation:** reviews/scenario_framework_architecture_review_20251110.md, logs/performance_optimization_tech_deployment_20251110.md
 
+**Nov 13: Issue #120 - Organization Management O(n²) Bottlenecks Fixed** (commit 0ef62bf)
+- ✅ **8 Additional O(n²) Patterns Fixed:** 90% operation reduction (400K → 46K operations per step)
+- ✅ **Locations Optimized:** shouldTrainNewModel(), startModelTraining(), calculateComputeRevenue(), calculateTotalExpenses(), handleBankruptcy() (6 instances)
+- ✅ **Pattern:** `.filter(x => array.includes(x.id))` → Set-based O(1) membership test
+- ✅ **Impact:** Organization logic now scales efficiently to 200+ orgs, completes Issue #120
+- 📖 **Documentation:** logs/issue_120_optimization_summary.txt (detailed performance analysis)
+
 **Nov 10: HIGH-1 Compute Utilization O(n²) Bottleneck Fixed** (commit 12da0ce)
 - ✅ **Compute Utilization: 70× speedup** (100,000 → 1,400 operations per step)
 - ✅ **Root Cause:** `.filter(org => agents.some(a => a.orgs.includes(org.id)))` creates O(n²) nested loops
@@ -7571,15 +7578,18 @@ deploymentSpeed = baselineSpeed
 - Shutdown only as last resort (no viable buyers)
 - Result: Infrastructure preserved, maintains population coherence
 
-**Part 3c: Compute Utilization Performance Optimization (Nov 10, 2025)**
-- File: `src/simulation/organizationManagement.ts:43-74`
-- **Problem:** O(n²) bottleneck from `.filter(org => agents.some(a => a.orgs.includes(org.id)))`
-- **Impact:** 100,000 unnecessary operations per step (50 agents × 200 orgs × nested loops)
-- **Solution:** Build ownership Set once (O(n)), use O(1) `Set.has()` instead of O(n) `array.includes()`
-- **Performance gain:** 70× reduction (100,000 → 1,400 operations per step)
-- **Unblocks:** Scaling to 200+ organizations, Monte Carlo N=100 validation, scenario analysis
-- **Follow-up (Nov 13):** All 12 remaining O(n²) patterns fixed in commit 27e788f - total 13 patterns resolved
-- **Review:** `reviews/ARCHITECTURE_REVIEW_O_N2_BOTTLENECKS.md`, `devlogs/compute_utilization_o_n2_fix_20251110.md`
+**Part 3c: Organization Management Performance Optimization (Nov 2025)**
+- File: `src/simulation/organizationManagement.ts`
+- **Initial Fix (Nov 10):** `calculateComputeUtilization()` O(n²) → O(n) [lines 43-74]
+  - 70× reduction: 100,000 → 1,400 operations per step
+- **Issue #120 Fix (Nov 13):** 8 additional O(n²) patterns fixed [commit 0ef62bf]
+  - Locations: shouldTrainNewModel(), startModelTraining(), calculateComputeRevenue(), calculateTotalExpenses(), handleBankruptcy()
+  - 90% reduction: 400,000 → 46,000 operations per step
+- **Pattern:** `.filter(x => array.includes(x.id))` creates O(n²) nested loops
+- **Solution:** Build Set once (O(n)), use O(1) `Set.has()` lookups
+- **Impact:** Organization logic now scales efficiently to 200+ orgs
+- **Follow-up (Nov 13):** All 13 O(n²) patterns resolved (commit 27e788f + commit 0ef62bf)
+- **Review:** `reviews/ARCHITECTURE_REVIEW_O_N2_BOTTLENECKS.md`, `devlogs/compute_utilization_o_n2_fix_20251110.md`, `logs/issue_120_optimization_summary.txt`
 
 **Validation (Nov 5, 2025):**
 - **Unit tests:** `scripts/testInfrastructureDegradation_simple.ts`
