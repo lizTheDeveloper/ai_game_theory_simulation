@@ -403,12 +403,10 @@ export function shouldTrainNewModel(
   const capFloor = getCapabilityFloorForNewAI(state);
   const capFloorTotal = calculateTotalCapabilityFromProfile(capFloor);
 
-  // PERFORMANCE: O(n²) → O(n) optimization - use Set for O(1) membership test
+  // PERFORMANCE: O(n²) → O(n) optimization - use Set for O(1) membership test (Nov 13, 2025)
   const ownedAISet = new Set(org.ownedAIModels);
 
   // Note: AIAgent doesn't have createdAt field, use capability as proxy for "newest"
-  // O(n²) FIX (Nov 13, 2025): Build Set once for O(1) membership test
-  const ownedAISet = new Set(org.ownedAIModels);
   const newestModel = state.aiAgents
     .filter(ai => ownedAISet.has(ai.id))
     .sort((a, b) => b.capability - a.capability)[0];
@@ -485,12 +483,10 @@ export function startModelTraining(
   // Cost: 2x monthly revenue (reduced from 5x based on research: GPT-4 ~$100-200M, largest ~$1B)
   const cost = 2 * org.monthlyRevenue;
 
-  // PERFORMANCE: O(n²) → O(n) optimization - use Set for O(1) membership test
+  // PERFORMANCE: O(n²) → O(n) optimization - use Set for O(1) membership test (Nov 13, 2025)
   const ownedDCSet = new Set(org.ownedDataCenters);
 
   // Compute reservation: 10-30% of org's compute
-  // O(n²) FIX (Nov 13, 2025): Build Set once for O(1) membership test
-  const ownedDCSet = new Set(org.ownedDataCenters);
   const ownedCompute = state.computeInfrastructure.dataCenters
     .filter(dc => ownedDCSet.has(dc.id) && dc.operational)
     .reduce((sum, dc) => sum + dc.capacity * dc.efficiency, 0);
