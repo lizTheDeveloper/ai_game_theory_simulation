@@ -166,7 +166,7 @@ Do NOT use git stash - resolve conflicts properly by editing files.
 CONFLICT_EOF
 
         # Note: Claude Code is Node.js/TypeScript, doesn't need Python .venv
-        claude --dangerously-skip-permissions < /tmp/conflict_resolution_$TIMESTAMP.txt 2>&1
+        claude --model sonnet --dangerously-skip-permissions < /tmp/conflict_resolution_$TIMESTAMP.txt 2>&1
         rm -f /tmp/conflict_resolution_$TIMESTAMP.txt
 
         log_success "Conflicts resolved, continuing..."
@@ -358,7 +358,7 @@ TASK_EOF
 
     # Run with timeout and capture exit code
     set +e
-    timeout 2700 claude --dangerously-skip-permissions < /tmp/claude_task_$TIMESTAMP.txt 2>&1
+    timeout 2700 claude --model sonnet --dangerously-skip-permissions < /tmp/claude_task_$TIMESTAMP.txt 2>&1
     CLAUDE_EXIT=$?
     set -e
 
@@ -389,7 +389,7 @@ Be concise - you have limited time. Focus on preserving work, not perfecting it.
 CLEANUP_EOF
 
         set +e
-        timeout 300 claude --dangerously-skip-permissions < /tmp/cleanup_task_$TIMESTAMP.txt 2>&1
+        timeout 300 claude --model sonnet --dangerously-skip-permissions < /tmp/cleanup_task_$TIMESTAMP.txt 2>&1
         CLEANUP_EXIT=$?
         set -e
         rm -f /tmp/cleanup_task_$TIMESTAMP.txt

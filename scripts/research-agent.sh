@@ -173,7 +173,7 @@ TASK_EOF
 
     # Run with timeout and capture exit code
     set +e
-    timeout 2700 claude --dangerously-skip-permissions < /tmp/research_task_$TIMESTAMP.txt 2>&1
+    timeout 2700 claude --model sonnet --dangerously-skip-permissions < /tmp/research_task_$TIMESTAMP.txt 2>&1
     CLAUDE_EXIT=$?
     set -e
 
@@ -200,7 +200,7 @@ Be concise - you have limited time.
 CLEANUP_EOF
 
         set +e
-        timeout 300 claude --dangerously-skip-permissions < /tmp/cleanup_task_$TIMESTAMP.txt 2>&1
+        timeout 300 claude --model sonnet --dangerously-skip-permissions < /tmp/cleanup_task_$TIMESTAMP.txt 2>&1
         CLEANUP_EXIT=$?
         set -e
         rm -f /tmp/cleanup_task_$TIMESTAMP.txt
