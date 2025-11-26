@@ -316,14 +316,22 @@ cascadeProbability = networkDensity * singleAgentFailureRate * amplificationFact
 
 ### Failure Mode Probabilities
 
-| Failure Mode | Base Probability | Risk Factors |
-|-------------|-----------------|--------------|
-| Miscoordination | 15-25% | Agent heterogeneity, strategy complexity |
-| Conflict | 10-20% | Capability differential, resource scarcity |
-| Collusion | 5-15% | Communication bandwidth, oversight gaps |
-| Monoculture collapse | 20-40% | Training data similarity >70% |
-| Conformity bias | 15-30% | Group size, homogeneity |
-| Cascading failure | 5-15% | Network density, coupling |
+**⚠️ CRITICAL WARNING (Nov 26, 2025): These probabilities are SPECULATIVE - NO EMPIRICAL BASIS**
+
+The cited source (Hammond et al. 2025, arXiv:2502.14143) provides ONLY a qualitative taxonomy of failure modes (miscoordination, conflict, collusion). It does NOT provide numerical probability estimates.
+
+The probabilities below are FABRICATED and should NOT be used in simulation without explicit acknowledgment of their speculative nature.
+
+| Failure Mode | Base Probability | Risk Factors | Evidence Quality |
+|-------------|-----------------|--------------|------------------|
+| Miscoordination | 15-25% (SPECULATIVE) | Agent heterogeneity, strategy complexity | ❌ No empirical data |
+| Conflict | 10-20% (SPECULATIVE) | Capability differential, resource scarcity | ❌ No empirical data |
+| Collusion | 5-15% (SPECULATIVE) | Communication bandwidth, oversight gaps | ❌ No empirical data |
+| Monoculture collapse | 20-40% (SPECULATIVE) | Training data similarity >70% | ❌ No empirical data |
+| Conformity bias | 15-30% (SPECULATIVE) | Group size, homogeneity | ❌ No empirical data |
+| Cascading failure | 5-15% (SPECULATIVE) | Network density, coupling | ❌ No empirical data |
+
+**SIMULATION IMPACT:** CoordinatedDeploymentPhase previously used the fabricated "10% failure probability" (Nov 26 CRITICAL-1 fix removed this). Simulation now uses continuous coordination stress model instead of discrete failure events.
 
 ### Coordination Efficiency by Scale
 
