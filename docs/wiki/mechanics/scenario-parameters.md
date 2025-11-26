@@ -240,16 +240,30 @@ const state = await createHistoricalInitialState({
 - **Temperature:** Initializes both `planetaryBoundaries.currentValue` and `resourceEconomy.temperatureAnomaly`
 - **Birth rate scaling:** Regional birth rates scaled using historical CBR values (1990: 24.3/1000 vs 2025: 16.8/1000)
 
-**Validation targets (UN WPP, NOAA, FAO):**
+**Validation targets (UN WPP, HadCRUT5, Keeling Curve - exact research values Nov 26 2025):**
 | Year | Population | Temp Anomaly | CO2 ppm |
 |------|-----------|--------------|---------|
-| 1990 | 5.3B | 0.45°C | 354 |
-| 2000 | 6.1B | 0.65°C | 370 |
-| 2010 | 6.9B | 0.90°C | 390 |
-| 2020 | 7.8B | 1.15°C | 412 |
+| 1990 | 5.3B | 0.355°C | 354.19 |
+| 2000 | 6.1B | 0.512°C | 369.55 |
+| 2010 | 6.9B | 0.674°C | 390.22 |
+| 2020 | 7.8B | 1.115°C | 413.27 |
 | 2024 | 8.1B | 1.30°C | 422 |
 
-**Current status:** Population growth direction correct (5.3B → 6.24B), calibration gap remaining (~1.86B).
+**Phase 4 Validation Results (Nov 26, 2025, commit 8bc84d6):**
+- **VERDICT: FAIL** - CO2 deviation 17.53% vs 5% threshold (N=10 runs)
+- **CO2:** 354.19 → 444.40 ppm (vs 390.22 observed) - FAIL (17.53% error)
+- **Temperature:** 0.355 → 0.720°C (vs 0.674 observed) - PASS (+0.046°C)
+- **Population:** 5.3B → 9.64B (vs 6.9B observed) - FAIL (+39.4% overshoot)
+- **Determinism:** CV = 0.04-0.07% (borderline acceptable)
+
+**Key insight:** Temperature matches despite CO2 overshoot = climate mechanics CORRECT, calibration inputs WRONG (emissions + demographics)
+
+**Follow-up phases (HIGH priority):**
+- Phase 5: Historical Emissions Forcing Mode (GCP lookup table)
+- Phase 6: Demographics Calibration (1990 fertility rates)
+- Phase 7: Re-run Validation with fixes
+
+📄 **Full report:** `reviews/climate_hindcast_validation_20251126.md`
 
 ### Monte Carlo Analysis
 
