@@ -408,20 +408,32 @@ export class ClimateSystemPhase implements SimulationPhase {
     /**
      * Cap total degradation at 95% (per-step)
      *
-     * Research basis:
-     * - Even during PETM (56 Ma, +5-8°C), Earth retained habitable climate zones
-     * - Snowball Earth events (~700 Ma) had equatorial refugia
-     * - IPCC AR6 WG1 Ch4: Worst-case scenarios (RCP8.5) show severe but not
-     *   complete climate system collapse by 2300
-     * - Armstrong McKay et al. (2022, Science): Multiple tipping points crossing
-     *   leads to "Hothouse Earth" but not complete destabilization
+     * MODELING ASSUMPTION: Prevents simulation artifacts from single-step collapse.
+     * NOT empirically validated as a physical threshold. Climate systems have massive
+     * inertia, but this cap is a modeling choice to prevent runaway simulation behavior.
      *
-     * The 95% cap prevents single-step collapse while allowing cumulative
-     * degradation over many steps. This models the physical reality that
-     * climate systems have massive inertia and multiple stabilizing feedbacks
-     * even under severe forcing.
+     * Supporting observations (not direct validation):
+     * - Planck feedback: Stefan-Boltzmann radiation prevents infinite warming (basic physics)
+     * - PETM (~56Ma): 4-5C warming with recovery over ~100ky, though catastrophic
+     *   ocean acidification and "largest deep-sea mass extinction in 93 million years"
+     *   occurred (Zachos et al. 2008, Nature). Demonstrates eventual geological
+     *   stabilization over timescales irrelevant to human civilization.
+     * - Snowball Earth (~700Ma): Had equatorial refugia during full glaciation
+     *
+     * Research warnings (what Earth systems can do):
+     * - Lenton et al. (2019, Nature) "Climate tipping points - too risky to bet against"
+     *   warns of CASCADING risks and SELF-AMPLIFYING feedbacks from tipping points.
+     *   "We have underestimated the risks of unleashing irreversible changes."
+     *   Do NOT assume self-limiting feedbacks will prevent severe outcomes.
+     * - Armstrong McKay et al. (2022, Science): Multiple tipping points don't cause
+     *   "runaway" warming but DO cause severe, potentially irreversible changes.
+     *   Emissions cuts still matter (agency), but stability is not guaranteed.
+     *
+     * This cap models physical inertia and prevents simulation artifacts, NOT a claim
+     * that Earth systems are inherently self-stabilizing. Research warns the opposite.
      *
      * @see research/climate_tipping_timescales_20251106.md
+     * @see research/verification_climate_stability_citations_20251126.md
      */
     const cap = 0.95;
     totalClimateStabilityImpact = Math.min(cap, Math.abs(totalClimateStabilityImpact));
@@ -439,32 +451,39 @@ export class ClimateSystemPhase implements SimulationPhase {
     /**
      * 5% minimum climate stability floor
      *
-     * Research basis:
-     * - Lenton et al. (2019, Nature): Even crossing multiple tipping points,
-     *   Earth systems retain some stability through self-limiting feedbacks
-     * - PETM recovery: After +5-8°C spike, climate stabilized within ~200ky
-     *   (Zachos et al. 2022, PNAS), demonstrating system resilience
-     * - Steffen et al. (2018, PNAS): Hothouse Earth threshold at 4-5°C suggests
-     *   stabilization point, not complete collapse
-     * - Armstrong McKay et al. (2022, Science): 16 tipping elements, even cascading
-     *   failures do not produce instant 0% stability
-     * - Planck feedback (Cronin 2023, JAMES): Stefan-Boltzmann radiation provides
-     *   fundamental stabilizing mechanism, preventing infinite warming
-     * - IPCC AR6 (2021): Net positive feedbacks amplify warming but Planck feedback
-     *   prevents runaway; ECS bounded at 2.5-4.0°C per CO2 doubling
+     * MODELING ASSUMPTION: This floor prevents simulation artifacts (division by zero,
+     * single-step collapse). NOT empirically validated as a physical threshold.
      *
-     * The 5% floor represents: Even in worst-case scenarios, some regions
-     * retain minimal climate predictability. This is a CONSERVATIVE bound -
-     * actual collapse would still be catastrophic but not total system failure.
+     * Supporting observations (not direct validation):
+     * - Planck feedback (fundamental physics): Stefan-Boltzmann radiation prevents
+     *   infinite warming. Basic physics, but does NOT prevent catastrophic warming.
+     * - PETM (~56Ma): 4-5C warming with recovery over ~100ky geological timescales
+     *   (Zachos et al. 2008, Nature). Demonstrates eventual stabilization, but NOT
+     *   rapid resilience - catastrophic ocean acidification and "largest deep-sea
+     *   mass extinction in 93 million years" occurred during recovery.
+     * - Planetary boundaries (Steffen et al. 2015, Science): Transgressions create
+     *   risk zones, not instant collapse. We currently exist in transgression of 4+
+     *   boundaries without immediate collapse (but with increasing risk).
      *
-     * IMPORTANT: This is a MODELING ASSUMPTION to prevent simulation artifacts
-     * (division by zero, runaway collapse in single timestep). NOT empirically
-     * validated - paleoclimate shows recovery from extreme states (Snowball Earth,
-     * PETM). Reserve 0% for "Venus scenario," 5% for "worst plausible Earth
-     * scenario maintaining multicellular life."
+     * Research warnings (what Earth systems can do):
+     * - Lenton et al. (2019, Nature) "Climate tipping points - too risky to bet against"
+     *   warns "we have underestimated the risks of unleashing irreversible changes,
+     *   where the planet SELF-AMPLIFIES global warming." Paper emphasizes cascading
+     *   RISK and EMERGENCY, not stability. Do NOT assume self-limiting feedbacks.
+     * - Armstrong McKay et al. (2022, Science): Multiple tipping points don't cause
+     *   "runaway" warming but DO cause severe, potentially irreversible changes.
+     *   Emissions cuts still matter (agency), but stability is not guaranteed.
+     *
+     * HONEST FRAMING: The 5% floor represents "worst plausible Earth scenario maintaining
+     * some multicellular life" - still catastrophic for civilization. Reserve 0% for
+     * "Venus scenario." Paleoclimate recovery (PETM, Snowball Earth) occurred over
+     * geological time (100-200ky), not policy-relevant timescales. These bounds are
+     * implementation choices to prevent simulation artifacts, NOT claims that Earth
+     * systems are inherently self-stabilizing. Research warns the opposite.
      *
      * @see research/climate_self_limiting_mechanisms_20251125.md - Full research synthesis
      * @see research/climate_tipping_timescales_20251106.md
+     * @see research/verification_climate_stability_citations_20251126.md - Citation verification (Grade: C+, CRITICAL Lenton 2019 misrepresentation corrected)
      * @see Lenton et al. (2019) "Climate tipping points — too risky to bet against" Nature
      * @see Armstrong McKay et al. (2022) "Exceeding 1.5°C global warming could trigger multiple tipping points" Science
      */
@@ -534,8 +553,9 @@ export class ClimateSystemPhase implements SimulationPhase {
      * current worst-case scenario, but:
      * - Self-limiting: Extreme pollution causes collapse, which reduces
      *   industrial output and emissions (Meadows et al. 1972, Limits to Growth)
-     * - Scale reference: Current planetary boundaries transgression for
-     *   Novel Entities is ~2x safe boundary (Persson et al. 2022, ES&T)
+     * - Scale reference: Persson et al. (2022, ES&T) establishes that Novel Entities
+     *   planetary boundary is "exceeded" using qualitative weight-of-evidence, NOT
+     *   a quantified 2x multiple (see verification_climate_stability_citations_20251126.md)
      * - The [0,1] normalization enables consistent cross-system comparisons
      */
     state.environmentalAccumulation.pollutionLevel = Math.max(0, Math.min(1, pollutionLevel / 100));
