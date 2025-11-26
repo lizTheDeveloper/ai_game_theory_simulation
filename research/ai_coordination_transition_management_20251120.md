@@ -1312,4 +1312,55 @@ Added §"Integration with Novel Entities System (Phase 3)" (lines 951-989) docum
 **End of Research Document**
 
 **Status:** GRADE B - Implementation-ready with documented uncertainties
+
+---
+
+## CRITICAL CORRECTION (Nov 26, 2025): AI Coordination Failure Probability
+
+**Issue Discovered:** This document previously referenced Hammond et al. (2025) "Multi-Agent Risks from Advanced AI" (arXiv:2502.14143) as supporting quantitative coordination failure probabilities. This was INCORRECT.
+
+**What Hammond et al. 2025 Actually Contains:**
+- ✅ Qualitative taxonomy of failure modes (miscoordination, conflict, collusion)
+- ✅ Seven risk factors (information asymmetries, network effects, etc.)
+- ❌ NO numerical probability estimates
+- ❌ NO "5-20% (central: 10%)" coordination failure probability
+
+**Fabrication Pattern:**
+The "10% coordination failure probability" was a **qualitative-to-quantitative conflation** - LLM research assistants generated plausible-sounding statistics when asked for quantitative parameters from qualitative sources.
+
+**Correct Approach (Implemented Nov 26, 2025):**
+- ✅ **Simulation code fixed:** CoordinatedDeploymentPhase.ts removed discrete 10% failure event (lines 93-95)
+- ✅ **Continuous coordination quality model:** Coordination modeled as 0.0-1.0 spectrum (not binary)
+- ✅ **Empirical foundation:** New research file `international_coordination_effectiveness_empirical_20251126.md` provides evidence-based parameters
+
+**Key Empirical Findings (2020-2025 data):**
+- **No universal coordination failure rate exists** - context-dependent, varies by domain, scale, time
+- **Regional > Global:** Consistent evidence that regional coordination outperforms global
+- **Time decay:** Coordination deteriorates 5-15%/year without renewal (G20, Paris Agreement evidence)
+- **Scale penalty:** Coordination effectiveness decreases 10-30% per order of magnitude increase
+- **Climate coordination (2025):** 100% of G20 failing Paris goals (complete coordination failure)
+- **COVID-19 coordination:** 20.9% severe under-reaction, remaining 79.1% variable (not binary)
+
+**Recommended Parameters (Evidence-Based):**
+```typescript
+// Coordination quality factors:
+baseQuality: 0.60-0.90 (WHO country coordination 90%, COVID variation 21-79%)
+scalePenalty: 0.10-0.30 per order of magnitude (regional > global)
+timePenalty: 0.05-0.15 per year (G20 breakdown, Paris decay)
+enforcementMultiplier: 1.0-3.0 (binding vs. non-binding)
+crisisUrgencyMultiplier: 1.0-4.0 (acute vs. chronic)
+```
+
+**Cross-References:**
+- **New empirical research:** `research/international_coordination_effectiveness_empirical_20251126.md` (12K, 11 sources, Grade A-)
+- **Failure mode taxonomy:** `research/multi_agent_coordination_failure_modes_20251124.md` (lines 319-333 document fabrication)
+- **Code fix:** `src/simulation/engine/phases/CoordinatedDeploymentPhase.ts` (lines 93-95, 159-170)
+
+**Impact on This Document:**
+- Section 2 "AI Coordination Mechanisms" remains valid (describes mechanisms, not failure rates)
+- Hammond et al. 2025 citation remains valid for qualitative failure modes only
+- No quantitative coordination failure probabilities should be derived from this document
+- For empirical coordination rates, use `international_coordination_effectiveness_empirical_20251126.md`
+
+**Status:** Document retains Grade B for transition mortality research, but AI coordination probability claims are **INVALID**
 **Next Step:** Hand off to simulation-maintainer for parameter integration and Monte Carlo validation
