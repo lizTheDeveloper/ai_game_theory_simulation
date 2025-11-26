@@ -825,6 +825,88 @@ function updateEnergySystem(state: GameState, resources: ResourceEconomy): void 
 }
 
 // ============================================================================
+// HISTORICAL EMISSIONS FORCING MODE (Nov 26, 2025)
+// ============================================================================
+
+/**
+ * Global Carbon Project emissions data (1990-2010)
+ *
+ * Research: research/climate_hindcast_data_20251126.md
+ * Source: Global Carbon Project via Our World in Data
+ * Units: GtCO2/year (gigatonnes CO2 per year, fossil fuel + cement production)
+ *
+ * Used for hindcast validation when config.historicalEmissionsMode = true.
+ * Bypasses endogenous emissions calculation to test carbon sink mechanics independently.
+ *
+ * Root cause: Endogenous model generates 18% excess CO2 (17.53% deviation in Phase 4 validation).
+ * Temperature trajectory PASSED (validates climate sensitivity + sinks), so only emissions need override.
+ */
+const HISTORICAL_EMISSIONS_GCP: Record<number, number> = {
+  1990: 22.7,  // UNFCCC baseline year
+  1991: 22.8,  // Linear interpolation estimate
+  1992: 22.9,
+  1993: 23.0,
+  1994: 23.2,
+  1995: 23.5,  // Slow growth decade
+  1996: 23.8,
+  1997: 24.1,
+  1998: 24.4,
+  1999: 24.7,
+  2000: 25.5,  // Pre-China acceleration
+  2001: 25.9,
+  2002: 26.3,
+  2003: 26.7,
+  2004: 27.5,
+  2005: 29.0,  // Rapid growth phase
+  2006: 30.0,
+  2007: 31.0,
+  2008: 31.8,
+  2009: 32.0,  // Post-recession
+  2010: 33.5,  // Post-recession surge (+5.9% single-year growth)
+};
+
+/**
+ * Get historical emissions for a given year with monthly interpolation
+ *
+ * @param year - Calendar year (1990-2010)
+ * @param month - Month of year (0-11)
+ * @returns Annual emissions in GtCO2/year
+ * @throws Error if year is outside historical range (1990-2010)
+ */
+function getHistoricalEmissions(year: number, month: number): number {
+  // Fail loudly if out of range (no silent fallbacks in research simulation)
+  if (year < 1990 || year > 2010) {
+    throw new Error(
+      `❌ HISTORICAL EMISSIONS MODE: Year ${year} outside valid range (1990-2010). ` +
+      `This mode is ONLY for hindcast validation. Use endogenous emissions for other periods.`
+    );
+  }
+
+  // Get annual values for current and next year
+  const currentYearEmissions = HISTORICAL_EMISSIONS_GCP[year];
+  const nextYearEmissions = HISTORICAL_EMISSIONS_GCP[year + 1];
+
+  if (currentYearEmissions === undefined) {
+    throw new Error(`❌ HISTORICAL EMISSIONS MODE: No data for year ${year}`);
+  }
+
+  // Linear interpolation for monthly resolution
+  // If next year doesn't exist (year 2010), use current year value
+  if (nextYearEmissions === undefined) {
+    return currentYearEmissions;
+  }
+
+  const monthFraction = month / 12;
+  const interpolated = currentYearEmissions + (nextYearEmissions - currentYearEmissions) * monthFraction;
+
+  return assertFinite(interpolated, {
+    location: 'getHistoricalEmissions',
+    valueName: 'interpolatedEmissions',
+    additionalInfo: { year, month, currentYearEmissions, nextYearEmissions }
+  });
+}
+
+// ============================================================================
 // CO2 & CLIMATE SYSTEM
 // ============================================================================
 
@@ -841,56 +923,100 @@ function updateCO2System(state: GameState, resources: ResourceEconomy): void {
   }
 
   // === EMISSIONS FROM FOSSIL FUEL USE ===
-  
-  // Calculate emissions (Gt CO2 per month)
-  // Scale: 1 unit of monthly extraction ≈ 1% of global reserves ≈ 3 Gt CO2
-  // FIX (Oct 26, 2025): Assert inputs are finite before calculation
-  if (!isFinite(resources.oil.monthlyConsumption) || !isFinite(resources.oil.co2PerUnit)) {
-    throw new Error(`❌ Oil inputs not finite: consumption=${resources.oil.monthlyConsumption}, co2PerUnit=${resources.oil.co2PerUnit} (month ${state.currentMonth})`);
-  }
-  if (!isFinite(resources.coal.monthlyConsumption) || !isFinite(resources.coal.co2PerUnit)) {
-    throw new Error(`❌ Coal inputs not finite: consumption=${resources.coal.monthlyConsumption}, co2PerUnit=${resources.coal.co2PerUnit} (month ${state.currentMonth})`);
-  }
-  if (!isFinite(resources.naturalGas.monthlyConsumption) || !isFinite(resources.naturalGas.co2PerUnit)) {
-    throw new Error(`❌ Gas inputs not finite: consumption=${resources.naturalGas.monthlyConsumption}, co2PerUnit=${resources.naturalGas.co2PerUnit} (month ${state.currentMonth})`);
-  }
 
-  const oilEmissions = resources.oil.monthlyConsumption * resources.oil.co2PerUnit * 3.0;
-  const coalEmissions = resources.coal.monthlyConsumption * resources.coal.co2PerUnit * 3.0;
-  const gasEmissions = resources.naturalGas.monthlyConsumption * resources.naturalGas.co2PerUnit * 3.0;
+  // HISTORICAL EMISSIONS FORCING MODE (Nov 26, 2025): Phase 5 of Climate Mini-Hindcast Validation
+  // When enabled, bypass endogenous emissions calculation and use empirical Global Carbon Project data.
+  // This isolates carbon sink mechanics for testing (temperature trajectory PASSED, but emissions deviated 17.53%).
+  let monthlyEmissions: number;
+  let calculatedAnnual: number;
 
-  // Methane leakage (CH4 is 80x worse than CO2 over 20 years)
-  if (!isFinite(resources.naturalGas.methaneLeakage)) {
-    throw new Error(`❌ Methane leakage not finite: ${resources.naturalGas.methaneLeakage} (month ${state.currentMonth})`);
+  if (state.config?.historicalEmissionsMode === true) {
+    // Use historical emissions data (1990-2010 only)
+    const startYear = state.config?.startYear ?? 2025;
+    const currentYear = startYear + Math.floor(state.currentMonth / 12);
+    const monthOfYear = state.currentMonth % 12;
+
+    // Get annual emissions from lookup table
+    calculatedAnnual = getHistoricalEmissions(currentYear, monthOfYear);
+
+    // Convert to monthly (assume uniform distribution across year)
+    monthlyEmissions = assertFinite(
+      calculatedAnnual / 12,
+      {
+        location: 'updateCO2System (historical emissions mode)',
+        valueName: 'monthlyEmissions',
+        month: state.currentMonth,
+        additionalInfo: { year: currentYear, monthOfYear, annualEmissions: calculatedAnnual }
+      }
+    );
+
+    // Log annually for monitoring
+    if (state.currentMonth % 12 === 0) {
+      console.log(
+        `  📊 [Historical Emissions Mode] Year ${currentYear}: ${calculatedAnnual.toFixed(2)} GtCO2/yr ` +
+        `(${monthlyEmissions.toFixed(3)} GtCO2/mo) - Global Carbon Project data`
+      );
+    }
+  } else {
+    // Standard mode: Calculate emissions from endogenous economic model
+    // Scale: 1 unit of monthly extraction ≈ 1% of global reserves ≈ 3 Gt CO2
+    // FIX (Oct 26, 2025): Assert inputs are finite before calculation
+    if (!isFinite(resources.oil.monthlyConsumption) || !isFinite(resources.oil.co2PerUnit)) {
+      throw new Error(`❌ Oil inputs not finite: consumption=${resources.oil.monthlyConsumption}, co2PerUnit=${resources.oil.co2PerUnit} (month ${state.currentMonth})`);
+    }
+    if (!isFinite(resources.coal.monthlyConsumption) || !isFinite(resources.coal.co2PerUnit)) {
+      throw new Error(`❌ Coal inputs not finite: consumption=${resources.coal.monthlyConsumption}, co2PerUnit=${resources.coal.co2PerUnit} (month ${state.currentMonth})`);
+    }
+    if (!isFinite(resources.naturalGas.monthlyConsumption) || !isFinite(resources.naturalGas.co2PerUnit)) {
+      throw new Error(`❌ Gas inputs not finite: consumption=${resources.naturalGas.monthlyConsumption}, co2PerUnit=${resources.naturalGas.co2PerUnit} (month ${state.currentMonth})`);
+    }
+
+    const oilEmissions = resources.oil.monthlyConsumption * resources.oil.co2PerUnit * 3.0;
+    const coalEmissions = resources.coal.monthlyConsumption * resources.coal.co2PerUnit * 3.0;
+    const gasEmissions = resources.naturalGas.monthlyConsumption * resources.naturalGas.co2PerUnit * 3.0;
+
+    // Methane leakage (CH4 is 80x worse than CO2 over 20 years)
+    if (!isFinite(resources.naturalGas.methaneLeakage)) {
+      throw new Error(`❌ Methane leakage not finite: ${resources.naturalGas.methaneLeakage} (month ${state.currentMonth})`);
+    }
+    const methaneEmissions = resources.naturalGas.monthlyConsumption *
+      resources.naturalGas.methaneLeakage * 80;
+
+    // Total monthly emissions (Gt CO2 equivalent)
+    monthlyEmissions = oilEmissions + coalEmissions + gasEmissions + methaneEmissions;
+
+    // Calculate annual from monthly
+    calculatedAnnual = monthlyEmissions * 12;
   }
-  const methaneEmissions = resources.naturalGas.monthlyConsumption *
-    resources.naturalGas.methaneLeakage * 80;
-
-  // Total monthly emissions (Gt CO2 equivalent)
-  const monthlyEmissions = oilEmissions + coalEmissions + gasEmissions + methaneEmissions;
 
   // Catch NaN at source with detailed debugging
   if (!isFinite(monthlyEmissions)) {
     console.error(`❌ NaN detected in CO2 emissions calculation (month ${state.currentMonth}):`);
-    console.error(`   oil: ${resources.oil.monthlyConsumption} * ${resources.oil.co2PerUnit} * 3.0 = ${oilEmissions}`);
-    console.error(`   coal: ${resources.coal.monthlyConsumption} * ${resources.coal.co2PerUnit} * 3.0 = ${coalEmissions}`);
-    console.error(`   gas: ${resources.naturalGas.monthlyConsumption} * ${resources.naturalGas.co2PerUnit} * 3.0 = ${gasEmissions}`);
-    console.error(`   methane: ${resources.naturalGas.monthlyConsumption} * ${resources.naturalGas.methaneLeakage} * 80 = ${methaneEmissions}`);
-    console.error(`   renewablePercentage: ${resources.energy.renewablePercentage}`);
-    console.error(`   energy.sources.oil: ${resources.energy.sources.oil}`);
-    console.error(`   energy.sources.coal: ${resources.energy.sources.coal}`);
-    console.error(`   energy.sources.solar: ${resources.energy.sources.solar}`);
-    console.error(`   energy.sources.wind: ${resources.energy.sources.wind}`);
-    console.error(`   energy.totalProduction: ${resources.energy.totalProduction}`);
+    if (state.config?.historicalEmissionsMode === true) {
+      console.error(`   [Historical Emissions Mode]`);
+      console.error(`   monthlyEmissions: ${monthlyEmissions}`);
+      console.error(`   annualEmissions: ${calculatedAnnual}`);
+    } else {
+      console.error(`   [Endogenous Emissions Model]`);
+      console.error(`   oil: ${resources.oil.monthlyConsumption} * ${resources.oil.co2PerUnit} * 3.0 = ${resources.oil.monthlyConsumption * resources.oil.co2PerUnit * 3.0}`);
+      console.error(`   coal: ${resources.coal.monthlyConsumption} * ${resources.coal.co2PerUnit} * 3.0 = ${resources.coal.monthlyConsumption * resources.coal.co2PerUnit * 3.0}`);
+      console.error(`   gas: ${resources.naturalGas.monthlyConsumption} * ${resources.naturalGas.co2PerUnit} * 3.0 = ${resources.naturalGas.monthlyConsumption * resources.naturalGas.co2PerUnit * 3.0}`);
+      console.error(`   methane: ${resources.naturalGas.monthlyConsumption} * ${resources.naturalGas.methaneLeakage} * 80 = ${resources.naturalGas.monthlyConsumption * resources.naturalGas.methaneLeakage * 80}`);
+      console.error(`   renewablePercentage: ${resources.energy.renewablePercentage}`);
+      console.error(`   energy.sources.oil: ${resources.energy.sources.oil}`);
+      console.error(`   energy.sources.coal: ${resources.energy.sources.coal}`);
+      console.error(`   energy.sources.solar: ${resources.energy.sources.solar}`);
+      console.error(`   energy.sources.wind: ${resources.energy.sources.wind}`);
+      console.error(`   energy.totalProduction: ${resources.energy.totalProduction}`);
+    }
     throw new Error(`❌ Non-finite monthlyEmissions in updateCO2System`);
   }
 
-  // FIX (Oct 26, 2025): Catch division/multiplication edge cases
-  const calculatedAnnual = monthlyEmissions * 12;
+  // Validate annual emissions (already calculated above in both modes)
   if (!isFinite(calculatedAnnual)) {
     console.error(`❌ Annual emissions calculation produced NaN (month ${state.currentMonth}):`);
     console.error(`   monthlyEmissions: ${monthlyEmissions}`);
-    console.error(`   monthlyEmissions * 12: ${calculatedAnnual}`);
+    console.error(`   calculatedAnnual: ${calculatedAnnual}`);
     throw new Error(`❌ Annual emissions calculation is NaN`);
   }
 
@@ -901,10 +1027,19 @@ function updateCO2System(state: GameState, resources: ResourceEconomy): void {
     console.log(`  📊 CO2 Emissions (month ${state.currentMonth}):`);
     console.log(`     Monthly: ${monthlyEmissions.toFixed(2)} Gt CO2/month`);
     console.log(`     Annual: ${calculatedAnnual.toFixed(2)} Gt CO2/year`);
-    console.log(`     Oil: ${oilEmissions.toFixed(3)} Gt/mo (${resources.oil.monthlyConsumption.toFixed(4)} * ${resources.oil.co2PerUnit} * 3.0)`);
-    console.log(`     Coal: ${coalEmissions.toFixed(3)} Gt/mo (${resources.coal.monthlyConsumption.toFixed(4)} * ${resources.coal.co2PerUnit} * 3.0)`);
-    console.log(`     Gas: ${gasEmissions.toFixed(3)} Gt/mo (${resources.naturalGas.monthlyConsumption.toFixed(4)} * ${resources.naturalGas.co2PerUnit} * 3.0)`);
-    console.log(`     Methane: ${methaneEmissions.toFixed(3)} Gt CO2eq/mo`);
+    if (state.config?.historicalEmissionsMode !== true) {
+      // Only log breakdown if using endogenous model
+      const oilEmissions = resources.oil.monthlyConsumption * resources.oil.co2PerUnit * 3.0;
+      const coalEmissions = resources.coal.monthlyConsumption * resources.coal.co2PerUnit * 3.0;
+      const gasEmissions = resources.naturalGas.monthlyConsumption * resources.naturalGas.co2PerUnit * 3.0;
+      const methaneEmissions = resources.naturalGas.monthlyConsumption * resources.naturalGas.methaneLeakage * 80;
+      console.log(`     Oil: ${oilEmissions.toFixed(3)} Gt/mo (${resources.oil.monthlyConsumption.toFixed(4)} * ${resources.oil.co2PerUnit} * 3.0)`);
+      console.log(`     Coal: ${coalEmissions.toFixed(3)} Gt/mo (${resources.coal.monthlyConsumption.toFixed(4)} * ${resources.coal.co2PerUnit} * 3.0)`);
+      console.log(`     Gas: ${gasEmissions.toFixed(3)} Gt/mo (${resources.naturalGas.monthlyConsumption.toFixed(4)} * ${resources.naturalGas.co2PerUnit} * 3.0)`);
+      console.log(`     Methane: ${methaneEmissions.toFixed(3)} Gt CO2eq/mo`);
+    } else {
+      console.log(`     Source: Historical Global Carbon Project data (1990-2010)`);
+    }
   }
 
   // Verify it stuck
