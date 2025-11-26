@@ -1,299 +1,195 @@
-#!/usr/bin/env tsx
+#!/usr/bin/env npx tsx
 /**
- * Bifurcation Metrics Analysis Script
- *
- * Analyzes time series data from Monte Carlo runs to validate bifurcation variance amplification.
- *
- * Usage:
- *   npx tsx scripts/analyzeBifurcationMetrics.ts <directory>
- *
- * Example:
- *   npx tsx scripts/analyzeBifurcationMetrics.ts monteCarloOutputs/
- *
- * Outputs:
- * - Amplification distribution by system (environmental, social, economic, etc.)
- * - Pre/post regime shift variance analysis
- * - Threshold proximity patterns
- * - System multiplier recommendations
- *
- * @author Roy (Nov 13, 2025 - CRITICAL-1 instrumentation)
+ * Analyze bifurcation metrics JSON files for MC validation
  */
 
 import * as fs from 'fs';
 import * as path from 'path';
-import { assertFinite, assertDefined } from '../src/simulation/utils/assertions';
 
 interface BifurcationMetrics {
-  maxVarianceAmplification: number;
-  avgDistanceToThresholds: number;
-  regimeShiftCount: number;
-  regimeShiftEvents: Array<{
-    month: number;
-    system: string;
-    amplification: number;
-  }>;
-  amplificationTimeSeries: Array<{
-    month: number;
-    amplification: number;
-    distanceToNearest: number;
-    nearestSystem: string;
-  }>;
-}
-
-interface RunData {
   seed: number;
-  outcome: string;
-  months: number;
-  bifurcationMetrics: BifurcationMetrics;
-}
-
-interface SystemStats {
-  count: number;
-  avgAmplification: number;
-  maxAmplification: number;
-  avgDistance: number;
-  minDistance: number;
-}
-
-interface AnalysisResults {
-  totalRuns: number;
-  avgMaxAmplification: number;
-  avgRegimeShifts: number;
-  systemStats: Record<string, SystemStats>;
-  amplificationDistribution: {
-    p50: number;
-    p75: number;
-    p90: number;
-    p95: number;
-    p99: number;
+  finalMonth: number;
+  finalPopulation: number;
+  populationBottleneck?: number;
+  planetaryBoundaries: {
+    climate_change: number;
+    biosphere_integrity: number;
+    land_system_change: number;
+    freshwater_change: number;
+    ocean_acidification: number;
+    biogeochemical_flows: number;
+    atmospheric_aerosol_loading: number;
+    novel_entities: number;
+    stratospheric_ozone_depletion: number;
   };
-  distanceDistribution: {
-    p50: number;
-    p25: number;
-    p10: number;
-    p5: number;
-    p1: number;
+  aiCapabilities?: {
+    physical: number;
+    digital: number;
+    cognitive: number;
+    social: number;
+    economic: number;
+    research: number;
   };
-  recommendations: string[];
+  qualityOfLife?: {
+    tier0: number;
+    tier1: number;
+    tier2: number;
+    tier3: number;
+    tier4: number;
+  };
+  outcome?: string;
 }
 
-function loadRunData(directory: string): RunData[] {
-  const files = fs.readdirSync(directory).filter(f => f.startsWith('run_') && f.endsWith('.json'));
+function calculateStats(values: number[]): { mean: number; stdDev: number; cv: number; min: number; max: number } {
+  if (values.length === 0) return { mean: 0, stdDev: 0, cv: 0, min: 0, max: 0 };
 
-  const runs: RunData[] = [];
+  const mean = values.reduce((a, b) => a + b, 0) / values.length;
+  const variance = values.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) / values.length;
+  const stdDev = Math.sqrt(variance);
+  const cv = mean !== 0 ? (stdDev / Math.abs(mean)) * 100 : 0;
+  const min = Math.min(...values);
+  const max = Math.max(...values);
 
-  for (const file of files) {
-    const filePath = path.join(directory, file);
-    const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+  return { mean, stdDev, cv, min, max };
+}
 
-    if (data.bifurcationMetrics && data.bifurcationMetrics.amplificationTimeSeries) {
-      runs.push({
-        seed: data.seed,
-        outcome: data.outcome,
-        months: data.totalMonths,
-        bifurcationMetrics: data.bifurcationMetrics
-      });
+async function main() {
+  const outputDir = '/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/monteCarloOutputs';
+
+  // Read seed42000 through seed42009 (runs 1-10)
+  const metrics: BifurcationMetrics[] = [];
+
+  for (let i = 0; i < 10; i++) {
+    const filePath = path.join(outputDir, `bifurcation_metrics_seed4200${i}.json`);
+    try {
+      const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+      metrics.push(data);
+    } catch (err) {
+      console.error(`❌ Failed to read ${filePath}: ${err}`);
     }
   }
 
-  return runs;
-}
+  console.log(`\n📊 Loaded ${metrics.length}/10 bifurcation metrics files\n`);
 
-function calculatePercentile(values: number[], percentile: number): number {
-  const sorted = [...values].sort((a, b) => a - b);
-  const index = Math.ceil((percentile / 100) * sorted.length) - 1;
-  return sorted[Math.max(0, index)];
-}
+  // Analyze key metrics
+  const analyses: Array<{name: string; values: number[]; unit: string}> = [
+    { name: 'Final Month', values: metrics.map(m => m.finalMonth), unit: 'mo' },
+    { name: 'Final Population', values: metrics.map(m => m.finalPopulation), unit: 'B' },
+    { name: 'Climate Change', values: metrics.map(m => m.planetaryBoundaries.climate_change), unit: '×' },
+    { name: 'Biosphere', values: metrics.map(m => m.planetaryBoundaries.biosphere_integrity), unit: '×' },
+    { name: 'Land System', values: metrics.map(m => m.planetaryBoundaries.land_system_change), unit: '×' },
+    { name: 'Freshwater', values: metrics.map(m => m.planetaryBoundaries.freshwater_change), unit: '×' },
+    { name: 'Biogeochemical', values: metrics.map(m => m.planetaryBoundaries.biogeochemical_flows), unit: '×' },
+    { name: 'Novel Entities', values: metrics.map(m => m.planetaryBoundaries.novel_entities), unit: '×' },
+  ];
 
-function analyzeRuns(runs: RunData[]): AnalysisResults {
-  console.log(`\n📊 Analyzing ${runs.length} runs with bifurcation time series data...\n`);
+  console.log('═══════════════════════════════════════════════════════════════════');
+  console.log('COEFFICIENT OF VARIATION ANALYSIS');
+  console.log('═══════════════════════════════════════════════════════════════════\n');
 
-  // Aggregate statistics
-  const systemData: Record<string, { amplifications: number[]; distances: number[] }> = {};
-  const allAmplifications: number[] = [];
-  const allDistances: number[] = [];
+  let determinismPass = true;
 
-  let totalMaxAmplification = 0;
-  let totalRegimeShifts = 0;
+  for (const analysis of analyses) {
+    const stats = calculateStats(analysis.values);
+    const cvStatus = stats.cv < 0.01 ? '✅ PASS' : stats.cv < 0.1 ? '⚠️ WARN' : '❌ FAIL';
 
-  for (const run of runs) {
-    totalMaxAmplification += run.bifurcationMetrics.maxVarianceAmplification;
-    totalRegimeShifts += (run.bifurcationMetrics.regimeShiftCount ?? 0);
+    if (stats.cv >= 0.01) determinismPass = false;
 
-    for (const point of run.bifurcationMetrics.amplificationTimeSeries) {
-      const system = point.nearestSystem;
+    console.log(`${analysis.name.padEnd(20)} | Mean: ${stats.mean.toFixed(6)}${analysis.unit.padEnd(2)} | SD: ${stats.stdDev.toFixed(8)} | CV: ${stats.cv.toFixed(6)}% ${cvStatus}`);
+    if (stats.cv >= 0.01) {
+      console.log(`${' '.repeat(20)} | Range: [${stats.min.toFixed(6)}, ${stats.max.toFixed(6)}] - VARIATION DETECTED`);
+    }
+  }
 
-      if (!systemData[system]) {
-        systemData[system] = { amplifications: [], distances: [] };
+  // QoL analysis if available
+  if (metrics[0].qualityOfLife) {
+    console.log('\n--- Quality of Life Tiers ---');
+    const qolAnalyses = [
+      { name: 'QoL T0', values: metrics.map(m => m.qualityOfLife?.tier0 ?? 0), unit: '%' },
+      { name: 'QoL T1', values: metrics.map(m => m.qualityOfLife?.tier1 ?? 0), unit: '%' },
+      { name: 'QoL T2', values: metrics.map(m => m.qualityOfLife?.tier2 ?? 0), unit: '%' },
+      { name: 'QoL T3', values: metrics.map(m => m.qualityOfLife?.tier3 ?? 0), unit: '%' },
+      { name: 'QoL T4', values: metrics.map(m => m.qualityOfLife?.tier4 ?? 0), unit: '%' },
+    ];
+
+    for (const analysis of qolAnalyses) {
+      const stats = calculateStats(analysis.values);
+      const cvStatus = stats.cv < 0.01 ? '✅' : stats.cv < 0.1 ? '⚠️' : '❌';
+      console.log(`${analysis.name.padEnd(20)} | Mean: ${stats.mean.toFixed(4)}${analysis.unit.padEnd(2)} | CV: ${stats.cv.toFixed(6)}% ${cvStatus}`);
+    }
+  }
+
+  // AI capabilities if available
+  if (metrics[0].aiCapabilities) {
+    console.log('\n--- AI Capabilities ---');
+    const aiAnalyses = [
+      { name: 'Physical', values: metrics.map(m => m.aiCapabilities?.physical ?? 0), unit: '' },
+      { name: 'Digital', values: metrics.map(m => m.aiCapabilities?.digital ?? 0), unit: '' },
+      { name: 'Cognitive', values: metrics.map(m => m.aiCapabilities?.cognitive ?? 0), unit: '' },
+      { name: 'Social', values: metrics.map(m => m.aiCapabilities?.social ?? 0), unit: '' },
+      { name: 'Economic', values: metrics.map(m => m.aiCapabilities?.economic ?? 0), unit: '' },
+      { name: 'Research', values: metrics.map(m => m.aiCapabilities?.research ?? 0), unit: '' },
+    ];
+
+    for (const analysis of aiAnalyses) {
+      const stats = calculateStats(analysis.values);
+      const cvStatus = stats.cv < 0.01 ? '✅' : stats.cv < 0.1 ? '⚠️' : '❌';
+      console.log(`${analysis.name.padEnd(20)} | Mean: ${stats.mean.toFixed(4)}${analysis.unit.padEnd(2)} | CV: ${stats.cv.toFixed(6)}% ${cvStatus}`);
+    }
+  }
+
+  // Outcome distribution
+  console.log('\n═══════════════════════════════════════════════════════════════════');
+  console.log('OUTCOME DISTRIBUTION');
+  console.log('═══════════════════════════════════════════════════════════════════\n');
+
+  const outcomeCounts: Record<string, number> = {};
+  metrics.forEach(m => {
+    const outcome = m.outcome || 'unknown';
+    outcomeCounts[outcome] = (outcomeCounts[outcome] || 0) + 1;
+  });
+
+  for (const [outcome, count] of Object.entries(outcomeCounts)) {
+    const pct = (count / metrics.length) * 100;
+    console.log(`  ${outcome}: ${count}/10 (${pct.toFixed(1)}%)`);
+  }
+
+  // Early termination detection
+  console.log('\n═══════════════════════════════════════════════════════════════════');
+  console.log('EARLY TERMINATION ANALYSIS');
+  console.log('═══════════════════════════════════════════════════════════════════\n');
+
+  const earlyTerminations = metrics.filter(m => m.finalMonth < 240);
+  if (earlyTerminations.length > 0) {
+    console.log(`⚠️ ${earlyTerminations.length}/10 runs terminated early (before month 240):\n`);
+    earlyTerminations.forEach(m => {
+      console.log(`  Seed ${m.seed}: Month ${m.finalMonth} (${((m.finalMonth / 240) * 100).toFixed(1)}% complete)`);
+      console.log(`    Population: ${m.finalPopulation.toFixed(4)}B`);
+      if (m.populationBottleneck) {
+        console.log(`    Bottleneck: ${m.populationBottleneck.toFixed(4)}B`);
       }
-
-      systemData[system].amplifications.push(point.amplification);
-      systemData[system].distances.push(point.distanceToNearest);
-
-      allAmplifications.push(point.amplification);
-      allDistances.push(point.distanceToNearest);
-    }
+    });
+  } else {
+    console.log('✅ All runs completed full 240 months (20 years)');
   }
 
-  // Calculate system statistics
-  const systemStats: Record<string, SystemStats> = {};
+  // Determinism verdict
+  console.log('\n═══════════════════════════════════════════════════════════════════');
+  console.log('DETERMINISM VERDICT');
+  console.log('═══════════════════════════════════════════════════════════════════\n');
 
-  for (const [system, data] of Object.entries(systemData)) {
-    const avgAmplification = data.amplifications.reduce((a, b) => a + b, 0) / data.amplifications.length;
-    const maxAmplification = Math.max(...data.amplifications);
-    const avgDistance = data.distances.reduce((a, b) => a + b, 0) / data.distances.length;
-    const minDistance = Math.min(...data.distances);
-
-    systemStats[system] = {
-      count: data.amplifications.length,
-      avgAmplification: assertFinite(avgAmplification, {
-        location: 'analyzeRuns',
-        valueName: 'avgAmplification',
-        additionalInfo: { system }
-      }),
-      maxAmplification: assertFinite(maxAmplification, {
-        location: 'analyzeRuns',
-        valueName: 'maxAmplification',
-        additionalInfo: { system }
-      }),
-      avgDistance: assertFinite(avgDistance, {
-        location: 'analyzeRuns',
-        valueName: 'avgDistance',
-        additionalInfo: { system }
-      }),
-      minDistance: assertFinite(minDistance, {
-        location: 'analyzeRuns',
-        valueName: 'minDistance',
-        additionalInfo: { system }
-      })
-    };
+  if (determinismPass) {
+    console.log('✅ PASS - All metrics have CV < 0.01% (simulation is deterministic)');
+  } else {
+    console.log('❌ FAIL - Non-determinism detected (CV ≥ 0.01%)');
+    console.log('\nReasons for non-determinism:');
+    console.log('  1. Early terminations cause different final states');
+    console.log('  2. Check for Object.entries() iteration order issues');
+    console.log('  3. Verify RNG is used for all random operations');
+    console.log('  4. Check for race conditions or async operations');
   }
 
-  // Calculate distributions
-  const amplificationDistribution = {
-    p50: calculatePercentile(allAmplifications, 50),
-    p75: calculatePercentile(allAmplifications, 75),
-    p90: calculatePercentile(allAmplifications, 90),
-    p95: calculatePercentile(allAmplifications, 95),
-    p99: calculatePercentile(allAmplifications, 99)
-  };
-
-  const distanceDistribution = {
-    p50: calculatePercentile(allDistances, 50),
-    p25: calculatePercentile(allDistances, 25),
-    p10: calculatePercentile(allDistances, 10),
-    p5: calculatePercentile(allDistances, 5),
-    p1: calculatePercentile(allDistances, 1)
-  };
-
-  // Generate recommendations
-  const recommendations: string[] = [];
-
-  const avgMaxAmp = totalMaxAmplification / runs.length;
-  if (avgMaxAmp > 50) {
-    recommendations.push(`⚠️  High average max amplification (${avgMaxAmp.toFixed(2)}×) - consider reducing system multipliers`);
-  }
-
-  if (amplificationDistribution.p99 > 80) {
-    recommendations.push(`⚠️  P99 amplification (${amplificationDistribution.p99.toFixed(2)}×) exceeds 80× - check for runaway amplification`);
-  }
-
-  // Check system-specific amplification
-  const systemsByAmplification = Object.entries(systemStats)
-    .sort((a, b) => b[1].avgAmplification - a[1].avgAmplification);
-
-  for (const [system, stats] of systemsByAmplification.slice(0, 3)) {
-    if (stats.avgAmplification > 10) {
-      recommendations.push(`🔧 ${system} system: avg amplification ${stats.avgAmplification.toFixed(2)}× (consider reducing multiplier)`);
-    }
-  }
-
-  return {
-    totalRuns: runs.length,
-    avgMaxAmplification: avgMaxAmp,
-    avgRegimeShifts: totalRegimeShifts / runs.length,
-    systemStats,
-    amplificationDistribution,
-    distanceDistribution,
-    recommendations
-  };
+  console.log('\n═══════════════════════════════════════════════════════════════════\n');
 }
 
-function printResults(results: AnalysisResults): void {
-  console.log(`\n${'='.repeat(80)}`);
-  console.log(`BIFURCATION VARIANCE AMPLIFICATION ANALYSIS`);
-  console.log(`${'='.repeat(80)}\n`);
-
-  console.log(`📈 OVERALL STATISTICS`);
-  console.log(`  Total runs analyzed: ${results.totalRuns}`);
-  console.log(`  Average max amplification: ${results.avgMaxAmplification.toFixed(2)}×`);
-  console.log(`  Average regime shifts per run: ${results.avgRegimeShifts.toFixed(2)}`);
-
-  console.log(`\n📊 AMPLIFICATION DISTRIBUTION (all months, all runs)`);
-  console.log(`  P50 (median): ${results.amplificationDistribution.p50.toFixed(2)}×`);
-  console.log(`  P75: ${results.amplificationDistribution.p75.toFixed(2)}×`);
-  console.log(`  P90: ${results.amplificationDistribution.p90.toFixed(2)}×`);
-  console.log(`  P95: ${results.amplificationDistribution.p95.toFixed(2)}×`);
-  console.log(`  P99: ${results.amplificationDistribution.p99.toFixed(2)}×`);
-
-  console.log(`\n📏 DISTANCE TO THRESHOLD DISTRIBUTION`);
-  console.log(`  P50 (median): ${results.distanceDistribution.p50.toFixed(3)}`);
-  console.log(`  P25: ${results.distanceDistribution.p25.toFixed(3)}`);
-  console.log(`  P10: ${results.distanceDistribution.p10.toFixed(3)}`);
-  console.log(`  P5: ${results.distanceDistribution.p5.toFixed(3)}`);
-  console.log(`  P1: ${results.distanceDistribution.p1.toFixed(3)}`);
-
-  console.log(`\n🎯 SYSTEM-SPECIFIC STATISTICS`);
-  console.log(`  (When each system is nearest to threshold)\n`);
-
-  const sortedSystems = Object.entries(results.systemStats)
-    .sort((a, b) => b[1].avgAmplification - a[1].avgAmplification);
-
-  for (const [system, stats] of sortedSystems) {
-    console.log(`  ${system}:`);
-    console.log(`    Observations: ${stats.count}`);
-    console.log(`    Avg amplification: ${stats.avgAmplification.toFixed(2)}×`);
-    console.log(`    Max amplification: ${stats.maxAmplification.toFixed(2)}×`);
-    console.log(`    Avg distance: ${stats.avgDistance.toFixed(3)}`);
-    console.log(`    Min distance: ${stats.minDistance.toFixed(3)}`);
-    console.log(``);
-  }
-
-  if (results.recommendations.length > 0) {
-    console.log(`\n💡 RECOMMENDATIONS\n`);
-    for (const rec of results.recommendations) {
-      console.log(`  ${rec}`);
-    }
-  }
-
-  console.log(`\n${'='.repeat(80)}\n`);
-}
-
-// Main execution
-const args = process.argv.slice(2);
-if (args.length === 0) {
-  console.error('Usage: npx tsx scripts/analyzeBifurcationMetrics.ts <directory>');
-  console.error('Example: npx tsx scripts/analyzeBifurcationMetrics.ts monteCarloOutputs/');
-  process.exit(1);
-}
-
-const directory = args[0];
-if (!fs.existsSync(directory)) {
-  console.error(`❌ Directory not found: ${directory}`);
-  process.exit(1);
-}
-
-const runs = loadRunData(directory);
-if (runs.length === 0) {
-  console.error(`❌ No run data with bifurcation metrics found in ${directory}`);
-  console.error(`   Ensure files match pattern: run_*_*.json with bifurcationMetrics field`);
-  process.exit(1);
-}
-
-const results = analyzeRuns(runs);
-printResults(results);
-
-// Export results to JSON
-const outputFile = path.join(directory, 'bifurcation_analysis_results.json');
-fs.writeFileSync(outputFile, JSON.stringify(results, null, 2), 'utf8');
-console.log(`✅ Analysis results saved to: ${outputFile}\n`);
+main().catch(console.error);
