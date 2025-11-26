@@ -1,0 +1,1713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>God Mode v4 - Command Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        :root {
+            --bg-primary: #0A0A0A;
+            --bg-secondary: #0F0F0F;
+            --bg-tertiary: #141414;
+            --bg-hover: rgba(0, 240, 255, 0.03);
+            --text-primary: #FFFFFF;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --text-tertiary: rgba(255, 255, 255, 0.4);
+            --text-disabled: rgba(255, 255, 255, 0.2);
+            --cyan: #00F0FF;
+            --cyan-dim: rgba(0, 240, 255, 0.1);
+            --cyan-glow: 0 0 20px rgba(0, 240, 255, 0.6);
+            --amber: #FFB000;
+            --amber-dim: rgba(255, 176, 0, 0.1);
+            --amber-glow: 0 0 20px rgba(255, 176, 0, 0.6);
+            --red: #FF0040;
+            --red-dim: rgba(255, 0, 64, 0.1);
+            --red-glow: 0 0 20px rgba(255, 0, 64, 0.6);
+            --green: #00FF88;
+            --green-dim: rgba(0, 255, 136, 0.1);
+            --green-glow: 0 0 20px rgba(0, 255, 136, 0.6);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-focus: rgba(0, 240, 255, 0.3);
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
+            --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4);
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Background effects */
+        .background-effects {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .background-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0, 240, 255, 0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.015) 1px, transparent 1px);
+            background-size: 80px 80px;
+            animation: gridDrift 40s linear infinite;
+        }
+
+        @keyframes gridDrift {
+            from { transform: translate(0, 0); }
+            to { transform: translate(80px, 80px); }
+        }
+
+        .glow-orbs {
+            position: absolute;
+            inset: 0;
+        }
+
+        .orb {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.03;
+            animation: orbFloat 30s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            background: var(--cyan);
+            top: -200px;
+            left: -200px;
+            animation-duration: 35s;
+        }
+
+        .orb-2 {
+            background: var(--amber);
+            bottom: -200px;
+            right: -200px;
+            animation-duration: 40s;
+            animation-delay: -10s;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(100px, -50px) scale(1.1); }
+            66% { transform: translate(-50px, 100px) scale(0.9); }
+        }
+
+        /* Main layout */
+        .main-container {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        /* Top Header */
+        .top-header {
+            background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-secondary) 100%);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 10;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .god-mode-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .god-mode-icon {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--cyan);
+            border-radius: 6px;
+            position: relative;
+            box-shadow: var(--cyan-glow);
+            animation: iconPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes iconPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 240, 255, 0.6); }
+            50% { box-shadow: 0 0 30px rgba(0, 240, 255, 0.8); }
+        }
+
+        .god-mode-icon::before {
+            content: '⚡';
+            font-size: 18px;
+            color: var(--bg-primary);
+        }
+
+        .god-mode-text {
+            font-size: 20px;
+            font-weight: 300;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .command-center {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-left: 8px;
+        }
+
+        .mode-selector {
+            display: flex;
+            background: var(--bg-primary);
+            border-radius: 8px;
+            padding: 2px;
+            border: 1px solid var(--border);
+        }
+
+        .mode-option {
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-tertiary);
+            cursor: pointer;
+            transition: all var(--transition-base);
+        }
+
+        .mode-option:hover {
+            color: var(--text-secondary);
+        }
+
+        .mode-option.active {
+            background: var(--cyan);
+            color: var(--bg-primary);
+            box-shadow: var(--cyan-glow);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .search-bar {
+            position: relative;
+            width: 300px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 40px 10px 16px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 14px;
+            transition: all var(--transition-base);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 3px var(--cyan-dim);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-tertiary);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .header-btn {
+            padding: 8px 12px;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all var(--transition-base);
+            font-size: 12px;
+        }
+
+        .header-btn:hover {
+            background: var(--bg-hover);
+            border-color: var(--border-focus);
+            color: var(--text-primary);
+        }
+
+        /* Timeline Controls */
+        .timeline-bar {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .playback-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .playback-btn {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all var(--transition-base);
+        }
+
+        .playback-btn:hover {
+            background: var(--bg-hover);
+            border-color: var(--border-focus);
+            color: var(--cyan);
+        }
+
+        .playback-btn.active {
+            background: var(--cyan);
+            color: var(--bg-primary);
+            border-color: var(--cyan);
+            box-shadow: var(--cyan-glow);
+        }
+
+        .playback-btn.paused {
+            animation: pausePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pausePulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .speed-selector {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+        }
+
+        .speed-option {
+            padding: 6px 10px;
+            font-size: 11px;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-tertiary);
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all var(--transition-fast);
+        }
+
+        .speed-option:hover {
+            color: var(--text-secondary);
+            background: var(--bg-hover);
+        }
+
+        .speed-option.active {
+            background: var(--cyan);
+            color: var(--bg-primary);
+        }
+
+        .timeline-progress {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .month-display {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            color: var(--cyan);
+            min-width: 80px;
+        }
+
+        .progress-container {
+            flex: 1;
+            height: 32px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 4px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .progress-track {
+            height: 100%;
+            background: linear-gradient(90deg, var(--cyan-dim) 0%, var(--amber-dim) 50%, var(--red-dim) 100%);
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 20%;
+            background: linear-gradient(90deg, var(--cyan) 0%, var(--amber) 100%);
+            border-radius: 4px;
+            position: relative;
+            transition: width var(--transition-base);
+        }
+
+        .progress-handle {
+            position: absolute;
+            right: -8px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            background: var(--text-primary);
+            border: 2px solid var(--cyan);
+            border-radius: 50%;
+            box-shadow: var(--cyan-glow);
+            cursor: grab;
+        }
+
+        .progress-handle:active {
+            cursor: grabbing;
+        }
+
+        .progress-markers {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 8px;
+            pointer-events: none;
+        }
+
+        .progress-marker {
+            width: 1px;
+            height: 8px;
+            background: var(--border);
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* Left Panel - Actor Tabs & Controls */
+        .left-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid var(--border);
+        }
+
+        .actor-tabs {
+            display: flex;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
+            padding: 0 16px;
+        }
+
+        .actor-tab {
+            position: relative;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-tertiary);
+            cursor: pointer;
+            transition: all var(--transition-base);
+            border-bottom: 2px solid transparent;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+
+        .actor-tab:hover {
+            color: var(--text-secondary);
+            background: var(--bg-hover);
+        }
+
+        .actor-tab.active {
+            color: var(--cyan);
+            border-bottom-color: var(--cyan);
+        }
+
+        .actor-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--cyan);
+            box-shadow: var(--cyan-glow);
+        }
+
+        .actor-tab-icon {
+            font-size: 16px;
+        }
+
+        .actor-tab-count {
+            margin-left: 4px;
+            padding: 2px 6px;
+            background: var(--bg-tertiary);
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text-tertiary);
+        }
+
+        .actor-tab.active .actor-tab-count {
+            background: var(--cyan-dim);
+            color: var(--cyan);
+        }
+
+        /* Control Panel */
+        .control-panel {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+        }
+
+        .control-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 16px;
+            overflow: hidden;
+            transition: all var(--transition-base);
+        }
+
+        .control-section.collapsed .section-header {
+            border-bottom: none;
+        }
+
+        .section-header {
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            border-bottom: 1px solid var(--border);
+            transition: all var(--transition-base);
+        }
+
+        .section-header:hover {
+            background: var(--bg-hover);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+        }
+
+        .section-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-tertiary);
+            border-radius: 4px;
+            font-size: 12px;
+            color: var(--cyan);
+        }
+
+        .section-toggle {
+            color: var(--text-tertiary);
+            transition: transform var(--transition-base);
+        }
+
+        .control-section.collapsed .section-toggle {
+            transform: rotate(-90deg);
+        }
+
+        .section-content {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            max-height: 400px;
+            overflow: hidden;
+            transition: all var(--transition-base);
+        }
+
+        .control-section.collapsed .section-content {
+            max-height: 0;
+            padding: 0 20px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .control-label {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 12px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all var(--transition-base);
+            flex: 1;
+        }
+
+        .radio-option:hover {
+            background: var(--bg-hover);
+            border-color: var(--border-focus);
+        }
+
+        .radio-option.active {
+            background: var(--cyan-dim);
+            border-color: var(--cyan);
+            box-shadow: inset 0 0 0 1px var(--cyan);
+        }
+
+        .radio-dot {
+            width: 12px;
+            height: 12px;
+            border: 2px solid var(--text-tertiary);
+            border-radius: 50%;
+            transition: all var(--transition-base);
+        }
+
+        .radio-option.active .radio-dot {
+            border-color: var(--cyan);
+            background: var(--cyan);
+            box-shadow: var(--cyan-glow);
+        }
+
+        .radio-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* Right Sidebar - Queue & Decisions */
+        .right-sidebar {
+            width: 320px;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-secondary);
+            border-left: 1px solid var(--border);
+        }
+
+        .queue-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .queue-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-tertiary);
+        }
+
+        .queue-title {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .queue-count {
+            font-size: 24px;
+            font-weight: 200;
+            color: var(--amber);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .queue-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+        }
+
+        .queue-item {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all var(--transition-base);
+            position: relative;
+        }
+
+        .queue-item:hover {
+            background: var(--bg-hover);
+            border-color: var(--border-focus);
+            transform: translateX(-4px);
+        }
+
+        .queue-item-month {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--cyan);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .queue-item-decision {
+            font-size: 13px;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .queue-item-preview {
+            font-size: 11px;
+            color: var(--text-tertiary);
+        }
+
+        .queue-item-remove {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-primary);
+            border-radius: 4px;
+            color: var(--text-tertiary);
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0;
+            transition: all var(--transition-fast);
+        }
+
+        .queue-item:hover .queue-item-remove {
+            opacity: 1;
+        }
+
+        .queue-item-remove:hover {
+            background: var(--red);
+            color: var(--text-primary);
+        }
+
+        .queue-actions {
+            padding: 16px;
+            display: flex;
+            gap: 8px;
+            border-top: 1px solid var(--border);
+        }
+
+        .queue-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition-base);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .queue-btn.primary {
+            background: var(--cyan);
+            border: 1px solid var(--cyan);
+            color: var(--bg-primary);
+        }
+
+        .queue-btn.primary:hover {
+            box-shadow: var(--cyan-glow);
+            transform: translateY(-1px);
+        }
+
+        .queue-btn.secondary {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .queue-btn.secondary:hover {
+            background: var(--bg-hover);
+            border-color: var(--border-focus);
+        }
+
+        /* Bottom Panel - Decision History */
+        .bottom-panel {
+            height: 160px;
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .history-header {
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-tertiary);
+        }
+
+        .history-title {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+        }
+
+        .history-filter {
+            display: flex;
+            gap: 8px;
+        }
+
+        .filter-chip {
+            padding: 4px 8px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 10px;
+            color: var(--text-tertiary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .filter-chip:hover {
+            border-color: var(--border-focus);
+            color: var(--text-secondary);
+        }
+
+        .filter-chip.active {
+            background: var(--cyan-dim);
+            border-color: var(--cyan);
+            color: var(--cyan);
+        }
+
+        .history-timeline {
+            flex: 1;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .history-entry {
+            min-width: 240px;
+            padding: 12px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all var(--transition-base);
+            position: relative;
+        }
+
+        .history-entry:hover {
+            background: var(--bg-hover);
+            border-color: var(--border-focus);
+            transform: translateY(-4px);
+        }
+
+        .history-entry::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 8px;
+            background: var(--text-tertiary);
+            border-radius: 50%;
+        }
+
+        .history-entry.critical::before {
+            background: var(--red);
+            box-shadow: var(--red-glow);
+        }
+
+        .history-entry.positive::before {
+            background: var(--green);
+            box-shadow: var(--green-glow);
+        }
+
+        .history-month {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--cyan);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .history-decision {
+            font-size: 12px;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .history-impact {
+            font-size: 10px;
+            color: var(--text-tertiary);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .impact-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+            display: inline-block;
+        }
+
+        .impact-positive {
+            background: var(--green-dim);
+            border: 1px solid var(--green);
+        }
+
+        .impact-negative {
+            background: var(--red-dim);
+            border: 1px solid var(--red);
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: absolute;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-size: 11px;
+            color: var(--text-secondary);
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity var(--transition-fast);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .tooltip.visible {
+            opacity: 1;
+        }
+
+        /* Keyboard shortcut hints */
+        .kbd {
+            display: inline-block;
+            padding: 2px 6px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            font-size: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-tertiary);
+            margin-left: 4px;
+        }
+
+        /* Loading state */
+        .loading-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 10, 10, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity var(--transition-base);
+        }
+
+        .loading-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .loading-spinner {
+            width: 48px;
+            height: 48px;
+            border: 2px solid var(--border);
+            border-top-color: var(--cyan);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1400px) {
+            .right-sidebar {
+                width: 280px;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .search-bar {
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-effects">
+        <div class="background-grid"></div>
+        <div class="glow-orbs">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <!-- Top Header -->
+        <div class="top-header">
+            <div class="header-left">
+                <div class="god-mode-title">
+                    <div class="god-mode-icon"></div>
+                    <span class="god-mode-text">God Mode</span>
+                    <span class="command-center">Command Center</span>
+                </div>
+                <div class="mode-selector">
+                    <div class="mode-option">Beginner</div>
+                    <div class="mode-option">Intermediate</div>
+                    <div class="mode-option active">Expert</div>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="search-bar">
+                    <input type="text" class="search-input" placeholder="Search controls..." />
+                    <span class="search-icon">🔍</span>
+                </div>
+                <div class="header-actions">
+                    <button class="header-btn">Settings</button>
+                    <button class="header-btn">Help <span class="kbd">?</span></button>
+                    <button class="header-btn">Export</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Timeline Controls -->
+        <div class="timeline-bar">
+            <div class="playback-controls">
+                <button class="playback-btn" title="Step Back (Shift+←)">⏮</button>
+                <button class="playback-btn active paused" title="Play/Pause (Space)">⏸</button>
+                <button class="playback-btn" title="Step Forward (Shift+→)">⏭</button>
+                <button class="playback-btn" title="Reset (R)">🔄</button>
+            </div>
+
+            <div class="speed-selector">
+                <div class="speed-option">0.25x</div>
+                <div class="speed-option active">1x</div>
+                <div class="speed-option">2x</div>
+                <div class="speed-option">5x</div>
+                <div class="speed-option">10x</div>
+            </div>
+
+            <div class="timeline-progress">
+                <div class="month-display">Month 24</div>
+                <div class="progress-container">
+                    <div class="progress-track">
+                        <div class="progress-fill">
+                            <div class="progress-handle"></div>
+                        </div>
+                        <div class="progress-markers">
+                            <div class="progress-marker"></div>
+                            <div class="progress-marker"></div>
+                            <div class="progress-marker"></div>
+                            <div class="progress-marker"></div>
+                            <div class="progress-marker"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="month-display" style="color: var(--text-tertiary);">/ 120</div>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <!-- Left Panel - Actor Controls -->
+            <div class="left-panel">
+                <div class="actor-tabs">
+                    <div class="actor-tab active">
+                        <span class="actor-tab-icon">🏛️</span>
+                        <span>Government</span>
+                        <span class="actor-tab-count">12</span>
+                    </div>
+                    <div class="actor-tab">
+                        <span class="actor-tab-icon">🤖</span>
+                        <span>AI Agents</span>
+                        <span class="actor-tab-count">20</span>
+                    </div>
+                    <div class="actor-tab">
+                        <span class="actor-tab-icon">👥</span>
+                        <span>Society</span>
+                        <span class="actor-tab-count">8</span>
+                    </div>
+                    <div class="actor-tab">
+                        <span class="actor-tab-icon">🏢</span>
+                        <span>Organizations</span>
+                        <span class="actor-tab-count">15</span>
+                    </div>
+                    <div class="actor-tab">
+                        <span class="actor-tab-icon">⚙️</span>
+                        <span>Systems</span>
+                        <span class="actor-tab-count">45</span>
+                    </div>
+                </div>
+
+                <div class="control-panel">
+                    <!-- Example Control Sections -->
+                    <div class="control-section">
+                        <div class="section-header">
+                            <div class="section-title">
+                                <div class="section-icon">💰</div>
+                                <span>Economic Policy</span>
+                            </div>
+                            <span class="section-toggle">▼</span>
+                        </div>
+                        <div class="section-content">
+                            <div class="control-group">
+                                <label class="control-label">Policy Type</label>
+                                <div class="radio-group">
+                                    <div class="radio-option active">
+                                        <div class="radio-dot"></div>
+                                        <span class="radio-label">Generous UBI</span>
+                                    </div>
+                                    <div class="radio-option">
+                                        <div class="radio-dot"></div>
+                                        <span class="radio-label">Means-tested</span>
+                                    </div>
+                                    <div class="radio-option">
+                                        <div class="radio-dot"></div>
+                                        <span class="radio-label">Job Guarantee</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control-section collapsed">
+                        <div class="section-header">
+                            <div class="section-title">
+                                <div class="section-icon">🤖</div>
+                                <span>AI Regulation</span>
+                            </div>
+                            <span class="section-toggle">▼</span>
+                        </div>
+                        <div class="section-content"></div>
+                    </div>
+
+                    <div class="control-section collapsed">
+                        <div class="section-header">
+                            <div class="section-title">
+                                <div class="section-icon">🚨</div>
+                                <span>Crisis Response</span>
+                            </div>
+                            <span class="section-toggle">▼</span>
+                        </div>
+                        <div class="section-content"></div>
+                    </div>
+
+                    <div class="control-section collapsed">
+                        <div class="section-header">
+                            <div class="section-title">
+                                <div class="section-icon">🌍</div>
+                                <span>Environmental Policy</span>
+                            </div>
+                            <span class="section-toggle">▼</span>
+                        </div>
+                        <div class="section-content"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Sidebar -->
+            <div class="right-sidebar">
+                <div class="queue-panel">
+                    <div class="queue-header">
+                        <div class="queue-title">Pending Decisions</div>
+                        <div class="queue-count">3</div>
+                    </div>
+                    <div class="queue-items">
+                        <div class="queue-item">
+                            <div class="queue-item-month">Month 26</div>
+                            <div class="queue-item-decision">Change Policy → Means-tested</div>
+                            <div class="queue-item-preview">GDP +2%, Trust -5%</div>
+                            <div class="queue-item-remove">×</div>
+                        </div>
+                        <div class="queue-item">
+                            <div class="queue-item-month">Month 30</div>
+                            <div class="queue-item-decision">Deploy Pandemic Response</div>
+                            <div class="queue-item-preview">Resources: 60%</div>
+                            <div class="queue-item-remove">×</div>
+                        </div>
+                        <div class="queue-item">
+                            <div class="queue-item-month">Month 32</div>
+                            <div class="queue-item-decision">AI-3 Research → Digital</div>
+                            <div class="queue-item-preview">Tech acceleration</div>
+                            <div class="queue-item-remove">×</div>
+                        </div>
+                    </div>
+                    <div class="queue-actions">
+                        <button class="queue-btn primary">Apply All</button>
+                        <button class="queue-btn secondary">Clear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Panel - Decision History -->
+        <div class="bottom-panel">
+            <div class="history-header">
+                <div class="history-title">Decision History</div>
+                <div class="history-filter">
+                    <div class="filter-chip active">All</div>
+                    <div class="filter-chip">Critical</div>
+                    <div class="filter-chip">Recent</div>
+                </div>
+            </div>
+            <div class="history-timeline">
+                <div class="history-entry positive">
+                    <div class="history-month">Month 12</div>
+                    <div class="history-decision">Policy → Generous UBI</div>
+                    <div class="history-impact">
+                        <span class="impact-indicator impact-positive"></span>
+                        QoL +15%, Trust +8%
+                    </div>
+                </div>
+                <div class="history-entry">
+                    <div class="history-month">Month 16</div>
+                    <div class="history-decision">AI Compute Threshold</div>
+                    <div class="history-impact">
+                        <span class="impact-indicator impact-positive"></span>
+                        Slowed AGI by 6 months
+                    </div>
+                </div>
+                <div class="history-entry critical">
+                    <div class="history-month">Month 20</div>
+                    <div class="history-decision">Nuclear Crisis Prevented</div>
+                    <div class="history-impact">
+                        <span class="impact-indicator impact-positive"></span>
+                        2B lives saved
+                    </div>
+                </div>
+                <div class="history-entry">
+                    <div class="history-month">Month 22</div>
+                    <div class="history-decision">Climate Tech Deployed</div>
+                    <div class="history-impact">
+                        <span class="impact-indicator impact-negative"></span>
+                        GDP -3%, Emissions -20%
+                    </div>
+                </div>
+                <div class="history-entry">
+                    <div class="history-month">Month 24</div>
+                    <div class="history-decision">AI Safety Investment</div>
+                    <div class="history-impact">
+                        <span class="impact-indicator impact-positive"></span>
+                        Alignment +12%
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Tooltip -->
+    <div class="tooltip">Tooltip content</div>
+
+    <script>
+        // Initialize God Mode Command Center
+        class GodModeCommandCenter {
+            constructor() {
+                this.isPaused = true;
+                this.currentMonth = 24;
+                this.maxMonth = 120;
+                this.speed = 1;
+                this.activeTab = 'government';
+                this.queuedDecisions = [];
+                this.decisionHistory = [];
+
+                this.init();
+            }
+
+            init() {
+                this.setupPlaybackControls();
+                this.setupSpeedControls();
+                this.setupTimelineControls();
+                this.setupActorTabs();
+                this.setupControlSections();
+                this.setupQueueHandling();
+                this.setupKeyboardShortcuts();
+                this.setupTooltips();
+                this.setupModeSelector();
+                this.setupSearch();
+                this.animateInterface();
+            }
+
+            setupPlaybackControls() {
+                document.querySelectorAll('.playback-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const action = e.currentTarget.title.split(' ')[0].toLowerCase();
+                        this.handlePlayback(action);
+                    });
+                });
+            }
+
+            handlePlayback(action) {
+                switch(action) {
+                    case 'play/pause':
+                        this.togglePlayPause();
+                        break;
+                    case 'step':
+                        const direction = action.includes('back') ? -1 : 1;
+                        this.step(direction);
+                        break;
+                    case 'reset':
+                        this.reset();
+                        break;
+                }
+            }
+
+            togglePlayPause() {
+                this.isPaused = !this.isPaused;
+                const btn = document.querySelector('.playback-btn.active');
+                btn.innerHTML = this.isPaused ? '⏸' : '▶';
+                btn.classList.toggle('paused', this.isPaused);
+
+                if (!this.isPaused) {
+                    this.startSimulation();
+                }
+            }
+
+            startSimulation() {
+                if (!this.isPaused && this.currentMonth < this.maxMonth) {
+                    setTimeout(() => {
+                        this.currentMonth++;
+                        this.updateTimeline();
+                        this.startSimulation();
+                    }, 1000 / this.speed);
+                }
+            }
+
+            step(direction) {
+                this.currentMonth = Math.max(0, Math.min(this.maxMonth, this.currentMonth + direction));
+                this.updateTimeline();
+            }
+
+            reset() {
+                this.currentMonth = 0;
+                this.updateTimeline();
+                this.clearQueue();
+            }
+
+            updateTimeline() {
+                const progress = (this.currentMonth / this.maxMonth) * 100;
+                document.querySelector('.progress-fill').style.width = progress + '%';
+                document.querySelector('.month-display').textContent = `Month ${this.currentMonth}`;
+
+                // Process queued decisions at appropriate months
+                this.processQueuedDecisions();
+            }
+
+            setupSpeedControls() {
+                document.querySelectorAll('.speed-option').forEach(option => {
+                    option.addEventListener('click', (e) => {
+                        document.querySelector('.speed-option.active')?.classList.remove('active');
+                        e.target.classList.add('active');
+                        this.speed = parseFloat(e.target.textContent);
+                    });
+                });
+            }
+
+            setupTimelineControls() {
+                const progressContainer = document.querySelector('.progress-container');
+                let isDragging = false;
+
+                progressContainer.addEventListener('click', (e) => {
+                    const rect = progressContainer.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const percentage = (x / rect.width) * 100;
+                    this.currentMonth = Math.round((percentage / 100) * this.maxMonth);
+                    this.updateTimeline();
+                });
+
+                const handle = document.querySelector('.progress-handle');
+                handle.addEventListener('mousedown', () => isDragging = true);
+                document.addEventListener('mousemove', (e) => {
+                    if (isDragging) {
+                        const rect = progressContainer.getBoundingClientRect();
+                        const x = Math.max(0, Math.min(rect.width, e.clientX - rect.left));
+                        const percentage = (x / rect.width) * 100;
+                        this.currentMonth = Math.round((percentage / 100) * this.maxMonth);
+                        this.updateTimeline();
+                    }
+                });
+                document.addEventListener('mouseup', () => isDragging = false);
+            }
+
+            setupActorTabs() {
+                document.querySelectorAll('.actor-tab').forEach(tab => {
+                    tab.addEventListener('click', (e) => {
+                        document.querySelector('.actor-tab.active')?.classList.remove('active');
+                        e.currentTarget.classList.add('active');
+                        this.activeTab = e.currentTarget.querySelector('span:nth-child(2)').textContent.toLowerCase();
+                        this.loadActorControls(this.activeTab);
+                    });
+                });
+            }
+
+            loadActorControls(actor) {
+                console.log(`Loading controls for ${actor}`);
+                // Would load appropriate control panels here
+            }
+
+            setupControlSections() {
+                document.querySelectorAll('.section-header').forEach(header => {
+                    header.addEventListener('click', () => {
+                        const section = header.parentElement;
+                        section.classList.toggle('collapsed');
+                    });
+                });
+
+                // Setup radio options
+                document.querySelectorAll('.radio-option').forEach(option => {
+                    option.addEventListener('click', (e) => {
+                        const group = e.currentTarget.parentElement;
+                        group.querySelectorAll('.radio-option').forEach(opt => {
+                            opt.classList.remove('active');
+                        });
+                        e.currentTarget.classList.add('active');
+                    });
+                });
+            }
+
+            setupQueueHandling() {
+                // Remove queue items
+                document.querySelectorAll('.queue-item-remove').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const item = e.target.parentElement;
+                        item.style.transform = 'translateX(100%)';
+                        item.style.opacity = '0';
+                        setTimeout(() => item.remove(), 300);
+                        this.updateQueueCount();
+                    });
+                });
+
+                // Queue actions
+                document.querySelector('.queue-btn.primary').addEventListener('click', () => {
+                    this.applyQueuedDecisions();
+                });
+
+                document.querySelector('.queue-btn.secondary').addEventListener('click', () => {
+                    this.clearQueue();
+                });
+            }
+
+            processQueuedDecisions() {
+                const items = document.querySelectorAll('.queue-item');
+                items.forEach(item => {
+                    const month = parseInt(item.querySelector('.queue-item-month').textContent.replace('Month ', ''));
+                    if (month === this.currentMonth) {
+                        this.applyDecision(item);
+                        item.remove();
+                        this.updateQueueCount();
+                    }
+                });
+            }
+
+            applyDecision(item) {
+                const decision = item.querySelector('.queue-item-decision').textContent;
+                const preview = item.querySelector('.queue-item-preview').textContent;
+
+                // Add to history
+                this.addToHistory(this.currentMonth, decision, preview);
+
+                // Show notification
+                this.showNotification(`Applied: ${decision}`);
+            }
+
+            applyQueuedDecisions() {
+                document.querySelectorAll('.queue-item').forEach(item => {
+                    this.applyDecision(item);
+                });
+                this.clearQueue();
+            }
+
+            clearQueue() {
+                document.querySelectorAll('.queue-item').forEach(item => item.remove());
+                this.updateQueueCount();
+            }
+
+            updateQueueCount() {
+                const count = document.querySelectorAll('.queue-item').length;
+                document.querySelector('.queue-count').textContent = count;
+            }
+
+            addToHistory(month, decision, impact) {
+                const timeline = document.querySelector('.history-timeline');
+                const entry = document.createElement('div');
+                entry.className = 'history-entry';
+                entry.innerHTML = `
+                    <div class="history-month">Month ${month}</div>
+                    <div class="history-decision">${decision}</div>
+                    <div class="history-impact">
+                        <span class="impact-indicator impact-positive"></span>
+                        ${impact}
+                    </div>
+                `;
+                timeline.insertBefore(entry, timeline.firstChild);
+            }
+
+            setupKeyboardShortcuts() {
+                document.addEventListener('keydown', (e) => {
+                    if (e.target.tagName === 'INPUT') return;
+
+                    switch(e.key) {
+                        case ' ':
+                            e.preventDefault();
+                            this.togglePlayPause();
+                            break;
+                        case 'ArrowLeft':
+                            if (e.shiftKey) this.step(-1);
+                            break;
+                        case 'ArrowRight':
+                            if (e.shiftKey) this.step(1);
+                            break;
+                        case 'r':
+                        case 'R':
+                            this.reset();
+                            break;
+                        case '?':
+                            this.showHelp();
+                            break;
+                        case 'Escape':
+                            this.closeAllPanels();
+                            break;
+                    }
+                });
+            }
+
+            setupTooltips() {
+                const tooltip = document.querySelector('.tooltip');
+
+                document.querySelectorAll('[title]').forEach(element => {
+                    element.addEventListener('mouseenter', (e) => {
+                        tooltip.textContent = e.target.title;
+                        tooltip.classList.add('visible');
+
+                        const rect = e.target.getBoundingClientRect();
+                        tooltip.style.left = rect.left + 'px';
+                        tooltip.style.top = (rect.bottom + 8) + 'px';
+                    });
+
+                    element.addEventListener('mouseleave', () => {
+                        tooltip.classList.remove('visible');
+                    });
+                });
+            }
+
+            setupModeSelector() {
+                document.querySelectorAll('.mode-option').forEach(option => {
+                    option.addEventListener('click', (e) => {
+                        document.querySelector('.mode-option.active')?.classList.remove('active');
+                        e.target.classList.add('active');
+                        this.setComplexityMode(e.target.textContent.toLowerCase());
+                    });
+                });
+            }
+
+            setComplexityMode(mode) {
+                console.log(`Setting complexity mode: ${mode}`);
+                // Would adjust UI complexity here
+            }
+
+            setupSearch() {
+                const searchInput = document.querySelector('.search-input');
+                searchInput.addEventListener('input', (e) => {
+                    this.searchControls(e.target.value);
+                });
+
+                searchInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        this.jumpToFirstResult();
+                    }
+                });
+            }
+
+            searchControls(query) {
+                console.log(`Searching for: ${query}`);
+                // Would implement search functionality here
+            }
+
+            jumpToFirstResult() {
+                console.log('Jumping to first search result');
+            }
+
+            showNotification(message) {
+                // Create and show temporary notification
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    padding: 16px 24px;
+                    background: var(--cyan);
+                    color: var(--bg-primary);
+                    border-radius: 8px;
+                    font-weight: 500;
+                    box-shadow: var(--cyan-glow);
+                    z-index: 10000;
+                    animation: slideIn 0.3s ease;
+                `;
+                notification.textContent = message;
+                document.body.appendChild(notification);
+
+                setTimeout(() => {
+                    notification.style.animation = 'slideOut 0.3s ease';
+                    setTimeout(() => notification.remove(), 300);
+                }, 3000);
+            }
+
+            showHelp() {
+                console.log('Showing help panel');
+                // Would show help modal here
+            }
+
+            closeAllPanels() {
+                document.querySelectorAll('.control-section').forEach(section => {
+                    section.classList.add('collapsed');
+                });
+            }
+
+            animateInterface() {
+                // Add subtle animations on load
+                document.querySelectorAll('.control-section').forEach((section, i) => {
+                    section.style.opacity = '0';
+                    section.style.transform = 'translateY(20px)';
+                    setTimeout(() => {
+                        section.style.transition = 'all 0.5s ease';
+                        section.style.opacity = '1';
+                        section.style.transform = 'translateY(0)';
+                    }, i * 100);
+                });
+
+                // Animate queue items
+                document.querySelectorAll('.queue-item').forEach((item, i) => {
+                    item.style.opacity = '0';
+                    item.style.transform = 'translateX(20px)';
+                    setTimeout(() => {
+                        item.style.transition = 'all 0.3s ease';
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateX(0)';
+                    }, 500 + i * 100);
+                });
+            }
+        }
+
+        // Initialize the command center
+        const commandCenter = new GodModeCommandCenter();
+
+        // Add global styles for animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+
+            @keyframes slideOut {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Loading complete
+        setTimeout(() => {
+            document.querySelector('.loading-overlay').classList.remove('active');
+        }, 1000);
+    </script>
+</body>
+</html>

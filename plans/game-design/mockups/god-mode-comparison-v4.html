@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>God Mode v4 - Comparison View</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        :root {
+            --bg-primary: #0A0A0A;
+            --bg-secondary: #0F0F0F;
+            --bg-tertiary: #141414;
+            --bg-hover: rgba(0, 240, 255, 0.03);
+            --text-primary: #FFFFFF;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --text-tertiary: rgba(255, 255, 255, 0.4);
+            --text-disabled: rgba(255, 255, 255, 0.2);
+            --cyan: #00F0FF;
+            --cyan-dim: rgba(0, 240, 255, 0.1);
+            --cyan-glow: 0 0 20px rgba(0, 240, 255, 0.6);
+            --amber: #FFB000;
+            --amber-dim: rgba(255, 176, 0, 0.1);
+            --amber-glow: 0 0 20px rgba(255, 176, 0, 0.6);
+            --red: #FF0040;
+            --red-dim: rgba(255, 0, 64, 0.1);
+            --red-glow: 0 0 20px rgba(255, 0, 64, 0.6);
+            --green: #00FF88;
+            --green-dim: rgba(0, 255, 136, 0.1);
+            --green-glow: 0 0 20px rgba(0, 255, 136, 0.6);
+            --purple: #B000FF;
+            --purple-dim: rgba(176, 0, 255, 0.1);
+            --purple-glow: 0 0 20px rgba(176, 0, 255, 0.6);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-focus: rgba(0, 240, 255, 0.3);
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
+            --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4);
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Animated background */
+        .background-effects {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .split-gradient {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg,
+                var(--cyan-dim) 0%,
+                transparent 45%,
+                transparent 55%,
+                var(--amber-dim) 100%);
+            opacity: 0.05;
+            animation: gradientShift 20s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(20px); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 32px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary));
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px 32px;
+            margin-bottom: 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 50%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--cyan), transparent);
+            transform: translateY(-50%);
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 0;
+            width: 50%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--amber));
+            transform: translateY(-50%);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .page-icon {
+            font-size: 32px;
+            animation: compareBalance 3s ease-in-out infinite;
+        }
+
+        @keyframes compareBalance {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 200;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, var(--cyan), var(--amber));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .view-controls {
+            display: flex;
+            gap: 16px;
+        }
+
+        .view-btn {
+            padding: 10px 20px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .view-btn:hover {
+            border-color: var(--cyan);
+            color: var(--cyan);
+            transform: translateY(-1px);
+        }
+
+        .view-btn.active {
+            background: var(--cyan-dim);
+            border-color: var(--cyan);
+            color: var(--cyan);
+        }
+
+        /* Split Screen Container */
+        .split-container {
+            display: grid;
+            grid-template-columns: 1fr 2px 1fr;
+            gap: 0;
+            margin-bottom: 32px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--bg-secondary);
+        }
+
+        .split-divider {
+            background: linear-gradient(180deg, var(--cyan), var(--purple), var(--amber));
+            position: relative;
+            cursor: col-resize;
+        }
+
+        .split-divider::after {
+            content: '⋮';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--text-tertiary);
+            font-size: 20px;
+        }
+
+        .comparison-panel {
+            padding: 32px;
+            position: relative;
+        }
+
+        .comparison-panel.manual {
+            background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary));
+        }
+
+        .comparison-panel.auto {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .panel-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .panel-label {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .panel-label.manual {
+            color: var(--cyan);
+        }
+
+        .panel-label.auto {
+            color: var(--amber);
+        }
+
+        .panel-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .panel-badge.manual {
+            background: var(--cyan-dim);
+            color: var(--cyan);
+        }
+
+        .panel-badge.auto {
+            background: var(--amber-dim);
+            color: var(--amber);
+        }
+
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .metric-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+            transition: all var(--transition-fast);
+        }
+
+        .metric-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .metric-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-tertiary);
+            margin-bottom: 8px;
+        }
+
+        .metric-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 24px;
+            font-weight: 300;
+            margin-bottom: 8px;
+        }
+
+        .metric-value.manual {
+            color: var(--cyan);
+        }
+
+        .metric-value.auto {
+            color: var(--amber);
+        }
+
+        .metric-value.better {
+            color: var(--green);
+        }
+
+        .metric-value.worse {
+            color: var(--red);
+        }
+
+        .metric-change {
+            font-size: 12px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .change-arrow {
+            font-size: 14px;
+        }
+
+        .change-arrow.up {
+            color: var(--green);
+        }
+
+        .change-arrow.down {
+            color: var(--red);
+        }
+
+        /* Timeline Charts */
+        .timeline-chart {
+            height: 200px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .chart-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .chart-canvas {
+            position: relative;
+            height: 150px;
+            background-image:
+                repeating-linear-gradient(0deg, var(--border) 0, var(--border) 1px, transparent 1px, transparent 30px),
+                repeating-linear-gradient(90deg, var(--border) 0, var(--border) 1px, transparent 1px, transparent 50px);
+        }
+
+        .chart-line {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+        }
+
+        .chart-line.manual {
+            background: linear-gradient(to top, var(--cyan-dim), transparent);
+            clip-path: polygon(
+                0% 100%,
+                10% 85%,
+                20% 70%,
+                30% 60%,
+                40% 55%,
+                50% 45%,
+                60% 40%,
+                70% 35%,
+                80% 30%,
+                90% 25%,
+                100% 20%,
+                100% 100%
+            );
+        }
+
+        .chart-line.auto {
+            background: linear-gradient(to top, var(--amber-dim), transparent);
+            clip-path: polygon(
+                0% 100%,
+                10% 90%,
+                20% 85%,
+                30% 80%,
+                40% 75%,
+                50% 70%,
+                60% 65%,
+                70% 60%,
+                80% 55%,
+                90% 50%,
+                100% 45%,
+                100% 100%
+            );
+        }
+
+        /* Divergence Analysis */
+        .divergence-section {
+            background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary));
+            border: 1px solid var(--purple);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 32px;
+        }
+
+        .divergence-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .divergence-title {
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--purple);
+        }
+
+        .divergence-score {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 24px;
+            font-weight: 300;
+            color: var(--purple);
+            text-shadow: var(--purple-glow);
+        }
+
+        .divergence-list {
+            display: grid;
+            gap: 16px;
+        }
+
+        .divergence-item {
+            display: grid;
+            grid-template-columns: auto 1fr 1fr;
+            gap: 16px;
+            align-items: center;
+            padding: 12px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            transition: all var(--transition-fast);
+        }
+
+        .divergence-item:hover {
+            border-color: var(--purple);
+            transform: translateX(4px);
+        }
+
+        .divergence-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--purple-dim);
+            border-radius: 50%;
+            font-size: 20px;
+        }
+
+        .divergence-detail {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .divergence-name {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .divergence-value {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        /* Decision Points */
+        .decision-points {
+            display: grid;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .decision-point {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 16px;
+            transition: all var(--transition-fast);
+        }
+
+        .decision-point:hover {
+            border-color: var(--purple);
+            box-shadow: var(--shadow-md);
+        }
+
+        .decision-month {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--purple-dim), transparent);
+            border: 2px solid var(--purple);
+            border-radius: 50%;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--purple);
+        }
+
+        .decision-comparison {
+            display: grid;
+            gap: 8px;
+        }
+
+        .decision-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .decision-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-tertiary);
+            min-width: 60px;
+        }
+
+        .decision-value {
+            font-size: 12px;
+            color: var(--text-primary);
+        }
+
+        .decision-value.manual {
+            color: var(--cyan);
+        }
+
+        .decision-value.auto {
+            color: var(--amber);
+        }
+
+        /* Export Section */
+        .export-section {
+            background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary));
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .export-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .export-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .export-description {
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+
+        .export-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .export-btn {
+            padding: 12px 24px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .export-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .export-btn.primary {
+            background: var(--purple-dim);
+            border-color: var(--purple);
+            color: var(--purple);
+        }
+
+        .export-btn.primary:hover {
+            box-shadow: var(--shadow-lg), var(--purple-glow);
+        }
+
+        /* Sync Indicator */
+        .sync-indicator {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            padding: 16px 24px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: var(--shadow-lg);
+            animation: syncPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes syncPulse {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+
+        .sync-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--green);
+            border-radius: 50%;
+            animation: syncBlink 1s ease-in-out infinite;
+        }
+
+        @keyframes syncBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .sync-text {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* Accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-effects">
+        <div class="split-gradient"></div>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="page-title">
+                    <span class="page-icon">⚖️</span>
+                    <h1>Comparison View</h1>
+                </div>
+                <div class="view-controls">
+                    <button class="view-btn active">Side by Side</button>
+                    <button class="view-btn">Overlay</button>
+                    <button class="view-btn">Diff View</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Split Screen Comparison -->
+        <div class="split-container">
+            <!-- Manual Panel -->
+            <div class="comparison-panel manual">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <span class="panel-label manual">Manual Control</span>
+                        <span class="panel-badge manual">Your Decisions</span>
+                    </div>
+                </div>
+
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-label">GDP</div>
+                        <div class="metric-value manual better">$95T</div>
+                        <div class="metric-change">
+                            <span class="change-arrow up">↑</span>
+                            <span>+7% vs auto</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Quality of Life</div>
+                        <div class="metric-value manual better">6.2</div>
+                        <div class="metric-change">
+                            <span class="change-arrow up">↑</span>
+                            <span>+0.4 vs auto</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Extinction Risk</div>
+                        <div class="metric-value manual better">15%</div>
+                        <div class="metric-change">
+                            <span class="change-arrow down">↓</span>
+                            <span>-10% vs auto</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Utopia Path</div>
+                        <div class="metric-value manual">Emerging</div>
+                        <div class="metric-change">
+                            <span>Active trajectory</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-chart">
+                    <div class="chart-title">Progress Timeline</div>
+                    <div class="chart-canvas">
+                        <div class="chart-line manual"></div>
+                    </div>
+                </div>
+
+                <div class="decision-points">
+                    <div class="decision-point">
+                        <div class="decision-month">M12</div>
+                        <div class="decision-comparison">
+                            <div class="decision-row">
+                                <span class="decision-label">Decision</span>
+                                <span class="decision-value manual">Generous UBI</span>
+                            </div>
+                            <div class="decision-row">
+                                <span class="decision-label">Impact</span>
+                                <span class="decision-value">+15% QoL, -2% GDP</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="decision-point">
+                        <div class="decision-month">M18</div>
+                        <div class="decision-comparison">
+                            <div class="decision-row">
+                                <span class="decision-label">Decision</span>
+                                <span class="decision-value manual">Prevented Nuclear War</span>
+                            </div>
+                            <div class="decision-row">
+                                <span class="decision-label">Impact</span>
+                                <span class="decision-value">2B lives saved</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Divider -->
+            <div class="split-divider"></div>
+
+            <!-- Auto Panel -->
+            <div class="comparison-panel auto">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <span class="panel-label auto">Automated</span>
+                        <span class="panel-badge auto">No Intervention</span>
+                    </div>
+                </div>
+
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-label">GDP</div>
+                        <div class="metric-value auto">$88T</div>
+                        <div class="metric-change">
+                            <span>Baseline</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Quality of Life</div>
+                        <div class="metric-value auto">5.8</div>
+                        <div class="metric-change">
+                            <span>Baseline</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Extinction Risk</div>
+                        <div class="metric-value auto worse">25%</div>
+                        <div class="metric-change">
+                            <span>Baseline</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Utopia Path</div>
+                        <div class="metric-value auto worse">Blocked</div>
+                        <div class="metric-change">
+                            <span>No trajectory</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-chart">
+                    <div class="chart-title">Progress Timeline</div>
+                    <div class="chart-canvas">
+                        <div class="chart-line auto"></div>
+                    </div>
+                </div>
+
+                <div class="decision-points">
+                    <div class="decision-point">
+                        <div class="decision-month">M12</div>
+                        <div class="decision-comparison">
+                            <div class="decision-row">
+                                <span class="decision-label">Decision</span>
+                                <span class="decision-value auto">Means-tested Benefits</span>
+                            </div>
+                            <div class="decision-row">
+                                <span class="decision-label">Impact</span>
+                                <span class="decision-value">+3% Trust, -40% Cost</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="decision-point">
+                        <div class="decision-month">M18</div>
+                        <div class="decision-comparison">
+                            <div class="decision-row">
+                                <span class="decision-label">Decision</span>
+                                <span class="decision-value auto worse">Nuclear War Triggered</span>
+                            </div>
+                            <div class="decision-row">
+                                <span class="decision-label">Impact</span>
+                                <span class="decision-value">2B casualties</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Divergence Analysis -->
+        <div class="divergence-section">
+            <div class="divergence-header">
+                <h2 class="divergence-title">Divergence Analysis</h2>
+                <span class="divergence-score">42% Different</span>
+            </div>
+            <div class="divergence-list">
+                <div class="divergence-item">
+                    <div class="divergence-icon">💰</div>
+                    <div class="divergence-detail">
+                        <div class="divergence-name">Economic Policy</div>
+                        <div class="divergence-value">Manual: Generous UBI</div>
+                    </div>
+                    <div class="divergence-detail">
+                        <div class="divergence-name">Impact</div>
+                        <div class="divergence-value">+$7T GDP difference</div>
+                    </div>
+                </div>
+                <div class="divergence-item">
+                    <div class="divergence-icon">☢️</div>
+                    <div class="divergence-detail">
+                        <div class="divergence-name">Crisis Prevention</div>
+                        <div class="divergence-value">Manual: 2 crises prevented</div>
+                    </div>
+                    <div class="divergence-detail">
+                        <div class="divergence-name">Lives Saved</div>
+                        <div class="divergence-value">2 billion</div>
+                    </div>
+                </div>
+                <div class="divergence-item">
+                    <div class="divergence-icon">🤖</div>
+                    <div class="divergence-detail">
+                        <div class="divergence-name">AI Development</div>
+                        <div class="divergence-value">Manual: 4 months delayed</div>
+                    </div>
+                    <div class="divergence-detail">
+                        <div class="divergence-name">Alignment</div>
+                        <div class="divergence-value">+15% probability</div>
+                    </div>
+                </div>
+                <div class="divergence-item">
+                    <div class="divergence-icon">🌍</div>
+                    <div class="divergence-detail">
+                        <div class="divergence-name">Environmental</div>
+                        <div class="divergence-value">Manual: Early intervention</div>
+                    </div>
+                    <div class="divergence-detail">
+                        <div class="divergence-name">Emissions</div>
+                        <div class="divergence-value">-25% vs baseline</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Export Section -->
+        <div class="export-section">
+            <div class="export-info">
+                <div class="export-title">Export Comparison Analysis</div>
+                <div class="export-description">Download full comparison data with decision trees and impact analysis</div>
+            </div>
+            <div class="export-actions">
+                <button class="export-btn">Share</button>
+                <button class="export-btn primary">Export Report</button>
+                <button class="export-btn">Reset View</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sync Indicator -->
+    <div class="sync-indicator">
+        <div class="sync-dot"></div>
+        <span class="sync-text">Simulations synchronized</span>
+    </div>
+
+    <!-- Hidden accessibility announcements -->
+    <div class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>
