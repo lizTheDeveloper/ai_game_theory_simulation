@@ -29,6 +29,20 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 26: Hindcast Validation Blockers Resolved (H-1 + CRIT-1)** (commit 2e588ef)
+- 🔧 **H-1 FIX:** coordinationCapacity normalization bug in BifurcationLogicPhase
+  - BifurcationLogicPhase was dividing coordinationCapacity by 100
+  - But coordinationCapacity is initialized as 0.4 (range [0,1]), not 40
+  - This produced 0.004, falsely triggering "social-breakdown" at Month 0
+  - **Fix:** Removed erroneous `/100.0` normalization
+- 🔧 **CRIT-1 FIX:** Anachronistic tech deployment in hindcast mode
+  - `initializeTechTreeState()` was deploying all "deployed_2025" tech
+  - This included mRNA vaccines, 4th gen solar, etc. appearing in 1990
+  - **Fix:** Added `startYear` parameter to skip 2025 tech for historical scenarios
+  - Both async and sync `createHistoricalInitialState()` functions updated
+- 📄 **Architecture Review:** `reviews/architecture_integration_review_20251126_afternoon.md`
+- 📄 **Files:** `BifurcationLogicPhase.ts`, `historicalInitialization.ts`, `techTree/engine.ts`
+
 **Nov 25: Test Coverage & Deployment Validation Framework** (commit 23ca756)
 - 🧪 **ROADMAP:** New Section 5 - Continuous quality assurance strategy (225 lines)
 - **Philosophy:** "Never truly done. Always testing, validating, verifying."
@@ -1344,6 +1358,23 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - ✅ **Files Updated:** 0 (all current - previous autonomous sessions highly effective)
 - 📖 **Session Document:** research/autonomous_researcher_session_20251113.md (179 lines)
 - 🎯 **Recommendation:** Focus future sessions on emerging 2025 findings rather than backfilling
+
+**Nov 13: Bifurcation Time Series Instrumentation (CRITICAL-1)** (commit 95f8ddb)
+- 📊 **Feature Added:** Export month-by-month bifurcation metrics for variance amplification validation
+- 🎯 **Purpose:** Unblocks Priya validation of 87.2% mortality overshoot (+50% vs 43-58% target)
+- 🔧 **Implementation:**
+  1. Add `amplificationTimeSeries` to RunResult interface (scripts/monteCarloSimulation.ts)
+     - Track amplification, threshold distance, nearest system per month
+     - Export in 2 locations: per-run event logs + final results
+  2. New analysis script: scripts/analyzeBifurcationMetrics.ts
+     - System-specific amplification statistics
+     - Distribution analysis (P50, P75, P90, P95, P99)
+     - Calibration recommendations for system multipliers
+- 📈 **Output:** Time series data enables validation of variance amplification patterns
+- ✅ **Validation:** Smoke test (N=1, 12 months) confirms data export, analysis script processes successfully
+- 📊 **Example Finding:** Governance 12.43× avg amplification (consider reducing)
+- 🔬 **Next:** Run N=30 validation for full statistical analysis
+- **Files:** scripts/monteCarloSimulation.ts, scripts/analyzeBifurcationMetrics.ts
 
 **Nov 13: End-Game Extinction Logic Fix** (commit c61a4cb)
 - ✅ **Bug Fixed:** End-game scenarios (AI civil war, misaligned AI dominance) locked outcome to 'extinction' without verifying population actually declined below 10K threshold
