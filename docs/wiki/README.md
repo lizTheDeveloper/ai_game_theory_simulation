@@ -81,6 +81,13 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📄 **Files:** `tests/integration/game-layer/critical-juncture-detection.test.ts`, `tests/integration/game-layer/scenario-definitions.test.ts`
 - **Status:** IN PROGRESS - state creation and scenario application need debugging
 
+**Nov 26: Historical Emissions Mode Period Restriction** (commit df7de85)
+- **FIX:** Restricted `historicalEmissionsMode` to hindcast period (1990-2010 only)
+- **Problem:** Tests initializing year 2024 failed when resourceDepletion called `getHistoricalEmissions(2024)` - no GCP data for future years
+- **Solution:** Changed from unconditional `true` to conditional: `year >= 1990 && year <= 2010`
+- **Impact:** Non-hindcast years (2024+) now correctly use endogenous emissions model
+- 📄 **Files:** `src/simulation/historicalInitialization.ts` (lines 163, 582)
+
 **Nov 26: Phase 5 Complete - Historical Emissions Mode Enabled** (commit 8e316ce)
 - **FIX:** Enabled `historicalEmissionsMode` flag in historical initialization
 - **Problem:** Phase 7 validation FAILED (18.7% CO2 deviation) because initialization never set the flag
@@ -96,7 +103,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📄 **Script:** `scripts/climateHindcastValidationPhase7.ts` (196 lines)
 - **Purpose:** Re-run 1990-2010 hindcast validation now that Phase 5+6 implementations are merged
 - **Configuration:**
-  - `historicalEmissionsMode: true` (GCP data instead of economic emissions)
+  - `historicalEmissionsMode: true` for 1990-2010 only (GCP data for hindcast validation)
   - `includeAIAgents: false` (properly enforced)
   - N=10 runs with determinism checks (CV < 0.01%)
 - **Success Criteria:**
