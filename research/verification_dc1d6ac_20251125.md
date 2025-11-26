@@ -23,18 +23,23 @@ This commit adds research citations to justify existing self-limiting mechanisms
 **Claim:** "Worst-case scenarios (RCP8.5) show severe but not complete climate system collapse by 2300"
 
 **Layer 1 - Existence:**
-- [ ] IPCC AR6 WG1 Chapter 4 exists
-- [ ] Published 2021
-- [ ] Freely accessible
+- [x] IPCC AR6 WG1 Chapter 4 exists
+- [x] Published 2021
+- [x] Freely accessible
 
 **Layer 2 - Claim Verification:**
-- [ ] Does Ch4 specifically discuss RCP8.5 outcomes to 2300?
-- [ ] Does it characterize outcomes as "severe but not complete collapse"?
-- [ ] Extract specific quote supporting 95% degradation cap rationale
+- [x] Does Ch4 specifically discuss RCP8.5 outcomes to 2300? YES - SSP5-8.5 warming 6.6-14.1°C by 2300
+- [ ] Does it characterize outcomes as "severe but not complete collapse"? UNVERIFIED - Specific language not found
+- [ ] Extract specific quote supporting 95% degradation cap rationale - NOT FOUND
 
 **Verification Notes:**
 ```
-_________________
+⚠️ INCONCLUSIVE
+- Report projects extreme outcomes (6.6-14.1°C, 2.3-5.4m sea level rise)
+- Describes conditions "not seen in 50 million years"
+- Specific phrase "severe but not complete collapse" NOT FOUND in search results
+- Report emphasizes unprecedented warming without explicit stability assurances
+Status: Language not verified, claim unsubstantiated
 ```
 
 ---
@@ -45,19 +50,25 @@ _________________
 **Claim:** "Multiple tipping points crossing leads to 'Hothouse Earth' but not complete destabilization"
 
 **Layer 1 - Existence:**
-- [ ] Paper: "Exceeding 1.5°C global warming could trigger multiple climate tipping points"
-- [ ] Authors: David I. Armstrong McKay et al.
-- [ ] Journal: Science (2022)
-- [ ] DOI: 10.1126/science.abn7950
+- [x] Paper: "Exceeding 1.5°C global warming could trigger multiple climate tipping points"
+- [x] Authors: David I. Armstrong McKay et al.
+- [x] Journal: Science (2022)
+- [x] DOI: 10.1126/science.abn7950
 
 **Layer 2 - Claim Verification:**
-- [ ] Does paper discuss "Hothouse Earth"?
-- [ ] Does it claim Earth remains stable (not complete destabilization) even with multiple crossings?
-- [ ] What does paper actually say about Earth system stability under cascading tipping points?
+- [x] Does paper discuss "Hothouse Earth"? YES
+- [x] Does it claim Earth remains stable (not complete destabilization) even with multiple crossings? NO - OPPOSITE
+- [x] What does paper actually say about Earth system stability under cascading tipping points? WARNS ABOUT AMPLIFYING DESTABILIZATION
 
 **Verification Notes:**
 ```
-_________________
+❌ CRITICAL MISREPRESENTATION
+- Paper discusses "cascading effects and potential for triggering further tipping points"
+- States "interactions between tipping elements could AMPLIFY destabilization rather than limit it"
+- Warns "planetary system faces compound risks with potentially severe consequences"
+- Six tipping points likely within 1.5-2°C (ice sheets, coral reefs, permafrost)
+- NO mention of "not complete destabilization" - paper warns about INCREASED risk
+Status: FAILED - Paper contradicts simulation's stability claim
 ```
 
 ---
@@ -68,19 +79,26 @@ _________________
 **Claim:** "Even crossing multiple tipping points, Earth systems retain some stability through self-limiting feedbacks"
 
 **Layer 1 - Existence:**
-- [ ] Paper: "Climate tipping points - too risky to bet against"
-- [ ] Authors: Timothy M. Lenton et al.
-- [ ] Journal: Nature (2019)
-- [ ] DOI: 10.1038/d41586-019-03595-0
+- [x] Paper: "Climate tipping points - too risky to bet against"
+- [x] Authors: Timothy M. Lenton et al.
+- [x] Journal: Nature (2019)
+- [x] DOI: 10.1038/d41586-019-03595-0
 
 **Layer 2 - Claim Verification:**
-- [ ] Does paper discuss self-limiting feedbacks?
-- [ ] Does it claim Earth retains "some stability" after multiple tipping point crossings?
-- [ ] WARNING: This paper's title suggests it emphasizes RISK, not stability - may not support 5% floor claim
+- [x] Does paper discuss self-limiting feedbacks? NO
+- [x] Does it claim Earth retains "some stability" after multiple tipping point crossings? NO - OPPOSITE
+- [x] WARNING: This paper's title suggests it emphasizes RISK, not stability - CONFIRMED
 
 **Verification Notes:**
 ```
-_________________
+❌ CRITICAL MISREPRESENTATION - COMPLETE CONTRADICTION
+- Paper declares "state of planetary emergency: both risk and urgency acute"
+- Warns about CASCADING tipping points "like dominoes, piling disaster upon disaster"
+- Discusses "Hothouse Earth" scenario as "existential threat to civilization"
+- Title "too risky to bet against" emphasizes RISK, not stability
+- NO mention of self-limiting feedbacks
+- NO claim about Earth retaining stability after crossing tipping points
+Status: FAILED - Paper argues EXACT OPPOSITE of simulation's claim
 ```
 
 ---
@@ -91,19 +109,27 @@ _________________
 **Claim:** "After +5-8C spike, climate stabilized within ~200ky demonstrating system resilience"
 
 **Layer 1 - Existence:**
-- [ ] Paper about PETM (Paleocene-Eocene Thermal Maximum)
-- [ ] Authors: James C. Zachos et al.
-- [ ] Journal: Nature (2008)
-- [ ] Search: "Zachos 2008 Nature PETM"
+- [x] Paper about PETM (Paleocene-Eocene Thermal Maximum)
+- [x] Authors: James C. Zachos, Gerald R. Dickens, Richard E. Zeebe
+- [x] Journal: Nature 451, 279–283 (2008)
+- [x] DOI: 10.1038/nature06588
 
 **Layer 2 - Claim Verification:**
-- [ ] Does paper give specific recovery timescale (~200ky)?
-- [ ] Does it characterize PETM spike as +5-8C?
-- [ ] Does paper frame recovery as "demonstrating system resilience"?
+- [x] Does paper give specific recovery timescale (~200ky)? YES - "150,000-200,000 years" recovery confirmed
+- [x] Does it characterize PETM spike as +5-8C? YES - "5-8°C global average temperature rise" confirmed
+- [x] Does paper frame recovery as "demonstrating system resilience"? NO - Misleading framing
 
 **Verification Notes:**
 ```
-_________________
+⚠️ PARTIAL - Numbers correct, framing misleading
+- Temperature: ✅ 5-8°C global rise (matches claim)
+- Recovery: ✅ ~170-200ky (multiple sources confirm)
+- "System resilience": ❌ MISLEADING FRAMING
+  * 200,000 years = 2,000 human lifetimes (NOT policy-relevant timescale)
+  * Mass extinctions occurred during this event
+  * Paper discusses PETM as warning for "consequences of unabated carbon emissions"
+  * Using geological recovery as "resilience" in human-timescale simulation is inappropriate
+Status: Numbers accurate, interpretation misleading for simulation context
 ```
 
 ---
@@ -114,19 +140,26 @@ _________________
 **Claim:** "Safe operating space may be exceeded but Earth remains habitable"
 
 **Layer 1 - Existence:**
-- [ ] Paper: "Planetary boundaries: Guiding human development on a changing planet"
-- [ ] Authors: Will Steffen et al.
-- [ ] Journal: Science (2015)
-- [ ] DOI: 10.1126/science.1259855
+- [x] Paper: "Planetary boundaries: Guiding human development on a changing planet"
+- [x] Authors: Will Steffen et al.
+- [x] Journal: Science (2015)
+- [x] DOI: 10.1126/science.1259855
 
 **Layer 2 - Claim Verification:**
-- [ ] Does paper discuss habitability after boundary transgression?
-- [ ] Does it claim Earth "remains habitable" even outside safe operating space?
-- [ ] What does paper actually say about consequences of exceeding boundaries?
+- [x] Does paper discuss habitability after boundary transgression? YES - warns about risks
+- [x] Does it claim Earth "remains habitable" even outside safe operating space? NO - OPPOSITE
+- [x] What does paper actually say about consequences of exceeding boundaries? DESTABILIZATION RISK
 
 **Verification Notes:**
 ```
-_________________
+❌ MISREPRESENTATION - Reverses paper's message
+- Paper warns: "Transgression creates SUBSTANTIAL RISK of destabilizing the Holocene state"
+- Two core boundaries "have potential to drive Earth system into NEW STATE"
+- Holocene is "only state we know for certain can support contemporary human societies"
+- Framework designed to PREVENT transgression, not to assure survivability after
+- NO claims that "Earth remains habitable" after exceeding boundaries
+- Entire message is about staying WITHIN boundaries to maintain stability
+Status: FAILED - Claim reverses paper's core warning message
 ```
 
 ---
@@ -234,18 +267,58 @@ _________________
 
 ## Verification Status
 
-**Overall Status:** PENDING VALIDATION
+**Overall Status:** ⚠️ **CRITICAL FAILURES DETECTED**
 
-**Verified:** 0/8 citations
-**Partially Verified:** 0/8 citations
-**Unverified:** 8/8 citations
-**FAILED:** 0/8 citations
+**Grade: D (Failed Verification)**
+
+**Verified (5 CRITICAL/HIGH):** 0/5 citations fully support claims
+**Partially Verified:** 1/5 (Zachos - numbers correct, framing misleading)
+**Unverified:** 1/5 (IPCC - specific language not found)
+**FAILED:** 3/5 (Lenton, Armstrong McKay, Steffen - contradict or reverse claims)
+
+**Remaining (3 MODERATE):** Not yet verified (Royer, Meadows, Persson) - lower priority given CRITICAL failures above
+
+---
+
+## Critical Findings
+
+**Pattern of Misrepresentation:**
+- 60% of verified citations (3/5) contradict the simulation's stability claims
+- All three papers warn about DESTABILIZATION and CASCADING RISKS, not stability
+- Claims reverse the papers' core messages (e.g., "substantial risk of destabilizing" → "Earth remains habitable")
+
+**Research Integrity Concern:**
+- Cherry-picking: Papers warning about risks cited as supporting stability
+- Claim reversal: Papers emphasizing destabilization cited as supporting resilience
+- Timescale confusion: Geological recovery (200ky) used to justify human-timescale "resilience"
+
+---
+
+## Recommendations
+
+**IMMEDIATE:**
+1. **Remove or heavily qualify citations:** Lenton 2019, Armstrong McKay 2022, Steffen 2015 all contradict claims
+2. **Document as "Implementation Choice":** The 5% floor and 95% cap should be labeled as simulation tractability choices, NOT research-backed mechanisms
+3. **Add warning in code comments:** Clarify that cited research warns about destabilization, not stability
+
+**MEDIUM:**
+4. **Reframe Zachos 2008:** Keep for PETM numbers, remove "resilience" language, add timescale context
+5. **Verify IPCC language:** Find exact passage or remove unverifiable claim
+
+**LONG-TERM:**
+6. **Find appropriate citations:** If stability mechanisms needed, find papers that ACTUALLY support them
+7. **Architecture review:** Consider whether stability floors contradict "research-backed realism" philosophy
 
 ---
 
 ## Next Steps
 
-1. Research-skeptic (Sylvia) to perform two-layer verification
-2. If any Layer 2 failures: Flag for correction or removal
-3. If all pass: Mark verification complete in roadmap
-4. Update `reviews/self_limiting_feedback_audit_20251125.md` with final grade
+1. ✅ Two-layer verification complete (researcher, Nov 26, 2025)
+2. ⏭️ Flag for simulation-maintainer review
+3. ⏭️ Coordinate with research-skeptic (Sylvia) for independent validation
+4. ⏭️ Update `reviews/self_limiting_feedback_audit_20251125.md` with D grade
+5. ⏭️ Update SIMULATION_ROADMAP.md - move from MODERATE to HIGH priority (research integrity issue)
+
+---
+
+**Comprehensive Critique:** See `research/climate_stability_self_limiting_critique_20251126.md` (13K words, full analysis with sources)
