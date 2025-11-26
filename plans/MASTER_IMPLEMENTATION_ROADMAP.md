@@ -833,14 +833,14 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
 **Purpose:** Quick smoke tests that verify deployed version isn't broken
 
 **Tasks:**
-- [ ] **Deployment Smoke Test Suite** (Complexity: 5 systems)
+- [x] **Deployment Smoke Test Suite** (Complexity: 5 systems) ✅ COMPLETE (Nov 26, 2025)
   - Simulation initializes and runs 12 months without crashes
   - All phases execute in correct order
   - No NaN/Infinity in any calculation
   - State serialization/deserialization works
   - Game layer can load simulation state
-  - **Script:** `scripts/deploymentSmokeTest.ts` (to be created)
-  - **Target:** <60s execution time
+  - **Location:** `tests/deployment/smoke-test.test.ts` (16 tests)
+  - **Target:** <60s execution time ✅
   - **Owner:** Roy (simulation-maintainer)
 
 - [ ] **Monte Carlo Deployment Validation** (Complexity: 4 systems)
@@ -851,14 +851,19 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
   - **Script:** Extend existing `scripts/monteCarloSimulation.ts`
   - **Owner:** Priya (quantitative-validator)
 
-- [ ] **Critical Path Integrity Tests** (Complexity: 6 systems)
+- [x] **Critical Path Integrity Tests** (Complexity: 6 systems) ✅ COMPLETE
   - Hindcast 1990-2024 still passes
   - Phase execution order preserved
   - All assertion utilities fire correctly
   - Regional data loaders functional
   - Planetary boundaries update correctly
   - Tech tree research/deployment works
-  - **Location:** `tests/integration/critical-paths/`
+  - **Location:** `tests/integration/critical-paths/` (5 test suites)
+    - `ai-capability-path.test.ts`
+    - `bifurcation-path.test.ts`
+    - `mortality-path.test.ts`
+    - `scenario-override-path.test.ts`
+    - `technology-deployment-path.test.ts`
   - **Owner:** Roy
 
 #### 5.2 System Validation Tests (MEDIUM Priority)
