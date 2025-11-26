@@ -1,16 +1,38 @@
 # Master Implementation Roadmap
 ## AI Alignment Game Theory Simulation - Project Hub
 
-**Date:** November 26, 2025 (End-of-Session Gardening - Architect, Worker Session 3)
+**Date:** November 26, 2025 (End-of-Session Gardening - Architect, Worker Session 5)
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**Current Status:** 🟢 **EXCELLENT** (Nov 26, 2025 - Worker Session 3 Complete)
-- **Research Quality:** A (95%) - Worker Session 3 validation complete, C-1 RESOLVED, 96% sources from 2024-2025, UPDATE_QUEUE triaged (182→11 items)
-- **Architecture Health:** A- (Worker Session 3 review - 0 CRITICAL, 0 HIGH issues, 2 MEDIUM)
-- **System Performance:** Monte Carlo deterministic (CV=21.7% expected variation), deployment validated
-- **System Trajectory:** STABLE - Zero critical/high issues, M-2 COMPLETE, production ready
-- **Roadmap Coherence:** CLEAN - All CRITICAL/HIGH priorities resolved, M-2 assertion migration COMPLETE
+**Current Status:** 🔴 **VALIDATION CRISIS** (Nov 26, 2025 - Worker Session 5 Complete)
+- **Research Quality:** C+ METHODOLOGICAL CONCERNS - Nominal A (95%) but citation misrepresentation pattern, hindcast failing 7 phases
+- **Architecture Health:** A- (Implementation) / F (Validation) - 0 implementation issues, 3 NEW CRITICAL validation failures
+- **System Performance:** Monte Carlo operational but 100% dystopia outcomes (scientifically unfalsifiable)
+- **System Trajectory:** UNSTABLE - Research debate reveals fundamental validation failures undermining scientific credibility
+- **Roadmap Coherence:** REQUIRES URGENT RESTRUCTURING - 3 CRITICAL + 4 HIGH priorities from validation crisis
+- **Recent Work (Nov 26 Late Evening - Worker Session 5):**
+  - ✅ **C-2 VERIFIED RESOLVED** - Resource reserves crash fix validated
+    - Problem: Floating-point precision errors in calculateResourceSecurity() produced tiny negative values
+    - Solution: Math.max(0, weighted) floor + defensive logging
+    - Validation: Seeds 28183/36102 complete, N=10 Monte Carlo 0% crash rate (was 40%)
+    - Commit: cceb556ab
+  - ✅ **M-2 VERIFIED COMPLETE** - Assertion migration post-implementation validation
+    - Status: 6 real violations fixed (historicalInitialization, recoveryCalculations, strategicDeception)
+    - TypeScript CLEAN, tests PASS (80.41%), Monte Carlo N=10 zero assertion errors
+    - Report: `reviews/assertion_migration_status_20251126.md`
+  - ✅ **Architecture Integration Review - Grade A- MAINTAINED** - Zero implementation regressions
+    - 1174 commits analyzed, 0 CRITICAL/HIGH issues introduced
+    - 308 assertion utilities deployed, zero O(n²) patterns
+    - Review: `reviews/architecture_integration_review_20251126_worker5.md` (17.5K)
+  - ⚠️ **Research Debate - Grade C+ METHODOLOGICAL CONCERNS** - VALIDATION CRISIS identified
+    - 100% dystopia outcomes (scientifically unfalsifiable without diverse starting conditions)
+    - Hindcast failing 7 phases: 14% CO2 error, 33% population error
+    - Citation misrepresentation: Lenton 2019 supports OPPOSITE of claimed stability (60% climate citations contradictory)
+    - Cascade mortality unbounded: 1.05^N exponential growth physically impossible
+    - Extinction debt unmodeled: 200+ papers show recovery overestimation
+    - Report: `reviews/research_debate_20251126_worker5.md` (18.5K)
+  - 🚨 **3 NEW CRITICAL + 4 NEW HIGH priorities identified** - Requires immediate roadmap restructuring
 - **Recent Work (Nov 26 Late Evening - Worker Session 3):**
   - ✅ **Architecture Integration Review - Grade A-** - Comprehensive fallback workflow validation
     - Recent commits: 42+ test commits analyzed, 0 CRITICAL issues introduced
@@ -177,6 +199,57 @@
 
 ### 🚨 CRITICAL Priority Items
 
+**NEW CRITICAL PRIORITIES FROM WORKER SESSION 5 RESEARCH DEBATE (Nov 26, 2025):**
+
+**C-3: Hindcast CO2 Validation Failure - 7 Phases Without Resolution** 🚨 NEW
+- **Status:** 🔴 ACTIVE - Blocking scientific credibility
+- **Discovery:** Nov 26, 2025 - Research debate identified systematic validation failure
+- **Problem:** 14.4% CO2 error (446 ppm vs 390 ppm target at 2010) after 7 validation phases
+  - Phase 5: Historical emissions forcing (COMPLETE)
+  - Phase 6: Demographics calibration (PARTIAL - fertility incomplete)
+  - Phase 7: Validation failed (18.70% avg deviation across N=10)
+  - Phase 8: Carbon sink calibration (COMPLETE - reduced to 27% error)
+  - Phase 9: Temporal evolution pending
+- **Impact:** Model cannot reproduce past, undermines forecast authority
+- **Root Causes:**
+  - Carbon sink rates 30% too low (airborne fraction 65% vs 45%)
+  - Temporal evolution not modeled (sinks static at 1990 values)
+  - Possible architectural interference between systems
+- **Success Criteria:** CO2 deviation < 5% at 2010 (currently 14-27%)
+- **Priority Rationale:** 7 phases without achieving basic accuracy suggests deeper issues
+- **Complexity:** 3 systems (climate, carbon cycle, validation)
+- **Report:** `reviews/research_debate_20251126_worker5.md` (lines 69-90)
+
+**C-4: Hindcast Population Validation Failure - 33% Error** 🚨 NEW
+- **Status:** 🔴 ACTIVE - Blocking scientific credibility
+- **Discovery:** Nov 26, 2025 - Research debate systematic review
+- **Problem:** 33.6% population error (9.2B vs 6.9B target at 2010)
+  - Phase 6 "fix" did not calibrate 1990 fertility rates
+  - Birth rates not initialized to historical values
+  - Growth rate 3.05%/yr vs observed 1.31%/yr (2.3× too fast)
+- **Impact:** Cannot validate mortality models against historical data
+- **Root Cause:** Fertility rates not calibrated to 1990 baseline (TFR 3.2 vs correct 2.3)
+- **Success Criteria:** Population deviation < 10% at 2010 (currently 33.6%)
+- **Priority Rationale:** Model that cannot reproduce past has questionable authority about future
+- **Complexity:** 2 systems (population, mortality)
+- **Report:** `reviews/research_debate_20251126_worker5.md` (lines 69-90)
+
+**C-5: Cascade Mortality Unbounded Exponential Growth** 🚨 NEW
+- **Status:** 🔴 ACTIVE - Physically impossible outputs
+- **Discovery:** Nov 25, 2025 - Research debate first identification, NOT FIXED in Session 5
+- **Problem:** `planetaryBoundaries.ts:1436` uses 1.05^N exponential growth formula
+  - Month 48+96: 107× mortality multiplier
+  - Month 48+144: 1,688× mortality multiplier
+  - Physically impossible - exceeds total population multiple times over
+- **Research Reality:** Armstrong McKay et al. (2022) shows cascades are sub-linear after initial shock
+  - Systems reach new equilibrium states, not infinite runaway
+  - Real-world cascades saturate, simulation does not
+- **Solution:** Replace exponential with logistic growth (saturating curve)
+- **Success Criteria:** Cascade mortality caps at physically plausible levels
+- **Priority Rationale:** Produces physically impossible mortality rates in long simulations
+- **Complexity:** 1 system (planetary boundaries), ~20 lines
+- **Report:** `reviews/research_debate_20251126_worker5.md` (lines 95-106)
+
 **C-1: AI Coordination Failure Probability FABRICATION** ✅ RESOLVED (Nov 26, 2025)
 - **Status:** ✅ RESOLVED - Commit bf45de881 (Nov 26, 2025)
 - **Discovery:** Nov 26, 2025 - Autonomous researcher identified fabricated probability
@@ -217,6 +290,73 @@
 - **Files Changed:** `src/simulation/resourceEconomy.ts` (line 537), `src/simulation/resourceDepletion.ts` (lines 612-650)
 - **Analysis:** `reviews/resource_reserves_crash_root_cause_20251126.md` (314 lines)
 - **Note:** Temperature anticorrelation remains separate investigation (deferred to MEDIUM priority)
+
+### 🔴 HIGH Priority Items
+
+**NEW HIGH PRIORITIES FROM WORKER SESSION 5 RESEARCH DEBATE (Nov 26, 2025):**
+
+**H-3: Extinction Debt Not Modeled - Recovery Overestimation** 🆕 HIGH
+- **Status:** 🔴 ACTIVE - Affects all biodiversity trajectories
+- **Discovery:** Nov 26, 2025 - Research debate systematic review
+- **Problem:** Simulation assumes ecosystems recover immediately when stressors removed
+- **Research Reality (200+ papers):**
+  - Kuussaari et al. (2009): 50-400 year extinction debt in tropical forests
+  - Halley et al. (2016): Meta-analysis across 36 studies confirms lag effects
+  - Tilman et al. (1994): Original theoretical foundation
+- **Impact:** Current model OVERESTIMATES recovery potential, UNDERESTIMATES irreversibility
+- **Success Criteria:** Model extinction lag effects with multi-decadal timescales
+- **Priority Rationale:** 200+ papers document this effect, fundamental to biodiversity trajectories
+- **Complexity:** 2 systems (biodiversity, planetary boundaries), research + implementation
+- **Report:** `reviews/research_debate_20251126_worker5.md` (lines 107-119)
+
+**H-4: Citation Accuracy Audit - Misrepresentation Pattern** 🆕 HIGH
+- **Status:** 🔴 ACTIVE - Research integrity concern
+- **Discovery:** Nov 26, 2025 - Climate stability citation verification
+- **Problem:** 60% of climate stability citations CONTRADICT claimed support
+  - **Lenton 2019:** Cited for "self-limiting feedbacks", actually warns of "cascading tipping points"
+  - **Armstrong McKay 2022:** Cited for stability, warns of "amplifying destabilization"
+  - **Steffen 2015:** Cited for "Earth remains habitable", warns of "substantial risk"
+  - **Zachos 2008:** 200,000-year geological recovery framed as "resilience" on human timescales
+- **Pattern:** Post-hoc citation assembly - code written first, citations gathered later
+- **Impact:** Undermines research integrity claims, creates "citation theater"
+- **Success Criteria:** All citations accurately represent source content, no semantic reversals
+- **Priority Rationale:** Systematic misrepresentation affects credibility of entire research foundation
+- **Complexity:** 1 system (research validation), audit + correction workflow
+- **Report:** `reviews/research_debate_20251126_worker5.md` (lines 47-68)
+
+**H-5: Outcome Diversity Testing - 100% Dystopia Unfalsifiable** 🆕 HIGH
+- **Status:** 🔴 ACTIVE - Scientific unfalsifiability
+- **Discovery:** Nov 26, 2025 - Monte Carlo outcome analysis
+- **Problem:** 100% dystopia outcomes across N=10 runs (seeds 42000-42009)
+  - Population survivors vary 77M-160M (2× range) but ALWAYS collapse
+  - Even seed 42006 with early AI capability surge ends in dystopia
+  - Cannot distinguish "realistic pessimism" from "broken recovery mechanisms"
+- **Research Question:** Is this "hard problem calibration" (correct) or "model artifacts" (bug)?
+- **How to Distinguish:**
+  1. Historical backtesting: 1990-2020 should NOT show collapse (test against reality)
+  2. Varied starting conditions: Not just seeds, but optimistic/pessimistic initial states
+  3. Mechanism isolation: Individual systems vs integration behavior
+- **Success Criteria:** Some parameter combinations produce non-dystopia OR evidence that 100% is correct
+- **Priority Rationale:** Unfalsifiable claims are not science - need diverse outcomes or proof of correctness
+- **Complexity:** 3 systems (validation, scenario, Monte Carlo), experimental design
+- **Report:** `reviews/research_debate_20251126_worker5.md` (lines 29-46)
+
+**H-6: Temperature Anticorrelation Investigation** 🆕 HIGH
+- **Status:** 🔴 ACTIVE - Physically suspicious
+- **Discovery:** Nov 26, 2025 - Hindcast validation Phase 7
+- **Problem:** CO2 runs 14% HIGH, but temperature runs 15% LOW (anticorrelation)
+  - Expected: CO2 high → Temperature high (positive correlation via radiative forcing)
+  - Observed: CO2 high, Temperature low (negative correlation)
+- **Hypotheses:**
+  1. Aerosol forcing overcorrected (sulfates cooling too strong)
+  2. Climate sensitivity parameter wrong (ECS set too low)
+  3. Lag dynamics miscalibrated (temperature response lagging unrealistically)
+  4. Competing feedbacks suppressing warming (undocumented mechanism)
+- **Impact:** Anticorrelation is PHYSICALLY SUSPICIOUS - either model wrong OR unknown mechanism
+- **Success Criteria:** Identify root cause, either fix bug or document mechanism with research support
+- **Priority Rationale:** Physical inconsistency undermines climate model credibility
+- **Complexity:** 2 systems (climate, validation), diagnostic analysis
+- **Report:** `reviews/research_debate_20251126_worker5.md` (lines 195-211)
 
 ### 🟡 MEDIUM Priority Items
 
@@ -2359,7 +2499,36 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
 
 ## 🎯 Progress Summary
 
-**Overall Project Status: 🟢 EXCELLENT** (Nov 26, 2025 - Worker Session 3 Complete, Architecture A-, Roadmap Clean)
+**Overall Project Status: 🔴 VALIDATION CRISIS** (Nov 26, 2025 - Worker Session 5 Complete, 3 CRITICAL + 4 HIGH validation failures)
+
+**Nov 26, 2025 - Worker Session 5 Completion (Autonomous Worker #5):**
+
+- ✅ **C-2 VERIFIED RESOLVED** - Resource reserves crash fix validated (40% → 0% crash rate)
+  - Floating-point precision errors fixed in calculateResourceSecurity()
+  - Seeds 28183/36102 complete, Monte Carlo N=10 clean
+  - Commit: cceb556ab
+- ✅ **M-2 VERIFIED COMPLETE** - Assertion migration post-implementation validation
+  - 6 real violations fixed (historicalInitialization, recoveryCalculations, strategicDeception)
+  - TypeScript CLEAN, tests PASS (80.41%), Monte Carlo N=10 zero assertion errors
+  - Report: `reviews/assertion_migration_status_20251126.md` (11.6K)
+- ✅ **Architecture Integration Review - Grade A- MAINTAINED**
+  - 1174 commits analyzed, 0 CRITICAL/HIGH implementation issues
+  - 308 assertion utilities deployed, zero O(n²) patterns
+  - Report: `reviews/architecture_integration_review_20251126_worker5.md` (17.5K)
+- ⚠️ **Research Debate - Grade C+ METHODOLOGICAL CONCERNS**
+  - **CRITICAL FINDINGS:**
+    - C-3: Hindcast CO2 validation failing 7 phases (14% error, threshold 5%)
+    - C-4: Hindcast population validation failing (33% error, threshold 10%)
+    - C-5: Cascade mortality unbounded (1.05^N exponential, physically impossible)
+  - **HIGH FINDINGS:**
+    - H-3: Extinction debt unmodeled (200+ papers, recovery overestimation)
+    - H-4: Citation misrepresentation (60% climate citations contradictory, Lenton 2019 semantic reversal)
+    - H-5: 100% dystopia outcomes (unfalsifiable without diverse starting conditions)
+    - H-6: Temperature anticorrelation (CO2 high but temp low, physically suspicious)
+  - **Pattern:** Post-hoc citation assembly, "working as designed" fallacy, validation methodology inadequate
+  - Report: `reviews/research_debate_20251126_worker5.md` (18.5K)
+- 🚨 **PRIORITY ELEVATION:** 3 NEW CRITICAL + 4 NEW HIGH - Requires immediate validation focus
+- 📋 **Session Archive:** `plans/completed/worker_session_5_complete_20251126.md`
 
 **Nov 26, 2025 - Worker Session 3 Completion (Autonomous Worker #3):**
 
