@@ -150001,23 +150001,23 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 665,
+    "line": 547,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
-    "context": "location: 'updateRegionalPopulation',"
+    "context": "location: 'updateRegionalPopulations',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 666,
+    "line": 548,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
-    "context": "valueName: 'populationPressure',"
+    "context": "valueName: 'adjustedDeathRate (initial)',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 667,
+    "line": 549,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -150025,7 +150025,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 668,
+    "line": 550,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -150033,7 +150033,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 669,
+    "line": 551,
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
@@ -150041,23 +150041,15 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 670,
+    "line": 552,
     "type": "property",
-    "name": "population",
+    "name": "baselineDeathRate",
     "currentDoc": "(none)",
-    "context": "population: region.population,"
+    "context": "baselineDeathRate: region.baselineDeathRate,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 671,
-    "type": "property",
-    "name": "carryingCapacity",
-    "currentDoc": "(none)",
-    "context": "carryingCapacity: region.carryingCapacity"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 716,
+    "line": 578,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -150065,15 +150057,15 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 717,
+    "line": 579,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
-    "context": "valueName: 'pop.population (global)',"
+    "context": "valueName: 'adjustedDeathRate (post-historical-scaling)',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 718,
+    "line": 580,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -150081,7 +150073,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 719,
+    "line": 581,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -150089,47 +150081,31 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 720,
+    "line": 582,
     "type": "property",
-    "name": "totalPopulationMillions",
+    "name": "region",
     "currentDoc": "(none)",
-    "context": "totalPopulationMillions: totalPopulation,"
+    "context": "region: region.name,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 721,
-    "type": "property",
-    "name": "totalPopulationBillions",
-    "currentDoc": "(none)",
-    "context": "totalPopulationBillions: totalPopulation / 1000,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 722,
-    "type": "property",
-    "name": "regionCount",
-    "currentDoc": "(none)",
-    "context": "regionCount: pop.regionalPopulations.length"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 728,
+    "line": 688,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
-    "context": "location: 'updateRegionalPopulations',"
+    "context": "location: 'updateRegionalPopulation',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 729,
+    "line": 689,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
-    "context": "valueName: 'pop.monthlyExcessDeaths',"
+    "context": "valueName: 'populationPressure',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 730,
+    "line": 690,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -150137,7 +150113,119 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 731,
+    "line": 691,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
+    "line": 692,
+    "type": "property",
+    "name": "region",
+    "currentDoc": "(none)",
+    "context": "region: region.name,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
+    "line": 693,
+    "type": "property",
+    "name": "population",
+    "currentDoc": "(none)",
+    "context": "population: region.population,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
+    "line": 694,
+    "type": "property",
+    "name": "carryingCapacity",
+    "currentDoc": "(none)",
+    "context": "carryingCapacity: region.carryingCapacity"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
+    "line": 739,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'updateRegionalPopulations',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
+    "line": 740,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'pop.population (global)',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
+    "line": 741,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
+    "line": 742,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
+    "line": 743,
+    "type": "property",
+    "name": "totalPopulationMillions",
+    "currentDoc": "(none)",
+    "context": "totalPopulationMillions: totalPopulation,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
+    "line": 744,
+    "type": "property",
+    "name": "totalPopulationBillions",
+    "currentDoc": "(none)",
+    "context": "totalPopulationBillions: totalPopulation / 1000,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
+    "line": 745,
+    "type": "property",
+    "name": "regionCount",
+    "currentDoc": "(none)",
+    "context": "regionCount: pop.regionalPopulations.length"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
+    "line": 751,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'updateRegionalPopulations',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
+    "line": 752,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'pop.monthlyExcessDeaths',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
+    "line": 753,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
+    "line": 754,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
