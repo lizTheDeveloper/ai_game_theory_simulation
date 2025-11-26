@@ -129,8 +129,8 @@ export { ExogenousShockPhase } from './ExogenousShockPhase';  // Contingency & A
 export { CriticalJuncturePhase } from './CriticalJuncturePhase';  // Contingency & Agency Phase 3 (Oct 17, 2025)
 
 // Batch 5: Final phases (37.x - 40.x, 98.x - 99.x)
-export { ExtinctionTriggersPhase } from './ExtinctionTriggersPhase';
-export { ExtinctionProgressPhase } from './ExtinctionProgressPhase';
+// export { ExtinctionTriggersPhase } from './ExtinctionTriggersPhase';  // REMOVED: Consolidated into ExtinctionSystemPhase (Nov 26, 2025)
+// export { ExtinctionProgressPhase } from './ExtinctionProgressPhase';  // REMOVED: Consolidated into ExtinctionSystemPhase (Nov 26, 2025)
 export { TechnologyDiffusionPhase } from './TechnologyDiffusionPhase';
 export { CatastrophicScenariosPhase } from './CatastrophicScenariosPhase';
 export { EventCollectionPhase } from './EventCollectionPhase';
