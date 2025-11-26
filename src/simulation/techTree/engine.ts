@@ -79,8 +79,12 @@ export interface TechTreeState {
 
 /**
  * Initialize tech tree state
+ *
+ * @param startYear - Optional year for historical scenarios. If < 2025, deployed_2025 tech
+ *                    will NOT be unlocked (prevents anachronistic deployment in hindcast mode).
+ *                    FIX (Nov 26, 2025): CRIT-1 - mRNA vaccines, 4th gen solar were appearing in 1990.
  */
-export function initializeTechTreeState(): TechTreeState {
+export function initializeTechTreeState(startYear?: number): TechTreeState {
   const state: TechTreeState = {
     unlockedTech: [],
     researchProgress: {},
@@ -95,7 +99,15 @@ export function initializeTechTreeState(): TechTreeState {
     techDeployedCount: 0,
   };
 
-  // Unlock all DEPLOYED_2025 tech
+  // CRIT-1 FIX (Nov 26, 2025): Skip 2025 tech deployment for historical scenarios
+  // This prevents mRNA vaccines, 4th gen solar, etc. from appearing in 1990
+  const isHistoricalMode = startYear !== undefined && startYear < 2025;
+  if (isHistoricalMode) {
+    console.log(`[TechTree] Historical mode (${startYear}): Skipping deployed_2025 tech`);
+    return state;  // Return empty tech tree for historical scenarios
+  }
+
+  // Unlock all DEPLOYED_2025 tech (only for 2025+ scenarios)
   const deployedTech = getAllTech().filter(t => t.status === 'deployed_2025');
   for (const tech of deployedTech) {
     state.unlockedTech.push(tech.id);
