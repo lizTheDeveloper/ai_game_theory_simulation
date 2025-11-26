@@ -1,6 +1,6 @@
 # Research Update Queue
-**Generated:** 11/26/2025, 10:30:03 AM
-**Files Scanned:** 570
+**Generated:** 11/26/2025, 11:30:07 AM
+**Files Scanned:** 571
 
 ---
 
@@ -12,7 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 177 (31.1%)
+**Count:** 178 (31.2%)
 
 ### `CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
 - **Oldest source:** 2009 (16 years old)
@@ -238,6 +238,11 @@
 - **Oldest source:** 1990 (35 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/ai_coordination_transition_mechanics_VALIDATED_20251121.md`
+
+### `ai_coordination_verification_layer1_20251126.md`
+- **Oldest source:** 2009 (16 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/ai_coordination_verification_layer1_20251126.md`
 
 ### `ai_governance_international_coordination_20251113.md`
 - **Oldest source:** 1998 (27 years old)
@@ -934,7 +939,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 369 (64.7%)
+**Count:** 369 (64.6%)
 
 All sources <3 years old. No action required.
 
@@ -944,11 +949,11 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 570 |
+| Total files | 571 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 177 (31.1%) |
+| HIGH | 178 (31.2%) |
 | MEDIUM | 24 (4.2%) |
-| LOW | 369 (64.7%) |
+| LOW | 369 (64.6%) |
 | Average age | 7.0 years |
 | Oldest source | 1955 (70 years ago) |
 
@@ -956,21 +961,21 @@ All sources <3 years old. No action required.
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 369 | 64.7% |
+| Current (<3yr) | 369 | 64.6% |
 | Warning (3-5yr) | 24 | 4.2% |
-| Critical (>5yr) | 177 | 31.1% |
+| Critical (>5yr) | 178 | 31.2% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-- **Current:** 31.1% critical (>5yr)
+- **Current:** 31.2% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
-1. Update 177 HIGH priority file(s) within 1 month
+1. Update 178 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 
