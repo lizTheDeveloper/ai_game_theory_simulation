@@ -164,9 +164,10 @@
      - **Commit:** c85a7c9
      - **Next Steps:** Two-layer verification (existence + claim accuracy) → Parameters ready for future governance implementation
 
-   - **AI Coordination & Transition Management** - HIGH (Added Nov 21, 2025)
+   - **AI Coordination & Transition Management** - HIGH (Added Nov 21, 2025) ✅ CRITICAL-1 RESOLVED
      - **Context:** Phase 2 research complete (15K words, 15 sources), Grade B- CONDITIONAL PASS
-     - **Research File:** research/ai_coordination_transition_management_20251121.md
+     - **Research File:** research/ai_coordination_transition_management_20251120.md (CRITICAL CORRECTION added lines 1318-1366)
+     - **NEW Empirical Research:** research/international_coordination_effectiveness_empirical_20251126.md (485 lines, 11 sources, Grade A-)
      - **Critique File:** reviews/ai_coordination_transition_critique_20251121.md
      - **Handoff File:** .claude/agents/HANDOFF_ai_coordination_conservative_params.md (26KB spec)
      - **Verification File:** research/verification_96e2489_20251121.md
@@ -176,27 +177,31 @@
        - ✅ **Great Leap Forward mortality:** VERIFIED (30-45M deaths, 1959-1961)
        - ⚠️ **Stuckler et al. 2009 Lancet:** MISATTRIBUTION - Actual: 12.8% (CI 7.9-17.7%), NOT "13-42%" range
        - ⚠️ **AI coordination 80%:** PARTIALLY VERIFIED - 70-90% goal success rates, NOT "coordination efficiency"
-       - ❌ **Coordination failure 10%:** FABRICATED - Hammond et al. 2025 provides qualitative taxonomy ONLY, NO quantitative estimates
+       - ✅ **Coordination failure 10%:** RESOLVED - Fabricated parameter replaced with empirical data (commit 950ab53)
        - **Remaining:** 7 citations (Rebound effects, support systems, grid deployment, etc.)
-     - **Key Claims Requiring Two-Layer Verification:**
+     - **Key Claims - Updated Status (Nov 26, 2025):**
        - ⚠️ **CRITICAL:** USSR shock therapy ~~13-42%~~ → 12.8% (Stuckler 2009 - MISATTRIBUTION DETECTED)
        - ✅ **CRITICAL:** Job loss mortality 1.0-1.5yr (Sullivan 2009 QJE - VERIFIED)
        - ⚠️ **HIGH UNCERTAINTY:** AI coordination ~~80%+ efficiency~~ → 70-90% goal success rates (arXiv 2025 - PARTIALLY VERIFIED)
-       - ❌ **HIGH UNCERTAINTY:** Coordination failure ~~10% probability~~ → FABRICATED (Hammond et al. 2025 - qualitative only, NO probability estimates)
+       - ✅ **RESOLVED:** Coordination failure probability - Fabricated 10% replaced with evidence-based continuous model
        - **HIGH UNCERTAINTY:** Rebound effects 5-10% decay (Finkelstein 2025 - "not integrated into mortality model")
        - **MODERATE:** Support systems 32-37% reduction (BMC Public Health 2020)
        - **MODERATE:** Grid deployment 5-15%/yr (IEA 2024)
-     - **Total:** 12 citations (5 verified: 2 full, 2 partial, 1 fabricated)
-     - **CRITICAL FINDING (Nov 26, 2025):** The "5-20% (central: 10%)" coordination failure probability is FABRICATED. Hammond et al. 2025 identifies failure modes qualitatively but provides ZERO numerical estimates. **Recommend:** Model coordination quality as continuous variable (0.0-1.0), NOT binary failure events with fabricated probabilities.
-     - **Implementation Impact:**
-       - GameState.transitionManagement interface
-       - CoordinatedDeploymentPhase (NEW)
-       - ⚠️ Conservative parameters: MUST REVISE - Remove fabricated 10% coordination failure, use continuous quality variable instead
-       - Monte Carlo: N≥50 (sensitivity analysis required)
-     - **Priority:** HIGH - Phase 2 critical path, FABRICATED parameter discovered - requires design revision
-     - **Status:** 🔄 VERIFICATION IN PROGRESS (5/12) - CRITICAL: Coordination failure probability FABRICATED
-     - **Commit:** 96e2489, 51b4ef6, 6cad473 (verification progress)
-     - **Next Steps:** Complete verification (7 remaining) → **DESIGN REVISION: Replace binary coordination failure with continuous quality model** → Implementation (Roy) → Monte Carlo (Priya, N≥50)
+     - **Total:** 12 citations (6 resolved: 2 full, 2 partial, 1 fabricated→fixed, 1 N/A)
+     - **CRITICAL-1 RESOLVED (Nov 26, 2025):** Fabricated "10% coordination failure probability" removed and replaced with empirical evidence:
+       - ✅ **Code fixed:** CoordinatedDeploymentPhase.ts uses continuous coordination quality model (0.0-1.0)
+       - ✅ **New research:** 11 peer-reviewed sources (Nature 2025, BMJ Open 2022, JCR 2024, EU JRC 2025, etc.)
+       - ✅ **Evidence-based parameters:** Base quality 0.60-0.90, scale penalty 0.10-0.30, time decay 0.05-0.15/yr
+       - ✅ **Key insight:** No universal coordination failure rate exists - context-dependent by domain, scale, time
+     - **Implementation Status:**
+       - ✅ GameState.transitionManagement interface (complete)
+       - ✅ CoordinatedDeploymentPhase (uses continuous quality model)
+       - ✅ Empirical parameters documented
+       - Monte Carlo: N≥50 (validation recommended)
+     - **Priority:** MEDIUM - CRITICAL-1 resolved, remaining verification non-blocking
+     - **Status:** ✅ CRITICAL-1 RESOLVED - Fabricated parameter replaced with empirical data
+     - **Commit:** 96e2489, 51b4ef6, 6cad473, **950ab53** (CRITICAL-1 fix)
+     - **Next Steps:** Complete verification (6 remaining) → Monte Carlo validation (Priya, N≥50)
 
    - **Nitrogen-Food Phase 3 Technologies** - MEDIUM (Added Nov 21, 2025)
      - **Context:** 6 new nitrogen reduction technologies added to tech tree (Phase 3 complete)
