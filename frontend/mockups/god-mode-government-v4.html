@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>God Mode UI - Government Panel v4 (Production)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #000;
+            color: #fff;
+            padding: 32px;
+            min-height: 100vh;
+            background: radial-gradient(ellipse at center, #0A0A0A 0%, #000 100%);
+        }
+
+        /* Panel header */
+        .panel-header {
+            margin-bottom: 32px;
+        }
+
+        .panel-title {
+            font-size: 32px;
+            font-weight: 200;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        /* Policy templates by scenario */
+        .scenario-templates {
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), rgba(0, 128, 255, 0.05));
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .scenario-title {
+            font-size: 14px;
+            font-weight: 400;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .scenario-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .scenario-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .scenario-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .scenario-name {
+            font-size: 13px;
+            font-weight: 400;
+            margin-bottom: 4px;
+        }
+
+        .scenario-desc {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Impact simulation */
+        .impact-simulation {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .simulation-running {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 6px;
+            font-size: 12px;
+            color: #00F0FF;
+        }
+
+        .simulation-spinner {
+            width: 12px;
+            height: 12px;
+            border: 2px solid rgba(0, 240, 255, 0.3);
+            border-top-color: #00F0FF;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .simulation-timeline {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .timeline-point {
+            text-align: center;
+        }
+
+        .timeline-month {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 8px;
+        }
+
+        .timeline-value {
+            font-size: 18px;
+            font-weight: 300;
+        }
+
+        .timeline-value.positive {
+            color: #00FF88;
+        }
+
+        .timeline-value.negative {
+            color: #FF0040;
+        }
+
+        .timeline-value.neutral {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Dependency graph */
+        .dependency-graph {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+            height: 300px;
+            position: relative;
+        }
+
+        .graph-node {
+            position: absolute;
+            width: 120px;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            text-align: center;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .graph-node:hover {
+            background: rgba(0, 240, 255, 0.1);
+            border-color: rgba(0, 240, 255, 0.3);
+            transform: scale(1.05);
+            z-index: 10;
+        }
+
+        .graph-node.affected {
+            background: rgba(255, 176, 0, 0.1);
+            border-color: rgba(255, 176, 0, 0.3);
+            animation: pulseWarning 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseWarning {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        .graph-connection {
+            position: absolute;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.2);
+            transform-origin: left center;
+        }
+
+        .graph-connection.strong {
+            height: 2px;
+            background: rgba(0, 240, 255, 0.4);
+        }
+
+        /* Real-time validation */
+        .validation-panel {
+            position: fixed;
+            right: 32px;
+            top: 120px;
+            width: 320px;
+            background: rgba(10, 10, 10, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            backdrop-filter: blur(20px);
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .validation-title {
+            font-size: 14px;
+            font-weight: 400;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .validation-item {
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 6px;
+            margin-bottom: 8px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .validation-item.error {
+            background: rgba(255, 0, 64, 0.05);
+            border-left-color: #FF0040;
+        }
+
+        .validation-item.warning {
+            background: rgba(255, 176, 0, 0.05);
+            border-left-color: #FFB000;
+        }
+
+        .validation-item.success {
+            background: rgba(0, 255, 136, 0.05);
+            border-left-color: #00FF88;
+        }
+
+        .validation-message {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 4px;
+        }
+
+        .validation-suggestion {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Advanced controls with inline help */
+        .control-with-help {
+            position: relative;
+        }
+
+        .help-icon {
+            position: absolute;
+            right: 8px;
+            top: 8px;
+            width: 16px;
+            height: 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            cursor: help;
+            transition: all 0.2s ease;
+        }
+
+        .help-icon:hover {
+            background: rgba(0, 240, 255, 0.1);
+            border-color: rgba(0, 240, 255, 0.3);
+        }
+
+        .help-tooltip {
+            position: absolute;
+            right: 30px;
+            top: 0;
+            width: 250px;
+            background: rgba(10, 10, 10, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 12px;
+            line-height: 1.5;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateX(10px);
+            transition: all 0.2s ease;
+            z-index: 1000;
+        }
+
+        .help-icon:hover + .help-tooltip {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Macro recording indicator */
+        .macro-recorder {
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 1000;
+        }
+
+        .recording-dot {
+            width: 8px;
+            height: 8px;
+            background: #FF0040;
+            border-radius: 50%;
+            animation: recordPulse 1s ease-in-out infinite;
+        }
+
+        @keyframes recordPulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        .recording-text {
+            font-size: 12px;
+            color: #FF0040;
+        }
+
+        .recording-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .recording-btn {
+            padding: 4px 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .recording-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <!-- Panel Header -->
+    <div class="panel-header">
+        <h1 class="panel-title">Government Controls</h1>
+    </div>
+
+    <!-- Macro Recording Indicator -->
+    <div class="macro-recorder">
+        <div class="recording-dot"></div>
+        <span class="recording-text">Recording macro... (5 actions)</span>
+        <div class="recording-actions">
+            <button class="recording-btn">Pause</button>
+            <button class="recording-btn">Stop</button>
+            <button class="recording-btn">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Policy Templates by Scenario -->
+    <div class="scenario-templates">
+        <h3 class="scenario-title">
+            <span>🎯</span>
+            <span>Quick Templates by Scenario</span>
+        </h3>
+        <div class="scenario-grid">
+            <div class="scenario-card">
+                <div class="scenario-name">Nuclear Threat</div>
+                <div class="scenario-desc">Immediate military mobilization</div>
+            </div>
+            <div class="scenario-card">
+                <div class="scenario-name">Climate Collapse</div>
+                <div class="scenario-desc">Emergency environmental response</div>
+            </div>
+            <div class="scenario-card">
+                <div class="scenario-name">AI Breakout</div>
+                <div class="scenario-desc">Maximum containment measures</div>
+            </div>
+            <div class="scenario-card">
+                <div class="scenario-name">Economic Crisis</div>
+                <div class="scenario-desc">Stimulus and stability package</div>
+            </div>
+            <div class="scenario-card">
+                <div class="scenario-name">Pandemic</div>
+                <div class="scenario-desc">Health emergency protocols</div>
+            </div>
+            <div class="scenario-card">
+                <div class="scenario-name">Social Unrest</div>
+                <div class="scenario-desc">De-escalation and trust building</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Impact Simulation -->
+    <div class="impact-simulation">
+        <div class="simulation-running">
+            <div class="simulation-spinner"></div>
+            <span>Simulating impact...</span>
+        </div>
+
+        <h3 style="font-size: 14px; margin-bottom: 16px;">Projected Impact Timeline</h3>
+
+        <div class="simulation-timeline">
+            <div class="timeline-point">
+                <div class="timeline-month">Month +1</div>
+                <div class="timeline-value positive">+5%</div>
+            </div>
+            <div class="timeline-point">
+                <div class="timeline-month">Month +3</div>
+                <div class="timeline-value positive">+12%</div>
+            </div>
+            <div class="timeline-point">
+                <div class="timeline-month">Month +6</div>
+                <div class="timeline-value positive">+18%</div>
+            </div>
+            <div class="timeline-point">
+                <div class="timeline-month">Month +12</div>
+                <div class="timeline-value neutral">+15%</div>
+            </div>
+            <div class="timeline-point">
+                <div class="timeline-month">Month +24</div>
+                <div class="timeline-value negative">+8%</div>
+            </div>
+            <div class="timeline-point">
+                <div class="timeline-month">Stable at</div>
+                <div class="timeline-value neutral">+10%</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dependency Graph -->
+    <div class="dependency-graph">
+        <h3 style="font-size: 14px; margin-bottom: 16px;">System Dependencies</h3>
+
+        <!-- Nodes -->
+        <div class="graph-node" style="left: 50%; top: 20%; transform: translateX(-50%);">
+            AI Funding
+        </div>
+        <div class="graph-node affected" style="left: 20%; top: 50%;">
+            Defense Budget
+        </div>
+        <div class="graph-node" style="left: 80%; top: 50%;">
+            Research Output
+        </div>
+        <div class="graph-node affected" style="left: 30%; top: 80%;">
+            Public Trust
+        </div>
+        <div class="graph-node" style="left: 70%; top: 80%;">
+            Tech Progress
+        </div>
+
+        <!-- Connections -->
+        <div class="graph-connection strong" style="left: 45%; top: 35%; width: 120px; transform: rotate(30deg);"></div>
+        <div class="graph-connection" style="left: 45%; top: 35%; width: 120px; transform: rotate(-30deg);"></div>
+        <div class="graph-connection strong" style="left: 35%; top: 60%; width: 100px; transform: rotate(20deg);"></div>
+        <div class="graph-connection" style="left: 65%; top: 60%; width: 100px; transform: rotate(-20deg);"></div>
+    </div>
+
+    <!-- Real-time Validation Panel -->
+    <div class="validation-panel">
+        <h3 class="validation-title">
+            <span>✓</span>
+            <span>Real-time Validation</span>
+        </h3>
+
+        <div class="validation-item error">
+            <div class="validation-message">Defense budget too low</div>
+            <div class="validation-suggestion">Minimum 25% required for stability</div>
+        </div>
+
+        <div class="validation-item warning">
+            <div class="validation-message">Funding exceeds available resources</div>
+            <div class="validation-suggestion">Consider reducing other allocations</div>
+        </div>
+
+        <div class="validation-item success">
+            <div class="validation-message">AI safety measures adequate</div>
+            <div class="validation-suggestion">Current configuration is optimal</div>
+        </div>
+
+        <div class="validation-item warning">
+            <div class="validation-message">International tension rising</div>
+            <div class="validation-suggestion">Diplomatic measures recommended</div>
+        </div>
+    </div>
+
+    <!-- Example control with inline help -->
+    <div class="control-with-help" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 16px; margin-top: 24px;">
+        <span class="help-icon">?</span>
+        <div class="help-tooltip">
+            This setting controls the percentage of GDP allocated to AI safety research.
+            Higher values accelerate alignment progress but may reduce funding for other critical areas.
+            Recommended range: 60-80% for balanced progress.
+        </div>
+        <h4 style="font-size: 14px; margin-bottom: 12px;">AI Safety Research Funding</h4>
+        <!-- Slider controls here -->
+    </div>
+</body>
+</html>
