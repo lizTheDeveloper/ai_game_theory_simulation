@@ -226,6 +226,33 @@ npx tsx scripts/findDivergentPhase.ts
 **Current Status:** 90% determinism achieved (9/10 runs identical), 10% regression under investigation
 **Note:** Run manual validation until CI workflow re-enabled: `npx tsx scripts/comprehensiveDeterminismValidation.ts`
 
+### Deployment Smoke Tests (Added Nov 26, 2025)
+
+**Purpose:** Quick health checks verifying a deployed version isn't broken. Target: <60s execution.
+
+```bash
+# Run all deployment smoke tests
+npx tsx scripts/deploymentSmokeTest.ts
+```
+
+**Tests (7 total, ~7s execution):**
+1. **Initialization** - Simulation creates valid initial state
+2. **12-month run** - Simulation completes without crashes
+3. **No NaN/Infinity** - All critical state fields have finite values
+4. **Phase execution** - Phases run and advance time correctly
+5. **State serialization** - JSON roundtrip works (save/load compatibility)
+6. **Determinism** - Same seed produces identical results
+7. **Game layer compatibility** - Required fields exist for UI consumption
+
+**Exit Codes:**
+- `0` = All checks passed
+- `1` = One or more checks failed (details printed)
+
+**Use Cases:**
+- Post-deployment verification (CI/CD)
+- Quick local sanity check before committing
+- Detecting broken builds after refactoring
+
 ## Building & Development
 
 ### Next.js Frontend
