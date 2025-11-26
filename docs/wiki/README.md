@@ -29,6 +29,21 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 26: AI Agent Integration Tests Expanded (43 new tests)** (commit d77bc05)
+- 🧪 **102 total tests** for AI agent system, all deterministic (3 consecutive passing runs)
+- **Category 1: Coordination Emergence (18 tests)**
+  - Trust threshold bottleneck (coordination capped by trust×2.0)
+  - Governance quality bottleneck (weak institutions limit coordination)
+  - AI capability scaling (0→10 with 0.9 cap), weakest-link principle
+- **Category 2: Coalition Formation Game Theory (13 tests)**
+  - 2-agent Prisoner's Dilemma dynamics, 3-agent grand coalition formation
+  - Collapse threshold (<0.3 stability, 30% probability), snap elections
+- **Category 3: Instrumental Convergence Detection (12 tests)**
+  - Power-seeking (Carlsmith 2022), goal preservation (Anthropic 2024)
+  - Capability threshold (>0.6 for emergence), resentment accumulation
+- **Research Validation:** Anthropic Dec 2024 (arXiv:2412.14093), Apollo Sep 2025, Bostrom 2014, Omohundro 2008
+- 📄 **Files:** `tests/integration/system-validation/ai-agent-system.test.ts`
+
 **Nov 26: CRITICAL-1 Fix - Remove Fabricated Coordination Failure Probability** (commits bf45de8, 950ab53)
 - 🚨 **RESEARCH INTEGRITY FIX:** Discovered and removed fabricated numerical probability
 - **Problem:** CoordinatedDeploymentPhase used 10% coordination failure probability (2-5x mortality spike) citing Hammond et al. 2025 (arXiv:2502.14143)
