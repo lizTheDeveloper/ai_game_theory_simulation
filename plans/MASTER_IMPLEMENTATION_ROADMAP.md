@@ -973,22 +973,26 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
   - **File:** `tests/integration/game-layer/state-mappers.test.ts`
   - **Owner:** Tessa (far-future-ux-designer)
 
-- [ ] **Critical Juncture Detection Tests** (Complexity: 4 systems) - IN PROGRESS
+- [x] **Critical Juncture Detection Tests** (Complexity: 4 systems) - ✅ COMPLETED Nov 26, 2025
   - Tipping points detected correctly
   - Bifurcation moments identified
   - Player influence opportunities surface
   - Research breakthroughs trigger notifications
   - **File:** `tests/integration/game-layer/critical-juncture-detection.test.ts`
-  - **Status:** 23 tests written (10 failing - state creation needs debugging)
+  - **Status:** 23/23 tests passing
+  - **Fixes:** QoL scale bug (0-1 not 0-100), threshold conflict documentation
+  - **Commit:** d9e6433b1
   - **Owner:** Roy
 
-- [ ] **Scenario Definition Tests** (Complexity: 3 systems) - IN PROGRESS
+- [x] **Scenario Definition Tests** (Complexity: 3 systems) - ✅ COMPLETED Nov 26, 2025
   - All 11 governance scenarios load correctly
   - Override parameters applied to state
   - Scenarios don't crash during GDP collapse
   - Percentage-based spending (not fixed dollars)
   - **File:** `tests/integration/game-layer/scenario-definitions.test.ts`
-  - **Status:** 24 tests written (14 failing - scenario application needs debugging)
+  - **Status:** 23/23 tests passing
+  - **Fixes:** QoL scale bug in historicalInitialization, getGDPProxy() API usage
+  - **Commit:** d9e6433b1
   - **Owner:** Roy
 
 #### 5.5 Test Infrastructure (LOW Priority)
