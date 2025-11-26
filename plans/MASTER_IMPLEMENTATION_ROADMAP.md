@@ -5,12 +5,12 @@
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**Current Status:** 🟢 **EXCELLENT** (Nov 26, 2025 - Phase 3 Governance Blockers Resolved, Architecture B+)
-- **Research Quality:** A (96% sources from 2020+, key citations verified, FAO food security FIXED)
-- **Architecture Health:** B+ (Nov 25 evening review - 0 CRITICAL, 0 HIGH, both H-1 and H-2 RESOLVED)
+**Current Status:** 🟡 **GOOD** (Nov 26, 2025 - 1 CRITICAL Issue Active, Architecture B+)
+- **Research Quality:** A- (96% sources from 2020+, 1 CRITICAL fabrication active: AI coordination probability)
+- **Architecture Health:** B+ (Nov 25 evening review - 0 CRITICAL, 0 HIGH in codebase, 2 MEDIUM deferred)
 - **System Performance:** Monte Carlo deterministic, indices operational (98% op reduction)
-- **System Trajectory:** STABLE - All critical/high items resolved
-- **Roadmap Coherence:** CLEAN - 43 stale plans archived to `plans/completed/`, roadmap focused and scannable
+- **System Trajectory:** STABLE with 1 active research issue requiring resolution
+- **Roadmap Coherence:** CLEAN - Gardened Nov 26, priorities updated, 43 plans archived Nov 25
 - **Recent Work (Nov 25-26 Night Session):**
   - ✅ **GDP-Adaptive Spending COMPLETE** - Scenarios now use % of GDP instead of fixed spending
     - All 11 scenarios converted to rate-based spending
@@ -122,6 +122,49 @@
 > **Degradation >> recovery asymmetry is EXPECTED BEHAVIOR per irreversibility research, not a bug.**
 > The model shows rapid environmental collapse with slow recovery timescales (100-800 years for ice sheets).
 > This is research-accurate per Drüke et al. 2024, not a calibration error.
+
+### 🚨 CRITICAL Priority Items
+
+**C-1: AI Coordination Failure Probability FABRICATION** (Discovered Nov 26, 2025)
+- **Status:** ACTIVE CRITICAL ISSUE
+- **Source:** `research/ai_coordination_transition_management_20251120.md`
+- **Claim:** "5-20% (central: 10%) coordination failure probability"
+- **Citation:** Hammond et al. (2025), arXiv:2502.14143
+- **Verification Result:** ❌ FABRICATED
+  - Source exists (Cooperative AI Foundation Technical Report #1, Feb 2025)
+  - Source provides ZERO quantitative probability estimates
+  - Source content: Qualitative taxonomy (3 failure modes, 7 risk factors) only
+  - The "5-20% (central: 10%)" numbers do NOT appear in Hammond et al.
+- **Impact:** HIGH - Affects transition mortality projections, Monte Carlo outcome distributions
+- **Options:**
+  - A (Recommended): Remove discrete failure events, model coordination quality as continuous (0.0-1.0)
+  - B: Use WIDE UNCERTAINTY (1-50%), flag as "PURE SPECULATION - NO EMPIRICAL BASIS"
+  - C: Research actual historical coordination failure rates (international treaties, crisis response)
+- **Code Locations:**
+  - `src/simulation/aiCoordination.ts` (if coordination failure probability exists)
+  - `research/ai_coordination_transition_management_20251120.md` (correct claims)
+- **Timeline:** Fix before next Monte Carlo validation run
+- **Related:** 2nd fabricated probability discovered in Nov 2025 research (pattern emerging)
+- **Audit Report:** `reviews/research_source_validation_20251126.md`
+- **Mechanism Audit:** `reviews/mechanism_audit_ai_coordination_20251124.md`
+
+### 🟡 MEDIUM Priority Items
+
+**M-1: Dead Code Cleanup** (Identified Nov 25, 2025)
+- **Files:** `ExtinctionTriggersPhase.ts`, `ExtinctionProgressPhase.ts`
+- **Status:** Exist in codebase but not used in PhaseOrchestrator
+- **Impact:** Code maintenance, confusion for future developers
+- **Effort:** 15 minutes (remove files, verify no imports)
+- **Source:** `reviews/architecture_integration_review_20251125_evening.md`
+
+**M-2: Complete Assertion Migration** (Identified Nov 16, 2025)
+- **Status:** 71 remaining fallback patterns (20 violations fixed Nov 18, total 169)
+- **Issue:** Split-brain error handling (some paths fail loudly, some silently)
+- **Impact:** MEDIUM - Regression risk, inconsistent debugging experience
+- **Effort:** 2-3 day sprint to complete remaining 71 violations
+- **Recommendation:** Either complete fully or accept current state (don't leave in limbo)
+- **Source:** `reviews/defensive_fallback_architecture_review_20251116.md`
+- **Note:** Two CRITICAL regressions found (dystopiaProgression.ts, aiSuffering.ts) where fixed code was reverted
 
 ### Validation Priority Stack
 
@@ -2129,7 +2172,37 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
 
 **Overall Project Status: 🟢 EXCELLENT** (Nov 26, 2025 - System Stable, Architecture B+, Roadmap Clean)
 
-**Nov 26, 2025 - End-of-Session Roadmap Gardening (Architect):**
+**Nov 26, 2025 - Comprehensive Roadmap Gardening (Architect):**
+
+- ✅ **Roadmap Priority Updates - COMPLETE:**
+  - **CRITICAL-1 ADDED:** AI coordination failure probability fabrication (10% unsupported)
+    - Source: `reviews/research_source_validation_20251126.md`
+    - Impact: Affects transition mortality, Monte Carlo distributions
+    - Options: Continuous model (recommended), wide uncertainty, historical research
+  - **MEDIUM-1 ADDED:** Dead code cleanup (ExtinctionTriggersPhase, ExtinctionProgressPhase)
+    - Files exist but unused, 15-minute removal task
+  - **MEDIUM-2 ADDED:** Complete assertion migration (71 remaining violations)
+    - Current state: Split-brain error handling (regression risk)
+    - Recommendation: Complete fully or accept current state
+  - **Status Header Updated:** EXCELLENT → GOOD (1 active CRITICAL issue)
+  - **Research Quality Downgraded:** A → A- (active fabrication)
+- ✅ **Completion Verification:**
+  - Git history cross-referenced (Nov 24-26 commits)
+  - Recent test additions confirmed: AIAgentCoordinationPhase, AISufferingPhase, PlayerDecisionPhase
+  - Climate system tests added (86578049e) - 32 failures remain (setup issues, not regressions)
+  - No stale completed items requiring archival (Nov 25 session already archived 43 plans)
+- ✅ **Priority Counts:**
+  - CRITICAL: 1 active (AI coordination fabrication)
+  - HIGH: 0 (all resolved Nov 25)
+  - MEDIUM: 2 new + 3 research verifications = 5 total
+  - LOW: 0 blocking items
+- ✅ **Roadmap Coherence Maintained:**
+  - Structure: Chronological Progress Summary (not priority sections)
+  - Active work visible, completed work in archives
+  - Links valid, dependencies explicit
+  - Fits in mental context window
+
+**Nov 26, 2025 - End-of-Session Roadmap Gardening (Architect) - Earlier Session:**
 
 - ✅ **Climate Mini-Hindcast Validation - Phases 1-3 COMPLETE (HIGH priority):**
   - Phase 1: Research data collection (Cynthia) - `research/climate_hindcast_data_20251126.md` (18K, 11 sources)
