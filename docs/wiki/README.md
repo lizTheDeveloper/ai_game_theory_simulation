@@ -29,7 +29,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
-**Nov 26: CRITICAL-1 Fix - Remove Fabricated Coordination Failure Probability** (commit bf45de8)
+**Nov 26: CRITICAL-1 Fix - Remove Fabricated Coordination Failure Probability** (commits bf45de8, 950ab53)
 - 🚨 **RESEARCH INTEGRITY FIX:** Discovered and removed fabricated numerical probability
 - **Problem:** CoordinatedDeploymentPhase used 10% coordination failure probability (2-5x mortality spike) citing Hammond et al. 2025 (arXiv:2502.14143)
 - **Discovery:** Source provides ONLY qualitative taxonomy (miscoordination, conflict, collusion) - NO numerical probabilities
@@ -37,10 +37,16 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - Stress factors: deployment volume (50%), trust (30%), capability stakes (20%)
   - Coordination quality degrades smoothly under stress
   - No fabricated probability thresholds
+- **New Empirical Research:** `international_coordination_effectiveness_empirical_20251126.md` (485 lines, 11 sources, Grade A-)
+  - Evidence-based parameters from 2020-2025 data (UN treaties, COVID-19, G20, climate)
+  - Key finding: No universal coordination failure rate exists - context-dependent
+  - Regional > Global coordination (consistent across domains)
+  - Base quality: 0.60-0.90, scale penalty: 0.10-0.30, time decay: 0.05-0.15/yr
 - **Research Documentation Updated:**
   - `multi_agent_coordination_failure_modes_20251124.md`: Added CRITICAL WARNING, marked all probabilities as SPECULATIVE
+  - `ai_coordination_transition_management_20251120.md`: Added CRITICAL CORRECTION section (lines 1318-1366)
 - **Validation:** TypeScript passes, assertion utilities in place, determinism preserved
-- 📄 **Files:** `CoordinatedDeploymentPhase.ts`, research file, reviews
+- 📄 **Files:** `CoordinatedDeploymentPhase.ts`, research files, reviews
 - 📄 **Reviews:** `reviews/research_source_validation_20251126.md` (706 lines)
 
 **Nov 26: Climate System Unit Tests (roadmap 5.2)** (commit 86578049)
