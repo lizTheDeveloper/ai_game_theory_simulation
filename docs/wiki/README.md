@@ -41,6 +41,24 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📄 **Files:** `scripts/deploymentRateSweep.ts` (557 lines), `scripts/EXPERIMENT1_README.md` (260 lines)
 - **NEXT:** Run validation, then full experiment in background
 
+**Nov 25: Coordination Gap Analysis - Systematic Roadmap** (commit 88828a2)
+- 📊 **ANALYSIS:** Priya's 28,000-word systematic breakdown of gaps blocking coordination hypothesis test
+- **KEY FINDING:** Nov 24 "coordinated" implementation has PACING but lacks ADAPTIVE CONTROL
+  - Current: Deployment gates are checked but not acted upon (cosmetic)
+  - Needed: Real-time pause/resume based on economic shock detection
+- **7 GAPS IDENTIFIED:**
+  1. Adaptive Deployment Control [CRITICAL] - pause/resume based on monitoring
+  2. Economic Shock Detection [CRITICAL] - halt when GDP drops >10%
+  3. Cascade Risk Assessment [HIGH-VALUE] - pre-deployment risk scoring
+  4. Rollback Mechanisms [EXPERIMENTAL] - deactivate problematic techs
+  5. Coordination Quality Metrics [VALIDATION] - 0-1 coordination score
+  6. Transition Management [HIGH-VALUE] - gradual adoption curves
+  7. Research-backed Parameters [CRITICAL] - peer-reviewed sources
+- **MINIMUM VIABLE COORDINATION (MVC):** GAPs 1, 2, 5, 7 only (6-7 days)
+  - Expected mortality: 50-70% (vs 84% fixed, 92% uncoordinated, 68% baseline)
+  - Defer GAPs 3, 4, 6 to Phase 4D
+- 📄 **Analysis:** `reviews/coordination_gap_analysis_20251125.md`
+
 **Nov 26: Phase 4 Coordination Layer Strategic Pivot** (commit 4fe2a5d)
 - 🎯 **KEY FINDING:** 2025 initial conditions NOT past point of no return (6/9 boundaries recoverable)
 - **STRATEGIC INSIGHT:** Gap is COORDINATION, not capability
