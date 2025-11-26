@@ -29,6 +29,19 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 26: Game Layer Integration Tests (roadmap 5.4)** (commit 4863dc1)
+- 🧪 **Critical Juncture Detection Tests:** 23 tests (13 passing, 10 debugging)
+  - Tests three-condition detection (institutional flux + info ambiguity + balanced forces)
+  - Tests agency potential calculation (democracy, latent opposition, coordination cascades)
+  - Tests player influence opportunities (war prevention, cooperation, recovery)
+  - Research foundation: Acemoglu & Robinson (2001), Svolik (2012), Kuran (1991)
+- 🧪 **Scenario Definition Tests:** 24 tests (10 passing, 14 debugging)
+  - Tests all 11 governance scenarios load without errors
+  - Tests override parameter application (research, climate, redistribution)
+  - Tests GDP-adaptive spending (prevents crashes during economic collapse)
+- 📄 **Files:** `tests/integration/game-layer/critical-juncture-detection.test.ts`, `tests/integration/game-layer/scenario-definitions.test.ts`
+- **Status:** IN PROGRESS - state creation and scenario application need debugging
+
 **Nov 26: Hindcast Validation Blockers Resolved (H-1 + CRIT-1)** (commit 2e588ef)
 - 🔧 **H-1 FIX:** coordinationCapacity normalization bug in BifurcationLogicPhase
   - BifurcationLogicPhase was dividing coordinationCapacity by 100
