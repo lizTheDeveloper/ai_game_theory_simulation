@@ -102,6 +102,29 @@ npx tsx scripts/hindcastValidation.ts --runs=10 --max-months=240 > logs/hindcast
 **Pass criteria:** CO2 error ≤5% at each checkpoint
 **Output:** `logs/hindcast/hindcast_TIMESTAMP.log`
 
+### Monte Carlo Analysis Scripts
+
+**Bifurcation Metrics Analysis (Added Nov 13, 2025):**
+
+Analyze variance amplification patterns from Monte Carlo runs:
+
+```bash
+# Analyze bifurcation time series from Monte Carlo outputs
+npx tsx scripts/analyzeBifurcationMetrics.ts monteCarloOutputs/
+
+# Output includes:
+#   • System-specific amplification statistics (environmental, social, economic, etc.)
+#   • Distribution analysis (P50, P75, P90, P95, P99)
+#   • Threshold proximity patterns
+#   • System multiplier calibration recommendations
+#   • Saved to: monteCarloOutputs/bifurcation_analysis_results.json
+```
+
+**Usage Notes:**
+- Run after Monte Carlo simulations complete
+- Requires bifurcation time series data (available in runs from Nov 13, 2025+)
+- Helps validate and calibrate variance amplification parameters
+
 ### Other Diagnostic Scripts
 
 ```bash

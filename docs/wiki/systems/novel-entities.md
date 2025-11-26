@@ -754,6 +754,32 @@ God mode testing revealed 0% effectiveness for Novel Entities boundary despite 7
   - reboundFactor: [0.5, 0.7, 0.9]
   - Baseline vs Regulated scenarios
 
+**Tiered Effectiveness Model (Nov 13, 2025):**
+Replaced flat 1% minimum effectiveness with research-backed tiered model (2-30% range) based on regulatory strength. Addresses research-skeptic Grade B- review finding that zero effectiveness was too absolutist.
+
+**Research Basis:**
+- **Ling et al. (2024):** Cleanup cost analysis ($20-7,000 trillion/year at emission rate)
+- **Cousins et al. (2022):** Atmospheric redistribution (30% hard ceiling from thermodynamic constraints)
+- **Singh et al. (2024):** Thermal destruction (2-5% tech-only effectiveness)
+
+**Tiered Model:**
+- **Tech only (0-20% regulation):** 2-5% base effectiveness (point sources only)
+- **Partial regulation (20-60%):** 5-15% base effectiveness
+- **Strong regulation (60-100%):** 15-30% base effectiveness
+- **Hard ceiling:** 30% maximum (dilution reality + atmospheric redistribution)
+
+**Implementation:**
+- Location: `src/simulation/techTree/effectsEngine.ts:calculateNovelEntitiesRemediationEffectiveness()`
+- Three-tier interpolation model replaces previous regulation multiplier
+- Regulatory strength calculated from PFAS ban (50% weight), plastic phaseout (30%), substitution (20%)
+- Hard 30% ceiling enforced (thermodynamic constraints)
+
+**Model Implications:**
+- Tech-only scenario: 2-5% effectiveness (not zero, but minimal)
+- Remediation requires BOTH technology AND production regulation
+- Prevention:Remediation effectiveness ratio = 10:1 to 20:1
+- Maximum recovery: ~30% (70% irreversible floor from dilution/redistribution)
+
 **Research Files:**
 - Analysis: `research/novel_entities_zero_effectiveness_20251113.md` (742 lines, 16 sources)
 - Design: `plans/novel_entities_model_redesign_20251113.md` (276 lines)
@@ -773,6 +799,6 @@ God mode testing revealed 0% effectiveness for Novel Entities boundary despite 7
 
 ---
 
-**Last Updated:** November 13, 2025
-**Implementation Status:** ✅ Prevention-gated remediation COMPLETE, 🔄 Monte Carlo validation PENDING
+**Last Updated:** November 26, 2025
+**Implementation Status:** ✅ Prevention-gated remediation COMPLETE, ✅ Tiered effectiveness model implemented, 🔄 Monte Carlo validation PENDING
 **Next Steps:** Priya validation (N≥30 with sensitivity), then per-chemical tracking + multigenerational effects (TIER 2+)

@@ -92,19 +92,23 @@ function triggerBoundaryRecovery(
 }
 
 /**
- * Calculate Novel Entities remediation effectiveness with gating multipliers
+ * Calculate Novel Entities remediation effectiveness with tiered model and gating multipliers
  *
- * Research: Ling et al. (2024), Cousins et al. (2022), Kane et al. (2022)
+ * Research: Ling et al. (2024), Cousins et al. (2022), Singh et al. (2024)
+ * Review: research-skeptic Grade B- (Nov 13, 2025) - supports 2-30% effectiveness range
  *
  * Key findings:
- * - Remediation WITHOUT prevention is thermodynamically futile (0-2% effectiveness)
- * - Energy requirements: $20-7,000 trillion/year at current emissions (0.2-66× global GDP)
+ * - Tech only (no regulation): 2-5% effectiveness (Singh 2024 thermal destruction)
+ * - Tech + partial regulation: 8-15% effectiveness
+ * - Tech + strong regulation: 20-30% effectiveness
+ * - Hard ceiling: 30% maximum (thermodynamic constraints - Cousins 2022 dilution/redistribution)
+ * - Energy requirements: $20-7,000 trillion/year at current emissions (Ling 2024)
  * - Concentration penalty: Technologies work at mg/L, environment is ng/L (10^6-10^9× dilution)
  * - Time lag: 10-30 years to full deployment scale
  * - Rebound effect: Cleanup enables increased production (Jevons paradox)
  *
  * 5 Multipliers (research-backed):
- * 1. Regulation multiplier (0.01-1.0): Prevention tech deployed?
+ * 1. Tiered regulation multiplier (0.02-0.30): Regulatory strength determines base effectiveness tier
  * 2. Energy constraint (0.0-1.0): Sufficient renewable surplus?
  * 3. Concentration factor (0.001-1.0): Dilute environmental vs concentrated point sources
  * 4. Time lag (0.0-1.0): Years to full deployment scale (10-30 years)
@@ -132,26 +136,55 @@ function calculateNovelEntitiesRemediationEffectiveness(
     throw new Error('❌ CRITICAL: RNG required for deterministic simulation');
   }
 
-  // 1. REGULATION MULTIPLIER (0.01 → 1.0 based on prevention tech deployed)
-  // Research: Montreal Protocol - prevention 10-20× more effective than cleanup
+  // 1. TIERED EFFECTIVENESS MODEL (Nov 13, 2025)
+  // Research: Ling 2024, Cousins 2022, Singh 2024 thermal destruction
+  // Grade B- review: Zero effectiveness too absolutist, supports 2-30% range
+  // Research-skeptic finding: Tech only 2-5%, partial regulation 8-15%, strong regulation 20-30%
   const pfasBanDeployed = isTechDeployed(techTreeState, 'global_pfas_ban');
   const plasticPhaseoutDeployed = isTechDeployed(techTreeState, 'plastic_production_phaseout');
   const substitutionDeployed = isTechDeployed(techTreeState, 'green_chemistry_substitution');
 
-  // Weighted contribution from each prevention technology
+  // Calculate regulatory strength (0.0-1.0)
   // PFAS ban: 50% weight (addresses flow), Plastic phaseout: 30% (microplastics), Substitution: 20% (other chemicals)
-  const regulationLevel = (
+  const regulatoryStrength = (
     (pfasBanDeployed ? 0.5 : 0.0) +
     (plasticPhaseoutDeployed ? 0.3 : 0.0) +
     (substitutionDeployed ? 0.2 : 0.0)
   );
 
-  // Minimum 1% effectiveness (point sources only, without prevention)
-  const regulationMultiplier = assertFinite(Math.max(0.01, regulationLevel), {
+  // Tiered effectiveness based on regulatory strength
+  // - Tech only (0.0-0.2 regulation): 2-5% base effectiveness
+  // - Tech + partial regulation (0.2-0.6): 8-15% base effectiveness
+  // - Tech + strong regulation (0.6-1.0): 20-30% base effectiveness
+  let baseEffectivenessMultiplier: number;
+
+  if (regulatoryStrength < 0.2) {
+    // Tech only tier: 2-5% (linear interpolation)
+    baseEffectivenessMultiplier = 0.02 + (regulatoryStrength / 0.2) * 0.03;
+  } else if (regulatoryStrength < 0.6) {
+    // Partial regulation tier: 5-15% (linear interpolation)
+    const tierProgress = (regulatoryStrength - 0.2) / 0.4;
+    baseEffectivenessMultiplier = 0.05 + tierProgress * 0.10;
+  } else {
+    // Strong regulation tier: 15-30% (linear interpolation)
+    const tierProgress = (regulatoryStrength - 0.6) / 0.4;
+    baseEffectivenessMultiplier = 0.15 + tierProgress * 0.15;
+  }
+
+  // Hard ceiling: 30% maximum (thermodynamic constraints)
+  // Research: Dilution reality + atmospheric redistribution (Cousins 2022)
+  baseEffectivenessMultiplier = Math.min(0.30, baseEffectivenessMultiplier);
+
+  const regulationMultiplier = assertFinite(baseEffectivenessMultiplier, {
     location: 'calculateNovelEntitiesRemediationEffectiveness:regulationMultiplier',
     valueName: 'regulationMultiplier',
     month: gameState.currentMonth,
-    additionalInfo: { pfasBan: pfasBanDeployed, plasticPhaseout: plasticPhaseoutDeployed, substitution: substitutionDeployed }
+    additionalInfo: {
+      regulatoryStrength,
+      pfasBan: pfasBanDeployed,
+      plasticPhaseout: plasticPhaseoutDeployed,
+      substitution: substitutionDeployed
+    }
   });
 
   // 2. ENERGY CONSTRAINT MULTIPLIER (0.0-1.0 function of renewable surplus)
