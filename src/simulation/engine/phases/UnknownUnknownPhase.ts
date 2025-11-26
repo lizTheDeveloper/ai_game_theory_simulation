@@ -48,7 +48,7 @@ import { assertProbability, assertAICapability, assertAIAggregateCapability } fr
 export class UnknownUnknownPhase implements SimulationPhase {
   readonly id = 'unknown-unknown';
   readonly name = 'Unknown Unknown Events';
-  readonly order = 30.5; // After ExtinctionTriggersPhase (30), before OutcomeProbabilitiesPhase (31)
+  readonly order = 30.5; // After ExtinctionSystemPhase (30), before OutcomeProbabilitiesPhase (31)
   readonly dependencies = ['crisis-points']; // Reads system state for unknown risks
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
