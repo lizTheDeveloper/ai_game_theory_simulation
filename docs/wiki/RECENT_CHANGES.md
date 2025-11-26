@@ -4,6 +4,30 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
+## 🔍 Analysis: Resource Reserves Crash Root Cause (November 26, 2025 - commit 186c5b2)
+
+**Status:** 🔍 ANALYSIS COMPLETE - Fix Pending
+**Priority:** CRITICAL-1
+**Type:** Root Cause Analysis
+
+**Summary:** Identified root cause of 40% hindcast validation crash rate (`resourceReserves < 0` at months 142-146).
+
+**Root Cause:** Line 612 in `resourceDepletion.ts` uses `Math.min()` without `Math.max(0, ...)` floor, allowing negative reserve values to persist through regeneration cycles.
+
+**Conservation Law Violation:** Resource reserves cannot be negative (you can't harvest what doesn't exist). Missing constraint allowed overharvesting to produce physically impossible states.
+
+**Fix Strategy (Pending Implementation):**
+1. Add `Math.max(0, ...)` floor to line 612
+2. Add assertions to `calculateResourceSecurity()` for all inputs [0,1]
+3. Add early warning logging for low reserves (<10%)
+4. Investigate temperature anticorrelation (separate bug)
+
+**Secondary Finding:** Temperature anticorrelation mystery - CO2 overshoots by 19% but temperature undershoots by 26.5% (wrong sign). Under investigation.
+
+**File:** `reviews/resource_reserves_crash_root_cause_20251126.md` (314 lines)
+
+---
+
 ## ✅ Fix: Regional Population Death Rate Assertion (November 26, 2025 - commit 53b6672)
 
 **Status:** ✅ COMPLETE
