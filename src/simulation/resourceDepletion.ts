@@ -1070,6 +1070,59 @@ function updateCO2System(state: GameState, resources: ResourceEconomy): void {
     month: state.currentMonth
   });
 
+  // PHASE 9 (Nov 26, 2025): Temporal evolution of carbon sinks (1990-2010)
+  // Research shows sinks GROW over hindcast period:
+  // - Ocean: 8.1 → 10.6 GtCO2/yr (+32%)
+  // - Land: 5.1 → 11.4 GtCO2/yr (+121%)
+  // Source: research/carbon_sinks_1990_2025_20251126.md (Global Carbon Project data)
+  if (state.config?.historicalEmissionsMode === true) {
+    const startYear = state.config?.startYear ?? 2025;
+    const currentYear = startYear + Math.floor(state.currentMonth / 12);
+
+    // Only apply temporal evolution during hindcast period (1990-2010)
+    if (currentYear >= 1990 && currentYear <= 2010) {
+      const yearsSince1990 = currentYear - 1990;
+      const progressFraction = yearsSince1990 / 20.0;  // 0.0 at 1990, 1.0 at 2010
+
+      // Linear interpolation from 1990 to 2010 values
+      const ocean1990 = 8.1;   // GtCO2/yr (2.2 GtC/yr * 3.67)
+      const ocean2010 = 10.6;  // GtCO2/yr (2.9 GtC/yr * 3.67)
+      const land1990 = 5.1;    // GtCO2/yr (1.4 GtC/yr * 3.67)
+      const land2010 = 11.4;   // GtCO2/yr (3.1 GtC/yr * 3.67)
+
+      co2.oceanAbsorption = assertFinite(
+        ocean1990 + (ocean2010 - ocean1990) * progressFraction,
+        {
+          location: 'updateCO2System (temporal evolution)',
+          valueName: 'oceanAbsorption',
+          month: state.currentMonth,
+          additionalInfo: { year: currentYear, progressFraction }
+        }
+      );
+
+      co2.landAbsorption = assertFinite(
+        land1990 + (land2010 - land1990) * progressFraction,
+        {
+          location: 'updateCO2System (temporal evolution)',
+          valueName: 'landAbsorption',
+          month: state.currentMonth,
+          additionalInfo: { year: currentYear, progressFraction }
+        }
+      );
+
+      // During hindcast, disable sink saturation (empirical values are already "effective" sinks)
+      co2.sinkSaturation = 0;
+
+      // Log every 5 years for verification
+      if (state.currentMonth % 60 === 0) {
+        console.log(`  🌍 [Temporal Sink Evolution] Year ${currentYear}:`);
+        console.log(`     Ocean: ${co2.oceanAbsorption.toFixed(2)} GtCO2/yr (${ocean1990} → ${ocean2010})`);
+        console.log(`     Land: ${co2.landAbsorption.toFixed(2)} GtCO2/yr (${land1990} → ${land2010})`);
+        console.log(`     Sink saturation: ${co2.sinkSaturation} (disabled during hindcast)`);
+      }
+    }
+  }
+
   const sinkCapacity = assertFinite(
     (co2.oceanAbsorption + co2.landAbsorption) * (1 - co2.sinkSaturation),
     {
@@ -1135,20 +1188,27 @@ function updateCO2System(state: GameState, resources: ResourceEconomy): void {
   );
   
   // === SINKS SATURATE ===
-  
-  // Ocean absorption decreases with acidification
-  const ocean = resources.ocean;
-  if (ocean.pH < 8.0) {
-    const acidificationFactor = (8.0 - ocean.pH) / 0.5; // 0 to 1
-    co2.oceanAbsorption = Math.max(5, 10 * (1 - acidificationFactor * 0.5)); // Drops to 5 Gt/year
+  // NOTE: During hindcast mode (1990-2010), use empirical sink evolution instead of mechanistic saturation.
+  // Mixing empirical and mechanistic models breaks validation.
+  const inHindcastPeriod = state.config?.historicalEmissionsMode === true &&
+    state.config.startYear !== undefined &&
+    (state.config.startYear + Math.floor(state.currentMonth / 12)) <= 2010;
+
+  if (!inHindcastPeriod) {
+    // Ocean absorption decreases with acidification (FUTURE PROJECTION ONLY)
+    const ocean = resources.ocean;
+    if (ocean.pH < 8.0) {
+      const acidificationFactor = (8.0 - ocean.pH) / 0.5; // 0 to 1
+      co2.oceanAbsorption = Math.max(5, 10 * (1 - acidificationFactor * 0.5)); // Drops to 5 Gt/year
+    }
+
+    // Land absorption decreases with deforestation (FUTURE PROJECTION ONLY)
+    const forestLoss = 1 - resources.timber.forestCover;
+    co2.landAbsorption = Math.max(5, 11 * (1 - forestLoss * 0.3)); // Drops to 7.7 Gt/year
+
+    // Sinks saturate with cumulative emissions (FUTURE PROJECTION ONLY)
+    co2.sinkSaturation = Math.min(0.8, co2.cumulativeEmissions / 1000); // 80% saturated at 1000 Gt
   }
-  
-  // Land absorption decreases with deforestation
-  const forestLoss = 1 - resources.timber.forestCover;
-  co2.landAbsorption = Math.max(5, 11 * (1 - forestLoss * 0.3)); // Drops to 7.7 Gt/year
-  
-  // Sinks saturate with cumulative emissions
-  co2.sinkSaturation = Math.min(0.8, co2.cumulativeEmissions / 1000); // 80% saturated at 1000 Gt
   
   // === TEMPERATURE ===
   //
