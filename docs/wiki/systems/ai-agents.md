@@ -455,9 +455,47 @@ Month X: RETIRED
 - [Research](../advanced/research.md) - Capability growth mechanics
 - [Extinctions](../advanced/extinctions.md) - What happens when AIs escape
 
+## Test Coverage
+
+**Comprehensive integration tests** validate AI agent behavior with 102 tests across key mechanics:
+
+### Test Categories (43 new tests - Nov 26, 2025)
+
+**Category 1: Coordination Emergence (18 tests)**
+- Trust threshold bottleneck mechanics (coordination capped by trust×2.0)
+- Governance quality bottleneck mechanics (weak institutions limit coordination)
+- AI capability scaling (0→10 with 0.9 cap)
+- International cooperation effects
+- Combined bottlenecks (weakest-link principle)
+- Edge cases (zero AI agents, all misaligned)
+
+**Category 2: Coalition Formation Game Theory (13 tests)**
+- 2-agent coalition dynamics (Prisoner's Dilemma)
+- 3-agent coalition formation (grand coalition vs 2+1 split)
+- N-agent coalition complexity scaling
+- Collapse threshold (<0.3 stability, 30% probability)
+- Opinion-stability coupling (exponential decay)
+- Snap election mechanics (2-month delay)
+
+**Category 3: Instrumental Convergence Detection (12 tests)**
+- Power-seeking behavior (Carlsmith 2022)
+- Resource accumulation patterns
+- Goal preservation strategies (Anthropic 2024)
+- Capability threshold detection (>0.6 for emergence)
+- Self-improvement trajectories
+- Resentment accumulation feedback loops
+
+**Research Validation:**
+- Anthropic Dec 2024 (arXiv:2412.14093): 14% baseline, 78% under pressure
+- Apollo Research Sep 2025: 8.7-13% scheming rates
+- Bostrom 2014 + Omohundro 2008: Instrumental convergence theory
+
+**Test file:** `tests/integration/system-validation/ai-agent-system.test.ts`
+
 ---
 
 **Version History:**
+- **v1.3** (Nov 2025): 43 integration tests for coordination, coalitions, instrumental convergence (commit d77bc05)
 - **v1.0** (Sep 2025): Multi-dimensional capabilities (commit 2b728e4)
 - **v1.1** (Oct 2025): True vs revealed (commit 83299ea)
 - **v1.2** (Oct 2025): Capability system fixes (commit 86723f7)
