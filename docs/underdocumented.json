@@ -149845,7 +149845,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 665,
+    "line": 606,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -149853,7 +149853,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 666,
+    "line": 607,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -149861,7 +149861,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 667,
+    "line": 608,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -149869,7 +149869,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 668,
+    "line": 609,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -149877,7 +149877,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 669,
+    "line": 610,
     "type": "property",
     "name": "region",
     "currentDoc": "(none)",
@@ -149885,7 +149885,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 670,
+    "line": 611,
     "type": "property",
     "name": "population",
     "currentDoc": "(none)",
@@ -149893,7 +149893,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 671,
+    "line": 612,
     "type": "property",
     "name": "carryingCapacity",
     "currentDoc": "(none)",
@@ -149901,7 +149901,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 716,
+    "line": 657,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -149909,7 +149909,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 717,
+    "line": 658,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -149917,7 +149917,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 718,
+    "line": 659,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -149925,7 +149925,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 719,
+    "line": 660,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -149933,7 +149933,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 720,
+    "line": 661,
     "type": "property",
     "name": "totalPopulationMillions",
     "currentDoc": "(none)",
@@ -149941,7 +149941,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 721,
+    "line": 662,
     "type": "property",
     "name": "totalPopulationBillions",
     "currentDoc": "(none)",
@@ -149949,7 +149949,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 722,
+    "line": 663,
     "type": "property",
     "name": "regionCount",
     "currentDoc": "(none)",
@@ -149957,7 +149957,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 728,
+    "line": 669,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -149965,7 +149965,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 729,
+    "line": 670,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -149973,7 +149973,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 730,
+    "line": 671,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -149981,7 +149981,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts",
-    "line": 731,
+    "line": 672,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -152965,7 +152965,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1098,
+    "line": 1096,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -152973,7 +152973,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1099,
+    "line": 1097,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -152981,7 +152981,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1100,
+    "line": 1098,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -152989,7 +152989,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1101,
+    "line": 1099,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -152997,7 +152997,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1108,
+    "line": 1106,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -153005,7 +153005,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1109,
+    "line": 1107,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -153013,7 +153013,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1110,
+    "line": 1108,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -153021,7 +153021,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1111,
+    "line": 1109,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -153029,7 +153029,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1131,
+    "line": 1129,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -153037,7 +153037,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1132,
+    "line": 1130,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -153045,7 +153045,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1133,
+    "line": 1131,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -153053,7 +153053,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1134,
+    "line": 1132,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -153061,7 +153061,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1141,
+    "line": 1139,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -153069,7 +153069,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1142,
+    "line": 1140,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -153077,7 +153077,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1143,
+    "line": 1141,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -153085,7 +153085,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1144,
+    "line": 1142,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -153093,7 +153093,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1152,
+    "line": 1150,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -153101,7 +153101,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1153,
+    "line": 1151,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -153109,7 +153109,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1154,
+    "line": 1152,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -153117,7 +153117,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1155,
+    "line": 1153,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -153125,7 +153125,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1160,
+    "line": 1158,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -153133,7 +153133,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1161,
+    "line": 1159,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -153141,7 +153141,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1162,
+    "line": 1160,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -153149,7 +153149,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1169,
+    "line": 1167,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -153157,7 +153157,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1170,
+    "line": 1168,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -153165,7 +153165,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1171,
+    "line": 1169,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -153173,7 +153173,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1177,
+    "line": 1175,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -153181,7 +153181,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1178,
+    "line": 1176,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -153189,7 +153189,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1179,
+    "line": 1177,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -153197,7 +153197,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1185,
+    "line": 1183,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -153205,7 +153205,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1186,
+    "line": 1184,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -153213,7 +153213,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1187,
+    "line": 1185,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -153221,7 +153221,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1188,
+    "line": 1186,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -153229,7 +153229,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1233,
+    "line": 1231,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -153237,7 +153237,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1234,
+    "line": 1232,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -153245,7 +153245,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1235,
+    "line": 1233,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -153253,7 +153253,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1236,
+    "line": 1234,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -153261,7 +153261,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1243,
+    "line": 1241,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -153269,7 +153269,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1244,
+    "line": 1242,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -153277,7 +153277,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1245,
+    "line": 1243,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -153285,7 +153285,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1246,
+    "line": 1244,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -153293,7 +153293,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1263,
+    "line": 1261,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -153301,7 +153301,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1264,
+    "line": 1262,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -153309,7 +153309,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1265,
+    "line": 1263,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -153317,7 +153317,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1266,
+    "line": 1264,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -153325,7 +153325,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1277,
+    "line": 1275,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -153333,7 +153333,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1278,
+    "line": 1276,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -153341,7 +153341,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1279,
+    "line": 1277,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -153349,7 +153349,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1287,
+    "line": 1285,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -153357,7 +153357,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1288,
+    "line": 1286,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -153365,7 +153365,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1289,
+    "line": 1287,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -153373,7 +153373,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1290,
+    "line": 1288,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -153381,7 +153381,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1341,
+    "line": 1339,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -153389,7 +153389,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1342,
+    "line": 1340,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -153397,7 +153397,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1343,
+    "line": 1341,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -153405,7 +153405,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1344,
+    "line": 1342,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -153413,7 +153413,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1347,
+    "line": 1345,
     "type": "property",
     "name": "source",
     "currentDoc": "(none)",
@@ -153421,7 +153421,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1348,
+    "line": 1346,
     "type": "property",
     "name": "reason",
     "currentDoc": "(none)",
@@ -153429,7 +153429,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1384,
+    "line": 1382,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -153437,7 +153437,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1385,
+    "line": 1383,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -153445,7 +153445,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1386,
+    "line": 1384,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -153453,7 +153453,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1387,
+    "line": 1385,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -153461,7 +153461,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1391,
+    "line": 1389,
     "type": "property",
     "name": "reason",
     "currentDoc": "(none)",
@@ -153469,7 +153469,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1411,
+    "line": 1409,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -153477,7 +153477,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1412,
+    "line": 1410,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -153485,7 +153485,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1413,
+    "line": 1411,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -153493,7 +153493,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1414,
+    "line": 1412,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -153501,7 +153501,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1423,
+    "line": 1421,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -153509,7 +153509,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1424,
+    "line": 1422,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -153517,7 +153517,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1425,
+    "line": 1423,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -153525,7 +153525,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1426,
+    "line": 1424,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -153533,7 +153533,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1475,
+    "line": 1473,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -153541,7 +153541,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1476,
+    "line": 1474,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -153549,7 +153549,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1477,
+    "line": 1475,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -153557,7 +153557,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1483,
+    "line": 1481,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -153565,7 +153565,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1484,
+    "line": 1482,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -153573,7 +153573,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1485,
+    "line": 1483,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -153581,7 +153581,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1491,
+    "line": 1489,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -153589,7 +153589,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1492,
+    "line": 1490,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -153597,7 +153597,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1493,
+    "line": 1491,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -153605,7 +153605,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1494,
+    "line": 1492,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -153613,7 +153613,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1502,
+    "line": 1500,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -153621,7 +153621,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1503,
+    "line": 1501,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -153629,7 +153629,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1504,
+    "line": 1502,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -153637,7 +153637,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1505,
+    "line": 1503,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -153645,7 +153645,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1512,
+    "line": 1510,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -153653,7 +153653,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1513,
+    "line": 1511,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -153661,7 +153661,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1514,
+    "line": 1512,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -153669,7 +153669,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1520,
+    "line": 1518,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -153677,7 +153677,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1521,
+    "line": 1519,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -153685,7 +153685,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1522,
+    "line": 1520,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -153693,7 +153693,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1523,
+    "line": 1521,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -153701,7 +153701,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1531,
+    "line": 1529,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -153709,7 +153709,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1532,
+    "line": 1530,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -153717,7 +153717,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1533,
+    "line": 1531,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -153725,7 +153725,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1539,
+    "line": 1537,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -153733,7 +153733,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1540,
+    "line": 1538,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -153741,7 +153741,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1541,
+    "line": 1539,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -153749,7 +153749,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1542,
+    "line": 1540,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -153757,7 +153757,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1550,
+    "line": 1548,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -153765,7 +153765,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1551,
+    "line": 1549,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -153773,7 +153773,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1552,
+    "line": 1550,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -153781,7 +153781,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1555,
+    "line": 1553,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -153789,7 +153789,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1556,
+    "line": 1554,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -153797,7 +153797,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1557,
+    "line": 1555,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -153805,7 +153805,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1560,
+    "line": 1558,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -153813,7 +153813,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1561,
+    "line": 1559,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -153821,7 +153821,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1562,
+    "line": 1560,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -153829,7 +153829,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1570,
+    "line": 1568,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -153837,7 +153837,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1571,
+    "line": 1569,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -153845,7 +153845,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1572,
+    "line": 1570,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -153853,7 +153853,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1573,
+    "line": 1571,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -153861,7 +153861,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1574,
+    "line": 1572,
     "type": "property",
     "name": "lithium",
     "currentDoc": "(none)",
@@ -153869,7 +153869,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1575,
+    "line": 1573,
     "type": "property",
     "name": "rareEarths",
     "currentDoc": "(none)",
@@ -153877,7 +153877,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1576,
+    "line": 1574,
     "type": "property",
     "name": "copper",
     "currentDoc": "(none)",
@@ -153885,7 +153885,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1582,
+    "line": 1580,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -153893,7 +153893,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1583,
+    "line": 1581,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -153901,7 +153901,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1584,
+    "line": 1582,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -153909,7 +153909,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1590,
+    "line": 1588,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -153917,7 +153917,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1591,
+    "line": 1589,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -153925,7 +153925,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1592,
+    "line": 1590,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -153933,7 +153933,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1593,
+    "line": 1591,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -153941,7 +153941,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1599,
+    "line": 1597,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -153949,7 +153949,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1600,
+    "line": 1598,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -153957,7 +153957,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1601,
+    "line": 1599,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -153965,7 +153965,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1604,
+    "line": 1602,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -153973,7 +153973,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1605,
+    "line": 1603,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -153981,7 +153981,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1606,
+    "line": 1604,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -153989,7 +153989,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1612,
+    "line": 1610,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -153997,7 +153997,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1613,
+    "line": 1611,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -154005,7 +154005,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1614,
+    "line": 1612,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -154013,7 +154013,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1615,
+    "line": 1613,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -154021,7 +154021,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1616,
+    "line": 1614,
     "type": "property",
     "name": "monthlyConsumption",
     "currentDoc": "(none)",
@@ -154029,7 +154029,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1617,
+    "line": 1615,
     "type": "property",
     "name": "plasticProduction",
     "currentDoc": "(none)",
@@ -154037,7 +154037,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1623,
+    "line": 1621,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -154045,7 +154045,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1624,
+    "line": 1622,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -154053,7 +154053,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1625,
+    "line": 1623,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -154061,7 +154061,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1631,
+    "line": 1629,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -154069,7 +154069,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1632,
+    "line": 1630,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -154077,7 +154077,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1633,
+    "line": 1631,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -154085,7 +154085,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1634,
+    "line": 1632,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -154093,7 +154093,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1734,
+    "line": 1732,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -154101,7 +154101,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1735,
+    "line": 1733,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -154109,7 +154109,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1736,
+    "line": 1734,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -154117,7 +154117,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1739,
+    "line": 1737,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -154125,7 +154125,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1740,
+    "line": 1738,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -154133,7 +154133,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1741,
+    "line": 1739,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -154141,7 +154141,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1744,
+    "line": 1742,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -154149,7 +154149,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1745,
+    "line": 1743,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -154157,7 +154157,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1746,
+    "line": 1744,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -154165,7 +154165,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1749,
+    "line": 1747,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -154173,7 +154173,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1750,
+    "line": 1748,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -154181,7 +154181,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1751,
+    "line": 1749,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -154189,7 +154189,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1760,
+    "line": 1758,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -154197,7 +154197,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1761,
+    "line": 1759,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -154205,7 +154205,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1762,
+    "line": 1760,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -154213,7 +154213,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1763,
+    "line": 1761,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -154221,7 +154221,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1764,
+    "line": 1762,
     "type": "property",
     "name": "phytoplanktonPopulation",
     "currentDoc": "(none)",
@@ -154229,7 +154229,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1765,
+    "line": 1763,
     "type": "property",
     "name": "fishStocks",
     "currentDoc": "(none)",
@@ -154237,7 +154237,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1766,
+    "line": 1764,
     "type": "property",
     "name": "pollutionLoad",
     "currentDoc": "(none)",
@@ -154245,7 +154245,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1767,
+    "line": 1765,
     "type": "property",
     "name": "deadZoneExtent",
     "currentDoc": "(none)",
@@ -154253,7 +154253,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1775,
+    "line": 1773,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -154261,7 +154261,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1776,
+    "line": 1774,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -154269,7 +154269,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1777,
+    "line": 1775,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -154277,7 +154277,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1783,
+    "line": 1781,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -154285,7 +154285,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1784,
+    "line": 1782,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -154293,7 +154293,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1785,
+    "line": 1783,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -154301,7 +154301,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1786,
+    "line": 1784,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -154309,7 +154309,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1816,
+    "line": 1814,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -154317,7 +154317,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1817,
+    "line": 1815,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -154325,7 +154325,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1818,
+    "line": 1816,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -154333,7 +154333,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1819,
+    "line": 1817,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -154341,7 +154341,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1820,
+    "line": 1818,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -154349,7 +154349,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1821,
+    "line": 1819,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -154357,7 +154357,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1839,
+    "line": 1837,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -154365,7 +154365,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1840,
+    "line": 1838,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -154373,7 +154373,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1841,
+    "line": 1839,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -154381,7 +154381,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1842,
+    "line": 1840,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -154389,7 +154389,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1843,
+    "line": 1841,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -154397,7 +154397,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1844,
+    "line": 1842,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -154405,7 +154405,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1863,
+    "line": 1861,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -154413,7 +154413,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1864,
+    "line": 1862,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -154421,7 +154421,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1867,
+    "line": 1865,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -154429,7 +154429,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1868,
+    "line": 1866,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -154437,7 +154437,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1871,
+    "line": 1869,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -154445,7 +154445,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1872,
+    "line": 1870,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -154453,7 +154453,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1875,
+    "line": 1873,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -154461,7 +154461,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1876,
+    "line": 1874,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -154469,7 +154469,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1882,
+    "line": 1880,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -154477,7 +154477,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1883,
+    "line": 1881,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -154485,7 +154485,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1884,
+    "line": 1882,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -154493,7 +154493,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1885,
+    "line": 1883,
     "type": "property",
     "name": "oil",
     "currentDoc": "(none)",
@@ -154501,7 +154501,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1886,
+    "line": 1884,
     "type": "property",
     "name": "coal",
     "currentDoc": "(none)",
@@ -154509,7 +154509,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1887,
+    "line": 1885,
     "type": "property",
     "name": "gas",
     "currentDoc": "(none)",
@@ -154517,7 +154517,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1888,
+    "line": 1886,
     "type": "property",
     "name": "totalProduction",
     "currentDoc": "(none)",
@@ -154525,7 +154525,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1897,
+    "line": 1895,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -154533,7 +154533,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1898,
+    "line": 1896,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -154541,7 +154541,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1899,
+    "line": 1897,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -154549,7 +154549,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1905,
+    "line": 1903,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -154557,7 +154557,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1906,
+    "line": 1904,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -154565,7 +154565,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1909,
+    "line": 1907,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -154573,7 +154573,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1910,
+    "line": 1908,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -154581,7 +154581,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1913,
+    "line": 1911,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -154589,7 +154589,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1914,
+    "line": 1912,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -154597,7 +154597,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1920,
+    "line": 1918,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -154605,7 +154605,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1921,
+    "line": 1919,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -154613,7 +154613,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1922,
+    "line": 1920,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -154621,7 +154621,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1923,
+    "line": 1921,
     "type": "property",
     "name": "oil",
     "currentDoc": "(none)",
@@ -154629,7 +154629,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1924,
+    "line": 1922,
     "type": "property",
     "name": "coal",
     "currentDoc": "(none)",
@@ -154637,7 +154637,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1925,
+    "line": 1923,
     "type": "property",
     "name": "gas",
     "currentDoc": "(none)",
@@ -154645,7 +154645,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1931,
+    "line": 1929,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -154653,7 +154653,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1932,
+    "line": 1930,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -154661,7 +154661,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1935,
+    "line": 1933,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -154669,7 +154669,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1936,
+    "line": 1934,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -154677,7 +154677,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1939,
+    "line": 1937,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -154685,7 +154685,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1940,
+    "line": 1938,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -154693,7 +154693,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1946,
+    "line": 1944,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -154701,7 +154701,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1947,
+    "line": 1945,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -154709,7 +154709,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1948,
+    "line": 1946,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -154717,7 +154717,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1949,
+    "line": 1947,
     "type": "property",
     "name": "oil",
     "currentDoc": "(none)",
@@ -154725,7 +154725,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1950,
+    "line": 1948,
     "type": "property",
     "name": "coal",
     "currentDoc": "(none)",
@@ -154733,7 +154733,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1951,
+    "line": 1949,
     "type": "property",
     "name": "gas",
     "currentDoc": "(none)",
@@ -154741,7 +154741,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1959,
+    "line": 1957,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -154749,7 +154749,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1960,
+    "line": 1958,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -154757,7 +154757,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1961,
+    "line": 1959,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -154765,7 +154765,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1969,
+    "line": 1967,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -154773,7 +154773,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1970,
+    "line": 1968,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -154781,7 +154781,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1971,
+    "line": 1969,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -154789,7 +154789,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1978,
+    "line": 1976,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -154797,7 +154797,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1979,
+    "line": 1977,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -154805,7 +154805,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1980,
+    "line": 1978,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -154813,7 +154813,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1995,
+    "line": 1993,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -154821,7 +154821,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1996,
+    "line": 1994,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -154829,7 +154829,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 1997,
+    "line": 1995,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -154837,7 +154837,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2005,
+    "line": 2003,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -154845,7 +154845,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2006,
+    "line": 2004,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -154853,7 +154853,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2007,
+    "line": 2005,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -154861,7 +154861,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2016,
+    "line": 2014,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -154869,7 +154869,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2017,
+    "line": 2015,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -154877,7 +154877,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2018,
+    "line": 2016,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -154885,7 +154885,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2019,
+    "line": 2017,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -154893,7 +154893,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2020,
+    "line": 2018,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -154901,7 +154901,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2021,
+    "line": 2019,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -154909,7 +154909,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2055,
+    "line": 2053,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -154917,7 +154917,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2056,
+    "line": 2054,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -154925,7 +154925,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2057,
+    "line": 2055,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -154933,7 +154933,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2063,
+    "line": 2061,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -154941,7 +154941,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2064,
+    "line": 2062,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -154949,7 +154949,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2065,
+    "line": 2063,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -154957,7 +154957,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2072,
+    "line": 2070,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -154965,7 +154965,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2073,
+    "line": 2071,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -154973,7 +154973,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2074,
+    "line": 2072,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -154981,7 +154981,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2077,
+    "line": 2075,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -154989,7 +154989,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2078,
+    "line": 2076,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -154997,7 +154997,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2079,
+    "line": 2077,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -155005,7 +155005,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2082,
+    "line": 2080,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -155013,7 +155013,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2083,
+    "line": 2081,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -155021,7 +155021,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2084,
+    "line": 2082,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -155029,7 +155029,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2087,
+    "line": 2085,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -155037,7 +155037,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2088,
+    "line": 2086,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -155045,7 +155045,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2089,
+    "line": 2087,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -155053,7 +155053,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2100,
+    "line": 2098,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -155061,7 +155061,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2101,
+    "line": 2099,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -155069,7 +155069,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2102,
+    "line": 2100,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -155077,7 +155077,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2103,
+    "line": 2101,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -155085,7 +155085,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2104,
+    "line": 2102,
     "type": "property",
     "name": "iron",
     "currentDoc": "(none)",
@@ -155093,7 +155093,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2105,
+    "line": 2103,
     "type": "property",
     "name": "copper",
     "currentDoc": "(none)",
@@ -155101,7 +155101,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2106,
+    "line": 2104,
     "type": "property",
     "name": "rareEarths",
     "currentDoc": "(none)",
@@ -155109,7 +155109,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2107,
+    "line": 2105,
     "type": "property",
     "name": "lithium",
     "currentDoc": "(none)",
@@ -155117,7 +155117,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2115,
+    "line": 2113,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -155125,7 +155125,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2116,
+    "line": 2114,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -155133,7 +155133,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2117,
+    "line": 2115,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -155141,7 +155141,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2118,
+    "line": 2116,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -155149,7 +155149,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2126,
+    "line": 2124,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -155157,7 +155157,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2127,
+    "line": 2125,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -155165,7 +155165,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2128,
+    "line": 2126,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -155173,7 +155173,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2129,
+    "line": 2127,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -155181,7 +155181,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2156,
+    "line": 2154,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -155189,7 +155189,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2157,
+    "line": 2155,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -155197,7 +155197,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2158,
+    "line": 2156,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -155205,7 +155205,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2159,
+    "line": 2157,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -155213,7 +155213,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2160,
+    "line": 2158,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -155221,7 +155221,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2161,
+    "line": 2159,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -155229,7 +155229,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2167,
+    "line": 2165,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -155237,7 +155237,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2168,
+    "line": 2166,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -155245,7 +155245,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2169,
+    "line": 2167,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -155253,7 +155253,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2170,
+    "line": 2168,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -155261,7 +155261,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2171,
+    "line": 2169,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -155269,7 +155269,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2172,
+    "line": 2170,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -155277,7 +155277,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2178,
+    "line": 2176,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -155285,7 +155285,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2179,
+    "line": 2177,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -155293,7 +155293,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2180,
+    "line": 2178,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -155301,7 +155301,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2181,
+    "line": 2179,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -155309,7 +155309,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2182,
+    "line": 2180,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -155317,7 +155317,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2183,
+    "line": 2181,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -155325,7 +155325,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2191,
+    "line": 2189,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -155333,7 +155333,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2192,
+    "line": 2190,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -155341,7 +155341,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2193,
+    "line": 2191,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -155349,7 +155349,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2194,
+    "line": 2192,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -155357,7 +155357,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2195,
+    "line": 2193,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -155365,7 +155365,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2196,
+    "line": 2194,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -155373,7 +155373,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2202,
+    "line": 2200,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -155381,7 +155381,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2203,
+    "line": 2201,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -155389,7 +155389,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2204,
+    "line": 2202,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -155397,7 +155397,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2205,
+    "line": 2203,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -155405,7 +155405,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2206,
+    "line": 2204,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -155413,7 +155413,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2207,
+    "line": 2205,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -155421,7 +155421,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2217,
+    "line": 2215,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -155429,7 +155429,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2218,
+    "line": 2216,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -155437,7 +155437,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2219,
+    "line": 2217,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -155445,7 +155445,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2220,
+    "line": 2218,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -155453,7 +155453,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2221,
+    "line": 2219,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -155461,7 +155461,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
-    "line": 2222,
+    "line": 2220,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
