@@ -7826,6 +7826,11 @@ movementStrength = society.socialMovements.strength × 0.2
 agencyPotential = min(1.0, sum of all factors)
 ```
 
+**⚠️ Threshold Interaction Note**: Coordination cascade boost (0.2) is **unreachable at critical junctures** by design:
+- Critical juncture requires: `QoL > 0.3` (balanced forces condition)
+- Coordination cascade requires: `latentOpposition > 0.3`, which means `QoL < 0.3`
+- These thresholds are mutually exclusive - cascade moments occur at severe grievance levels that preclude critical junctures
+
 **Escape Attempt Mechanics**:
 
 Four escape types based on current conditions:

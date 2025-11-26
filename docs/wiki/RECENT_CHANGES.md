@@ -4,6 +4,32 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
+## 🐛 Fix: HDI/qualityOfLife Scaling Bug (November 26, 2025 - commit 545cd93)
+
+**Status:** ✅ FIXED
+**Priority:** MEDIUM (Data initialization)
+**Type:** Bug Fix
+
+**Summary:** Fixed incorrect scaling of `qualityOfLife` during historical initialization from HDI data.
+
+**The Bug:**
+- `qualityOfLife` was being multiplied by 100 when initialized from HDI
+- HDI is already 0-1 scale (e.g., 0.746 for 1990 global average)
+- Result: `qualityOfLife` was set to ~74.6 instead of 0.746
+- Caused assertion failures in `getGDPProxy` which expected 0-1 range
+- Validation code incorrectly divided by 100 to compensate
+
+**The Fix:**
+- Removed `* 100` multiplication: `qualityOfLife = historical.economic.globalHDI`
+- Removed `/ 100` compensation in validation
+- HDI and qualityOfLife now both stay in native 0-1 scale during initialization
+
+**Note:** Runtime `qualityOfLife` can exceed 1.0 (documented as "0-2+") through AI benefit additions and aggregation - this is intentional. The bug only affected *initialization* from historical HDI data.
+
+**File:** `src/simulation/historicalInitialization.ts` (3 locations fixed)
+
+---
+
 ## ✅ NaN/Infinity Regression Suite Added (November 26, 2025 - commit eb5753f)
 
 **Status:** ✅ COMPLETE

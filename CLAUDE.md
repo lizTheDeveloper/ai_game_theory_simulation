@@ -380,6 +380,18 @@ const pop = state.humanPopulationSystem?.population ?? 0;
 
 **Why this matters:** The Oct 2025 ecology NaN bug was hidden for months by a `?? 50` fallback. The Nov 2025 god mode NaN was a test script reading from wrong location (`undefined / 1e9 = NaN`). Silent fallbacks mask bugs.
 
+**Accessing GDP (Nov 2025 fix):**
+```typescript
+// ❌ WRONG - This field doesn't exist on GameState
+const gdp = state.globalMetrics.gdp;
+
+// ✅ CORRECT - Use getGDPProxy utility
+import { getGDPProxy } from '@/simulation/utils/recoveryCalculations';
+const gdp = getGDPProxy(state);  // Returns ~$114T (realistic units)
+```
+
+**Context:** `state.globalMetrics.gdp` doesn't exist. GDP is calculated dynamically from population, gdpPerCapita, and economic modifiers. The `getGDPProxy()` utility handles this calculation correctly.
+
 ### State Mutation & Logging
 
 **State:** Phases mutate state directly for performance (not immutable). Deep clone only for history tracking.
