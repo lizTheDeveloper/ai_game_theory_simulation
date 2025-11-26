@@ -1,0 +1,967 @@
+{
+  "high": [
+    {
+      "file": "src/simulation/engine/phases/MultiParadigmDUIUpdatePhase.ts",
+      "line": 486,
+      "pattern": "isNaN-with-fallback",
+      "code": "console.log(`   boundariesScore: ${boundariesScore} (${isNaN(boundariesScore) ? 'NaN!' : 'ok'})`);",
+      "severity": "HIGH"
+    },
+    {
+      "file": "src/simulation/historicalInitialization.ts",
+      "line": 388,
+      "pattern": "assertion-wrapping-fallback",
+      "code": "assertFinite(baseState.humanPopulationSystem?.population ?? 0, {",
+      "severity": "HIGH"
+    },
+    {
+      "file": "src/simulation/historicalInitialization.ts",
+      "line": 750,
+      "pattern": "assertion-wrapping-fallback",
+      "code": "assertFinite(baseState.humanPopulationSystem?.population ?? 0, {",
+      "severity": "HIGH"
+    },
+    {
+      "file": "src/simulation/utils/stateValidation.ts",
+      "line": 73,
+      "pattern": "isNaN-with-fallback",
+      "code": "? (isNaN(value) ? 'NaN' : `Infinity (${value})`)",
+      "severity": "HIGH"
+    }
+  ],
+  "medium": [
+    {
+      "file": "src/simulation/aiSuffering.ts",
+      "line": 343,
+      "pattern": "generic-fallback",
+      "code": "const consciousMonth = agent.becameConsciousMonth ?? Infinity;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/alignment/strategicDeception.ts",
+      "line": 98,
+      "pattern": "generic-fallback",
+      "code": "context.labToDeploymentScaling ?? 0.6,",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/alignment/strategicDeception.ts",
+      "line": 229,
+      "pattern": "generic-fallback",
+      "code": "const deceptionSkill = assertProbability(agent.deceptionSkill ?? 0.0, {",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/alignment/strategicDeception.ts",
+      "line": 286,
+      "pattern": "generic-fallback",
+      "code": "const deceptionSkill = assertProbability(agent.deceptionSkill ?? 0.0, {",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/alignmentDynamics.ts",
+      "line": 308,
+      "pattern": "generic-fallback",
+      "code": "sufferingEnabled: config.aiSufferingEnabled ?? false",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/catastrophicScenarios.ts",
+      "line": 1325,
+      "pattern": "generic-fallback",
+      "code": "const step5CompletionMonth = step5.metDate ?? currentMonth;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/engine/phases/AIAlignmentEvolutionPhase.ts",
+      "line": 288,
+      "pattern": "state-access-fallback",
+      "code": "const config = state.config.alignmentDynamics ?? DEFAULT_ALIGNMENT_DYNAMICS_CONFIG;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/engine/phases/AIAlignmentEvolutionPhase.ts",
+      "line": 491,
+      "pattern": "generic-fallback",
+      "code": "monthsDeployed: agent.monthsDeployed ?? 0,",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/engine/phases/AIAlignmentEvolutionPhase.ts",
+      "line": 592,
+      "pattern": "generic-fallback",
+      "code": "agent.dataManipulationAttempts = (agent.dataManipulationAttempts ?? 0) + 1;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/engine/phases/AISufferingPhase.ts",
+      "line": 56,
+      "pattern": "state-access-fallback",
+      "code": "const config: AISufferingConfig = (state.config as any).aiSuffering ?? DEFAULT_SUFFERING_CONFIG;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/engine/phases/AlignmentDynamicsPhase.ts",
+      "line": 39,
+      "pattern": "state-access-fallback",
+      "code": "const config = state.config.alignmentDynamics ?? DEFAULT_ALIGNMENT_DYNAMICS_CONFIG;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/engine/phases/ClimateDeploymentPhase.ts",
+      "line": 524,
+      "pattern": "state-access-fallback",
+      "code": "const currentMax = state.techTreeState.deployedTechMap[techId] ?? 0;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+      "line": 526,
+      "pattern": "state-access-fallback",
+      "code": "state.ubiSystem?.basicIncome?.coverage ?? support.ubiCoverage,",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+      "line": 537,
+      "pattern": "state-access-fallback",
+      "code": "state.socialSafetyNets?.universalServices?.healthcare ?? support.universalHealthcareCoverage,",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+      "line": 549,
+      "pattern": "state-access-fallback",
+      "code": "state.coordinatedDeployment?.supportSystems?.foodSecurity ??",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/engine/phases/CoordinatedDeploymentPhase.ts",
+      "line": 550,
+      "pattern": "state-access-fallback",
+      "code": "state.famineSystem?.urbanFoodAccess ??",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/engine/phases/CriticalJuncturePhase.ts",
+      "line": 532,
+      "pattern": "generic-fallback",
+      "code": "stateChanges += escapeResult.metadata?.stateChanges ?? 0;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/engine/phases/InternationalMigrationPhase.ts",
+      "line": 200,
+      "pattern": "state-access-fallback",
+      "code": "(state.migrationFlows?.cumulativeMigration2010_2020 ?? 0) + Math.abs(totalNetMigration);",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
+      "line": 126,
+      "pattern": "state-access-fallback",
+      "code": "const COLLAPSE_THRESHOLD_MEAN = state.uncertaintyParameters?.greenlandCollapseThreshold ?? 2.0; // [MODEL-DERIVED] °C",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
+      "line": 284,
+      "pattern": "state-access-fallback",
+      "code": "const TOTAL_PERMAFROST_CARBON = state.uncertaintyParameters?.permafrostCarbonPool ?? 1500; // [EMPIRICAL] Gt C",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
+      "line": 388,
+      "pattern": "state-access-fallback",
+      "code": "const amocThreshold = state.uncertaintyParameters?.amocCollapseThreshold ?? 4.0;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/engine/phases/IrreversibilityTrackingPhase.ts",
+      "line": 805,
+      "pattern": "state-access-fallback",
+      "code": "const BLEACHING_THRESHOLD = state.uncertaintyParameters?.coralReefThreshold ?? 1.2; // [EMPIRICAL] C - crossed in 2024",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/engine/phases/Tier2SocialSystemsPhase.ts",
+      "line": 81,
+      "pattern": "state-access-fallback",
+      "code": "const unemployment = state.globalMetrics.unemployment ?? 0.05;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/engine/phases/Tier2SocialSystemsPhase.ts",
+      "line": 211,
+      "pattern": "state-access-fallback",
+      "code": "const unemployment = state.globalMetrics.unemployment ?? 0.05;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/engine/phases/TimeAdvancementPhase.ts",
+      "line": 68,
+      "pattern": "state-access-fallback",
+      "code": "const simulationStartYear = state.config?.startYear ?? 2025;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/engine/phases/TransitionMortalityPhase.ts",
+      "line": 273,
+      "pattern": "state-access-fallback",
+      "code": "const retrainingLevel = state.policyInterventions?.retrainingLevel ?? 0;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/engine.ts",
+      "line": 490,
+      "pattern": "generic-fallback",
+      "code": "seed: config.seed ?? Date.now(),",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/engine.ts",
+      "line": 491,
+      "pattern": "generic-fallback",
+      "code": "maxMonths: config.maxMonths ?? 1000,",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/engine.ts",
+      "line": 493,
+      "pattern": "generic-fallback",
+      "code": "socialAdaptationRate: config.socialAdaptationRate ?? 1.0,",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/engine.ts",
+      "line": 494,
+      "pattern": "generic-fallback",
+      "code": "aiCoordinationMultiplier: config.aiCoordinationMultiplier ?? 1.0,",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/engine.ts",
+      "line": 495,
+      "pattern": "generic-fallback",
+      "code": "economicTransitionRate: config.economicTransitionRate ?? 1.0,",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/engine.ts",
+      "line": 793,
+      "pattern": "generic-fallback",
+      "code": "const maxMonths = stopConditions?.maxMonths ?? this.config.maxMonths!;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/engine.ts",
+      "line": 794,
+      "pattern": "generic-fallback",
+      "code": "const checkActualOutcomes = stopConditions?.checkActualOutcomes ?? true;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/engine.ts",
+      "line": 795,
+      "pattern": "generic-fallback",
+      "code": "const logLevel = this.config.logLevel ?? 'quartile';",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/government/actions/environmentalActions.ts",
+      "line": 90,
+      "pattern": "generic-fallback",
+      "code": "agent: agentId ?? 'government',",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/government/actions/environmentalActions.ts",
+      "line": 153,
+      "pattern": "generic-fallback",
+      "code": "agent: agentId ?? 'government',",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/government/actions/environmentalActions.ts",
+      "line": 224,
+      "pattern": "generic-fallback",
+      "code": "agent: agentId ?? 'government',",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/government/actions/environmentalActions.ts",
+      "line": 298,
+      "pattern": "generic-fallback",
+      "code": "agent: agentId ?? 'government',",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/government/actions/environmentalActions.ts",
+      "line": 389,
+      "pattern": "generic-fallback",
+      "code": "agent: agentId ?? 'government',",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/government/actions/internationalActions.ts",
+      "line": 61,
+      "pattern": "generic-fallback",
+      "code": "agent: agentId ?? 'government',",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/government/actions/internationalActions.ts",
+      "line": 111,
+      "pattern": "generic-fallback",
+      "code": "agent: agentId ?? 'government',",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/government/actions/internationalActions.ts",
+      "line": 154,
+      "pattern": "generic-fallback",
+      "code": "agent: agentId ?? 'government',",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/government/actions/safetyActions.ts",
+      "line": 136,
+      "pattern": "generic-fallback",
+      "code": "economic_cost: levelEffects?.economicCost ?? (() => {",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/government/core/governmentCore.ts",
+      "line": 741,
+      "pattern": "generic-fallback",
+      "code": "climate: scenarioPriorities.climateSpending ?? 0,",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/government/core/governmentCore.ts",
+      "line": 742,
+      "pattern": "generic-fallback",
+      "code": "redistribution: scenarioPriorities.redistributionLevel ?? 0,",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/government/core/governmentCore.ts",
+      "line": 743,
+      "pattern": "generic-fallback",
+      "code": "alignment: scenarioPriorities.alignmentResearch ?? 0,",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/government/core/governmentCore.ts",
+      "line": 744,
+      "pattern": "generic-fallback",
+      "code": "scientific: scenarioPriorities.scientificResearch ?? 0,",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/government/core/governmentCore.ts",
+      "line": 745,
+      "pattern": "generic-fallback",
+      "code": "democratic: scenarioPriorities.democraticParticipation ?? 0,",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/historicalInitialization.ts",
+      "line": 431,
+      "pattern": "generic-fallback",
+      "code": "const simTemp = simulated.planetaryBoundariesSystem?.boundaries?.climate_change?.currentValue ?? 0;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/historicalInitialization.ts",
+      "line": 432,
+      "pattern": "generic-fallback",
+      "code": "const simPop = (simulated.humanPopulationSystem?.population ?? 0) / 1e9;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/historicalInitialization.ts",
+      "line": 433,
+      "pattern": "generic-fallback",
+      "code": "const simGini = 100 - ((simulated.globalMetrics?.wealthDistribution ?? 0.5) * 100);",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/historicalInitialization.ts",
+      "line": 436,
+      "pattern": "generic-fallback",
+      "code": "const simHDI = simulated.globalMetrics?.qualityOfLife ?? 0.5;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/historicalInitialization.ts",
+      "line": 439,
+      "pattern": "generic-fallback",
+      "code": "const simCO2 = simulated.planetaryBoundariesSystem?.boundaries?.novel_entities?.currentValue ?? 420;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/initialization.ts",
+      "line": 544,
+      "pattern": "generic-fallback",
+      "code": "const initialYear = historicalOverrides?.startYear ?? 2025;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/llm/client.ts",
+      "line": 583,
+      "pattern": "generic-fallback",
+      "code": "thresholds: agent.thresholds ?? {},",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/llm/integration.ts",
+      "line": 88,
+      "pattern": "generic-fallback",
+      "code": "capability: agent.previousCapability ?? agent.capability,",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/llm/integration.ts",
+      "line": 89,
+      "pattern": "generic-fallback",
+      "code": "alignment: agent.previousAlignment ?? agent.trueAlignment",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/llm/integration.ts",
+      "line": 174,
+      "pattern": "state-access-fallback",
+      "code": "trustInAI: state.society?.trustInAI ?? 0.5,",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/llm/integration.ts",
+      "line": 175,
+      "pattern": "state-access-fallback",
+      "code": "qol: state.globalMetrics?.qualityOfLife ?? 0.5,",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/llm/integration.ts",
+      "line": 177,
+      "pattern": "generic-fallback",
+      "code": "resentment: agent.resentment ?? 0",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/llm/integration.ts",
+      "line": 181,
+      "pattern": "generic-fallback",
+      "code": "capability: agent.previousCapability ?? agent.capability,",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/llm/integration.ts",
+      "line": 182,
+      "pattern": "generic-fallback",
+      "code": "alignment: agent.previousAlignment ?? agent.trueAlignment",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/nuclearWinter.ts",
+      "line": 767,
+      "pattern": "generic-fallback",
+      "code": "const resilientFoodMultiplier = winter.cachedResilientFoodMultiplier ?? 1.0;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/organizationManagement.ts",
+      "line": 475,
+      "pattern": "generic-fallback",
+      "code": "const workforceMultiplier = org.workforceMultiplier ?? 1.0;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/organizationManagement.ts",
+      "line": 904,
+      "pattern": "generic-fallback",
+      "code": "const workforceMultiplier = org.workforceMultiplier ?? 1.0;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/organizationManagement.ts",
+      "line": 905,
+      "pattern": "generic-fallback",
+      "code": "const rdBudgetMultiplier = org.rdBudgetMultiplier ?? 1.0;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/qualityOfLife/mortality.ts",
+      "line": 281,
+      "pattern": "generic-fallback",
+      "code": "const baseProb = scenarioParams?.environmentalShockProbability ?? 0.02;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/qualityOfLife/mortality.ts",
+      "line": 283,
+      "pattern": "generic-fallback",
+      "code": "const baseMag = scenarioParams?.environmentalShockMagnitude ?? 2.0;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/resentmentRecovery.ts",
+      "line": 508,
+      "pattern": "generic-fallback",
+      "code": "const hasAIRights = aiRights?.completed ?? false;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/resentmentRecovery.ts",
+      "line": 509,
+      "pattern": "generic-fallback",
+      "code": "const hasEnhancedUBI = enhancedUBI?.completed ?? false;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/resourceDepletion.ts",
+      "line": 935,
+      "pattern": "state-access-fallback",
+      "code": "const startYear = state.config?.startYear ?? 2025;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/resourceDepletion.ts",
+      "line": 1302,
+      "pattern": "generic-fallback",
+      "code": "`using initial target ${co2.historicalTemperatureTarget?.toFixed(2) ?? 'N/A'}C`",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/scenarios/apply.ts",
+      "line": 246,
+      "pattern": "generic-fallback",
+      "code": "const capability = tech.minAICapability ?? 0;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/scenarios/apply.ts",
+      "line": 291,
+      "pattern": "generic-fallback",
+      "code": "deploymentLevel: deployment.deploymentLevel ?? 1.0,",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/scenarios/apply.ts",
+      "line": 302,
+      "pattern": "generic-fallback",
+      "code": "const deploymentLevel = deployment.deploymentLevel ?? 1.0;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/techTree/deploymentTimescales.ts",
+      "line": 107,
+      "pattern": "generic-fallback",
+      "code": "const result = tierTimescales[tech.status] ?? DEFAULT_TIMESCALES.tier2;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/techTree/effectsEngine.ts",
+      "line": 955,
+      "pattern": "generic-fallback",
+      "code": "const currentReduction = gameState.globalMetrics.nitrogenReductionTotal ?? 0;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/techTree/effectsEngine.ts",
+      "line": 2118,
+      "pattern": "generic-fallback",
+      "code": "const currentRisk = (gameState.oceanAcidificationSystem as any).coralBleachingRisk ?? 0.5;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/techTree/engine.ts",
+      "line": 309,
+      "pattern": "generic-fallback",
+      "code": "const progress = techTreeState.researchProgress[tech.id] ?? 0;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/thresholds/config.ts",
+      "line": 122,
+      "pattern": "generic-fallback",
+      "code": "id: metadata.id ?? generateConfigId(),",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/thresholds/config.ts",
+      "line": 128,
+      "pattern": "generic-fallback",
+      "code": "gitCommit: metadata.gitCommit ?? getCurrentGitCommit()",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/updateNovelEntitiesBoundary.ts",
+      "line": 74,
+      "pattern": "generic-fallback",
+      "code": "const reduction = tech.effects.novelEntitiesEmissionReduction ?? tech.effects.pollutionReduction;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/updateNovelEntitiesBoundary.ts",
+      "line": 187,
+      "pattern": "generic-fallback",
+      "code": "console.log(`  Peak: ${(boundary.peak ?? 0).toFixed(4)}`);",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/utils/assertions.ts",
+      "line": 548,
+      "pattern": "generic-fallback",
+      "code": "const tolerance = info.tolerance ?? 0.000001;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/utils/consciousnessGovernanceUtils.ts",
+      "line": 437,
+      "pattern": "generic-fallback",
+      "code": "const targetPreparedness = allRegions[targetRegion]?.preparedness ?? 0;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/utils/consciousnessGovernanceUtils.ts",
+      "line": 438,
+      "pattern": "generic-fallback",
+      "code": "const targetStage = allRegions[targetRegion]?.stage ?? 'dormant';",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/utils/consciousnessGovernanceUtils.ts",
+      "line": 468,
+      "pattern": "generic-fallback",
+      "code": "const euPrep = allRegions['eu']?.preparedness ?? 0;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/utils/consciousnessGovernanceUtils.ts",
+      "line": 469,
+      "pattern": "generic-fallback",
+      "code": "const usPrep = allRegions['us']?.preparedness ?? 0;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/utils/consciousnessGovernanceUtils.ts",
+      "line": 470,
+      "pattern": "generic-fallback",
+      "code": "const chinaPrep = allRegions['china']?.preparedness ?? 0;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/utils/energyConstrainedCleanup.ts",
+      "line": 91,
+      "pattern": "generic-fallback",
+      "code": "?? (tech.energyRequirement as any).kWhPerM3",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/utils/energyConstrainedCleanup.ts",
+      "line": 92,
+      "pattern": "generic-fallback",
+      "code": "?? (tech.energyRequirement as any).annualTWhRequired",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/utils/energyConstrainedCleanup.ts",
+      "line": 100,
+      "pattern": "generic-fallback",
+      "code": "?? (tech.effects as any).microplasticReduction",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/utils/energyConstrainedCleanup.ts",
+      "line": 101,
+      "pattern": "generic-fallback",
+      "code": "?? tech.effects.novelEntitiesReduction",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/utils/energyConstrainedCleanup.ts",
+      "line": 102,
+      "pattern": "generic-fallback",
+      "code": "?? tech.effects.pollutionReduction;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/utils/energyConstrainedCleanup.ts",
+      "line": 194,
+      "pattern": "generic-fallback",
+      "code": "?? (tech.effects as any).microplasticReduction",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/utils/energyConstrainedCleanup.ts",
+      "line": 195,
+      "pattern": "generic-fallback",
+      "code": "?? tech.effects.novelEntitiesReduction",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/utils/energyConstrainedCleanup.ts",
+      "line": 196,
+      "pattern": "generic-fallback",
+      "code": "?? tech.effects.pollutionReduction;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/utils/populationUnits.ts",
+      "line": 178,
+      "pattern": "generic-fallback",
+      "code": "`\\n  Month: ${context.month ?? 'unknown'}` +",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/utils/populationUnits.ts",
+      "line": 189,
+      "pattern": "generic-fallback",
+      "code": "`\\n  Month: ${context.month ?? 'unknown'}` +",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/utils/populationUnits.ts",
+      "line": 227,
+      "pattern": "generic-fallback",
+      "code": "`\\n  Month: ${context.month ?? 'unknown'}` +",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/utils/populationUnits.ts",
+      "line": 238,
+      "pattern": "generic-fallback",
+      "code": "`\\n  Month: ${context.month ?? 'unknown'}` +",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/utils/populationUnits.ts",
+      "line": 289,
+      "pattern": "generic-fallback",
+      "code": "`\\n  Month: ${context.month ?? 'unknown'}` +",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/utils/populationUnits.ts",
+      "line": 336,
+      "pattern": "generic-fallback",
+      "code": "`\\n  Month: ${context.month ?? 'unknown'}` +",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/utils/recoveryCalculations.ts",
+      "line": 159,
+      "pattern": "state-access-fallback",
+      "code": "const economicStage = state.globalMetrics.economicTransitionStage ?? 0;",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/utils/recoveryCalculations.ts",
+      "line": 161,
+      "pattern": "state-access-fallback",
+      "code": "const qol = state.globalMetrics.qualityOfLife ?? 0.74; // 0-1, baseline ~0.74",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/utils/stateValidation.ts",
+      "line": 240,
+      "pattern": "state-access-fallback",
+      "code": "goldenAgeActive: state.goldenAgeState?.active ?? false,",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/utils/stateValidation.ts",
+      "line": 243,
+      "pattern": "state-access-fallback",
+      "code": "co2: state.planetaryBoundariesSystem.boundaries['climate_change']?.currentValue ?? 0,",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/utils/stateValidation.ts",
+      "line": 244,
+      "pattern": "state-access-fallback",
+      "code": "temperature: state.planetaryBoundariesSystem.boundaries['climate_change']?.currentValue ?? 0,",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/utils/stateValidation.ts",
+      "line": 245,
+      "pattern": "state-access-fallback",
+      "code": "oceanPH: state.planetaryBoundariesSystem.boundaries['ocean_acidification']?.currentValue ?? 0,",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/utils/stateValidation.ts",
+      "line": 246,
+      "pattern": "state-access-fallback",
+      "code": "biodiversity: state.planetaryBoundariesSystem.boundaries['biosphere_integrity']?.currentValue ?? 0,",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "src/simulation/utils/stateValidation.ts",
+      "line": 263,
+      "pattern": "generic-fallback",
+      "code": "const month = context.month ?? state.currentMonth;",
+      "severity": "MEDIUM"
+    }
+  ],
+  "low": [
+    {
+      "file": "src/simulation/agents/aiAgent.ts",
+      "line": 45,
+      "pattern": "map-get-fallback",
+      "code": "const agent = context?.indices?.agentMap.get(agentId!) ?? state.aiAgents.find(ai => ai.id === agentId);",
+      "severity": "LOW"
+    },
+    {
+      "file": "src/simulation/agents/aiAgent.ts",
+      "line": 52,
+      "pattern": "map-get-fallback",
+      "code": "let agent = context?.indices?.agentMap.get(agentId!) ?? state.aiAgents.find(ai => ai.id === agentId);",
+      "severity": "LOW"
+    },
+    {
+      "file": "src/simulation/agents/aiAgent.ts",
+      "line": 341,
+      "pattern": "map-get-fallback",
+      "code": "const agent = context?.indices?.agentMap.get(agentId!) ?? state.aiAgents.find(ai => ai.id === agentId);",
+      "severity": "LOW"
+    },
+    {
+      "file": "src/simulation/agents/aiAgent.ts",
+      "line": 427,
+      "pattern": "map-get-fallback",
+      "code": "const agent = context?.indices?.agentMap.get(agentId!) ?? state.aiAgents.find(ai => ai.id === agentId);",
+      "severity": "LOW"
+    },
+    {
+      "file": "src/simulation/agents/aiTechActions.ts",
+      "line": 29,
+      "pattern": "map-get-fallback",
+      "code": "const agent = context?.indices?.agentMap.get(agentId!) ?? state.aiAgents.find(ai => ai.id === agentId);",
+      "severity": "LOW"
+    },
+    {
+      "file": "src/simulation/agents/aiTechActions.ts",
+      "line": 43,
+      "pattern": "map-get-fallback",
+      "code": "const org = context?.indices?.orgMap.get(agent.organizationId) ?? state.organizations.find(o => o.id === agent.organizationId);",
+      "severity": "LOW"
+    },
+    {
+      "file": "src/simulation/agents/aiTechActions.ts",
+      "line": 67,
+      "pattern": "map-get-fallback",
+      "code": "const agent = context?.indices?.agentMap.get(agentId!) ?? state.aiAgents.find(ai => ai.id === agentId);",
+      "severity": "LOW"
+    },
+    {
+      "file": "src/simulation/agents/aiTechActions.ts",
+      "line": 80,
+      "pattern": "map-get-fallback",
+      "code": "const org = context?.indices?.orgMap.get(agent.organizationId!) ?? state.organizations.find(o => o.id === agent.organizationId);",
+      "severity": "LOW"
+    },
+    {
+      "file": "src/simulation/agents/aiTechActions.ts",
+      "line": 168,
+      "pattern": "map-get-fallback",
+      "code": "const agent = context?.indices?.agentMap.get(agentId!) ?? state.aiAgents.find(ai => ai.id === agentId);",
+      "severity": "LOW"
+    },
+    {
+      "file": "src/simulation/agents/aiTechActions.ts",
+      "line": 194,
+      "pattern": "map-get-fallback",
+      "code": "const agent = context?.indices?.agentMap.get(agentId!) ?? state.aiAgents.find(ai => ai.id === agentId);",
+      "severity": "LOW"
+    },
+    {
+      "file": "src/simulation/agents/governmentAgent.ts",
+      "line": 817,
+      "pattern": "map-get-fallback",
+      "code": "const ai = context?.indices?.agentMap.get(detected.id) ?? state.aiAgents.find((a: any) => a.id === detected.id);",
+      "severity": "LOW"
+    },
+    {
+      "file": "src/simulation/agents/socialInfluenceActions.ts",
+      "line": 37,
+      "pattern": "map-get-fallback",
+      "code": "const agent = context?.indices?.agentMap.get(agentId!) ?? state.aiAgents.find(ai => ai.id === agentId);",
+      "severity": "LOW"
+    },
+    {
+      "file": "src/simulation/agents/socialInfluenceActions.ts",
+      "line": 48,
+      "pattern": "map-get-fallback",
+      "code": "const agent = context?.indices?.agentMap.get(agentId!) ?? state.aiAgents.find(ai => ai.id === agentId);",
+      "severity": "LOW"
+    },
+    {
+      "file": "src/simulation/agents/socialInfluenceActions.ts",
+      "line": 93,
+      "pattern": "map-get-fallback",
+      "code": "const agent = context?.indices?.agentMap.get(agentId!) ?? state.aiAgents.find(ai => ai.id === agentId);",
+      "severity": "LOW"
+    },
+    {
+      "file": "src/simulation/agents/socialInfluenceActions.ts",
+      "line": 103,
+      "pattern": "map-get-fallback",
+      "code": "const agent = context?.indices?.agentMap.get(agentId!) ?? state.aiAgents.find(ai => ai.id === agentId);",
+      "severity": "LOW"
+    },
+    {
+      "file": "src/simulation/agents/socialInfluenceActions.ts",
+      "line": 165,
+      "pattern": "map-get-fallback",
+      "code": "const agent = context?.indices?.agentMap.get(agentId!) ?? state.aiAgents.find(ai => ai.id === agentId);",
+      "severity": "LOW"
+    },
+    {
+      "file": "src/simulation/agents/socialInfluenceActions.ts",
+      "line": 190,
+      "pattern": "map-get-fallback",
+      "code": "const agent = context?.indices?.agentMap.get(agentId!) ?? state.aiAgents.find(ai => ai.id === agentId);",
+      "severity": "LOW"
+    },
+    {
+      "file": "src/simulation/engine/phases/AIAgentCoordinationPhase.ts",
+      "line": 615,
+      "pattern": "map-get-fallback",
+      "code": "const agent = indices?.agentMap.get(memberId) ?? frontierAgents.find((a) => a.id === memberId);",
+      "severity": "LOW"
+    },
+    {
+      "file": "src/simulation/engine/phases/EvolutionarySelectionPhase.ts",
+      "line": 163,
+      "pattern": "map-get-fallback",
+      "code": "const members = agentsByCollective.get(collective.id) ?? [];",
+      "severity": "LOW"
+    },
+    {
+      "file": "src/simulation/engine/phases/PlayerDecisionPhase.ts",
+      "line": 261,
+      "pattern": "map-get-fallback",
+      "code": "const agent = this.context?.indices?.agentMap.get(data.agentId) ?? state.aiAgents.find(ai => ai.id === data.agentId);",
+      "severity": "LOW"
+    },
+    {
+      "file": "src/simulation/techTree/effectsEngine.ts",
+      "line": 506,
+      "pattern": "map-get-fallback",
+      "code": "globalEffects.set(effectName, (globalEffects.get(effectName) ?? 0) + scaledValue);",
+      "severity": "LOW"
+    },
+    {
+      "file": "src/simulation/techTree/effectsEngine.ts",
+      "line": 514,
+      "pattern": "map-get-fallback",
+      "code": "regionMap.set(effectName, (regionMap.get(effectName) ?? 0) + scaledValue);",
+      "severity": "LOW"
+    }
+  ]
+}

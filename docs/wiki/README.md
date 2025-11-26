@@ -4693,6 +4693,32 @@ const score = assertStateProperty(state, 'metric', {
 });
 ```
 
+**Assertion-Wrapping-Fallback Anti-Pattern (Nov 2025):**
+```typescript
+// ❌ BAD - Fallback executes BEFORE assertion, defeating its purpose
+assertFinite(state.humanPopulationSystem?.population ?? 0, {
+  location: 'initializeHistoricalSimulation',
+  valueName: 'population',
+  month: 0
+});
+// Problem: assertFinite never sees undefined - it always gets 0
+// This creates false confidence while still masking bugs
+
+// ✅ GOOD - Two-step validation with no silent fallback
+const population = assertStateProperty(
+  state.humanPopulationSystem,
+  'population',
+  { location: 'initializeHistoricalSimulation', month: 0 }
+);
+assertFinite(population, {
+  location: 'initializeHistoricalSimulation',
+  valueName: 'population',
+  month: 0
+});
+```
+
+**Why this matters:** The `??` operator has higher precedence than function calls. When you write `assertFinite(x ?? 0, ...)`, the fallback replaces undefined with 0 *before* assertFinite runs. The assertion thinks everything is fine (0 is finite), but undefined was the real bug you needed to catch.
+
 #### When to Use Fallbacks
 
 **Acceptable Use Cases:**
