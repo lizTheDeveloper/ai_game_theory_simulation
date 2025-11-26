@@ -29,6 +29,14 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 26: Climate System Unit Tests (roadmap 5.2)** (commit 86578049)
+- 🧪 **Comprehensive test suite** for planetary boundary recovery mechanics (1,050 lines, 65+ assertions)
+- **Coverage:** Asymptote recovery, legacy stock release, climate/freshwater/biosphere/ocean/P/N/novel entities
+- **Research validation:** Tests verify parameters from IPCC AR6, Richardson 2023, Drüke 2024, Cousins 2022
+- **Quality assurance:** Determinism tests (seeded RNG), edge cases (zero emissions, geoengineering, far future)
+- **Status:** Initial suite created, 32 failures need state initialization fixes (Roy)
+- 📄 **Files:** `tests/climate.test.ts`, `CLIMATE_TESTS_README.md` (detailed test documentation)
+
 **Nov 26: Game Layer Integration Tests (roadmap 5.4)** (commit 4863dc1)
 - 🧪 **Critical Juncture Detection Tests:** 23 tests (13 passing, 10 debugging)
   - Tests three-condition detection (institutional flux + info ambiguity + balanced forces)
@@ -41,6 +49,15 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - Tests GDP-adaptive spending (prevents crashes during economic collapse)
 - 📄 **Files:** `tests/integration/game-layer/critical-juncture-detection.test.ts`, `tests/integration/game-layer/scenario-definitions.test.ts`
 - **Status:** IN PROGRESS - state creation and scenario application need debugging
+
+**Nov 26: Historical Baseline Precision Update** (commit b493ee3)
+- 📊 **Exact research values** for 1990/2010 climate baselines (was rounded estimates)
+  - CO2: 354.19 ppm (was 354), 390.22 ppm (was 390) - Keeling Curve/NOAA
+  - Temp: 0.355°C (was 0.45), 0.674°C (was 0.85) - HadCRUT5 (rel. 1961-1990)
+  - Emissions: 22.7 GtCO2/yr (was 22), 33.5 GtCO2/yr (was 32) - Global Carbon Project
+- 📄 **Research:** `research/climate_hindcast_data_20251126.md` (Cynthia)
+- 📄 **Review:** `reviews/climate_hindcast_data_critique_20251126.md` (Sylvia)
+- **Validation target:** CO2 within 5% of 390.22 ppm after 240-month hindcast
 
 **Nov 26: Hindcast Validation Blockers Resolved (H-1 + CRIT-1)** (commit 2e588ef)
 - 🔧 **H-1 FIX:** coordinationCapacity normalization bug in BifurcationLogicPhase
