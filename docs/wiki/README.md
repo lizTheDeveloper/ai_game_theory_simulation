@@ -103,21 +103,24 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📄 **Files:** `tests/integration/game-layer/critical-juncture-detection.test.ts`, `tests/integration/game-layer/scenario-definitions.test.ts`
 - **Status:** IN PROGRESS - state creation and scenario application need debugging
 
-**Nov 26: Phase 9 - Temporal Evolution of Carbon Sinks (1990-2010) - UPDATED** (commits 8a31aa0, 1585ea7)
-- ✅ **HINDCAST FIX:** Carbon sinks now evolve over hindcast period instead of using static 2025 values
+**Nov 26: Phase 9 - Temporal Evolution of Carbon Sinks (1990-2010) - RE-UPDATED** (commit 819729f)
+- ⚠️ **CRITICAL VALIDATION ISSUES EXPOSED:** Phase 9 improved CO2 but caused stability regression
 - **Research Source:** Global Carbon Project data (`research/carbon_sinks_1990_2025_20251126.md`)
-- **Implementation (CORRECTED in 1585ea7):**
-  - Ocean absorption: 8.1 → 9.9 GtCO2/yr (+22%) via linear interpolation
-    - Previous values (10.6) were 2014-2023 averages, not end-of-2000s values
-  - Land absorption: 5.1 → 8.1 GtCO2/yr (+59%) via linear interpolation
-    - Previous values (11.4) were 2010s peak, not mid-growth values
-  - Sink saturation disabled during hindcast (empirical values already account for effective uptake)
-  - Mechanistic saturation (acidification, deforestation) only applies post-2010
-- **Results:** Mean CO2 error improved from 28.4% → 7.99% (-71% improvement)
-- **Why needed:** Previous implementation used anachronistic 2025 sink values for 1990, causing 40%+ CO2 overshoot
-- **Validation assertions:** Proper `assertFinite()` wrapping with temporal context
-- **Logging:** Every 5 years for verification
-- 📄 **Files:** `src/simulation/resourceDepletion.ts` (lines 1073-1127)
+- **Implementation (819729f - reverted to stronger sinks):**
+  - Ocean absorption: 8.1 → 10.6 GtCO2/yr (+32%) via linear interpolation
+    - Uses 2014-2023 GCB averages (2.9 GtC/yr × 3.67)
+  - Land absorption: 5.1 → 11.4 GtCO2/yr (+121%) via linear interpolation
+    - Uses 2010s peak from Wang et al. 2023 (3.1 GtC/yr × 3.67)
+  - Total sink increase: 13.2 → 22.0 GtCO2/yr (+66.7%)
+- **Validation Results (Post-Phase 9):**
+  - ✅ CO2 error improved 51.9% (27% → 13%)
+  - ✅ Population error improved 15.6% (39.8% → 33.6%)
+  - ❌ **NEW ISSUE:** 40% crash rate (resource reserves < 0 at months 142-146)
+  - ❌ **NEW ISSUE:** Temperature undershoot -0.26°C (was +0.08°C - REGRESSED 3.25×)
+- **CRITICAL-1:** Resource reserves crash needs immediate fix before further calibration
+- **Analysis:** Phase 9 moved from "wrong but stable" → "less wrong but unstable"
+- 📄 **Review:** `reviews/climate_hindcast_validation_phase7_post_phase9_20251126.md` (439 lines)
+- 📄 **Files:** `src/simulation/resourceDepletion.ts` (lines 1088-1094)
 
 **Nov 26: Historical Emissions Mode Period Restriction** (commit df7de85)
 - **FIX:** Restricted `historicalEmissionsMode` to hindcast period (1990-2010 only)

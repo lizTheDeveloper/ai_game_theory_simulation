@@ -789,6 +789,12 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 - **Recently Completed:** Nitrogen-food coupling research (Nov 15), Climate deployment timescales (Nov 15), Novel Entities 0% effectiveness (Nov 14)
 
 **Research Verification Queue:**
+- [ ] **Phase 9 Carbon Sink Temporal Values** - ⏳ PENDING (Nov 26, 2025 - commit 819729f)
+  - **Research Spec:** `research/verification_819729f_20251126.md`
+  - **Issue:** Uses 2014-2023 averages and "2010s peak" for 2010 endpoint (potentially anachronistic)
+  - **Citations to Verify:** Global Carbon Budget 2024 (ocean 2.9 GtC/yr), Wang et al. 2023 (land 3.1 GtC/yr)
+  - **Validation Result:** CO2 improved 51.9%, but 40% crash rate and temperature regression
+  - **Priority:** HIGH (CRITICAL-1: Resource reserves crash blocking further calibration)
 - [ ] **Regional CDR Data Verification** - ⏳ PENDING (Nov 25, 2025 - commit bf90ffa)
   - **Research Spec:** `research/regional_cdr_un_wpp_2024_20251125.md`
   - **Review:** `reviews/regional_cdr_critique_20251125.md` (Grade B- conditional pass)
