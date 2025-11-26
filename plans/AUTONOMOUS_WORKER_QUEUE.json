@@ -1,0 +1,64 @@
+{
+  "queue": [
+    {
+      "id": "CRITICAL-1",
+      "priority": "CRITICAL",
+      "title": "Hindcast Validation Crashes (environmentalHealth NaN)",
+      "assignedAgent": "simulation-maintainer",
+      "agentPersonality": "roy",
+      "status": "AVAILABLE",
+      "complexity": 3,
+      "estimatedTokens": 40000,
+      "dependencies": [],
+      "blockedBy": [],
+      "roadmapSection": "CRITICAL Priority Items",
+      "createdAt": "2025-11-26T04:30:00Z",
+      "claimedBy": null,
+      "claimedAt": null,
+      "description": "30% crash rate at months 142-146 (Year 2002). environmentalHealth becomes NaN, propagates to dependent systems."
+    },
+    {
+      "id": "HIGH-2",
+      "priority": "HIGH",
+      "title": "Carbon Cycle Over-Calibration (+12.1% CO2 Bias)",
+      "assignedAgent": "simulation-maintainer",
+      "agentPersonality": "roy",
+      "status": "AVAILABLE",
+      "complexity": 3,
+      "estimatedTokens": 35000,
+      "dependencies": [],
+      "blockedBy": [],
+      "roadmapSection": "HIGH Priority Items",
+      "createdAt": "2025-11-26T04:30:00Z",
+      "claimedBy": null,
+      "claimedAt": null,
+      "description": "Hindcast validation failing CO2 criteria. Observed 2010: 390 ppm CO2. Simulated 2010: 437 ppm CO2. Phase 8-9 carbon sink temporal evolution overcorrected."
+    },
+    {
+      "id": "HIGH-3",
+      "priority": "HIGH",
+      "title": "VM Multi-Worker Infrastructure Setup + Priority Queue System",
+      "assignedAgent": "devops",
+      "agentPersonality": "devon",
+      "status": "COMPLETED",
+      "complexity": 3,
+      "estimatedTokens": 35000,
+      "dependencies": [],
+      "blockedBy": [],
+      "roadmapSection": "HIGH Priority Items",
+      "createdAt": "2025-11-26T03:00:00Z",
+      "claimedBy": "devon-local",
+      "claimedAt": "2025-11-26T08:00:00Z",
+      "completedAt": "2025-11-26T23:20:00Z",
+      "completedBy": "devon-local",
+      "description": "Infrastructure redesign for parallel worker execution + task coordination. Multi-repo workspace, systemd services, priority queue implementation. PHASE 1 COMPLETE."
+    }
+  ],
+  "metadata": {
+    "lastUpdated": "2025-11-26T23:20:00Z",
+    "version": "1.0.0",
+    "generatedFrom": "MASTER_IMPLEMENTATION_ROADMAP.md",
+    "schemaVersion": "1.0",
+    "notes": "Initial queue bootstrapped from roadmap CRITICAL and HIGH priority items. generateAutonomousWorkerQueue.ts script has known issue with duplicate IDs across roadmap sections - needs fixing in Phase 2."
+  }
+}
