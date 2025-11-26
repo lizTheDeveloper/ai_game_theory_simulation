@@ -28,6 +28,7 @@ import { createDefaultInitialState } from './initialization';
 import { getClimateDataForYear, type AnnualClimateData } from '@/data/loaders/historicalClimateLoader';
 import { getEconomicDataForYear, type AnnualEconomicData } from '@/data/loaders/historicalEconomicLoader';
 import { assertFinite } from './utils/assertions';
+import { initializeTechTreeState } from './techTree/engine';
 
 /**
  * Historical initialization options
@@ -139,6 +140,13 @@ export async function createHistoricalInitialState(
 
   // Create base state from 2025 defaults
   const baseState = createDefaultInitialState(rng, scenarioMode);
+
+  // CRIT-1 FIX (Nov 26, 2025): Re-initialize tech tree with historical year
+  // The default tech tree deploys all "deployed_2025" tech (mRNA, 4th gen solar, etc.)
+  // For historical scenarios, we need an empty tech tree to prevent anachronistic deployment
+  if (year < 2025) {
+    baseState.techTreeState = initializeTechTreeState(year);
+  }
 
   // === OVERRIDE WITH HISTORICAL VALUES ===
   // Use type assertions for runtime properties that may not match strict types
@@ -502,6 +510,13 @@ export function initializeHistoricalSimulation(
 
   // Create base state from 2025 defaults
   const baseState = createDefaultInitialState(rng, scenarioMode);
+
+  // CRIT-1 FIX (Nov 26, 2025): Re-initialize tech tree with historical year
+  // The default tech tree deploys all "deployed_2025" tech (mRNA, 4th gen solar, etc.)
+  // For historical scenarios, we need an empty tech tree to prevent anachronistic deployment
+  if (year < 2025) {
+    baseState.techTreeState = initializeTechTreeState(year);
+  }
 
   // === OVERRIDE WITH HISTORICAL VALUES ===
 

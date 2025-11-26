@@ -119,8 +119,10 @@ export class BifurcationLogicPhase implements SimulationPhase {
       valueName: 'socialCohesion',
       month: state.currentMonth,
     });
-    // CRITICAL FIX (CRITICAL-2): coordinationCapacity is 0-100, but threshold is [0,1] - normalize first
-    const socialCohesionNormalized = socialCohesionFinite / 100.0;
+    // NOTE: coordinationCapacity is already in [0,1] range (see initialization.ts:743)
+    // No normalization needed - the /100.0 was incorrect (caused false collapse at Month 0)
+    // FIX (Nov 26, 2025): Removed erroneous /100.0 normalization
+    const socialCohesionNormalized = socialCohesionFinite;
     // CRITICAL FIX (CRITICAL-1): For collapse thresholds (trigger when BELOW), distance should be 0 when at/below threshold
     const socialDistance = socialCohesionNormalized > bifState.socialBreakdownThreshold.location
       ? (socialCohesionNormalized - bifState.socialBreakdownThreshold.location)
