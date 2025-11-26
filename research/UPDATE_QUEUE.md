@@ -1,6 +1,6 @@
 # Research Update Queue
-**Generated:** 11/26/2025, 11:30:07 AM
-**Files Scanned:** 571
+**Generated:** 11/26/2025, 12:30:04 PM
+**Files Scanned:** 573
 
 ---
 
@@ -12,7 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 178 (31.2%)
+**Count:** 179 (31.2%)
 
 ### `CITATION_CORRECTIONS_APPLIED_PHASE11-14.md`
 - **Oldest source:** 2009 (16 years old)
@@ -383,6 +383,11 @@
 - **Oldest source:** 2008 (17 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/climate_collapse_timelines_verification_20251101.md`
+
+### `climate_hindcast_data_20251126.md`
+- **Oldest source:** 2019 (6 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/climate_hindcast_data_20251126.md`
 
 ### `climate_mortality_sections123_verification_20251030.md`
 - **Oldest source:** 2011 (14 years old)
@@ -939,7 +944,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 369 (64.6%)
+**Count:** 370 (64.6%)
 
 All sources <3 years old. No action required.
 
@@ -949,11 +954,11 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 571 |
+| Total files | 573 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 178 (31.2%) |
+| HIGH | 179 (31.2%) |
 | MEDIUM | 24 (4.2%) |
-| LOW | 369 (64.6%) |
+| LOW | 370 (64.6%) |
 | Average age | 7.0 years |
 | Oldest source | 1955 (70 years ago) |
 
@@ -961,9 +966,9 @@ All sources <3 years old. No action required.
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 369 | 64.6% |
+| Current (<3yr) | 370 | 64.6% |
 | Warning (3-5yr) | 24 | 4.2% |
-| Critical (>5yr) | 178 | 31.2% |
+| Critical (>5yr) | 179 | 31.2% |
 
 ### Targets
 
@@ -975,7 +980,7 @@ All sources <3 years old. No action required.
 
 ## 🔄 Next Steps
 
-1. Update 178 HIGH priority file(s) within 1 month
+1. Update 179 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 
