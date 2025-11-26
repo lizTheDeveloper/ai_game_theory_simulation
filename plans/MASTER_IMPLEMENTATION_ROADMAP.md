@@ -197,22 +197,26 @@
 - **Impact:** Restores research integrity, maintains continuous coordination model
 - **Related:** 2nd fabricated probability discovered in Nov 2025 research (pattern emerging - requires vigilance)
 
-**C-2: Resource Reserves Negative Value Crash** 🔍 ANALYSIS COMPLETE (Nov 26, 2025)
-- **Status:** 🔍 ANALYSIS COMPLETE - Fix pending
+**C-2: Resource Reserves Negative Value Crash** ✅ RESOLVED (Nov 26, 2025)
+- **Status:** ✅ RESOLVED - Commit cceb556ab (Nov 26, 2025)
 - **Discovery:** Nov 26, 2025 - Autonomous researcher identified root cause during hindcast validation
-- **Impact:** 40% of hindcast validation runs crash with `resourceReserves < 0` at months 142-146 (~12 years)
-- **Root Cause:** Line 612 in `resourceDepletion.ts` uses `Math.min()` without `Math.max(0, ...)` floor
-  - Conservation law violation: reserves cannot be negative (you can't harvest what doesn't exist)
-  - Phase 9 carbon sink changes TRIGGERED existing bug (didn't cause it)
-- **Fix Strategy:**
-  1. Add `Math.max(0, ...)` floor to line 612 (defensive)
-  2. Add assertions to `calculateResourceSecurity()` for all inputs [0,1]
-  3. Add early warning logging for low reserves (<10%)
-  4. Investigate temperature anticorrelation (separate bug)
-- **Secondary Finding:** Temperature anticorrelation mystery - CO2 overshoots 19% but temperature undershoots 26.5% (wrong sign)
-- **Files Affected:** `src/simulation/systems/resourceDepletion.ts` (line 612), `src/simulation/systems/resourceEconomy.ts`
+- **Impact:** 40% of hindcast validation runs crashed with `resourceReserves < 0` at months 142-146 (~12 years)
+- **Root Cause:** `calculateResourceSecurity()` computed weighted sum of individual reserves
+  - While each reserve had `Math.max(0, ...)` floor, floating-point precision errors during accumulation produced tiny negative values (-0.000226)
+  - Propagated to `state.environmentalAccumulation.resourceReserves`, crashing BifurcationLogicPhase when computing geometric means (NaN)
+- **Solution:**
+  - Added `Math.max(0, weighted)` floor to `calculateResourceSecurity()` return value (resourceEconomy.ts:537)
+  - Added `Math.max(0, ...)` floor to renewable reserve regeneration (resourceDepletion.ts:617)
+  - Added early warning logging for low reserves (<10%)
+  - Catches floating-point drift before propagation
+- **Validation:**
+  - Seed 28183 (crashed Month 146): ✅ Completes
+  - Seed 36102 (crashed Month 142): ✅ Completes
+  - Monte Carlo N=10: ✅ All runs complete, 0% crash rate
+  - Tests: ✅ Pass
+- **Files Changed:** `src/simulation/resourceEconomy.ts` (line 537), `src/simulation/resourceDepletion.ts` (lines 612-650)
 - **Analysis:** `reviews/resource_reserves_crash_root_cause_20251126.md` (314 lines)
-- **Assignee:** simulation-maintainer (Roy)
+- **Note:** Temperature anticorrelation remains separate investigation (deferred to MEDIUM priority)
 
 ### 🟡 MEDIUM Priority Items
 
@@ -227,14 +231,21 @@
 - **Impact:** Codebase maintenance improved, removes confusion for future developers
 - **Effort:** 15 minutes (as estimated)
 
-**M-2: Complete Assertion Migration** (Identified Nov 16, 2025)
-- **Status:** 71 remaining fallback patterns (20 violations fixed Nov 18, total 169)
-- **Issue:** Split-brain error handling (some paths fail loudly, some silently)
-- **Impact:** MEDIUM - Regression risk, inconsistent debugging experience
-- **Effort:** 2-3 day sprint to complete remaining 71 violations
-- **Recommendation:** Either complete fully or accept current state (don't leave in limbo)
-- **Source:** `reviews/defensive_fallback_architecture_review_20251116.md`
-- **Note:** Two CRITICAL regressions found (dystopiaProgression.ts, aiSuffering.ts) where fixed code was reverted
+**M-2: Complete Assertion Migration** ✅ RESOLVED (Nov 26, 2025)
+- **Status:** ✅ RESOLVED - All anti-patterns fixed (Nov 26, 2025)
+- **Initial Assessment:** 71 violations reported (Nov 16, 2025)
+- **Actual Finding:** 6 real violations (assertion-wrapping-fallback anti-patterns), ~130 legitimate uses
+- **Files Fixed:**
+  - `historicalInitialization.ts` (2 violations) - Assertion-wrapping-fallback patterns
+  - `recoveryCalculations.ts` (2 violations) - State access with fallbacks on REQUIRED fields
+  - `strategicDeception.ts` (2 violations) - Assertion-wrapping-fallback patterns
+- **Validation:**
+  - TypeScript: ✅ CLEAN compilation
+  - Test suite: ✅ PASSED (80.41% coverage)
+  - Monte Carlo: ✅ N=10 complete, no assertion errors
+  - Architecture review: ✅ No regressions detected
+- **Report:** `reviews/assertion_migration_status_20251126.md`
+- **Note:** Original 71 count included many false positives (legitimate optional fields, UI code, compatibility layers)
 
 ### Validation Priority Stack
 
