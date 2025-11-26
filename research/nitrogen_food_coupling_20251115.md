@@ -79,7 +79,7 @@ research_quality: A (>95% peer-reviewed, seminal 2002 work + 2024-2025 updates)
 **Sources:**
 - Smil, V. (2002). "Nitrogen and food production: Proteins for human diets." *Ambio*. PMID: 12078001
 - Our World in Data (2024). "How many people does synthetic fertilizer feed?" https://ourworldindata.org/how-many-people-does-synthetic-fertilizer-feed
-- Zhang, X., et al. (2021). "Quantification of global and national nitrogen budgets for crop production." *Nature Food*. DOI: 10.1038/s43016-021-00318-5
+- Gu, B., Zhang, X., et al. (2023). "Cost-effective mitigation of nitrogen pollution from global croplands." *Nature*, 613, 77-84. DOI: 10.1038/s41586-022-05481-8
 - Lassaletta, L., et al. (2024). "ESSD - A global FAOSTAT reference database of cropland nutrient budgets and nutrient use efficiency (1961–2020)." DOI: 10.5194/essd-16-525-2024
 
 ### 1.3 Dietary Patterns and Nitrogen Requirements
