@@ -1,6 +1,6 @@
 # Research Update Queue
-**Generated:** 11/26/2025, 9:30:04 AM
-**Files Scanned:** 569
+**Generated:** 11/26/2025, 10:30:03 AM
+**Files Scanned:** 570
 
 ---
 
@@ -934,7 +934,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 368 (64.7%)
+**Count:** 369 (64.7%)
 
 All sources <3 years old. No action required.
 
@@ -944,11 +944,11 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 569 |
+| Total files | 570 |
 | CRITICAL | 0 (0.0%) |
 | HIGH | 177 (31.1%) |
 | MEDIUM | 24 (4.2%) |
-| LOW | 368 (64.7%) |
+| LOW | 369 (64.7%) |
 | Average age | 7.0 years |
 | Oldest source | 1955 (70 years ago) |
 
@@ -956,7 +956,7 @@ All sources <3 years old. No action required.
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 368 | 64.7% |
+| Current (<3yr) | 369 | 64.7% |
 | Warning (3-5yr) | 24 | 4.2% |
 | Critical (>5yr) | 177 | 31.1% |
 
