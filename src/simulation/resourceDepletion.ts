@@ -609,7 +609,14 @@ function updateRenewable(
     }
   );
 
-  resource.reserves = Math.min(resource.capacity, resource.reserves + regen);
+  // CRITICAL-1 FIX (Nov 26, 2025): Add floor at 0 to prevent negative reserves
+  // Conservation law: reserves cannot be negative (you can't harvest what doesn't exist)
+  // Bug: Line 634 uses Math.max(0, ...) but if reserves somehow become negative before
+  // regeneration runs, Math.min(capacity, reserves + regen) doesn't fix it.
+  const newReserves = resource.reserves + regen;
+  const clampedReserves = Math.max(0, Math.min(resource.capacity, newReserves));
+
+  resource.reserves = clampedReserves;
 
   // Harvesting (scales with economic stage)
   // FIX (Oct 25, 2025): Replaced defensive fallback with assertion
@@ -631,7 +638,23 @@ function updateRenewable(
   );
 
   // Consume
-  resource.reserves = Math.max(0, resource.reserves - resource.monthlyHarvest);
+  const reservesAfterHarvest = resource.reserves - resource.monthlyHarvest;
+  resource.reserves = Math.max(0, reservesAfterHarvest);
+
+  // CRITICAL-1: Early warning for low reserves (before they hit 0)
+  if (resource.reserves < 0.10 && state.currentMonth % 12 === 0) {
+    const resourceType = (resource as any).type || 'unknown';
+    console.log(`⚠️ LOW RESOURCE RESERVES: ${resourceType} at ${(resource.reserves * 100).toFixed(1)}%`);
+    console.log(`   Monthly harvest: ${resource.monthlyHarvest.toFixed(4)}`);
+    console.log(`   Sustainable rate: ${resource.sustainableHarvestRate.toFixed(4)}`);
+    console.log(`   Monthly regen: ${regen.toFixed(4)}`);
+    console.log(`   Net depletion: ${(resource.monthlyHarvest - regen).toFixed(4)}/month`);
+
+    if (reservesAfterHarvest < 0) {
+      console.log(`   🚨 CONSERVATION LAW VIOLATION: Harvest (${resource.monthlyHarvest.toFixed(4)}) exceeded reserves (${(resource.reserves + resource.monthlyHarvest).toFixed(4)})`);
+      console.log(`      Clamped to 0. This indicates unsustainable resource extraction.`);
+    }
+  }
 
   // Overharvest if consumption exceeds regeneration
   resource.overharvest = Math.max(0, resource.monthlyHarvest - regen);
