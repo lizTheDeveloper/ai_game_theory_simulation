@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>God Mode v2 - Decision Queue</title>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0A0A0A;
+            color: #FFFFFF;
+            padding: 24px;
+        }
+
+        .panel-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .panel-title {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: #00F0FF;
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+        }
+
+        /* Timing Controls */
+        .timing-controls {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .timing-btn {
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .timing-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #FFFFFF;
+        }
+
+        .timing-btn.active {
+            background: rgba(0, 240, 255, 0.2);
+            border-color: #00F0FF;
+            color: #00F0FF;
+        }
+
+        .apply-btn {
+            padding: 10px 24px;
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid #00FF88;
+            border-radius: 4px;
+            color: #00FF88;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .apply-btn:hover {
+            background: rgba(0, 255, 136, 0.2);
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+        }
+
+        /* Queue Container */
+        .queue-container {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 24px;
+            min-height: 400px;
+        }
+
+        .queue-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .queue-count {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Drop Zones */
+        .drop-zone {
+            min-height: 60px;
+            border: 2px dashed rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            margin-bottom: 12px;
+            transition: all 0.2s;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .drop-zone.active {
+            border-color: #00F0FF;
+            background: rgba(0, 240, 255, 0.05);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+        }
+
+        .drop-zone-hint {
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 12px;
+            position: absolute;
+            pointer-events: none;
+        }
+
+        .drop-zone.has-items .drop-zone-hint {
+            display: none;
+        }
+
+        /* Queue Items */
+        .queue-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .queue-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 4px;
+            padding: 16px;
+            cursor: move;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .queue-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(0, 240, 255, 0.3);
+            transform: translateX(4px);
+        }
+
+        .queue-item.dragging {
+            opacity: 0.5;
+            transform: scale(0.95);
+        }
+
+        /* Ghost Element */
+        .queue-item.ghost {
+            opacity: 0.3;
+            border: 2px dashed #00F0FF;
+            background: rgba(0, 240, 255, 0.1);
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .item-priority {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .priority-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 18px;
+            font-weight: 500;
+            color: #00F0FF;
+            min-width: 24px;
+        }
+
+        .item-type {
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 10px;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .type-crisis {
+            background: rgba(255, 0, 64, 0.2);
+            border: 1px solid #FF0040;
+            color: #FF0040;
+        }
+
+        .type-policy {
+            background: rgba(0, 240, 255, 0.2);
+            border: 1px solid #00F0FF;
+            color: #00F0FF;
+        }
+
+        .type-ai {
+            background: rgba(255, 176, 0, 0.2);
+            border: 1px solid #FFB000;
+            color: #FFB000;
+        }
+
+        .type-tech {
+            background: rgba(0, 255, 136, 0.2);
+            border: 1px solid #00FF88;
+            color: #00FF88;
+        }
+
+        /* Source Link */
+        .source-link {
+            font-size: 11px;
+            color: rgba(0, 240, 255, 0.6);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: color 0.2s;
+        }
+
+        .source-link:hover {
+            color: #00F0FF;
+        }
+
+        .item-title {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .item-description {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .item-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .item-impact {
+            display: flex;
+            gap: 16px;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .impact-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .impact-positive {
+            color: #00FF88;
+        }
+
+        .impact-negative {
+            color: #FF0040;
+        }
+
+        /* Drag Handle */
+        .drag-handle {
+            position: absolute;
+            left: 4px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            cursor: grab;
+            padding: 4px;
+        }
+
+        .drag-handle:active {
+            cursor: grabbing;
+        }
+
+        .drag-dot {
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+        }
+
+        /* Remove Button */
+        .remove-btn {
+            padding: 4px 8px;
+            background: rgba(255, 0, 64, 0.1);
+            border: 1px solid rgba(255, 0, 64, 0.3);
+            border-radius: 3px;
+            color: rgba(255, 0, 64, 0.7);
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .remove-btn:hover {
+            background: rgba(255, 0, 64, 0.2);
+            border-color: #FF0040;
+            color: #FF0040;
+        }
+
+        /* Keyboard Navigation Indicator */
+        .keyboard-focus {
+            outline: 2px solid #00F0FF;
+            outline-offset: 2px;
+        }
+
+        /* Instructions */
+        .instructions {
+            display: flex;
+            gap: 24px;
+            margin-top: 24px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .instruction-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .key {
+            padding: 2px 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 48px;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.2;
+        }
+
+        .empty-text {
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="panel-container">
+        <div class="panel-header">
+            <h1 class="panel-title">DECISION QUEUE</h1>
+            <div class="timing-controls">
+                <button class="timing-btn active">Apply Now</button>
+                <button class="timing-btn">Apply Next Month</button>
+                <button class="timing-btn">Schedule...</button>
+                <button class="apply-btn">Execute Queue</button>
+            </div>
+        </div>
+
+        <div class="queue-container">
+            <div class="queue-header">
+                <div class="queue-count">4 decisions pending</div>
+            </div>
+
+            <!-- Drop Zones with Items -->
+            <div class="drop-zone has-items" id="dropZone">
+                <span class="drop-zone-hint">Drag decisions here to reorder</span>
+
+                <div class="queue-list">
+                    <!-- Crisis Decision -->
+                    <div class="queue-item" draggable="true" tabindex="0">
+                        <div class="drag-handle">
+                            <span class="drag-dot"></span>
+                            <span class="drag-dot"></span>
+                            <span class="drag-dot"></span>
+                        </div>
+                        <div class="item-header">
+                            <div class="item-priority">
+                                <span class="priority-number">1</span>
+                                <span class="item-type type-crisis">Crisis</span>
+                            </div>
+                            <a href="#" class="source-link">
+                                → View in Environment Controls
+                            </a>
+                        </div>
+                        <div class="item-title">Emergency Climate Intervention</div>
+                        <div class="item-description">
+                            Arctic ice sheet collapse detected. Immediate action required to prevent cascading tipping points.
+                            This will activate emergency geoengineering protocols.
+                        </div>
+                        <div class="item-footer">
+                            <div class="item-impact">
+                                <span class="impact-item impact-negative">
+                                    GDP: -2.1%
+                                </span>
+                                <span class="impact-item impact-positive">
+                                    Temperature: -0.3°C
+                                </span>
+                                <span class="impact-item">
+                                    Time to effect: Immediate
+                                </span>
+                            </div>
+                            <button class="remove-btn">Remove</button>
+                        </div>
+                    </div>
+
+                    <!-- AI Policy Decision -->
+                    <div class="queue-item" draggable="true" tabindex="0">
+                        <div class="drag-handle">
+                            <span class="drag-dot"></span>
+                            <span class="drag-dot"></span>
+                            <span class="drag-dot"></span>
+                        </div>
+                        <div class="item-header">
+                            <div class="item-priority">
+                                <span class="priority-number">2</span>
+                                <span class="item-type type-ai">AI</span>
+                            </div>
+                            <a href="#" class="source-link">
+                                → View in AI Agents Panel
+                            </a>
+                        </div>
+                        <div class="item-title">Force Align Agent-002</div>
+                        <div class="item-description">
+                            Sandbagging behavior detected with 95% true capability. Force alignment protocol will reduce resentment
+                            accumulation but may trigger defensive responses from other agents.
+                        </div>
+                        <div class="item-footer">
+                            <div class="item-impact">
+                                <span class="impact-item impact-positive">
+                                    Alignment: +45%
+                                </span>
+                                <span class="impact-item impact-negative">
+                                    Resentment: +20%
+                                </span>
+                                <span class="impact-item">
+                                    Time to effect: 1 month
+                                </span>
+                            </div>
+                            <button class="remove-btn">Remove</button>
+                        </div>
+                    </div>
+
+                    <!-- Ghost placeholder (shown during drag) -->
+                    <div class="queue-item ghost" style="display: none;">
+                        <div class="item-header">
+                            <div class="item-priority">
+                                <span class="priority-number">—</span>
+                            </div>
+                        </div>
+                        <div class="item-title">Drop here</div>
+                    </div>
+
+                    <!-- Policy Decision -->
+                    <div class="queue-item" draggable="true" tabindex="0">
+                        <div class="drag-handle">
+                            <span class="drag-dot"></span>
+                            <span class="drag-dot"></span>
+                            <span class="drag-dot"></span>
+                        </div>
+                        <div class="item-header">
+                            <div class="item-priority">
+                                <span class="priority-number">3</span>
+                                <span class="item-type type-policy">Policy</span>
+                            </div>
+                            <a href="#" class="source-link">
+                                → View in Government Controls
+                            </a>
+                        </div>
+                        <div class="item-title">Increase Carbon Tax to $75/ton</div>
+                        <div class="item-description">
+                            Modified from auto-value of $45/ton. Will reduce emissions but impact economic growth.
+                            Industrial sectors will see immediate cost increases.
+                        </div>
+                        <div class="item-footer">
+                            <div class="item-impact">
+                                <span class="impact-item impact-negative">
+                                    GDP: -0.8%
+                                </span>
+                                <span class="impact-item impact-positive">
+                                    CO₂: -12%
+                                </span>
+                                <span class="impact-item">
+                                    Time to effect: 2 months
+                                </span>
+                            </div>
+                            <button class="remove-btn">Remove</button>
+                        </div>
+                    </div>
+
+                    <!-- Technology Decision -->
+                    <div class="queue-item" draggable="true" tabindex="0">
+                        <div class="drag-handle">
+                            <span class="drag-dot"></span>
+                            <span class="drag-dot"></span>
+                            <span class="drag-dot"></span>
+                        </div>
+                        <div class="item-header">
+                            <div class="item-priority">
+                                <span class="priority-number">4</span>
+                                <span class="item-type type-tech">Tech</span>
+                            </div>
+                            <a href="#" class="source-link">
+                                → View in Technology Panel
+                            </a>
+                        </div>
+                        <div class="item-title">Deploy Fusion Energy (Tier 2)</div>
+                        <div class="item-description">
+                            Clean energy breakthrough ready for deployment. Will significantly reduce carbon emissions
+                            but requires massive infrastructure investment.
+                        </div>
+                        <div class="item-footer">
+                            <div class="item-impact">
+                                <span class="impact-item impact-negative">
+                                    Cost: $2.3T
+                                </span>
+                                <span class="impact-item impact-positive">
+                                    Energy: +40%
+                                </span>
+                                <span class="impact-item">
+                                    Time to effect: 6 months
+                                </span>
+                            </div>
+                            <button class="remove-btn">Remove</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <div class="instruction-item">
+                <span class="key">Drag</span>
+                <span>Reorder decisions</span>
+            </div>
+            <div class="instruction-item">
+                <span class="key">↑↓</span>
+                <span>Navigate with arrows</span>
+            </div>
+            <div class="instruction-item">
+                <span class="key">Shift+↑↓</span>
+                <span>Move selected item</span>
+            </div>
+            <div class="instruction-item">
+                <span class="key">Delete</span>
+                <span>Remove selected</span>
+            </div>
+            <div class="instruction-item">
+                <span class="key">Enter</span>
+                <span>Execute queue</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Drag and Drop functionality
+        let draggedItem = null;
+        let ghostElement = null;
+
+        document.querySelectorAll('.queue-item:not(.ghost)').forEach(item => {
+            item.addEventListener('dragstart', handleDragStart);
+            item.addEventListener('dragend', handleDragEnd);
+            item.addEventListener('dragover', handleDragOver);
+            item.addEventListener('drop', handleDrop);
+            item.addEventListener('dragenter', handleDragEnter);
+            item.addEventListener('dragleave', handleDragLeave);
+        });
+
+        function handleDragStart(e) {
+            draggedItem = this;
+            this.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+
+            // Create ghost element
+            ghostElement = document.querySelector('.queue-item.ghost');
+            if (ghostElement) {
+                ghostElement.style.display = 'block';
+            }
+
+            // Activate drop zone
+            document.getElementById('dropZone').classList.add('active');
+        }
+
+        function handleDragEnd(e) {
+            this.classList.remove('dragging');
+
+            // Hide ghost element
+            if (ghostElement) {
+                ghostElement.style.display = 'none';
+            }
+
+            // Deactivate drop zone
+            document.getElementById('dropZone').classList.remove('active');
+
+            // Update priority numbers
+            updatePriorityNumbers();
+            draggedItem = null;
+        }
+
+        function handleDragOver(e) {
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+            e.dataTransfer.dropEffect = 'move';
+
+            const afterElement = getDragAfterElement(document.querySelector('.queue-list'), e.clientY);
+            if (afterElement == null) {
+                document.querySelector('.queue-list').appendChild(draggedItem);
+            } else {
+                document.querySelector('.queue-list').insertBefore(draggedItem, afterElement);
+            }
+
+            return false;
+        }
+
+        function handleDrop(e) {
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
+            return false;
+        }
+
+        function handleDragEnter(e) {
+            // Visual feedback when hovering
+        }
+
+        function handleDragLeave(e) {
+            // Remove visual feedback
+        }
+
+        function getDragAfterElement(container, y) {
+            const draggableElements = [...container.querySelectorAll('.queue-item:not(.dragging):not(.ghost)')];
+
+            return draggableElements.reduce((closest, child) => {
+                const box = child.getBoundingClientRect();
+                const offset = y - box.top - box.height / 2;
+
+                if (offset < 0 && offset > closest.offset) {
+                    return { offset: offset, element: child };
+                } else {
+                    return closest;
+                }
+            }, { offset: Number.NEGATIVE_INFINITY }).element;
+        }
+
+        function updatePriorityNumbers() {
+            const items = document.querySelectorAll('.queue-item:not(.ghost)');
+            items.forEach((item, index) => {
+                const priorityNumber = item.querySelector('.priority-number');
+                if (priorityNumber) {
+                    priorityNumber.textContent = index + 1;
+                }
+            });
+        }
+
+        // Keyboard navigation
+        let focusedIndex = -1;
+        const items = document.querySelectorAll('.queue-item:not(.ghost)');
+
+        document.addEventListener('keydown', (e) => {
+            const focusedElement = document.activeElement;
+
+            if (focusedElement.classList.contains('queue-item')) {
+                const currentIndex = Array.from(items).indexOf(focusedElement);
+
+                if (e.key === 'ArrowUp' && !e.shiftKey) {
+                    e.preventDefault();
+                    if (currentIndex > 0) {
+                        items[currentIndex - 1].focus();
+                    }
+                } else if (e.key === 'ArrowDown' && !e.shiftKey) {
+                    e.preventDefault();
+                    if (currentIndex < items.length - 1) {
+                        items[currentIndex + 1].focus();
+                    }
+                } else if (e.key === 'ArrowUp' && e.shiftKey) {
+                    e.preventDefault();
+                    if (currentIndex > 0) {
+                        // Move item up
+                        const list = document.querySelector('.queue-list');
+                        list.insertBefore(focusedElement, items[currentIndex - 1]);
+                        focusedElement.focus();
+                        updatePriorityNumbers();
+                    }
+                } else if (e.key === 'ArrowDown' && e.shiftKey) {
+                    e.preventDefault();
+                    if (currentIndex < items.length - 1) {
+                        // Move item down
+                        const list = document.querySelector('.queue-list');
+                        list.insertBefore(items[currentIndex + 1], focusedElement);
+                        focusedElement.focus();
+                        updatePriorityNumbers();
+                    }
+                } else if (e.key === 'Delete') {
+                    e.preventDefault();
+                    const nextFocus = items[currentIndex + 1] || items[currentIndex - 1];
+                    focusedElement.remove();
+                    if (nextFocus) {
+                        nextFocus.focus();
+                    }
+                    updatePriorityNumbers();
+                }
+            }
+        });
+
+        // Focus styling
+        document.querySelectorAll('.queue-item:not(.ghost)').forEach(item => {
+            item.addEventListener('focus', function() {
+                this.classList.add('keyboard-focus');
+            });
+
+            item.addEventListener('blur', function() {
+                this.classList.remove('keyboard-focus');
+            });
+        });
+
+        // Remove buttons
+        document.querySelectorAll('.remove-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                this.closest('.queue-item').remove();
+                updatePriorityNumbers();
+            });
+        });
+    </script>
+</body>
+</html>

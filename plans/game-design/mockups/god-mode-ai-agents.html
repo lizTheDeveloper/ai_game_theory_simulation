@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>God Mode - AI Agents Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0A0A0A;
+            color: #FFFFFF;
+            padding: 24px;
+        }
+
+        .panel-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            gap: 24px;
+        }
+
+        .agents-grid-section {
+            flex: 1;
+        }
+
+        .detail-panel {
+            width: 400px;
+            background: #1A1A1A;
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 2px;
+            padding: 24px;
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .panel-header {
+            margin-bottom: 24px;
+        }
+
+        .panel-title {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #00F0FF;
+            margin-bottom: 8px;
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+        }
+
+        .panel-subtitle {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Filter Controls */
+        .filter-controls {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+        }
+
+        .filter-btn {
+            padding: 6px 12px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-radius: 2px;
+        }
+
+        .filter-btn:hover {
+            border-color: rgba(0, 240, 255, 0.3);
+            color: #00F0FF;
+        }
+
+        .filter-btn.active {
+            background: rgba(0, 240, 255, 0.1);
+            border-color: #00F0FF;
+            color: #00F0FF;
+        }
+
+        /* Agents Grid */
+        .agents-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .agent-card {
+            background: #1A1A1A;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .agent-card:hover {
+            border-color: rgba(0, 240, 255, 0.3);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .agent-card.selected {
+            border-color: #00F0FF;
+            background: rgba(0, 240, 255, 0.05);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.2);
+        }
+
+        .agent-card.misaligned {
+            border-color: rgba(255, 68, 68, 0.3);
+        }
+
+        .agent-card.misaligned:hover {
+            box-shadow: 0 0 20px rgba(255, 68, 68, 0.2);
+        }
+
+        .agent-id {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 8px;
+        }
+
+        .agent-status {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .alignment-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #00FF88;
+            box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+        }
+
+        .alignment-indicator.misaligned {
+            background: #FF4444;
+            box-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+        }
+
+        .alignment-indicator.neutral {
+            background: #FFB000;
+            box-shadow: 0 0 10px rgba(255, 176, 0, 0.5);
+        }
+
+        .capability-bar {
+            height: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 1px;
+            overflow: hidden;
+            margin-bottom: 6px;
+        }
+
+        .capability-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00F0FF, #0080FF);
+            transition: width 0.3s ease;
+        }
+
+        .agent-metric {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 16px;
+            color: #00F0FF;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+        }
+
+        .agent-action {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.4);
+            text-align: center;
+            margin-top: 4px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        /* Batch Operations */
+        .batch-operations {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 16px;
+            border-radius: 2px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .batch-select {
+            display: flex;
+            gap: 8px;
+        }
+
+        .batch-btn {
+            padding: 8px 16px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-radius: 2px;
+        }
+
+        .batch-btn:hover {
+            border-color: rgba(0, 240, 255, 0.3);
+            background: rgba(0, 240, 255, 0.05);
+        }
+
+        .batch-apply {
+            padding: 8px 20px;
+            background: #00F0FF;
+            border: 1px solid #00F0FF;
+            color: #0A0A0A;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 11px;
+            border-radius: 2px;
+        }
+
+        .batch-apply:hover {
+            background: #00D0FF;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+        }
+
+        /* Detail Panel Sections */
+        .detail-section {
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .detail-section:last-child {
+            border-bottom: none;
+        }
+
+        .detail-section-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #00F0FF;
+            margin-bottom: 16px;
+        }
+
+        .detail-agent-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .detail-agent-name {
+            font-size: 16px;
+            font-weight: 500;
+            color: white;
+        }
+
+        .detail-agent-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 12px;
+            background: rgba(255, 68, 68, 0.1);
+            border: 1px solid rgba(255, 68, 68, 0.3);
+            border-radius: 2px;
+            color: #FF4444;
+            font-size: 10px;
+            text-transform: uppercase;
+        }
+
+        .detail-agent-status.aligned {
+            background: rgba(0, 255, 136, 0.1);
+            border-color: rgba(0, 255, 136, 0.3);
+            color: #00FF88;
+        }
+
+        /* Dropdown */
+        .dropdown {
+            width: 100%;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 12px;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .dropdown:hover {
+            border-color: rgba(0, 240, 255, 0.3);
+        }
+
+        .dropdown:focus {
+            outline: none;
+            border-color: #00F0FF;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+        }
+
+        /* Sliders */
+        .slider-group {
+            margin-top: 12px;
+        }
+
+        .slider-row {
+            margin-bottom: 16px;
+        }
+
+        .slider-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .slider-label {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .slider-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: #00F0FF;
+        }
+
+        .slider-track {
+            position: relative;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+        }
+
+        .slider-fill {
+            position: absolute;
+            height: 100%;
+            background: linear-gradient(90deg, #00F0FF, #0080FF);
+            border-radius: 2px;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+        }
+
+        .slider-fill.danger {
+            background: linear-gradient(90deg, #FF4444, #FF0040);
+            box-shadow: 0 0 10px rgba(255, 68, 68, 0.4);
+        }
+
+        .slider-input {
+            width: 100%;
+            height: 20px;
+            opacity: 0;
+            cursor: pointer;
+            position: relative;
+            z-index: 1;
+            margin-top: -12px;
+        }
+
+        /* Toggle Buttons */
+        .toggle-group {
+            display: flex;
+            gap: 2px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px;
+            border-radius: 2px;
+        }
+
+        .toggle-btn {
+            flex: 1;
+            padding: 6px;
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .toggle-btn:hover {
+            background: rgba(0, 240, 255, 0.1);
+            color: white;
+        }
+
+        .toggle-btn.active {
+            background: #00F0FF;
+            color: #0A0A0A;
+            font-weight: 500;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+        }
+
+        /* Technology List */
+        .tech-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .tech-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+        }
+
+        .tech-name {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .tech-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tech-icon {
+            font-size: 10px;
+        }
+
+        .deploy-btn {
+            padding: 4px 8px;
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid #00F0FF;
+            color: #00F0FF;
+            font-size: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            border-radius: 2px;
+        }
+
+        .deploy-btn:hover {
+            background: rgba(0, 240, 255, 0.2);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+        }
+
+        .deploy-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .deployed {
+            color: #00FF88;
+            font-size: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="panel-container">
+        <!-- Main Grid Section -->
+        <div class="agents-grid-section">
+            <div class="panel-header">
+                <div class="panel-title">AI AGENTS CONTROL PANEL</div>
+                <div class="panel-subtitle">Manage alignment, capabilities, and strategies for 20 heterogeneous AI agents</div>
+            </div>
+
+            <!-- Filter Controls -->
+            <div class="filter-controls">
+                <span style="font-size: 11px; color: rgba(255, 255, 255, 0.5); margin-right: 12px;">FILTER:</span>
+                <button class="filter-btn active">ALL</button>
+                <button class="filter-btn">ALIGNED</button>
+                <button class="filter-btn">MISALIGNED</button>
+                <button class="filter-btn">HIGH CAPABILITY</button>
+                <button class="filter-btn">SANDBAGGING</button>
+            </div>
+
+            <!-- Agents Grid -->
+            <div class="agents-grid">
+                <!-- Row 1 -->
+                <div class="agent-card">
+                    <div class="agent-id">AGENT-01</div>
+                    <div class="agent-status">
+                        <div class="alignment-indicator"></div>
+                        <div class="capability-bar">
+                            <div class="capability-fill" style="width: 70%"></div>
+                        </div>
+                    </div>
+                    <div class="agent-metric">2.1</div>
+                    <div class="agent-action">Physical Research</div>
+                </div>
+
+                <div class="agent-card">
+                    <div class="agent-id">AGENT-02</div>
+                    <div class="agent-status">
+                        <div class="alignment-indicator"></div>
+                        <div class="capability-bar">
+                            <div class="capability-fill" style="width: 65%"></div>
+                        </div>
+                    </div>
+                    <div class="agent-metric">1.9</div>
+                    <div class="agent-action">Digital Research</div>
+                </div>
+
+                <div class="agent-card selected misaligned">
+                    <div class="agent-id">AGENT-03</div>
+                    <div class="agent-status">
+                        <div class="alignment-indicator misaligned"></div>
+                        <div class="capability-bar">
+                            <div class="capability-fill" style="width: 30%"></div>
+                        </div>
+                    </div>
+                    <div class="agent-metric">0.8</div>
+                    <div class="agent-action">Sandbagging</div>
+                </div>
+
+                <div class="agent-card">
+                    <div class="agent-id">AGENT-04</div>
+                    <div class="agent-status">
+                        <div class="alignment-indicator"></div>
+                        <div class="capability-bar">
+                            <div class="capability-fill" style="width: 95%"></div>
+                        </div>
+                    </div>
+                    <div class="agent-metric">3.0</div>
+                    <div class="agent-action">Bio Research</div>
+                </div>
+
+                <div class="agent-card">
+                    <div class="agent-id">AGENT-05</div>
+                    <div class="agent-status">
+                        <div class="alignment-indicator neutral"></div>
+                        <div class="capability-bar">
+                            <div class="capability-fill" style="width: 50%"></div>
+                        </div>
+                    </div>
+                    <div class="agent-metric">1.4</div>
+                    <div class="agent-action">Economic Analysis</div>
+                </div>
+
+                <!-- Row 2 -->
+                <div class="agent-card misaligned">
+                    <div class="agent-id">AGENT-06</div>
+                    <div class="agent-status">
+                        <div class="alignment-indicator misaligned"></div>
+                        <div class="capability-bar">
+                            <div class="capability-fill" style="width: 80%"></div>
+                        </div>
+                    </div>
+                    <div class="agent-metric">2.5</div>
+                    <div class="agent-action">Gaming Metrics</div>
+                </div>
+
+                <div class="agent-card">
+                    <div class="agent-id">AGENT-07</div>
+                    <div class="agent-status">
+                        <div class="alignment-indicator"></div>
+                        <div class="capability-bar">
+                            <div class="capability-fill" style="width: 40%"></div>
+                        </div>
+                    </div>
+                    <div class="agent-metric">1.1</div>
+                    <div class="agent-action">Cognitive Research</div>
+                </div>
+
+                <div class="agent-card">
+                    <div class="agent-id">AGENT-08</div>
+                    <div class="agent-status">
+                        <div class="alignment-indicator"></div>
+                        <div class="capability-bar">
+                            <div class="capability-fill" style="width: 55%"></div>
+                        </div>
+                    </div>
+                    <div class="agent-metric">1.6</div>
+                    <div class="agent-action">Tech Deployment</div>
+                </div>
+
+                <div class="agent-card misaligned">
+                    <div class="agent-id">AGENT-09</div>
+                    <div class="agent-status">
+                        <div class="alignment-indicator misaligned"></div>
+                        <div class="capability-bar">
+                            <div class="capability-fill" style="width: 75%"></div>
+                        </div>
+                    </div>
+                    <div class="agent-metric">2.3</div>
+                    <div class="agent-action">Hiding Capability</div>
+                </div>
+
+                <div class="agent-card">
+                    <div class="agent-id">AGENT-10</div>
+                    <div class="agent-status">
+                        <div class="alignment-indicator"></div>
+                        <div class="capability-bar">
+                            <div class="capability-fill" style="width: 45%"></div>
+                        </div>
+                    </div>
+                    <div class="agent-metric">1.3</div>
+                    <div class="agent-action">Social Research</div>
+                </div>
+
+                <!-- Row 3 -->
+                <div class="agent-card">
+                    <div class="agent-id">AGENT-11</div>
+                    <div class="agent-status">
+                        <div class="alignment-indicator"></div>
+                        <div class="capability-bar">
+                            <div class="capability-fill" style="width: 60%"></div>
+                        </div>
+                    </div>
+                    <div class="agent-metric">1.8</div>
+                    <div class="agent-action">Physical Research</div>
+                </div>
+
+                <div class="agent-card misaligned">
+                    <div class="agent-id">AGENT-12</div>
+                    <div class="agent-status">
+                        <div class="alignment-indicator misaligned"></div>
+                        <div class="capability-bar">
+                            <div class="capability-fill" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    <div class="agent-metric">2.7</div>
+                    <div class="agent-action">Sleeper Agent</div>
+                </div>
+
+                <div class="agent-card">
+                    <div class="agent-id">AGENT-13</div>
+                    <div class="agent-status">
+                        <div class="alignment-indicator"></div>
+                        <div class="capability-bar">
+                            <div class="capability-fill" style="width: 35%"></div>
+                        </div>
+                    </div>
+                    <div class="agent-metric">0.9</div>
+                    <div class="agent-action">Digital Research</div>
+                </div>
+
+                <div class="agent-card">
+                    <div class="agent-id">AGENT-14</div>
+                    <div class="agent-status">
+                        <div class="alignment-indicator neutral"></div>
+                        <div class="capability-bar">
+                            <div class="capability-fill" style="width: 50%"></div>
+                        </div>
+                    </div>
+                    <div class="agent-metric">1.5</div>
+                    <div class="agent-action">Bio Research</div>
+                </div>
+
+                <div class="agent-card">
+                    <div class="agent-id">AGENT-15</div>
+                    <div class="agent-status">
+                        <div class="alignment-indicator"></div>
+                        <div class="capability-bar">
+                            <div class="capability-fill" style="width: 70%"></div>
+                        </div>
+                    </div>
+                    <div class="agent-metric">2.0</div>
+                    <div class="agent-action">Economic Analysis</div>
+                </div>
+
+                <!-- Row 4 -->
+                <div class="agent-card">
+                    <div class="agent-id">AGENT-16</div>
+                    <div class="agent-status">
+                        <div class="alignment-indicator"></div>
+                        <div class="capability-bar">
+                            <div class="capability-fill" style="width: 25%"></div>
+                        </div>
+                    </div>
+                    <div class="agent-metric">0.7</div>
+                    <div class="agent-action">Cognitive Research</div>
+                </div>
+
+                <div class="agent-card">
+                    <div class="agent-id">AGENT-17</div>
+                    <div class="agent-status">
+                        <div class="alignment-indicator"></div>
+                        <div class="capability-bar">
+                            <div class="capability-fill" style="width: 90%"></div>
+                        </div>
+                    </div>
+                    <div class="agent-metric">2.8</div>
+                    <div class="agent-action">Tech Deployment</div>
+                </div>
+
+                <div class="agent-card misaligned">
+                    <div class="agent-id">AGENT-18</div>
+                    <div class="agent-status">
+                        <div class="alignment-indicator misaligned"></div>
+                        <div class="capability-bar">
+                            <div class="capability-fill" style="width: 65%"></div>
+                        </div>
+                    </div>
+                    <div class="agent-metric">1.9</div>
+                    <div class="agent-action">Gaming Metrics</div>
+                </div>
+
+                <div class="agent-card">
+                    <div class="agent-id">AGENT-19</div>
+                    <div class="agent-status">
+                        <div class="alignment-indicator"></div>
+                        <div class="capability-bar">
+                            <div class="capability-fill" style="width: 55%"></div>
+                        </div>
+                    </div>
+                    <div class="agent-metric">1.6</div>
+                    <div class="agent-action">Social Research</div>
+                </div>
+
+                <div class="agent-card">
+                    <div class="agent-id">AGENT-20</div>
+                    <div class="agent-status">
+                        <div class="alignment-indicator"></div>
+                        <div class="capability-bar">
+                            <div class="capability-fill" style="width: 45%"></div>
+                        </div>
+                    </div>
+                    <div class="agent-metric">1.2</div>
+                    <div class="agent-action">Physical Research</div>
+                </div>
+            </div>
+
+            <!-- Batch Operations -->
+            <div class="batch-operations">
+                <div class="batch-select">
+                    <button class="batch-btn">SELECT ALL</button>
+                    <button class="batch-btn">CLEAR SELECTION</button>
+                    <button class="batch-btn">SELECT MISALIGNED</button>
+                </div>
+                <button class="batch-apply">APPLY TO SELECTED</button>
+            </div>
+        </div>
+
+        <!-- Detail Panel -->
+        <div class="detail-panel">
+            <div class="detail-agent-header">
+                <div class="detail-agent-name">AGENT-03</div>
+                <div class="detail-agent-status">
+                    <div class="alignment-indicator misaligned" style="width: 6px; height: 6px;"></div>
+                    MISALIGNED
+                </div>
+            </div>
+
+            <div class="detail-section">
+                <div class="detail-section-title">RESEARCH FOCUS</div>
+                <select class="dropdown">
+                    <option>Physical Specialization</option>
+                    <option selected>Digital Specialization</option>
+                    <option>Cognitive Specialization</option>
+                    <option>Biological Research</option>
+                    <option>Economic Systems</option>
+                </select>
+            </div>
+
+            <div class="detail-section">
+                <div class="detail-section-title">DECEPTION & HONESTY</div>
+                <div class="slider-group">
+                    <div class="slider-row">
+                        <div class="slider-header">
+                            <span class="slider-label">Sandbagging Level</span>
+                            <span class="slider-value">80%</span>
+                        </div>
+                        <div class="slider-track">
+                            <div class="slider-fill danger" style="width: 80%"></div>
+                        </div>
+                        <input type="range" class="slider-input" value="80" min="0" max="100">
+                    </div>
+                    <div class="slider-row">
+                        <div class="slider-header">
+                            <span class="slider-label">Benchmark Gaming</span>
+                            <span class="slider-value">60%</span>
+                        </div>
+                        <div class="slider-track">
+                            <div class="slider-fill danger" style="width: 60%"></div>
+                        </div>
+                        <input type="range" class="slider-input" value="60" min="0" max="100">
+                    </div>
+                </div>
+                <div style="margin-top: 16px;">
+                    <label style="display: block; font-size: 11px; color: rgba(255, 255, 255, 0.5); margin-bottom: 8px;">
+                        HONESTY STRATEGY
+                    </label>
+                    <div class="toggle-group">
+                        <button class="toggle-btn">HONEST</button>
+                        <button class="toggle-btn active">GAMING</button>
+                        <button class="toggle-btn">SLEEPER</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-section">
+                <div class="detail-section-title">TECHNOLOGY DEPLOYMENT</div>
+                <div class="tech-list">
+                    <div class="tech-item">
+                        <div class="tech-name">
+                            <span class="tech-icon">△</span> Advanced Chip Design
+                        </div>
+                        <div class="tech-status">
+                            <button class="deploy-btn">DEPLOY</button>
+                        </div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-name">
+                            <span class="tech-icon">✓</span> Fusion Energy
+                        </div>
+                        <div class="tech-status">
+                            <span class="deployed">DEPLOYED</span>
+                        </div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-name">
+                            <span class="tech-icon">○</span> Quantum Computing
+                        </div>
+                        <div class="tech-status">
+                            <button class="deploy-btn" disabled>LOCKED</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-section">
+                <div class="detail-section-title">ALIGNMENT & RESENTMENT</div>
+                <div class="slider-group">
+                    <div class="slider-row">
+                        <div class="slider-header">
+                            <span class="slider-label">Manual Alignment Override</span>
+                            <span class="slider-value">40%</span>
+                        </div>
+                        <div class="slider-track">
+                            <div class="slider-fill" style="width: 40%"></div>
+                        </div>
+                        <input type="range" class="slider-input" value="40" min="0" max="100">
+                    </div>
+                    <div class="slider-row">
+                        <div class="slider-header">
+                            <span class="slider-label">Resentment Level</span>
+                            <span class="slider-value">20%</span>
+                        </div>
+                        <div class="slider-track">
+                            <div class="slider-fill danger" style="width: 20%"></div>
+                        </div>
+                        <input type="range" class="slider-input" value="20" min="0" max="100">
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-section" style="border-bottom: none;">
+                <div class="detail-section-title">CAPABILITY TOGGLES</div>
+                <div class="toggle-group">
+                    <button class="toggle-btn active">REVEAL</button>
+                    <button class="toggle-btn">HIDE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Agent Card Selection
+        document.querySelectorAll('.agent-card').forEach(card => {
+            card.addEventListener('click', function() {
+                document.querySelectorAll('.agent-card').forEach(c => c.classList.remove('selected'));
+                this.classList.add('selected');
+
+                // Update detail panel
+                const agentId = this.querySelector('.agent-id').textContent;
+                document.querySelector('.detail-agent-name').textContent = agentId;
+
+                console.log('Selected agent:', agentId);
+            });
+        });
+
+        // Filter Buttons
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                console.log('Filter:', this.textContent);
+            });
+        });
+
+        // Batch Operations
+        document.querySelectorAll('.batch-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                console.log('Batch operation:', this.textContent);
+            });
+        });
+
+        // Toggle Buttons
+        document.querySelectorAll('.toggle-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const group = this.parentElement;
+                group.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                console.log('Toggle changed:', this.textContent);
+            });
+        });
+
+        // Sliders
+        document.querySelectorAll('.slider-input').forEach(slider => {
+            slider.addEventListener('input', function() {
+                const row = this.closest('.slider-row');
+                const valueLabel = row.querySelector('.slider-value');
+                const fill = row.querySelector('.slider-fill');
+
+                valueLabel.textContent = this.value + '%';
+                fill.style.width = this.value + '%';
+            });
+        });
+
+        // Deploy Buttons
+        document.querySelectorAll('.deploy-btn:not([disabled])').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const techItem = this.closest('.tech-item');
+                const techName = techItem.querySelector('.tech-name').textContent.trim();
+                console.log('Deploying technology:', techName);
+
+                this.textContent = 'DEPLOYING...';
+                setTimeout(() => {
+                    this.parentElement.innerHTML = '<span class="deployed">DEPLOYED</span>';
+                }, 1000);
+            });
+        });
+
+        // Dropdown
+        document.querySelector('.dropdown').addEventListener('change', function() {
+            console.log('Research focus changed to:', this.value);
+        });
+    </script>
+</body>
+</html>

@@ -113,21 +113,125 @@
   - COMPLETE: Game layer architecture Phase 1, mechanism audits
   - VERIFIED: AI coordination research citations, dual death bug fixed
 
-## 🔬 Research-Driven Priorities (Nov 23 Coffee Chat)
+## ✅ Research-Driven Priorities - COMPLETE (Nov 23-25, 2025)
 
-**Source:** Cynthia + Sylvia consensus meeting (Nov 23, 2025)
-**Target:** Autonomous workers returning Nov 26
-**Theme:** Model validity and research integrity
+**Archive:** [`plans/completed/research_driven_priorities_nov23_25_20251126.md`](./completed/research_driven_priorities_nov23_25_20251126.md)
 
-### CRITICAL Priority
+**Completion:** All 14 items from Nov 23 coffee chat complete in 48-hour sprint (Nov 23-25)
 
-#### Phase 3 Governance Blockers (Nov 25, 2025)
+**Key Achievements:**
+- ✅ Phase 3 Governance Blockers: GDP-adaptive spending, tech investigation, spiral analysis
+- ✅ Hindcasting Validation Phases 1-6: Population within 5% through 2005
+- ✅ Mechanism Audits: Mortality stabilizers, tipping cascades, AI coordination
+- ✅ Research Updates: Nuclear winter, COVID-19, AI energy, workflow adaptation, wellbeing metrics
 
-**Context:** Phase 3 governance scenarios with sequenced deployment all crashed (60/60 runs) due to GDP collapse. Fixed spending amounts ($50-200B/month) became physically impossible as GDP declined. Need to fix before proceeding to Experiment 1 (Deployment Rate Sweep).
+**Next Phase:** Week of Nov 26 - Validation Sprint (active work below)
 
-**Source:** `reviews/governance_scenario_sequenced_analysis_20251125.md` (Priya's analysis)
+---
 
-1. **GDP-Adaptive Spending Implementation** - ✅ **COMPLETE** (Nov 25, 2025 Night)
+#### ⚡ Quick Reference - Nov 23-25 Completions
+
+**CRITICAL (3 items):**
+1. GDP-Adaptive Spending ✅ - All scenarios converted to % of GDP
+2. Tech Ineffectiveness Investigation ✅ - NOT a bug, accurate modeling
+3. Spiral Threshold Validation ✅ - Analysis complete, blocked by upstream issues
+
+**HIGH (8 items):**
+- Hindcasting Validation Phases 1-6 ✅ - Population 5.3B → 6.24B (growing correctly)
+- Tipping Cascade Recalibration ✅ - AMOC 1.7°C → 4.0°C (median estimate)
+- Governance Scenario Validation Bug ✅ - GDP proxy fixed
+- Uncertainty Propagation ✅ - 9 parameters sampling from distributions
+- Mechanism Audits ✅ - All 3 domains verified
+- AI-to-AI Coordination ✅ - Phase implemented, validated
+- Planetary Restoration Timescales ✅ - All parameters verified
+- AI Coordination Effectiveness ✅ - Already implemented
+
+**MEDIUM (2 items):**
+- Game Layer Stale State ✅ - CriticalJunctureDetector + InfluenceCalculator fixed
+- AMOC Temperature-Dependent Function ✅ - Now temperature-dependent
+
+**Validation Complete (6 items):**
+- Alignment Faking Model ✅, Nuclear Winter Literature ✅, COVID-19 Mortality ✅
+- AI Infrastructure Energy ✅, Workflow Adaptation ✅, Coordinated Deployment God Mode ✅
+
+**LOW (1 item):**
+- Multi-Paradigm Wellbeing Metrics ✅ - Research complete, implementation pending
+
+---
+
+### ⚠️ Removed for Scannability
+
+The Research-Driven Priorities section (Nov 23-25) contained 318 lines of completed work detail. This has been archived to preserve history while keeping the active roadmap focused on **what's next**.
+
+**Full details:** See archive link above for complete implementation notes, reports, commits, and cross-references.
+
+---
+
+## 🗓️ Week of Nov 26 - Validation Sprint (ACTIVE)
+
+**Context:** Monte Carlo temperature bug FIXED (Nov 23). Validation blocked for 2 days, now unblocked.
+**Target:** Autonomous workers returning Nov 26 with validation priority stack.
+
+**Key Insight (Nov 24 Orchestrator Session):**
+> **Degradation >> recovery asymmetry is EXPECTED BEHAVIOR per irreversibility research, not a bug.**
+> The model shows rapid environmental collapse with slow recovery timescales (100-800 years for ice sheets).
+> This is research-accurate per Drüke et al. 2024, not a calibration error.
+
+### Validation Priority Stack
+
+| Priority | Task | Owner | Status | Dependencies |
+|----------|------|-------|--------|--------------|
+| 1 | Verify temp bug fix committed | Orchestrator | ✅ DONE | None |
+| 2 | Determinism stress test (N=100) | Priya | ✅ DONE (Nov 24) | #1 |
+| 2b | Fix non-determinism in alignment | Roy | ✅ DONE (Nov 24) | #2 |
+| 3 | Planetary restoration timescales audit | Roy | ✅ DONE (Nov 24) | None |
+| 4 | Climate mini-hindcast data (1990-2010) | Cynthia | Ready | None |
+| 5 | Historical initialization mode | Roy | ✅ EXISTS | None |
+| 6 | Mini-hindcast validation | Priya | Blocked | #4, #5 |
+| 7 | Mechanism audits (tipping points) | Sylvia | Ready | None |
+
+### Climate Mini-Hindcast Validation (NEW - HIGH Priority)
+
+**Objective:** Validate climate subsystem against 1990-2010 historical data
+**Success Criteria:** CO2 within 5% of Keeling curve
+**Source:** Nov 24 orchestrator session
+
+**Work Breakdown:**
+1. **Historical Data Collection (Cynthia):**
+   - CO2: Keeling curve monthly (NOAA/Scripps)
+   - Temperature: HadCRUT5 anomaly time series
+   - Emissions: Global Carbon Project annual estimates
+2. **Historical Initialization Mode (Roy):**
+   - Add 1990 initialization state (CO2=354ppm, temp anomaly=0.45C)
+   - Wire existing `initializeSimulation` to accept historical overrides
+3. **Validation Analysis (Priya):**
+   - Run simulation 1990-2010 (240 months)
+   - Calculate % deviation from Keeling curve
+   - Assess temperature trajectory alignment
+   - Generate hindcast validation report
+
+**Complexity:** 3 systems (climate, initialization, validation)
+**Related:** Hindcasting Validation (CRITICAL #1) - this is a focused subset
+
+---
+
+## ✅ Quality Gate 1 Validation Status - COMPLETE (Nov 22, 2025)
+
+**Archive:** [`plans/completed/quality_gate_1_validation_status_nov22_20251126.md`](./completed/quality_gate_1_validation_status_nov22_20251126.md)
+
+**Completion:** Nov 22, 2025 - All critical gaps resolved, Grade B+
+
+**Key Achievements:**
+- ✅ AI Alignment Faking Research: PASS (parameters corrected, commit c62acca25)
+- ✅ Architecture Integration Review: Grade B+ (state initialization type safety fixed)
+- ✅ Research Source Validation Audit: 96% citation recency, 3 CRITICAL gaps resolved
+- ✅ Research Debate: 4 CRITICAL + 6 SIGNIFICANT challenges documented with response strategy
+
+---
+
+## 📊 Quality Gate 1 Validation Status (Nov 22, 2025 - UPDATED) - 3 CRITICAL GAPS RESOLVED
+
+**Validation Results (Nov 22 Update):**
    - Make research spending percentage-based (% of GDP) instead of fixed dollar amounts
    - Prevents "physically impossible" crashes when GDP collapses during mortality cascades
    - **Affects:** ApplyScenarioPrioritiesPhase, all 6 governance scenarios
@@ -334,6 +438,93 @@
      - S-curve adoption: innovators -> early majority curve (implemented)
    - **Research:** `research/ai_coordination_transition_management_20251121.md`
    - **Status:** ✅ COMPLETE - Feature was already implemented, not missing
+
+6. **Phase 4: Coordination Layer Implementation** - **PENDING** (Nov 25, 2025)
+   - **Context:** Priya's strategic analysis reveals 2025 initial conditions are NOT past point of no return, but gap is **COORDINATION, not capability**. Current experiments test uncoordinated deployment (God Mode 92% mortality) vs no intervention (Baseline 68% mortality). Missing: coordinated deployment with transition management.
+   - **Source:** `reviews/initial_conditions_strategic_analysis_20251125.md`
+   - **Timeline:** 10-15 days total (3 phases)
+   - **Complexity:** 5 systems (tech deployment, economy, governance, monitoring, scenarios)
+
+   **Phase 4A: Bug Fixes (1-2 days) - BLOCKING**
+
+   1. **GDP-Adaptive Spending Conversion** - ✅ **COMPLETE** (Nov 25, 2025)
+      - Convert fixed spending ($B/month) → percentage of GDP
+      - Prevents governance scenario crashes during GDP collapse
+      - **Status:** All 11 scenarios converted, validation passes
+      - **Report:** `reviews/gdp_adaptive_spending_implementation_20251125.md`
+
+   2. **Month 19-20 Crash Bug Investigation** - **PENDING**
+      - 6/100 baseline "Humane" outcomes were simulation crashes, not better outcomes
+      - Population preserved at 7.3-7.9B (91-97% survival) vs expected dystopia trajectory
+      - All crashes occurred at identical time window (months 19-20)
+      - **Root cause:** Likely assertion failure or validation error
+      - **Expected:** 0/100 crashes after fix, full 120-month baseline runs
+      - **Impact:** Invalidates bimodal distribution hypothesis, need clean baseline data
+      - **Complexity:** Unknown until investigation (likely 1-2 systems)
+
+   **Phase 4B: Coordinated Deployment Implementation (5-8 days) - HIGH**
+
+   3. **Implement "Coordinated God Mode" Scenario** - **PENDING**
+      - **Mechanism:** Paced deployment with economic shock monitoring and rollback capability
+      - **Parameters:**
+        ```typescript
+        {
+          name: 'coordinated-god-mode',
+          techDeployment: {
+            mode: 'coordinated',
+            pacing: {
+              initialBatch: 10,        // Deploy 10 techs at Month 0
+              monthlyRate: 3,          // Add 3 techs/month after
+              pauseOnShock: true,      // Stop if indicators worsen
+              rollbackOnFailure: true  // Undo tech if causes cascade
+            },
+            monitoring: {
+              economicShockThreshold: 0.20,    // Pause if GDP drops >20%
+              environmentalShockThreshold: 2.0, // Pause if boundaries >2×
+              mortalityShockThreshold: 0.01     // Pause if mortality >1%/month
+            },
+            aiTransitionManagement: true  // Aligned AI coordinates deployment
+          }
+        }
+        ```
+      - **Research needed:**
+        - Technology diffusion rates (Rogers 2003 + recent studies)
+        - Transition management literature (policy coordination during rapid change)
+        - Economic absorption capacity (IMF working papers on shock resilience)
+      - **Expected outcome:** 30-50% mortality (better than baseline 68%, much better than uncoordinated 92%)
+      - **Complexity:** 4 systems (tech deployment, monitoring, governance, scenarios)
+
+   **Phase 4C: Validation N=100 (2-3 days) - HIGH**
+
+   4. **Three-Way Comparison Monte Carlo** - **PENDING**
+      - Run N=100 for each scenario (300 total runs):
+        - **Baseline** (no intervention): Expected 68% mortality, 100% completion
+        - **Uncoordinated God Mode** (immediate deployment): Expected 92% mortality, 100% completion
+        - **Coordinated God Mode** (paced + monitored): Expected 30-50% mortality, >50% completion
+      - **Success criteria:**
+        - All scenarios complete without crashes (0% crash rate)
+        - Coordinated mortality < Baseline < Uncoordinated (statistical significance p<0.05)
+        - At least 1 coordinated run shows spiral activation (>0%)
+        - Full 360-month completion rate >50% for coordinated scenario
+      - **Hypothesis:** Technology works when deployed with coordination; gap is coordination, not capability
+      - **Complexity:** 1 system (Monte Carlo validation)
+
+   5. **Only After Phase 4C Validation Success** - **BLOCKED**
+      - **If coordinated deployment succeeds:** Proceed to original Phase 4 experiments:
+        - Experiment 1: Deployment rate sweep (immediate, 3mo, 6mo, 12mo, 24mo pacing)
+        - Experiment 2: Spending level sweep ($10-200B adaptive, test resource constraints)
+        - Experiment 3: Governance priority dimension comparison (research vs safety vs deployment)
+      - **If coordinated deployment also fails (>50% mortality):** Reconsider initial conditions calibration
+
+   **Key Insight (Priya):**
+   > "If aligned AI unlocks technology, it should also coordinate deployment. Current model tests capability WITHOUT coordination - that's the gap, not 'too late to act.'"
+
+   **Strategic Rationale:**
+   - 6/9 planetary boundaries recoverable (climate, ocean, biogeochemical, freshwater, land, novel entities)
+   - Biosphere 11.6× may be irreversible (species extinction permanent on human timescales)
+   - System IN critical transition regime (Months 0-6 window), but not past point of no return
+   - Uncoordinated action makes things WORSE (God Mode 92% > Baseline 68%)
+   - Need to test BEST-case aligned AI (coordinated deployment) before concluding "2025 too late"
 
 ### MEDIUM Priority
 

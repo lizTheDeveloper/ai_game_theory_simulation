@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>God Mode - Government Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0A0A0A;
+            color: #FFFFFF;
+            padding: 24px;
+        }
+
+        .panel-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .panel-header {
+            margin-bottom: 32px;
+        }
+
+        .panel-title {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #00F0FF;
+            margin-bottom: 8px;
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+        }
+
+        .panel-subtitle {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Control Sections */
+        .control-group {
+            background: #1A1A1A;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            margin-bottom: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .control-group:hover {
+            border-color: rgba(0, 240, 255, 0.3);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.1);
+        }
+
+        .control-group-header {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .control-group-title {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #00F0FF;
+            font-weight: 500;
+        }
+
+        .control-group-content {
+            padding: 24px;
+        }
+
+        /* Policy Selector */
+        .policy-selector {
+            margin-bottom: 24px;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .radio-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .radio-item:hover {
+            border-color: rgba(0, 240, 255, 0.3);
+            background: rgba(0, 240, 255, 0.05);
+        }
+
+        .radio-item.selected {
+            border-color: #00F0FF;
+            background: rgba(0, 240, 255, 0.1);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+        }
+
+        .radio-dot {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            margin-right: 12px;
+            position: relative;
+        }
+
+        .radio-item.selected .radio-dot {
+            border-color: #00F0FF;
+        }
+
+        .radio-item.selected .radio-dot::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: #00F0FF;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.8);
+        }
+
+        .radio-label {
+            flex: 1;
+        }
+
+        .radio-label-main {
+            font-size: 13px;
+            color: white;
+            margin-bottom: 4px;
+        }
+
+        .radio-label-sub {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Sliders */
+        .slider-group {
+            margin-bottom: 20px;
+        }
+
+        .slider-row {
+            margin-bottom: 16px;
+        }
+
+        .slider-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .slider-label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.8);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .slider-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            color: #00F0FF;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+        }
+
+        .slider-track {
+            position: relative;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            margin-bottom: 4px;
+        }
+
+        .slider-fill {
+            position: absolute;
+            height: 100%;
+            background: linear-gradient(90deg, #00F0FF, #0080FF);
+            border-radius: 2px;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+            transition: width 0.3s ease;
+        }
+
+        .slider-input {
+            width: 100%;
+            height: 20px;
+            opacity: 0;
+            cursor: pointer;
+            position: relative;
+            z-index: 1;
+            margin-top: -12px;
+        }
+
+        /* Checkboxes */
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 0;
+            cursor: pointer;
+        }
+
+        .checkbox-item:hover .checkbox-box {
+            border-color: rgba(0, 240, 255, 0.5);
+        }
+
+        .checkbox-box {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .checkbox-box.checked {
+            background: #00F0FF;
+            border-color: #00F0FF;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
+        }
+
+        .checkbox-box.checked::after {
+            content: '✓';
+            color: #0A0A0A;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .checkbox-label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 16px;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn {
+            padding: 10px 24px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border-radius: 2px;
+        }
+
+        .btn:hover {
+            border-color: rgba(0, 240, 255, 0.5);
+            background: rgba(0, 240, 255, 0.05);
+        }
+
+        .btn-primary {
+            background: #00F0FF;
+            border-color: #00F0FF;
+            color: #0A0A0A;
+            font-weight: 500;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: #00D0FF;
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.5);
+        }
+
+        .btn-secondary {
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            border-color: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Dropdown */
+        .dropdown {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 12px;
+            color: white;
+            font-size: 12px;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-width: 200px;
+        }
+
+        .dropdown:hover {
+            border-color: rgba(0, 240, 255, 0.3);
+            background: rgba(0, 240, 255, 0.05);
+        }
+
+        .dropdown:focus {
+            outline: none;
+            border-color: #00F0FF;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+        }
+
+        /* Crisis Response Cards */
+        .crisis-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .crisis-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 16px;
+            border-radius: 2px;
+            transition: all 0.2s ease;
+        }
+
+        .crisis-card:hover {
+            border-color: rgba(255, 176, 0, 0.3);
+            box-shadow: 0 0 20px rgba(255, 176, 0, 0.1);
+        }
+
+        .crisis-card-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #FFB000;
+            margin-bottom: 12px;
+        }
+
+        .crisis-status {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .status-option {
+            flex: 1;
+            padding: 6px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .status-option:hover {
+            border-color: rgba(255, 176, 0, 0.5);
+        }
+
+        .status-option.active {
+            background: rgba(255, 176, 0, 0.2);
+            border-color: #FFB000;
+            color: #FFB000;
+        }
+
+        .deploy-btn {
+            width: 100%;
+            padding: 8px;
+            background: rgba(255, 176, 0, 0.1);
+            border: 1px solid #FFB000;
+            color: #FFB000;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 8px;
+        }
+
+        .deploy-btn:hover {
+            background: rgba(255, 176, 0, 0.2);
+            box-shadow: 0 0 15px rgba(255, 176, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="panel-container">
+        <div class="panel-header">
+            <div class="panel-title">GOVERNMENT CONTROL PANEL</div>
+            <div class="panel-subtitle">Configure economic policy, AI regulation, and crisis response</div>
+        </div>
+
+        <!-- Economic Policy -->
+        <div class="control-group">
+            <div class="control-group-header">
+                <div class="control-group-title">ECONOMIC POLICY</div>
+            </div>
+            <div class="control-group-content">
+                <div class="policy-selector">
+                    <div class="radio-group">
+                        <div class="radio-item">
+                            <div class="radio-dot"></div>
+                            <div class="radio-label">
+                                <div class="radio-label-main">Generous UBI</div>
+                                <div class="radio-label-sub">Maximum coverage, highest payment amount</div>
+                            </div>
+                        </div>
+                        <div class="radio-item selected">
+                            <div class="radio-dot"></div>
+                            <div class="radio-label">
+                                <div class="radio-label-main">Means-tested Benefits</div>
+                                <div class="radio-label-sub">Targeted welfare for those below poverty line</div>
+                            </div>
+                        </div>
+                        <div class="radio-item">
+                            <div class="radio-dot"></div>
+                            <div class="radio-label">
+                                <div class="radio-label-main">Job Guarantee</div>
+                                <div class="radio-label-sub">Government employment for all who want to work</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Investment Priorities -->
+        <div class="control-group">
+            <div class="control-group-header">
+                <div class="control-group-title">INVESTMENT PRIORITIES</div>
+            </div>
+            <div class="control-group-content">
+                <div class="slider-group">
+                    <div class="slider-row">
+                        <div class="slider-header">
+                            <span class="slider-label">Technology Research</span>
+                            <span class="slider-value">35%</span>
+                        </div>
+                        <div class="slider-track">
+                            <div class="slider-fill" style="width: 35%"></div>
+                        </div>
+                        <input type="range" class="slider-input" value="35" min="0" max="100">
+                    </div>
+                    <div class="slider-row">
+                        <div class="slider-header">
+                            <span class="slider-label">Infrastructure</span>
+                            <span class="slider-value">25%</span>
+                        </div>
+                        <div class="slider-track">
+                            <div class="slider-fill" style="width: 25%"></div>
+                        </div>
+                        <input type="range" class="slider-input" value="25" min="0" max="100">
+                    </div>
+                    <div class="slider-row">
+                        <div class="slider-header">
+                            <span class="slider-label">Social Programs</span>
+                            <span class="slider-value">20%</span>
+                        </div>
+                        <div class="slider-track">
+                            <div class="slider-fill" style="width: 20%"></div>
+                        </div>
+                        <input type="range" class="slider-input" value="20" min="0" max="100">
+                    </div>
+                    <div class="slider-row">
+                        <div class="slider-header">
+                            <span class="slider-label">Military & Defense</span>
+                            <span class="slider-value">15%</span>
+                        </div>
+                        <div class="slider-track">
+                            <div class="slider-fill" style="width: 15%"></div>
+                        </div>
+                        <input type="range" class="slider-input" value="15" min="0" max="100">
+                    </div>
+                    <div class="slider-row">
+                        <div class="slider-header">
+                            <span class="slider-label">Debt Reduction</span>
+                            <span class="slider-value">5%</span>
+                        </div>
+                        <div class="slider-track">
+                            <div class="slider-fill" style="width: 5%"></div>
+                        </div>
+                        <input type="range" class="slider-input" value="5" min="0" max="100">
+                    </div>
+                </div>
+                <div style="font-size: 11px; color: rgba(255, 255, 255, 0.4); margin-top: 8px;">
+                    Total allocation: 100% (auto-normalized)
+                </div>
+            </div>
+        </div>
+
+        <!-- Active Regulations -->
+        <div class="control-group">
+            <div class="control-group-header">
+                <div class="control-group-title">ACTIVE REGULATIONS</div>
+            </div>
+            <div class="control-group-content">
+                <div class="checkbox-grid">
+                    <div class="checkbox-item">
+                        <div class="checkbox-box checked"></div>
+                        <span class="checkbox-label">AI Development Regulation</span>
+                    </div>
+                    <div class="checkbox-item">
+                        <div class="checkbox-box checked"></div>
+                        <span class="checkbox-label">Carbon Tax Policy</span>
+                    </div>
+                    <div class="checkbox-item">
+                        <div class="checkbox-box"></div>
+                        <span class="checkbox-label">Universal Basic Income</span>
+                    </div>
+                    <div class="checkbox-item">
+                        <div class="checkbox-box checked"></div>
+                        <span class="checkbox-label">Data Privacy Laws</span>
+                    </div>
+                    <div class="checkbox-item">
+                        <div class="checkbox-box"></div>
+                        <span class="checkbox-label">Automation Tax</span>
+                    </div>
+                    <div class="checkbox-item">
+                        <div class="checkbox-box"></div>
+                        <span class="checkbox-label">Gene Editing Ban</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Crisis Response -->
+        <div class="control-group">
+            <div class="control-group-header">
+                <div class="control-group-title">CRISIS RESPONSE PROTOCOLS</div>
+            </div>
+            <div class="control-group-content">
+                <div class="crisis-grid">
+                    <div class="crisis-card">
+                        <div class="crisis-card-title">Pandemic Response</div>
+                        <div class="crisis-status">
+                            <div class="status-option">AUTO</div>
+                            <div class="status-option active">MANUAL</div>
+                            <div class="status-option">OFF</div>
+                        </div>
+                        <div class="slider-row">
+                            <div class="slider-header">
+                                <span class="slider-label" style="font-size: 10px;">Resources</span>
+                                <span class="slider-value" style="font-size: 11px;">60%</span>
+                            </div>
+                            <div class="slider-track" style="height: 2px;">
+                                <div class="slider-fill" style="width: 60%"></div>
+                            </div>
+                        </div>
+                        <button class="deploy-btn">EMERGENCY DEPLOY</button>
+                    </div>
+                    <div class="crisis-card">
+                        <div class="crisis-card-title">Climate Disaster</div>
+                        <div class="crisis-status">
+                            <div class="status-option active">AUTO</div>
+                            <div class="status-option">MANUAL</div>
+                            <div class="status-option">OFF</div>
+                        </div>
+                        <div class="slider-row">
+                            <div class="slider-header">
+                                <span class="slider-label" style="font-size: 10px;">Resources</span>
+                                <span class="slider-value" style="font-size: 11px;">40%</span>
+                            </div>
+                            <div class="slider-track" style="height: 2px;">
+                                <div class="slider-fill" style="width: 40%"></div>
+                            </div>
+                        </div>
+                        <button class="deploy-btn">EMERGENCY DEPLOY</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Selection -->
+        <div class="control-group">
+            <div class="control-group-header">
+                <div class="control-group-title">ACTION SELECTION</div>
+            </div>
+            <div class="control-group-content">
+                <div style="margin-bottom: 16px;">
+                    <label style="display: block; font-size: 11px; color: rgba(255, 255, 255, 0.5); margin-bottom: 8px;">
+                        PRIMARY ACTION THIS MONTH
+                    </label>
+                    <select class="dropdown">
+                        <option>Emergency Response</option>
+                        <option>Technology Deployment</option>
+                        <option>Social Program Launch</option>
+                        <option>Military Mobilization</option>
+                        <option>Infrastructure Project</option>
+                    </select>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-primary">SAVE AS PRESET</button>
+                    <button class="btn btn-secondary">RESET TO AUTO</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Radio Button Selection
+        document.querySelectorAll('.radio-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.radio-item').forEach(r => r.classList.remove('selected'));
+                this.classList.add('selected');
+                console.log('Policy selected:', this.querySelector('.radio-label-main').textContent);
+            });
+        });
+
+        // Checkbox Toggle
+        document.querySelectorAll('.checkbox-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const checkbox = this.querySelector('.checkbox-box');
+                checkbox.classList.toggle('checked');
+                console.log('Regulation toggled:', this.querySelector('.checkbox-label').textContent);
+            });
+        });
+
+        // Slider Updates
+        document.querySelectorAll('.slider-input').forEach(slider => {
+            slider.addEventListener('input', function() {
+                const row = this.closest('.slider-row');
+                const valueLabel = row.querySelector('.slider-value');
+                const fill = row.querySelector('.slider-fill');
+
+                valueLabel.textContent = this.value + '%';
+                fill.style.width = this.value + '%';
+
+                // Auto-normalize (simplified for demo)
+                console.log('Investment priority adjusted');
+            });
+        });
+
+        // Crisis Status Toggle
+        document.querySelectorAll('.status-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const siblings = this.parentElement.querySelectorAll('.status-option');
+                siblings.forEach(s => s.classList.remove('active'));
+                this.classList.add('active');
+                console.log('Crisis status changed:', this.textContent);
+            });
+        });
+
+        // Deploy Buttons
+        document.querySelectorAll('.deploy-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                console.log('Emergency deployment triggered');
+                this.style.background = 'rgba(255, 176, 0, 0.3)';
+                this.textContent = 'DEPLOYED';
+                setTimeout(() => {
+                    this.style.background = 'rgba(255, 176, 0, 0.1)';
+                    this.textContent = 'EMERGENCY DEPLOY';
+                }, 2000);
+            });
+        });
+
+        // Action Buttons
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                console.log('Action:', this.textContent);
+            });
+        });
+    </script>
+</body>
+</html>

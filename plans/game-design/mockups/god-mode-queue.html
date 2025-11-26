@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>God Mode - Decision Queue</title>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0A0A0A;
+            color: #FFFFFF;
+            padding: 24px;
+        }
+
+        .queue-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .panel-header {
+            margin-bottom: 32px;
+        }
+
+        .panel-title {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #00F0FF;
+            margin-bottom: 8px;
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+        }
+
+        .panel-subtitle {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Queue Summary */
+        .queue-summary {
+            background: #1A1A1A;
+            border: 1px solid rgba(255, 176, 0, 0.3);
+            padding: 20px;
+            margin-bottom: 24px;
+            border-radius: 2px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 0 20px rgba(255, 176, 0, 0.1);
+        }
+
+        .summary-stats {
+            display: flex;
+            gap: 32px;
+        }
+
+        .summary-stat {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 4px;
+        }
+
+        .stat-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 20px;
+            color: #FFB000;
+            font-weight: 500;
+            text-shadow: 0 0 10px rgba(255, 176, 0, 0.4);
+        }
+
+        /* Queue Actions */
+        .queue-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .action-btn {
+            padding: 10px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: transparent;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border-radius: 2px;
+        }
+
+        .action-btn:hover {
+            border-color: rgba(0, 240, 255, 0.3);
+            background: rgba(0, 240, 255, 0.05);
+        }
+
+        .action-btn.primary {
+            background: #00FF88;
+            border-color: #00FF88;
+            color: #0A0A0A;
+            font-weight: 500;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+
+        .action-btn.primary:hover {
+            background: #00DD77;
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
+        }
+
+        .action-btn.danger {
+            border-color: rgba(255, 68, 68, 0.5);
+            color: #FF4444;
+        }
+
+        .action-btn.danger:hover {
+            background: rgba(255, 68, 68, 0.1);
+            border-color: #FF4444;
+            box-shadow: 0 0 20px rgba(255, 68, 68, 0.2);
+        }
+
+        .action-btn.preview {
+            border-color: rgba(255, 176, 0, 0.5);
+            color: #FFB000;
+        }
+
+        .action-btn.preview:hover {
+            background: rgba(255, 176, 0, 0.1);
+            border-color: #FFB000;
+            box-shadow: 0 0 20px rgba(255, 176, 0, 0.2);
+        }
+
+        /* Queue Items */
+        .queue-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .queue-item {
+            background: #1A1A1A;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            transition: all 0.2s ease;
+            cursor: move;
+            position: relative;
+        }
+
+        .queue-item:hover {
+            border-color: rgba(0, 240, 255, 0.3);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.05);
+        }
+
+        .queue-item.dragging {
+            opacity: 0.5;
+            transform: scale(0.98);
+        }
+
+        .queue-item.drag-over {
+            border-color: #00F0FF;
+            background: rgba(0, 240, 255, 0.05);
+        }
+
+        .item-header {
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .item-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .drag-handle {
+            color: rgba(255, 255, 255, 0.3);
+            cursor: move;
+            font-size: 14px;
+        }
+
+        .drag-handle:hover {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .item-phase {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #00F0FF;
+        }
+
+        .item-actor {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 8px;
+            border-radius: 2px;
+        }
+
+        .remove-btn {
+            padding: 4px 8px;
+            background: transparent;
+            border: 1px solid rgba(255, 68, 68, 0.3);
+            color: rgba(255, 68, 68, 0.8);
+            font-size: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-radius: 2px;
+        }
+
+        .remove-btn:hover {
+            background: rgba(255, 68, 68, 0.1);
+            border-color: #FF4444;
+            color: #FF4444;
+        }
+
+        .item-content {
+            padding: 16px;
+        }
+
+        .change-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .change-label {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.5);
+            min-width: 80px;
+        }
+
+        .change-value {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+        }
+
+        .value-old {
+            color: rgba(255, 255, 255, 0.4);
+            text-decoration: line-through;
+        }
+
+        .value-arrow {
+            color: #00F0FF;
+        }
+
+        .value-new {
+            color: #00F0FF;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Impact Preview */
+        .impact-preview {
+            padding: 12px 16px;
+            background: rgba(0, 240, 255, 0.02);
+            border-top: 1px solid rgba(0, 240, 255, 0.1);
+            display: flex;
+            gap: 24px;
+        }
+
+        .impact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .impact-label {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+        }
+
+        .impact-value {
+            font-size: 11px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .impact-value.positive {
+            color: #00FF88;
+        }
+
+        .impact-value.negative {
+            color: #FF4444;
+        }
+
+        .impact-value.neutral {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Empty State */
+        .empty-state {
+            background: #1A1A1A;
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+            padding: 48px;
+            text-align: center;
+            border-radius: 2px;
+        }
+
+        .empty-icon {
+            font-size: 48px;
+            color: rgba(255, 255, 255, 0.1);
+            margin-bottom: 16px;
+        }
+
+        .empty-text {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 8px;
+        }
+
+        .empty-subtext {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="queue-container">
+        <div class="panel-header">
+            <div class="panel-title">DECISION QUEUE</div>
+            <div class="panel-subtitle">Manage pending decisions for future execution</div>
+        </div>
+
+        <!-- Queue Summary -->
+        <div class="queue-summary">
+            <div class="summary-stats">
+                <div class="summary-stat">
+                    <span class="stat-label">Queued Decisions</span>
+                    <span class="stat-value">5</span>
+                </div>
+                <div class="summary-stat">
+                    <span class="stat-label">Next Execution</span>
+                    <span class="stat-value">Month 24</span>
+                </div>
+                <div class="summary-stat">
+                    <span class="stat-label">Estimated Impact</span>
+                    <span class="stat-value">+12%</span>
+                </div>
+            </div>
+            <div class="queue-actions">
+                <button class="action-btn preview">PREVIEW OUTCOMES</button>
+                <button class="action-btn primary">APPLY ALL</button>
+                <button class="action-btn danger">CLEAR QUEUE</button>
+            </div>
+        </div>
+
+        <!-- Queue Items -->
+        <div class="queue-list">
+            <!-- Item 1 -->
+            <div class="queue-item" draggable="true">
+                <div class="item-header">
+                    <div class="item-info">
+                        <span class="drag-handle">⋮⋮</span>
+                        <span class="item-phase">Government Actions</span>
+                        <span class="item-actor">Policy</span>
+                    </div>
+                    <button class="remove-btn">REMOVE</button>
+                </div>
+                <div class="item-content">
+                    <div class="change-row">
+                        <span class="change-label">CONTROL:</span>
+                        <span class="change-value">Economic Policy Type</span>
+                    </div>
+                    <div class="change-row">
+                        <span class="change-label">CHANGE:</span>
+                        <div class="change-value">
+                            <span class="value-old">Means-tested</span>
+                            <span class="value-arrow">→</span>
+                            <span class="value-new">Generous UBI</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="impact-preview">
+                    <div class="impact-item">
+                        <span class="impact-label">QoL:</span>
+                        <span class="impact-value positive">+15%</span>
+                    </div>
+                    <div class="impact-item">
+                        <span class="impact-label">GDP:</span>
+                        <span class="impact-value negative">-2%</span>
+                    </div>
+                    <div class="impact-item">
+                        <span class="impact-label">Trust:</span>
+                        <span class="impact-value positive">+8%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="queue-item" draggable="true">
+                <div class="item-header">
+                    <div class="item-info">
+                        <span class="drag-handle">⋮⋮</span>
+                        <span class="item-phase">AI Agent Control</span>
+                        <span class="item-actor">Agent-03</span>
+                    </div>
+                    <button class="remove-btn">REMOVE</button>
+                </div>
+                <div class="item-content">
+                    <div class="change-row">
+                        <span class="change-label">CONTROL:</span>
+                        <span class="change-value">Research Focus</span>
+                    </div>
+                    <div class="change-row">
+                        <span class="change-label">CHANGE:</span>
+                        <div class="change-value">
+                            <span class="value-old">Physical</span>
+                            <span class="value-arrow">→</span>
+                            <span class="value-new">Digital Specialization</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="impact-preview">
+                    <div class="impact-item">
+                        <span class="impact-label">Tech Speed:</span>
+                        <span class="impact-value positive">+6 months</span>
+                    </div>
+                    <div class="impact-item">
+                        <span class="impact-label">Capability:</span>
+                        <span class="impact-value positive">+0.3</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="queue-item" draggable="true">
+                <div class="item-header">
+                    <div class="item-info">
+                        <span class="drag-handle">⋮⋮</span>
+                        <span class="item-phase">Crisis Response</span>
+                        <span class="item-actor">Emergency</span>
+                    </div>
+                    <button class="remove-btn">REMOVE</button>
+                </div>
+                <div class="item-content">
+                    <div class="change-row">
+                        <span class="change-label">CONTROL:</span>
+                        <span class="change-value">Pandemic Response</span>
+                    </div>
+                    <div class="change-row">
+                        <span class="change-label">CHANGE:</span>
+                        <div class="change-value">
+                            <span class="value-old">Auto</span>
+                            <span class="value-arrow">→</span>
+                            <span class="value-new">Deploy Emergency</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="impact-preview">
+                    <div class="impact-item">
+                        <span class="impact-label">Lives Saved:</span>
+                        <span class="impact-value positive">~2M</span>
+                    </div>
+                    <div class="impact-item">
+                        <span class="impact-label">Resources:</span>
+                        <span class="impact-value negative">-60%</span>
+                    </div>
+                    <div class="impact-item">
+                        <span class="impact-label">Trust:</span>
+                        <span class="impact-value positive">+12%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 4 -->
+            <div class="queue-item" draggable="true">
+                <div class="item-header">
+                    <div class="item-info">
+                        <span class="drag-handle">⋮⋮</span>
+                        <span class="item-phase">AI Regulation</span>
+                        <span class="item-actor">Compute</span>
+                    </div>
+                    <button class="remove-btn">REMOVE</button>
+                </div>
+                <div class="item-content">
+                    <div class="change-row">
+                        <span class="change-label">CONTROL:</span>
+                        <span class="change-value">Compute Threshold</span>
+                    </div>
+                    <div class="change-row">
+                        <span class="change-label">CHANGE:</span>
+                        <div class="change-value">
+                            <span class="value-old">10^28 FLOP</span>
+                            <span class="value-arrow">→</span>
+                            <span class="value-new">10^26 FLOP</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="impact-preview">
+                    <div class="impact-item">
+                        <span class="impact-label">AI Speed:</span>
+                        <span class="impact-value negative">-25%</span>
+                    </div>
+                    <div class="impact-item">
+                        <span class="impact-label">Safety:</span>
+                        <span class="impact-value positive">+18%</span>
+                    </div>
+                    <div class="impact-item">
+                        <span class="impact-label">Resentment:</span>
+                        <span class="impact-value negative">+5%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 5 -->
+            <div class="queue-item" draggable="true">
+                <div class="item-header">
+                    <div class="item-info">
+                        <span class="drag-handle">⋮⋮</span>
+                        <span class="item-phase">Technology</span>
+                        <span class="item-actor">Deployment</span>
+                    </div>
+                    <button class="remove-btn">REMOVE</button>
+                </div>
+                <div class="item-content">
+                    <div class="change-row">
+                        <span class="change-label">CONTROL:</span>
+                        <span class="change-value">Deploy Technology</span>
+                    </div>
+                    <div class="change-row">
+                        <span class="change-label">CHANGE:</span>
+                        <div class="change-value">
+                            <span class="value-old">None</span>
+                            <span class="value-arrow">→</span>
+                            <span class="value-new">Advanced Solar Panels</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="impact-preview">
+                    <div class="impact-item">
+                        <span class="impact-label">Energy:</span>
+                        <span class="impact-value positive">+15%</span>
+                    </div>
+                    <div class="impact-item">
+                        <span class="impact-label">CO2:</span>
+                        <span class="impact-value positive">-8%</span>
+                    </div>
+                    <div class="impact-item">
+                        <span class="impact-label">Cost:</span>
+                        <span class="impact-value neutral">$2B</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty State (hidden when items present) -->
+        <div class="empty-state" style="display: none;">
+            <div class="empty-icon">📋</div>
+            <div class="empty-text">No decisions queued</div>
+            <div class="empty-subtext">Make changes in control panels to queue decisions</div>
+        </div>
+    </div>
+
+    <script>
+        let draggedElement = null;
+
+        // Drag and Drop
+        document.querySelectorAll('.queue-item').forEach(item => {
+            item.addEventListener('dragstart', function(e) {
+                draggedElement = this;
+                this.classList.add('dragging');
+                e.dataTransfer.effectAllowed = 'move';
+            });
+
+            item.addEventListener('dragend', function(e) {
+                this.classList.remove('dragging');
+            });
+
+            item.addEventListener('dragover', function(e) {
+                if (e.preventDefault) {
+                    e.preventDefault();
+                }
+                e.dataTransfer.dropEffect = 'move';
+
+                const afterElement = getDragAfterElement(this.parentElement, e.clientY);
+                if (afterElement == null) {
+                    this.parentElement.appendChild(draggedElement);
+                } else {
+                    this.parentElement.insertBefore(draggedElement, afterElement);
+                }
+
+                this.classList.add('drag-over');
+                return false;
+            });
+
+            item.addEventListener('dragleave', function(e) {
+                this.classList.remove('drag-over');
+            });
+
+            item.addEventListener('drop', function(e) {
+                if (e.stopPropagation) {
+                    e.stopPropagation();
+                }
+                this.classList.remove('drag-over');
+                console.log('Queue order changed');
+                return false;
+            });
+        });
+
+        function getDragAfterElement(container, y) {
+            const draggableElements = [...container.querySelectorAll('.queue-item:not(.dragging)')];
+
+            return draggableElements.reduce((closest, child) => {
+                const box = child.getBoundingClientRect();
+                const offset = y - box.top - box.height / 2;
+
+                if (offset < 0 && offset > closest.offset) {
+                    return { offset: offset, element: child };
+                } else {
+                    return closest;
+                }
+            }, { offset: Number.NEGATIVE_INFINITY }).element;
+        }
+
+        // Remove Buttons
+        document.querySelectorAll('.remove-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const item = this.closest('.queue-item');
+                item.style.transform = 'translateX(100%)';
+                item.style.opacity = '0';
+                setTimeout(() => {
+                    item.remove();
+                    updateQueueCount();
+                }, 300);
+            });
+        });
+
+        // Action Buttons
+        document.querySelector('.action-btn.primary').addEventListener('click', function() {
+            console.log('Applying all queued decisions');
+            this.textContent = 'APPLYING...';
+            setTimeout(() => {
+                this.textContent = 'APPLIED';
+                setTimeout(() => {
+                    this.textContent = 'APPLY ALL';
+                }, 1000);
+            }, 1500);
+        });
+
+        document.querySelector('.action-btn.danger').addEventListener('click', function() {
+            if (confirm('Clear all queued decisions?')) {
+                document.querySelectorAll('.queue-item').forEach(item => {
+                    item.style.transform = 'translateX(100%)';
+                    item.style.opacity = '0';
+                });
+                setTimeout(() => {
+                    document.querySelector('.queue-list').innerHTML = '';
+                    document.querySelector('.empty-state').style.display = 'block';
+                    updateQueueCount();
+                }, 300);
+            }
+        });
+
+        document.querySelector('.action-btn.preview').addEventListener('click', function() {
+            console.log('Previewing outcomes...');
+            this.textContent = 'CALCULATING...';
+            setTimeout(() => {
+                this.textContent = 'PREVIEW OUTCOMES';
+            }, 1500);
+        });
+
+        function updateQueueCount() {
+            const count = document.querySelectorAll('.queue-item').length;
+            document.querySelector('.stat-value').textContent = count;
+
+            if (count === 0) {
+                document.querySelector('.empty-state').style.display = 'block';
+            } else {
+                document.querySelector('.empty-state').style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

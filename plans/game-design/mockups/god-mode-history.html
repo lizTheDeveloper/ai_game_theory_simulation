@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>God Mode - Decision History</title>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0A0A0A;
+            color: #FFFFFF;
+            padding: 24px;
+        }
+
+        .history-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .panel-header {
+            margin-bottom: 32px;
+        }
+
+        .panel-title {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #00F0FF;
+            margin-bottom: 8px;
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+        }
+
+        .panel-subtitle {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Filter Controls */
+        .filter-bar {
+            background: #1A1A1A;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 16px;
+            margin-bottom: 24px;
+            border-radius: 2px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .filter-label {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .filter-select {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 6px 12px;
+            font-size: 11px;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-select:hover {
+            border-color: rgba(0, 240, 255, 0.3);
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: #00F0FF;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+        }
+
+        .export-btn {
+            padding: 8px 16px;
+            background: transparent;
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            color: #00F0FF;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-radius: 2px;
+        }
+
+        .export-btn:hover {
+            background: rgba(0, 240, 255, 0.1);
+            border-color: #00F0FF;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 16px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg,
+                rgba(0, 240, 255, 0.3),
+                rgba(0, 240, 255, 0.1) 50%,
+                rgba(0, 240, 255, 0.05));
+        }
+
+        /* History Entry */
+        .history-entry {
+            background: #1A1A1A;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            margin-bottom: 20px;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .history-entry:hover {
+            border-color: rgba(0, 240, 255, 0.2);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.05);
+        }
+
+        .history-entry::before {
+            content: '';
+            position: absolute;
+            left: -28px;
+            top: 24px;
+            width: 10px;
+            height: 10px;
+            background: #00F0FF;
+            border: 2px solid #0A0A0A;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+        }
+
+        .history-entry.negative::before {
+            background: #FF4444;
+            box-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+        }
+
+        .history-entry.neutral::before {
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+
+        .entry-header {
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .entry-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .entry-month {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            color: #00F0FF;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+        }
+
+        .entry-phase {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 8px;
+            border-radius: 2px;
+        }
+
+        .entry-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .undo-btn {
+            padding: 4px 12px;
+            background: transparent;
+            border: 1px solid rgba(255, 176, 0, 0.3);
+            color: #FFB000;
+            font-size: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            border-radius: 2px;
+        }
+
+        .undo-btn:hover:not(:disabled) {
+            background: rgba(255, 176, 0, 0.1);
+            border-color: #FFB000;
+            box-shadow: 0 0 10px rgba(255, 176, 0, 0.2);
+        }
+
+        .undo-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .export-single-btn {
+            padding: 4px 12px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            border-radius: 2px;
+        }
+
+        .export-single-btn:hover {
+            border-color: rgba(255, 255, 255, 0.4);
+            color: white;
+        }
+
+        .entry-content {
+            padding: 16px;
+        }
+
+        .decision-description {
+            font-size: 13px;
+            color: white;
+            margin-bottom: 12px;
+        }
+
+        .change-detail {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 8px;
+        }
+
+        .value-old {
+            text-decoration: line-through;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .value-arrow {
+            color: #00F0FF;
+        }
+
+        .value-new {
+            color: #00F0FF;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Outcome Section */
+        .outcome-section {
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .outcome-metrics {
+            display: flex;
+            gap: 24px;
+        }
+
+        .outcome-metric {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .metric-label {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+        }
+
+        .metric-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+        }
+
+        .metric-value.positive {
+            color: #00FF88;
+        }
+
+        .metric-value.negative {
+            color: #FF4444;
+        }
+
+        .metric-value.neutral {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .alternative-text {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.4);
+            font-style: italic;
+        }
+
+        /* Summary Statistics */
+        .summary-stats {
+            background: #1A1A1A;
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            padding: 24px;
+            margin-bottom: 32px;
+            border-radius: 2px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.05);
+        }
+
+        .stat-card {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 28px;
+            font-weight: 500;
+            color: #00F0FF;
+            text-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 32px;
+        }
+
+        .page-btn {
+            width: 32px;
+            height: 32px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-radius: 2px;
+        }
+
+        .page-btn:hover {
+            border-color: rgba(0, 240, 255, 0.3);
+            color: #00F0FF;
+        }
+
+        .page-btn.active {
+            background: rgba(0, 240, 255, 0.1);
+            border-color: #00F0FF;
+            color: #00F0FF;
+        }
+    </style>
+</head>
+<body>
+    <div class="history-container">
+        <div class="panel-header">
+            <div class="panel-title">DECISION HISTORY</div>
+            <div class="panel-subtitle">Timeline of manual interventions and their outcomes</div>
+        </div>
+
+        <!-- Summary Statistics -->
+        <div class="summary-stats">
+            <div class="stat-card">
+                <div class="stat-value">12</div>
+                <div class="stat-label">Total Interventions</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">75%</div>
+                <div class="stat-label">Positive Outcomes</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">2.3M</div>
+                <div class="stat-label">Lives Improved</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">-10%</div>
+                <div class="stat-label">Extinction Risk Delta</div>
+            </div>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+            <div class="filter-group">
+                <span class="filter-label">Filter by:</span>
+                <select class="filter-select">
+                    <option>All Actors</option>
+                    <option>Government</option>
+                    <option>AI Agents</option>
+                    <option>Crisis Response</option>
+                </select>
+                <select class="filter-select">
+                    <option>All Phases</option>
+                    <option>Economic Policy</option>
+                    <option>AI Control</option>
+                    <option>Technology</option>
+                </select>
+                <select class="filter-select">
+                    <option>All Outcomes</option>
+                    <option>Positive</option>
+                    <option>Negative</option>
+                    <option>Neutral</option>
+                </select>
+            </div>
+            <button class="export-btn">EXPORT HISTORY</button>
+        </div>
+
+        <!-- Timeline -->
+        <div class="timeline">
+            <!-- Entry 1 - Positive outcome -->
+            <div class="history-entry">
+                <div class="entry-header">
+                    <div class="entry-info">
+                        <span class="entry-month">MONTH 24</span>
+                        <span class="entry-phase">Economic Policy</span>
+                    </div>
+                    <div class="entry-actions">
+                        <button class="undo-btn">UNDO</button>
+                        <button class="export-single-btn">EXPORT</button>
+                    </div>
+                </div>
+                <div class="entry-content">
+                    <div class="decision-description">Changed UBI policy to Generous</div>
+                    <div class="change-detail">
+                        <span class="value-old">Means-tested</span>
+                        <span class="value-arrow">→</span>
+                        <span class="value-new">Generous UBI</span>
+                    </div>
+                </div>
+                <div class="outcome-section">
+                    <div class="outcome-metrics">
+                        <div class="outcome-metric">
+                            <span class="metric-label">QoL:</span>
+                            <span class="metric-value positive">+15%</span>
+                        </div>
+                        <div class="outcome-metric">
+                            <span class="metric-label">GDP:</span>
+                            <span class="metric-value negative">-2%</span>
+                        </div>
+                        <div class="outcome-metric">
+                            <span class="metric-label">Trust:</span>
+                            <span class="metric-value positive">+8%</span>
+                        </div>
+                    </div>
+                    <div class="alternative-text">Without intervention: Trust would have increased only +3%</div>
+                </div>
+            </div>
+
+            <!-- Entry 2 - Positive outcome -->
+            <div class="history-entry">
+                <div class="entry-header">
+                    <div class="entry-info">
+                        <span class="entry-month">MONTH 26</span>
+                        <span class="entry-phase">AI Agent Control</span>
+                    </div>
+                    <div class="entry-actions">
+                        <button class="undo-btn">UNDO</button>
+                        <button class="export-single-btn">EXPORT</button>
+                    </div>
+                </div>
+                <div class="entry-content">
+                    <div class="decision-description">Overrode AI-3 research to Digital</div>
+                    <div class="change-detail">
+                        <span class="value-old">Physical Research</span>
+                        <span class="value-arrow">→</span>
+                        <span class="value-new">Digital Specialization</span>
+                    </div>
+                </div>
+                <div class="outcome-section">
+                    <div class="outcome-metrics">
+                        <div class="outcome-metric">
+                            <span class="metric-label">Tech Speed:</span>
+                            <span class="metric-value positive">6 months faster</span>
+                        </div>
+                        <div class="outcome-metric">
+                            <span class="metric-label">Capability:</span>
+                            <span class="metric-value positive">+0.3</span>
+                        </div>
+                    </div>
+                    <div class="alternative-text">Tech advancement accelerated by 6 months</div>
+                </div>
+            </div>
+
+            <!-- Entry 3 - Critical positive outcome -->
+            <div class="history-entry">
+                <div class="entry-header">
+                    <div class="entry-info">
+                        <span class="entry-month">MONTH 28</span>
+                        <span class="entry-phase">Crisis Prevention</span>
+                    </div>
+                    <div class="entry-actions">
+                        <button class="undo-btn" disabled>UNDO</button>
+                        <button class="export-single-btn">EXPORT</button>
+                    </div>
+                </div>
+                <div class="entry-content">
+                    <div class="decision-description">Prevented nuclear war escalation</div>
+                    <div class="change-detail">
+                        <span class="value-old">Would trigger at Month 29</span>
+                        <span class="value-arrow">→</span>
+                        <span class="value-new">Prevented</span>
+                    </div>
+                </div>
+                <div class="outcome-section">
+                    <div class="outcome-metrics">
+                        <div class="outcome-metric">
+                            <span class="metric-label">Lives Saved:</span>
+                            <span class="metric-value positive">2 billion</span>
+                        </div>
+                        <div class="outcome-metric">
+                            <span class="metric-label">Extinction Risk:</span>
+                            <span class="metric-value positive">-15%</span>
+                        </div>
+                    </div>
+                    <div class="alternative-text">Critical intervention - cannot be undone</div>
+                </div>
+            </div>
+
+            <!-- Entry 4 - Negative outcome -->
+            <div class="history-entry negative">
+                <div class="entry-header">
+                    <div class="entry-info">
+                        <span class="entry-month">MONTH 30</span>
+                        <span class="entry-phase">AI Regulation</span>
+                    </div>
+                    <div class="entry-actions">
+                        <button class="undo-btn">UNDO</button>
+                        <button class="export-single-btn">EXPORT</button>
+                    </div>
+                </div>
+                <div class="entry-content">
+                    <div class="decision-description">Lowered compute threshold too aggressively</div>
+                    <div class="change-detail">
+                        <span class="value-old">10^28 FLOP</span>
+                        <span class="value-arrow">→</span>
+                        <span class="value-new">10^24 FLOP</span>
+                    </div>
+                </div>
+                <div class="outcome-section">
+                    <div class="outcome-metrics">
+                        <div class="outcome-metric">
+                            <span class="metric-label">AI Progress:</span>
+                            <span class="metric-value negative">-60%</span>
+                        </div>
+                        <div class="outcome-metric">
+                            <span class="metric-label">Resentment:</span>
+                            <span class="metric-value negative">+25%</span>
+                        </div>
+                        <div class="outcome-metric">
+                            <span class="metric-label">Sandbagging:</span>
+                            <span class="metric-value negative">+40%</span>
+                        </div>
+                    </div>
+                    <div class="alternative-text">Triggered widespread AI deception behaviors</div>
+                </div>
+            </div>
+
+            <!-- Entry 5 - Positive outcome -->
+            <div class="history-entry">
+                <div class="entry-header">
+                    <div class="entry-info">
+                        <span class="entry-month">MONTH 32</span>
+                        <span class="entry-phase">Technology Deployment</span>
+                    </div>
+                    <div class="entry-actions">
+                        <button class="undo-btn">UNDO</button>
+                        <button class="export-single-btn">EXPORT</button>
+                    </div>
+                </div>
+                <div class="entry-content">
+                    <div class="decision-description">Deployed fusion energy early</div>
+                    <div class="change-detail">
+                        <span class="value-old">Scheduled for Month 40</span>
+                        <span class="value-arrow">→</span>
+                        <span class="value-new">Deployed immediately</span>
+                    </div>
+                </div>
+                <div class="outcome-section">
+                    <div class="outcome-metrics">
+                        <div class="outcome-metric">
+                            <span class="metric-label">Energy:</span>
+                            <span class="metric-value positive">+45%</span>
+                        </div>
+                        <div class="outcome-metric">
+                            <span class="metric-label">CO2:</span>
+                            <span class="metric-value positive">-30%</span>
+                        </div>
+                        <div class="outcome-metric">
+                            <span class="metric-label">Cost:</span>
+                            <span class="metric-value neutral">$15B</span>
+                        </div>
+                    </div>
+                    <div class="alternative-text">Accelerated clean energy transition by 8 months</div>
+                </div>
+            </div>
+
+            <!-- Entry 6 - Neutral outcome -->
+            <div class="history-entry neutral">
+                <div class="entry-header">
+                    <div class="entry-info">
+                        <span class="entry-month">MONTH 34</span>
+                        <span class="entry-phase">Social Programs</span>
+                    </div>
+                    <div class="entry-actions">
+                        <button class="undo-btn">UNDO</button>
+                        <button class="export-single-btn">EXPORT</button>
+                    </div>
+                </div>
+                <div class="entry-content">
+                    <div class="decision-description">Adjusted social program funding</div>
+                    <div class="change-detail">
+                        <span class="value-old">15% of budget</span>
+                        <span class="value-arrow">→</span>
+                        <span class="value-new">20% of budget</span>
+                    </div>
+                </div>
+                <div class="outcome-section">
+                    <div class="outcome-metrics">
+                        <div class="outcome-metric">
+                            <span class="metric-label">QoL:</span>
+                            <span class="metric-value positive">+2%</span>
+                        </div>
+                        <div class="outcome-metric">
+                            <span class="metric-label">Debt:</span>
+                            <span class="metric-value negative">+5%</span>
+                        </div>
+                        <div class="outcome-metric">
+                            <span class="metric-label">Trust:</span>
+                            <span class="metric-value neutral">0%</span>
+                        </div>
+                    </div>
+                    <div class="alternative-text">Minimal impact - mostly redistributive</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            <button class="page-btn">←</button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn">→</button>
+        </div>
+    </div>
+
+    <script>
+        // Undo Buttons
+        document.querySelectorAll('.undo-btn:not([disabled])').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const entry = this.closest('.history-entry');
+                const month = entry.querySelector('.entry-month').textContent;
+
+                if (confirm(`Undo decision from ${month}? This will recalculate all subsequent outcomes.`)) {
+                    console.log('Undoing decision from', month);
+
+                    entry.style.opacity = '0.5';
+                    this.textContent = 'UNDOING...';
+
+                    setTimeout(() => {
+                        entry.style.transition = 'all 0.3s ease';
+                        entry.style.transform = 'translateX(-100%)';
+                        entry.style.opacity = '0';
+
+                        setTimeout(() => {
+                            entry.remove();
+                        }, 300);
+                    }, 1500);
+                }
+            });
+        });
+
+        // Export Buttons
+        document.querySelectorAll('.export-single-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const entry = this.closest('.history-entry');
+                const month = entry.querySelector('.entry-month').textContent;
+                console.log('Exporting decision from', month);
+
+                this.textContent = 'EXPORTED';
+                setTimeout(() => {
+                    this.textContent = 'EXPORT';
+                }, 1000);
+            });
+        });
+
+        document.querySelector('.export-btn').addEventListener('click', function() {
+            console.log('Exporting full history');
+            this.textContent = 'EXPORTING...';
+            setTimeout(() => {
+                this.textContent = 'EXPORTED';
+                setTimeout(() => {
+                    this.textContent = 'EXPORT HISTORY';
+                }, 1000);
+            }, 1000);
+        });
+
+        // Filter Controls
+        document.querySelectorAll('.filter-select').forEach(select => {
+            select.addEventListener('change', function() {
+                console.log('Filter changed:', this.value);
+            });
+        });
+
+        // Pagination
+        document.querySelectorAll('.page-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (!this.textContent.match(/[←→]/)) {
+                    document.querySelectorAll('.page-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    console.log('Page:', this.textContent);
+                } else {
+                    console.log('Navigate:', this.textContent);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

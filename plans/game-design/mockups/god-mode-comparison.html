@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>God Mode - Manual vs Auto Comparison</title>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0A0A0A;
+            color: #FFFFFF;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            height: 64px;
+            background: #1A1A1A;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+        }
+
+        .header-title {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #00F0FF;
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+        }
+
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .toggle-label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 180px;
+            height: 32px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 86px;
+            height: 26px;
+            background: #00F0FF;
+            border-radius: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 500;
+            color: #0A0A0A;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
+        }
+
+        .toggle-switch.auto .toggle-slider {
+            left: 90px;
+        }
+
+        /* Split View */
+        .split-view {
+            flex: 1;
+            display: flex;
+            position: relative;
+        }
+
+        .split-panel {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .split-panel.left {
+            border-right: 1px solid rgba(0, 240, 255, 0.2);
+            background: linear-gradient(90deg, rgba(0, 240, 255, 0.02) 0%, transparent 50%);
+        }
+
+        .split-panel.right {
+            background: linear-gradient(270deg, rgba(255, 176, 0, 0.02) 0%, transparent 50%);
+        }
+
+        .panel-label {
+            position: absolute;
+            top: 24px;
+            left: 24px;
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid #00F0FF;
+            padding: 6px 16px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #00F0FF;
+            z-index: 10;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+        }
+
+        .split-panel.right .panel-label {
+            background: rgba(255, 176, 0, 0.1);
+            border-color: #FFB000;
+            color: #FFB000;
+            box-shadow: 0 0 15px rgba(255, 176, 0, 0.3);
+        }
+
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-top: 60px;
+        }
+
+        .metric-card {
+            background: #1A1A1A;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 2px;
+            transition: all 0.2s ease;
+        }
+
+        .metric-card:hover {
+            border-color: rgba(0, 240, 255, 0.2);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.05);
+        }
+
+        .metric-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .metric-name {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .metric-delta {
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 2px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .metric-delta.better {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            color: #00FF88;
+        }
+
+        .metric-delta.worse {
+            background: rgba(255, 68, 68, 0.1);
+            border: 1px solid rgba(255, 68, 68, 0.3);
+            color: #FF4444;
+        }
+
+        .metric-delta.same {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .metric-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 32px;
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        .metric-value.highlight {
+            color: #00F0FF;
+            text-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+        }
+
+        .metric-trend {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .trend-icon {
+            font-size: 14px;
+        }
+
+        .trend-icon.up {
+            color: #00FF88;
+        }
+
+        .trend-icon.down {
+            color: #FF4444;
+        }
+
+        /* Chart Container */
+        .chart-container {
+            background: #1A1A1A;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 2px;
+            margin-top: 20px;
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chart-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 16px;
+        }
+
+        .chart-svg {
+            width: 100%;
+            height: 150px;
+        }
+
+        .chart-line {
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .manual-line {
+            stroke: #00F0FF;
+            filter: drop-shadow(0 0 5px rgba(0, 240, 255, 0.5));
+        }
+
+        .auto-line {
+            stroke: #FFB000;
+            filter: drop-shadow(0 0 5px rgba(255, 176, 0, 0.5));
+        }
+
+        /* Divergence Analysis */
+        .divergence-panel {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 180px;
+            background: #1A1A1A;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px 24px;
+        }
+
+        .divergence-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #00F0FF;
+            margin-bottom: 16px;
+        }
+
+        .divergence-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .divergence-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .divergence-label {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 4px;
+        }
+
+        .divergence-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            color: white;
+        }
+
+        .divergence-value.positive {
+            color: #00FF88;
+        }
+
+        .divergence-value.negative {
+            color: #FF4444;
+        }
+
+        /* Action Buttons */
+        .action-bar {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            display: flex;
+            gap: 12px;
+            z-index: 10;
+        }
+
+        .action-btn {
+            padding: 8px 16px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-radius: 2px;
+        }
+
+        .action-btn:hover {
+            border-color: rgba(0, 240, 255, 0.3);
+            background: rgba(0, 240, 255, 0.05);
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 240, 255, 0.2);
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-title">COMPARISON MODE</div>
+            <div class="toggle-container">
+                <span class="toggle-label">View Mode:</span>
+                <div class="toggle-switch manual">
+                    <div class="toggle-slider">MANUAL</div>
+                </div>
+            </div>
+            <div class="action-bar">
+                <button class="action-btn">EXPORT COMPARISON</button>
+                <button class="action-btn">RESET VIEW</button>
+            </div>
+        </div>
+
+        <!-- Split View -->
+        <div class="split-view">
+            <!-- Manual Panel (Left) -->
+            <div class="split-panel left">
+                <div class="panel-label">MANUAL DECISIONS</div>
+
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <span class="metric-name">Current Month</span>
+                        </div>
+                        <div class="metric-value">24/120</div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <span class="metric-name">GDP</span>
+                            <span class="metric-delta better">+7T</span>
+                        </div>
+                        <div class="metric-value highlight">$95T</div>
+                        <div class="metric-trend">
+                            <span class="trend-icon up">↑</span>
+                            <span>Growing at 3.2% annually</span>
+                        </div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <span class="metric-name">Quality of Life</span>
+                            <span class="metric-delta better">+0.4</span>
+                        </div>
+                        <div class="metric-value highlight">6.2</div>
+                        <div class="metric-trend">
+                            <span class="trend-icon up">↑</span>
+                            <span>15% improvement from policy</span>
+                        </div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <span class="metric-name">Extinction Risk</span>
+                            <span class="metric-delta better">-10%</span>
+                        </div>
+                        <div class="metric-value highlight">15%</div>
+                        <div class="metric-trend">
+                            <span class="trend-icon up">↑</span>
+                            <span>Prevented nuclear escalation</span>
+                        </div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <span class="metric-name">Utopia Path</span>
+                            <span class="metric-delta better">ACTIVE</span>
+                        </div>
+                        <div class="metric-value highlight">Emerging</div>
+                        <div class="metric-trend">
+                            <span class="trend-icon up">↑</span>
+                            <span>3 of 5 conditions met</span>
+                        </div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <span class="metric-name">Crises Prevented</span>
+                            <span class="metric-delta better">+2</span>
+                        </div>
+                        <div class="metric-value highlight">2</div>
+                        <div class="metric-trend">
+                            <span>Nuclear, Pandemic</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-title">Extinction Risk Trajectory</div>
+                    <svg class="chart-svg">
+                        <polyline class="chart-line manual-line"
+                                  points="10,120 50,110 90,105 130,95 170,90 210,85 250,75 290,70 330,68 370,65"/>
+                        <circle cx="370" cy="65" r="3" fill="#00F0FF"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Auto Panel (Right) -->
+            <div class="split-panel right">
+                <div class="panel-label">AUTOMATED DECISIONS</div>
+
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <span class="metric-name">Current Month</span>
+                        </div>
+                        <div class="metric-value">24/120</div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <span class="metric-name">GDP</span>
+                            <span class="metric-delta worse">BASELINE</span>
+                        </div>
+                        <div class="metric-value">$88T</div>
+                        <div class="metric-trend">
+                            <span class="trend-icon down">↓</span>
+                            <span>Growing at 2.1% annually</span>
+                        </div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <span class="metric-name">Quality of Life</span>
+                            <span class="metric-delta worse">BASELINE</span>
+                        </div>
+                        <div class="metric-value">5.8</div>
+                        <div class="metric-trend">
+                            <span class="trend-icon down">↓</span>
+                            <span>Slow improvement</span>
+                        </div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <span class="metric-name">Extinction Risk</span>
+                            <span class="metric-delta worse">BASELINE</span>
+                        </div>
+                        <div class="metric-value" style="color: #FF4444;">25%</div>
+                        <div class="metric-trend">
+                            <span class="trend-icon down">↓</span>
+                            <span>Nuclear risk unmitigated</span>
+                        </div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <span class="metric-name">Utopia Path</span>
+                            <span class="metric-delta worse">BLOCKED</span>
+                        </div>
+                        <div class="metric-value" style="color: #FF4444;">Blocked</div>
+                        <div class="metric-trend">
+                            <span class="trend-icon down">↓</span>
+                            <span>1 of 5 conditions met</span>
+                        </div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <span class="metric-name">Crises Prevented</span>
+                            <span class="metric-delta same">BASELINE</span>
+                        </div>
+                        <div class="metric-value">0</div>
+                        <div class="metric-trend">
+                            <span>Auto-response only</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-title">Extinction Risk Trajectory</div>
+                    <svg class="chart-svg">
+                        <polyline class="chart-line auto-line"
+                                  points="10,120 50,118 90,115 130,113 170,115 210,118 250,122 290,125 330,128 370,130"/>
+                        <circle cx="370" cy="130" r="3" fill="#FFB000"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Divergence Analysis -->
+        <div class="divergence-panel">
+            <div class="divergence-title">DIVERGENCE ANALYSIS</div>
+            <div class="divergence-grid">
+                <div class="divergence-item">
+                    <span class="divergence-label">Policy Impact</span>
+                    <span class="divergence-value positive">+7% GDP</span>
+                </div>
+                <div class="divergence-item">
+                    <span class="divergence-label">QoL Delta</span>
+                    <span class="divergence-value positive">+0.4 points</span>
+                </div>
+                <div class="divergence-item">
+                    <span class="divergence-label">Crises Prevented</span>
+                    <span class="divergence-value positive">2 major events</span>
+                </div>
+                <div class="divergence-item">
+                    <span class="divergence-label">Utopia Delay</span>
+                    <span class="divergence-value negative">-4 months</span>
+                </div>
+                <div class="divergence-item">
+                    <span class="divergence-label">Lives Saved</span>
+                    <span class="divergence-value positive">~2 billion</span>
+                </div>
+                <div class="divergence-item">
+                    <span class="divergence-label">Extinction Risk</span>
+                    <span class="divergence-value positive">-10% absolute</span>
+                </div>
+                <div class="divergence-item">
+                    <span class="divergence-label">Tech Progress</span>
+                    <span class="divergence-value positive">+6 months</span>
+                </div>
+                <div class="divergence-item">
+                    <span class="divergence-label">AI Alignment</span>
+                    <span class="divergence-value negative">-5% average</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle Switch
+        const toggleSwitch = document.querySelector('.toggle-switch');
+        const toggleSlider = document.querySelector('.toggle-slider');
+
+        toggleSwitch.addEventListener('click', function() {
+            this.classList.toggle('auto');
+            if (this.classList.contains('auto')) {
+                toggleSlider.textContent = 'AUTO';
+                console.log('Switched to AUTO view');
+            } else {
+                toggleSlider.textContent = 'MANUAL';
+                console.log('Switched to MANUAL view');
+            }
+        });
+
+        // Action Buttons
+        document.querySelectorAll('.action-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                console.log('Action:', this.textContent);
+
+                if (this.textContent === 'EXPORT COMPARISON') {
+                    this.textContent = 'EXPORTING...';
+                    setTimeout(() => {
+                        this.textContent = 'EXPORTED';
+                        setTimeout(() => {
+                            this.textContent = 'EXPORT COMPARISON';
+                        }, 1000);
+                    }, 1000);
+                }
+
+                if (this.textContent === 'RESET VIEW') {
+                    window.location.reload();
+                }
+            });
+        });
+
+        // Metric Cards Hover Effect
+        document.querySelectorAll('.metric-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                const value = this.querySelector('.metric-value');
+                if (value) {
+                    value.style.transform = 'scale(1.05)';
+                    value.style.transition = 'transform 0.2s ease';
+                }
+            });
+
+            card.addEventListener('mouseleave', function() {
+                const value = this.querySelector('.metric-value');
+                if (value) {
+                    value.style.transform = 'scale(1)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
