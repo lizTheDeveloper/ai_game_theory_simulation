@@ -4,6 +4,41 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
+## ✅ Fix: Regional Population Death Rate Assertion (November 26, 2025 - commit 53b6672)
+
+**Status:** ✅ COMPLETE
+**Priority:** MEDIUM (Architecture review M-3)
+**Type:** Defensive Coding / NaN Handling
+
+**Summary:** Replaced silent NaN fallback with fail-loud assertion in `updateRegionalPopulations()`.
+
+**Change:** In `src/simulation/regionalPopulations.ts`, the death rate calculation now uses `assertFinite()` with full diagnostic context instead of silently falling back to baseline death rate when NaN occurs.
+
+**Before:**
+```typescript
+// Silent fallback - masks bugs
+if (isNaN(region.adjustedDeathRate)) {
+  region.adjustedDeathRate = region.baselineDeathRate;
+}
+```
+
+**After:**
+```typescript
+// Fail loudly with context
+region.adjustedDeathRate = assertFinite(region.adjustedDeathRate, {
+  location: 'updateRegionalPopulations',
+  valueName: 'adjustedDeathRate (post-historical-scaling)',
+  month: state.currentMonth,
+  additionalInfo: { region: region.name, actualYear, regionalCDR, baseline2025CDR, regionalCDRScale }
+});
+```
+
+**Impact:** NaN bugs in regional death rate calculations will now crash with detailed error context instead of silently producing incorrect results. Follows CLAUDE.md fail-loud philosophy.
+
+**Validation:** TypeScript clean, all tests passing.
+
+---
+
 ## ✅ Research: Wet Bulb Temperature Threshold Verification (November 26, 2025 - commit 6624219)
 
 **Status:** ✅ VALIDATED WITH CAVEATS
