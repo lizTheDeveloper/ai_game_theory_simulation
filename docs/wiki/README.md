@@ -168,7 +168,9 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - Interpolation with assertFinite validation
   - Fail-loudly on unknown region (no silent fallbacks)
   - Integration in `regionalPopulations.ts` - only active in `scenarioMode === 'historical'`
-- **EXPECTED IMPACT:** Reduce hindcast overshoot from 10.3% → 4-6% (pending validation)
+- **EXPECTED IMPACT:** Reduce hindcast overshoot from 10.3% → 4-6%
+  - **VALIDATION RESULT (Nov 26):** CO2 error 16-19% (428-441 ppm vs actual 361-380 ppm), temp ±0.06-0.18°C
+  - **STATUS:** FAILED - exceeds 5% CO2 threshold. Emissions model calibration needed.
 - **RESEARCH:** Regional CDR data verified for Sub-Saharan Africa trajectory (1990-2020); other regions estimated
   - Research: `research/regional_cdr_un_wpp_2024_20251125.md`
   - Review: `reviews/regional_cdr_critique_20251125.md` (Grade B- conditional pass)
