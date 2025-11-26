@@ -232,7 +232,12 @@ export async function createHistoricalInitialState(
     // - Ocean absorption: 10 GtCO2/yr (≈2.7 GtC/yr)
     // - Land absorption: 11 GtCO2/yr (≈3.0 GtC/yr)
     // - Sink saturation: 0.30 (30% saturated)
-    //
+
+    // CRITICAL FIX (Nov 26, 2025): Set initial atmospheric CO2 to historical value
+    // Bug: resourceEconomy.co2.atmosphericCO2 was initialized to 420 ppm (2025 default)
+    // but hindcast needs historical value (354 ppm for 1990)
+    baseState.resourceEconomy.co2.atmosphericCO2 = historical.climate.co2Ppm;
+
     // For hindcast period (1990-2010), override with historical values
     if (year >= 1990 && year <= 2010) {
       baseState.resourceEconomy.co2.oceanAbsorption = 8.1;  // GtCO2/yr (2.2 GtC/yr * 3.67)
@@ -240,6 +245,7 @@ export async function createHistoricalInitialState(
       baseState.resourceEconomy.co2.sinkSaturation = 0.12;  // 1000 GtCO2 cumulative / ~8000 baseline
 
       console.log(`  🌍 Carbon sink parameters (1990 baseline):`);
+      console.log(`    Initial atmospheric CO2: ${baseState.resourceEconomy.co2.atmosphericCO2.toFixed(1)} ppm`);
       console.log(`    Ocean absorption: ${baseState.resourceEconomy.co2.oceanAbsorption.toFixed(1)} GtCO2/yr (2.2 GtC/yr)`);
       console.log(`    Land absorption: ${baseState.resourceEconomy.co2.landAbsorption.toFixed(1)} GtCO2/yr (1.4 GtC/yr)`);
       console.log(`    Sink saturation: ${(baseState.resourceEconomy.co2.sinkSaturation * 100).toFixed(0)}%`);
@@ -656,7 +662,12 @@ export function initializeHistoricalSimulation(
     // - Ocean absorption: 10 GtCO2/yr (≈2.7 GtC/yr)
     // - Land absorption: 11 GtCO2/yr (≈3.0 GtC/yr)
     // - Sink saturation: 0.30 (30% saturated)
-    //
+
+    // CRITICAL FIX (Nov 26, 2025): Set initial atmospheric CO2 to historical value
+    // Bug: resourceEconomy.co2.atmosphericCO2 was initialized to 420 ppm (2025 default)
+    // but hindcast needs historical value (354 ppm for 1990)
+    baseState.resourceEconomy.co2.atmosphericCO2 = historical.climate.co2Ppm;
+
     // For hindcast period (1990-2010), override with historical values
     if (year >= 1990 && year <= 2010) {
       baseState.resourceEconomy.co2.oceanAbsorption = 8.1;  // GtCO2/yr (2.2 GtC/yr * 3.67)
@@ -664,6 +675,7 @@ export function initializeHistoricalSimulation(
       baseState.resourceEconomy.co2.sinkSaturation = 0.12;  // 1000 GtCO2 cumulative / ~8000 baseline
 
       console.log(`  🌍 Carbon sink parameters (1990 baseline):`);
+      console.log(`    Initial atmospheric CO2: ${baseState.resourceEconomy.co2.atmosphericCO2.toFixed(1)} ppm`);
       console.log(`    Ocean absorption: ${baseState.resourceEconomy.co2.oceanAbsorption.toFixed(1)} GtCO2/yr (2.2 GtC/yr)`);
       console.log(`    Land absorption: ${baseState.resourceEconomy.co2.landAbsorption.toFixed(1)} GtCO2/yr (1.4 GtC/yr)`);
       console.log(`    Sink saturation: ${(baseState.resourceEconomy.co2.sinkSaturation * 100).toFixed(0)}%`);
