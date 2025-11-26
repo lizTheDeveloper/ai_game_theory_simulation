@@ -4,6 +4,31 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
+## 📋 Research: AI Coordination Citation Verification Progress (November 26, 2025 - commit 51b4ef6)
+
+**Status:** 🔄 IN PROGRESS (2/12)
+**Priority:** HIGH
+**Type:** Research Verification
+
+**Summary:** Layer 1+2 verification progress for AI Coordination & Transition Management parameters.
+
+**Verified Citations:**
+- ✅ **Sullivan & von Wachter 2009 (QJE):** Job loss mortality - ALL CLAIMS CONFIRMED
+  - Year 1: +50-100% mortality (confirmed from abstract)
+  - Year 20: +10-15% persistent increase (confirmed)
+  - Life expectancy: 1.0-1.5 year loss at age 40 (confirmed)
+- ⚠️ **Stuckler et al. 2009 (Lancet):** USSR shock therapy - MISATTRIBUTION DETECTED
+  - Claimed: "13-42% excess mortality increase"
+  - Actual: 12.8% (95% CI 7.9-17.7%)
+  - Issue: Conflated multiple statistics from different sources
+  - Severity: MODERATE (actual 12.8% close to lower bound 13%)
+
+**Remaining:** 10 citations including Great Leap Forward and HIGH UNCERTAINTY items (AI coordination efficiency, coordination failure probability, rebound effects)
+
+**File:** `research/ai_coordination_verification_layer1_20251126.md`
+
+---
+
 ## ✅ Test: AIAgentCoordinationPhase Unit Tests (November 26, 2025 - commit 6181570)
 
 **Status:** ✅ COMPLETE
