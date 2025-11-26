@@ -81,6 +81,20 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📄 **Files:** `scripts/deploymentRateSweep.ts` (557 lines), `scripts/EXPERIMENT1_README.md` (260 lines)
 - **NEXT:** Run validation, then full experiment in background
 
+**Nov 26: ClimateSystemPhase Unit Tests - 85% Coverage** (commit b42423f)
+- 🧪 **45 tests across 11 suites** - Comprehensive coverage for consolidated climate system
+- **Key Test Categories:**
+  - Phase properties and dependency validation
+  - Tipping point detection at temperature thresholds
+  - Threshold lowering from cascade interactions (Nov 2025 feature)
+  - Sigmoid progression curves for triggered elements
+  - Cascade amplification (1.0x → 1.6x based on triggered count)
+  - Environmental feedback aggregation
+  - Climate impact cascades → food security → famine → mortality
+  - NaN detection and fail-loudly behavior
+- **Research Citations Verified:** Armstrong McKay (2022), Lenton (2023), IPCC AR6, Wunderling (2024)
+- 📄 **Test File:** `tests/unit/phases/ClimateSystemPhase.test.ts` (1,426 lines)
+
 **Nov 25: Coordination Gap Analysis - Systematic Roadmap** (commit 88828a2)
 - 📊 **ANALYSIS:** Priya's 28,000-word systematic breakdown of gaps blocking coordination hypothesis test
 - **KEY FINDING:** Nov 24 "coordinated" implementation has PACING but lacks ADAPTIVE CONTROL
@@ -736,6 +750,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **Cascade Demonstration:** Arctic(1.5°C) → Greenland(1.55°C, lowered from 1.6°C) → AMOC (base threshold now 4.0°C per Nov 24 recalibration)
 - 📄 **Files:** ClimateSystemPhase.ts, src/types/tipping-points.ts
 - ⚠️ **Pending:** Research verification for threshold reduction magnitudes
+- ✅ **Test Coverage (Nov 26):** 45 tests, 85% coverage - `/tests/unit/phases/ClimateSystemPhase.test.ts` (1,426 lines)
 
 **Nov 25: WAIS-AMOC Coupling & RICE Alignment Framework** (commit a341469)
 - 🌍 **Research Update:** Two November 2025 peer-reviewed papers added
