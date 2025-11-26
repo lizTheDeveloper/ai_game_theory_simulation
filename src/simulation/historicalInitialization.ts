@@ -160,7 +160,9 @@ export async function createHistoricalInitialState(
   // Without this, year calculation breaks after Month 12: uses 2025 default instead of historical year
   if (baseState.config) {
     baseState.config.startYear = year;
+    baseState.config.historicalEmissionsMode = true;  // Enable GCP emissions forcing for hindcast (Phase 5)
     console.log(`  config.startYear set to ${year} for historical hindcast`);
+    console.log(`  config.historicalEmissionsMode enabled (Phase 5: GCP emissions forcing)`);
   }
 
   // Store simulation start year for reference (legacy - keeping for backwards compatibility)
@@ -577,7 +579,9 @@ export function initializeHistoricalSimulation(
   // CRITICAL FIX: Set config.startYear for TimeAdvancementPhase
   if (baseState.config) {
     baseState.config.startYear = year;
+    baseState.config.historicalEmissionsMode = true;  // Enable GCP emissions forcing for hindcast (Phase 5)
     console.log(`  config.startYear set to ${year} for historical hindcast`);
+    console.log(`  config.historicalEmissionsMode enabled (Phase 5: GCP emissions forcing)`);
   }
 
   // Store simulation start year for reference (legacy - keeping for backwards compatibility)
