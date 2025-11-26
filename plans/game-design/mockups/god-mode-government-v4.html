@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>God Mode v4 - Government Controls</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        :root {
+            --bg-primary: #0A0A0A;
+            --bg-secondary: #0F0F0F;
+            --bg-tertiary: #141414;
+            --bg-hover: rgba(0, 240, 255, 0.03);
+            --text-primary: #FFFFFF;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --text-tertiary: rgba(255, 255, 255, 0.4);
+            --text-disabled: rgba(255, 255, 255, 0.2);
+            --cyan: #00F0FF;
+            --cyan-dim: rgba(0, 240, 255, 0.1);
+            --cyan-glow: 0 0 20px rgba(0, 240, 255, 0.6);
+            --amber: #FFB000;
+            --amber-dim: rgba(255, 176, 0, 0.1);
+            --amber-glow: 0 0 20px rgba(255, 176, 0, 0.6);
+            --red: #FF0040;
+            --red-dim: rgba(255, 0, 64, 0.1);
+            --red-glow: 0 0 20px rgba(255, 0, 64, 0.6);
+            --green: #00FF88;
+            --green-dim: rgba(0, 255, 136, 0.1);
+            --green-glow: 0 0 20px rgba(0, 255, 136, 0.6);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-focus: rgba(0, 240, 255, 0.3);
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
+            --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4);
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Background effects */
+        .background-effects {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .background-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0, 240, 255, 0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.015) 1px, transparent 1px);
+            background-size: 80px 80px;
+            animation: gridDrift 40s linear infinite;
+        }
+
+        @keyframes gridDrift {
+            from { transform: translate(0, 0); }
+            to { transform: translate(80px, 80px); }
+        }
+
+        /* Container */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 32px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-secondary) 100%);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px 32px;
+            margin-bottom: 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            right: -100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+            animation: headerScan 3s linear infinite;
+        }
+
+        @keyframes headerScan {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(200%); }
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .page-icon {
+            font-size: 32px;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.5));
+            animation: iconFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes iconFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 200;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, var(--text-primary), var(--cyan));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 32px;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .stat-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-tertiary);
+            margin-bottom: 4px;
+        }
+
+        .stat-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 20px;
+            font-weight: 300;
+            color: var(--cyan);
+            text-shadow: var(--cyan-glow);
+        }
+
+        /* Control Sections */
+        .control-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 24px;
+        }
+
+        .control-card {
+            background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-secondary) 100%);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all var(--transition-base);
+            position: relative;
+        }
+
+        .control-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), var(--cyan-dim), transparent 50%);
+            opacity: 0;
+            transition: opacity var(--transition-base);
+            pointer-events: none;
+        }
+
+        .control-card:hover {
+            border-color: var(--cyan);
+            box-shadow: var(--shadow-lg), 0 0 30px rgba(0, 240, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .control-card:hover::before {
+            opacity: 1;
+        }
+
+        .card-header {
+            padding: 20px 24px;
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-title {
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .card-indicator {
+            padding: 4px 12px;
+            background: var(--cyan-dim);
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .card-indicator.warning {
+            background: var(--amber-dim);
+            color: var(--amber);
+        }
+
+        .card-indicator.critical {
+            background: var(--red-dim);
+            color: var(--red);
+            animation: criticalPulse 1s ease-in-out infinite;
+        }
+
+        @keyframes criticalPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        .card-body {
+            padding: 24px;
+        }
+
+        /* Policy Selector */
+        .policy-selector {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .policy-option {
+            display: grid;
+            grid-template-columns: 24px 1fr auto;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            position: relative;
+        }
+
+        .policy-option:hover {
+            background: var(--bg-hover);
+            border-color: var(--cyan);
+            transform: translateX(4px);
+        }
+
+        .policy-option.selected {
+            background: var(--cyan-dim);
+            border-color: var(--cyan);
+            box-shadow: inset 0 0 20px rgba(0, 240, 255, 0.1);
+        }
+
+        .policy-radio {
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--border);
+            border-radius: 50%;
+            position: relative;
+            transition: all var(--transition-fast);
+        }
+
+        .policy-option.selected .policy-radio {
+            border-color: var(--cyan);
+        }
+
+        .policy-option.selected .policy-radio::after {
+            content: '';
+            position: absolute;
+            inset: 4px;
+            background: var(--cyan);
+            border-radius: 50%;
+            box-shadow: var(--cyan-glow);
+            animation: radioAppear 300ms ease-out;
+        }
+
+        @keyframes radioAppear {
+            from { transform: scale(0); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .policy-info {
+            flex: 1;
+        }
+
+        .policy-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .policy-description {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            line-height: 1.5;
+        }
+
+        .policy-impact {
+            display: flex;
+            gap: 8px;
+        }
+
+        .impact-badge {
+            padding: 4px 8px;
+            background: var(--bg-tertiary);
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .impact-badge.positive {
+            color: var(--green);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+        }
+
+        .impact-badge.negative {
+            color: var(--red);
+            border: 1px solid rgba(255, 0, 64, 0.2);
+        }
+
+        /* Advanced Slider */
+        .slider-group {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .slider-item {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .slider-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .slider-label {
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+        }
+
+        .slider-value-display {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .slider-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--cyan);
+            min-width: 80px;
+            text-align: right;
+        }
+
+        .value-unit {
+            font-size: 11px;
+            color: var(--text-tertiary);
+        }
+
+        .slider-container {
+            position: relative;
+            height: 44px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 4px;
+            cursor: pointer;
+        }
+
+        .slider-track {
+            position: absolute;
+            left: 4px;
+            right: 4px;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 4px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 2px;
+        }
+
+        .slider-fill {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            background: linear-gradient(90deg, var(--cyan), var(--green));
+            border-radius: 2px;
+            width: var(--value, 50%);
+            transition: width var(--transition-base);
+            box-shadow: inset 0 0 10px rgba(0, 240, 255, 0.3);
+        }
+
+        .slider-segments {
+            position: absolute;
+            left: 4px;
+            right: 4px;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 4px;
+            display: flex;
+            justify-content: space-between;
+            pointer-events: none;
+        }
+
+        .segment-marker {
+            width: 1px;
+            height: 12px;
+            background: var(--border);
+            transform: translateY(-4px);
+        }
+
+        .slider-handle {
+            position: absolute;
+            top: 50%;
+            left: var(--value, 50%);
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 28px;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+            border: 2px solid var(--cyan);
+            border-radius: 6px;
+            cursor: grab;
+            box-shadow: var(--shadow-md), var(--cyan-glow);
+            transition: all var(--transition-fast);
+        }
+
+        .slider-handle:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+            box-shadow: var(--shadow-lg), var(--cyan-glow);
+        }
+
+        .slider-handle:active {
+            cursor: grabbing;
+            transform: translate(-50%, -50%) scale(0.95);
+        }
+
+        .slider-handle::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 2px;
+            height: 12px;
+            background: var(--cyan);
+            box-shadow: 0 0 4px var(--cyan);
+        }
+
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            padding: 0 4px;
+        }
+
+        .slider-label-item {
+            font-size: 10px;
+            color: var(--text-tertiary);
+        }
+
+        /* Toggle Controls */
+        .toggle-group {
+            display: grid;
+            gap: 16px;
+        }
+
+        .toggle-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            transition: all var(--transition-fast);
+        }
+
+        .toggle-item:hover {
+            border-color: var(--cyan);
+            background: var(--bg-hover);
+        }
+
+        .toggle-label {
+            font-size: 13px;
+            color: var(--text-primary);
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 48px;
+            height: 24px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .toggle-switch.active {
+            background: var(--cyan-dim);
+            border-color: var(--cyan);
+        }
+
+        .toggle-knob {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 18px;
+            height: 18px;
+            background: var(--text-tertiary);
+            border-radius: 50%;
+            transition: all var(--transition-base);
+        }
+
+        .toggle-switch.active .toggle-knob {
+            left: 26px;
+            background: var(--cyan);
+            box-shadow: var(--cyan-glow);
+        }
+
+        /* Crisis Response Panel */
+        .crisis-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .crisis-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: all var(--transition-fast);
+        }
+
+        .crisis-card:hover {
+            border-color: var(--amber);
+            box-shadow: 0 0 20px rgba(255, 176, 0, 0.1);
+        }
+
+        .crisis-card.critical {
+            border-color: var(--red);
+            animation: criticalBlink 2s ease-in-out infinite;
+        }
+
+        @keyframes criticalBlink {
+            0%, 100% { box-shadow: none; }
+            50% { box-shadow: 0 0 20px rgba(255, 0, 64, 0.3); }
+        }
+
+        .crisis-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .crisis-type {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .crisis-severity {
+            padding: 2px 8px;
+            background: var(--amber-dim);
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--amber);
+        }
+
+        .crisis-severity.critical {
+            background: var(--red-dim);
+            color: var(--red);
+        }
+
+        .crisis-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .crisis-btn {
+            flex: 1;
+            padding: 8px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .crisis-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .crisis-btn.deploy {
+            background: var(--amber-dim);
+            border-color: var(--amber);
+            color: var(--amber);
+        }
+
+        .crisis-btn.deploy:hover {
+            box-shadow: var(--amber-glow);
+        }
+
+        .crisis-btn.active {
+            background: var(--green-dim);
+            border-color: var(--green);
+            color: var(--green);
+        }
+
+        /* Allocation Matrix */
+        .allocation-matrix {
+            display: grid;
+            grid-template-columns: 120px repeat(3, 1fr);
+            gap: 1px;
+            background: var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .matrix-cell {
+            background: var(--bg-primary);
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            transition: all var(--transition-fast);
+        }
+
+        .matrix-header {
+            background: var(--bg-tertiary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+        }
+
+        .matrix-label {
+            background: var(--bg-tertiary);
+            font-weight: 500;
+            color: var(--text-secondary);
+            justify-content: flex-start;
+        }
+
+        .matrix-value {
+            cursor: pointer;
+            position: relative;
+        }
+
+        .matrix-value:hover {
+            background: var(--bg-hover);
+        }
+
+        .matrix-value.high {
+            background: var(--cyan-dim);
+            color: var(--cyan);
+            font-weight: 600;
+        }
+
+        .matrix-value input {
+            background: transparent;
+            border: none;
+            color: inherit;
+            font: inherit;
+            text-align: center;
+            width: 60px;
+            cursor: pointer;
+        }
+
+        .matrix-value input:focus {
+            outline: 2px solid var(--cyan);
+            outline-offset: -2px;
+        }
+
+        /* Action Buttons */
+        .action-bar {
+            display: flex;
+            gap: 16px;
+            margin-top: 32px;
+            padding: 24px;
+            background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-secondary) 100%);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 16px 24px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .action-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, var(--cyan-dim), transparent);
+            transform: translateX(-100%);
+            transition: transform 600ms;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .action-btn:hover::before {
+            transform: translateX(100%);
+        }
+
+        .action-btn.primary {
+            background: var(--cyan-dim);
+            border-color: var(--cyan);
+            color: var(--cyan);
+        }
+
+        .action-btn.primary:hover {
+            box-shadow: var(--shadow-lg), var(--cyan-glow);
+        }
+
+        .action-btn.danger {
+            border-color: var(--red);
+            color: var(--red);
+        }
+
+        .action-btn.danger:hover {
+            background: var(--red-dim);
+            box-shadow: var(--shadow-lg), var(--red-glow);
+        }
+
+        /* Tooltips */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip-content {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-bottom: 8px;
+            padding: 8px 12px;
+            background: var(--bg-primary);
+            border: 1px solid var(--cyan);
+            border-radius: 6px;
+            font-size: 11px;
+            color: var(--text-primary);
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-fast);
+            z-index: 1000;
+            box-shadow: var(--shadow-lg), var(--cyan-glow);
+        }
+
+        .tooltip:hover .tooltip-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(-4px);
+        }
+
+        /* Loading state */
+        .loading {
+            position: relative;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        .loading::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, var(--cyan-dim), transparent);
+            animation: loadingSwipe 1.5s linear infinite;
+        }
+
+        @keyframes loadingSwipe {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(100%); }
+        }
+
+        /* Accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-effects">
+        <div class="background-grid"></div>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="page-title">
+                    <span class="page-icon">🏛️</span>
+                    <h1>Government Controls</h1>
+                </div>
+                <div class="header-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Active Policies</span>
+                        <span class="stat-value">7</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Budget Used</span>
+                        <span class="stat-value">$8.2T</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Approval</span>
+                        <span class="stat-value">68%</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Control Grid -->
+        <div class="control-grid">
+            <!-- Economic Policy Card -->
+            <div class="control-card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <span>💰</span>
+                        <span>Economic Policy</span>
+                    </h2>
+                    <span class="card-indicator">Active</span>
+                </div>
+                <div class="card-body">
+                    <div class="policy-selector">
+                        <div class="policy-option selected">
+                            <div class="policy-radio"></div>
+                            <div class="policy-info">
+                                <div class="policy-name">Generous UBI</div>
+                                <div class="policy-description">Maximum coverage with highest monthly payments</div>
+                            </div>
+                            <div class="policy-impact">
+                                <span class="impact-badge positive">QoL +15%</span>
+                                <span class="impact-badge negative">GDP -2%</span>
+                            </div>
+                        </div>
+                        <div class="policy-option">
+                            <div class="policy-radio"></div>
+                            <div class="policy-info">
+                                <div class="policy-name">Means-tested Benefits</div>
+                                <div class="policy-description">Targeted welfare for those below poverty line</div>
+                            </div>
+                            <div class="policy-impact">
+                                <span class="impact-badge positive">Cost -40%</span>
+                            </div>
+                        </div>
+                        <div class="policy-option">
+                            <div class="policy-radio"></div>
+                            <div class="policy-info">
+                                <div class="policy-name">Job Guarantee</div>
+                                <div class="policy-description">Government employment for all who want work</div>
+                            </div>
+                            <div class="policy-impact">
+                                <span class="impact-badge positive">Trust +8%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slider-group">
+                        <div class="slider-item">
+                            <div class="slider-header">
+                                <span class="slider-label">UBI Coverage</span>
+                                <div class="slider-value-display">
+                                    <span class="slider-value">80%</span>
+                                    <span class="value-unit">of population</span>
+                                </div>
+                            </div>
+                            <div class="slider-container">
+                                <div class="slider-track">
+                                    <div class="slider-fill" style="--value: 80%;"></div>
+                                </div>
+                                <div class="slider-segments">
+                                    <span class="segment-marker"></span>
+                                    <span class="segment-marker"></span>
+                                    <span class="segment-marker"></span>
+                                    <span class="segment-marker"></span>
+                                    <span class="segment-marker"></span>
+                                </div>
+                                <div class="slider-handle" style="--value: 80%;">
+                                    <span class="sr-only">Drag to adjust coverage</span>
+                                </div>
+                            </div>
+                            <div class="slider-labels">
+                                <span class="slider-label-item">0%</span>
+                                <span class="slider-label-item">50%</span>
+                                <span class="slider-label-item">100%</span>
+                            </div>
+                        </div>
+
+                        <div class="slider-item">
+                            <div class="slider-header">
+                                <span class="slider-label">Monthly Payment</span>
+                                <div class="slider-value-display">
+                                    <span class="slider-value">$2,400</span>
+                                    <span class="value-unit">per person</span>
+                                </div>
+                            </div>
+                            <div class="slider-container">
+                                <div class="slider-track">
+                                    <div class="slider-fill" style="--value: 60%;"></div>
+                                </div>
+                                <div class="slider-handle" style="--value: 60%;"></div>
+                            </div>
+                            <div class="slider-labels">
+                                <span class="slider-label-item">$0</span>
+                                <span class="slider-label-item">$2000</span>
+                                <span class="slider-label-item">$4000</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Regulation Card -->
+            <div class="control-card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <span>🤖</span>
+                        <span>AI Regulation</span>
+                    </h2>
+                    <span class="card-indicator warning">Moderate</span>
+                </div>
+                <div class="card-body">
+                    <div class="slider-group">
+                        <div class="slider-item">
+                            <div class="slider-header">
+                                <span class="slider-label">Compute Threshold</span>
+                                <div class="slider-value-display">
+                                    <span class="slider-value">10²⁶</span>
+                                    <span class="value-unit">FLOP</span>
+                                </div>
+                            </div>
+                            <div class="slider-container">
+                                <div class="slider-track">
+                                    <div class="slider-fill" style="--value: 40%;"></div>
+                                </div>
+                                <div class="slider-handle" style="--value: 40%;"></div>
+                            </div>
+                            <div class="slider-labels">
+                                <span class="slider-label-item">10²⁴</span>
+                                <span class="slider-label-item">10²⁶</span>
+                                <span class="slider-label-item">10²⁸</span>
+                            </div>
+                        </div>
+
+                        <div class="slider-item">
+                            <div class="slider-header">
+                                <span class="slider-label">Capability Ceiling</span>
+                                <div class="slider-value-display">
+                                    <span class="slider-value">3.0</span>
+                                    <span class="value-unit">max level</span>
+                                </div>
+                            </div>
+                            <div class="slider-container">
+                                <div class="slider-track">
+                                    <div class="slider-fill" style="--value: 60%;"></div>
+                                </div>
+                                <div class="slider-handle" style="--value: 60%;"></div>
+                            </div>
+                            <div class="slider-labels">
+                                <span class="slider-label-item">1.0</span>
+                                <span class="slider-label-item">3.0</span>
+                                <span class="slider-label-item">5.0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="toggle-group">
+                        <div class="toggle-item">
+                            <span class="toggle-label">Regulate Large Companies</span>
+                            <div class="toggle-switch active">
+                                <div class="toggle-knob"></div>
+                            </div>
+                        </div>
+                        <div class="toggle-item">
+                            <span class="toggle-label">Control Model Weights</span>
+                            <div class="toggle-switch active">
+                                <div class="toggle-knob"></div>
+                            </div>
+                        </div>
+                        <div class="toggle-item">
+                            <span class="toggle-label">Restrict Research Access</span>
+                            <div class="toggle-switch">
+                                <div class="toggle-knob"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Safety Investment Card -->
+            <div class="control-card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <span>🔬</span>
+                        <span>Safety Investment</span>
+                    </h2>
+                    <span class="card-indicator">7% Total</span>
+                </div>
+                <div class="card-body">
+                    <div class="allocation-matrix">
+                        <div class="matrix-cell matrix-header">Category</div>
+                        <div class="matrix-cell matrix-header">Current</div>
+                        <div class="matrix-cell matrix-header">Target</div>
+                        <div class="matrix-cell matrix-header">Impact</div>
+
+                        <div class="matrix-cell matrix-label">R&D Funding</div>
+                        <div class="matrix-cell matrix-value high">
+                            <input type="text" value="5%" readonly />
+                        </div>
+                        <div class="matrix-cell matrix-value">
+                            <input type="text" value="8%" />
+                        </div>
+                        <div class="matrix-cell">+12% Safety</div>
+
+                        <div class="matrix-cell matrix-label">Oversight</div>
+                        <div class="matrix-cell matrix-value">
+                            <input type="text" value="2%" readonly />
+                        </div>
+                        <div class="matrix-cell matrix-value">
+                            <input type="text" value="3%" />
+                        </div>
+                        <div class="matrix-cell">+5% Trust</div>
+
+                        <div class="matrix-cell matrix-label">Evaluation</div>
+                        <div class="matrix-cell matrix-value">
+                            <input type="text" value="0%" readonly />
+                        </div>
+                        <div class="matrix-cell matrix-value">
+                            <input type="text" value="2%" />
+                        </div>
+                        <div class="matrix-cell">+8% Detection</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Crisis Response Card -->
+            <div class="control-card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <span>🚨</span>
+                        <span>Crisis Response</span>
+                    </h2>
+                    <span class="card-indicator critical">2 Active</span>
+                </div>
+                <div class="card-body">
+                    <div class="crisis-grid">
+                        <div class="crisis-card critical">
+                            <div class="crisis-header">
+                                <span class="crisis-type">🦠 Pandemic</span>
+                                <span class="crisis-severity critical">Critical</span>
+                            </div>
+                            <div class="crisis-controls">
+                                <button class="crisis-btn deploy">Deploy</button>
+                                <button class="crisis-btn">Auto</button>
+                                <button class="crisis-btn">Off</button>
+                            </div>
+                        </div>
+
+                        <div class="crisis-card">
+                            <div class="crisis-header">
+                                <span class="crisis-type">🌡️ Climate</span>
+                                <span class="crisis-severity">High</span>
+                            </div>
+                            <div class="crisis-controls">
+                                <button class="crisis-btn">Deploy</button>
+                                <button class="crisis-btn active">Auto</button>
+                                <button class="crisis-btn">Off</button>
+                            </div>
+                        </div>
+
+                        <div class="crisis-card">
+                            <div class="crisis-header">
+                                <span class="crisis-type">📉 Economic</span>
+                                <span class="crisis-severity">Moderate</span>
+                            </div>
+                            <div class="crisis-controls">
+                                <button class="crisis-btn">Deploy</button>
+                                <button class="crisis-btn active">Auto</button>
+                                <button class="crisis-btn">Off</button>
+                            </div>
+                        </div>
+
+                        <div class="crisis-card">
+                            <div class="crisis-header">
+                                <span class="crisis-type">☢️ Nuclear</span>
+                                <span class="crisis-severity">Low</span>
+                            </div>
+                            <div class="crisis-controls">
+                                <button class="crisis-btn">Deploy</button>
+                                <button class="crisis-btn active">Auto</button>
+                                <button class="crisis-btn">Off</button>
+                            </div>
+                        </div>
+
+                        <div class="crisis-card">
+                            <div class="crisis-header">
+                                <span class="crisis-type">👥 Social</span>
+                                <span class="crisis-severity">Moderate</span>
+                            </div>
+                            <div class="crisis-controls">
+                                <button class="crisis-btn">Deploy</button>
+                                <button class="crisis-btn">Auto</button>
+                                <button class="crisis-btn">Off</button>
+                            </div>
+                        </div>
+
+                        <div class="crisis-card">
+                            <div class="crisis-header">
+                                <span class="crisis-type">🌍 Ecological</span>
+                                <span class="crisis-severity critical">Critical</span>
+                            </div>
+                            <div class="crisis-controls">
+                                <button class="crisis-btn deploy">Deploy</button>
+                                <button class="crisis-btn">Auto</button>
+                                <button class="crisis-btn">Off</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Bar -->
+        <div class="action-bar">
+            <button class="action-btn primary">Apply Changes</button>
+            <button class="action-btn">Preview Impact</button>
+            <button class="action-btn">Save as Preset</button>
+            <button class="action-btn danger">Reset to Default</button>
+        </div>
+    </div>
+
+    <!-- Hidden accessibility announcements -->
+    <div class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>

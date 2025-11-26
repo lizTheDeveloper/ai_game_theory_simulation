@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>God Mode v4 - Decision History</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        :root {
+            --bg-primary: #0A0A0A;
+            --bg-secondary: #0F0F0F;
+            --bg-tertiary: #141414;
+            --bg-hover: rgba(0, 240, 255, 0.03);
+            --text-primary: #FFFFFF;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --text-tertiary: rgba(255, 255, 255, 0.4);
+            --text-disabled: rgba(255, 255, 255, 0.2);
+            --cyan: #00F0FF;
+            --cyan-dim: rgba(0, 240, 255, 0.1);
+            --cyan-glow: 0 0 20px rgba(0, 240, 255, 0.6);
+            --amber: #FFB000;
+            --amber-dim: rgba(255, 176, 0, 0.1);
+            --amber-glow: 0 0 20px rgba(255, 176, 0, 0.6);
+            --red: #FF0040;
+            --red-dim: rgba(255, 0, 64, 0.1);
+            --red-glow: 0 0 20px rgba(255, 0, 64, 0.6);
+            --green: #00FF88;
+            --green-dim: rgba(0, 255, 136, 0.1);
+            --green-glow: 0 0 20px rgba(0, 255, 136, 0.6);
+            --purple: #B000FF;
+            --purple-dim: rgba(176, 0, 255, 0.1);
+            --purple-glow: 0 0 20px rgba(176, 0, 255, 0.6);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-focus: rgba(0, 240, 255, 0.3);
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
+            --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4);
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Animated background */
+        .background-effects {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .time-waves {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at top, var(--purple-dim), transparent 50%),
+                radial-gradient(ellipse at bottom, var(--cyan-dim), transparent 50%);
+            opacity: 0.1;
+            animation: waveMotion 15s ease-in-out infinite;
+        }
+
+        @keyframes waveMotion {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.05) rotate(2deg); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 32px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary));
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px 32px;
+            margin-bottom: 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, var(--purple), var(--cyan), var(--green));
+            opacity: 0.5;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .page-icon {
+            font-size: 32px;
+            animation: historyRotate 20s linear infinite;
+        }
+
+        @keyframes historyRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(-360deg); }
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 200;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, var(--text-primary), var(--purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Filters and Controls */
+        .controls-bar {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 32px;
+            padding: 20px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .filter-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-tertiary);
+        }
+
+        .filter-select {
+            padding: 8px 12px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .filter-select:hover,
+        .filter-select:focus {
+            border-color: var(--cyan);
+            outline: none;
+        }
+
+        .search-box {
+            flex: 1;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 40px 10px 16px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 13px;
+            transition: all var(--transition-fast);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--purple);
+            box-shadow: 0 0 0 3px var(--purple-dim);
+        }
+
+        /* Timeline Graph */
+        .timeline-graph {
+            background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary));
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 32px;
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .graph-grid {
+            position: absolute;
+            inset: 24px;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .graph-line {
+            position: absolute;
+            bottom: 24px;
+            left: 24px;
+            right: 24px;
+            height: 150px;
+            border-left: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .graph-path {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: linear-gradient(to top, var(--cyan-dim), transparent);
+            clip-path: polygon(
+                0% 100%,
+                10% 80%,
+                20% 85%,
+                30% 70%,
+                40% 60%,
+                50% 65%,
+                60% 50%,
+                70% 40%,
+                80% 45%,
+                90% 30%,
+                100% 35%,
+                100% 100%
+            );
+        }
+
+        .graph-points {
+            position: absolute;
+            inset: 24px;
+        }
+
+        .graph-point {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: var(--cyan);
+            border: 2px solid var(--bg-primary);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .graph-point:hover {
+            transform: scale(1.5);
+            box-shadow: var(--cyan-glow);
+        }
+
+        /* History List */
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .history-item {
+            background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary));
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all var(--transition-base);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .history-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--cyan);
+            transition: width var(--transition-fast);
+        }
+
+        .history-item:hover {
+            border-color: var(--purple);
+            transform: translateX(8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .history-item:hover::before {
+            width: 8px;
+        }
+
+        .history-item.undone {
+            opacity: 0.5;
+            border-color: var(--red);
+        }
+
+        .history-item.undone::before {
+            background: var(--red);
+        }
+
+        .history-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .history-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .history-month {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--purple);
+            padding: 4px 12px;
+            background: var(--purple-dim);
+            border-radius: 20px;
+        }
+
+        .history-timestamp {
+            font-size: 11px;
+            color: var(--text-tertiary);
+        }
+
+        .history-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .history-btn {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-tertiary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .history-btn:hover {
+            transform: translateY(-2px);
+            color: var(--text-primary);
+        }
+
+        .history-btn.undo:hover {
+            border-color: var(--amber);
+            color: var(--amber);
+        }
+
+        .history-btn.export:hover {
+            border-color: var(--cyan);
+            color: var(--cyan);
+        }
+
+        .history-btn.duplicate:hover {
+            border-color: var(--green);
+            color: var(--green);
+        }
+
+        .history-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+        }
+
+        .decision-details {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .decision-category {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-tertiary);
+        }
+
+        .decision-description {
+            font-size: 14px;
+            color: var(--text-primary);
+            line-height: 1.5;
+        }
+
+        .decision-changes {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .change-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+        }
+
+        .change-arrow {
+            color: var(--text-tertiary);
+        }
+
+        .change-from {
+            color: var(--text-secondary);
+            text-decoration: line-through;
+        }
+
+        .change-to {
+            color: var(--cyan);
+            font-weight: 500;
+        }
+
+        .impact-summary {
+            display: grid;
+            gap: 12px;
+        }
+
+        .impact-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-tertiary);
+            margin-bottom: 8px;
+        }
+
+        .impact-metrics {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .impact-metric {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding: 8px;
+            background: var(--bg-primary);
+            border-radius: 6px;
+        }
+
+        .impact-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-tertiary);
+        }
+
+        .impact-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .impact-value.positive {
+            color: var(--green);
+        }
+
+        .impact-value.negative {
+            color: var(--red);
+        }
+
+        .impact-value.neutral {
+            color: var(--amber);
+        }
+
+        /* Comparison View */
+        .comparison-toggle {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--purple-dim), transparent);
+            border: 1px solid var(--purple);
+            border-radius: 8px;
+            margin-bottom: 24px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 48px;
+            height: 24px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .toggle-switch.active {
+            background: var(--purple-dim);
+            border-color: var(--purple);
+        }
+
+        .toggle-knob {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 18px;
+            height: 18px;
+            background: var(--text-tertiary);
+            border-radius: 50%;
+            transition: all var(--transition-base);
+        }
+
+        .toggle-switch.active .toggle-knob {
+            left: 26px;
+            background: var(--purple);
+            box-shadow: var(--purple-glow);
+        }
+
+        .toggle-label {
+            font-size: 13px;
+            color: var(--text-primary);
+        }
+
+        /* Export Modal */
+        .export-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+        .export-modal.visible {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-secondary);
+            border: 1px solid var(--purple);
+            border-radius: 12px;
+            padding: 32px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg), var(--purple-glow);
+            animation: modalAppear 300ms ease-out;
+        }
+
+        @keyframes modalAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--purple);
+        }
+
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-tertiary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .modal-close:hover {
+            border-color: var(--red);
+            color: var(--red);
+        }
+
+        .export-options {
+            display: grid;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .export-option {
+            padding: 16px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .export-option:hover {
+            border-color: var(--purple);
+            background: var(--purple-dim);
+        }
+
+        .export-option.selected {
+            border-color: var(--purple);
+            background: var(--purple-dim);
+        }
+
+        .export-format {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .export-description {
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+
+        /* Stats Summary */
+        .stats-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 24px;
+            background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary));
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            text-align: center;
+        }
+
+        .stat-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-tertiary);
+            margin-bottom: 4px;
+        }
+
+        .stat-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 24px;
+            font-weight: 300;
+            color: var(--cyan);
+            text-shadow: var(--cyan-glow);
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 32px;
+        }
+
+        .page-btn {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .page-btn:hover {
+            border-color: var(--purple);
+            color: var(--purple);
+            transform: translateY(-2px);
+        }
+
+        .page-btn.active {
+            background: var(--purple-dim);
+            border-color: var(--purple);
+            color: var(--purple);
+        }
+
+        .page-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .page-info {
+            padding: 0 16px;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* Accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-effects">
+        <div class="time-waves"></div>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="page-title">
+                    <span class="page-icon">⏰</span>
+                    <h1>Decision History</h1>
+                </div>
+            </div>
+        </header>
+
+        <!-- Controls Bar -->
+        <div class="controls-bar">
+            <div class="filter-group">
+                <span class="filter-label">Type:</span>
+                <select class="filter-select">
+                    <option>All Decisions</option>
+                    <option>Government</option>
+                    <option>AI Agents</option>
+                    <option>Crisis Response</option>
+                    <option>Technology</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">Impact:</span>
+                <select class="filter-select">
+                    <option>All</option>
+                    <option>High Impact</option>
+                    <option>Medium Impact</option>
+                    <option>Low Impact</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">Status:</span>
+                <select class="filter-select">
+                    <option>All</option>
+                    <option>Applied</option>
+                    <option>Undone</option>
+                </select>
+            </div>
+            <div class="search-box">
+                <input type="search" class="search-input" placeholder="Search decisions...">
+            </div>
+        </div>
+
+        <!-- Stats Summary -->
+        <div class="stats-summary">
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-label">Total Decisions</div>
+                <div class="stat-value">47</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">✅</div>
+                <div class="stat-label">Applied</div>
+                <div class="stat-value">42</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">↩️</div>
+                <div class="stat-label">Undone</div>
+                <div class="stat-value">5</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⚡</div>
+                <div class="stat-label">Avg Impact</div>
+                <div class="stat-value">+18%</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⏱️</div>
+                <div class="stat-label">Time Saved</div>
+                <div class="stat-value">14mo</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">💰</div>
+                <div class="stat-label">Cost Impact</div>
+                <div class="stat-value">-$12T</div>
+            </div>
+        </div>
+
+        <!-- Timeline Graph -->
+        <div class="timeline-graph">
+            <div class="graph-grid"></div>
+            <div class="graph-line">
+                <div class="graph-path"></div>
+            </div>
+            <div class="graph-points">
+                <div class="graph-point" style="left: 10%; bottom: 80%;" title="Month 2: Economic Policy"></div>
+                <div class="graph-point" style="left: 20%; bottom: 85%;" title="Month 5: AI Regulation"></div>
+                <div class="graph-point" style="left: 30%; bottom: 70%;" title="Month 8: Crisis Response"></div>
+                <div class="graph-point" style="left: 40%; bottom: 60%;" title="Month 12: Tech Deploy"></div>
+                <div class="graph-point" style="left: 50%; bottom: 65%;" title="Month 15: Safety Investment"></div>
+                <div class="graph-point" style="left: 60%; bottom: 50%;" title="Month 18: Policy Change"></div>
+                <div class="graph-point" style="left: 70%; bottom: 40%;" title="Month 20: AI Override"></div>
+                <div class="graph-point" style="left: 80%; bottom: 45%;" title="Month 22: Climate Action"></div>
+                <div class="graph-point" style="left: 90%; bottom: 30%;" title="Month 24: Current"></div>
+            </div>
+        </div>
+
+        <!-- Comparison Toggle -->
+        <div class="comparison-toggle">
+            <div class="toggle-switch active">
+                <div class="toggle-knob"></div>
+            </div>
+            <span class="toggle-label">Show comparison with automated simulation</span>
+        </div>
+
+        <!-- History List -->
+        <div class="history-list">
+            <!-- History Item 1 -->
+            <div class="history-item">
+                <div class="history-header">
+                    <div class="history-meta">
+                        <span class="history-month">Month 24</span>
+                        <span class="history-timestamp">2 hours ago</span>
+                    </div>
+                    <div class="history-actions">
+                        <button class="history-btn undo" title="Undo">↩️</button>
+                        <button class="history-btn export" title="Export">📤</button>
+                        <button class="history-btn duplicate" title="Duplicate">📋</button>
+                    </div>
+                </div>
+                <div class="history-content">
+                    <div class="decision-details">
+                        <span class="decision-category">Economic Policy</span>
+                        <div class="decision-description">Changed UBI policy from Means-tested to Generous</div>
+                        <div class="decision-changes">
+                            <div class="change-item">
+                                <span class="change-from">Means-tested (60% coverage)</span>
+                                <span class="change-arrow">→</span>
+                                <span class="change-to">Generous (85% coverage)</span>
+                            </div>
+                            <div class="change-item">
+                                <span class="change-from">$1,200/month</span>
+                                <span class="change-arrow">→</span>
+                                <span class="change-to">$2,400/month</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="impact-summary">
+                        <div class="impact-title">Impact Analysis</div>
+                        <div class="impact-metrics">
+                            <div class="impact-metric">
+                                <span class="impact-label">QoL</span>
+                                <span class="impact-value positive">+15%</span>
+                            </div>
+                            <div class="impact-metric">
+                                <span class="impact-label">GDP</span>
+                                <span class="impact-value negative">-2%</span>
+                            </div>
+                            <div class="impact-metric">
+                                <span class="impact-label">Trust</span>
+                                <span class="impact-value positive">+8%</span>
+                            </div>
+                            <div class="impact-metric">
+                                <span class="impact-label">Cost</span>
+                                <span class="impact-value negative">$4.2T</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- History Item 2 -->
+            <div class="history-item">
+                <div class="history-header">
+                    <div class="history-meta">
+                        <span class="history-month">Month 22</span>
+                        <span class="history-timestamp">1 day ago</span>
+                    </div>
+                    <div class="history-actions">
+                        <button class="history-btn undo" title="Undo">↩️</button>
+                        <button class="history-btn export" title="Export">📤</button>
+                        <button class="history-btn duplicate" title="Duplicate">📋</button>
+                    </div>
+                </div>
+                <div class="history-content">
+                    <div class="decision-details">
+                        <span class="decision-category">AI Agent Control</span>
+                        <div class="decision-description">Overrode AI-3 research focus to Digital specialization</div>
+                        <div class="decision-changes">
+                            <div class="change-item">
+                                <span class="change-from">Physical (auto-selected)</span>
+                                <span class="change-arrow">→</span>
+                                <span class="change-to">Digital (manual override)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="impact-summary">
+                        <div class="impact-title">Impact Analysis</div>
+                        <div class="impact-metrics">
+                            <div class="impact-metric">
+                                <span class="impact-label">Tech</span>
+                                <span class="impact-value positive">+6mo</span>
+                            </div>
+                            <div class="impact-metric">
+                                <span class="impact-label">Risk</span>
+                                <span class="impact-value neutral">+5%</span>
+                            </div>
+                            <div class="impact-metric">
+                                <span class="impact-label">Progress</span>
+                                <span class="impact-value positive">+12%</span>
+                            </div>
+                            <div class="impact-metric">
+                                <span class="impact-label">Alignment</span>
+                                <span class="impact-value negative">-3%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- History Item 3 (Undone) -->
+            <div class="history-item undone">
+                <div class="history-header">
+                    <div class="history-meta">
+                        <span class="history-month">Month 20</span>
+                        <span class="history-timestamp">3 days ago (UNDONE)</span>
+                    </div>
+                    <div class="history-actions">
+                        <button class="history-btn" title="Redo">↪️</button>
+                        <button class="history-btn export" title="Export">📤</button>
+                        <button class="history-btn duplicate" title="Duplicate">📋</button>
+                    </div>
+                </div>
+                <div class="history-content">
+                    <div class="decision-details">
+                        <span class="decision-category">Crisis Response</span>
+                        <div class="decision-description">Prevented nuclear war escalation</div>
+                        <div class="decision-changes">
+                            <div class="change-item">
+                                <span class="change-from">Auto-escalation at Month 21</span>
+                                <span class="change-arrow">→</span>
+                                <span class="change-to">Prevented (manual intervention)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="impact-summary">
+                        <div class="impact-title">Impact Analysis</div>
+                        <div class="impact-metrics">
+                            <div class="impact-metric">
+                                <span class="impact-label">Lives</span>
+                                <span class="impact-value positive">2B saved</span>
+                            </div>
+                            <div class="impact-metric">
+                                <span class="impact-label">GDP</span>
+                                <span class="impact-value positive">+$50T</span>
+                            </div>
+                            <div class="impact-metric">
+                                <span class="impact-label">Stability</span>
+                                <span class="impact-value positive">+40%</span>
+                            </div>
+                            <div class="impact-metric">
+                                <span class="impact-label">Trust</span>
+                                <span class="impact-value positive">+25%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            <button class="page-btn" disabled>←</button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn">4</button>
+            <button class="page-btn">5</button>
+            <span class="page-info">...</span>
+            <button class="page-btn">12</button>
+            <button class="page-btn">→</button>
+        </div>
+    </div>
+
+    <!-- Export Modal -->
+    <div class="export-modal" role="dialog" aria-modal="true" aria-labelledby="export-title">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="export-title" class="modal-title">Export History</h2>
+                <button class="modal-close" aria-label="Close">×</button>
+            </div>
+            <div class="export-options">
+                <div class="export-option selected">
+                    <div class="export-format">JSON</div>
+                    <div class="export-description">Complete decision log with all metadata</div>
+                </div>
+                <div class="export-option">
+                    <div class="export-format">CSV</div>
+                    <div class="export-description">Spreadsheet-compatible format</div>
+                </div>
+                <div class="export-option">
+                    <div class="export-format">Markdown</div>
+                    <div class="export-description">Human-readable documentation format</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden accessibility announcements -->
+    <div class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>

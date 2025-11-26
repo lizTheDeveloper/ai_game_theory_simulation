@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>God Mode v4 - Presets & Scenarios</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        :root {
+            --bg-primary: #0A0A0A;
+            --bg-secondary: #0F0F0F;
+            --bg-tertiary: #141414;
+            --bg-hover: rgba(0, 240, 255, 0.03);
+            --text-primary: #FFFFFF;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --text-tertiary: rgba(255, 255, 255, 0.4);
+            --text-disabled: rgba(255, 255, 255, 0.2);
+            --cyan: #00F0FF;
+            --cyan-dim: rgba(0, 240, 255, 0.1);
+            --cyan-glow: 0 0 20px rgba(0, 240, 255, 0.6);
+            --amber: #FFB000;
+            --amber-dim: rgba(255, 176, 0, 0.1);
+            --amber-glow: 0 0 20px rgba(255, 176, 0, 0.6);
+            --red: #FF0040;
+            --red-dim: rgba(255, 0, 64, 0.1);
+            --red-glow: 0 0 20px rgba(255, 0, 64, 0.6);
+            --green: #00FF88;
+            --green-dim: rgba(0, 255, 136, 0.1);
+            --green-glow: 0 0 20px rgba(0, 255, 136, 0.6);
+            --purple: #B000FF;
+            --purple-dim: rgba(176, 0, 255, 0.1);
+            --purple-glow: 0 0 20px rgba(176, 0, 255, 0.6);
+            --blue: #0080FF;
+            --blue-dim: rgba(0, 128, 255, 0.1);
+            --blue-glow: 0 0 20px rgba(0, 128, 255, 0.6);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-focus: rgba(0, 240, 255, 0.3);
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
+            --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4);
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Animated background */
+        .background-effects {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .preset-particles {
+            position: absolute;
+            inset: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--cyan);
+            border-radius: 50%;
+            opacity: 0;
+            animation: particleFloat 10s linear infinite;
+        }
+
+        .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 30%; animation-delay: 2s; background: var(--purple); }
+        .particle:nth-child(3) { left: 50%; animation-delay: 4s; background: var(--green); }
+        .particle:nth-child(4) { left: 70%; animation-delay: 6s; background: var(--amber); }
+        .particle:nth-child(5) { left: 90%; animation-delay: 8s; background: var(--blue); }
+
+        @keyframes particleFloat {
+            0% {
+                bottom: -10px;
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.5;
+            }
+            90% {
+                opacity: 0.5;
+            }
+            100% {
+                bottom: 100%;
+                opacity: 0;
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 32px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary));
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px 32px;
+            margin-bottom: 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg,
+                var(--cyan) 0%,
+                var(--purple) 25%,
+                var(--green) 50%,
+                var(--amber) 75%,
+                var(--blue) 100%);
+            opacity: 0.8;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .page-icon {
+            font-size: 32px;
+            animation: presetRotate 10s linear infinite;
+        }
+
+        @keyframes presetRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 200;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg,
+                var(--cyan),
+                var(--purple),
+                var(--green));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 16px;
+        }
+
+        .header-btn {
+            padding: 10px 20px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .header-btn:hover {
+            border-color: var(--cyan);
+            color: var(--cyan);
+            transform: translateY(-1px);
+        }
+
+        .header-btn.primary {
+            background: var(--cyan-dim);
+            border-color: var(--cyan);
+            color: var(--cyan);
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 1px;
+            background: var(--border);
+            padding: 1px;
+            border-radius: 8px;
+            margin-bottom: 32px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 16px;
+            background: var(--bg-secondary);
+            border: none;
+            font-size: 13px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-tertiary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            position: relative;
+        }
+
+        .tab:first-child {
+            border-radius: 7px 0 0 7px;
+        }
+
+        .tab:last-child {
+            border-radius: 0 7px 7px 0;
+        }
+
+        .tab:hover {
+            color: var(--text-secondary);
+            background: var(--bg-tertiary);
+        }
+
+        .tab.active {
+            background: var(--bg-primary);
+            color: var(--cyan);
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--cyan);
+            box-shadow: var(--cyan-glow);
+        }
+
+        /* Preset Grid */
+        .preset-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .preset-card {
+            background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary));
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all var(--transition-base);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .preset-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, var(--cyan-dim), transparent 70%);
+            opacity: 0;
+            transition: opacity var(--transition-base);
+        }
+
+        .preset-card:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .preset-card:hover::before {
+            opacity: 1;
+        }
+
+        .preset-card.built-in {
+            border-color: var(--purple);
+        }
+
+        .preset-card.built-in:hover {
+            box-shadow: var(--shadow-lg), var(--purple-glow);
+        }
+
+        .preset-card.community {
+            border-color: var(--green);
+        }
+
+        .preset-card.community:hover {
+            box-shadow: var(--shadow-lg), var(--green-glow);
+        }
+
+        .preset-header {
+            padding: 20px;
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .preset-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--cyan-dim), var(--purple-dim));
+            border-radius: 8px;
+            font-size: 24px;
+        }
+
+        .preset-meta {
+            flex: 1;
+            margin-left: 16px;
+        }
+
+        .preset-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .preset-author {
+            font-size: 11px;
+            color: var(--text-tertiary);
+        }
+
+        .preset-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .preset-badge.official {
+            background: var(--purple-dim);
+            color: var(--purple);
+        }
+
+        .preset-badge.popular {
+            background: var(--green-dim);
+            color: var(--green);
+        }
+
+        .preset-badge.experimental {
+            background: var(--amber-dim);
+            color: var(--amber);
+        }
+
+        .preset-body {
+            padding: 20px;
+        }
+
+        .preset-description {
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .preset-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .preset-stat {
+            text-align: center;
+        }
+
+        .preset-stat-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--cyan);
+            margin-bottom: 4px;
+        }
+
+        .preset-stat-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-tertiary);
+        }
+
+        .preset-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .preset-tag {
+            padding: 4px 12px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .preset-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .preset-btn {
+            flex: 1;
+            padding: 10px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .preset-btn:hover {
+            transform: translateY(-1px);
+            color: var(--text-primary);
+        }
+
+        .preset-btn.load {
+            background: var(--cyan-dim);
+            border-color: var(--cyan);
+            color: var(--cyan);
+        }
+
+        .preset-btn.load:hover {
+            box-shadow: var(--cyan-glow);
+        }
+
+        /* Create Preset Form */
+        .create-form {
+            background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary));
+            border: 1px solid var(--cyan);
+            border-radius: 12px;
+            padding: 32px;
+            margin-bottom: 32px;
+            display: none;
+        }
+
+        .create-form.visible {
+            display: block;
+            animation: formAppear 400ms ease-out;
+        }
+
+        @keyframes formAppear {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+        }
+
+        .form-title {
+            font-size: 16px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--cyan);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+        }
+
+        .form-input,
+        .form-textarea {
+            padding: 12px 16px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 13px;
+            transition: all var(--transition-fast);
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--cyan);
+            box-shadow: 0 0 0 3px var(--cyan-dim);
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-checkboxes {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .checkbox-item:hover {
+            border-color: var(--cyan);
+            background: var(--bg-hover);
+        }
+
+        .checkbox-item.selected {
+            background: var(--cyan-dim);
+            border-color: var(--cyan);
+        }
+
+        .checkbox {
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--border);
+            border-radius: 4px;
+            position: relative;
+            transition: all var(--transition-fast);
+        }
+
+        .checkbox-item.selected .checkbox {
+            background: var(--cyan);
+            border-color: var(--cyan);
+        }
+
+        .checkbox-item.selected .checkbox::after {
+            content: '✓';
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bg-primary);
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .checkbox-label {
+            font-size: 12px;
+            color: var(--text-primary);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .form-btn {
+            padding: 12px 32px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .form-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .form-btn.primary {
+            background: var(--cyan-dim);
+            border-color: var(--cyan);
+            color: var(--cyan);
+        }
+
+        .form-btn.primary:hover {
+            box-shadow: var(--shadow-lg), var(--cyan-glow);
+        }
+
+        /* Import/Export Section */
+        .import-export {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .import-box,
+        .export-box {
+            background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary));
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            transition: all var(--transition-fast);
+        }
+
+        .import-box {
+            border-style: dashed;
+        }
+
+        .import-box:hover {
+            border-color: var(--green);
+            background: var(--green-dim);
+        }
+
+        .export-box:hover {
+            border-color: var(--blue);
+            background: var(--blue-dim);
+        }
+
+        .ie-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        .ie-title {
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .ie-description {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-bottom: 20px;
+        }
+
+        .ie-btn {
+            padding: 12px 32px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            display: inline-block;
+        }
+
+        .ie-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .import-box .ie-btn {
+            border-color: var(--green);
+            color: var(--green);
+        }
+
+        .export-box .ie-btn {
+            border-color: var(--blue);
+            color: var(--blue);
+        }
+
+        /* Search Bar */
+        .search-section {
+            margin-bottom: 32px;
+        }
+
+        .search-container {
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 16px 20px 16px 48px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 14px;
+            transition: all var(--transition-fast);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--cyan);
+            box-shadow: 0 0 0 3px var(--cyan-dim);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-tertiary);
+            font-size: 18px;
+        }
+
+        /* Accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-effects">
+        <div class="preset-particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="page-title">
+                    <span class="page-icon">🎨</span>
+                    <h1>Presets & Scenarios</h1>
+                </div>
+                <div class="header-actions">
+                    <button class="header-btn">Import</button>
+                    <button class="header-btn primary">Create New</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Search -->
+        <div class="search-section">
+            <div class="search-container">
+                <span class="search-icon">🔍</span>
+                <input type="search" class="search-input" placeholder="Search presets by name, author, or tag...">
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab active">My Presets</button>
+            <button class="tab">Built-in Scenarios</button>
+            <button class="tab">Community</button>
+            <button class="tab">Recently Used</button>
+        </div>
+
+        <!-- Preset Grid -->
+        <div class="preset-grid">
+            <!-- User Preset 1 -->
+            <div class="preset-card">
+                <div class="preset-header">
+                    <div class="preset-icon">🛡️</div>
+                    <div class="preset-meta">
+                        <div class="preset-name">Conservative AI Regulation</div>
+                        <div class="preset-author">Created by You</div>
+                    </div>
+                </div>
+                <div class="preset-body">
+                    <p class="preset-description">High compute limits, strong oversight, maximum safety research investment. Prioritizes alignment over speed.</p>
+                    <div class="preset-stats">
+                        <div class="preset-stat">
+                            <div class="preset-stat-value">12</div>
+                            <div class="preset-stat-label">Controls</div>
+                        </div>
+                        <div class="preset-stat">
+                            <div class="preset-stat-value">3</div>
+                            <div class="preset-stat-label">Uses</div>
+                        </div>
+                        <div class="preset-stat">
+                            <div class="preset-stat-value">85%</div>
+                            <div class="preset-stat-label">Success</div>
+                        </div>
+                    </div>
+                    <div class="preset-tags">
+                        <span class="preset-tag">AI Safety</span>
+                        <span class="preset-tag">Regulation</span>
+                        <span class="preset-tag">Conservative</span>
+                    </div>
+                    <div class="preset-actions">
+                        <button class="preset-btn load">Load</button>
+                        <button class="preset-btn">Edit</button>
+                        <button class="preset-btn">Duplicate</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Preset 2 -->
+            <div class="preset-card">
+                <div class="preset-header">
+                    <div class="preset-icon">🌍</div>
+                    <div class="preset-meta">
+                        <div class="preset-name">Aggressive Climate Action</div>
+                        <div class="preset-author">Created by You</div>
+                    </div>
+                </div>
+                <div class="preset-body">
+                    <p class="preset-description">Immediate carbon tax, rapid renewable deployment, emergency response protocols. Environmental focus.</p>
+                    <div class="preset-stats">
+                        <div class="preset-stat">
+                            <div class="preset-stat-value">18</div>
+                            <div class="preset-stat-label">Controls</div>
+                        </div>
+                        <div class="preset-stat">
+                            <div class="preset-stat-value">5</div>
+                            <div class="preset-stat-label">Uses</div>
+                        </div>
+                        <div class="preset-stat">
+                            <div class="preset-stat-value">72%</div>
+                            <div class="preset-stat-label">Success</div>
+                        </div>
+                    </div>
+                    <div class="preset-tags">
+                        <span class="preset-tag">Climate</span>
+                        <span class="preset-tag">Environment</span>
+                        <span class="preset-tag">Crisis</span>
+                    </div>
+                    <div class="preset-actions">
+                        <button class="preset-btn load">Load</button>
+                        <button class="preset-btn">Edit</button>
+                        <button class="preset-btn">Duplicate</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Built-in Preset 1 -->
+            <div class="preset-card built-in">
+                <div class="preset-header">
+                    <div class="preset-icon">🚀</div>
+                    <div class="preset-meta">
+                        <div class="preset-name">Race to AGI</div>
+                        <div class="preset-author">Official Scenario</div>
+                    </div>
+                    <div class="preset-badge official">Official</div>
+                </div>
+                <div class="preset-body">
+                    <p class="preset-description">Minimal regulation, maximum R&D investment, accelerated development. High risk, high reward strategy.</p>
+                    <div class="preset-stats">
+                        <div class="preset-stat">
+                            <div class="preset-stat-value">25</div>
+                            <div class="preset-stat-label">Controls</div>
+                        </div>
+                        <div class="preset-stat">
+                            <div class="preset-stat-value">142</div>
+                            <div class="preset-stat-label">Uses</div>
+                        </div>
+                        <div class="preset-stat">
+                            <div class="preset-stat-value">48%</div>
+                            <div class="preset-stat-label">Success</div>
+                        </div>
+                    </div>
+                    <div class="preset-tags">
+                        <span class="preset-tag">Acceleration</span>
+                        <span class="preset-tag">Risk</span>
+                        <span class="preset-tag">AGI</span>
+                    </div>
+                    <div class="preset-actions">
+                        <button class="preset-btn load">Load</button>
+                        <button class="preset-btn">Preview</button>
+                        <button class="preset-btn">Details</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Community Preset -->
+            <div class="preset-card community">
+                <div class="preset-header">
+                    <div class="preset-icon">🤝</div>
+                    <div class="preset-meta">
+                        <div class="preset-name">Balanced Approach</div>
+                        <div class="preset-author">by @research_team</div>
+                    </div>
+                    <div class="preset-badge popular">Popular</div>
+                </div>
+                <div class="preset-body">
+                    <p class="preset-description">Carefully calibrated settings balancing safety, progress, and societal wellbeing. Most successful preset.</p>
+                    <div class="preset-stats">
+                        <div class="preset-stat">
+                            <div class="preset-stat-value">32</div>
+                            <div class="preset-stat-label">Controls</div>
+                        </div>
+                        <div class="preset-stat">
+                            <div class="preset-stat-value">387</div>
+                            <div class="preset-stat-label">Uses</div>
+                        </div>
+                        <div class="preset-stat">
+                            <div class="preset-stat-value">91%</div>
+                            <div class="preset-stat-label">Success</div>
+                        </div>
+                    </div>
+                    <div class="preset-tags">
+                        <span class="preset-tag">Balanced</span>
+                        <span class="preset-tag">Proven</span>
+                        <span class="preset-tag">Safe</span>
+                    </div>
+                    <div class="preset-actions">
+                        <button class="preset-btn load">Load</button>
+                        <button class="preset-btn">Fork</button>
+                        <button class="preset-btn">Share</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Experimental Preset -->
+            <div class="preset-card">
+                <div class="preset-header">
+                    <div class="preset-icon">⚡</div>
+                    <div class="preset-meta">
+                        <div class="preset-name">Chaos Mode</div>
+                        <div class="preset-author">Experimental</div>
+                    </div>
+                    <div class="preset-badge experimental">Experimental</div>
+                </div>
+                <div class="preset-body">
+                    <p class="preset-description">Random parameter variations, unpredictable outcomes. For testing edge cases and system resilience.</p>
+                    <div class="preset-stats">
+                        <div class="preset-stat">
+                            <div class="preset-stat-value">??</div>
+                            <div class="preset-stat-label">Controls</div>
+                        </div>
+                        <div class="preset-stat">
+                            <div class="preset-stat-value">23</div>
+                            <div class="preset-stat-label">Uses</div>
+                        </div>
+                        <div class="preset-stat">
+                            <div class="preset-stat-value">???</div>
+                            <div class="preset-stat-label">Success</div>
+                        </div>
+                    </div>
+                    <div class="preset-tags">
+                        <span class="preset-tag">Experimental</span>
+                        <span class="preset-tag">Random</span>
+                        <span class="preset-tag">Testing</span>
+                    </div>
+                    <div class="preset-actions">
+                        <button class="preset-btn load">Try at Risk</button>
+                        <button class="preset-btn">Info</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Empty Preset Slot -->
+            <div class="preset-card" style="border-style: dashed; background: transparent;">
+                <div class="preset-body" style="padding: 60px 20px; text-align: center;">
+                    <div style="font-size: 48px; opacity: 0.2; margin-bottom: 16px;">+</div>
+                    <div style="font-size: 14px; color: var(--text-tertiary); margin-bottom: 20px;">Create New Preset</div>
+                    <button class="preset-btn load">Create</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Create Preset Form (initially hidden) -->
+        <div class="create-form">
+            <div class="form-header">
+                <h2 class="form-title">Create New Preset</h2>
+            </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label class="form-label">Preset Name</label>
+                    <input type="text" class="form-input" placeholder="Enter preset name...">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Category</label>
+                    <input type="text" class="form-input" placeholder="e.g., AI Safety, Climate, Economic">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Description</label>
+                <textarea class="form-textarea" placeholder="Describe your preset strategy..."></textarea>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Include Controls</label>
+                <div class="form-checkboxes">
+                    <div class="checkbox-item selected">
+                        <div class="checkbox"></div>
+                        <span class="checkbox-label">Government Controls</span>
+                    </div>
+                    <div class="checkbox-item selected">
+                        <div class="checkbox"></div>
+                        <span class="checkbox-label">AI Agent Settings</span>
+                    </div>
+                    <div class="checkbox-item">
+                        <div class="checkbox"></div>
+                        <span class="checkbox-label">Society Controls</span>
+                    </div>
+                    <div class="checkbox-item">
+                        <div class="checkbox"></div>
+                        <span class="checkbox-label">Organization Strategies</span>
+                    </div>
+                    <div class="checkbox-item selected">
+                        <div class="checkbox"></div>
+                        <span class="checkbox-label">Crisis Thresholds</span>
+                    </div>
+                    <div class="checkbox-item">
+                        <div class="checkbox"></div>
+                        <span class="checkbox-label">System Parameters</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button class="form-btn">Cancel</button>
+                <button class="form-btn primary">Save Preset</button>
+            </div>
+        </div>
+
+        <!-- Import/Export Section -->
+        <div class="import-export">
+            <div class="import-box">
+                <div class="ie-icon">📥</div>
+                <h3 class="ie-title">Import Preset</h3>
+                <p class="ie-description">Load a preset from JSON file or paste configuration</p>
+                <button class="ie-btn">Choose File</button>
+            </div>
+            <div class="export-box">
+                <div class="ie-icon">📤</div>
+                <h3 class="ie-title">Export All Presets</h3>
+                <p class="ie-description">Download your presets for backup or sharing</p>
+                <button class="ie-btn">Export JSON</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden accessibility announcements -->
+    <div class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>

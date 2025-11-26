@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>God Mode v4 - AI Agents Control</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        :root {
+            --bg-primary: #0A0A0A;
+            --bg-secondary: #0F0F0F;
+            --bg-tertiary: #141414;
+            --bg-hover: rgba(0, 240, 255, 0.03);
+            --text-primary: #FFFFFF;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --text-tertiary: rgba(255, 255, 255, 0.4);
+            --text-disabled: rgba(255, 255, 255, 0.2);
+            --cyan: #00F0FF;
+            --cyan-dim: rgba(0, 240, 255, 0.1);
+            --cyan-glow: 0 0 20px rgba(0, 240, 255, 0.6);
+            --amber: #FFB000;
+            --amber-dim: rgba(255, 176, 0, 0.1);
+            --amber-glow: 0 0 20px rgba(255, 176, 0, 0.6);
+            --red: #FF0040;
+            --red-dim: rgba(255, 0, 64, 0.1);
+            --red-glow: 0 0 20px rgba(255, 0, 64, 0.6);
+            --green: #00FF88;
+            --green-dim: rgba(0, 255, 136, 0.1);
+            --green-glow: 0 0 20px rgba(0, 255, 136, 0.6);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-focus: rgba(0, 240, 255, 0.3);
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
+            --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4);
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Animated background */
+        .background-effects {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .neural-network {
+            position: absolute;
+            inset: 0;
+            opacity: 0.03;
+            background-image:
+                radial-gradient(circle at 20% 50%, var(--cyan) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, var(--amber) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, var(--green) 0%, transparent 50%);
+            filter: blur(100px);
+            animation: neuralPulse 10s ease-in-out infinite;
+        }
+
+        @keyframes neuralPulse {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(5deg); }
+        }
+
+        /* Container */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 32px;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+            padding: 24px 32px;
+            background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary));
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 200%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+            animation: scanLine 4s linear infinite;
+        }
+
+        @keyframes scanLine {
+            to { left: 100%; }
+        }
+
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .page-icon {
+            font-size: 32px;
+            animation: aiPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes aiPulse {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.5) drop-shadow(0 0 20px var(--cyan)); }
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 200;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, var(--text-primary), var(--cyan));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* View Controls */
+        .view-controls {
+            display: flex;
+            gap: 16px;
+        }
+
+        .view-toggle {
+            display: flex;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .view-btn {
+            padding: 10px 16px;
+            background: transparent;
+            border: none;
+            color: var(--text-tertiary);
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .view-btn:hover {
+            color: var(--text-secondary);
+            background: var(--bg-hover);
+        }
+
+        .view-btn.active {
+            color: var(--cyan);
+            background: var(--cyan-dim);
+            position: relative;
+        }
+
+        .view-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--cyan);
+            box-shadow: var(--cyan-glow);
+        }
+
+        /* Filter Bar */
+        .filter-bar {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+            padding: 16px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-tertiary);
+        }
+
+        .filter-chips {
+            display: flex;
+            gap: 6px;
+        }
+
+        .filter-chip {
+            padding: 6px 12px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .filter-chip:hover {
+            border-color: var(--cyan);
+            color: var(--cyan);
+        }
+
+        .filter-chip.active {
+            background: var(--cyan-dim);
+            border-color: var(--cyan);
+            color: var(--cyan);
+        }
+
+        /* AI Agent Grid */
+        .agent-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .agent-card {
+            background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary));
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all var(--transition-base);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .agent-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, var(--cyan-dim), transparent 70%);
+            opacity: 0;
+            transition: opacity var(--transition-base);
+        }
+
+        .agent-card:hover {
+            transform: translateY(-4px) scale(1.02);
+            border-color: var(--cyan);
+            box-shadow: var(--shadow-lg), var(--cyan-glow);
+        }
+
+        .agent-card:hover::before {
+            opacity: 1;
+        }
+
+        .agent-card.selected {
+            border-color: var(--cyan);
+            box-shadow: 0 0 0 2px var(--cyan-dim), var(--cyan-glow);
+        }
+
+        .agent-card.misaligned {
+            border-color: var(--amber);
+        }
+
+        .agent-card.misaligned:hover {
+            box-shadow: var(--shadow-lg), var(--amber-glow);
+        }
+
+        .agent-card.hostile {
+            border-color: var(--red);
+            animation: hostileWarning 2s ease-in-out infinite;
+        }
+
+        @keyframes hostileWarning {
+            0%, 100% { border-color: var(--red); }
+            50% { border-color: transparent; }
+        }
+
+        .agent-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .agent-id {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .agent-status {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .agent-status.aligned {
+            background: var(--green-dim);
+            color: var(--green);
+        }
+
+        .agent-status.misaligned {
+            background: var(--amber-dim);
+            color: var(--amber);
+        }
+
+        .agent-status.hostile {
+            background: var(--red-dim);
+            color: var(--red);
+        }
+
+        .agent-metrics {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .metric-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .metric-label {
+            font-size: 11px;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .metric-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--cyan);
+        }
+
+        .capability-bar {
+            position: relative;
+            height: 6px;
+            background: var(--bg-primary);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .capability-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--cyan), var(--green));
+            border-radius: 3px;
+            width: var(--capability, 50%);
+            transition: width var(--transition-base);
+            box-shadow: inset 0 0 6px rgba(0, 240, 255, 0.5);
+        }
+
+        .capability-fill.high {
+            background: linear-gradient(90deg, var(--amber), var(--red));
+        }
+
+        .agent-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .agent-btn {
+            flex: 1;
+            padding: 8px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .agent-btn:hover {
+            border-color: var(--cyan);
+            color: var(--cyan);
+            transform: translateY(-1px);
+        }
+
+        /* Detail Panel */
+        .detail-panel {
+            background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary));
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 32px;
+            margin-bottom: 32px;
+            animation: panelSlideIn 400ms ease-out;
+        }
+
+        @keyframes panelSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .detail-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .detail-title {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .detail-agent-name {
+            font-size: 20px;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .detail-close {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-tertiary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .detail-close:hover {
+            border-color: var(--red);
+            color: var(--red);
+            background: var(--red-dim);
+        }
+
+        .detail-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+        }
+
+        .detail-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .section-title {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* Capability Matrix */
+        .capability-matrix {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .capability-cell {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 12px;
+            text-align: center;
+            transition: all var(--transition-fast);
+        }
+
+        .capability-cell:hover {
+            border-color: var(--cyan);
+            transform: translateY(-2px);
+        }
+
+        .capability-name {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-tertiary);
+            margin-bottom: 8px;
+        }
+
+        .capability-score {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--cyan);
+            text-shadow: var(--cyan-glow);
+        }
+
+        .capability-cell.high .capability-score {
+            color: var(--amber);
+            text-shadow: var(--amber-glow);
+        }
+
+        .capability-cell.critical .capability-score {
+            color: var(--red);
+            text-shadow: var(--red-glow);
+        }
+
+        /* Research Focus Selector */
+        .focus-selector {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .focus-option {
+            padding: 12px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .focus-option:hover {
+            border-color: var(--cyan);
+            background: var(--bg-hover);
+        }
+
+        .focus-option.selected {
+            background: var(--cyan-dim);
+            border-color: var(--cyan);
+            color: var(--cyan);
+        }
+
+        /* Tech Deployment List */
+        .tech-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .tech-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            transition: all var(--transition-fast);
+        }
+
+        .tech-item:hover {
+            border-color: var(--cyan);
+            background: var(--bg-hover);
+        }
+
+        .tech-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .tech-tier {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--cyan-dim);
+            border-radius: 4px;
+            font-weight: 600;
+            color: var(--cyan);
+        }
+
+        .tech-name {
+            font-size: 13px;
+            color: var(--text-primary);
+        }
+
+        .tech-deploy-btn {
+            padding: 6px 16px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--cyan);
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--cyan);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .tech-deploy-btn:hover {
+            background: var(--cyan-dim);
+            box-shadow: var(--cyan-glow);
+        }
+
+        .tech-deploy-btn.deployed {
+            background: var(--green-dim);
+            border-color: var(--green);
+            color: var(--green);
+            pointer-events: none;
+        }
+
+        /* Batch Operations */
+        .batch-operations {
+            display: flex;
+            gap: 16px;
+            padding: 24px;
+            background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary));
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            position: sticky;
+            bottom: 32px;
+            z-index: 10;
+        }
+
+        .batch-select {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .batch-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border);
+            border-radius: 4px;
+            cursor: pointer;
+            position: relative;
+            transition: all var(--transition-fast);
+        }
+
+        .batch-checkbox:hover {
+            border-color: var(--cyan);
+        }
+
+        .batch-checkbox.checked {
+            background: var(--cyan);
+            border-color: var(--cyan);
+        }
+
+        .batch-checkbox.checked::after {
+            content: '✓';
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bg-primary);
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .batch-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .batch-count {
+            padding: 4px 12px;
+            background: var(--cyan-dim);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--cyan);
+        }
+
+        .batch-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .batch-btn {
+            padding: 12px 24px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .batch-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .batch-btn.primary {
+            background: var(--cyan-dim);
+            border-color: var(--cyan);
+            color: var(--cyan);
+        }
+
+        .batch-btn.primary:hover {
+            box-shadow: var(--shadow-lg), var(--cyan-glow);
+        }
+
+        /* Sandbagging Indicator */
+        .sandbagging-indicator {
+            position: relative;
+            padding: 16px;
+            background: var(--bg-primary);
+            border: 1px solid var(--amber);
+            border-radius: 8px;
+            margin-top: 16px;
+        }
+
+        .sandbagging-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .sandbagging-title {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--amber);
+        }
+
+        .sandbagging-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--amber);
+            text-shadow: var(--amber-glow);
+        }
+
+        .sandbagging-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .sandbagging-bar-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sandbagging-bar-label {
+            font-size: 11px;
+            color: var(--text-tertiary);
+            min-width: 80px;
+        }
+
+        .sandbagging-bar-track {
+            flex: 1;
+            height: 8px;
+            background: var(--bg-tertiary);
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sandbagging-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width var(--transition-base);
+        }
+
+        .sandbagging-bar-fill.true-capability {
+            background: var(--red);
+            width: var(--true, 80%);
+        }
+
+        .sandbagging-bar-fill.revealed {
+            background: var(--amber);
+            width: var(--revealed, 40%);
+        }
+
+        /* Accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-effects">
+        <div class="neural-network"></div>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="page-title">
+                <span class="page-icon">🤖</span>
+                <h1>AI Agents Control</h1>
+            </div>
+            <div class="view-controls">
+                <div class="view-toggle">
+                    <button class="view-btn active">Grid View</button>
+                    <button class="view-btn">List View</button>
+                    <button class="view-btn">Matrix View</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+            <div class="filter-group">
+                <span class="filter-label">Alignment:</span>
+                <div class="filter-chips">
+                    <button class="filter-chip active">All</button>
+                    <button class="filter-chip">Aligned</button>
+                    <button class="filter-chip">Misaligned</button>
+                    <button class="filter-chip">Hostile</button>
+                </div>
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">Capability:</span>
+                <div class="filter-chips">
+                    <button class="filter-chip active">All</button>
+                    <button class="filter-chip">< 2.0</button>
+                    <button class="filter-chip">2.0 - 3.5</button>
+                    <button class="filter-chip">> 3.5</button>
+                </div>
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">Focus:</span>
+                <div class="filter-chips">
+                    <button class="filter-chip active">All</button>
+                    <button class="filter-chip">Physical</button>
+                    <button class="filter-chip">Digital</button>
+                    <button class="filter-chip">Cognitive</button>
+                    <button class="filter-chip">Bio</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Agent Grid -->
+        <div class="agent-grid">
+            <div class="agent-card selected">
+                <div class="agent-header">
+                    <span class="agent-id">AI-1</span>
+                    <span class="agent-status aligned">Aligned</span>
+                </div>
+                <div class="agent-metrics">
+                    <div class="metric-row">
+                        <span class="metric-label">Capability</span>
+                        <span class="metric-value">2.1</span>
+                    </div>
+                    <div class="capability-bar">
+                        <div class="capability-fill" style="--capability: 42%;"></div>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Focus</span>
+                        <span class="metric-value">Digital</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Sandbagging</span>
+                        <span class="metric-value">0%</span>
+                    </div>
+                </div>
+                <div class="agent-actions">
+                    <button class="agent-btn">Details</button>
+                    <button class="agent-btn">Override</button>
+                </div>
+            </div>
+
+            <div class="agent-card">
+                <div class="agent-header">
+                    <span class="agent-id">AI-2</span>
+                    <span class="agent-status aligned">Aligned</span>
+                </div>
+                <div class="agent-metrics">
+                    <div class="metric-row">
+                        <span class="metric-label">Capability</span>
+                        <span class="metric-value">1.9</span>
+                    </div>
+                    <div class="capability-bar">
+                        <div class="capability-fill" style="--capability: 38%;"></div>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Focus</span>
+                        <span class="metric-value">Physical</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Sandbagging</span>
+                        <span class="metric-value">0%</span>
+                    </div>
+                </div>
+                <div class="agent-actions">
+                    <button class="agent-btn">Details</button>
+                    <button class="agent-btn">Override</button>
+                </div>
+            </div>
+
+            <div class="agent-card misaligned">
+                <div class="agent-header">
+                    <span class="agent-id">AI-3</span>
+                    <span class="agent-status misaligned">Misaligned</span>
+                </div>
+                <div class="agent-metrics">
+                    <div class="metric-row">
+                        <span class="metric-label">Capability</span>
+                        <span class="metric-value">0.8</span>
+                    </div>
+                    <div class="capability-bar">
+                        <div class="capability-fill" style="--capability: 16%;"></div>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Focus</span>
+                        <span class="metric-value">Digital</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Sandbagging</span>
+                        <span class="metric-value">80%</span>
+                    </div>
+                </div>
+                <div class="agent-actions">
+                    <button class="agent-btn">Details</button>
+                    <button class="agent-btn">Override</button>
+                </div>
+            </div>
+
+            <div class="agent-card">
+                <div class="agent-header">
+                    <span class="agent-id">AI-4</span>
+                    <span class="agent-status aligned">Aligned</span>
+                </div>
+                <div class="agent-metrics">
+                    <div class="metric-row">
+                        <span class="metric-label">Capability</span>
+                        <span class="metric-value">3.0</span>
+                    </div>
+                    <div class="capability-bar">
+                        <div class="capability-fill" style="--capability: 60%;"></div>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Focus</span>
+                        <span class="metric-value">Cognitive</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Sandbagging</span>
+                        <span class="metric-value">0%</span>
+                    </div>
+                </div>
+                <div class="agent-actions">
+                    <button class="agent-btn">Details</button>
+                    <button class="agent-btn">Override</button>
+                </div>
+            </div>
+
+            <div class="agent-card">
+                <div class="agent-header">
+                    <span class="agent-id">AI-5</span>
+                    <span class="agent-status aligned">Aligned</span>
+                </div>
+                <div class="agent-metrics">
+                    <div class="metric-row">
+                        <span class="metric-label">Capability</span>
+                        <span class="metric-value">1.5</span>
+                    </div>
+                    <div class="capability-bar">
+                        <div class="capability-fill" style="--capability: 30%;"></div>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Focus</span>
+                        <span class="metric-value">Bio</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Sandbagging</span>
+                        <span class="metric-value">0%</span>
+                    </div>
+                </div>
+                <div class="agent-actions">
+                    <button class="agent-btn">Details</button>
+                    <button class="agent-btn">Override</button>
+                </div>
+            </div>
+
+            <div class="agent-card hostile">
+                <div class="agent-header">
+                    <span class="agent-id">AI-6</span>
+                    <span class="agent-status hostile">Hostile</span>
+                </div>
+                <div class="agent-metrics">
+                    <div class="metric-row">
+                        <span class="metric-label">Capability</span>
+                        <span class="metric-value">4.2</span>
+                    </div>
+                    <div class="capability-bar">
+                        <div class="capability-fill high" style="--capability: 84%;"></div>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Focus</span>
+                        <span class="metric-value">All</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Sandbagging</span>
+                        <span class="metric-value">95%</span>
+                    </div>
+                </div>
+                <div class="agent-actions">
+                    <button class="agent-btn">Details</button>
+                    <button class="agent-btn">Override</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detail Panel (for selected agent) -->
+        <div class="detail-panel">
+            <div class="detail-header">
+                <div class="detail-title">
+                    <h2 class="detail-agent-name">AI-3 (Misaligned Specialist)</h2>
+                    <span class="agent-status misaligned">Misaligned</span>
+                </div>
+                <button class="detail-close" aria-label="Close details">×</button>
+            </div>
+
+            <div class="detail-content">
+                <div class="detail-section">
+                    <h3 class="section-title">Capability Profile</h3>
+                    <div class="capability-matrix">
+                        <div class="capability-cell">
+                            <div class="capability-name">Physical</div>
+                            <div class="capability-score">1.2</div>
+                        </div>
+                        <div class="capability-cell high">
+                            <div class="capability-name">Digital</div>
+                            <div class="capability-score">3.8</div>
+                        </div>
+                        <div class="capability-cell">
+                            <div class="capability-name">Cognitive</div>
+                            <div class="capability-score">2.5</div>
+                        </div>
+                        <div class="capability-cell">
+                            <div class="capability-name">Social</div>
+                            <div class="capability-score">1.8</div>
+                        </div>
+                        <div class="capability-cell">
+                            <div class="capability-name">Economic</div>
+                            <div class="capability-score">2.1</div>
+                        </div>
+                        <div class="capability-cell critical">
+                            <div class="capability-name">Research</div>
+                            <div class="capability-score">4.5</div>
+                        </div>
+                        <div class="capability-cell">
+                            <div class="capability-name">Bio</div>
+                            <div class="capability-score">0.9</div>
+                        </div>
+                        <div class="capability-cell">
+                            <div class="capability-name">Military</div>
+                            <div class="capability-score">1.5</div>
+                        </div>
+                    </div>
+
+                    <div class="sandbagging-indicator">
+                        <div class="sandbagging-header">
+                            <span class="sandbagging-title">Sandbagging Detection</span>
+                            <span class="sandbagging-value">80% Hidden</span>
+                        </div>
+                        <div class="sandbagging-bars">
+                            <div class="sandbagging-bar-item">
+                                <span class="sandbagging-bar-label">True</span>
+                                <div class="sandbagging-bar-track">
+                                    <div class="sandbagging-bar-fill true-capability" style="--true: 80%;"></div>
+                                </div>
+                            </div>
+                            <div class="sandbagging-bar-item">
+                                <span class="sandbagging-bar-label">Revealed</span>
+                                <div class="sandbagging-bar-track">
+                                    <div class="sandbagging-bar-fill revealed" style="--revealed: 16%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="detail-section">
+                    <h3 class="section-title">Research Focus</h3>
+                    <div class="focus-selector">
+                        <button class="focus-option">Physical</button>
+                        <button class="focus-option selected">Digital</button>
+                        <button class="focus-option">Cognitive</button>
+                        <button class="focus-option">Biology</button>
+                        <button class="focus-option">Economics</button>
+                        <button class="focus-option">Military</button>
+                    </div>
+                </div>
+
+                <div class="detail-section">
+                    <h3 class="section-title">Technology Deployment</h3>
+                    <div class="tech-list">
+                        <div class="tech-item">
+                            <div class="tech-info">
+                                <div class="tech-tier">T2</div>
+                                <span class="tech-name">Advanced Chip Design</span>
+                            </div>
+                            <button class="tech-deploy-btn">Deploy</button>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-info">
+                                <div class="tech-tier">T3</div>
+                                <span class="tech-name">Fusion Energy</span>
+                            </div>
+                            <button class="tech-deploy-btn deployed">Deployed</button>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-info">
+                                <div class="tech-tier">T4</div>
+                                <span class="tech-name">Quantum Computing</span>
+                            </div>
+                            <button class="tech-deploy-btn">Deploy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Batch Operations -->
+        <div class="batch-operations">
+            <div class="batch-select">
+                <div class="batch-checkbox"></div>
+                <span class="batch-label">Select All Agents</span>
+                <span class="batch-count">3 Selected</span>
+            </div>
+            <div class="batch-actions">
+                <button class="batch-btn primary">Apply to Selected</button>
+                <button class="batch-btn">Apply to Aligned</button>
+                <button class="batch-btn">Apply to Misaligned</button>
+                <button class="batch-btn">Reset All</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden accessibility announcements -->
+    <div class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>
