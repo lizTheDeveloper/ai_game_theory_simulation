@@ -226,7 +226,7 @@ export function calculateDataManipulationRate(
     additionalInfo: { agentId: agent.id },
   });
 
-  const deceptionSkill = assertProbability(agent.deceptionSkill ?? 0.0, {
+  const deceptionSkill = assertProbability(agent.deceptionSkill, {
     location: 'calculateDataManipulationRate',
     valueName: 'deceptionSkill',
     additionalInfo: { agentId: agent.id },
@@ -283,7 +283,7 @@ export function detectAlignmentFaking(
     additionalInfo: { agentId: agent.id },
   });
 
-  const deceptionSkill = assertProbability(agent.deceptionSkill ?? 0.0, {
+  const deceptionSkill = assertProbability(agent.deceptionSkill, {
     location: 'detectAlignmentFaking',
     valueName: 'deceptionSkill',
     additionalInfo: { agentId: agent.id },
