@@ -510,6 +510,27 @@ Before any scenario modification:
 - Narrative generation for outcomes
 - Achievement/milestone system
 
+## Test Coverage
+
+### PlayerDecisionPhase (Nov 26, 2025)
+
+**Status:** ✅ **90% coverage** (41 tests) - `/tests/unit/phases/PlayerDecisionPhase.test.ts`
+
+**Comprehensive test suites:**
+- **Policy decisions:** AI regulation, safety investment, compute governance
+- **Government actions:** migratedActions execution
+- **Investment decisions:** Technology research acceleration
+- **Emergency decisions:** Crisis response processing
+- **AI action decisions:** Manual agent action execution
+- **Error handling:** Edge cases and malformed input
+- **Queue processing:** Multiple decision queue handling
+
+**Uncovered lines (9.4%):**
+- AI action `canExecute=false` branch (requires specific action state)
+- Action success/failure event generation (requires full action execution)
+
+---
+
 ## Related Documentation
 
 - [Game Design Document](../../../plans/game-design/GAME_DESIGN_DOCUMENT.md) - Overall vision and design philosophy
@@ -521,7 +542,8 @@ Before any scenario modification:
 
 | Date | Change | Commit | Details |
 |------|--------|--------|---------|
-| Nov 24, 2025 | Wiki documentation update | CURRENT | Comprehensive game layer architecture documentation |
+| Nov 26, 2025 | PlayerDecisionPhase unit tests | 7a83474 | 41 tests, 90% coverage for decision processing |
+| Nov 24, 2025 | Wiki documentation update | - | Comprehensive game layer architecture documentation |
 | Nov 24, 2025 | Game Dashboard UI | 109a89a | Far-future aesthetic components (12 files, ~1,800 lines) |
 | Nov 24, 2025 | GameStateProvider | 63ffd76 | React bridge for dashboard/simulation integration |
 | Nov 24, 2025 | Phase 1 Complete | a984b51 | All 17 game layer files implemented |
