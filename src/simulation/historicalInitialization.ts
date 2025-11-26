@@ -274,8 +274,10 @@ export async function createHistoricalInitialState(
     // Normalize: Gini 70 => wealth distribution 0.30
     baseState.globalMetrics.wealthDistribution = (100 - historical.economic.globalGini) / 100;
 
-    // HDI to quality of life (keep 0-1 scale, model scales internally)
-    baseState.globalMetrics.qualityOfLife = historical.economic.globalHDI * 100;
+    // HDI to quality of life (keep 0-1 scale)
+    // HDI is already 0-1 (e.g., 0.746), no scaling needed
+    // FIX (Nov 26, 2025): Bug - was multiplying by 100, causing assertion failures in getGDPProxy
+    baseState.globalMetrics.qualityOfLife = historical.economic.globalHDI;
 
     // Social stability baseline for 1990
     baseState.globalMetrics.socialStability = 50 + (historical.economic.globalHDI - 0.5) * 50;
@@ -383,7 +385,9 @@ export async function validateHistoricalState(
   const simTemp = simulated.planetaryBoundariesSystem?.boundaries?.climate_change?.currentValue ?? 0;
   const simPop = (simulated.humanPopulationSystem?.population ?? 0) / 1e9;
   const simGini = 100 - ((simulated.globalMetrics?.wealthDistribution ?? 0.5) * 100);
-  const simHDI = (simulated.globalMetrics?.qualityOfLife ?? 50) / 100;
+  // qualityOfLife is already 0-1 (same scale as HDI)
+  // FIX (Nov 26, 2025): Was dividing by 100, but qualityOfLife is no longer scaled
+  const simHDI = simulated.globalMetrics?.qualityOfLife ?? 0.5;
 
   // For CO2, check novel_entities boundary (atmospheric composition)
   const simCO2 = simulated.planetaryBoundariesSystem?.boundaries?.novel_entities?.currentValue ?? 420;
@@ -601,7 +605,9 @@ export function initializeHistoricalSimulation(
   // Economic metrics
   if (baseState.globalMetrics) {
     baseState.globalMetrics.wealthDistribution = (100 - historical.economic.globalGini) / 100;
-    baseState.globalMetrics.qualityOfLife = historical.economic.globalHDI * 100;
+    // HDI is already 0-1 (e.g., 0.746), no scaling needed
+    // FIX (Nov 26, 2025): Bug - was multiplying by 100, causing assertion failures in getGDPProxy
+    baseState.globalMetrics.qualityOfLife = historical.economic.globalHDI;
     baseState.globalMetrics.socialStability = 50 + (historical.economic.globalHDI - 0.5) * 50;
   }
 
