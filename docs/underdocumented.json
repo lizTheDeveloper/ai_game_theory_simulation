@@ -63137,71 +63137,103 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 94,
+    "line": 93,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
     "context": "location: 'BifurcationLogicPhase.calculateProximities',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+    "line": 94,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'climateStability',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
     "line": 95,
     "type": "property",
-    "name": "valueName",
+    "name": "month",
     "currentDoc": "(none)",
-    "context": "valueName: 'environmentalHealth',"
+    "context": "month: state.currentMonth,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
     "line": 96,
     "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { value: climateStability }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+    "line": 99,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'BifurcationLogicPhase.calculateProximities',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+    "line": 100,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'biodiversityIndex',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+    "line": 101,
+    "type": "property",
     "name": "month",
     "currentDoc": "(none)",
     "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+    "line": 102,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { value: biodiversityIndex }"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
     "line": 105,
     "type": "property",
-    "name": "distance",
+    "name": "location",
     "currentDoc": "(none)",
-    "context": "distance: envDistance,"
+    "context": "location: 'BifurcationLogicPhase.calculateProximities',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
     "line": 106,
     "type": "property",
-    "name": "currentValue",
+    "name": "valueName",
     "currentDoc": "(none)",
-    "context": "currentValue: envHealthFinite,"
+    "context": "valueName: 'resourceReserves',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
     "line": 107,
     "type": "property",
-    "name": "threshold",
-    "currentDoc": "(none)",
-    "context": "threshold: bifState.environmentalCollapseThreshold,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 114,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'BifurcationLogicPhase.calculateProximities',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 115,
-    "type": "property",
     "name": "month",
     "currentDoc": "(none)",
     "context": "month: state.currentMonth,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 118,
+    "line": 108,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { value: resourceReserves }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+    "line": 111,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -63209,15 +63241,15 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 119,
+    "line": 112,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
-    "context": "valueName: 'socialCohesion',"
+    "context": "valueName: 'pollutionLevel',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 120,
+    "line": 113,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -63225,27 +63257,19 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 131,
+    "line": 139,
     "type": "property",
-    "name": "distance",
+    "name": "location",
     "currentDoc": "(none)",
-    "context": "distance: socialDistance,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 133,
-    "type": "property",
-    "name": "threshold",
-    "currentDoc": "(none)",
-    "context": "threshold: bifState.socialBreakdownThreshold,"
+    "context": "location: 'BifurcationLogicPhase.calculateProximities',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
     "line": 140,
     "type": "property",
-    "name": "location",
+    "name": "valueName",
     "currentDoc": "(none)",
-    "context": "location: 'BifurcationLogicPhase.calculateProximities',"
+    "context": "valueName: 'envHealthProduct',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
@@ -63257,23 +63281,55 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+    "line": 142,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+    "line": 143,
+    "type": "property",
+    "name": "climateStability",
+    "currentDoc": "(none)",
+    "context": "climateStability: climateStabilityValid,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
     "line": 144,
     "type": "property",
-    "name": "location",
+    "name": "biodiversityIndex",
     "currentDoc": "(none)",
-    "context": "location: 'BifurcationLogicPhase.calculateProximities',"
+    "context": "biodiversityIndex: biodiversityIndexValid,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
     "line": 145,
     "type": "property",
-    "name": "month",
+    "name": "resourceReserves",
     "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
+    "context": "resourceReserves: resourceReservesValid,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 150,
+    "line": 146,
+    "type": "property",
+    "name": "pollutionLevel",
+    "currentDoc": "(none)",
+    "context": "pollutionLevel: pollutionLevelValid,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+    "line": 147,
+    "type": "property",
+    "name": "pollutionTerm",
+    "currentDoc": "(none)",
+    "context": "pollutionTerm: (1 - pollutionLevelValid)"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+    "line": 164,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -63281,15 +63337,15 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 151,
+    "line": 165,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
-    "context": "valueName: 'economicStability',"
+    "context": "valueName: 'environmentalHealth',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 152,
+    "line": 166,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -63297,111 +63353,119 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 159,
+    "line": 167,
     "type": "property",
-    "name": "distance",
+    "name": "additionalInfo",
     "currentDoc": "(none)",
-    "context": "distance: economicDistance,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 160,
-    "type": "property",
-    "name": "currentValue",
-    "currentDoc": "(none)",
-    "context": "currentValue: economicStabilityFinite,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 161,
-    "type": "property",
-    "name": "threshold",
-    "currentDoc": "(none)",
-    "context": "threshold: bifState.economicCollapseThreshold,"
+    "context": "additionalInfo: {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
     "line": 168,
     "type": "property",
-    "name": "location",
+    "name": "product",
     "currentDoc": "(none)",
-    "context": "location: 'BifurcationLogicPhase.calculateProximities',"
+    "context": "product: envHealthProductValid,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
     "line": 169,
     "type": "property",
-    "name": "month",
+    "name": "inputs",
     "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
+    "context": "inputs: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+    "line": 170,
+    "type": "property",
+    "name": "climateStability",
+    "currentDoc": "(none)",
+    "context": "climateStability: climateStabilityValid,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+    "line": 171,
+    "type": "property",
+    "name": "biodiversityIndex",
+    "currentDoc": "(none)",
+    "context": "biodiversityIndex: biodiversityIndexValid,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
     "line": 172,
     "type": "property",
-    "name": "location",
+    "name": "resourceReserves",
     "currentDoc": "(none)",
-    "context": "location: 'BifurcationLogicPhase.calculateProximities',"
+    "context": "resourceReserves: resourceReservesValid,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
     "line": 173,
     "type": "property",
-    "name": "valueName",
+    "name": "pollutionLevel",
     "currentDoc": "(none)",
-    "context": "valueName: 'governanceEffectiveness',"
+    "context": "pollutionLevel: pollutionLevelValid"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 174,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 181,
+    "line": 184,
     "type": "property",
     "name": "distance",
     "currentDoc": "(none)",
-    "context": "distance: governanceDistance,"
+    "context": "distance: envDistance,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 182,
+    "line": 185,
     "type": "property",
     "name": "currentValue",
     "currentDoc": "(none)",
-    "context": "currentValue: governanceEffectivenessFinite,"
+    "context": "currentValue: envHealthFinite,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 183,
+    "line": 186,
     "type": "property",
     "name": "threshold",
     "currentDoc": "(none)",
-    "context": "threshold: bifState.governanceFailureThreshold,"
+    "context": "threshold: bifState.environmentalCollapseThreshold,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 196,
+    "line": 193,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
     "context": "location: 'BifurcationLogicPhase.calculateProximities',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+    "line": 194,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
     "line": 197,
     "type": "property",
-    "name": "valueName",
+    "name": "location",
     "currentDoc": "(none)",
-    "context": "valueName: 'qolOverall',"
+    "context": "location: 'BifurcationLogicPhase.calculateProximities',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
     "line": 198,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'socialCohesion',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+    "line": 199,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -63409,43 +63473,27 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 207,
+    "line": 210,
     "type": "property",
     "name": "distance",
     "currentDoc": "(none)",
-    "context": "distance: flourishingDistance,"
+    "context": "distance: socialDistance,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 208,
-    "type": "property",
-    "name": "currentValue",
-    "currentDoc": "(none)",
-    "context": "currentValue: qolOverallFinite,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 209,
+    "line": 212,
     "type": "property",
     "name": "threshold",
     "currentDoc": "(none)",
-    "context": "threshold: bifState.flourishingThreshold,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 218,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'BifurcationLogicPhase.calculateProximities',"
+    "context": "threshold: bifState.socialBreakdownThreshold,"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
     "line": 219,
     "type": "property",
-    "name": "valueName",
+    "name": "location",
     "currentDoc": "(none)",
-    "context": "valueName: 'avgDeployment',"
+    "context": "location: 'BifurcationLogicPhase.calculateProximities',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
@@ -63457,7 +63505,207 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+    "line": 223,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'BifurcationLogicPhase.calculateProximities',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+    "line": 224,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
     "line": 229,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'BifurcationLogicPhase.calculateProximities',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+    "line": 230,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'economicStability',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+    "line": 231,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+    "line": 238,
+    "type": "property",
+    "name": "distance",
+    "currentDoc": "(none)",
+    "context": "distance: economicDistance,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+    "line": 239,
+    "type": "property",
+    "name": "currentValue",
+    "currentDoc": "(none)",
+    "context": "currentValue: economicStabilityFinite,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+    "line": 240,
+    "type": "property",
+    "name": "threshold",
+    "currentDoc": "(none)",
+    "context": "threshold: bifState.economicCollapseThreshold,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+    "line": 247,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'BifurcationLogicPhase.calculateProximities',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+    "line": 248,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+    "line": 251,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'BifurcationLogicPhase.calculateProximities',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+    "line": 252,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'governanceEffectiveness',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+    "line": 253,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+    "line": 260,
+    "type": "property",
+    "name": "distance",
+    "currentDoc": "(none)",
+    "context": "distance: governanceDistance,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+    "line": 261,
+    "type": "property",
+    "name": "currentValue",
+    "currentDoc": "(none)",
+    "context": "currentValue: governanceEffectivenessFinite,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+    "line": 262,
+    "type": "property",
+    "name": "threshold",
+    "currentDoc": "(none)",
+    "context": "threshold: bifState.governanceFailureThreshold,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+    "line": 275,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'BifurcationLogicPhase.calculateProximities',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+    "line": 276,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'qolOverall',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+    "line": 277,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+    "line": 286,
+    "type": "property",
+    "name": "distance",
+    "currentDoc": "(none)",
+    "context": "distance: flourishingDistance,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+    "line": 287,
+    "type": "property",
+    "name": "currentValue",
+    "currentDoc": "(none)",
+    "context": "currentValue: qolOverallFinite,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+    "line": 288,
+    "type": "property",
+    "name": "threshold",
+    "currentDoc": "(none)",
+    "context": "threshold: bifState.flourishingThreshold,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+    "line": 297,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'BifurcationLogicPhase.calculateProximities',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+    "line": 298,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'avgDeployment',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+    "line": 299,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
+    "line": 308,
     "type": "property",
     "name": "distance",
     "currentDoc": "(none)",
@@ -63465,7 +63713,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 230,
+    "line": 309,
     "type": "property",
     "name": "currentValue",
     "currentDoc": "(none)",
@@ -63473,7 +63721,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 231,
+    "line": 310,
     "type": "property",
     "name": "threshold",
     "currentDoc": "(none)",
@@ -63481,7 +63729,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 264,
+    "line": 343,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -63489,7 +63737,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 265,
+    "line": 344,
     "type": "property",
     "name": "bifState",
     "currentDoc": "(none)",
@@ -63497,7 +63745,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 266,
+    "line": 345,
     "type": "property",
     "name": "proximities",
     "currentDoc": "(none)",
@@ -63505,7 +63753,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 282,
+    "line": 361,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -63513,7 +63761,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 283,
+    "line": 362,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -63521,7 +63769,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 284,
+    "line": 363,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -63529,7 +63777,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 285,
+    "line": 364,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -63537,7 +63785,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 313,
+    "line": 392,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -63545,7 +63793,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 314,
+    "line": 393,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -63553,7 +63801,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 315,
+    "line": 394,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -63561,7 +63809,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 316,
+    "line": 395,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -63569,7 +63817,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 317,
+    "line": 396,
     "type": "property",
     "name": "nearestThreshold",
     "currentDoc": "(none)",
@@ -63577,7 +63825,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 318,
+    "line": 397,
     "type": "property",
     "name": "distance",
     "currentDoc": "(none)",
@@ -63585,7 +63833,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 355,
+    "line": 434,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -63593,7 +63841,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 356,
+    "line": 435,
     "type": "property",
     "name": "amplification",
     "currentDoc": "(none)",
@@ -63601,7 +63849,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 357,
+    "line": 436,
     "type": "property",
     "name": "distanceToNearest",
     "currentDoc": "(none)",
@@ -63609,7 +63857,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 358,
+    "line": 437,
     "type": "property",
     "name": "nearestSystem",
     "currentDoc": "(none)",
@@ -63617,7 +63865,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 380,
+    "line": 459,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -63625,7 +63873,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 381,
+    "line": 460,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -63633,7 +63881,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 382,
+    "line": 461,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -63641,7 +63889,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 383,
+    "line": 462,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -63649,7 +63897,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 384,
+    "line": 463,
     "type": "property",
     "name": "beforeTrim",
     "currentDoc": "(none)",
@@ -63657,7 +63905,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 385,
+    "line": 464,
     "type": "property",
     "name": "afterTrim",
     "currentDoc": "(none)",
@@ -63665,7 +63913,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 462,
+    "line": 541,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -63673,7 +63921,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 463,
+    "line": 542,
     "type": "property",
     "name": "bifState",
     "currentDoc": "(none)",
@@ -63681,7 +63929,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 464,
+    "line": 543,
     "type": "property",
     "name": "proximities",
     "currentDoc": "(none)",
@@ -63689,7 +63937,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 519,
+    "line": 598,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -63697,7 +63945,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 520,
+    "line": 599,
     "type": "property",
     "name": "bifState",
     "currentDoc": "(none)",
@@ -63705,7 +63953,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 521,
+    "line": 600,
     "type": "property",
     "name": "proximities",
     "currentDoc": "(none)",
@@ -63713,7 +63961,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 555,
+    "line": 634,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -63721,7 +63969,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 556,
+    "line": 635,
     "type": "property",
     "name": "bifState",
     "currentDoc": "(none)",
@@ -63729,7 +63977,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 563,
+    "line": 642,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -63737,7 +63985,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 564,
+    "line": 643,
     "type": "property",
     "name": "fromRegime",
     "currentDoc": "(none)",
@@ -63745,7 +63993,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 565,
+    "line": 644,
     "type": "property",
     "name": "toRegime",
     "currentDoc": "(none)",
@@ -63753,7 +64001,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 566,
+    "line": 645,
     "type": "property",
     "name": "trigger",
     "currentDoc": "(none)",
@@ -63761,7 +64009,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 581,
+    "line": 660,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -63769,7 +64017,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 582,
+    "line": 661,
     "type": "property",
     "name": "system",
     "currentDoc": "(none)",
@@ -63777,7 +64025,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 583,
+    "line": 662,
     "type": "property",
     "name": "amplification",
     "currentDoc": "(none)",
@@ -63785,7 +64033,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 594,
+    "line": 673,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -63793,7 +64041,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 595,
+    "line": 674,
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -63801,7 +64049,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 596,
+    "line": 675,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -63809,7 +64057,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 597,
+    "line": 676,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -63817,7 +64065,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 598,
+    "line": 677,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -63825,7 +64073,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 599,
+    "line": 678,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -63833,7 +64081,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 600,
+    "line": 679,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -63841,7 +64089,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 601,
+    "line": 680,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -63849,7 +64097,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 602,
+    "line": 681,
     "type": "property",
     "name": "previousRegime",
     "currentDoc": "(none)",
@@ -63857,7 +64105,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 603,
+    "line": 682,
     "type": "property",
     "name": "currentRegime",
     "currentDoc": "(none)",
@@ -63865,7 +64113,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts",
-    "line": 604,
+    "line": 683,
     "type": "property",
     "name": "varianceAmplification",
     "currentDoc": "(none)",
