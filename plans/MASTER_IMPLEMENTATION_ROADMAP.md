@@ -930,17 +930,23 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
   - Test: `tests/integration/regressions/critical-3-rng-regression.test.ts`
   - Verified: No optional RNG with Math.random fallback
 
-- [ ] **Regional Fertility Scaling (Nov 25, 2025)** (Complexity: 3 systems)
+- [x] **Regional Fertility Scaling (Nov 25, 2025)** (Complexity: 3 systems) ✅ COMPLETED Nov 26, 2025
   - Bug: Population jumped 5.32B → 8.1B after Month 0
   - Fix: Commit c4ac98029 - proper `initializeHistoricalSimulation()`
-  - Test needed: Verify population stable at historical start year
+  - Test: Verify population stable at historical start year
+  - **File:** `tests/integration/regressions/regional-fertility-scaling.test.ts`
+  - **Tests:** 7 tests across 4 suites - all passing
+  - **Verified:** Population stable (5.32B), regional scaling correct (0.654x factor), no jump after Month 0
   - **Owner:** Roy
 
-- [ ] **Food Security Region Names (Nov 25, 2025)** (Complexity: 2 systems)
+- [x] **Food Security Region Names (Nov 25, 2025)** (Complexity: 2 systems) ✅ COMPLETED Nov 26, 2025
   - Bug: Used camelCase 'eastAsia' but regions are 'East Asia'
-  - Result: ALL regions fell through to 0.80 fallback
+  - Result: ALL regions fell through to 0.80 fallback (35% → 20% hunger masking)
   - Fix: Commit 8f69e1087 - corrected names + fail-loud error
-  - Test needed: Verify all 10 regions use FAO values, not fallback
+  - Test: Verify all 10 regions use FAO values, not fallback
+  - **File:** `tests/integration/regressions/food-security-region-names.test.ts`
+  - **Tests:** 9 tests across 4 suites - all passing
+  - **Verified:** All FAO SOFI 1999 values applied, Sub-Saharan Africa 0.65 (not 0.80), region names correct
   - **Owner:** Roy
 
 - [x] **NaN/Infinity Regression Suite** (Complexity: 4 systems) ✅ COMPLETED Nov 26, 2025
