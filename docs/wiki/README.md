@@ -70,6 +70,17 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📄 **Files:** `tests/integration/game-layer/critical-juncture-detection.test.ts`, `tests/integration/game-layer/scenario-definitions.test.ts`
 - **Status:** IN PROGRESS - state creation and scenario application need debugging
 
+**Nov 26: Phase 5 Complete - Historical Emissions Mode Enabled** (commit 8e316ce)
+- **FIX:** Enabled `historicalEmissionsMode` flag in historical initialization
+- **Problem:** Phase 7 validation FAILED (18.7% CO2 deviation) because initialization never set the flag
+- **Solution:** Added `config.historicalEmissionsMode = true` in both:
+  - `createHistoricalInitialState()` (line 163)
+  - `initializeHistoricalSimulation()` (line 582)
+- **Evidence:** Logs now show `📊 [Historical Emissions Mode] Year XXXX: YY.YY GtCO2/yr`
+- **Status:** Phase 5 COMPLETE. GCP emissions forcing now active for hindcast runs.
+- **Note:** CO2 validation still failing (40% overshoot, 549 vs 390 ppm) - root cause is sink parameters, NOT emissions
+- 📄 **Files:** `src/simulation/historicalInitialization.ts`
+
 **Nov 26: Phase 7 - Hindcast Re-Validation Script Ready** (commit 7154f8d)
 - 📄 **Script:** `scripts/climateHindcastValidationPhase7.ts` (196 lines)
 - **Purpose:** Re-run 1990-2010 hindcast validation now that Phase 5+6 implementations are merged
@@ -81,8 +92,8 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - CO2 deviation < 5% (vs 389.9 ppm NOAA 2010)
   - Temperature deviation < 0.1°C (vs 0.85°C HadCRUT5 2010)
   - Population deviation < 10% (vs 6.9B UN 2010)
-- **Status:** Ready to run. Expected to PASS now that dependencies are merged.
-- **Dependencies:** Phase 5 (commit a47e341c4) + Phase 6 (commit b5bf2951c)
+- **Status:** Ready to run. CO2 may still fail (sink calibration needed).
+- **Dependencies:** Phase 5 (commit 8e316ce) + Phase 6 (commit b5bf2951c)
 
 **Nov 26: Phase 6 - Demographics Calibration COMPLETE** (commit b5bf295 / 9450aec)
 - ✅ **FIX:** 1990 scenarios now initialize with correct historical fertility rates (was using 2025 values)
@@ -116,9 +127,9 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   3. AI agents spawning despite `includeAIAgents: false` flag
 - **Key Insight:** Temperature matches despite CO2 overshoot = climate mechanics CORRECT, calibration inputs WRONG
 - **Follow-up Phases (HIGH priority):**
-  - Phase 5: Historical Emissions Forcing Mode (Roy) - GCP lookup table ✅ MERGED
-  - Phase 6: Demographics Calibration (Roy + Cynthia) - 1990 fertility rates ✅ MERGED
-  - Phase 7: Re-run Validation (Priya) - Script ready ✅ (commit 7154f8d)
+  - Phase 5: Historical Emissions Forcing Mode (Roy) - ✅ COMPLETE (commit 8e316ce)
+  - Phase 6: Demographics Calibration (Roy + Cynthia) - ✅ COMPLETE (commit b5bf295)
+  - Phase 7: Re-run Validation (Priya) - Script ready, awaiting sink calibration (CO2 still 40% high)
 - 📄 **Report:** `reviews/climate_hindcast_validation_20251126.md` (24KB analysis)
 
 **Nov 26: Historical Baseline Precision Update** (commit b493ee3)
