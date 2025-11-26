@@ -2,8 +2,13 @@
 oldest_source: 2019
 newest_source: 2025
 last_verified: 2025-11-26
-verification_status: UPDATED
-verification_notes: BII species baseline (54,000) source corrected from "IPBES 2024" to "PREDICTS Database 2021" (Natural History Museum London)
+verification_status: CURRENT
+verification_notes: |
+  - BII species baseline (54,000) source corrected from "IPBES 2024" to "PREDICTS Database 2021" (Natural History Museum London)
+  - Updated with Wilson et al. (2024) on age-specific wet-bulb mortality thresholds
+  - Added 2024 IPBES Nexus Assessment and Transformative Change Assessment
+  - Updated Joshua Tree mortality with 2024-2025 fire data (>1M trees lost)
+  - Verified Knutson et al. (2020) tropical cyclone projections remain current (NOAA GFDL 2024)
 ---
 
 # Climate-Related Mortality & Biosphere Die-off: Multi-Paradigm Modeling Framework
@@ -50,6 +55,118 @@ This research addresses the need to move from **random exogenous shock models** 
 - **Age-specific vulnerability**: Young adults more vulnerable than previously assumed
 - **Non-linear thresholds**: Most deaths occur at moderate wet-bulb temps (23-24°C) due to high frequency
 - **Attribution confidence**: >50% of current heat mortality directly attributable to climate change (not compound/uncertain)
+
+---
+
+## 2024-2025 Research Updates (November 26, 2025)
+
+### New Findings: Heat Mortality and Age Vulnerability
+
+**Wilson et al. (2024)** - "Heat disproportionately kills young people: Evidence from wet-bulb temperature in Mexico," *Science Advances*, DOI: 10.1126/sciadv.adq3367
+
+**Key findings:**
+- 75% of heat-related deaths occur in people under 35 years old (87% of lost life years)
+- Peak mortality at wet-bulb 23-24°C (not extreme temperatures as previously assumed)
+- Uncompensable thresholds vary by age: 19-32°C depending on physiological capacity
+- Young adult threshold area: 2.2% of land (1994-2023); projected to triple at 2°C warming above preindustrial
+- From 1998-2019, Mexico suffered ~3,300 heat-related deaths/year; nearly 1/3 in ages 18-35
+
+**Implications:** Challenges conventional assumption that elderly are most vulnerable. Young adults face disproportionate mortality, likely due to outdoor labor exposure and occupational heat stress.
+
+**Sources:**
+- [Science Advances publication](https://www.science.org/doi/10.1126/sciadv.adq3367)
+- [NASA GISS abstract](https://pubs.giss.nasa.gov/abs/wi01600j.html)
+- [ScienceDaily coverage](https://www.sciencedaily.com/releases/2024/12/241206161916.htm)
+
+### 2024 Global Heat Mortality Data
+
+**Nature Communications (2025)** - "Improvements in life expectancy mask rising trends in heat-related excess mortality attributable to climate change"
+
+**Key findings:**
+- >260,000 heat-related fatalities documented in deadliest events since 2000
+- 2024 examples: 1,300 deaths during Hajj pilgrimage at 52°C, widespread fatalities in US, Thailand, India, Mexico
+- Europe 2024: 62,775 heat-related deaths across 654 regions, 32 countries
+- 2023 Global: 178,486 excess deaths, 54.29% attributable to anthropogenic climate change
+- Relative proportion of climate-attributable mortality increased 5.6% per decade, averaging 53.6%
+
+**Sources:**
+- [Nature Communications](https://www.nature.com/articles/s41467-025-66681-0)
+- [Bloomberg analysis](https://www.bloomberg.com/news/articles/2024-08-14/how-climate-change-extreme-heat-and-high-wet-bulb-temperatures-affect-lives)
+
+### Tropical Cyclone Projections Reaffirmed (2024)
+
+**NOAA GFDL (2024)** - Global Warming and Hurricanes assessment reaffirms Knutson et al. (2020) projections:
+
+**Current consensus:**
+- Intensity increase: 2-11% by 2100 (median 14% precipitation increase)
+- Frequency: Decrease or remain stable in total number
+- Category 4-5 proportion: Increasing (10 of 11 authors medium-to-high confidence)
+- Near-coastal intensification: Projected to increase (Balaguru et al. 2024)
+
+**Verification:** The 2020 Knutson assessment remains the authoritative baseline. NOAA GFDL 2024 confirms no major revisions needed.
+
+**Sources:**
+- [NOAA GFDL Global Warming and Hurricanes](https://www.gfdl.noaa.gov/global-warming-and-hurricanes/)
+- [NOAA Climate.gov](https://www.climate.gov/news-features/understanding-climate/climate-change-probably-increasing-intensity-tropical-cyclones)
+- Knutson et al. (2020), *Bulletin of the American Meteorological Society*, 101(3)
+
+### IPBES 2024 Reports: Biodiversity and Transformative Change
+
+**IPBES Nexus Assessment (December 2024)** - Addresses five interconnected crises: biodiversity loss, climate change, food, health, and water. Approved by 147 member governments in Windhoek, Namibia.
+
+**Key findings:**
+- 6 of 9 planetary boundaries transgressed (Richardson et al. 2023 reaffirmed)
+- Extinction risk increased >12% aggregate deterioration in Red List Index (1993-2024)
+- Freshwater species: 23,496 assessed, 25% threatened with extinction
+- Trees: 47,282 species assessed, 38% threatened by deforestation, invasive species, climate change
+- ~1 million of today's 8 million species face extinction (many within decades without forceful measures)
+
+**IPBES Transformative Change Assessment (2024)** - Details causes of biodiversity loss and principles for transformations needed to reverse course.
+
+**Second Global Assessment** - Approved at IPBES 11 (2024), with first author meeting expected Q3 2025, finalization at IPBES 15 (Q3-Q4 2028).
+
+**Sources:**
+- [IPBES Nexus Assessment](https://eco-act.com/blog/ipbes-nexus-assessment-5-global-crises/)
+- [IPBES 11 Summary Report](https://enb.iisd.org/intergovernmental-science-policy-platform-biodiversity-ecosystem-services-ipbes11-summary)
+- [IPBES Transformative Change Assessment](https://www.sei.org/publications/ipbes-transformative-change-assessment/)
+- [UN SDG Extended Report 2025](https://unstats.un.org/sdgs/report/2025/extended-report/Extended-Report-2025_Goal-15.pdf)
+
+### Joshua Tree Mortality Updates (2024-2025)
+
+**Yoder et al. (2024)** - "Reconstructing 120 years of climate change impacts on Joshua tree flowering," *Ecology Letters*, 27, e14478. DOI: 10.1111/ele.14478
+
+**Recent fire mortality:**
+- York Fire (2023): >1 million Joshua trees impacted (likely the single greatest mortality event in species history)
+- 2020-2023: At least 1 million trees destroyed in wildfires
+- Post-fire mortality: 80-90% (previously documented)
+
+**Climate projections:**
+- Increasing temperatures and shifting rainfall will render most current range unsuitable by end of century
+- Slight rise in flowering conditions (increased precipitation variation) but net negative impacts from temperature/drought stress
+- **Shryock et al. (2025)**, *Ecosphere* - Assessed uncertainty in climate refugia forecasts
+
+**Keystone species impacts:**
+- Joshua trees create habitat for other species, increasing Mojave Desert biodiversity
+- 43% decline in bird species diversity linked to Joshua Tree loss (previously documented)
+
+**Sources:**
+- [Ecology Letters publication](https://onlinelibrary.wiley.com/doi/10.1111/ele.14478)
+- [PubMed abstract](https://pubmed.ncbi.nlm.nih.gov/39092581/)
+- [Shryock et al. (2025) Ecosphere](https://esajournals.onlinelibrary.wiley.com/doi/10.1002/ecs2.70308)
+- [Yale E360](https://e360.yale.edu/features/joshua-trees-climate-change)
+- [U.S. National Park Service](https://www.nps.gov/jotr/learn/nature/climate-change.htm)
+
+### Research Status Summary
+
+| Domain | Status | Newest Sources | Confidence |
+|--------|--------|----------------|------------|
+| Heat mortality | UPDATED | Wilson et al. (2024), Nature Comms (2025) | HIGH |
+| Tropical cyclones | CURRENT | NOAA GFDL (2024), Knutson et al. (2020) | HIGH |
+| Biodiversity | UPDATED | IPBES (2024), Yoder et al. (2024) | HIGH |
+| Attribution | UPDATED | 2024 global heatwave data (53.6% attributable) | HIGH |
+| Joshua Tree | UPDATED | >1M trees lost 2020-2023 | HIGH |
+
+**Verification complete:** All core parameters remain valid with 2024-2025 sources. No fundamental changes to modeling approach required.
 
 ---
 
