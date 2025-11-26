@@ -215,6 +215,36 @@ export async function createHistoricalInitialState(
     console.log(`  Temperature anomaly (resourceEconomy.co2): ${historical.climate.tempAnomaly.toFixed(2)}°C`);
     console.log(`  Temperature vs pre-industrial: ${historical.climate.tempVsPreindustrial.toFixed(2)}°C`);
     console.log(`  🔒 Thermal lock enabled: ${historical.climate.tempAnomaly.toFixed(2)}°C → ${HISTORICAL_2024_TEMP}°C over ${HINDCAST_DURATION_MONTHS} months`);
+
+    // CARBON SINK PARAMETERS (Nov 26, 2025 - CO2 CALIBRATION FIX)
+    // Research: research/carbon_sinks_1990_2025_20251126.md
+    // Critique: reviews/carbon_sinks_research_critique_20251126.md (Grade: B+ APPROVED)
+    //
+    // Root cause: Carbon sinks initialized with 2025 values for 1990 start year
+    // Result: CO2 31% too high at 2010 (549 vs 390 ppm)
+    //
+    // 1990 baseline values (IPCC, Global Carbon Budget):
+    // - Ocean absorption: 2.2 ± 0.4 GtC/yr = 8.1 GtCO2/yr
+    // - Land absorption: 1.4 ± 0.7 GtC/yr = 5.1 GtCO2/yr
+    // - Sink saturation: ~0.12 (cumulative 1000 GtCO2 / 8000-10000 baseline capacity)
+    //
+    // 2025 values (already in resourceEconomy.ts defaults):
+    // - Ocean absorption: 10 GtCO2/yr (≈2.7 GtC/yr)
+    // - Land absorption: 11 GtCO2/yr (≈3.0 GtC/yr)
+    // - Sink saturation: 0.30 (30% saturated)
+    //
+    // For hindcast period (1990-2010), override with historical values
+    if (year >= 1990 && year <= 2010) {
+      baseState.resourceEconomy.co2.oceanAbsorption = 8.1;  // GtCO2/yr (2.2 GtC/yr * 3.67)
+      baseState.resourceEconomy.co2.landAbsorption = 5.1;   // GtCO2/yr (1.4 GtC/yr * 3.67)
+      baseState.resourceEconomy.co2.sinkSaturation = 0.12;  // 1000 GtCO2 cumulative / ~8000 baseline
+
+      console.log(`  🌍 Carbon sink parameters (1990 baseline):`);
+      console.log(`    Ocean absorption: ${baseState.resourceEconomy.co2.oceanAbsorption.toFixed(1)} GtCO2/yr (2.2 GtC/yr)`);
+      console.log(`    Land absorption: ${baseState.resourceEconomy.co2.landAbsorption.toFixed(1)} GtCO2/yr (1.4 GtC/yr)`);
+      console.log(`    Sink saturation: ${(baseState.resourceEconomy.co2.sinkSaturation * 100).toFixed(0)}%`);
+      console.log(`    Total sink capacity: ${(baseState.resourceEconomy.co2.oceanAbsorption + baseState.resourceEconomy.co2.landAbsorption).toFixed(1)} GtCO2/yr`);
+    }
   }
 
   // Population (from UN WPP)
@@ -609,6 +639,36 @@ export function initializeHistoricalSimulation(
     baseState.resourceEconomy.co2.temperatureAnomaly = historical.climate.tempAnomaly;
     console.log(`  Temperature anomaly (resourceEconomy.co2): ${historical.climate.tempAnomaly.toFixed(2)}°C`);
     console.log(`  Temperature vs pre-industrial: ${historical.climate.tempVsPreindustrial.toFixed(2)}°C`);
+
+    // CARBON SINK PARAMETERS (Nov 26, 2025 - CO2 CALIBRATION FIX)
+    // Research: research/carbon_sinks_1990_2025_20251126.md
+    // Critique: reviews/carbon_sinks_research_critique_20251126.md (Grade: B+ APPROVED)
+    //
+    // Root cause: Carbon sinks initialized with 2025 values for 1990 start year
+    // Result: CO2 31% too high at 2010 (549 vs 390 ppm)
+    //
+    // 1990 baseline values (IPCC, Global Carbon Budget):
+    // - Ocean absorption: 2.2 ± 0.4 GtC/yr = 8.1 GtCO2/yr
+    // - Land absorption: 1.4 ± 0.7 GtC/yr = 5.1 GtCO2/yr
+    // - Sink saturation: ~0.12 (cumulative 1000 GtCO2 / 8000-10000 baseline capacity)
+    //
+    // 2025 values (already in resourceEconomy.ts defaults):
+    // - Ocean absorption: 10 GtCO2/yr (≈2.7 GtC/yr)
+    // - Land absorption: 11 GtCO2/yr (≈3.0 GtC/yr)
+    // - Sink saturation: 0.30 (30% saturated)
+    //
+    // For hindcast period (1990-2010), override with historical values
+    if (year >= 1990 && year <= 2010) {
+      baseState.resourceEconomy.co2.oceanAbsorption = 8.1;  // GtCO2/yr (2.2 GtC/yr * 3.67)
+      baseState.resourceEconomy.co2.landAbsorption = 5.1;   // GtCO2/yr (1.4 GtC/yr * 3.67)
+      baseState.resourceEconomy.co2.sinkSaturation = 0.12;  // 1000 GtCO2 cumulative / ~8000 baseline
+
+      console.log(`  🌍 Carbon sink parameters (1990 baseline):`);
+      console.log(`    Ocean absorption: ${baseState.resourceEconomy.co2.oceanAbsorption.toFixed(1)} GtCO2/yr (2.2 GtC/yr)`);
+      console.log(`    Land absorption: ${baseState.resourceEconomy.co2.landAbsorption.toFixed(1)} GtCO2/yr (1.4 GtC/yr)`);
+      console.log(`    Sink saturation: ${(baseState.resourceEconomy.co2.sinkSaturation * 100).toFixed(0)}%`);
+      console.log(`    Total sink capacity: ${(baseState.resourceEconomy.co2.oceanAbsorption + baseState.resourceEconomy.co2.landAbsorption).toFixed(1)} GtCO2/yr`);
+    }
   }
 
   // Population (from UN WPP)
