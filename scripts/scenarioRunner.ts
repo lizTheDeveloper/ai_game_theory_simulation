@@ -924,5 +924,58 @@ if (require.main === module) {
   console.log(`\n💾 Result saved to: ${filename}\n`);
 }
 
-// Export for use by compareScenarios.ts
-export { runScenario, extractScenarioResult };
+/**
+ * Run scenario with a custom ScenarioDefinition object (not from catalog)
+ * Used by deployment rate sweep and other experiments that modify scenario parameters
+ */
+function runScenarioWithDef(
+  scenario: ScenarioDefinition,
+  seed: number,
+  maxMonths: number = 360
+): ScenarioResult {
+  console.log(`\n${'='.repeat(80)}`);
+  console.log(`🎭 SCENARIO TEST: ${scenario.id}`);
+  console.log('='.repeat(80));
+  console.log(`Seed: ${seed}`);
+  console.log(`Max months: ${maxMonths}\n`);
+
+  console.log(`📋 Scenario: ${scenario.name}`);
+  console.log(`📝 Description: ${scenario.description}`);
+  console.log(`🔬 Hypothesis: ${scenario.hypothesis}\n`);
+
+  // Create initial state with proper RNG
+  // CRITICAL: Must create engine first to get deterministic RNG
+  const tempEngine = new SimulationEngine({ seed });
+  const rng = tempEngine.getRNG().next.bind(tempEngine.getRNG());
+  const state = createDefaultInitialState(rng);
+
+  // Attach scenario to state (so ApplyScenarioPrioritiesPhase can read it)
+  (state as any).scenario = scenario;
+
+  // Apply scenario modifications
+  applyScenario(state, scenario, rng);
+
+  // Run simulation
+  console.log('\n' + '='.repeat(80));
+  console.log('▶️  Running simulation...');
+  console.log('='.repeat(80) + '\n');
+
+  const engine = new SimulationEngine({ seed });
+  const result = engine.run(state, { maxMonths, checkActualOutcomes: true });
+
+  // Extract scenario result
+  const scenarioResult = extractScenarioResult(
+    scenario,
+    result,
+    seed,
+    maxMonths
+  );
+
+  // Print summary
+  printScenarioSummary(scenarioResult);
+
+  return scenarioResult;
+}
+
+// Export for use by compareScenarios.ts and deploymentRateSweep.ts
+export { runScenario, runScenarioWithDef, extractScenarioResult };

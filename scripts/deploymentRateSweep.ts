@@ -19,8 +19,8 @@
  * - Enhanced tracking: crash stats, GDP trajectory, mortality trajectory, spiral timing
  */
 
-import { runScenario } from './scenarioRunner';
-import { ScenarioResult, SCENARIO_CATALOG } from '../src/types/scenarios';
+import { runScenarioWithDef } from './scenarioRunner';
+import { ScenarioResult, ScenarioDefinition, SCENARIO_CATALOG } from '../src/types/scenarios';
 import * as fs from 'fs';
 
 /**
@@ -109,7 +109,7 @@ interface EnhancedScenarioResult extends ScenarioResult {
  * Create scenario variant with specific deployment rate
  * Modifies base scenario to use sequenced deployment with given gap
  */
-function createRateVariant(baseScenarioId: string, rateName: string): any {
+function createRateVariant(baseScenarioId: string, rateName: string): ScenarioDefinition {
   const baseScenario = SCENARIO_CATALOG[baseScenarioId as keyof typeof SCENARIO_CATALOG];
   if (!baseScenario) {
     throw new Error(`❌ Unknown base scenario: ${baseScenarioId}`);
@@ -252,8 +252,8 @@ function runConfiguration(
   console.log(`${'='.repeat(80)}`);
 
   try {
-    // Run scenario (uses scenarioRunner.ts infrastructure)
-    const baseResult = runScenario(scenario.id, seed, maxMonths);
+    // Run scenario with modified definition (uses scenarioRunner.ts infrastructure)
+    const baseResult = runScenarioWithDef(scenario, seed, maxMonths);
 
     // Enhance with deployment rate metadata
     // Note: We pass null for finalState since we don't have access to it from runScenario
