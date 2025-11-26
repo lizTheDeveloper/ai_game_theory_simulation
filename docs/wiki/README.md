@@ -70,6 +70,25 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📄 **Files:** `tests/integration/game-layer/critical-juncture-detection.test.ts`, `tests/integration/game-layer/scenario-definitions.test.ts`
 - **Status:** IN PROGRESS - state creation and scenario application need debugging
 
+**Nov 26: Phase 6 - Demographics Calibration COMPLETE** (commit b5bf295 / 9450aec)
+- ✅ **FIX:** 1990 scenarios now initialize with correct historical fertility rates (was using 2025 values)
+- **Root Cause:** Previous implementation initialized 1990 with TFR ~2.3 (2025 global), but historical 1990 TFR was 3.2-3.3 (40% higher)
+- **Regional TFR Values (1990, UN WPP 2024):**
+  - Sub-Saharan Africa: 6.4 | South Asia: 4.4 | East Asia: 2.3 | Europe: 1.8
+  - Middle East & North Africa: 4.7 | Southeast Asia: 3.6 | Latin America: 3.4
+  - North America: 2.0 | Oceania: 2.6 | Central Asia: 2.7
+- **AI Agent Flag Fix:** `includeAIAgents: false` now properly enforced (agents were spawning despite flag)
+- **Implementation:**
+  - `historicalInitialization.ts`: Added `REGIONAL_TFR_1990` initialization for both sync/async versions
+  - `regionalPopulations.ts`: Skip fertility recalculation in historical mode, skip historical CBR scaling when fertility already historical
+  - Added `_skipHistoricalBirthRateScaling` flag to prevent double-counting
+- **Test Validation:** All 4 tests pass (regional TFR, AI agents = 0, scaling flag, initial population = 5.32B)
+- **Expected Impact:** Population overshoot reduced from 39.4% to <10% (pending Phase 7 validation)
+- 📄 **DevLog:** `devlogs/phase6_fertility_fix_20251126.md` (293 lines)
+- 📄 **Research:** `research/demographics_1990_hindcast_20251126.md` (393 lines, Cynthia)
+- 📄 **Test:** `scripts/test_phase6_fertility.ts`
+- **Next:** Phase 7 - Re-run hindcast validation with corrected demographics
+
 **Nov 26: Climate Mini-Hindcast Phase 4 FAIL - Emissions Calibration Required** (commit 8bc84d6)
 - ❌ **VERDICT: FAIL** - CO2 deviation 17.53% vs 5% threshold
 - **Validation Results (N=10 runs):**
@@ -83,8 +102,8 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   3. AI agents spawning despite `includeAIAgents: false` flag
 - **Key Insight:** Temperature matches despite CO2 overshoot = climate mechanics CORRECT, calibration inputs WRONG
 - **Follow-up Phases (HIGH priority):**
-  - Phase 5: Historical Emissions Forcing Mode (Roy) - GCP lookup table
-  - Phase 6: Demographics Calibration (Roy + Cynthia) - 1990 fertility rates
+  - Phase 5: Historical Emissions Forcing Mode (Roy) - GCP lookup table ✅ MERGED
+  - Phase 6: Demographics Calibration (Roy + Cynthia) - 1990 fertility rates ✅ MERGED
   - Phase 7: Re-run Validation (Priya) - Full validation with fixes
 - 📄 **Report:** `reviews/climate_hindcast_validation_20251126.md` (24KB analysis)
 
