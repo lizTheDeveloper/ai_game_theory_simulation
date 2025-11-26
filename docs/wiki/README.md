@@ -44,6 +44,13 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **Research Validation:** Anthropic Dec 2024 (arXiv:2412.14093), Apollo Sep 2025, Bostrom 2014, Omohundro 2008
 - 📄 **Files:** `tests/integration/system-validation/ai-agent-system.test.ts`
 
+**Nov 26: M-1 Dead Code Cleanup - Extinction Phase Consolidation** (commit 8ef9b82)
+- 🧹 **Cleanup:** Removed 2 dead phase files (~280 lines) left from Nov 9 consolidation
+- **Files Deleted:** `ExtinctionTriggersPhase.ts`, `ExtinctionProgressPhase.ts` (functionality in `ExtinctionSystemPhase` since Nov 9)
+- **References Updated:** index.ts, outcomeClassifier.ts, UnknownUnknownPhase.ts
+- ✅ **Validation:** TypeScript clean, no behavior change
+- 📄 **Archive:** `plans/completed/C1_M1_RESOLVED_20251126.md`
+
 **Nov 26: CRITICAL-1 Fix - Remove Fabricated Coordination Failure Probability** (commits bf45de8, 950ab53)
 - 🚨 **RESEARCH INTEGRITY FIX:** Discovered and removed fabricated numerical probability
 - **Problem:** CoordinatedDeploymentPhase used 10% coordination failure probability (2-5x mortality spike) citing Hammond et al. 2025 (arXiv:2502.14143)
@@ -1211,7 +1218,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **Changes:**
   - AIAgentActionsPhase.ts: Added missing newlines before variable declarations
   - ComputeAllocationPhase.ts: Added missing newlines before variable declarations
-  - ExtinctionProgressPhase.ts: Added missing newline before extinctionProgress declaration
+  - ExtinctionProgressPhase.ts: Added missing newline before extinctionProgress declaration (**FILE DELETED Nov 26**: consolidated into ExtinctionSystemPhase)
   - ExtinctionSystemPhase.ts: Added missing newlines before extinctionCheck and extinctionProgress declarations
   - CyberSecurityPhase.ts: Added missing newline and fixed effects.breachedAgents type (convert array to comma-separated string)
 - ✅ **Validation:** All variables properly declared with newlines separating statements
@@ -8145,7 +8152,7 @@ According to research (Acemoglu & Robinson 2001, Svolik 2012):
 - Most history is structurally determined (90%)
 - Only ~10% allows genuine agency
 
-**Phase Order**: 29 (after ExogenousShockPhase, before ExtinctionTriggersPhase)
+**Phase Order**: 29 (after ExogenousShockPhase, before ExtinctionSystemPhase)
 
 **Performance Impact**: Negligible (<1ms per month, <0.1% of total simulation time)
 
@@ -8922,10 +8929,8 @@ The simulation runs via a **phase-based architecture** with **99 phases** execut
 - CrisisDetectionPhase (36.5): Detect active crises
 
 **37.0-40.0: Endgame & Catastrophes**
-- ExtinctionTriggersPhase (37.0): Check extinction conditions
-- ExtinctionProgressPhase (38.0): Progress extinction events
+- **ExtinctionSystemPhase (37.0)**: CONSOLIDATED extinction monitoring - triggers, progress, and scenarios (**CONSOLIDATED Nov 9**: replaces ExtinctionTriggersPhase + ExtinctionProgressPhase + CatastrophicScenariosPhase)
 - TechnologyDiffusionPhase (39.0): Tech spread across regions
-- CatastrophicScenariosPhase (40.5): Catastrophic event handling
 
 **22.0-24.0: Special Phases & Modeling**
 - BenchmarkEvaluationsPhase (22.5): AI evaluations, sandbagging detection
@@ -8970,8 +8975,7 @@ The simulation runs via a **phase-based architecture** with **99 phases** execut
   - **Circular dependency detection:** Added validation to PhaseOrchestrator - catches cycles at startup
   - **Order validation:** Dependencies must have lower order numbers than dependent phases
   - **Critical phases updated:**
-    - ExtinctionTriggersPhase → bayesian_mortality_resolution, climate_impact_cascade, crisis-detection, nuclear_winter
-    - ExtinctionProgressPhase → extinction-triggers
+    - ExtinctionSystemPhase → bayesian_mortality_resolution, climate_system, crisis-detection (**CONSOLIDATED Nov 9**: replaces ExtinctionTriggersPhase + ExtinctionProgressPhase)
     - CrisisDetectionPhase → bayesian_mortality_resolution, climate_impact_cascade, social-stability, outcome-probabilities
     - OutcomeProbabilitiesPhase → quality-of-life, bayesian_mortality_resolution, social-stability, environmental_feedback
     - AILifecyclePhase → compute-growth, compute-allocation, alignment_dynamics
@@ -9157,20 +9161,20 @@ With 95 phases executing each simulation step (reduced from 116), phase ordering
 Instead of relying on fragile decimal ordering, phases now declare explicit dependencies:
 
 ```typescript
-export class ExtinctionTriggersPhase implements SimulationPhase {
-  readonly id = 'extinction-triggers';
-  readonly name = 'Extinction Triggers Check';
+export class ExtinctionSystemPhase implements SimulationPhase {
+  readonly id = 'extinction-system';
+  readonly name = 'Extinction System';
   readonly order = 37.0;
 
-  // DEPENDENCIES (Nov 6, 2025): Must run after all risk accumulation
+  // DEPENDENCIES: Must run after all risk accumulation
+  // CONSOLIDATED Nov 9, 2025: Replaces ExtinctionTriggersPhase + ExtinctionProgressPhase
   readonly dependencies = [
     'bayesian_mortality_resolution',  // Order 35.0: Population mortality resolved
-    'climate_impact_cascade',         // Order 34.0: Climate collapse detection
+    'climate_system',                 // Order 34.0: Climate collapse detection
     'crisis-detection',               // Order 36.0: Crisis state assessed
-    'nuclear_winter',                 // Order 252: Nuclear winter effects calculated
   ] as const;
 
-  execute(state: GameState, rng: RNGFunction): PhaseResult {
+  execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     // Phase logic here...
   }
 }
@@ -9195,7 +9199,7 @@ export class ExtinctionTriggersPhase implements SimulationPhase {
 ```
 ❌ PHASE DEPENDENCY ORDER VIOLATION
 
-   Phase: ExtinctionTriggersPhase (extinction-triggers)
+   Phase: ExtinctionSystemPhase (extinction-system)
    Order: 37.0
    Depends on: CrisisDetectionPhase (crisis-detection)
    Dependency order: 36.0
@@ -9210,7 +9214,7 @@ export class ExtinctionTriggersPhase implements SimulationPhase {
 ```
 ❌ INVALID PHASE DEPENDENCY
 
-   Phase: ExtinctionTriggersPhase (extinction-triggers, order 37.0)
+   Phase: ExtinctionSystemPhase (extinction-system, order 37.0)
    Missing dependency: invalid-phase-id
 
    This phase declares a dependency on 'invalid-phase-id' but no phase with that
@@ -9229,7 +9233,7 @@ export class ExtinctionTriggersPhase implements SimulationPhase {
 
 **Critical phases with dependencies:**
 - **Mortality chain:** BayesianMortalityResolutionPhase, MortalityStabilizersPhase, ClimateImpactCascadePhase
-- **Extinction chain:** ExtinctionTriggersPhase → ExtinctionProgressPhase → TechnologyDiffusionPhase
+- **Extinction chain:** ExtinctionSystemPhase → TechnologyDiffusionPhase (**CONSOLIDATED Nov 9**: ExtinctionTriggersPhase + ExtinctionProgressPhase merged)
 - **Crisis detection:** CrisisDetectionPhase (depends on mortality, climate, social stability, outcomes)
 - **Outcomes:** OutcomeProbabilitiesPhase (depends on QoL, mortality, social, environmental)
 - **AI lifecycle:** AILifecyclePhase (depends on compute growth, allocation, alignment)
