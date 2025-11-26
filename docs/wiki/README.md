@@ -2726,6 +2726,8 @@ Fixed critical threshold mismatch: simulation used theoretical 35°C limit inste
 
 **Research:** Vecellio et al. (2022) empirical experiments (TRL 8) vs Raymond et al. (2020) theoretical 35°C. People die at 30.5°C in practice, not 35°C in theory.
 
+**Verification:** Comprehensive research verification completed (commit 6624219, Nov 26, 2025). 11 peer-reviewed sources (2017-2025, TRL 7-9) validate 30.5-31.2°C thresholds and historical mortality calibration. See `research/wet_bulb_temperature_verification_20251126.md` for full validation including citation verification, historical heatwave cross-validation (2003 Europe, 2010 Russia, 2015 Pakistan, 2021 PNW), and acclimatization/demographic nuances. **Status:** VALIDATED WITH CAVEATS - conservative bias (2-3x high) appropriate for research simulation.
+
 **Files:** `src/types/wetBulbTemperature.ts`, `src/simulation/wetBulbEvents.ts`, `src/simulation/config/centralConfig.ts`
 
 ### November 6, 2025
