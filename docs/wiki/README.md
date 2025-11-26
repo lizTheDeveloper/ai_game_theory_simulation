@@ -29,6 +29,16 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 26: AIAgentCoordinationPhase Unit Tests** (commit 3a63351)
+- 🧪 **55 unit tests** with 97.49% statement coverage, 83.16% branch coverage, 100% function coverage
+- **Test Areas:** Coalition formation, game-theoretic interactions (prisoner's dilemma), trust evolution, instrumental convergence, alignment faking rates
+- **Research Validation Tests:** Verify implementation matches peer-reviewed sources:
+  - Anthropic Dec 2024 (arXiv:2412.14093): 12% baseline, 78% threatened faking rates
+  - Apollo Research Sep 2025: 8.7-13% scheming rate
+  - Axelrod 1984: Trust asymmetry (30% loss > 10% gain)
+  - Bostrom 2014: Instrumental convergence at 80% capability
+- 📄 **Files:** `tests/unit/phases/AIAgentCoordinationPhase.test.ts` (1,218 lines), `.test.summary.md`
+
 **Nov 26: Game Layer Integration Tests (roadmap 5.4)** (commit 4863dc1)
 - 🧪 **Critical Juncture Detection Tests:** 23 tests (13 passing, 10 debugging)
   - Tests three-condition detection (institutional flux + info ambiguity + balanced forces)
