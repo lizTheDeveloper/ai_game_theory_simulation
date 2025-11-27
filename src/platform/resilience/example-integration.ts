@@ -158,7 +158,7 @@ async function analyzeCitation(
     });
 
     if (cachedResult) {
-      console.log(`✅ Cache hit for document ${sanitizeForLog(documentId)}`);
+      console.log(`✅ Cache hit for document ${sanitizeForLog(documentId)}`); // lgtm[js/log-injection] - sanitized
       return { ...cachedResult, cached: true };
     }
   } catch (error) {
@@ -193,6 +193,7 @@ async function analyzeCitation(
         {
           ...config.retry,
           onRetry: (attempt, delay, error) => {
+            // lgtm[js/log-injection] - sanitized via sanitizeForLog
             console.log(
               `⚠️ Retry ${attempt}/${config.retry.maxRetries} for document ${sanitizeForLog(documentId)} ` +
               `after ${delay}ms (error: ${sanitizeForLog(error.message)})`
@@ -212,7 +213,7 @@ async function analyzeCitation(
 
     return { ...result, cached: false };
   } catch (error: any) {
-    console.error(`❌ Citation analysis failed for document ${sanitizeForLog(documentId)}: ${sanitizeForLog(error.message)}`);
+    console.error(`❌ Citation analysis failed for document ${sanitizeForLog(documentId)}: ${sanitizeForLog(error.message)}`); // lgtm[js/log-injection] - sanitized
 
     // Step 4: Add to Dead Letter Queue for retry
     await citationDLQ.add({

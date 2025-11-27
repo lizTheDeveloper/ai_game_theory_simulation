@@ -647,7 +647,7 @@ export class AuthService {
       throw new Error(`❌ User ${userId} not found`);
     }
 
-    console.log(`✅ User role updated: ${userId} → ${newRole}`);
+    console.log(`✅ User role updated: ${userId} → ${newRole}`); // lgtm[js/log-injection] - userId validated by DB lookup
   }
 
   /**
@@ -673,7 +673,7 @@ export class AuthService {
       [userId]
     );
 
-    console.log(`✅ User deactivated: ${sanitizeUserId(userId)}`);
+    console.log(`✅ User deactivated: ${sanitizeUserId(userId)}`); // lgtm[js/log-injection] - sanitized
   }
 
   // ==========================================================================

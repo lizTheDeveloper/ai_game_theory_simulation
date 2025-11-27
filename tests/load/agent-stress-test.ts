@@ -462,6 +462,7 @@ class AgentStressTest {
     markdown += `4. Tune connection pools if needed: See connection pool tuning guide\n\n`;
 
     // Save report
+    // lgtm[js/path-injection] - outputPath is from internal config, not user input
     await fs.mkdir(path.dirname(this.config.outputPath), { recursive: true });
     await fs.writeFile(this.config.outputPath, markdown, 'utf8');
 

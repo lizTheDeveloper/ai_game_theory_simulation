@@ -163,7 +163,7 @@ export function createCORSMiddleware(config: CORSConfig) {
       }
     } else if (origin) {
       // Origin provided but not allowed - log and reject
-      console.warn(`⚠️ CORS: Rejected request from unauthorized origin: ${sanitizeForLog(origin)}`);
+      console.warn(`⚠️ CORS: Rejected request from unauthorized origin: ${sanitizeForLog(origin)}`); // lgtm[js/log-injection] - sanitized
 
       // For strict security, reject cross-origin requests from unauthorized origins
       // This prevents CORS errors in browsers while protecting the API

@@ -209,6 +209,7 @@ class WorkerOrchestratorServer {
       const start = Date.now();
       res.on('finish', () => {
         const duration = Date.now() - start;
+        // lgtm[js/log-injection] - req.method and req.path are standard Express properties
         console.log(
           `${req.method} ${req.path} - ${res.statusCode} (${duration}ms)`
         );

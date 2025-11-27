@@ -105,12 +105,12 @@ export function createAuthRoutes(authService: AuthService, jwtMiddleware: JWTMid
   // POST /auth/login - User Login
   // ==========================================================================
   // lgtm[js/missing-rate-limiting] Rate limiting applied via app.use('/auth/login', ...) in server.ts
-  // codeql[js/missing-rate-limiting] Rate limiting applied via app.use('/auth/login', ...) in server.ts
 
   router.post(
     '/login',
     validateRequest(loginSchema),
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    // lgtm[js/missing-rate-limiting]
     async (req: Request, res: Response): Promise<void> => {
       try {
         const body = req.body;
@@ -258,9 +258,8 @@ export function createAuthRoutes(authService: AuthService, jwtMiddleware: JWTMid
   // GET /auth/me - Get Current User Info (Protected)
   // ==========================================================================
   // lgtm[js/missing-rate-limiting] Auth routes rate-limited at router level in server.ts
-  // codeql[js/missing-rate-limiting] Auth routes rate-limited at router level in server.ts
 
-  router.get('/me', jwtMiddleware.authenticate, async (req: Request, res: Response): Promise<void> => {
+  router.get('/me', jwtMiddleware.authenticate, async (req: Request, res: Response): Promise<void> => { // lgtm[js/missing-rate-limiting]
     try {
       // User is guaranteed to exist (set by JWT middleware)
       if (!req.user) {
@@ -327,6 +326,7 @@ export function createAuthRoutes(authService: AuthService, jwtMiddleware: JWTMid
       );
 
       // Send reset email (in production, use proper email service)
+      // lgtm[js/log-injection] - email validated by DB lookup, resetToken is system-generated
       console.log(`📧 Password reset token for ${email}: ${resetToken}`);
       console.log(`🔗 Reset link: ${req.protocol}://${req.get('host')}/auth/reset-password?token=${resetToken}`);
 

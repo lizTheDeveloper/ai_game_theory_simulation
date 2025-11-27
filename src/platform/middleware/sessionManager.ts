@@ -170,7 +170,7 @@ export class SessionManager {
     const sessionAge = now.getTime() - new Date(session.createdAt).getTime();
     if (sessionAge > this.config.absoluteTimeout * 1000) {
       await this.destroySession(sessionId);
-      console.warn(`⚠️ Session expired (absolute timeout): ${sanitizeForLog(sessionId)}`);
+      console.warn(`⚠️ Session expired (absolute timeout): ${sanitizeForLog(sessionId)}`); // lgtm[js/log-injection] - sanitized
       return null;
     }
 
@@ -178,7 +178,7 @@ export class SessionManager {
     const inactiveDuration = now.getTime() - new Date(session.lastActivityAt).getTime();
     if (inactiveDuration > this.config.inactivityTimeout * 1000) {
       await this.destroySession(sessionId);
-      console.warn(`⚠️ Session expired (inactivity): ${sanitizeForLog(sessionId)}`);
+      console.warn(`⚠️ Session expired (inactivity): ${sanitizeForLog(sessionId)}`); // lgtm[js/log-injection] - sanitized
       return null;
     }
 
@@ -224,7 +224,7 @@ export class SessionManager {
       [sessionId]
     );
 
-    console.log(`✅ Session destroyed: ${sanitizeForLog(sessionId)}`);
+    console.log(`✅ Session destroyed: ${sanitizeForLog(sessionId)}`); // lgtm[js/log-injection] - sanitized
   }
 
   /**

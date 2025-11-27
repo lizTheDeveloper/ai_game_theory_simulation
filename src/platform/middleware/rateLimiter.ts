@@ -184,6 +184,7 @@ export class RateLimiter {
       if (violationCount >= this.config.blockAfterViolations!) {
         // Block IP
         await this.blockIdentifier(identifier);
+        // lgtm[js/log-injection] - sanitized via sanitizeForLog
         console.warn(
           `🚨 Rate limit: Blocked ${sanitizeForLog(identifier)} after ${violationCount} violations`
         );
@@ -364,6 +365,7 @@ export function createRateLimitMiddleware(
       if (!result.allowed) {
         res.setHeader('Retry-After', result.retryAfter!.toString());
 
+        // lgtm[js/log-injection] - sanitized via sanitizeForLog, sanitizeMethod, sanitizePath
         console.warn(
           `⚠️ Rate limit exceeded: ${sanitizeForLog(identifier)} (${sanitizeMethod(req.method)} ${sanitizePath(req.path)})`
         );
