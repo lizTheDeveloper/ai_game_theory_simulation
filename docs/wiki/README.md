@@ -29,6 +29,17 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 27: CRITICAL FIX - TechCoolingPhase Registration** (commit 76b069b)
+- 🔧 **Orphaned Phase Bug:** TechCoolingPhase.ts existed but was NEVER registered in engine.ts
+- **Impact:** All geoengineering cooling effects were completely ignored - explains H-6 temperature anticorrelation bug (CO2 rises but temp doesn't cool)
+- **Phase Order Fix:**
+  - TechTreePhase (12.5): Accumulates cooling → `technologyEffects.coolingFromGeoengineering`
+  - ResourceEconomyPhase (17.0): Recalculates `temperatureAnomaly` from CO2 (overwrites direct changes)
+  - **TechCoolingPhase (17.5):** Applies accumulated cooling AFTER recalculation ← NOW REGISTERED
+- **Fix:** Added import + registration in engine.ts (lines 80, 553), exported from phases/index.ts (line 79)
+- 📄 **Files:** `engine.ts`, `phases/index.ts`, `TechCoolingPhase.ts`
+- **Severity:** CRITICAL - affects all climate tech validation
+
 **Nov 27: VolcanicForcingPhase Added** (commits 6f3037c, previous)
 - 🌋 **New Phase (16.5):** Models stratospheric aerosol optical depth (AOD) from volcanic eruptions
 - **Purpose:** Historical validation for 1990-2010 hindcast - captures Mount Pinatubo cooling (~0.3°C)
@@ -8686,7 +8697,8 @@ The simulation runs via a **phase-based architecture** with **100 phases** execu
 - FamineSystemPhase (21.6): Famine progression, mortality (**MOVED Nov 25** - was 21.5, collision fix)
 - MemeticEvolutionPhase (22.0): Meme transmission, polarization
 - MADDeterrencePhase (23.0): Nuclear deterrence, escalation
-- ResourceEconomyPhase (24.0): Resource extraction, depletion
+- ResourceEconomyPhase (17.0): Resource extraction, depletion (**REORDERED** - was 24.0)
+- **TechCoolingPhase (17.5)**: Applies accumulated geoengineering cooling AFTER ResourceEconomyPhase recalculates temperature (**CRITICAL FIX Nov 27, 2025** - phase existed but was never registered)
 - ResourceTechnologyPhase (24.5): Tech effects on resources
 - **GovernmentResponsePhase (25.0)**: Policy responses with comprehension lag (**NEW Oct 20**)
 - **PolicyImplementationPhase (25.5)**: Policy lifecycle tracking - sigmoid ramp-up, political will decay, abandonment risk (**NEW Oct 30**)
