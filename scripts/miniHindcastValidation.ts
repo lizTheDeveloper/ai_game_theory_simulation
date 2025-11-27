@@ -224,7 +224,16 @@ async function runMiniHindcast(seed: number = 42) {
     // Annual emissions validation (at December of each year)
     if (currentMonth === 12 && ANNUAL_EMISSIONS_DATA[currentYear] !== undefined) {
       const observedEmissions = ANNUAL_EMISSIONS_DATA[currentYear];
-      const simulatedEmissions = state.resourceEconomy.co2.annualEmissionsGtCO2;
+      const simulatedEmissions = state.resourceEconomy.co2.annualEmissions;
+
+      // Defensive assertion: emissions should NEVER be NaN (indicates real bug)
+      if (!isFinite(simulatedEmissions)) {
+        throw new Error(
+          `❌ CRITICAL: annualEmissions is ${simulatedEmissions} at year ${currentYear} month ${currentMonth}. ` +
+          `This indicates a bug in climate/resource phases. Check updateCO2System() in resourceDepletion.ts`
+        );
+      }
+
       const absError = simulatedEmissions - observedEmissions;
       const pctError = (absError / observedEmissions) * 100;
 

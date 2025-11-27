@@ -63,11 +63,11 @@ export class TechCoolingPhase implements SimulationPhase {
     state.technologyEffects.coolingFromGeoengineering = 0;
 
     return {
-      success: true,
-      stateChanged: cooling > 0,
-      message: cooling > 0
-        ? `✅ Applied ${cooling.toFixed(2)}°C geoengineering cooling`
-        : undefined,
+      events: [],
+      metadata: {
+        coolingApplied: cooling,
+        message: cooling > 0 ? `Applied ${cooling.toFixed(2)}°C geoengineering cooling` : undefined,
+      },
     };
   }
 }
