@@ -1223,9 +1223,10 @@ function updateCO2System(state: GameState, resources: ResourceEconomy): void {
     }
   );
 
-  // Convert to ppm (2.13 Gt CO2 = 1 ppm)
+  // Convert to ppm (2.13 GtC = 1 ppm, or 7.82 GtCO2 = 1 ppm)
+  // netEmissions is in GtCO2/yr, so use 7.82 conversion factor (not 2.13)
   const ppmIncrease = assertFinite(
-    netEmissions / 2.13,
+    netEmissions / 7.82,
     {
       location: 'updateCO2System',
       valueName: 'ppmIncrease',
