@@ -1,6 +1,7 @@
 #!/bin/bash
 # Install Autonomous Worker Systemd Services
 # Run this script to set up the autonomous worker system
+# NOTE: For multi-worker setup, run /home/user/satu/shared/install-services.sh instead
 
 set -e
 
@@ -18,13 +19,47 @@ if [ "$EUID" -ne 0 ]; then
   exit 1
 fi
 
+# Check if multi-worker setup exists
+if [ -d "/home/user/satu" ]; then
+  echo "⚠️  WARNING: Multi-worker setup detected at /home/user/satu"
+  echo "   Use /home/user/satu/shared/install-services.sh instead"
+  echo "   This legacy installer is for single-repo setup only"
+  echo ""
+  read -p "Continue anyway? (y/N): " -n 1 -r
+  echo
+  if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+    echo "❌ Aborted"
+    exit 1
+  fi
+fi
+
 echo "✅ Running as root"
 echo "📁 Project root: $PROJECT_ROOT"
 echo ""
 
-# Copy service files
+# Check for API key in service files
+if [ -z "$ANTHROPIC_API_KEY" ]; then
+  echo "⚠️  WARNING: ANTHROPIC_API_KEY not set"
+  echo "   Service files contain placeholder %ANTHROPIC_API_KEY%"
+  echo "   Export API key before running: export ANTHROPIC_API_KEY=sk-..."
+  echo ""
+  read -p "Continue without API key replacement? (y/N): " -n 1 -r
+  echo
+  if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+    echo "❌ Aborted"
+    exit 1
+  fi
+fi
+
+# Copy service files (replace API key if present)
 echo "📋 Installing service files..."
-cp "$SCRIPT_DIR"/*.service /etc/systemd/system/
+for service_file in "$SCRIPT_DIR"/*.service; do
+  if [ -n "$ANTHROPIC_API_KEY" ]; then
+    sed "s|%ANTHROPIC_API_KEY%|$ANTHROPIC_API_KEY|g" "$service_file" > "/etc/systemd/system/$(basename "$service_file")"
+  else
+    cp "$service_file" /etc/systemd/system/
+  fi
+done
 cp "$SCRIPT_DIR"/*.timer /etc/systemd/system/
 echo "✅ Service files copied to /etc/systemd/system/"
 echo ""

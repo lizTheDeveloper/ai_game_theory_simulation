@@ -89,6 +89,15 @@ export class BifurcationLogicPhase implements SimulationPhase {
 
     // CRITICAL-1 FIX: Validate ALL inputs before calculation to catch NaN propagation early
     // Each input must be finite AND non-negative (except pollutionLevel which must be [0,1])
+    // HINDCAST DIAGNOSTIC: Add detailed logging for months 140-150 (year 2002 crash window)
+    if (state.currentMonth >= 140 && state.currentMonth <= 150) {
+      console.log(`\n🔍 HINDCAST DIAGNOSTIC Month ${state.currentMonth}:`);
+      console.log(`  climateStability: ${climateStability} (${typeof climateStability})`);
+      console.log(`  biodiversityIndex: ${biodiversityIndex} (${typeof biodiversityIndex})`);
+      console.log(`  resourceReserves: ${resourceReserves} (${typeof resourceReserves})`);
+      console.log(`  pollutionLevel: ${pollutionLevel} (${typeof pollutionLevel})`);
+    }
+
     const climateStabilityValid = assertFinite(climateStability, {
       location: 'BifurcationLogicPhase.calculateProximities',
       valueName: 'climateStability',

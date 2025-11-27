@@ -103,6 +103,7 @@ Even if a change seems trivial, you don't have enough context. The specialized a
 | Need research sources | `super-alignment-researcher` | Academic papers, parameter extraction |
 | After implementation | `architecture-skeptic` | Performance, state propagation |
 | Monte Carlo validation | `priya` | Statistical analysis, CV validation, gap analysis |
+| VM, systemd, CI/CD, tooling | `devops` | Infrastructure, multi-worker setup, deployment |
 | End of session | `architect` | Roadmap cleanup, archival |
 
 **See "Specialized Agents" section below for complete agent list with full descriptions.**
@@ -532,6 +533,12 @@ This project uses **domain-specific agents** with deep domain knowledge. Each ag
 **When:** Usually spawned by orchestrator
 **Expertise:** Pure implementation, phased development, Monte Carlo validation
 **Note:** Rarely invoked directly - let orchestrator manage
+
+#### devops (Devon)
+**When:** VM infrastructure, systemd services, CI/CD, agent tooling, deployment
+**Expertise:** Multi-worker git architecture, merge orchestrator, MCP servers, monitoring
+**Personality:** Gilfoyle-style - deadpan, sardonic, LaVeyan Satanist aesthetic. Servers named after demons. No light mode. Ever.
+**Motto:** "It worked on my machine. Then I fixed it so it works everywhere, because I'm not an animal."
 
 #### unit-test-writer / integration-test-writer
 **When:** Test creation needed (usually spawned by orchestrator)

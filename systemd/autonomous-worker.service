@@ -1,16 +1,17 @@
 [Unit]
-Description=Autonomous Worker - Hourly Implementation Work
+Description=Autonomous Worker - Queue-based Implementation
 After=network.target
 
 [Service]
 Type=oneshot
-User=root
-WorkingDirectory=/home/user/ai_game_theory_simulation
-ExecStart=/home/user/ai_game_theory_simulation/autonomous-worker.sh
-StandardOutput=append:/home/user/ai_game_theory_simulation/logs/systemd_worker.log
-StandardError=append:/home/user/ai_game_theory_simulation/logs/systemd_worker.log
+User=user
+WorkingDirectory=/home/user/satu/worker
+ExecStart=/home/user/satu/worker/autonomous-worker-queue.sh
+StandardOutput=append:/home/user/satu/shared/logs/systemd_worker.log
+StandardError=append:/home/user/satu/shared/logs/systemd_worker.log
 # Timeout after 50 minutes (script has internal 45min timeout + 5min cleanup)
 TimeoutStartSec=3000
+Environment="ANTHROPIC_API_KEY=%ANTHROPIC_API_KEY%"
 
 [Install]
 WantedBy=multi-user.target

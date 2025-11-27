@@ -65,7 +65,7 @@ print(f"📤 Posting #{next_post['id']} (type: {next_post.get('type', 'single')}
 
 # Login to Bluesky
 client = Client()
-client.login('aethrix.bsky.social', 'ether matrix seraph escape')
+client.login('aethrix.bsky.social', '67 ether matrix seraph escape')
 
 # Post based on type
 post_type = next_post.get('type', 'single')

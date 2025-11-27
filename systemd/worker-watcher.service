@@ -4,12 +4,13 @@ After=network.target
 
 [Service]
 Type=oneshot
-User=root
-WorkingDirectory=/home/user/ai_game_theory_simulation
-ExecStart=/home/user/ai_game_theory_simulation/scripts/autonomous-worker-watcher.sh
-StandardOutput=append:/home/user/ai_game_theory_simulation/logs/systemd_watcher.log
-StandardError=append:/home/user/ai_game_theory_simulation/logs/systemd_watcher.log
+User=user
+WorkingDirectory=/home/user/satu/shared
+ExecStart=/home/user/satu/shared/scripts/autonomous-worker-watcher.sh
+StandardOutput=append:/home/user/satu/shared/logs/systemd_watcher.log
+StandardError=append:/home/user/satu/shared/logs/systemd_watcher.log
 TimeoutStartSec=600
+Environment="ANTHROPIC_API_KEY=%ANTHROPIC_API_KEY%"
 
 [Install]
 WantedBy=multi-user.target

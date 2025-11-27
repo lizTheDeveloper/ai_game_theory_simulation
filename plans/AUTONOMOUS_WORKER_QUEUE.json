@@ -15,7 +15,15 @@
       "createdAt": "2025-11-26T04:30:00Z",
       "claimedBy": null,
       "claimedAt": null,
-      "description": "30% crash rate at months 142-146 (Year 2002). environmentalHealth becomes NaN, propagates to dependent systems."
+      "description": "30% crash rate at months 142-146 (Year 2002). environmentalHealth becomes NaN, propagates to dependent systems.",
+      "acceptanceCriteria": [
+        "All 10 hindcast runs complete without crashes",
+        "No NaN values in environmentalHealth at months 142-146",
+        "environmentalHealth stays within valid range [0, 100]",
+        "Root cause identified and documented in commit message"
+      ],
+      "validationCommand": "npx tsx scripts/hindcastValidation.ts --runs=10 --start=1990 --end=2010 --check-environmental-health",
+      "validationStatus": "FAILED"
     },
     {
       "id": "HIGH-2",
@@ -32,7 +40,15 @@
       "createdAt": "2025-11-26T04:30:00Z",
       "claimedBy": null,
       "claimedAt": null,
-      "description": "Hindcast validation failing CO2 criteria. Observed 2010: 390 ppm CO2. Simulated 2010: 437 ppm CO2. Phase 8-9 carbon sink temporal evolution overcorrected."
+      "description": "Hindcast validation failing CO2 criteria. Observed 2010: 390 ppm CO2. Simulated 2010: 437 ppm CO2. Phase 8-9 carbon sink temporal evolution overcorrected.",
+      "acceptanceCriteria": [
+        "Simulated 2010 CO2 within ±5% of observed 390 ppm (370.5-409.5 ppm)",
+        "Hindcast validation passes CO2 criteria",
+        "Carbon sink saturation parameters documented with peer-reviewed justification",
+        "No regression in 1990 baseline accuracy"
+      ],
+      "validationCommand": "npx tsx scripts/hindcastValidation.ts --runs=10 --start=1990 --end=2010 --check-co2-accuracy",
+      "validationStatus": null
     },
     {
       "id": "HIGH-3",
@@ -51,14 +67,23 @@
       "claimedAt": "2025-11-26T08:00:00Z",
       "completedAt": "2025-11-26T23:20:00Z",
       "completedBy": "devon-local",
-      "description": "Infrastructure redesign for parallel worker execution + task coordination. Multi-repo workspace, systemd services, priority queue implementation. PHASE 1 COMPLETE."
+      "description": "Infrastructure redesign for parallel worker execution + task coordination. Multi-repo workspace, systemd services, priority queue implementation. PHASE 1 COMPLETE.",
+      "acceptanceCriteria": [
+        "Multi-repo workspace created (/srv/satu/worker-01, worker-02, worker-03)",
+        "systemd services operational for 3 workers",
+        "Priority queue system operational (select/claim/release scripts)",
+        "Task selection demonstrates priority ordering (CRITICAL > HIGH > MEDIUM > LOW)",
+        "No git contention during parallel worker execution"
+      ],
+      "validationCommand": "npx tsx scripts/autonomousWorkerSelectTask.ts && systemctl --user status satu-worker@01 satu-worker@02 satu-worker@03",
+      "validationStatus": "PASSED"
     }
   ],
   "metadata": {
-    "lastUpdated": "2025-11-26T23:20:00Z",
+    "lastUpdated": "2025-11-27T03:52:22.927Z",
     "version": "1.0.0",
     "generatedFrom": "MASTER_IMPLEMENTATION_ROADMAP.md",
-    "schemaVersion": "1.0",
-    "notes": "Initial queue bootstrapped from roadmap CRITICAL and HIGH priority items. generateAutonomousWorkerQueue.ts script has known issue with duplicate IDs across roadmap sections - needs fixing in Phase 2."
+    "schemaVersion": "2.1",
+    "notes": "Schema v2.1: Added progress tracking (attempts, lastWorkedBy, lastWorkedAt, notes, validationOutput). Removed auto-FAILED logic - tasks stay CLAIMED until validation passes or worker explicitly abandons."
   }
 }

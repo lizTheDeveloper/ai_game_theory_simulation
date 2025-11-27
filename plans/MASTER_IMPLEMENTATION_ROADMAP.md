@@ -247,6 +247,70 @@
 - **Dependencies:** Blocks hindcast validation acceptance (Phase 10 completion)
 - **Report:** `reviews/climate_hindcast_validation_phase7_20251126.md` (line 52-97 for CO2 analysis)
 
+**HIGH-3: VM Multi-Worker Infrastructure Setup + Priority Queue System** ⏳ PLANNED (Nov 26, 2025)
+- **Status:** ⏳ PLANNED - Infrastructure redesign for parallel worker execution + task coordination
+- **Assignee:** devops (Devon - Gilfoyle personality) - NEW DEVOPS AGENT
+- **Design Document:** `plans/autonomous_worker_priority_queue_design.md` (COMPLETE)
+- **Problem 1 - Git Contention:** Workers cannot run in parallel
+  - Current: Single repo on VM (`/home/user/satu/`)
+  - Workers cannot run concurrently (git lock conflicts)
+  - Orchestrator running on Ann's laptop (125 branch backlog)
+  - Scalability blocked
+- **Problem 2 - No Task Coordination:** Workers don't know what to work on
+  - Nov 8, 2025: 24 hourly branches with ZERO substantive work
+  - All tokens wasted on overhead (git pulls, status updates)
+  - No mechanism to prevent duplicate work
+  - No way for workers to "become" the right agent personality
+- **Solution 1 - Multi-Repo Workspace:**
+  ```
+  /home/user/satu/
+    ├── worker/           ← Implementation worker's isolated repo
+    ├── researcher/       ← Research worker's isolated repo
+    ├── orchestrator/     ← Clean repo just for merging
+    └── shared/           ← Logs, configs, coordination files
+  ```
+- **Solution 2 - Priority Queue System:**
+  - Queue file: `/plans/AUTONOMOUS_WORKER_QUEUE.json`
+  - Workers select tasks by priority: CRITICAL → HIGH → MEDIUM → LOW
+  - Git provides atomic claim (test-and-set via commit)
+  - Agent personality mapping: roadmap assignee → agent ID (Roy, Devon, Sylvia, etc.)
+  - Infrastructure tasks (Devon) get priority boost when no CRITICAL blockers
+- **Implementation Steps:**
+  1. **Phase 1 - Queue Infrastructure (Devon):**
+     - Create `/plans/AUTONOMOUS_WORKER_QUEUE.json` schema
+     - Write `scripts/generateAutonomousWorkerQueue.ts` (roadmap → queue)
+     - Write `scripts/autonomousWorkerSelectTask.ts` (filter + priority sort)
+     - Write `scripts/autonomousWorkerClaimTask.ts` (atomic claim via git)
+     - Update `scripts/autonomousWorker.sh` to use queue-based selection
+  2. **Phase 2 - Agent Personality Integration:**
+     - Create agent personality mapping table (assignee → agent ID)
+     - Update autonomous worker to load `.claudeagent` files dynamically
+     - Test: Worker becomes Roy when claiming simulation-maintainer task
+     - Test: Worker becomes Devon when claiming devops task
+  3. **Phase 3 - VM Multi-Worker Setup:**
+     - Create folder structure on VM
+     - Clone repository 3 times (worker, researcher, orchestrator)
+     - Update systemd service files to point to correct paths
+     - Add pre-run "pull main" + post-run "push branch" logic
+     - Run `install-services.sh` on VM
+  4. **Phase 4 - Testing & Validation:**
+     - Test concurrent workers claiming different tasks
+     - Test queue regeneration after architect cleanup
+     - Test infrastructure priority boost
+- **Benefits:**
+  - No git lock contention (multi-repo)
+  - Workers select highest-priority task within token budget
+  - No duplicate work (atomic claim)
+  - Workers adopt correct agent personality (Roy, Devon, Sylvia, etc.)
+  - Infrastructure work gets priority when appropriate
+  - Token budgets used efficiently (>80% substantive work target)
+- **Effort:** 4-6 hours (infrastructure + queue system + testing)
+- **Complexity:** 3 systems (git workflow, systemd services, autonomous workers)
+- **Dependencies:** Unblocks migration of merge orchestrator from laptop to VM
+- **Impact:** Force multiplier - enables true parallel execution, reduces Ann's operational overhead, prevents token waste
+- **Priority Justification:** 125 branch backlog + Nov 8 zero-work pattern indicate this is critical path bottleneck
+- **Devon's First Task:** This is Devon's introduction to the project. Infrastructure work unblocks ALL other agents.
+
 ### 🟡 MEDIUM Priority Items
 
 **M-1: Dead Code Cleanup** ✅ RESOLVED (Nov 26, 2025)

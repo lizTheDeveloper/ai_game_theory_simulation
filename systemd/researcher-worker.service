@@ -1,16 +1,17 @@
 [Unit]
-Description=Autonomous Researcher - Hourly Research Updates
+Description=Autonomous Researcher - Queue-based Research
 After=network.target
 
 [Service]
 Type=oneshot
-User=root
-WorkingDirectory=/home/user/ai_game_theory_simulation
-ExecStart=/home/user/ai_game_theory_simulation/researcher-worker.sh
-StandardOutput=append:/home/user/ai_game_theory_simulation/logs/systemd_researcher.log
-StandardError=append:/home/user/ai_game_theory_simulation/logs/systemd_researcher.log
+User=user
+WorkingDirectory=/home/user/satu/researcher
+ExecStart=/home/user/satu/researcher/researcher-worker-queue.sh
+StandardOutput=append:/home/user/satu/shared/logs/systemd_researcher.log
+StandardError=append:/home/user/satu/shared/logs/systemd_researcher.log
 # Timeout after 35 minutes (script has internal 30min timeout)
 TimeoutStartSec=2100
+Environment="ANTHROPIC_API_KEY=%ANTHROPIC_API_KEY%"
 
 [Install]
 WantedBy=multi-user.target

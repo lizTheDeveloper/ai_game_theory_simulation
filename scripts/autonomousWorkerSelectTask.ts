@@ -22,6 +22,14 @@ import path from 'path';
 type Priority = "CRITICAL" | "HIGH" | "MEDIUM" | "LOW";
 type Status = "AVAILABLE" | "CLAIMED" | "BLOCKED" | "COMPLETED" | "ABANDONED";
 
+interface TaskProgress {
+  attempts: number;
+  lastWorkedBy: string;
+  lastWorkedAt: string;
+  notes: string[];
+  validationOutput?: string;
+}
+
 interface Task {
   id: string;
   priority: Priority;
@@ -38,6 +46,7 @@ interface Task {
   claimedBy: string | null;
   claimedAt: string | null;
   description?: string;
+  progress?: TaskProgress;
 }
 
 interface QueueFile {
@@ -59,6 +68,9 @@ const QUEUE_FILE_PATH = path.resolve(process.cwd(), 'plans/AUTONOMOUS_WORKER_QUE
 // Parse CLI args
 const args = process.argv.slice(2);
 const tokenBudgetArg = args.find(arg => arg.startsWith('--token-budget='));
+const resumeArg = args.includes('--resume');
+const workerIdArg = args.find(arg => arg.startsWith('--worker-id='));
+const WORKER_ID = workerIdArg ? workerIdArg.split('=')[1] : 'unknown';
 const TOKEN_BUDGET = tokenBudgetArg
   ? parseInt(tokenBudgetArg.split('=')[1], 10)
   : DEFAULT_TOKEN_BUDGET;
@@ -67,8 +79,30 @@ const TOKEN_BUDGET = tokenBudgetArg
 // Task Selection Logic
 // ============================================
 
-function selectTask(queue: Task[], workerTokenBudget: number): Task | null {
-  // 1. Filter to AVAILABLE tasks only
+function selectTask(queue: Task[], workerTokenBudget: number, workerId: string, resume: boolean): Task | null {
+  // 1. If --resume, check for CLAIMED tasks by this worker first
+  if (resume) {
+    const myClaimed = queue.filter(t =>
+      t.status === "CLAIMED" &&
+      t.claimedBy === workerId
+    );
+
+    if (myClaimed.length > 0) {
+      const task = myClaimed[0];
+      console.error(`\n📋 Resuming task: ${task.id}`);
+      if (task.progress) {
+        console.error(`   Attempts: ${task.progress.attempts}`);
+        console.error(`   Last worked: ${task.progress.lastWorkedAt}`);
+        console.error(`   Notes: ${task.progress.notes.length} recorded`);
+        if (task.progress.validationOutput) {
+          console.error(`   Last validation: ${task.progress.validationOutput.substring(0, 100)}...`);
+        }
+      }
+      return task;
+    }
+  }
+
+  // 2. Filter to AVAILABLE tasks only
   const available = queue.filter(t => t.status === "AVAILABLE");
 
   if (available.length === 0) {
@@ -146,7 +180,7 @@ function main(): void {
   }
 
   // Select task
-  const selectedTask = selectTask(queueData.queue, TOKEN_BUDGET);
+  const selectedTask = selectTask(queueData.queue, TOKEN_BUDGET, WORKER_ID, resumeArg);
 
   if (!selectedTask) {
     // No tasks available - this is NOT an error condition
@@ -155,6 +189,9 @@ function main(): void {
     console.error(`   Token budget: ${TOKEN_BUDGET.toLocaleString()}`);
     console.error(`   Available tasks: ${queueData.queue.filter(t => t.status === "AVAILABLE").length}`);
     console.error(`   Affordable tasks: ${queueData.queue.filter(t => t.status === "AVAILABLE" && t.estimatedTokens <= TOKEN_BUDGET).length}`);
+    if (resumeArg) {
+      console.error(`   No CLAIMED tasks for worker: ${WORKER_ID}`);
+    }
     process.exit(0);
   }
 
