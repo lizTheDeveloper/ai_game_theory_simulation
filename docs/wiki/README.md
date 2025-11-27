@@ -42,22 +42,24 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
-**Nov 27: C-4 IN PROGRESS - Birth Rate Calculation Bug Fix** (commit 052a8c8)
-- ⚠️ **WIP:** Population hindcast 33.6% error (9.2B vs 6.9B at 2010)
-- **ROOT CAUSE FOUND:** Birth rate calculation multiplying instead of using historical CBR directly
-  - Phase 6 initialized TFR correctly (SSA: 6.35, Europe: 1.57, etc.)
-  - But `adjustedBirthRate = baselineBirthRate * (fertilityRate / 2.1)` used 2025 baseline
-  - Result: SSA 4.47% birth rate (should be 4.73% from UN WPP 1990)
-- **FIX IMPLEMENTED:** Direct historical CBR lookup path in `regionalPopulations.ts:458-535`
-  - When `_skipHistoricalBirthRateScaling = true`, use UN WPP CBR data directly
-  - Sub-Saharan Africa: 4.73% ✅ (was 9.39%)
-  - East Asia: 1.43% ✅ (correct regional value)
+**Nov 27: C-4 IN PROGRESS - ERA Mortality Exemption Fix** (commit 43272b1)
+- ⚠️ **WIP:** Population hindcast still showing error (was 33.6%, now investigating)
+- **LATEST FIX:** ERA multiplier exemption for baseline demographic mortality
+  - **Problem:** ERA multiplier (crisis response capacity) was applied to ALL mortality including baseline aging/disease
+  - 1990 ERA = 0.30 meant baseline deaths were 70% LOWER than historical (wrong!)
+  - ERA should only affect crisis response capability, not natural aging
+  - **Fix:** `bayesianMortality.ts:364-366` - Baseline demographic mortality (type='other', root='demographic') exempt from ERA scaling
+  - **Impact:** 1990 deaths now 31.6M/yr (was artificially suppressed before)
+  - **Validation:** Test script confirms eraScale=1.0 for baseline demographic risks
+- **PREVIOUS FIX (commit 052a8c8):** Birth rate calculation bug resolved
+  - Direct historical CBR lookup in `regionalPopulations.ts`
+  - Sub-Saharan Africa: 4.73% ✅, East Asia: 1.43% ✅
 - **REMAINING ISSUES:**
-  - Overall growth still too low (0.11% vs expected 1.5%)
-  - Death rates potentially too high - Bayesian mortality interaction needs investigation
+  - Deaths still below expected 49.5M/yr (-36% error)
+  - Need to investigate remaining discrepancy
   - Full 1990-2010 validation pending
-- 📄 **Files:** `regionalPopulations.ts`, `scripts/debugFertilityInitialization.ts`, `scripts/validateC4Fix.ts`
-- **Status:** PARTIAL - Core calculation bug fixed, population decline issue remains
+- 📄 **Files:** `bayesianMortality.ts:364-366`, `BaselineMortalityPhase.ts:505-509`, `ROOT_CAUSE_C4_POPULATION_DECLINE.md`
+- **Status:** PARTIAL - ERA exemption fix implemented, death rate gap remains
 
 **Nov 27: C-5 CRITICAL Fix - Cascade Mortality Logistic Saturation** (commit 5e4e407)
 - **CRITICAL BUG FIXED:** Cascade mortality used unbounded exponential growth (1.05^N) producing physically impossible multipliers
@@ -693,9 +695,10 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - **Decision:** KEEP 0.30 multiplier, reframe as CRISIS VULNERABILITY (not baseline mortality)
   - **Evidence:** Hospital surge capacity 40-60% lower (1990), response time weeks vs hours, famine mortality worse per-capita once triggered
   - **Documentation:** 45 lines added to `src/types/config.ts` explaining crisis cascade mechanism
-- ⏳ **POPULATION FIX IN PROGRESS:** Deaths still 40% too high (70M+/year vs 50M historical)
-  - **Issue:** Baseline mortality calculations assume 2025 crisis conditions
-  - **Needed:** Reduce baseline death rate, increase birth rate for historical era, apply ERA multiplier to crisis deaths only
+- ✅ **ERA CRISIS-ONLY FIX IMPLEMENTED:** (commit 43272b1)
+  - **Issue:** ERA multiplier was being applied to ALL mortality including baseline aging/disease
+  - **Fix:** Baseline demographic mortality (type='other', root='demographic') now exempt from ERA scaling
+  - **Result:** 1990 deaths now 31.6M/yr (still below 49.5M expected - remaining gap under investigation)
 - 📊 **Research Documents:**
   - `plans/hindcast_phase3_roy_synthesis_20251124.md` - Roy's synthesis & decision
   - `research/hindcast_era_mortality_verification_20251124.md` - Cynthia's research (Grade B-)
