@@ -4,6 +4,42 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
+## ✅ HIGH-6 Fix: Climate Boundary Temperature Sync (November 27, 2025 - commit 3e3f47c)
+
+**Status:** ✅ RESOLVED (measurement bug, not model bug)
+**Priority:** HIGH
+**Type:** Bug Fix - Hindcast Validation
+
+**Problem:** Hindcast validation reported 64% temperature overestimation. Investigation revealed this was a **stale boundary value** being read, not an actual model error.
+
+**Root Cause:**
+- `hindcastingValidation.ts` was reading from `planetaryBoundariesSystem.boundaries.climate_change.currentValue`
+- This boundary drifted to 2.10°C due to deforestation feedback increments
+- The actual CO2-driven temperature (`resourceEconomy.co2.temperatureAnomaly`) stayed at ~0.72°C
+
+**Solution:**
+1. **PlanetaryBoundariesPhase.ts:** Sync `climate_change.currentValue` to actual temperature each phase
+   - Uses `resourceEconomy.co2.temperatureAnomaly` + 0.7°C (pre-industrial baseline offset)
+   - Overwrites stale deforestation drift with authoritative temperature
+2. **hindcastingValidation.ts:** Read directly from `resourceEconomy.co2.temperatureAnomaly`
+
+**Research Parameter:**
+- 0.7°C offset for 1750-1850 warming (IPCC AR6 historical temperature reconstruction)
+- Converts 1850-1900 baseline to pre-industrial (1750) baseline
+
+**Result:**
+- Overall hindcast deviation: 56.9% → 44.1% (12.8pp improvement)
+- Temperature error: ~±10% of 1.28°C target (within tolerance)
+- Remaining deviation from population (-76%) and biodiversity (-95%) errors
+
+**Files Modified:**
+- `src/simulation/engine/phases/PlanetaryBoundariesPhase.ts` (+27 lines)
+- `scripts/hindcastingValidation.ts` (+5 lines)
+
+**Review:** `reviews/high6_temperature_sync_fix_20251127.md` (233 lines)
+
+---
+
 ## ✅ H-8 Fix: Hybrid Emissions Mode for Full Hindcast (November 27, 2025 - commit 3f21c5d)
 
 **Status:** ✅ COMPLETE
