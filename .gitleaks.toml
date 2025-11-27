@@ -7,10 +7,11 @@ title = "MARCUS 3.0 Gitleaks Config"
 [extend]
 useDefault = true
 
-# Global allowlist for paths containing documentation examples
+# Global allowlist for paths containing documentation and test examples
 [allowlist]
-  description = "Allowlist documentation files with example tokens"
+  description = "Allowlist documentation, test scripts, and example configurations"
   paths = [
+    # Documentation
     '''src/platform/docs/.*\.md$''',
     '''docs/.*\.md$''',
     '''.*README\.md$''',
@@ -18,5 +19,13 @@ useDefault = true
     '''\.env\..*\.template$''',
     '''\.md$''',
     '''\.txt$''',
+    # Test scripts with example credentials (not real secrets)
+    '''scripts/test_marcus_.*\.sh$''',
+    '''scripts/test_.*\.sh$''',
+    # Kubernetes example manifests (placeholder values only)
+    '''k8s/secrets\.yaml$''',
+    '''k8s/.*-example\.yaml$''',
+    # Backup examples (historical test data, not production secrets)
+    '''backups/.*''',
   ]
   regexTarget = "match"

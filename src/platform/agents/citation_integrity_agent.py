@@ -997,8 +997,8 @@ def run_ipc_server(agent_id: str):
                                 "confidence": result.confidence,
                                 "detectedViolations": result.detected_violations,
                                 "metadata": result.metadata,
-                                "agentId": result.agent_id,
-                                "agentReputation": result.agent_reputation
+                                "agentId": result.metadata.get('agent_id', agent_id),
+                                "agentReputation": result.metadata.get('reputation', agent.reputation)
                             }
                         }
 

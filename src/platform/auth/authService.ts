@@ -13,12 +13,12 @@
  * @author Marcus (Platform Engineer)
  */
 
-import bcrypt = require('bcrypt');
-import jwt = require('jsonwebtoken');
+import * as bcrypt from 'bcrypt';
+import * as jwt from 'jsonwebtoken';
 import { Pool, PoolClient } from 'pg';
-import crypto = require('crypto');
+import * as crypto from 'crypto';
 import { authAttempts, activeTokens } from '../monitoring/metricsEndpoint';
-import { sanitizeForLog, sanitizeUserId } from '../middleware/utils/logSanitizer';
+import { sanitizeForLog, sanitizeUserId } from '../utils/logSanitizer';
 
 // ============================================================================
 // Types & Interfaces
@@ -673,7 +673,7 @@ export class AuthService {
       [userId]
     );
 
-    console.log(`✅ User deactivated: ${userId}`);
+    console.log(`✅ User deactivated: ${sanitizeUserId(userId)}`);
   }
 
   // ==========================================================================

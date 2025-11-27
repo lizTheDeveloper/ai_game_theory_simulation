@@ -17,7 +17,7 @@
 
 import { Request, Response, NextFunction } from 'express';
 import { Pool } from 'pg';
-import crypto = require('crypto');
+import * as crypto from 'crypto';
 import Redis from 'ioredis';
 import { sanitizeForLog } from '../utils/logSanitizer';
 

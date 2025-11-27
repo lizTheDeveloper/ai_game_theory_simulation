@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "ES2017",
     "lib": ["dom", "dom.iterable", "esnext"],
+    "types": ["node", "jest"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -41,6 +42,9 @@
     "tests/**/*",
     "src/app/api/**/*",
     "src/data/loaders/**/*",
-    "src/mcp-servers/**/*"
+    "src/mcp-servers/**/*",
+    "src/platform/**/*",
+    "docs/investigations/**/*",
+    "jest.setup.ts"
   ]
 }

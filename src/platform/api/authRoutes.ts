@@ -8,8 +8,7 @@
  * @author Marcus (Platform Engineer)
  */
 
-import express = require('express');
-import { Request, Response } from 'express';
+import express, { Request, Response } from 'express';
 import { AuthService } from '../auth/authService';
 import { JWTMiddleware } from '../auth/jwtMiddleware';
 import { validateRequest } from '../middleware/validation';

@@ -12,6 +12,7 @@ import { retryWithBackoff } from './retryHandler';
 import { DeadLetterQueue } from './deadLetterQueue';
 import { createDatabasePool, DatabasePool } from '../database/pool';
 import { gracefulShutdown } from './gracefulShutdown';
+import { sanitizeForLog } from '../utils/logSanitizer';
 import Redis from 'ioredis';
 import express from 'express';
 
@@ -157,7 +158,7 @@ async function analyzeCitation(
     });
 
     if (cachedResult) {
-      console.log(`✅ Cache hit for document ${documentId}`);
+      console.log(`✅ Cache hit for document ${sanitizeForLog(documentId)}`);
       return { ...cachedResult, cached: true };
     }
   } catch (error) {
@@ -193,8 +194,8 @@ async function analyzeCitation(
           ...config.retry,
           onRetry: (attempt, delay, error) => {
             console.log(
-              `⚠️ Retry ${attempt}/${config.retry.maxRetries} for document ${documentId} ` +
-              `after ${delay}ms (error: ${error.message})`
+              `⚠️ Retry ${attempt}/${config.retry.maxRetries} for document ${sanitizeForLog(documentId)} ` +
+              `after ${delay}ms (error: ${sanitizeForLog(error.message)})`
             );
           }
         },
@@ -206,12 +207,12 @@ async function analyzeCitation(
     redisCircuitBreaker.execute(async () => {
       await redisClient.set(cacheKey, JSON.stringify(result), 'EX', 3600);
     }).catch(err => {
-      console.log(`⚠️ Failed to update cache: ${err.message}`);
+      console.log(`⚠️ Failed to update cache: ${sanitizeForLog(err.message)}`);
     });
 
     return { ...result, cached: false };
   } catch (error: any) {
-    console.error(`❌ Citation analysis failed for document ${documentId}: ${error.message}`);
+    console.error(`❌ Citation analysis failed for document ${sanitizeForLog(documentId)}: ${sanitizeForLog(error.message)}`);
 
     // Step 4: Add to Dead Letter Queue for retry
     await citationDLQ.add({
@@ -248,7 +249,7 @@ async function performCitationAnalysis(text: string): Promise<Omit<CitationAnaly
 // ============================================================================
 
 citationDLQ.startWorker(async (payload: CitationAnalysisRequest) => {
-  console.log(`🔄 Retrying citation analysis from DLQ: ${payload.documentId}`);
+  console.log(`🔄 Retrying citation analysis from DLQ: ${sanitizeForLog(payload.documentId)}`);
 
   // Retry the analysis
   await analyzeCitation(payload);

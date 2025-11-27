@@ -11,6 +11,46 @@ Production-ready platform for orchestrating multi-agent citation integrity analy
 
 **Current Status:** Preparatory work - no Python agents currently deployed in main simulation.
 
+## Quick Start
+
+### Development Setup
+
+```bash
+# From root project directory:
+
+# Install platform-specific dependencies
+npm run platform:install
+
+# Type check the platform module
+npm run typecheck:platform
+
+# Or from within src/platform:
+cd src/platform
+npm install
+npm run typecheck
+```
+
+### TypeScript Configuration
+
+The platform module has its own `tsconfig.platform.json` for stricter type checking with all its dependencies:
+
+- **Main project** (`tsconfig.json`) - Excludes `src/platform/**/*` since platform has optional dependencies
+- **Platform module** (`src/platform/tsconfig.platform.json`) - Stricter settings with all platform dependencies
+
+### Dependencies
+
+**Core (required):**
+- `express`, `pg`, `ioredis` - Web server, PostgreSQL, Redis
+- `bcrypt`, `jsonwebtoken` - Authentication
+- `zod` - Schema validation
+- `dotenv` - Environment configuration
+
+**Optional (for full features):**
+- `@apollo/server`, `graphql` - GraphQL API
+- `@opentelemetry/*` - Distributed tracing
+- `@aws-sdk/client-secrets-manager` - AWS Secrets Manager
+- `winston`, `pino` - Logging
+
 ## Architecture
 
 ```
