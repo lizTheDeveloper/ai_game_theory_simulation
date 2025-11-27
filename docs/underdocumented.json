@@ -87873,7 +87873,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TechTreePhase.ts",
-    "line": 56,
+    "line": 58,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -87881,7 +87881,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TechTreePhase.ts",
-    "line": 57,
+    "line": 59,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -87889,7 +87889,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TechTreePhase.ts",
-    "line": 58,
+    "line": 60,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -87897,7 +87897,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TechTreePhase.ts",
-    "line": 64,
+    "line": 66,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -87905,7 +87905,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TechTreePhase.ts",
-    "line": 65,
+    "line": 67,
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -87913,7 +87913,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TechTreePhase.ts",
-    "line": 66,
+    "line": 68,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -87921,7 +87921,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TechTreePhase.ts",
-    "line": 67,
+    "line": 69,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -87929,7 +87929,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TechTreePhase.ts",
-    "line": 68,
+    "line": 70,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -87937,7 +87937,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TechTreePhase.ts",
-    "line": 69,
+    "line": 71,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -87945,7 +87945,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TechTreePhase.ts",
-    "line": 70,
+    "line": 72,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -87953,7 +87953,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TechTreePhase.ts",
-    "line": 71,
+    "line": 73,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -87961,7 +87961,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TechTreePhase.ts",
-    "line": 72,
+    "line": 74,
     "type": "property",
     "name": "tech",
     "currentDoc": "(none)",
@@ -87969,7 +87969,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/TechTreePhase.ts",
-    "line": 73,
+    "line": 75,
     "type": "property",
     "name": "category",
     "currentDoc": "(none)",
@@ -188785,7 +188785,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 79,
+    "line": 97,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -188793,7 +188793,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 80,
+    "line": 98,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -188801,7 +188801,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 81,
+    "line": 99,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -188809,7 +188809,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 108,
+    "line": 126,
     "type": "property",
     "name": "alpha",
     "currentDoc": "(none)",
@@ -188817,7 +188817,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 109,
+    "line": 127,
     "type": "property",
     "name": "beta",
     "currentDoc": "(none)",
@@ -188825,7 +188825,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 110,
+    "line": 128,
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -188833,7 +188833,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 114,
+    "line": 132,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -188841,7 +188841,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 115,
+    "line": 133,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -188849,7 +188849,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 116,
+    "line": 134,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -188857,7 +188857,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 120,
+    "line": 138,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -188865,7 +188865,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 121,
+    "line": 139,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -188873,7 +188873,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 122,
+    "line": 140,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -188881,7 +188881,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 148,
+    "line": 166,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -188889,7 +188889,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 149,
+    "line": 167,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -188897,7 +188897,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 165,
+    "line": 183,
     "type": "property",
     "name": "shape",
     "currentDoc": "(none)",
@@ -188905,7 +188905,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 166,
+    "line": 184,
     "type": "property",
     "name": "scale",
     "currentDoc": "(none)",
@@ -188913,7 +188913,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 167,
+    "line": 185,
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -188921,7 +188921,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 230,
+    "line": 248,
     "type": "property",
     "name": "mu",
     "currentDoc": "(none)",
@@ -188929,7 +188929,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 231,
+    "line": 249,
     "type": "property",
     "name": "sigma",
     "currentDoc": "(none)",
@@ -188937,7 +188937,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 232,
+    "line": 250,
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -188945,7 +188945,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 236,
+    "line": 254,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -188953,7 +188953,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 237,
+    "line": 255,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -188961,35 +188961,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 238,
+    "line": 256,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
     "context": "additionalInfo: { sigma }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 242,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'sampleLogNormal',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 243,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'sigma',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 244,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { mu }"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
@@ -189005,7 +188981,7 @@
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
-    "context": "valueName: 'result',"
+    "context": "valueName: 'sigma',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
@@ -189013,11 +188989,35 @@
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
+    "context": "additionalInfo: { mu }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
+    "line": 278,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'sampleLogNormal',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
+    "line": 279,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'result',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
+    "line": 280,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
     "context": "additionalInfo: { mu, sigma, normalSample }"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 292,
+    "line": 310,
     "type": "property",
     "name": "min",
     "currentDoc": "(none)",
@@ -189025,7 +189025,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 293,
+    "line": 311,
     "type": "property",
     "name": "mode",
     "currentDoc": "(none)",
@@ -189033,7 +189033,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 294,
+    "line": 312,
     "type": "property",
     "name": "max",
     "currentDoc": "(none)",
@@ -189041,7 +189041,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 295,
+    "line": 313,
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -189049,7 +189049,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 299,
+    "line": 317,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -189057,7 +189057,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 300,
+    "line": 318,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -189065,7 +189065,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 301,
+    "line": 319,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -189073,7 +189073,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 305,
+    "line": 323,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -189081,7 +189081,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 306,
+    "line": 324,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -189089,7 +189089,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 307,
+    "line": 325,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -189097,7 +189097,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 311,
+    "line": 329,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -189105,7 +189105,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 312,
+    "line": 330,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -189113,7 +189113,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 313,
+    "line": 331,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -189121,7 +189121,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 348,
+    "line": 366,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -189129,7 +189129,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 349,
+    "line": 367,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -189137,7 +189137,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 372,
+    "line": 390,
     "type": "property",
     "name": "min",
     "currentDoc": "(none)",
@@ -189145,7 +189145,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 373,
+    "line": 391,
     "type": "property",
     "name": "max",
     "currentDoc": "(none)",
@@ -189153,7 +189153,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 374,
+    "line": 392,
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -189161,7 +189161,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 378,
+    "line": 396,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -189169,7 +189169,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 379,
+    "line": 397,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -189177,7 +189177,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 380,
+    "line": 398,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -189185,7 +189185,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 384,
+    "line": 402,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -189193,7 +189193,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 385,
+    "line": 403,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -189201,7 +189201,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 386,
+    "line": 404,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -189209,7 +189209,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 400,
+    "line": 418,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -189217,7 +189217,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 401,
+    "line": 419,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -189225,7 +189225,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 415,
+    "line": 433,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -189233,7 +189233,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts",
-    "line": 416,
+    "line": 434,
     "type": "property",
     "name": "params",
     "currentDoc": "(none)",
