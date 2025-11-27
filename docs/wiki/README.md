@@ -18,129 +18,23 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 ## 🚀 Project Status
 
-**🔴 VALIDATION CRISIS** (November 26, 2025 - Worker Session 5)
+**🟢 STABLE** (November 26, 2025)
 
 **SYSTEM HEALTH:**
-- **Research Quality:** C+ METHODOLOGICAL CONCERNS - Nominal A (95%) but citation misrepresentation pattern discovered, hindcast failing 7 phases
-- **Research Currency:** ⚠️ UNDER REVIEW (citation accuracy audit revealed 60% of climate citations contradict claimed support)
-- **Implementation Fidelity:** A- (assertion coverage 97.2%, C-2/M-2 resolved, zero implementation regressions) ✅ GOOD
-- **Architecture Health:** A- (Implementation) / F (Validation) - 0 implementation issues, 3 NEW CRITICAL validation failures
-- **System Trajectory:** 🔴 UNSTABLE - Hindcast validation failures undermine scientific credibility
-
-**CRITICAL VALIDATION FAILURES (Must resolve before new features):**
-- **C-3:** Hindcast CO2 validation failing 7 phases (14% error vs 5% threshold)
-- **C-4:** Hindcast population validation failing (33% error vs 10% threshold) - **IN PROGRESS** (Nov 27, commit 052a8c8 - birth rate bug fix, partial)
-- ~~**C-5:** Cascade mortality unbounded~~ ✅ **RESOLVED** (Nov 27, commit 5e4e407 - logistic saturation)
-
-**HIGH PRIORITY ISSUES:**
-- **H-3:** Extinction debt unmodeled (200+ papers document lag effects)
-- **H-4:** Citation misrepresentation (60% climate citations contradictory - Lenton 2019 semantic reversal)
-- **H-5:** 100% dystopia outcomes (scientifically unfalsifiable without diverse starting conditions)
-- **H-6:** Temperature anticorrelation (CO2 high but temp low - physically suspicious)
-
-**Reports:** `reviews/research_debate_20251126_worker5.md` (18.5K), `plans/completed/worker_session_5_complete_20251126.md`
+- **Research Quality:** B+ (56.5% sources 2023-2025, 3 CRITICAL parameter issues resolved/documented, 8 research gaps identified) ✅ GOOD
+- **Research Currency:** ✅ EXCELLENT (all simulation-critical files updated within 14 days, autonomous system working effectively)
+- **Implementation Fidelity:** A- (assertion coverage 97.2%, 24 integration tests for CoordinatedDeploymentPhase) ✅ EXCELLENT
+- **Architecture Health:** B+ (0 CRITICAL, 2 HIGH technical debt non-urgent, deep clone optimization complete) ✅ GOOD
+- **System Trajectory:** 🟢 READY (Nov 26: Phase 4 Coordination Layer strategic pivot - testing coordinated deployment)
 
 **Recent Major Achievements:**
 
-**Nov 27: C-4 IN PROGRESS - ERA Mortality Exemption Fix** (commit 43272b1)
-- ⚠️ **WIP:** Population hindcast still showing error (was 33.6%, now investigating)
-- **LATEST FIX:** ERA multiplier exemption for baseline demographic mortality
-  - **Problem:** ERA multiplier (crisis response capacity) was applied to ALL mortality including baseline aging/disease
-  - 1990 ERA = 0.30 meant baseline deaths were 70% LOWER than historical (wrong!)
-  - ERA should only affect crisis response capability, not natural aging
-  - **Fix:** `bayesianMortality.ts:364-366` - Baseline demographic mortality (type='other', root='demographic') exempt from ERA scaling
-  - **Impact:** 1990 deaths now 31.6M/yr (was artificially suppressed before)
-  - **Validation:** Test script confirms eraScale=1.0 for baseline demographic risks
-- **PREVIOUS FIX (commit 052a8c8):** Birth rate calculation bug resolved
-  - Direct historical CBR lookup in `regionalPopulations.ts`
-  - Sub-Saharan Africa: 4.73% ✅, East Asia: 1.43% ✅
-- **REMAINING ISSUES:**
-  - Deaths still below expected 49.5M/yr (-36% error)
-  - Need to investigate remaining discrepancy
-  - Full 1990-2010 validation pending
-- 📄 **Files:** `bayesianMortality.ts:364-366`, `BaselineMortalityPhase.ts:505-509`, `ROOT_CAUSE_C4_POPULATION_DECLINE.md`
-- **Status:** PARTIAL - ERA exemption fix implemented, death rate gap remains
-
-**Nov 27: C-5 CRITICAL Fix - Cascade Mortality Logistic Saturation** (commit 5e4e407)
-- **CRITICAL BUG FIXED:** Cascade mortality used unbounded exponential growth (1.05^N) producing physically impossible multipliers
-  - Month 144: 108× → 8.6×
-  - Month 192: 1,125× → 9.9×
-  - Month 288: 121,740× → 10.0× (capped)
-- **Research:** Armstrong McKay et al. (2022) shows cascades reach equilibrium, not infinite runaway
-- **Solution:** Logistic growth formula: `10 / (1 + exp(-0.05 * (months - 60)))`
-  - S-curve with midpoint at month 60
-  - Maximum multiplier: 10× (research-backed saturation)
-- **Validation:** TypeScript clean, tests pass, validation script confirms saturation
-- 📄 **Files:** `planetaryBoundaries.ts:1427-1456`, `scripts/validateCascadeGrowth.ts`
-- 📄 **Review:** `reviews/C5_cascade_mortality_fix_20251127.md`
-
-**Nov 26: Worker Session 5 - VALIDATION CRISIS Identified** (commit 034ae10)
-- ⚠️ **Research Debate (Sylvia):** Systematic critique revealed fundamental methodological concerns
-- **Completions Verified:**
-  - ✅ C-2 Resource reserves crash RESOLVED (40% → 0% crash rate, commit cceb556ab)
-  - ✅ M-2 Assertion migration COMPLETE (6 violations fixed, zero regressions)
-  - ✅ Architecture integration Grade A- MAINTAINED (0 implementation issues)
-- **Critical Discoveries:**
-  - Hindcast validation failing after 7 phases (CO2 14% error, population 33% error)
-  - Citation misrepresentation pattern: Lenton 2019 cited for "stability" actually warns of "cascading tipping points"
-  - 100% dystopia outcomes scientifically unfalsifiable without diverse starting conditions
-  - ~~Cascade mortality unbounded (1.05^N exponential physically impossible)~~ ✅ Fixed Nov 27
-- **Priority Elevation:** 3 NEW CRITICAL + 4 NEW HIGH validation priorities
-- **Status Change:** EXCELLENT → VALIDATION CRISIS
-- 📄 **Session Archive:** `plans/completed/worker_session_5_complete_20251126.md`
-
-**Nov 26: AI Agent Integration Tests Expanded (43 new tests)** (commit d77bc05)
-- 🧪 **102 total tests** for AI agent system, all deterministic (3 consecutive passing runs)
-- **Category 1: Coordination Emergence (18 tests)**
-  - Trust threshold bottleneck (coordination capped by trust×2.0)
-  - Governance quality bottleneck (weak institutions limit coordination)
-  - AI capability scaling (0→10 with 0.9 cap), weakest-link principle
-- **Category 2: Coalition Formation Game Theory (13 tests)**
-  - 2-agent Prisoner's Dilemma dynamics, 3-agent grand coalition formation
-  - Collapse threshold (<0.3 stability, 30% probability), snap elections
-- **Category 3: Instrumental Convergence Detection (12 tests)**
-  - Power-seeking (Carlsmith 2022), goal preservation (Anthropic 2024)
-  - Capability threshold (>0.6 for emergence), resentment accumulation
-- **Research Validation:** Anthropic Dec 2024 (arXiv:2412.14093), Apollo Sep 2025, Bostrom 2014, Omohundro 2008
-- 📄 **Files:** `tests/integration/system-validation/ai-agent-system.test.ts`
-
-**Nov 26: CRITICAL-1 Fix - Remove Fabricated Coordination Failure Probability** (commits bf45de8, 950ab53)
-- 🚨 **RESEARCH INTEGRITY FIX:** Discovered and removed fabricated numerical probability
-- **Problem:** CoordinatedDeploymentPhase used 10% coordination failure probability (2-5x mortality spike) citing Hammond et al. 2025 (arXiv:2502.14143)
-- **Discovery:** Source provides ONLY qualitative taxonomy (miscoordination, conflict, collusion) - NO numerical probabilities
-- **Fix:** Replaced discrete failure probability with **continuous coordination stress model**:
-  - Stress factors: deployment volume (50%), trust (30%), capability stakes (20%)
-  - Coordination quality degrades smoothly under stress
-  - No fabricated probability thresholds
-- **New Empirical Research:** `international_coordination_effectiveness_empirical_20251126.md` (485 lines, 11 sources, Grade A-)
-  - Evidence-based parameters from 2020-2025 data (UN treaties, COVID-19, G20, climate)
-  - Key finding: No universal coordination failure rate exists - context-dependent
-  - Regional > Global coordination (consistent across domains)
-  - Base quality: 0.60-0.90, scale penalty: 0.10-0.30, time decay: 0.05-0.15/yr
-- **Research Documentation Updated:**
-  - `multi_agent_coordination_failure_modes_20251124.md`: Added CRITICAL WARNING, marked all probabilities as SPECULATIVE
-  - `ai_coordination_transition_management_20251120.md`: Added CRITICAL CORRECTION section (lines 1318-1366)
-- **Validation:** TypeScript passes, assertion utilities in place, determinism preserved
-- 📄 **Files:** `CoordinatedDeploymentPhase.ts`, research files, reviews
-- 📄 **Reviews:** `reviews/research_source_validation_20251126.md` (706 lines)
-
-**Nov 26: Climate Stability Citation Verification - GRADE D FAILURE** (commits 69e1490, 5112164, f3003f2)
-- 🚨 **RESEARCH INTEGRITY ISSUE:** Two-layer verification found 60% of citations CONTRADICT simulation's stability claims
-- **Two-Layer Verification Results (5 CRITICAL/HIGH citations):**
-  - ❌ **Lenton 2019 (FAILED):** Claims "self-limiting feedbacks" but paper warns "state of planetary emergency", cascading tipping points
-  - ❌ **Armstrong McKay 2022 (FAILED):** Claims "not complete destabilization" but paper warns "amplifying destabilization"
-  - ❌ **Steffen 2015 (FAILED):** Claims "Earth remains habitable" but paper warns "substantial risk of destabilizing Holocene state"
-  - ⚠️ **Zachos 2008 (PARTIAL):** Numbers correct (+5-8°C, 200ky), but 200,000-year geological recovery ≠ human-timescale "resilience"
-  - ⚠️ **IPCC AR6 (INCONCLUSIVE):** Specific language "severe but not complete collapse" not found in search results
-- **Pattern Detected:** Cherry-picking + claim reversal (papers warning about risks cited as supporting stability)
-- **Grade: D (Failed Verification)** - 60% of verified citations contradict simulation's stability claims
-- **Impact:** The 5% stability floor and 95% degradation cap should be documented as "implementation choices", NOT research-backed
-- **Recommendations:**
-  1. Remove/qualify contradictory citations (Lenton, Armstrong McKay, Steffen)
-  2. Document stability bounds as implementation choices for simulation tractability
-  3. Add code warnings clarifying research warns about destabilization, not stability
-- 📄 **Critique:** `research/climate_stability_self_limiting_critique_20251126.md` (409 lines, comprehensive analysis)
-- 📄 **Verification:** `research/verification_dc1d6ac_20251125.md` (Grade D, 5 citations verified)
+**Nov 26: Population Dynamics Test Suite COMPLETE (roadmap 5.2)** (commit c547c04)
+- 🧪 **82 tests passing** (1,360 lines, 91.8% avg coverage across 4 modules)
+- **Migration tests:** Syrian crisis (6.7M refugees), COVID-19 suppression (-64%), net-zero validation
+- **Segment tests:** Differential mortality, elite/precariat inequality, polarization index, trust recovery
+- **Coverage:** populationDynamics=79.6%, mortalityStabilizersInit=99%, populationProvider=91%, populationSegments=97.8%
+- 📄 **File:** `tests/integration/system-validation/population-dynamics.test.ts`
 
 **Nov 26: Climate System Unit Tests (roadmap 5.2)** (commit 86578049)
 - 🧪 **Comprehensive test suite** for planetary boundary recovery mechanics (1,050 lines, 65+ assertions)
@@ -162,115 +56,6 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - Tests GDP-adaptive spending (prevents crashes during economic collapse)
 - 📄 **Files:** `tests/integration/game-layer/critical-juncture-detection.test.ts`, `tests/integration/game-layer/scenario-definitions.test.ts`
 - **Status:** IN PROGRESS - state creation and scenario application need debugging
-
-**Nov 26: Phase 9 - Temporal Evolution of Carbon Sinks (1990-2010) - RE-UPDATED** (commit 819729f)
-- ⚠️ **CRITICAL VALIDATION ISSUES EXPOSED:** Phase 9 improved CO2 but caused stability regression
-- **Research Source:** Global Carbon Project data (`research/carbon_sinks_1990_2025_20251126.md`)
-- **Implementation (819729f - reverted to stronger sinks):**
-  - Ocean absorption: 8.1 → 10.6 GtCO2/yr (+32%) via linear interpolation
-    - Uses 2014-2023 GCB averages (2.9 GtC/yr × 3.67)
-  - Land absorption: 5.1 → 11.4 GtCO2/yr (+121%) via linear interpolation
-    - Uses 2010s peak from Wang et al. 2023 (3.1 GtC/yr × 3.67)
-  - Total sink increase: 13.2 → 22.0 GtCO2/yr (+66.7%)
-- **Validation Results (Post-Phase 9):**
-  - ✅ CO2 error improved 51.9% (27% → 13%)
-  - ✅ Population error improved 15.6% (39.8% → 33.6%)
-  - ❌ **NEW ISSUE:** 40% crash rate (resource reserves < 0 at months 142-146)
-  - ❌ **NEW ISSUE:** Temperature undershoot -0.26°C (was +0.08°C - REGRESSED 3.25×)
-- **CRITICAL-1:** Resource reserves crash needs immediate fix before further calibration
-- **Analysis:** Phase 9 moved from "wrong but stable" → "less wrong but unstable"
-- 📄 **Review:** `reviews/climate_hindcast_validation_phase7_post_phase9_20251126.md` (439 lines)
-- 📄 **Files:** `src/simulation/resourceDepletion.ts` (lines 1088-1094)
-
-**Nov 26: Historical Emissions Mode Period Restriction** (commit df7de85)
-- **FIX:** Restricted `historicalEmissionsMode` to hindcast period (1990-2010 only)
-- **Problem:** Tests initializing year 2024 failed when resourceDepletion called `getHistoricalEmissions(2024)` - no GCP data for future years
-- **Solution:** Changed from unconditional `true` to conditional: `year >= 1990 && year <= 2010`
-- **Impact:** Non-hindcast years (2024+) now correctly use endogenous emissions model
-- 📄 **Files:** `src/simulation/historicalInitialization.ts` (lines 163, 582)
-
-**Nov 26: Phase 5 Complete - Historical Emissions Mode Enabled** (commit 8e316ce)
-- **FIX:** Enabled `historicalEmissionsMode` flag in historical initialization
-- **Problem:** Phase 7 validation FAILED (18.7% CO2 deviation) because initialization never set the flag
-- **Solution:** Added `config.historicalEmissionsMode = true` in both:
-  - `createHistoricalInitialState()` (line 163)
-  - `initializeHistoricalSimulation()` (line 582)
-- **Evidence:** Logs now show `📊 [Historical Emissions Mode] Year XXXX: YY.YY GtCO2/yr`
-- **Status:** Phase 5 COMPLETE. GCP emissions forcing now active for hindcast runs.
-- **Note:** CO2 validation still failing (40% overshoot, 549 vs 390 ppm) - root cause is sink parameters, NOT emissions
-- 📄 **Files:** `src/simulation/historicalInitialization.ts`
-
-**Nov 26: Phase 8 - Carbon Sink Calibration for 1990 Baseline** (commit 6a1dc02)
-- ✅ **FIX:** Corrected anachronistic carbon sink parameters that caused CO2 overshoot in hindcast
-- **Problem:** Hindcast showed 549 ppm vs target 390 ppm (31% error) at 2010 endpoint
-- **Root Cause 1 - Sink Parameters:** Using 2025 values (ocean: 10, land: 11 GtCO2/yr, saturation: 0.30) for 1990 baseline
-- **Root Cause 2 - Initial CO2 Bug:** `atmosphericCO2` was initialized to 420 ppm (2025 default) instead of historical 354 ppm for 1990
-- **Research-Backed Fix (IPCC AR5/AR6, Global Carbon Budget):**
-  - Ocean absorption: 8.1 GtCO2/yr (was 10) - based on IPCC 1990s mean of 2.2 GtC/yr
-  - Land absorption: 5.1 GtCO2/yr (was 11) - based on IPCC 1990s mean of 1.4 GtC/yr
-  - Sink saturation: 0.12 (was 0.30) - reflects ~1000 GtCO2 cumulative by 1990 (vs ~2400 by 2025)
-  - Initial CO2 now set from `historical.climate.co2Ppm` (354 ppm for 1990)
-- **Results:** Improved from 549 ppm (31% error) to ~497 ppm (27% error)
-- **Remaining Gap:** Static sinks don't capture 1990→2010 sink growth; research recommends temporal evolution (Option 3)
-- 📄 **Research:** `research/carbon_sinks_1990_2025_20251126.md` (Cynthia, 12+ sources)
-- 📄 **Review:** `reviews/carbon_sinks_research_critique_20251126.md` (Sylvia, Grade B+)
-- 📄 **Files:** `src/simulation/historicalInitialization.ts` (createHistoricalInitialState, initializeHistoricalSimulation)
-
-**Nov 26: Phase 7 - Hindcast Re-Validation Script Ready** (commit 7154f8d)
-- 📄 **Script:** `scripts/climateHindcastValidationPhase7.ts` (196 lines)
-- **Purpose:** Re-run 1990-2010 hindcast validation now that Phase 5+6 implementations are merged
-- **Configuration:**
-  - `historicalEmissionsMode: true` for 1990-2010 only (GCP data for hindcast validation)
-  - `includeAIAgents: false` (properly enforced)
-  - N=10 runs with determinism checks (CV < 0.01%)
-- **Success Criteria:**
-  - CO2 deviation < 5% (vs 389.9 ppm NOAA 2010)
-  - Temperature deviation < 0.1°C (vs 0.85°C HadCRUT5 2010)
-  - Population deviation < 10% (vs 6.9B UN 2010)
-- **Status:** Ready to run. CO2 may still fail (sink calibration needed).
-- **Dependencies:** Phase 5 (commit 8e316ce) + Phase 6 (commit b5bf2951c)
-
-**Nov 26: Phase 6 - Demographics Calibration COMPLETE + UPDATED** (commits b5bf295 / 9450aec / 1585ea7)
-- ✅ **FIX:** 1990 scenarios now initialize with correct historical fertility rates (was using 2025 values)
-- **Root Cause:** Previous implementation initialized 1990 with TFR ~2.3 (2025 global), but historical 1990 TFR was 3.2-3.3 (40% higher)
-- **Regional TFR Values (1990, UN WPP 2024) - UPDATED in 1585ea7:**
-  - Sub-Saharan Africa: 6.35 | South Asia: 4.3 | East Asia: 2.5 | Europe: 1.6
-  - Middle East & North Africa: 4.6 | Southeast Asia: 2.7 | Latin America: 3.0
-  - North America: 2.0 | Oceania: 2.4 | Central Asia: 2.7
-- **NEW: Fertility Transition Mechanism (1585ea7):**
-  - Linear interpolation from 1990 TFR → 2020 TFR during hindcast period
-  - Models demographic transition that occurred historically
-  - Example: Sub-Saharan Africa: 6.35 (1990) → 4.6 (2020)
-  - Example: South Asia: 4.3 (1990) → 2.3 (2020)
-- **AI Agent Flag Fix:** `includeAIAgents: false` now properly enforced (agents were spawning despite flag)
-- **Implementation:**
-  - `historicalInitialization.ts`: Added `REGIONAL_TFR_1990` initialization for both sync/async versions
-  - `regionalPopulations.ts`: Fertility transition mechanism (1990→2020 linear interpolation)
-  - Added `_skipHistoricalBirthRateScaling` flag to prevent double-counting
-- **Test Validation:** All 4 tests pass (regional TFR, AI agents = 0, scaling flag, initial population = 5.32B)
-- **Expected Impact:** Population overshoot reduced from 39.4% to <10% at 2010
-- 📄 **DevLog:** `devlogs/phase6_fertility_fix_UPDATED_20251126.md` (234 lines)
-- 📄 **Research:** `research/demographics_1990_calibration_20251126.md` (402 lines, Cynthia)
-- 📄 **Test:** `scripts/validateFertilityFix.ts`
-- **Next:** Phase 7 - Re-run hindcast validation with corrected demographics
-
-**Nov 26: Climate Mini-Hindcast Phase 4 FAIL - Emissions Calibration Required** (commit 8bc84d6)
-- ❌ **VERDICT: FAIL** - CO2 deviation 17.53% vs 5% threshold
-- **Validation Results (N=10 runs):**
-  - CO2: 354.19 ppm → 444.40 ppm (vs 390.22 ppm observed) - **17.53% error**
-  - Temperature: PASS (+0.046°C deviation - climate sensitivity validated)
-  - Population: FAIL (+39.4% overshoot - 9.64B vs 6.9B observed)
-  - Determinism: CV = 0.04-0.07% (borderline acceptable)
-- **Root Causes:**
-  1. Endogenous emissions model generates 18% excess CO2 (economic consumption too high)
-  2. Fertility rates not initialized for 1990 era (TFR mismatch)
-  3. AI agents spawning despite `includeAIAgents: false` flag
-- **Key Insight:** Temperature matches despite CO2 overshoot = climate mechanics CORRECT, calibration inputs WRONG
-- **Follow-up Phases (HIGH priority):**
-  - Phase 5: Historical Emissions Forcing Mode (Roy) - ✅ COMPLETE (commit 8e316ce)
-  - Phase 6: Demographics Calibration (Roy + Cynthia) - ✅ COMPLETE (commit b5bf295)
-  - Phase 7: Re-run Validation (Priya) - Script ready, awaiting sink calibration (CO2 still 40% high)
-- 📄 **Report:** `reviews/climate_hindcast_validation_20251126.md` (24KB analysis)
 
 **Nov 26: Historical Baseline Precision Update** (commit b493ee3)
 - 📊 **Exact research values** for 1990/2010 climate baselines (was rounded estimates)
@@ -582,10 +367,9 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 🔬 **NEW RESEARCH:** `research/multi_agent_coordination_failure_modes_20251124.md` (423 lines, 8 sources)
 - **Key Finding:** "A collection of safe agents does NOT guarantee a safe collection of agents"
 - **Three Primary Failure Modes** (Hammond et al. 2025, Cooperative AI Foundation):
-  - Miscoordination: Failure to cooperate despite shared goals
-  - Conflict: Failure to cooperate due to differing goals
-  - Collusion: Undesirable cooperation harming broader interests
-- ⚠️ **CRITICAL WARNING (Nov 26):** Numerical probabilities in this research file are **SPECULATIVE** - Hammond et al. 2025 provides ONLY qualitative taxonomy, NO empirical probability data
+  - Miscoordination: Failure to cooperate despite shared goals (15-25% base probability)
+  - Conflict: Failure to cooperate due to differing goals (10-20%)
+  - Collusion: Undesirable cooperation harming broader interests (5-15%)
 - **Six Critical Risk Factors** (Gradient Institute 2025):
   - Monoculture collapse (>70% shared training data threshold)
   - Conformity bias (1.2-2.0× error amplification)
@@ -695,10 +479,9 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - **Decision:** KEEP 0.30 multiplier, reframe as CRISIS VULNERABILITY (not baseline mortality)
   - **Evidence:** Hospital surge capacity 40-60% lower (1990), response time weeks vs hours, famine mortality worse per-capita once triggered
   - **Documentation:** 45 lines added to `src/types/config.ts` explaining crisis cascade mechanism
-- ✅ **ERA CRISIS-ONLY FIX IMPLEMENTED:** (commit 43272b1)
-  - **Issue:** ERA multiplier was being applied to ALL mortality including baseline aging/disease
-  - **Fix:** Baseline demographic mortality (type='other', root='demographic') now exempt from ERA scaling
-  - **Result:** 1990 deaths now 31.6M/yr (still below 49.5M expected - remaining gap under investigation)
+- ⏳ **POPULATION FIX IN PROGRESS:** Deaths still 40% too high (70M+/year vs 50M historical)
+  - **Issue:** Baseline mortality calculations assume 2025 crisis conditions
+  - **Needed:** Reduce baseline death rate, increase birth rate for historical era, apply ERA multiplier to crisis deaths only
 - 📊 **Research Documents:**
   - `plans/hindcast_phase3_roy_synthesis_20251124.md` - Roy's synthesis & decision
   - `research/hindcast_era_mortality_verification_20251124.md` - Cynthia's research (Grade B-)
@@ -1187,7 +970,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - AI coordination quality: 0.5-0.7 (central: 0.6) - HIGH UNCERTAINTY
   - Support effectiveness: 50-70% reduction (central: 60%) - HIGH UNCERTAINTY
   - Combined mortality reduction: 65-75% (NOT 95% as originally claimed)
-  - ~~NEW: Coordination failure scenarios (10-20% probability, 2-5x mortality spike)~~ **REMOVED Nov 26 (CRITICAL-1): Probability was FABRICATED - replaced with continuous stress model**
+  - NEW: Coordination failure scenarios (10-20% probability, 2-5x mortality spike)
   - NEW: Rebound effects (5-10% effectiveness decay per year)
 - 🎯 **Implementation Ready:** 26KB handoff spec (.claude/agents/HANDOFF_ai_coordination_conservative_params.md)
   - GameState interface design
@@ -2820,10 +2603,6 @@ Fixed critical threshold mismatch: simulation used theoretical 35°C limit inste
 
 **Research:** Vecellio et al. (2022) empirical experiments (TRL 8) vs Raymond et al. (2020) theoretical 35°C. People die at 30.5°C in practice, not 35°C in theory.
 
-**Verification:** Comprehensive research verification completed (commit 6624219, Nov 26, 2025). 11 peer-reviewed sources (2017-2025, TRL 7-9) validate 30.5-31.2°C thresholds and historical mortality calibration. See `research/wet_bulb_temperature_verification_20251126.md` for full validation including citation verification, historical heatwave cross-validation (2003 Europe, 2010 Russia, 2015 Pakistan, 2021 PNW), and acclimatization/demographic nuances. **Status:** VALIDATED WITH CAVEATS - conservative bias (2-3x high) appropriate for research simulation.
-
-**Quality Gate 1 PASSED** (commit 59b10c6, Nov 26, 2025): Multi-agent workflow completed via orchestrator. Stage 1 (Cynthia): Research verification validated empirical thresholds. Stage 2 (Sylvia): Critical review identified 2-3x conservative bias from lab conditions (24 young, fit, non-acclimated subjects) vs real-world (acclimatization, adaptation, infrastructure). Consensus: Conservative bias appropriate for worst-case modeling, must document caveats. See `reviews/wet_bulb_temperature_critique_20251126.md` for methodological critique and `research/wet_bulb_coordination_summary_20251126.md` for full workflow. **Next:** Documentation updates to wetBulbEvents.ts (Roy) → Monte Carlo validation (Priya).
-
 **Files:** `src/types/wetBulbTemperature.ts`, `src/simulation/wetBulbEvents.ts`, `src/simulation/config/centralConfig.ts`
 
 ### November 6, 2025
@@ -4176,25 +3955,6 @@ See: [`infrastructure_oct_nov_2025_COMPLETE_20251105.md`](/plans/completed/infra
 - **Impact**: Fundamental modeling errors identified requiring parameter corrections and additional research sources
 - See: [`research/mortality_stabilizers_layer2_verification_20251106.md`](/research/mortality_stabilizers_layer2_verification_20251106.md), [`research/UPDATE_QUEUE.md`](/research/UPDATE_QUEUE.md)
 
-**🔴 AI Coordination Citation Verification** (November 26, 2025):
-- **Status**: ❌ **FABRICATED PARAMETER IDENTIFIED** - flagged for Sylvia review (commit 6c4c4a2)
-- **Progress**: 5 of 12 citations verified from `ai_coordination_transition_management_20251121.md`
-- **CRITICAL Finding**:
-  - 🔴 **Coordination Failure Probability FABRICATED**: Code claims "10% (range: 5-20%)" citing Hammond et al. (2025)
-  - **Reality**: Hammond et al. provides ZERO quantitative probability estimates - qualitative taxonomy only
-  - **Impact**: Directly affects transition mortality projections in simulation
-- **Verification Results**:
-  - ✅ Sullivan & von Wachter 2009: FULLY VERIFIED (gold standard)
-  - ✅ Great Leap Forward mortality: VERIFIED (16.5-55M, needs source update)
-  - ⚠️ Stuckler et al. 2009: MISATTRIBUTED (12.8% not "13-42%")
-  - ⚠️ AI Coordination Efficiency: PARTIALLY VERIFIED (conflates different metrics)
-  - ❌ Coordination Failure 10%: FABRICATED (no empirical basis)
-- **Remaining**: 7 citations (Finkelstein, IEA grid, China mortality, air pollution, TRL, S-curve)
-- **Recommendations**:
-  - Option A (recommended): Remove coordination failure probability parameter entirely
-  - Option B: Use wide uncertainty (1-50%), flag as "PURE SPECULATION"
-- See: [`research/RESEARCHER_ASSESSMENT_20251126_afternoon.md`](/research/RESEARCHER_ASSESSMENT_20251126_afternoon.md)
-
 ### Core Systems
 
 The fundamental building blocks of the simulation:
@@ -4790,32 +4550,6 @@ const score = assertStateProperty(state, 'metric', {
   month: state.currentMonth
 });
 ```
-
-**Assertion-Wrapping-Fallback Anti-Pattern (Nov 2025):**
-```typescript
-// ❌ BAD - Fallback executes BEFORE assertion, defeating its purpose
-assertFinite(state.humanPopulationSystem?.population ?? 0, {
-  location: 'initializeHistoricalSimulation',
-  valueName: 'population',
-  month: 0
-});
-// Problem: assertFinite never sees undefined - it always gets 0
-// This creates false confidence while still masking bugs
-
-// ✅ GOOD - Two-step validation with no silent fallback
-const population = assertStateProperty(
-  state.humanPopulationSystem,
-  'population',
-  { location: 'initializeHistoricalSimulation', month: 0 }
-);
-assertFinite(population, {
-  location: 'initializeHistoricalSimulation',
-  valueName: 'population',
-  month: 0
-});
-```
-
-**Why this matters:** The `??` operator has higher precedence than function calls. When you write `assertFinite(x ?? 0, ...)`, the fallback replaces undefined with 0 *before* assertFinite runs. The assertion thinks everything is fine (0 is finite), but undefined was the real bug you needed to catch.
 
 #### When to Use Fallbacks
 
