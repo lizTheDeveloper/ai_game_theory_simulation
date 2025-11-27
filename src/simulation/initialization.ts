@@ -800,7 +800,13 @@ export function createDefaultInitialState(
       // Derived from fusionEnabling progress (start at 0)
       fusionResearchBonus: 0,               // No research bonus initially
       fusionDeploymentCostReduction: 0,     // No cost reduction initially
-      fusionDeploymentTimeReduction: 0      // No time reduction initially
+      fusionDeploymentTimeReduction: 0,     // No time reduction initially
+
+      // CRITICAL-1 FIX (Nov 27, 2025): Environmental Health Composite
+      // Research: Scheffer et al. (2014) - Critical thresholds in environmental systems
+      // Calculated by BifurcationLogicPhase, initialize with baseline healthy state
+      // Baseline 2025: 0.70 (moderately healthy - degraded but not collapsed)
+      environmentalHealth: 0.70             // [0,1] Composite environmental health metric
     },
 
     // Track AI capability changes for performance calculation (Phase 3.1 initialization fix)
