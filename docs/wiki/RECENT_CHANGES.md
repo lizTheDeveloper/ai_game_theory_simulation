@@ -4,6 +4,84 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
+## ✅ H-8 Fix: Hybrid Emissions Mode for Full Hindcast (November 27, 2025 - commit 3f21c5d)
+
+**Status:** ✅ COMPLETE
+**Priority:** HIGH (Blocker for hindcast validation)
+**Type:** Bug Fix / Feature Enhancement
+
+**Problem:** Full hindcast validation (1990-2024) crashed at year 2011:
+```
+❌ HISTORICAL EMISSIONS MODE: Year 2011 outside valid range (1990-2010)
+```
+
+**Root Cause:** `getHistoricalEmissions()` in `resourceDepletion.ts` only has Global Carbon Project data for 1990-2010. No fallback for years beyond 2010.
+
+**Solution: Hybrid Emissions Mode**
+Modified `updateCO2System()` in `src/simulation/resourceDepletion.ts` (lines 959-1001):
+- 1990-2010: Use empirical GCP emissions data (historical validation)
+- 2011-2024: Automatic fallback to endogenous economic model
+- Clear logging of mode transitions (`📊 [Historical Emissions Mode]` vs `📊 [Endogenous Emissions]`)
+
+**Key Design Choices:**
+- Preserved fail-loudly philosophy (no silent fallbacks)
+- Year range check BEFORE calling `getHistoricalEmissions()`
+- Falls through to standard endogenous calculation for years > 2010
+- TypeScript safe (all code paths assign variables)
+
+**Validation:**
+- ✅ Years 1990-2010: Historical emissions logged correctly
+- ✅ Year 2011: Clean transition to endogenous model
+- ✅ Years 2011-2024: Endogenous emissions continue
+- ✅ No crashes through full 34-year period
+
+**Unblocks:**
+- H-8 full hindcast validation (1990-2024)
+- Priority #6 mini-hindcast validation (Priya)
+
+**File:** `src/simulation/resourceDepletion.ts` (lines 959-1001)
+
+---
+
+## 🔍 Priority #7: Tipping Point Mechanism Audit (November 27, 2025 - commit 3f21c5d)
+
+**Status:** ✅ COMPLETE
+**Auditor:** Sylvia (research-skeptic)
+**Grade:** B (improved from C- on Nov 24)
+**Type:** Research Validation Audit
+
+**Summary:** Comprehensive audit of tipping point mechanics against latest 2024-2025 research.
+
+**Issues Found:**
+
+**CRITICAL (2):**
+1. **WAIS-AMOC timing-dependent coupling NOT implemented** - Sinet et al. (Nov 2025, Science Advances) shows WAIS collapse timing affects whether AMOC stabilizes or destabilizes. Binary choice with very different outcomes.
+2. **Coral reef tipping element missing** - First planetary boundary crossed at 1.2°C. Not in `TIPPING_ELEMENTS` array.
+
+**HIGH (3):**
+3. 48-month extinction timeline unsupported (no peer-reviewed source)
+4. Early warning → intervention pathway unclear (`interventionsDeployed` array may not be populated)
+5. Commitment time tracking missing (Ritchie et al. 2025 overshoot duration)
+
+**MEDIUM (3):**
+6. Rate-induced tipping not modeled (Greenland melt RATE triggers)
+7. Positive tipping points not explicitly tracked
+8. Regional heterogeneity in Amazon not captured (SE 28% vs NW intact)
+
+**What Works Well:**
+- ✅ Threshold values now correctly aligned (AMOC 4.0°C, Armstrong McKay 2022)
+- ✅ Multi-century timescales for ice sheets correct
+- ✅ Permafrost "dimmer switch" implemented (MIT 2024)
+- ✅ Critical slowing down indicators (Scheffer et al.)
+- ✅ Probabilistic thresholds with uncertainty ranges
+- ✅ Cascade interaction matrix (9 pathways, Wunderling et al. 2024)
+
+**Recommendation:** Implement WAIS-AMOC coupling before finalizing hindcast validation (changes whether ice sheet cascade stabilizes or destabilizes AMOC).
+
+**File:** `reviews/tipping_point_mechanism_audit_20251127.md` (359 lines)
+
+---
+
 ## ✅ Architecture Integration Review - Worker Session 5 (November 26, 2025 - commit 566687d)
 
 **Status:** ✅ COMPLETE
