@@ -58,6 +58,7 @@ import { initializeAIAssistedSkillsMetrics, initializeLaborCapitalDistribution }
 import { initializeRecoveryTracking } from './utils/recoveryCalculations';
 import { initializeMemeticSystem } from './memetics/initialization';
 import { initializeNuclearCommandControl } from './nuclearCommandControl';
+import { initializeTechnologyEffects } from '@/types/technologyEffects';
 import { initializePositiveTippingPoints } from './positiveTippingPoints';
 import { initializeTippingPointSystem } from './tippingPoints';
 import { initializeConsciousnessGovernance } from './consciousnessGovernance';
@@ -974,6 +975,7 @@ export function createDefaultInitialState(
     countryPopulationSystem: initializeCountryPopulations(),
     nuclearWinterState: initializeNuclearWinterState(),  // TIER 1.7.4: Long-term nuclear war effects
     nuclearCommandControlState: initializeNuclearCommandControl(),  // TIER 1 Phase 1B: Circuit breakers
+    technologyEffects: initializeTechnologyEffects(),  // Nov 27 2025: Tech effects accumulator (phase order bug fix)
 
     // TIER 2: Major Mitigations
     ubiSystem: initializeUBISystem(),

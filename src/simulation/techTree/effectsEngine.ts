@@ -894,33 +894,25 @@ function applyGlobalEffects(
         break;
         
       case 'globalCooling':
-        // Emergency geoengineering cooling
-        if (gameState.resourceEconomy?.co2) {
-          gameState.resourceEconomy.co2.temperatureAnomaly = assertFinite(Math.max(
-            0,
-            gameState.resourceEconomy.co2.temperatureAnomaly - value * 0.01
-          ), {
-        location: 'applyRegionalEffects:globalCooling',
-        valueName: 'temperatureAnomaly',
-        month: gameState.currentMonth
-      });
+        // Emergency geoengineering cooling (ACCUMULATE, don't apply yet)
+        // Phase order fix (Nov 27, 2025): ResourceEconomyPhase (17.0) will overwrite direct changes
+        // Instead, accumulate in technologyEffects.coolingFromGeoengineering
+        // TechCoolingPhase (17.5) will apply AFTER ResourceEconomyPhase recalculates
+        if (gameState.technologyEffects) {
+          const coolingEffect = value * 0.01; // 0.01°C per deployment level
+          gameState.technologyEffects.coolingFromGeoengineering += coolingEffect;
+
           // INTEGRATION FIX (Oct 29, 2025): Global cooling helps climate boundary
           triggerBoundaryRecovery(gameState, 'climate_change');
         }
         break;
 
       case 'regionalCooling':
-        // Regional cooling from marine cloud brightening
-        if (gameState.resourceEconomy?.co2) {
-          // Less effective than global cooling but safer
-          gameState.resourceEconomy.co2.temperatureAnomaly = assertFinite(Math.max(
-            0,
-            gameState.resourceEconomy.co2.temperatureAnomaly - value * 0.005
-          ), {
-        location: 'applyRegionalEffects:regionalCooling',
-        valueName: 'temperatureAnomaly',
-        month: gameState.currentMonth
-      });
+        // Regional cooling from marine cloud brightening (ACCUMULATE, don't apply yet)
+        // Phase order fix (Nov 27, 2025): ResourceEconomyPhase (17.0) will overwrite direct changes
+        if (gameState.technologyEffects) {
+          const coolingEffect = value * 0.005; // 0.005°C per deployment level (less effective than global)
+          gameState.technologyEffects.coolingFromGeoengineering += coolingEffect;
         }
         // Flag that regional cooling is active
         if (gameState.globalMetrics) {
