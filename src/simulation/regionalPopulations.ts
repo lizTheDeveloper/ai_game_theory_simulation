@@ -445,22 +445,63 @@ export function updateRegionalPopulations(state: GameState): void {
       }
     }
 
-    // Birth rate from fertility
-    region.adjustedBirthRate = region.baselineBirthRate *
-      (region.fertilityRate / 2.3); // Scale by fertility vs baseline
-
-    // HISTORICAL BIRTH RATE SCALING (Nov 24-25, 2025)
-    // CRITICAL FIX (Nov 25, 2025): Use region-specific CBR curves instead of global average
-    // Root cause of 2010-2020 overshoot: Global CBR scaling applied uniformly across regions,
-    // but fertility declines varied by 7x (Europe -2.6% vs North America -19.6% in 2010-2020).
-    // Using single multiplier overestimated births in East/South Asia (50% of population).
-    // Research: UN World Population Prospects 2024, regional TFR → CBR using ratio of 7.5
+    // CRITICAL FIX (Nov 27, 2025 - C-4): Birth rate calculation in historical mode
+    // ROOT CAUSE: Lines 449-450 use 2025 baseline birth rates scaled by fertility ratio
+    // Problem: For SSA with TFR 6.35, this gives 3.4% * (6.35/2.3) = 9.39% instead of 4.73%
+    // The _skipHistoricalBirthRateScaling flag prevented ADDITIONAL scaling (lines 463-489)
+    // but couldn't fix the already-wrong calculation from lines 449-450.
     //
-    // CRITICAL FIX (Nov 26, 2025 - Phase 6): Skip scaling if fertility already initialized historically
-    // When _skipHistoricalBirthRateScaling flag is set, fertilityRate is already 1990 values
-    // and applying the historical CBR scaling would double-count the higher fertility
+    // FIX: When _skipHistoricalBirthRateScaling=true, DIRECTLY use historical CBR data
+    // instead of scaling baseline birth rates by fertility ratio.
     const skipScaling = (state as any)._skipHistoricalBirthRateScaling;
-    if (state.config.scenarioMode === 'historical' && !skipScaling) {
+
+    if (state.config.scenarioMode === 'historical' && skipScaling) {
+      // DIRECT HISTORICAL CBR MODE (Nov 27, 2025)
+      // Fertility is already initialized to historical values (e.g., SSA TFR 6.35)
+      // Calculate birth rate DIRECTLY from historical CBR data (not from fertility formula)
+      const { getRegionalHistoricalBirthRate } = require('./engine/phases/BaselineMortalityPhase');
+      const actualYear = state.currentYear;
+
+      // Get historical CBR for this region-year (e.g., SSA 1990: 47.3/1000)
+      const historicalCBR = getRegionalHistoricalBirthRate(region.name, actualYear);
+
+      // Convert to annual rate: CBR/1000 = annual rate
+      // E.g., 47.3/1000 = 0.0473 = 4.73%
+      region.adjustedBirthRate = historicalCBR / 1000;
+
+      // Validate result
+      region.adjustedBirthRate = assertFinite(region.adjustedBirthRate, {
+        location: 'updateRegionalPopulations (historical CBR mode)',
+        valueName: 'adjustedBirthRate',
+        month: state.currentMonth,
+        additionalInfo: {
+          region: region.name,
+          actualYear,
+          historicalCBR,
+          adjustedBirthRate: region.adjustedBirthRate
+        }
+      });
+
+      // Diagnostic logging (once per year for one region)
+      if (state.currentMonth % 12 === 0 && region.name === 'Sub-Saharan Africa') {
+        console.log(`  📊 Direct historical CBR mode (${actualYear}):`);
+        console.log(`    Region: ${region.name}`);
+        console.log(`    Historical CBR: ${historicalCBR.toFixed(1)}/1000`);
+        console.log(`    Adjusted birth rate: ${(region.adjustedBirthRate * 100).toFixed(2)}%`);
+        console.log(`    Fertility (TFR): ${region.fertilityRate.toFixed(2)}`);
+      }
+    } else if (state.config.scenarioMode === 'historical' && !skipScaling) {
+      // LEGACY HISTORICAL SCALING MODE (pre-Nov 27, 2025)
+      // Calculate from fertility formula, then scale by historical CBR
+      region.adjustedBirthRate = region.baselineBirthRate *
+        (region.fertilityRate / 2.3); // Scale by fertility vs baseline
+
+      // HISTORICAL BIRTH RATE SCALING (Nov 24-25, 2025)
+      // CRITICAL FIX (Nov 25, 2025): Use region-specific CBR curves instead of global average
+      // Root cause of 2010-2020 overshoot: Global CBR scaling applied uniformly across regions,
+      // but fertility declines varied by 7x (Europe -2.6% vs North America -19.6% in 2010-2020).
+      // Using single multiplier overestimated births in East/South Asia (50% of population).
+      // Research: UN World Population Prospects 2024, regional TFR → CBR using ratio of 7.5
       const { getRegionalHistoricalBirthRate, getHistoricalCrudeBirthRate } = require('./engine/phases/BaselineMortalityPhase');
       const actualYear = state.currentYear;
 
@@ -486,6 +527,11 @@ export function updateRegionalPopulations(state: GameState): void {
         console.log(`    Difference: ${((regionalScale - globalScale) / globalScale * 100).toFixed(1)}% ${regionalScale > globalScale ? 'HIGHER' : 'lower'}`);
         console.log(`    Final birth rate: ${region.adjustedBirthRate.toFixed(4)}`);
       }
+    } else {
+      // STANDARD MODE (non-historical scenarios)
+      // Calculate birth rate from fertility using baseline scaling
+      region.adjustedBirthRate = region.baselineBirthRate *
+        (region.fertilityRate / 2.3); // Scale by fertility vs baseline
     }
 
     // === 2. CALCULATE DEATH RATE ===
