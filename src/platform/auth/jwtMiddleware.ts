@@ -48,6 +48,7 @@ export class JWTMiddleware {
       // Extract token from Authorization header
       const authHeader = req.headers.authorization;
 
+      // codeql[js/user-controlled-bypass] Intentional: missing auth header results in 401 rejection, not bypass
       if (!authHeader) {
         res.status(401).json({
           error: 'Unauthorized',
@@ -59,6 +60,7 @@ export class JWTMiddleware {
       // Expect format: "Bearer <token>"
       const parts = authHeader.split(' ');
 
+      // codeql[js/user-controlled-bypass] Intentional: invalid format results in 401 rejection, not bypass
       if (parts.length !== 2 || parts[0] !== 'Bearer') {
         res.status(401).json({
           error: 'Unauthorized',
@@ -116,6 +118,7 @@ export class JWTMiddleware {
     try {
       const authHeader = req.headers.authorization;
 
+      // codeql[js/user-controlled-bypass] Intentional: optional auth allows unauthenticated access by design
       if (!authHeader) {
         // No auth header - continue without user
         next();
@@ -124,6 +127,7 @@ export class JWTMiddleware {
 
       const parts = authHeader.split(' ');
 
+      // codeql[js/user-controlled-bypass] Intentional: optional auth allows invalid format to pass by design
       if (parts.length !== 2 || parts[0] !== 'Bearer') {
         // Invalid format - continue without user
         next();

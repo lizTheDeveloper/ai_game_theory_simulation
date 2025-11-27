@@ -410,7 +410,7 @@ describe('JSON Object Sanitization', () => {
     };
     const result = sanitizeJsonObject(input);
     assert.match(result.name, /&lt;script&gt;/);
-    assert.doesNotMatch(result.name, /<script>/);
+    assert.doesNotMatch(result.name, /<script>/i);
     assert.match(result.description, /&quot;/);
   });
 
@@ -434,7 +434,7 @@ describe('JSON Object Sanitization', () => {
     };
     const result = sanitizeJsonObject(input);
     for (const tag of result.tags) {
-      assert.doesNotMatch(tag, /<[^>]+>/);
+      assert.doesNotMatch(tag, /<[^>]+>/i);
     }
   });
 

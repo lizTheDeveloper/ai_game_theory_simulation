@@ -105,10 +105,12 @@ export function createAuthRoutes(authService: AuthService, jwtMiddleware: JWTMid
   // POST /auth/login - User Login
   // ==========================================================================
   // lgtm[js/missing-rate-limiting] Rate limiting applied via app.use('/auth/login', ...) in server.ts
+  // codeql[js/missing-rate-limiting] Rate limiting applied via app.use('/auth/login', ...) in server.ts
 
   router.post(
     '/login',
     validateRequest(loginSchema),
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     async (req: Request, res: Response): Promise<void> => {
       try {
         const body = req.body;
@@ -256,6 +258,7 @@ export function createAuthRoutes(authService: AuthService, jwtMiddleware: JWTMid
   // GET /auth/me - Get Current User Info (Protected)
   // ==========================================================================
   // lgtm[js/missing-rate-limiting] Auth routes rate-limited at router level in server.ts
+  // codeql[js/missing-rate-limiting] Auth routes rate-limited at router level in server.ts
 
   router.get('/me', jwtMiddleware.authenticate, async (req: Request, res: Response): Promise<void> => {
     try {

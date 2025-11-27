@@ -261,7 +261,7 @@ describe('Sanitized String Validation', () => {
     const input = 'Hello <b>World</b>';
     const result = schema.parse(input);
     assert.match(result, /&lt;b&gt;/);
-    assert.doesNotMatch(result, /<b>/);
+    assert.doesNotMatch(result, /<b>/i);
   });
 
   it('should respect min/max length', () => {
