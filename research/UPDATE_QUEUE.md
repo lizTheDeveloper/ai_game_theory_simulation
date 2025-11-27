@@ -1,6 +1,6 @@
 # Research Update Queue
-**Generated:** 11/27/2025, 8:30:07 AM
-**Files Scanned:** 448
+**Generated:** 11/27/2025, 9:30:03 AM
+**Files Scanned:** 450
 
 ---
 
@@ -12,7 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 154 (34.4%)
+**Count:** 155 (34.4%)
 
 ### `CRISIS_MITIGATION_RESEARCH_CRITIQUE_20251029.md`
 - **Oldest source:** 2001 (24 years old)
@@ -318,6 +318,11 @@
 - **Oldest source:** 2002 (23 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/climate_self_limiting_mechanisms_20251125.md`
+
+### `climate_stability_mechanisms_2024_2025.md`
+- **Oldest source:** 2008 (17 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/climate_stability_mechanisms_2024_2025.md`
 
 ### `climate_stability_parameters_20251127.md`
 - **Oldest source:** 2013 (12 years old)
@@ -816,7 +821,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 273 (60.9%)
+**Count:** 274 (60.9%)
 
 All sources <3 years old. No action required.
 
@@ -826,11 +831,11 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 448 |
+| Total files | 450 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 154 (34.4%) |
+| HIGH | 155 (34.4%) |
 | MEDIUM | 21 (4.7%) |
-| LOW | 273 (60.9%) |
+| LOW | 274 (60.9%) |
 | Average age | 8.1 years |
 | Oldest source | 1955 (70 years ago) |
 
@@ -838,9 +843,9 @@ All sources <3 years old. No action required.
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 273 | 60.9% |
+| Current (<3yr) | 274 | 60.9% |
 | Warning (3-5yr) | 21 | 4.7% |
-| Critical (>5yr) | 154 | 34.4% |
+| Critical (>5yr) | 155 | 34.4% |
 
 ### Targets
 
@@ -852,7 +857,7 @@ All sources <3 years old. No action required.
 
 ## 🔄 Next Steps
 
-1. Update 154 HIGH priority file(s) within 1 month
+1. Update 155 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 
