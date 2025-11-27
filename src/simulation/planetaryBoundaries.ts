@@ -2078,10 +2078,11 @@ export function updateBiosphereIntegrityIndex(
   // HISTORICAL MODE (Nov 27, 2025): Dampen biodiversity decline for hindcast validation
   // Research: research/historical_mode_parameters_20251127.md
   // Root cause: Crisis-calibrated extinction rates produce -95% collapse (0.03 vs 0.49 actual)
-  // Historical data: WWF Living Planet Index shows -25% over 34 years (0.74%/year decline)
-  // Solution: Use baseline habitat loss rate (0.74%/year) instead of crisis extinction cascades
+  // Historical data: WWF Living Planet Index shows -34.7% decline 1990-2024 (0.75 → 0.49)
+  // Solution: Use baseline habitat loss rate (1.236%/year) instead of crisis extinction cascades
   if (state.config.historicalMode) {
-    const HISTORICAL_ANNUAL_DECLINE_RATE = 0.0074; // 0.74% per year (WWF LPI 1990-2024)
+    console.log(`🧪 [BII] Historical mode ACTIVE (month ${state.currentMonth}, species: ${bii.currentSpeciesCount})`);
+    const HISTORICAL_ANNUAL_DECLINE_RATE = 0.01236; // 1.236% per year (WWF LPI 1990-2024: 0.75 → 0.49)
     const monthlyDeclineRate = HISTORICAL_ANNUAL_DECLINE_RATE / 12;
 
     // Apply simple linear decline (no feedback loops, no catastrophic events)
