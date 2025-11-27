@@ -177,6 +177,8 @@ export class PythonAgentWrapper extends EventEmitter {
       throw new Error(`Agent script not found: ${this.scriptPath}`);
     }
 
+    console.log(`🔄 Starting Python agent ${this.agentId}...`);
+
     // Spawn Python process
     this.process = spawn('python3', [this.scriptPath, this.agentId], {
       stdio: ['pipe', 'pipe', 'pipe'],
@@ -196,6 +198,10 @@ export class PythonAgentWrapper extends EventEmitter {
 
     // Set up IPC
     this.setupIPC();
+
+    // Wait for agent to be ready (receive initial health message or error)
+    await this.waitForReady();
+
     this.setupHealthMonitor();
 
     // Mark as running in registry
@@ -206,6 +212,68 @@ export class PythonAgentWrapper extends EventEmitter {
 
     // Process queued requests
     this.processQueuedRequests();
+  }
+
+  /**
+   * Wait for the Python agent to send its initial health message.
+   * This ensures the agent has connected to DB/Redis before we consider it ready.
+   */
+  private waitForReady(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const startupTimeout = setTimeout(() => {
+        reject(new Error(`Agent ${this.agentId} startup timeout (10s) - check DB/Redis connection`));
+      }, 10000);
+
+      let stderrOutput = '';
+
+      // Capture stderr for error diagnosis
+      const stderrHandler = (data: Buffer) => {
+        stderrOutput += data.toString();
+      };
+      this.process!.stderr!.on('data', stderrHandler);
+
+      // Listen for exit during startup
+      const exitHandler = (code: number | null) => {
+        clearTimeout(startupTimeout);
+        this.process!.stderr!.off('data', stderrHandler);
+        reject(new Error(
+          `Agent ${this.agentId} crashed during startup (exit code: ${code})\n` +
+          `stderr: ${stderrOutput || '(empty)'}`
+        ));
+      };
+      this.process!.once('exit', exitHandler);
+
+      // Listen for the initial health message on stdout
+      const readyHandler = (data: Buffer) => {
+        const output = data.toString();
+        try {
+          // The Python agent sends {"type": "health", "data": {"healthy": true}} on startup
+          const lines = output.split('\n').filter(l => l.trim());
+          for (const line of lines) {
+            const msg = JSON.parse(line);
+            if (msg.type === 'health' && msg.data?.healthy) {
+              clearTimeout(startupTimeout);
+              this.process!.stdout!.off('data', readyHandler);
+              this.process!.off('exit', exitHandler);
+              this.process!.stderr!.off('data', stderrHandler);
+              this.isHealthy = true;
+              resolve();
+              return;
+            } else if (msg.type === 'error') {
+              clearTimeout(startupTimeout);
+              this.process!.stdout!.off('data', readyHandler);
+              this.process!.off('exit', exitHandler);
+              this.process!.stderr!.off('data', stderrHandler);
+              reject(new Error(`Agent ${this.agentId} initialization error: ${msg.error}`));
+              return;
+            }
+          }
+        } catch (e) {
+          // Not valid JSON yet, keep waiting
+        }
+      };
+      this.process!.stdout!.on('data', readyHandler);
+    });
   }
 
   /**
