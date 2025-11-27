@@ -51,13 +51,18 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📄 **Files:** `engine.ts`, `phases/index.ts`, `TechCoolingPhase.ts`
 - **Severity:** CRITICAL - affects all climate tech validation
 
+**Nov 27: TypeScript Fixes** (commit 18b5040)
+- 🔧 **Merge Cleanup:** Removed duplicate `volcanicForcing` declaration (was at line 437, canonical at 514)
+- 🔧 **GlobalMetrics:** Added optional `environmentalHealth` composite metric
+- 📄 **Files:** `src/types/game.ts`, `src/types/metrics.ts`
+
 **Nov 27: VolcanicForcingPhase Added** (commits 6f3037c, previous)
 - 🌋 **New Phase (16.5):** Models stratospheric aerosol optical depth (AOD) from volcanic eruptions
 - **Purpose:** Historical validation for 1990-2010 hindcast - captures Mount Pinatubo cooling (~0.3°C)
 - **Physics:** AOD exponential decay (τ≈18 months), radiative forcing = -25 W/m² per unit AOD (IPCC AR6)
 - **Research:** Hansen et al. (2005), Sato et al. (1993) volcanic AOD data
 - **GameState:** New `volcanicForcing` property (currentAOD, forcingWattsPerM2, lastEruptionMonth)
-- 📄 **Files:** `VolcanicForcingPhase.ts`, `src/types/game.ts:437-441`
+- 📄 **Files:** `VolcanicForcingPhase.ts`, `src/types/game.ts:514-520`
 
 **Nov 26: AIAgentCoordinationPhase Unit Tests** (commit 3a63351)
 - 🧪 **55 unit tests** with 97.49% statement coverage, 83.16% branch coverage, 100% function coverage
