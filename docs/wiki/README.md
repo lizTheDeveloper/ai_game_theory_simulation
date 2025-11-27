@@ -29,7 +29,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
-**Nov 27: CRITICAL - Climate Stability Citation Correction** (commits 1babf63, 6eac753)
+**Nov 27: CRITICAL - Climate Stability Citation Correction** (commits 1babf63, 6eac753, b580b1c)
 - 🔬 **Citation Failure Discovered:** ClimateSystemPhase.ts cited 5 papers to justify 5% stability floor - 3/5 CONTRADICT claims (Grade D)
 - **Problem Papers:** Lenton 2019, Armstrong McKay 2022, Steffen 2015 all warn about DESTABILIZATION, not self-limiting stability
 - **2024-2025 Literature Review (Grade D-):** Comprehensive review of 6 recent papers finds **0% support for stability floor, 83% contradict**:
@@ -37,9 +37,9 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - ❌ State of Climate 2025 (BioScience): Warming "possibly accelerating", planet "on the brink"
   - ⚠️ Planck feedback: Real but continuous (not a "floor" mechanism after tipping cascades)
   - ⚠️ Permafrost study (2025): Limited non-self-perpetuation but only under stabilization scenarios, by 2300
-- **Verdict:** 5% stability floor is NOT research-backed. Must document as "IMPLEMENTATION CHOICE for tractability"
-- 📄 **Files:** `research/climate_stability_mechanisms_2024_2025_update.md` (336 lines), `research/ROADMAP_RESEARCH_STATUS_20251127.md`
-- **Status:** Research complete, implementation corrections pending (Roy + Sylvia)
+- **Verdict:** 5% stability floor is NOT research-backed. Documented as "IMPLEMENTATION CHOICE for tractability"
+- 📄 **Files:** `research/climate_stability_mechanisms_2024_2025_update.md` (336 lines), `ClimateSystemPhase.ts` (updated comments)
+- **Status:** ✅ COMPLETE - Code comments updated to honestly document implementation choices vs research claims
 
 **Nov 27: CRITICAL-1 + HIGH-2 FIX - environmentalHealth NaN + Carbon Cycle Calibration** (commit 8596afd)
 - 🔧 **CRITICAL-1 FIX: environmentalHealth NaN Crashes (30% → 0% crash rate)**
