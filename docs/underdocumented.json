@@ -61520,6 +61520,158 @@
     "context": "elysiumPattern: elysiumDetected,"
   },
   {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AerosolForcingPhase.ts",
+    "line": 51,
+    "type": "property",
+    "name": "events",
+    "currentDoc": "(none)",
+    "context": "events: [],"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AerosolForcingPhase.ts",
+    "line": 52,
+    "type": "property",
+    "name": "metadata",
+    "currentDoc": "(none)",
+    "context": "metadata: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AerosolForcingPhase.ts",
+    "line": 53,
+    "type": "property",
+    "name": "message",
+    "currentDoc": "(none)",
+    "context": "message: 'Skipped (hindcast mode - aerosols already in NASA data)'"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AerosolForcingPhase.ts",
+    "line": 88,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'AerosolForcingPhase.execute',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AerosolForcingPhase.ts",
+    "line": 89,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'aerosolCooling',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AerosolForcingPhase.ts",
+    "line": 90,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AerosolForcingPhase.ts",
+    "line": 91,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { aerosolERF, currentYear }"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AerosolForcingPhase.ts",
+    "line": 100,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'AerosolForcingPhase.execute',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AerosolForcingPhase.ts",
+    "line": 101,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'temperatureAnomaly',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AerosolForcingPhase.ts",
+    "line": 102,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AerosolForcingPhase.ts",
+    "line": 103,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AerosolForcingPhase.ts",
+    "line": 107,
+    "type": "property",
+    "name": "newTemp",
+    "currentDoc": "(none)",
+    "context": "newTemp: Math.max(0, oldTemp + aerosolCooling)"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AerosolForcingPhase.ts",
+    "line": 125,
+    "type": "property",
+    "name": "events",
+    "currentDoc": "(none)",
+    "context": "events: [],"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AerosolForcingPhase.ts",
+    "line": 126,
+    "type": "property",
+    "name": "metadata",
+    "currentDoc": "(none)",
+    "context": "metadata: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AerosolForcingPhase.ts",
+    "line": 129,
+    "type": "property",
+    "name": "appliedCooling",
+    "currentDoc": "(none)",
+    "context": "appliedCooling: true,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AerosolForcingPhase.ts",
+    "line": 130,
+    "type": "property",
+    "name": "message",
+    "currentDoc": "(none)",
+    "context": "message: `Applied ${aerosolCooling.toFixed(2)}°C aerosol cooling (ERF ${aerosolERF.toFixed(2)} W/m²)`"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AerosolForcingPhase.ts",
+    "line": 156,
+    "type": "property",
+    "name": "x",
+    "currentDoc": "(none)",
+    "context": "x: number,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AerosolForcingPhase.ts",
+    "line": 157,
+    "type": "property",
+    "name": "x1",
+    "currentDoc": "(none)",
+    "context": "x1: number, y1: number,"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AerosolForcingPhase.ts",
+    "line": 158,
+    "type": "property",
+    "name": "x2",
+    "currentDoc": "(none)",
+    "context": "x2: number, y2: number"
+  },
+  {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/AlignmentDynamicsPhase.ts",
     "line": 43,
     "type": "property",
