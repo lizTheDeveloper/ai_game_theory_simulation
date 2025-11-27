@@ -1,0 +1,33 @@
+# CPU-only Python dependencies for benchmark Docker image
+# This avoids pulling in CUDA/cuDNN (~4GB) which exceeds GitHub Actions disk space
+
+# Install CPU-only PyTorch FIRST (before sentence-transformers pulls in CUDA version)
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch>=2.0.0+cpu
+torchvision>=0.15.0+cpu
+
+# Now sentence-transformers will use the already-installed CPU torch
+numpy>=1.24.0
+faiss-cpu>=1.7.4
+sentence-transformers>=2.2.0
+
+# AI/ML libraries (API-based, no GPU needed)
+anthropic>=0.18.0
+openai>=1.0.0
+tiktoken>=0.5.0
+
+# Data processing
+pandas>=2.0.0
+scikit-learn>=1.3.0
+
+# Web scraping (for citation checking)
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+
+# Utilities
+python-dotenv>=1.0.0
+tqdm>=4.66.0
+
+# Database connectivity for benchmarks
+psycopg2-binary>=2.9.0
+redis>=4.5.0
