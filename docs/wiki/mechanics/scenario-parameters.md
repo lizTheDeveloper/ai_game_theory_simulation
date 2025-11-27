@@ -293,11 +293,22 @@ const state = await createHistoricalInitialState({
 
 #### Crisis Systems Requiring Adjustment
 
+**Status (Nov 27, 2025 - commit af9eff2):** 6 mortality/demographic phases updated to use `historicalMode` flag.
+Population error improved from -76% to -25.5%. See `logs/hindcast/high7_mortality_fix_20251127_170638.log`.
+
+**Phases now using `historicalMode` flag:**
+1. ✅ **BaselineMortalityPhase** - Check `historicalMode` before applying crisis mortality
+2. ✅ **BayesianMortalityResolutionPhase** - Dampen Bayesian escalation in historical mode
+3. ✅ **FamineSystemPhase** - Disable crisis cascades during historical period
+4. ✅ **FoodSecurityDegradationPhase** - Use empirical food security in historical mode
+5. ✅ **HumanSurvivalSystemPhase** - Apply historical mode to health systems
+6. ✅ **regionalPopulations.ts** - Use `historicalMode` flag (3 locations)
+
+**Phases still needing adjustment:**
 1. **ExogenousShockPhase** - Disable nuclear/asteroid events, cap mortality at 10M per event
-2. **BaselineMortalityPhase** - Use historical death rates from IHME GBD (7.4-9.0 per 1000)
-3. **BiodiversityPhase** - Dampen decline to 0.74%/year (matches LPI 2024)
-4. **ClimateSystemPhase** - Verify ECS=3.0°C, fix temperature anticorrelation
-5. **ResourceDepletionPhase** - Dampen oil depletion → GDP collapse feedback
+2. **BiodiversityPhase** - Dampen decline to 0.74%/year (matches LPI 2024) - HIGH-8, still 91% error
+3. **ClimateSystemPhase** - Verify ECS=3.0°C, fix temperature anticorrelation
+4. **ResourceDepletionPhase** - Dampen oil depletion → GDP collapse feedback
 
 #### Implementation Pattern
 

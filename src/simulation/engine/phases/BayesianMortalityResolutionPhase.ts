@@ -61,7 +61,8 @@ export class BayesianMortalityResolutionPhase implements SimulationPhase {
     // double-count deaths by applying crisis mortality on top of historical rates.
     // Solution: Disable Bayesian mortality entirely for hindcast validation (1990-2024).
     // Historical CDR data already incorporates real-world mortality from all causes.
-    if (state.config.scenarioMode === 'historical' && state.currentYear <= 2024) {
+    // historicalMode = empirical UN data (1990-2024), scenarioMode = crisis severity
+    if (state.config.historicalMode && state.currentYear <= 2024) {
       // Clear any accumulated risks to prevent memory leaks
       if (state.humanPopulationSystem?.mortalityRisks) {
         state.humanPopulationSystem.mortalityRisks = [];

@@ -81,8 +81,9 @@ export class HumanSurvivalSystemPhase implements SimulationPhase {
     // This degradation models future AI-era stress that didn't exist then.
     // Skip to allow hindcast validation against actual history.
     // Source: FAO State of Food Insecurity reports (1999-2015)
+    // HIGH-7 FIX (Nov 27, 2025): Use historicalMode flag for hindcast calibration
     // ============================================================================
-    if (state.config?.scenarioMode === 'historical' && state.currentYear < 2020) {
+    if (state.config?.historicalMode && state.currentYear < 2020) {
       return;
     }
 
