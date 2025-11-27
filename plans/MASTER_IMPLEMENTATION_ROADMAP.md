@@ -1125,6 +1125,12 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 - **Recently Completed:** Nitrogen-food coupling research (Nov 15), Climate deployment timescales (Nov 15), Novel Entities 0% effectiveness (Nov 14)
 
 **Research Verification Queue:**
+- [ ] **Pre-industrial Temperature Offset** - ⏳ PENDING (Nov 27, 2025 - commit 3e3f47c)
+  - **Research Spec:** `research/verification_3e3f47c_20251127.md`
+  - **Claim:** 1750-1850 warming ~0.7°C (converts 1850-1900 baseline to pre-industrial)
+  - **Cited Source:** IPCC AR6
+  - **Priority:** HIGH (affects all planetary boundary assessments)
+  - **Verifier:** research-skeptic (Sylvia)
 - [ ] **Historical Mode Parameters** - ⏳ PENDING (Nov 27, 2025 - commit 87292c6)
   - **Research Spec:** `research/historical_mode_parameters_20251127.md`
   - **Verification File:** `research/verification_87292c6_20251127.md`
