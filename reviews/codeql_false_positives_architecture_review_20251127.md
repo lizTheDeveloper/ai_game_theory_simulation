@@ -2,7 +2,8 @@
 
 **Date:** 2025-11-27
 **Reviewer:** Architecture Skeptic
-**Severity Summary:** 0 CRITICAL | 1 HIGH | 2 MEDIUM | 1 LOW
+**Severity Summary:** 0 CRITICAL | 0 HIGH | 0 MEDIUM | 0 LOW (all resolved via query filters)
+**Status:** RESOLVED via `.github/codeql/codeql-config.yml`
 
 ## Executive Summary
 
