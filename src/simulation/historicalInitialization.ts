@@ -177,6 +177,31 @@ export async function createHistoricalInitialState(
     }
   }
 
+  // ============================================================================
+  // PHASE 12: HISTORICAL BIODIVERSITY BASELINE (Nov 27, 2025)
+  // ============================================================================
+  // Research: WWF Living Planet Index (research/hindcast_calibration_parameters_20251127.md lines 229-390)
+  // - 1970: 1.00 (baseline year)
+  // - 1990: 0.75 (-25% from 1970)
+  // - 2024: 0.49 (-51% from 1970, -34.7% from 1990)
+  // - Default 2025 value: 0.35 (further decline)
+  //
+  // Root cause: Default initialization sets biodiversityIndex=0.35 (2025 baseline)
+  // For hindcast validation, must use historical starting points
+  // ============================================================================
+  if (year >= 1970 && year <= 2024) {
+    // Calculate biodiversity from 1970 baseline using WWF LPI trajectory
+    // LPI shows -1.02%/year average decline (73% over 54 years 1970-2024)
+    const yearsFrom1970 = year - 1970;
+    const ANNUAL_DECLINE_RATE = 0.0102; // 1.02%/year (WWF LPI 1970-2024)
+    const biodiversityFromLPI = Math.pow(1 - ANNUAL_DECLINE_RATE, yearsFrom1970);
+
+    if (baseState.environmentalAccumulation) {
+      baseState.environmentalAccumulation.biodiversityIndex = biodiversityFromLPI;
+      console.log(`  Phase 12: Biodiversity baseline set to ${(biodiversityFromLPI * 100).toFixed(2)}% for ${year} (WWF LPI trajectory from 1970)`);
+    }
+  }
+
   // Store simulation start year for reference (legacy - keeping for backwards compatibility)
   (baseState as unknown as Record<string, unknown>).simulationStartYear = year;
 
@@ -660,6 +685,31 @@ export function initializeHistoricalSimulation(
     }
     if (baseState.config.historicalMode) {
       console.log(`  config.historicalMode enabled (Phase 11: dampened crisis systems for ${year})`);
+    }
+  }
+
+  // ============================================================================
+  // PHASE 12: HISTORICAL BIODIVERSITY BASELINE (Nov 27, 2025)
+  // ============================================================================
+  // Research: WWF Living Planet Index (research/hindcast_calibration_parameters_20251127.md lines 229-390)
+  // - 1970: 1.00 (baseline year)
+  // - 1990: 0.75 (-25% from 1970)
+  // - 2024: 0.49 (-51% from 1970, -34.7% from 1990)
+  // - Default 2025 value: 0.35 (further decline)
+  //
+  // Root cause: Default initialization sets biodiversityIndex=0.35 (2025 baseline)
+  // For hindcast validation, must use historical starting points
+  // ============================================================================
+  if (year >= 1970 && year <= 2024) {
+    // Calculate biodiversity from 1970 baseline using WWF LPI trajectory
+    // LPI shows -1.02%/year average decline (73% over 54 years 1970-2024)
+    const yearsFrom1970 = year - 1970;
+    const ANNUAL_DECLINE_RATE = 0.0102; // 1.02%/year (WWF LPI 1970-2024)
+    const biodiversityFromLPI = Math.pow(1 - ANNUAL_DECLINE_RATE, yearsFrom1970);
+
+    if (baseState.environmentalAccumulation) {
+      baseState.environmentalAccumulation.biodiversityIndex = biodiversityFromLPI;
+      console.log(`  Phase 12: Biodiversity baseline set to ${(biodiversityFromLPI * 100).toFixed(2)}% for ${year} (WWF LPI trajectory from 1970)`);
     }
   }
 

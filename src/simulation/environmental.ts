@@ -328,8 +328,8 @@ export function updateEnvironmentalAccumulation(
 
     // WWF LPI empirical decline rate (ALREADY includes conservation effects)
     // Calculation: 0.75 (1990) → 0.49 (2024) over 34 years
-    // Geometric decline: (1 - r)^408 = 0.6533 → r = 0.00102/month
-    const HISTORICAL_DECLINE_RATE = 0.00102; // 0.102%/month (1.22%/year)
+    // Geometric decline: (0.49/0.75)^(1/408) = 0.998978 → r = 0.001022/month
+    const HISTORICAL_DECLINE_RATE = 0.001022; // 0.1022%/month (1.236%/year)
 
     // Use empirical rate directly (no modifiers - observed rate is net of all effects)
     biodiversityLossRate = HISTORICAL_DECLINE_RATE;
