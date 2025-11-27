@@ -1125,6 +1125,13 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 - **Recently Completed:** Nitrogen-food coupling research (Nov 15), Climate deployment timescales (Nov 15), Novel Entities 0% effectiveness (Nov 14)
 
 **Research Verification Queue:**
+- [ ] **Historical Mode Parameters** - ⏳ PENDING (Nov 27, 2025 - commit 87292c6)
+  - **Research Spec:** `research/historical_mode_parameters_20251127.md`
+  - **Verification File:** `research/verification_87292c6_20251127.md`
+  - **Sources to Verify:** UN WPP 2024, NASA GISS, NOAA, WWF LPI 2024, IHME GBD 2021, IPCC AR6
+  - **Key Claims:** Population 8.12B, Temp 1.28°C, CO2 424.6 ppm, Biodiversity 0.49, Death rates 7.4-9.0/1000
+  - **Priority:** HIGH (blocks hindcast implementation)
+  - **Verifier:** research-skeptic (Sylvia)
 - [ ] **Regional CDR Data Verification** - ⏳ PENDING (Nov 25, 2025 - commit bf90ffa)
   - **Research Spec:** `research/regional_cdr_un_wpp_2024_20251125.md`
   - **Review:** `reviews/regional_cdr_critique_20251125.md` (Grade B- conditional pass)
