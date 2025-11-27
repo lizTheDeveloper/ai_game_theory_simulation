@@ -77,6 +77,7 @@ import {
   // MADDeterrencePhase removed - merged into InternationalRelationsPhase (Batch 5, Nov 9, 2025)
   NuclearCommandControlPhase,  // TIER 1 Phase 1B (Oct 16, 2025): Circuit breakers (human-in-the-loop, kill switches, time delays)
   ResourceEconomyPhase,  // UPDATED (Batch 3, Nov 9, 2025): Absorbed ResourceTechnologyPhase + PowerGenerationPhase
+  TechCoolingPhase,  // CRITICAL FIX (Nov 27, 2025): Applies geoengineering cooling AFTER ResourceEconomyPhase
   // ResourceTechnologyPhase removed - merged into ResourceEconomyPhase (Batch 3, Nov 9, 2025)
   // GeoengineringPhase removed - merged into ClimateSystemPhase (Batch 3, Nov 9, 2025)
   DefensiveAIPhase,
@@ -549,6 +550,7 @@ export class SimulationEngine {
     // MADDeterrencePhase removed - merged into InternationalRelationsPhase (Batch 5, Nov 9, 2025)
     this.orchestrator.registerPhase(new NuclearCommandControlPhase());  // TIER 1 Phase 1B: Circuit breakers
     this.orchestrator.registerPhase(new ResourceEconomyPhase());  // UPDATED (Batch 3): Absorbed ResourceTechnologyPhase + PowerGenerationPhase
+    this.orchestrator.registerPhase(new TechCoolingPhase());  // CRITICAL FIX (Nov 27, 2025): Applies accumulated geoengineering cooling
     // ResourceTechnologyPhase removed - merged into ResourceEconomyPhase (Batch 3, Nov 9, 2025)
     // GeoengineringPhase removed - merged into ClimateSystemPhase (Batch 3, Nov 9, 2025)
     this.orchestrator.registerPhase(new DefensiveAIPhase());
