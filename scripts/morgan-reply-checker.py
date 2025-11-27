@@ -15,7 +15,7 @@ VENV_PATH = Path('/tmp/morgan-venv')
 STATE_FILE = Path('/tmp/morgan-reply-state.json')
 PENDING_REPLIES_FILE = Path('/tmp/morgan-pending-replies.json')
 BLUESKY_HANDLE = 'aethrix.bsky.social'
-BLUESKY_PASSWORD = 'ether matrix seraph escape'
+BLUESKY_PASSWORD = '67 ether matrix seraph escape'
 
 def load_state():
     """Load state of which posts we've checked for replies."""

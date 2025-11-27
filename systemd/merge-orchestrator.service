@@ -4,12 +4,13 @@ After=network.target
 
 [Service]
 Type=oneshot
-User=root
-WorkingDirectory=/home/user/ai_game_theory_simulation
-ExecStart=/home/user/ai_game_theory_simulation/scripts/merge-orchestrator.sh
-StandardOutput=append:/home/user/ai_game_theory_simulation/logs/systemd_merge.log
-StandardError=append:/home/user/ai_game_theory_simulation/logs/systemd_merge.log
+User=user
+WorkingDirectory=/home/user/satu/orchestrator
+ExecStart=/home/user/satu/orchestrator/scripts/merge-orchestrator.sh
+StandardOutput=append:/home/user/satu/shared/logs/systemd_merge.log
+StandardError=append:/home/user/satu/shared/logs/systemd_merge.log
 TimeoutStartSec=1800
+Environment="ANTHROPIC_API_KEY=%ANTHROPIC_API_KEY%"
 
 [Install]
 WantedBy=multi-user.target

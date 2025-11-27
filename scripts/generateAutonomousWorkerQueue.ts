@@ -41,6 +41,9 @@ interface Task {
   claimedBy: string | null;
   claimedAt: string | null;
   description?: string;
+  acceptanceCriteria?: string[];
+  validationCommand?: string;
+  validationStatus?: "PENDING" | "PASSED" | "FAILED" | null;
 }
 
 interface QueueFile {
@@ -88,6 +91,8 @@ interface RoadmapItem {
   complexity: number;
   description: string;
   section: string;
+  acceptanceCriteria: string[];
+  validationCommand?: string;
 }
 
 function extractRoadmapItems(markdown: string): RoadmapItem[] {
@@ -97,6 +102,8 @@ function extractRoadmapItems(markdown: string): RoadmapItem[] {
   let currentSection = 'Unknown';
   let currentItem: Partial<RoadmapItem> | null = null;
   let descriptionLines: string[] = [];
+  let acceptanceCriteria: string[] = [];
+  let inAcceptanceCriteria = false;
 
   const itemPattern = /^\*\*((CRITICAL|HIGH|MEDIUM|LOW)-\d+):\s*(.+?)\*\*/;
 
@@ -116,6 +123,7 @@ function extractRoadmapItems(markdown: string): RoadmapItem[] {
         items.push({
           ...currentItem,
           description: descriptionLines.join(' ').trim(),
+          acceptanceCriteria,
         } as RoadmapItem);
       }
 
@@ -129,8 +137,11 @@ function extractRoadmapItems(markdown: string): RoadmapItem[] {
         complexity: 2,
         description: '',
         section: currentSection,
+        acceptanceCriteria: [],
       };
       descriptionLines = [];
+      acceptanceCriteria = [];
+      inAcceptanceCriteria = false;
     } else if (currentItem) {
       // Extract metadata from bullet points
       if (line.includes('**Assignee:**')) {
@@ -147,8 +158,31 @@ function extractRoadmapItems(markdown: string): RoadmapItem[] {
         }
       }
 
+      if (line.includes('**Validation:**')) {
+        const validationMatch = line.match(/\*\*Validation:\*\*\s*`([^`]+)`/);
+        if (validationMatch) {
+          currentItem.validationCommand = validationMatch[1];
+        }
+      }
+
+      // Track acceptance criteria section
+      if (line.includes('**Acceptance:**') || line.includes('**Done when:**') || line.includes('**Success criteria:**')) {
+        inAcceptanceCriteria = true;
+      } else if (line.startsWith('**') && inAcceptanceCriteria) {
+        inAcceptanceCriteria = false;
+      }
+
+      // Collect acceptance criteria
+      if (inAcceptanceCriteria && line.startsWith('- ')) {
+        acceptanceCriteria.push(line.replace(/^-\s*/, '').trim());
+      }
+
       // Collect description lines (non-metadata bullets)
-      if (line.startsWith('- ') && !line.includes('**Assignee:**') && !line.includes('**Complexity:**')) {
+      if (line.startsWith('- ') &&
+          !line.includes('**Assignee:**') &&
+          !line.includes('**Complexity:**') &&
+          !line.includes('**Validation:**') &&
+          !inAcceptanceCriteria) {
         descriptionLines.push(line.replace(/^-\s*/, '').trim());
       }
     }
@@ -159,6 +193,7 @@ function extractRoadmapItems(markdown: string): RoadmapItem[] {
     items.push({
       ...currentItem,
       description: descriptionLines.join(' ').trim(),
+      acceptanceCriteria,
     } as RoadmapItem);
   }
 
@@ -206,6 +241,9 @@ function roadmapItemToTask(item: RoadmapItem, existingTask?: Task): Task {
     claimedBy: shouldPreserveClaim ? existingTask?.claimedBy || null : null,
     claimedAt: shouldPreserveClaim ? existingTask?.claimedAt || null : null,
     description: item.description,
+    acceptanceCriteria: item.acceptanceCriteria.length > 0 ? item.acceptanceCriteria : undefined,
+    validationCommand: item.validationCommand,
+    validationStatus: existingTask?.validationStatus || null,
   };
 }
 
