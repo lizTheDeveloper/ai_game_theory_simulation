@@ -60,6 +60,24 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📄 **Files:** `tests/integration/game-layer/critical-juncture-detection.test.ts`, `tests/integration/game-layer/scenario-definitions.test.ts`
 - **Status:** IN PROGRESS - state creation and scenario application need debugging
 
+**Nov 27: Priority #7 Tipping Point Audit + H-8 Hindcast Fix** (commit 3f21c5d)
+- 🔬 **Tipping Point Audit (Sylvia):** Comprehensive review of planetary boundary tipping mechanics
+  - **Grade: B** (improved from C- on Nov 24)
+  - **Threshold Values:** 6/7 tipping elements correctly parameterized per Armstrong McKay 2022
+    - AMOC: 4.0C (corrected from 1.7C)
+    - Amazon: 2.3C, Arctic: 1.5C, Permafrost: 1.8C, WAIS: 2.0C, Greenland: 1.6C
+  - **What Works:** Multi-century ice sheet timescales, permafrost "dimmer switch", critical slowing down indicators, probabilistic thresholds
+  - **CRITICAL Gaps Identified:**
+    - WAIS-AMOC timing-dependent coupling missing (Sinet et al. Nov 2025) - meltwater timing affects AMOC resilience
+    - Coral reef tipping element missing (first boundary crossed at 1.2C)
+  - **HIGH Gaps:** 48-month extinction timeline unsupported, commitment time tracking missing (Ritchie et al. 2025)
+- 🔧 **H-8 Fix:** Hindcast validation crash at year 2011 resolved
+  - **Problem:** `getHistoricalEmissions()` only has GCP data for 1990-2010
+  - **Solution:** Hybrid emissions mode - empirical GCP data (1990-2010), endogenous model (2011-2024)
+  - **Implementation:** Year range check in `resourceDepletion.ts` before calling historical lookup
+  - **Unblocks:** Full 1990-2024 hindcast validation
+- 📄 **Files:** `src/simulation/resourceDepletion.ts`, `reviews/tipping_point_mechanism_audit_20251127.md`
+
 **Nov 26: Hindcast Validation Blockers Resolved (H-1 + CRIT-1)** (commit 2e588ef)
 - 🔧 **H-1 FIX:** coordinationCapacity normalization bug in BifurcationLogicPhase
   - BifurcationLogicPhase was dividing coordinationCapacity by 100
