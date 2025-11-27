@@ -43,7 +43,13 @@ jobs:
     steps:
       - name: Free disk space
         run: |
+          # Free up ~30GB of disk space on GitHub runners
           sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc
+          sudo rm -rf /usr/local/share/boost "$AGENT_TOOLSDIRECTORY"
+          sudo rm -rf /opt/hostedtoolcache/CodeQL
+          sudo apt-get clean
+          sudo docker system prune -af || true
+          echo "=== Disk space after cleanup ==="
           df -h
 
       - name: Checkout code
