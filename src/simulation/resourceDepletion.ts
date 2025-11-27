@@ -950,16 +950,24 @@ function updateCO2System(state: GameState, resources: ResourceEconomy): void {
   // HISTORICAL EMISSIONS FORCING MODE (Nov 26, 2025): Phase 5 of Climate Mini-Hindcast Validation
   // When enabled, bypass endogenous emissions calculation and use empirical Global Carbon Project data.
   // This isolates carbon sink mechanics for testing (temperature trajectory PASSED, but emissions deviated 17.53%).
+  //
+  // HYBRID HINDCAST MODE (Nov 27, 2025): Extended to support full 1990-2024 validation.
+  // Uses empirical GCP data (1990-2010) and switches to endogenous model (2011+).
   let monthlyEmissions: number;
   let calculatedAnnual: number;
 
-  if (state.config?.historicalEmissionsMode === true) {
-    // Use historical emissions data (1990-2010 only)
-    const startYear = state.config?.startYear ?? 2025;
-    const currentYear = startYear + Math.floor(state.currentMonth / 12);
-    const monthOfYear = state.currentMonth % 12;
+  // Calculate current year for mode switching logic
+  const startYear = state.config?.startYear ?? 2025;
+  const currentYear = startYear + Math.floor(state.currentMonth / 12);
+  const monthOfYear = state.currentMonth % 12;
 
-    // Get annual emissions from lookup table
+  // Determine if we should use historical emissions (only for 1990-2010 when mode is enabled)
+  const useHistoricalEmissions = state.config?.historicalEmissionsMode === true &&
+                                  currentYear >= 1990 &&
+                                  currentYear <= 2010;
+
+  if (useHistoricalEmissions) {
+    // HISTORICAL EMISSIONS MODE: Use Global Carbon Project empirical data (1990-2010)
     calculatedAnnual = getHistoricalEmissions(currentYear, monthOfYear);
 
     // Convert to monthly (assume uniform distribution across year)
@@ -981,6 +989,16 @@ function updateCO2System(state: GameState, resources: ResourceEconomy): void {
       );
     }
   } else {
+    // ENDOGENOUS EMISSIONS MODE: Calculate from economic model
+    // Used for: (1) standard future projections, (2) hindcast years outside GCP data range (2011-2024)
+
+    // Log mode switch for hindcast validation (only when transitioning out of historical data)
+    if (state.config?.historicalEmissionsMode === true && state.currentMonth % 12 === 0) {
+      console.log(
+        `  📊 [Endogenous Emissions] Year ${currentYear}: Using economic model ` +
+        `(GCP data only available 1990-2010)`
+      );
+    }
     // Standard mode: Calculate emissions from endogenous economic model
     // Scale: 1 unit of monthly extraction ≈ 1% of global reserves ≈ 3 Gt CO2
     // FIX (Oct 26, 2025): Assert inputs are finite before calculation
