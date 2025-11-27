@@ -36337,7 +36337,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 436,
+    "line": 440,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -36345,7 +36345,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 437,
+    "line": 441,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -36353,7 +36353,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 438,
+    "line": 442,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -36361,7 +36361,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 439,
+    "line": 443,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -36369,7 +36369,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 440,
+    "line": 444,
     "type": "property",
     "name": "demographic",
     "currentDoc": "(none)",
@@ -36377,7 +36377,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 443,
+    "line": 447,
     "type": "property",
     "name": "riskCount",
     "currentDoc": "(none)",
@@ -36385,7 +36385,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 482,
+    "line": 486,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -36393,7 +36393,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 483,
+    "line": 487,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -36401,7 +36401,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 484,
+    "line": 488,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -36409,7 +36409,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 485,
+    "line": 489,
     "type": "property",
     "name": "population",
     "currentDoc": "(none)",
@@ -36417,7 +36417,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 495,
+    "line": 499,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -36425,7 +36425,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 496,
+    "line": 500,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -36433,7 +36433,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 497,
+    "line": 501,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -36441,7 +36441,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 498,
+    "line": 502,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -36449,7 +36449,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 499,
+    "line": 503,
     "type": "property",
     "name": "totalPopulation",
     "currentDoc": "(none)",
@@ -36457,7 +36457,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 500,
+    "line": 504,
     "type": "property",
     "name": "demographicFraction",
     "currentDoc": "(none)",
@@ -36465,7 +36465,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 501,
+    "line": 505,
     "type": "property",
     "name": "demographic",
     "currentDoc": "(none)",
@@ -36473,7 +36473,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 509,
+    "line": 513,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -36481,7 +36481,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 510,
+    "line": 514,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -36489,7 +36489,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 511,
+    "line": 515,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -36497,7 +36497,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 512,
+    "line": 516,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -36505,7 +36505,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 513,
+    "line": 517,
     "type": "property",
     "name": "segmentPopulation",
     "currentDoc": "(none)",
@@ -36513,7 +36513,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 514,
+    "line": 518,
     "type": "property",
     "name": "mortality",
     "currentDoc": "(none)",
@@ -36521,7 +36521,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 515,
+    "line": 519,
     "type": "property",
     "name": "demographic",
     "currentDoc": "(none)",
@@ -36529,7 +36529,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 524,
+    "line": 528,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -36537,7 +36537,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 525,
+    "line": 529,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -36545,7 +36545,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 526,
+    "line": 530,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -36553,7 +36553,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 527,
+    "line": 531,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -36561,7 +36561,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 528,
+    "line": 532,
     "type": "property",
     "name": "demographic",
     "currentDoc": "(none)",
@@ -36569,7 +36569,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 529,
+    "line": 533,
     "type": "property",
     "name": "riskCount",
     "currentDoc": "(none)",
@@ -36577,7 +36577,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 538,
+    "line": 542,
     "type": "property",
     "name": "proximate",
     "currentDoc": "(none)",
@@ -36585,7 +36585,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 539,
+    "line": 543,
     "type": "property",
     "name": "root",
     "currentDoc": "(none)",
@@ -36593,7 +36593,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 540,
+    "line": 544,
     "type": "property",
     "name": "contributionFraction",
     "currentDoc": "(none)",
@@ -36601,7 +36601,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 541,
+    "line": 545,
     "type": "property",
     "name": "confidence",
     "currentDoc": "(none)",
@@ -36609,7 +36609,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 546,
+    "line": 550,
     "type": "property",
     "name": "demographic",
     "currentDoc": "(none)",
@@ -36617,7 +36617,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 548,
+    "line": 552,
     "type": "property",
     "name": "probability",
     "currentDoc": "(none)",
@@ -36625,7 +36625,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 561,
+    "line": 565,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -36633,7 +36633,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 562,
+    "line": 566,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -36641,7 +36641,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 563,
+    "line": 567,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -36649,7 +36649,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 564,
+    "line": 568,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -36657,7 +36657,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 565,
+    "line": 569,
     "type": "property",
     "name": "segmentCount",
     "currentDoc": "(none)",
@@ -36665,7 +36665,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 566,
+    "line": 570,
     "type": "property",
     "name": "segmentDeaths",
     "currentDoc": "(none)",
@@ -36673,7 +36673,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 575,
+    "line": 579,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -36681,7 +36681,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 576,
+    "line": 580,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -36689,7 +36689,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 577,
+    "line": 581,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -36697,7 +36697,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 586,
+    "line": 590,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -36705,7 +36705,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 587,
+    "line": 591,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -36713,7 +36713,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 588,
+    "line": 592,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -36721,7 +36721,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 589,
+    "line": 593,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -36729,7 +36729,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 590,
+    "line": 594,
     "type": "property",
     "name": "popPopulation",
     "currentDoc": "(none)",
@@ -36737,7 +36737,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 591,
+    "line": 595,
     "type": "property",
     "name": "regionCount",
     "currentDoc": "(none)",
@@ -36745,7 +36745,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 617,
+    "line": 621,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -36753,7 +36753,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 618,
+    "line": 622,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -36761,7 +36761,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 619,
+    "line": 623,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -36769,7 +36769,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 624,
+    "line": 628,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -36777,7 +36777,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 625,
+    "line": 629,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -36785,7 +36785,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 626,
+    "line": 630,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -36793,7 +36793,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 632,
+    "line": 636,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -36801,7 +36801,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 633,
+    "line": 637,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -36809,7 +36809,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 634,
+    "line": 638,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -36817,7 +36817,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 635,
+    "line": 639,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -36825,7 +36825,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 636,
+    "line": 640,
     "type": "property",
     "name": "previous",
     "currentDoc": "(none)",
@@ -36833,7 +36833,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 637,
+    "line": 641,
     "type": "property",
     "name": "adding",
     "currentDoc": "(none)",
@@ -36841,7 +36841,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 654,
+    "line": 658,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -36849,7 +36849,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 655,
+    "line": 659,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -36857,7 +36857,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 656,
+    "line": 660,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -36865,7 +36865,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 665,
+    "line": 669,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -36873,7 +36873,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 666,
+    "line": 670,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -36881,7 +36881,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 667,
+    "line": 671,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -36889,7 +36889,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 677,
+    "line": 681,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -36897,7 +36897,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 678,
+    "line": 682,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -36905,7 +36905,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 679,
+    "line": 683,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -36913,7 +36913,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 680,
+    "line": 684,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -36921,7 +36921,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 681,
+    "line": 685,
     "type": "property",
     "name": "previous",
     "currentDoc": "(none)",
@@ -36929,7 +36929,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 682,
+    "line": 686,
     "type": "property",
     "name": "adding",
     "currentDoc": "(none)",
@@ -36937,7 +36937,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 690,
+    "line": 694,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -36945,7 +36945,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 691,
+    "line": 695,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -36953,7 +36953,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 692,
+    "line": 696,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -36961,7 +36961,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 693,
+    "line": 697,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -36969,7 +36969,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 694,
+    "line": 698,
     "type": "property",
     "name": "previous",
     "currentDoc": "(none)",
@@ -36977,7 +36977,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 695,
+    "line": 699,
     "type": "property",
     "name": "adding",
     "currentDoc": "(none)",
@@ -36985,7 +36985,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 707,
+    "line": 711,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -36993,7 +36993,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 708,
+    "line": 712,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -37001,7 +37001,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 709,
+    "line": 713,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -37009,7 +37009,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 710,
+    "line": 714,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -37017,7 +37017,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 711,
+    "line": 715,
     "type": "property",
     "name": "previous",
     "currentDoc": "(none)",
@@ -37025,7 +37025,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 712,
+    "line": 716,
     "type": "property",
     "name": "adding",
     "currentDoc": "(none)",
@@ -37033,7 +37033,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 713,
+    "line": 717,
     "type": "property",
     "name": "riskCount",
     "currentDoc": "(none)",
@@ -37041,7 +37041,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 735,
+    "line": 739,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -37049,7 +37049,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 736,
+    "line": 740,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -37057,7 +37057,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 737,
+    "line": 741,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -37065,7 +37065,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 738,
+    "line": 742,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -37073,7 +37073,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 739,
+    "line": 743,
     "type": "property",
     "name": "segmentCount",
     "currentDoc": "(none)",
@@ -37081,7 +37081,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 764,
+    "line": 768,
     "type": "property",
     "name": "deaths",
     "currentDoc": "(none)",
@@ -37089,7 +37089,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 765,
+    "line": 769,
     "type": "property",
     "name": "remainingPopulation",
     "currentDoc": "(none)",
@@ -37097,7 +37097,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 766,
+    "line": 770,
     "type": "property",
     "name": "cappedByMonthlyLimit",
     "currentDoc": "(none)",
@@ -37105,7 +37105,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 767,
+    "line": 771,
     "type": "property",
     "name": "cappedByInstantLimit",
     "currentDoc": "(none)",
@@ -37113,7 +37113,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 768,
+    "line": 772,
     "type": "property",
     "name": "summary",
     "currentDoc": "(none)",
@@ -37121,7 +37121,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 770,
+    "line": 774,
     "type": "property",
     "name": "compoundedRisks",
     "currentDoc": "(none)",
@@ -37129,7 +37129,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 771,
+    "line": 775,
     "type": "property",
     "name": "peakSegmentMortality",
     "currentDoc": "(none)",
@@ -37137,7 +37137,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 772,
+    "line": 776,
     "type": "property",
     "name": "segment",
     "currentDoc": "(none)",
@@ -37145,7 +37145,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 773,
+    "line": 777,
     "type": "property",
     "name": "mortality",
     "currentDoc": "(none)",
@@ -37153,7 +37153,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 785,
+    "line": 789,
     "type": "property",
     "name": "pop",
     "currentDoc": "(none)",
@@ -37161,7 +37161,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/bayesianMortality.ts",
-    "line": 796,
+    "line": 800,
     "type": "property",
     "name": "pop",
     "currentDoc": "(none)",
@@ -62825,39 +62825,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BaselineMortalityPhase.ts",
-    "line": 533,
-    "type": "property",
-    "name": "location",
-    "currentDoc": "(none)",
-    "context": "location: 'BaselineMortalityPhase.execute',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BaselineMortalityPhase.ts",
-    "line": 534,
-    "type": "property",
-    "name": "valueName",
-    "currentDoc": "(none)",
-    "context": "valueName: 'compensatedBaselineRisk',"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BaselineMortalityPhase.ts",
-    "line": 535,
-    "type": "property",
-    "name": "month",
-    "currentDoc": "(none)",
-    "context": "month: state.currentMonth,"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BaselineMortalityPhase.ts",
-    "line": 536,
-    "type": "property",
-    "name": "additionalInfo",
-    "currentDoc": "(none)",
-    "context": "additionalInfo: { baselineRisk, eraMultiplier, actualYear }"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BaselineMortalityPhase.ts",
-    "line": 547,
+    "line": 519,
     "type": "property",
     "name": "confidence",
     "currentDoc": "(none)",
@@ -62865,7 +62833,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BaselineMortalityPhase.ts",
-    "line": 548,
+    "line": 520,
     "type": "property",
     "name": "scope",
     "currentDoc": "(none)",
@@ -62873,7 +62841,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BaselineMortalityPhase.ts",
-    "line": 549,
+    "line": 521,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -62881,7 +62849,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BaselineMortalityPhase.ts",
-    "line": 550,
+    "line": 522,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
