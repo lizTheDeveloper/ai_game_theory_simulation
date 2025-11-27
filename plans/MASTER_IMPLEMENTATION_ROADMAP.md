@@ -1125,6 +1125,13 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 - **Recently Completed:** Nitrogen-food coupling research (Nov 15), Climate deployment timescales (Nov 15), Novel Entities 0% effectiveness (Nov 14)
 
 **Research Verification Queue:**
+- [ ] **HIGH-6/7/8 Hindcast Calibration Research** - ⏳ PENDING (Nov 27, 2025 - commit b15e5a5)
+  - **Research Spec:** `research/temperature_overestimation_HIGH6_research_20251127.md`, `research/population_underestimation_HIGH7_research_20251127.md`, `research/biodiversity_collapse_HIGH8_research_20251127.md`
+  - **Verification File:** `research/verification_b15e5a5_20251127.md`
+  - **Sources to Verify:** IPCC AR6 (aerosol forcing -1.1 W/m²), UN WPP 2024 (CDR/TFR), WWF LPI 2024 (biodiversity decline 1.24%/yr)
+  - **Key Claims:** Aerosol cooling masks 30% of warming, CDR declined 9.3‰→7.76‰ (1990-2024), biodiversity -34.7% (not -99%)
+  - **Priority:** HIGH (blocks implementation of THREE hindcast calibration fixes)
+  - **Verifier:** research-skeptic (Sylvia)
 - [ ] **Historical Mode Parameters** - ⏳ PENDING (Nov 27, 2025 - commit 87292c6)
   - **Research Spec:** `research/historical_mode_parameters_20251127.md`
   - **Verification File:** `research/verification_87292c6_20251127.md`
