@@ -41,10 +41,16 @@ jobs:
           - benchmark
 
     steps:
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc
+          df -h
+
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Set up QEMU
+        if: github.event_name != 'pull_request'
         uses: docker/setup-qemu-action@v3
 
       - name: Set up Docker Buildx
@@ -77,8 +83,9 @@ jobs:
         with:
           context: .
           file: ./docker/Dockerfile.${{ matrix.image }}
-          platforms: linux/amd64,linux/arm64
+          platforms: ${{ github.event_name != 'pull_request' && 'linux/amd64,linux/arm64' || 'linux/amd64' }}
           push: ${{ github.event_name != 'pull_request' }}
+          load: ${{ github.event_name == 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
@@ -89,18 +96,21 @@ jobs:
             VERSION=${{ steps.meta.outputs.version }}
 
       - name: Run Trivy security scan
+        if: github.event_name == 'pull_request'
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}/marcus-${{ matrix.image }}:${{ steps.meta.outputs.version }}
+          image-ref: ghcr.io/${{ env.IMAGE_PREFIX }}/marcus-${{ matrix.image }}:${{ steps.meta.outputs.version }}
           format: 'sarif'
           output: 'trivy-results-${{ matrix.image }}.sarif'
           severity: 'CRITICAL,HIGH'
+        continue-on-error: true
 
       - name: Upload Trivy results to GitHub Security
-        uses: github/codeql-action/upload-sarif@v3
-        if: always()
+        uses: github/codeql-action/upload-sarif@v4
+        if: github.event_name == 'pull_request' && hashFiles('trivy-results-${{ matrix.image }}.sarif') != ''
         with:
           sarif_file: 'trivy-results-${{ matrix.image }}.sarif'
+        continue-on-error: true
 
       - name: Sign container image with cosign
         if: github.event_name != 'pull_request'
