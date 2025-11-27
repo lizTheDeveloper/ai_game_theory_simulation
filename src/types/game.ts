@@ -425,6 +425,21 @@ export interface GameState {
     temperatureOffset: number;           // Degrees C cooling from SAI
   };
 
+  /**
+   * Volcanic Forcing System (Nov 27, 2025 - HIGH PRIORITY)
+   *
+   * Models radiative forcing from volcanic eruptions for historical validation.
+   * Pinatubo 1991: AOD peak ~0.15, forcing ~-3.5 W/m², ~0.5°C cooling
+   *
+   * Research: Hansen et al. (2005), Sato et al. (1993) volcanic AOD data
+   * Expected impact: Fixes mini-hindcast temperature validation (H-7)
+   */
+  volcanicForcing: {
+    currentAOD: number;           // Aerosol Optical Depth (unitless)
+    forcingWattsPerM2: number;    // Radiative forcing in W/m²
+    lastEruptionMonth: number;    // Month of last eruption (-999 for none)
+  };
+
   upwardSpirals: import('../simulation/upwardSpirals').UpwardSpiralState; // Phase 2D: Upward spirals for Utopia detection
   meaningRenaissance: import('../simulation/meaningRenaissance').MeaningRenaissanceState; // Phase 2E: Meaning renaissance
 
