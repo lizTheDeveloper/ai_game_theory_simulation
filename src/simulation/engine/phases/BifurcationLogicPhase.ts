@@ -174,6 +174,10 @@ export class BifurcationLogicPhase implements SimulationPhase {
         }
       }
     });
+
+    // CRITICAL-1 FIX: Write environmentalHealth to state for other phases to access
+    // This prevents NaN propagation from undefined field access
+    state.globalMetrics.environmentalHealth = envHealthFinite;
     // CRITICAL FIX (CRITICAL-1): For collapse thresholds (trigger when BELOW), distance should be 0 when at/below threshold
     // If value > threshold: safe, distance = (value - threshold)
     // If value <= threshold: collapsing, distance = 0 (maximum amplification)
