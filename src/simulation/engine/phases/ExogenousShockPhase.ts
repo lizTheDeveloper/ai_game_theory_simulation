@@ -1239,6 +1239,17 @@ export class ExogenousShockPhase implements SimulationPhase {
       return { events: [] };
     }
 
+    // === BIFURCATION VARIANCE AMPLIFICATION ===
+    // Near critical thresholds → 10× variance amplification
+    // Far from thresholds → 1× (no effect)
+    // This creates path-dependent Monte Carlo trajectories
+    const varianceAmp = assertFinite(state.bifurcationState.varianceAmplification, {
+      location: 'ExogenousShockPhase.execute',
+      valueName: 'varianceAmplification',
+      month: state.currentMonth,
+      additionalInfo: { expectedSource: 'BifurcationLogicPhase (order 4.5)' }
+    });
+
     // HISTORICAL MODE (Nov 27, 2025): Dampen crisis systems for hindcast validation
     // Research: research/historical_mode_parameters_20251127.md
     // Root cause: Crisis-calibrated systems produce massive errors on baseline period (1990-2024)
@@ -1287,17 +1298,6 @@ export class ExogenousShockPhase implements SimulationPhase {
         },
       };
     }
-
-    // === BIFURCATION VARIANCE AMPLIFICATION ===
-    // Near critical thresholds → 10× variance amplification
-    // Far from thresholds → 1× (no effect)
-    // This creates path-dependent Monte Carlo trajectories
-    const varianceAmp = assertFinite(state.bifurcationState.varianceAmplification, {
-      location: 'ExogenousShockPhase.execute',
-      valueName: 'varianceAmplification',
-      month: state.currentMonth,
-      additionalInfo: { expectedSource: 'BifurcationLogicPhase (order 4.5)' }
-    });
 
     // BLACK SWAN: 0.1% per month (~1% per year) × bifurcation amplification
     // Near collapse thresholds: 10× more likely (models critical instability)
