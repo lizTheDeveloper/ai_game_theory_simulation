@@ -60,8 +60,8 @@ CREATE TABLE citation_analyses (
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users(id) ON DELETE SET NULL,
 
-    -- Citation content
-    document_text TEXT NOT NULL,
+    -- Citation content (nullable for orchestrator aggregated analyses)
+    document_text TEXT,
     claimed_source VARCHAR(500),
     actual_source VARCHAR(500),
 
