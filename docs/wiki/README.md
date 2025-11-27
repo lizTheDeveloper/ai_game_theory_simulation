@@ -2865,6 +2865,8 @@ Watcher script now monitors all four autonomous systems (implementation worker +
 
 **Complete infrastructure visibility:** No blind spots in autonomous operations. Watcher validates implementation execution, research coordination, and branch merging with auto-remediation for all systems.
 
+**Time-Aware Monitoring (Nov 21, 2025)**: Watcher now respects the overnight maintenance window (23:00-07:00 UTC) when workers are intentionally scheduled off. Workers run 08:00-22:00 UTC hourly. During overnight window: Missing runs are expected (workers scheduled off), only alerts if >12 hours since last run. During work hours: Missing runs trigger alerts if no runs in 90 minutes. This prevents false alarms at midnight while still catching real issues. Fix (commit fe7baa6): Added `OVERNIGHT_WINDOW` detection based on UTC hour, applied same logic to both worker and researcher checks. Impact: No more false positive alerts during scheduled downtime, watcher now respects cron schedule properly.
+
 **Health Check Bug Fix (Nov 7, 2025)**: Watcher was failing with "integer expression expected" errors due to bash scripting anti-pattern. Root cause: `grep -c "pattern" || echo "0"` fallback was producing multi-line output (e.g., "0\n0") when grep found zero matches. Fix (commit a7103fd): Replaced with proper bash idiom `grep "pattern" | wc -l` + `${VAR:-0}` fallback at lines 74 and 163. This implements defensive programming guidance from CLAUDE.md:366-371. Impact: Watcher now runs without errors, prevents multi-instance contention, eliminates git lock conflicts. See: RECENT_CHANGES.md for full incident details.
 
 See: `scripts/autonomous-worker-watcher.sh` (424 lines), Commit: 418c9c4
