@@ -371,21 +371,18 @@
 - **Impact:** Transforms agents from isolated workers to collaborative team
 
 **HIGH-6: Temperature Overestimation in Historical Period (+64% Error)** ⏳ NEW (Nov 27, 2025)
-- **Status:** ⏳ NEW - Identified in Phase 10 hindcast validation
+- **Status:** ⏳ RESEARCH COMPLETE - Ready for implementation
 - **Discovery:** Phase 10 validation (Nov 27, 2025) - ALL 10 runs produce exactly 2.10°C (deterministic)
 - **Problem:** Climate system overestimates warming for baseline historical period
   - Actual 2024: 1.28°C above baseline (NASA GISS)
   - Simulated 2024: 2.10°C above baseline (ALL runs identical)
   - Absolute error: +0.82°C (+64.1%)
-- **Root Cause Hypotheses:**
-  1. Climate sensitivity (TCRE) too high for historical period
-  2. Missing offsetting cooling mechanisms (aerosols, natural variability)
-  3. Carbon cycle HIGH-2 fix may have introduced errors
-- **Diagnostic Steps:**
-  1. Extract CO2 concentration from hindcast (currently not tracked)
-  2. Verify HIGH-2 carbon cycle fix (target <5% CO2 error)
-  3. Check climate sensitivity parameter against IPCC AR6 range
-  4. Compare simulated emissions trajectory to GCP historical data
+- **Research Parameters (from comprehensive research doc):**
+  - TCRE: 1.65°C per 1000 PgC (IPCC AR6 range: 1.0-2.3°C)
+  - TCR: 1.8 ± 0.3 K (2024 multi-model mean)
+  - Aerosol cooling: 0.24 ± 0.11 K (CRITICAL: trend reversal in 1990s)
+  - Target historical warming: +1.19°C (2014-2023 vs pre-industrial)
+- **Key Finding:** Aerosol forcing changed sign in 1990s - declining SO₂ → enhanced warming
 - **Solution Options:**
   1. Reduce climate sensitivity for historical mode
   2. Add aerosol cooling (missing mechanism)
@@ -395,26 +392,22 @@
 - **Effort:** 4-6 hours (diagnostics + mechanism tuning + validation)
 - **Complexity:** 3 systems (climate, carbon cycle, emissions)
 - **Dependencies:** None (can proceed immediately)
+- **Research:** `research/hindcast_calibration_parameters_20251127.md` (lines 37-104)
 - **Report:** `reviews/climate_hindcast_validation_phase10_20251127.md` (lines 59-186)
 
 **HIGH-7: Population Mortality Calibration (-76% Error)** ⏳ NEW (Nov 27, 2025)
-- **Status:** ⏳ NEW - Identified in Phase 10 hindcast validation
+- **Status:** ⏳ RESEARCH COMPLETE - Ready for implementation
 - **Discovery:** Phase 10 validation (Nov 27, 2025) - population severely underestimated
 - **Problem:** Mortality system calibrated for CRISIS scenarios, not BASELINE historical
   - Actual 2024: 8.12 billion (UN DESA)
   - Simulated 2024: 1.22B to 3.44B (mean ~2.0B)
   - Absolute error: -6.1B (-76.2%)
   - Variance: 3x across runs (1.22B to 3.44B) - non-deterministic mortality
-- **Root Cause Hypotheses:**
-  1. Bayesian mortality resolution too aggressive for 1990-2024 period
-  2. Birth rate parameters not tuned to historical fertility trends
-  3. Food security/health systems triggering famine cascades incorrectly
-  4. Missing improvements in medicine/sanitation (baseline period was growth period)
-- **Diagnostic Steps:**
-  1. Compare simulated mortality rate to historical (0.7-0.9% per year)
-  2. Check birth rate against UN fertility data (2.5 → 2.3 TFR, 1990-2024)
-  3. Validate food security doesn't trigger false famine cascades
-  4. Audit health system improvements (medicine progress not modeled?)
+- **Research Parameters (from comprehensive research doc):**
+  - Fertility decline: 3.31 (1990) → 2.25 (2024) = -0.031 births/year linear trend
+  - Life expectancy: +0.33 years/year (2000-2019), ~66.8→73.1 years
+  - COVID impact: Reversed ~1 decade of gains (2020-2021), now rebounding
+  - Key: Separate BASELINE mortality from CRISIS mortality
 - **Solution Options:**
   1. Add "historical mode" flag that disables crisis mortality
   2. Recalibrate baseline mortality/birth rates to UN data
@@ -424,25 +417,23 @@
 - **Effort:** 6-8 hours (mortality system audit + recalibration + validation)
 - **Complexity:** 4 systems (demographics, food security, health, mortality resolution)
 - **Dependencies:** None (can proceed immediately)
+- **Research:** `research/hindcast_calibration_parameters_20251127.md` (lines 107-226)
 - **Report:** `reviews/climate_hindcast_validation_phase10_20251127.md` (lines 70-97, 187-198)
 
 **HIGH-8: Biodiversity Decline Rate Calibration (-95% Error)** ⏳ NEW (Nov 27, 2025)
-- **Status:** ⏳ NEW - Identified in Phase 10 hindcast validation
+- **Status:** ⏳ RESEARCH COMPLETE - Ready for implementation
 - **Discovery:** Phase 10 validation (Nov 27, 2025) - biodiversity collapses to near-zero
 - **Problem:** Decline rate far too aggressive for historical baseline period
   - Actual 2024: 0.49 (WWF LPI - 51% of 1970 baseline, -34.7% decline 1990-2024)
   - Simulated 2024: 0.004 to 0.065 (mean ~0.03, -97% decline)
   - Absolute error: -0.46 (-94.7%)
-- **Root Cause Hypotheses:**
-  1. Extinction rate parameters tuned for worst-case scenarios
-  2. Land use pressure overestimated (agriculture/urbanization)
-  3. Conservation efforts not modeled for historical period
-  4. Missing recovery mechanisms (protected areas, species reintroductions)
-- **Diagnostic Steps:**
-  1. Compare simulated decline rate to WWF LPI historical curve (1990-2024)
-  2. Check land use/agriculture pressure against FAO data
-  3. Validate extinction risk parameters against IUCN Red List trends
-  4. Audit if conservation efforts exist in model
+- **Research Parameters (from comprehensive research doc):**
+  - WWF LPI: -73% vertebrate decline (1970-2020), accelerating over time
+  - Habitat-specific rates: Freshwater -85%, Terrestrial -69%, Marine -56%
+  - Regional variation: Latin America/Caribbean -95% (catastrophic), Africa -76%
+  - IUCN Red List: 46,337 threatened species (27.9% of assessed)
+  - Deforestation: 420M ha since 1990, declining rate (16→10M ha/yr)
+  - Conservation effectiveness: 5-20% (protected areas), 10-50% (species programs)
 - **Solution Options:**
   1. Reduce baseline decline rate to match WWF LPI trajectory
   2. Add conservation effort mechanisms (protected areas scale with GDP)
@@ -452,6 +443,7 @@
 - **Effort:** 4-6 hours (ecology system audit + recalibration + validation)
 - **Complexity:** 3 systems (ecology, land use, extinction)
 - **Dependencies:** None (can proceed immediately)
+- **Research:** `research/hindcast_calibration_parameters_20251127.md` (lines 229-390)
 - **Report:** `reviews/climate_hindcast_validation_phase10_20251127.md` (lines 95-105, 199-212)
 
 **HIGH-9: Non-Determinism Investigation (CV=6.7%)** ⏳ NEW (Nov 27, 2025)
