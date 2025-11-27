@@ -77,6 +77,7 @@ export { ConsciousnessGovernancePhase } from './ConsciousnessGovernancePhase';  
 export { NuclearCommandControlPhase } from './NuclearCommandControlPhase';  // TIER 1 Phase 1B (Oct 16, 2025)
 export { ResourceEconomyPhase } from './ResourceEconomyPhase';  // UPDATED: Now includes PowerGeneration (Batch 3, Nov 2025)
 export { TechCoolingPhase } from './TechCoolingPhase';  // CRITICAL FIX (Nov 27, 2025): Applies geoengineering cooling AFTER ResourceEconomyPhase
+export { AerosolForcingPhase } from './AerosolForcingPhase';  // HIGH-6 (Nov 27, 2025): Applies anthropogenic aerosol cooling (IPCC AR6: -0.8 to -1.1 W/m²)
 // export { ResourceTechnologyPhase } from './ResourceTechnologyPhase';  // CONSOLIDATED into ResourceEconomyPhase (Batch 3, Nov 2025)
 // export { GeoengineringPhase } from './GeoengineringPhase';  // CONSOLIDATED into ClimateSystemPhase (Batch 3, Nov 2025)
 export { DefensiveAIPhase } from './DefensiveAIPhase';
