@@ -108,8 +108,47 @@ function applyStochasticVariance(baseRate: number, variance: number = 0.25): num
 }
 
 /**
+ * Get protected area coverage (% of land) for historical mode
+ *
+ * HIGH-8 FIX (Nov 27, 2025): Historical biodiversity calibration
+ * Research: UNEP-WCMC World Database on Protected Areas (WDPA)
+ *
+ * @param year - Current simulation year
+ * @returns Protected area coverage as fraction (0-1)
+ */
+function getProtectedAreaCoverage(year: number): number {
+  // Protected area expansion 1990-2024
+  // Source: WDPA, Convention on Biological Diversity Aichi Target 11
+  const PROTECTED_AREA_DATA: Record<number, number> = {
+    1990: 0.089, // 8.9% of land
+    2000: 0.105, // 10.5%
+    2010: 0.127, // 12.7% (Aichi Target 11: 10% by 2010 - achieved)
+    2020: 0.166, // 16.6% (approaching 17% target)
+    2024: 0.175, // ~17.5% (on track for 30×30 goal)
+  };
+
+  // Linear interpolation between data points
+  const years = Object.keys(PROTECTED_AREA_DATA).map(Number).sort((a, b) => a - b);
+
+  if (year <= years[0]) return PROTECTED_AREA_DATA[years[0]];
+  if (year >= years[years.length - 1]) return PROTECTED_AREA_DATA[years[years.length - 1]];
+
+  // Find surrounding years
+  for (let i = 0; i < years.length - 1; i++) {
+    const y1 = years[i];
+    const y2 = years[i + 1];
+    if (year >= y1 && year <= y2) {
+      const fraction = (year - y1) / (y2 - y1);
+      return PROTECTED_AREA_DATA[y1] + fraction * (PROTECTED_AREA_DATA[y2] - PROTECTED_AREA_DATA[y1]);
+    }
+  }
+
+  return PROTECTED_AREA_DATA[2024]; // Fallback
+}
+
+/**
  * Update environmental accumulation based on economic activity
- * 
+ *
  * Called each month to track accumulation rates.
  * Rate-based: high production = faster accumulation (unless mitigated)
  */
@@ -265,42 +304,90 @@ export function updateEnvironmentalAccumulation(
   );
   
   // === BIODIVERSITY LOSS ===
-  // Habitat disruption from expansion
-  // P2.1: IPBES 2019 Global Assessment - 1.5%/year decline = 0.125%/month target
-  // Target: 10-20% decline by Month 300 (25 years), not 99% by Month 60
-  // Multi-factor model: Base rate + compounding effects from all environmental stressors
-  let biodiversityLossRate = economicStage * 0.00006; // Was 0.0004 (reduced 6.7x)
+  // HIGH-8 FIX (Nov 27, 2025): Add historical mode for hindcast calibration
+  // Historical mode (1990-2024): Use WWF LPI empirical decline rates
+  // Projection mode (2025+): Use mechanistic crisis model
 
-  // Manufacturing and resource extraction destroy habitats
-  // P2.1: Reduced compounding factors to achieve IPBES timescale
-  biodiversityLossRate += manufacturingCap * 0.00004; // Was 0.0003 (reduced 7.5x)
-  biodiversityLossRate += (1 - env.resourceReserves) * 0.0001; // Was 0.0008 (reduced 8x)
+  let biodiversityLossRate: number;
+  let naturalRecovery: number;
 
-  // Pollution and climate degrade ecosystems
-  // P2.1: Critic identified compounding effects needed 6-8x reduction
-  biodiversityLossRate += env.pollutionLevel * 0.00005; // Was 0.0004 (reduced 8x)
-  biodiversityLossRate += (1 - env.climateStability) * 0.00008; // Was 0.0006 (reduced 7.5x)
-  
-  // P2.1: Apply stochastic variance (±30% = higher ecological uncertainty)
-  biodiversityLossRate = applyStochasticVariance(biodiversityLossRate, 0.30);
-  
-  // Mitigation from ecosystem management
-  if (hasEcosystemManagement) {
-    biodiversityLossRate *= 0.3; // 70% reduction (AI manages ecosystems)
-  }
-  
-  // Natural recovery (very slow without active management)
-  const naturalRecovery = hasEcosystemManagement ? 0.005 : 0.001;
+  if (state.config.historicalMode && state.currentYear <= 2024) {
+    // === HISTORICAL MODE (1990-2024): WWF LPI Empirical Rates ===
+    // Research: WWF Living Planet Index 2024
+    // - 1970: 1.00 (baseline)
+    // - 1990: 0.75 (-25% from 1970)
+    // - 2024: 0.49 (-51% from 1970)
+    // - Decline: -34.7% from 1990 to 2024 (34 years)
+    // - Annual rate: ~1.24%/year
+    // - Monthly rate: 0.103%/month (1.24% / 12)
 
-  // FIXED: Use assertFinite to catch NaN/Infinity in calculation itself
-  env.biodiversityIndex = assertFinite(
-    Math.max(0, Math.min(1, env.biodiversityIndex - biodiversityLossRate + naturalRecovery)),
-    {
-      location: 'updateBiodiversityIndex',
-      valueName: 'biodiversityIndex',
-      month: state.currentMonth,
+    // DEBUG (HIGH-8): Log first time we enter historical mode
+    if (state.currentMonth === 1) {
+      console.log(`🔍 HIGH-8 DEBUG: Historical biodiversity mode ACTIVE (year=${state.currentYear}, month=${state.currentMonth})`);
     }
-  );
+
+    const HISTORICAL_DECLINE_RATE = 0.00103; // 0.103%/month (WWF LPI 2024)
+
+    // Protected area conservation effect (reduces decline)
+    // Protected areas grew from 8.9% (1990) to 17.5% (2024)
+    // Research: Geldmann et al. 2019 - protected areas reduce biodiversity loss by 40-60%
+    const protectedAreaCoverage = getProtectedAreaCoverage(state.currentYear);
+    const conservationEffect = 1 - (protectedAreaCoverage * 0.5); // 50% reduction at full coverage
+
+    // Apply empirical decline rate with conservation modifier
+    biodiversityLossRate = HISTORICAL_DECLINE_RATE * conservationEffect;
+
+    // Natural recovery is minimal during baseline period (not crisis recovery)
+    naturalRecovery = 0.0001; // Very slow baseline recovery
+
+    // Apply decline
+    env.biodiversityIndex = assertFinite(
+      Math.max(0, Math.min(1, env.biodiversityIndex - biodiversityLossRate + naturalRecovery)),
+      {
+        location: 'updateBiodiversityIndex (historicalMode)',
+        valueName: 'biodiversityIndex',
+        month: state.currentMonth,
+      }
+    );
+  } else {
+    // === PROJECTION MODE (2025+): Mechanistic Crisis Model ===
+    // Habitat disruption from expansion
+    // P2.1: IPBES 2019 Global Assessment - 1.5%/year decline = 0.125%/month target
+    // Target: 10-20% decline by Month 300 (25 years), not 99% by Month 60
+    // Multi-factor model: Base rate + compounding effects from all environmental stressors
+    biodiversityLossRate = economicStage * 0.00006; // Was 0.0004 (reduced 6.7x)
+
+    // Manufacturing and resource extraction destroy habitats
+    // P2.1: Reduced compounding factors to achieve IPBES timescale
+    biodiversityLossRate += manufacturingCap * 0.00004; // Was 0.0003 (reduced 7.5x)
+    biodiversityLossRate += (1 - env.resourceReserves) * 0.0001; // Was 0.0008 (reduced 8x)
+
+    // Pollution and climate degrade ecosystems
+    // P2.1: Critic identified compounding effects needed 6-8x reduction
+    biodiversityLossRate += env.pollutionLevel * 0.00005; // Was 0.0004 (reduced 8x)
+    biodiversityLossRate += (1 - env.climateStability) * 0.00008; // Was 0.0006 (reduced 7.5x)
+
+    // P2.1: Apply stochastic variance (±30% = higher ecological uncertainty)
+    biodiversityLossRate = applyStochasticVariance(biodiversityLossRate, 0.30);
+
+    // Mitigation from ecosystem management
+    if (hasEcosystemManagement) {
+      biodiversityLossRate *= 0.3; // 70% reduction (AI manages ecosystems)
+    }
+
+    // Natural recovery (very slow without active management)
+    naturalRecovery = hasEcosystemManagement ? 0.005 : 0.001;
+
+    // FIXED: Use assertFinite to catch NaN/Infinity in calculation itself
+    env.biodiversityIndex = assertFinite(
+      Math.max(0, Math.min(1, env.biodiversityIndex - biodiversityLossRate + naturalRecovery)),
+      {
+        location: 'updateBiodiversityIndex',
+        valueName: 'biodiversityIndex',
+        month: state.currentMonth,
+      }
+    );
+  }
 
   // === P1.5: ECOSYSTEM REGENERATION FROM POPULATION DECLINE ===
   // Historical evidence: Nature rebounds when human pressure reduces
@@ -368,7 +455,12 @@ export function updateEnvironmentalAccumulation(
   }
 
   // Biodiversity cascade (ecosystem collapse cascades)
-  if (env.biodiversityIndex < criticalThreshold) {
+  // HIGH-8 FIX (Nov 27, 2025): Disable cascade during historical mode (1990-2024)
+  // Historical period did NOT experience catastrophic biodiversity tipping points
+  // Cascades are crisis-specific mechanisms (reserved for projection mode)
+  const historicalModeActive = state.config.historicalMode && state.currentYear <= 2024;
+
+  if (!historicalModeActive && env.biodiversityIndex < criticalThreshold) {
     const cascadeMagnitude = levyFlight(ALPHA_PRESETS.ENVIRONMENT, rng);
 
     if (cascadeMagnitude > 10.0) {
