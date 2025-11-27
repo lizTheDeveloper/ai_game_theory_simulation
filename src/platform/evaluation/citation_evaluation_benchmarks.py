@@ -537,8 +537,9 @@ class CitationEvaluationRunner:
             ground_truth, predictions, average='binary', zero_division=0
         )
 
-        # Confusion matrix
-        tn, fp, fn, tp = confusion_matrix(ground_truth, predictions).ravel()
+        # Confusion matrix - handle case where all predictions are same class
+        cm = confusion_matrix(ground_truth, predictions, labels=[False, True])
+        tn, fp, fn, tp = cm.ravel()
 
         # Performance metrics
         throughput = len(dataset) / total_time

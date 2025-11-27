@@ -854,8 +854,4 @@ if (require.main === module) {
   main().catch(console.error);
 }
 
-export {
-  BenchmarkDatasetGenerator,
-  CitationBenchmarkEvaluator,
-  BenchmarkReportGenerator
-};
+// Classes are already exported with `export class` declarations above

@@ -78,6 +78,55 @@ jobs:
       - name: Create benchmarks directory
         run: mkdir -p benchmarks benchmark_results
 
+      - name: Setup database schema
+        env:
+          PGHOST: localhost
+          PGPORT: 5432
+          PGUSER: benchmark_user
+          PGPASSWORD: benchmark_pass
+          PGDATABASE: benchmark_db
+        run: |
+          echo "Setting up database schema..."
+
+          # Wait for PostgreSQL to be ready
+          for i in {1..30}; do
+            if pg_isready -h localhost -p 5432 -U benchmark_user; then
+              echo "✅ PostgreSQL is ready"
+              break
+            fi
+            echo "Waiting for PostgreSQL... ($i/30)"
+            sleep 1
+          done
+
+          # Apply migrations in order
+          echo "Applying migrations..."
+          for migration in src/platform/database/migrations/*.sql; do
+            echo "  Applying $(basename $migration)..."
+            psql -h localhost -U benchmark_user -d benchmark_db -f "$migration" || {
+              echo "⚠️ Migration $(basename $migration) had issues (may already exist)"
+            }
+          done
+
+          echo "✅ Database schema setup complete"
+
+          # Verify key tables exist
+          echo "Verifying tables..."
+          psql -h localhost -U benchmark_user -d benchmark_db -c "\dt" | head -20
+
+      - name: Verify Redis connection
+        run: |
+          echo "Checking Redis..."
+          for i in {1..10}; do
+            if redis-cli -h localhost -p 6379 ping; then
+              echo "✅ Redis is ready"
+              exit 0
+            fi
+            echo "Waiting for Redis... ($i/10)"
+            sleep 1
+          done
+          echo "❌ Redis not available"
+          exit 1
+
       - name: Run Python accuracy benchmarks
         env:
           DATABASE_URL: postgresql://benchmark_user:benchmark_pass@localhost:5432/benchmark_db
