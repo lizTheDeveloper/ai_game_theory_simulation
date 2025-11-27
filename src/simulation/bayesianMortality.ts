@@ -359,7 +359,11 @@ export function resolveMortality(
 
       // HINDCAST FIX (Nov 24, 2025): Apply era mortality multiplier to scale risks
       // Historical eras (e.g., 1990) have lower base mortality than 2025 calibration
-      const adjustedRisk = risk.baseRisk * vulnerability * eraMortalityMultiplier;
+      // C-4 FIX (Nov 27, 2025): Exempt baseline demographic mortality from ERA scaling
+      // ERA represents crisis response infrastructure, not baseline aging/disease
+      const isBaselineDemographic = (risk.type === 'other' && risk.root === 'demographic');
+      const eraScale = isBaselineDemographic ? 1.0 : eraMortalityMultiplier;
+      const adjustedRisk = risk.baseRisk * vulnerability * eraScale;
 
       if (isNaN(adjustedRisk)) {
         throw new Error(`adjustedRisk is NaN: baseRisk=${risk.baseRisk}, vulnerability=${vulnerability}, eraMortalityMultiplier=${eraMortalityMultiplier}, demographic=${demo.name}`);
