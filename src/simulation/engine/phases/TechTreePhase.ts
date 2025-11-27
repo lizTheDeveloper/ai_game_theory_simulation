@@ -51,7 +51,9 @@ export class TechTreePhase implements SimulationPhase {
     const unlockEvents = updateTechTree(state, techTreeState, rng);
 
     // ASSERTIONS (Nov 7, 2025): Validate research progress values are probabilities
-    for (const [techId, progress] of Object.entries(techTreeState.researchProgress)) {
+    // FIX (Nov 27, 2025): Sort entries for deterministic iteration order
+    const sortedProgress = Object.entries(techTreeState.researchProgress).sort((a, b) => a[0].localeCompare(b[0]));
+    for (const [techId, progress] of sortedProgress) {
       assertProbability(progress, {
         location: 'TechTreePhase.execute',
         valueName: `techTreeState.researchProgress.${techId}`,

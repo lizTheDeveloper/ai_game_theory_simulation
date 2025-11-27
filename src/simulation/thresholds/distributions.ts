@@ -68,6 +68,24 @@ export function sampleNormal(
   const u1 = rng();
   const u2 = rng();
 
+  // CRITICAL: Validate RNG outputs are finite (CRITICAL-3 regression protection)
+  if (typeof u1 !== 'number' || !isFinite(u1)) {
+    throw new Error([
+      '❌ CRITICAL: RNG produced non-finite u1',
+      `   u1 = ${u1}`,
+      '   RNG function must be provided and return finite numbers [0,1]',
+      '   This indicates RNG was not passed correctly to initialization.'
+    ].join('\n'));
+  }
+  if (typeof u2 !== 'number' || !isFinite(u2)) {
+    throw new Error([
+      '❌ CRITICAL: RNG produced non-finite u2',
+      `   u2 = ${u2}`,
+      '   RNG function must be provided and return finite numbers [0,1]',
+      '   This indicates RNG was not passed correctly to initialization.'
+    ].join('\n'));
+  }
+
   // Avoid log(0) - if u1 is exactly 0, use tiny epsilon
   const u1Safe = u1 === 0 ? 1e-10 : u1;
 
