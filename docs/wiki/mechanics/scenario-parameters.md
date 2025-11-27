@@ -270,6 +270,55 @@ const state = await createHistoricalInitialState({
 
 📄 **Full report:** `reviews/climate_hindcast_validation_20251126.md`
 
+### Historical Mode Implementation (Nov 27, 2025)
+
+**Problem:** Phase 10 hindcast validation revealed systematic calibration issues:
+- Temperature: +64% error (2.1°C vs 1.28°C actual)
+- Population: -76% error (2.0B vs 8.1B actual)
+- Biodiversity: -95% error (0.03 vs 0.49 actual)
+- Non-determinism: CV=6.7% (target <0.1%)
+
+**Root Cause:** Simulation calibrated for CRISIS scenarios (nuclear winter, famine cascades), but 1990-2024 was a BASELINE growth period.
+
+**Solution:** Add `historicalMode` flag to SimulationConfig to disable/dampen crisis systems during hindcasting.
+
+#### Historical Validation Targets
+
+| Metric | 2024 Target | Error Threshold | Source |
+|--------|-------------|-----------------|--------|
+| Temperature | 1.28°C | ±10% | NASA GISS |
+| Population | 8.12B | ±10% | UN WPP 2024 |
+| CO2 | 424.6 ppm | ±5% | NOAA Mauna Loa |
+| Biodiversity | 0.49 | ±20% | WWF LPI 2024 |
+
+#### Crisis Systems Requiring Adjustment
+
+1. **ExogenousShockPhase** - Disable nuclear/asteroid events, cap mortality at 10M per event
+2. **BaselineMortalityPhase** - Use historical death rates from IHME GBD (7.4-9.0 per 1000)
+3. **BiodiversityPhase** - Dampen decline to 0.74%/year (matches LPI 2024)
+4. **ClimateSystemPhase** - Verify ECS=3.0°C, fix temperature anticorrelation
+5. **ResourceDepletionPhase** - Dampen oil depletion → GDP collapse feedback
+
+#### Implementation Pattern
+
+```typescript
+// Add flag to SimulationConfig (src/types/game.ts)
+export interface SimulationConfig {
+  historicalMode?: boolean; // Enable historical calibration (1990-2024 validation mode)
+}
+
+// Each phase checks flag
+export function phaseFunction(state: GameState, rng: () => number): void {
+  if (state.config.historicalMode) {
+    // Historical calibration (baseline growth)
+  } else {
+    // Crisis calibration (current behavior)
+  }
+}
+```
+
+📄 **Full research:** `research/historical_mode_parameters_20251127.md`
+
 ### Monte Carlo Analysis
 
 **Recommended approach:** Run 50% historical, 50% unprecedented to show range of outcomes

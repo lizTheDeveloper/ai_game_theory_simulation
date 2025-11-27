@@ -29,6 +29,16 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 27: Historical Mode Research Brief** (commit 87292c6)
+- 📐 **Hindcast Calibration Solution:** Documented comprehensive approach to historical mode implementation
+- **Problem:** Phase 10 validation revealed systematic errors (temp +64%, pop -76%, bio -95%, CV 6.7%)
+- **Root Cause:** Simulation calibrated for CRISIS scenarios, but 1990-2024 was BASELINE growth period
+- **Solution:** Add `historicalMode` flag to disable/dampen 5 crisis systems during hindcasting
+- **Validation Targets:** Temp 1.28°C (±10%), Pop 8.12B (±10%), Bio 0.49 (±20%), CV <0.1%
+- **Sources:** UN WPP 2024, NASA GISS, NOAA, WWF LPI 2024, IHME GBD 2021
+- 📄 **Research:** `research/historical_mode_parameters_20251127.md`
+- **Status:** READY FOR IMPLEMENTATION (Roy)
+
 **Nov 27: CRITICAL - Climate Stability Citation Correction** (commits 1babf63, 6eac753, b580b1c)
 - 🔬 **Citation Failure Discovered:** ClimateSystemPhase.ts cited 5 papers to justify 5% stability floor - 3/5 CONTRADICT claims (Grade D)
 - **Problem Papers:** Lenton 2019, Armstrong McKay 2022, Steffen 2015 all warn about DESTABILIZATION, not self-limiting stability
