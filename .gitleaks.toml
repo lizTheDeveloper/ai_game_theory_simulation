@@ -27,5 +27,15 @@ useDefault = true
     '''k8s/.*-example\.yaml$''',
     # Backup examples (historical test data, not production secrets)
     '''backups/.*''',
+    # Python agent with example database credentials
+    '''src/platform/agents/.*\.py$''',
+    # Docker and docker-compose files with example credentials
+    '''docker-compose.*\.yml$''',
+    '''docker-compose.*\.yaml$''',
+  ]
+  # Allowlist specific commits that contain only test/example credentials
+  commits = [
+    # Initial MARCUS platform setup with example credentials (not production secrets)
+    '''e0c84e73de1c89d1c1e22990dea816772dcaccd5''',
   ]
   regexTarget = "match"
