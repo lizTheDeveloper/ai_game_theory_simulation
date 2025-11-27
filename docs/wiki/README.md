@@ -29,6 +29,17 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 27: Comprehensive Hindcast Calibration Parameters Research** (commit 60c98e2)
+- 📚 **572-Line Research Document:** Peer-reviewed parameters for HIGH-6, HIGH-7, HIGH-8, HIGH-9 hindcast calibration
+- **HIGH-6 Temperature (+64% error):** IPCC AR6 TCRE 1.65°C/1000 PgC, TCR 1.8±0.3K, aerosol cooling 0.24±0.11K
+- **HIGH-7 Population (-76% error):** Fertility decline 3.31→2.25 (1990-2024), life expectancy +0.33 yr/yr
+- **HIGH-8 Biodiversity (-95% error):** WWF LPI -73% (1970-2020), habitat-specific rates (freshwater -85%, terrestrial -69%, marine -56%)
+- **HIGH-9 Determinism (CV 6.7%):** Hash-based RNG seed splitting, deterministic iteration order, CV <0.01% target
+- **Sources:** 40+ peer-reviewed papers (2020-2025), IPCC AR6, UN DESA WPP 2024, WHO, WWF LPI 2024, IUCN Red List 2024, FAO
+- **Implementation Priority:** Fix determinism first (HIGH-9), then temperature (HIGH-6), population (HIGH-7), biodiversity (HIGH-8)
+- 📄 **Research:** `research/hindcast_calibration_parameters_20251127.md` (comprehensive reference)
+- **Status:** READY FOR IMPLEMENTATION - Parameters validated against peer-reviewed sources
+
 **Nov 27: Historical Mode Research Brief** (commit 87292c6)
 - 📐 **Hindcast Calibration Solution:** Documented comprehensive approach to historical mode implementation
 - **Problem:** Phase 10 validation revealed systematic errors (temp +64%, pop -76%, bio -95%, CV 6.7%)
