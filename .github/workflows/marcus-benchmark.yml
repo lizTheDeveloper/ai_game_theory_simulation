@@ -132,10 +132,17 @@ jobs:
 
       - name: Run Python accuracy benchmarks
         env:
-          DATABASE_URL: postgresql://benchmark_user:benchmark_pass@localhost:5432/benchmark_db
-          REDIS_URL: redis://localhost:6379/0
+          # Use production secrets if available, otherwise fall back to local test DB
+          DATABASE_URL: ${{ secrets.PROD_DATABASE_URL || 'postgresql://benchmark_user:benchmark_pass@localhost:5432/benchmark_db' }}
+          REDIS_URL: ${{ secrets.PROD_REDIS_URL || 'redis://localhost:6379/0' }}
         run: |
           echo "Running Python benchmarks..."
+          # Log which credentials are being used (without exposing secrets)
+          if [ -n "${{ secrets.PROD_DATABASE_URL }}" ]; then
+            echo "📊 Using PRODUCTION database credentials from GitHub Secrets"
+          else
+            echo "📊 Using LOCAL test database credentials (benchmark_user@localhost)"
+          fi
           python src/platform/evaluation/citation_evaluation_benchmarks.py
 
           # Find and copy JSON results (scripts write to benchmark_results/)
@@ -150,18 +157,30 @@ jobs:
 
       - name: Run TypeScript performance benchmarks
         env:
-          DATABASE_URL: postgresql://benchmark_user:benchmark_pass@localhost:5432/benchmark_db
-          REDIS_URL: redis://localhost:6379/0
+          # Use production secrets if available, otherwise fall back to local test DB
+          DATABASE_URL: ${{ secrets.PROD_DATABASE_URL || 'postgresql://benchmark_user:benchmark_pass@localhost:5432/benchmark_db' }}
+          REDIS_URL: ${{ secrets.PROD_REDIS_URL || 'redis://localhost:6379/0' }}
           # Individual env vars for Python agents spawned by TypeScript benchmarks
-          DATABASE_HOST: localhost
-          DATABASE_PORT: "5432"
-          DATABASE_NAME: benchmark_db
-          DATABASE_USER: benchmark_user
-          DATABASE_PASSWORD: benchmark_pass
-          POSTGRES_USER: benchmark_user
-          POSTGRES_PASSWORD: benchmark_pass
+          # These use secrets if available, otherwise local test credentials
+          DATABASE_HOST: ${{ secrets.PROD_DATABASE_HOST || 'localhost' }}
+          DATABASE_PORT: ${{ secrets.PROD_DATABASE_PORT || '5432' }}
+          DATABASE_NAME: ${{ secrets.PROD_DATABASE_NAME || 'benchmark_db' }}
+          DATABASE_USER: ${{ secrets.PROD_DATABASE_USER || 'benchmark_user' }}
+          DATABASE_PASSWORD: ${{ secrets.PROD_DATABASE_PASSWORD || 'benchmark_pass' }}
+          POSTGRES_USER: ${{ secrets.PROD_DATABASE_USER || 'benchmark_user' }}
+          POSTGRES_PASSWORD: ${{ secrets.PROD_DATABASE_PASSWORD || 'benchmark_pass' }}
         run: |
           echo "Running TypeScript benchmarks..."
+          # Log which credentials are being used
+          if [ -n "${{ secrets.PROD_DATABASE_URL }}" ]; then
+            echo "📊 Using PRODUCTION database credentials from GitHub Secrets"
+            echo "   Host: ${{ secrets.PROD_DATABASE_HOST || 'not set' }}"
+          else
+            echo "📊 Using LOCAL test database credentials"
+            echo "   Host: localhost"
+            echo "   Database: benchmark_db"
+            echo "   User: benchmark_user"
+          fi
           npx tsx src/platform/evaluation/citationBenchmarks.ts
 
           # Find and copy JSON results (newer than Python results)
