@@ -321,24 +321,21 @@ export function updateEnvironmentalAccumulation(
     // - Annual rate: ~1.24%/year
     // - Monthly rate: 0.103%/month (1.24% / 12)
 
-    // DEBUG (HIGH-8): Log first time we enter historical mode
-    if (state.currentMonth === 1) {
-      console.log(`🔍 HIGH-8 DEBUG: Historical biodiversity mode ACTIVE (year=${state.currentYear}, month=${state.currentMonth})`);
+    // DEBUG (HIGH-8): Log biodiversity decline every year
+    if (state.currentMonth % 12 === 0) {
+      console.log(`🔍 HIGH-8 DEBUG: Historical mode (year=${state.currentYear}, biodiv=${(env.biodiversityIndex * 100).toFixed(2)}%)`);
     }
 
-    const HISTORICAL_DECLINE_RATE = 0.00103; // 0.103%/month (WWF LPI 2024)
+    // WWF LPI empirical decline rate (ALREADY includes conservation effects)
+    // Calculation: 0.75 (1990) → 0.49 (2024) over 34 years
+    // Geometric decline: (1 - r)^408 = 0.6533 → r = 0.00102/month
+    const HISTORICAL_DECLINE_RATE = 0.00102; // 0.102%/month (1.22%/year)
 
-    // Protected area conservation effect (reduces decline)
-    // Protected areas grew from 8.9% (1990) to 17.5% (2024)
-    // Research: Geldmann et al. 2019 - protected areas reduce biodiversity loss by 40-60%
-    const protectedAreaCoverage = getProtectedAreaCoverage(state.currentYear);
-    const conservationEffect = 1 - (protectedAreaCoverage * 0.5); // 50% reduction at full coverage
+    // Use empirical rate directly (no modifiers - observed rate is net of all effects)
+    biodiversityLossRate = HISTORICAL_DECLINE_RATE;
 
-    // Apply empirical decline rate with conservation modifier
-    biodiversityLossRate = HISTORICAL_DECLINE_RATE * conservationEffect;
-
-    // Natural recovery is minimal during baseline period (not crisis recovery)
-    naturalRecovery = 0.0001; // Very slow baseline recovery
+    // Natural recovery is ZERO during baseline (empirical rate is net)
+    naturalRecovery = 0;
 
     // Apply decline
     env.biodiversityIndex = assertFinite(

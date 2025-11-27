@@ -1360,8 +1360,13 @@ export function applyTippingPointCascadeEffects(state: GameState): void {
   env.climateStability = Math.max(0, env.climateStability * (1 - climateDecay));
 
   // Biodiversity crashes (with variation)
-  const bioDecay = 0.03 * envStochasticFactor(); // Base 3% ± variation
-  env.biodiversityIndex = Math.max(0, env.biodiversityIndex * (1 - bioDecay));
+  // HIGH-8 FIX (Nov 27, 2025): Skip during historical mode (1990-2024)
+  // Historical biodiversity decline is handled by environmental.ts with empirical WWF LPI rates
+  const historicalModeActive = state.config.historicalMode && state.currentYear <= 2024;
+  if (!historicalModeActive) {
+    const bioDecay = 0.03 * envStochasticFactor(); // Base 3% ± variation
+    env.biodiversityIndex = Math.max(0, env.biodiversityIndex * (1 - bioDecay));
+  }
 
   // Resources depleted faster (with variation)
   const resourceDecay = 0.015 * envStochasticFactor(); // Base 1.5% ± variation
@@ -1612,8 +1617,10 @@ function updateLandUseSystem(state: GameState): void {
       region.ecosystemCollapseRisk = Math.min(1.0, region.ecosystemCollapseRisk + 0.01);
 
       // Check for ecosystem collapse (varies by biodiversity weight)
+      // HIGH-8 FIX (Nov 27, 2025): Disable catastrophic collapses during historical mode
+      const historicalModeActive = state.config.historicalMode && state.currentYear <= 2024;
       const collapseChance = region.biodiversityWeight * 0.05; // Tropical has highest chance
-      if (region.ecosystemCollapseRisk > 0.80 && deterministicRandom() < collapseChance) {
+      if (!historicalModeActive && region.ecosystemCollapseRisk > 0.80 && deterministicRandom() < collapseChance) {
         region.ecosystemsLost++;
         const regionLabel = String(regionName).toUpperCase();
         console.log(`\n🌳💀 ${regionLabel} ECOSYSTEM COLLAPSED (Total: ${region.ecosystemsLost})`);
