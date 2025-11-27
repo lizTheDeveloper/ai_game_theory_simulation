@@ -356,12 +356,14 @@ class CitationIntegrityAgent:
             config: Dict with keys: host, port, database, user, password
         """
         try:
+            # Use environment variables with fallback to config, then defaults
+            import os
             self.db_conn = psycopg2.connect(
-                host=config.get('host', 'localhost'),
-                port=config.get('port', 5432),
-                database=config.get('database', 'citations'),
-                user=config.get('user', 'postgres'),
-                password=config.get('password', ''),
+                host=config.get('host') or os.getenv('DATABASE_HOST', os.getenv('PGHOST', 'localhost')),
+                port=config.get('port') or int(os.getenv('DATABASE_PORT', os.getenv('PGPORT', '5432'))),
+                database=config.get('database') or os.getenv('POSTGRES_DB', os.getenv('PGDATABASE', 'citations')),
+                user=config.get('user') or os.getenv('POSTGRES_USER', os.getenv('PGUSER', 'postgres')),
+                password=config.get('password') or os.getenv('POSTGRES_PASSWORD', os.getenv('PGPASSWORD', '')),
                 cursor_factory=RealDictCursor
             )
             logger.info(f"Agent {self.agent_id} connected to PostgreSQL")

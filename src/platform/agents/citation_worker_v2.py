@@ -405,16 +405,18 @@ def main():
     redis_password = os.getenv('REDIS_PASSWORD')
     force_mode = os.getenv('FORCE_AGENT_MODE')  # Optional override
 
-    # Database configuration
-    db_config = None
-    if os.getenv('POSTGRES_HOST'):
+    # Database configuration - check multiple env var formats
+    db_host = os.getenv('DATABASE_HOST') or os.getenv('PGHOST') or os.getenv('POSTGRES_HOST')
+    if db_host:
         db_config = {
-            'host': os.getenv('POSTGRES_HOST'),
-            'port': int(os.getenv('POSTGRES_PORT', '5432')),
-            'database': os.getenv('POSTGRES_DB', 'citations'),
-            'user': os.getenv('POSTGRES_USER', 'postgres'),
-            'password': os.getenv('POSTGRES_PASSWORD', '')
+            'host': db_host,
+            'port': int(os.getenv('DATABASE_PORT', os.getenv('PGPORT', os.getenv('POSTGRES_PORT', '5432')))),
+            'database': os.getenv('POSTGRES_DB', os.getenv('PGDATABASE', 'citations')),
+            'user': os.getenv('POSTGRES_USER', os.getenv('PGUSER', 'postgres')),
+            'password': os.getenv('POSTGRES_PASSWORD', os.getenv('PGPASSWORD', ''))
         }
+    else:
+        db_config = None
 
     # Create and run worker
     worker = CitationWorkerV2(

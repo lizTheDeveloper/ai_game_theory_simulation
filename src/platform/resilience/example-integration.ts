@@ -22,11 +22,11 @@ import express from 'express';
 
 const config = {
   database: {
-    host: process.env.DB_HOST || 'localhost',
-    port: parseInt(process.env.DB_PORT || '5432'),
-    database: process.env.DB_NAME || 'marcus',
-    user: process.env.DB_USER || 'postgres',
-    password: process.env.DB_PASSWORD || '',
+    host: process.env.DATABASE_HOST || process.env.PGHOST || process.env.DB_HOST || 'localhost',
+    port: parseInt(process.env.DATABASE_PORT || process.env.PGPORT || process.env.DB_PORT || '5432'),
+    database: process.env.POSTGRES_DB || process.env.PGDATABASE || process.env.DB_NAME || 'marcus',
+    user: process.env.POSTGRES_USER || process.env.PGUSER || process.env.DB_USER || 'postgres',
+    password: process.env.POSTGRES_PASSWORD || process.env.PGPASSWORD || process.env.DB_PASSWORD || '',
     min: 10,
     max: 50,
     healthCheckInterval: 30000,

@@ -371,11 +371,11 @@ describe('Database Pool', () => {
 
   beforeEach(() => {
     pool = new DatabasePool({
-      host: process.env.DB_HOST || 'localhost',
-      port: parseInt(process.env.DB_PORT || '5432'),
-      database: process.env.DB_NAME || 'test',
-      user: process.env.DB_USER || 'postgres',
-      password: process.env.DB_PASSWORD || 'postgres',
+      host: process.env.DATABASE_HOST || process.env.PGHOST || process.env.DB_HOST || 'localhost',
+      port: parseInt(process.env.DATABASE_PORT || process.env.PGPORT || process.env.DB_PORT || '5432'),
+      database: process.env.POSTGRES_DB || process.env.PGDATABASE || process.env.DB_NAME || 'test',
+      user: process.env.POSTGRES_USER || process.env.PGUSER || process.env.DB_USER || 'postgres',
+      password: process.env.POSTGRES_PASSWORD || process.env.PGPASSWORD || process.env.DB_PASSWORD || 'postgres',
       min: 2,
       max: 10,
       healthCheckInterval: 5000,

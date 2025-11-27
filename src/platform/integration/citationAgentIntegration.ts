@@ -1329,17 +1329,17 @@ async function main() {
     maxRestarts: 3,
 
     database: {
-      host: 'localhost',
-      port: 5432,
-      database: 'citations',
-      user: 'postgres',
-      password: 'password',
+      host: process.env.DATABASE_HOST || process.env.PGHOST || 'localhost',
+      port: parseInt(process.env.DATABASE_PORT || process.env.PGPORT || '5432'),
+      database: process.env.POSTGRES_DB || process.env.PGDATABASE || 'citations',
+      user: process.env.POSTGRES_USER || process.env.PGUSER || 'postgres',
+      password: process.env.POSTGRES_PASSWORD || process.env.PGPASSWORD || 'password',
       poolSize: 10
     },
 
     redis: {
-      host: 'localhost',
-      port: 6379,
+      host: process.env.REDIS_HOST || 'localhost',
+      port: parseInt(process.env.REDIS_PORT || '6379'),
       db: 0,
       ttl: 3600
     },

@@ -259,18 +259,18 @@ def benchmark_startup_time(agent_id: str, iterations: int = 10) -> Dict[str, flo
     cold_starts = []
     warm_starts = []
 
-    # Database config (customize as needed)
+    # Database config from environment variables
     db_config = {
-        'host': 'localhost',
-        'port': 5432,
-        'database': 'citations',
-        'user': 'postgres',
-        'password': 'password'
+        'host': os.getenv('DATABASE_HOST', os.getenv('PGHOST', 'localhost')),
+        'port': int(os.getenv('DATABASE_PORT', os.getenv('PGPORT', '5432'))),
+        'database': os.getenv('POSTGRES_DB', os.getenv('PGDATABASE', 'citations')),
+        'user': os.getenv('POSTGRES_USER', os.getenv('PGUSER', 'postgres')),
+        'password': os.getenv('POSTGRES_PASSWORD', os.getenv('PGPASSWORD', 'password'))
     }
 
     redis_config = {
-        'host': 'localhost',
-        'port': 6379,
+        'host': os.getenv('REDIS_HOST', 'localhost'),
+        'port': int(os.getenv('REDIS_PORT', '6379')),
         'db': 0
     }
 

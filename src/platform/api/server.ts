@@ -757,11 +757,11 @@ export function getDefaultConfig(): ServerConfig {
     corsOrigins: process.env.CORS_ORIGINS?.split(',') || ['http://localhost:3333'],
 
     database: {
-      host: process.env.DATABASE_HOST || process.env.DB_HOST || 'localhost',
-      port: parseInt(process.env.DATABASE_PORT || process.env.DB_PORT || '5432', 10),
-      database: process.env.DATABASE_NAME || process.env.DB_NAME || 'marcus_platform',
-      user: process.env.DATABASE_USER || process.env.DB_USER || 'postgres',
-      password: process.env.DATABASE_PASSWORD || process.env.DB_PASSWORD || '',
+      host: process.env.DATABASE_HOST || process.env.PGHOST || process.env.DB_HOST || 'localhost',
+      port: parseInt(process.env.DATABASE_PORT || process.env.PGPORT || process.env.DB_PORT || '5432', 10),
+      database: process.env.POSTGRES_DB || process.env.PGDATABASE || process.env.DATABASE_NAME || process.env.DB_NAME || 'marcus_platform',
+      user: process.env.POSTGRES_USER || process.env.PGUSER || process.env.DATABASE_USER || process.env.DB_USER || 'postgres',
+      password: process.env.POSTGRES_PASSWORD || process.env.PGPASSWORD || process.env.DATABASE_PASSWORD || process.env.DB_PASSWORD || '',
       max: parseInt(process.env.DB_POOL_SIZE || '20', 10),
     },
 
