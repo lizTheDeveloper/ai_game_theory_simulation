@@ -4,6 +4,35 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
+## 🔧 CRITICAL-3 Regression Prevention: RNG Output Validation (November 27, 2025 - commit 6f3c1ea)
+
+**Status:** ✅ COMPLETE
+**Priority:** CRITICAL (regression prevention)
+**Type:** Defensive Fix
+
+**Change:** Added non-finite value detection to Box-Muller transform in `sampleNormal()` function.
+
+**Context:**
+- HIGH-7 diagnostic revealed that numeric seeds work but string seeds fail
+- When RNG function is not passed correctly to initialization, Box-Muller could silently produce NaN
+- This extends the CRITICAL-3 fix (Nov 7, 2025) which removed Math.random() fallbacks
+
+**Implementation:**
+```typescript
+// After calling rng() for u1, u2:
+if (typeof u1 !== 'number' || !isFinite(u1)) {
+  throw new Error('❌ CRITICAL: RNG produced non-finite u1...');
+}
+```
+
+**File:** `src/simulation/thresholds/distributions.ts:71-86` (+18 lines)
+
+**Relation to CRITICAL-3:** This completes the defense-in-depth strategy:
+1. CRITICAL-3 (Nov 7): Made RNG required, removed Math.random() fallbacks
+2. This commit: Validates RNG output (catches corrupted/missing RNG at point of use)
+
+---
+
 ## ✅ HIGH-6 Fix: Climate Boundary Temperature Sync (November 27, 2025 - commit 3e3f47c)
 
 **Status:** ✅ RESOLVED (measurement bug, not model bug)
