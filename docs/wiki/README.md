@@ -2861,6 +2861,19 @@ function simulate(rng: () => number) {
 - CRITICAL-3: RNG Algorithm Regression
 - See also: NaN handling section (same fail-loudly philosophy)
 
+**🔧 CRITICAL-3 Extension: RNG Output Validation (Nov 27, 2025 - commit 6f3c1ea)**
+
+Added defense-in-depth to Box-Muller transform in `sampleNormal()`. If RNG isn't passed correctly during initialization, the function now fails loudly with clear error messages rather than propagating NaN silently.
+
+```typescript
+const u1 = rng();
+if (typeof u1 !== 'number' || !isFinite(u1)) {
+  throw new Error('❌ CRITICAL: RNG produced non-finite u1...');
+}
+```
+
+**File:** `src/simulation/thresholds/distributions.ts:71-86`
+
 ---
 
 **🔧 Determinism Fix - Object Iteration Order (90% Resolution)**
