@@ -1,0 +1,58 @@
+{
+  "metrics": {
+    "accuracy": {
+      "accuracy": 0.7,
+      "precision": 0.7446808510638298,
+      "recall": 0.9210526315789473,
+      "f1Score": 0.8235294117647057,
+      "truePositives": 35,
+      "falsePositives": 12,
+      "trueNegatives": 0,
+      "falseNegatives": 3
+    },
+    "performance": {
+      "meanLatencyMs": 17.66838886000005,
+      "p50LatencyMs": 17.034032000000025,
+      "p95LatencyMs": 20.774691000000075,
+      "p99LatencyMs": 37.43290900000011,
+      "throughputPerSec": 56.57533399712342,
+      "memoryUsageMb": 12.870658874511719
+    },
+    "convergence": {
+      "learningCurve": [],
+      "convergenceTime": null,
+      "finalAccuracy": 0.7,
+      "consensusStability": 0.8
+    },
+    "robustness": {
+      "adversarialAccuracy": 0.75,
+      "edgeCaseAccuracy": 0.8,
+      "consistencyScore": 0.85
+    },
+    "totalSamples": 100,
+    "totalErrors": 0,
+    "errorRate": 0,
+    "timestamp": "2025-11-27T21:27:08.581Z"
+  },
+  "scalability": [
+    {
+      "numAgents": 1,
+      "throughput": 54.21861990386172,
+      "latencyP95": 22.165280000000166,
+      "consensusLevel": 0.7655448170565458
+    },
+    {
+      "numAgents": 5,
+      "throughput": 55.025928366016075,
+      "latencyP95": 20.323747999999796,
+      "consensusLevel": 0.7955089776359563
+    },
+    {
+      "numAgents": 10,
+      "throughput": 52.73430139754081,
+      "latencyP95": 26.073883999999452,
+      "consensusLevel": 0.8970652201568644
+    }
+  ],
+  "timestamp": "2025-11-27T21:27:08.583Z"
+}
