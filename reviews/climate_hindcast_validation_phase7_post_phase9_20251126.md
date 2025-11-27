@@ -65,7 +65,7 @@ The hindcast validation revealed two critical issues:
 
 ### Final State (Run 5, Month 240)
 - **CO2:** 462.8 ppm (vs 389 ppm target = **19.0% error**)
-- **Temperature:** 0.72°C (vs 0.98°C target = **-0.26°C error**)
+- **Temperature:** 0.72°C (vs 0.73°C target = **-0.01°C error**) ✅ CORRECTED (previous: 0.98°C was 2019 value, not 2010)
 - **Population:** 9.22B (vs 6.90B target = **33.6% overshoot**)
 
 ---
@@ -166,11 +166,12 @@ The assertion is working correctly (fail-loudly design). The upstream bug is tha
 - **NEW CRITICAL BUG:** Resource reserves going negative in 40% of runs
 - System stability decreased (no crashes → 40% crash rate)
 
-**Temperature Regression Root Cause:**
+**Temperature "Regression" - FALSE ALARM (Corrected Nov 27, 2025):**
 - Previous: +0.08°C error (simulated too warm)
-- Current: -0.26°C error (simulated too cool)
-- **Hypothesis:** Stronger carbon sinks → Lower CO2 → Lower temperature (overcorrection)
-- **Magnitude:** 0.26°C / 0.98°C target = **26.5% undershoot**
+- Current: -0.01°C error (simulated correct) ✅ EXCELLENT
+- **Root Cause of Error:** Used wrong target (0.98°C from 2019, not 2010's 0.73°C)
+- **Actual Performance:** Temperature fidelity IMPROVED (0.08°C → 0.01°C error)
+- See: `reviews/temperature_anticorrelation_investigation_20251127.md`
 
 ---
 
