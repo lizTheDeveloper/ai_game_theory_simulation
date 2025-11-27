@@ -244,6 +244,20 @@ export class PythonAgentWrapper extends EventEmitter {
       console.error(`[Agent ${this.agentId} stderr]:`, data.toString());
     });
 
+    // Handle stdin errors (EPIPE when process exits while writing)
+    // CRITICAL: Without this handler, Node.js crashes with unhandled 'error' event
+    this.process.stdin!.on('error', (err: Error) => {
+      // EPIPE is expected when the process exits while we're writing to stdin
+      // This is not a critical error - the process exit handler will manage cleanup
+      if ((err as NodeJS.ErrnoException).code === 'EPIPE') {
+        console.warn(`⚠️ Agent ${this.agentId} stdin EPIPE (process exited during write)`);
+      } else {
+        console.error(`❌ Agent ${this.agentId} stdin error:`, err.message);
+      }
+      // Mark as unhealthy - the exit handler will trigger restart if needed
+      this.isHealthy = false;
+    });
+
     // Handle process exit
     this.process.on('exit', (code, signal) => {
       console.warn(`⚠️ Agent ${this.agentId} exited (code: ${code}, signal: ${signal})`);
