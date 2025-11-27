@@ -268,10 +268,8 @@ while true; do
         respond_to_dm
     fi
 
-    # Send heartbeat every cycle (for now - can disable later)
-    if [ "$NEW_MSG" != "1" ] && [ "$NEW_DM" != "1" ]; then
-        send_heartbeat "[Quinn] Cycle ${CYCLE_COUNT}: All quiet. Workers running. Checking again in 60s."
-    fi
+    # Quiet cycles - no message (disabled per Liz request)
+    # Only notify on: startup, DM detected, mention detected
 
     # Wait before next check
     sleep $POLL_INTERVAL
