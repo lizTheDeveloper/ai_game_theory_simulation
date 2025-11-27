@@ -29,7 +29,7 @@
     - 100% dystopia outcomes (scientifically unfalsifiable without diverse starting conditions)
     - Hindcast failing 7 phases: 14% CO2 error, 33% population error
     - Citation misrepresentation: Lenton 2019 supports OPPOSITE of claimed stability (60% climate citations contradictory)
-    - Cascade mortality unbounded: 1.05^N exponential growth physically impossible
+    - ~~Cascade mortality unbounded~~ ✅ FIXED Nov 27 (logistic saturation)
     - Extinction debt unmodeled: 200+ papers show recovery overestimation
     - Report: `reviews/research_debate_20251126_worker5.md` (18.5K)
   - 🚨 **3 NEW CRITICAL + 4 NEW HIGH priorities identified** - Requires immediate roadmap restructuring
@@ -234,21 +234,28 @@
 - **Complexity:** 2 systems (population, mortality)
 - **Report:** `reviews/research_debate_20251126_worker5.md` (lines 69-90)
 
-**C-5: Cascade Mortality Unbounded Exponential Growth** 🚨 NEW
-- **Status:** 🔴 ACTIVE - Physically impossible outputs
-- **Discovery:** Nov 25, 2025 - Research debate first identification, NOT FIXED in Session 5
-- **Problem:** `planetaryBoundaries.ts:1436` uses 1.05^N exponential growth formula
+**C-5: Cascade Mortality Unbounded Exponential Growth** ✅ RESOLVED (Nov 27, 2025)
+- **Status:** ✅ RESOLVED - Commit 5e4e4076b (Nov 27, 2025)
+- **Discovery:** Nov 25, 2025 - Research debate first identification
+- **Problem:** `planetaryBoundaries.ts:1436` used 1.05^N exponential growth formula
   - Month 48+96: 107× mortality multiplier
   - Month 48+144: 1,688× mortality multiplier
   - Physically impossible - exceeds total population multiple times over
 - **Research Reality:** Armstrong McKay et al. (2022) shows cascades are sub-linear after initial shock
   - Systems reach new equilibrium states, not infinite runaway
-  - Real-world cascades saturate, simulation does not
-- **Solution:** Replace exponential with logistic growth (saturating curve)
-- **Success Criteria:** Cascade mortality caps at physically plausible levels
-- **Priority Rationale:** Produces physically impossible mortality rates in long simulations
-- **Complexity:** 1 system (planetary boundaries), ~20 lines
-- **Report:** `reviews/research_debate_20251126_worker5.md` (lines 95-106)
+- **Solution:** Replaced exponential with logistic growth (saturating S-curve)
+  - Formula: `10 / (1 + exp(-0.05 * (months - 60)))`
+  - Maximum multiplier: 10× (research-backed saturation)
+  - S-curve midpoint at 60 months past crisis
+- **Validation Results:**
+  - Month 144: 108× → 8.6× ✅
+  - Month 192: 1,125× → 9.9× ✅
+  - Month 288: 121,740× → 10.0× ✅
+- **Files Changed:**
+  - `src/simulation/planetaryBoundaries.ts:1427-1456`
+  - `scripts/validateCascadeGrowth.ts` (validation script)
+  - `reviews/C5_cascade_mortality_fix_20251127.md` (documentation)
+- **Verification:** `research/meta/verification_5e4e407_20251127.md`
 
 **C-1: AI Coordination Failure Probability FABRICATION** ✅ RESOLVED (Nov 26, 2025)
 - **Status:** ✅ RESOLVED - Commit bf45de881 (Nov 26, 2025)
