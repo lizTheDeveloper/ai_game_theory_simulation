@@ -93,6 +93,33 @@ export class PlanetaryBoundariesPhase implements SimulationPhase {
     // This now reads legacy nutrient stock releases (via getLegacyContributionPercentage)
     updatePlanetaryBoundaries(state);
 
+    // HIGH-6 FIX (Nov 27, 2025): Sync climate_change boundary to actual CO2-driven temperature
+    // Root cause: planetaryBoundaries.ts line 1685 was incrementing boundary with deforestation feedback,
+    // causing drift (1.14°C → 2.10°C over 408 months) while actual temperature stayed at 0.72°C.
+    // Validation script reads this boundary, creating false "64% error" report.
+    // Solution: Overwrite boundary with authoritative temperature from resourceEconomy.co2
+    if (state.planetaryBoundariesSystem?.boundaries?.climate_change && state.resourceEconomy?.co2) {
+      const tempAnomalyVs1850 = assertFinite(
+        state.resourceEconomy.co2.temperatureAnomaly,
+        {
+          location: 'PlanetaryBoundariesPhase.execute',
+          valueName: 'temperatureAnomaly',
+          month: state.currentMonth
+        }
+      );
+      // Convert to pre-industrial (1750) baseline: add 0.7°C
+      // Research: 1750-1850 warming ~0.7°C (IPCC AR6, historical temperature reconstruction)
+      state.planetaryBoundariesSystem.boundaries.climate_change.currentValue =
+        assertFinite(
+          tempAnomalyVs1850 + 0.7,
+          {
+            location: 'PlanetaryBoundariesPhase.execute',
+            valueName: 'climate_change.currentValue (synced)',
+            month: state.currentMonth
+          }
+        );
+    }
+
     // Update Novel Entities boundary with energy-constrained cleanup model (Nov 16, 2025)
     updateNovelEntitiesBoundary(state, rng);
 
