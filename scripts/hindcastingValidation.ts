@@ -116,7 +116,11 @@ interface HindcastMetrics {
 }
 
 function extractMetrics(state: any): HindcastMetrics {
-  const simTemp = state.planetaryBoundariesSystem?.boundaries?.climate_change?.currentValue || 0;
+  // HIGH-6 FIX (Nov 27, 2025): Read temperature from authoritative source
+  // Previously read from planetaryBoundariesSystem.boundaries.climate_change.currentValue,
+  // which drifted due to deforestation feedback increments (1.14°C → 2.10°C).
+  // Now read from resourceEconomy.co2.temperatureAnomaly (actual CO2-driven temperature).
+  const simTemp = state.resourceEconomy?.co2?.temperatureAnomaly || 0;
   const simPop = state.humanPopulationSystem?.population || 0;
   const simQoL = state.globalMetrics?.qualityOfLife || 0;
   const simSocial = state.globalMetrics?.socialStability || 0;

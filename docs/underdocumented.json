@@ -83497,15 +83497,15 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PlanetaryBoundariesPhase.ts",
-    "line": 108,
+    "line": 105,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
-    "context": "location: 'PlanetaryBoundariesPhase.execute (post-update)',"
+    "context": "location: 'PlanetaryBoundariesPhase.execute',"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PlanetaryBoundariesPhase.ts",
-    "line": 109,
+    "line": 106,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -83513,7 +83513,55 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PlanetaryBoundariesPhase.ts",
-    "line": 110,
+    "line": 107,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PlanetaryBoundariesPhase.ts",
+    "line": 116,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'PlanetaryBoundariesPhase.execute',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PlanetaryBoundariesPhase.ts",
+    "line": 117,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'climate_change.currentValue (synced)',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PlanetaryBoundariesPhase.ts",
+    "line": 118,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PlanetaryBoundariesPhase.ts",
+    "line": 135,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'PlanetaryBoundariesPhase.execute (post-update)',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PlanetaryBoundariesPhase.ts",
+    "line": 136,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'temperatureAnomaly',"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/PlanetaryBoundariesPhase.ts",
+    "line": 137,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
