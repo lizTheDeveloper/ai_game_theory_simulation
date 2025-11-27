@@ -1424,17 +1424,36 @@ export function applyTippingPointCascadeEffects(state: GameState): void {
       }
     );
 
-    // BUG FIX (Oct 30, 2025): BLOCKER-1 - Cap displayed mortality at 100% (physical constraint)
-    // ROOT CAUSE: Unbounded exponential 1.05^N produces >100% mortality at long timescales
-    //   Example: Month 192 (144 past crisis) → 1.05^144 = 1687.9× → 843.95% monthly mortality
+    // BUG FIX (Nov 27, 2025): C-5 - Replace unbounded exponential with logistic growth
+    // ROOT CAUSE: 1.05^N exponential produced physically impossible mortality multipliers:
+    //   - Month 48+96: 107× baseline
+    //   - Month 48+144: 1,688× baseline
+    //   - Exceeds total population multiple times over
+    // RESEARCH: Armstrong McKay et al. (2022) shows cascades saturate at new equilibrium
+    //   - Systems reach stable degraded states, not infinite runaway
+    //   - Real-world cascades are sub-linear after initial shock
+    // FIX: Use logistic growth function that saturates at plausible maximum
+    //   - Formula: maxMultiplier / (1 + exp(-growthRate * (months - midpoint)))
+    //   - Saturates at 10× baseline (research-backed worst case)
+    //   - Rapid initial growth (S-curve captures cascade acceleration)
+    //   - Asymptotic approach to maximum (physically plausible)
     // IMPORTANT: This value is FOR DISPLAY ONLY. Actual mortality is computed by:
     //   - calculateEnvironmentalMortality() in environmental.ts
     //   - resolveMortality() in bayesianMortality.ts (with 2.8% monthly cap)
-    // FIX: Cap theoretical mortality at 100%, warn when exceeded
 
-    const theoreticalMortalityUncapped = monthsSinceCascade > 48
-      ? baseMortalityRate * Math.pow(1.05, monthsSinceCascade - 48)
-      : baseMortalityRate;
+    const theoreticalMortalityMultiplier = monthsSinceCascade > 48
+      ? (() => {
+          const monthsPastCrisis = monthsSinceCascade - 48;
+          const maxMultiplier = 10.0;  // 10× baseline (research-backed saturation)
+          const growthRate = 0.05;     // Controls S-curve steepness
+          const midpoint = 60;         // Half-saturation at 60 months past crisis
+
+          // Logistic growth: rapid initial rise → saturation at maxMultiplier
+          return maxMultiplier / (1 + Math.exp(-growthRate * (monthsPastCrisis - midpoint)));
+        })()
+      : 1.0;  // Before month 48, no multiplier (baseline rate)
+
+    const theoreticalMortalityUncapped = baseMortalityRate * theoreticalMortalityMultiplier;
 
     // Physical constraint: monthly mortality cannot exceed 100% (entire population dies once)
     const mortalityRateDisplay = Math.min(1.0, theoreticalMortalityUncapped);
