@@ -59,7 +59,7 @@ import {
  * 1990 correction critical for hindcast: Previous value (9.8) overestimated deaths by ~3M/year
  * affecting population growth validation (5.3B→6.1B expected, was producing 5.3B→2.7B)
  */
-function getHistoricalCrudeDeathRate(year: number): number {
+export function getHistoricalCrudeDeathRate(year: number): number {
   // UN WPP 2024 data: CDR per 1000 population
   const HISTORICAL_CDR = {
     1950: 19.5,  // Plausible (unverified, pre-antibiotics era)
