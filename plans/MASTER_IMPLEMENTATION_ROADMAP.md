@@ -5,12 +5,12 @@
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**Current Status:** 🟢 **STABLE** (Nov 27, 2025 - Post-Fix Validation)
+**Current Status:** 🟡 **STABLE (CALIBRATION ISSUES)** (Nov 27, 2025 - Phase 10 Validation Complete)
 - **Research Quality:** A- (95%+ sources from 2024-2025, high-priority updates identified)
-- **Architecture Health:** A- (0 CRITICAL, 0 HIGH issues, 3 MEDIUM issues)
-- **System Performance:** Monte Carlo deterministic, hindcast validation passing, 81.68% test coverage
-- **System Trajectory:** 🟢 **UNBLOCKED** - All 3 overnight blockers resolved (commit 8596afd8b)
-- **Roadmap Coherence:** CURRENT - Updated Nov 27 post-fix validation
+- **Architecture Health:** B+ (0 CRITICAL, 4 NEW HIGH calibration issues, 3 MEDIUM issues)
+- **System Performance:** 0% crash rate ✅, determinism compromised (CV=6.7%), historical accuracy failed (56.9% deviation)
+- **System Trajectory:** 🟡 **CALIBRATION REQUIRED** - Phase 10 revealed crisis-tuned params invalid for historical baseline
+- **Roadmap Coherence:** CURRENT - Updated Nov 27 post-Phase 10 validation (4 new HIGH items added)
 - **Recent Work (Nov 27 Morning - CRITICAL FIXES COMPLETE):**
   - ✅ **CRITICAL-1 RESOLVED** - environmentalHealth NaN crashes fixed (commit 8596afd8b)
     - Root cause: Division operations in resourceDepletion.ts producing NaN
@@ -370,6 +370,122 @@
 - **Dependencies:** Matrix tokens for each agent (most already exist)
 - **Impact:** Transforms agents from isolated workers to collaborative team
 
+**HIGH-6: Temperature Overestimation in Historical Period (+64% Error)** ⏳ NEW (Nov 27, 2025)
+- **Status:** ⏳ NEW - Identified in Phase 10 hindcast validation
+- **Discovery:** Phase 10 validation (Nov 27, 2025) - ALL 10 runs produce exactly 2.10°C (deterministic)
+- **Problem:** Climate system overestimates warming for baseline historical period
+  - Actual 2024: 1.28°C above baseline (NASA GISS)
+  - Simulated 2024: 2.10°C above baseline (ALL runs identical)
+  - Absolute error: +0.82°C (+64.1%)
+- **Root Cause Hypotheses:**
+  1. Climate sensitivity (TCRE) too high for historical period
+  2. Missing offsetting cooling mechanisms (aerosols, natural variability)
+  3. Carbon cycle HIGH-2 fix may have introduced errors
+- **Diagnostic Steps:**
+  1. Extract CO2 concentration from hindcast (currently not tracked)
+  2. Verify HIGH-2 carbon cycle fix (target <5% CO2 error)
+  3. Check climate sensitivity parameter against IPCC AR6 range
+  4. Compare simulated emissions trajectory to GCP historical data
+- **Solution Options:**
+  1. Reduce climate sensitivity for historical mode
+  2. Add aerosol cooling (missing mechanism)
+  3. Implement "historical mode" flag to disable crisis amplification
+- **Impact:** Overestimated warming makes climate interventions appear MORE effective than reality
+- **Assignee:** simulation-maintainer (Roy) + super-alignment-researcher (Cynthia)
+- **Effort:** 4-6 hours (diagnostics + mechanism tuning + validation)
+- **Complexity:** 3 systems (climate, carbon cycle, emissions)
+- **Dependencies:** None (can proceed immediately)
+- **Report:** `reviews/climate_hindcast_validation_phase10_20251127.md` (lines 59-186)
+
+**HIGH-7: Population Mortality Calibration (-76% Error)** ⏳ NEW (Nov 27, 2025)
+- **Status:** ⏳ NEW - Identified in Phase 10 hindcast validation
+- **Discovery:** Phase 10 validation (Nov 27, 2025) - population severely underestimated
+- **Problem:** Mortality system calibrated for CRISIS scenarios, not BASELINE historical
+  - Actual 2024: 8.12 billion (UN DESA)
+  - Simulated 2024: 1.22B to 3.44B (mean ~2.0B)
+  - Absolute error: -6.1B (-76.2%)
+  - Variance: 3x across runs (1.22B to 3.44B) - non-deterministic mortality
+- **Root Cause Hypotheses:**
+  1. Bayesian mortality resolution too aggressive for 1990-2024 period
+  2. Birth rate parameters not tuned to historical fertility trends
+  3. Food security/health systems triggering famine cascades incorrectly
+  4. Missing improvements in medicine/sanitation (baseline period was growth period)
+- **Diagnostic Steps:**
+  1. Compare simulated mortality rate to historical (0.7-0.9% per year)
+  2. Check birth rate against UN fertility data (2.5 → 2.3 TFR, 1990-2024)
+  3. Validate food security doesn't trigger false famine cascades
+  4. Audit health system improvements (medicine progress not modeled?)
+- **Solution Options:**
+  1. Add "historical mode" flag that disables crisis mortality
+  2. Recalibrate baseline mortality/birth rates to UN data
+  3. Separate crisis mortality (shocks) from baseline mortality (demographics)
+- **Impact:** Pessimistic population makes all interventions tested on dying population (invalid baseline)
+- **Assignee:** simulation-maintainer (Roy) + super-alignment-researcher (Cynthia)
+- **Effort:** 6-8 hours (mortality system audit + recalibration + validation)
+- **Complexity:** 4 systems (demographics, food security, health, mortality resolution)
+- **Dependencies:** None (can proceed immediately)
+- **Report:** `reviews/climate_hindcast_validation_phase10_20251127.md` (lines 70-97, 187-198)
+
+**HIGH-8: Biodiversity Decline Rate Calibration (-95% Error)** ⏳ NEW (Nov 27, 2025)
+- **Status:** ⏳ NEW - Identified in Phase 10 hindcast validation
+- **Discovery:** Phase 10 validation (Nov 27, 2025) - biodiversity collapses to near-zero
+- **Problem:** Decline rate far too aggressive for historical baseline period
+  - Actual 2024: 0.49 (WWF LPI - 51% of 1970 baseline, -34.7% decline 1990-2024)
+  - Simulated 2024: 0.004 to 0.065 (mean ~0.03, -97% decline)
+  - Absolute error: -0.46 (-94.7%)
+- **Root Cause Hypotheses:**
+  1. Extinction rate parameters tuned for worst-case scenarios
+  2. Land use pressure overestimated (agriculture/urbanization)
+  3. Conservation efforts not modeled for historical period
+  4. Missing recovery mechanisms (protected areas, species reintroductions)
+- **Diagnostic Steps:**
+  1. Compare simulated decline rate to WWF LPI historical curve (1990-2024)
+  2. Check land use/agriculture pressure against FAO data
+  3. Validate extinction risk parameters against IUCN Red List trends
+  4. Audit if conservation efforts exist in model
+- **Solution Options:**
+  1. Reduce baseline decline rate to match WWF LPI trajectory
+  2. Add conservation effort mechanisms (protected areas scale with GDP)
+  3. Implement "historical mode" flag to disable crisis extinction cascades
+- **Impact:** Near-extinction baseline makes biodiversity recovery appear impossible (invalid starting point)
+- **Assignee:** simulation-maintainer (Roy) + super-alignment-researcher (Cynthia)
+- **Effort:** 4-6 hours (ecology system audit + recalibration + validation)
+- **Complexity:** 3 systems (ecology, land use, extinction)
+- **Dependencies:** None (can proceed immediately)
+- **Report:** `reviews/climate_hindcast_validation_phase10_20251127.md` (lines 95-105, 199-212)
+
+**HIGH-9: Non-Determinism Investigation (CV=6.7%)** ⏳ NEW (Nov 27, 2025)
+- **Status:** ⏳ NEW - Identified in Phase 10 hindcast validation
+- **Discovery:** Phase 10 validation (Nov 27, 2025) - identical seeds produce different results
+- **Problem:** Coefficient of variation (CV) = 6.7% across 10 runs with IDENTICAL seeds
+  - Target: CV < 0.1% (near-perfect reproducibility for research simulation)
+  - Observed: CV = 6.7% (67x higher than target)
+  - Population varies 3x across runs (1.22B to 3.44B)
+  - Deviation scores range 51.3% to 63.1%
+- **Root Cause Hypotheses:**
+  1. Optional RNG parameters with `Math.random()` fallback (CRITICAL-3 regression pattern)
+  2. Object.entries() iteration order issues (non-deterministic object traversal)
+  3. Async operations completing in different order
+  4. Floating point accumulation errors (unlikely to cause 3x variance)
+- **Diagnostic Steps:**
+  1. Run determinism audit: N=3 runs, SAME seed, verify CV → 0%
+  2. Grep for `Math.random` usage (should be ZERO in simulation code)
+  3. Audit all RNG parameters - must be REQUIRED, never optional
+  4. Check for Object.entries() in phase execution loops
+  5. Review mortality/birth rate calculations for non-deterministic elements
+- **Solution - Nuclear Option:**
+  1. Make ALL RNG parameters REQUIRED (no optional with fallbacks)
+  2. Replace Object.entries() with deterministic iteration (sorted keys)
+  3. Add RNG assertion at phase entry (fail if undefined)
+  4. Run N=100 stress test to verify CV < 0.01%
+- **Impact:** Non-determinism breaks Monte Carlo reproducibility (research invalidation risk)
+- **Assignee:** simulation-maintainer (Roy) + quantitative-validator (Priya)
+- **Effort:** 3-5 hours (audit + fixes + N=100 stress test)
+- **Complexity:** 2 systems (RNG infrastructure, phase orchestration)
+- **Dependencies:** None (can proceed immediately)
+- **Priority Justification:** Research simulation MUST be deterministic - this is foundational
+- **Report:** `reviews/climate_hindcast_validation_phase10_20251127.md` (lines 41-55, 123-143)
+
 ### 🟡 MEDIUM Priority Items
 
 **M-1: Dead Code Cleanup** ✅ RESOLVED (Nov 26, 2025)
@@ -460,24 +576,36 @@
    - **Report:** `reviews/climate_hindcast_validation_phase7_20251126.md` (27K)
    - **Log:** `logs/hindcast/hindcast_2025-11-26T15-02-18.log`
 
-10. ✅ **Phase 10: Post-Calibration Validation (Priya) - UNBLOCKED (Nov 27, 2025):**
+10. ✅ **Phase 10: Post-Calibration Validation (Priya) - COMPLETE (Nov 27, 2025):**
    - **Previous Runs (Nov 26):** N=10, 30% crash rate + 12.1% CO2 error
-   - **Results:**
-     - **Crash Rate:** 30% (3 of 10 runs crashed at months 142-146)
-     - **Crash Cause:** `environmentalHealth → NaN` propagation
-     - **CO2 (7 successful runs):** +12.1% deviation (437 ppm vs 390 ppm observed)
-     - **Status:** DOUBLE FAILURE - crashes + over-calibration
    - **FIXES APPLIED (Nov 27, 2025):**
      1. ✅ CRITICAL-1 fixed: environmentalHealth field added to GlobalMetrics (commit 8596afd8b)
      2. ✅ HIGH-2 fixed: Carbon cycle recalibrated (+0.77% error, well under 5% threshold, commit 8596afd8b)
-   - **Next Actions:**
-     1. Re-run Phase 10 with N=10 after fixes (Priya)
-     2. Verify 0% crash rate and CO2 within 5% threshold
-     3. Create Phase 10 detailed validation report
-   - **Report:** Phase 10 detailed report PENDING (awaiting post-fix validation run)
-   - **Log:** TBD (need to locate overnight autonomous worker logs)
+   - **Final Validation Results (Nov 27, 13:09 UTC):**
+     - **Crash Rate:** ✅ 0% (10/10 runs completed - CRITICAL-1 fix successful)
+     - **Temperature:** ❌ +64.1% error (2.10°C vs 1.28°C actual)
+     - **Population:** ❌ -76.2% error (2.0B vs 8.1B actual)
+     - **Biodiversity:** ❌ -94.7% error (0.03 vs 0.49 actual)
+     - **Quality of Life:** ✅ -10.5% error (within 20% tolerance)
+     - **Determinism (CV):** ❌ 6.7% (target <0.1%, indicates RNG leakage or optional params)
+   - **VERDICT: CONDITIONAL PASS (Stability) / FAIL (Accuracy)**
+     - ✅ Stability achieved: No crashes, simulations complete
+     - ❌ Accuracy failed: 56.9% overall deviation (target <30%)
+   - **Root Cause Analysis:**
+     - Simulation calibrated for CRISIS scenarios, not BASELINE historical periods
+     - Temperature deterministic but overestimates warming (climate sensitivity too high)
+     - Population mortality too aggressive for 1990-2024 (crisis-tuned)
+     - Biodiversity decline rate far exceeds historical (WWF LPI shows -34.7%, sim shows -95%)
+     - Non-determinism (CV=6.7%) suggests optional RNG params or Object.entries() ordering
+   - **Impact on God Mode Analysis:**
+     - ⚠️ God mode results may be INVALID (ran on miscalibrated baseline)
+     - Climate interventions will appear MORE effective than reality
+     - Population dynamics pessimistic (technologies tested on dying population)
+     - Biodiversity recovery appears impossible (starting from near-extinction)
+   - **Report:** `reviews/climate_hindcast_validation_phase10_20251127.md`
+   - **Log:** `logs/hindcast/phase10_post_fix_20251127_130203.log` (118K lines)
 
-**Current Status:** 🟢 **UNBLOCKED - Fixes applied, ready for validation re-run**
+**Current Status:** ✅ **COMPLETE - Stability achieved, accuracy calibration issues identified**
 
 **Completed Phases:**
 1. ✅ **Phase 5 complete:** `historicalEmissionsMode` flag implemented + GCP emissions data active
