@@ -190,7 +190,7 @@ class BenchmarkDatasetGenerator:
             claimed = f"{author} et al. {year}"
         elif difficulty == "hard":
             # Abbreviated, informal citation
-            text = f"{author} {year[-2:]} - {title[:20]}..."
+            text = f"{author} {str(year)[-2:]} - {title[:20]}..."
             claimed = f"{author} {year}"
         else:
             # Medium difficulty
