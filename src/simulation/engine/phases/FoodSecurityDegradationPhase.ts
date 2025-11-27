@@ -60,8 +60,9 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
     // This degradation phase models future AI-era stress that didn't exist then.
     // Skip degradation to allow hindcast validation against actual history.
     // Source: FAO State of Food Insecurity reports (1999-2015) show stable/improving trends
+    // HIGH-7 FIX (Nov 27, 2025): Use historicalMode flag for hindcast calibration
     // ============================================================================
-    if (state.config?.scenarioMode === 'historical' && state.currentYear < 2020) {
+    if (state.config?.historicalMode && state.currentYear < 2020) {
       // Don't degrade food security in historical mode - it was actually stable
       return { events: [] };
     }
