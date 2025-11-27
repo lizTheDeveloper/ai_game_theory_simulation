@@ -32,10 +32,19 @@ useDefault = true
     # Docker and docker-compose files with example credentials
     '''docker-compose.*\.yml$''',
     '''docker-compose.*\.yaml$''',
+    # Test files with mock/fake credentials (not production secrets)
+    '''.*\.test\.ts$''',
+    '''.*\.test\.js$''',
+    '''.*\.spec\.ts$''',
+    '''.*\.spec\.js$''',
+    '''tests/.*''',
+    '''__tests__/.*''',
   ]
   # Allowlist specific commits that contain only test/example credentials
   commits = [
     # Initial MARCUS platform setup with example credentials (not production secrets)
     '''e0c84e73de1c89d1c1e22990dea816772dcaccd5''',
+    # Test file with fake JWT tokens and test secrets (for unit testing auth)
+    '''770c872d111d23620fb29e5ba6b0996d39e28932''',
   ]
   regexTarget = "match"
