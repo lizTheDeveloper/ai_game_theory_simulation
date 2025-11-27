@@ -30,7 +30,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 **CRITICAL VALIDATION FAILURES (Must resolve before new features):**
 - **C-3:** Hindcast CO2 validation failing 7 phases (14% error vs 5% threshold)
 - **C-4:** Hindcast population validation failing (33% error vs 10% threshold)
-- **C-5:** Cascade mortality unbounded (1.05^N exponential growth physically impossible)
+- ~~**C-5:** Cascade mortality unbounded~~ ✅ **RESOLVED** (Nov 27, commit 5e4e407 - logistic saturation)
 
 **HIGH PRIORITY ISSUES:**
 - **H-3:** Extinction debt unmodeled (200+ papers document lag effects)
@@ -42,6 +42,19 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 27: C-5 CRITICAL Fix - Cascade Mortality Logistic Saturation** (commit 5e4e407)
+- **CRITICAL BUG FIXED:** Cascade mortality used unbounded exponential growth (1.05^N) producing physically impossible multipliers
+  - Month 144: 108× → 8.6×
+  - Month 192: 1,125× → 9.9×
+  - Month 288: 121,740× → 10.0× (capped)
+- **Research:** Armstrong McKay et al. (2022) shows cascades reach equilibrium, not infinite runaway
+- **Solution:** Logistic growth formula: `10 / (1 + exp(-0.05 * (months - 60)))`
+  - S-curve with midpoint at month 60
+  - Maximum multiplier: 10× (research-backed saturation)
+- **Validation:** TypeScript clean, tests pass, validation script confirms saturation
+- 📄 **Files:** `planetaryBoundaries.ts:1427-1456`, `scripts/validateCascadeGrowth.ts`
+- 📄 **Review:** `reviews/C5_cascade_mortality_fix_20251127.md`
+
 **Nov 26: Worker Session 5 - VALIDATION CRISIS Identified** (commit 034ae10)
 - ⚠️ **Research Debate (Sylvia):** Systematic critique revealed fundamental methodological concerns
 - **Completions Verified:**
@@ -52,7 +65,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - Hindcast validation failing after 7 phases (CO2 14% error, population 33% error)
   - Citation misrepresentation pattern: Lenton 2019 cited for "stability" actually warns of "cascading tipping points"
   - 100% dystopia outcomes scientifically unfalsifiable without diverse starting conditions
-  - Cascade mortality unbounded (1.05^N exponential physically impossible)
+  - ~~Cascade mortality unbounded (1.05^N exponential physically impossible)~~ ✅ Fixed Nov 27
 - **Priority Elevation:** 3 NEW CRITICAL + 4 NEW HIGH validation priorities
 - **Status Change:** EXCELLENT → VALIDATION CRISIS
 - 📄 **Session Archive:** `plans/completed/worker_session_5_complete_20251126.md`
