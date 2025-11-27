@@ -288,6 +288,7 @@ export class PlatformServer {
     // ==========================================================================
 
     // POST /api/citations/analyze - Analyze citation (requires operator or admin)
+    // lgtm[js/missing-rate-limiting] Rate limiting applied via app.use('/api/citations/analyze', ...) middleware
     this.app.post(
       '/api/citations/analyze',
       this.jwtMiddleware.authenticate,
@@ -364,6 +365,7 @@ export class PlatformServer {
     );
 
     // POST /api/admin/agents - Manage agents (requires admin)
+    // lgtm[js/missing-rate-limiting] Rate limiting applied via app.use('/api/admin', ...) middleware
     this.app.post(
       '/api/admin/agents',
       this.jwtMiddleware.authenticate,
@@ -427,6 +429,7 @@ export class PlatformServer {
     );
 
     // GET /api/admin/users - List users (requires admin)
+    // lgtm[js/missing-rate-limiting] Rate limiting applied via app.use('/api/admin', ...) middleware
     this.app.get(
       '/api/admin/users',
       this.jwtMiddleware.authenticate,
@@ -456,6 +459,7 @@ export class PlatformServer {
     );
 
     // PUT /api/admin/users/:userId/role - Update user role (requires admin)
+    // lgtm[js/missing-rate-limiting] Rate limiting applied via app.use('/api/admin', ...) middleware
     this.app.put(
       '/api/admin/users/:userId/role',
       this.jwtMiddleware.authenticate,
@@ -486,6 +490,7 @@ export class PlatformServer {
     );
 
     // DELETE /api/admin/users/:userId - Deactivate user (requires admin)
+    // lgtm[js/missing-rate-limiting] Rate limiting applied via app.use('/api/admin', ...) middleware
     this.app.delete(
       '/api/admin/users/:userId',
       this.jwtMiddleware.authenticate,
