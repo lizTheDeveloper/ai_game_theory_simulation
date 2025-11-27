@@ -1,16 +1,26 @@
 # Master Implementation Roadmap
 ## AI Alignment Game Theory Simulation - Project Hub
 
-**Date:** November 26, 2025 (End-of-Session Gardening - Architect)
+**Date:** November 27, 2025 (historian auto-update)
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**Current Status:** 🟡 **CAUTION** (Nov 26, 2025 - Post-Autonomous-Worker Assessment)
-- **Research Quality:** B (78%) - CRITICAL citation failure discovered (climate stability self-limiting claims unsupported)
+**Current Status:** 🟡 **CAUTION** (Nov 27, 2025 - Post-Autonomous-Worker Assessment)
+- **Research Quality:** C+ (downgraded) - CRITICAL citation failure CONFIRMED by 2024-2025 literature review (0% support for 5% stability floor)
 - **Architecture Health:** A- (Worker Session 2 review - 0 CRITICAL, 0 HIGH issues, 1 MEDIUM remaining)
 - **System Performance:** Monte Carlo deterministic, indices operational (98% op reduction)
 - **System Trajectory:** ⚠️ **BLOCKED** - 1 CRITICAL blocker (hindcast validation failing), 1 HIGH blocker (carbon cycle over-calibration), 1 RESEARCH-CRITICAL (citation integrity)
 - **Roadmap Coherence:** NEEDS UPDATE - Autonomous worker identified 3 new blocking issues overnight
+- **Recent Work (Nov 27 - Autonomous Researcher):**
+  - ❌ **Climate Stability 2024-2025 Literature Review - CONTRADICTS STABILITY FLOOR**
+    - 6 peer-reviewed papers reviewed (2024-2025)
+    - 0/6 support 5% stability floor, 5/6 contradict
+    - Wunderling et al. (2024, ESD): "Many tipping interactions are **destabilizing**"
+    - State of Climate 2025 (BioScience): Warming "possibly accelerating", planet "on the brink"
+    - **Grade:** D- (0% support, 83% contradict) - downgraded from D
+    - Report: `research/climate_stability_mechanisms_2024_2025_update.md` (336 lines)
+    - Report: `research/ROADMAP_RESEARCH_STATUS_20251127.md` (260 lines)
+    - **Status:** RESEARCH-CRITICAL - 5% stability floor must be documented as "IMPLEMENTATION CHOICE"
 - **Recent Work (Nov 26 Late Night - Autonomous Worker Session 3 - CRITICAL FAILURES):**
   - ❌ **Hindcast Validation Phase 10 - FAILED** - 30% crash rate, environmentalHealth NaN
     - 3 of 10 runs crashed at months 142-146 (2002)
@@ -27,7 +37,7 @@
     - Armstrong McKay 2022: Claims "not complete destabilization" but paper warns of "cascading effects"
     - Steffen 2015: Claims "Earth remains habitable" but paper warns of "destabilizing Holocene state"
     - Report: `research/climate_stability_self_limiting_critique_20251126.md`
-    - **Status:** RESEARCH-CRITICAL - 5% stability floor NOT supported by research
+    - **Status:** RESEARCH-CRITICAL - 5% stability floor NOT supported by research (confirmed Nov 27)
 - **Recent Work (Nov 26 Evening - Worker Session 2):**
   - ✅ **Carbon Sink Calibration (Phases 8-9) COMPLETE** - 1990 baseline + temporal evolution
     - Phase 8: Correct 1990 carbon sink values (land 2.6 GtC/yr, ocean 2.2 GtC/yr)
@@ -183,23 +193,28 @@
 - **Dependencies:** Blocks Phase 10 hindcast completion, blocks research validation milestone
 - **Report:** `reviews/climate_hindcast_validation_phase7_20251126.md` (Phase 7 - older report, Phase 10 report not yet created)
 
-**RESEARCH-CRITICAL: Climate Stability Self-Limiting Citations FAILED** ❌ INTEGRITY ISSUE (Nov 26, 2025)
+**RESEARCH-CRITICAL: Climate Stability Self-Limiting Citations FAILED** ❌ INTEGRITY ISSUE (Nov 26-27, 2025)
 - **Status:** ❌ RESEARCH INTEGRITY FAILURE - 3 of 5 citations contradict simulation claims
 - **Discovery:** Nov 26, 2025 late night - Autonomous researcher verification (Layer 2)
+- **Follow-up Research (Nov 27):** 2024-2025 literature review - **CONTRADICT stability floor claims**
 - **Problem:** Simulation claims "self-limiting feedbacks preserve 5% stability floor" but research says opposite
   - **Lenton 2019:** Code claims "self-limiting feedbacks" → Paper warns of "planetary emergency" and cascading tipping points
   - **Armstrong McKay 2022:** Code claims "not complete destabilization" → Paper warns of "amplifying destabilization"
   - **Steffen 2015:** Code claims "Earth remains habitable after boundary transgression" → Paper warns of "substantial risk of destabilizing Holocene state"
   - **Pattern:** Cherry-picking papers that warn about risks to support claims about stability
+- **2024-2025 Research Verdict (Grade D-):** 0/6 papers support stability floor, 5/6 contradict
+  - Wunderling et al. (2024, ESD): "Many tipping interactions are destabilizing"
+  - State of Climate 2025 (BioScience): Warming "possibly accelerating", planet "on the brink"
+  - Planck feedback is real but continuous (NOT a "floor" mechanism after tipping cascades)
 - **Files Affected:** `src/simulation/engine/phases/ClimateSystemPhase.ts` (lines 407-459)
-- **Solution Options:**
-  - Option A: Remove citations, document as "implementation choice for tractability"
-  - Option B: Find research actually supporting self-limiting mechanisms (if it exists)
-  - Option C: Remove 5% stability floor entirely (return to research-backed destabilization)
-- **Assignee:** super-alignment-researcher (Cynthia) + research-skeptic (Sylvia)
-- **Effort:** 4-8 hours (research + architecture decision)
+- **Solution:** Option A RECOMMENDED - Remove citations, document as "IMPLEMENTATION CHOICE for tractability"
+- **Assignee:** simulation-maintainer (Roy) + research-skeptic (Sylvia)
+- **Effort:** 4-8 hours (code documentation + architecture decision)
 - **Priority:** RESEARCH-CRITICAL - undermines "research-backed realism" philosophy
-- **Report:** `research/climate_stability_self_limiting_critique_20251126.md` (380 lines, detailed verification)
+- **Reports:**
+  - `research/climate_stability_self_limiting_critique_20251126.md` (380 lines, initial discovery)
+  - `research/climate_stability_mechanisms_2024_2025_update.md` (336 lines, Nov 27 literature review)
+  - `research/ROADMAP_RESEARCH_STATUS_20251127.md` (260 lines, status summary)
 
 **C-1: AI Coordination Failure Probability FABRICATION** ✅ RESOLVED (Nov 26, 2025)
 - **Status:** ✅ RESOLVED - Commit bf45de881 (Nov 26, 2025)
