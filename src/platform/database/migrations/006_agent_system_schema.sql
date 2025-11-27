@@ -84,6 +84,12 @@ BEGIN
                    WHERE table_name='citation_analyses' AND column_name='latency_ms') THEN
         ALTER TABLE citation_analyses ADD COLUMN latency_ms INTEGER;
     END IF;
+
+    -- Add timestamp column if missing (used by orchestrator for analysis records)
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns
+                   WHERE table_name='citation_analyses' AND column_name='timestamp') THEN
+        ALTER TABLE citation_analyses ADD COLUMN timestamp TIMESTAMP NOT NULL DEFAULT NOW();
+    END IF;
 END $$;
 
 -- Add constraints to new columns
@@ -125,6 +131,7 @@ CREATE INDEX IF NOT EXISTS idx_citation_analyses_mean_integrity ON citation_anal
 CREATE INDEX IF NOT EXISTS idx_citation_analyses_consensus ON citation_analyses(consensus);
 CREATE INDEX IF NOT EXISTS idx_citation_analyses_num_agents ON citation_analyses(num_agents);
 CREATE INDEX IF NOT EXISTS idx_citation_analyses_latency ON citation_analyses(latency_ms);
+CREATE INDEX IF NOT EXISTS idx_citation_analyses_timestamp ON citation_analyses(timestamp DESC);
 
 -- ============================================================================
 -- Updated At Trigger for Agent States
