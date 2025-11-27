@@ -978,10 +978,20 @@ export class CitationAgentOrchestrator {
   }
 
   /**
-   * Analyze document using multi-agent consensus with lazy spawning.
+   * Analyze document using multi-agent consensus with AUTO-SCALING.
    *
-   * Spawns agents on-demand as needed, up to the configured maximum.
-   * Uses agent pool for efficient resource utilization in CI environments.
+   * TRUE AUTO-SCALING ARCHITECTURE:
+   * - Pool starts empty (0 agents)
+   * - Each call scales pool UP by 1 agent until reaching numAgents
+   * - Uses ALL currently available agents for consensus
+   * - Gradual ramp-up prevents connection storms in CI
+   *
+   * Scale-up pattern:
+   * - Call 1: spawn agent_000, use 1 agent
+   * - Call 2: spawn agent_001, use 2 agents
+   * - Call 3: spawn agent_002, use 3 agents
+   * - ... until numAgents reached
+   * - Call N: reuse all agents, no new spawns
    *
    * @param document Document to analyze
    * @returns Aggregated analysis with consensus metrics
@@ -993,35 +1003,15 @@ export class CitationAgentOrchestrator {
 
     const startTime = Date.now();
 
-    // Spawn agents on-demand up to numAgents (sequentially with delay)
-    // This prevents connection exhaustion in CI environments
-    const targetAgentCount = this.config.numAgents;
-    const spawnPromises: Promise<void>[] = [];
-
-    for (let i = this.agents.size; i < targetAgentCount; i++) {
-      // Sequential spawning with 500ms delay between agents
-      spawnPromises.push(
-        (async () => {
-          if (i > 0) {
-            await new Promise(resolve => setTimeout(resolve, i * 500));
-          }
-          try {
-            await this.spawnAgent();
-          } catch (err) {
-            console.error(`Failed to spawn agent: ${err}`);
-          }
-        })()
-      );
-    }
-
-    // Wait for all agents to spawn (with timeout)
-    if (spawnPromises.length > 0) {
-      console.log(`🔄 Spawning ${spawnPromises.length} agents on-demand...`);
-      await Promise.race([
-        Promise.all(spawnPromises),
-        new Promise(resolve => setTimeout(resolve, (targetAgentCount + 1) * 500 + 5000)) // Generous timeout
-      ]);
-      console.log(`✅ Agent pool ready: ${this.agents.size}/${targetAgentCount} agents`);
+    // AUTO-SCALE: Spawn ONE more agent if below capacity
+    // This gradually ramps up the pool over multiple calls
+    if (this.agents.size < this.config.numAgents) {
+      try {
+        await this.spawnAgent();
+      } catch (err) {
+        console.error(`Failed to spawn agent: ${err}`);
+        // Continue with existing agents if spawn fails
+      }
     }
 
     // Get all healthy agents for analysis
