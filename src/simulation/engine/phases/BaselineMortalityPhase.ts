@@ -492,6 +492,20 @@ export class BaselineMortalityPhase implements SimulationPhase {
   readonly order = 34.8; // Before BayesianMortalityResolutionPhase (35.0)
 
   execute(state: GameState): { events: any[] } {
+    // CRITICAL FIX (Nov 27, 2025): Disable in historical mode to prevent double-counting
+    // Root cause of C-4 population decline: Regional population system (HumanPopulationPhase,
+    // order 20.52) applies historical CDR-based mortality directly to regional populations.
+    // This phase (order 34.8) then adds ANOTHER baseline mortality risk based on the SAME
+    // historical CDR data, which BayesianMortalityResolution (order 35.0) applies again.
+    // Result: Deaths counted twice → population crashes instead of growing.
+    // Example: 1990 has 54.9M/yr regional deaths + 28.8M/yr Bayesian deaths = 83.7M/yr total
+    // vs expected 49.5M/yr (9.3/1000 CDR). Deaths are 69% too high!
+    // Solution: In historical mode (pre-2000), skip Bayesian baseline mortality entirely.
+    // The regional population system handles ALL mortality with historical CDR scaling.
+    if (state.config.scenarioMode === 'historical' && state.currentYear < 2000) {
+      return { events: [] };
+    }
+
     const pop = assertDefined(state.humanPopulationSystem, {
       location: 'BaselineMortalityPhase.execute',
       valueName: 'state.humanPopulationSystem',
