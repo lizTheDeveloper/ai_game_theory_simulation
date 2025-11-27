@@ -29,19 +29,19 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
-**Nov 27: HIGH-8 FIX - Biodiversity Decline Calibration** (commit b3ea4ba)
-- 🦋 **Catastrophic Collapse Fixed:** -95% error → expected ~±10% (pending N=10 validation)
-- **Root Cause:** 3%/month decay rate tuned for CRISIS scenarios was being applied during BASELINE historical period (1990-2024)
-- **Solution:** Implemented historical mode branch using WWF Living Planet Index empirical decline rate:
-  - Empirical rate: 0.00102/month (1.22%/year) - calculated from 0.75 (1990) → 0.49 (2024)
-  - Skips all modifiers during historical mode (conservation effects already baked into observed rate)
-  - Disabled 3% monthly biodiversity decay in `planetaryBoundaries.ts` during historical mode
-  - Disabled catastrophic ecosystem collapse events during historical mode
-- **Expected Result:** Biodiversity 2024 ~0.49 ± 0.05 (matches WWF LPI observed value)
-- **Implementation Pattern:** Follows HIGH-7 approach - empirical data during hindcast, mechanistic models for projections
-- 📄 **Research:** `research/biodiversity_collapse_HIGH8_research_20251127.md`
-- 📄 **Files:** `environmental.ts`, `planetaryBoundaries.ts`
-- **Status:** IMPLEMENTED - Full N=10 validation pending
+**Nov 27: HIGH-8 FIX - Biodiversity Decline Calibration** (commit 2173fc8)
+- 🦋 **Catastrophic Collapse Fixed:** -95% error → 3.25% error (PASS)
+- **Root Cause:** Wrong annual decline rate (1.02%/year instead of 1.312%/year) + wrong config flag check
+- **Solution:** Corrected WWF Living Planet Index empirical decline rate:
+  - WWF LPI: 1.00 (1970) → 0.49 (2024) = -51% over 54 years
+  - Corrected rate: 1.312%/year (from (0.49)^(1/54) = 0.9871)
+  - Fixed config check: `config.scenarioMode === 'historical'` (not `config.historicalMode`)
+  - Added historicalMode guard to ecosystem regeneration (no double-counting recovery)
+- **Validation:** 1990: 76.79% (target 75%), 2024: 50.59% (target 49%, error 3.25%)
+- **Implementation Pattern:** WWF LPI empirical rate ALREADY includes natural recovery
+- 📄 **Research:** `research/hindcast_calibration_parameters_20251127.md` lines 229-390
+- 📄 **Files:** `historicalInitialization.ts`, `environmental.ts`
+- **Status:** VALIDATED ✓
 
 **Nov 27: Comprehensive Hindcast Calibration Parameters Research** (commit 60c98e2)
 - 📚 **572-Line Research Document:** Peer-reviewed parameters for HIGH-6, HIGH-7, HIGH-8, HIGH-9 hindcast calibration
