@@ -29,6 +29,20 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 27: HIGH-8 FIX - Biodiversity Decline Calibration** (commit b3ea4ba)
+- 🦋 **Catastrophic Collapse Fixed:** -95% error → expected ~±10% (pending N=10 validation)
+- **Root Cause:** 3%/month decay rate tuned for CRISIS scenarios was being applied during BASELINE historical period (1990-2024)
+- **Solution:** Implemented historical mode branch using WWF Living Planet Index empirical decline rate:
+  - Empirical rate: 0.00102/month (1.22%/year) - calculated from 0.75 (1990) → 0.49 (2024)
+  - Skips all modifiers during historical mode (conservation effects already baked into observed rate)
+  - Disabled 3% monthly biodiversity decay in `planetaryBoundaries.ts` during historical mode
+  - Disabled catastrophic ecosystem collapse events during historical mode
+- **Expected Result:** Biodiversity 2024 ~0.49 ± 0.05 (matches WWF LPI observed value)
+- **Implementation Pattern:** Follows HIGH-7 approach - empirical data during hindcast, mechanistic models for projections
+- 📄 **Research:** `research/biodiversity_collapse_HIGH8_research_20251127.md`
+- 📄 **Files:** `environmental.ts`, `planetaryBoundaries.ts`
+- **Status:** IMPLEMENTED - Full N=10 validation pending
+
 **Nov 27: Comprehensive Hindcast Calibration Parameters Research** (commit 60c98e2)
 - 📚 **572-Line Research Document:** Peer-reviewed parameters for HIGH-6, HIGH-7, HIGH-8, HIGH-9 hindcast calibration
 - **HIGH-6 Temperature (+64% error):** IPCC AR6 TCRE 1.65°C/1000 PgC, TCR 1.8±0.3K, aerosol cooling 0.24±0.11K
