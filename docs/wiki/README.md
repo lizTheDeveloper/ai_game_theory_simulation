@@ -8451,10 +8451,13 @@ All major AI labs (OpenAI, Anthropic, Meta, DeepMind) go bankrupt months 70-120 
 
 Models how beliefs, narratives, and ideologies spread through society in response to AI development.
 
-**Research Foundation** (TRL 6-7 - HIGHLY MATURE):
+**Research Foundation** (TRL 6-7 - HIGHLY MATURE, updated Nov 27 2025):
 - Expert Systems with Applications (2024): Multi-agent opinion dynamics
 - npj Complexity (2024): Affective polarization and information spread
 - Physical Review Research (2025): Social network depolarization mechanisms
+- PNAS (2025): Community Notes reduce reposts 46% immediately (Pennycook et al., DOI: 10.1073/pnas.2503413122)
+- PNAS (2025): Network clustering dynamics from 7.45B user study (Wang et al., DOI: 10.1073/pnas.2410227122)
+- Scientific Reports (2025): Climate misinformation engagement asymmetries (Storani et al.)
 - Scientific Reports (2021): Entropy and meme evolution
 - Duncan Watts (UPenn), Cristian Candia (Northwestern), Marten Scheffer (Wageningen)
 
