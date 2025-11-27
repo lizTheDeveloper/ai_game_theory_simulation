@@ -169,6 +169,13 @@ jobs:
           DATABASE_PASSWORD: ${{ secrets.PROD_DATABASE_PASSWORD || 'benchmark_pass' }}
           POSTGRES_USER: ${{ secrets.PROD_DATABASE_USER || 'benchmark_user' }}
           POSTGRES_PASSWORD: ${{ secrets.PROD_DATABASE_PASSWORD || 'benchmark_pass' }}
+          # POSTGRES_DB is what our TypeScript code reads for database name
+          POSTGRES_DB: ${{ secrets.PROD_DATABASE_NAME || 'benchmark_db' }}
+          PGDATABASE: ${{ secrets.PROD_DATABASE_NAME || 'benchmark_db' }}
+          PGHOST: ${{ secrets.PROD_DATABASE_HOST || 'localhost' }}
+          PGPORT: ${{ secrets.PROD_DATABASE_PORT || '5432' }}
+          PGUSER: ${{ secrets.PROD_DATABASE_USER || 'benchmark_user' }}
+          PGPASSWORD: ${{ secrets.PROD_DATABASE_PASSWORD || 'benchmark_pass' }}
         run: |
           echo "Running TypeScript benchmarks..."
           # Log which credentials are being used
