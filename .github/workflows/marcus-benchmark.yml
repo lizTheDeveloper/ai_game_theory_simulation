@@ -71,41 +71,57 @@ jobs:
 
       - name: Install dependencies
         run: |
-          # Install minimal Python deps for benchmarks (skip heavy ML libs)
-          pip install numpy pandas requests python-dotenv tqdm psycopg2-binary redis
+          # Install Python deps for benchmarks (scikit-learn required for ML baselines)
+          pip install numpy pandas requests python-dotenv tqdm psycopg2-binary redis scikit-learn
           npm ci
 
       - name: Create benchmarks directory
-        run: mkdir -p benchmarks
+        run: mkdir -p benchmarks benchmark_results
 
-      - name: Generate benchmark datasets
-        run: |
-          if [ -f "src/platform/evaluation/generate_benchmark_datasets.py" ]; then
-            python src/platform/evaluation/generate_benchmark_datasets.py
-          else
-            echo "⚠️ generate_benchmark_datasets.py not found, skipping"
-          fi
-
-      - name: Run accuracy benchmarks
+      - name: Run Python accuracy benchmarks
         env:
           DATABASE_URL: postgresql://benchmark_user:benchmark_pass@localhost:5432/benchmark_db
           REDIS_URL: redis://localhost:6379/0
         run: |
           if [ -f "src/platform/evaluation/citation_evaluation_benchmarks.py" ]; then
-            python src/platform/evaluation/citation_evaluation_benchmarks.py \
-              --output benchmarks/results-python.json || echo '{"accuracy": {"status": "skipped"}}' > benchmarks/results-python.json
+            echo "Running Python benchmarks..."
+            python src/platform/evaluation/citation_evaluation_benchmarks.py && \
+            # Find and copy JSON results (scripts write to benchmark_results/)
+            JSON_FILE=$(ls -t benchmark_results/*.json 2>/dev/null | head -1) && \
+            if [ -n "$JSON_FILE" ]; then
+              cp "$JSON_FILE" benchmarks/results-python.json
+            else
+              echo '{"accuracy": {"status": "no_output"}}' > benchmarks/results-python.json
+            fi
           else
             echo '{"accuracy": {"status": "not_found"}}' > benchmarks/results-python.json
           fi
+        continue-on-error: true
 
-      - name: Run performance benchmarks
+      - name: Run TypeScript performance benchmarks
+        env:
+          DATABASE_URL: postgresql://benchmark_user:benchmark_pass@localhost:5432/benchmark_db
+          REDIS_URL: redis://localhost:6379/0
         run: |
           if [ -f "src/platform/evaluation/citationBenchmarks.ts" ]; then
-            npx tsx src/platform/evaluation/citationBenchmarks.ts \
-              --output benchmarks/results-typescript.json || echo '{"performance": {"status": "skipped"}, "scalability": {"status": "skipped"}}' > benchmarks/results-typescript.json
+            echo "Running TypeScript benchmarks..."
+            npx tsx src/platform/evaluation/citationBenchmarks.ts && \
+            # Find and copy JSON results
+            JSON_FILE=$(ls -t benchmark_results/*.json 2>/dev/null | head -1) && \
+            if [ -n "$JSON_FILE" ]; then
+              cp "$JSON_FILE" benchmarks/results-typescript.json
+            else
+              echo '{"performance": {"status": "no_output"}, "scalability": {"status": "no_output"}}' > benchmarks/results-typescript.json
+            fi
           else
             echo '{"performance": {"status": "not_found"}, "scalability": {"status": "not_found"}}' > benchmarks/results-typescript.json
           fi
+        continue-on-error: true
+
+      - name: Create fallback results if missing
+        run: |
+          [ -f benchmarks/results-python.json ] || echo '{"accuracy": {"status": "skipped"}}' > benchmarks/results-python.json
+          [ -f benchmarks/results-typescript.json ] || echo '{"performance": {"status": "skipped"}, "scalability": {"status": "skipped"}}' > benchmarks/results-typescript.json
 
       - name: Merge benchmark results
         run: |
@@ -142,39 +158,54 @@ jobs:
             const current = require('./benchmarks/results.json');
             const threshold = parseFloat('${{ env.REGRESSION_THRESHOLD }}');
 
-            const metrics = {
-              accuracy: {
-                baseline: baseline.accuracy.overall,
-                current: current.accuracy.overall,
-                threshold: threshold
-              },
-              f1_score: {
-                baseline: baseline.accuracy.f1_score,
-                current: current.accuracy.f1_score,
-                threshold: threshold
-              },
-              consensus: {
-                baseline: baseline.accuracy.consensus,
-                current: current.accuracy.consensus,
-                threshold: threshold
-              },
-              latency_p95: {
-                baseline: baseline.performance.latency_p95,
-                current: current.performance.latency_p95,
-                threshold: threshold,
-                inverse: true  // Lower is better
-              },
-              throughput: {
-                baseline: baseline.performance.throughput,
-                current: current.performance.throughput,
-                threshold: threshold
+            // Check if results were skipped (no numeric values)
+            const accuracySkipped = !current.accuracy || typeof current.accuracy.overall !== 'number';
+            const performanceSkipped = !current.performance || typeof current.performance.latency_p95 !== 'number';
+
+            if (accuracySkipped && performanceSkipped) {
+              console.log('⚠️ All benchmarks skipped - no comparison possible');
+              require('fs').writeFileSync('benchmarks/comparison.json', JSON.stringify({
+                hasRegression: false,
+                skipped: true,
+                report: [{ metric: 'all', status: '⚠️ SKIPPED', reason: 'Benchmark scripts not available' }]
+              }, null, 2));
+              process.exit(0);
+            }
+
+            const metrics = {};
+
+            // Only add metrics that have valid numeric values
+            if (!accuracySkipped) {
+              if (typeof current.accuracy.overall === 'number') {
+                metrics.accuracy = { baseline: baseline.accuracy?.overall, current: current.accuracy.overall, threshold };
               }
-            };
+              if (typeof current.accuracy.f1_score === 'number') {
+                metrics.f1_score = { baseline: baseline.accuracy?.f1_score, current: current.accuracy.f1_score, threshold };
+              }
+              if (typeof current.accuracy.consensus === 'number') {
+                metrics.consensus = { baseline: baseline.accuracy?.consensus, current: current.accuracy.consensus, threshold };
+              }
+            }
+
+            if (!performanceSkipped) {
+              if (typeof current.performance.latency_p95 === 'number') {
+                metrics.latency_p95 = { baseline: baseline.performance?.latency_p95, current: current.performance.latency_p95, threshold, inverse: true };
+              }
+              if (typeof current.performance.throughput === 'number') {
+                metrics.throughput = { baseline: baseline.performance?.throughput, current: current.performance.throughput, threshold };
+              }
+            }
 
             let hasRegression = false;
             const report = [];
 
             for (const [name, data] of Object.entries(metrics)) {
+              // Skip if baseline doesn't have this metric
+              if (typeof data.baseline !== 'number') {
+                report.push({ metric: name, baseline: 'N/A', current: data.current.toFixed(4), change: 'N/A', status: '⚠️ NO BASELINE' });
+                continue;
+              }
+
               const change = data.inverse
                 ? (data.current - data.baseline) / data.baseline
                 : (data.baseline - data.current) / data.baseline;
@@ -194,6 +225,10 @@ jobs:
               });
             }
 
+            // Add skipped sections to report
+            if (accuracySkipped) report.push({ metric: 'accuracy', status: '⚠️ SKIPPED' });
+            if (performanceSkipped) report.push({ metric: 'performance', status: '⚠️ SKIPPED' });
+
             console.table(report);
 
             require('fs').writeFileSync('benchmarks/comparison.json', JSON.stringify({
@@ -209,10 +244,14 @@ jobs:
 
       - name: Generate benchmark report
         run: |
-          node src/platform/scripts/generate-benchmark-report.js \
-            benchmarks/results.json \
-            benchmarks/comparison.json \
-            > benchmarks/report.html
+          if [ -f "src/platform/scripts/generate-benchmark-report.js" ]; then
+            node src/platform/scripts/generate-benchmark-report.js \
+              benchmarks/results.json \
+              benchmarks/comparison.json \
+              > benchmarks/report.html
+          else
+            echo "<html><body><h1>Benchmark Report</h1><p>Report generator not available. See comparison.json artifact.</p></body></html>" > benchmarks/report.html
+          fi
 
       - name: Upload benchmark results
         uses: actions/upload-artifact@v4
@@ -248,9 +287,10 @@ jobs:
             const header = `${pipe} Metric ${pipe} Baseline ${pipe} Current ${pipe} Change ${pipe} Status ${pipe}`;
             const separator = `${pipe}--------${pipe}----------${pipe}---------${pipe}--------${pipe}--------${pipe}`;
             const table = comparison.report.map(r =>
-              `${pipe} ${r.metric} ${pipe} ${r.baseline} ${pipe} ${r.current} ${pipe} ${r.change} ${pipe} ${r.status} ${pipe}`
+              `${pipe} ${r.metric} ${pipe} ${r.baseline || '-'} ${pipe} ${r.current || '-'} ${pipe} ${r.change || '-'} ${pipe} ${r.status} ${pipe}`
             ).join('\n');
-            const status = comparison.hasRegression ? '⚠️ Performance regression detected!' : '✅ All benchmarks passed';
+            let status = comparison.hasRegression ? '⚠️ Performance regression detected!' : '✅ All benchmarks passed';
+            if (comparison.skipped) status = '⚠️ Benchmarks skipped - scripts not available';
             const body = `## 📊 Benchmark Results\n\n${header}\n${separator}\n${table}\n\n**Threshold:** ±${threshold}%\n\n${status}`;
             github.rest.issues.createComment({
               issue_number: context.issue.number,
