@@ -6265,7 +6265,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 462,
+    "line": 447,
     "type": "property",
     "name": "tier2InterventionParameters",
     "currentDoc": "(none)",
@@ -6273,75 +6273,11 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 544,
+    "line": 557,
     "type": "property",
     "name": "ecosystemCollapse",
     "currentDoc": "(none)",
     "context": "ecosystemCollapse?: {"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 545,
-    "type": "property",
-    "name": "triggered",
-    "currentDoc": "(none)",
-    "context": "triggered: boolean;"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 546,
-    "type": "property",
-    "name": "triggeredAt",
-    "currentDoc": "(none)",
-    "context": "triggeredAt: number;"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 547,
-    "type": "property",
-    "name": "monthsSinceTrigger",
-    "currentDoc": "(none)",
-    "context": "monthsSinceTrigger: number;"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 548,
-    "type": "property",
-    "name": "phase",
-    "currentDoc": "(none)",
-    "context": "phase: 'declining' | 'crisis' | 'collapse';"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 554,
-    "type": "property",
-    "name": "specificTippingPoints",
-    "currentDoc": "(none)",
-    "context": "specificTippingPoints?: {"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 555,
-    "type": "property",
-    "name": "amazon",
-    "currentDoc": "(none)",
-    "context": "amazon: {"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 556,
-    "type": "property",
-    "name": "deforestation",
-    "currentDoc": "(none)",
-    "context": "deforestation: number;"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 557,
-    "type": "property",
-    "name": "tippingThreshold",
-    "currentDoc": "(none)",
-    "context": "tippingThreshold: number;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
@@ -6363,65 +6299,41 @@
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
     "line": 560,
     "type": "property",
-    "name": "transitionProgress",
+    "name": "monthsSinceTrigger",
     "currentDoc": "(none)",
-    "context": "transitionProgress: number;"
+    "context": "monthsSinceTrigger: number;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
     "line": 561,
     "type": "property",
-    "name": "carbonReleased",
+    "name": "phase",
     "currentDoc": "(none)",
-    "context": "carbonReleased: number;"
+    "context": "phase: 'declining' | 'crisis' | 'collapse';"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 562,
+    "line": 567,
     "type": "property",
-    "name": "regionallyAffected",
+    "name": "specificTippingPoints",
     "currentDoc": "(none)",
-    "context": "regionallyAffected: string[];"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 564,
-    "type": "property",
-    "name": "reversibility",
-    "currentDoc": "(none)",
-    "context": "reversibility?: 'irreversible' | 'reversible-with-damping';"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 565,
-    "type": "property",
-    "name": "dampingFeedbackStrength",
-    "currentDoc": "(none)",
-    "context": "dampingFeedbackStrength?: number;"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 566,
-    "type": "property",
-    "name": "recoveryTimescale",
-    "currentDoc": "(none)",
-    "context": "recoveryTimescale?: number;"
+    "context": "specificTippingPoints?: {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
     "line": 568,
     "type": "property",
-    "name": "coral",
+    "name": "amazon",
     "currentDoc": "(none)",
-    "context": "coral: {"
+    "context": "amazon: {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
     "line": 569,
     "type": "property",
-    "name": "healthPercentage",
+    "name": "deforestation",
     "currentDoc": "(none)",
-    "context": "healthPercentage: number;"
+    "context": "deforestation: number;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
@@ -6451,17 +6363,17 @@
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
     "line": 573,
     "type": "property",
-    "name": "collapseProgress",
+    "name": "transitionProgress",
     "currentDoc": "(none)",
-    "context": "collapseProgress: number;"
+    "context": "transitionProgress: number;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
     "line": 574,
     "type": "property",
-    "name": "fisheryCollapseLevel",
+    "name": "carbonReleased",
     "currentDoc": "(none)",
-    "context": "fisheryCollapseLevel: number;"
+    "context": "carbonReleased: number;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
@@ -6499,25 +6411,25 @@
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
     "line": 581,
     "type": "property",
-    "name": "pollinators",
+    "name": "coral",
     "currentDoc": "(none)",
-    "context": "pollinators: {"
+    "context": "coral: {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
     "line": 582,
     "type": "property",
-    "name": "populationPercentage",
+    "name": "healthPercentage",
     "currentDoc": "(none)",
-    "context": "populationPercentage: number;"
+    "context": "healthPercentage: number;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
     "line": 583,
     "type": "property",
-    "name": "criticalThreshold",
+    "name": "tippingThreshold",
     "currentDoc": "(none)",
-    "context": "criticalThreshold: number;"
+    "context": "tippingThreshold: number;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
@@ -6539,13 +6451,21 @@
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
     "line": 586,
     "type": "property",
-    "name": "foodProductionLoss",
+    "name": "collapseProgress",
     "currentDoc": "(none)",
-    "context": "foodProductionLoss: number;"
+    "context": "collapseProgress: number;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
     "line": 587,
+    "type": "property",
+    "name": "fisheryCollapseLevel",
+    "currentDoc": "(none)",
+    "context": "fisheryCollapseLevel: number;"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
+    "line": 588,
     "type": "property",
     "name": "regionallyAffected",
     "currentDoc": "(none)",
@@ -6553,7 +6473,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 589,
+    "line": 590,
     "type": "property",
     "name": "reversibility",
     "currentDoc": "(none)",
@@ -6561,39 +6481,47 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
+    "line": 591,
+    "type": "property",
+    "name": "dampingFeedbackStrength",
+    "currentDoc": "(none)",
+    "context": "dampingFeedbackStrength?: number;"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
+    "line": 592,
+    "type": "property",
+    "name": "recoveryTimescale",
+    "currentDoc": "(none)",
+    "context": "recoveryTimescale?: number;"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
     "line": 594,
     "type": "property",
-    "name": "permafrost",
+    "name": "pollinators",
     "currentDoc": "(none)",
-    "context": "permafrost: {"
+    "context": "pollinators: {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
     "line": 595,
     "type": "property",
-    "name": "carbonStored",
+    "name": "populationPercentage",
     "currentDoc": "(none)",
-    "context": "carbonStored: number;"
+    "context": "populationPercentage: number;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
     "line": 596,
     "type": "property",
-    "name": "carbonReleased",
+    "name": "criticalThreshold",
     "currentDoc": "(none)",
-    "context": "carbonReleased: number;"
+    "context": "criticalThreshold: number;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
     "line": 597,
-    "type": "property",
-    "name": "thawRate",
-    "currentDoc": "(none)",
-    "context": "thawRate: number;"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 598,
     "type": "property",
     "name": "triggered",
     "currentDoc": "(none)",
@@ -6601,11 +6529,19 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 599,
+    "line": 598,
     "type": "property",
     "name": "triggeredAt",
     "currentDoc": "(none)",
     "context": "triggeredAt: number;"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
+    "line": 599,
+    "type": "property",
+    "name": "foodProductionLoss",
+    "currentDoc": "(none)",
+    "context": "foodProductionLoss: number;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
@@ -6625,47 +6561,39 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 603,
-    "type": "property",
-    "name": "dampingFeedbackStrength",
-    "currentDoc": "(none)",
-    "context": "dampingFeedbackStrength?: number;"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 604,
-    "type": "property",
-    "name": "recoveryTimescale",
-    "currentDoc": "(none)",
-    "context": "recoveryTimescale?: number;"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 606,
-    "type": "property",
-    "name": "amoc",
-    "currentDoc": "(none)",
-    "context": "amoc: {"
-  },
-  {
-    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
     "line": 607,
     "type": "property",
-    "name": "strength",
+    "name": "permafrost",
     "currentDoc": "(none)",
-    "context": "strength: number;"
+    "context": "permafrost: {"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
     "line": 608,
     "type": "property",
-    "name": "collapseThreshold",
+    "name": "carbonStored",
     "currentDoc": "(none)",
-    "context": "collapseThreshold: number;"
+    "context": "carbonStored: number;"
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
     "line": 609,
+    "type": "property",
+    "name": "carbonReleased",
+    "currentDoc": "(none)",
+    "context": "carbonReleased: number;"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
+    "line": 610,
+    "type": "property",
+    "name": "thawRate",
+    "currentDoc": "(none)",
+    "context": "thawRate: number;"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
+    "line": 611,
     "type": "property",
     "name": "triggered",
     "currentDoc": "(none)",
@@ -6673,7 +6601,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 610,
+    "line": 612,
     "type": "property",
     "name": "triggeredAt",
     "currentDoc": "(none)",
@@ -6681,7 +6609,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 611,
+    "line": 613,
     "type": "property",
     "name": "regionallyAffected",
     "currentDoc": "(none)",
@@ -6689,7 +6617,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 613,
+    "line": 615,
     "type": "property",
     "name": "reversibility",
     "currentDoc": "(none)",
@@ -6697,7 +6625,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 614,
+    "line": 616,
     "type": "property",
     "name": "dampingFeedbackStrength",
     "currentDoc": "(none)",
@@ -6705,7 +6633,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 615,
+    "line": 617,
     "type": "property",
     "name": "recoveryTimescale",
     "currentDoc": "(none)",
@@ -6713,7 +6641,79 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
+    "line": 619,
+    "type": "property",
+    "name": "amoc",
+    "currentDoc": "(none)",
+    "context": "amoc: {"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
+    "line": 620,
+    "type": "property",
+    "name": "strength",
+    "currentDoc": "(none)",
+    "context": "strength: number;"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
+    "line": 621,
+    "type": "property",
+    "name": "collapseThreshold",
+    "currentDoc": "(none)",
+    "context": "collapseThreshold: number;"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
     "line": 622,
+    "type": "property",
+    "name": "triggered",
+    "currentDoc": "(none)",
+    "context": "triggered: boolean;"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
+    "line": 623,
+    "type": "property",
+    "name": "triggeredAt",
+    "currentDoc": "(none)",
+    "context": "triggeredAt: number;"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
+    "line": 624,
+    "type": "property",
+    "name": "regionallyAffected",
+    "currentDoc": "(none)",
+    "context": "regionallyAffected: string[];"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
+    "line": 626,
+    "type": "property",
+    "name": "reversibility",
+    "currentDoc": "(none)",
+    "context": "reversibility?: 'irreversible' | 'reversible-with-damping';"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
+    "line": 627,
+    "type": "property",
+    "name": "dampingFeedbackStrength",
+    "currentDoc": "(none)",
+    "context": "dampingFeedbackStrength?: number;"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
+    "line": 628,
+    "type": "property",
+    "name": "recoveryTimescale",
+    "currentDoc": "(none)",
+    "context": "recoveryTimescale?: number;"
+  },
+  {
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
+    "line": 635,
     "type": "property",
     "name": "psychologicalTrauma",
     "currentDoc": "(none)",
@@ -6721,7 +6721,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 659,
+    "line": 672,
     "type": "property",
     "name": "triggeredEvents",
     "currentDoc": "(none)",
@@ -6729,7 +6729,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 662,
+    "line": 675,
     "type": "property",
     "name": "economicStageHistory",
     "currentDoc": "(none)",
@@ -6737,7 +6737,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 663,
+    "line": 676,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -6745,7 +6745,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 664,
+    "line": 677,
     "type": "property",
     "name": "stage",
     "currentDoc": "(none)",
@@ -6753,7 +6753,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 670,
+    "line": 683,
     "type": "property",
     "name": "currentEconomicStage",
     "currentDoc": "(none)",
@@ -6761,7 +6761,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 672,
+    "line": 685,
     "type": "property",
     "name": "gdp",
     "currentDoc": "(none)",
@@ -6769,7 +6769,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 673,
+    "line": 686,
     "type": "property",
     "name": "qol",
     "currentDoc": "(none)",
@@ -6777,7 +6777,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 674,
+    "line": 687,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -6785,7 +6785,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 690,
+    "line": 703,
     "type": "property",
     "name": "policyInterventions",
     "currentDoc": "(none)",
@@ -6793,7 +6793,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 697,
+    "line": 710,
     "type": "property",
     "name": "policies",
     "currentDoc": "(none)",
@@ -6801,7 +6801,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 698,
+    "line": 711,
     "type": "property",
     "name": "aiEducationCampaigns",
     "currentDoc": "(none)",
@@ -6809,7 +6809,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 808,
+    "line": 821,
     "type": "property",
     "name": "gamingDetection",
     "currentDoc": "(none)",
@@ -6817,7 +6817,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 815,
+    "line": 828,
     "type": "property",
     "name": "proactiveSleeperDetection",
     "currentDoc": "(none)",
@@ -6825,7 +6825,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 827,
+    "line": 840,
     "type": "property",
     "name": "config",
     "currentDoc": "(none)",
@@ -6833,7 +6833,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 921,
+    "line": 934,
     "type": "property",
     "name": "regionalCapacity",
     "currentDoc": "(none)",
@@ -6841,7 +6841,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 929,
+    "line": 942,
     "type": "property",
     "name": "supportSystems",
     "currentDoc": "(none)",
@@ -6849,7 +6849,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 946,
+    "line": 959,
     "type": "property",
     "name": "transitionMortality",
     "currentDoc": "(none)",
@@ -6857,7 +6857,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 949,
+    "line": 962,
     "type": "property",
     "name": "mortalityByMechanism",
     "currentDoc": "(none)",
@@ -6865,7 +6865,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 959,
+    "line": 972,
     "type": "property",
     "name": "deploymentEvents",
     "currentDoc": "(none)",
@@ -6873,7 +6873,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 960,
+    "line": 973,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -6881,7 +6881,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 961,
+    "line": 974,
     "type": "property",
     "name": "techId",
     "currentDoc": "(none)",
@@ -6889,7 +6889,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 979,
+    "line": 992,
     "type": "property",
     "name": "unifiedOutcome",
     "currentDoc": "(none)",
@@ -6897,7 +6897,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 982,
+    "line": 995,
     "type": "property",
     "name": "crises",
     "currentDoc": "(none)",
@@ -6905,7 +6905,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 983,
+    "line": 996,
     "type": "property",
     "name": "megaPandemic",
     "currentDoc": "(none)",
@@ -6913,7 +6913,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 984,
+    "line": 997,
     "type": "property",
     "name": "active",
     "currentDoc": "(none)",
@@ -6921,7 +6921,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 985,
+    "line": 998,
     "type": "property",
     "name": "startMonth",
     "currentDoc": "(none)",
@@ -6929,7 +6929,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 986,
+    "line": 999,
     "type": "property",
     "name": "totalMortality",
     "currentDoc": "(none)",
@@ -6937,7 +6937,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 987,
+    "line": 1000,
     "type": "property",
     "name": "monthlyMortality",
     "currentDoc": "(none)",
@@ -6945,7 +6945,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 988,
+    "line": 1001,
     "type": "property",
     "name": "socialDisruption",
     "currentDoc": "(none)",
@@ -6953,7 +6953,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 993,
+    "line": 1006,
     "type": "property",
     "name": "catastrophe",
     "currentDoc": "(none)",
@@ -6961,7 +6961,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 1003,
+    "line": 1016,
     "type": "property",
     "name": "history",
     "currentDoc": "(none)",
@@ -6969,7 +6969,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 1004,
+    "line": 1017,
     "type": "property",
     "name": "qualityOfLife",
     "currentDoc": "(none)",
@@ -6977,7 +6977,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 1005,
+    "line": 1018,
     "type": "property",
     "name": "outcomeProbs",
     "currentDoc": "(none)",
@@ -6985,7 +6985,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 1006,
+    "line": 1019,
     "type": "property",
     "name": "controlCapability",
     "currentDoc": "(none)",
@@ -6993,7 +6993,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 1008,
+    "line": 1021,
     "type": "property",
     "name": "metrics",
     "currentDoc": "(none)",
@@ -7001,7 +7001,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 1009,
+    "line": 1022,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -7009,7 +7009,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 1010,
+    "line": 1023,
     "type": "property",
     "name": "unemployment",
     "currentDoc": "(none)",
@@ -7017,7 +7017,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 1011,
+    "line": 1024,
     "type": "property",
     "name": "socialAdaptation",
     "currentDoc": "(none)",
@@ -7025,7 +7025,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 1012,
+    "line": 1025,
     "type": "property",
     "name": "trustInAI",
     "currentDoc": "(none)",
@@ -7033,7 +7033,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 1013,
+    "line": 1026,
     "type": "property",
     "name": "totalAICapability",
     "currentDoc": "(none)",
@@ -7041,7 +7041,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 1014,
+    "line": 1027,
     "type": "property",
     "name": "avgAIAlignment",
     "currentDoc": "(none)",
@@ -7049,7 +7049,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 1015,
+    "line": 1028,
     "type": "property",
     "name": "effectiveControl",
     "currentDoc": "(none)",
@@ -7057,7 +7057,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 1016,
+    "line": 1029,
     "type": "property",
     "name": "wealthDistribution",
     "currentDoc": "(none)",
@@ -7065,7 +7065,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 1017,
+    "line": 1030,
     "type": "property",
     "name": "socialStability",
     "currentDoc": "(none)",
@@ -7073,7 +7073,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 1018,
+    "line": 1031,
     "type": "property",
     "name": "economicStage",
     "currentDoc": "(none)",
@@ -7081,7 +7081,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 1019,
+    "line": 1032,
     "type": "property",
     "name": "governmentLegitimacy",
     "currentDoc": "(none)",
@@ -7089,7 +7089,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 1020,
+    "line": 1033,
     "type": "property",
     "name": "coordinationCapacity",
     "currentDoc": "(none)",
@@ -7097,7 +7097,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 1023,
+    "line": 1036,
     "type": "property",
     "name": "exogenousShocks",
     "currentDoc": "(none)",
@@ -7105,7 +7105,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 1024,
+    "line": 1037,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -7113,7 +7113,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 1025,
+    "line": 1038,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -7121,7 +7121,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 1026,
+    "line": 1039,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -7129,7 +7129,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 1031,
+    "line": 1044,
     "type": "property",
     "name": "criticalJunctureEscapes",
     "currentDoc": "(none)",
@@ -7137,7 +7137,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 1032,
+    "line": 1045,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -7145,7 +7145,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 1033,
+    "line": 1046,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -7153,7 +7153,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 1034,
+    "line": 1047,
     "type": "property",
     "name": "agencyPotential",
     "currentDoc": "(none)",
@@ -7161,7 +7161,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 1035,
+    "line": 1048,
     "type": "property",
     "name": "crisisSeverity",
     "currentDoc": "(none)",
@@ -7169,7 +7169,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 1039,
+    "line": 1052,
     "type": "property",
     "name": "cooperativeSpirals",
     "currentDoc": "(none)",
@@ -7177,7 +7177,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 1040,
+    "line": 1053,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -7185,7 +7185,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 1041,
+    "line": 1054,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -7193,7 +7193,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 1042,
+    "line": 1055,
     "type": "property",
     "name": "trustBoost",
     "currentDoc": "(none)",
@@ -7201,7 +7201,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 1043,
+    "line": 1056,
     "type": "property",
     "name": "institutionBoost",
     "currentDoc": "(none)",
@@ -7209,7 +7209,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 1044,
+    "line": 1057,
     "type": "property",
     "name": "trigger",
     "currentDoc": "(none)",
@@ -7217,7 +7217,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 1048,
+    "line": 1061,
     "type": "property",
     "name": "cooperativeOwnershipEvents",
     "currentDoc": "(none)",
@@ -7225,7 +7225,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 1049,
+    "line": 1062,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -7233,7 +7233,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 1050,
+    "line": 1063,
     "type": "property",
     "name": "orgId",
     "currentDoc": "(none)",
@@ -7241,7 +7241,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 1051,
+    "line": 1064,
     "type": "property",
     "name": "eventType",
     "currentDoc": "(none)",
@@ -7249,7 +7249,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 1052,
+    "line": 1065,
     "type": "property",
     "name": "details",
     "currentDoc": "(none)",
@@ -7257,7 +7257,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 1053,
+    "line": 1066,
     "type": "property",
     "name": "economicImpact",
     "currentDoc": "(none)",
@@ -7265,7 +7265,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 1071,
+    "line": 1084,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -7273,7 +7273,7 @@
   },
   {
     "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/types/game.ts",
-    "line": 1072,
+    "line": 1085,
     "type": "property",
     "name": "data",
     "currentDoc": "(none)",
