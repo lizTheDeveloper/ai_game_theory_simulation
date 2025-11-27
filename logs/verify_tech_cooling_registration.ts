@@ -4,17 +4,18 @@
  * CRITICAL FIX (Nov 27, 2025): Phase was missing from engine.ts registration
  */
 
-import { SimulationEngine } from '../src/simulation/engine.js';
+import { SimulationEngine, SeededRandom } from '../src/simulation/engine.js';
 import { createDefaultInitialState } from '../src/simulation/initialization.js';
 
 console.log('\n=== TechCoolingPhase Registration Verification ===\n');
 
 // Initialize engine
-const engine = new SimulationEngine();
 const seed = 12345;
+const engine = new SimulationEngine({ seed });
+const rng = new SeededRandom(seed);
 
 // Create initial state
-const initialState = createDefaultInitialState(seed, 'hindcast');
+const initialState = createDefaultInitialState(() => rng.next(), 'historical');
 
 // Set up a scenario where cooling should be applied
 initialState.technologyEffects.coolingFromGeoengineering = 0.5; // 0.5°C cooling
@@ -25,7 +26,7 @@ console.log(`  CO2 Temperature Anomaly: ${initialState.resourceEconomy.co2.tempe
 console.log(`  Geoengineering Cooling: ${initialState.technologyEffects.coolingFromGeoengineering.toFixed(3)}°C`);
 
 // Run one step
-const result = engine.simulateStep(initialState);
+const result = engine.step(initialState);
 
 console.log('\n📊 After Step:');
 console.log(`  CO2 Temperature Anomaly: ${result.state.resourceEconomy.co2.temperatureAnomaly.toFixed(3)}°C`);
