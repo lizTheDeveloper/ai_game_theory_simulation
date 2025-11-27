@@ -357,9 +357,15 @@ export function resolveMortality(
         throw new Error(`vulnerability is NaN: demographic=${demo.name}, riskType=${risk.type}, vulnerability=${vulnerability}`);
       }
 
-      // HINDCAST FIX (Nov 24, 2025): Apply era mortality multiplier to scale risks
-      // Historical eras (e.g., 1990) have lower base mortality than 2025 calibration
-      const adjustedRisk = risk.baseRisk * vulnerability * eraMortalityMultiplier;
+      // CRITICAL FIX (Nov 27, 2025): ERA multiplier for CRISIS mortality only, not baseline
+      // ERA represents emergency response capability (early warning, surge capacity, disaster coordination)
+      // Baseline demographic mortality improvement (9.3→7.5/1000 CDR 1990-2025) already captured in historical CDR
+      // Only apply ERA to crisis-related mortality (famine, heatwave, conflict, pollution)
+      //
+      // Research: config.ts line 322 - "Applied to crisis mortality calculations, not baseline population dynamics"
+      const isBaselineMortality = (risk.root === 'demographic' || risk.type === 'other');
+      const eraAdjustment = isBaselineMortality ? 1.0 : eraMortalityMultiplier;
+      const adjustedRisk = risk.baseRisk * vulnerability * eraAdjustment;
 
       if (isNaN(adjustedRisk)) {
         throw new Error(`adjustedRisk is NaN: baseRisk=${risk.baseRisk}, vulnerability=${vulnerability}, eraMortalityMultiplier=${eraMortalityMultiplier}, demographic=${demo.name}`);
