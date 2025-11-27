@@ -218,26 +218,18 @@ jobs:
         env:
           THRESHOLD: ${{ env.REGRESSION_THRESHOLD }}
         with:
-          script: |
+          script: |-
             const fs = require('fs');
             const comparison = JSON.parse(fs.readFileSync('benchmarks/comparison.json', 'utf8'));
             const threshold = parseFloat(process.env.THRESHOLD || '0.05') * 100;
-
+            const pipe = '|';
+            const header = `${pipe} Metric ${pipe} Baseline ${pipe} Current ${pipe} Change ${pipe} Status ${pipe}`;
+            const separator = `${pipe}--------${pipe}----------${pipe}---------${pipe}--------${pipe}--------${pipe}`;
             const table = comparison.report.map(r =>
-              `| ${r.metric} | ${r.baseline} | ${r.current} | ${r.change} | ${r.status} |`
+              `${pipe} ${r.metric} ${pipe} ${r.baseline} ${pipe} ${r.current} ${pipe} ${r.change} ${pipe} ${r.status} ${pipe}`
             ).join('\n');
-
-            const body = `## 📊 Benchmark Results
-
-| Metric | Baseline | Current | Change | Status |
-|--------|----------|---------|--------|--------|
-${table}
-
-**Threshold:** ±${threshold}%
-
-${comparison.hasRegression ? '⚠️ Performance regression detected!' : '✅ All benchmarks passed'}
-            `;
-
+            const status = comparison.hasRegression ? '⚠️ Performance regression detected!' : '✅ All benchmarks passed';
+            const body = `## 📊 Benchmark Results\n\n${header}\n${separator}\n${table}\n\n**Threshold:** ±${threshold}%\n\n${status}`;
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
