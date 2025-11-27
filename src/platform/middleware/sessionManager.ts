@@ -19,6 +19,7 @@ import { Request, Response, NextFunction } from 'express';
 import { Pool } from 'pg';
 import crypto = require('crypto');
 import Redis from 'ioredis';
+import { sanitizeForLog } from '../utils/logSanitizer';
 
 // ============================================================================
 // Types & Interfaces
@@ -169,7 +170,7 @@ export class SessionManager {
     const sessionAge = now.getTime() - new Date(session.createdAt).getTime();
     if (sessionAge > this.config.absoluteTimeout * 1000) {
       await this.destroySession(sessionId);
-      console.warn(`⚠️ Session expired (absolute timeout): ${sessionId}`);
+      console.warn(`⚠️ Session expired (absolute timeout): ${sanitizeForLog(sessionId)}`);
       return null;
     }
 
@@ -177,7 +178,7 @@ export class SessionManager {
     const inactiveDuration = now.getTime() - new Date(session.lastActivityAt).getTime();
     if (inactiveDuration > this.config.inactivityTimeout * 1000) {
       await this.destroySession(sessionId);
-      console.warn(`⚠️ Session expired (inactivity): ${sessionId}`);
+      console.warn(`⚠️ Session expired (inactivity): ${sanitizeForLog(sessionId)}`);
       return null;
     }
 
@@ -223,7 +224,7 @@ export class SessionManager {
       [sessionId]
     );
 
-    console.log(`✅ Session destroyed: ${sessionId}`);
+    console.log(`✅ Session destroyed: ${sanitizeForLog(sessionId)}`);
   }
 
   /**

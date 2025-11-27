@@ -18,6 +18,7 @@ import jwt = require('jsonwebtoken');
 import { Pool, PoolClient } from 'pg';
 import crypto = require('crypto');
 import { authAttempts, activeTokens } from '../monitoring/metricsEndpoint';
+import { sanitizeForLog, sanitizeUserId } from '../middleware/utils/logSanitizer';
 
 // ============================================================================
 // Types & Interfaces

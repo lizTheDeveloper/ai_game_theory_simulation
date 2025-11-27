@@ -20,6 +20,7 @@
 
 import { Request, Response, NextFunction } from 'express';
 import Redis from 'ioredis';
+import { sanitizeForLog, sanitizeIP, sanitizePath, sanitizeMethod } from '../utils/logSanitizer';
 
 // ============================================================================
 // Types
@@ -184,7 +185,7 @@ export class RateLimiter {
         // Block IP
         await this.blockIdentifier(identifier);
         console.warn(
-          `🚨 Rate limit: Blocked ${identifier} after ${violationCount} violations`
+          `🚨 Rate limit: Blocked ${sanitizeForLog(identifier)} after ${violationCount} violations`
         );
       }
     }
@@ -364,7 +365,7 @@ export function createRateLimitMiddleware(
         res.setHeader('Retry-After', result.retryAfter!.toString());
 
         console.warn(
-          `⚠️ Rate limit exceeded: ${identifier} (${req.method} ${req.path})`
+          `⚠️ Rate limit exceeded: ${sanitizeForLog(identifier)} (${sanitizeMethod(req.method)} ${sanitizePath(req.path)})`
         );
 
         res.status(429).json({

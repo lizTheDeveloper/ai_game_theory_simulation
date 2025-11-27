@@ -14,6 +14,7 @@
  */
 
 import { Request, Response, NextFunction } from 'express';
+import { sanitizeForLog } from '../utils/logSanitizer';
 
 // ============================================================================
 // Types & Interfaces
@@ -162,7 +163,7 @@ export function createCORSMiddleware(config: CORSConfig) {
       }
     } else if (origin) {
       // Origin provided but not allowed - log and reject
-      console.warn(`⚠️ CORS: Rejected request from unauthorized origin: ${origin}`);
+      console.warn(`⚠️ CORS: Rejected request from unauthorized origin: ${sanitizeForLog(origin)}`);
 
       // For strict security, reject cross-origin requests from unauthorized origins
       // This prevents CORS errors in browsers while protecting the API
