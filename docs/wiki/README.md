@@ -29,6 +29,26 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 27: HIGH-7 Population Mortality Calibration - historicalMode Flag Fix** (commit af9eff2)
+- 🔧 **Partial Fix:** Population error improved from -76% to -25.5% (MAJOR IMPROVEMENT)
+- **Problem:** 6 mortality/demographic phases were checking `scenarioMode === 'historical'` instead of `historicalMode` flag
+- **Root Cause:** `historicalMode` is a separate boolean flag for empirical data (1990-2024), while `scenarioMode` is for crisis severity settings
+- **Files Fixed (6 total):**
+  - `BaselineMortalityPhase.ts`: Check `historicalMode` before applying crisis mortality
+  - `BayesianMortalityResolutionPhase.ts`: Dampen Bayesian escalation in historical mode
+  - `FamineSystemPhase.ts`: Disable crisis cascades during historical period
+  - `FoodSecurityDegradationPhase.ts`: Use empirical food security in historical mode
+  - `HumanSurvivalSystemPhase.ts`: Apply historical mode to health systems
+  - `regionalPopulations.ts`: Use `historicalMode` flag (3 locations)
+- **Results (N=10 hindcast, 1990-2024):**
+  - Population error: -76% → -25.5% ✅
+  - Temperature error: +64% → +11.5% (unexpected improvement)
+  - QoL error: 9.0% (EXCELLENT)
+  - Overall deviation: 56.9% → 30.4%
+  - CV: 7.5% (acceptable determinism)
+- **Status:** HIGH-7 PARTIAL SUCCESS - population still 25% low, needs deeper investigation
+- 📄 **Log:** `logs/hindcast/high7_mortality_fix_20251127_170638.log`
+
 **Nov 27: Comprehensive Hindcast Calibration Parameters Research** (commit 60c98e2)
 - 📚 **572-Line Research Document:** Peer-reviewed parameters for HIGH-6, HIGH-7, HIGH-8, HIGH-9 hindcast calibration
 - **HIGH-6 Temperature (+64% error):** IPCC AR6 TCRE 1.65°C/1000 PgC, TCR 1.8±0.3K, aerosol cooling 0.24±0.11K
