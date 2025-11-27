@@ -11,10 +11,13 @@ CREATE TABLE IF NOT EXISTS csp_violations (
     user_agent TEXT,
     ip_address INET,
     timestamp TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-
-    -- Prevent duplicate violations within 1-minute window
-    CONSTRAINT unique_violation UNIQUE (document_uri, violated_directive, blocked_uri, DATE_TRUNC('minute', timestamp))
+    -- Store truncated minute for deduplication
+    violation_minute TIMESTAMP WITH TIME ZONE GENERATED ALWAYS AS (DATE_TRUNC('minute', timestamp)) STORED
 );
+
+-- Create unique index for deduplication (instead of constraint with function call)
+CREATE UNIQUE INDEX IF NOT EXISTS idx_csp_unique_violation
+    ON csp_violations(document_uri, violated_directive, blocked_uri, violation_minute);
 
 -- Index for common queries
 CREATE INDEX IF NOT EXISTS idx_csp_violations_timestamp ON csp_violations(timestamp DESC);

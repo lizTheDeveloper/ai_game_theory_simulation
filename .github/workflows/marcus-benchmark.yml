@@ -71,6 +71,9 @@ jobs:
 
       - name: Install dependencies
         run: |
+          # Install system deps (redis-tools for connectivity check)
+          sudo apt-get update && sudo apt-get install -y redis-tools postgresql-client
+
           # Install Python deps for benchmarks (scikit-learn required for ML baselines)
           pip install numpy pandas requests python-dotenv tqdm psycopg2-binary redis scikit-learn
           npm ci

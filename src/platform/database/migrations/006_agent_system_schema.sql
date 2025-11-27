@@ -130,7 +130,9 @@ CREATE INDEX IF NOT EXISTS idx_citation_analyses_latency ON citation_analyses(la
 -- Updated At Trigger for Agent States
 -- ============================================================================
 
-CREATE TRIGGER IF NOT EXISTS update_agent_states_timestamp
+-- Drop trigger if exists, then create (PostgreSQL doesn't support CREATE TRIGGER IF NOT EXISTS)
+DROP TRIGGER IF EXISTS update_agent_states_timestamp ON agent_states;
+CREATE TRIGGER update_agent_states_timestamp
     BEFORE UPDATE ON agent_states
     FOR EACH ROW
     EXECUTE FUNCTION update_updated_at_column();
