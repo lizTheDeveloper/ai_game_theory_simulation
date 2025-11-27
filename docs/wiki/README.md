@@ -29,6 +29,13 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 27: Historical Mode Utility + Architecture Review** (commit 123dcf3)
+- 🏗️ **H-1 Fix:** New `src/simulation/utils/historicalMode.ts` utility centralizes scattered historical mode checks
+- **Functions:** `isHistoricalModeActive()` and `isHistoricalEmissionsModeActive()` - replaces copy-pasted pattern across 9+ files
+- **Architecture Review:** Comprehensive integration analysis of HIGH-6/7/8 calibration fixes (`reviews/architecture_review_historical_calibration_20251127.md`)
+- **Findings:** 1 HIGH, 4 MEDIUM, 2 LOW priority items identified. No CRITICAL blocking issues.
+- **Status:** Utility ready for integration into affected phases
+
 **Nov 27: Research Validation Complete for HIGH Priority Items** (commit fbe8042)
 - 📚 **All HIGH priority roadmap items validated:** Grade A- across the board
 - **HIGH-6 (Temperature):** 90% from 2024-2025 sources (IPCC AR6, ACP 2024) - READY
@@ -3176,6 +3183,7 @@ All logs preserved in `/logs/` directory (NEVER `/tmp/` - tmp gets cleared):
 - CI workflow: Validates determinism on every PR (10 runs × 12 months)
 - RNG logging: `LOG_RNG_CALLS=true` environment variable for debugging
 - **`src/simulation/utils/resetModuleState.ts`** (Nov 24, 2025): Centralized utility to reset all module-level singletons between Monte Carlo runs. Call `resetModuleState()` before creating new `SimulationEngine`.
+- **`src/simulation/utils/historicalMode.ts`** (Nov 27, 2025): Centralized historical mode checks. Two functions: `isHistoricalModeActive(state)` (checks `scenarioMode === 'historical' && currentYear <= endYear`) and `isHistoricalEmissionsModeActive(state)` (checks `historicalEmissionsMode` flag). Config-driven end year (default: 2024). Addresses H-1 flag proliferation issue from architecture review.
 
 **Next Steps:** ✅ COMPLETE
 

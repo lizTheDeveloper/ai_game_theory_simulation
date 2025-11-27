@@ -302,22 +302,30 @@ const state = await createHistoricalInitialState({
 #### Implementation Pattern
 
 ```typescript
-// Add flag to SimulationConfig (src/types/game.ts)
-export interface SimulationConfig {
-  historicalMode?: boolean; // Enable historical calibration (1990-2024 validation mode)
+// Use centralized utility (src/simulation/utils/historicalMode.ts)
+import { isHistoricalModeActive, isHistoricalEmissionsModeActive } from '@/simulation/utils/historicalMode';
+
+// Each phase checks via utility - config-driven end year, single source of truth
+export function phaseFunction(state: GameState, rng: () => number): void {
+  if (isHistoricalModeActive(state)) {
+    // Historical calibration (baseline growth, 1990-2024)
+    return { events: [] }; // Skip crisis systems during hindcast
+  }
+  // Crisis calibration (current behavior)
 }
 
-// Each phase checks flag
-export function phaseFunction(state: GameState, rng: () => number): void {
-  if (state.config.historicalMode) {
-    // Historical calibration (baseline growth)
-  } else {
-    // Crisis calibration (current behavior)
-  }
+// For historical emissions forcing (bypass endogenous model)
+if (isHistoricalEmissionsModeActive(state)) {
+  // Use empirical Global Carbon Project data
 }
 ```
 
+**Utility functions (Nov 27, 2025):**
+- `isHistoricalModeActive(state)` - Checks `scenarioMode === 'historical' && currentYear <= endYear` (config-driven)
+- `isHistoricalEmissionsModeActive(state)` - Checks `historicalEmissionsMode` flag for emissions forcing
+
 📄 **Full research:** `research/historical_mode_parameters_20251127.md`
+📄 **Architecture review:** `reviews/architecture_review_historical_calibration_20251127.md` (H-1 fix)
 
 ### Monte Carlo Analysis
 
