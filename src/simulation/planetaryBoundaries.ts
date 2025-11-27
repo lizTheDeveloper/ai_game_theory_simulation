@@ -2061,6 +2061,65 @@ export function updateBiosphereIntegrityIndex(
 
   const bii = state.biosphereIntegrityIndex;
 
+  // HISTORICAL MODE (Nov 27, 2025): Dampen biodiversity decline for hindcast validation
+  // Research: research/historical_mode_parameters_20251127.md
+  // Root cause: Crisis-calibrated extinction rates produce -95% collapse (0.03 vs 0.49 actual)
+  // Historical data: WWF Living Planet Index shows -25% over 34 years (0.74%/year decline)
+  // Solution: Use baseline habitat loss rate (0.74%/year) instead of crisis extinction cascades
+  if (state.config.historicalMode) {
+    const HISTORICAL_ANNUAL_DECLINE_RATE = 0.0074; // 0.74% per year (WWF LPI 1990-2024)
+    const monthlyDeclineRate = HISTORICAL_ANNUAL_DECLINE_RATE / 12;
+
+    // Apply simple linear decline (no feedback loops, no catastrophic events)
+    const newSpeciesCount = assertFinite(
+      Math.max(1000, bii.currentSpeciesCount * (1 - monthlyDeclineRate)),
+      {
+        location: 'updateBiosphereIntegrityIndex (historicalMode)',
+        valueName: 'currentSpeciesCount',
+        month: state.currentMonth,
+        additionalInfo: {
+          previousCount: bii.currentSpeciesCount,
+          monthlyDeclineRate
+        }
+      }
+    );
+
+    bii.currentSpeciesCount = newSpeciesCount;
+
+    // Calculate extinction rate from species loss (for boundary value)
+    const speciesLost = bii.totalSpeciesBaseline - bii.currentSpeciesCount;
+    const yearsElapsed = Math.max(1, state.currentMonth / 12);
+    const extinctionsPerYear = speciesLost / yearsElapsed;
+    const extinctionRate = (extinctionsPerYear / bii.totalSpeciesBaseline) * 1_000_000; // E/MSY
+
+    bii.currentExtinctionRate = extinctionRate;
+
+    // Update planetary boundary value (normalized to safe rate)
+    const SAFE_EXTINCTION_RATE = 1.0;
+    const boundaryValue = extinctionRate / SAFE_EXTINCTION_RATE;
+    bii.boundaryValue = boundaryValue;
+    bii.tippingPointRisk = Math.min(1.0, boundaryValue / 10.0);
+
+    // Update planetary boundary system
+    if (state.planetaryBoundariesSystem) {
+      const boundary = state.planetaryBoundariesSystem.boundaries.biosphere_integrity;
+      boundary.currentValue = bii.boundaryValue;
+      boundary.tippingPointRisk = bii.tippingPointRisk;
+
+      // Update status
+      if (bii.boundaryValue >= 10.0) {
+        boundary.status = 'high_risk';
+      } else if (bii.boundaryValue >= 1.0) {
+        boundary.status = 'increasing_risk';
+      } else {
+        boundary.status = 'safe';
+      }
+    }
+
+    // Early return - skip crisis-calibrated extinction mechanics
+    return;
+  }
+
   // === 1. UPDATE CLIMATE VELOCITY ===
   // Climate velocity increases with warming rate
   // Use getter function to decouple from internal planetary boundaries structure

@@ -2289,7 +2289,31 @@ function updateAggregates(state: GameState, resources: ResourceEconomy): void {
 
 function checkResourceEvents(state: GameState, resources: ResourceEconomy): void {
   const month = state.currentMonth;
-  
+
+  // HISTORICAL MODE (Nov 27, 2025): Dampen resource crisis warnings for hindcast validation
+  // Research: research/historical_mode_parameters_20251127.md
+  // Root cause: Crisis-calibrated resource depletion produces unrealistic shortages during baseline period
+  // Solution: Reduce warning frequency by 80% (only trigger if reserves VERY low)
+  if (state.config.historicalMode) {
+    // More stringent thresholds for historical mode (only severe shortages trigger warnings)
+    const HISTORICAL_DAMPENING = 0.2; // 80% reduction in sensitivity
+
+    // Check only most critical shortages (reserves < 10% instead of < 20-50%)
+    if (resources.oil.reserves < 0.1 && month % 24 === 0) { // Annual instead of monthly
+      addEvent(state, {
+        type: 'crisis',
+        severity: 'warning',
+        agent: 'environmental',
+        title: '⚠️ Oil Reserves Very Low',
+        description: `Oil reserves down to ${(resources.oil.reserves * 100).toFixed(0)}%.`,
+        effects: { resource_scarcity: 0.2 * HISTORICAL_DAMPENING }
+      });
+    }
+
+    // Skip other warnings in historical mode - they distort baseline validation
+    return;
+  }
+
   // === DEPLETION WARNINGS ===
   
   if (resources.oil.reserves < 0.2 && month % 12 === 0) {
