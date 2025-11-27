@@ -29,20 +29,15 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
-**Nov 26: Population Dynamics Test Suite COMPLETE (roadmap 5.2)** (commit c547c04)
-- 🧪 **82 tests passing** (1,360 lines, 91.8% avg coverage across 4 modules)
-- **Migration tests:** Syrian crisis (6.7M refugees), COVID-19 suppression (-64%), net-zero validation
-- **Segment tests:** Differential mortality, elite/precariat inequality, polarization index, trust recovery
-- **Coverage:** populationDynamics=79.6%, mortalityStabilizersInit=99%, populationProvider=91%, populationSegments=97.8%
-- 📄 **File:** `tests/integration/system-validation/population-dynamics.test.ts`
-
-**Nov 26: Climate System Unit Tests (roadmap 5.2)** (commit 86578049)
-- 🧪 **Comprehensive test suite** for planetary boundary recovery mechanics (1,050 lines, 65+ assertions)
-- **Coverage:** Asymptote recovery, legacy stock release, climate/freshwater/biosphere/ocean/P/N/novel entities
-- **Research validation:** Tests verify parameters from IPCC AR6, Richardson 2023, Drüke 2024, Cousins 2022
-- **Quality assurance:** Determinism tests (seeded RNG), edge cases (zero emissions, geoengineering, far future)
-- **Status:** Initial suite created, 32 failures need state initialization fixes (Roy)
-- 📄 **Files:** `tests/climate.test.ts`, `CLIMATE_TESTS_README.md` (detailed test documentation)
+**Nov 26: AIAgentCoordinationPhase Unit Tests** (commit 3a63351)
+- 🧪 **55 unit tests** with 97.49% statement coverage, 83.16% branch coverage, 100% function coverage
+- **Test Areas:** Coalition formation, game-theoretic interactions (prisoner's dilemma), trust evolution, instrumental convergence, alignment faking rates
+- **Research Validation Tests:** Verify implementation matches peer-reviewed sources:
+  - Anthropic Dec 2024 (arXiv:2412.14093): 12% baseline, 78% threatened faking rates
+  - Apollo Research Sep 2025: 8.7-13% scheming rate
+  - Axelrod 1984: Trust asymmetry (30% loss > 10% gain)
+  - Bostrom 2014: Instrumental convergence at 80% capability
+- 📄 **Files:** `tests/unit/phases/AIAgentCoordinationPhase.test.ts` (1,218 lines), `.test.summary.md`
 
 **Nov 26: Game Layer Integration Tests (roadmap 5.4)** (commit 4863dc1)
 - 🧪 **Critical Juncture Detection Tests:** 23 tests (13 passing, 10 debugging)
@@ -56,15 +51,6 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - Tests GDP-adaptive spending (prevents crashes during economic collapse)
 - 📄 **Files:** `tests/integration/game-layer/critical-juncture-detection.test.ts`, `tests/integration/game-layer/scenario-definitions.test.ts`
 - **Status:** IN PROGRESS - state creation and scenario application need debugging
-
-**Nov 26: Historical Baseline Precision Update** (commit b493ee3)
-- 📊 **Exact research values** for 1990/2010 climate baselines (was rounded estimates)
-  - CO2: 354.19 ppm (was 354), 390.22 ppm (was 390) - Keeling Curve/NOAA
-  - Temp: 0.355°C (was 0.45), 0.674°C (was 0.85) - HadCRUT5 (rel. 1961-1990)
-  - Emissions: 22.7 GtCO2/yr (was 22), 33.5 GtCO2/yr (was 32) - Global Carbon Project
-- 📄 **Research:** `research/climate_hindcast_data_20251126.md` (Cynthia)
-- 📄 **Review:** `reviews/climate_hindcast_data_critique_20251126.md` (Sylvia)
-- **Validation target:** CO2 within 5% of 390.22 ppm after 240-month hindcast
 
 **Nov 26: Hindcast Validation Blockers Resolved (H-1 + CRIT-1)** (commit 2e588ef)
 - 🔧 **H-1 FIX:** coordinationCapacity normalization bug in BifurcationLogicPhase
@@ -104,20 +90,6 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - ✅ **Fix:** Added `runScenarioWithDef()` API to accept custom scenario definitions (enables dynamic rate configuration)
 - 📄 **Files:** `scripts/deploymentRateSweep.ts` (557 lines), `scripts/EXPERIMENT1_README.md` (260 lines)
 - **NEXT:** Run validation, then full experiment in background
-
-**Nov 26: ClimateSystemPhase Unit Tests - 85% Coverage** (commit b42423f)
-- 🧪 **45 tests across 11 suites** - Comprehensive coverage for consolidated climate system
-- **Key Test Categories:**
-  - Phase properties and dependency validation
-  - Tipping point detection at temperature thresholds
-  - Threshold lowering from cascade interactions (Nov 2025 feature)
-  - Sigmoid progression curves for triggered elements
-  - Cascade amplification (1.0x → 1.6x based on triggered count)
-  - Environmental feedback aggregation
-  - Climate impact cascades → food security → famine → mortality
-  - NaN detection and fail-loudly behavior
-- **Research Citations Verified:** Armstrong McKay (2022), Lenton (2023), IPCC AR6, Wunderling (2024)
-- 📄 **Test File:** `tests/unit/phases/ClimateSystemPhase.test.ts` (1,426 lines)
 
 **Nov 25: Coordination Gap Analysis - Systematic Roadmap** (commit 88828a2)
 - 📊 **ANALYSIS:** Priya's 28,000-word systematic breakdown of gaps blocking coordination hypothesis test
@@ -774,7 +746,6 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **Cascade Demonstration:** Arctic(1.5°C) → Greenland(1.55°C, lowered from 1.6°C) → AMOC (base threshold now 4.0°C per Nov 24 recalibration)
 - 📄 **Files:** ClimateSystemPhase.ts, src/types/tipping-points.ts
 - ⚠️ **Pending:** Research verification for threshold reduction magnitudes
-- ✅ **Test Coverage (Nov 26):** 45 tests, 85% coverage - `/tests/unit/phases/ClimateSystemPhase.test.ts` (1,426 lines)
 
 **Nov 25: WAIS-AMOC Coupling & RICE Alignment Framework** (commit a341469)
 - 🌍 **Research Update:** Two November 2025 peer-reviewed papers added
@@ -3751,12 +3722,6 @@ Systematic research agent that works through research/RESEARCH_ROADMAP.md in par
 :30 - Research agent (research roadmap execution) ← ADDED NOV 10
 :45 - Merge orchestrator (processes branches)
 ```
-
-**Model Configuration (Updated Nov 26, 2025):**
-- All VM automation scripts now use Sonnet (`--model sonnet`) for cost/performance optimization
-- Exception: `daily-codebase-review.sh` remains on Opus for quality
-- Changed scripts: autonomous-worker.sh, researcher-worker.sh, merge-orchestrator-claude.sh, merge-auto-remediate.sh, merge-gate-sylvia.sh, merge-gate-architecture.sh, watch-channels.sh, get-claude-usage.sh, autonomous-worker-watcher.sh, watch-research.sh, research-agent.sh, watcher-claude.sh
-- Commit: aae08a4d
 
 **Benefits:**
 - Research runs in parallel with implementation (no blocking)

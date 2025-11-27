@@ -158,6 +158,20 @@ if (stateValidator.isEnabled()) {
 
 ## Testing & Validation
 
+### Unit Tests
+
+```bash
+npm test tests/unit/stateValidation.test.ts
+# ✅ 57 tests, 100% pass
+```
+
+**Test coverage areas:**
+- Validation context (set/reset)
+- State validation proxy (NaN/Infinity detection on read/write)
+- State snapshots and comparison
+- Critical state validation (population, boundaries, AI agents)
+- StateValidator class (pre/post conditions)
+
 ### Type Checking
 
 ```bash
@@ -165,7 +179,7 @@ npx tsc --noEmit
 # ✅ Passes (0 errors excluding test files)
 ```
 
-### Monte Carlo Validation (Planned)
+### Monte Carlo Validation
 
 ```bash
 # Quick test (N=3, 120 months)
@@ -206,6 +220,7 @@ DEV_MODE_STATE_VALIDATION=true npx tsx scripts/monteCarloSimulation.ts --runs=10
 - `src/simulation/utils/stateValidation.ts` - State validation layer (526 lines)
 - `src/simulation/utils/assertions.ts` - Assertion utilities (1,147 lines)
 - `src/simulation/engine/PhaseOrchestrator.ts` - Integration point (line 221-232)
+- `tests/unit/stateValidation.test.ts` - Unit tests (1,349 lines, 57 tests)
 - `reviews/architecture_integration_review_20251115.md` - Original issue (HIGH-3)
 
 ## Resolution Status
@@ -216,6 +231,7 @@ DEV_MODE_STATE_VALIDATION=true npx tsx scripts/monteCarloSimulation.ts --runs=10
 - ✅ State snapshot comparison implemented
 - ✅ Integration with PhaseOrchestrator
 - ✅ Type checking passes
+- ✅ Unit tests (57 tests, 100% pass) - Added Nov 26, 2025
 - ⏳ Monte Carlo validation (in progress)
 
 The implementation is **additive** (does not break existing functionality) and provides a **development-time** safety net for detecting state corruption bugs.
