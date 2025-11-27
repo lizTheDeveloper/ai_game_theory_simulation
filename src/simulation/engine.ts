@@ -77,6 +77,7 @@ import {
   // MADDeterrencePhase removed - merged into InternationalRelationsPhase (Batch 5, Nov 9, 2025)
   NuclearCommandControlPhase,  // TIER 1 Phase 1B (Oct 16, 2025): Circuit breakers (human-in-the-loop, kill switches, time delays)
   ResourceEconomyPhase,  // UPDATED (Batch 3, Nov 9, 2025): Absorbed ResourceTechnologyPhase + PowerGenerationPhase
+  TechCoolingPhase,  // CRITICAL FIX (Nov 27, 2025): Applies geoengineering cooling AFTER ResourceEconomyPhase
   // ResourceTechnologyPhase removed - merged into ResourceEconomyPhase (Batch 3, Nov 9, 2025)
   // GeoengineringPhase removed - merged into ClimateSystemPhase (Batch 3, Nov 9, 2025)
   DefensiveAIPhase,
@@ -168,6 +169,7 @@ import { UnknownUnknownPhase } from './engine/phases/UnknownUnknownPhase';  // P
 import { ClimateSystemPhase } from './engine/phases/ClimateSystemPhase';  // Consolidated 4 climate phases
 import { ClimateDeploymentPhase } from './engine/phases/ClimateDeploymentPhase';  // TIER 1 CRITICAL (Nov 2025): Climate tech phased deployment + energy constraints
 import { ClimateDeploymentDelayPhase } from './engine/phases/ClimateDeploymentDelayPhase';  // TIER 1 CRITICAL (Nov 18, 2025): Three-delay model
+import { VolcanicForcingPhase } from './engine/phases/VolcanicForcingPhase';  // HIGH PRIORITY (Nov 27, 2025): Stratospheric aerosol forcing for hindcast validation
 import { ResourceSoilPhase } from './engine/phases/ResourceSoilPhase';  // Consolidated phosphorus + novel entities
 import { ResourceWaterPhase } from './engine/phases/ResourceWaterPhase';  // Consolidated freshwater + ocean acidification
 // Batch 4 Consolidation: Crisis & Mortality (14 → 5, Nov 9, 2025)
@@ -548,6 +550,7 @@ export class SimulationEngine {
     // MADDeterrencePhase removed - merged into InternationalRelationsPhase (Batch 5, Nov 9, 2025)
     this.orchestrator.registerPhase(new NuclearCommandControlPhase());  // TIER 1 Phase 1B: Circuit breakers
     this.orchestrator.registerPhase(new ResourceEconomyPhase());  // UPDATED (Batch 3): Absorbed ResourceTechnologyPhase + PowerGenerationPhase
+    this.orchestrator.registerPhase(new TechCoolingPhase());  // CRITICAL FIX (Nov 27, 2025): Applies accumulated geoengineering cooling
     // ResourceTechnologyPhase removed - merged into ResourceEconomyPhase (Batch 3, Nov 9, 2025)
     // GeoengineringPhase removed - merged into ClimateSystemPhase (Batch 3, Nov 9, 2025)
     this.orchestrator.registerPhase(new DefensiveAIPhase());
@@ -578,6 +581,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new ClimateSystemPhase());  // Consolidated: GeoengineringPhase + TippingPointPhase + EnvironmentalFeedbackPhase + ClimateImpactCascadePhase
     this.orchestrator.registerPhase(new ClimateDeploymentPhase());  // TIER 1 CRITICAL (Nov 2025): Climate tech phased deployment + energy constraints (order 8.5)
     this.orchestrator.registerPhase(new ClimateDeploymentDelayPhase());  // TIER 1 CRITICAL (Nov 18, 2025): Three-delay model for realistic deployment timescales (order 16.0)
+    this.orchestrator.registerPhase(new VolcanicForcingPhase());  // HIGH PRIORITY (Nov 27, 2025): Stratospheric aerosol forcing for hindcast validation (order 16.5)
     // === BATCH 4 CONSOLIDATED SURVIVAL SYSTEM (Nov 9, 2025) ===
     this.orchestrator.registerPhase(new HumanSurvivalSystemPhase());  // Consolidated: FamineSystemPhase + FoodSecurityDegradationPhase + MortalityStabilizersPhase (order 19.7)
     // DEPRECATED (Nov 21, 2025): TransitionMortalityPhase superseded by CoordinatedDeploymentPhase (order 10.5)
@@ -797,6 +801,9 @@ export class SimulationEngine {
     // Phase 1B (Oct 17, 2025): Capture initial population BEFORE any mutations
     // This is critical because state = initialState (same reference), so mutations affect both
     const savedInitialPopulation = initialState.humanPopulationSystem.population;
+    // FIX (Nov 21, 2025): Set initialPopulation on state at START of simulation
+    // Previously was only set at END after simulation loop, causing undefined access
+    initialState.initialPopulation = savedInitialPopulation;
 
     // Reset crisis points for this run
     const { resetCrisisPoints } = require('./crisisPoints');

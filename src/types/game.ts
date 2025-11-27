@@ -495,6 +495,34 @@ export interface GameState {
   tippingPointSystem: TippingPointSystem;
 
   /**
+   * Volcanic Forcing System (Nov 27, 2025) - HIGH PRIORITY
+   *
+   * Tracks stratospheric aerosol optical depth (AOD) from volcanic eruptions
+   * and applies radiative forcing to climate system. Critical for historical
+   * validation (1990-2010 hindcast) - captures Mount Pinatubo cooling 1991-1993.
+   *
+   * Research: IPCC AR6 WG1 Chapter 7 (volcanic forcing reconstructions)
+   *           Sato et al. (1993) stratospheric aerosol data
+   *           NASA GISS volcanic forcing datasets
+   *
+   * Physics: volcanicForcingWattsPerM2 = -25 * AOD (IPCC AR6 formula)
+   *          AOD(t) = AOD_peak * exp(-t / τ) where τ ≈ 1.5 years (18 months)
+   *
+   * Expected impact: Fixes 50% → 70% temperature validation pass rate by adding
+   *                  missing 0.2-0.3°C cooling during 1991-1993 (Pinatubo eruption)
+   */
+  volcanicForcing: {
+    /** Current stratospheric aerosol optical depth (dimensionless, 0-1) */
+    currentAOD: number;
+
+    /** Radiative forcing from volcanic aerosols (W/m²) */
+    forcingWattsPerM2: number;
+
+    /** Month when last major eruption occurred (for decay tracking) */
+    lastEruptionMonth: number;
+  };
+
+  /**
    * Irreversibility Framework (Nov 16, 2025) - TIER 1 CRITICAL
    *
    * Environmental and social tipping points that cannot fully recover on human
@@ -624,6 +652,9 @@ export interface GameState {
 
   // TIER 1 Phase 1B: Nuclear Command & Control - Circuit Breakers (Oct 16, 2025)
   nuclearCommandControlState: import('../simulation/nuclearCommandControl').NuclearCommandControlState; // Human-in-the-loop, kill switches, time delays
+
+  // Technology Effects Accumulator (Nov 27, 2025) - Prevents phase order bugs
+  technologyEffects: import('../types/technologyEffects').TechnologyEffectsState; // Accumulated tech effects applied after resource economy updates
 
   // Universal Basic Income + Purpose Infrastructure (TIER 2.1)
   ubiSystem: import('../types/ubi').UBISystem; // Enhanced UBI with purpose infrastructure for post-work society

@@ -47,7 +47,14 @@ function addEvent(state: GameState, event: Omit<GameEvent, 'id' | 'timestamp'>):
 export function updateGeoengineering(state: GameState): void {
   const resources = state.resourceEconomy;
   if (!resources) return;
-  
+
+  // HISTORICAL MODE (Nov 27, 2025): Skip geoengineering for hindcast validation
+  // Research: No large-scale geoengineering deployment occurred 1990-2024
+  // Prevents temperature overrides that distort climate sensitivity validation
+  if (state.config.historicalMode) {
+    return;
+  }
+
   const geoeng = resources.geoengineering;
   
   // Update each active geoengineering technology

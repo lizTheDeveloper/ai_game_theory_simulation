@@ -58,6 +58,7 @@ import { initializeAIAssistedSkillsMetrics, initializeLaborCapitalDistribution }
 import { initializeRecoveryTracking } from './utils/recoveryCalculations';
 import { initializeMemeticSystem } from './memetics/initialization';
 import { initializeNuclearCommandControl } from './nuclearCommandControl';
+import { initializeTechnologyEffects } from '@/types/technologyEffects';
 import { initializePositiveTippingPoints } from './positiveTippingPoints';
 import { initializeTippingPointSystem } from './tippingPoints';
 import { initializeConsciousnessGovernance } from './consciousnessGovernance';
@@ -799,7 +800,13 @@ export function createDefaultInitialState(
       // Derived from fusionEnabling progress (start at 0)
       fusionResearchBonus: 0,               // No research bonus initially
       fusionDeploymentCostReduction: 0,     // No cost reduction initially
-      fusionDeploymentTimeReduction: 0      // No time reduction initially
+      fusionDeploymentTimeReduction: 0,     // No time reduction initially
+
+      // CRITICAL-1 FIX (Nov 27, 2025): Environmental Health Composite
+      // Research: Scheffer et al. (2014) - Critical thresholds in environmental systems
+      // Calculated by BifurcationLogicPhase, initialize with baseline healthy state
+      // Baseline 2025: 0.70 (moderately healthy - degraded but not collapsed)
+      environmentalHealth: 0.70             // [0,1] Composite environmental health metric
     },
 
     // Track AI capability changes for performance calculation (Phase 3.1 initialization fix)
@@ -954,6 +961,15 @@ export function createDefaultInitialState(
     // Multi-Timescale Climate Tipping Points (Oct 26, 2025)
     tippingPointSystem: initializeTippingPointSystem(),
 
+    // Volcanic Forcing System (Nov 27, 2025 - HIGH PRIORITY)
+    // Initialized to zero for default 2025 start (no active eruptions)
+    // Historical scenarios initialize with historical AOD values for hindcasting
+    volcanicForcing: {
+      currentAOD: 0.0,           // No volcanic eruption at simulation start (2025)
+      forcingWattsPerM2: 0.0,    // No forcing
+      lastEruptionMonth: -999    // Sentinel value (no previous eruption)
+    },
+
     // Irreversibility Tracking (Nov 22, 2025 - CRITICAL FIX)
     // CRITICAL-1 FIX: Initialize tippingPoints to prevent dynamic creation in IrreversibilityTrackingPhase
     tippingPoints: initializeIrreversibilityState(),
@@ -965,6 +981,7 @@ export function createDefaultInitialState(
     countryPopulationSystem: initializeCountryPopulations(),
     nuclearWinterState: initializeNuclearWinterState(),  // TIER 1.7.4: Long-term nuclear war effects
     nuclearCommandControlState: initializeNuclearCommandControl(),  // TIER 1 Phase 1B: Circuit breakers
+    technologyEffects: initializeTechnologyEffects(),  // Nov 27 2025: Tech effects accumulator (phase order bug fix)
 
     // TIER 2: Major Mitigations
     ubiSystem: initializeUBISystem(),

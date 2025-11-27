@@ -8,7 +8,7 @@
  * Usage: npx tsx scripts/debugEnvironmentalHealthNaN.ts --seed=28183
  */
 
-import { SimulationEngine } from '../src/simulation/engine';
+import { SimulationEngine, SeededRandom } from '../src/simulation/engine';
 import { createDefaultInitialState } from '../src/simulation/initialization';
 
 const args = process.argv.slice(2);
@@ -20,7 +20,9 @@ console.log(`Seed: ${seed}`);
 console.log(`Expected crash: Month 142-146\n`);
 
 const engine = new SimulationEngine({ seed, maxMonths: 150 });
-let state = createDefaultInitialState(seed);
+const seededRandom = new SeededRandom(seed);
+const rng = () => seededRandom.next();
+let state = createDefaultInitialState(rng);
 
 // Run simulation with detailed logging for environmental metrics
 let crashed = false;
@@ -29,8 +31,9 @@ try {
   // Add custom logging callback that monitors environmental health
   let lastLogMonth = 0;
 
-  state = engine.runSimulation(state, {
-    onMonthComplete: (monthState) => {
+  state = engine.run(state, {
+    maxMonths: 150,
+    onMonthEnd: (monthState) => {
       const month = monthState.currentMonth;
 
       // Log every month starting from 140

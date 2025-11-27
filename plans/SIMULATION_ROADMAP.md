@@ -97,8 +97,22 @@
        1. Remove/qualify contradictory citations (Lenton, Armstrong McKay, Steffen)
        2. Document stability bounds as implementation tractability choices, not empirical validation
        3. Add code comments clarifying research warns about destabilization, not stability
-     - **Status:** ✅ VERIFICATION COMPLETE (Grade D)
-     - **Next Steps:** simulation-maintainer implement recommendations → Update code comments → No parameter changes needed
+     - **Status:** ✅ RESEARCH CORRECTED (Nov 27, 2025)
+     - **Corrected Research (Grade A-):**
+       - `research/climate_stability_mechanisms_2024_2025.md` (463 lines, 14 peer-reviewed sources)
+       - Documents what stability mechanisms ACTUALLY exist (silicate weathering: 240,000-year timescale - NOT policy-relevant; Planck feedback: -3.3 W/m²/K - immediate but limited)
+       - Clarifies research warns about CASCADING DESTABILIZATION on human timescales, not self-limiting stability
+       - ClimateSystemPhase.ts already has correct comments (lines 451-498) acknowledging 5% floor is "MODELING ASSUMPTION"
+     - **Verification File:** `research/verification_6eac753_20251127.md`
+     - **Issue Document:** `research/CRITICAL_ISSUE_climate_stability_floor_20251127.md` (180 lines, detailed implementation checklist)
+     - **Remaining Work:** MEDIUM priority - Remove misleading citations, document 5% floor as implementation choice not research finding
+     - **Implementation Checklist (see CRITICAL_ISSUE file for details):**
+       - [ ] Remove misleading citations from ClimateSystemPhase.ts lines 407-459
+       - [ ] Add honest implementation choice documentation
+       - [ ] Update JSDoc comments to reflect reality vs constraint
+       - [ ] Run Monte Carlo validation N≥10
+       - [ ] Update wiki climate section with limitation
+     - **Next Steps:** simulation-maintainer apply checklist from CRITICAL_ISSUE document (4-8 hours estimated)
 
    - **Tech Ineffectiveness Investigation - Proposed Magnitudes** - LOW (Added Nov 25, 2025)
      - **Context:** Investigation documented why 119 techs fail to prevent 99% mortality; proposes magnitude increases

@@ -1,0 +1,176 @@
+{
+  "timestamp": "2025-11-27T04:56:30.612Z",
+  "config": {
+    "startYear": 1990,
+    "endYear": 2024,
+    "totalMonths": 408,
+    "numRuns": 10,
+    "baseSeed": 19900101,
+    "outputDir": "logs/hindcast_validation"
+  },
+  "historical1990": {
+    "temperatureAnomaly": 0.45,
+    "co2Concentration": 354.4,
+    "population": 5.32,
+    "gdpTrillion": 22.6,
+    "aiCapabilityLevel": 0,
+    "biodiversityIndex": 0.75,
+    "socialCohesion": 0.65,
+    "trustInGovernment": 0.55,
+    "unemploymentRate": 0.06
+  },
+  "actual2024": {
+    "temperatureAnomaly": 1.28,
+    "co2Concentration": 424.6,
+    "population": 8.12,
+    "gdpTrillion": 110,
+    "aiCapabilityHigh": true,
+    "biodiversityIndex": 0.49,
+    "socialCohesion": 0.45,
+    "qualityOfLife": 0.74,
+    "unemploymentRate": 0.049
+  },
+  "runs": [
+    {
+      "runNumber": 1,
+      "seed": 19900102,
+      "months": 0,
+      "outcome": "error",
+      "outcomeReason": "❌ HISTORICAL EMISSIONS MODE: Year 2011 outside valid range (1990-2010). This mode is ONLY for hindcast validation. Use endogenous emissions for other periods.",
+      "finalYear": 1990,
+      "finalMonth": 0,
+      "metrics": {},
+      "errors": [
+        "❌ HISTORICAL EMISSIONS MODE: Year 2011 outside valid range (1990-2010). This mode is ONLY for hindcast validation. Use endogenous emissions for other periods."
+      ],
+      "warnings": []
+    },
+    {
+      "runNumber": 2,
+      "seed": 19900103,
+      "months": 0,
+      "outcome": "error",
+      "outcomeReason": "❌ HISTORICAL EMISSIONS MODE: Year 2011 outside valid range (1990-2010). This mode is ONLY for hindcast validation. Use endogenous emissions for other periods.",
+      "finalYear": 1990,
+      "finalMonth": 0,
+      "metrics": {},
+      "errors": [
+        "❌ HISTORICAL EMISSIONS MODE: Year 2011 outside valid range (1990-2010). This mode is ONLY for hindcast validation. Use endogenous emissions for other periods."
+      ],
+      "warnings": []
+    },
+    {
+      "runNumber": 3,
+      "seed": 19900104,
+      "months": 0,
+      "outcome": "error",
+      "outcomeReason": "❌ HISTORICAL EMISSIONS MODE: Year 2011 outside valid range (1990-2010). This mode is ONLY for hindcast validation. Use endogenous emissions for other periods.",
+      "finalYear": 1990,
+      "finalMonth": 0,
+      "metrics": {},
+      "errors": [
+        "❌ HISTORICAL EMISSIONS MODE: Year 2011 outside valid range (1990-2010). This mode is ONLY for hindcast validation. Use endogenous emissions for other periods."
+      ],
+      "warnings": []
+    },
+    {
+      "runNumber": 4,
+      "seed": 19900105,
+      "months": 0,
+      "outcome": "error",
+      "outcomeReason": "❌ HISTORICAL EMISSIONS MODE: Year 2011 outside valid range (1990-2010). This mode is ONLY for hindcast validation. Use endogenous emissions for other periods.",
+      "finalYear": 1990,
+      "finalMonth": 0,
+      "metrics": {},
+      "errors": [
+        "❌ HISTORICAL EMISSIONS MODE: Year 2011 outside valid range (1990-2010). This mode is ONLY for hindcast validation. Use endogenous emissions for other periods."
+      ],
+      "warnings": []
+    },
+    {
+      "runNumber": 5,
+      "seed": 19900106,
+      "months": 0,
+      "outcome": "error",
+      "outcomeReason": "❌ HISTORICAL EMISSIONS MODE: Year 2011 outside valid range (1990-2010). This mode is ONLY for hindcast validation. Use endogenous emissions for other periods.",
+      "finalYear": 1990,
+      "finalMonth": 0,
+      "metrics": {},
+      "errors": [
+        "❌ HISTORICAL EMISSIONS MODE: Year 2011 outside valid range (1990-2010). This mode is ONLY for hindcast validation. Use endogenous emissions for other periods."
+      ],
+      "warnings": []
+    },
+    {
+      "runNumber": 6,
+      "seed": 19900107,
+      "months": 0,
+      "outcome": "error",
+      "outcomeReason": "❌ HISTORICAL EMISSIONS MODE: Year 2011 outside valid range (1990-2010). This mode is ONLY for hindcast validation. Use endogenous emissions for other periods.",
+      "finalYear": 1990,
+      "finalMonth": 0,
+      "metrics": {},
+      "errors": [
+        "❌ HISTORICAL EMISSIONS MODE: Year 2011 outside valid range (1990-2010). This mode is ONLY for hindcast validation. Use endogenous emissions for other periods."
+      ],
+      "warnings": []
+    },
+    {
+      "runNumber": 7,
+      "seed": 19900108,
+      "months": 0,
+      "outcome": "error",
+      "outcomeReason": "❌ HISTORICAL EMISSIONS MODE: Year 2011 outside valid range (1990-2010). This mode is ONLY for hindcast validation. Use endogenous emissions for other periods.",
+      "finalYear": 1990,
+      "finalMonth": 0,
+      "metrics": {},
+      "errors": [
+        "❌ HISTORICAL EMISSIONS MODE: Year 2011 outside valid range (1990-2010). This mode is ONLY for hindcast validation. Use endogenous emissions for other periods."
+      ],
+      "warnings": []
+    },
+    {
+      "runNumber": 8,
+      "seed": 19900109,
+      "months": 0,
+      "outcome": "error",
+      "outcomeReason": "❌ HISTORICAL EMISSIONS MODE: Year 2011 outside valid range (1990-2010). This mode is ONLY for hindcast validation. Use endogenous emissions for other periods.",
+      "finalYear": 1990,
+      "finalMonth": 0,
+      "metrics": {},
+      "errors": [
+        "❌ HISTORICAL EMISSIONS MODE: Year 2011 outside valid range (1990-2010). This mode is ONLY for hindcast validation. Use endogenous emissions for other periods."
+      ],
+      "warnings": []
+    },
+    {
+      "runNumber": 9,
+      "seed": 19900110,
+      "months": 0,
+      "outcome": "error",
+      "outcomeReason": "❌ HISTORICAL EMISSIONS MODE: Year 2011 outside valid range (1990-2010). This mode is ONLY for hindcast validation. Use endogenous emissions for other periods.",
+      "finalYear": 1990,
+      "finalMonth": 0,
+      "metrics": {},
+      "errors": [
+        "❌ HISTORICAL EMISSIONS MODE: Year 2011 outside valid range (1990-2010). This mode is ONLY for hindcast validation. Use endogenous emissions for other periods."
+      ],
+      "warnings": []
+    },
+    {
+      "runNumber": 10,
+      "seed": 19900111,
+      "months": 0,
+      "outcome": "error",
+      "outcomeReason": "❌ HISTORICAL EMISSIONS MODE: Year 2011 outside valid range (1990-2010). This mode is ONLY for hindcast validation. Use endogenous emissions for other periods.",
+      "finalYear": 1990,
+      "finalMonth": 0,
+      "metrics": {},
+      "errors": [
+        "❌ HISTORICAL EMISSIONS MODE: Year 2011 outside valid range (1990-2010). This mode is ONLY for hindcast validation. Use endogenous emissions for other periods."
+      ],
+      "warnings": []
+    }
+  ],
+  "aggregate": null
+}

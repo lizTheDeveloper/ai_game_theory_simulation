@@ -535,7 +535,15 @@ export function updateRegionalPopulations(state: GameState): void {
     }
 
     // === 2. CALCULATE DEATH RATE ===
-    const healthcareReduction = Math.max(0.3, 1 - (region.healthcareQuality * 0.7));
+    // CRITICAL FIX (Nov 27, 2025): Disable healthcare reduction in historical mode
+    // Historical CDR data already incorporates real-world healthcare quality from that era.
+    // Applying modern healthcare reduction factors on top of historical CDR double-counts
+    // the effect → death rates too low in historical mode.
+    // Example: SSA 1990 baseline 0.9% × healthcare 0.76 × historical scale 1.95 = 1.33%
+    // But expected is 15.6/1000 = 1.56% (historical CDR directly).
+    // HIGH-7 FIX (Nov 27, 2025): Extended from < 2000 to <= 2024 for full hindcast period
+    const isHistoricalMode = state.config.scenarioMode === 'historical' && state.currentYear <= 2024;
+    const healthcareReduction = isHistoricalMode ? 1.0 : Math.max(0.3, 1 - (region.healthcareQuality * 0.7));
 
     // Detect NaN in resource reserves - fail loudly
     if (isNaN(state.resourceEconomy.food.reserves)) {
@@ -579,9 +587,18 @@ export function updateRegionalPopulations(state: GameState): void {
     }
     const pollutionLevel = state.environmentalAccumulation.pollutionLevel;
     const pollutionStress = pollutionLevel * 0.3;
-    const warMultiplier = region.conflictRisk > 0.5 ? 1.5 : 1.0;
 
-    const crisisMultiplier = 1 + foodWaterStress + climateStress + pollutionStress;
+    // CRITICAL FIX (Nov 27, 2025): Disable crisis/war multipliers in historical mode
+    // Root cause of C-4 population decline: Historical CDR data already incorporates
+    // real-world mortality from conflicts, famines, etc. Applying additional multipliers
+    // double-counts these effects → death rates 2-3× too high → population crashes.
+    // Example: SSA 1990 has 1.5× war multiplier + 1.28× crisis multiplier on top of
+    // historical 15.6/1000 CDR → 2.54% death rate vs expected 1.56%.
+    // Solution: In historical mode (pre-2000), use neutral multipliers (1.0).
+    // The historical CDR scaling (lines 605-644) will apply correct mortality rates.
+    // (isHistoricalMode defined above at line 544)
+    const warMultiplier = isHistoricalMode ? 1.0 : (region.conflictRisk > 0.5 ? 1.5 : 1.0);
+    const crisisMultiplier = isHistoricalMode ? 1.0 : (1 + foodWaterStress + climateStress + pollutionStress);
 
     region.adjustedDeathRate = region.baselineDeathRate *
       healthcareReduction *
@@ -665,9 +682,16 @@ export function updateRegionalPopulations(state: GameState): void {
     }
 
     // === 3. CALCULATE NET GROWTH ===
-    // FIX (Oct 28, 2025): Only apply BIRTHS here - BayesianMortalityResolutionPhase handles deaths
-    // Architecture: updateRegionalPopulations adds births → BayesianMortalityResolutionPhase subtracts deaths → HumanPopulationPhase aggregates
-    region.netGrowthRate = region.adjustedBirthRate; // Only births, no death subtraction
+    // CRITICAL FIX (Nov 27, 2025): In historical mode, apply deaths HERE not via Bayesian
+    // Root cause of C-4 population stagnation: BaselineMortalityPhase disabled in historical
+    // mode (to prevent double-counting), but that means NO deaths are applied at all!
+    // Solution: In historical mode, apply regional death rates directly (births - deaths).
+    // In modern mode, use Bayesian system (births only, deaths via BaselineMortalityPhase).
+    // HIGH-7 FIX (Nov 27, 2025): Extended from < 2000 to <= 2024 for full hindcast period
+    const useDirectDeaths = state.config.scenarioMode === 'historical' && state.currentYear <= 2024;
+    region.netGrowthRate = useDirectDeaths
+      ? (region.adjustedBirthRate - region.adjustedDeathRate)  // Historical: apply deaths here
+      : region.adjustedBirthRate;                               // Modern: Bayesian handles deaths
     const monthlyGrowthRate = region.netGrowthRate / 12;
 
     // === 4. APPLY POPULATION CHANGE ===

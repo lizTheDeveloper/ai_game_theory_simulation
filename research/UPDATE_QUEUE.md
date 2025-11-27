@@ -1,6 +1,6 @@
 # Research Update Queue
-**Generated:** 11/26/2025, 10:30:05 PM
-**Files Scanned:** 442
+**Generated:** 11/27/2025, 4:30:06 PM
+**Files Scanned:** 462
 
 ---
 
@@ -12,7 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 151 (34.2%)
+**Count:** 158 (34.2%)
 
 ### `CRISIS_MITIGATION_RESEARCH_CRITIQUE_20251029.md`
 - **Oldest source:** 2001 (24 years old)
@@ -98,6 +98,11 @@
 - **Oldest source:** 1981 (44 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/RESEARCH_STATUS_20251115.md`
+
+### `ROADMAP_RESEARCH_STATUS_20251127.md`
+- **Oldest source:** 2019 (6 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/ROADMAP_RESEARCH_STATUS_20251127.md`
 
 ### `ROUND2_SYLVIA_CRITIQUE_20251030.md`
 - **Oldest source:** 2006 (19 years old)
@@ -234,6 +239,11 @@
 - **Status:** Not used in simulation
 - **Path:** `research/bifurcation_instrumentation_calibration_20251113.md`
 
+### `biodiversity_collapse_HIGH8_research_20251127.md`
+- **Oldest source:** 2013 (12 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/biodiversity_collapse_HIGH8_research_20251127.md`
+
 ### `black-mirror-phase3-research-AMENDED_20251016.md`
 - **Oldest source:** 2000 (25 years old)
 - **Status:** Not used in simulation
@@ -318,6 +328,16 @@
 - **Oldest source:** 2002 (23 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/climate_self_limiting_mechanisms_20251125.md`
+
+### `climate_stability_mechanisms_2024_2025.md`
+- **Oldest source:** 2008 (17 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/climate_stability_mechanisms_2024_2025.md`
+
+### `climate_stability_parameters_20251127.md`
+- **Oldest source:** 2013 (12 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/climate_stability_parameters_20251127.md`
 
 ### `climate_stability_self_limiting_critique_20251126.md`
 - **Oldest source:** 2008 (17 years old)
@@ -433,6 +453,11 @@
 - **Oldest source:** 2019 (6 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/hendrycks_2021_citation_verification.md`
+
+### `hindcast_climate_data_20251127.md`
+- **Oldest source:** 1990 (35 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/hindcast_climate_data_20251127.md`
 
 ### `ihme_gbd_mortality_differentials_20251124.md`
 - **Oldest source:** 1993 (32 years old)
@@ -659,6 +684,11 @@
 - **Status:** Not used in simulation
 - **Path:** `research/technology_diffusion_io_psychology_verification_20251101.md`
 
+### `temperature_overestimation_HIGH6_research_20251127.md`
+- **Oldest source:** 1991 (34 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/temperature_overestimation_HIGH6_research_20251127.md`
+
 ### `threshold_tier2_historical_ranges_20251026.md`
 - **Oldest source:** 1970 (55 years old)
 - **Status:** Not used in simulation
@@ -713,6 +743,11 @@
 - **Oldest source:** 2014 (11 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/validation-summary-ready-for-implementation-20251101.md`
+
+### `verification_6f3037c_20251127.md`
+- **Oldest source:** 1991 (34 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/verification_6f3037c_20251127.md`
 
 ### `verification_819729f_20251126.md`
 - **Oldest source:** 2001 (24 years old)
@@ -773,7 +808,7 @@
 
 ## 📋 MEDIUM (Review Within Quarter)
 
-**Count:** 21 (4.8%)
+**Count:** 21 (4.5%)
 
 - `LAYER2_COMPREHENSIVE_STATUS_20251030.md` - Oldest: 2020 (5 years)
 - `LAYER2_DEBATE_SUMMARY_20251030.md` - Oldest: 2020 (5 years)
@@ -801,7 +836,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 270 (61.1%)
+**Count:** 283 (61.3%)
 
 All sources <3 years old. No action required.
 
@@ -811,11 +846,11 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 442 |
+| Total files | 462 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 151 (34.2%) |
-| MEDIUM | 21 (4.8%) |
-| LOW | 270 (61.1%) |
+| HIGH | 158 (34.2%) |
+| MEDIUM | 21 (4.5%) |
+| LOW | 283 (61.3%) |
 | Average age | 8.0 years |
 | Oldest source | 1955 (70 years ago) |
 
@@ -823,9 +858,9 @@ All sources <3 years old. No action required.
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 270 | 61.1% |
-| Warning (3-5yr) | 21 | 4.8% |
-| Critical (>5yr) | 151 | 34.2% |
+| Current (<3yr) | 283 | 61.3% |
+| Warning (3-5yr) | 21 | 4.5% |
+| Critical (>5yr) | 158 | 34.2% |
 
 ### Targets
 
@@ -837,7 +872,7 @@ All sources <3 years old. No action required.
 
 ## 🔄 Next Steps
 
-1. Update 151 HIGH priority file(s) within 1 month
+1. Update 158 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 
