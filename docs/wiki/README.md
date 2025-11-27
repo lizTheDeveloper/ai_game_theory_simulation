@@ -29,16 +29,17 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
-**Nov 27: CRITICAL - Climate Stability Citation Correction** (commit 6eac753)
+**Nov 27: CRITICAL - Climate Stability Citation Correction** (commits 1babf63, 6eac753)
 - 🔬 **Citation Failure Discovered:** ClimateSystemPhase.ts cited 5 papers to justify 5% stability floor - 3/5 CONTRADICT claims (Grade D)
 - **Problem Papers:** Lenton 2019, Armstrong McKay 2022, Steffen 2015 all warn about DESTABILIZATION, not self-limiting stability
-- **Corrected Research (A-):** 14 peer-reviewed sources (2024-2025) documenting:
-  - ✅ **Real stability mechanisms:** Silicate weathering (240,000-year timescale - NOT policy-relevant), Planck feedback (-3.3 W/m²/K - immediate)
-  - ✅ **Physical limits:** No Venus-like runaway at plausible CO₂ (Phil Trans Roy Soc 2012)
-  - ❌ **What research warns (human timescales):** Cascading tipping points, 6 elements likely at 1.5-2°C, self-AMPLIFYING not self-limiting
-- **Impact:** ClimateSystemPhase.ts requires citation corrections; 5% stability floor must be documented as "simulation constraint" not research-backed
-- 📄 **Files:** `research/climate_stability_mechanisms_2024_2025.md` (463 lines)
-- **Status:** Research complete, implementation corrections pending
+- **2024-2025 Literature Review (Grade D-):** Comprehensive review of 6 recent papers finds **0% support for stability floor, 83% contradict**:
+  - ❌ Wunderling et al. (2024, ESD): "Many tipping interactions are **destabilizing**" - cascades cannot be ruled out at 1.5-2°C
+  - ❌ State of Climate 2025 (BioScience): Warming "possibly accelerating", planet "on the brink"
+  - ⚠️ Planck feedback: Real but continuous (not a "floor" mechanism after tipping cascades)
+  - ⚠️ Permafrost study (2025): Limited non-self-perpetuation but only under stabilization scenarios, by 2300
+- **Verdict:** 5% stability floor is NOT research-backed. Must document as "IMPLEMENTATION CHOICE for tractability"
+- 📄 **Files:** `research/climate_stability_mechanisms_2024_2025_update.md` (336 lines), `research/ROADMAP_RESEARCH_STATUS_20251127.md`
+- **Status:** Research complete, implementation corrections pending (Roy + Sylvia)
 
 **Nov 27: CRITICAL FIX - TechCoolingPhase Registration** (commit 76b069b)
 - 🔧 **Orphaned Phase Bug:** TechCoolingPhase.ts existed but was NEVER registered in engine.ts
