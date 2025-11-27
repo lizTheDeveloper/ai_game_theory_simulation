@@ -62,4 +62,12 @@ export interface GlobalMetrics {
   // Accumulated reduction effectiveness from technologies (used by food security + nitrogen coupling)
   // Multiplicative stacking: 1 - (1 - r1)(1 - r2)...(1 - rN) prevents >100% reduction
   nitrogenReductionTotal?: number;       // [0,1] Total nitrogen reduction from all active technologies
+
+  // === ENVIRONMENTAL HEALTH COMPOSITE (Nov 27, 2025 - CRITICAL-1 fix) ===
+  // Research: Scheffer et al. (2014) - Critical thresholds in environmental systems
+  // Research: Richardson et al. (2023) - Planetary boundaries framework
+  // Calculated by BifurcationLogicPhase as geometric mean of environmental metrics
+  // Formula: (climateStability × biodiversityIndex × resourceReserves × (1 - pollution))^0.25
+  // Used by bifurcation threshold detection (environmental collapse at ~0.35)
+  environmentalHealth: number;           // [0,1] Composite environmental health metric
 }
