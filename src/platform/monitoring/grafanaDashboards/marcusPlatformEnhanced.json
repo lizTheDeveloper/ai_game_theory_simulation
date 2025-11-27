@@ -1,0 +1,476 @@
+{
+  "dashboard": {
+    "title": "MARCUS 3.1 Platform - Enhanced Monitoring",
+    "description": "Comprehensive platform monitoring with P95/P99 latencies, error classification, queue metrics, and state synchronization",
+    "tags": ["marcus", "platform", "production"],
+    "timezone": "UTC",
+    "schemaVersion": 38,
+    "version": 2,
+    "refresh": "10s",
+
+    "panels": [
+      {
+        "id": 1,
+        "title": "🚀 Platform Health Overview",
+        "type": "stat",
+        "gridPos": { "x": 0, "y": 0, "w": 24, "h": 3 },
+        "targets": [
+          {
+            "expr": "up{job=\"marcus-orchestrator\"}",
+            "legendFormat": "Orchestrator Status",
+            "refId": "A"
+          },
+          {
+            "expr": "sum(marcus_agent_status)",
+            "legendFormat": "Healthy Agents",
+            "refId": "B"
+          },
+          {
+            "expr": "rate(marcus_http_requests_total{status_code=~\"5..\"}[5m])",
+            "legendFormat": "Error Rate",
+            "refId": "C"
+          }
+        ],
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "orientation": "horizontal"
+        }
+      },
+
+      {
+        "id": 2,
+        "title": "📊 Request Latency Distribution (P50/P95/P99)",
+        "type": "graph",
+        "gridPos": { "x": 0, "y": 3, "w": 12, "h": 8 },
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.50, rate(marcus_http_request_duration_seconds_bucket[5m]))",
+            "legendFormat": "P50 (median)",
+            "refId": "A"
+          },
+          {
+            "expr": "histogram_quantile(0.95, rate(marcus_http_request_duration_seconds_bucket[5m]))",
+            "legendFormat": "P95",
+            "refId": "B"
+          },
+          {
+            "expr": "histogram_quantile(0.99, rate(marcus_http_request_duration_seconds_bucket[5m]))",
+            "legendFormat": "P99",
+            "refId": "C"
+          }
+        ],
+        "yaxes": [
+          { "format": "s", "label": "Latency" },
+          { "format": "short" }
+        ],
+        "alert": {
+          "name": "High P95 Latency",
+          "conditions": [
+            {
+              "evaluator": { "type": "gt", "params": [0.5] },
+              "operator": { "type": "and" },
+              "query": { "params": ["B", "5m", "now"] },
+              "reducer": { "type": "avg" }
+            }
+          ],
+          "message": "P95 latency exceeded 500ms threshold"
+        }
+      },
+
+      {
+        "id": 3,
+        "title": "❌ Error Classification",
+        "type": "table",
+        "gridPos": { "x": 12, "y": 3, "w": 12, "h": 8 },
+        "targets": [
+          {
+            "expr": "sum by (error_type, component, severity) (rate(marcus_errors_total[5m]))",
+            "format": "table",
+            "refId": "A"
+          }
+        ],
+        "transformations": [
+          {
+            "id": "organize",
+            "options": {
+              "excludeByName": {},
+              "indexByName": {
+                "error_type": 0,
+                "component": 1,
+                "severity": 2,
+                "Value": 3
+              },
+              "renameByName": {
+                "error_type": "Error Type",
+                "component": "Component",
+                "severity": "Severity",
+                "Value": "Rate (errors/sec)"
+              }
+            }
+          }
+        ],
+        "options": {
+          "sortBy": [{ "displayName": "Rate (errors/sec)", "desc": true }]
+        }
+      },
+
+      {
+        "id": 4,
+        "title": "📈 Error Rate by Component",
+        "type": "graph",
+        "gridPos": { "x": 0, "y": 11, "w": 12, "h": 6 },
+        "targets": [
+          {
+            "expr": "sum by (component) (rate(marcus_errors_total[5m])) / sum by (component) (rate(marcus_http_requests_total[5m]))",
+            "legendFormat": "{{component}}",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          { "format": "percentunit", "label": "Error Rate" },
+          { "format": "short" }
+        ],
+        "alert": {
+          "name": "High Error Rate",
+          "conditions": [
+            {
+              "evaluator": { "type": "gt", "params": [0.01] },
+              "operator": { "type": "and" },
+              "query": { "params": ["A", "5m", "now"] },
+              "reducer": { "type": "avg" }
+            }
+          ],
+          "message": "Error rate exceeded 1% threshold"
+        }
+      },
+
+      {
+        "id": 5,
+        "title": "⏱️ Queue Processing Metrics",
+        "type": "graph",
+        "gridPos": { "x": 12, "y": 11, "w": 12, "h": 6 },
+        "targets": [
+          {
+            "expr": "marcus_queue_depth{queue_name=~\".*\"}",
+            "legendFormat": "{{queue_name}} - Depth",
+            "refId": "A"
+          },
+          {
+            "expr": "marcus_queue_processing_lag_seconds{queue_name=~\".*\"}",
+            "legendFormat": "{{queue_name}} - Lag (s)",
+            "refId": "B"
+          },
+          {
+            "expr": "marcus_queue_throughput_items_per_second{queue_name=~\".*\"}",
+            "legendFormat": "{{queue_name}} - Throughput (items/s)",
+            "refId": "C"
+          }
+        ],
+        "yaxes": [
+          { "format": "short", "label": "Count / Rate" },
+          { "format": "s", "label": "Lag" }
+        ]
+      },
+
+      {
+        "id": 6,
+        "title": "🔄 State Synchronization Delay",
+        "type": "graph",
+        "gridPos": { "x": 0, "y": 17, "w": 12, "h": 6 },
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, rate(marcus_state_sync_delay_seconds_bucket[5m]))",
+            "legendFormat": "P95 Sync Delay - {{sync_type}}",
+            "refId": "A"
+          },
+          {
+            "expr": "histogram_quantile(0.99, rate(marcus_state_sync_delay_seconds_bucket[5m]))",
+            "legendFormat": "P99 Sync Delay - {{sync_type}}",
+            "refId": "B"
+          }
+        ],
+        "yaxes": [
+          { "format": "s", "label": "Delay" },
+          { "format": "short" }
+        ],
+        "alert": {
+          "name": "High State Sync Delay",
+          "conditions": [
+            {
+              "evaluator": { "type": "gt", "params": [0.1] },
+              "operator": { "type": "and" },
+              "query": { "params": ["A", "5m", "now"] },
+              "reducer": { "type": "avg" }
+            }
+          ],
+          "message": "State sync delay exceeded 100ms threshold"
+        }
+      },
+
+      {
+        "id": 7,
+        "title": "💾 Cache Hit Ratio",
+        "type": "gauge",
+        "gridPos": { "x": 12, "y": 17, "w": 6, "h": 6 },
+        "targets": [
+          {
+            "expr": "marcus_cache_hit_ratio{cache_type=\"redis\"}",
+            "legendFormat": "Redis Cache",
+            "refId": "A"
+          },
+          {
+            "expr": "marcus_cache_hit_ratio{cache_type=\"memory\"}",
+            "legendFormat": "Memory Cache",
+            "refId": "B"
+          }
+        ],
+        "options": {
+          "min": 0,
+          "max": 1,
+          "showThresholdLabels": true,
+          "showThresholdMarkers": true,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "red", "value": 0 },
+              { "color": "yellow", "value": 0.7 },
+              { "color": "green", "value": 0.9 }
+            ]
+          }
+        }
+      },
+
+      {
+        "id": 8,
+        "title": "🔒 Lock Contention",
+        "type": "graph",
+        "gridPos": { "x": 18, "y": 17, "w": 6, "h": 6 },
+        "targets": [
+          {
+            "expr": "rate(marcus_lock_contention_total{result=\"timeout\"}[5m])",
+            "legendFormat": "{{lock_name}} - Timeouts",
+            "refId": "A"
+          },
+          {
+            "expr": "rate(marcus_lock_contention_total{result=\"failed\"}[5m])",
+            "legendFormat": "{{lock_name}} - Failures",
+            "refId": "B"
+          },
+          {
+            "expr": "histogram_quantile(0.95, rate(marcus_lock_acquisition_duration_seconds_bucket[5m]))",
+            "legendFormat": "{{lock_name}} - P95 Acquisition",
+            "refId": "C"
+          }
+        ],
+        "yaxes": [
+          { "format": "short", "label": "Rate" },
+          { "format": "s", "label": "Duration" }
+        ]
+      },
+
+      {
+        "id": 9,
+        "title": "🤖 Agent Performance (P95/P99 Latency)",
+        "type": "graph",
+        "gridPos": { "x": 0, "y": 23, "w": 12, "h": 6 },
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, rate(marcus_agent_request_duration_seconds_bucket[5m]))",
+            "legendFormat": "P95 - {{agent_id}}",
+            "refId": "A"
+          },
+          {
+            "expr": "histogram_quantile(0.99, rate(marcus_agent_request_duration_seconds_bucket[5m]))",
+            "legendFormat": "P99 - {{agent_id}}",
+            "refId": "B"
+          }
+        ],
+        "yaxes": [
+          { "format": "s", "label": "Latency" },
+          { "format": "short" }
+        ]
+      },
+
+      {
+        "id": 10,
+        "title": "📊 Citation Analysis Throughput",
+        "type": "graph",
+        "gridPos": { "x": 12, "y": 23, "w": 12, "h": 6 },
+        "targets": [
+          {
+            "expr": "sum(rate(marcus_citation_analysis_total{result=\"success\"}[5m]))",
+            "legendFormat": "Successful Analyses/sec",
+            "refId": "A"
+          },
+          {
+            "expr": "sum(rate(marcus_citation_analysis_total{result=\"error\"}[5m]))",
+            "legendFormat": "Failed Analyses/sec",
+            "refId": "B"
+          },
+          {
+            "expr": "histogram_quantile(0.95, rate(marcus_citation_analysis_duration_seconds_bucket[5m]))",
+            "legendFormat": "P95 Analysis Duration",
+            "refId": "C"
+          }
+        ],
+        "yaxes": [
+          { "format": "short", "label": "Rate" },
+          { "format": "s", "label": "Duration" }
+        ]
+      },
+
+      {
+        "id": 11,
+        "title": "🗄️ Database Connection Pool",
+        "type": "graph",
+        "gridPos": { "x": 0, "y": 29, "w": 12, "h": 6 },
+        "targets": [
+          {
+            "expr": "marcus_db_pool_size{pool_type=\"total\"}",
+            "legendFormat": "Total Pool Size",
+            "refId": "A"
+          },
+          {
+            "expr": "marcus_db_pool_size{pool_type=\"active\"}",
+            "legendFormat": "Active Connections",
+            "refId": "B"
+          },
+          {
+            "expr": "marcus_db_pool_size{pool_type=\"idle\"}",
+            "legendFormat": "Idle Connections",
+            "refId": "C"
+          },
+          {
+            "expr": "marcus_db_pool_waiting",
+            "legendFormat": "Waiting Clients",
+            "refId": "D"
+          }
+        ],
+        "yaxes": [
+          { "format": "short", "label": "Connections" },
+          { "format": "short" }
+        ]
+      },
+
+      {
+        "id": 12,
+        "title": "🔴 Redis Metrics",
+        "type": "graph",
+        "gridPos": { "x": 12, "y": 29, "w": 12, "h": 6 },
+        "targets": [
+          {
+            "expr": "marcus_redis_memory_bytes{type=\"used\"}",
+            "legendFormat": "Memory Used",
+            "refId": "A"
+          },
+          {
+            "expr": "marcus_redis_connected_clients",
+            "legendFormat": "Connected Clients",
+            "refId": "B"
+          },
+          {
+            "expr": "rate(marcus_redis_keyspace_hits_total[5m])",
+            "legendFormat": "Keyspace Hits/sec",
+            "refId": "C"
+          },
+          {
+            "expr": "rate(marcus_redis_keyspace_misses_total[5m])",
+            "legendFormat": "Keyspace Misses/sec",
+            "refId": "D"
+          }
+        ],
+        "yaxes": [
+          { "format": "bytes", "label": "Memory / Clients" },
+          { "format": "short", "label": "Hit/Miss Rate" }
+        ]
+      },
+
+      {
+        "id": 13,
+        "title": "📋 SLO Compliance Summary",
+        "type": "table",
+        "gridPos": { "x": 0, "y": 35, "w": 24, "h": 5 },
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, rate(marcus_http_request_duration_seconds_bucket[5m]))",
+            "format": "table",
+            "legendFormat": "P95 Latency",
+            "refId": "A"
+          },
+          {
+            "expr": "sum(rate(marcus_errors_total[5m])) / sum(rate(marcus_http_requests_total[5m]))",
+            "format": "table",
+            "legendFormat": "Error Rate",
+            "refId": "B"
+          },
+          {
+            "expr": "sum(marcus_agent_status) / count(marcus_agent_status)",
+            "format": "table",
+            "legendFormat": "Agent Availability",
+            "refId": "C"
+          },
+          {
+            "expr": "marcus_cache_hit_ratio{cache_type=\"redis\"}",
+            "format": "table",
+            "legendFormat": "Cache Hit Ratio",
+            "refId": "D"
+          }
+        ],
+        "transformations": [
+          {
+            "id": "organize",
+            "options": {
+              "renameByName": {
+                "Value #A": "P95 Latency (target: <500ms)",
+                "Value #B": "Error Rate (target: <1%)",
+                "Value #C": "Agent Availability (target: >95%)",
+                "Value #D": "Cache Hit Ratio (target: >90%)"
+              }
+            }
+          }
+        ]
+      }
+    ],
+
+    "templating": {
+      "list": [
+        {
+          "name": "agent",
+          "type": "query",
+          "query": "label_values(marcus_agent_status, agent_id)",
+          "refresh": 1,
+          "multi": true,
+          "includeAll": true
+        },
+        {
+          "name": "component",
+          "type": "query",
+          "query": "label_values(marcus_errors_total, component)",
+          "refresh": 1,
+          "multi": true,
+          "includeAll": true
+        }
+      ]
+    },
+
+    "annotations": {
+      "list": [
+        {
+          "name": "Deployments",
+          "datasource": "Prometheus",
+          "expr": "changes(up{job=\"marcus-orchestrator\"}[5m]) > 0",
+          "iconColor": "blue",
+          "tagKeys": "deployment"
+        },
+        {
+          "name": "Alerts",
+          "datasource": "Prometheus",
+          "expr": "ALERTS{job=\"marcus-orchestrator\"}",
+          "iconColor": "red",
+          "tagKeys": "alertname"
+        }
+      ]
+    }
+  }
+}
