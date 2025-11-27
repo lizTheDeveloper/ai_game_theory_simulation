@@ -62,4 +62,8 @@ export interface GlobalMetrics {
   // Accumulated reduction effectiveness from technologies (used by food security + nitrogen coupling)
   // Multiplicative stacking: 1 - (1 - r1)(1 - r2)...(1 - rN) prevents >100% reduction
   nitrogenReductionTotal?: number;       // [0,1] Total nitrogen reduction from all active technologies
+
+  // === ENVIRONMENTAL HEALTH COMPOSITE (Nov 27, 2025) ===
+  // Composite metric of overall environmental health
+  environmentalHealth?: number;          // [0,1] Overall environmental health composite
 }
