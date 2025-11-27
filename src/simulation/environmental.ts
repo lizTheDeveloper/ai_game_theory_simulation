@@ -311,7 +311,7 @@ export function updateEnvironmentalAccumulation(
   let biodiversityLossRate: number;
   let naturalRecovery: number;
 
-  if (state.config.historicalMode && state.currentYear <= 2024) {
+  if (state.config.scenarioMode === 'historical' && state.currentYear <= 2024) {
     // === HISTORICAL MODE (1990-2024): WWF LPI Empirical Rates ===
     // Research: WWF Living Planet Index 2024
     // - 1970: 1.00 (baseline)
@@ -393,9 +393,13 @@ export function updateEnvironmentalAccumulation(
   // - Post-Black Death: Forest regrowth in Europe (1350-1400)
   // - Mayan collapse: Jungle reclaimed cities in decades (800-900 CE)
   // Research: Ecological succession takes 20-50 years, but initial recovery is fast
+  //
+  // HIGH-8 FIX (Nov 27, 2025): Disable during historical mode (1990-2024)
+  // WWF LPI empirical rate ALREADY includes any natural recovery that occurred
+  const historicalModeActive = state.config.scenarioMode === 'historical' && state.currentYear <= 2024;
   const currentPressure = state.humanPopulationSystem.population / state.humanPopulationSystem.carryingCapacity;
 
-  if (currentPressure < 0.5) { // Population below half of carrying capacity
+  if (!historicalModeActive && currentPressure < 0.5) { // Population below half of carrying capacity
     // Regeneration rate scales with reduced pressure: 0-1% monthly
     // At 50% pressure: 0%/month (no bonus)
     // At 25% pressure: 0.5%/month
@@ -455,7 +459,7 @@ export function updateEnvironmentalAccumulation(
   // HIGH-8 FIX (Nov 27, 2025): Disable cascade during historical mode (1990-2024)
   // Historical period did NOT experience catastrophic biodiversity tipping points
   // Cascades are crisis-specific mechanisms (reserved for projection mode)
-  const historicalModeActive = state.config.historicalMode && state.currentYear <= 2024;
+  // NOTE: historicalModeActive already defined above (line 399)
 
   if (!historicalModeActive && env.biodiversityIndex < criticalThreshold) {
     const cascadeMagnitude = levyFlight(ALPHA_PRESETS.ENVIRONMENT, rng);
