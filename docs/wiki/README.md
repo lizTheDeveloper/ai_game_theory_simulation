@@ -42,23 +42,24 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
-**Nov 27: C-4 IN PROGRESS - Historical Mode Double-Counting Fix** (commits 052a8c8, 59032f2)
-- ⚠️ **WIP:** Population growth -0.37% (was 0.11%, expected 1.5%) - 11× error reduction
-- **ROOT CAUSES FIXED (commit 59032f2):**
-  1. **Crisis/war multipliers double-counting:** Historical CDR data already incorporates real-world conflicts/famines. Applying 1.5× war + 1.28× crisis multipliers double-counts → 2-3× death rates
-  2. **Healthcare reduction double-counting:** Historical CDR reflects 1990 healthcare quality. Applying 0.76× reduction on 1.95× historical scaling underestimates deaths
-  3. **BaselineMortalityPhase double-counting:** HumanPopulationPhase (order 20.52) applies regional CDR deaths, then BaselineMortalityPhase (order 34.8) adds SAME deaths via Bayesian system → 83.7M/yr vs expected 49.5M/yr
-  4. **Deaths not applied after fix:** After disabling BaselineMortalityPhase, NO deaths applied (only births) → stagnant population
-- **SOLUTIONS IMPLEMENTED:**
-  - `regionalPopulations.ts:591-600`: Disable crisis/war multipliers in historical mode (pre-2000)
-  - `regionalPopulations.ts:544-545`: Disable healthcare reduction in historical mode
-  - `BaselineMortalityPhase.ts:495-507`: Skip phase entirely in historical mode
-  - `regionalPopulations.ts:684-693`: Apply deaths directly in regional system (historical) vs Bayesian (modern)
+**Nov 27: C-4 IN PROGRESS - ERA Mortality Exemption Fix** (commit 43272b1)
+- ⚠️ **WIP:** Population hindcast still showing error (was 33.6%, now investigating)
+- **LATEST FIX:** ERA multiplier exemption for baseline demographic mortality
+  - **Problem:** ERA multiplier (crisis response capacity) was applied to ALL mortality including baseline aging/disease
+  - 1990 ERA = 0.30 meant baseline deaths were 70% LOWER than historical (wrong!)
+  - ERA should only affect crisis response capability, not natural aging
+  - **Fix:** `bayesianMortality.ts:364-366` - Baseline demographic mortality (type='other', root='demographic') exempt from ERA scaling
+  - **Impact:** 1990 deaths now 31.6M/yr (was artificially suppressed before)
+  - **Validation:** Test script confirms eraScale=1.0 for baseline demographic risks
+- **PREVIOUS FIX (commit 052a8c8):** Birth rate calculation bug resolved
+  - Direct historical CBR lookup in `regionalPopulations.ts`
+  - Sub-Saharan Africa: 4.73% ✅, East Asia: 1.43% ✅
 - **REMAINING ISSUES:**
-  - Regional CBR/CDR values aggregate to 27.0/10.3 per 1000 vs expected 24.3/9.3 (11% error)
-  - This is parameter calibration, not architecture - the double-counting bugs are fixed
-- 📄 **Files:** `regionalPopulations.ts`, `BaselineMortalityPhase.ts`, debug scripts
-- **Status:** PARTIAL - Architecture bugs fixed, parameter calibration needed
+  - Deaths still below expected 49.5M/yr (-36% error)
+  - Need to investigate remaining discrepancy
+  - Full 1990-2010 validation pending
+- 📄 **Files:** `bayesianMortality.ts:364-366`, `BaselineMortalityPhase.ts:505-509`, `ROOT_CAUSE_C4_POPULATION_DECLINE.md`
+- **Status:** PARTIAL - ERA exemption fix implemented, death rate gap remains
 
 **Nov 27: C-5 CRITICAL Fix - Cascade Mortality Logistic Saturation** (commit 5e4e407)
 - **CRITICAL BUG FIXED:** Cascade mortality used unbounded exponential growth (1.05^N) producing physically impossible multipliers
@@ -694,9 +695,10 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - **Decision:** KEEP 0.30 multiplier, reframe as CRISIS VULNERABILITY (not baseline mortality)
   - **Evidence:** Hospital surge capacity 40-60% lower (1990), response time weeks vs hours, famine mortality worse per-capita once triggered
   - **Documentation:** 45 lines added to `src/types/config.ts` explaining crisis cascade mechanism
-- ⏳ **POPULATION FIX IN PROGRESS:** Deaths still 40% too high (70M+/year vs 50M historical)
-  - **Issue:** Baseline mortality calculations assume 2025 crisis conditions
-  - **Needed:** Reduce baseline death rate, increase birth rate for historical era, apply ERA multiplier to crisis deaths only
+- ✅ **ERA CRISIS-ONLY FIX IMPLEMENTED:** (commit 43272b1)
+  - **Issue:** ERA multiplier was being applied to ALL mortality including baseline aging/disease
+  - **Fix:** Baseline demographic mortality (type='other', root='demographic') now exempt from ERA scaling
+  - **Result:** 1990 deaths now 31.6M/yr (still below 49.5M expected - remaining gap under investigation)
 - 📊 **Research Documents:**
   - `plans/hindcast_phase3_roy_synthesis_20251124.md` - Roy's synthesis & decision
   - `research/hindcast_era_mortality_verification_20251124.md` - Cynthia's research (Grade B-)
@@ -1234,10 +1236,6 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **Root Cause:** Missing call to `aggregateGlobalPopulation(state)` after mortality resolution
 - **Fix:** Added aggregation call after mortality resolution (line 99 of BayesianMortalityResolutionPhase.ts)
 - **Phase Ordering (canonical):** HumanPopulationPhase (20.52) applies BIRTHS only → BayesianMortalityResolutionPhase (35.0) applies ALL deaths
-  - **EXCEPTION (Historical Mode):** In pre-2000 hindcast mode (Nov 27 commit 59032f2):
-    - BaselineMortalityPhase SKIPPED (historical CDR already incorporates baseline mortality)
-    - Regional system applies deaths directly (`netGrowthRate = births - deaths`)
-    - Crisis/war multipliers DISABLED (historical CDR incorporates real-world conflicts)
 - ✅ **Result:** Crisis-driven deaths (novel entities, climate, famine, disease, etc) now correctly reduce population
 - ⚠️ **Note:** See Nov 24 commit 5b60d18 for dual-death fix ensuring deaths aren't double-counted between phases
 - 📝 **Documentation:** Updated docs/wiki/systems/bayesian-mortality.md with aggregation requirement
