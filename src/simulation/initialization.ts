@@ -954,6 +954,15 @@ export function createDefaultInitialState(
     // Multi-Timescale Climate Tipping Points (Oct 26, 2025)
     tippingPointSystem: initializeTippingPointSystem(),
 
+    // Volcanic Forcing System (Nov 27, 2025 - HIGH PRIORITY)
+    // Initialized to zero for default 2025 start (no active eruptions)
+    // Historical scenarios initialize with historical AOD values for hindcasting
+    volcanicForcing: {
+      currentAOD: 0.0,           // No volcanic eruption at simulation start (2025)
+      forcingWattsPerM2: 0.0,    // No forcing
+      lastEruptionMonth: -999    // Sentinel value (no previous eruption)
+    },
+
     // Irreversibility Tracking (Nov 22, 2025 - CRITICAL FIX)
     // CRITICAL-1 FIX: Initialize tippingPoints to prevent dynamic creation in IrreversibilityTrackingPhase
     tippingPoints: initializeIrreversibilityState(),
