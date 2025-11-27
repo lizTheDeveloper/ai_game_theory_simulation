@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+    margin: 0;
+    padding: 60pt 80pt;
+    width: 720pt;
+    height: 405pt;
+    background: #000000;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+h1 {
+    color: #00FF88;
+    font-size: 36pt;
+    font-weight: 300;
+    margin: 0 0 35pt 0;
+    text-transform: uppercase;
+    letter-spacing: 2pt;
+    text-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+}
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25pt;
+}
+
+.metric-card {
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 255, 136, 0.05) 100%);
+    border: 1px solid rgba(0, 255, 136, 0.3);
+    padding: 20pt;
+    position: relative;
+    overflow: hidden;
+}
+
+.metric-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #00FF88, transparent);
+    animation: slide 3s linear infinite;
+}
+
+@keyframes slide {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.metric-value {
+    color: #00FF88;
+    font-size: 36pt;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    margin-bottom: 8pt;
+}
+
+.metric-label {
+    color: #FFFFFF;
+    font-size: 14pt;
+    margin-bottom: 10pt;
+    text-transform: uppercase;
+    letter-spacing: 1pt;
+}
+
+.metric-detail {
+    color: #FFFFFF;
+    font-size: 12pt;
+    opacity: 0.6;
+}
+
+.improvement {
+    color: #00FF88;
+    font-weight: bold;
+}
+</style>
+</head>
+<body>
+    <h1>Key Results</h1>
+
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <div class="metric-value">2.8x</div>
+            <div class="metric-label">Throughput Increase</div>
+            <div class="metric-detail">From <span class="improvement">15 to 42</span> citations/second</div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-value">63%</div>
+            <div class="metric-label">Cost Reduction</div>
+            <div class="metric-detail">From <span class="improvement">$120 to $45</span>/month</div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-value">94%</div>
+            <div class="metric-label">Citation Accuracy</div>
+            <div class="metric-detail">Multi-agent consensus validation</div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-value">&lt;5min</div>
+            <div class="metric-label">MTTR</div>
+            <div class="metric-detail">With distributed tracing</div>
+        </div>
+    </div>
+</body>
+</html>
