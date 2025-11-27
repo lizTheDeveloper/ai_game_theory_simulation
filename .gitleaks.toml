@@ -7,7 +7,7 @@ title = "MARCUS 3.0 Gitleaks Config"
 [extend]
 useDefault = true
 
-# Allowlist paths containing documentation examples
+# Global allowlist for paths containing documentation examples
 [allowlist]
   description = "Allowlist documentation files with example tokens"
   paths = [
@@ -15,21 +15,8 @@ useDefault = true
     '''docs/.*\.md$''',
     '''.*README\.md$''',
     '''.*EXAMPLE.*''',
-  ]
-  regexTarget = "match"
-
-# Additional path-based allowlists for common false positives
-[[rules.allowlist]]
-  description = "Allow example/placeholder tokens in docs"
-  commits = []
-  paths = [
+    '''\.env\..*\.template$''',
     '''\.md$''',
     '''\.txt$''',
   ]
-  regexes = [
-    '''example''',
-    '''placeholder''',
-    '''your[-_]?token''',
-    '''xxx''',
-    '''demo''',
-  ]
+  regexTarget = "match"
