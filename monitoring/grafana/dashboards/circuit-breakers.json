@@ -1,0 +1,58 @@
+{
+  "dashboard": {
+    "title": "MARCUS Circuit Breakers",
+    "tags": ["marcus", "resilience", "circuit-breakers"],
+    "timezone": "browser",
+    "refresh": "5s",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Circuit Breaker States",
+        "type": "stat",
+        "gridPos": {"h": 6, "w": 24, "x": 0, "y": 0},
+        "targets": [
+          {"expr": "marcus_circuit_breaker_state", "legendFormat": "{{breaker_name}}"}
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "mappings": [
+              {"type": "value", "value": 0, "text": "CLOSED"},
+              {"type": "value", "value": 1, "text": "OPEN"},
+              {"type": "value", "value": 2, "text": "HALF_OPEN"}
+            ]
+          }
+        },
+        "options": {"colorMode": "background"}
+      },
+      {
+        "id": 2,
+        "title": "Circuit Breaker Trips",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 6},
+        "targets": [
+          {"expr": "rate(marcus_circuit_breaker_failures_total[5m])", "legendFormat": "{{breaker_name}}"}
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Recovery Time",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 6},
+        "targets": [
+          {"expr": "marcus_circuit_breaker_recovery_time_seconds", "legendFormat": "{{breaker_name}}"}
+        ],
+        "yaxes": [{"format": "s"}]
+      },
+      {
+        "id": 4,
+        "title": "Success Rate by Service",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 24, "x": 0, "y": 14},
+        "targets": [
+          {"expr": "rate(marcus_circuit_breaker_requests_total{result=\"success\"}[5m]) / rate(marcus_circuit_breaker_requests_total[5m])", "legendFormat": "{{breaker_name}}"}
+        ],
+        "fieldConfig": {"defaults": {"unit": "percentunit", "min": 0, "max": 1}}
+      }
+    ]
+  }
+}

@@ -1,0 +1,66 @@
+# Snyk Security Configuration
+# https://snyk.io/
+#
+# This file configures Snyk security scanning for:
+# - npm dependencies
+# - Docker images
+# - Infrastructure as Code (IaC)
+# - Code analysis
+#
+# Install Snyk CLI: npm install -g snyk
+# Authenticate: snyk auth
+# Test: snyk test
+# Monitor: snyk monitor
+
+# Language settings
+language-settings:
+  node:
+    # Package manager
+    package-manager: npm
+    # Target Node.js version
+    target-node-version: "20"
+
+# Ignore specific vulnerabilities (with justification)
+ignore:
+  # Example: Ignore dev-only vulnerability in testing framework
+  # SNYK-JS-AXIOS-1234567:
+  #   - '*':
+  #       reason: 'Development dependency only, not used in production'
+  #       expires: '2025-12-31T23:59:59.000Z'
+
+# Severity threshold
+# fail-on:
+#   - high
+#   - critical
+
+# Exclude paths from scanning
+exclude:
+  - node_modules/
+  - dist/
+  - .next/
+  - coverage/
+  - logs/
+
+# Patch settings
+patch:
+  # Auto-patch vulnerable dependencies when possible
+  auto: true
+
+# Monitor settings
+monitor:
+  # Project name in Snyk dashboard
+  project-name: "marcus-citation-platform"
+  # Organization
+  org: "your-org-name"
+  # Tags for filtering
+  tags:
+    - platform
+    - security
+    - owasp
+
+# Test settings
+test:
+  # Show dependency paths
+  show-dependency-paths: true
+  # Severity threshold for failing builds
+  severity-threshold: high

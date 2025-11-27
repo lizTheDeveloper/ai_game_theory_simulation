@@ -1,0 +1,226 @@
+{
+  "dashboard": {
+    "title": "MARCUS - Agent Performance",
+    "tags": ["marcus", "agents", "performance"],
+    "timezone": "browser",
+    "editable": true,
+    "graphTooltip": 1,
+    "time": {
+      "from": "now-6h",
+      "to": "now"
+    },
+    "refresh": "30s",
+    "templating": {
+      "list": [
+        {
+          "name": "environment",
+          "type": "custom",
+          "options": [
+            {"text": "Production", "value": "prod"},
+            {"text": "Staging", "value": "staging"},
+            {"text": "Development", "value": "dev"}
+          ],
+          "current": {"text": "Production", "value": "prod"}
+        },
+        {
+          "name": "agent_id",
+          "type": "query",
+          "query": "label_values(agent_health_status{environment=\"$environment\"}, agent_id)",
+          "multi": true,
+          "includeAll": true
+        }
+      ]
+    },
+    "panels": [
+      {
+        "id": 1,
+        "title": "Active Agents",
+        "type": "stat",
+        "gridPos": {"x": 0, "y": 0, "w": 6, "h": 4},
+        "targets": [
+          {
+            "expr": "count(agent_health_status{environment=\"$environment\"})",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "thresholds"},
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"value": 0, "color": "red"},
+                {"value": 5, "color": "yellow"},
+                {"value": 10, "color": "green"}
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 2,
+        "title": "Healthy Agents",
+        "type": "stat",
+        "gridPos": {"x": 6, "y": 0, "w": 6, "h": 4},
+        "targets": [
+          {
+            "expr": "count(agent_health_status{environment=\"$environment\", status=\"healthy\"})",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "thresholds"},
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"value": 0, "color": "red"},
+                {"value": 5, "color": "yellow"},
+                {"value": 10, "color": "green"}
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 3,
+        "title": "Agent Health Status",
+        "type": "graph",
+        "gridPos": {"x": 12, "y": 0, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "sum(agent_health_status{environment=\"$environment\", status=\"healthy\"})",
+            "legendFormat": "Healthy",
+            "refId": "A"
+          },
+          {
+            "expr": "sum(agent_health_status{environment=\"$environment\", status=\"unhealthy\"})",
+            "legendFormat": "Unhealthy",
+            "refId": "B"
+          }
+        ],
+        "stack": true,
+        "yaxes": [
+          {"format": "short", "label": "Agents"},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Per-Agent Accuracy",
+        "type": "graph",
+        "gridPos": {"x": 0, "y": 8, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "agent_accuracy{environment=\"$environment\", agent_id=~\"$agent_id\"}",
+            "legendFormat": "{{agent_id}}",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "percentunit", "label": "Accuracy", "min": 0, "max": 1},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Agent Response Times",
+        "type": "graph",
+        "gridPos": {"x": 12, "y": 8, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, sum(rate(agent_response_time_ms_bucket{environment=\"$environment\", agent_id=~\"$agent_id\"}[5m])) by (agent_id, le))",
+            "legendFormat": "{{agent_id}} p95",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "ms", "label": "Response Time"},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Agent Reputation Scores",
+        "type": "graph",
+        "gridPos": {"x": 0, "y": 16, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "agent_reputation{environment=\"$environment\", agent_id=~\"$agent_id\"}",
+            "legendFormat": "{{agent_id}}",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "percentunit", "label": "Reputation", "min": 0, "max": 1},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 7,
+        "title": "Memory Usage Per Agent",
+        "type": "graph",
+        "gridPos": {"x": 12, "y": 16, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "agent_memory_rss_bytes{environment=\"$environment\", agent_id=~\"$agent_id\"}",
+            "legendFormat": "{{agent_id}}",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "bytes", "label": "Memory (RSS)"},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 8,
+        "title": "CPU Utilization Per Agent",
+        "type": "graph",
+        "gridPos": {"x": 0, "y": 24, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "rate(agent_cpu_seconds_total{environment=\"$environment\", agent_id=~\"$agent_id\"}[5m]) * 100",
+            "legendFormat": "{{agent_id}}",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "percent", "label": "CPU %", "min": 0, "max": 100},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 9,
+        "title": "Agent Restart Events",
+        "type": "graph",
+        "gridPos": {"x": 12, "y": 24, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "increase(agent_restarts_total{environment=\"$environment\", agent_id=~\"$agent_id\"}[1h])",
+            "legendFormat": "{{agent_id}}",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "short", "label": "Restarts"},
+          {"format": "short"}
+        ],
+        "alert": {
+          "conditions": [
+            {
+              "evaluator": {"params": [3], "type": "gt"},
+              "query": {"params": ["A", "5m", "now"]},
+              "reducer": {"params": [], "type": "avg"},
+              "type": "query"
+            }
+          ],
+          "executionErrorState": "alerting",
+          "for": "5m",
+          "frequency": "1m",
+          "name": "Excessive agent restarts"
+        }
+      }
+    ]
+  }
+}

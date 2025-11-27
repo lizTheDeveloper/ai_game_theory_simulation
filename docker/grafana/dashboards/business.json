@@ -1,0 +1,348 @@
+{
+  "dashboard": {
+    "title": "MARCUS - Business Metrics",
+    "tags": ["marcus", "business", "sla", "usage"],
+    "timezone": "browser",
+    "editable": true,
+    "graphTooltip": 1,
+    "time": {
+      "from": "now-7d",
+      "to": "now"
+    },
+    "refresh": "5m",
+    "templating": {
+      "list": [
+        {
+          "name": "environment",
+          "type": "custom",
+          "options": [
+            {"text": "Production", "value": "prod"},
+            {"text": "Staging", "value": "staging"},
+            {"text": "Development", "value": "dev"}
+          ],
+          "current": {"text": "Production", "value": "prod"}
+        }
+      ]
+    },
+    "panels": [
+      {
+        "id": 1,
+        "title": "Total Citations Analyzed",
+        "type": "stat",
+        "gridPos": {"x": 0, "y": 0, "w": 6, "h": 6},
+        "targets": [
+          {
+            "expr": "citation_analyses_total{environment=\"$environment\"}",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "palette-classic"},
+            "decimals": 0,
+            "unit": "short"
+          }
+        },
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "orientation": "auto"
+        }
+      },
+      {
+        "id": 2,
+        "title": "Active Users",
+        "type": "stat",
+        "gridPos": {"x": 6, "y": 0, "w": 6, "h": 6},
+        "targets": [
+          {
+            "expr": "count(count_over_time(user_activity{environment=\"$environment\"}[24h]))",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "palette-classic"},
+            "decimals": 0,
+            "unit": "short"
+          }
+        },
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "orientation": "auto"
+        }
+      },
+      {
+        "id": 3,
+        "title": "Citations Analyzed (7d)",
+        "type": "graph",
+        "gridPos": {"x": 12, "y": 0, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "increase(citation_analyses_total{environment=\"$environment\"}[1d])",
+            "legendFormat": "Citations/day",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "short", "label": "Citations"},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 4,
+        "title": "API Usage by Endpoint",
+        "type": "graph",
+        "gridPos": {"x": 0, "y": 8, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "topk(10, sum by (endpoint) (increase(http_requests_total{environment=\"$environment\"}[24h])))",
+            "legendFormat": "{{endpoint}}",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "short", "label": "Requests (24h)"},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Average Processing Time per Citation",
+        "type": "graph",
+        "gridPos": {"x": 12, "y": 8, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "avg(citation_latency_ms{environment=\"$environment\"})",
+            "legendFormat": "Avg Latency",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "ms", "label": "Latency"},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Error Rate",
+        "type": "gauge",
+        "gridPos": {"x": 0, "y": 16, "w": 6, "h": 8},
+        "targets": [
+          {
+            "expr": "rate(http_requests_total{environment=\"$environment\", status=~\"5..\"}[5m]) / rate(http_requests_total{environment=\"$environment\"}[5m])",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "min": 0,
+            "max": 0.1,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"value": 0, "color": "green"},
+                {"value": 0.01, "color": "yellow"},
+                {"value": 0.05, "color": "red"}
+              ]
+            },
+            "unit": "percentunit"
+          }
+        }
+      },
+      {
+        "id": 7,
+        "title": "Uptime (7d SLA)",
+        "type": "gauge",
+        "gridPos": {"x": 6, "y": 16, "w": 6, "h": 8},
+        "targets": [
+          {
+            "expr": "avg_over_time(up{job=\"marcus-platform\", environment=\"$environment\"}[7d])",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "min": 0.99,
+            "max": 1,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"value": 0, "color": "red"},
+                {"value": 0.999, "color": "yellow"},
+                {"value": 0.9999, "color": "green"}
+              ]
+            },
+            "unit": "percentunit",
+            "decimals": 4
+          }
+        },
+        "options": {
+          "showThresholdLabels": true,
+          "showThresholdMarkers": true
+        }
+      },
+      {
+        "id": 8,
+        "title": "Uptime Over Time",
+        "type": "graph",
+        "gridPos": {"x": 12, "y": 16, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "avg_over_time(up{job=\"marcus-platform\", environment=\"$environment\"}[1h])",
+            "legendFormat": "Uptime (1h avg)",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "percentunit", "label": "Uptime", "min": 0.99, "max": 1},
+          {"format": "short"}
+        ],
+        "thresholds": [
+          {"value": 0.999, "colorMode": "critical", "op": "lt", "fill": true, "line": true}
+        ]
+      },
+      {
+        "id": 9,
+        "title": "Cost per Citation (Resource-Based)",
+        "type": "stat",
+        "gridPos": {"x": 0, "y": 24, "w": 6, "h": 6},
+        "targets": [
+          {
+            "expr": "(sum(rate(agent_cpu_seconds_total{environment=\"$environment\"}[5m])) * 0.00001 + sum(agent_memory_rss_bytes{environment=\"$environment\"}) * 0.000000001) / rate(citation_analyses_total{environment=\"$environment\"}[5m])",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "decimals": 6,
+            "unit": "currencyUSD"
+          }
+        },
+        "options": {
+          "colorMode": "value",
+          "graphMode": "none",
+          "orientation": "auto"
+        }
+      },
+      {
+        "id": 10,
+        "title": "User Growth",
+        "type": "graph",
+        "gridPos": {"x": 6, "y": 24, "w": 18, "h": 8},
+        "targets": [
+          {
+            "expr": "count(count_over_time(user_activity{environment=\"$environment\"}[24h]))",
+            "legendFormat": "Active Users (24h)",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "short", "label": "Users"},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 11,
+        "title": "SLA Compliance - Latency (<100ms)",
+        "type": "gauge",
+        "gridPos": {"x": 0, "y": 32, "w": 6, "h": 8},
+        "targets": [
+          {
+            "expr": "sum(rate(citation_latency_ms_bucket{environment=\"$environment\", le=\"100\"}[5m])) / sum(rate(citation_latency_ms_count{environment=\"$environment\"}[5m]))",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "min": 0,
+            "max": 1,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"value": 0, "color": "red"},
+                {"value": 0.95, "color": "yellow"},
+                {"value": 0.99, "color": "green"}
+              ]
+            },
+            "unit": "percentunit"
+          }
+        }
+      },
+      {
+        "id": 12,
+        "title": "SLA Compliance - Accuracy (>80%)",
+        "type": "gauge",
+        "gridPos": {"x": 6, "y": 32, "w": 6, "h": 8},
+        "targets": [
+          {
+            "expr": "(citation_accuracy_total{environment=\"$environment\"} >= 0.8)",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "min": 0,
+            "max": 1,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"value": 0, "color": "red"},
+                {"value": 1, "color": "green"}
+              ]
+            },
+            "mappings": [
+              {"type": "value", "value": "0", "text": "Below SLA"},
+              {"type": "value", "value": "1", "text": "Meeting SLA"}
+            ]
+          }
+        }
+      },
+      {
+        "id": 13,
+        "title": "Citations by Behavior Type",
+        "type": "piechart",
+        "gridPos": {"x": 12, "y": 32, "w": 12, "h": 12},
+        "targets": [
+          {
+            "expr": "sum by (behavior) (increase(citation_behavior_count{environment=\"$environment\"}[7d]))",
+            "legendFormat": "{{behavior}}",
+            "refId": "A"
+          }
+        ],
+        "options": {
+          "legend": {
+            "displayMode": "table",
+            "placement": "right",
+            "values": ["value", "percent"]
+          }
+        }
+      },
+      {
+        "id": 14,
+        "title": "Response Time SLA Distribution",
+        "type": "heatmap",
+        "gridPos": {"x": 0, "y": 40, "w": 24, "h": 8},
+        "targets": [
+          {
+            "expr": "sum(rate(citation_latency_ms_bucket{environment=\"$environment\"}[5m])) by (le)",
+            "format": "heatmap",
+            "refId": "A"
+          }
+        ],
+        "dataFormat": "tsbuckets",
+        "color": {
+          "mode": "spectrum",
+          "cardColor": "#b4ff00",
+          "colorScale": "sqrt",
+          "exponent": 0.5,
+          "colorScheme": "interpolateSpectral"
+        },
+        "yAxis": {
+          "format": "ms"
+        }
+      }
+    ]
+  }
+}

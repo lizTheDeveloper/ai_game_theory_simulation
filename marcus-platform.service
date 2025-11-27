@@ -1,0 +1,40 @@
+[Unit]
+Description=MARCUS 3.0 Citation Integrity Platform
+Documentation=https://github.com/404GeneNotFound/ai_game_theory_simulation
+After=network.target postgresql.service redis.service
+Wants=postgresql.service redis.service
+StartLimitIntervalSec=200
+StartLimitBurst=5
+
+[Service]
+Type=simple
+User=g7throwawayplz
+WorkingDirectory=/home/g7throwawayplz/ai_game_theory_simulation
+EnvironmentFile=/home/g7throwawayplz/ai_game_theory_simulation/.env
+
+# Production start command using standalone build (optimized)
+ExecStart=/usr/bin/node /home/g7throwawayplz/ai_game_theory_simulation/.next/standalone/server.js
+
+# Restart policy
+Restart=on-failure
+RestartSec=10
+
+# Resource limits
+LimitNOFILE=65536
+LimitNPROC=4096
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=marcus-platform
+
+# Security hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/home/g7throwawayplz/ai_game_theory_simulation/logs
+ReadWritePaths=/home/g7throwawayplz/ai_game_theory_simulation/.next
+
+[Install]
+WantedBy=multi-user.target

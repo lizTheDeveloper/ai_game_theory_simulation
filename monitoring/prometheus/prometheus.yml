@@ -1,0 +1,119 @@
+# MARCUS 3.0 - Prometheus Configuration
+# Phase 3.2: Monitoring Setup
+#
+# This configuration scrapes metrics from the MARCUS platform and exports
+# them to Prometheus for monitoring and alerting.
+#
+# Installation:
+#   sudo cp monitoring/prometheus/prometheus.yml /etc/prometheus/prometheus.yml
+#   sudo systemctl restart prometheus
+#
+# Verification:
+#   curl http://localhost:9090/api/v1/targets
+
+global:
+  scrape_interval: 15s      # Scrape metrics every 15 seconds
+  evaluation_interval: 15s  # Evaluate alert rules every 15 seconds
+  scrape_timeout: 10s       # Timeout after 10 seconds
+
+  # External labels for federated Prometheus setups
+  external_labels:
+    cluster: 'marcus-production'
+    environment: 'production'
+
+# Alertmanager configuration (optional)
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          # - 'localhost:9093'  # Uncomment if using Alertmanager
+
+# Load alert rules
+rule_files:
+  - '/etc/prometheus/alerts/marcus-platform.yml'
+
+# Scrape configurations
+scrape_configs:
+  # ==========================================================================
+  # MARCUS Platform Metrics
+  # ==========================================================================
+  - job_name: 'marcus-platform'
+    static_configs:
+      - targets: ['localhost:3000']
+        labels:
+          service: 'marcus-api'
+          component: 'platform'
+
+    # Scrape /metrics endpoint (requires authentication)
+    metrics_path: '/api/metrics'
+
+    # Authentication (JWT token)
+    # NOTE: Replace with actual token or use bearer_token_file
+    # bearer_token: 'YOUR_JWT_TOKEN_HERE'
+    bearer_token_file: '/etc/prometheus/marcus_token.txt'
+
+    # Scrape interval override (more frequent for critical service)
+    scrape_interval: 10s
+    scrape_timeout: 5s
+
+  # ==========================================================================
+  # PostgreSQL Metrics (via postgres_exporter)
+  # ==========================================================================
+  - job_name: 'postgresql'
+    static_configs:
+      - targets: ['localhost:9187']
+        labels:
+          service: 'postgresql'
+          component: 'database'
+
+    scrape_interval: 15s
+
+  # ==========================================================================
+  # Redis Metrics (via redis_exporter)
+  # ==========================================================================
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['localhost:9121']
+        labels:
+          service: 'redis'
+          component: 'cache'
+
+    scrape_interval: 15s
+
+  # ==========================================================================
+  # Node Exporter (system metrics: CPU, memory, disk)
+  # ==========================================================================
+  - job_name: 'node'
+    static_configs:
+      - targets: ['localhost:9100']
+        labels:
+          service: 'system'
+          component: 'node'
+
+    scrape_interval: 15s
+
+  # ==========================================================================
+  # Prometheus Self-Monitoring
+  # ==========================================================================
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+        labels:
+          service: 'prometheus'
+          component: 'monitoring'
+
+    scrape_interval: 30s
+
+# Remote write (optional - for long-term storage)
+# remote_write:
+#   - url: 'http://victoriametrics:8428/api/v1/write'
+#     queue_config:
+#       capacity: 10000
+#       max_shards: 5
+#       min_shards: 1
+#       max_samples_per_send: 1000
+#       batch_send_deadline: 5s
+
+# Remote read (optional - for long-term storage)
+# remote_read:
+#   - url: 'http://victoriametrics:8428/api/v1/read'

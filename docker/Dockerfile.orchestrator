@@ -1,0 +1,105 @@
+# MARCUS 3.0 - Worker Service Orchestrator (OPTIMIZED)
+#
+# HIGH PRIORITY #4: Multi-stage build optimization
+#
+# Problem:
+# - Original image: 3.5GB (includes unnecessary dependencies)
+# - Slow deployments, high registry costs
+#
+# Solution:
+# - Multi-stage build (builder + runtime)
+# - Remove development dependencies from production
+# - Alpine base image where possible
+# - Strategic layer caching
+#
+# Expected Outcome:
+# - Image size: <1GB (70% reduction)
+# - Faster deployments
+# - Lower registry storage costs
+#
+# Author: Marcus (Platform Engineer)
+# Date: 2025-11-22
+
+# ============================================================================
+# Stage 1: Builder (includes dev dependencies)
+# ============================================================================
+FROM node:20-slim as builder
+
+LABEL org.opencontainers.image.source="https://github.com/your-org/ai_game_theory_simulation"
+LABEL org.opencontainers.image.description="MARCUS 3.0 Citation Worker Orchestrator (Build Stage)"
+
+WORKDIR /build
+
+# Install build dependencies
+RUN apt-get update && apt-get install -y \
+    python3 \
+    make \
+    g++ \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy package files (leverage layer caching)
+COPY package*.json ./
+COPY tsconfig.json ./
+
+# Install ALL dependencies (including devDependencies for build)
+RUN npm ci
+
+# Copy source code
+COPY src/platform /build/src/platform
+COPY src/types /build/src/types
+
+# Build TypeScript (if needed - tsx handles TS natively, but precompiling reduces startup)
+# Uncomment if you want to precompile:
+# RUN npx tsc --project tsconfig.json
+
+# Prune development dependencies
+RUN npm prune --production
+
+# ============================================================================
+# Stage 2: Runtime (minimal production image)
+# ============================================================================
+FROM node:20-slim as runtime
+
+LABEL org.opencontainers.image.source="https://github.com/your-org/ai_game_theory_simulation"
+LABEL org.opencontainers.image.description="MARCUS 3.0 Citation Worker Orchestrator (Production)"
+LABEL maintainer="marcus@platform.engineering"
+
+WORKDIR /app
+
+# Install ONLY runtime dependencies (minimal)
+RUN apt-get update && apt-get install -y \
+    curl \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get clean
+
+# Create non-root user
+RUN useradd -m -s /bin/bash marcus && \
+    chown -R marcus:marcus /app
+
+# Copy ONLY production dependencies from builder
+COPY --from=builder --chown=marcus:marcus /build/node_modules /app/node_modules
+COPY --from=builder --chown=marcus:marcus /build/package*.json /app/
+
+# Copy application code
+COPY --chown=marcus:marcus src/platform /app/src/platform
+COPY --chown=marcus:marcus src/types /app/src/types
+COPY --chown=marcus:marcus tsconfig.json /app/
+
+# Switch to non-root user
+USER marcus
+
+# Expose API port
+EXPOSE 3000
+
+# Set environment
+ENV NODE_ENV=production
+# Limit memory usage to 512MB
+ENV NODE_OPTIONS="--max-old-space-size=512"
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
+    CMD curl -f http://localhost:3000/health || exit 1
+
+# Run worker orchestrator API server
+CMD ["npx", "tsx", "/app/src/platform/api/worker-orchestrator-server.ts"]

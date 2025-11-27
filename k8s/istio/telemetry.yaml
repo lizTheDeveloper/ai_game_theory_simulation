@@ -1,0 +1,154 @@
+---
+# Telemetry configuration for metrics, logs, and traces
+apiVersion: telemetry.istio.io/v1alpha1
+kind: Telemetry
+metadata:
+  name: marcus-telemetry
+  namespace: marcus-platform
+spec:
+  # Distributed tracing
+  tracing:
+    - providers:
+        - name: jaeger
+      randomSamplingPercentage: 100.0  # 100% sampling for now, reduce in prod
+      customTags:
+        environment:
+          literal:
+            value: "production"
+        service_version:
+          literal:
+            value: "1.0.0"
+        citation_id:
+          header:
+            name: "x-citation-id"
+
+  # Access logging
+  accessLogging:
+    - providers:
+        - name: envoy
+      filter:
+        expression: "response.code >= 400"  # Log only errors
+
+  # Custom metrics
+  metrics:
+    - providers:
+        - name: prometheus
+      dimensions:
+        source_principal:
+          value: source.principal | "unknown"
+        destination_principal:
+          value: destination.principal | "unknown"
+        citation_id:
+          value: request.headers['x-citation-id'] | "none"
+        user_id:
+          value: request.headers['x-user-id'] | "anonymous"
+        request_method:
+          value: request.method | "unknown"
+        response_code:
+          value: response.code | 0
+      overrides:
+        - match:
+            metric: REQUEST_COUNT
+          tagOverrides:
+            response_flags:
+              value: response.flags | "none"
+        - match:
+            metric: REQUEST_DURATION
+          tagOverrides:
+            response_flags:
+              value: response.flags | "none"
+---
+# EnvoyFilter for custom headers
+apiVersion: networking.istio.io/v1alpha3
+kind: EnvoyFilter
+metadata:
+  name: custom-headers
+  namespace: marcus-platform
+spec:
+  workloadSelector:
+    labels:
+      app: orchestrator
+  configPatches:
+    - applyTo: HTTP_FILTER
+      match:
+        context: SIDECAR_INBOUND
+        listener:
+          filterChain:
+            filter:
+              name: "envoy.filters.network.http_connection_manager"
+              subFilter:
+                name: "envoy.filters.http.router"
+      patch:
+        operation: INSERT_BEFORE
+        value:
+          name: envoy.filters.http.lua
+          typed_config:
+            "@type": type.googleapis.com/envoy.extensions.filters.http.lua.v3.Lua
+            inlineCode: |
+              function envoy_on_response(response_handle)
+                response_handle:headers():add("x-marcus-version", "3.0")
+                response_handle:headers():add("x-powered-by", "MARCUS Platform")
+              end
+---
+# ServiceMonitor for Prometheus scraping
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: marcus-services
+  namespace: marcus-platform
+spec:
+  selector:
+    matchLabels:
+      prometheus: "true"
+  endpoints:
+    - port: metrics
+      path: /metrics
+      interval: 30s
+      scrapeTimeout: 10s
+---
+# PrometheusRule for Istio-specific alerts
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: istio-alerts
+  namespace: marcus-platform
+spec:
+  groups:
+    - name: istio
+      interval: 30s
+      rules:
+        - alert: IstioHighRequestLatency
+          expr: |
+            histogram_quantile(0.99,
+              sum(rate(istio_request_duration_milliseconds_bucket{destination_service_namespace="marcus-platform"}[5m]))
+              by (destination_service_name, le)
+            ) > 1000
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "High request latency in {{ $labels.destination_service_name }}"
+            description: "P99 latency is {{ $value }}ms"
+
+        - alert: IstioHighErrorRate
+          expr: |
+            sum(rate(istio_requests_total{destination_service_namespace="marcus-platform",response_code=~"5.."}[5m]))
+            / sum(rate(istio_requests_total{destination_service_namespace="marcus-platform"}[5m]))
+            > 0.05
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: "High error rate detected"
+            description: "Error rate is {{ $value | humanizePercentage }}"
+
+        - alert: IstioCircuitBreakerTripped
+          expr: |
+            sum(rate(istio_requests_total{destination_service_namespace="marcus-platform",response_flags=~".*UO.*"}[5m]))
+            > 0
+          for: 2m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Circuit breaker tripped for {{ $labels.destination_service_name }}"
+            description: "Upstream overflow detected"

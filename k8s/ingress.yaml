@@ -1,0 +1,104 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: marcus-ingress
+  namespace: marcus-platform
+  annotations:
+    # NGINX ingress controller annotations
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+
+    # Rate limiting (per IP address)
+    # Target: 100 req/min per IP (1.67 req/sec), burst 150
+    nginx.ingress.kubernetes.io/limit-rps: "2"  # ~100/min, allowing small burst
+    nginx.ingress.kubernetes.io/limit-burst-multiplier: "75"  # 2 * 75 = 150 burst capacity
+    nginx.ingress.kubernetes.io/limit-connections: "20"  # Max concurrent connections per IP
+    nginx.ingress.kubernetes.io/limit-rpm: "100"  # Explicit requests per minute
+    nginx.ingress.kubernetes.io/limit-whitelist: ""  # No IP whitelist by default
+
+    # Timeouts
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "30"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "60"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "60"
+
+    # Request size limits
+    nginx.ingress.kubernetes.io/proxy-body-size: "10m"
+
+    # Security headers
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      more_set_headers "X-Frame-Options: DENY";
+      more_set_headers "X-Content-Type-Options: nosniff";
+      more_set_headers "X-XSS-Protection: 1; mode=block";
+      more_set_headers "Referrer-Policy: strict-origin-when-cross-origin";
+      more_set_headers "Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';";
+
+    # TLS/SSL
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+
+    # CORS
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "https://marcus.example.com"
+    nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, PUT, DELETE, OPTIONS"
+    nginx.ingress.kubernetes.io/cors-allow-headers: "Authorization, Content-Type, X-Request-ID"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - marcus.example.com
+        - api.marcus.example.com
+      secretName: marcus-tls
+  rules:
+    - host: marcus.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: orchestrator
+                port:
+                  number: 3000
+
+    - host: api.marcus.example.com
+      http:
+        paths:
+          - path: /api/citations
+            pathType: Prefix
+            backend:
+              service:
+                name: orchestrator
+                port:
+                  number: 3000
+
+          - path: /api/health
+            pathType: Prefix
+            backend:
+              service:
+                name: orchestrator
+                port:
+                  number: 3000
+
+          - path: /metrics
+            pathType: Prefix
+            backend:
+              service:
+                name: orchestrator
+                port:
+                  number: 9090
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: admin@example.com
+    privateKeySecretRef:
+      name: letsencrypt-prod
+    solvers:
+      - http01:
+          ingress:
+            class: nginx

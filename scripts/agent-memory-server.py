@@ -46,6 +46,7 @@ AGENT_MEMORY_FILES = {
     'priya': 'priya-memory.json',
     'paulo': 'paulo-memory.json',
     'morgan': 'morgan-memory.json',
+    'marcus': 'marcus-memory.json',
 }
 
 # Create fastMCP server

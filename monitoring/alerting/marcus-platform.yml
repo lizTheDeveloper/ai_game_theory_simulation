@@ -1,0 +1,219 @@
+# MARCUS 3.0 - Prometheus Alert Rules
+# Phase 3.2.3: Alert Configuration
+#
+# This file defines alert rules for the MARCUS platform.
+# Alerts fire when conditions are met and can be routed to Alertmanager.
+#
+# Installation:
+#   sudo mkdir -p /etc/prometheus/alerts
+#   sudo cp monitoring/alerting/marcus-platform.yml /etc/prometheus/alerts/
+#   sudo systemctl reload prometheus
+#
+# Verification:
+#   curl http://localhost:9090/api/v1/rules
+
+groups:
+  # ==========================================================================
+  # Platform Health Alerts
+  # ==========================================================================
+  - name: marcus_platform_health
+    interval: 30s
+    rules:
+      # Alert: Platform Down
+      - alert: MarcusPlatformDown
+        expr: up{job="marcus-platform"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          component: platform
+        annotations:
+          summary: "MARCUS Platform is down"
+          description: "The MARCUS platform API has been down for more than 1 minute. Check systemd service: sudo systemctl status marcus-platform"
+          runbook: "https://github.com/404GeneNotFound/ai_game_theory_simulation/blob/main/docs/MARCUS_PRODUCTION_RUNBOOK.md#platform-down"
+
+      # Alert: High Error Rate
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) / rate(http_requests_total[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: high
+          component: platform
+        annotations:
+          summary: "High error rate detected (>5%)"
+          description: "Error rate is {{ $value | humanizePercentage }} over the last 5 minutes. Check platform logs: sudo journalctl -u marcus-platform -n 100"
+          runbook: "https://github.com/404GeneNotFound/ai_game_theory_simulation/blob/main/docs/MARCUS_PRODUCTION_RUNBOOK.md#high-error-rate"
+
+      # Alert: Slow Response Time (P95 > 2 seconds)
+      - alert: SlowResponseTime
+        expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m])) > 2
+        for: 10m
+        labels:
+          severity: high
+          component: platform
+        annotations:
+          summary: "P95 response time exceeds 2 seconds"
+          description: "P95 latency is {{ $value | humanizeDuration }} (target: <2s). Run performance benchmarks: npx tsx scripts/benchmark/citation-throughput.ts"
+          runbook: "https://github.com/404GeneNotFound/ai_game_theory_simulation/blob/main/docs/MARCUS_PRODUCTION_RUNBOOK.md#slow-response"
+
+  # ==========================================================================
+  # Database Alerts
+  # ==========================================================================
+  - name: marcus_database_health
+    interval: 30s
+    rules:
+      # Alert: PostgreSQL Down
+      - alert: PostgreSQLDown
+        expr: up{job="postgresql"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          component: database
+        annotations:
+          summary: "PostgreSQL is down"
+          description: "PostgreSQL has been down for more than 1 minute. Check service: sudo systemctl status postgresql"
+          runbook: "https://github.com/404GeneNotFound/ai_game_theory_simulation/blob/main/docs/MARCUS_PRODUCTION_RUNBOOK.md#postgresql-down"
+
+      # Alert: Connection Pool Exhausted
+      - alert: DatabaseConnectionPoolExhausted
+        expr: pg_stat_database_numbackends / pg_settings_max_connections > 0.9
+        for: 5m
+        labels:
+          severity: high
+          component: database
+        annotations:
+          summary: "Database connection pool near exhaustion"
+          description: "Connection pool is {{ $value | humanizePercentage }} full. Increase pool size or investigate connection leaks."
+          runbook: "https://github.com/404GeneNotFound/ai_game_theory_simulation/blob/main/docs/MARCUS_PRODUCTION_RUNBOOK.md#connection-pool"
+
+      # Alert: Low Cache Hit Ratio (<90%)
+      - alert: LowCacheHitRatio
+        expr: |
+          (pg_stat_database_blks_hit / (pg_stat_database_blks_hit + pg_stat_database_blks_read)) < 0.90
+        for: 10m
+        labels:
+          severity: medium
+          component: database
+        annotations:
+          summary: "PostgreSQL cache hit ratio below 90%"
+          description: "Cache hit ratio is {{ $value | humanizePercentage }} (target: >95%). Consider increasing shared_buffers in postgresql.conf"
+          runbook: "https://github.com/404GeneNotFound/ai_game_theory_simulation/blob/main/docs/MARCUS_PRODUCTION_RUNBOOK.md#cache-hit-ratio"
+
+  # ==========================================================================
+  # Redis Alerts
+  # ==========================================================================
+  - name: marcus_redis_health
+    interval: 30s
+    rules:
+      # Alert: Redis Down
+      - alert: RedisDown
+        expr: up{job="redis"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          component: cache
+        annotations:
+          summary: "Redis is down"
+          description: "Redis has been down for more than 1 minute. Check service: sudo systemctl status redis"
+          runbook: "https://github.com/404GeneNotFound/ai_game_theory_simulation/blob/main/docs/MARCUS_PRODUCTION_RUNBOOK.md#redis-down"
+
+      # Alert: High Memory Usage (>90%)
+      - alert: RedisHighMemoryUsage
+        expr: redis_memory_used_bytes / redis_memory_max_bytes > 0.9
+        for: 5m
+        labels:
+          severity: high
+          component: cache
+        annotations:
+          summary: "Redis memory usage above 90%"
+          description: "Redis memory usage is {{ $value | humanizePercentage }}. Review eviction policy or increase maxmemory."
+          runbook: "https://github.com/404GeneNotFound/ai_game_theory_simulation/blob/main/docs/MARCUS_PRODUCTION_RUNBOOK.md#redis-memory"
+
+  # ==========================================================================
+  # Agent Health Alerts
+  # ==========================================================================
+  - name: marcus_agent_health
+    interval: 30s
+    rules:
+      # Alert: Multiple Agents Down (>2 agents)
+      - alert: MultipleAgentsDown
+        expr: count(agent_status{status="unhealthy"}) > 2
+        for: 5m
+        labels:
+          severity: high
+          component: agents
+        annotations:
+          summary: "Multiple Python agents are unhealthy"
+          description: "{{ $value }} agents are unhealthy. Check agent logs and restart: sudo systemctl restart marcus-platform"
+          runbook: "https://github.com/404GeneNotFound/ai_game_theory_simulation/blob/main/docs/MARCUS_PRODUCTION_RUNBOOK.md#agent-health"
+
+      # Alert: Agent Response Time High (>500ms)
+      - alert: AgentSlowResponse
+        expr: histogram_quantile(0.95, rate(agent_response_time_seconds_bucket[5m])) > 0.5
+        for: 10m
+        labels:
+          severity: medium
+          component: agents
+        annotations:
+          summary: "Agent response time exceeds 500ms"
+          description: "Agent P95 response time is {{ $value | humanizeDuration }}. Run agent latency benchmark: npx tsx scripts/benchmark/agent-latency.ts"
+          runbook: "https://github.com/404GeneNotFound/ai_game_theory_simulation/blob/main/docs/MARCUS_PRODUCTION_RUNBOOK.md#agent-latency"
+
+  # ==========================================================================
+  # Circuit Breaker Alerts
+  # ==========================================================================
+  - name: marcus_circuit_breakers
+    interval: 30s
+    rules:
+      # Alert: Circuit Breaker Open (Critical Service)
+      - alert: CriticalCircuitBreakerOpen
+        expr: circuit_breaker_state{service=~"database|redis"} == 1
+        for: 2m
+        labels:
+          severity: critical
+          component: circuit-breaker
+        annotations:
+          summary: "Circuit breaker open for {{ $labels.service }}"
+          description: "Circuit breaker for {{ $labels.service }} has been open for >2 minutes. Service is unavailable. Check service health."
+          runbook: "https://github.com/404GeneNotFound/ai_game_theory_simulation/blob/main/docs/MARCUS_PRODUCTION_RUNBOOK.md#circuit-breaker"
+
+  # ==========================================================================
+  # System Resource Alerts
+  # ==========================================================================
+  - name: marcus_system_resources
+    interval: 30s
+    rules:
+      # Alert: High CPU Usage (>80%)
+      - alert: HighCPUUsage
+        expr: 100 - (avg by (instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
+        for: 10m
+        labels:
+          severity: medium
+          component: system
+        annotations:
+          summary: "High CPU usage detected"
+          description: "CPU usage is {{ $value | humanizePercentage }} on {{ $labels.instance }}. Check top processes: top -b -n 1"
+          runbook: "https://github.com/404GeneNotFound/ai_game_theory_simulation/blob/main/docs/MARCUS_PRODUCTION_RUNBOOK.md#high-cpu"
+
+      # Alert: High Memory Usage (>90%)
+      - alert: HighMemoryUsage
+        expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) > 0.9
+        for: 5m
+        labels:
+          severity: high
+          component: system
+        annotations:
+          summary: "High memory usage detected"
+          description: "Memory usage is {{ $value | humanizePercentage }} on {{ $labels.instance }}. Check memory usage: free -h"
+          runbook: "https://github.com/404GeneNotFound/ai_game_theory_simulation/blob/main/docs/MARCUS_PRODUCTION_RUNBOOK.md#high-memory"
+
+      # Alert: Low Disk Space (<10%)
+      - alert: LowDiskSpace
+        expr: (node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"}) < 0.1
+        for: 5m
+        labels:
+          severity: high
+          component: system
+        annotations:
+          summary: "Low disk space on root partition"
+          description: "Only {{ $value | humanizePercentage }} disk space remaining. Clean up logs or expand disk: df -h"
+          runbook: "https://github.com/404GeneNotFound/ai_game_theory_simulation/blob/main/docs/MARCUS_PRODUCTION_RUNBOOK.md#low-disk"

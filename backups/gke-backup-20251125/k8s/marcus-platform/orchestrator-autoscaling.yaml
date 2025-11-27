@@ -1,0 +1,96 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: orchestrator-scaler
+  namespace: marcus-platform
+spec:
+  scaleTargetRef:
+    name: orchestrator
+    kind: Deployment
+  # Scale to zero after 5 minutes of no activity
+  minReplicaCount: 0
+  maxReplicaCount: 10
+  pollingInterval: 30  # Check every 30 seconds
+  cooldownPeriod: 300  # Wait 5 minutes before scaling down
+  triggers:
+  # Scale based on HTTP requests (excluding health checks)
+  - type: prometheus
+    metadata:
+      serverAddress: http://prometheus:9090
+      metricName: http_requests_per_second
+      threshold: '0.5'  # Scale up if more than 0.5 requests per second
+      query: |
+        sum(rate(http_requests_total{
+          job="orchestrator",
+          path!="/health",
+          path!="/ready",
+          path!="/healthz",
+          path!="/readyz",
+          path!="/metrics"
+        }[1m]))
+      # If no requests (excluding health checks), scale to zero
+      activationThreshold: '0.1'  # Below this value, scale to zero
+---
+# Alternative: Scale based on Redis queue length
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: orchestrator-queue-scaler
+  namespace: marcus-platform
+spec:
+  scaleTargetRef:
+    name: orchestrator
+    kind: Deployment
+  minReplicaCount: 0
+  maxReplicaCount: 10
+  pollingInterval: 30
+  cooldownPeriod: 300
+  triggers:
+  - type: redis
+    metadata:
+      address: redis-0.redis-headless.marcus-platform.svc.cluster.local:6379
+      listName: citation-queue
+      listLength: '10'  # Scale up if more than 10 items in queue
+      activationListLength: '1'  # Scale from 0 to 1 if any items in queue
+    authenticationRef:
+      name: redis-trigger-auth
+---
+# Create HPA as backup (standard Kubernetes autoscaling)
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: orchestrator-hpa
+  namespace: marcus-platform
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: orchestrator
+  minReplicas: 1  # Minimum 1 for HPA (KEDA will override to 0)
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 70
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 300  # Wait 5 minutes before scaling down
+      policies:
+      - type: Percent
+        value: 50  # Scale down 50% at a time
+        periodSeconds: 60
+    scaleUp:
+      stabilizationWindowSeconds: 30  # Scale up quickly
+      policies:
+      - type: Percent
+        value: 100  # Double the pods when scaling up
+        periodSeconds: 30

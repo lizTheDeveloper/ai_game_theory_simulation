@@ -336,6 +336,7 @@ jobs:
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           prompt: ${{ steps.read_prompt.outputs.prompt }}
+          show_full_output: true
           claude_args: |
             --max-turns 20
             --dangerously-skip-permissions

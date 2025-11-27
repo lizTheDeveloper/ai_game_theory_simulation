@@ -1,0 +1,211 @@
+---
+# Horizontal Pod Autoscaler for Orchestrator
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: orchestrator-hpa
+  namespace: marcus-platform
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: orchestrator
+  minReplicas: 3
+  maxReplicas: 20
+  metrics:
+    # CPU-based scaling
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+
+    # Memory-based scaling
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 80
+
+    # Custom metric: Request rate (requests per second)
+    - type: Pods
+      pods:
+        metric:
+          name: http_requests_per_second
+        target:
+          type: AverageValue
+          averageValue: "100"
+
+    # Custom metric: Active citations being processed
+    - type: Pods
+      pods:
+        metric:
+          name: active_citations_count
+        target:
+          type: AverageValue
+          averageValue: "50"
+
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 300  # 5 minutes
+      policies:
+        - type: Percent
+          value: 50
+          periodSeconds: 60
+        - type: Pods
+          value: 2
+          periodSeconds: 60
+      selectPolicy: Min
+
+    scaleUp:
+      stabilizationWindowSeconds: 0
+      policies:
+        - type: Percent
+          value: 100
+          periodSeconds: 30
+        - type: Pods
+          value: 4
+          periodSeconds: 30
+      selectPolicy: Max
+---
+# Horizontal Pod Autoscaler for Citation Agent
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: citation-agent-hpa
+  namespace: marcus-platform
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: citation-agent
+  minReplicas: 5
+  maxReplicas: 50
+  metrics:
+    # CPU-based scaling
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 60
+
+    # Memory-based scaling
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 70
+
+    # Custom metric: Agent queue depth
+    - type: Pods
+      pods:
+        metric:
+          name: agent_queue_depth
+        target:
+          type: AverageValue
+          averageValue: "10"
+
+    # Custom metric: Agent response time
+    - type: Pods
+      pods:
+        metric:
+          name: agent_response_time_p95_seconds
+        target:
+          type: AverageValue
+          averageValue: "5"
+
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 600  # 10 minutes
+      policies:
+        - type: Percent
+          value: 30
+          periodSeconds: 120
+        - type: Pods
+          value: 3
+          periodSeconds: 120
+      selectPolicy: Min
+
+    scaleUp:
+      stabilizationWindowSeconds: 30
+      policies:
+        - type: Percent
+          value: 200
+          periodSeconds: 30
+        - type: Pods
+          value: 10
+          periodSeconds: 30
+      selectPolicy: Max
+---
+# Pod Disruption Budget for Orchestrator
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: orchestrator-pdb
+  namespace: marcus-platform
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: orchestrator
+---
+# Pod Disruption Budget for Citation Agent
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: citation-agent-pdb
+  namespace: marcus-platform
+spec:
+  minAvailable: 3
+  selector:
+    matchLabels:
+      app: citation-agent
+---
+# Vertical Pod Autoscaler (optional - for right-sizing recommendations)
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: orchestrator-vpa
+  namespace: marcus-platform
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: orchestrator
+  updatePolicy:
+    updateMode: "Off"  # Recommendation mode only
+  resourcePolicy:
+    containerPolicies:
+      - containerName: orchestrator
+        minAllowed:
+          cpu: 100m
+          memory: 256Mi
+        maxAllowed:
+          cpu: 2000m
+          memory: 2Gi
+---
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: citation-agent-vpa
+  namespace: marcus-platform
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: citation-agent
+  updatePolicy:
+    updateMode: "Off"  # Recommendation mode only
+  resourcePolicy:
+    containerPolicies:
+      - containerName: agent
+        minAllowed:
+          cpu: 50m
+          memory: 128Mi
+        maxAllowed:
+          cpu: 1000m
+          memory: 1Gi

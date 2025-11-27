@@ -945,6 +945,13 @@ function calculateCapabilityFear(state: GameState): number {
  * DEPRECATED: Use calculateComprehensiveTrustInAI() for post-recalibration runs
  */
 export function getTrustInAI(society: HumanSocietyAgent): number {
+  // P2.3 UPDATE (Nov 21, 2025): Use segment-based trust when segments are active
+  // When heterogeneous population segments exist, use population-weighted aggregate
+  if (society.segments && society.segments.length > 0 && society.trustInAI !== undefined) {
+    return Math.max(0.20, Math.min(0.95, society.trustInAI));
+  }
+
+  // Legacy behavior: Calculate from paranoia level (pre-P2.3)
   // NOTE: paranoiaLevel is ALWAYS initialized in initialization.ts
   const paranoia = assertStateProperty(society, 'paranoiaLevel', {
     location: 'getTrustInAI'

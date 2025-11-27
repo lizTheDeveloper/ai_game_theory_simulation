@@ -1,0 +1,68 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: marcus-platform
+
+resources:
+  # Namespace
+  - namespace.yaml
+
+  # Configuration
+  - configmap.yaml
+  - secrets.yaml
+
+  # Databases
+  - postgres-statefulset.yaml
+  - redis-statefulset.yaml
+
+  # Application
+  - orchestrator-deployment.yaml
+  - agent-deployment.yaml
+
+  # Networking
+  - ingress.yaml
+
+  # Autoscaling
+  - hpa.yaml
+  - prometheus-adapter.yaml
+
+  # Istio Service Mesh
+  - istio/gateway.yaml
+  - istio/authorization.yaml
+  - istio/telemetry.yaml
+  - istio/traffic-management.yaml
+
+commonLabels:
+  project: marcus-platform
+  managed-by: kustomize
+  version: "3.0"
+
+images:
+  - name: ghcr.io/404genenotfound/marcus-orchestrator
+    newTag: latest
+  - name: ghcr.io/404genenotfound/marcus-agent
+    newTag: latest
+
+replicas:
+  - name: orchestrator
+    count: 3
+  - name: citation-agent
+    count: 5
+
+configMapGenerator:
+  - name: deployment-info
+    literals:
+      - deployment.timestamp=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+      - deployment.version=3.0.0
+      - deployment.environment=production
+
+secretGenerator:
+  - name: generated-secrets
+    envs:
+      - .env.production  # Create this file with actual secrets
+
+generatorOptions:
+  disableNameSuffixHash: false
+  labels:
+    managed-by: kustomize

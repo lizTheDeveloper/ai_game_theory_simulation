@@ -1,0 +1,297 @@
+addonsConfig:
+  gcePersistentDiskCsiDriverConfig:
+    enabled: true
+  horizontalPodAutoscaling: {}
+  httpLoadBalancing: {}
+  kubernetesDashboard:
+    disabled: true
+  networkPolicyConfig:
+    disabled: true
+anonymousAuthenticationConfig:
+  mode: ENABLED
+autopilot: {}
+autoscaling:
+  autoprovisioningNodePoolDefaults:
+    imageType: COS_CONTAINERD
+    management:
+      autoRepair: true
+      autoUpgrade: true
+    oauthScopes:
+    - https://www.googleapis.com/auth/devstorage.read_only
+    - https://www.googleapis.com/auth/logging.write
+    - https://www.googleapis.com/auth/monitoring
+    - https://www.googleapis.com/auth/service.management.readonly
+    - https://www.googleapis.com/auth/servicecontrol
+    - https://www.googleapis.com/auth/trace.append
+    serviceAccount: default
+  autoscalingProfile: BALANCED
+clusterIpv4Cidr: 10.64.0.0/14
+controlPlaneEndpointsConfig:
+  dnsEndpointConfig:
+    allowExternalTraffic: false
+    enableK8sCertsViaDns: false
+    enableK8sTokensViaDns: false
+    endpoint: gke-23a374d9e7db471cb979c16a39b4503e64c7-90055777210.us-central1.gke.goog
+  ipEndpointsConfig:
+    authorizedNetworksConfig: {}
+    enablePublicEndpoint: true
+    enabled: true
+    privateEndpoint: 10.128.0.2
+    publicEndpoint: 34.56.8.53
+createTime: '2025-11-22T06:09:11+00:00'
+currentMasterVersion: 1.33.5-gke.1201000
+currentNodeCount: 3
+currentNodeVersion: 1.33.5-gke.1201000
+databaseEncryption:
+  currentState: CURRENT_STATE_DECRYPTED
+  state: DECRYPTED
+defaultMaxPodsConstraint:
+  maxPodsPerNode: '110'
+endpoint: 34.56.8.53
+enterpriseConfig:
+  clusterTier: STANDARD
+etag: fdf1160c-71a3-4438-98b4-ec64284b5466
+id: 23a374d9e7db471cb979c16a39b4503e64c78b179942428789acc71dfdb67295
+initialClusterVersion: 1.33.5-gke.1201000
+instanceGroupUrls:
+- https://www.googleapis.com/compute/v1/projects/project-6d921a00-c010-437c-990/zones/us-central1-f/instanceGroupManagers/gke-marcus-platform-default-pool-d6fc338f-grp
+- https://www.googleapis.com/compute/v1/projects/project-6d921a00-c010-437c-990/zones/us-central1-c/instanceGroupManagers/gke-marcus-platform-default-pool-f6fbdffb-grp
+- https://www.googleapis.com/compute/v1/projects/project-6d921a00-c010-437c-990/zones/us-central1-a/instanceGroupManagers/gke-marcus-platform-default-pool-225d202c-grp
+- https://www.googleapis.com/compute/v1/projects/project-6d921a00-c010-437c-990/zones/us-central1-f/instanceGroupManagers/gke-marcus-platform-spot-workers-fae0a376-grp
+- https://www.googleapis.com/compute/v1/projects/project-6d921a00-c010-437c-990/zones/us-central1-c/instanceGroupManagers/gke-marcus-platform-spot-workers-11e78121-grp
+- https://www.googleapis.com/compute/v1/projects/project-6d921a00-c010-437c-990/zones/us-central1-a/instanceGroupManagers/gke-marcus-platform-spot-workers-ccd221c8-grp
+ipAllocationPolicy:
+  clusterIpv4Cidr: 10.64.0.0/14
+  clusterIpv4CidrBlock: 10.64.0.0/14
+  clusterSecondaryRangeName: gke-marcus-platform-pods-23a374d9
+  defaultPodIpv4RangeUtilization: 0.0029
+  networkTierConfig:
+    networkTier: NETWORK_TIER_DEFAULT
+  podCidrOverprovisionConfig: {}
+  servicesIpv4Cidr: 34.118.224.0/20
+  servicesIpv4CidrBlock: 34.118.224.0/20
+  stackType: IPV4
+  useIpAliases: true
+labelFingerprint: a9dc16a7
+legacyAbac: {}
+location: us-central1
+locations:
+- us-central1-f
+- us-central1-c
+- us-central1-a
+loggingConfig:
+  componentConfig: {}
+loggingService: none
+maintenancePolicy:
+  resourceVersion: e3b0c442
+masterAuth:
+  clientCertificateConfig: {}
+  clusterCaCertificate: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUVMVENDQXBXZ0F3SUJBZ0lSQUsxWmJZbXB4YXVCeERiVndQNm5uSWd3RFFZSktvWklodmNOQVFFTEJRQXcKTHpFdE1Dc0dBMVVFQXhNa056VmxNelF5TnpFdE5UTTNaQzAwWmpVM0xUaGpNMkV0TWpZeFptSTFaVFJqTW1FdwpNQ0FYRFRJMU1URXlNakExTURreE5Gb1lEekl3TlRVeE1URTFNRFl3T1RFMFdqQXZNUzB3S3dZRFZRUURFeVEzCk5XVXpOREkzTVMwMU16ZGtMVFJtTlRjdE9HTXpZUzB5TmpGbVlqVmxOR015WVRBd2dnR2lNQTBHQ1NxR1NJYjMKRFFFQkFRVUFBNElCandBd2dnR0tBb0lCZ1FDd3ZSdmg3SUtBQjllM2tTQVp5aGR6UXlVZHRhMmMyVjZZNEVUWQpGdjhPRnNvR1hBQ1M0STlkL3luZlpzdFVxTUxja2ZvbUVWT0s5aUI1dE5MVkNEUnowekt5S2NnWTU3aHNUSnBWClp0ckVQN2hqaStrNjNwNXVwLzJlYWNFRzRyNnk5OWoxOHNlM3BWTkdwZWVCZ3NtampLMXFSWmlrQlRnakVRUUsKVUs4Z3RXMmNHNlhOM3NuUHZYL0F2SXVmTkxseWdQTEZLQW5yd3J4SXhJZml5RC9sSVVEblpaaUVYeXNMZVAxdApNRklZaWFvL0RaRGxBVjQ1ZnkyMjBNcUZjeWxLZm5qbXZmRXUxKzdzTFdaYXBvNldHNWlJYnRUKzh5TVU0ZHRuCmJ0dDMvWEFQdmJkaFBNYVdlNHhGY0YzWGZUckN6V0VLZGprNzNFeGxlSVV5RjA0VzhyanFjaloxM3V1bnRFRkgKNnJ4cDhTc3c2dDVac2c4Zy9lQ2FVQWRoLzBrWkxaWU9nejVMbldSaTNOT3BOcVhTVlFkcWx0RjlWRmRGSVhnOAoyU0NYMGZyVVZRL1NkY250SVNCQnBUWm9ML2x0SU1XRzhyZ3JvaTc5Y1B4dEFzOXF4MUd0bU9OL1BOYit0UktwCm0yYW1sZjErSUhmRVozUVdjZGg3RmJjMG5pOENBd0VBQWFOQ01FQXdEZ1lEVlIwUEFRSC9CQVFEQWdJRU1BOEcKQTFVZEV3RUIvd1FGTUFNQkFmOHdIUVlEVlIwT0JCWUVGQkpBbTNMaWx4bStKNXJzVjdUSGJpczl4djhMTUEwRwpDU3FHU0liM0RRRUJDd1VBQTRJQmdRQlovR1FtMkd4TTkwaEpqTnhYNDJ1eW5SWklpakw4SktHLzIvV1FLb0ZxCkQ2bkNPUVgyS1hlSTA4RFFwbmxpNDlRUittRVlmU2NCZW5HZDAyZ1MwTXpFRWVQRUR0YVBGbEF4Umx6R2pnR08KZGl0OHMxampLc1lDRnRQdnNWVGtmVGdPa0kwL0VtR3dPZDZZR2NVUnY4ZGMxdTJWUndZYWxyUlNRZ1BvNEV6cAppMlh6cUdidXZaZzR3UjhnZjNnZmRYTk8xMUFZSHJJVnFNa3YrakJUNDdiN1Z3ZGp4ci9BdnB0c1phdFlRNkpwCkQwZ1hYZFp5WHpKazlzcXR2enQyWVJrKy9JRzdkT3JndGtxMjNGbjhFZXFoZGpUT1d3NjNDWjI4RHU1NDY3WDQKWEVLR1ZKa0poeTJkVlhINERaQXUwcmFGUFVYSk1oSVJMaDV2TWN0d0NveWNtckJvd3RQZEI3aDFyRzJyR0lRMgpILzJxQ2tIdmdZOGNYY2UzU1pIK3lOWmsxWFBpYXpEck5kL3dRWHJ3Tjl3VEFzNXlQZWFEUFppdUJUQXBtcFBxCk15cUxadjRzajBRSG5hdGxHU2pjZDFieVAzSjljdzN3cjVxTllqekhQMUJGZklzcml2UlFNR2sycFhTdzlsVG8KSlZlbitoMkhFL2ZlaHJwTHNCejNxSUE9Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+masterAuthorizedNetworksConfig: {}
+monitoringConfig:
+  advancedDatapathObservabilityConfig: {}
+  componentConfig:
+    enableComponents:
+    - SYSTEM_COMPONENTS
+    - POD
+    - DAEMONSET
+    - DEPLOYMENT
+    - STATEFULSET
+    - JOBSET
+    - STORAGE
+    - HPA
+    - CADVISOR
+    - KUBELET
+    - DCGM
+  managedPrometheusConfig:
+    enabled: true
+monitoringService: monitoring.googleapis.com/kubernetes
+name: marcus-platform
+network: default
+networkConfig:
+  network: projects/project-6d921a00-c010-437c-990/global/networks/default
+  serviceExternalIpsConfig: {}
+  subnetwork: projects/project-6d921a00-c010-437c-990/regions/us-central1/subnetworks/default
+nodeConfig:
+  bootDisk:
+    diskType: pd-balanced
+    sizeGb: '50'
+  diskSizeGb: 50
+  diskType: pd-balanced
+  effectiveCgroupMode: EFFECTIVE_CGROUP_MODE_V2
+  imageType: COS_CONTAINERD
+  kubeletConfig:
+    insecureKubeletReadonlyPortEnabled: false
+    maxParallelImagePulls: 2
+  machineType: e2-standard-4
+  metadata:
+    disable-legacy-endpoints: 'true'
+  oauthScopes:
+  - https://www.googleapis.com/auth/cloud-platform
+  resourceLabels:
+    goog-gke-node-pool-provisioning-model: on-demand
+  serviceAccount: default
+  shieldedInstanceConfig:
+    enableIntegrityMonitoring: true
+  windowsNodeConfig: {}
+nodePoolAutoConfig:
+  nodeKubeletConfig:
+    insecureKubeletReadonlyPortEnabled: false
+nodePoolDefaults:
+  nodeConfigDefaults:
+    loggingConfig:
+      variantConfig:
+        variant: DEFAULT
+    nodeKubeletConfig:
+      insecureKubeletReadonlyPortEnabled: false
+nodePools:
+- autoscaling:
+    enabled: true
+    locationPolicy: BALANCED
+    maxNodeCount: 1
+    minNodeCount: 1
+  config:
+    bootDisk:
+      diskType: pd-balanced
+      sizeGb: '50'
+    diskSizeGb: 50
+    diskType: pd-balanced
+    effectiveCgroupMode: EFFECTIVE_CGROUP_MODE_V2
+    imageType: COS_CONTAINERD
+    kubeletConfig:
+      insecureKubeletReadonlyPortEnabled: false
+      maxParallelImagePulls: 2
+    machineType: e2-standard-4
+    metadata:
+      disable-legacy-endpoints: 'true'
+    oauthScopes:
+    - https://www.googleapis.com/auth/cloud-platform
+    resourceLabels:
+      goog-gke-node-pool-provisioning-model: on-demand
+    serviceAccount: default
+    shieldedInstanceConfig:
+      enableIntegrityMonitoring: true
+    windowsNodeConfig: {}
+  etag: 80b0c230-c80c-4d4a-88df-40fb0fee53bb
+  initialNodeCount: 1
+  instanceGroupUrls:
+  - https://www.googleapis.com/compute/v1/projects/project-6d921a00-c010-437c-990/zones/us-central1-f/instanceGroupManagers/gke-marcus-platform-default-pool-d6fc338f-grp
+  - https://www.googleapis.com/compute/v1/projects/project-6d921a00-c010-437c-990/zones/us-central1-c/instanceGroupManagers/gke-marcus-platform-default-pool-f6fbdffb-grp
+  - https://www.googleapis.com/compute/v1/projects/project-6d921a00-c010-437c-990/zones/us-central1-a/instanceGroupManagers/gke-marcus-platform-default-pool-225d202c-grp
+  locations:
+  - us-central1-f
+  - us-central1-c
+  - us-central1-a
+  management:
+    autoRepair: true
+    autoUpgrade: true
+  maxPodsConstraint:
+    maxPodsPerNode: '110'
+  name: default-pool
+  networkConfig:
+    networkTierConfig:
+      networkTier: NETWORK_TIER_DEFAULT
+    podIpv4CidrBlock: 10.64.0.0/14
+    podIpv4RangeUtilization: 0.0029
+    podRange: gke-marcus-platform-pods-23a374d9
+    subnetwork: projects/project-6d921a00-c010-437c-990/regions/us-central1/subnetworks/default
+  podIpv4CidrSize: 24
+  selfLink: https://container.googleapis.com/v1/projects/project-6d921a00-c010-437c-990/locations/us-central1/clusters/marcus-platform/nodePools/default-pool
+  status: RUNNING
+  upgradeSettings:
+    maxSurge: 1
+    strategy: SURGE
+  version: 1.33.5-gke.1201000
+- autoscaling:
+    enabled: true
+    locationPolicy: ANY
+    maxNodeCount: 10
+  config:
+    bootDisk:
+      diskType: pd-standard
+      sizeGb: '20'
+    diskSizeGb: 20
+    diskType: pd-standard
+    effectiveCgroupMode: EFFECTIVE_CGROUP_MODE_V2
+    imageType: COS_CONTAINERD
+    kubeletConfig:
+      insecureKubeletReadonlyPortEnabled: false
+      maxParallelImagePulls: 2
+    labels:
+      cost-optimized: 'true'
+      workload-type: worker
+    machineType: e2-medium
+    metadata:
+      disable-legacy-endpoints: 'true'
+    oauthScopes:
+    - https://www.googleapis.com/auth/devstorage.read_only
+    - https://www.googleapis.com/auth/logging.write
+    - https://www.googleapis.com/auth/monitoring
+    - https://www.googleapis.com/auth/service.management.readonly
+    - https://www.googleapis.com/auth/servicecontrol
+    - https://www.googleapis.com/auth/trace.append
+    resourceLabels:
+      goog-gke-node-pool-provisioning-model: spot
+    serviceAccount: default
+    shieldedInstanceConfig:
+      enableIntegrityMonitoring: true
+    spot: true
+    taints:
+    - effect: NO_SCHEDULE
+      key: spot
+      value: 'true'
+    windowsNodeConfig: {}
+  etag: dc1d3b3c-beb0-4b4a-9bc3-531c83dd8644
+  instanceGroupUrls:
+  - https://www.googleapis.com/compute/v1/projects/project-6d921a00-c010-437c-990/zones/us-central1-f/instanceGroupManagers/gke-marcus-platform-spot-workers-fae0a376-grp
+  - https://www.googleapis.com/compute/v1/projects/project-6d921a00-c010-437c-990/zones/us-central1-c/instanceGroupManagers/gke-marcus-platform-spot-workers-11e78121-grp
+  - https://www.googleapis.com/compute/v1/projects/project-6d921a00-c010-437c-990/zones/us-central1-a/instanceGroupManagers/gke-marcus-platform-spot-workers-ccd221c8-grp
+  locations:
+  - us-central1-f
+  - us-central1-c
+  - us-central1-a
+  management:
+    autoRepair: true
+    autoUpgrade: true
+  maxPodsConstraint:
+    maxPodsPerNode: '110'
+  name: spot-workers
+  networkConfig:
+    networkTierConfig:
+      networkTier: NETWORK_TIER_DEFAULT
+    podIpv4CidrBlock: 10.64.0.0/14
+    podIpv4RangeUtilization: 0.0029
+    podRange: gke-marcus-platform-pods-23a374d9
+    subnetwork: projects/project-6d921a00-c010-437c-990/regions/us-central1/subnetworks/default
+  podIpv4CidrSize: 24
+  selfLink: https://container.googleapis.com/v1/projects/project-6d921a00-c010-437c-990/locations/us-central1/clusters/marcus-platform/nodePools/spot-workers
+  status: RUNNING
+  upgradeSettings:
+    maxSurge: 1
+    strategy: SURGE
+  version: 1.33.5-gke.1201000
+notificationConfig:
+  pubsub: {}
+podAutoscaling:
+  hpaProfile: HPA_PROFILE_UNSPECIFIED
+privateClusterConfig:
+  privateEndpoint: 10.128.0.2
+  publicEndpoint: 34.56.8.53
+rbacBindingConfig:
+  enableInsecureBindingSystemAuthenticated: true
+  enableInsecureBindingSystemUnauthenticated: true
+releaseChannel:
+  channel: REGULAR
+satisfiesPzi: true
+satisfiesPzs: false
+securityPostureConfig:
+  mode: BASIC
+  vulnerabilityMode: VULNERABILITY_MODE_UNSPECIFIED
+selfLink: https://container.googleapis.com/v1/projects/project-6d921a00-c010-437c-990/locations/us-central1/clusters/marcus-platform
+servicesIpv4Cidr: 34.118.224.0/20
+shieldedNodes:
+  enabled: true
+status: RUNNING
+subnetwork: default
+userManagedKeysConfig: {}
+zone: us-central1

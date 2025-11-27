@@ -17,7 +17,11 @@ import type { GameState } from '../src/types/game';
 function createMockState(): GameState {
   return {
     socialAccumulation: {
-      socialCohesion: 0.70,
+      socialCohesion: {
+        trust: 70,           // [0, 100] Social trust
+        communityBonds: 70,  // [0, 100] Community bonds
+        civilLiberties: 75,  // [0, 100] Civil liberties
+      },
       meaningCrisisLevel: 0.20,
       institutionalLegitimacy: 0.75,
     },
@@ -178,7 +182,9 @@ describe('Indigenous Paradigm - 3-Tier Data Strategy', () => {
     const state = createMockState();
 
     // Simulate dystopian social conditions
-    state.socialAccumulation.socialCohesion = 0.15; // Very low
+    state.socialAccumulation.socialCohesion.trust = 15;  // Very low (0-100 scale)
+    state.socialAccumulation.socialCohesion.communityBonds = 15;  // Very low
+    state.socialAccumulation.socialCohesion.civilLiberties = 10;  // Very low
     state.socialAccumulation.meaningCrisisLevel = 0.80; // Very high crisis
     state.socialAccumulation.institutionalLegitimacy = 0.20; // Very low
     state.society.unemploymentLevel = 0.35;

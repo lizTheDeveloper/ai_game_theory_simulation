@@ -1,54 +1,134 @@
-# Dependencies
-node_modules
-npm-debug.log
-yarn-error.log
-package-lock.json
-yarn.lock
+# MARCUS 3.0 - Docker Build Exclusions (ENHANCED)
+#
+# HIGH PRIORITY #4: Exclude unnecessary files from Docker builds
+# Updated: 2025-11-22 by Marcus
 
-# Next.js build output
-.next
-out
-
-# Local dev files
-.env*.local
-.env
-
-# Git
+# ============================================================================
+# Development Files
+# ============================================================================
 .git
 .gitignore
-
-# Testing
-coverage
-.nyc_output
-
-# Misc
-.DS_Store
-*.pem
-
-# Debug
-logs
-*.log
-
-# IDE
-.idea
+.github
 .vscode
+.idea
 *.swp
 *.swo
+*~
 
-# Simulation outputs
-monteCarloOutputs
-logs/*.log
-
-# Documentation (not needed in container)
-docs
-devlogs
-research
-reviews
-plans
-
-# Claude Code agent files
-.claude
-
-# Large unnecessary files
+# ============================================================================
+# Documentation
+# ============================================================================
+README.md
+CHANGELOG.md
+LICENSE
+docs/
+devlogs/
+reviews/
+plans/
+research/
 *.md
-!README.md
+
+# ============================================================================
+# Build Artifacts
+# ============================================================================
+node_modules/
+dist/
+build/
+.next/
+out/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+*.egg-info/
+.pytest_cache/
+.coverage
+
+# ============================================================================
+# Test Files
+# ============================================================================
+tests/
+test/
+*.test.ts
+*.test.js
+*.spec.ts
+*.spec.js
+coverage/
+.nyc_output/
+
+# ============================================================================
+# Configuration Files (not needed in image)
+# ============================================================================
+.env
+.env.local
+.env.development
+.env.test
+.eslintrc*
+.prettierrc*
+jest.config*
+cypress/
+cypress.json
+
+# ============================================================================
+# CI/CD Files
+# ============================================================================
+.gitlab-ci.yml
+.travis.yml
+Jenkinsfile
+azure-pipelines.yml
+
+# ============================================================================
+# Docker Files (don't copy into themselves)
+# ============================================================================
+Dockerfile*
+docker-compose*.yml
+
+# ============================================================================
+# Kubernetes Manifests (not needed in image)
+# ============================================================================
+k8s/
+helm/
+
+# ============================================================================
+# Logs and Temporary Files
+# ============================================================================
+logs/
+*.log
+tmp/
+temp/
+.cache/
+monteCarloOutputs/
+
+# ============================================================================
+# OS Files
+# ============================================================================
+.DS_Store
+Thumbs.db
+*.pem
+
+# ============================================================================
+# Claude Code agent files
+# ============================================================================
+.claude/
+
+# ============================================================================
+# Large Files / Data
+# ============================================================================
+datasets/
+data/
+*.csv
+*.json.gz
+*.parquet
+*.db
+*.sqlite
+*.sqlite3

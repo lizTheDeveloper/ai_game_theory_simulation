@@ -1,0 +1,172 @@
+# MARCUS 3.1 L6 Cost Optimization
+# Scheduled Scaling for Dev/Staging Environments
+#
+# Benefits:
+# - Scales down dev/staging at 6 PM daily (save ~$15/month)
+# - Scales up at 8 AM weekdays
+# - Production unaffected
+#
+# Author: Marcus (Platform Engineer)
+# Date: 2025-11-22
+
+---
+# Scale DOWN at 6 PM daily
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: scale-down-evening
+  namespace: marcus-dev
+spec:
+  schedule: "0 18 * * *"  # 6:00 PM daily
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: scheduled-scaler
+          restartPolicy: OnFailure
+          containers:
+            - name: kubectl
+              image: bitnami/kubectl:latest
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  echo "⏬ Scaling down dev environment..."
+
+                  # Scale orchestrator to 1 replica
+                  kubectl scale deployment citation-orchestrator --replicas=1 -n marcus-dev
+
+                  # Scale workers to 0
+                  kubectl scale deployment citation-worker --replicas=0 -n marcus-dev
+
+                  # Scale database to minimal
+                  kubectl scale statefulset marcus-postgres --replicas=1 -n marcus-dev
+
+                  echo "✅ Dev environment scaled down"
+
+---
+# Scale UP at 8 AM weekdays
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: scale-up-morning
+  namespace: marcus-dev
+spec:
+  schedule: "0 8 * * 1-5"  # 8:00 AM Monday-Friday
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: scheduled-scaler
+          restartPolicy: OnFailure
+          containers:
+            - name: kubectl
+              image: bitnami/kubectl:latest
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  echo "⏫ Scaling up dev environment..."
+
+                  # Scale orchestrator to normal
+                  kubectl scale deployment citation-orchestrator --replicas=2 -n marcus-dev
+
+                  # Scale workers to normal (KEDA will manage from here)
+                  kubectl scale deployment citation-worker --replicas=3 -n marcus-dev
+
+                  # Scale database to normal
+                  kubectl scale statefulset marcus-postgres --replicas=2 -n marcus-dev
+
+                  echo "✅ Dev environment scaled up"
+
+---
+# ServiceAccount for scheduled scaling
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: scheduled-scaler
+  namespace: marcus-dev
+
+---
+# Role for scaling deployments
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: deployment-scaler
+  namespace: marcus-dev
+rules:
+  - apiGroups: ["apps"]
+    resources: ["deployments", "statefulsets"]
+    verbs: ["get", "list", "patch", "update"]
+  - apiGroups: ["apps"]
+    resources: ["deployments/scale", "statefulsets/scale"]
+    verbs: ["get", "update", "patch"]
+
+---
+# RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: scheduled-scaler-binding
+  namespace: marcus-dev
+subjects:
+  - kind: ServiceAccount
+    name: scheduled-scaler
+    namespace: marcus-dev
+roleRef:
+  kind: Role
+  name: deployment-scaler
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# Apply to staging as well
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: scale-down-evening
+  namespace: marcus-staging
+spec:
+  schedule: "0 18 * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: scheduled-scaler
+          restartPolicy: OnFailure
+          containers:
+            - name: kubectl
+              image: bitnami/kubectl:latest
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  kubectl scale deployment citation-orchestrator --replicas=1 -n marcus-staging
+                  kubectl scale deployment citation-worker --replicas=0 -n marcus-staging
+
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: scale-up-morning
+  namespace: marcus-staging
+spec:
+  schedule: "0 8 * * 1-5"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: scheduled-scaler
+          restartPolicy: OnFailure
+          containers:
+            - name: kubectl
+              image: bitnami/kubectl:latest
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  kubectl scale deployment citation-orchestrator --replicas=2 -n marcus-staging
+                  kubectl scale deployment citation-worker --replicas=3 -n marcus-staging

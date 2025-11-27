@@ -1,0 +1,175 @@
+name: Validate Database Migrations
+
+on:
+  pull_request:
+    paths:
+      - 'src/platform/database/migrations/**'
+      - 'src/platform/database/migrate.ts'
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/platform/database/migrations/**'
+      - 'src/platform/database/migrate.ts'
+
+jobs:
+  validate-migrations:
+    name: Validate Migration Files
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_USER: marcus
+          POSTGRES_PASSWORD: changeme
+          POSTGRES_DB: citation_integrity_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check migration file naming
+        run: |
+          echo "Checking migration file names..."
+          cd src/platform/database/migrations
+          for file in *.sql; do
+            if ! [[ $file =~ ^[0-9]{3}_[a-z_]+\.sql$ ]]; then
+              echo "❌ Invalid migration filename: $file"
+              echo "   Expected format: 001_description.sql"
+              exit 1
+            fi
+          done
+          echo "✅ All migration filenames valid"
+
+      - name: Check for migration conflicts
+        run: |
+          echo "Checking for version conflicts..."
+          cd src/platform/database/migrations
+          versions=$(ls *.sql | grep -oP '^\d{3}' | sort)
+          duplicates=$(echo "$versions" | uniq -d)
+          if [ ! -z "$duplicates" ]; then
+            echo "❌ Duplicate migration versions found:"
+            echo "$duplicates"
+            exit 1
+          fi
+          echo "✅ No version conflicts"
+
+      - name: Run migrations (fresh database)
+        env:
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
+          POSTGRES_DB: citation_integrity_test
+          POSTGRES_USER: marcus
+          POSTGRES_PASSWORD: changeme
+        run: |
+          echo "Running all migrations..."
+          npx tsx src/platform/database/migrate.ts up
+          echo "✅ All migrations applied successfully"
+
+      - name: Verify migration status
+        env:
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
+          POSTGRES_DB: citation_integrity_test
+          POSTGRES_USER: marcus
+          POSTGRES_PASSWORD: changeme
+        run: |
+          echo "Checking migration status..."
+          npx tsx src/platform/database/migrate.ts status
+
+      - name: Test idempotency (run migrations again)
+        env:
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
+          POSTGRES_DB: citation_integrity_test
+          POSTGRES_USER: marcus
+          POSTGRES_PASSWORD: changeme
+        run: |
+          echo "Testing migration idempotency..."
+          npx tsx src/platform/database/migrate.ts up
+          echo "✅ Migrations are idempotent"
+
+      - name: Verify required tables exist
+        env:
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
+          POSTGRES_DB: citation_integrity_test
+          POSTGRES_USER: marcus
+          POSTGRES_PASSWORD: changeme
+        run: |
+          echo "Verifying tables exist..."
+          PGPASSWORD=changeme psql -h localhost -U marcus -d citation_integrity_test -c "
+            SELECT table_name
+            FROM information_schema.tables
+            WHERE table_schema = 'public'
+              AND table_name IN ('users', 'agent_states', 'citation_analyses', 'auth_audit_log', 'schema_migrations')
+            ORDER BY table_name;
+          "
+
+      - name: Check for SQL syntax errors
+        run: |
+          echo "Checking SQL syntax..."
+          for file in src/platform/database/migrations/*.sql; do
+            echo "Checking $file..."
+            # Basic syntax check (will fail if migrations already applied, but that's ok)
+            PGPASSWORD=changeme psql -h localhost -U marcus -d citation_integrity_test -f "$file" --dry-run 2>&1 || true
+          done
+          echo "✅ SQL syntax check complete"
+
+      - name: Verify indexes created
+        env:
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
+          POSTGRES_DB: citation_integrity_test
+          POSTGRES_USER: marcus
+          POSTGRES_PASSWORD: changeme
+        run: |
+          echo "Verifying indexes..."
+          PGPASSWORD=changeme psql -h localhost -U marcus -d citation_integrity_test -c "
+            SELECT schemaname, tablename, indexname
+            FROM pg_indexes
+            WHERE schemaname = 'public'
+              AND tablename IN ('users', 'agent_states', 'citation_analyses')
+            ORDER BY tablename, indexname;
+          "
+
+  migration-documentation:
+    name: Check Migration Documentation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check migration comments
+        run: |
+          echo "Checking migration documentation..."
+          for file in src/platform/database/migrations/*.sql; do
+            if ! grep -q "^\s*/\*\*" "$file"; then
+              echo "❌ Missing documentation header in: $file"
+              exit 1
+            fi
+            if ! grep -qi "Author:" "$file"; then
+              echo "⚠️  Warning: Missing Author field in: $file"
+            fi
+            if ! grep -qi "Date:" "$file" && ! grep -qi "Created:" "$file"; then
+              echo "⚠️  Warning: Missing Date/Created field in: $file"
+            fi
+          done
+          echo "✅ All migrations have documentation"

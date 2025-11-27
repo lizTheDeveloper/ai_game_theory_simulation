@@ -1,0 +1,147 @@
+=================================================================
+MARCUS Citation Worker Metrics - Implementation Verification
+=================================================================
+Date: 2025-11-22
+Pattern: Connection Pooling Aggregator
+Port: 9300
+
+=================================================================
+1. METRICS ENDPOINT VERIFICATION
+=================================================================
+
+Health Check:
+{
+    "status": "ok",
+    "service": "worker-metrics-aggregator",
+    "port": 9300,
+    "description": "Aggregated Prometheus metrics from all citation workers"
+}
+
+Metrics Sample (first 20 lines):
+# HELP citation_tasks_processed_total Total citation tasks processed
+# TYPE citation_tasks_processed_total counter
+# HELP citation_task_duration_seconds Citation task processing duration
+# TYPE citation_task_duration_seconds histogram
+# HELP citation_agent_reputation Agent reputation score (0-1)
+# TYPE citation_agent_reputation gauge
+# HELP citation_queue_depth Number of tasks in Redis queue
+# TYPE citation_queue_depth gauge
+citation_queue_depth 0.0
+# HELP citation_integrity_score Distribution of citation integrity scores
+# TYPE citation_integrity_score histogram
+# HELP citation_workers_active Number of active citation workers
+# TYPE citation_workers_active gauge
+citation_workers_active 0.0
+
+=================================================================
+2. PROMETHEUS TARGET VERIFICATION
+=================================================================
+Target Status: up
+Last Scrape: 2025-11-22T06:46:54.004234594Z
+Scrape URL: http://localhost:9300/metrics
+Last Error: None
+
+=================================================================
+3. PROMETHEUS QUERY VERIFICATION
+=================================================================
+citation_workers_active:
+{
+  "metric": {
+    "__name__": "citation_workers_active",
+    "component": "agents",
+    "instance": "localhost:9300",
+    "job": "citation-workers",
+    "pattern": "aggregator",
+    "service": "citation-workers"
+  },
+  "value": [
+    1763794036.461,
+    "0"
+  ]
+}
+
+citation_queue_depth:
+{
+  "metric": {
+    "__name__": "citation_queue_depth",
+    "component": "agents",
+    "instance": "localhost:9300",
+    "job": "citation-workers",
+    "pattern": "aggregator",
+    "service": "citation-workers"
+  },
+  "value": [
+    1763794036.482,
+    "0"
+  ]
+}
+
+=================================================================
+4. PORT VERIFICATION
+=================================================================
+Port 9300 Status:
+LISTEN 0      5            0.0.0.0:9300       0.0.0.0:*    users:(("python3",pid=45934,fd=3))        
+
+=================================================================
+5. FILE VERIFICATION
+=================================================================
+Created Files:
+-rwx--x--x 1 g7throwawayplz g7throwawayplz 4.7K Nov 22 06:41 src/platform/metrics/worker_metrics_server.py
+-rwx--x--x 1 g7throwawayplz g7throwawayplz 2.0K Nov 22 06:45 scripts/start_worker_metrics.sh
+-rw------- 1 g7throwawayplz g7throwawayplz 936 Nov 22 06:45 deployment/systemd/worker-metrics-aggregator.service
+-rw------- 1 g7throwawayplz g7throwawayplz 1.4K Nov 22 06:42 deployment/prometheus/citation-workers-scrape.yml
+-rw------- 1 g7throwawayplz g7throwawayplz 7.4K Nov 22 06:46 docs/WORKER_METRICS.md
+
+=================================================================
+6. CONFIGURATION VERIFICATION
+=================================================================
+Prometheus config includes citation-workers:
+  - job_name: "citation-workers"
+    static_configs:
+      - targets: ["localhost:9300"]
+        labels:
+          service: "citation-workers"
+          component: "agents"
+          pattern: "aggregator"
+
+    metrics_path: "/metrics"
+    scrape_interval: 30s
+    scrape_timeout: 10s
+
+PORT_MAPPING.md includes port 9300:
+Port 9300: worker-metrics-aggregator       - Citation Worker Metrics Aggregator
+**Port:** 9300
+**URL:** http://localhost:9300/metrics
+curl http://localhost:9300/metrics
+curl http://localhost:9300/health
+
+=================================================================
+SUCCESS CRITERIA CHECKLIST
+=================================================================
+[✅] Port 9300 documented in PORT_MAPPING.md
+[✅] Metrics endpoint returns data: curl http://localhost:9300/metrics
+[✅] Prometheus scrapes successfully (check /targets)
+[✅] Health endpoint responds: curl http://localhost:9300/health
+[✅] Prometheus can query metrics (citation_workers_active)
+[✅] Shared registry pattern implemented (METRICS_REGISTRY)
+[✅] Instrumentation added to citation_worker.py
+[✅] Aggregator server created (worker_metrics_server.py)
+[✅] Startup script created (start_worker_metrics.sh)
+[✅] Systemd service file created
+[✅] Documentation created (WORKER_METRICS.md)
+[✅] prometheus-client added to requirements.txt
+
+=================================================================
+IMPLEMENTATION COMPLETE
+=================================================================
+
+Next Steps:
+1. Start citation workers to see live metrics
+2. Create Grafana dashboard panels (see WORKER_METRICS.md)
+3. Set up alerting rules if needed
+4. Install systemd service for production:
+   sudo cp deployment/systemd/worker-metrics-aggregator.service /etc/systemd/system/
+   sudo systemctl daemon-reload
+   sudo systemctl enable worker-metrics-aggregator
+   sudo systemctl start worker-metrics-aggregator
+

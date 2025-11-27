@@ -1,0 +1,208 @@
+2025-11-22T02:02:40Z	INFO	[vuln] Vulnerability scanning is enabled
+2025-11-22T02:02:40Z	INFO	[secret] Secret scanning is enabled
+2025-11-22T02:02:40Z	INFO	[secret] If your scanning is slow, please try '--scanners vuln' to disable secret scanning
+2025-11-22T02:02:40Z	INFO	[secret] Please see https://trivy.dev/v0.67/docs/scanner/secret#recommendation for faster secret detection
+2025-11-22T02:02:52Z	INFO	[python] Licenses acquired from one or more METADATA files may be subject to additional terms. Use `--debug` flag to see all affected packages.
+2025-11-22T02:02:57Z	INFO	Detected OS	family="debian" version="13.2"
+2025-11-22T02:02:57Z	INFO	[debian] Detecting vulnerabilities...	os_version="13" pkg_num=140
+2025-11-22T02:02:58Z	INFO	Number of language-specific files	num=1
+2025-11-22T02:02:58Z	INFO	[python-pkg] Detecting vulnerabilities...
+2025-11-22T02:02:58Z	WARN	Using severities from other vendors for some vulnerabilities. Read https://trivy.dev/v0.67/docs/scanner/vulnerability#severity-selection for details.
+
+Report Summary
+
+┌──────────────────────────────────────────────────────────────────────────────────┬────────────┬─────────────────┬─────────┐
+│                                      Target                                      │    Type    │ Vulnerabilities │ Secrets │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┤
+│ marcus-citation-agent:v3.0.0 (debian 13.2)                                       │   debian   │       31        │    -    │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┤
+│ usr/local/lib/python3.11/site-packages/colorlog-6.10.1.dist-info/METADATA        │ python-pkg │        0        │    -    │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┤
+│ usr/local/lib/python3.11/site-packages/numpy-2.3.5.dist-info/METADATA            │ python-pkg │        0        │    -    │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┤
+│ usr/local/lib/python3.11/site-packages/pip-24.0.dist-info/METADATA               │ python-pkg │        0        │    -    │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┤
+│ usr/local/lib/python3.11/site-packages/psycopg2_binary-2.9.11.dist-info/METADATA │ python-pkg │        0        │    -    │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┤
+│ usr/local/lib/python3.11/site-packages/redis-7.1.0.dist-info/METADATA            │ python-pkg │        0        │    -    │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┤
+│ usr/local/lib/python3.11/site-packages/setuptools-79.0.1.dist-info/METADATA      │ python-pkg │        0        │    -    │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┤
+│ usr/local/lib/python3.11/site-packages/setuptools/_vendor/autocommand-2.2.2.dis- │ python-pkg │        0        │    -    │
+│ t-info/METADATA                                                                  │            │                 │         │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┤
+│ usr/local/lib/python3.11/site-packages/setuptools/_vendor/backports.tarfile-1.2- │ python-pkg │        0        │    -    │
+│ .0.dist-info/METADATA                                                            │            │                 │         │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┤
+│ usr/local/lib/python3.11/site-packages/setuptools/_vendor/importlib_metadata-8.- │ python-pkg │        0        │    -    │
+│ 0.0.dist-info/METADATA                                                           │            │                 │         │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┤
+│ usr/local/lib/python3.11/site-packages/setuptools/_vendor/inflect-7.3.1.dist-in- │ python-pkg │        0        │    -    │
+│ fo/METADATA                                                                      │            │                 │         │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┤
+│ usr/local/lib/python3.11/site-packages/setuptools/_vendor/jaraco.collections-5.- │ python-pkg │        0        │    -    │
+│ 1.0.dist-info/METADATA                                                           │            │                 │         │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┤
+│ usr/local/lib/python3.11/site-packages/setuptools/_vendor/jaraco.context-5.3.0.- │ python-pkg │        0        │    -    │
+│ dist-info/METADATA                                                               │            │                 │         │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┤
+│ usr/local/lib/python3.11/site-packages/setuptools/_vendor/jaraco.functools-4.0.- │ python-pkg │        0        │    -    │
+│ 1.dist-info/METADATA                                                             │            │                 │         │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┤
+│ usr/local/lib/python3.11/site-packages/setuptools/_vendor/jaraco.text-3.12.1.di- │ python-pkg │        0        │    -    │
+│ st-info/METADATA                                                                 │            │                 │         │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┤
+│ usr/local/lib/python3.11/site-packages/setuptools/_vendor/more_itertools-10.3.0- │ python-pkg │        0        │    -    │
+│ .dist-info/METADATA                                                              │            │                 │         │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┤
+│ usr/local/lib/python3.11/site-packages/setuptools/_vendor/packaging-24.2.dist-i- │ python-pkg │        0        │    -    │
+│ nfo/METADATA                                                                     │            │                 │         │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┤
+│ usr/local/lib/python3.11/site-packages/setuptools/_vendor/platformdirs-4.2.2.di- │ python-pkg │        0        │    -    │
+│ st-info/METADATA                                                                 │            │                 │         │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┤
+│ usr/local/lib/python3.11/site-packages/setuptools/_vendor/tomli-2.0.1.dist-info- │ python-pkg │        0        │    -    │
+│ /METADATA                                                                        │            │                 │         │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┤
+│ usr/local/lib/python3.11/site-packages/setuptools/_vendor/typeguard-4.3.0.dist-- │ python-pkg │        0        │    -    │
+│ info/METADATA                                                                    │            │                 │         │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┤
+│ usr/local/lib/python3.11/site-packages/setuptools/_vendor/typing_extensions-4.1- │ python-pkg │        0        │    -    │
+│ 2.2.dist-info/METADATA                                                           │            │                 │         │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┤
+│ usr/local/lib/python3.11/site-packages/setuptools/_vendor/wheel-0.45.1.dist-inf- │ python-pkg │        0        │    -    │
+│ o/METADATA                                                                       │            │                 │         │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┤
+│ usr/local/lib/python3.11/site-packages/setuptools/_vendor/zipp-3.19.2.dist-info- │ python-pkg │        0        │    -    │
+│ /METADATA                                                                        │            │                 │         │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┤
+│ usr/local/lib/python3.11/site-packages/wheel-0.45.1.dist-info/METADATA           │ python-pkg │        0        │    -    │
+└──────────────────────────────────────────────────────────────────────────────────┴────────────┴─────────────────┴─────────┘
+Legend:
+- '-': Not scanned
+- '0': Clean (no security findings detected)
+
+
+marcus-citation-agent:v3.0.0 (debian 13.2)
+==========================================
+Total: 31 (HIGH: 31, CRITICAL: 0)
+
+┌────────────────┬────────────────┬──────────┬──────────┬───────────────────┬───────────────┬──────────────────────────────────────────────────────────────┐
+│    Library     │ Vulnerability  │ Severity │  Status  │ Installed Version │ Fixed Version │                            Title                             │
+├────────────────┼────────────────┼──────────┼──────────┼───────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ libpq-dev      │ CVE-2025-12818 │ HIGH     │ affected │ 17.6-0+deb13u1    │               │ postgresql: libpq undersizes allocations, via integer        │
+│                │                │          │          │                   │               │ wraparound                                                   │
+│                │                │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2025-12818                   │
+├────────────────┤                │          │          │                   ├───────────────┤                                                              │
+│ libpq5         │                │          │          │                   │               │                                                              │
+│                │                │          │          │                   │               │                                                              │
+│                │                │          │          │                   │               │                                                              │
+├────────────────┼────────────────┤          │          ├───────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ linux-libc-dev │ CVE-2013-7445  │          │          │ 6.12.57-1         │               │ kernel: memory exhaustion via crafted Graphics Execution     │
+│                │                │          │          │                   │               │ Manager (GEM) objects                                        │
+│                │                │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2013-7445                    │
+│                ├────────────────┤          │          │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                │ CVE-2019-19449 │          │          │                   │               │ kernel: mounting a crafted f2fs filesystem image can lead to │
+│                │                │          │          │                   │               │ slab-out-of-bounds read...                                   │
+│                │                │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2019-19449                   │
+│                ├────────────────┤          │          │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                │ CVE-2019-19814 │          │          │                   │               │ kernel: out-of-bounds write in __remove_dirty_segment in     │
+│                │                │          │          │                   │               │ fs/f2fs/segment.c                                            │
+│                │                │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2019-19814                   │
+│                ├────────────────┤          │          │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                │ CVE-2021-3847  │          │          │                   │               │ kernel: low-privileged user privileges escalation            │
+│                │                │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2021-3847                    │
+│                ├────────────────┤          │          │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                │ CVE-2021-3864  │          │          │                   │               │ kernel: descendant's dumpable setting with certain SUID      │
+│                │                │          │          │                   │               │ binaries                                                     │
+│                │                │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2021-3864                    │
+│                ├────────────────┤          │          │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                │ CVE-2024-21803 │          │          │                   │               │ kernel: bluetooth: use-after-free vulnerability in           │
+│                │                │          │          │                   │               │ af_bluetooth.c                                               │
+│                │                │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2024-21803                   │
+│                ├────────────────┤          │          │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                │ CVE-2024-58015 │          │          │                   │               │ kernel: wifi: ath12k: Fix for out-of bound access error      │
+│                │                │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2024-58015                   │
+│                ├────────────────┤          │          │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                │ CVE-2024-58093 │          │          │                   │               │ kernel: PCI/ASPM: Fix link state exit during switch upstream │
+│                │                │          │          │                   │               │ function removal                                             │
+│                │                │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2024-58093                   │
+│                ├────────────────┤          │          │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                │ CVE-2025-22104 │          │          │                   │               │ kernel: ibmvnic: Use kernel helpers for hex dumps            │
+│                │                │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2025-22104                   │
+│                ├────────────────┤          │          │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                │ CVE-2025-22107 │          │          │                   │               │ kernel: net: dsa: sja1105: fix kasan out-of-bounds warning   │
+│                │                │          │          │                   │               │ in sja1105_table_delete_entry()                              │
+│                │                │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2025-22107                   │
+│                ├────────────────┤          │          │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                │ CVE-2025-22118 │          │          │                   │               │ kernel: ice: validate queue quanta parameters to prevent OOB │
+│                │                │          │          │                   │               │ access                                                       │
+│                │                │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2025-22118                   │
+│                ├────────────────┤          │          │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                │ CVE-2025-22121 │          │          │                   │               │ kernel: ext4: fix out-of-bound read in                       │
+│                │                │          │          │                   │               │ ext4_xattr_inode_dec_ref_all()                               │
+│                │                │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2025-22121                   │
+│                ├────────────────┤          │          │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                │ CVE-2025-37825 │          │          │                   │               │ kernel: nvmet: fix out-of-bounds access in nvmet_enable_port │
+│                │                │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2025-37825                   │
+│                ├────────────────┤          │          │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                │ CVE-2025-38137 │          │          │                   │               │ kernel: PCI/pwrctrl: Cancel outstanding rescan work when     │
+│                │                │          │          │                   │               │ unregistering                                                │
+│                │                │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2025-38137                   │
+│                ├────────────────┤          │          │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                │ CVE-2025-38187 │          │          │                   │               │ kernel: drm/nouveau: fix a use-after-free in                 │
+│                │                │          │          │                   │               │ r535_gsp_rpc_push()                                          │
+│                │                │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2025-38187                   │
+│                ├────────────────┤          │          │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                │ CVE-2025-38248 │          │          │                   │               │ kernel: bridge: mcast: Fix use-after-free during router port │
+│                │                │          │          │                   │               │ configuration                                                │
+│                │                │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2025-38248                   │
+│                ├────────────────┤          │          │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                │ CVE-2025-38421 │          │          │                   │               │ kernel: platform/x86/amd: pmf: Use device managed            │
+│                │                │          │          │                   │               │ allocations                                                  │
+│                │                │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2025-38421                   │
+│                ├────────────────┤          │          │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                │ CVE-2025-39677 │          │          │                   │               │ kernel: net/sched: Fix backlog accounting in                 │
+│                │                │          │          │                   │               │ qdisc_dequeue_internal                                       │
+│                │                │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2025-39677                   │
+│                ├────────────────┤          │          │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                │ CVE-2025-39905 │          │          │                   │               │ kernel: net: phylink: add lock for serializing concurrent    │
+│                │                │          │          │                   │               │ pl->phydev writes with resolver...                           │
+│                │                │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2025-39905                   │
+│                ├────────────────┤          │          │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                │ CVE-2025-39910 │          │          │                   │               │ kernel: mm/vmalloc, mm/kasan: respect gfp mask in            │
+│                │                │          │          │                   │               │ kasan_populate_vmalloc()                                     │
+│                │                │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2025-39910                   │
+│                ├────────────────┤          │          │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                │ CVE-2025-39933 │          │          │                   │               │ kernel: smb: client: let recv_done verify data_offset,       │
+│                │                │          │          │                   │               │ data_length and remaining_data_length                        │
+│                │                │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2025-39933                   │
+│                ├────────────────┤          │          │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                │ CVE-2025-39981 │          │          │                   │               │ kernel: Bluetooth: MGMT: Fix possible UAFs                   │
+│                │                │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2025-39981                   │
+│                ├────────────────┤          │          │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                │ CVE-2025-40005 │          │          │                   │               │ kernel: spi: cadence-quadspi: Implement refcount to handle   │
+│                │                │          │          │                   │               │ unbind during busy                                           │
+│                │                │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2025-40005                   │
+│                ├────────────────┤          │          │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                │ CVE-2025-40064 │          │          │                   │               │ kernel: smc: Fix use-after-free in __pnet_find_base_ndev()   │
+│                │                │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2025-40064                   │
+│                ├────────────────┤          │          │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                │ CVE-2025-40082 │          │          │                   │               │ kernel: hfsplus: fix slab-out-of-bounds read in              │
+│                │                │          │          │                   │               │ hfsplus_uni2asc()                                            │
+│                │                │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2025-40082                   │
+│                ├────────────────┤          │          │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                │ CVE-2025-40149 │          │          │                   │               │ kernel: tls: Use __sk_dst_get() and dst_dev_rcu() in         │
+│                │                │          │          │                   │               │ get_netdev_for_sock()                                        │
+│                │                │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2025-40149                   │
+│                ├────────────────┤          │          │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                │ CVE-2025-40158 │          │          │                   │               │ kernel: ipv6: use RCU in ip6_output()                        │
+│                │                │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2025-40158                   │
+│                ├────────────────┤          │          │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                │ CVE-2025-40168 │          │          │                   │               │ kernel: smc: Use __sk_dst_get() and dst_dev_rcu() in         │
+│                │                │          │          │                   │               │ smc_clc_prfx_match()                                         │
+│                │                │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2025-40168                   │
+│                ├────────────────┤          │          │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│                │ CVE-2025-40170 │          │          │                   │               │ kernel: net: use dst_dev_rcu() in sk_setup_caps()            │
+│                │                │          │          │                   │               │ https://avd.aquasec.com/nvd/cve-2025-40170                   │
+└────────────────┴────────────────┴──────────┴──────────┴───────────────────┴───────────────┴──────────────────────────────────────────────────────────────┘

@@ -1,0 +1,319 @@
+{
+  "dashboard": {
+    "title": "MARCUS - Security Monitoring",
+    "tags": ["marcus", "security", "auth", "rate-limiting"],
+    "timezone": "browser",
+    "editable": true,
+    "graphTooltip": 1,
+    "time": {
+      "from": "now-24h",
+      "to": "now"
+    },
+    "refresh": "1m",
+    "templating": {
+      "list": [
+        {
+          "name": "environment",
+          "type": "custom",
+          "options": [
+            {"text": "Production", "value": "prod"},
+            {"text": "Staging", "value": "staging"},
+            {"text": "Development", "value": "dev"}
+          ],
+          "current": {"text": "Production", "value": "prod"}
+        }
+      ]
+    },
+    "panels": [
+      {
+        "id": 1,
+        "title": "Failed Authentication Attempts",
+        "type": "graph",
+        "gridPos": {"x": 0, "y": 0, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "rate(auth_failed_total{environment=\"$environment\"}[5m])",
+            "legendFormat": "Failed Logins/sec",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "short", "label": "Failures/sec"},
+          {"format": "short"}
+        ],
+        "alert": {
+          "conditions": [
+            {
+              "evaluator": {"params": [10], "type": "gt"},
+              "query": {"params": ["A", "5m", "now"]},
+              "reducer": {"params": [], "type": "avg"},
+              "type": "query"
+            }
+          ],
+          "executionErrorState": "alerting",
+          "for": "5m",
+          "frequency": "1m",
+          "name": "High authentication failures"
+        }
+      },
+      {
+        "id": 2,
+        "title": "Authentication Success Rate",
+        "type": "gauge",
+        "gridPos": {"x": 12, "y": 0, "w": 6, "h": 8},
+        "targets": [
+          {
+            "expr": "rate(auth_success_total{environment=\"$environment\"}[5m]) / (rate(auth_success_total{environment=\"$environment\"}[5m]) + rate(auth_failed_total{environment=\"$environment\"}[5m]))",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "min": 0,
+            "max": 1,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"value": 0, "color": "red"},
+                {"value": 0.8, "color": "yellow"},
+                {"value": 0.95, "color": "green"}
+              ]
+            },
+            "unit": "percentunit"
+          }
+        }
+      },
+      {
+        "id": 3,
+        "title": "Rate Limiting Violations by IP",
+        "type": "table",
+        "gridPos": {"x": 18, "y": 0, "w": 6, "h": 8},
+        "targets": [
+          {
+            "expr": "topk(10, sum by (ip) (increase(rate_limit_exceeded_total{environment=\"$environment\"}[1h])))",
+            "format": "table",
+            "instant": true,
+            "refId": "A"
+          }
+        ],
+        "transformations": [
+          {
+            "id": "organize",
+            "options": {
+              "renameByName": {
+                "ip": "IP Address",
+                "Value": "Violations (1h)"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Rate Limiting Violations by Endpoint",
+        "type": "graph",
+        "gridPos": {"x": 0, "y": 8, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "rate(rate_limit_exceeded_total{environment=\"$environment\"}[5m])",
+            "legendFormat": "{{endpoint}}",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "short", "label": "Violations/sec"},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Security Audit Events",
+        "type": "graph",
+        "gridPos": {"x": 12, "y": 8, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "rate(security_audit_events_total{environment=\"$environment\"}[5m])",
+            "legendFormat": "{{event_type}}",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "short", "label": "Events/sec"},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Blocked IPs Count",
+        "type": "stat",
+        "gridPos": {"x": 0, "y": 16, "w": 6, "h": 4},
+        "targets": [
+          {
+            "expr": "count(blocked_ips{environment=\"$environment\"})",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "thresholds"},
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"value": 0, "color": "green"},
+                {"value": 50, "color": "yellow"},
+                {"value": 100, "color": "red"}
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 7,
+        "title": "Active Sessions",
+        "type": "graph",
+        "gridPos": {"x": 6, "y": 16, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "active_sessions{environment=\"$environment\"}",
+            "legendFormat": "Active Sessions",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "short", "label": "Sessions"},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 8,
+        "title": "Session Creation/Termination Rate",
+        "type": "graph",
+        "gridPos": {"x": 18, "y": 16, "w": 6, "h": 8},
+        "targets": [
+          {
+            "expr": "rate(session_created_total{environment=\"$environment\"}[5m])",
+            "legendFormat": "Created/sec",
+            "refId": "A"
+          },
+          {
+            "expr": "rate(session_terminated_total{environment=\"$environment\"}[5m])",
+            "legendFormat": "Terminated/sec",
+            "refId": "B"
+          }
+        ],
+        "yaxes": [
+          {"format": "short", "label": "Sessions/sec"},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 9,
+        "title": "Input Validation Failures",
+        "type": "graph",
+        "gridPos": {"x": 0, "y": 24, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "rate(input_validation_failed_total{environment=\"$environment\"}[5m])",
+            "legendFormat": "{{field}}",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "short", "label": "Failures/sec"},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 10,
+        "title": "CSRF Token Validation Failures",
+        "type": "graph",
+        "gridPos": {"x": 12, "y": 24, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "rate(csrf_validation_failed_total{environment=\"$environment\"}[5m])",
+            "legendFormat": "CSRF Failures/sec",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "short", "label": "Failures/sec"},
+          {"format": "short"}
+        ],
+        "alert": {
+          "conditions": [
+            {
+              "evaluator": {"params": [5], "type": "gt"},
+              "query": {"params": ["A", "5m", "now"]},
+              "reducer": {"params": [], "type": "avg"},
+              "type": "query"
+            }
+          ],
+          "executionErrorState": "alerting",
+          "for": "5m",
+          "frequency": "1m",
+          "name": "High CSRF validation failures"
+        }
+      },
+      {
+        "id": 11,
+        "title": "Security Scan Results - Vulnerabilities",
+        "type": "table",
+        "gridPos": {"x": 0, "y": 32, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "security_vulnerabilities{environment=\"$environment\"}",
+            "format": "table",
+            "instant": true,
+            "refId": "A"
+          }
+        ],
+        "transformations": [
+          {
+            "id": "organize",
+            "options": {
+              "renameByName": {
+                "severity": "Severity",
+                "package": "Package",
+                "Value": "Count"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": 12,
+        "title": "Authorization Failures",
+        "type": "graph",
+        "gridPos": {"x": 12, "y": 32, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "rate(authz_failed_total{environment=\"$environment\"}[5m])",
+            "legendFormat": "{{resource}}",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "short", "label": "Authz Failures/sec"},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 13,
+        "title": "Admin Operations Audit Log",
+        "type": "logs",
+        "gridPos": {"x": 0, "y": 40, "w": 24, "h": 8},
+        "targets": [
+          {
+            "expr": "{job=\"marcus-platform\", level=\"audit\", event_type=\"admin_operation\"}",
+            "refId": "A"
+          }
+        ],
+        "options": {
+          "showTime": true,
+          "wrapLogMessage": true,
+          "sortOrder": "Descending"
+        }
+      }
+    ]
+  }
+}

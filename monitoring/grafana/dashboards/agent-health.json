@@ -1,0 +1,48 @@
+{
+  "dashboard": {
+    "title": "MARCUS Agent Health",
+    "tags": ["marcus", "agents"],
+    "timezone": "browser",
+    "refresh": "5s",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Agent Status",
+        "type": "stat",
+        "gridPos": {"h": 6, "w": 8, "x": 0, "y": 0},
+        "targets": [
+          {"expr": "count(marcus_agent_status == 1)", "legendFormat": "Healthy"},
+          {"expr": "count(marcus_agent_status == 0)", "legendFormat": "Unhealthy"}
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Agent Throughput (citations/sec)",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 16, "x": 8, "y": 0},
+        "targets": [
+          {"expr": "rate(marcus_citation_analysis_total[5m])", "legendFormat": "{{agent_id}}"}
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Agent Response Time (P95)",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8},
+        "targets": [
+          {"expr": "histogram_quantile(0.95, rate(marcus_agent_request_duration_seconds_bucket[5m]))", "legendFormat": "{{agent_id}}"}
+        ],
+        "alert": {"conditions": [{"evaluator": {"params": [0.5], "type": "gt"}}]}
+      },
+      {
+        "id": 4,
+        "title": "Agent Errors",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 8},
+        "targets": [
+          {"expr": "rate(marcus_citation_analysis_total{result=\"error\"}[5m])", "legendFormat": "{{agent_id}}"}
+        ]
+      }
+    ]
+  }
+}

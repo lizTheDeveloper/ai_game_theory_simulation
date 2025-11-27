@@ -1,0 +1,36 @@
+[Unit]
+Description=MARCUS Citation Worker Metrics Aggregator
+Documentation=https://github.com/404GeneNotFound/ai_game_theory_simulation
+After=network.target redis.service
+
+[Service]
+Type=simple
+User=g7throwawayplz
+Group=g7throwawayplz
+WorkingDirectory=/home/g7throwawayplz/ai_game_theory_simulation
+
+# Environment
+Environment="METRICS_PORT=9300"
+Environment="METRICS_HOST=0.0.0.0"
+Environment="PYTHONUNBUFFERED=1"
+
+# Start command
+ExecStart=/usr/bin/python3 /home/g7throwawayplz/ai_game_theory_simulation/src/platform/metrics/worker_metrics_server.py
+
+# Logging
+StandardOutput=append:/home/g7throwawayplz/ai_game_theory_simulation/logs/worker_metrics_server.log
+StandardError=append:/home/g7throwawayplz/ai_game_theory_simulation/logs/worker_metrics_server.log
+
+# Restart policy
+Restart=on-failure
+RestartSec=5s
+
+# Security
+NoNewPrivileges=true
+PrivateTmp=true
+
+# Resource limits
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
