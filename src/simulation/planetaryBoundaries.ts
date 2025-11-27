@@ -1234,8 +1234,13 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     // Grace period: No trigger in first 24 months (cascades take 2-5 years to manifest)
     const gracePeriod = state.currentMonth < 24;
 
+    // HISTORICAL MODE (Nov 27, 2025): Disable cascade trigger during hindcast validation
+    // Root cause: Cascades trigger in 1990-2024 baseline period, causing exponential mortality
+    // Research: research/historical_mode_parameters_20251127.md
+    const historicalModeActive = state.config.historicalMode ?? false;
+
     // Stochastic trigger with Bayesian adjustment
-    if (!system.cascadeActive && !gracePeriod && deterministicRandom() < monthlyTriggerChance) {
+    if (!system.cascadeActive && !gracePeriod && !historicalModeActive && deterministicRandom() < monthlyTriggerChance) {
       system.cascadeActive = true;
       system.cascadeStartMonth = state.currentMonth;
       console.log(`\n🌪️ ========== TIPPING POINT CASCADE TRIGGERED ==========`);
@@ -1271,7 +1276,9 @@ export function updatePlanetaryBoundaries(state: GameState): void {
   }
 
   // === 5. APPLY CASCADE EFFECTS ===
-  if (system.cascadeActive) {
+  // HISTORICAL MODE (Nov 27, 2025): Skip cascade effects during hindcast validation
+  const historicalMode = state.config.historicalMode ?? false;
+  if (system.cascadeActive && !historicalMode) {
     applyTippingPointCascadeEffects(state);
   }
 
