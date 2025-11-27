@@ -470,13 +470,13 @@ def main():
 
     # Database configuration
     db_config = None
-    if os.getenv('DATABASE_URL') or os.getenv('DATABASE_HOST'):
+    if os.getenv('DATABASE_URL') or os.getenv('DATABASE_HOST') or os.getenv('PGHOST'):
         db_config = {
-            'host': os.getenv('DATABASE_HOST', 'localhost'),
-            'port': int(os.getenv('DATABASE_PORT', '5432')),
-            'database': os.getenv('DATABASE_NAME', 'citation_integrity'),
-            'user': os.getenv('DATABASE_USER', 'marcus'),
-            'password': os.getenv('DATABASE_PASSWORD', '')
+            'host': os.getenv('DATABASE_HOST', os.getenv('PGHOST', 'localhost')),
+            'port': int(os.getenv('DATABASE_PORT', os.getenv('PGPORT', '5432'))),
+            'database': os.getenv('POSTGRES_DB', os.getenv('PGDATABASE', os.getenv('DATABASE_NAME', 'citations'))),
+            'user': os.getenv('POSTGRES_USER', os.getenv('PGUSER', os.getenv('DATABASE_USER', 'postgres'))),
+            'password': os.getenv('POSTGRES_PASSWORD', os.getenv('PGPASSWORD', os.getenv('DATABASE_PASSWORD', '')))
         }
 
     logger.info(f"🚀 Starting citation worker")

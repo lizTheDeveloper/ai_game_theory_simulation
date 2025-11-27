@@ -621,19 +621,20 @@ def analyze_code_file(
 
 
 if __name__ == "__main__":
-    # Example usage
+    # Example usage - reads from environment variables
+    import os
     db_config = {
-        'host': 'localhost',
-        'port': '5432',
-        'database': 'citation_integrity',
-        'user': 'marcus_app',
-        'password': 'test123'
+        'host': os.getenv('DATABASE_HOST', os.getenv('PGHOST', 'localhost')),
+        'port': os.getenv('DATABASE_PORT', os.getenv('PGPORT', '5432')),
+        'database': os.getenv('POSTGRES_DB', os.getenv('PGDATABASE', 'citations')),
+        'user': os.getenv('POSTGRES_USER', os.getenv('PGUSER', 'postgres')),
+        'password': os.getenv('POSTGRES_PASSWORD', os.getenv('PGPASSWORD', ''))
     }
 
     redis_config = {
-        'host': 'localhost',
-        'port': 6379,
-        'password': None
+        'host': os.getenv('REDIS_HOST', 'localhost'),
+        'port': int(os.getenv('REDIS_PORT', '6379')),
+        'password': os.getenv('REDIS_PASSWORD')
     }
 
     # Create agent

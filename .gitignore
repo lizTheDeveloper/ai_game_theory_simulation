@@ -116,3 +116,4 @@ certs/
 .env.test
 *.tar.gz
 google-cloud-sdk/
+.env.local
