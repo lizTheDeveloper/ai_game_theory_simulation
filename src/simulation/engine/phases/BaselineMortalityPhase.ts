@@ -501,8 +501,9 @@ export class BaselineMortalityPhase implements SimulationPhase {
     // vs expected 49.5M/yr (9.3/1000 CDR). Deaths are 69% too high!
     // Solution: In historical mode (1990-2024 hindcast), skip Bayesian baseline mortality entirely.
     // The regional population system handles ALL mortality with historical CDR scaling.
-    // HIGH-7 FIX (Nov 27, 2025): Extended from < 2000 to <= 2024 for full hindcast period
-    if (state.config.scenarioMode === 'historical' && state.currentYear <= 2024) {
+    // HIGH-7 FIX (Nov 27, 2025): Use historicalMode flag (not scenarioMode) for hindcast calibration
+    // historicalMode = empirical UN data (1990-2024), scenarioMode = crisis severity when crises occur
+    if (state.config.historicalMode && state.currentYear <= 2024) {
       return { events: [] };
     }
 
@@ -566,7 +567,7 @@ export class BaselineMortalityPhase implements SimulationPhase {
     // DIAGNOSTIC LOGGING (historical demographics)
     if (state.currentMonth % 12 === 0) {
       const cdr = getHistoricalCrudeDeathRate(actualYear);
-      if (state.config.scenarioMode === 'historical') {
+      if (state.config.historicalMode) {
         const cbr = getHistoricalCrudeBirthRate(actualYear);
         const netGrowthPer1000 = cbr - cdr;
         console.log(`👶 Historical demographics (${actualYear}):`);
