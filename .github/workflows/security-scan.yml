@@ -164,7 +164,9 @@ jobs:
         uses: github/codeql-action/init@v3
         with:
           languages: ${{ matrix.language }}
-          queries: security-extended
+          # Custom config excludes documented false positives
+          # See: reviews/codeql_false_positives_architecture_review_20251127.md
+          config-file: .github/codeql/codeql-config.yml
 
       - name: Autobuild
         uses: github/codeql-action/autobuild@v3

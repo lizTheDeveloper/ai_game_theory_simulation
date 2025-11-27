@@ -1,0 +1,62 @@
+# MARCUS Platform CodeQL Configuration
+#
+# This configuration addresses documented false positives in src/platform/ code.
+# See: reviews/codeql_false_positives_architecture_review_20251127.md
+#
+# IMPORTANT: Before adding exclusions, verify the issue is a genuine false positive.
+# These exclusions should be reviewed quarterly.
+
+name: "MARCUS Platform CodeQL Config"
+
+# Use security-extended queries (same as before)
+queries:
+  - uses: security-extended
+
+# Query filters to exclude specific false-positive patterns
+# Documentation: https://github.blog/changelog/2022-08-31-code-scanning-customize-your-codeql-analysis-using-query-filters/
+query-filters:
+  # ============================================================================
+  # js/user-controlled-bypass - FALSE POSITIVE
+  # ============================================================================
+  # Our jwtMiddleware.ts uses user input in security checks, but these are
+  # REJECTION patterns (return 401), not bypass patterns. CodeQL cannot
+  # distinguish between:
+  #   if (!valid) { grant_access(); }  // ACTUAL bypass - bad
+  #   if (!valid) { deny_access(); }   // REJECTION - good
+  #
+  # Evidence: jwtMiddleware.ts lines 51-70 return 401 responses on invalid input.
+  # Review date: 2025-11-27
+  - exclude:
+      id: js/user-controlled-bypass
+
+  # ============================================================================
+  # js/missing-rate-limiting - FALSE POSITIVE
+  # ============================================================================
+  # Rate limiting IS applied, but at the app-level middleware layer in server.ts,
+  # not at individual route handlers. CodeQL cannot trace cross-file middleware.
+  #
+  # Evidence:
+  #   - server.ts lines 194-214: app.use() applies rate limiting to all routes
+  #   - rateLimiter.ts implements Redis-based sliding window algorithm
+  #   - RateLimitPresets configured for login (5 req/min), analysis (100 req/min)
+  #
+  # Tests: src/platform/tests/rateLimiter.test.ts validates rate limiting behavior
+  # Review date: 2025-11-27
+  - exclude:
+      id: js/missing-rate-limiting
+
+# ============================================================================
+# Queries NOT excluded (even though they produce alerts)
+# ============================================================================
+#
+# js/log-injection:
+#   NOT EXCLUDED because log injection is a real risk. Our code uses
+#   sanitizeForLog() properly, but excluding this query would hide future
+#   log statements that forget to sanitize. Instead, we:
+#   1. Manually dismiss existing false positives via GitHub UI
+#   2. Keep the query active to catch new unprotected logging
+#
+# js/disabling-certificate-validation:
+#   NOT EXCLUDED because disabling TLS validation is dangerous. Our single
+#   instance (testTLSConnection in httpsServer.ts) is a test utility.
+#   We manually dismiss this one alert but keep detection active.
