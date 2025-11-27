@@ -63,6 +63,7 @@ export interface ConfigurationSettings {
   // Solution: Conditional logic in 5 phases (ExogenousShock, BaselineMortality, PlanetaryBoundaries, Climate, ResourceDepletion)
   // WARNING: This mode is ONLY for hindcast validation. Default mode uses crisis-calibrated parameters.
   historicalMode?: boolean; // Enable historical dampening (default: false)
+  historicalModeEndYear?: number; // End year for historical mode (default: 2024)
 
   // Alignment Dynamics System (Oct 23, 2025)
   // Multi-theory modeling of alignment change (static vs drift vs epicycles vs unknowable)
