@@ -322,7 +322,7 @@ agents.forEach((agent, index) => {
   const x = 0.5 + (index % 3) * 3.2;
   const y = 1.0 + Math.floor(index / 3) * 1.0;
   const isSpecial = agent.includes('*');
-  const cleanName = agent.replace('*', '');
+  const cleanName = agent.replaceAll('*', '');
 
   slide7.addShape(pptx.shapes.RECTANGLE, {
     x: x, y: y, w: 3, h: 0.8,

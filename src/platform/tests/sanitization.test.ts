@@ -33,7 +33,7 @@ describe('HTML Sanitization', () => {
     const input = '<script>alert("xss")</script>';
     const result = sanitizeHtml(input);
     assert.match(result, /&lt;script&gt;/);
-    assert.doesNotMatch(result, /<script>/);
+    assert.doesNotMatch(result, /<script>/i);
   });
 
   it('should escape quotes', () => {
@@ -65,7 +65,7 @@ describe('Strip HTML', () => {
   it('should escape remaining content', () => {
     const input = '<script>alert("xss")</script>';
     const result = stripHtml(input);
-    assert.doesNotMatch(result, /<script>/);
+    assert.doesNotMatch(result, /<script>/i);
   });
 });
 

@@ -230,7 +230,7 @@ describe('Citation Text Validation', () => {
     const input = '<script>alert("xss")</script>';
     const result = citationTextSchema.parse(input);
     assert.match(result, /&lt;script&gt;/);
-    assert.doesNotMatch(result, /<script>/);
+    assert.doesNotMatch(result, /<script>/i);
   });
 
   it('should reject empty strings', () => {
@@ -454,7 +454,7 @@ describe('XSS Prevention', () => {
   it('should sanitize script tags', () => {
     const input = '<script>alert("xss")</script>';
     const result = citationTextSchema.parse(input);
-    assert.doesNotMatch(result, /<script>/);
+    assert.doesNotMatch(result, /<script>/i);
     assert.match(result, /&lt;script&gt;/);
   });
 

@@ -338,6 +338,8 @@ export async function testTLSConnection(
       port,
       method: 'GET',
       path: '/health',
+      // lgtm[js/disabled-certificate-validation] - Intentionally disabled for TLS testing function
+      // This function is used to test self-signed certificates in development/testing environments
       rejectUnauthorized: false, // Allow self-signed for testing
     }, (res) => {
       const protocol = (res.socket as any).getProtocol?.();
