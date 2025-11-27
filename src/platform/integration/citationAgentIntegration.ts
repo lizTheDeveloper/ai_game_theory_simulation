@@ -239,10 +239,16 @@ export class PythonAgentWrapper extends EventEmitter {
       this.processMessages();
     });
 
-    // Handle stderr (logging)
+    // Handle stderr (logging) - capture last error for diagnostics
+    let lastStderr = '';
     this.process.stderr.on('data', (data: Buffer) => {
-      console.error(`[Agent ${this.agentId} stderr]:`, data.toString());
+      const output = data.toString();
+      lastStderr = output; // Keep last stderr for exit diagnostics
+      console.error(`[Agent ${this.agentId} stderr]:`, output);
     });
+
+    // Store lastStderr reference for exit handler
+    (this as any)._lastStderr = () => lastStderr;
 
     // Handle stdin errors (EPIPE when process exits while writing)
     // CRITICAL: Without this handler, Node.js crashes with unhandled 'error' event
@@ -260,7 +266,11 @@ export class PythonAgentWrapper extends EventEmitter {
 
     // Handle process exit
     this.process.on('exit', (code, signal) => {
+      const lastError = (this as any)._lastStderr ? (this as any)._lastStderr() : '';
       console.warn(`⚠️ Agent ${this.agentId} exited (code: ${code}, signal: ${signal})`);
+      if (code !== 0 && lastError) {
+        console.error(`❌ Agent ${this.agentId} last stderr before exit: ${lastError}`);
+      }
       this.isHealthy = false;
 
       // Reject pending requests
@@ -869,7 +879,7 @@ export class CitationAgentOrchestrator {
   async initialize(): Promise<void> {
     console.log(`🚀 Initializing orchestrator with ${this.config.numAgents} agents...`);
 
-    // Spawn agents
+    // Spawn agents with staggered startup to prevent connection exhaustion in CI
     for (let i = 0; i < this.config.numAgents; i++) {
       const agentId = `agent_${String(i).padStart(3, '0')}`;
       const agent = new PythonAgentWrapper(
@@ -892,6 +902,12 @@ export class CitationAgentOrchestrator {
 
       await agent.start();
       this.agents.set(agentId, agent);
+
+      // Stagger agent startup by 500ms to allow DB connections to stabilize
+      // This prevents connection exhaustion in resource-constrained CI environments
+      if (i < this.config.numAgents - 1) {
+        await new Promise(resolve => setTimeout(resolve, 500));
+      }
     }
 
     this.isRunning = true;
