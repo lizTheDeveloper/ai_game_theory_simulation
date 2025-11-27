@@ -1,0 +1,28 @@
+{
+  "timestamp": "2025-11-21T17:16:07.130Z",
+  "numRuns": 1,
+  "targetMonth": 60,
+  "results": [
+    {
+      "run": 1,
+      "seed": 42,
+      "effectiveness": 0,
+      "co2RemovalRate": 0,
+      "temperatureOffset": 0,
+      "deployedTechs": 0
+    }
+  ],
+  "statistics": {
+    "mean": 0,
+    "stdDev": 0,
+    "cv": 0,
+    "min": 0,
+    "max": 0
+  },
+  "validationChecks": {
+    "effectivenessInRange": false,
+    "deterministic": true,
+    "allTechsDeployed": false,
+    "overall": false
+  }
+}
