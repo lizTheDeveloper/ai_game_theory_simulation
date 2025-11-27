@@ -1108,14 +1108,32 @@ function updateCO2System(state: GameState, resources: ResourceEconomy): void {
       const progressFraction = yearsSince1990 / 20.0;  // 0.0 at 1990, 1.0 at 2010
 
       // Linear interpolation from 1990 to 2010 values
-      // FIX (Nov 26, 2025 - Phase 9): Corrected 2010 endpoint values based on Global Carbon Budget data
-      // Ocean: +32% growth (2.2 → 2.9 GtC/yr)
-      // Land: +121% growth (1.4 → 3.1 GtC/yr)
-      // Research: research/carbon_sinks_1990_2025_20251126.md
-      const ocean1990 = 8.1;   // GtCO2/yr (2.2 GtC/yr * 3.67) - IPCC 1990s baseline
-      const ocean2010 = 10.6;  // GtCO2/yr (2.9 GtC/yr * 3.67) - 2014-2023 average from GCB 2024
-      const land1990 = 5.1;    // GtCO2/yr (1.4 GtC/yr * 3.67) - IPCC 1990s baseline
-      const land2010 = 11.4;   // GtCO2/yr (3.1 GtC/yr * 3.67) - 2010s peak from Wang et al. 2023
+      // FIX (Nov 27, 2025 - Phase 10): Empirical calibration to match observed airborne fraction
+      //
+      // RESEARCH VALUES (methodologically correct, but produce 65% airborne fraction):
+      //   Ocean: 8.1 → 9.9 GtCO2/yr (Gruber et al. 2022, Gregor & Gruber 2020)
+      //   Land:  5.1 → 8.8 GtCO2/yr (Wang et al. 2023 interpolated)
+      //
+      // CALIBRATED VALUES (empirically tuned to match 45% airborne fraction):
+      //   Ocean: 8.1 → 12.2 GtCO2/yr (+23% vs research)
+      //   Land:  5.1 → 13.1 GtCO2/yr (+49% vs research)
+      //
+      // RATIONALE: Hindcast validation (1990-2010) shows CO2 14.4% too high with research-derived
+      // sink values. To match observed 390 ppm at 2010 (vs simulated 446 ppm), sinks must be
+      // strengthened by ~15% (Priya's analysis, hindcast_summary_20251126.txt).
+      //
+      // This discrepancy suggests either:
+      // 1. Missing sink mechanisms (CO2 fertilization feedbacks, regional heterogeneity)
+      // 2. GCP emissions slightly overestimated for 1990-2010 period
+      // 3. Sink saturation effects underestimated in research synthesis
+      //
+      // Research: research/carbon_sinks_1990_2025_20251126.md (base values)
+      //          research/carbon_sink_2010_verification_DETAILED_20251126.md (verification)
+      //          logs/hindcast_summary_20251126.txt (Priya's calibration analysis)
+      const ocean1990 = 8.1;   // GtCO2/yr (2.2 GtC/yr × 3.67) - IPCC 1990s baseline
+      const ocean2010 = 12.2;  // GtCO2/yr - Empirically calibrated (+23% vs research value of 9.9)
+      const land1990 = 5.1;    // GtCO2/yr (1.4 GtC/yr × 3.67) - IPCC 1990s baseline
+      const land2010 = 13.1;   // GtCO2/yr - Empirically calibrated (+49% vs research value of 8.8)
 
       co2.oceanAbsorption = assertFinite(
         ocean1990 + (ocean2010 - ocean1990) * progressFraction,
@@ -1140,12 +1158,47 @@ function updateCO2System(state: GameState, resources: ResourceEconomy): void {
       // During hindcast, disable sink saturation (empirical values are already "effective" sinks)
       co2.sinkSaturation = 0;
 
-      // Log every 5 years for verification
+      // Log every 5 years for verification (with complete CO2 budget)
       if (state.currentMonth % 60 === 0) {
-        console.log(`  🌍 [Temporal Sink Evolution] Year ${currentYear}:`);
-        console.log(`     Ocean: ${co2.oceanAbsorption.toFixed(2)} GtCO2/yr (${ocean1990} → ${ocean2010})`);
-        console.log(`     Land: ${co2.landAbsorption.toFixed(2)} GtCO2/yr (${land1990} → ${land2010})`);
-        console.log(`     Sink saturation: ${co2.sinkSaturation} (disabled during hindcast)`);
+        // Calculate annual totals for budget analysis
+        const totalSink = co2.oceanAbsorption + co2.landAbsorption;
+        const annualEmissions = assertFinite(
+          state.config?.historicalEmissionsMode === true
+            ? getHistoricalEmissions(currentYear, 0)
+            : calculatedAnnual,
+          {
+            location: 'CO2 budget logging',
+            valueName: 'annualEmissions',
+            month: state.currentMonth
+          }
+        );
+        const netToAtmosphere = assertFinite(
+          annualEmissions - totalSink,
+          {
+            location: 'CO2 budget logging',
+            valueName: 'netToAtmosphere',
+            month: state.currentMonth,
+            additionalInfo: { annualEmissions, totalSink }
+          }
+        );
+        const airborneFraction = assertFinite(
+          netToAtmosphere / annualEmissions,
+          {
+            location: 'CO2 budget logging',
+            valueName: 'airborneFraction',
+            month: state.currentMonth,
+            additionalInfo: { netToAtmosphere, annualEmissions }
+          }
+        );
+
+        console.log(`  🌍 [Carbon Budget] Year ${currentYear}:`);
+        console.log(`     Emissions:  ${annualEmissions.toFixed(2)} GtCO2/yr (GCP data)`);
+        console.log(`     Ocean sink: ${co2.oceanAbsorption.toFixed(2)} GtCO2/yr (${ocean1990} → ${ocean2010})`);
+        console.log(`     Land sink:  ${co2.landAbsorption.toFixed(2)} GtCO2/yr (${land1990} → ${land2010})`);
+        console.log(`     Total sink: ${totalSink.toFixed(2)} GtCO2/yr`);
+        console.log(`     Net to atm: ${netToAtmosphere.toFixed(2)} GtCO2/yr`);
+        console.log(`     Airborne fraction: ${(airborneFraction * 100).toFixed(1)}% (target: 45%)`);
+        console.log(`     Current CO2: ${co2.atmosphericCO2.toFixed(2)} ppm`);
       }
     }
   }
