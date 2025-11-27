@@ -1,0 +1,35 @@
+# Gitleaks configuration file
+# See: https://github.com/gitleaks/gitleaks#configuration
+
+title = "MARCUS 3.0 Gitleaks Config"
+
+# Extend the default rules
+[extend]
+useDefault = true
+
+# Allowlist paths containing documentation examples
+[allowlist]
+  description = "Allowlist documentation files with example tokens"
+  paths = [
+    '''src/platform/docs/.*\.md$''',
+    '''docs/.*\.md$''',
+    '''.*README\.md$''',
+    '''.*EXAMPLE.*''',
+  ]
+  regexTarget = "match"
+
+# Additional path-based allowlists for common false positives
+[[rules.allowlist]]
+  description = "Allow example/placeholder tokens in docs"
+  commits = []
+  paths = [
+    '''\.md$''',
+    '''\.txt$''',
+  ]
+  regexes = [
+    '''example''',
+    '''placeholder''',
+    '''your[-_]?token''',
+    '''xxx''',
+    '''demo''',
+  ]

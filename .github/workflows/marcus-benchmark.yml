@@ -83,45 +83,36 @@ jobs:
           DATABASE_URL: postgresql://benchmark_user:benchmark_pass@localhost:5432/benchmark_db
           REDIS_URL: redis://localhost:6379/0
         run: |
-          if [ -f "src/platform/evaluation/citation_evaluation_benchmarks.py" ]; then
-            echo "Running Python benchmarks..."
-            python src/platform/evaluation/citation_evaluation_benchmarks.py && \
-            # Find and copy JSON results (scripts write to benchmark_results/)
-            JSON_FILE=$(ls -t benchmark_results/*.json 2>/dev/null | head -1) && \
-            if [ -n "$JSON_FILE" ]; then
-              cp "$JSON_FILE" benchmarks/results-python.json
-            else
-              echo '{"accuracy": {"status": "no_output"}}' > benchmarks/results-python.json
-            fi
+          echo "Running Python benchmarks..."
+          python src/platform/evaluation/citation_evaluation_benchmarks.py
+
+          # Find and copy JSON results (scripts write to benchmark_results/)
+          JSON_FILE=$(ls -t benchmark_results/*.json 2>/dev/null | head -1)
+          if [ -n "$JSON_FILE" ]; then
+            cp "$JSON_FILE" benchmarks/results-python.json
+            echo "✅ Python benchmark results saved"
           else
-            echo '{"accuracy": {"status": "not_found"}}' > benchmarks/results-python.json
+            echo "❌ No JSON output from Python benchmarks"
+            exit 1
           fi
-        continue-on-error: true
 
       - name: Run TypeScript performance benchmarks
         env:
           DATABASE_URL: postgresql://benchmark_user:benchmark_pass@localhost:5432/benchmark_db
           REDIS_URL: redis://localhost:6379/0
         run: |
-          if [ -f "src/platform/evaluation/citationBenchmarks.ts" ]; then
-            echo "Running TypeScript benchmarks..."
-            npx tsx src/platform/evaluation/citationBenchmarks.ts && \
-            # Find and copy JSON results
-            JSON_FILE=$(ls -t benchmark_results/*.json 2>/dev/null | head -1) && \
-            if [ -n "$JSON_FILE" ]; then
-              cp "$JSON_FILE" benchmarks/results-typescript.json
-            else
-              echo '{"performance": {"status": "no_output"}, "scalability": {"status": "no_output"}}' > benchmarks/results-typescript.json
-            fi
-          else
-            echo '{"performance": {"status": "not_found"}, "scalability": {"status": "not_found"}}' > benchmarks/results-typescript.json
-          fi
-        continue-on-error: true
+          echo "Running TypeScript benchmarks..."
+          npx tsx src/platform/evaluation/citationBenchmarks.ts
 
-      - name: Create fallback results if missing
-        run: |
-          [ -f benchmarks/results-python.json ] || echo '{"accuracy": {"status": "skipped"}}' > benchmarks/results-python.json
-          [ -f benchmarks/results-typescript.json ] || echo '{"performance": {"status": "skipped"}, "scalability": {"status": "skipped"}}' > benchmarks/results-typescript.json
+          # Find and copy JSON results (newer than Python results)
+          JSON_FILE=$(ls -t benchmark_results/report_*.json 2>/dev/null | head -1)
+          if [ -n "$JSON_FILE" ]; then
+            cp "$JSON_FILE" benchmarks/results-typescript.json
+            echo "✅ TypeScript benchmark results saved"
+          else
+            echo "❌ No JSON output from TypeScript benchmarks"
+            exit 1
+          fi
 
       - name: Merge benchmark results
         run: |
@@ -244,14 +235,10 @@ jobs:
 
       - name: Generate benchmark report
         run: |
-          if [ -f "src/platform/scripts/generate-benchmark-report.js" ]; then
-            node src/platform/scripts/generate-benchmark-report.js \
-              benchmarks/results.json \
-              benchmarks/comparison.json \
-              > benchmarks/report.html
-          else
-            echo "<html><body><h1>Benchmark Report</h1><p>Report generator not available. See comparison.json artifact.</p></body></html>" > benchmarks/report.html
-          fi
+          node src/platform/scripts/generate-benchmark-report.js \
+            benchmarks/results.json \
+            benchmarks/comparison.json \
+            > benchmarks/report.html
 
       - name: Upload benchmark results
         uses: actions/upload-artifact@v4
@@ -287,10 +274,9 @@ jobs:
             const header = `${pipe} Metric ${pipe} Baseline ${pipe} Current ${pipe} Change ${pipe} Status ${pipe}`;
             const separator = `${pipe}--------${pipe}----------${pipe}---------${pipe}--------${pipe}--------${pipe}`;
             const table = comparison.report.map(r =>
-              `${pipe} ${r.metric} ${pipe} ${r.baseline || '-'} ${pipe} ${r.current || '-'} ${pipe} ${r.change || '-'} ${pipe} ${r.status} ${pipe}`
+              `${pipe} ${r.metric} ${pipe} ${r.baseline} ${pipe} ${r.current} ${pipe} ${r.change} ${pipe} ${r.status} ${pipe}`
             ).join('\n');
-            let status = comparison.hasRegression ? '⚠️ Performance regression detected!' : '✅ All benchmarks passed';
-            if (comparison.skipped) status = '⚠️ Benchmarks skipped - scripts not available';
+            const status = comparison.hasRegression ? '⚠️ Performance regression detected!' : '✅ All benchmarks passed';
             const body = `## 📊 Benchmark Results\n\n${header}\n${separator}\n${table}\n\n**Threshold:** ±${threshold}%\n\n${status}`;
             github.rest.issues.createComment({
               issue_number: context.issue.number,
