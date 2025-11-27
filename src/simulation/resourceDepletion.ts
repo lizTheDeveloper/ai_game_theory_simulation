@@ -1360,7 +1360,7 @@ function updateCO2System(state: GameState, resources: ResourceEconomy): void {
   }
 
   // Calculate equilibrium temperature from CO2
-  const equilibriumTemp = assertFinite(
+  let equilibriumTemp = assertFinite(
     co2Doublings * effectiveClimateSensitivity,
     {
       location: 'updateCO2System',
@@ -1369,6 +1369,43 @@ function updateCO2System(state: GameState, resources: ResourceEconomy): void {
       additionalInfo: { co2Doublings, climateSensitivity: effectiveClimateSensitivity }
     }
   );
+
+  // VOLCANIC FORCING ADJUSTMENT (Nov 27, 2025 - HIGH PRIORITY)
+  // Add volcanic cooling to equilibrium temperature calculation
+  // Research: IPCC AR6 WG1 - volcanic forcing affects global temperature
+  // Formula: ΔT ≈ F * λ where λ ≈ 0.8 K/(W/m²) (climate feedback parameter)
+  //
+  // Note: For hindcast scenarios (1990-2010), volcanic effects are already included
+  // in the NASA GISS historical temperature data, so this adjustment is skipped.
+  // This adjustment only applies to forecast scenarios (2025+) or post-hindcast periods.
+  if (state.volcanicForcing && Math.abs(state.volcanicForcing.forcingWattsPerM2) > 0.01) {
+    // Climate feedback parameter: λ ≈ 0.8 K per W/m² (IPCC AR6)
+    const CLIMATE_FEEDBACK_PARAMETER = 0.8; // K / (W/m²)
+    const volcanicTempAdjustment = state.volcanicForcing.forcingWattsPerM2 * CLIMATE_FEEDBACK_PARAMETER;
+
+    equilibriumTemp = assertFinite(
+      equilibriumTemp + volcanicTempAdjustment,
+      {
+        location: 'updateCO2System (volcanic forcing adjustment)',
+        valueName: 'equilibriumTemp (after volcanic)',
+        month: state.currentMonth,
+        additionalInfo: {
+          baseEquilibrium: equilibriumTemp,
+          volcanicForcingWattsPerM2: state.volcanicForcing.forcingWattsPerM2,
+          volcanicTempAdjustment,
+          currentAOD: state.volcanicForcing.currentAOD
+        }
+      }
+    );
+
+    // Log significant volcanic adjustments (quarterly)
+    if (state.currentMonth % 3 === 0) {
+      console.log(
+        `  🌋 Volcanic temperature adjustment: ${volcanicTempAdjustment >= 0 ? '+' : ''}${volcanicTempAdjustment.toFixed(3)}°C ` +
+        `(forcing ${state.volcanicForcing.forcingWattsPerM2.toFixed(2)} W/m², AOD ${state.volcanicForcing.currentAOD.toFixed(3)})`
+      );
+    }
+  }
 
   // HINDCAST FIX (Nov 24, 2025): Apply thermal inertia for historical mode
   //

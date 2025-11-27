@@ -37,6 +37,7 @@
 🌡️ | Climate tipping point
 🔥 | Deadly heat event
 🌱 | Climate recovery
+🌋 | Volcanic eruption
 🌊 | Ocean acidification
 🐟 | Ocean anoxia
 💧 | Day zero drought

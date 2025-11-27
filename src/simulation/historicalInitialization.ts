@@ -445,6 +445,15 @@ export async function createHistoricalInitialState(
     additionalInfo: { year },
   });
 
+  // Initialize volcanic forcing (Nov 27, 2025 - HIGH PRIORITY)
+  // For 1990 start: pre-Pinatubo (AOD = 0)
+  // Pinatubo erupts at Month 18 (June 1991), handled by VolcanicForcingPhase
+  baseState.volcanicForcing = {
+    currentAOD: 0.0,           // No volcanic eruption at start
+    forcingWattsPerM2: 0.0,    // No forcing
+    lastEruptionMonth: -999    // Sentinel value (no previous eruption)
+  };
+
   console.log(`[HistoricalInitialization] Created state for ${year}:`);
   console.log(`  CO2: ${historical.climate.co2Ppm} ppm`);
   console.log(`  Temp anomaly: ${historical.climate.tempAnomaly}C`);
@@ -452,6 +461,7 @@ export async function createHistoricalInitialState(
   console.log(`  Global Gini: ${historical.economic.globalGini}`);
   console.log(`  HDI: ${historical.economic.globalHDI}`);
   console.log(`  AI Agents: ${baseState.aiAgents.length}`);
+  console.log(`  Volcanic forcing: ${baseState.volcanicForcing.forcingWattsPerM2.toFixed(2)} W/m² (AOD ${baseState.volcanicForcing.currentAOD.toFixed(3)})`);
 
   return baseState;
 }
@@ -860,6 +870,15 @@ export function initializeHistoricalSimulation(
     additionalInfo: { year },
   });
 
+  // Initialize volcanic forcing (Nov 27, 2025 - HIGH PRIORITY)
+  // For 1990 start: pre-Pinatubo (AOD = 0)
+  // Pinatubo erupts at Month 18 (June 1991), handled by VolcanicForcingPhase
+  baseState.volcanicForcing = {
+    currentAOD: 0.0,           // No volcanic eruption at start
+    forcingWattsPerM2: 0.0,    // No forcing
+    lastEruptionMonth: -999    // Sentinel value (no previous eruption)
+  };
+
   console.log(`[HistoricalInitialization] Created state for ${year}:`);
   console.log(`  CO2: ${historical.climate.co2Ppm} ppm`);
   console.log(`  Temp anomaly: ${historical.climate.tempAnomaly}C`);
@@ -867,6 +886,7 @@ export function initializeHistoricalSimulation(
   console.log(`  Global Gini: ${historical.economic.globalGini}`);
   console.log(`  HDI: ${historical.economic.globalHDI}`);
   console.log(`  AI Agents: ${baseState.aiAgents.length}`);
+  console.log(`  Volcanic forcing: ${baseState.volcanicForcing.forcingWattsPerM2.toFixed(2)} W/m² (AOD ${baseState.volcanicForcing.currentAOD.toFixed(3)})`);
 
   return baseState;
 }

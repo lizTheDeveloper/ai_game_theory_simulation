@@ -29,6 +29,14 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 27: VolcanicForcingPhase Added** (commits 6f3037c, previous)
+- 🌋 **New Phase (16.5):** Models stratospheric aerosol optical depth (AOD) from volcanic eruptions
+- **Purpose:** Historical validation for 1990-2010 hindcast - captures Mount Pinatubo cooling (~0.3°C)
+- **Physics:** AOD exponential decay (τ≈18 months), radiative forcing = -25 W/m² per unit AOD (IPCC AR6)
+- **Research:** Hansen et al. (2005), Sato et al. (1993) volcanic AOD data
+- **GameState:** New `volcanicForcing` property (currentAOD, forcingWattsPerM2, lastEruptionMonth)
+- 📄 **Files:** `VolcanicForcingPhase.ts`, `src/types/game.ts:437-441`
+
 **Nov 26: AIAgentCoordinationPhase Unit Tests** (commit 3a63351)
 - 🧪 **55 unit tests** with 97.49% statement coverage, 83.16% branch coverage, 100% function coverage
 - **Test Areas:** Coalition formation, game-theoretic interactions (prisoner's dilemma), trust evolution, instrumental convergence, alignment faking rates
@@ -8610,7 +8618,7 @@ See **[`plans/MASTER_IMPLEMENTATION_ROADMAP.md`](../../plans/MASTER_IMPLEMENTATI
 
 ## 🔄 Phase Execution Order (Updated Nov 25, 2025)
 
-The simulation runs via a **phase-based architecture** with **99 phases** executing in deterministic order each month (reduced from 116 via Nov 2025 consolidation, +2 Nov 24).
+The simulation runs via a **phase-based architecture** with **100 phases** executing in deterministic order each month (reduced from 116 via Nov 2025 consolidation, +2 Nov 24, +1 Nov 27).
 
 **✅ Phase Consolidation Complete (Nov 9, 2025):** Reduced **116 → 95 phases** (-18% complexity). Target exceeded: 3-4 days actual vs 2-3 weeks estimated (5× faster). Zero regressions, 143 test cases, Monte Carlo validated.
 
@@ -8646,6 +8654,7 @@ The simulation runs via a **phase-based architecture** with **99 phases** execut
 - ConflictResolutionPhase (14.0): Diplomatic AI, peace dividend
 - DiplomaticAIPhase (15.0): Hegemonic AI alignment
 - NationalAIPhase (16.0): Country-level AI capabilities
+- **VolcanicForcingPhase (16.5)**: Stratospheric aerosol optical depth (AOD) from volcanic eruptions for historical validation. Models Pinatubo 1991 cooling (~0.3°C). (**NEW Nov 27, 2025**)
 - UBIPhase (17.0): Universal basic income
 - SocialSafetyNetsPhase (18.0): Community programs
 - InformationWarfarePhase (19.0): Truth decay, deepfakes
