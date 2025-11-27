@@ -502,46 +502,18 @@ export class BaselineMortalityPhase implements SimulationPhase {
     // Calculate baseline mortality risk from historical data
     const baselineRisk = calculateBaselineMortalityRisk(state);
 
-    // HINDCAST FIX: Compensate for ERA mortality multiplier
-    // The Bayesian system will multiply ALL risks by ERA multiplier (line 362 of bayesianMortality.ts)
-    // But baseline demographic deaths should NOT be scaled by ERA multiplier!
-    //
-    // ERA multiplier compensation: Baseline mortality is NOT divided by ERA multiplier
-    // because ERA represents "crisis response capability" not "baseline healthcare quality"
-    //
-    // Rationale: 1990 had HIGHER baseline mortality (9.3/1000) but LOWER crisis response
-    // capability than 2025. Baseline improvement comes from antibiotics, sanitation, vaccines
-    // (captured in HISTORICAL_CDR), while ERA captures emergency response infrastructure.
-    //
-    // CAVEAT: This separation lacks direct empirical support. Alternative interpretation:
-    // ERA improvements and baseline mortality improvements may be confounded (same healthcare
-    // systems that reduce baseline also improve crisis response). Flagged for validation.
-    //
-    // See: research/baseline_mortality_skeptical_review_20251124.md
-    //
-    // Solution: Pre-divide by ERA multiplier so that when Bayesian system multiplies,
-    // we get back the correct historical baseline mortality rate.
-    // Example: baselineRisk=0.000775 (9.3/1000/12), eraMultiplier=0.30
-    //          compensated=0.000775/0.30=0.00258
-    //          bayesian applies: 0.00258*0.30=0.000775 ✓
-    // FIX (Nov 24, 2025): state.currentYear is now updated by TimeAdvancementPhase to include
-    // years elapsed since start. No need to add yearsElapsed again - that was double-counting!
-    // Before fix: Month 12 would use year 1992 (1991 + 1) instead of 1991
+    // C-4 FIX (Nov 27, 2025): Use historical CDR directly (no ERA compensation)
+    // Baseline demographic mortality is now EXEMPT from ERA scaling in bayesianMortality.ts
+    // ERA represents crisis response infrastructure, not baseline aging/disease
+    // See: bayesianMortality.ts line 364 (isBaselineDemographic check)
     const actualYear = state.currentYear;
-    const eraMultiplier = getEraMortalityMultiplier(actualYear);
-    const compensatedBaselineRisk = assertFinite(baselineRisk / eraMultiplier, {
-      location: 'BaselineMortalityPhase.execute',
-      valueName: 'compensatedBaselineRisk',
-      month: state.currentMonth,
-      additionalInfo: { baselineRisk, eraMultiplier, actualYear }
-    });
 
     // Add baseline mortality risk to Bayesian system
     // The Bayesian system will apply demographic vulnerability weights automatically
     // (Elite 0.6×, Professional 0.7×, Working 1.0×, Precariat 1.3×, Informal 1.6×)
     addMortalityRisk(pop, {
       type: 'other', // Baseline mortality is catch-all for natural causes
-      baseRisk: compensatedBaselineRisk, // Pre-compensated for ERA multiplier
+      baseRisk: baselineRisk, // No ERA compensation needed (exempt in Bayesian)
       proximate: 'disease', // Disease/natural causes (aging, illness, accidents)
       root: 'demographic', // Demographic baseline (natural mortality)
       confidence: 'HIGH',
