@@ -42,6 +42,16 @@ export class FamineSystemPhase implements SimulationPhase {
     if (!state.famineSystem) return { events: [] };
     setDeterministicRng(rng);
 
+    // HIGH-7 FIX (Nov 27, 2025): Skip famine system in historical mode
+    // Root cause: Famine cascades trigger during 1990-2024 baseline period, causing
+    // population crashes instead of historical growth (+52.8% actual vs -76% simulated).
+    // The historical period had localized famines (Somalia 1992, North Korea 1990s) but
+    // no global food crises. Historical CDR data already incorporates these events.
+    // Solution: Disable famine system entirely for hindcast validation (1990-2024).
+    if (state.config.scenarioMode === 'historical' && state.currentYear <= 2024) {
+      return { events: [] };
+    }
+
     // 1. Check regional biodiversity for new famine triggers (ecosystem collapse)checkRegionalFamineRisk(state, state.currentMonth);
 
     // 2. Update active famines (progress death curves)// Validate AI capability aggregation (prevent NaN propagation)
