@@ -29,7 +29,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **CRITICAL VALIDATION FAILURES (Must resolve before new features):**
 - **C-3:** Hindcast CO2 validation failing 7 phases (14% error vs 5% threshold)
-- **C-4:** Hindcast population validation failing (33% error vs 10% threshold)
+- **C-4:** Hindcast population validation failing (33% error vs 10% threshold) - **IN PROGRESS** (Nov 27, commit 052a8c8 - birth rate bug fix, partial)
 - ~~**C-5:** Cascade mortality unbounded~~ ✅ **RESOLVED** (Nov 27, commit 5e4e407 - logistic saturation)
 
 **HIGH PRIORITY ISSUES:**
@@ -41,6 +41,23 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 **Reports:** `reviews/research_debate_20251126_worker5.md` (18.5K), `plans/completed/worker_session_5_complete_20251126.md`
 
 **Recent Major Achievements:**
+
+**Nov 27: C-4 IN PROGRESS - Birth Rate Calculation Bug Fix** (commit 052a8c8)
+- ⚠️ **WIP:** Population hindcast 33.6% error (9.2B vs 6.9B at 2010)
+- **ROOT CAUSE FOUND:** Birth rate calculation multiplying instead of using historical CBR directly
+  - Phase 6 initialized TFR correctly (SSA: 6.35, Europe: 1.57, etc.)
+  - But `adjustedBirthRate = baselineBirthRate * (fertilityRate / 2.1)` used 2025 baseline
+  - Result: SSA 4.47% birth rate (should be 4.73% from UN WPP 1990)
+- **FIX IMPLEMENTED:** Direct historical CBR lookup path in `regionalPopulations.ts:458-535`
+  - When `_skipHistoricalBirthRateScaling = true`, use UN WPP CBR data directly
+  - Sub-Saharan Africa: 4.73% ✅ (was 9.39%)
+  - East Asia: 1.43% ✅ (correct regional value)
+- **REMAINING ISSUES:**
+  - Overall growth still too low (0.11% vs expected 1.5%)
+  - Death rates potentially too high - Bayesian mortality interaction needs investigation
+  - Full 1990-2010 validation pending
+- 📄 **Files:** `regionalPopulations.ts`, `scripts/debugFertilityInitialization.ts`, `scripts/validateC4Fix.ts`
+- **Status:** PARTIAL - Core calculation bug fixed, population decline issue remains
 
 **Nov 27: C-5 CRITICAL Fix - Cascade Mortality Logistic Saturation** (commit 5e4e407)
 - **CRITICAL BUG FIXED:** Cascade mortality used unbounded exponential growth (1.05^N) producing physically impossible multipliers
