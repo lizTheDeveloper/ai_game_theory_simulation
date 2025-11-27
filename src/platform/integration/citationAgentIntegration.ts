@@ -863,9 +863,12 @@ export class MetricsCollector {
 
 export class CitationAgentOrchestrator {
   private agents: Map<string, PythonAgentWrapper> = new Map();
+  private busyAgents: Set<string> = new Set();
+  private agentCounter: number = 0;
   private stateManager: AgentStateManager;
   private metricsCollector: MetricsCollector;
   private isRunning: boolean = false;
+  private spawnLock: Promise<void> = Promise.resolve();
 
   constructor(
     private config: PlatformConfig,
@@ -877,47 +880,108 @@ export class CitationAgentOrchestrator {
   }
 
   async initialize(): Promise<void> {
-    console.log(`🚀 Initializing orchestrator with ${this.config.numAgents} agents...`);
+    console.log(`🚀 Initializing orchestrator (lazy spawning, max ${this.config.numAgents} agents)...`);
 
-    // Spawn agents with staggered startup to prevent connection exhaustion in CI
-    for (let i = 0; i < this.config.numAgents; i++) {
-      const agentId = `agent_${String(i).padStart(3, '0')}`;
-      const agent = new PythonAgentWrapper(
-        agentId,
-        this.config.agentScriptPath,
-        this.config.maxRestarts,
-        this.config.agentTimeout
-      );
-
-      // Set up event handlers
-      agent.on('error', (err) => {
-        console.error(`❌ Agent ${agentId} error:`, err);
-        this.metricsCollector.recordAgentFailure(agentId);
-      });
-
-      agent.on('failed', () => {
-        console.error(`❌ Agent ${agentId} failed permanently`);
-        this.agents.delete(agentId);
-      });
-
-      await agent.start();
-      this.agents.set(agentId, agent);
-
-      // Stagger agent startup by 500ms to allow DB connections to stabilize
-      // This prevents connection exhaustion in resource-constrained CI environments
-      if (i < this.config.numAgents - 1) {
-        await new Promise(resolve => setTimeout(resolve, 500));
-      }
-    }
+    // Lazy initialization - don't pre-spawn agents
+    // Agents will be spawned on-demand when tasks arrive
+    // This prevents connection exhaustion in resource-constrained CI environments
 
     this.isRunning = true;
-    console.log(`✅ Orchestrator initialized with ${this.agents.size} agents`);
+    console.log(`✅ Orchestrator initialized (agents will spawn on-demand)`);
   }
 
   /**
-   * Analyze document using multi-agent consensus.
+   * Get an idle agent or spawn a new one if capacity allows.
+   * Uses a lock to prevent race conditions when spawning.
+   */
+  private async getOrSpawnAgent(): Promise<PythonAgentWrapper | null> {
+    // First, try to find an idle healthy agent
+    for (const [agentId, agent] of this.agents) {
+      if (!this.busyAgents.has(agentId) && agent.isHealthy) {
+        return agent;
+      }
+    }
+
+    // No idle agent available - spawn new one if under limit
+    if (this.agents.size < this.config.numAgents) {
+      // Use lock to prevent multiple spawns at once
+      await this.spawnLock;
+
+      // Double-check after acquiring lock
+      if (this.agents.size >= this.config.numAgents) {
+        // Another spawn completed while we waited, try to find idle agent again
+        for (const [agentId, agent] of this.agents) {
+          if (!this.busyAgents.has(agentId) && agent.isHealthy) {
+            return agent;
+          }
+        }
+        return null; // All agents busy, caller should wait
+      }
+
+      // Spawn with lock held
+      let resolveSpawnLock: () => void;
+      this.spawnLock = new Promise(resolve => { resolveSpawnLock = resolve; });
+
+      try {
+        const agent = await this.spawnAgent();
+        return agent;
+      } finally {
+        resolveSpawnLock!();
+      }
+    }
+
+    return null; // At capacity, all agents busy
+  }
+
+  /**
+   * Spawn a single agent on-demand.
+   */
+  private async spawnAgent(): Promise<PythonAgentWrapper> {
+    const agentId = `agent_${String(this.agentCounter++).padStart(3, '0')}`;
+    console.log(`🔄 Spawning agent ${agentId} on-demand (${this.agents.size + 1}/${this.config.numAgents})...`);
+
+    const agent = new PythonAgentWrapper(
+      agentId,
+      this.config.agentScriptPath,
+      this.config.maxRestarts,
+      this.config.agentTimeout
+    );
+
+    // Set up event handlers
+    agent.on('error', (err) => {
+      console.error(`❌ Agent ${agentId} error:`, err);
+      this.metricsCollector.recordAgentFailure(agentId);
+    });
+
+    agent.on('failed', () => {
+      console.error(`❌ Agent ${agentId} failed permanently`);
+      this.agents.delete(agentId);
+      this.busyAgents.delete(agentId);
+    });
+
+    await agent.start();
+    this.agents.set(agentId, agent);
+
+    console.log(`✅ Agent ${agentId} ready`);
+    return agent;
+  }
+
+  /**
+   * Mark an agent as busy/idle for task tracking.
+   */
+  private markAgentBusy(agentId: string): void {
+    this.busyAgents.add(agentId);
+  }
+
+  private markAgentIdle(agentId: string): void {
+    this.busyAgents.delete(agentId);
+  }
+
+  /**
+   * Analyze document using multi-agent consensus with lazy spawning.
    *
-   * Distributes work to all healthy agents and aggregates results.
+   * Spawns agents on-demand as needed, up to the configured maximum.
+   * Uses agent pool for efficient resource utilization in CI environments.
    *
    * @param document Document to analyze
    * @returns Aggregated analysis with consensus metrics
@@ -929,14 +993,57 @@ export class CitationAgentOrchestrator {
 
     const startTime = Date.now();
 
-    // Distribute to all agents (with error handling)
-    const agentPromises = Array.from(this.agents.values()).map(agent =>
-      agent.analyzeCitation(document).catch(err => {
-        console.error(`Agent ${agent.agentId} failed:`, err);
-        this.metricsCollector.recordAgentFailure(agent.agentId);
-        return null;
-      })
-    );
+    // Spawn agents on-demand up to numAgents (sequentially with delay)
+    // This prevents connection exhaustion in CI environments
+    const targetAgentCount = this.config.numAgents;
+    const spawnPromises: Promise<void>[] = [];
+
+    for (let i = this.agents.size; i < targetAgentCount; i++) {
+      // Sequential spawning with 500ms delay between agents
+      spawnPromises.push(
+        (async () => {
+          if (i > 0) {
+            await new Promise(resolve => setTimeout(resolve, i * 500));
+          }
+          try {
+            await this.spawnAgent();
+          } catch (err) {
+            console.error(`Failed to spawn agent: ${err}`);
+          }
+        })()
+      );
+    }
+
+    // Wait for all agents to spawn (with timeout)
+    if (spawnPromises.length > 0) {
+      console.log(`🔄 Spawning ${spawnPromises.length} agents on-demand...`);
+      await Promise.race([
+        Promise.all(spawnPromises),
+        new Promise(resolve => setTimeout(resolve, (targetAgentCount + 1) * 500 + 5000)) // Generous timeout
+      ]);
+      console.log(`✅ Agent pool ready: ${this.agents.size}/${targetAgentCount} agents`);
+    }
+
+    // Get all healthy agents for analysis
+    const healthyAgents = Array.from(this.agents.values()).filter(a => a.isHealthy);
+
+    if (healthyAgents.length === 0) {
+      throw new Error('❌ CRITICAL: No healthy agents available - platform unhealthy');
+    }
+
+    // Distribute to all healthy agents (with error handling)
+    const agentPromises = healthyAgents.map(agent => {
+      this.markAgentBusy(agent.agentId);
+      return agent.analyzeCitation(document)
+        .catch(err => {
+          console.error(`Agent ${agent.agentId} failed:`, err);
+          this.metricsCollector.recordAgentFailure(agent.agentId);
+          return null;
+        })
+        .finally(() => {
+          this.markAgentIdle(agent.agentId);
+        });
+    });
 
     // Wait for all agents (with timeout)
     const results = await Promise.race([
@@ -948,11 +1055,11 @@ export class CitationAgentOrchestrator {
     const validResults = results.filter(r => r !== null) as CitationAnalysisResult[];
 
     if (validResults.length === 0) {
-      throw new Error('❌ CRITICAL: No agents available - platform unhealthy');
+      throw new Error('❌ CRITICAL: No agents returned results - platform unhealthy');
     }
 
-    if (validResults.length < this.agents.size * 0.5) {
-      console.warn(`⚠️ Less than 50% of agents responded (${validResults.length}/${this.agents.size})`);
+    if (validResults.length < healthyAgents.length * 0.5) {
+      console.warn(`⚠️ Less than 50% of agents responded (${validResults.length}/${healthyAgents.length})`);
     }
 
     // Calculate consensus
