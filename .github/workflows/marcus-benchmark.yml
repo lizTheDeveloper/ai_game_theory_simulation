@@ -1,0 +1,283 @@
+name: MARCUS 3.0 - Automated Benchmarking
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    # Run daily at 2 AM UTC
+    - cron: '0 2 * * *'
+
+env:
+  BASELINE_FILE: benchmarks/baseline.json
+  REGRESSION_THRESHOLD: 0.10  # 10% regression fails CI
+
+jobs:
+  benchmark:
+    name: Run Benchmarks
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: benchmark_user
+          POSTGRES_PASSWORD: benchmark_pass
+          POSTGRES_DB: benchmark_db
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for baseline comparison
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          npm ci
+
+      - name: Generate benchmark datasets
+        run: |
+          python src/platform/evaluation/generate_benchmark_datasets.py
+
+      - name: Run accuracy benchmarks
+        env:
+          DATABASE_URL: postgresql://benchmark_user:benchmark_pass@localhost:5432/benchmark_db
+          REDIS_URL: redis://localhost:6379/0
+        run: |
+          python src/platform/evaluation/citation_evaluation_benchmarks.py \
+            --output benchmarks/results-python.json
+
+      - name: Run performance benchmarks
+        run: |
+          npx tsx src/platform/evaluation/citationBenchmarks.ts \
+            --output benchmarks/results-typescript.json
+
+      - name: Merge benchmark results
+        run: |
+          node -e "
+            const python = require('./benchmarks/results-python.json');
+            const typescript = require('./benchmarks/results-typescript.json');
+            const merged = {
+              timestamp: new Date().toISOString(),
+              commit: '${{ github.sha }}',
+              branch: '${{ github.ref_name }}',
+              accuracy: python.accuracy,
+              performance: typescript.performance,
+              scalability: typescript.scalability
+            };
+            require('fs').writeFileSync('benchmarks/results.json', JSON.stringify(merged, null, 2));
+          "
+
+      - name: Load baseline
+        id: baseline
+        run: |
+          if [ -f "${{ env.BASELINE_FILE }}" ]; then
+            echo "baseline_exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "baseline_exists=false" >> $GITHUB_OUTPUT
+            echo "⚠️ No baseline found - this run will establish baseline"
+          fi
+
+      - name: Compare to baseline
+        if: steps.baseline.outputs.baseline_exists == 'true'
+        id: comparison
+        run: |
+          node -e "
+            const baseline = require('./${{ env.BASELINE_FILE }}');
+            const current = require('./benchmarks/results.json');
+            const threshold = parseFloat('${{ env.REGRESSION_THRESHOLD }}');
+
+            const metrics = {
+              accuracy: {
+                baseline: baseline.accuracy.overall,
+                current: current.accuracy.overall,
+                threshold: threshold
+              },
+              f1_score: {
+                baseline: baseline.accuracy.f1_score,
+                current: current.accuracy.f1_score,
+                threshold: threshold
+              },
+              consensus: {
+                baseline: baseline.accuracy.consensus,
+                current: current.accuracy.consensus,
+                threshold: threshold
+              },
+              latency_p95: {
+                baseline: baseline.performance.latency_p95,
+                current: current.performance.latency_p95,
+                threshold: threshold,
+                inverse: true  // Lower is better
+              },
+              throughput: {
+                baseline: baseline.performance.throughput,
+                current: current.performance.throughput,
+                threshold: threshold
+              }
+            };
+
+            let hasRegression = false;
+            const report = [];
+
+            for (const [name, data] of Object.entries(metrics)) {
+              const change = data.inverse
+                ? (data.current - data.baseline) / data.baseline
+                : (data.baseline - data.current) / data.baseline;
+
+              const status = Math.abs(change) > data.threshold
+                ? (change > 0 ? '⚠️ REGRESSION' : '✅ IMPROVEMENT')
+                : '✓ OK';
+
+              if (change > data.threshold) hasRegression = true;
+
+              report.push({
+                metric: name,
+                baseline: data.baseline.toFixed(4),
+                current: data.current.toFixed(4),
+                change: (change * 100).toFixed(2) + '%',
+                status: status
+              });
+            }
+
+            console.table(report);
+
+            require('fs').writeFileSync('benchmarks/comparison.json', JSON.stringify({
+              hasRegression,
+              report
+            }, null, 2));
+
+            if (hasRegression) {
+              console.error('❌ Performance regression detected');
+              process.exit(1);
+            }
+          "
+
+      - name: Generate benchmark report
+        run: |
+          node src/platform/scripts/generate-benchmark-report.js \
+            benchmarks/results.json \
+            benchmarks/comparison.json \
+            > benchmarks/report.html
+
+      - name: Upload benchmark results
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-results
+          path: |
+            benchmarks/results.json
+            benchmarks/comparison.json
+            benchmarks/report.html
+          retention-days: 90
+
+      - name: Update baseline (main branch only)
+        if: github.ref == 'refs/heads/main' && steps.baseline.outputs.baseline_exists == 'false'
+        run: |
+          cp benchmarks/results.json ${{ env.BASELINE_FILE }}
+          git config user.name "Marcus Bot"
+          git config user.email "marcus-bot@platform.engineering"
+          git add ${{ env.BASELINE_FILE }}
+          git commit -m "chore: Update benchmark baseline [skip ci]"
+          git push
+
+      - name: Comment on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        env:
+          THRESHOLD: ${{ env.REGRESSION_THRESHOLD }}
+        with:
+          script: |
+            const fs = require('fs');
+            const comparison = JSON.parse(fs.readFileSync('benchmarks/comparison.json', 'utf8'));
+            const threshold = parseFloat(process.env.THRESHOLD || '0.05') * 100;
+
+            const table = comparison.report.map(r =>
+              `| ${r.metric} | ${r.baseline} | ${r.current} | ${r.change} | ${r.status} |`
+            ).join('\n');
+
+            const body = `## 📊 Benchmark Results
+
+| Metric | Baseline | Current | Change | Status |
+|--------|----------|---------|--------|--------|
+${table}
+
+**Threshold:** ±${threshold}%
+
+${comparison.hasRegression ? '⚠️ Performance regression detected!' : '✅ All benchmarks passed'}
+            `;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });
+
+  profile:
+    name: Performance Profiling
+    runs-on: ubuntu-latest
+    needs: benchmark
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install profiling tools
+        run: |
+          pip install py-spy memory-profiler
+
+      - name: Run CPU profiling
+        run: |
+          py-spy record -o benchmarks/cpu-profile.svg \
+            -- python src/platform/evaluation/citation_evaluation_benchmarks.py
+
+      - name: Run memory profiling
+        run: |
+          mprof run src/platform/evaluation/citation_evaluation_benchmarks.py
+          mprof plot -o benchmarks/memory-profile.png
+
+      - name: Upload profiling results
+        uses: actions/upload-artifact@v4
+        with:
+          name: profiling-results
+          path: |
+            benchmarks/cpu-profile.svg
+            benchmarks/memory-profile.png
+          retention-days: 30

@@ -1,0 +1,112 @@
+name: MARCUS 3.0 - Linting
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/platform/**/*.py'
+      - 'src/platform/**/*.ts'
+      - '.github/workflows/marcus-lint.yml'
+      - 'pyproject.toml'
+      - '.flake8'
+      - 'mypy.ini'
+      - '.eslintrc.json'
+      - '.prettierrc'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/platform/**/*.py'
+      - 'src/platform/**/*.ts'
+  workflow_dispatch:
+
+jobs:
+  python-lint:
+    name: Python Linting
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install linting dependencies
+        run: |
+          pip install black flake8 mypy isort
+          pip install -r requirements.txt
+
+      - name: Check formatting with Black
+        run: |
+          black --check --diff src/platform/
+
+      - name: Check import sorting with isort
+        run: |
+          isort --check-only --diff src/platform/
+
+      - name: Lint with flake8
+        run: |
+          flake8 src/platform/
+
+      - name: Type check with mypy
+        run: |
+          mypy src/platform/ --ignore-missing-imports
+
+  typescript-lint:
+    name: TypeScript Linting
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: ESLint with security rules
+        run: |
+          npx eslint src/platform/**/*.ts --max-warnings 0
+
+      - name: Prettier format check
+        run: |
+          npx prettier --check "src/platform/**/*.ts"
+
+      - name: TypeScript compiler check
+        run: |
+          npx tsc --noEmit
+
+  security-lint:
+    name: Security Scanning
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Bandit (Python security)
+        run: |
+          pip install bandit
+          bandit -r src/platform/ -f json -o bandit-report.json || true
+
+      - name: Upload Bandit report
+        uses: actions/upload-artifact@v4
+        with:
+          name: bandit-security-report
+          path: bandit-report.json
+          retention-days: 7
+
+      - name: Check for secrets in code
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: ./
+          base: ${{ github.event.repository.default_branch }}
+          head: HEAD
