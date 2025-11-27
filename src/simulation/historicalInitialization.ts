@@ -163,11 +163,17 @@ export async function createHistoricalInitialState(
     // Only enable historical emissions mode for hindcast period (1990-2010)
     // For other years (2024+), use endogenous emissions model
     baseState.config.historicalEmissionsMode = (year >= 1990 && year <= 2010);
+    // Enable historical mode for all hindcast periods (1990-2024)
+    // This dampens crisis systems to match baseline growth trajectories
+    baseState.config.historicalMode = (year >= 1990 && year <= 2024);
     console.log(`  config.startYear set to ${year} for historical hindcast`);
     if (baseState.config.historicalEmissionsMode) {
       console.log(`  config.historicalEmissionsMode enabled (Phase 5: GCP emissions forcing for ${year})`);
     } else {
       console.log(`  config.historicalEmissionsMode disabled (using endogenous emissions for ${year})`);
+    }
+    if (baseState.config.historicalMode) {
+      console.log(`  config.historicalMode enabled (Phase 11: dampened crisis systems for ${year})`);
     }
   }
 
@@ -643,11 +649,17 @@ export function initializeHistoricalSimulation(
     // Only enable historical emissions mode for hindcast period (1990-2010)
     // For other years (2024+), use endogenous emissions model
     baseState.config.historicalEmissionsMode = (year >= 1990 && year <= 2010);
+    // Enable historical mode for all hindcast periods (1990-2024)
+    // This dampens crisis systems to match baseline growth trajectories
+    baseState.config.historicalMode = (year >= 1990 && year <= 2024);
     console.log(`  config.startYear set to ${year} for historical hindcast`);
     if (baseState.config.historicalEmissionsMode) {
       console.log(`  config.historicalEmissionsMode enabled (Phase 5: GCP emissions forcing for ${year})`);
     } else {
       console.log(`  config.historicalEmissionsMode disabled (using endogenous emissions for ${year})`);
+    }
+    if (baseState.config.historicalMode) {
+      console.log(`  config.historicalMode enabled (Phase 11: dampened crisis systems for ${year})`);
     }
   }
 
