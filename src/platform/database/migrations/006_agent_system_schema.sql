@@ -137,12 +137,21 @@ CREATE INDEX IF NOT EXISTS idx_citation_analyses_timestamp ON citation_analyses(
 -- Updated At Trigger for Agent States
 -- ============================================================================
 
--- Drop trigger if exists, then create (PostgreSQL doesn't support CREATE TRIGGER IF NOT EXISTS)
+-- Agent_states uses 'timestamp' column instead of 'updated_at', so needs custom function
+CREATE OR REPLACE FUNCTION update_agent_states_timestamp_column()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.timestamp = CURRENT_TIMESTAMP;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Drop trigger if exists, then create with correct function
 DROP TRIGGER IF EXISTS update_agent_states_timestamp ON agent_states;
 CREATE TRIGGER update_agent_states_timestamp
     BEFORE UPDATE ON agent_states
     FOR EACH ROW
-    EXECUTE FUNCTION update_updated_at_column();
+    EXECUTE FUNCTION update_agent_states_timestamp_column();
 
 -- ============================================================================
 -- Verification
