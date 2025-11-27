@@ -6,8 +6,8 @@
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
 **Current Status:** 🟢 **STABLE** (Nov 27, 2025 - Post-Fix Validation)
-- **Research Quality:** B+ (82%) - Climate stability citations corrected (commits 69e1490b1, 511216428)
-- **Architecture Health:** A- (0 CRITICAL, 0 HIGH issues, 1 MEDIUM remaining)
+- **Research Quality:** A- (95%+ sources from 2024-2025, high-priority updates identified)
+- **Architecture Health:** A- (0 CRITICAL, 0 HIGH issues, 3 MEDIUM issues)
 - **System Performance:** Monte Carlo deterministic, hindcast validation passing, 81.68% test coverage
 - **System Trajectory:** 🟢 **UNBLOCKED** - All 3 overnight blockers resolved (commit 8596afd8b)
 - **Roadmap Coherence:** CURRENT - Updated Nov 27 post-fix validation
@@ -27,6 +27,17 @@
     - Armstrong McKay 2022: Corrected to "cascading tipping points" (not "stable")
     - Steffen 2015: Corrected to "state shift risks" (not "remains habitable")
     - **Status:** RESOLVED - research integrity restored
+  - ✅ **H-6 RESOLVED (Nov 27):** Temperature anticorrelation bug fixed (commit 76b069b20)
+    - Root cause: TechCoolingPhase existed but NEVER registered in engine.ts
+    - Geoengineering cooling accumulated by TechTreePhase but never applied to temperature
+    - Fix: Registered TechCoolingPhase at order 17.5 (after ResourceEconomyPhase 17.0)
+    - Impact: All climate tech validation now functional
+  - ✅ **H-7 RESOLVED (Nov 27):** VolcanicForcingPhase implemented (commit 0e1c65d36)
+    - Problem: Temperature validation failing 50% of checks (missing Pinatubo cooling ~0.3°C)
+    - Solution: New VolcanicForcingPhase (order 16.5) models stratospheric aerosols
+    - Exponential decay: AOD(t) = AOD_peak * exp(-t / 18 months)
+    - Radiative forcing: F = -25 W/m² per unit AOD (IPCC AR6 WG1)
+    - Temperature effect: ΔT ≈ F * λ where λ ≈ 0.8 K/(W/m²)
 - **Recent Work (Nov 26 Late Night - Autonomous Worker Session 3 - Issue Discovery):**
   - 🔍 **Hindcast Validation Phase 10 - Issues Identified** - 30% crash rate, environmentalHealth NaN
     - 3 of 10 runs crashed at months 142-146 (2002)
