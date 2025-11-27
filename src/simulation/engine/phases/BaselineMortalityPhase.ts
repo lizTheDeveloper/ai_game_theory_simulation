@@ -499,9 +499,10 @@ export class BaselineMortalityPhase implements SimulationPhase {
     // Result: Deaths counted twice → population crashes instead of growing.
     // Example: 1990 has 54.9M/yr regional deaths + 28.8M/yr Bayesian deaths = 83.7M/yr total
     // vs expected 49.5M/yr (9.3/1000 CDR). Deaths are 69% too high!
-    // Solution: In historical mode (pre-2000), skip Bayesian baseline mortality entirely.
+    // Solution: In historical mode (1990-2024 hindcast), skip Bayesian baseline mortality entirely.
     // The regional population system handles ALL mortality with historical CDR scaling.
-    if (state.config.scenarioMode === 'historical' && state.currentYear < 2000) {
+    // HIGH-7 FIX (Nov 27, 2025): Extended from < 2000 to <= 2024 for full hindcast period
+    if (state.config.scenarioMode === 'historical' && state.currentYear <= 2024) {
       return { events: [] };
     }
 

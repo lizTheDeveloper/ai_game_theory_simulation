@@ -541,7 +541,8 @@ export function updateRegionalPopulations(state: GameState): void {
     // the effect → death rates too low in historical mode.
     // Example: SSA 1990 baseline 0.9% × healthcare 0.76 × historical scale 1.95 = 1.33%
     // But expected is 15.6/1000 = 1.56% (historical CDR directly).
-    const isHistoricalMode = state.config.scenarioMode === 'historical' && state.currentYear < 2000;
+    // HIGH-7 FIX (Nov 27, 2025): Extended from < 2000 to <= 2024 for full hindcast period
+    const isHistoricalMode = state.config.scenarioMode === 'historical' && state.currentYear <= 2024;
     const healthcareReduction = isHistoricalMode ? 1.0 : Math.max(0.3, 1 - (region.healthcareQuality * 0.7));
 
     // Detect NaN in resource reserves - fail loudly
@@ -686,7 +687,8 @@ export function updateRegionalPopulations(state: GameState): void {
     // mode (to prevent double-counting), but that means NO deaths are applied at all!
     // Solution: In historical mode, apply regional death rates directly (births - deaths).
     // In modern mode, use Bayesian system (births only, deaths via BaselineMortalityPhase).
-    const useDirectDeaths = state.config.scenarioMode === 'historical' && state.currentYear < 2000;
+    // HIGH-7 FIX (Nov 27, 2025): Extended from < 2000 to <= 2024 for full hindcast period
+    const useDirectDeaths = state.config.scenarioMode === 'historical' && state.currentYear <= 2024;
     region.netGrowthRate = useDirectDeaths
       ? (region.adjustedBirthRate - region.adjustedDeathRate)  // Historical: apply deaths here
       : region.adjustedBirthRate;                               // Modern: Bayesian handles deaths

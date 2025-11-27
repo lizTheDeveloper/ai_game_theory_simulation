@@ -52,6 +52,23 @@ export class BayesianMortalityResolutionPhase implements SimulationPhase {
     const events = [];
     setDeterministicRng(rng);
 
+    // HIGH-7 FIX (Nov 27, 2025): Skip Bayesian mortality system in historical mode
+    // Root cause: Crisis-calibrated mortality system (climate deaths, extreme weather,
+    // nuclear, famine) applies during 1990-2024 baseline period, causing population
+    // crashes instead of historical growth (+52.8% actual vs -76% simulated).
+    // The regional population system (HumanPopulationPhase, order 20.52) applies
+    // mortality DIRECTLY using historical CDR scaling. The Bayesian system would
+    // double-count deaths by applying crisis mortality on top of historical rates.
+    // Solution: Disable Bayesian mortality entirely for hindcast validation (1990-2024).
+    // Historical CDR data already incorporates real-world mortality from all causes.
+    if (state.config.scenarioMode === 'historical' && state.currentYear <= 2024) {
+      // Clear any accumulated risks to prevent memory leaks
+      if (state.humanPopulationSystem?.mortalityRisks) {
+        state.humanPopulationSystem.mortalityRisks = [];
+      }
+      return { events: [] };
+    }
+
     // PHASE DEPENDENCY SAFEGUARD (Oct 28, 2025)
     // This phase is the authoritative source for population after mortality.
     // Verify that no population-modifying phases ran after us in a previous bug.
