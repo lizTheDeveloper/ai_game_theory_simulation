@@ -24,6 +24,7 @@ import { updatePlanetaryBoundaries, updateBiosphereIntegrityIndex } from '../../
 import { updateBoundaryRecovery } from '../../planetaryBoundaryRecovery';
 import { updateNovelEntitiesBoundary } from '../../updateNovelEntitiesBoundary';
 import { isHistoricalModeActive } from '@/simulation/utils/historicalMode';
+import { updateEnvironmentalAccumulation } from '../../environmental';
 
 export class PlanetaryBoundariesPhase implements SimulationPhase {
   readonly id = 'planetary_boundaries';
@@ -141,46 +142,19 @@ export class PlanetaryBoundariesPhase implements SimulationPhase {
       );
     }
 
-    // === HIGH-8 FIX (Nov 28, 2025): BIODIVERSITY DECLINE ===
-    // ROOT CAUSE: No phase was applying monthly biodiversity decline
-    // environmental.ts updateEnvironmentalAccumulation() has the code but is never called
+    // === HIGH-11 FIX (Nov 28, 2025): CALL ENVIRONMENTAL.TS ===
+    // ARCHITECTURAL DECISION: environmental.ts OWNS biodiversityIndex decline mechanics
+    // This phase only READS biodiversityIndex and WRITES biosphere_integrity boundary
     //
-    // SOLUTION: Apply biodiversity decline here (runs every month for all modes)
-    // - Historical mode (1990-2024): 0.1022%/month empirical decline (WWF LPI 2024)
-    // - Projection mode (2025+): Mechanistic model based on economic/manufacturing pressure
-    const env = state.environmentalAccumulation;
-
-    if (isHistoricalModeActive(state)) {
-      // === HISTORICAL MODE (1990-2024): WWF LPI Empirical Rates ===
-      // Research: WWF Living Planet Index 2024
-      // - 1990: 76.79% (initialization from historicalInitialization.ts)
-      // - 2024: 49% (WWF LPI target)
-      // - Decline: 76.79% → 49% over 34 years (408 months)
-      // - Geometric decline: (49 / 76.79)^(1/408) = 0.998899
-      // - This means: bio_new = bio_old * 0.998899 (MULTIPLICATIVE)
-      // - Verification: 76.79 * 0.998899^408 = 49.00 ✓
-      const HISTORICAL_DECAY_MULTIPLIER = 0.998899; // 0.1101% per month decay (1.33%/year)
-
-      // Apply empirical decline (net of all conservation/degradation effects)
-      env.biodiversityIndex = Math.max(0, Math.min(1, env.biodiversityIndex * HISTORICAL_DECAY_MULTIPLIER));
-
-      // DEBUG: Log decline every 12 months
-      if (state.currentMonth % 12 === 0) {
-        debugLog('PLANETARY', () => `🔍 HIGH-8 DEBUG: Historical biodiversity decline (year=${state.currentYear}, biodiv=${(env.biodiversityIndex * 100).toFixed(2)}%)`);
-      }
-    } else {
-      // === PROJECTION MODE (2025+): Mechanistic Crisis Model ===
-      // Base decline from economic/manufacturing pressure (matches environmental.ts logic)
-      const economicStage = state.globalMetrics.economicTransitionStage;
-      const manufacturingCap = state.globalMetrics.manufacturingCapability;
-
-      // Target: IPBES 2019 Global Assessment - 1.5%/year decline = 0.125%/month
-      let biodiversityLossRate = economicStage * 0.00006; // Reduced factor
-      biodiversityLossRate += manufacturingCap * 0.00004; // Manufacturing impact
-
-      // Apply decline
-      env.biodiversityIndex = Math.max(0, Math.min(1, env.biodiversityIndex - biodiversityLossRate));
-    }
+    // Research: WWF Living Planet Index 2024 (1990: 76.79% → 2024: 49%)
+    // Geometric decline formula implemented in environmental.ts lines 342-392
+    //
+    // environmental.ts has BOTH modes:
+    // - Historical mode (1990-2024): WWF LPI empirical rates (geometric: 0.998978 multiplier/month)
+    // - Projection mode (2025+): Mechanistic model (economic/manufacturing pressure)
+    //
+    // No need to duplicate logic here - just call the function
+    updateEnvironmentalAccumulation(state, rng);
 
     return { events: [] };
   }
