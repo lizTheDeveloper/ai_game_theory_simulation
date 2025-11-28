@@ -1514,12 +1514,14 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
   - **Key Claims:** Aerosol cooling masks 30% of warming, CDR declined 9.3‰→7.76‰ (1990-2024), biodiversity -34.7% (not -99%)
   - **Priority:** HIGH (blocks implementation of THREE hindcast calibration fixes)
   - **Verifier:** research-skeptic (Sylvia)
-- [ ] **Pre-industrial Temperature Offset** - ⏳ PENDING (Nov 27, 2025 - commit 3e3f47c)
-  - **Research Spec:** `research/verification_3e3f47c_20251127.md`
-  - **Claim:** 1750-1850 warming ~0.7°C (converts 1850-1900 baseline to pre-industrial)
+- [x] **Pre-industrial Temperature Offset** - ✅ FIXED (Nov 28, 2025)
+  - **Verification File:** `research/verification_3e3f47c_FAILED_20251128.md`
+  - **Original Claim:** 1750-1850 warming ~0.7°C ❌ FAILED (700% overestimate)
+  - **Corrected Value:** 0.1°C (IPCC AR6 Cross-Chapter Box 1.2, likely range: -0.1 to +0.3°C)
   - **Cited Source:** IPCC AR6
+  - **Impact:** Systematic 0.6°C underestimate of warming vs 1750 baseline (corrected)
   - **Priority:** HIGH (affects all planetary boundary assessments)
-  - **Verifier:** research-skeptic (Sylvia)
+  - **Fixed by:** simulation-maintainer (Roy) - commit auto/worker-20251128_170001
 - [ ] **Historical Mode Parameters** - ⏳ PENDING (Nov 27, 2025 - commit 87292c6)
   - **Research Spec:** `research/historical_mode_parameters_20251127.md`
   - **Verification File:** `research/verification_87292c6_20251127.md`
