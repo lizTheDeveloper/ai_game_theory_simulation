@@ -994,7 +994,7 @@ export class CitationAgentOrchestrator {
   private async getOrSpawnAgent(): Promise<PythonAgentWrapper | null> {
     // First, try to find an idle healthy agent
     for (const [agentId, agent] of this.agents) {
-      if (!this.busyAgents.has(agentId) && agent.isHealthy) {
+      if (!this.busyAgents.has(agentId) && agent.getHealthStatus()) {
         return agent;
       }
     }
@@ -1008,7 +1008,7 @@ export class CitationAgentOrchestrator {
       if (this.agents.size >= this.config.numAgents) {
         // Another spawn completed while we waited, try to find idle agent again
         for (const [agentId, agent] of this.agents) {
-          if (!this.busyAgents.has(agentId) && agent.isHealthy) {
+          if (!this.busyAgents.has(agentId) && agent.getHealthStatus()) {
             return agent;
           }
         }
@@ -1112,7 +1112,7 @@ export class CitationAgentOrchestrator {
     }
 
     // Get all healthy agents for analysis
-    const healthyAgents = Array.from(this.agents.values()).filter(a => a.isHealthy);
+    const healthyAgents = Array.from(this.agents.values()).filter(a => a.getHealthStatus());
 
     if (healthyAgents.length === 0) {
       throw new Error('❌ CRITICAL: No healthy agents available - platform unhealthy');
