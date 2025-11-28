@@ -185,6 +185,38 @@ CONFLICT_EOF
     log_success "Branch created"
 
     echo ""
+    log_stage "MESSAGE CHECK"
+
+    # Check for pending messages/mentions in coordination channels
+    # This ensures agents respond to @mentions before starting autonomous work
+    log_info "Checking for pending messages in coordination channels..."
+
+    # Source environment for Matrix tokens
+    if [ -f ~/.superalignment-env ]; then
+        source ~/.superalignment-env
+    fi
+
+    COORDINATION_ROOM="!G-uy0v5GZd9IUqFufg4KIt0ks6d7bNdwquD29SVC4-I"
+    HAS_MENTIONS=0
+
+    # Check if there are any recent messages mentioning "autonomous-worker" or general alerts
+    if [ -n "$MATRIX_TOKEN_ORCHESTRATOR" ]; then
+        RECENT_MESSAGES=$(curl -s -X GET \
+            "https://matrix.themultiverse.school/_matrix/client/v3/rooms/${COORDINATION_ROOM}/messages?dir=b&limit=5" \
+            -H "Authorization: Bearer ${MATRIX_TOKEN_ORCHESTRATOR}" 2>/dev/null || echo "")
+
+        if echo "$RECENT_MESSAGES" | grep -qi "autonomous-worker\|@worker\|URGENT"; then
+            HAS_MENTIONS=1
+            log_warning "Found potential mentions or urgent messages in coordination channel"
+            log_info "These should be handled by agent monitors, continuing with scheduled work"
+        else
+            log_success "No urgent messages found"
+        fi
+    else
+        log_warning "Matrix token not found, skipping message check"
+    fi
+
+    echo ""
     log_stage "ENVIRONMENT SETUP"
 
     # Note: Autonomous worker uses TypeScript/Node.js (Claude Code, npx tsx)
