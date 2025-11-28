@@ -28,7 +28,7 @@
  * Expected impact: +0.1-0.3°C warming by 2100 in baseline scenarios,
  *                  critical tipping point risk above 1.5°C warming
  *
- * Order: 18.5 (AFTER ClimateSystemPhase 34.0 for temperature, BEFORE carbon cycle updates)
+ * Order: 18.5 (AFTER ResourceEconomyPhase 17.0 for temperature, BEFORE carbon cycle updates)
  */
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
@@ -43,8 +43,7 @@ export class PermafrostCarbonPhase implements SimulationPhase {
   readonly name = 'Permafrost Carbon Feedback';
   readonly order = 18.5;
 
-  // No phase dependencies - uses state.resourceEconomy.co2.temperatureAnomaly
-  // (set by ResourceEconomyPhase at order 17.0, which runs before this phase)
+  readonly dependencies = ['resource-economy']; // Uses state.resourceEconomy.co2.temperatureAnomaly
 
   // Constants (validated parameters)
   // Uncertainty ranges for Monte Carlo validation (research-skeptic requirement)
