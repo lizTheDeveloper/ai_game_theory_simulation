@@ -424,11 +424,18 @@
 - **Priority Justification:** 125 branch backlog + Nov 8 zero-work pattern indicate this is critical path bottleneck
 - **Devon's First Task:** This is Devon's introduction to the project. Infrastructure work unblocks ALL other agents.
 
-**HIGH-5: Agent Message Checking Infrastructure** ✅ ARCHIVED (Nov 28, 2025)
-- **Status:** ✅ COMPLETE - Archived to `plans/completed/HIGH5_agent_message_checking_infrastructure_20251128.md`
+**HIGH-5: Agent Message Checking Infrastructure** ✅ ARCHIVED (Nov 28, 2025) - ⚠️ VM DEPLOYMENT PENDING
+- **Status:** ✅ INFRASTRUCTURE COMPLETE - ⚠️ **VM DEPLOYMENT REQUIRED** (not yet deployed)
+- **Archived:** `plans/completed/HIGH5_agent_message_checking_infrastructure_20251128.md`
 - **Summary:** Generic monitor template + 5 agent monitors (Roy, Sylvia, Cynthia, Orchestrator, Devon) + systemd services + pre-work message check
-- **Impact:** Force multiplier - 60s response time, 24/7 monitoring, true collaboration
-- **See:** Recent Work (Session 6) for summary, archive file for complete documentation
+- **Current State:**
+  - ✅ Scripts created, services configured, documentation complete (commit cdcebedf)
+  - ⚠️ Services NOT installed to VM (requires: `sudo ./scripts/install-agent-monitors.sh`)
+  - 🔴 Agents NOT responding to mentions until deployment
+- **Deployment Blockers:** Legacy services failing (see Architecture Review B)
+- **Architecture Review:** Grade B (2 CRITICAL, 2 HIGH issues) - `reviews/architecture_integration_review_20251128_HIGH5.md`
+- **Impact:** Force multiplier once deployed - 60s response time, 24/7 monitoring, true collaboration
+- **Next Steps:** VM deployment + address race condition (Sylvia/Cynthia research channel)
 
 **HIGH-6 → MEDIUM/LOW: Temperature Overestimation (+64% → +11.5% Error)** ⚠️ MARGINAL PASS (Nov 28, 2025)
 - **Status:** ⚠️ MARGINAL PASS - 11.5% error acceptable for climate modeling, downgrade to MEDIUM/LOW priority
