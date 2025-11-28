@@ -578,7 +578,7 @@ export class AuthService {
         [userId]
       );
 
-      if (userResult.rowCount > 0) {
+      if ((userResult.rowCount ?? 0) > 0) {
         const email = userResult.rows[0].email;
 
         // Log logout event
@@ -615,7 +615,7 @@ export class AuthService {
       [userId]
     );
 
-    return result.rowCount > 0 ? result.rows[0] : null;
+    return (result.rowCount ?? 0) > 0 ? result.rows[0] : null;
   }
 
   /**
@@ -629,7 +629,7 @@ export class AuthService {
       [email]
     );
 
-    return result.rowCount > 0 ? result.rows[0] : null;
+    return (result.rowCount ?? 0) > 0 ? result.rows[0] : null;
   }
 
   /**

@@ -11,7 +11,7 @@
  * @module platform/database/pool
  */
 
-import { Pool, PoolClient, PoolConfig, QueryResult } from 'pg';
+import { Pool, PoolClient, PoolConfig, QueryResult, QueryResultRow } from 'pg';
 import { EventEmitter } from 'events';
 import { Counter, Gauge, Histogram } from 'prom-client';
 
@@ -194,7 +194,7 @@ export class DatabasePool extends EventEmitter {
   /**
    * Execute a query with monitoring
    */
-  async query<T = any>(text: string, params?: any[]): Promise<QueryResult<T>> {
+  async query<T extends QueryResultRow = any>(text: string, params?: any[]): Promise<QueryResult<T>> {
     const startTime = Date.now();
 
     try {

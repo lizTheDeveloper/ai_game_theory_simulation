@@ -104,7 +104,7 @@ export class DualSecretJwtManager extends EventEmitter {
       rotationId: this.currentRotationId
     };
 
-    return jwt.sign(fullPayload, this.currentSecret, {
+    return jwt.sign(fullPayload as object, this.currentSecret, {
       expiresIn,
       algorithm: 'HS256'
     });

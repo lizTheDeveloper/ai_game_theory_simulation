@@ -24,7 +24,7 @@
 import express, { Express, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import { Pool as PostgresPool } from 'pg';
-import Redis from 'ioredis';
+import Redis, { Cluster as RedisCluster } from 'ioredis';
 import { v4 as uuidv4 } from 'uuid';
 import { register as promRegister } from 'prom-client';
 import {
@@ -112,7 +112,7 @@ const CONFIG = {
 
 class WorkerOrchestratorServer {
   private app: Express;
-  private redis: Redis;
+  private redis: Redis | RedisCluster;
   private db: PostgresPool;
   private server: any;
   private dbCircuitBreaker: CircuitBreaker;
@@ -181,7 +181,8 @@ class WorkerOrchestratorServer {
     params?: any[]
   ): Promise<{ rows: T[]; rowCount: number }> {
     return this.dbCircuitBreaker.execute(async () => {
-      return this.db.query(query, params);
+      const result = await this.db.query(query, params);
+      return { rows: result.rows as T[], rowCount: result.rowCount ?? 0 };
     });
   }
 

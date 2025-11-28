@@ -162,7 +162,7 @@ export async function retryWithBackoff<T>(
 
       console.log(
         `⚠️ Retry attempt ${attempt + 1}/${maxRetries} for [${operationName}] ` +
-        `after ${delay}ms (error: ${error.message})`
+        `after ${delay}ms (error: ${error instanceof Error ? error.message : String(error)})`
       );
 
       if (onRetry) {

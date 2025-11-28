@@ -1,38 +1,17 @@
 /**
- * MARCUS 3.1 GraphQL Apollo Server
+ * MARCUS 3.2 GraphQL Apollo Server
  *
  * Production-ready GraphQL server with:
  * - Apollo Server 4
  * - DataLoader optimization
  * - Authentication via JWT
  * - Subscription support via WebSockets
+ * - Redis-backed PubSub for multi-pod production (M2/M3 resolved)
  * - Playground in development only
- *
- * M2 TODO: Redis-backed PubSub for multi-pod production
- * =====================================================
- * Current PubSub uses in-memory graphql-subscriptions which doesn't work
- * across multiple K8s pods. For production multi-pod deployments:
- *
- * 1. Install: npm install graphql-redis-subscriptions
- * 2. Replace PubSub import with RedisPubSub
- * 3. Configure with same Redis host as RedisConnectionPool
- * 4. Update GraphQLContext type in resolvers.ts
- *
- * Example:
- * ```typescript
- * import { RedisPubSub } from 'graphql-redis-subscriptions';
- * const pubsub = new RedisPubSub({
- *   publisher: new Redis(redisConfig),
- *   subscriber: new Redis(redisConfig)
- * });
- * ```
- *
- * Impact: Subscriptions will work across all orchestrator pods
- * Priority: MEDIUM (only needed when running 3+ replicas with subscriptions)
  *
  * Author: Marcus (Platform Engineer)
  * Date: 2025-11-22
- * Updated: 2025-11-28 (M2 documentation)
+ * Updated: 2025-11-28 (M2/M3 Redis PubSub implemented)
  */
 
 import { ApolloServer } from '@apollo/server';
@@ -42,7 +21,7 @@ import { ApolloServerPluginLandingPageLocalDefault, ApolloServerPluginLandingPag
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import { WebSocketServer } from 'ws';
 import { useServer } from 'graphql-ws/lib/use/ws';
-import { PubSub } from 'graphql-subscriptions';
+import { pubsub, isRedisPubSub } from './pubsub';
 import { Pool } from 'pg';
 import { readFileSync } from 'fs';
 import { join } from 'path';
@@ -99,12 +78,13 @@ export async function createGraphQLServer(config: GraphQLServerConfig): Promise<
     resolvers
   });
 
-  // Create PubSub for subscriptions
-  const pubsub = new PubSub();
+  // Log PubSub mode
+  console.log(`PubSub mode: ${isRedisPubSub() ? 'Redis (multi-pod)' : 'In-memory (single-pod)'}`);
 
   // Setup WebSocket server for subscriptions (if enabled)
   let wsServer: WebSocketServer | undefined;
-  let serverCleanup: (() => Promise<void>) | undefined;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let serverCleanup: any;
 
   if (config.enableSubscriptions !== false) {
     wsServer = new WebSocketServer({
@@ -147,7 +127,9 @@ export async function createGraphQLServer(config: GraphQLServerConfig): Promise<
         async serverWillStart() {
           return {
             async drainServer() {
-              await serverCleanup!();
+              if (serverCleanup?.dispose) {
+                await serverCleanup.dispose();
+              }
             }
           };
         }
@@ -220,9 +202,6 @@ export function createGraphQLMiddleware(
       // Create fresh DataLoaders for each request (prevents cache staleness)
       const dataloaders = createDataLoaders(config.db);
 
-      // Create PubSub instance (shared for subscriptions)
-      const pubsub = new PubSub();
-
       // Extract user from JWT (if authenticated)
       // JWT middleware should run before this
       const user = (req as any).user;
@@ -231,7 +210,7 @@ export function createGraphQLMiddleware(
         orchestrator: config.orchestrator,
         db: config.db,
         dataloaders,
-        pubsub,
+        pubsub, // Use shared PubSub instance (imported from ./pubsub)
         user
       };
     }

@@ -16,6 +16,7 @@
 import { Pool } from 'pg';
 import { GraphQLError } from 'graphql';
 import { PubSub } from 'graphql-subscriptions';
+import { RedisPubSub } from 'graphql-redis-subscriptions';
 import { CitationAgentOrchestrator, AgentStatus, CitationDocument, AggregatedAnalysis } from '../integration/citationAgentIntegration';
 import { AgentMetricsLoader, CitationResultsLoader } from './dataloaders';
 
@@ -30,7 +31,7 @@ export interface GraphQLContext {
     agentMetrics: AgentMetricsLoader;
     citationResults: CitationResultsLoader;
   };
-  pubsub: PubSub;
+  pubsub: PubSub | RedisPubSub; // M3 FIX: Support both in-memory and Redis-backed PubSub
   // Auth context (from JWT middleware if needed)
   user?: {
     id: string;
