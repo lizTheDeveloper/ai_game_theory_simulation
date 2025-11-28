@@ -933,8 +933,8 @@ export function createDefaultInitialState(
 
     // Geopolitical Conflict Escalation (TIER 2, RD-3, Nov 28, 2025)
     geopoliticalConflict: {
-      tension: 50,
-      nuclearEscalationRisk: 0.0005,
+      tension: 50,  // Baseline moderate tension (0-100 scale)
+      nuclearEscalationRisk: 0.0005,  // 0.05% monthly base risk
       regionalFlashpoints: new Map([
         ['Taiwan', { risk: 0.033, triggers: [], lastUpdate: 0 }],
         ['Ukraine', { risk: 0.005, triggers: [], lastUpdate: 0 }],
