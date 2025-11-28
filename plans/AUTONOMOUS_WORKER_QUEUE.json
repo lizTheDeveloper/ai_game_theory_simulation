@@ -39,15 +39,15 @@
       "title": "Carbon Cycle Over-Calibration (+12.1% CO2 Bias)",
       "assignedAgent": "simulation-maintainer",
       "agentPersonality": "roy",
-      "status": "AVAILABLE",
+      "status": "CLAIMED",
       "complexity": 3,
       "estimatedTokens": 35000,
       "dependencies": [],
       "blockedBy": [],
       "roadmapSection": "HIGH Priority Items",
       "createdAt": "2025-11-26T04:30:00Z",
-      "claimedBy": null,
-      "claimedAt": null,
+      "claimedBy": "worker-vm-claude-workspace",
+      "claimedAt": "2025-11-28T23:50:24.305Z",
       "description": "Hindcast validation failing CO2 criteria. Observed 2010: 390 ppm CO2. Simulated 2010: 437 ppm CO2. Phase 8-9 carbon sink temporal evolution overcorrected.",
       "acceptanceCriteria": [
         "Simulated 2010 CO2 within ±5% of observed 390 ppm (370.5-409.5 ppm)",
@@ -88,7 +88,7 @@
     }
   ],
   "metadata": {
-    "lastUpdated": "2025-11-27T04:07:11.199Z",
+    "lastUpdated": "2025-11-28T23:50:24.305Z",
     "version": "1.0.0",
     "generatedFrom": "MASTER_IMPLEMENTATION_ROADMAP.md",
     "schemaVersion": "2.1",
