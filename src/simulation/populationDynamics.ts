@@ -680,7 +680,9 @@ export function aggregateAllRegionalData(state: GameState): void {
     month: state.currentMonth
   });
 
-  const totalPopulationBillions = assertInRange(totalPopulationValidated / 1000, 0.001, 100, {
+  // CALIBRATION (Nov 28, 2025): Lowered floor from 1M (0.001B) to 10M (0.01B)
+  // Allows exploration of deep collapse scenarios while still detecting extinction
+  const totalPopulationBillions = assertInRange(totalPopulationValidated / 1000, 0.01, 100, {
     location: 'aggregateAllRegionalData (billions conversion)',
     valueName: 'totalPopulationBillions',
     month: state.currentMonth
@@ -828,7 +830,8 @@ export function aggregateGlobalPopulation(state: GameState): void {
 
   // Convert from millions to billions for global population storage
   // Regional: millions (1677), Global: billions (8.137)
-  const totalPopulationBillions = assertInRange(totalPopulation / 1000, 0.001, 100, {
+  // CALIBRATION (Nov 28, 2025): Lowered floor from 1M (0.001B) to 10M (0.01B)
+  const totalPopulationBillions = assertInRange(totalPopulation / 1000, 0.01, 100, {
     location: 'aggregateGlobalPopulation (billions conversion)',
     valueName: 'totalPopulationBillions',
     month: state.currentMonth

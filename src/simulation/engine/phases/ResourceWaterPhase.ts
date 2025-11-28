@@ -17,7 +17,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
-import { assertFinite, assertProbability } from '@/simulation/utils/assertions';
+import { assertFinite, assertProbability, assertInRange } from '@/simulation/utils/assertions';
 import { updateFreshwaterSystem, checkFreshwaterTechUnlocks } from '../../freshwaterDepletion';
 import { updateOceanAcidificationSystem, checkOceanAcidificationTechUnlocks } from '../../oceanAcidification';
 
@@ -82,14 +82,16 @@ export class ResourceWaterPhase implements SimulationPhase {
         valueName: 'pHLevel',
         month: state.currentMonth
       });
-      assertProbability(state.oceanAcidificationSystem.aragoniteSaturation, {
+      // RD-2 FIX (Nov 28, 2025): aragoniteSaturation now in real units (0-5), not probability
+      assertInRange(state.oceanAcidificationSystem.aragoniteSaturation, 0, 5, {
         location: 'ResourceWaterPhase.execute (pre-ocean)',
         valueName: 'aragoniteSaturation',
         month: state.currentMonth
       });
     }
 
-    updateOceanAcidificationSystem(state);
+    // RD-2 FIX (Nov 28, 2025): Pass RNG to ocean acidification system (now REQUIRED)
+    updateOceanAcidificationSystem(state, rng);
     checkOceanAcidificationTechUnlocks(state);
 
     // Validate ocean acidification system state after update
@@ -99,7 +101,8 @@ export class ResourceWaterPhase implements SimulationPhase {
         valueName: 'pHLevel',
         month: state.currentMonth
       });
-      assertProbability(state.oceanAcidificationSystem.aragoniteSaturation, {
+      // RD-2 FIX (Nov 28, 2025): aragoniteSaturation now in real units (0-5), not probability
+      assertInRange(state.oceanAcidificationSystem.aragoniteSaturation, 0, 5, {
         location: 'ResourceWaterPhase.execute (post-ocean)',
         valueName: 'aragoniteSaturation',
         month: state.currentMonth
