@@ -130,7 +130,15 @@ export class ClimateSystemPhase implements SimulationPhase {
     const system = state.tippingPointSystem;
 
     // Get current global mean temperature (degrees C above pre-industrial)
-    const currentTempC = state.resourceEconomy.co2.temperatureAnomaly || 1.1; // Default to 2025 baseline (~1.1°C)
+    const currentTempC = assertStateProperty(
+      state.resourceEconomy.co2,
+      'temperatureAnomaly',
+      {
+        location: 'ClimateSystemPhase.executeTippingPoints',
+        month: state.currentMonth,
+        expectedSource: 'resourceEconomy.co2.temperatureAnomaly (required for tipping point evaluation)'
+      }
+    );
 
     console.log(`\n=== Tipping Points ===`);
     console.log(`  Current Temperature: ${currentTempC.toFixed(2)}°C above pre-industrial`);
