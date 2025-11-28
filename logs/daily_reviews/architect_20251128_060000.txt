@@ -1,0 +1,30 @@
+Roadmap updated successfully. Here's the summary:
+
+## Architect Daily Review Actions - Nov 28, 2025 (06:00 UTC)
+
+### Issues Added to Roadmap
+| Priority | Item | Description |
+|----------|------|-------------|
+| HIGH | HIGH-10 | Monte Carlo revalidation required for HIGH-8 biodiversity fix post-CRITICAL-1 |
+
+### Systems Affected
+- Simulation validation (hindcast testing)
+- Biodiversity calibration verification
+
+### Deferred Items (MEDIUM)
+- 3 architectural concerns (dual biodiversity mechanisms, dynamic require patterns, guard duplication)
+- 4 code quality items (silent fallbacks, comment clarity, type enforcement)
+
+### Overall Health
+- **Architecture:** GOOD (0 CRITICAL, 0 HIGH)
+- **Research Integrity:** GOOD (conditional - revalidation needed)
+- **System Trajectory:** STABLE
+
+### Next Recommended Actions
+1. **HIGH-10:** Run `npx tsx scripts/hindcastingValidation.ts` to verify Monte Carlo passes post-CRITICAL-1
+2. Monitor for biodiversity double-counting in projection mode
+3. Consider silent fallback cleanup in future session
+
+---
+ROADMAP_UPDATES: 1
+TRACKING_FILE: plans/daily_review_items_20251128_060000.md

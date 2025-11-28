@@ -1,0 +1,100 @@
+{
+  "timestamp": "2025-11-21T17:20:49.872Z",
+  "numRuns": 10,
+  "targetMonth": 60,
+  "results": [
+    {
+      "run": 1,
+      "seed": 42,
+      "effectiveness": 0,
+      "co2RemovalRate": 0,
+      "temperatureOffset": 0,
+      "deployedTechs": 0
+    },
+    {
+      "run": 2,
+      "seed": 43,
+      "effectiveness": 0,
+      "co2RemovalRate": 0,
+      "temperatureOffset": 0,
+      "deployedTechs": 0
+    },
+    {
+      "run": 3,
+      "seed": 44,
+      "effectiveness": 0,
+      "co2RemovalRate": 0,
+      "temperatureOffset": 0,
+      "deployedTechs": 0
+    },
+    {
+      "run": 4,
+      "seed": 45,
+      "effectiveness": 0,
+      "co2RemovalRate": 0,
+      "temperatureOffset": 0,
+      "deployedTechs": 0
+    },
+    {
+      "run": 5,
+      "seed": 46,
+      "effectiveness": 0,
+      "co2RemovalRate": 0,
+      "temperatureOffset": 0,
+      "deployedTechs": 0
+    },
+    {
+      "run": 6,
+      "seed": 47,
+      "effectiveness": 0,
+      "co2RemovalRate": 0,
+      "temperatureOffset": 0,
+      "deployedTechs": 0
+    },
+    {
+      "run": 7,
+      "seed": 48,
+      "effectiveness": 0,
+      "co2RemovalRate": 0,
+      "temperatureOffset": 0,
+      "deployedTechs": 0
+    },
+    {
+      "run": 8,
+      "seed": 49,
+      "effectiveness": 0,
+      "co2RemovalRate": 0,
+      "temperatureOffset": 0,
+      "deployedTechs": 0
+    },
+    {
+      "run": 9,
+      "seed": 50,
+      "effectiveness": 0,
+      "co2RemovalRate": 0,
+      "temperatureOffset": 0,
+      "deployedTechs": 0
+    },
+    {
+      "run": 10,
+      "seed": 51,
+      "effectiveness": 0,
+      "co2RemovalRate": 0,
+      "temperatureOffset": 0,
+      "deployedTechs": 0
+    }
+  ],
+  "statistics": {
+    "mean": 0,
+    "stdDev": 0,
+    "cv": 0,
+    "min": 0,
+    "max": 0
+  },
+  "validationChecks": {
+    "effectivenessInRange": false,
+    "deterministic": true,
+    "allTechsDeployed": false,
+    "overall": false
+  }
+}

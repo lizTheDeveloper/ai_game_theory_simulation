@@ -36,6 +36,7 @@ import { initializePhosphorusSystem } from './phosphorusDepletion';
 import { initializeFreshwaterSystem } from './freshwaterDepletion';
 import { initializeOceanAcidificationSystem } from './oceanAcidification';
 import { initializeNovelEntitiesSystem } from './novelEntities';
+import { initializePermafrostSystem } from './permafrostCarbon';
 import { initializePlanetaryBoundariesSystem } from './planetaryBoundaries';
 import { initializeHumanPopulationSystem } from './populationDynamics';
 import { initializeRefugeeCrisisSystem } from './refugeeCrises';
@@ -58,6 +59,7 @@ import { initializeAIAssistedSkillsMetrics, initializeLaborCapitalDistribution }
 import { initializeRecoveryTracking } from './utils/recoveryCalculations';
 import { initializeMemeticSystem } from './memetics/initialization';
 import { initializeNuclearCommandControl } from './nuclearCommandControl';
+import { initializeTechnologyEffects } from '@/types/technologyEffects';
 import { initializePositiveTippingPoints } from './positiveTippingPoints';
 import { initializeTippingPointSystem } from './tippingPoints';
 import { initializeConsciousnessGovernance } from './consciousnessGovernance';
@@ -799,7 +801,13 @@ export function createDefaultInitialState(
       // Derived from fusionEnabling progress (start at 0)
       fusionResearchBonus: 0,               // No research bonus initially
       fusionDeploymentCostReduction: 0,     // No cost reduction initially
-      fusionDeploymentTimeReduction: 0      // No time reduction initially
+      fusionDeploymentTimeReduction: 0,     // No time reduction initially
+
+      // CRITICAL-1 FIX (Nov 27, 2025): Environmental Health Composite
+      // Research: Scheffer et al. (2014) - Critical thresholds in environmental systems
+      // Calculated by BifurcationLogicPhase, initialize with baseline healthy state
+      // Baseline 2025: 0.70 (moderately healthy - degraded but not collapsed)
+      environmentalHealth: 0.70             // [0,1] Composite environmental health metric
     },
 
     // Track AI capability changes for performance calculation (Phase 3.1 initialization fix)
@@ -922,7 +930,24 @@ export function createDefaultInitialState(
     nuclearStates: initializeNuclearStates(),
     madDeterrence: initializeMADDeterrence(),
     bilateralTensions: initializeBilateralTensions(),
-    
+
+    // Geopolitical Conflict Escalation (TIER 2, RD-3, Nov 28, 2025)
+    geopoliticalConflict: {
+      tension: 50,  // Baseline moderate tension (0-100 scale)
+      nuclearEscalationRisk: 0.0005,  // 0.05% monthly base risk
+      regionalFlashpoints: new Map([
+        ['Taiwan', { risk: 0.033, triggers: [], lastUpdate: 0 }],
+        ['Ukraine', { risk: 0.005, triggers: [], lastUpdate: 0 }],
+        ['Middle East', { risk: 0.020, triggers: [], lastUpdate: 0 }],
+        ['Kashmir', { risk: 0.008, triggers: [], lastUpdate: 0 }]
+      ]),
+      activeConflicts: {
+        conventional: 0,
+        nuclear: false
+      },
+      historicalEvents: []
+    },
+
     // Resource Economy (Phase 2.9)
     resourceEconomy: initializeResourceEconomy(),
     
@@ -939,10 +964,14 @@ export function createDefaultInitialState(
     freshwaterSystem: initializeFreshwaterSystem(),
     
     // Ocean Acidification Crisis (TIER 1.3)
-    oceanAcidificationSystem: initializeOceanAcidificationSystem(),
+    // RD-2 (Nov 28, 2025): Pass RNG for species sensitivity randomization
+    oceanAcidificationSystem: initializeOceanAcidificationSystem(rngFunction),
     
     // Novel Entities Crisis (TIER 1.5)
     novelEntitiesSystem: initializeNovelEntitiesSystem(),
+
+    // Permafrost Carbon Feedback (TIER 2, RD-1)
+    permafrostSystem: initializePermafrostSystem(),
 
     // Planetary Boundaries (TIER 3.1)
     // LAYER 2 REMEDIATION (Nov 2, 2025): Pass RNG for biosphere parameter sweep
@@ -953,6 +982,15 @@ export function createDefaultInitialState(
 
     // Multi-Timescale Climate Tipping Points (Oct 26, 2025)
     tippingPointSystem: initializeTippingPointSystem(),
+
+    // Volcanic Forcing System (Nov 27, 2025 - HIGH PRIORITY)
+    // Initialized to zero for default 2025 start (no active eruptions)
+    // Historical scenarios initialize with historical AOD values for hindcasting
+    volcanicForcing: {
+      currentAOD: 0.0,           // No volcanic eruption at simulation start (2025)
+      forcingWattsPerM2: 0.0,    // No forcing
+      lastEruptionMonth: -999    // Sentinel value (no previous eruption)
+    },
 
     // Irreversibility Tracking (Nov 22, 2025 - CRITICAL FIX)
     // CRITICAL-1 FIX: Initialize tippingPoints to prevent dynamic creation in IrreversibilityTrackingPhase
@@ -965,6 +1003,7 @@ export function createDefaultInitialState(
     countryPopulationSystem: initializeCountryPopulations(),
     nuclearWinterState: initializeNuclearWinterState(),  // TIER 1.7.4: Long-term nuclear war effects
     nuclearCommandControlState: initializeNuclearCommandControl(),  // TIER 1 Phase 1B: Circuit breakers
+    technologyEffects: initializeTechnologyEffects(),  // Nov 27 2025: Tech effects accumulator (phase order bug fix)
 
     // TIER 2: Major Mitigations
     ubiSystem: initializeUBISystem(),

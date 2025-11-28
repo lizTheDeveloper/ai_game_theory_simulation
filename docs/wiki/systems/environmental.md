@@ -43,6 +43,8 @@ The Environmental Accumulation System tracks four metrics that slowly degrade du
 - Economic Productivity: -0.10
 - Ongoing: -0.005 per month (worsening shortage)
 
+> ⚠️ **Known Issue (Nov 26, 2025):** `resourceReserves` can go negative in hindcast validation due to missing floor in `resourceDepletion.ts` line 612. Root cause identified, fix pending. See `reviews/resource_reserves_crash_root_cause_20251126.md`. CRITICAL-1 priority.
+
 ### 2. Pollution Level (0-1)
 
 **What it measures:** Environmental contamination from industrial activity

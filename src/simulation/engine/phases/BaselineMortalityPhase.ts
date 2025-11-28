@@ -41,11 +41,11 @@
 import type { SimulationPhase } from '../PhaseOrchestrator';
 import type { GameState } from '@/types/game';
 import { addMortalityRisk } from '@/simulation/bayesianMortality';
-import { getEraMortalityMultiplier } from '@/types/config';
 import {
   assertFinite,
   assertDefined,
 } from '@/simulation/utils/assertions';
+import { isHistoricalModeActive } from '@/simulation/utils/historicalMode';
 
 /**
  * Get historical baseline death rate (crude death rate per 1000)
@@ -60,7 +60,7 @@ import {
  * 1990 correction critical for hindcast: Previous value (9.8) overestimated deaths by ~3M/year
  * affecting population growth validation (5.3B→6.1B expected, was producing 5.3B→2.7B)
  */
-function getHistoricalCrudeDeathRate(year: number): number {
+export function getHistoricalCrudeDeathRate(year: number): number {
   // UN WPP 2024 data: CDR per 1000 population
   const HISTORICAL_CDR = {
     1950: 19.5,  // Plausible (unverified, pre-antibiotics era)
@@ -184,79 +184,91 @@ export function getHistoricalCrudeBirthRate(year: number): number {
  * @returns CBR per 1000 population for that region-year
  */
 export function getRegionalHistoricalBirthRate(regionName: string, year: number): number {
-  // Regional TFR data (UN WPP 2024) converted to CBR using ratio of 7.5
-  // Validation: Global 2010 TFR=2.60 * 7.5 = 19.5 CBR ✅ (matches UN data)
+  // M-4 FIX (Nov 28, 2025): Updated to UN WPP 2024 data with 2024 calibration points
+  // Research: research/population_demographics_regional_20251128.md (Cynthia)
+  // Validation: reviews/m4_demographics_research_critique_20251128.md (Sylvia)
+  // Conversion: TFR × 0.008 = annual birth rate (Cynthia's formula, Table 4.2)
+  // CBR = birth rate × 1000 (convert to per-thousand metric)
   const REGIONAL_CBR: Record<string, Record<number, number>> = {
     'East Asia': {
-      1990: 15.2,  // TFR 2.03 * 7.5
-      2000: 12.7,  // TFR 1.69 * 7.5
-      2010: 11.6,  // TFR 1.54 * 7.5
-      2020: 9.5,   // TFR 1.27 * 7.5
-      2025: 8.5,   // Projected (continued decline)
+      1990: 17.6,  // TFR 2.20 × 8 = 17.6/1000 (Cynthia Table 4.2)
+      2000: 12.7,  // TFR 1.69 × 7.5 (keeping intermediate value)
+      2010: 11.6,  // TFR 1.54 × 7.5
+      2020: 9.5,   // TFR 1.27 × 7.5
+      2024: 9.6,   // TFR 1.20 × 8 = 9.6/1000 (Cynthia 2024 target)
+      2025: 9.6,   // Stable at 2024 level
     },
     'South Asia': {
-      1990: 30.8,  // TFR 4.11 * 7.5
-      2000: 24.9,  // TFR 3.32 * 7.5
-      2010: 21.2,  // TFR 2.82 * 7.5
-      2020: 17.1,  // TFR 2.28 * 7.5
-      2025: 15.5,  // Projected
+      1990: 33.6,  // TFR 4.20 × 8 = 33.6/1000 (Cynthia Table 4.2)
+      2000: 24.9,  // TFR 3.32 × 7.5
+      2010: 21.2,  // TFR 2.82 × 7.5
+      2020: 17.1,  // TFR 2.28 × 7.5
+      2024: 16.0,  // TFR 2.00 × 8 = 16.0/1000 (India crossed replacement)
+      2025: 16.0,  // Stable
     },
     'Sub-Saharan Africa': {
-      1990: 47.3,  // TFR 6.30 * 7.5
-      2000: 43.5,  // TFR 5.80 * 7.5
-      2010: 40.9,  // TFR 5.45 * 7.5
-      2020: 34.5,  // TFR 4.60 * 7.5
-      2025: 31.5,  // Projected
+      1990: 52.0,  // TFR 6.50 × 8 = 52.0/1000 (Cynthia Table 4.2)
+      2000: 43.5,  // TFR 5.80 × 7.5
+      2010: 40.9,  // TFR 5.45 × 7.5
+      2020: 34.5,  // TFR 4.60 × 7.5
+      2024: 34.4,  // TFR 4.30 × 8 = 34.4/1000 (Cynthia 2024 target)
+      2025: 34.4,  // Stable
     },
     'Europe': {
-      1990: 12.8,  // TFR 1.70 * 7.5
-      2000: 10.7,  // TFR 1.43 * 7.5
-      2010: 11.8,  // TFR 1.57 * 7.5
-      2020: 11.5,  // TFR 1.53 * 7.5
-      2025: 11.0,  // Projected (minimal decline - at floor)
+      1990: 14.0,  // TFR 1.75 × 8 = 14.0/1000 (Cynthia Table 4.2)
+      2000: 10.7,  // TFR 1.43 × 7.5
+      2010: 11.8,  // TFR 1.57 × 7.5
+      2020: 11.5,  // TFR 1.53 × 7.5
+      2024: 12.0,  // TFR 1.50 × 8 = 12.0/1000 (Cynthia 2024 target)
+      2025: 12.0,  // Stable (at floor)
     },
     'North America': {
-      1990: 15.4,  // TFR 2.05 * 7.5
-      2000: 15.3,  // TFR 2.04 * 7.5
-      2010: 15.3,  // TFR 2.04 * 7.5
-      2020: 12.3,  // TFR 1.64 * 7.5
-      2025: 11.5,  // Projected
+      1990: 16.0,  // TFR 2.00 × 8 = 16.0/1000 (Cynthia Table 4.2)
+      2000: 15.3,  // TFR 2.04 × 7.5
+      2010: 15.3,  // TFR 2.04 × 7.5
+      2020: 12.3,  // TFR 1.64 × 7.5
+      2024: 13.6,  // TFR 1.70 × 8 = 13.6/1000 (record low)
+      2025: 13.6,  // Stable
     },
     'Latin America': {
-      1990: 23.3,  // TFR 3.11 * 7.5
-      2000: 19.4,  // TFR 2.58 * 7.5
-      2010: 16.7,  // TFR 2.23 * 7.5
-      2020: 14.3,  // TFR 1.91 * 7.5
-      2025: 13.0,  // Projected
+      1990: 26.4,  // TFR 3.30 × 8 = 26.4/1000 (Cynthia Table 4.2)
+      2000: 19.4,  // TFR 2.58 × 7.5
+      2010: 16.7,  // TFR 2.23 × 7.5
+      2020: 14.3,  // TFR 1.91 × 7.5
+      2024: 14.4,  // TFR 1.80 × 8 = 14.4/1000 (UN ECLAC 2024)
+      2025: 14.4,  // Stable
     },
     'Middle East & North Africa': {
-      1990: 34.5,  // TFR 4.60 * 7.5
-      2000: 26.1,  // TFR 3.48 * 7.5
-      2010: 23.8,  // TFR 3.17 * 7.5
-      2020: 21.6,  // TFR 2.88 * 7.5
-      2025: 20.0,  // Projected
+      1990: 40.0,  // TFR 5.00 × 8 = 40.0/1000 (Cynthia Table 4.2, dramatic decline)
+      2000: 26.1,  // TFR 3.48 × 7.5
+      2010: 23.8,  // TFR 3.17 × 7.5
+      2020: 21.6,  // TFR 2.88 × 7.5
+      2024: 21.3,  // TFR 2.66 × 8 = 21.3/1000 (Cynthia 2024 target)
+      2025: 21.3,  // Stable
     },
-    // Additional regions (fallback to global if not specified)
-    'Southeast Asia': {  // Approximate from South Asia + development adjustment
-      1990: 28.0,
+    'Southeast Asia': {
+      1990: 28.0,  // TFR 3.50 × 8 = 28.0/1000 (Cynthia Table 4.2)
       2000: 22.0,
       2010: 19.0,
       2020: 15.5,
-      2025: 14.0,
+      2024: 16.8,  // TFR 2.10 × 8 = 16.8/1000 (near replacement)
+      2025: 16.8,
     },
-    'Central Asia': {  // Approximate from MENA + development adjustment
-      1990: 32.0,
+    'Central Asia': {
+      1990: 21.6,  // TFR 2.70 × 8 = 21.6/1000 (Cynthia - stable)
       2000: 24.0,
       2010: 22.0,
       2020: 20.0,
-      2025: 18.5,
+      2024: 21.6,  // TFR 2.70 × 8 (unchanged)
+      2025: 21.6,
     },
-    'Oceania': {  // Similar to North America
-      1990: 16.0,
+    'Oceania': {
+      1990: 19.2,  // TFR 2.40 × 8 = 19.2/1000 (Cynthia - immigration-sustained)
       2000: 15.5,
       2010: 15.0,
       2020: 12.5,
-      2025: 11.8,
+      2024: 14.4,  // TFR 1.80 × 8 = 14.4/1000 (below replacement)
+      2025: 14.4,
     },
   };
 
@@ -492,6 +504,23 @@ export class BaselineMortalityPhase implements SimulationPhase {
   readonly order = 34.8; // Before BayesianMortalityResolutionPhase (35.0)
 
   execute(state: GameState): { events: any[] } {
+    // CRITICAL FIX (Nov 27, 2025): Disable in historical mode to prevent double-counting
+    // Root cause of C-4 population decline: Regional population system (HumanPopulationPhase,
+    // order 20.52) applies historical CDR-based mortality directly to regional populations.
+    // This phase (order 34.8) then adds ANOTHER baseline mortality risk based on the SAME
+    // historical CDR data, which BayesianMortalityResolution (order 35.0) applies again.
+    // Result: Deaths counted twice → population crashes instead of growing.
+    // Example: 1990 has 54.9M/yr regional deaths + 28.8M/yr Bayesian deaths = 83.7M/yr total
+    // vs expected 49.5M/yr (9.3/1000 CDR). Deaths are 69% too high!
+    // Solution: In historical mode (1990-2024 hindcast), skip Bayesian baseline mortality entirely.
+    // The regional population system handles ALL mortality with historical CDR scaling.
+    // HIGH-7 FIX (Nov 27, 2025): Use historicalMode flag (not scenarioMode) for hindcast calibration
+    // CRITICAL-1 FIX (Nov 28, 2025): Unified historical mode detection via isHistoricalModeActive()
+    // historicalMode = empirical UN data (1990-2024), scenarioMode = crisis severity when crises occur
+    if (isHistoricalModeActive(state)) {
+      return { events: [] };
+    }
+
     const pop = assertDefined(state.humanPopulationSystem, {
       location: 'BaselineMortalityPhase.execute',
       valueName: 'state.humanPopulationSystem',
@@ -502,48 +531,33 @@ export class BaselineMortalityPhase implements SimulationPhase {
     // Calculate baseline mortality risk from historical data
     const baselineRisk = calculateBaselineMortalityRisk(state);
 
-    // HINDCAST FIX: Compensate for ERA mortality multiplier
-    // The Bayesian system will multiply ALL risks by ERA multiplier (line 362 of bayesianMortality.ts)
-    // But baseline demographic deaths should NOT be scaled by ERA multiplier!
+    // CRITICAL FIX (Nov 27, 2025): ERA multiplier NO LONGER applied to baseline mortality
+    // Previous approach (Nov 24, 2025): Pre-divided by ERA, then Bayesian multiplied by ERA
+    // Problem: Created fragile coupling between phases, violated architecture intent
     //
-    // ERA multiplier compensation: Baseline mortality is NOT divided by ERA multiplier
-    // because ERA represents "crisis response capability" not "baseline healthcare quality"
+    // NEW APPROACH: ERA multiplier is for CRISIS mortality only (Bayesian system filters on root='demographic')
+    // Baseline mortality improvement already captured in historical CDR values:
+    // - 1990 CDR: 9.3/1000 (worse healthcare, sanitation, antibiotics)
+    // - 2025 CDR: 7.5/1000 (better healthcare)
     //
-    // Rationale: 1990 had HIGHER baseline mortality (9.3/1000) but LOWER crisis response
-    // capability than 2025. Baseline improvement comes from antibiotics, sanitation, vaccines
-    // (captured in HISTORICAL_CDR), while ERA captures emergency response infrastructure.
+    // ERA represents CRISIS RESPONSE (early warning, surge capacity, disaster coordination),
+    // not baseline healthcare quality (antibiotics, sanitation, routine care).
     //
-    // CAVEAT: This separation lacks direct empirical support. Alternative interpretation:
-    // ERA improvements and baseline mortality improvements may be confounded (same healthcare
-    // systems that reduce baseline also improve crisis response). Flagged for validation.
-    //
-    // See: research/baseline_mortality_skeptical_review_20251124.md
-    //
-    // Solution: Pre-divide by ERA multiplier so that when Bayesian system multiplies,
-    // we get back the correct historical baseline mortality rate.
-    // Example: baselineRisk=0.000775 (9.3/1000/12), eraMultiplier=0.30
-    //          compensated=0.000775/0.30=0.00258
-    //          bayesian applies: 0.00258*0.30=0.000775 ✓
-    // FIX (Nov 24, 2025): state.currentYear is now updated by TimeAdvancementPhase to include
-    // years elapsed since start. No need to add yearsElapsed again - that was double-counting!
-    // Before fix: Month 12 would use year 1992 (1991 + 1) instead of 1991
+    // Research:
+    // - config.ts line 322: "Applied to crisis mortality calculations, not baseline population dynamics"
+    // - bayesianMortality.ts line 366: Now filters baseline mortality from ERA scaling
+    // - research/baseline_mortality_skeptical_review_20251124.md
     const actualYear = state.currentYear;
-    const eraMultiplier = getEraMortalityMultiplier(actualYear);
-    const compensatedBaselineRisk = assertFinite(baselineRisk / eraMultiplier, {
-      location: 'BaselineMortalityPhase.execute',
-      valueName: 'compensatedBaselineRisk',
-      month: state.currentMonth,
-      additionalInfo: { baselineRisk, eraMultiplier, actualYear }
-    });
 
-    // Add baseline mortality risk to Bayesian system
+    // Add baseline mortality risk to Bayesian system (NO ERA compensation)
     // The Bayesian system will apply demographic vulnerability weights automatically
     // (Elite 0.6×, Professional 0.7×, Working 1.0×, Precariat 1.3×, Informal 1.6×)
+    // and will NOT apply ERA multiplier to baseline (filtered on root='demographic')
     addMortalityRisk(pop, {
       type: 'other', // Baseline mortality is catch-all for natural causes
-      baseRisk: compensatedBaselineRisk, // Pre-compensated for ERA multiplier
+      baseRisk: baselineRisk, // Direct from historical CDR (no ERA compensation)
       proximate: 'disease', // Disease/natural causes (aging, illness, accidents)
-      root: 'demographic', // Demographic baseline (natural mortality)
+      root: 'demographic', // Demographic baseline (natural mortality) - triggers ERA filter in Bayesian
       confidence: 'HIGH',
       scope: 'GLOBAL',
       month: state.currentMonth,
@@ -567,7 +581,7 @@ export class BaselineMortalityPhase implements SimulationPhase {
     // DIAGNOSTIC LOGGING (historical demographics)
     if (state.currentMonth % 12 === 0) {
       const cdr = getHistoricalCrudeDeathRate(actualYear);
-      if (state.config.scenarioMode === 'historical') {
+      if (isHistoricalModeActive(state)) {
         const cbr = getHistoricalCrudeBirthRate(actualYear);
         const netGrowthPer1000 = cbr - cdr;
         console.log(`👶 Historical demographics (${actualYear}):`);

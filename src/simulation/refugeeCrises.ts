@@ -34,6 +34,7 @@ import {
   assertProbability,
   assertInRange,
 } from './utils/assertions';
+import { isHistoricalModeActive } from './utils/historicalMode';
 
 /**
  * Initialize refugee crisis system (2025 baseline)
@@ -552,7 +553,7 @@ export function checkRefugeeCrisisTriggers(state: GameState): RefugeeCrisis[] {
   // This crisis generation triggers phantom wars/climate disasters that didn't happen.
   // Skip crisis triggers during hindcast to validate against real history.
   // ============================================================================
-  if (state.config?.scenarioMode === 'historical') {
+  if (isHistoricalModeActive(state)) {
     // Historical refugee patterns are modeled via actual data in initialization
     // Don't generate phantom crises during hindcast validation
     return [];

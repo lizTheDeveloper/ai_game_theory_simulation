@@ -17,7 +17,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
-import { assertFinite, assertProbability } from '@/simulation/utils/assertions';
+import { assertFinite, assertProbability, assertInRange } from '@/simulation/utils/assertions';
 import { updateFreshwaterSystem, checkFreshwaterTechUnlocks } from '../../freshwaterDepletion';
 import { updateOceanAcidificationSystem, checkOceanAcidificationTechUnlocks } from '../../oceanAcidification';
 
@@ -74,32 +74,51 @@ export class ResourceWaterPhase implements SimulationPhase {
 
     // === OCEAN ACIDIFICATION SYSTEM (TIER 1.3) ===
     // Updates ocean acidification, coral/shellfish collapse, marine food web, tech breakthroughs
+    // RD-2 (Nov 28, 2025): Research-backed cascades with species sensitivity, warming synergy
 
     // Validate ocean acidification system state before update
     if (state.oceanAcidificationSystem) {
-      assertProbability(state.oceanAcidificationSystem.pHLevel, {
+      // pH is now absolute units (7.5-8.3), not normalized [0,1]
+      assertFinite(state.oceanAcidificationSystem.pH, {
         location: 'ResourceWaterPhase.execute (pre-ocean)',
-        valueName: 'pHLevel',
+        valueName: 'pH',
         month: state.currentMonth
       });
-      assertProbability(state.oceanAcidificationSystem.aragoniteSaturation, {
+      // LEGACY pHLevel [0,1] maintained for backward compatibility
+      assertProbability(state.oceanAcidificationSystem.pHLevel, {
+        location: 'ResourceWaterPhase.execute (pre-ocean)',
+        valueName: 'pHLevel (legacy)',
+        month: state.currentMonth
+      });
+      // PRIYA FIX (Nov 28, 2025): aragoniteSaturation is NOT a probability (0-1)
+      // It's a chemical ratio (Ωar) ranging from ~1.0 (dissolution) to 5.0 (pre-industrial 4.6)
+      assertInRange(state.oceanAcidificationSystem.aragoniteSaturation, 1.0, 5.0, {
         location: 'ResourceWaterPhase.execute (pre-ocean)',
         valueName: 'aragoniteSaturation',
         month: state.currentMonth
       });
     }
 
-    updateOceanAcidificationSystem(state);
+    updateOceanAcidificationSystem(state, rng);  // RD-2: Pass RNG for determinism
     checkOceanAcidificationTechUnlocks(state);
 
     // Validate ocean acidification system state after update
     if (state.oceanAcidificationSystem) {
-      assertProbability(state.oceanAcidificationSystem.pHLevel, {
+      // pH is now absolute units (7.5-8.3), not normalized [0,1]
+      assertFinite(state.oceanAcidificationSystem.pH, {
         location: 'ResourceWaterPhase.execute (post-ocean)',
-        valueName: 'pHLevel',
+        valueName: 'pH',
         month: state.currentMonth
       });
-      assertProbability(state.oceanAcidificationSystem.aragoniteSaturation, {
+      // LEGACY pHLevel [0,1] maintained for backward compatibility
+      assertProbability(state.oceanAcidificationSystem.pHLevel, {
+        location: 'ResourceWaterPhase.execute (post-ocean)',
+        valueName: 'pHLevel (legacy)',
+        month: state.currentMonth
+      });
+      // PRIYA FIX (Nov 28, 2025): aragoniteSaturation is NOT a probability (0-1)
+      // It's a chemical ratio (Ωar) ranging from ~1.0 (dissolution) to 5.0 (pre-industrial 4.6)
+      assertInRange(state.oceanAcidificationSystem.aragoniteSaturation, 1.0, 5.0, {
         location: 'ResourceWaterPhase.execute (post-ocean)',
         valueName: 'aragoniteSaturation',
         month: state.currentMonth

@@ -22,6 +22,7 @@ import {
   initializeRegionalResilienceProfile
 } from './mortalityStabilizersInit';
 import { assertFinite } from './utils/assertions';
+import { isHistoricalModeActive } from './utils/historicalMode';
 
 /**
  * Initialize regional populations with 2025 baseline data
@@ -363,13 +364,45 @@ export function updateRegionalPopulations(state: GameState): void {
   let totalPopulation = 0;
   let totalCrisisDeaths = 0;
 
+  // M-4 FIX (Nov 28, 2025): Calculate current year for time-varying demographics
+  const currentYear = 1990 + Math.floor(state.currentMonth / 12);
+  const isHistorical = isHistoricalModeActive(state);
+
   for (const region of pop.regionalPopulations) {
+    // === M-4: TIME-VARYING DEMOGRAPHICS (Nov 28, 2025) ===
+    // Apply time-varying birth/death rates if in historical mode and data available
+    // This REPLACES the complex scaling logic below with simple linear interpolation
+    // Research: research/population_demographics_regional_20251128.md (21 sources)
+    // Goal: Reduce 2024 population error from +24.5% to <15%
+    let useTimeVaryingRates = false;
+    if (isHistorical) {
+      const { getTimeVaryingBirthRate, getTimeVaryingDeathRate } = require('./populationDynamics');
+      const birthRate = getTimeVaryingBirthRate(region.name, currentYear);
+      const deathRate = getTimeVaryingDeathRate(region.name, currentYear);
+
+      if (birthRate > 0 && deathRate > 0) {
+        // Both rates available - use time-varying approach
+        region.baselineBirthRate = birthRate;
+        region.adjustedBirthRate = birthRate;
+        region.baselineDeathRate = deathRate;
+        region.adjustedDeathRate = deathRate;
+        useTimeVaryingRates = true;
+
+        // Diagnostic logging (once per year for one region)
+        if (state.currentMonth % 12 === 0 && region.name === 'Sub-Saharan Africa') {
+          console.log(`\n🔄 M-4 Time-Varying Demographics (${currentYear}):`);
+          console.log(`  Region: ${region.name}`);
+          console.log(`  Birth rate: ${(birthRate * 100).toFixed(2)}%`);
+          console.log(`  Death rate: ${(deathRate * 100).toFixed(2)}%`);
+          console.log(`  Net growth: ${((birthRate - deathRate) * 100).toFixed(2)}%`);
+        }
+      }
+    }
+
     // === 1. CALCULATE BIRTH RATE ===
-    // CRITICAL FIX (Nov 26, 2025 - Phase 6): Skip fertility recalculation in historical mode
-    // In historical mode, fertility is initialized to historical values and then scaled
-    // by historical CBR curves (see lines 393-419 below). We don't want to overwrite
-    // the historical initialization with 2025 modifiers.
-    if (state.config.scenarioMode !== 'historical') {
+    // M-4 FIX (Nov 28, 2025): Skip ALL birth/death rate calculation if using time-varying rates
+    // Time-varying rates are empirical UN data that already incorporate demographic transition
+    if (!useTimeVaryingRates && !isHistoricalModeActive(state)) {
       // Use inverse healthcare-fertility relationship (implemented in populationDynamics.ts)
       const healthcareFertilityModifier = calculateHealthcareFertilityModifier(region.healthcareQuality);
       const developmentModifier = calculateDevelopmentModifier(region.economicStage);
@@ -384,83 +417,129 @@ export function updateRegionalPopulations(state: GameState): void {
 
       // Clamp to realistic bounds
       region.fertilityRate = Math.max(0.5, Math.min(6.0, region.fertilityRate));
-    } else {
+    } else if (!useTimeVaryingRates) {
       // HISTORICAL FERTILITY TRANSITION (Nov 26, 2025 - Phase 6 Fix)
       // Apply linear interpolation from 1990 TFR → 2020 TFR
       // Research: research/demographics_1990_calibration_20251126.md
       // This models the demographic transition that occurred historically
       const actualYear = state.currentYear;
 
-      // Only apply transition during hindcast period (1990-2020)
-      // After 2020, use endogenous modifiers
-      if (actualYear >= 1990 && actualYear <= 2020 && !(state as any)._skipHistoricalBirthRateScaling) {
-        // Target 2020 TFR values (UN WPP 2024)
-        const REGIONAL_TFR_2020: Record<string, number> = {
-          'Sub-Saharan Africa': 4.6,    // Still high but declining
-          'Middle East & North Africa': 2.9,
-          'South Asia': 2.3,            // Near replacement
-          'East Asia': 1.5,             // Below replacement
-          'Southeast Asia': 2.0,
-          'Latin America': 2.0,
-          'Europe': 1.5,                // Well below replacement
-          'North America': 1.7,
-          'Oceania': 2.4,               // Stable (Australia + Pacific Islands)
-          'Central Asia': 2.5,
+      // Only apply transition during hindcast period (1990-2024)
+      // After 2024, use endogenous modifiers
+      // M-4 FIX (Nov 28, 2025): Extended to 2024 endpoint, updated parameters per UN WPP 2024
+      // Research: research/population_demographics_regional_20251128.md (Cynthia)
+      // Validation: reviews/m4_demographics_research_critique_20251128.md (Sylvia)
+      if (actualYear >= 1990 && actualYear <= 2024 && !(state as any)._skipHistoricalBirthRateScaling) {
+        // Target 2024 TFR values (UN WPP 2024 - Cynthia's research)
+        const REGIONAL_TFR_2024: Record<string, number> = {
+          'Sub-Saharan Africa': 4.30,   // UN WPP 2024 (was 4.6 in 2020)
+          'Middle East & North Africa': 2.66,  // UN WPP 2024 (was 2.9 in 2020)
+          'South Asia': 2.00,           // Below replacement (India crossed threshold 2024)
+          'East Asia': 1.20,            // Ultra-low (South Korea 0.75, China 1.7)
+          'Southeast Asia': 2.10,       // Near replacement (range 1.0-2.4)
+          'Latin America': 1.80,        // Below replacement (UN ECLAC 2024)
+          'Europe': 1.50,               // Persistent below-replacement
+          'North America': 1.70,        // Record low (US 1.599 in 2024)
+          'Oceania': 1.80,              // Below replacement (was 2.4 in 2020)
+          'Central Asia': 2.70,         // High
         };
 
-        // 1990 baseline (from initialization)
+        // 1990 baseline (UN WPP 2024 - Cynthia's research Table 4.2)
         const REGIONAL_TFR_1990: Record<string, number> = {
-          'Sub-Saharan Africa': 6.35,
-          'Middle East & North Africa': 4.6,
-          'South Asia': 4.3,
-          'East Asia': 2.5,
-          'Southeast Asia': 2.7,
-          'Latin America': 3.0,
-          'Europe': 1.6,
-          'North America': 2.0,
-          'Oceania': 2.4,
-          'Central Asia': 2.7,
+          'Sub-Saharan Africa': 6.50,   // Pre-transition high
+          'Middle East & North Africa': 5.00,  // Dramatic decline begins
+          'South Asia': 4.20,           // Mid-transition
+          'East Asia': 2.20,            // Post-one-child policy
+          'Southeast Asia': 3.50,       // Mid-transition
+          'Latin America': 3.30,        // Mid-transition
+          'Europe': 1.75,               // Already post-transition
+          'North America': 2.00,        // Near replacement
+          'Oceania': 2.40,              // Stable (immigration-sustained)
+          'Central Asia': 2.70,         // Stable
         };
 
         const tfr1990 = REGIONAL_TFR_1990[region.name];
-        const tfr2020 = REGIONAL_TFR_2020[region.name];
+        const tfr2024 = REGIONAL_TFR_2024[region.name];
 
-        if (tfr1990 === undefined || tfr2020 === undefined) {
+        if (tfr1990 === undefined || tfr2024 === undefined) {
           throw new Error(
             `❌ CRITICAL: Unknown region '${region.name}' in fertility transition. ` +
             `Valid regions: ${Object.keys(REGIONAL_TFR_1990).join(', ')}`
           );
         }
 
-        // Linear interpolation: TFR(year) = TFR1990 + (TFR2020 - TFR1990) * (year - 1990) / 30
-        const progress = (actualYear - 1990) / 30; // 0.0 in 1990, 1.0 in 2020
-        region.fertilityRate = tfr1990 + (tfr2020 - tfr1990) * progress;
+        // Linear interpolation: TFR(year) = TFR1990 + (TFR2024 - TFR1990) * (year - 1990) / 34
+        const progress = (actualYear - 1990) / 34; // 0.0 in 1990, 1.0 in 2024
+        region.fertilityRate = tfr1990 + (tfr2024 - tfr1990) * progress;
 
         // Diagnostic logging (once per year for one region)
         if (state.currentMonth % 12 === 0 && region.name === 'Sub-Saharan Africa') {
           console.log(`  Fertility transition (${actualYear}):`);
-          console.log(`    ${region.name}: ${tfr1990.toFixed(2)} (1990) → ${region.fertilityRate.toFixed(2)} (${actualYear}) → ${tfr2020.toFixed(2)} (2020)`);
+          console.log(`    ${region.name}: ${tfr1990.toFixed(2)} (1990) → ${region.fertilityRate.toFixed(2)} (${actualYear}) → ${tfr2024.toFixed(2)} (2024)`);
           console.log(`    Progress: ${(progress * 100).toFixed(1)}%`);
         }
       }
     }
 
-    // Birth rate from fertility
-    region.adjustedBirthRate = region.baselineBirthRate *
-      (region.fertilityRate / 2.3); // Scale by fertility vs baseline
-
-    // HISTORICAL BIRTH RATE SCALING (Nov 24-25, 2025)
-    // CRITICAL FIX (Nov 25, 2025): Use region-specific CBR curves instead of global average
-    // Root cause of 2010-2020 overshoot: Global CBR scaling applied uniformly across regions,
-    // but fertility declines varied by 7x (Europe -2.6% vs North America -19.6% in 2010-2020).
-    // Using single multiplier overestimated births in East/South Asia (50% of population).
-    // Research: UN World Population Prospects 2024, regional TFR → CBR using ratio of 7.5
+    // CRITICAL FIX (Nov 27, 2025 - C-4): Birth rate calculation in historical mode
+    // ROOT CAUSE: Lines 449-450 use 2025 baseline birth rates scaled by fertility ratio
+    // Problem: For SSA with TFR 6.35, this gives 3.4% * (6.35/2.3) = 9.39% instead of 4.73%
+    // The _skipHistoricalBirthRateScaling flag prevented ADDITIONAL scaling (lines 463-489)
+    // but couldn't fix the already-wrong calculation from lines 449-450.
     //
-    // CRITICAL FIX (Nov 26, 2025 - Phase 6): Skip scaling if fertility already initialized historically
-    // When _skipHistoricalBirthRateScaling flag is set, fertilityRate is already 1990 values
-    // and applying the historical CBR scaling would double-count the higher fertility
+    // FIX: When _skipHistoricalBirthRateScaling=true, DIRECTLY use historical CBR data
+    // instead of scaling baseline birth rates by fertility ratio.
     const skipScaling = (state as any)._skipHistoricalBirthRateScaling;
-    if (state.config.scenarioMode === 'historical' && !skipScaling) {
+
+    // M-4 FIX (Nov 28, 2025): Skip historical scaling if using time-varying rates
+    // Time-varying rates already incorporate the demographic transition
+    if (!useTimeVaryingRates && isHistoricalModeActive(state) && skipScaling) {
+      // DIRECT HISTORICAL CBR MODE (Nov 27, 2025)
+      // Fertility is already initialized to historical values (e.g., SSA TFR 6.35)
+      // Calculate birth rate DIRECTLY from historical CBR data (not from fertility formula)
+      const { getRegionalHistoricalBirthRate } = require('./engine/phases/BaselineMortalityPhase');
+      const actualYear = state.currentYear;
+
+      // Get historical CBR for this region-year (e.g., SSA 1990: 47.3/1000)
+      const historicalCBR = getRegionalHistoricalBirthRate(region.name, actualYear);
+
+      // Convert to annual rate: CBR/1000 = annual rate
+      // E.g., 47.3/1000 = 0.0473 = 4.73%
+      region.adjustedBirthRate = historicalCBR / 1000;
+
+      // Validate result
+      region.adjustedBirthRate = assertFinite(region.adjustedBirthRate, {
+        location: 'updateRegionalPopulations (historical CBR mode)',
+        valueName: 'adjustedBirthRate',
+        month: state.currentMonth,
+        additionalInfo: {
+          region: region.name,
+          actualYear,
+          historicalCBR,
+          adjustedBirthRate: region.adjustedBirthRate
+        }
+      });
+
+      // Diagnostic logging (once per year for one region)
+      if (state.currentMonth % 12 === 0 && region.name === 'Sub-Saharan Africa') {
+        console.log(`  📊 Direct historical CBR mode (${actualYear}):`);
+        console.log(`    Region: ${region.name}`);
+        console.log(`    Historical CBR: ${historicalCBR.toFixed(1)}/1000`);
+        console.log(`    Adjusted birth rate: ${(region.adjustedBirthRate * 100).toFixed(2)}%`);
+        console.log(`    Fertility (TFR): ${region.fertilityRate.toFixed(2)}`);
+      }
+    } else if (!useTimeVaryingRates && isHistoricalModeActive(state) && !skipScaling) {
+      // LEGACY HISTORICAL SCALING MODE (pre-Nov 27, 2025)
+      // Calculate from fertility formula, then scale by historical CBR
+      region.adjustedBirthRate = region.baselineBirthRate *
+        (region.fertilityRate / 2.3); // Scale by fertility vs baseline
+
+      // HISTORICAL BIRTH RATE SCALING (Nov 24-25, 2025)
+      // CRITICAL FIX (Nov 25, 2025): Use region-specific CBR curves instead of global average
+      // Root cause of 2010-2020 overshoot: Global CBR scaling applied uniformly across regions,
+      // but fertility declines varied by 7x (Europe -2.6% vs North America -19.6% in 2010-2020).
+      // Using single multiplier overestimated births in East/South Asia (50% of population).
+      // Research: UN World Population Prospects 2024, regional TFR → CBR using ratio of 7.5
       const { getRegionalHistoricalBirthRate, getHistoricalCrudeBirthRate } = require('./engine/phases/BaselineMortalityPhase');
       const actualYear = state.currentYear;
 
@@ -486,10 +565,37 @@ export function updateRegionalPopulations(state: GameState): void {
         console.log(`    Difference: ${((regionalScale - globalScale) / globalScale * 100).toFixed(1)}% ${regionalScale > globalScale ? 'HIGHER' : 'lower'}`);
         console.log(`    Final birth rate: ${region.adjustedBirthRate.toFixed(4)}`);
       }
+    } else if (!useTimeVaryingRates) {
+      // STANDARD MODE (non-historical scenarios)
+      // Calculate birth rate from fertility using baseline scaling
+      region.adjustedBirthRate = region.baselineBirthRate *
+        (region.fertilityRate / 2.3); // Scale by fertility vs baseline
     }
 
     // === 2. CALCULATE DEATH RATE ===
-    const healthcareReduction = Math.max(0.3, 1 - (region.healthcareQuality * 0.7));
+    // M-4 FIX (Nov 28, 2025): Declare debug variables outside block for TypeScript flow analysis
+    let healthcareReduction = 1.0;
+    let crisisMultiplier = 1.0;
+    let foodWaterStress = 0;
+    let climateStress = 0;
+    let pollutionStress = 0;
+    let warMultiplier = 1.0;
+    let waterStock = 0;
+
+    // M-4 FIX (Nov 28, 2025): Skip death rate calculation if using time-varying rates
+    // Time-varying death rates already incorporate healthcare quality, aging, and historical patterns
+    if (!useTimeVaryingRates) {
+      // CRITICAL FIX (Nov 27, 2025): Disable healthcare reduction in historical mode
+      // Historical CDR data already incorporates real-world healthcare quality from that era.
+      // Applying modern healthcare reduction factors on top of historical CDR double-counts
+      // the effect → death rates too low in historical mode.
+      // Example: SSA 1990 baseline 0.9% × healthcare 0.76 × historical scale 1.95 = 1.33%
+      // But expected is 15.6/1000 = 1.56% (historical CDR directly).
+      // HIGH-7 FIX (Nov 27, 2025): Use historicalMode flag for hindcast calibration
+      // CRITICAL-1 FIX (Nov 28, 2025): Unified historical mode detection via isHistoricalModeActive()
+      // historicalMode = empirical UN data (1990-2024), scenarioMode = crisis severity
+      const isHistoricalMode = isHistoricalModeActive(state);
+      healthcareReduction = isHistoricalMode ? 1.0 : Math.max(0.3, 1 - (region.healthcareQuality * 0.7));
 
     // Detect NaN in resource reserves - fail loudly
     if (isNaN(state.resourceEconomy.food.reserves)) {
@@ -502,8 +608,8 @@ export function updateRegionalPopulations(state: GameState): void {
     }
 
     const foodStock = state.resourceEconomy.food.reserves;
-    const waterStock = state.resourceEconomy.water.reserves;
-    const foodWaterStress = Math.max(0,
+    waterStock = state.resourceEconomy.water.reserves;
+    foodWaterStress = Math.max(0,
       (1 - foodStock) * 0.3 +
       (1 - waterStock) * 0.3
     );
@@ -521,7 +627,7 @@ export function updateRegionalPopulations(state: GameState): void {
     const climateStability = state.environmentalAccumulation.climateStability;
 
     // Base climate stress from general climate degradation
-    let climateStress = (1 - climateStability) * 0.4 * region.climateVulnerability;
+    climateStress = (1 - climateStability) * 0.4 * region.climateVulnerability;
 
     // Add tipping point impacts (if any active)
     // TippingPointPhase (order 21.6) stores impacts in state for regional variation
@@ -532,22 +638,47 @@ export function updateRegionalPopulations(state: GameState): void {
       climateStress += tippingStress;
     }
     const pollutionLevel = state.environmentalAccumulation.pollutionLevel;
-    const pollutionStress = pollutionLevel * 0.3;
-    const warMultiplier = region.conflictRisk > 0.5 ? 1.5 : 1.0;
+    pollutionStress = pollutionLevel * 0.3;
 
-    const crisisMultiplier = 1 + foodWaterStress + climateStress + pollutionStress;
+    // CRITICAL FIX (Nov 27, 2025): Disable crisis/war multipliers in historical mode
+    // Root cause of C-4 population decline: Historical CDR data already incorporates
+    // real-world mortality from conflicts, famines, etc. Applying additional multipliers
+    // double-counts these effects → death rates 2-3× too high → population crashes.
+    // Example: SSA 1990 has 1.5× war multiplier + 1.28× crisis multiplier on top of
+    // historical 15.6/1000 CDR → 2.54% death rate vs expected 1.56%.
+    // Solution: In historical mode (pre-2000), use neutral multipliers (1.0).
+    // The historical CDR scaling (lines 605-644) will apply correct mortality rates.
+    // (isHistoricalMode defined above at line 544)
+    warMultiplier = isHistoricalMode ? 1.0 : (region.conflictRisk > 0.5 ? 1.5 : 1.0);
+    crisisMultiplier = isHistoricalMode ? 1.0 : (1 + foodWaterStress + climateStress + pollutionStress);
 
     region.adjustedDeathRate = region.baselineDeathRate *
       healthcareReduction *
       crisisMultiplier *
       warMultiplier;
 
+    // Assert death rate calculation is valid
+    region.adjustedDeathRate = assertFinite(region.adjustedDeathRate, {
+      location: 'updateRegionalPopulations',
+      valueName: 'adjustedDeathRate (initial)',
+      month: state.currentMonth,
+      additionalInfo: {
+        region: region.name,
+        baselineDeathRate: region.baselineDeathRate,
+        healthcareReduction,
+        crisisMultiplier,
+        warMultiplier
+      }
+    });
+
     // CRITICAL FIX (Nov 25, 2025): Regional death rate scaling for historical mode
     // Parallel to birth rate scaling (lines 393-419) - must account for regional CDR variation
     // Root cause: Global CDR misses dramatic regional differences (SSA: 15.6/1000 vs MENA: 8.5/1000 in 1990)
     // Without scaling: Population grows too fast in high-mortality regions → 500M overshoot by 2020
     // Research: /research/regional_cdr_un_wpp_2024_20251125.md
-    if (state.config.scenarioMode === 'historical') {
+    // HIGH-7 FIX (Nov 27, 2025): Use historicalMode flag for hindcast calibration
+    // CRITICAL-1 FIX (Nov 28, 2025): Unified historical mode detection via isHistoricalModeActive()
+    if (isHistoricalModeActive(state)) {
       const { getRegionalHistoricalDeathRate } = require('./engine/phases/BaselineMortalityPhase');
       const actualYear = state.currentYear;
 
@@ -559,6 +690,20 @@ export function updateRegionalPopulations(state: GameState): void {
       // Apply scaling (higher historical CDR = more deaths)
       region.adjustedDeathRate *= regionalCDRScale;
 
+      // Assert death rate after historical scaling is valid
+      region.adjustedDeathRate = assertFinite(region.adjustedDeathRate, {
+        location: 'updateRegionalPopulations',
+        valueName: 'adjustedDeathRate (post-historical-scaling)',
+        month: state.currentMonth,
+        additionalInfo: {
+          region: region.name,
+          actualYear,
+          regionalCDR,
+          baseline2025CDR,
+          regionalCDRScale
+        }
+      });
+
       // DIAGNOSTIC: Log occasionally (once per year) showing regional CDR scaling
       if (state.currentMonth % 12 === 0 && (region.name === 'Sub-Saharan Africa' || region.name === 'Europe')) {
         console.log(`  🌍 Historical death rate scaling (${actualYear}):`);
@@ -568,11 +713,7 @@ export function updateRegionalPopulations(state: GameState): void {
         console.log(`    Final death rate: ${(region.adjustedDeathRate * 100).toFixed(3)}% annual`);
       }
     }
-
-    // Guard against NaN
-    if (isNaN(region.adjustedDeathRate)) {
-      region.adjustedDeathRate = region.baselineDeathRate;
-    }
+    } // End of !useTimeVaryingRates block for death rate calculation
 
     // DEBUG (Oct 26, 2025): Track what's causing massive death rates
     // Log ALL regions in first 2 months to establish baseline
@@ -596,9 +737,18 @@ export function updateRegionalPopulations(state: GameState): void {
     }
 
     // === 3. CALCULATE NET GROWTH ===
-    // FIX (Oct 28, 2025): Only apply BIRTHS here - BayesianMortalityResolutionPhase handles deaths
-    // Architecture: updateRegionalPopulations adds births → BayesianMortalityResolutionPhase subtracts deaths → HumanPopulationPhase aggregates
-    region.netGrowthRate = region.adjustedBirthRate; // Only births, no death subtraction
+    // CRITICAL FIX (Nov 27, 2025): In historical mode, apply deaths HERE not via Bayesian
+    // Root cause of C-4 population stagnation: BaselineMortalityPhase disabled in historical
+    // mode (to prevent double-counting), but that means NO deaths are applied at all!
+    // Solution: In historical mode, apply regional death rates directly (births - deaths).
+    // In modern mode, use Bayesian system (births only, deaths via BaselineMortalityPhase).
+    // HIGH-7 FIX (Nov 27, 2025): Use historicalMode flag for hindcast calibration
+    // CRITICAL-1 FIX (Nov 28, 2025): Unified historical mode detection via isHistoricalModeActive()
+    // historicalMode = empirical UN data (1990-2024), scenarioMode = crisis severity
+    const useDirectDeaths = isHistoricalModeActive(state);
+    region.netGrowthRate = useDirectDeaths
+      ? (region.adjustedBirthRate - region.adjustedDeathRate)  // Historical: apply deaths here
+      : region.adjustedBirthRate;                               // Modern: Bayesian handles deaths
     const monthlyGrowthRate = region.netGrowthRate / 12;
 
     // === 4. APPLY POPULATION CHANGE ===

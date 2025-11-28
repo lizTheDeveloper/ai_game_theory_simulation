@@ -20,6 +20,7 @@ import { assertStateProperty, assertFinite } from './utils/assertions';
 import { addMortalityRisk } from './bayesianMortality';
 import { asymptoteRecovery, legacyStockRelease } from './utils/irreversibility';
 import { isTechDeployed } from './techTree/helpers';
+import { isHistoricalModeActive } from './utils/historicalMode';
 
 /**
  * Initialize novel entities system state (2025 baseline - ALREADY BREACHED)
@@ -490,7 +491,8 @@ export function updateNovelEntitiesSystem(state: GameState): void {
     console.log(`   Chemical load: ${(ne.syntheticChemicalLoad * 100).toFixed(0)}%`);
 
     // Biodiversity impact (one-time top-down cascade when collapse announced)
-    if (state.environmentalAccumulation) {
+    // HIGH-8 FIX (Nov 28, 2025): Guard during historical mode
+    if (!isHistoricalModeActive(state) && state.environmentalAccumulation) {
       state.environmentalAccumulation.biodiversityIndex = Math.max(0,
         state.environmentalAccumulation.biodiversityIndex - 0.08 // -8% instant hit
       );

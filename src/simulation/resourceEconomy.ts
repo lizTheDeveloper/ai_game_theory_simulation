@@ -518,64 +518,39 @@ export function calculateResourceSecurity(resources: ResourceEconomy): number {
     }
   );
   
-  // CRITICAL-1 FIX: Clamp all reserves to non-negative before weighted sum
-  // Individual reserves SHOULD already be clamped to ≥0, but defensive check here
-  // to prevent NaN propagation if any upstream code fails to clamp.
-
-  // CRITICAL-1 DIAGNOSTIC: Log any negative reserves to identify upstream bug
-  const negatives: string[] = [];
-  if (resources.oil.reserves < 0) negatives.push(`oil=${resources.oil.reserves.toFixed(6)}`);
-  if (resources.coal.reserves < 0) negatives.push(`coal=${resources.coal.reserves.toFixed(6)}`);
-  if (resources.naturalGas.reserves < 0) negatives.push(`naturalGas=${resources.naturalGas.reserves.toFixed(6)}`);
-  if (resources.copper.reserves < 0) negatives.push(`copper=${resources.copper.reserves.toFixed(6)}`);
-  if (resources.rareEarths.reserves < 0) negatives.push(`rareEarths=${resources.rareEarths.reserves.toFixed(6)}`);
-  if (resources.lithium.reserves < 0) negatives.push(`lithium=${resources.lithium.reserves.toFixed(6)}`);
-  if (resources.iron.reserves < 0) negatives.push(`iron=${resources.iron.reserves.toFixed(6)}`);
-  if (resources.food.reserves < 0) negatives.push(`food=${resources.food.reserves.toFixed(6)}`);
-  if (resources.water.reserves < 0) negatives.push(`water=${resources.water.reserves.toFixed(6)}`);
-  if (resources.timber.reserves < 0) negatives.push(`timber=${resources.timber.reserves.toFixed(6)}`);
-
-  if (negatives.length > 0) {
-    console.log(`⚠️  CRITICAL-1 DIAGNOSTIC: Negative reserves detected in calculateResourceSecurity: ${negatives.join(', ')}`);
-    console.log(`   This indicates upstream calculation error - reserves should be clamped to ≥0`);
-  }
-
-  const oil = Math.max(0, resources.oil.reserves);
-  const coal = Math.max(0, resources.coal.reserves);
-  const naturalGas = Math.max(0, resources.naturalGas.reserves);
-  const copper = Math.max(0, resources.copper.reserves);
-  const rareEarths = Math.max(0, resources.rareEarths.reserves);
-  const lithium = Math.max(0, resources.lithium.reserves);
-  const iron = Math.max(0, resources.iron.reserves);
-  const food = Math.max(0, resources.food.reserves);
-  const water = Math.max(0, resources.water.reserves);
-  const timber = Math.max(0, resources.timber.reserves);
-
   const weighted =
-    weights.oil * oil +
-    weights.coal * coal +
-    weights.naturalGas * naturalGas +
-    weights.copper * copper +
-    weights.rareEarths * rareEarths +
-    weights.lithium * lithium +
-    weights.iron * iron +
-    weights.food * food +
-    weights.water * water +
-    weights.timber * timber +
+    weights.oil * resources.oil.reserves +
+    weights.coal * resources.coal.reserves +
+    weights.naturalGas * resources.naturalGas.reserves +
+    weights.copper * resources.copper.reserves +
+    weights.rareEarths * resources.rareEarths.reserves +
+    weights.lithium * resources.lithium.reserves +
+    weights.iron * resources.iron.reserves +
+    weights.food * resources.food.reserves +
+    weights.water * resources.water.reserves +
+    weights.timber * resources.timber.reserves +
     weights.energy * energySecurity;
 
-  // CRITICAL-1 FIX: Clamp final result to ≥0 (negative resource security is physically meaningless)
-  const clamped = Math.max(0, weighted);
+  // CRITICAL-1 FIX (Nov 26, 2025): Floor at 0 to prevent negative values
+  // Individual reserves use Math.max(0, ...) but if ANY reserve goes negative OR
+  // if renewablePercentage > 1.0 (making weights negative), weighted sum can be negative.
+  // This propagates to resourceReserves and crashes BifurcationLogicPhase geometric mean.
+  const weightedFloored = Math.max(0, weighted);
 
-  return assertFinite(clamped, {
+  // Defensive: Log if weighted was negative (indicates upstream bug)
+  if (weighted < 0 && Math.abs(weighted) > 1e-10) {
+    console.log(`⚠️ WARNING: calculateResourceSecurity produced negative value: ${weighted.toFixed(6)}`);
+    console.log(`   This indicates either:`);
+    console.log(`   1. Individual resource reserves went negative`);
+    console.log(`   2. Renewable percentage > 1.0 (causing negative weights)`);
+    console.log(`   Clamped to 0, but root cause should be investigated.`);
+  }
+
+
+  return assertFinite(weightedFloored, {
     location: 'calculateResourceSecurity',
     valueName: 'weightedResourceSecurity',
-    additionalInfo: {
-      energySecurity,
-      weighted,
-      clamped,
-      negativeReserves: weighted < 0 ? 'YES - clamped to 0' : 'NO'
-    }
+    additionalInfo: { energySecurity, rawWeighted: weighted }
   });
 }
 

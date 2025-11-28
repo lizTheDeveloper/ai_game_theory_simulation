@@ -53,6 +53,18 @@ export interface ConfigurationSettings {
   // WARNING: This mode is ONLY for hindcast validation (1990-2010). Default mode uses endogenous emissions.
   historicalEmissionsMode?: boolean; // Enable historical emissions forcing (default: false)
 
+  // HISTORICAL MODE (Nov 27, 2025): Hindcast Validation Phase 11
+  // Dampens crisis systems during baseline validation (1990-2024)
+  // Research: research/historical_mode_parameters_20251127.md
+  // Root cause: Crisis-calibrated systems produce massive errors on baseline period:
+  //   - Temperature: +64% error (2.1°C vs 1.28°C actual)
+  //   - Population: -76% error (2.0B vs 8.1B actual)
+  //   - Biodiversity: -95% error (0.03 vs 0.49 actual)
+  // Solution: Conditional logic in 5 phases (ExogenousShock, BaselineMortality, PlanetaryBoundaries, Climate, ResourceDepletion)
+  // WARNING: This mode is ONLY for hindcast validation. Default mode uses crisis-calibrated parameters.
+  historicalMode?: boolean; // Enable historical dampening (default: false)
+  historicalModeEndYear?: number; // End year for historical mode (default: 2024)
+
   // Alignment Dynamics System (Oct 23, 2025)
   // Multi-theory modeling of alignment change (static vs drift vs epicycles vs unknowable)
   // Allows exploring different theories of how AI values evolve

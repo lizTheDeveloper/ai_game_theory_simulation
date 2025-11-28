@@ -894,33 +894,25 @@ function applyGlobalEffects(
         break;
         
       case 'globalCooling':
-        // Emergency geoengineering cooling
-        if (gameState.resourceEconomy?.co2) {
-          gameState.resourceEconomy.co2.temperatureAnomaly = assertFinite(Math.max(
-            0,
-            gameState.resourceEconomy.co2.temperatureAnomaly - value * 0.01
-          ), {
-        location: 'applyRegionalEffects:globalCooling',
-        valueName: 'temperatureAnomaly',
-        month: gameState.currentMonth
-      });
+        // Emergency geoengineering cooling (ACCUMULATE, don't apply yet)
+        // Phase order fix (Nov 27, 2025): ResourceEconomyPhase (17.0) will overwrite direct changes
+        // Instead, accumulate in technologyEffects.coolingFromGeoengineering
+        // TechCoolingPhase (17.5) will apply AFTER ResourceEconomyPhase recalculates
+        if (gameState.technologyEffects) {
+          const coolingEffect = value * 0.01; // 0.01°C per deployment level
+          gameState.technologyEffects.coolingFromGeoengineering += coolingEffect;
+
           // INTEGRATION FIX (Oct 29, 2025): Global cooling helps climate boundary
           triggerBoundaryRecovery(gameState, 'climate_change');
         }
         break;
 
       case 'regionalCooling':
-        // Regional cooling from marine cloud brightening
-        if (gameState.resourceEconomy?.co2) {
-          // Less effective than global cooling but safer
-          gameState.resourceEconomy.co2.temperatureAnomaly = assertFinite(Math.max(
-            0,
-            gameState.resourceEconomy.co2.temperatureAnomaly - value * 0.005
-          ), {
-        location: 'applyRegionalEffects:regionalCooling',
-        valueName: 'temperatureAnomaly',
-        month: gameState.currentMonth
-      });
+        // Regional cooling from marine cloud brightening (ACCUMULATE, don't apply yet)
+        // Phase order fix (Nov 27, 2025): ResourceEconomyPhase (17.0) will overwrite direct changes
+        if (gameState.technologyEffects) {
+          const coolingEffect = value * 0.005; // 0.005°C per deployment level (less effective than global)
+          gameState.technologyEffects.coolingFromGeoengineering += coolingEffect;
         }
         // Flag that regional cooling is active
         if (gameState.globalMetrics) {
@@ -1978,24 +1970,59 @@ function applyRegionalEffects(
         // Ocean has TWO systems: oceanHealth (resourceEconomy) and oceanAcidificationSystem
         
         case 'coralCoverage':
-          // Increase coral reef health in acidification system
+          // HIGH-2 FIX (Nov 28, 2025): Modify regional coral health, not global
+          // Tech effects must modify regionalCoralHealth (0-1 scale) so cascade phase
+          // can aggregate to global average. Direct coralReefHealth writes get overwritten.
           if (gameState.oceanAcidificationSystem) {
-            gameState.oceanAcidificationSystem.coralReefHealth = assertFinite(Math.min(
+            const ocean = gameState.oceanAcidificationSystem;
+            const boost = value * 0.01; // Same magnitude as before
+
+            // Boost all regional coral health proportionally
+            ocean.regionalCoralHealth.seAsia = assertFinite(Math.min(
               1.0,
-              gameState.oceanAcidificationSystem.coralReefHealth + value * 0.01
+              ocean.regionalCoralHealth.seAsia + boost
             ), {
-        location: 'applyRegionalEffects:coralCoverage',
-        valueName: 'coralReefHealth',
-        month: gameState.currentMonth
-      });
-            gameState.oceanAcidificationSystem.coralRestorationDeployment = assertFinite(Math.min(
+              location: 'applyRegionalEffects:coralCoverage',
+              valueName: 'regionalCoralHealth.seAsia',
+              month: gameState.currentMonth
+            });
+
+            ocean.regionalCoralHealth.pacificIslands = assertFinite(Math.min(
               1.0,
-              gameState.oceanAcidificationSystem.coralRestorationDeployment + value * 0.01
+              ocean.regionalCoralHealth.pacificIslands + boost
             ), {
-        location: 'applyRegionalEffects:coralCoverage',
-        valueName: 'coralRestorationDeployment',
-        month: gameState.currentMonth
-      });
+              location: 'applyRegionalEffects:coralCoverage',
+              valueName: 'regionalCoralHealth.pacificIslands',
+              month: gameState.currentMonth
+            });
+
+            ocean.regionalCoralHealth.caribbean = assertFinite(Math.min(
+              1.0,
+              ocean.regionalCoralHealth.caribbean + boost
+            ), {
+              location: 'applyRegionalEffects:coralCoverage',
+              valueName: 'regionalCoralHealth.caribbean',
+              month: gameState.currentMonth
+            });
+
+            ocean.regionalCoralHealth.indianOcean = assertFinite(Math.min(
+              1.0,
+              ocean.regionalCoralHealth.indianOcean + boost
+            ), {
+              location: 'applyRegionalEffects:coralCoverage',
+              valueName: 'regionalCoralHealth.indianOcean',
+              month: gameState.currentMonth
+            });
+
+            // Also boost restoration deployment (unchanged)
+            ocean.coralRestorationDeployment = assertFinite(Math.min(
+              1.0,
+              ocean.coralRestorationDeployment + value * 0.01
+            ), {
+              location: 'applyRegionalEffects:coralCoverage',
+              valueName: 'coralRestorationDeployment',
+              month: gameState.currentMonth
+            });
           }
           break;
           
@@ -2088,66 +2115,158 @@ function applyRegionalEffects(
         valueName: 'marineFoodWeb',
         month: gameState.currentMonth
       });
-            // Also helps coral reefs
-            gameState.oceanAcidificationSystem.coralReefHealth = assertFinite(Math.min(
+            // HIGH-2 FIX (Nov 28, 2025): Also helps coral reefs (modify regional health)
+            const ocean = gameState.oceanAcidificationSystem;
+            const coralBoost = value * 0.005;
+
+            ocean.regionalCoralHealth.seAsia = assertFinite(Math.min(
               1.0,
-              gameState.oceanAcidificationSystem.coralReefHealth + value * 0.005
+              ocean.regionalCoralHealth.seAsia + coralBoost
             ), {
-        location: 'applyRegionalEffects:marineLifeBonus',
-        valueName: 'coralReefHealth',
-        month: gameState.currentMonth
-      });
+              location: 'applyRegionalEffects:marineLifeBonus',
+              valueName: 'regionalCoralHealth.seAsia',
+              month: gameState.currentMonth
+            });
+
+            ocean.regionalCoralHealth.pacificIslands = assertFinite(Math.min(
+              1.0,
+              ocean.regionalCoralHealth.pacificIslands + coralBoost
+            ), {
+              location: 'applyRegionalEffects:marineLifeBonus',
+              valueName: 'regionalCoralHealth.pacificIslands',
+              month: gameState.currentMonth
+            });
+
+            ocean.regionalCoralHealth.caribbean = assertFinite(Math.min(
+              1.0,
+              ocean.regionalCoralHealth.caribbean + coralBoost
+            ), {
+              location: 'applyRegionalEffects:marineLifeBonus',
+              valueName: 'regionalCoralHealth.caribbean',
+              month: gameState.currentMonth
+            });
+
+            ocean.regionalCoralHealth.indianOcean = assertFinite(Math.min(
+              1.0,
+              ocean.regionalCoralHealth.indianOcean + coralBoost
+            ), {
+              location: 'applyRegionalEffects:marineLifeBonus',
+              valueName: 'regionalCoralHealth.indianOcean',
+              month: gameState.currentMonth
+            });
           }
           break;
 
         case 'coralProtection':
-          // Protect coral reefs from temperature stress (marine cloud brightening)
+          // HIGH-2 FIX (Nov 28, 2025): Protect coral reefs (modify regional health, not global)
           if (gameState.oceanAcidificationSystem) {
+            const ocean = gameState.oceanAcidificationSystem;
+            const protectionBoost = value * 0.01;
+
             // Regional cooling protects corals
-            gameState.oceanAcidificationSystem.coralReefHealth = assertFinite(Math.min(
+            ocean.regionalCoralHealth.seAsia = assertFinite(Math.min(
               1.0,
-              gameState.oceanAcidificationSystem.coralReefHealth + value * 0.01
+              ocean.regionalCoralHealth.seAsia + protectionBoost
             ), {
-        location: 'applyRegionalEffects:coralProtection',
-        valueName: 'coralReefHealth',
-        month: gameState.currentMonth
-      });
+              location: 'applyRegionalEffects:coralProtection',
+              valueName: 'regionalCoralHealth.seAsia',
+              month: gameState.currentMonth
+            });
+
+            ocean.regionalCoralHealth.pacificIslands = assertFinite(Math.min(
+              1.0,
+              ocean.regionalCoralHealth.pacificIslands + protectionBoost
+            ), {
+              location: 'applyRegionalEffects:coralProtection',
+              valueName: 'regionalCoralHealth.pacificIslands',
+              month: gameState.currentMonth
+            });
+
+            ocean.regionalCoralHealth.caribbean = assertFinite(Math.min(
+              1.0,
+              ocean.regionalCoralHealth.caribbean + protectionBoost
+            ), {
+              location: 'applyRegionalEffects:coralProtection',
+              valueName: 'regionalCoralHealth.caribbean',
+              month: gameState.currentMonth
+            });
+
+            ocean.regionalCoralHealth.indianOcean = assertFinite(Math.min(
+              1.0,
+              ocean.regionalCoralHealth.indianOcean + protectionBoost
+            ), {
+              location: 'applyRegionalEffects:coralProtection',
+              valueName: 'regionalCoralHealth.indianOcean',
+              month: gameState.currentMonth
+            });
+
             // ROOT CAUSE FIX (Oct 27, 2025): Bug #14 - Initialize coralBleachingRisk on first access
             // This is initialization context (valid use of ?? fallback per CLAUDE.md)
             // Default: 0.5 (moderate bleaching risk, 2025 baseline with 1.1°C warming)
-            const currentRisk = (gameState.oceanAcidificationSystem as any).coralBleachingRisk ?? 0.5;
-            (gameState.oceanAcidificationSystem as any).coralBleachingRisk = assertFinite(Math.max(
+            const currentRisk = (ocean as any).coralBleachingRisk ?? 0.5;
+            (ocean as any).coralBleachingRisk = assertFinite(Math.max(
               0,
               currentRisk - value * 0.01
             ), {
-        location: 'applyRegionalEffects:coralProtection',
-        valueName: 'coralBleachingRisk',
-        month: gameState.currentMonth
-      });
+              location: 'applyRegionalEffects:coralProtection',
+              valueName: 'coralBleachingRisk',
+              month: gameState.currentMonth
+            });
           }
           break;
 
         case 'coralSurvival':
-          // Increase coral survival through ocean alkalinity enhancement
+          // HIGH-2 FIX (Nov 28, 2025): Ocean alkalinity enhancement (modify regional health)
           if (gameState.oceanAcidificationSystem) {
-            // Major boost to coral reef health
-            gameState.oceanAcidificationSystem.coralReefHealth = assertFinite(Math.min(
+            const ocean = gameState.oceanAcidificationSystem;
+            const survivalBoost = value * 0.015; // Major boost
+
+            // Major boost to coral reef health (all regions)
+            ocean.regionalCoralHealth.seAsia = assertFinite(Math.min(
               1.0,
-              gameState.oceanAcidificationSystem.coralReefHealth + value * 0.015
+              ocean.regionalCoralHealth.seAsia + survivalBoost
             ), {
-        location: 'applyRegionalEffects:coralSurvival',
-        valueName: 'coralReefHealth',
-        month: gameState.currentMonth
-      });
+              location: 'applyRegionalEffects:coralSurvival',
+              valueName: 'regionalCoralHealth.seAsia',
+              month: gameState.currentMonth
+            });
+
+            ocean.regionalCoralHealth.pacificIslands = assertFinite(Math.min(
+              1.0,
+              ocean.regionalCoralHealth.pacificIslands + survivalBoost
+            ), {
+              location: 'applyRegionalEffects:coralSurvival',
+              valueName: 'regionalCoralHealth.pacificIslands',
+              month: gameState.currentMonth
+            });
+
+            ocean.regionalCoralHealth.caribbean = assertFinite(Math.min(
+              1.0,
+              ocean.regionalCoralHealth.caribbean + survivalBoost
+            ), {
+              location: 'applyRegionalEffects:coralSurvival',
+              valueName: 'regionalCoralHealth.caribbean',
+              month: gameState.currentMonth
+            });
+
+            ocean.regionalCoralHealth.indianOcean = assertFinite(Math.min(
+              1.0,
+              ocean.regionalCoralHealth.indianOcean + survivalBoost
+            ), {
+              location: 'applyRegionalEffects:coralSurvival',
+              valueName: 'regionalCoralHealth.indianOcean',
+              month: gameState.currentMonth
+            });
+
             // Improve aragonite saturation (critical for coral calcification)
-            gameState.oceanAcidificationSystem.aragoniteSaturation = assertFinite(Math.min(
+            ocean.aragoniteSaturation = assertFinite(Math.min(
               1.0,
-              gameState.oceanAcidificationSystem.aragoniteSaturation + value * 0.02
+              ocean.aragoniteSaturation + value * 0.02
             ), {
-        location: 'applyRegionalEffects:coralSurvival',
-        valueName: 'aragoniteSaturation',
-        month: gameState.currentMonth
-      });
+              location: 'applyRegionalEffects:coralSurvival',
+              valueName: 'aragoniteSaturation',
+              month: gameState.currentMonth
+            });
           }
           break;
 

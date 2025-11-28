@@ -1,0 +1,208 @@
+# Daily Architecture Review - November 28, 2025
+
+## Executive Summary
+
+**Review Date:** 2025-11-28 06:00 UTC
+**Reviewer:** Architecture-Skeptic Agent (Opus 4.5)
+**Commits Reviewed:** 95+ commits (Nov 27-28, 2025)
+**Files Changed:** 100+ files across simulation, documentation, research
+
+---
+
+## Changes Reviewed
+
+### Major Work Completed (Last 24 Hours)
+
+1. **CRITICAL-1 RESOLVED** (commit 5c7fec87)
+   - Unified historical mode detection pattern across codebase
+   - Created `src/simulation/utils/historicalMode.ts` as single source of truth
+   - Migrated 17 violations across 10 files to canonical `isHistoricalModeActive()` function
+   - Fixed hardcoded year cutoffs (2020 → 2024)
+
+2. **HIGH-8 Biodiversity Calibration** (commits 47a6b52a, 9f9a9f7b, 1bac34a5)
+   - Applied 14 historical mode guards across biodiversity-related phases
+   - Error reduced from 77.3% → 1.2% (target: 49%, achieved: 49.59%)
+   - Added WWF LPI empirical decline rates for hindcast period
+
+3. **HIGH-6/7 Temperature/Population Calibration** (various commits)
+   - Aerosol forcing phase added for temperature calibration
+   - Regional CDR/CBR data updated to UN WPP 2024
+   - Downgraded from HIGH to MEDIUM (acceptable tolerances)
+
+4. **HIGH-9 Determinism Investigation** (commit b50da7eb)
+   - Closed as FALSE ALARM - CV=0.000% verified
+   - Determinism is intact
+
+---
+
+## Architecture Analysis
+
+### 1. PERFORMANCE ISSUES
+
+**Status: ✅ NO CRITICAL ISSUES**
+
+**Review findings:**
+- No new O(n²) algorithms introduced in changed files
+- `BaselineMortalityPhase.ts` and `regionalPopulations.ts` use O(n) iteration over regions (N=10, acceptable)
+- Linear interpolation functions in demographic lookups are O(k) where k is number of data points (typically 5-10)
+- Dynamic `require()` calls still present (see complexity section below) but not in hot paths
+
+**Recommendation:** Monitor the `updateRegionalPopulations()` function - it runs every month and iterates all regions. Currently acceptable, but if regions expand significantly, consider optimization.
+
+### 2. STATE PROPAGATION
+
+**Status: ⚠️ 1 MEDIUM ISSUE**
+
+**MEDIUM-1: Dual Biodiversity Decline Mechanisms**
+
+Location: `PlanetaryBoundariesPhase.ts:143-182` AND `environmental.ts:308-387`
+
+**Issue:** Biodiversity decline is now implemented in TWO places:
+1. `PlanetaryBoundariesPhase.execute()` - applies decay multiplier or mechanistic model
+2. `updateEnvironmentalAccumulation()` - also has biodiversity decline logic
+
+**Root cause:** The HIGH-8 fix added biodiversity decline to `PlanetaryBoundariesPhase` because "no phase was applying monthly biodiversity decline." However, `environmental.ts` already had this logic, but `updateEnvironmentalAccumulation()` is NOT called as a phase.
+
+**Impact:** Currently safe because:
+- Historical mode uses multiplicative decay (0.998899) in PlanetaryBoundariesPhase
+- environmental.ts code may be dead code for historical mode
+- Both use similar WWF LPI empirical rates
+
+**Risk:** If both paths execute in projection mode, biodiversity could decline ~2x too fast.
+
+**Recommendation:** Audit whether `updateEnvironmentalAccumulation()` is called from any phase. If yes, remove duplicate biodiversity logic. If no, consider moving all environmental accumulation logic into a dedicated phase.
+
+---
+
+### 3. SILENT FALLBACK / NaN HANDLING
+
+**Status: ✅ GOOD - Improved**
+
+**Positive findings:**
+- `isHistoricalModeActive()` utility eliminates scattered hardcoded checks
+- Region lookup functions (`getRegionalHistoricalBirthRate`, `getRegionalHistoricalDeathRate`) now throw errors on unknown regions
+- `assertFinite()` used consistently in demographic calculations
+- Direct `isNaN()` checks with explicit throws in `regionalPopulations.ts` lines 559-582
+
+**One remaining defensive fallback pattern (acceptable):**
+
+```typescript
+// regionalPopulations.ts:716-721
+if (isNaN(newPopulation) || newPopulation < 0) {
+  console.warn(`⚠️  Regional population calculation produced ${newPopulation}...`);
+  region.population = Math.max(0, previousPopulation * 0.99);
+}
+```
+
+**Assessment:** This is a legitimate UI/stability fallback at the END of calculations (after validation). The input validations earlier in the function should catch NaN before this point.
+
+---
+
+### 4. COMPLEXITY / MAINTAINABILITY
+
+**Status: ⚠️ 2 MEDIUM ISSUES**
+
+**MEDIUM-2: Dynamic require() Pattern Proliferation**
+
+Found 50+ instances of dynamic `require()` in simulation code. Examples:
+- `regionalPopulations.ts:470,513,640` - imports from BaselineMortalityPhase
+- `planetaryBoundaries.ts` - 11 dynamic requires
+- `organizationManagement.ts` - 14 dynamic requires
+- `outcomes.ts` - 6 dynamic requires
+
+**Issues with this pattern:**
+1. Breaks static analysis and tree-shaking
+2. Circular dependency risk (though none detected currently)
+3. Runtime import overhead (minor but non-zero)
+4. Makes dependency graph opaque
+
+**Root cause:** Appears to be used to avoid circular imports between tightly coupled modules.
+
+**Recommendation:** For next major refactor, consider:
+- Extracting shared types/interfaces to dedicated modules
+- Using dependency injection pattern for cross-phase communication
+- Creating a central "shared utilities" module
+
+---
+
+**MEDIUM-3: Historical Mode Guard Duplication**
+
+The unified `isHistoricalModeActive()` is a good improvement, but the historical mode pattern is now checked **73 times** across 20 files:
+
+```
+src/simulation/regionalPopulations.ts:12 occurrences
+src/simulation/planetaryBoundaries.ts:11 occurrences
+src/simulation/geoengineering.ts:5 occurrences
+src/simulation/engine/phases/BaselineMortalityPhase.ts:4 occurrences
+...and 16 more files
+```
+
+**Issue:** Each call site has its own logic for "what to do in historical mode" - some skip entirely, some apply different parameters, some use empirical data.
+
+**Risk:** If historical mode semantics need to change, 73 call sites may need review.
+
+**Recommendation:** Consider a higher-level abstraction:
+- Create mode-aware parameter providers: `getDeathRate(state)` that internally handles historical vs projection mode
+- Or use a strategy pattern where each phase selects its historical vs projection behavior once at construction
+
+---
+
+### 5. RECENT CHANGES IMPACT
+
+**Status: ✅ NO BREAKING CHANGES**
+
+**Integration review findings:**
+- Phase ordering unchanged (BaselineMortalityPhase at 34.8, PlanetaryBoundariesPhase at 21.0)
+- No new phase dependencies introduced
+- Type definitions stable (no changes to core GameState interface)
+- Historical initialization path unchanged
+
+**Verified compatibility:**
+- Hindcast validation: ✅ Runs without crashes
+- God mode verification: ✅ Determinism intact
+- Type checking: ✅ No new errors
+
+---
+
+## Severity Summary
+
+| Priority | Count | Details |
+|----------|-------|---------|
+| CRITICAL | 0 | None |
+| HIGH | 0 | All HIGH items resolved in last 24h |
+| MEDIUM | 3 | M-1: Dual biodiversity mechanism, M-2: Dynamic requires, M-3: Historical mode duplication |
+| LOW | 0 | None actionable |
+
+---
+
+## Overall Health Assessment
+
+**OVERALL_HEALTH: GOOD**
+
+**Rationale:**
+1. No CRITICAL or HIGH issues found
+2. CRITICAL-1 fix (unified historical mode) significantly improved codebase consistency
+3. Biodiversity calibration (HIGH-8) now within 2% of target
+4. Determinism verified at CV=0.000%
+5. No performance regressions introduced
+
+**Remaining technical debt (MEDIUM priority):**
+- Dynamic require() patterns should be refactored in next major release
+- Dual biodiversity decline mechanisms should be consolidated
+- Historical mode guards could benefit from higher-level abstraction
+
+**System trajectory:** 🟢 **STABLE** - Good architectural hygiene, consistent improvements over past 48h
+
+---
+
+## Recommendations for Next Session
+
+1. **Audit `updateEnvironmentalAccumulation()` callsites** - Determine if biodiversity decline is double-applied
+2. **Document dynamic require() rationale** - If circular dependency prevention, note it; if legacy, plan migration
+3. **Consider mode-aware parameter providers** - Reduce 73 `isHistoricalModeActive()` calls to ~10 strategic providers
+
+---
+
+CRITICAL_ISSUES: 0
+HIGH_ISSUES: 0
+OVERALL_HEALTH: GOOD

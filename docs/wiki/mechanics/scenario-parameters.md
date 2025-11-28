@@ -270,6 +270,84 @@ const state = await createHistoricalInitialState({
 
 📄 **Full report:** `reviews/climate_hindcast_validation_20251126.md`
 
+### Historical Mode Implementation (Nov 27, 2025)
+
+**Problem:** Phase 10 hindcast validation revealed systematic calibration issues:
+- Temperature: +64% error (2.1°C vs 1.28°C actual)
+- Population: -76% error (2.0B vs 8.1B actual)
+- Biodiversity: -95% error (0.03 vs 0.49 actual)
+- Non-determinism: CV=6.7% (target <0.1%)
+
+**Root Cause:** Simulation calibrated for CRISIS scenarios (nuclear winter, famine cascades), but 1990-2024 was a BASELINE growth period.
+
+**Solution:** Add `historicalMode` flag to SimulationConfig to disable/dampen crisis systems during hindcasting.
+
+#### Historical Validation Targets
+
+| Metric | 2024 Target | Error Threshold | Source |
+|--------|-------------|-----------------|--------|
+| Temperature | 1.28°C | ±10% | NASA GISS |
+| Population | 8.12B | ±10% | UN WPP 2024 |
+| CO2 | 424.6 ppm | ±5% | NOAA Mauna Loa |
+| Biodiversity | 0.49 | ±20% | WWF LPI 2024 |
+
+#### Crisis Systems Requiring Adjustment
+
+**Status (Nov 27, 2025 - commit af9eff2):** 6 mortality/demographic phases updated to use `historicalMode` flag.
+Population error improved from -76% to -25.5%. See `logs/hindcast/high7_mortality_fix_20251127_170638.log`.
+
+**Phases now using `historicalMode` flag:**
+1. ✅ **BaselineMortalityPhase** - Check `historicalMode` before applying crisis mortality
+2. ✅ **BayesianMortalityResolutionPhase** - Dampen Bayesian escalation in historical mode
+3. ✅ **FamineSystemPhase** - Disable crisis cascades during historical period
+4. ✅ **FoodSecurityDegradationPhase** - Use empirical food security in historical mode
+5. ✅ **HumanSurvivalSystemPhase** - Apply historical mode to health systems
+6. ✅ **regionalPopulations.ts** - Use `historicalMode` flag (3 locations)
+
+**Phases still needing adjustment:**
+1. **ExogenousShockPhase** - Disable nuclear/asteroid events, cap mortality at 10M per event
+2. **BiodiversityPhase** - Dampen decline to 0.74%/year (matches LPI 2024) - HIGH-8, still 91% error
+3. **ClimateSystemPhase** - Verify ECS=3.0°C, fix temperature anticorrelation
+4. **ResourceDepletionPhase** - Dampen oil depletion → GDP collapse feedback
+
+#### Implementation Pattern
+
+```typescript
+// Use centralized utility (src/simulation/utils/historicalMode.ts)
+import { isHistoricalModeActive, isHistoricalEmissionsModeActive } from '@/simulation/utils/historicalMode';
+
+// Each phase checks via utility - config-driven end year, single source of truth
+export function phaseFunction(state: GameState, rng: () => number): void {
+  if (isHistoricalModeActive(state)) {
+    // Historical calibration (baseline growth, 1990-2024)
+    return { events: [] }; // Skip crisis systems during hindcast
+  }
+  // Crisis calibration (current behavior)
+}
+
+// For historical emissions forcing (bypass endogenous model)
+if (isHistoricalEmissionsModeActive(state)) {
+  // Use empirical Global Carbon Project data
+}
+```
+
+**Historical mode flags (Nov 27-28, 2025):**
+
+There are **two parallel mechanisms** for historical/hindcast mode:
+
+1. **`config.historicalMode`** (boolean) - Set directly by `createHistoricalInitialState()` for years 1990-2024
+   - Used by: `environmental.ts` (biodiversity), `planetaryBoundaries.ts`, `geoengineering.ts`, `regionalPopulations.ts`
+   - ⚠️ **Nov 28 fix (5a78f20):** `environmental.ts` was checking wrong flag; now consistently uses `historicalMode`
+
+2. **`isHistoricalModeActive(state)`** (utility function) - Checks `scenarioMode === 'historical' && currentYear <= endYear`
+   - Used by: Phases checking `scenarioMode` string for crisis parameter variants
+   - **`isHistoricalEmissionsModeActive(state)`** - Checks `historicalEmissionsMode` flag for emissions forcing
+
+**Best practice:** For new hindcast calibration code, use `config.historicalMode` directly (aligns with majority of calibration code).
+
+📄 **Full research:** `research/historical_mode_parameters_20251127.md`
+📄 **Architecture review:** `reviews/architecture_review_historical_calibration_20251127.md` (H-1 fix)
+
 ### Monte Carlo Analysis
 
 **Recommended approach:** Run 50% historical, 50% unprecedented to show range of outcomes

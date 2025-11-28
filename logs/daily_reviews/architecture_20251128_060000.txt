@@ -1,0 +1,68 @@
+# Daily Architecture Review - November 28, 2025
+
+## Summary of Changes Reviewed
+
+Reviewed **95+ commits** from Nov 27-28, 2025 covering major work:
+- **CRITICAL-1**: Unified historical mode detection pattern (17 violations fixed across 10 files)
+- **HIGH-8**: Biodiversity calibration (77.3% → 1.2% error)
+- **HIGH-6/7**: Temperature/population calibration (downgraded to MEDIUM)
+- **HIGH-9**: Determinism investigation (closed as FALSE ALARM, CV=0.000%)
+
+---
+
+## CRITICAL Issues: 0
+
+No critical issues found.
+
+---
+
+## HIGH Priority Issues: 0
+
+All HIGH items from previous reviews have been resolved in the last 24 hours.
+
+---
+
+## MEDIUM Concerns: 3
+
+### M-1: Dual Biodiversity Decline Mechanisms
+**Location**: `PlanetaryBoundariesPhase.ts:143-182` AND `environmental.ts:308-387`
+
+Biodiversity decline logic exists in two places. The HIGH-8 fix added decline to PlanetaryBoundariesPhase because "no phase was applying monthly biodiversity decline," but environmental.ts already had this logic. Currently safe (environmental.ts may be dead code for historical mode), but risk of 2x decline rate in projection mode if both paths execute.
+
+**Recommendation**: Audit whether `updateEnvironmentalAccumulation()` is called from any phase.
+
+### M-2: Dynamic require() Pattern Proliferation
+**Location**: 50+ instances across simulation code
+
+Dynamic `require()` used extensively (14 in organizationManagement.ts, 11 in planetaryBoundaries.ts, etc.) to avoid circular imports. Breaks static analysis, makes dependency graph opaque, minor runtime overhead.
+
+**Recommendation**: Consider dependency injection or dedicated shared utilities module in next refactor.
+
+### M-3: Historical Mode Guard Duplication
+**Location**: 73 occurrences across 20 files
+
+The `isHistoricalModeActive()` utility is good, but each of 73 call sites has its own logic for "what to do in historical mode." If semantics change, all sites need review.
+
+**Recommendation**: Create mode-aware parameter providers (e.g., `getDeathRate(state)` handles mode internally).
+
+---
+
+## Overall Health Assessment
+
+| Aspect | Status |
+|--------|--------|
+| Performance | ✅ No O(n²) or hot-path issues |
+| State Propagation | ⚠️ 1 MEDIUM (dual biodiversity mechanism) |
+| NaN Handling | ✅ Improved (unified assertions) |
+| Complexity | ⚠️ 2 MEDIUM (dynamic requires, mode guards) |
+| Breaking Changes | ✅ None |
+
+**System Trajectory**: 🟢 **STABLE** - Good architectural hygiene, consistent improvements
+
+---
+
+```
+CRITICAL_ISSUES: 0
+HIGH_ISSUES: 0
+OVERALL_HEALTH: GOOD
+```

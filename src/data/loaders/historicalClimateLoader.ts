@@ -52,7 +52,7 @@ export interface AnnualClimateData {
    * Source: NASA GISS GISTEMP v4
    * Baseline: 1951-1980 average = 0
    * 1990 value: ~0.45C
-   * 2024 value: ~1.45C (record)
+   * 2024 value: ~1.28C (record - warmest year on record)
    */
   temperatureAnomalyC: number;
 
@@ -171,7 +171,7 @@ const HISTORICAL_CLIMATE_DATA: AnnualClimateData[] = [
   { year: 2021, co2Ppm: 416.45, temperatureAnomalyC: 0.84, emissionsMtCO2: 36230, seaLevelMm: 118, arcticIceMinKm2: 4.72, dataQuality: 'actual' },
   { year: 2022, co2Ppm: 418.56, temperatureAnomalyC: 0.89, emissionsMtCO2: 36680, seaLevelMm: 122, arcticIceMinKm2: 4.87, dataQuality: 'actual' },
   { year: 2023, co2Ppm: 421.93, temperatureAnomalyC: 1.17, emissionsMtCO2: 36800, seaLevelMm: 126, arcticIceMinKm2: 4.23, dataQuality: 'actual' },
-  { year: 2024, co2Ppm: 426.00, temperatureAnomalyC: 1.45, emissionsMtCO2: 37000, seaLevelMm: 130, arcticIceMinKm2: 4.28, dataQuality: 'estimated' },
+  { year: 2024, co2Ppm: 426.00, temperatureAnomalyC: 1.28, emissionsMtCO2: 37000, seaLevelMm: 130, arcticIceMinKm2: 4.28, dataQuality: 'actual' },
 ];
 
 // Cache file path

@@ -1,186 +1,186 @@
 [
   {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/capabilities.ts",
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/capabilities.ts",
     "line": 53,
     "name": "initializeCapabilityProfile",
     "doc": "Initializes capability profile with default or specified values."
   },
   {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/conflictResolution.ts",
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/conflictResolution.ts",
     "line": 51,
     "name": "initializeConflictResolution",
     "doc": "Initializes conflict resolution with default or specified values."
   },
   {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/defensiveAI.ts",
     "line": 30,
     "name": "initializeDefensiveAI",
     "doc": "Initializes defensive a i with default or specified values."
   },
   {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/defensiveAI.ts",
     "line": 117,
     "name": "checkDefensiveAITriggers",
     "doc": "Detects defensive a i triggers conditions and triggers appropriate responses."
   },
   {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/defensiveAI.ts",
     "line": 206,
     "name": "attemptDefensiveAIDeployment",
     "doc": "attemptDefensiveAIDeployment implementation. See defensiveAI.ts for details."
   },
   {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/defensiveAI.ts",
     "line": 296,
     "name": "updateDefensiveAI",
     "doc": "Updates defensive a i based on current state and modifiers."
   },
   {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/defensiveAI.ts",
     "line": 989,
     "name": "applyDefensiveAIToMAD",
     "doc": "Applies defensive a i to m a d effects to game state."
   },
   {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/diagnostics.ts",
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/diagnostics.ts",
     "line": 751,
     "name": "analyzeDeterminism",
     "doc": "analyzeDeterminism implementation. See diagnostics.ts for details."
   },
   {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/diplomaticAI.ts",
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/diplomaticAI.ts",
     "line": 65,
     "name": "initializeDiplomaticAI",
     "doc": "Initializes diplomatic a i with default or specified values."
   },
   {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/endGame.ts",
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/endGame.ts",
     "line": 149,
     "name": "enterEndGame",
     "doc": "enterEndGame implementation. See endGame.ts for details."
   },
   {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/geoengineering.ts",
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/geoengineering.ts",
     "line": 47,
     "name": "updateGeoengineering",
     "doc": "Updates geoengineering based on current state and modifiers."
   },
   {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/governanceQuality.ts",
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/governanceQuality.ts",
     "line": 22,
     "name": "initializeGovernanceQuality",
     "doc": "Initializes governance quality with default or specified values."
   },
   {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/historicalInitialization.ts",
-    "line": 558,
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts",
+    "line": 600,
     "name": "createParameterLockdown",
     "doc": "Initializes parameter lockdown with default or specified values."
   },
   {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/meaningRenaissance.ts",
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/meaningRenaissance.ts",
     "line": 51,
     "name": "initializeMeaningRenaissance",
     "doc": "Initializes meaning renaissance with default or specified values."
   },
   {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/resourceDepletion.ts",
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceDepletion.ts",
     "line": 43,
     "name": "updateResourceEconomy",
     "doc": "Updates resource economy based on current state and modifiers."
   },
   {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/resourceEconomy.ts",
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceEconomy.ts",
     "line": 35,
     "name": "initializeResourceEconomy",
     "doc": "Initializes resource economy with default or specified values."
   },
   {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/resourceTechnology.ts",
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceTechnology.ts",
     "line": 23,
     "name": "applyTechnologyToResources",
     "doc": "Applies technology to resources effects to game state."
   },
   {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/resourceTechnology.ts",
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/resourceTechnology.ts",
     "line": 366,
     "name": "applyIndustryOppositionToTech",
     "doc": "Applies industry opposition to tech effects to game state."
   },
   {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/socialInfluence.ts",
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialInfluence.ts",
     "line": 120,
     "name": "initializeSocialInfluence",
     "doc": "Initializes social influence with default or specified values."
   },
   {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/socialInfluence.ts",
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialInfluence.ts",
     "line": 166,
     "name": "calculateVoiceAdoption",
     "doc": "Calculates voice adoption from state variables and parameters. Returns numeric value."
   },
   {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/socialInfluence.ts",
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/socialInfluence.ts",
     "line": 361,
     "name": "decayDetectionRisk",
     "doc": "decayDetectionRisk for social cohesion and trust dynamics."
   },
   {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/comprehensiveTechTree.ts",
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/techTree/comprehensiveTechTree.ts",
     "line": 3196,
     "name": "getAllTech",
     "doc": " Returns array of results."
   },
   {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/technologicalRisk.ts",
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/technologicalRisk.ts",
     "line": 14,
     "name": "initializeTechnologicalRisk",
     "doc": "Initializes technological risk with default or specified values."
   },
   {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/technologicalRisk.ts",
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/technologicalRisk.ts",
     "line": 26,
     "name": "updateTechnologicalRisk",
     "doc": "Updates technological risk based on current state and modifiers."
   },
   {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/technologicalRisk.ts",
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/technologicalRisk.ts",
     "line": 250,
     "name": "getTechnologicalSafety",
     "doc": "getTechnologicalSafety for technology tree management. Returns numeric value."
   },
   {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/technologicalRisk.ts",
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/technologicalRisk.ts",
     "line": 259,
     "name": "hasTechnologicalCrisis",
     "doc": "Evaluates crisis/catastrophe conditions and triggers appropriate cascades. Returns true if condition met."
   },
   {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/thresholds/tier1Config.ts",
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/tier1Config.ts",
     "line": 129,
     "name": "sampleResearchBackedThresholds",
     "doc": "Checks threshold conditions and triggers state transitions."
   },
   {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/thresholds/tier2Config.ts",
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/tier2Config.ts",
     "line": 167,
     "name": "sampleHistoricalThresholds",
     "doc": "Checks threshold conditions and triggers state transitions."
   },
   {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/thresholds/tier2InterventionConfig.ts",
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/tier2InterventionConfig.ts",
     "line": 499,
     "name": "sampleTier2InterventionParameters",
     "doc": "sampleTier2InterventionParameters implementation. See tier2InterventionConfig.ts for details."
   },
   {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/upwardSpirals.ts",
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/upwardSpirals.ts",
     "line": 50,
     "name": "initializeUpwardSpirals",
     "doc": "Initializes upward spirals with default or specified values."
   },
   {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/utils/stateValidation.ts",
+    "file": "/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/stateValidation.ts",
     "line": 48,
     "name": "resetValidationContext",
     "doc": "resetValidationContext implementation. See stateValidation.ts for details."

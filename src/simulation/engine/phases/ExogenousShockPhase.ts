@@ -29,6 +29,7 @@ import {
 } from '@/simulation/utils/assertions';
 import { addMortalityRisk } from '@/simulation/bayesianMortality';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { isHistoricalModeActive } from '@/simulation/utils/historicalMode';
 
 /**
  * CRITICAL FIX (Nov 8, 2025): Round capabilities to discrete levels [0-5]
@@ -1232,7 +1233,7 @@ export class ExogenousShockPhase implements SimulationPhase {
 
     // Historical mode: Skip random exogenous shocks - we model actual historical events only
     // Research simulations should compare to real history, not random alternative timelines
-    if (state.config.scenarioMode === 'historical') {
+    if (isHistoricalModeActive(state)) {
       // TODO: Could add ACTUAL historical events here (Gulf War 1990-1991, 9/11 2001, etc.)
       // For now, skip random shock generation entirely
       console.log(`[ExogenousShockPhase] Skipping random shocks in historical mode (month ${state.currentMonth})`);
@@ -1249,6 +1250,56 @@ export class ExogenousShockPhase implements SimulationPhase {
       month: state.currentMonth,
       additionalInfo: { expectedSource: 'BifurcationLogicPhase (order 4.5)' }
     });
+
+    // HISTORICAL MODE (Nov 27, 2025): Dampen crisis systems for hindcast validation
+    // Research: research/historical_mode_parameters_20251127.md
+    // Root cause: Crisis-calibrated systems produce massive errors on baseline period (1990-2024)
+    // CRITICAL-1 FIX (Nov 28, 2025): Unified historical mode detection via isHistoricalModeActive()
+    // Solution: Disable extreme shocks (nuclear/asteroid), reduce gray swan frequency by 90%
+    if (isHistoricalModeActive(state)) {
+      console.log(`[ExogenousShockPhase] Historical dampening active (month ${state.currentMonth})`);
+
+      // BLACK SWAN: DISABLED in historical mode (no nuclear war or asteroids in 1990-2024)
+      // These are too extreme for baseline validation period
+
+      // GRAY SWAN: Reduced by 90% (0.01 → 0.001 per month)
+      // Allows some economic/political shocks but at realistic historical frequency
+      const graySwanProb = assertProbability(0.001 * varianceAmp, {
+        location: 'ExogenousShockPhase.execute (historicalMode)',
+        valueName: 'graySwanProb',
+        month: state.currentMonth
+      }); // 90% reduction
+
+      if (rng() < graySwanProb) {
+        // Only financial crashes and political upheavals allowed in historical mode
+        // (no regional wars - those distort population trajectories)
+        const graySwans = [
+          ShockType.FINANCIAL_CRASH,
+          ShockType.POLITICAL_UPHEAVAL,
+        ];
+
+        const index = Math.floor(rng() * graySwans.length);
+        const shock = graySwans[index];
+        events.push(...applyExogenousShock(state, shock, rng));
+
+        return {
+          events,
+          metadata: {
+            shockTriggered: shock,
+            severity: 'major-recoverable',
+            historicalDampening: true,
+          },
+        };
+      }
+
+      return {
+        events: [],
+        metadata: {
+          shockTriggered: null,
+          historicalDampening: true,
+        },
+      };
+    }
 
     // BLACK SWAN: 0.1% per month (~1% per year) × bifurcation amplification
     // Near collapse thresholds: 10× more likely (models critical instability)

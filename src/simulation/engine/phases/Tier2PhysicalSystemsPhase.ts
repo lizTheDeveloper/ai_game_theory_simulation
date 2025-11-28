@@ -32,6 +32,7 @@ import {
   assertProbability
 } from '@/simulation/utils/assertions';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { isHistoricalModeActive } from '@/simulation/utils/historicalMode';
 
 export class Tier2PhysicalSystemsPhase implements SimulationPhase {
   readonly id = 'tier2_physical_systems';
@@ -328,7 +329,11 @@ export class Tier2PhysicalSystemsPhase implements SimulationPhase {
 
       ecosystemState.keystoneSpeciesProtected = Math.floor(ecosystemState.activePrograms * 0.60);
 
-      if (state.environmentalAccumulation.biodiversityIndex !== undefined) {
+      // HIGH-8 (Nov 28, 2025): Historical mode guard - biodiversity recovery only for future projections
+      // HIGH-1 FIX (Nov 28, 2025): Use isHistoricalModeActive() instead of unreliable config field
+      const isHistoricalMode = isHistoricalModeActive(state);
+
+      if (!isHistoricalMode && state.environmentalAccumulation.biodiversityIndex !== undefined) {
         const SAFE_BIODIVERSITY = 0.70;
         const currentBiodiversity = state.environmentalAccumulation.biodiversityIndex;
 
