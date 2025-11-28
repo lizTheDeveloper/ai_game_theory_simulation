@@ -65,13 +65,15 @@ export function initializeEnvironmentalAccumulation(rng: () => number): Environm
   const clampedClimateStability = Math.max(0.65, Math.min(0.85, climateStability));
 
   // DEBUG (BUG #3): Log stochastic initialization at month 0
-  console.log(`🔍 ENV INIT: reserves=${clampedResourceReserves.toFixed(3)}, pollution=${clampedPollutionLevel.toFixed(3)}, climate=${clampedClimateStability.toFixed(3)}`);
+  console.log(`🔍 ENV INIT (Month 0): reserves=${clampedResourceReserves.toFixed(3)}, pollution=${clampedPollutionLevel.toFixed(3)}, climate=${clampedClimateStability.toFixed(3)}, biodiversity=0.49`);
 
   return {
     resourceReserves: clampedResourceReserves,
     pollutionLevel: clampedPollutionLevel,
     climateStability: clampedClimateStability,
-    biodiversityIndex: 0.35,      // Keep deterministic - biodiversity tracked via boundary system
+    biodiversityIndex: 0.49,      // WWF Living Planet Index 2024 (49% of 1970 baseline)
+                                   // Research: research/verification_b15e5a5_20251127.md
+                                   // Keep deterministic - biodiversity tracked via boundary system
 
     // Pollution Prevention Factor (Oct 27, 2025)
     // Research: Baseline 2025 = current regulations (EPA standards, EU REACH)
@@ -292,6 +294,17 @@ export function updateEnvironmentalAccumulation(
   
   // Natural stabilization (very slow)
   const naturalStabilization = 0.001; // 0.1% per month
+
+  // DEBUG (Nov 28, 2025): Log climate degradation at Month 1
+  if (state.currentMonth === 0 || state.currentMonth === 1) {
+    console.log(`🔍 MONTH ${state.currentMonth} CLIMATE DEGRADATION DEBUG:`);
+    console.log(`   energyUsage: ${energyUsage.toFixed(6)}`);
+    console.log(`   baseClimateRate: ${baseClimateRate.toFixed(6)}`);
+    console.log(`   climateDegradationRate: ${climateDegradationRate.toFixed(6)}`);
+    console.log(`   currentClimateStability (BEFORE update): ${env.climateStability.toFixed(6)}`);
+    console.log(`   naturalStabilization: ${naturalStabilization.toFixed(6)}`);
+    console.log(`   netChange: ${(-climateDegradationRate + naturalStabilization).toFixed(6)}`);
+  }
 
   // Detect NaN before calculation - fail loudly
   // Apply climate degradation (with FLOORS.GEOMETRIC_MEAN_FLOOR to prevent exactly 0, which breaks geometric means)
