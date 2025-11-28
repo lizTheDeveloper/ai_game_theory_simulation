@@ -20,7 +20,7 @@ import {
   detectCrisis,
   determineActualOutcome,
   updateGoldenAgeState,  // Phase: Golden Age & Accumulation Systems
-  updateEnvironmentalAccumulation,  // Phase 2: Environmental Accumulation
+  // updateEnvironmentalAccumulation - REMOVED (Nov 28, 2025): Migrated to PlanetaryBoundariesPhase (HIGH-11 fix)
   updateSocialAccumulation,  // Phase 3: Social Cohesion
   updateTechnologicalRisk  // Phase 4: Technological Risk
 } from './calculations';
@@ -969,15 +969,16 @@ export class SimulationEngine {
       // Phase: Golden Age & Accumulation Systems
       // Update Golden Age state each month (tracks entry/exit/duration)
       updateGoldenAgeState(state, month);
-      
+
       // Phase 2: Environmental Accumulation
-      // Track environmental debt from production/growth
-      updateEnvironmentalAccumulation(state, rng);
-      
+      // MIGRATED TO PHASE: PlanetaryBoundariesPhase (order 21.0) now calls updateEnvironmentalAccumulation()
+      // CRITICAL FIX (Nov 28, 2025): Removed duplicate call - was causing 2x biodiversity decline, 2x pollution, 2x resource depletion
+      // See: HIGH-11 architecture review
+
       // Phase 3: Social Cohesion & Meaning Crisis
       // Track psychological and social costs from automation
       updateSocialAccumulation(state, rng);
-      
+
       // Phase 4: Technological Risk Accumulation
       // Track AI safety debt and complacency
       updateTechnologicalRisk(state);
