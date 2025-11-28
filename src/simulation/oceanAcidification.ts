@@ -38,7 +38,7 @@ export function initializeOceanAcidificationSystem(rng?: () => number): OceanAci
   return {
     // Research-backed fields (RD-2 Nov 28 2025)
     aragoniteSaturation: 2.8,        // Current (2025): 2.8-3.3, down from 4.6 pre-industrial
-    pH: 7.95,                        // Current (2025): 7.95 (above cascade threshold, allows grace period)
+    pH: 7.95,                        // Current (2025): 7.95 (CALIBRATION: above cascade threshold, allows grace period)
     pHLevel: 0.96,                   // LEGACY: Slight decline from pre-industrial 8.2
     co2AbsorptionCapacity: 0.85,     // Still strong but declining
     coralReefHealth: 70,             // 70% (30% degradation from baseline)
@@ -84,7 +84,7 @@ export function initializeOceanAcidificationSystem(rng?: () => number): OceanAci
     },
     economicValueAtRisk: 100,       // $100B/year baseline (conservative)
     populationDependent: 350,       // 350M people (midpoint 330-500M)
-    pHHistory: [7.95],              // Historical tracking (Month 0)
+    pHHistory: [7.95],              // Historical tracking (Month 0) - CALIBRATION: matches initial pH
     coralHealthHistory: [70],       // Historical tracking (Month 0)
 
     // Existing fields
@@ -151,7 +151,7 @@ export function updateOceanAcidificationSystem(state: GameState, rng: () => numb
   // === pH DECLINE (SSP Scenario-Based) ===
   // Research: Jiang et al. (2023), IPCC AR6
   // Monthly rates from RCP/SSP projections (2025-2100, 900 months)
-  // CALIBRATION (Nov 28, 2025): Reduced by 50% to match research timelines
+  // CALIBRATION (Nov 28, 2025): Reduced by 50% + capped SSP3/SSP5 to match research timelines
 
   const pH_DECLINE_RATE_PER_MONTH = {
     SSP1_1_9: -0.000005,  // Was -0.00001 → 50% reduction
@@ -249,8 +249,14 @@ export function updateOceanAcidificationSystem(state: GameState, rng: () => numb
     coralDeclineRate = -0.1;      // Mild: -0.1%/month
   }
 
-  // Apply species sensitivity multiplier (0.3-1.5 range)
-  coralDeclineRate *= oa.speciesSensitivity;
+  // Store base decline rate before applying multipliers
+  const baseDeclineRate = coralDeclineRate;
+
+  // === COMPOUND MULTIPLIER CALCULATION ===
+  // CALIBRATION (Nov 28, 2025): Cap total multipliers at 3x to prevent runaway compounding
+
+  // Apply species sensitivity multiplier (0.8-1.2 range)
+  let compoundMultiplier = oa.speciesSensitivity;
 
   // === WARMING SYNERGY (Compound Stress) ===
   // Research: Anthony et al. (2008) - Warming + acidification = synergistic (2-3x)
@@ -260,21 +266,29 @@ export function updateOceanAcidificationSystem(state: GameState, rng: () => numb
   const baselineSST = 27.0;
   const estimatedSST = baselineSST + temperatureAnomaly;
 
+  let warmingSynergy = 1.0;
   if (estimatedSST > 31.5 && oa.pH < 7.9) {
-    coralDeclineRate *= 3.0;  // Severe synergy
+    warmingSynergy = 3.0;  // Severe synergy
     console.log(`🌡️🪸 Synergistic coral stress (SST ${estimatedSST.toFixed(1)}°C, pH ${oa.pH.toFixed(2)}): 3× multiplier`);
   } else if (estimatedSST > 30.0 && oa.pH < 7.9) {
-    coralDeclineRate *= 2.0;  // Moderate synergy
+    warmingSynergy = 2.0;  // Moderate synergy
   }
+  compoundMultiplier *= warmingSynergy;
 
   // Climate stress accelerates (heat + acid = double hit)
   const climateStressMultiplier = 1.0 + (1.0 - climateStability) * 0.5;
-  coralDeclineRate *= climateStressMultiplier;
+  compoundMultiplier *= climateStressMultiplier;
 
-  // Coral restoration helps
+  // CAP at 3x to prevent unrealistic compound effects
+  compoundMultiplier = Math.min(compoundMultiplier, 3.0);
+
+  // Apply capped compound multiplier
+  coralDeclineRate = baseDeclineRate * compoundMultiplier;
+
+  // Coral restoration helps (applied AFTER cap)
   coralDeclineRate *= (1.0 - oa.coralRestorationDeployment * 0.4);
 
-  // Protected areas help
+  // Protected areas help (applied AFTER cap)
   coralDeclineRate *= (1.0 - oa.marineProtectedAreasDeployment * 0.3);
 
   // HIGH-1 FIX (Nov 28, 2025): Removed duplicate coral health calculation
@@ -350,9 +364,9 @@ export function updateOceanAcidificationSystem(state: GameState, rng: () => numb
   }
 
   // === COASTAL FISHERIES YIELD (Power Law) ===
-  // Research: Exponential decline (coralHealth/100)^1.2 (calibrated Nov 28, 2025)
+  // Research: Exponential decline (coralHealth/100)^1.2
   // Species composition factor: resistant species maintain higher yields
-  // CALIBRATION: Reduced exponent from 1.5 to 1.2 (gentler decline curve)
+  // CALIBRATION (Nov 28, 2025): Reduced exponent from 1.5 to 1.2 (gentler decline curve)
 
   const speciesCompositionFactor = 0.7 + (0.6 * (1.0 - oa.speciesSensitivity));  // More resistant = higher yield
   const baseFisheriesYield = Math.pow(oa.coralReefHealth / 100, 1.2);

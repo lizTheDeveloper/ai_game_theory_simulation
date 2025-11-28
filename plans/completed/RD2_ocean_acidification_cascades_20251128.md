@@ -150,14 +150,103 @@ Implemented comprehensive ocean acidification cascade system modeling 7th planet
 
 ---
 
-## Production Readiness Assessment
+## Implementation Details
 
-**Code Quality:** ✅ A- (excellent defensive coding, research-backed)
-**Architecture:** ✅ A- (HIGH issues resolved, state propagation correct)
-**Research:** ✅ A- (conservative estimates, 21 sources)
-**Testing:** ⚠️ INCOMPLETE (Monte Carlo validation pending)
+### State Structure
 
-**Conditional Approval:** Implementation ready for Monte Carlo validation. If validation passes, PRODUCTION READY. If validation fails (extinctions, unrealistic trajectories), apply CRITICAL-1 recommendations and re-validate.
+```typescript
+interface OceanAcidificationSystem {
+  // Core metrics
+  pH: number;                          // Current surface pH (7.68-8.1)
+  pHLevel: number;                     // LEGACY: 0-1 normalized
+  co2AbsorptionCapacity: number;       // 0-1 (1 = pre-industrial)
+  aragoniteSaturation: number;         // Ωar (2.0-4.6)
+  coralReefHealth: number;             // 0-100% (global aggregate)
+
+  // Cascade state
+  cascadeActive: boolean;              // pH < 7.9 triggers
+
+  // Regional tracking (RD-2)
+  regionalCoralHealth: {
+    seAsia: number;                    // 0-100%
+    pacificIslands: number;
+    caribbean: number;
+    indianOcean: number;
+  };
+
+  regionalCascades: {
+    seAsia: CascadeState;              // Stage tracking per region
+    pacificIslands: CascadeState;
+    caribbean: CascadeState;
+    indianOcean: CascadeState;
+  };
+
+  // Economic/population impacts
+  shellfishIndustryViability: number;  // 0-1
+  fishDependentPopulation: number;     // Billions at risk
+  economicDamage: number;              // $/year from cascades
+
+  // History tracking
+  pHHistory: number[];                 // Monthly pH values
+  coralHealthHistory: number[];        // Monthly coral health
+}
+```
+
+### Phase Execution Order
+
+**OceanAcidificationCascadePhase:** Order 21.8
+- **Dependencies:** resourceEconomy (17.0), climate data
+- **Reads:** CO2 levels, temperature, deployed technologies
+- **Writes:** oceanAcidificationSystem state, materialAbundance impacts
+- **Downstream:** Food security phases, population mortality
+
+### Research Parameters
+
+| Parameter | Value | Source | Confidence |
+|-----------|-------|--------|------------|
+| Pre-industrial pH | 8.1-8.2 | IPCC AR6 WG1 | Very High |
+| Current pH (2025) | 7.95 | Jiang et al. 2023 | High |
+| Moderate stress threshold | pH < 7.9 | NOAA, Anthony 2008 | High |
+| Severe stress threshold | pH < 7.8 | Bednaršek 2021 | Medium |
+| Collapse threshold | pH < 7.7 | Langdon 2003 | Medium |
+| Population at risk | 500M-1B | Hoegh-Guldberg 2019 | Medium (wide range) |
+| Economic value | $100-500B/year | Conservative estimate | Low (underestimate) |
+| Tipping point | 1.2°C ±0.3°C | Research synthesis | Medium |
+| Recovery threshold | ~1.0°C cooling | Derived from research | Low (speculative) |
+
+---
+
+## Known Issues & Follow-Up Work
+
+### CRITICAL: Monte Carlo Validation Required
+
+**Before Production Merge:**
+1. Run Monte Carlo validation (N ≥ 10)
+2. Verify no early extinctions (before month 360)
+3. Check cascade timing matches research expectations
+4. Validate pH/coral trajectories against SSP scenarios
+
+**If Validation Fails:**
+- Apply CRITICAL-1 recommendations from architecture review
+- Reduce decline rates by 30-50%
+- Add population floor (10M minimum)
+- Cap compound effect multipliers (3x max)
+
+### MEDIUM: Parameter Calibration
+
+**Fisheries Power Law:** (coralHealth/100)^1.5 may be too aggressive
+- Real-world shows more resilience (species substitution)
+- Recommendation: Change exponent to 1.2, add 20% yield floor
+
+**Regional Impact Propagation:** Regional impacts calculated but not differentiating population effects
+- Pacific Islands should suffer more than inland regions
+- Need regional vulnerability modifiers in mortality calculations
+
+### LOW: Documentation
+
+**Technology Integration:** Which techs affect ocean parameters not fully documented
+- Need tech tree cross-reference
+- Effectiveness ranges for restoration technologies
 
 ---
 
@@ -168,6 +257,37 @@ Implemented comprehensive ocean acidification cascade system modeling 7th planet
 3. **2d109499** - feat: RD-2 Ocean Acidification Cascades implementation
 4. **66ac20e6** - fix: Resolve HIGH-1 and HIGH-2 architecture issues in RD-2
 5. **eb7a2909** - docs: Add RD-2 Ocean Acidification Cascades to wiki
+
+---
+
+## Lessons Learned
+
+### Research Quality Gates Work
+
+Sylvia's critique identified overconfidence in economic estimates early, preventing unrealistic implementation. The revision process improved research quality from "optimistic projections" to "conservative mechanisms."
+
+### Architecture Review Caught Critical Bug
+
+Population extinction at month 388 would have been discovered in production without architecture review. The review process works - but only if recommendations are fully applied.
+
+### Partial Fixes Create Technical Debt
+
+HIGH-1 and HIGH-2 fully resolved, but CRITICAL-1 only partially addressed (pH adjustment only, decline rates and floors NOT fixed). This creates conditional approval status - implementation works architecturally, but parameters may still cause unrealistic outcomes.
+
+### Monte Carlo Validation is Non-Negotiable
+
+Architecture review found extinction issue through manual testing. Monte Carlo would have caught this earlier with statistical significance. Cannot skip validation step.
+
+---
+
+## Production Readiness Assessment
+
+**Code Quality:** ✅ A- (excellent defensive coding, research-backed)
+**Architecture:** ✅ A- (HIGH issues resolved, state propagation correct)
+**Research:** ✅ A- (conservative estimates, 21 sources)
+**Testing:** ⚠️ INCOMPLETE (Monte Carlo validation pending)
+
+**Conditional Approval:** Implementation ready for Monte Carlo validation. If validation passes, PRODUCTION READY. If validation fails (extinctions, unrealistic trajectories), apply CRITICAL-1 recommendations and re-validate.
 
 ---
 
