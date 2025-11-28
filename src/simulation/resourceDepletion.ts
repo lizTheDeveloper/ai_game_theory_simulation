@@ -1462,7 +1462,7 @@ function updateCO2System(state: GameState, resources: ResourceEconomy): void {
   //
   // After hindcast period ends (e.g., 2024+), switch to lagged equilibrium formula
   // with proper initialization from the 2024 observed temperature.
-  if (state.config?.scenarioMode === 'historical' && state.config?.startYear) {
+  if (isHistoricalModeActive(state) && state.config?.startYear) {
     // Calculate current year from simulation state
     const startYear = state.config.startYear;
     const monthsSinceStart = state.currentMonth;

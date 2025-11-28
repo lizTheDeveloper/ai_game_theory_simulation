@@ -1233,7 +1233,7 @@ export class ExogenousShockPhase implements SimulationPhase {
 
     // Historical mode: Skip random exogenous shocks - we model actual historical events only
     // Research simulations should compare to real history, not random alternative timelines
-    if (state.config.scenarioMode === 'historical') {
+    if (isHistoricalModeActive(state)) {
       // TODO: Could add ACTUAL historical events here (Gulf War 1990-1991, 9/11 2001, etc.)
       // For now, skip random shock generation entirely
       console.log(`[ExogenousShockPhase] Skipping random shocks in historical mode (month ${state.currentMonth})`);

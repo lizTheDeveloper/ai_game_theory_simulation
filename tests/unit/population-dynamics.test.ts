@@ -120,10 +120,10 @@ describe('Population Dynamics - Baseline Mortality Phase', () => {
   describe('Regional Historical Birth Rates', () => {
     test('should return region-specific CBR values', () => {
       const testCases = [
-        { region: 'Sub-Saharan Africa', year: 1990, minCBR: 45, maxCBR: 50 },
-        { region: 'East Asia', year: 1990, minCBR: 14, maxCBR: 16 },
-        { region: 'South Asia', year: 1990, minCBR: 29, maxCBR: 32 },
-        { region: 'Europe', year: 1990, minCBR: 12, maxCBR: 14 },
+        { region: 'Sub-Saharan Africa', year: 1990, minCBR: 50, maxCBR: 54 },
+        { region: 'East Asia', year: 1990, minCBR: 17, maxCBR: 18 },
+        { region: 'South Asia', year: 1990, minCBR: 32, maxCBR: 35 },
+        { region: 'Europe', year: 1990, minCBR: 13, maxCBR: 15 },
       ];
 
       for (const { region, year, minCBR, maxCBR } of testCases) {
@@ -334,8 +334,8 @@ describe('Population Dynamics - Regional Population System', () => {
       assert.ok(regionAfter, 'Region should still exist after update');
 
       // Birth rate should be from historical CBR, not calculated from fertility formula
-      // SSA 1990: 47.3/1000 CBR = 0.0473 = 4.73% annual
-      const expectedAnnualBirthRate = 0.0473; // SSA 1990
+      // SSA 1990: 52.0/1000 CBR = 0.0520 = 5.20% annual (UN WPP 2024)
+      const expectedAnnualBirthRate = 0.0520; // SSA 1990 (UN WPP 2024: 52.0/1000)
       const tolerance = 0.002;
       assert.ok(
         Math.abs(regionAfter.adjustedBirthRate - expectedAnnualBirthRate) < tolerance,
