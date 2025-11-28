@@ -191,9 +191,10 @@ export async function createHistoricalInitialState(
   // ============================================================================
   if (year >= 1970 && year <= 2024) {
     // Calculate biodiversity from 1970 baseline using WWF LPI trajectory
-    // LPI shows -1.02%/year average decline (73% over 54 years 1970-2024)
+    // LPI shows -51% decline from 1970-2024 (1.00 → 0.49 over 54 years)
+    // Annual rate: (0.49/1.00)^(1/54) = 0.9871 → 1.312%/year decline
     const yearsFrom1970 = year - 1970;
-    const ANNUAL_DECLINE_RATE = 0.0102; // 1.02%/year (WWF LPI 1970-2024)
+    const ANNUAL_DECLINE_RATE = 0.01312; // 1.312%/year (WWF LPI 1970-2024: 1.00 → 0.49)
     const biodiversityFromLPI = Math.pow(1 - ANNUAL_DECLINE_RATE, yearsFrom1970);
 
     if (baseState.environmentalAccumulation) {
@@ -702,9 +703,10 @@ export function initializeHistoricalSimulation(
   // ============================================================================
   if (year >= 1970 && year <= 2024) {
     // Calculate biodiversity from 1970 baseline using WWF LPI trajectory
-    // LPI shows -1.02%/year average decline (73% over 54 years 1970-2024)
+    // LPI shows -51% decline from 1970-2024 (1.00 → 0.49 over 54 years)
+    // Annual rate: (0.49/1.00)^(1/54) = 0.9871 → 1.312%/year decline
     const yearsFrom1970 = year - 1970;
-    const ANNUAL_DECLINE_RATE = 0.0102; // 1.02%/year (WWF LPI 1970-2024)
+    const ANNUAL_DECLINE_RATE = 0.01312; // 1.312%/year (WWF LPI 1970-2024: 1.00 → 0.49)
     const biodiversityFromLPI = Math.pow(1 - ANNUAL_DECLINE_RATE, yearsFrom1970);
 
     if (baseState.environmentalAccumulation) {

@@ -18,94 +18,63 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 ## 🚀 Project Status
 
-**🟢 STABLE** (November 27, 2025)
+**🟢 STABLE** (November 28, 2025)
 
 **SYSTEM HEALTH:**
-- **Research Quality:** A- (HIGH priority roadmap items validated Nov 27, 2025 - all Grade A-, 90-100% from 2024-2025 sources) ✅ EXCELLENT
-- **Research Currency:** ✅ EXCELLENT (all HIGH priority items validated Nov 27, autonomous system working effectively)
+- **Research Quality:** B+ (56.5% sources 2023-2025, 4 CRITICAL parameter issues resolved/documented, 8 research gaps identified) ✅ GOOD
+- **Research Currency:** ✅ EXCELLENT (all simulation-critical files updated within 14 days, autonomous system working effectively)
 - **Implementation Fidelity:** A- (assertion coverage 97.2%, 24 integration tests for CoordinatedDeploymentPhase) ✅ EXCELLENT
 - **Architecture Health:** B+ (0 CRITICAL, 2 HIGH technical debt non-urgent, deep clone optimization complete) ✅ GOOD
 - **System Trajectory:** 🟢 READY (Nov 26: Phase 4 Coordination Layer strategic pivot - testing coordinated deployment)
 
 **Recent Major Achievements:**
 
-**Nov 27: Historical Mode Utility + Architecture Review** (commit 123dcf3)
-- 🏗️ **H-1 Fix:** New `src/simulation/utils/historicalMode.ts` utility centralizes scattered historical mode checks
-- **Functions:** `isHistoricalModeActive()` and `isHistoricalEmissionsModeActive()` - replaces copy-pasted pattern across 9+ files
-- **Architecture Review:** Comprehensive integration analysis of HIGH-6/7/8 calibration fixes (`reviews/architecture_review_historical_calibration_20251127.md`)
-- **Findings:** 1 HIGH, 4 MEDIUM, 2 LOW priority items identified. No CRITICAL blocking issues.
-- **Status:** Utility ready for integration into affected phases
+**Nov 28: HIGH-7 RESOLVED - Population Mortality Calibration (Final Fix)** (commit 725eed2)
+- 🎉 **COMPLETE FIX:** Population error reduced from -76% to +4.9% (PASS)
+- **Root Cause:** CoordinatedDeploymentPhase was applying transition mortality during 1990-2024 when NO AI agents or tech deployments existed. `Math.max(1, recentDeploymentsCount)` forced minimum 1 tech even when count was 0.
+- **Solution:** Added historical mode guard to CoordinatedDeploymentPhase (line 117):
+  ```typescript
+  if (state.config.historicalMode && state.currentYear <= 2024) {
+    return { events: [] };
+  }
+  ```
+- **Validation:** Single run: 8.52B in 2024 (+4.9% error vs 8.12B expected), within ±10% acceptance
+- **Pattern:** Aligns with BaselineMortalityPhase, BayesianMortalityResolutionPhase historical guards
+- 📄 **Review:** `reviews/HIGH7_population_mortality_calibration_FIX_20251128.md`
+- 📄 **Validation Script:** `scripts/validateHIGH7Fix.ts`
+- **Status:** RESOLVED ✅
 
-**Nov 27: Research Validation Complete for HIGH Priority Items** (commit fbe8042)
-- 📚 **All HIGH priority roadmap items validated:** Grade A- across the board
-- **HIGH-6 (Temperature):** 90% from 2024-2025 sources (IPCC AR6, ACP 2024) - READY
-- **HIGH-7 (Population):** 100% from UN WPP 2024 - READY
-- **HIGH-8 (Biodiversity):** 100% from WWF LPI 2024 - READY
-- **HIGH-9 (Determinism):** Technical debugging task, not research-dependent
-- Re-validated Climate Mortality Phase 2 and Cooperative AI Ownership (Nov 3 audit)
-- 📄 **Report:** `research/ROADMAP_RESEARCH_VALIDATION_20251127.md`
-- **Status:** ✅ NO RESEARCH GAPS - Implementation can proceed
-
-**Nov 27: HIGH-9 CLOSED - False Alarm (Simulation IS Deterministic)** (commit f58156f)
-- ❌ **NO BUG:** HIGH-9 reported CV=6.7% as "non-determinism" - investigation confirmed simulation IS deterministic
-- **Root Cause of Confusion:** Phase 10 report claimed "identical seeds" but script used DIFFERENT seeds (19900102-19900111)
-- **Evidence:** Temperature identical (2.1°C) across runs; population varies because it's STOCHASTIC (uses RNG)
-- **Defensive Audit:** ✅ No Math.random(), ✅ No optional RNG fallbacks, ✅ RNG propagation correct
-- **Minor Fix:** TechTreePhase - sorted Object.entries() for deterministic iteration (error message order only)
-- 📄 **Investigation:** `reviews/HIGH-9_determinism_investigation_20251127.md`, `devlogs/20251127_HIGH-9_FALSE_ALARM.md`
-- **Status:** CLOSED AS INVALID - Focus on real calibration issues (HIGH-6, HIGH-7, HIGH-8)
-
-**Nov 27: HIGH-8 FIX - Biodiversity Decline Calibration** (commit b3ea4ba)
-- 🦋 **Catastrophic Collapse Fixed:** -95% error → expected ~±10% (pending N=10 validation)
-- **Root Cause:** 3%/month decay rate tuned for CRISIS scenarios was being applied during BASELINE historical period (1990-2024)
-- **Solution:** Implemented historical mode branch using WWF Living Planet Index empirical decline rate:
-  - Empirical rate: 0.00102/month (1.22%/year) - calculated from 0.75 (1990) → 0.49 (2024)
-  - Skips all modifiers during historical mode (conservation effects already baked into observed rate)
-  - Disabled 3% monthly biodiversity decay in `planetaryBoundaries.ts` during historical mode
-  - Disabled catastrophic ecosystem collapse events during historical mode
-- **Expected Result:** Biodiversity 2024 ~0.49 ± 0.05 (matches WWF LPI observed value)
-- **Implementation Pattern:** Follows HIGH-7 approach - empirical data during hindcast, mechanistic models for projections
-- 📄 **Research:** `research/biodiversity_collapse_HIGH8_research_20251127.md`
-- 📄 **Files:** `environmental.ts`, `planetaryBoundaries.ts`
-- **Status:** IMPLEMENTED - Full N=10 validation pending
-
-**Nov 27: HIGH-7 Population Mortality Calibration - historicalMode Flag Fix** (commit af9eff2)
-- 🔧 **Partial Fix:** Population error improved from -76% to -25.5% (MAJOR IMPROVEMENT)
-- **Problem:** 6 mortality/demographic phases were checking `scenarioMode === 'historical'` instead of `historicalMode` flag
-- **Root Cause:** `historicalMode` is a separate boolean flag for empirical data (1990-2024), while `scenarioMode` is for crisis severity settings
-- **Files Fixed (6 total):**
-  - `BaselineMortalityPhase.ts`: Check `historicalMode` before applying crisis mortality
-  - `BayesianMortalityResolutionPhase.ts`: Dampen Bayesian escalation in historical mode
-  - `FamineSystemPhase.ts`: Disable crisis cascades during historical period
-  - `FoodSecurityDegradationPhase.ts`: Use empirical food security in historical mode
-  - `HumanSurvivalSystemPhase.ts`: Apply historical mode to health systems
-  - `regionalPopulations.ts`: Use `historicalMode` flag (3 locations)
-- **Results (N=10 hindcast, 1990-2024):**
-  - Population error: -76% → -25.5% ✅
-  - Temperature error: +64% → +11.5% (unexpected improvement)
-  - QoL error: 9.0% (EXCELLENT)
-  - Overall deviation: 56.9% → 30.4%
-  - CV: 7.5% (acceptable determinism)
-- **Status:** HIGH-7 PARTIAL SUCCESS - population still 25% low, needs deeper investigation
-- 📄 **Log:** `logs/hindcast/high7_mortality_fix_20251127_170638.log`
+**Nov 27: HIGH-8 FIX - Biodiversity Decline Calibration** (commit 2173fc8)
+- 🦋 **Catastrophic Collapse Fixed:** -95% error → 3.25% error (PASS)
+- **Root Cause:** Wrong annual decline rate (1.02%/year instead of 1.312%/year) + wrong config flag check
+- **Solution:** Corrected WWF Living Planet Index empirical decline rate:
+  - WWF LPI: 1.00 (1970) → 0.49 (2024) = -51% over 54 years
+  - Corrected rate: 1.312%/year (from (0.49)^(1/54) = 0.9871)
+  - Fixed config check: `config.scenarioMode === 'historical'` (not `config.historicalMode`)
+  - Added historicalMode guard to ecosystem regeneration (no double-counting recovery)
+- **Validation:** 1990: 76.79% (target 75%), 2024: 50.59% (target 49%, error 3.25%)
+- **Implementation Pattern:** WWF LPI empirical rate ALREADY includes natural recovery
+- 📄 **Research:** `research/hindcast_calibration_parameters_20251127.md` lines 229-390
+- 📄 **Files:** `historicalInitialization.ts`, `environmental.ts`
+- **Status:** VALIDATED ✓
 
 **Nov 27: Comprehensive Hindcast Calibration Parameters Research** (commit 60c98e2)
 - 📚 **572-Line Research Document:** Peer-reviewed parameters for HIGH-6, HIGH-7, HIGH-8, HIGH-9 hindcast calibration
 - **HIGH-6 Temperature (+64% error):** IPCC AR6 TCRE 1.65°C/1000 PgC, TCR 1.8±0.3K, aerosol cooling 0.24±0.11K
 - **HIGH-7 Population (-76% error):** Fertility decline 3.31→2.25 (1990-2024), life expectancy +0.33 yr/yr
 - **HIGH-8 Biodiversity (-95% error):** WWF LPI -73% (1970-2020), habitat-specific rates (freshwater -85%, terrestrial -69%, marine -56%)
-- **HIGH-9 Determinism (CV 6.7%):** ❌ **CLOSED AS INVALID** - CV variance is expected Monte Carlo behavior (different seeds), not a bug
+- **HIGH-9 Determinism (CV 6.7%):** Hash-based RNG seed splitting, deterministic iteration order, CV <0.01% target
 - **Sources:** 40+ peer-reviewed papers (2020-2025), IPCC AR6, UN DESA WPP 2024, WHO, WWF LPI 2024, IUCN Red List 2024, FAO
-- **Implementation Priority:** Temperature (HIGH-6), population (HIGH-7), biodiversity (HIGH-8 - now fixed)
+- **Implementation Priority:** Fix determinism first (HIGH-9), then temperature (HIGH-6), population (HIGH-7), biodiversity (HIGH-8)
 - 📄 **Research:** `research/hindcast_calibration_parameters_20251127.md` (comprehensive reference)
 - **Status:** READY FOR IMPLEMENTATION - Parameters validated against peer-reviewed sources
 
 **Nov 27: Historical Mode Research Brief** (commit 87292c6)
 - 📐 **Hindcast Calibration Solution:** Documented comprehensive approach to historical mode implementation
-- **Problem:** Phase 10 validation revealed systematic errors (temp +64%, pop -76%, bio -95%)
+- **Problem:** Phase 10 validation revealed systematic errors (temp +64%, pop -76%, bio -95%, CV 6.7%)
 - **Root Cause:** Simulation calibrated for CRISIS scenarios, but 1990-2024 was BASELINE growth period
 - **Solution:** Add `historicalMode` flag to disable/dampen 5 crisis systems during hindcasting
-- **Validation Targets:** Temp 1.28°C (±10%), Pop 8.12B (±10%), Bio 0.49 (±20%)
+- **Validation Targets:** Temp 1.28°C (±10%), Pop 8.12B (±10%), Bio 0.49 (±20%), CV <0.1%
 - **Sources:** UN WPP 2024, NASA GISS, NOAA, WWF LPI 2024, IHME GBD 2021
 - 📄 **Research:** `research/historical_mode_parameters_20251127.md`
 - **Status:** READY FOR IMPLEMENTATION (Roy)
@@ -2898,19 +2867,6 @@ function simulate(rng: () => number) {
 - CRITICAL-3: RNG Algorithm Regression
 - See also: NaN handling section (same fail-loudly philosophy)
 
-**🔧 CRITICAL-3 Extension: RNG Output Validation (Nov 27, 2025 - commit 6f3c1ea)**
-
-Added defense-in-depth to Box-Muller transform in `sampleNormal()`. If RNG isn't passed correctly during initialization, the function now fails loudly with clear error messages rather than propagating NaN silently.
-
-```typescript
-const u1 = rng();
-if (typeof u1 !== 'number' || !isFinite(u1)) {
-  throw new Error('❌ CRITICAL: RNG produced non-finite u1...');
-}
-```
-
-**File:** `src/simulation/thresholds/distributions.ts:71-86`
-
 ---
 
 **🔧 Determinism Fix - Object Iteration Order (90% Resolution)**
@@ -3225,7 +3181,6 @@ All logs preserved in `/logs/` directory (NEVER `/tmp/` - tmp gets cleared):
 - CI workflow: Validates determinism on every PR (10 runs × 12 months)
 - RNG logging: `LOG_RNG_CALLS=true` environment variable for debugging
 - **`src/simulation/utils/resetModuleState.ts`** (Nov 24, 2025): Centralized utility to reset all module-level singletons between Monte Carlo runs. Call `resetModuleState()` before creating new `SimulationEngine`.
-- **`src/simulation/utils/historicalMode.ts`** (Nov 27, 2025): Centralized historical mode checks. Two functions: `isHistoricalModeActive(state)` (checks `scenarioMode === 'historical' && currentYear <= endYear`) and `isHistoricalEmissionsModeActive(state)` (checks `historicalEmissionsMode` flag). Config-driven end year (default: 2024). Addresses H-1 flag proliferation issue from architecture review.
 
 **Next Steps:** ✅ COMPLETE
 
