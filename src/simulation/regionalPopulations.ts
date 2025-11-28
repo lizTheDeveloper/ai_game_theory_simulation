@@ -364,15 +364,45 @@ export function updateRegionalPopulations(state: GameState): void {
   let totalPopulation = 0;
   let totalCrisisDeaths = 0;
 
+  // M-4 FIX (Nov 28, 2025): Calculate current year for time-varying demographics
+  const currentYear = 1990 + Math.floor(state.currentMonth / 12);
+  const isHistorical = isHistoricalModeActive(state);
+
   for (const region of pop.regionalPopulations) {
+    // === M-4: TIME-VARYING DEMOGRAPHICS (Nov 28, 2025) ===
+    // Apply time-varying birth/death rates if in historical mode and data available
+    // This REPLACES the complex scaling logic below with simple linear interpolation
+    // Research: research/population_demographics_regional_20251128.md (21 sources)
+    // Goal: Reduce 2024 population error from +24.5% to <15%
+    let useTimeVaryingRates = false;
+    if (isHistorical) {
+      const { getTimeVaryingBirthRate, getTimeVaryingDeathRate } = require('./populationDynamics');
+      const birthRate = getTimeVaryingBirthRate(region.name, currentYear);
+      const deathRate = getTimeVaryingDeathRate(region.name, currentYear);
+
+      if (birthRate > 0 && deathRate > 0) {
+        // Both rates available - use time-varying approach
+        region.baselineBirthRate = birthRate;
+        region.adjustedBirthRate = birthRate;
+        region.baselineDeathRate = deathRate;
+        region.adjustedDeathRate = deathRate;
+        useTimeVaryingRates = true;
+
+        // Diagnostic logging (once per year for one region)
+        if (state.currentMonth % 12 === 0 && region.name === 'Sub-Saharan Africa') {
+          console.log(`\n🔄 M-4 Time-Varying Demographics (${currentYear}):`);
+          console.log(`  Region: ${region.name}`);
+          console.log(`  Birth rate: ${(birthRate * 100).toFixed(2)}%`);
+          console.log(`  Death rate: ${(deathRate * 100).toFixed(2)}%`);
+          console.log(`  Net growth: ${((birthRate - deathRate) * 100).toFixed(2)}%`);
+        }
+      }
+    }
+
     // === 1. CALCULATE BIRTH RATE ===
-    // CRITICAL FIX (Nov 26, 2025 - Phase 6): Skip fertility recalculation in historical mode
-    // In historical mode, fertility is initialized to historical values and then scaled
-    // by historical CBR curves (see lines 393-419 below). We don't want to overwrite
-    // the historical initialization with 2025 modifiers.
-    // HIGH-7 FIX (Nov 27, 2025): Use historicalMode flag for hindcast calibration
-    // CRITICAL-1 FIX (Nov 28, 2025): Unified historical mode detection via isHistoricalModeActive()
-    if (!isHistoricalModeActive(state)) {
+    // M-4 FIX (Nov 28, 2025): Skip ALL birth/death rate calculation if using time-varying rates
+    // Time-varying rates are empirical UN data that already incorporate demographic transition
+    if (!useTimeVaryingRates && !isHistoricalModeActive(state)) {
       // Use inverse healthcare-fertility relationship (implemented in populationDynamics.ts)
       const healthcareFertilityModifier = calculateHealthcareFertilityModifier(region.healthcareQuality);
       const developmentModifier = calculateDevelopmentModifier(region.economicStage);
@@ -387,7 +417,7 @@ export function updateRegionalPopulations(state: GameState): void {
 
       // Clamp to realistic bounds
       region.fertilityRate = Math.max(0.5, Math.min(6.0, region.fertilityRate));
-    } else {
+    } else if (!useTimeVaryingRates) {
       // HISTORICAL FERTILITY TRANSITION (Nov 26, 2025 - Phase 6 Fix)
       // Apply linear interpolation from 1990 TFR → 2020 TFR
       // Research: research/demographics_1990_calibration_20251126.md
@@ -461,9 +491,9 @@ export function updateRegionalPopulations(state: GameState): void {
     // instead of scaling baseline birth rates by fertility ratio.
     const skipScaling = (state as any)._skipHistoricalBirthRateScaling;
 
-    // HIGH-7 FIX (Nov 27, 2025): Use historicalMode flag for hindcast calibration
-    // CRITICAL-1 FIX (Nov 28, 2025): Unified historical mode detection via isHistoricalModeActive()
-    if (isHistoricalModeActive(state) && skipScaling) {
+    // M-4 FIX (Nov 28, 2025): Skip historical scaling if using time-varying rates
+    // Time-varying rates already incorporate the demographic transition
+    if (!useTimeVaryingRates && isHistoricalModeActive(state) && skipScaling) {
       // DIRECT HISTORICAL CBR MODE (Nov 27, 2025)
       // Fertility is already initialized to historical values (e.g., SSA TFR 6.35)
       // Calculate birth rate DIRECTLY from historical CBR data (not from fertility formula)
@@ -498,7 +528,7 @@ export function updateRegionalPopulations(state: GameState): void {
         console.log(`    Adjusted birth rate: ${(region.adjustedBirthRate * 100).toFixed(2)}%`);
         console.log(`    Fertility (TFR): ${region.fertilityRate.toFixed(2)}`);
       }
-    } else if (isHistoricalModeActive(state) && !skipScaling) {
+    } else if (!useTimeVaryingRates && isHistoricalModeActive(state) && !skipScaling) {
       // LEGACY HISTORICAL SCALING MODE (pre-Nov 27, 2025)
       // Calculate from fertility formula, then scale by historical CBR
       region.adjustedBirthRate = region.baselineBirthRate *
@@ -535,7 +565,7 @@ export function updateRegionalPopulations(state: GameState): void {
         console.log(`    Difference: ${((regionalScale - globalScale) / globalScale * 100).toFixed(1)}% ${regionalScale > globalScale ? 'HIGHER' : 'lower'}`);
         console.log(`    Final birth rate: ${region.adjustedBirthRate.toFixed(4)}`);
       }
-    } else {
+    } else if (!useTimeVaryingRates) {
       // STANDARD MODE (non-historical scenarios)
       // Calculate birth rate from fertility using baseline scaling
       region.adjustedBirthRate = region.baselineBirthRate *
@@ -543,17 +573,20 @@ export function updateRegionalPopulations(state: GameState): void {
     }
 
     // === 2. CALCULATE DEATH RATE ===
-    // CRITICAL FIX (Nov 27, 2025): Disable healthcare reduction in historical mode
-    // Historical CDR data already incorporates real-world healthcare quality from that era.
-    // Applying modern healthcare reduction factors on top of historical CDR double-counts
-    // the effect → death rates too low in historical mode.
-    // Example: SSA 1990 baseline 0.9% × healthcare 0.76 × historical scale 1.95 = 1.33%
-    // But expected is 15.6/1000 = 1.56% (historical CDR directly).
-    // HIGH-7 FIX (Nov 27, 2025): Use historicalMode flag for hindcast calibration
-    // CRITICAL-1 FIX (Nov 28, 2025): Unified historical mode detection via isHistoricalModeActive()
-    // historicalMode = empirical UN data (1990-2024), scenarioMode = crisis severity
-    const isHistoricalMode = isHistoricalModeActive(state);
-    const healthcareReduction = isHistoricalMode ? 1.0 : Math.max(0.3, 1 - (region.healthcareQuality * 0.7));
+    // M-4 FIX (Nov 28, 2025): Skip death rate calculation if using time-varying rates
+    // Time-varying death rates already incorporate healthcare quality, aging, and historical patterns
+    if (!useTimeVaryingRates) {
+      // CRITICAL FIX (Nov 27, 2025): Disable healthcare reduction in historical mode
+      // Historical CDR data already incorporates real-world healthcare quality from that era.
+      // Applying modern healthcare reduction factors on top of historical CDR double-counts
+      // the effect → death rates too low in historical mode.
+      // Example: SSA 1990 baseline 0.9% × healthcare 0.76 × historical scale 1.95 = 1.33%
+      // But expected is 15.6/1000 = 1.56% (historical CDR directly).
+      // HIGH-7 FIX (Nov 27, 2025): Use historicalMode flag for hindcast calibration
+      // CRITICAL-1 FIX (Nov 28, 2025): Unified historical mode detection via isHistoricalModeActive()
+      // historicalMode = empirical UN data (1990-2024), scenarioMode = crisis severity
+      const isHistoricalMode = isHistoricalModeActive(state);
+      const healthcareReduction = isHistoricalMode ? 1.0 : Math.max(0.3, 1 - (region.healthcareQuality * 0.7));
 
     // Detect NaN in resource reserves - fail loudly
     if (isNaN(state.resourceEconomy.food.reserves)) {
@@ -671,6 +704,7 @@ export function updateRegionalPopulations(state: GameState): void {
         console.log(`    Final death rate: ${(region.adjustedDeathRate * 100).toFixed(3)}% annual`);
       }
     }
+    } // End of !useTimeVaryingRates block for death rate calculation
 
     // DEBUG (Oct 26, 2025): Track what's causing massive death rates
     // Log ALL regions in first 2 months to establish baseline
