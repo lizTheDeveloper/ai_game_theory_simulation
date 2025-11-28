@@ -15,6 +15,7 @@
 import { GameState } from '@/types/game';
 import { OceanAcidificationSystem } from '@/types/oceanAcidification';
 import { assertStateProperty } from './utils/assertions';
+import { isHistoricalModeActive } from './utils/historicalMode';
 
 /**
  * Initialize ocean acidification system state (2025 baseline - JUST BREACHED)
@@ -143,7 +144,8 @@ export function updateOceanAcidificationSystem(state: GameState): void {
     console.log(`   25% of marine species losing habitat`);
     
     // Impact biodiversity
-    if (state.environmentalAccumulation) {
+    // HIGH-8 FIX (Nov 28, 2025): Guard during historical mode
+    if (!isHistoricalModeActive(state) && state.environmentalAccumulation) {
       state.environmentalAccumulation.biodiversityIndex = Math.max(0,
         state.environmentalAccumulation.biodiversityIndex - 0.05 // -5% instant hit
       );
@@ -198,7 +200,8 @@ export function updateOceanAcidificationSystem(state: GameState): void {
     console.log(`   3 billion people depend on fish for protein`);
     
     // Major biodiversity hit
-    if (state.environmentalAccumulation) {
+    // HIGH-8 FIX (Nov 28, 2025): Guard during historical mode
+    if (!isHistoricalModeActive(state) && state.environmentalAccumulation) {
       state.environmentalAccumulation.biodiversityIndex = Math.max(0,
         state.environmentalAccumulation.biodiversityIndex - 0.10 // -10% instant hit
       );
