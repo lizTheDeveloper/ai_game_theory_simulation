@@ -875,7 +875,7 @@ export interface GameState {
    * - Trust Recovery Rate: Meta-analysis - Beta(α=2, β=5)
    * - Climate Sensitivity: IPCC AR6 - Log-Normal(μ=3.0, σ=0.75)
    * - Government Legitimacy Crisis: Historical cases - Triangular(0.25, 0.30, 0.40)
-   * - Automation Job Loss: Acemoglu & Restrepo (2022) - 35% ± 5%
+   * - Automation Job Loss: Acemoglu & Restrepo (2019) - 35% ± 5%
    *
    * Tier 2 Thresholds (Historical Ranges - Semi-known):
    * - Government Legitimacy Crisis: Weimar, USSR, Arab Spring - Triangular(0.25, 0.30, 0.40)

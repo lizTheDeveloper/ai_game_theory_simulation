@@ -354,7 +354,7 @@ export const NUCLEAR_SECURITY_PARAMS = {
  *
  * User Validation: "Augmentation preserves autonomy, that's what's happening here"
  *
- * Acemoglu Framework (2022):
+ * Acemoglu Framework (2019):
  * - Automation: Displaces labor → unemployment → meaning crisis
  * - Augmentation: Enhances human capabilities → autonomy preserved → meaning maintained
  *
@@ -380,7 +380,7 @@ export const CENTAUR_SYSTEMS_PARAMS = {
     min: 0.10,
     max: 0.30,
     note: 'Indirect effect via autonomy preservation',
-    citation: 'Meaning crisis tied to autonomy loss (Acemoglu 2022)'
+    citation: 'Meaning crisis tied to autonomy loss (Acemoglu 2019)'
   },
   deploymentTimeline: {
     distribution: 'triangular' as const,

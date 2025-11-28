@@ -1,20 +1,44 @@
 # Master Implementation Roadmap
 ## AI Alignment Game Theory Simulation - Project Hub
 
-**Date:** November 28, 2025 (Session 8 Complete - Architect)
+**Date:** November 28, 2025 (Session 9 Complete - Architect)
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**Current Status:** ✅ **VALIDATION PASS** (Nov 28, 2025 - Session 8 Complete)
-- **Research Quality:** A- (95%+ sources from 2024-2025, high-priority updates identified)
-- **Architecture Health:** A- (0 CRITICAL, 0 HIGH active, 5 MEDIUM - CRITICAL-2 resolved)
+**Current Status:** ✅ **VALIDATION PASS** (Nov 28, 2025 - Session 9 Complete)
+- **Research Quality:** A- (95%+ sources from 2024-2025, Acemoglu citation corrected)
+- **Architecture Health:** A- (0 CRITICAL, 0 HIGH active, 3 MEDIUM - HIGH-1 resolved)
 - **System Performance:** 0% crash rate ✅, determinism verified (CV=0.000% ✅), historical accuracy 19.9% overall deviation ✅
-- **System Trajectory:** ✅ **ACCEPTABLE** - All CRITICAL/HIGH items resolved, biodiversity 32% error within threshold
-- **Roadmap Coherence:** CURRENT - Updated Nov 28 Session 8 complete (Architect)
-- **Daily Review (Nov 28 13:00 UTC):**
-  - Architecture Review: ✅ GOOD (0 CRITICAL, 0 HIGH, 5 MEDIUM - M-5 resolved)
-  - Infrastructure: ✅ COMPLETE (HIGH-5 agent message checking deployed)
-  - **Completed:** HIGH-5 agent monitoring, M-5 biodiversity consistency (Session 6)
+- **System Trajectory:** ✅ **ACCEPTABLE** - All CRITICAL/HIGH items resolved, temperature offset corrected
+- **Roadmap Coherence:** CURRENT - Updated Nov 28 Session 9 complete (Architect)
+- **Daily Review (Nov 28 17:00 UTC):**
+  - Architecture Review: ✅ EXCELLENT (0 CRITICAL, 0 HIGH, 3 MEDIUM - HIGH-1 resolved)
+  - Research Quality: ✅ IMPROVED (Acemoglu 2022 → 2019 citation corrected)
+  - Temperature Calibration: ✅ CORRECTED (offset 0.7°C → 0.1°C, IPCC AR6 Cross-Chapter Box 1.2)
+  - **Completed:** HIGH-1 dependency ordering, temperature offset fix, citation correction
+- **Recent Work (Nov 28 Session 9 - HIGH-1 RESOLVED, CALIBRATION FIXES):**
+  - ✅ **HIGH-1 COMPLETE** (commit 7db49ca1) - PermafrostCarbonPhase Dependency Ordering Fix
+    - **Problem:** Phase at order 18.5 declared dependency on climate_system (order 34.0), violating ordering constraint
+    - **Impact:** Would cause PhaseOrchestrator runtime failure "PHASE DEPENDENCY ORDER VIOLATION"
+    - **Root Cause:** Incorrect dependency declaration - phase already handles multiple temperature sources via getGlobalTemperatureAnomaly()
+    - **Fix:** Removed climate_system dependency - phase uses resourceEconomy.co2 (order 17.0) correctly
+    - **Verification:** Type check ✅, phase ordering validation ✅
+    - **Archive:** Session 9 summary (this section)
+  - ✅ **TEMPERATURE OFFSET CORRECTION** (commit c5484f89) - Pre-industrial baseline fix
+    - **Problem:** PREINDUSTRIAL_OFFSET = 0.7°C caused systematic 0.6°C underestimate
+    - **Research:** IPCC AR6 Cross-Chapter Box 1.2 - actual offset is 0.1°C (1850-1900 vs 1750)
+    - **Fix:** Changed constant from 0.7°C to 0.1°C with full IPCC citation
+    - **Impact:** Historical temperature accuracy improved, aligns with peer-reviewed baseline
+    - **Verification:** Value matches IPCC AR6 methodology
+  - ✅ **CITATION CORRECTION** (commit 2d255e0f) - Acemoglu research metadata fix
+    - **Problem:** research/automation_labor_displacement_20241120.md cited "Acemoglu & Restrepo (2022)"
+    - **Correct Citation:** "Automation and New Tasks: How Technology Displaces and Reinstates Labor" (JEP 2019)
+    - **Fix:** Updated year 2022 → 2019, verified against actual publication
+    - **Impact:** Research quality grade maintained at A- (citation accuracy critical for peer review)
+  - ✅ **Architecture Integration Review** (Session 9, Grade A-)
+    - **Issues:** 0 CRITICAL, 1 HIGH (fixed), 3 MEDIUM (legacy code cleanup deferred)
+    - **Status:** Excellent health, all active HIGH items resolved
+    - **Archive:** reviews/architecture_integration_review_20251128_session9.md
 - **Recent Work (Nov 28 Session 8 - CRITICAL-2 RESOLVED):**
   - ✅ **CRITICAL-2 COMPLETE** (commit ef986a43) - Double Environmental Accumulation Fix
     - **Problem:** HIGH-11 added updateEnvironmentalAccumulation() to PlanetaryBoundariesPhase, but legacy call in engine.ts not removed
@@ -1514,12 +1538,14 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
   - **Key Claims:** Aerosol cooling masks 30% of warming, CDR declined 9.3‰→7.76‰ (1990-2024), biodiversity -34.7% (not -99%)
   - **Priority:** HIGH (blocks implementation of THREE hindcast calibration fixes)
   - **Verifier:** research-skeptic (Sylvia)
-- [ ] **Pre-industrial Temperature Offset** - ⏳ PENDING (Nov 27, 2025 - commit 3e3f47c)
-  - **Research Spec:** `research/verification_3e3f47c_20251127.md`
-  - **Claim:** 1750-1850 warming ~0.7°C (converts 1850-1900 baseline to pre-industrial)
+- [x] **Pre-industrial Temperature Offset** - ✅ FIXED (Nov 28, 2025)
+  - **Verification File:** `research/verification_3e3f47c_FAILED_20251128.md`
+  - **Original Claim:** 1750-1850 warming ~0.7°C ❌ FAILED (700% overestimate)
+  - **Corrected Value:** 0.1°C (IPCC AR6 Cross-Chapter Box 1.2, likely range: -0.1 to +0.3°C)
   - **Cited Source:** IPCC AR6
+  - **Impact:** Systematic 0.6°C underestimate of warming vs 1750 baseline (corrected)
   - **Priority:** HIGH (affects all planetary boundary assessments)
-  - **Verifier:** research-skeptic (Sylvia)
+  - **Fixed by:** simulation-maintainer (Roy) - commit auto/worker-20251128_170001
 - [ ] **Historical Mode Parameters** - ⏳ PENDING (Nov 27, 2025 - commit 87292c6)
   - **Research Spec:** `research/historical_mode_parameters_20251127.md`
   - **Verification File:** `research/verification_87292c6_20251127.md`
@@ -3069,7 +3095,30 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
 
 ## 🎯 Progress Summary
 
-**Overall Project Status: 🟢 EXCELLENT** (Nov 28, 2025 - Session 8 Complete, All CRITICAL/HIGH Resolved, Architecture A-)
+**Overall Project Status: 🟢 EXCELLENT** (Nov 28, 2025 - Session 9 Complete, All CRITICAL/HIGH Resolved, Architecture A-)
+
+**Nov 28, 2025 - Session 9 Summary (Architect):**
+
+- ✅ **HIGH-1 RESOLVED:** PermafrostCarbonPhase dependency ordering fix (commit 7db49ca1)
+  - **Problem:** Phase at order 18.5 declared dependency on climate_system (order 34.0), violating ordering constraint
+  - **Impact:** Would cause PhaseOrchestrator runtime failure "PHASE DEPENDENCY ORDER VIOLATION"
+  - **Root Cause:** Incorrect dependency declaration - phase already handles multiple temperature sources
+  - **Fix:** Removed climate_system dependency - phase uses resourceEconomy.co2 (order 17.0) correctly
+  - **Verification:** Type check ✅, phase ordering validation ✅
+- ✅ **TEMPERATURE OFFSET CORRECTION:** Pre-industrial baseline fix (commit c5484f89)
+  - **Problem:** PREINDUSTRIAL_OFFSET = 0.7°C caused systematic 0.6°C underestimate
+  - **Research:** IPCC AR6 Cross-Chapter Box 1.2 - actual offset is 0.1°C (1850-1900 vs 1750)
+  - **Fix:** Changed constant from 0.7°C to 0.1°C with full IPCC citation
+  - **Impact:** Historical temperature accuracy improved, aligns with peer-reviewed baseline
+- ✅ **CITATION CORRECTION:** Acemoglu research metadata fix (commit 2d255e0f)
+  - **Problem:** research/automation_labor_displacement_20241120.md cited "Acemoglu & Restrepo (2022)"
+  - **Correct Citation:** "Automation and New Tasks: How Technology Displaces and Reinstates Labor" (JEP 2019)
+  - **Fix:** Updated year 2022 → 2019, verified against actual publication
+- ✅ **Architecture Integration Review:** Session 9 comprehensive scan (Grade A-)
+  - **Issues:** 0 CRITICAL, 1 HIGH (fixed), 3 MEDIUM (legacy code cleanup deferred)
+  - **Status:** Excellent health, all active HIGH items resolved
+  - **Report:** reviews/architecture_integration_review_20251128_session9.md
+- **Priority Counts:** 0 CRITICAL, 0 HIGH, 3 MEDIUM (M-1 legacy code, M-2 fallbacks, M-3 export consistency)
 
 **Nov 28, 2025 - Session 8 Summary (Architect):**
 
