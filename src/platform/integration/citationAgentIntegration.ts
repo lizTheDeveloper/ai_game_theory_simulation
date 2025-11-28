@@ -893,6 +893,11 @@ export class AgentStateManager {
     await this.db.end();
     // H1 FIX: Don't close pool here - it's shared across components
     // Pool will be closed by global shutdown
+
+    // H3 FIX: Close the lock manager's dedicated Redis connection
+    // This prevents process hang on shutdown
+    await this.lockManager.close();
+
     console.log('✅ AgentStateManager cleanup complete');
   }
 }

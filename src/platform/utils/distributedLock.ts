@@ -243,6 +243,17 @@ export class DistributedLockManager {
     }
     return false;
   }
+
+  /**
+   * Close the Redis connection.
+   *
+   * CRITICAL: Must be called during shutdown to prevent process hang.
+   * The Redis connection keeps the Node.js event loop alive.
+   */
+  async close(): Promise<void> {
+    await this.redis.quit();
+    console.log('🔓 DistributedLockManager Redis connection closed');
+  }
 }
 
 /**
