@@ -154,6 +154,7 @@ export class PythonAgentWrapper extends EventEmitter {
   private lastHealthCheck: Date | null = null;
   private requestQueue: Array<{ method: string; params: any; resolve: Function; reject: Function }> = [];
   private processRegistry: ProcessRegistry;
+  private healthCheckInterval?: NodeJS.Timeout;
 
   constructor(
     public readonly agentId: string,
@@ -334,6 +335,12 @@ export class PythonAgentWrapper extends EventEmitter {
 
     // Handle process exit
     this.process.on('exit', (code, signal) => {
+      // CRITICAL: Stop health checks immediately to prevent write-to-destroyed-stream
+      if (this.healthCheckInterval) {
+        clearInterval(this.healthCheckInterval);
+        this.healthCheckInterval = undefined;
+      }
+
       const lastError = (this as any)._lastStderr ? (this as any)._lastStderr() : '';
       console.warn(`⚠️ Agent ${this.agentId} exited (code: ${code}, signal: ${signal})`);
       if (code !== 0 && lastError) {
@@ -498,7 +505,16 @@ export class PythonAgentWrapper extends EventEmitter {
         params
       }) + '\n';
 
-      this.process!.stdin!.write(request, (err) => {
+      // Check stream state before writing
+      if (!this.process || !this.process.stdin || this.process.stdin.destroyed || !this.process.stdin.writable) {
+        clearTimeout(timeoutHandle);
+        this.pendingRequests.delete(requestId);
+        this.isHealthy = false;
+        reject(new Error(`Agent ${this.agentId} stdin stream not available (destroyed or not writable)`));
+        return;
+      }
+
+      this.process.stdin.write(request, (err) => {
         if (err) {
           clearTimeout(timeoutHandle);
           const pending = this.pendingRequests.get(requestId);
@@ -551,7 +567,14 @@ export class PythonAgentWrapper extends EventEmitter {
   }
 
   private setupHealthMonitor(): void {
-    setInterval(async () => {
+    this.healthCheckInterval = setInterval(async () => {
+      // Check if process is still alive before health check
+      if (!this.process || this.process.killed || !this.process.stdin || this.process.stdin.destroyed) {
+        console.warn(`⚠️ Skipping health check for ${this.agentId} - process not available`);
+        this.isHealthy = false;
+        return;
+      }
+
       try {
         const status = await this.getStatus();
         this.isHealthy = status.isHealthy;
@@ -568,6 +591,12 @@ export class PythonAgentWrapper extends EventEmitter {
   }
 
   async stop(): Promise<void> {
+    // Stop health checks first
+    if (this.healthCheckInterval) {
+      clearInterval(this.healthCheckInterval);
+      this.healthCheckInterval = undefined;
+    }
+
     if (!this.process) {
       return;
     }

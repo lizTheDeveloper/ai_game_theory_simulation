@@ -724,7 +724,7 @@ class CitationIntegrityAgent:
             except Exception as e:
                 self.db_conn.rollback()
                 logger.error(f"Database save failed: {e}")
-                raise
+                # Don't re-raise - agent should continue operating despite DB errors
 
     def load_state(self) -> bool:
         """
@@ -765,7 +765,7 @@ class CitationIntegrityAgent:
 
             except Exception as e:
                 logger.error(f"Database load failed: {e}")
-                raise
+                # Don't re-raise - return False to indicate no state loaded
 
         logger.warning(f"Agent {self.agent_id} no saved state found")
         return False
