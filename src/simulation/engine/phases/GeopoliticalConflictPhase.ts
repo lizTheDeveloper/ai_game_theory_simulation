@@ -46,6 +46,7 @@ import {
   assertStateProperty,
   assertDefined,
 } from '@/simulation/utils/assertions';
+import { getGDPProxy } from '@/simulation/utils/recoveryCalculations';
 
 /**
  * CORRECTED PARAMETERS (Nov 28, 2025)
@@ -280,17 +281,14 @@ export class GeopoliticalConflictPhase implements SimulationPhase {
    * Formula: 1.0 + ECONOMIC_STRESS_COEFF × (gdpLossPct / 10)
    */
   private calculateEconomicStressMultiplier(state: GameState): number {
-    // Get GDP loss from baseline
+    // Get GDP and population to calculate per capita
+    // Research: Homer-Dixon et al. 2015 (economic stress → conflict)
+    const gdp = getGDPProxy(state);  // Returns ~$114T (realistic units)
+    const population = state.humanPopulationSystem.population;  // In billions
+    const currentGDPPerCapita = (gdp / population) / 1000;  // Convert to thousands
+
     // Baseline GDP per capita: ~$15,000 (2025)
-    const baselineGDPPerCapita = 15000;
-    const currentGDPPerCapita = assertStateProperty(
-      state.globalMetrics,
-      'gdpPerCapita',
-      {
-        location: 'GeopoliticalConflictPhase.calculateEconomicStressMultiplier',
-        month: state.currentMonth
-      }
-    );
+    const baselineGDPPerCapita = 15;  // In thousands
 
     const gdpLossPct = Math.max(0, (baselineGDPPerCapita - currentGDPPerCapita) / baselineGDPPerCapita * 100);
 
@@ -304,7 +302,9 @@ export class GeopoliticalConflictPhase implements SimulationPhase {
         valueName: 'economicMultiplier',
         month: state.currentMonth,
         additionalInfo: {
-          currentGDPPerCapita: currentGDPPerCapita.toFixed(0),
+          gdp: gdp.toFixed(0),
+          population: population.toFixed(2),
+          currentGDPPerCapita: (currentGDPPerCapita * 1000).toFixed(0),
           gdpLossPct: gdpLossPct.toFixed(1)
         }
       }
