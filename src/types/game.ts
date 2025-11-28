@@ -452,7 +452,43 @@ export interface GameState {
   nuclearStates: import('../types/nuclearStates').NuclearState[]; // Specific nuclear-armed nations
   madDeterrence: import('../types/nuclearStates').MADDeterrence; // MAD deterrence system
   bilateralTensions: import('../types/nuclearStates').BilateralTension[]; // Bilateral relationships
-  
+
+  /**
+   * Geopolitical Conflict Escalation System (TIER 2, RD-3, Nov 28, 2025)
+   *
+   * Models AI-era conflict escalation with:
+   * - Base risk: 0.05% monthly (0.6% annual)
+   * - AI multiplier: 2× range [1.5, 3.0] (corrected from 4×)
+   * - Compound cap: 4× maximum (prevents doom spiral)
+   * - Deterrence discount: 0.6× (MAD still effective)
+   * - Regional flashpoints: Taiwan (3.3%), Middle East (2%), Kashmir (0.8%), Ukraine (0.5%)
+   * - Resource scarcity multipliers: food (+0.18 per 25%), water (+0.09 per 25%)
+   * - Climate stress: +0.075× per °C above 1.5°C
+   *
+   * Research: geopolitical_conflict_escalation_20251128.md (30+ sources)
+   * Validation: rd3_geopolitical_conflict_critique_20251128.md (PASSED with corrections)
+   * Expected impact: Realistic nuclear risk (not doom spiral), regional hotspot modeling
+   */
+  geopoliticalConflict: {
+    tension: number;  // 0-100 scale (global geopolitical tension)
+    nuclearEscalationRisk: number;  // Monthly probability [0, 1] of nuclear event
+    regionalFlashpoints: Map<string, {
+      risk: number;  // Monthly escalation probability [0, 1]
+      triggers: string[];  // Active triggers (e.g., "AI arms race", "resource scarcity")
+      lastUpdate: number;  // Month last updated
+    }>;
+    activeConflicts: {
+      conventional: number;  // Count of active conventional conflicts
+      nuclear: boolean;  // Has nuclear exchange occurred this simulation
+    };
+    historicalEvents: Array<{
+      month: number;
+      type: 'escalation' | 'deescalation' | 'nuclear_event';
+      region: string;
+      severity: number;  // 0-1 scale
+    }>;
+  };
+
   // Resource Economy (Phase 2.9)
   resourceEconomy: import('../types/resources').ResourceEconomy; // Comprehensive resource modeling with CO2 coupling
   
