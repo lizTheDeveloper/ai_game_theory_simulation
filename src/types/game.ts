@@ -474,6 +474,19 @@ export interface GameState {
   // Novel Entities Crisis (TIER 1.5)
   novelEntitiesSystem: import('../types/novelEntities').NovelEntitiesSystem; // Chemical pollution & slow poisoning
 
+  /**
+   * Permafrost Carbon Feedback System (TIER 2, RD-1, Nov 28, 2025)
+   *
+   * Models positive feedback loop from thawing permafrost releasing CO2 and CH4.
+   * Arctic amplification (3×) causes accelerated thaw, exposing ancient carbon.
+   *
+   * Research: Schuur et al. (2022) AREP, Turetsky et al. (2020) Nature Geoscience,
+   *           IPCC AR6 WG1 (2021), McGuire et al. (2018) Nature
+   * Expected impact: +0.1-0.3°C warming by 2100 in baseline scenarios,
+   *                  critical tipping point risk above 1.5°C warming
+   */
+  permafrostSystem: import('../types/permafrost').PermafrostSystem;
+
   // Planetary Boundaries (TIER 3.1)
   planetaryBoundariesSystem: import('../types/planetaryBoundaries').PlanetaryBoundariesSystem; // Kate Raworth's Doughnut Economics & tipping point cascades
 

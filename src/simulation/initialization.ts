@@ -36,6 +36,7 @@ import { initializePhosphorusSystem } from './phosphorusDepletion';
 import { initializeFreshwaterSystem } from './freshwaterDepletion';
 import { initializeOceanAcidificationSystem } from './oceanAcidification';
 import { initializeNovelEntitiesSystem } from './novelEntities';
+import { initializePermafrostSystem } from './permafrostCarbon';
 import { initializePlanetaryBoundariesSystem } from './planetaryBoundaries';
 import { initializeHumanPopulationSystem } from './populationDynamics';
 import { initializeRefugeeCrisisSystem } from './refugeeCrises';
@@ -950,6 +951,9 @@ export function createDefaultInitialState(
     
     // Novel Entities Crisis (TIER 1.5)
     novelEntitiesSystem: initializeNovelEntitiesSystem(),
+
+    // Permafrost Carbon Feedback (TIER 2, RD-1)
+    permafrostSystem: initializePermafrostSystem(),
 
     // Planetary Boundaries (TIER 3.1)
     // LAYER 2 REMEDIATION (Nov 2, 2025): Pass RNG for biosphere parameter sweep
