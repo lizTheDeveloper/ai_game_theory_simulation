@@ -91,6 +91,7 @@ export class ResourceWaterPhase implements SimulationPhase {
       });
     }
 
+    // RD-2 FIX (Nov 28, 2025): Pass RNG to ocean acidification system (now REQUIRED)
     updateOceanAcidificationSystem(state, rng);
     checkOceanAcidificationTechUnlocks(state);
 
