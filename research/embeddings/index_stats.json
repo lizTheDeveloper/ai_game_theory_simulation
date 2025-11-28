@@ -1,6 +1,6 @@
 {
-  "total_videos": 444,
-  "total_chunks": 77700,
+  "total_videos": 624,
+  "total_chunks": 133200,
   "embedding_dimension": 384,
   "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
   "chunk_size": 512,

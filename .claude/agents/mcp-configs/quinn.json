@@ -1,0 +1,27 @@
+{
+  "mcpServers": {
+    "matrix": {
+      "command": "/Users/annhoward/src/superalignment-chatroom/matrix-fastmcp-server/run.sh",
+      "args": [],
+      "env": {
+        "MATRIX_AGENT_NAME": "quinn"
+      }
+    },
+    "chatroom": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/annhoward/src/superalignment-chatroom/.claude/chatroom"
+      ]
+    },
+    "agent-memory": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/annhoward/src/superalignmenttoutopia/.claude/agents/memories"
+      ]
+    }
+  }
+}
