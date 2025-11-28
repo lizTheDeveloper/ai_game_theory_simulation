@@ -1,0 +1,354 @@
+# Google Cloud Armor Security Policy for MARCUS Platform
+# This policy provides WAF (Web Application Firewall) and DDoS protection
+#
+# Apply with gcloud (not kubectl - Cloud Armor is GCP infrastructure):
+# gcloud compute security-policies create marcus-security-policy \
+#   --description "MARCUS Platform WAF + DDoS Protection" \
+#   --project=YOUR_PROJECT
+#
+# Then apply rules from this file using the gcloud commands below
+
+---
+# CLOUD ARMOR POLICY CONFIGURATION
+# (Apply via gcloud CLI - this YAML is for documentation/reference)
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloudarmor-policy-commands
+  namespace: marcus-platform
+data:
+  # This ConfigMap contains the gcloud commands to create the Cloud Armor policy
+  # Run these commands in order:
+
+  # 1. Create the base security policy
+  create-policy.sh: |
+    #!/bin/bash
+    set -e
+
+    PROJECT_ID=${PROJECT_ID:-"your-gcp-project"}
+    POLICY_NAME="marcus-security-policy"
+
+    echo "Creating Cloud Armor security policy..."
+    gcloud compute security-policies create $POLICY_NAME \
+      --description "MARCUS Platform WAF + DDoS Protection" \
+      --project=$PROJECT_ID
+
+    echo "Policy created successfully!"
+
+  # 2. Configure rate limiting (100 req/min per IP, burst 150)
+  rate-limiting.sh: |
+    #!/bin/bash
+    set -e
+
+    PROJECT_ID=${PROJECT_ID:-"your-gcp-project"}
+    POLICY_NAME="marcus-security-policy"
+
+    echo "Configuring rate limiting rule..."
+    gcloud compute security-policies rules create 1000 \
+      --security-policy=$POLICY_NAME \
+      --expression="true" \
+      --action=rate-based-ban \
+      --rate-limit-threshold-count=150 \
+      --rate-limit-threshold-interval-sec=60 \
+      --ban-duration-sec=600 \
+      --conform-action=allow \
+      --exceed-action=deny-429 \
+      --enforce-on-key=IP \
+      --project=$PROJECT_ID
+
+    echo "Rate limiting configured: 150 req/min per IP, 10min ban on exceed"
+
+  # 3. Block common attack patterns (OWASP Top 10)
+  owasp-rules.sh: |
+    #!/bin/bash
+    set -e
+
+    PROJECT_ID=${PROJECT_ID:-"your-gcp-project"}
+    POLICY_NAME="marcus-security-policy"
+
+    echo "Enabling OWASP Top 10 protection..."
+
+    # SQL Injection
+    gcloud compute security-policies rules create 2000 \
+      --security-policy=$POLICY_NAME \
+      --expression="evaluatePreconfiguredExpr('sqli-stable')" \
+      --action=deny-403 \
+      --description="Block SQL injection attempts" \
+      --project=$PROJECT_ID
+
+    # XSS (Cross-Site Scripting)
+    gcloud compute security-policies rules create 2001 \
+      --security-policy=$POLICY_NAME \
+      --expression="evaluatePreconfiguredExpr('xss-stable')" \
+      --action=deny-403 \
+      --description="Block XSS attempts" \
+      --project=$PROJECT_ID
+
+    # LFI (Local File Inclusion)
+    gcloud compute security-policies rules create 2002 \
+      --security-policy=$POLICY_NAME \
+      --expression="evaluatePreconfiguredExpr('lfi-stable')" \
+      --action=deny-403 \
+      --description="Block local file inclusion attempts" \
+      --project=$PROJECT_ID
+
+    # RFI (Remote File Inclusion)
+    gcloud compute security-policies rules create 2003 \
+      --security-policy=$POLICY_NAME \
+      --expression="evaluatePreconfiguredExpr('rfi-stable')" \
+      --action=deny-403 \
+      --description="Block remote file inclusion attempts" \
+      --project=$PROJECT_ID
+
+    # RCE (Remote Code Execution)
+    gcloud compute security-policies rules create 2004 \
+      --security-policy=$POLICY_NAME \
+      --expression="evaluatePreconfiguredExpr('rce-stable')" \
+      --action=deny-403 \
+      --description="Block remote code execution attempts" \
+      --project=$PROJECT_ID
+
+    # Scanner Detection
+    gcloud compute security-policies rules create 2005 \
+      --security-policy=$POLICY_NAME \
+      --expression="evaluatePreconfiguredExpr('scannerdetection-stable')" \
+      --action=deny-403 \
+      --description="Block security scanners" \
+      --project=$PROJECT_ID
+
+    # Protocol Attack
+    gcloud compute security-policies rules create 2006 \
+      --security-policy=$POLICY_NAME \
+      --expression="evaluatePreconfiguredExpr('protocolattack-stable')" \
+      --action=deny-403 \
+      --description="Block protocol-level attacks" \
+      --project=$PROJECT_ID
+
+    # Session Fixation
+    gcloud compute security-policies rules create 2007 \
+      --security-policy=$POLICY_NAME \
+      --expression="evaluatePreconfiguredExpr('sessionfixation-stable')" \
+      --action=deny-403 \
+      --description="Block session fixation attempts" \
+      --project=$PROJECT_ID
+
+    echo "OWASP Top 10 protection enabled!"
+
+  # 4. Block known malicious IPs (optional - add specific IPs/ranges)
+  block-malicious-ips.sh: |
+    #!/bin/bash
+    set -e
+
+    PROJECT_ID=${PROJECT_ID:-"your-gcp-project"}
+    POLICY_NAME="marcus-security-policy"
+
+    echo "Blocking known malicious IP ranges..."
+
+    # Example: Block Tor exit nodes (optional, may block legitimate users)
+    # gcloud compute security-policies rules create 3000 \
+    #   --security-policy=$POLICY_NAME \
+    #   --src-ip-ranges="1.2.3.4/32,5.6.7.8/32" \
+    #   --action=deny-403 \
+    #   --description="Block known malicious IPs" \
+    #   --project=$PROJECT_ID
+
+    echo "IP blocking configured (add specific IPs as needed)"
+
+  # 5. Geo-blocking (optional - block specific countries)
+  geo-blocking.sh: |
+    #!/bin/bash
+    set -e
+
+    PROJECT_ID=${PROJECT_ID:-"your-gcp-project"}
+    POLICY_NAME="marcus-security-policy"
+
+    echo "Configuring geo-blocking (optional)..."
+
+    # Example: Block traffic from specific countries
+    # Uncomment and adjust country codes as needed
+    # ISO 3166-1 alpha-2 country codes: US, CN, RU, etc.
+
+    # gcloud compute security-policies rules create 4000 \
+    #   --security-policy=$POLICY_NAME \
+    #   --expression="origin.region_code == 'CN' || origin.region_code == 'RU'" \
+    #   --action=deny-403 \
+    #   --description="Block traffic from high-risk countries" \
+    #   --project=$PROJECT_ID
+
+    echo "Geo-blocking ready (configure countries as needed)"
+
+  # 6. Adaptive DDoS protection (automatic)
+  ddos-protection.sh: |
+    #!/bin/bash
+    set -e
+
+    PROJECT_ID=${PROJECT_ID:-"your-gcp-project"}
+    POLICY_NAME="marcus-security-policy"
+
+    echo "Enabling adaptive DDoS protection..."
+
+    gcloud compute security-policies update $POLICY_NAME \
+      --enable-layer7-ddos-defense \
+      --layer7-ddos-defense-rule-visibility=STANDARD \
+      --project=$PROJECT_ID
+
+    echo "Adaptive DDoS protection enabled!"
+
+  # 7. Custom rule: Block excessive API calls to specific endpoints
+  api-protection.sh: |
+    #!/bin/bash
+    set -e
+
+    PROJECT_ID=${PROJECT_ID:-"your-gcp-project"}
+    POLICY_NAME="marcus-security-policy"
+
+    echo "Configuring API endpoint protection..."
+
+    # Stricter rate limit for expensive /analyze endpoint
+    gcloud compute security-policies rules create 5000 \
+      --security-policy=$POLICY_NAME \
+      --expression="request.path.matches('/api/citations/analyze')" \
+      --action=rate-based-ban \
+      --rate-limit-threshold-count=30 \
+      --rate-limit-threshold-interval-sec=60 \
+      --ban-duration-sec=600 \
+      --conform-action=allow \
+      --exceed-action=deny-429 \
+      --enforce-on-key=IP \
+      --description="Strict rate limit for /analyze endpoint (30/min)" \
+      --project=$PROJECT_ID
+
+    echo "API endpoint protection configured!"
+
+  # 8. Configure logging and monitoring
+  logging.sh: |
+    #!/bin/bash
+    set -e
+
+    PROJECT_ID=${PROJECT_ID:-"your-gcp-project"}
+    POLICY_NAME="marcus-security-policy"
+
+    echo "Configuring security policy logging..."
+
+    gcloud compute security-policies update $POLICY_NAME \
+      --log-level=VERBOSE \
+      --json-parsing=STANDARD \
+      --project=$PROJECT_ID
+
+    echo "Logging configured - view in Cloud Logging with filter:"
+    echo "  resource.type=\"http_load_balancer\""
+    echo "  jsonPayload.enforcedSecurityPolicy.name=\"$POLICY_NAME\""
+
+  # 9. Verify policy configuration
+  verify.sh: |
+    #!/bin/bash
+    set -e
+
+    PROJECT_ID=${PROJECT_ID:-"your-gcp-project"}
+    POLICY_NAME="marcus-security-policy"
+
+    echo "Verifying Cloud Armor policy configuration..."
+
+    gcloud compute security-policies describe $POLICY_NAME \
+      --project=$PROJECT_ID \
+      --format=yaml
+
+    echo ""
+    echo "Listing all rules:"
+    gcloud compute security-policies rules list $POLICY_NAME \
+      --project=$PROJECT_ID \
+      --format=table
+
+  # 10. Deploy policy to ingress
+  deploy.sh: |
+    #!/bin/bash
+    set -e
+
+    PROJECT_ID=${PROJECT_ID:-"your-gcp-project"}
+    POLICY_NAME="marcus-security-policy"
+    BACKEND_SERVICE="YOUR_BACKEND_SERVICE_NAME"
+
+    echo "Attaching Cloud Armor policy to backend service..."
+
+    # Get backend service name from GKE ingress
+    # gcloud compute backend-services list --project=$PROJECT_ID
+
+    gcloud compute backend-services update $BACKEND_SERVICE \
+      --security-policy=$POLICY_NAME \
+      --global \
+      --project=$PROJECT_ID
+
+    echo "Cloud Armor policy attached to backend service: $BACKEND_SERVICE"
+
+---
+# Usage Instructions:
+#
+# 1. Set your GCP project ID:
+#    export PROJECT_ID="your-gcp-project-id"
+#
+# 2. Extract and run the scripts:
+#    kubectl get configmap cloudarmor-policy-commands -n marcus-platform -o jsonpath='{.data.create-policy\.sh}' | bash
+#    kubectl get configmap cloudarmor-policy-commands -n marcus-platform -o jsonpath='{.data.rate-limiting\.sh}' | bash
+#    kubectl get configmap cloudarmor-policy-commands -n marcus-platform -o jsonpath='{.data.owasp-rules\.sh}' | bash
+#    kubectl get configmap cloudarmor-policy-commands -n marcus-platform -o jsonpath='{.data.ddos-protection\.sh}' | bash
+#    kubectl get configmap cloudarmor-policy-commands -n marcus-platform -o jsonpath='{.data.api-protection\.sh}' | bash
+#    kubectl get configmap cloudarmor-policy-commands -n marcus-platform -o jsonpath='{.data.logging\.sh}' | bash
+#    kubectl get configmap cloudarmor-policy-commands -n marcus-platform -o jsonpath='{.data.verify\.sh}' | bash
+#
+# 3. Or run all at once:
+#    for script in create-policy rate-limiting owasp-rules ddos-protection api-protection logging verify; do
+#      kubectl get configmap cloudarmor-policy-commands -n marcus-platform -o jsonpath="{.data.$script\.sh}" | bash
+#    done
+#
+# 4. Monitor Cloud Armor activity:
+#    https://console.cloud.google.com/net-security/securitypolicies/list?project=YOUR_PROJECT
+#
+# 5. View blocked requests in Cloud Logging:
+#    resource.type="http_load_balancer"
+#    jsonPayload.enforcedSecurityPolicy.name="marcus-security-policy"
+#    jsonPayload.enforcedSecurityPolicy.outcome="DENY"
+
+---
+# Expected Protection:
+#
+# Rate Limiting:
+#   - 150 req/min per IP (global)
+#   - 30 req/min per IP for /analyze endpoint
+#   - 10-minute ban on exceed
+#   - 429 Too Many Requests response
+#
+# OWASP Top 10:
+#   - SQL injection
+#   - XSS
+#   - Local/remote file inclusion
+#   - Remote code execution
+#   - Scanner detection
+#   - Protocol attacks
+#   - Session fixation
+#
+# DDoS Protection:
+#   - Adaptive layer 7 protection
+#   - Automatic threat detection
+#   - Traffic anomaly detection
+#
+# Logging:
+#   - All denied requests logged
+#   - Security policy outcomes tracked
+#   - Integration with Cloud Monitoring
+
+---
+# Cost Estimate (as of Nov 2025):
+#
+# Cloud Armor Pricing:
+#   - Policy: $5/month
+#   - Rule: $1/month per rule (8 rules = $8/month)
+#   - Requests: $0.75 per 1M requests (first 10B requests)
+#
+# Total: ~$13/month + $0.75 per 1M requests
+#
+# For 1B requests/month: ~$763/month
+# For 100M requests/month: ~$88/month
+# For 10M requests/month: ~$21/month
+#
+# Note: Standard Cloud Load Balancer costs apply separately

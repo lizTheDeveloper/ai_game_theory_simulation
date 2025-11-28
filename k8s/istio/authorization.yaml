@@ -1,0 +1,111 @@
+---
+# AuthorizationPolicy - Require authentication for API endpoints
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: require-jwt
+  namespace: marcus-platform
+spec:
+  selector:
+    matchLabels:
+      app: orchestrator
+  action: ALLOW
+  rules:
+    # Public endpoints (no auth required)
+    - to:
+        - operation:
+            paths:
+              - /health
+              - /ready
+              - /auth/login
+              - /auth/register
+
+    # API endpoints (JWT required)
+    - to:
+        - operation:
+            paths:
+              - /api/*
+      when:
+        - key: request.auth.claims[iss]
+          values: ["https://marcus.example.com"]
+        - key: request.auth.claims[aud]
+          values: ["marcus-api"]
+
+    # Admin endpoints (admin role required)
+    - to:
+        - operation:
+            paths:
+              - /api/admin/*
+      when:
+        - key: request.auth.claims[role]
+          values: ["admin"]
+---
+# PeerAuthentication - Enforce mTLS between services
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: default
+  namespace: marcus-platform
+spec:
+  mtls:
+    mode: STRICT
+---
+# RequestAuthentication - JWT validation
+apiVersion: security.istio.io/v1beta1
+kind: RequestAuthentication
+metadata:
+  name: jwt-auth
+  namespace: marcus-platform
+spec:
+  selector:
+    matchLabels:
+      app: orchestrator
+  jwtRules:
+    - issuer: "https://marcus.example.com"
+      audiences:
+        - "marcus-api"
+      jwksUri: "https://marcus.example.com/.well-known/jwks.json"
+      forwardOriginalToken: true
+---
+# AuthorizationPolicy - Deny all by default (explicit allow required)
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: deny-all
+  namespace: marcus-platform
+spec:
+  action: DENY
+  rules:
+    - from:
+        - source:
+            notNamespaces: ["marcus-platform", "istio-system"]
+---
+# AuthorizationPolicy - Allow Prometheus scraping
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-prometheus
+  namespace: marcus-platform
+spec:
+  action: ALLOW
+  rules:
+    - from:
+        - source:
+            namespaces: ["istio-system"]
+      to:
+        - operation:
+            ports: ["9090", "9091"]
+            paths: ["/metrics"]
+---
+# AuthorizationPolicy - Allow Jaeger tracing
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-jaeger
+  namespace: marcus-platform
+spec:
+  action: ALLOW
+  rules:
+    - to:
+        - operation:
+            ports: ["6831", "6832", "14250", "14268"]

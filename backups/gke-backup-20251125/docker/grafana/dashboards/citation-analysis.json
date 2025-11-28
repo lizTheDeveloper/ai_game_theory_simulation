@@ -1,0 +1,228 @@
+{
+  "dashboard": {
+    "title": "MARCUS - Citation Analysis Overview",
+    "tags": ["marcus", "citation", "analysis"],
+    "timezone": "browser",
+    "editable": true,
+    "graphTooltip": 1,
+    "time": {
+      "from": "now-6h",
+      "to": "now"
+    },
+    "refresh": "30s",
+    "templating": {
+      "list": [
+        {
+          "name": "environment",
+          "type": "custom",
+          "options": [
+            {"text": "Production", "value": "prod"},
+            {"text": "Staging", "value": "staging"},
+            {"text": "Development", "value": "dev"}
+          ],
+          "current": {"text": "Production", "value": "prod"}
+        }
+      ]
+    },
+    "panels": [
+      {
+        "id": 1,
+        "title": "Citation Analysis Throughput",
+        "type": "graph",
+        "gridPos": {"x": 0, "y": 0, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "rate(citation_analyses_total{environment=\"$environment\"}[5m])",
+            "legendFormat": "Citations/sec",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "short", "label": "Citations/sec"},
+          {"format": "short"}
+        ],
+        "alert": {
+          "conditions": [
+            {
+              "evaluator": {"params": [0.1], "type": "lt"},
+              "query": {"params": ["A", "5m", "now"]},
+              "reducer": {"params": [], "type": "avg"},
+              "type": "query"
+            }
+          ],
+          "executionErrorState": "alerting",
+          "for": "5m",
+          "frequency": "1m",
+          "name": "Low throughput alert"
+        }
+      },
+      {
+        "id": 2,
+        "title": "Mean Integrity Score",
+        "type": "graph",
+        "gridPos": {"x": 12, "y": 0, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "avg(citation_mean_integrity{environment=\"$environment\"})",
+            "legendFormat": "Mean Integrity",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "percentunit", "label": "Integrity", "min": 0, "max": 1},
+          {"format": "short"}
+        ],
+        "thresholds": [
+          {"value": 0.7, "colorMode": "critical", "op": "lt", "fill": true, "line": true}
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Consensus Level",
+        "type": "gauge",
+        "gridPos": {"x": 0, "y": 8, "w": 6, "h": 8},
+        "targets": [
+          {
+            "expr": "avg(citation_consensus{environment=\"$environment\"})",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "min": 0,
+            "max": 1,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"value": 0, "color": "red"},
+                {"value": 0.7, "color": "yellow"},
+                {"value": 0.8, "color": "green"}
+              ]
+            },
+            "unit": "percentunit"
+          }
+        }
+      },
+      {
+        "id": 4,
+        "title": "Consensus Over Time",
+        "type": "graph",
+        "gridPos": {"x": 6, "y": 8, "w": 18, "h": 8},
+        "targets": [
+          {
+            "expr": "avg(citation_consensus{environment=\"$environment\"})",
+            "legendFormat": "Consensus",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "percentunit", "label": "Consensus", "min": 0, "max": 1},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Accuracy Metrics",
+        "type": "graph",
+        "gridPos": {"x": 0, "y": 16, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "citation_accuracy_total{environment=\"$environment\"}",
+            "legendFormat": "Accuracy",
+            "refId": "A"
+          },
+          {
+            "expr": "citation_precision_total{environment=\"$environment\"}",
+            "legendFormat": "Precision",
+            "refId": "B"
+          },
+          {
+            "expr": "citation_recall_total{environment=\"$environment\"}",
+            "legendFormat": "Recall",
+            "refId": "C"
+          },
+          {
+            "expr": "citation_f1_score{environment=\"$environment\"}",
+            "legendFormat": "F1 Score",
+            "refId": "D"
+          }
+        ],
+        "yaxes": [
+          {"format": "percentunit", "label": "Score", "min": 0, "max": 1},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Citation Behaviors Detected",
+        "type": "piechart",
+        "gridPos": {"x": 12, "y": 16, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "sum by (behavior) (citation_behavior_count{environment=\"$environment\"})",
+            "legendFormat": "{{behavior}}",
+            "refId": "A"
+          }
+        ],
+        "options": {
+          "legend": {
+            "displayMode": "table",
+            "placement": "right",
+            "values": ["value", "percent"]
+          }
+        }
+      },
+      {
+        "id": 7,
+        "title": "Agent Agreement Distribution",
+        "type": "heatmap",
+        "gridPos": {"x": 0, "y": 24, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.5, sum(rate(agent_agreement_bucket{environment=\"$environment\"}[5m])) by (le))",
+            "legendFormat": "Agreement",
+            "refId": "A"
+          }
+        ],
+        "dataFormat": "tsbuckets",
+        "color": {
+          "mode": "spectrum",
+          "cardColor": "#b4ff00",
+          "colorScale": "sqrt",
+          "exponent": 0.5,
+          "colorScheme": "interpolateSpectral"
+        }
+      },
+      {
+        "id": 8,
+        "title": "Processing Latency",
+        "type": "graph",
+        "gridPos": {"x": 12, "y": 24, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.50, rate(citation_latency_ms_bucket{environment=\"$environment\"}[5m]))",
+            "legendFormat": "p50",
+            "refId": "A"
+          },
+          {
+            "expr": "histogram_quantile(0.95, rate(citation_latency_ms_bucket{environment=\"$environment\"}[5m]))",
+            "legendFormat": "p95",
+            "refId": "B"
+          },
+          {
+            "expr": "histogram_quantile(0.99, rate(citation_latency_ms_bucket{environment=\"$environment\"}[5m]))",
+            "legendFormat": "p99",
+            "refId": "C"
+          }
+        ],
+        "yaxes": [
+          {"format": "ms", "label": "Latency"},
+          {"format": "short"}
+        ],
+        "thresholds": [
+          {"value": 100, "colorMode": "critical", "op": "gt", "fill": false, "line": true}
+        ]
+      }
+    ]
+  }
+}

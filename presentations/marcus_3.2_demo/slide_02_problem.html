@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+    margin: 0;
+    padding: 60pt 80pt;
+    width: 720pt;
+    height: 405pt;
+    background: #000000;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+h1 {
+    color: #FF0040;
+    font-size: 36pt;
+    font-weight: 300;
+    margin: 0 0 30pt 0;
+    text-transform: uppercase;
+    letter-spacing: 2pt;
+    text-shadow: 0 0 20px rgba(255, 0, 64, 0.4);
+}
+
+.stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30pt;
+    margin-bottom: 40pt;
+}
+
+.stat-box {
+    background: rgba(255, 0, 64, 0.05);
+    border: 1px solid rgba(255, 0, 64, 0.3);
+    padding: 20pt;
+    position: relative;
+}
+
+.stat-number {
+    color: #FF0040;
+    font-size: 42pt;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    line-height: 1;
+}
+
+.stat-label {
+    color: #FFFFFF;
+    font-size: 14pt;
+    margin-top: 8pt;
+    opacity: 0.8;
+}
+
+.problem-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.problem-list li {
+    color: #FFFFFF;
+    font-size: 16pt;
+    margin-bottom: 12pt;
+    padding-left: 30pt;
+    position: relative;
+    line-height: 1.4;
+}
+
+.problem-list li:before {
+    content: "⚠";
+    position: absolute;
+    left: 0;
+    color: #FFB000;
+    font-size: 18pt;
+}
+</style>
+</head>
+<body>
+    <h1>The Problem</h1>
+
+    <div class="stat-grid">
+        <div class="stat-box">
+            <div class="stat-number">67%</div>
+            <div class="stat-label">AI citations are hallucinated</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-number">$2.3M</div>
+            <div class="stat-label">Average cost of misinformation incident</div>
+        </div>
+    </div>
+
+    <ul class="problem-list">
+        <li>Single-agent verification fails at scale</li>
+        <li>No consensus mechanism for citation accuracy</li>
+        <li>Manual review bottlenecks deployment</li>
+        <li>Existing solutions lack behavioral diversity</li>
+        <li>Zero observability into citation decision-making</li>
+    </ul>
+</body>
+</html>

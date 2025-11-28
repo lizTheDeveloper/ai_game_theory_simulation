@@ -1,0 +1,170 @@
+global:
+  resolve_timeout: 5m
+  slack_api_url: ${SLACK_WEBHOOK_URL}
+  pagerduty_url: 'https://events.pagerduty.com/v2/enqueue'
+
+# Alert routing tree
+route:
+  # Default receiver for all alerts
+  receiver: 'default'
+
+  # Group alerts by these labels
+  group_by: ['alertname', 'cluster', 'service', 'severity']
+
+  # Wait time before sending first notification
+  group_wait: 30s
+
+  # Wait time before sending notification about new alerts for the same group
+  group_interval: 5m
+
+  # Wait time before re-sending notification if no resolution
+  repeat_interval: 4h
+
+  # Route configuration based on severity and component
+  routes:
+    # CRITICAL alerts → PagerDuty + Slack
+    - match:
+        severity: critical
+      receiver: 'pagerduty-critical'
+      routes:
+        - match:
+            component: security
+          receiver: 'security-team'
+          continue: true
+        - match:
+            component: database
+          receiver: 'database-team'
+          continue: true
+
+    # WARNING alerts → Slack #monitoring
+    - match:
+        severity: warning
+      receiver: 'slack-warnings'
+      repeat_interval: 12h
+
+    # INFO alerts → Slack #observability
+    - match:
+        severity: info
+      receiver: 'slack-info'
+      repeat_interval: 24h
+
+# Alert receivers
+receivers:
+  # Default receiver (logs only)
+  - name: 'default'
+    webhook_configs:
+      - url: 'http://localhost:9093/api/v1/alerts'
+        send_resolved: true
+
+  # PagerDuty for critical alerts
+  - name: 'pagerduty-critical'
+    pagerduty_configs:
+      - service_key: ${PAGERDUTY_SERVICE_KEY}
+        description: '{{ .CommonAnnotations.summary }}'
+        details:
+          firing: '{{ .Alerts.Firing | len }}'
+          num_firing: '{{ .Alerts.Firing | len }}'
+          num_resolved: '{{ .Alerts.Resolved | len }}'
+          resolved: '{{ .Alerts.Resolved | len }}'
+        severity: 'critical'
+    slack_configs:
+      - channel: '#alerts'
+        username: 'MARCUS AlertManager'
+        color: 'danger'
+        title: '🚨 CRITICAL: {{ .CommonAnnotations.summary }}'
+        text: |
+          *Alert:* {{ .CommonLabels.alertname }}
+          *Severity:* {{ .CommonLabels.severity }}
+          *Component:* {{ .CommonLabels.component }}
+          *Description:* {{ .CommonAnnotations.description }}
+          *Runbook:* {{ .CommonAnnotations.runbook_url }}
+        send_resolved: true
+
+  # Slack for warning alerts
+  - name: 'slack-warnings'
+    slack_configs:
+      - channel: '#monitoring'
+        username: 'MARCUS AlertManager'
+        color: 'warning'
+        title: '⚠️ WARNING: {{ .CommonAnnotations.summary }}'
+        text: |
+          *Alert:* {{ .CommonLabels.alertname }}
+          *Severity:* {{ .CommonLabels.severity }}
+          *Component:* {{ .CommonLabels.component }}
+          *Description:* {{ .CommonAnnotations.description }}
+          *Runbook:* {{ .CommonAnnotations.runbook_url }}
+        send_resolved: true
+
+  # Slack for info alerts
+  - name: 'slack-info'
+    slack_configs:
+      - channel: '#observability'
+        username: 'MARCUS AlertManager'
+        color: 'good'
+        title: 'ℹ️ INFO: {{ .CommonAnnotations.summary }}'
+        text: |
+          *Alert:* {{ .CommonLabels.alertname }}
+          *Description:* {{ .CommonAnnotations.description }}
+        send_resolved: true
+
+  # Security team (critical security alerts)
+  - name: 'security-team'
+    slack_configs:
+      - channel: '#security-incidents'
+        username: 'MARCUS Security Alert'
+        color: 'danger'
+        title: '🔒 SECURITY ALERT: {{ .CommonAnnotations.summary }}'
+        text: |
+          *Alert:* {{ .CommonLabels.alertname }}
+          *Severity:* CRITICAL
+          *Description:* {{ .CommonAnnotations.description }}
+          *Immediate Action Required*
+        send_resolved: true
+    email_configs:
+      - to: ${SECURITY_TEAM_EMAIL}
+        from: 'alerts@marcus.local'
+        smarthost: 'smtp.sendgrid.net:587'
+        auth_username: ${SMTP_USERNAME}
+        auth_password: ${SMTP_PASSWORD}
+        headers:
+          Subject: '[CRITICAL] MARCUS Security Alert: {{ .CommonAnnotations.summary }}'
+
+  # Database team (critical database alerts)
+  - name: 'database-team'
+    slack_configs:
+      - channel: '#database-ops'
+        username: 'MARCUS DB Alert'
+        color: 'danger'
+        title: '💾 DATABASE ALERT: {{ .CommonAnnotations.summary }}'
+        text: |
+          *Alert:* {{ .CommonLabels.alertname }}
+          *Severity:* {{ .CommonLabels.severity }}
+          *Description:* {{ .CommonAnnotations.description }}
+          *Runbook:* {{ .CommonAnnotations.runbook_url }}
+        send_resolved: true
+
+# Inhibition rules (suppress alerts based on other alerts)
+inhibit_rules:
+  # Inhibit warning alerts if critical alert is firing for same service
+  - source_match:
+      severity: 'critical'
+    target_match:
+      severity: 'warning'
+    equal: ['alertname', 'component', 'service']
+
+  # Inhibit low consensus alerts if all agents are down
+  - source_match:
+      alertname: 'AllAgentsUnhealthy'
+    target_match:
+      alertname: 'LowConsensus'
+
+  # Inhibit high latency alerts if database is down
+  - source_match:
+      alertname: 'DatabaseConnectionPoolExhausted'
+    target_match:
+      alertname: 'HighLatency'
+    equal: ['component']
+
+# Templates for custom alert formatting
+templates:
+  - '/etc/alertmanager/templates/*.tmpl'

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    width: 720pt;
+    height: 405pt;
+    background: linear-gradient(135deg, #000000 0%, #0A0A0A 100%);
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.glow-circle {
+    position: absolute;
+    width: 300pt;
+    height: 300pt;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 240, 255, 0.2) 0%, transparent 70%);
+    animation: pulse-circle 4s ease-in-out infinite;
+}
+
+@keyframes pulse-circle {
+    0%, 100% { transform: scale(0.8); opacity: 0.3; }
+    50% { transform: scale(1.2); opacity: 0.6; }
+}
+
+h1 {
+    color: #00FF88;
+    font-size: 48pt;
+    font-weight: 300;
+    margin: 0 0 30pt 0;
+    text-transform: uppercase;
+    letter-spacing: 4pt;
+    text-align: center;
+    text-shadow: 0 0 40px rgba(0, 255, 136, 0.6);
+    z-index: 1;
+}
+
+.cta-box {
+    background: rgba(0, 255, 136, 0.05);
+    border: 2px solid rgba(0, 255, 136, 0.4);
+    padding: 30pt 50pt;
+    text-align: center;
+    z-index: 1;
+}
+
+.cta-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 30pt 0;
+}
+
+.cta-list li {
+    color: #FFFFFF;
+    font-size: 18pt;
+    margin-bottom: 15pt;
+    position: relative;
+    padding-left: 35pt;
+}
+
+.cta-list li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: #00F0FF;
+    font-size: 20pt;
+    font-weight: bold;
+}
+
+.contact-info {
+    display: flex;
+    gap: 40pt;
+    justify-content: center;
+    margin-top: 30pt;
+}
+
+.contact-item {
+    color: #00F0FF;
+    font-size: 14pt;
+}
+
+.contact-label {
+    color: #FFFFFF;
+    opacity: 0.6;
+    font-size: 11pt;
+    margin-bottom: 5pt;
+}
+
+.bottom-tagline {
+    position: absolute;
+    bottom: 30pt;
+    color: #FFFFFF;
+    font-size: 12pt;
+    opacity: 0.5;
+    text-align: center;
+}
+</style>
+</head>
+<body>
+    <div class="glow-circle"></div>
+
+    <h1>Ready to Deploy?</h1>
+
+    <div class="cta-box">
+        <ul class="cta-list">
+            <li>Start with our free trial</li>
+            <li>Deploy in your infrastructure</li>
+            <li>See results in 24 hours</li>
+        </ul>
+
+        <div class="contact-info">
+            <div>
+                <div class="contact-label">Schedule Demo</div>
+                <div class="contact-item">demo.marcus.ai</div>
+            </div>
+            <div>
+                <div class="contact-label">Technical Docs</div>
+                <div class="contact-item">docs.marcus.ai</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bottom-tagline">
+        MARCUS 3.2 - Production-Ready Citation Integrity at Scale
+    </div>
+</body>
+</html>

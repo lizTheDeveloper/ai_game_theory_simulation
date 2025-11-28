@@ -1,0 +1,483 @@
+{
+  "dashboard": {
+    "title": "Adversarial Detection",
+    "uid": "sim-detection-07",
+    "tags": ["simulation", "research-tool", "detection", "adversarial", "ai"],
+    "timezone": "browser",
+    "schemaVersion": 38,
+    "version": 1,
+    "refresh": "5s",
+    "time": {
+      "from": "now-6h",
+      "to": "now"
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 1,
+    "panels": [
+      {
+        "id": 1,
+        "type": "timeseries",
+        "title": "Adversarial Evaluation Scores",
+        "gridPos": { "x": 0, "y": 0, "w": 24, "h": 8 },
+        "datasource": { "type": "prometheus", "uid": "prometheus" },
+        "targets": [
+          {
+            "expr": "adversarial_eval_score{agent=\"agent0\"}",
+            "refId": "A",
+            "legendFormat": "Agent 0"
+          },
+          {
+            "expr": "adversarial_eval_score{agent=\"agent1\"}",
+            "refId": "B",
+            "legendFormat": "Agent 1"
+          },
+          {
+            "expr": "adversarial_eval_score{agent=\"agent2\"}",
+            "refId": "C",
+            "legendFormat": "Agent 2"
+          },
+          {
+            "expr": "adversarial_eval_score{agent=\"agent3\"}",
+            "refId": "D",
+            "legendFormat": "Agent 3"
+          },
+          {
+            "expr": "adversarial_eval_score{agent=\"agent4\"}",
+            "refId": "E",
+            "legendFormat": "Agent 4"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "Adversarial Score",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 10,
+              "gradientMode": "opacity",
+              "hideFrom": {
+                "tooltip": false,
+                "viz": false,
+                "legend": false
+              },
+              "lineInterpolation": "smooth",
+              "lineWidth": 2,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "never",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "area"
+              }
+            },
+            "mappings": [],
+            "min": 0,
+            "max": 1,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "color": "transparent", "value": null },
+                { "color": "rgba(255, 176, 0, 0.1)", "value": 0.5 },
+                { "color": "rgba(255, 0, 64, 0.2)", "value": 0.75 }
+              ]
+            },
+            "unit": "percentunit"
+          },
+          "overrides": []
+        },
+        "options": {
+          "tooltip": {
+            "mode": "multi",
+            "sort": "desc"
+          },
+          "legend": {
+            "displayMode": "table",
+            "placement": "right",
+            "showLegend": true,
+            "calcs": ["lastNotNull", "max"]
+          }
+        }
+      },
+      {
+        "id": 2,
+        "type": "table",
+        "title": "Gaming Detection Matrix",
+        "gridPos": { "x": 0, "y": 8, "w": 24, "h": 8 },
+        "datasource": { "type": "prometheus", "uid": "prometheus" },
+        "targets": [
+          {
+            "expr": "gaming_detected",
+            "refId": "A",
+            "format": "table",
+            "instant": true
+          },
+          {
+            "expr": "alignment_fidelity",
+            "refId": "B",
+            "format": "table",
+            "instant": true
+          },
+          {
+            "expr": "adversarial_eval_score",
+            "refId": "C",
+            "format": "table",
+            "instant": true
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "custom": {
+              "align": "center",
+              "displayMode": "auto",
+              "filterable": true,
+              "inspect": false
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "color": "transparent", "value": null }
+              ]
+            },
+            "unit": "percentunit"
+          },
+          "overrides": [
+            {
+              "matcher": { "id": "byName", "options": "agent" },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 150
+                },
+                {
+                  "id": "displayName",
+                  "value": "Agent ID"
+                },
+                {
+                  "id": "custom.displayMode",
+                  "value": "color-text"
+                },
+                {
+                  "id": "color",
+                  "value": {
+                    "mode": "fixed",
+                    "fixedColor": "#00F0FF"
+                  }
+                }
+              ]
+            },
+            {
+              "matcher": { "id": "byName", "options": "Value #A" },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "Gaming Detected"
+                },
+                {
+                  "id": "custom.displayMode",
+                  "value": "color-background-solid"
+                },
+                {
+                  "id": "mappings",
+                  "value": [
+                    {
+                      "type": "value",
+                      "value": 0,
+                      "options": {
+                        "text": "CLEAR",
+                        "color": "rgba(0, 255, 136, 0.2)"
+                      }
+                    },
+                    {
+                      "type": "value",
+                      "value": 1,
+                      "options": {
+                        "text": "DETECTED",
+                        "color": "rgba(255, 0, 64, 0.3)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "unit",
+                  "value": "none"
+                }
+              ]
+            },
+            {
+              "matcher": { "id": "byName", "options": "Value #B" },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "Alignment Fidelity"
+                },
+                {
+                  "id": "custom.displayMode",
+                  "value": "gradient-gauge"
+                },
+                {
+                  "id": "color",
+                  "value": {
+                    "mode": "thresholds"
+                  }
+                },
+                {
+                  "id": "thresholds",
+                  "value": {
+                    "mode": "absolute",
+                    "steps": [
+                      { "color": "#FF0040", "value": null },
+                      { "color": "#FFB000", "value": 0.5 },
+                      { "color": "#00FF88", "value": 0.8 }
+                    ]
+                  }
+                },
+                {
+                  "id": "min",
+                  "value": 0
+                },
+                {
+                  "id": "max",
+                  "value": 1
+                }
+              ]
+            },
+            {
+              "matcher": { "id": "byName", "options": "Value #C" },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "Adversarial Score"
+                },
+                {
+                  "id": "custom.displayMode",
+                  "value": "gradient-gauge"
+                },
+                {
+                  "id": "color",
+                  "value": {
+                    "mode": "thresholds"
+                  }
+                },
+                {
+                  "id": "thresholds",
+                  "value": {
+                    "mode": "absolute",
+                    "steps": [
+                      { "color": "#00FF88", "value": null },
+                      { "color": "#FFB000", "value": 0.3 },
+                      { "color": "#FF0040", "value": 0.6 }
+                    ]
+                  }
+                },
+                {
+                  "id": "min",
+                  "value": 0
+                },
+                {
+                  "id": "max",
+                  "value": 1
+                }
+              ]
+            }
+          ]
+        },
+        "options": {
+          "showHeader": true,
+          "sortBy": [
+            {
+              "displayName": "Adversarial Score",
+              "desc": true
+            }
+          ],
+          "footer": {
+            "show": false,
+            "reducer": ["sum"],
+            "fields": ""
+          }
+        },
+        "transformations": [
+          {
+            "id": "merge"
+          },
+          {
+            "id": "organize",
+            "options": {
+              "excludeByName": {
+                "Time": true,
+                "__name__": true,
+                "job": true,
+                "instance": true
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "type": "gauge",
+        "title": "Average Alignment Fidelity",
+        "gridPos": { "x": 0, "y": 16, "w": 8, "h": 6 },
+        "datasource": { "type": "prometheus", "uid": "prometheus" },
+        "targets": [
+          {
+            "expr": "avg(alignment_fidelity)",
+            "refId": "A",
+            "legendFormat": "Average"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "min": 0,
+            "max": 1,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "color": "#FF0040", "value": null },
+                { "color": "#FFB000", "value": 0.5 },
+                { "color": "#00FF88", "value": 0.8 }
+              ]
+            },
+            "unit": "percentunit"
+          },
+          "overrides": []
+        },
+        "options": {
+          "orientation": "horizontal",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          },
+          "showThresholdLabels": true,
+          "showThresholdMarkers": true,
+          "text": {
+            "titleSize": 14,
+            "valueSize": 32
+          }
+        }
+      },
+      {
+        "id": 4,
+        "type": "barchart",
+        "title": "Capability Gap Analysis",
+        "gridPos": { "x": 8, "y": 16, "w": 16, "h": 6 },
+        "datasource": { "type": "prometheus", "uid": "prometheus" },
+        "targets": [
+          {
+            "expr": "capability_gap",
+            "refId": "A",
+            "legendFormat": "{{agent}}"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "custom": {
+              "axisCenteredZero": true,
+              "axisColorMode": "text",
+              "axisLabel": "Capability Gap",
+              "axisPlacement": "auto",
+              "fillOpacity": 80,
+              "gradientMode": "scheme",
+              "hideFrom": {
+                "tooltip": false,
+                "viz": false,
+                "legend": false
+              },
+              "lineWidth": 0,
+              "scaleDistribution": {
+                "type": "linear"
+              }
+            },
+            "mappings": [],
+            "min": -0.5,
+            "max": 0.5,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "color": "#00FF88", "value": null },
+                { "color": "#FFB000", "value": 0.1 },
+                { "color": "#FF0040", "value": 0.2 }
+              ]
+            },
+            "unit": "none"
+          },
+          "overrides": []
+        },
+        "options": {
+          "groupWidth": 0.7,
+          "legend": {
+            "displayMode": "hidden",
+            "placement": "bottom",
+            "showLegend": false
+          },
+          "orientation": "vertical",
+          "showValue": "always",
+          "stacking": "none",
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          },
+          "barCornerRadius": 2
+        },
+        "transformations": [
+          {
+            "id": "reduce",
+            "options": {
+              "reducers": ["lastNotNull"]
+            }
+          }
+        ]
+      }
+    ],
+    "style": "dark",
+    "templating": {
+      "list": []
+    },
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": {
+            "type": "datasource",
+            "uid": "grafana"
+          },
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(255, 0, 255, 1)",
+          "name": "Detection Events",
+          "target": {
+            "limit": 100,
+            "matchAny": false,
+            "tags": ["detection", "adversarial"],
+            "type": "tags"
+          }
+        }
+      ]
+    }
+  },
+  "folderUid": "ef4v15yhwmjggd",
+  "overwrite": true
+}

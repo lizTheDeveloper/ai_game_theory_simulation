@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+    margin: 0;
+    padding: 50pt 60pt;
+    width: 720pt;
+    height: 405pt;
+    background: #000000;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+h1 {
+    color: #00FF88;
+    font-size: 32pt;
+    font-weight: 300;
+    margin: 0 0 30pt 0;
+    text-transform: uppercase;
+    letter-spacing: 2pt;
+}
+
+.roi-container {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 40pt;
+    height: calc(100% - 70pt);
+}
+
+.cost-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15pt;
+}
+
+.cost-category {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 15pt;
+}
+
+.category-header {
+    color: #00F0FF;
+    font-size: 14pt;
+    margin-bottom: 10pt;
+    text-transform: uppercase;
+    letter-spacing: 1pt;
+}
+
+.cost-item {
+    display: flex;
+    justify-content: space-between;
+    color: #FFFFFF;
+    font-size: 11pt;
+    margin-bottom: 5pt;
+    opacity: 0.8;
+}
+
+.cost-before {
+    color: #FF0040;
+    font-family: 'Courier New', monospace;
+}
+
+.cost-after {
+    color: #00FF88;
+    font-family: 'Courier New', monospace;
+}
+
+.savings-summary {
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(0, 255, 136, 0.05) 100%);
+    border: 2px solid rgba(0, 255, 136, 0.4);
+    padding: 25pt;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.total-savings {
+    color: #00FF88;
+    font-size: 48pt;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    margin-bottom: 10pt;
+    text-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
+}
+
+.savings-label {
+    color: #FFFFFF;
+    font-size: 16pt;
+    margin-bottom: 20pt;
+    text-transform: uppercase;
+    letter-spacing: 1pt;
+}
+
+.payback {
+    color: #00F0FF;
+    font-size: 14pt;
+}
+
+.payback-time {
+    color: #00FF88;
+    font-size: 24pt;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+}
+</style>
+</head>
+<body>
+    <h1>Return on Investment</h1>
+
+    <div class="roi-container">
+        <div class="cost-section">
+            <div class="cost-category">
+                <div class="category-header">Infrastructure Costs</div>
+                <div class="cost-item">
+                    <span>Compute (GKE)</span>
+                    <span><span class="cost-before">$85</span> → <span class="cost-after">$30</span>/mo</span>
+                </div>
+                <div class="cost-item">
+                    <span>Storage (PostgreSQL)</span>
+                    <span><span class="cost-before">$25</span> → <span class="cost-after">$10</span>/mo</span>
+                </div>
+                <div class="cost-item">
+                    <span>Memory (Redis)</span>
+                    <span><span class="cost-before">$10</span> → <span class="cost-after">$5</span>/mo</span>
+                </div>
+            </div>
+
+            <div class="cost-category">
+                <div class="category-header">Operational Savings</div>
+                <div class="cost-item">
+                    <span>Manual Review Hours</span>
+                    <span><span class="cost-before">160</span> → <span class="cost-after">10</span> hrs/mo</span>
+                </div>
+                <div class="cost-item">
+                    <span>Incident Response</span>
+                    <span><span class="cost-before">40</span> → <span class="cost-after">2</span> hrs/mo</span>
+                </div>
+                <div class="cost-item">
+                    <span>False Positive Rate</span>
+                    <span><span class="cost-before">35%</span> → <span class="cost-after">6%</span></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="savings-summary">
+            <div class="total-savings">$18,750</div>
+            <div class="savings-label">Monthly Savings</div>
+            <div class="payback">
+                <div>Payback Period:</div>
+                <div class="payback-time">2.3 months</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,370 @@
+groups:
+  - name: marcus_critical_alerts
+    interval: 30s
+    rules:
+      - alert: MARCUSPlatformDown
+        expr: up{job="marcus-platform"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          component: platform
+        annotations:
+          summary: "MARCUS platform is down"
+          description: "The MARCUS citation integrity platform has been down for more than 1 minute. Immediate action required."
+          runbook_url: "https://docs.marcus.local/runbooks/platform-down"
+
+      - alert: HighErrorRate
+        expr: |
+          (
+            rate(http_requests_total{status=~"5.."}[5m])
+            /
+            rate(http_requests_total[5m])
+          ) > 0.05
+        for: 5m
+        labels:
+          severity: critical
+          component: api
+        annotations:
+          summary: "Error rate exceeds 5% for 5 minutes"
+          description: "HTTP 5xx error rate is {{ $value | humanizePercentage }} (threshold: 5%)"
+          runbook_url: "https://docs.marcus.local/runbooks/high-error-rate"
+
+      - alert: DatabaseConnectionPoolExhausted
+        expr: db_pool_utilization > 0.9
+        for: 2m
+        labels:
+          severity: critical
+          component: database
+        annotations:
+          summary: "Database connection pool >90% utilized"
+          description: "PostgreSQL connection pool is {{ $value | humanizePercentage }} utilized. Risk of connection exhaustion."
+          runbook_url: "https://docs.marcus.local/runbooks/db-pool-exhaustion"
+
+      - alert: CircuitBreakerOpen
+        expr: circuit_breaker_state{breaker="postgresql"} == 1
+        for: 1m
+        labels:
+          severity: critical
+          component: database
+        annotations:
+          summary: "PostgreSQL circuit breaker is OPEN"
+          description: "Circuit breaker for PostgreSQL is in OPEN state, indicating persistent database failures."
+          runbook_url: "https://docs.marcus.local/runbooks/circuit-breaker-open"
+
+      - alert: RedisCircuitBreakerOpen
+        expr: circuit_breaker_state{breaker="redis"} == 1
+        for: 1m
+        labels:
+          severity: critical
+          component: cache
+        annotations:
+          summary: "Redis circuit breaker is OPEN"
+          description: "Circuit breaker for Redis is in OPEN state, indicating persistent cache failures."
+          runbook_url: "https://docs.marcus.local/runbooks/circuit-breaker-open"
+
+      - alert: AllAgentsUnhealthy
+        expr: sum(agent_health_status{status="healthy"}) == 0
+        for: 2m
+        labels:
+          severity: critical
+          component: agents
+        annotations:
+          summary: "All citation agents are unhealthy"
+          description: "No healthy citation agents available. Platform cannot process citations."
+          runbook_url: "https://docs.marcus.local/runbooks/all-agents-down"
+
+      - alert: DatabaseQueryLatencyCritical
+        expr: |
+          histogram_quantile(0.95,
+            rate(db_query_duration_ms_bucket[5m])
+          ) > 500
+        for: 5m
+        labels:
+          severity: critical
+          component: database
+        annotations:
+          summary: "Database p95 query latency exceeds 500ms"
+          description: "p95 database query latency is {{ $value }}ms (threshold: 500ms)"
+          runbook_url: "https://docs.marcus.local/runbooks/slow-queries"
+
+      - alert: SecurityBreach
+        expr: rate(auth_failed_total[5m]) > 50
+        for: 2m
+        labels:
+          severity: critical
+          component: security
+        annotations:
+          summary: "Potential security breach - excessive failed authentication"
+          description: "Failed authentication rate is {{ $value }}/sec, indicating possible brute force attack."
+          runbook_url: "https://docs.marcus.local/runbooks/security-incident"
+
+  - name: marcus_warning_alerts
+    interval: 1m
+    rules:
+      - alert: HighLatency
+        expr: |
+          histogram_quantile(0.95,
+            rate(citation_latency_ms_bucket[5m])
+          ) > 100
+        for: 10m
+        labels:
+          severity: warning
+          component: performance
+        annotations:
+          summary: "p95 latency exceeds 100ms for 10 minutes"
+          description: "Citation analysis p95 latency is {{ $value }}ms (SLA: 100ms)"
+          runbook_url: "https://docs.marcus.local/runbooks/high-latency"
+
+      - alert: LowConsensus
+        expr: avg(citation_consensus) < 0.8
+        for: 15m
+        labels:
+          severity: warning
+          component: quality
+        annotations:
+          summary: "Average consensus below 80%"
+          description: "Agent consensus is {{ $value | humanizePercentage }} (threshold: 80%)"
+          runbook_url: "https://docs.marcus.local/runbooks/low-consensus"
+
+      - alert: DLQDepthHigh
+        expr: dlq_depth > 100
+        for: 5m
+        labels:
+          severity: warning
+          component: queue
+        annotations:
+          summary: "Dead letter queue depth exceeds 100"
+          description: "DLQ has {{ $value }} failed citations awaiting retry"
+          runbook_url: "https://docs.marcus.local/runbooks/dlq-backlog"
+
+      - alert: CacheHitRateLow
+        expr: redis_cache_hit_rate < 0.7
+        for: 10m
+        labels:
+          severity: warning
+          component: cache
+        annotations:
+          summary: "Redis cache hit rate below 70%"
+          description: "Cache hit rate is {{ $value | humanizePercentage }} (threshold: 70%)"
+          runbook_url: "https://docs.marcus.local/runbooks/low-cache-hit-rate"
+
+      - alert: HighRetryRate
+        expr: rate(retry_attempts_total[5m]) > 10
+        for: 10m
+        labels:
+          severity: warning
+          component: resilience
+        annotations:
+          summary: "High retry rate detected"
+          description: "Retry rate is {{ $value }}/sec, indicating system instability"
+          runbook_url: "https://docs.marcus.local/runbooks/high-retry-rate"
+
+      - alert: DatabasePoolHighUtilization
+        expr: db_pool_utilization > 0.7
+        for: 5m
+        labels:
+          severity: warning
+          component: database
+        annotations:
+          summary: "Database connection pool >70% utilized"
+          description: "Connection pool utilization is {{ $value | humanizePercentage }}"
+          runbook_url: "https://docs.marcus.local/runbooks/db-pool-pressure"
+
+      - alert: MemoryUsageHigh
+        expr: |
+          sum(agent_memory_rss_bytes)
+          /
+          (10 * 1024 * 1024 * 1024) > 0.8
+        for: 10m
+        labels:
+          severity: warning
+          component: resources
+        annotations:
+          summary: "Agent memory usage exceeds 80% of 10GB limit"
+          description: "Total agent memory is {{ $value | humanizePercentage }} of limit"
+          runbook_url: "https://docs.marcus.local/runbooks/high-memory-usage"
+
+      - alert: AccuracyBelowSLA
+        expr: citation_accuracy_total < 0.8
+        for: 15m
+        labels:
+          severity: warning
+          component: quality
+        annotations:
+          summary: "Citation accuracy below 80% SLA"
+          description: "Accuracy is {{ $value | humanizePercentage }} (SLA: 80%)"
+          runbook_url: "https://docs.marcus.local/runbooks/low-accuracy"
+
+      - alert: ThroughputDegraded
+        expr: rate(citation_analyses_total[5m]) < 1
+        for: 10m
+        labels:
+          severity: warning
+          component: performance
+        annotations:
+          summary: "Citation analysis throughput below 1/sec"
+          description: "Throughput is {{ $value }}/sec (expected: >10/sec)"
+          runbook_url: "https://docs.marcus.local/runbooks/low-throughput"
+
+  - name: marcus_informational_alerts
+    interval: 2m
+    rules:
+      - alert: AgentUnhealthy
+        expr: sum(agent_health_status{status="unhealthy"}) > 0
+        for: 3m
+        labels:
+          severity: info
+          component: agents
+        annotations:
+          summary: "One or more agents unhealthy"
+          description: "{{ $value }} citation agents are currently unhealthy"
+          runbook_url: "https://docs.marcus.local/runbooks/agent-health"
+
+      - alert: HighRetryRateModerate
+        expr: rate(retry_attempts_total[5m]) > 5
+        for: 10m
+        labels:
+          severity: info
+          component: resilience
+        annotations:
+          summary: "Moderate retry rate detected"
+          description: "Retry rate is {{ $value }}/sec"
+
+      - alert: CacheEvictionHigh
+        expr: rate(redis_evicted_keys_total[5m]) > 10
+        for: 10m
+        labels:
+          severity: info
+          component: cache
+        annotations:
+          summary: "Redis key eviction rate is high"
+          description: "{{ $value }} keys/sec being evicted from cache"
+
+      - alert: SlowQueries
+        expr: |
+          histogram_quantile(0.99,
+            rate(db_query_duration_ms_bucket[5m])
+          ) > 200
+        for: 10m
+        labels:
+          severity: info
+          component: database
+        annotations:
+          summary: "p99 database query latency exceeds 200ms"
+          description: "p99 query latency is {{ $value }}ms"
+
+      - alert: RateLimitingActive
+        expr: rate(rate_limit_exceeded_total[5m]) > 1
+        for: 10m
+        labels:
+          severity: info
+          component: security
+        annotations:
+          summary: "Rate limiting is actively blocking requests"
+          description: "{{ $value }} requests/sec are being rate limited"
+
+      - alert: SessionCountHigh
+        expr: active_sessions > 1000
+        for: 10m
+        labels:
+          severity: info
+          component: sessions
+        annotations:
+          summary: "High number of active sessions"
+          description: "{{ $value }} active sessions (normal: <500)"
+
+      - alert: InputValidationFailures
+        expr: rate(input_validation_failed_total[5m]) > 1
+        for: 10m
+        labels:
+          severity: info
+          component: validation
+        annotations:
+          summary: "Input validation failures detected"
+          description: "{{ $value }} validation failures/sec"
+
+      - alert: AgentRestartFrequent
+        expr: rate(agent_restarts_total[1h]) > 0.5
+        for: 10m
+        labels:
+          severity: info
+          component: agents
+        annotations:
+          summary: "Agents restarting frequently"
+          description: "Agent restart rate is {{ $value }}/hour"
+
+      - alert: DiskSpaceWarning
+        expr: |
+          (
+            node_filesystem_avail_bytes{mountpoint="/"}
+            /
+            node_filesystem_size_bytes{mountpoint="/"}
+          ) < 0.2
+        for: 5m
+        labels:
+          severity: info
+          component: infrastructure
+        annotations:
+          summary: "Disk space below 20%"
+          description: "Available disk space: {{ $value | humanizePercentage }}"
+
+      - alert: UptimeBelow99_9
+        expr: avg_over_time(up{job="marcus-platform"}[7d]) < 0.999
+        for: 5m
+        labels:
+          severity: info
+          component: sla
+        annotations:
+          summary: "7-day uptime below 99.9% SLA"
+          description: "Uptime is {{ $value | humanizePercentage }} (SLA: 99.9%)"
+
+  - name: marcus_performance_baselines
+    interval: 5m
+    rules:
+      - alert: LatencyAnomalyDetected
+        expr: |
+          (
+            histogram_quantile(0.95, rate(citation_latency_ms_bucket[5m]))
+            -
+            baseline_latency_p95
+          ) / baseline_latency_p95 > 0.5
+        for: 15m
+        labels:
+          severity: warning
+          component: performance
+        annotations:
+          summary: "Latency anomaly - 50% above baseline"
+          description: "p95 latency is {{ $value | humanizePercentage }} above baseline"
+          runbook_url: "https://docs.marcus.local/runbooks/performance-degradation"
+
+      - alert: ThroughputAnomalyDetected
+        expr: |
+          (
+            baseline_throughput
+            -
+            rate(citation_analyses_total[5m])
+          ) / baseline_throughput > 0.3
+        for: 15m
+        labels:
+          severity: warning
+          component: performance
+        annotations:
+          summary: "Throughput anomaly - 30% below baseline"
+          description: "Throughput is {{ $value | humanizePercentage }} below baseline"
+          runbook_url: "https://docs.marcus.local/runbooks/throughput-degradation"
+
+      - alert: AccuracyAnomalyDetected
+        expr: |
+          (
+            baseline_accuracy
+            -
+            citation_accuracy_total
+          ) / baseline_accuracy > 0.1
+        for: 15m
+        labels:
+          severity: warning
+          component: quality
+        annotations:
+          summary: "Accuracy anomaly - 10% below baseline"
+          description: "Accuracy is {{ $value | humanizePercentage }} below baseline"
+          runbook_url: "https://docs.marcus.local/runbooks/accuracy-degradation"

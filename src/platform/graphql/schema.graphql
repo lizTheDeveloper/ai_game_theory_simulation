@@ -1,0 +1,439 @@
+# MARCUS 3.1 GraphQL Schema
+#
+# Efficient data fetching for citation platform with DataLoader optimization.
+# Reduces client round trips from 4x to 1x via batched queries.
+#
+# M1 FIX: Memory fields are now nullable (not always populated)
+# M2 FIX: Removed unimplemented mutations - only advertise working capabilities
+#
+# Author: Marcus (Platform Engineer)
+# Date: 2025-11-22
+# Updated: 2025-11-28 (M1, M2 fixes)
+
+"""
+ISO 8601 datetime string
+"""
+scalar DateTime
+
+"""
+JSON object type for flexible metadata
+"""
+scalar JSON
+
+# ===== Agent Types =====
+
+"""
+Citation integrity agent with learning capabilities
+"""
+type Agent {
+  "Unique agent identifier"
+  id: ID!
+
+  "Agent reputation score [0, 1]"
+  reputation: Float!
+
+  "Total citations processed"
+  totalCitations: Int!
+
+  "Detected violations"
+  detectedViolations: Int!
+
+  "Current behavior strategy"
+  currentBehavior: CitationBehavior!
+
+  "Exploration rate for learning"
+  explorationRate: Float!
+
+  "Last update timestamp"
+  timestamp: DateTime!
+
+  """
+  Agent memory state.
+  M1 FIX: Now nullable - memory details require direct agent query which
+  may not be available in lightweight GraphQL mode.
+  """
+  memoryState: AgentMemory
+
+  "Recent citations analyzed by this agent"
+  recentCitations(limit: Int = 10): [Citation!]!
+
+  "Performance metrics"
+  metrics: AgentMetrics!
+
+  "Agent mode: sync or async"
+  mode: AgentMode!
+}
+
+"""
+Agent memory hierarchy.
+M1 FIX: All fields are now nullable since memory may not be populated
+in lightweight query mode.
+"""
+type AgentMemory {
+  "Immediate memory (last N citations) - may be null if not loaded"
+  immediateHistory: [MemoryEntry!]
+
+  "Short-term memory - may be null if not loaded"
+  shorttermHistory: [MemoryEntry!]
+
+  "Long-term statistics"
+  longtermStats: JSON
+
+  "Behavior success rates"
+  behaviorSuccessRates: JSON
+
+  "Total citations processed"
+  totalCitationsProcessed: Int
+}
+
+"""
+Memory entry for citation analysis
+"""
+type MemoryEntry {
+  behavior: String!
+  integrityScore: Float!
+  wasCorrect: Boolean!
+  surprise: Float!
+  timestamp: DateTime!
+}
+
+"""
+Agent performance metrics
+"""
+type AgentMetrics {
+  "Average processing latency (ms)"
+  avgLatency: Float!
+
+  "Throughput (citations/sec)"
+  throughput: Float!
+
+  "Error rate (%)"
+  errorRate: Float!
+
+  "Accuracy rate (%)"
+  accuracyRate: Float!
+}
+
+"""
+Agent operation mode
+"""
+enum AgentMode {
+  SYNC
+  ASYNC
+}
+
+"""
+Citation behavior strategies
+"""
+enum CitationBehavior {
+  ALWAYS_ACCEPT
+  LENIENT_SIMILARITY
+  MODERATE_CHECK
+  STRICT_MATCH
+  ALWAYS_REJECT
+  AUTHOR_FOCUSED
+  YEAR_FOCUSED
+  TITLE_FOCUSED
+  COMBINED_HEURISTIC
+}
+
+# ===== Citation Types =====
+
+"""
+Citation analysis result
+"""
+type Citation {
+  "Unique citation ID"
+  id: ID!
+
+  "Citation text"
+  text: String!
+
+  "Claimed source"
+  claimedSource: String!
+
+  "Actual source (if available)"
+  actualSource: String
+
+  "Integrity score [0, 1]"
+  integrityScore: Float!
+
+  "Agent confidence [0, 1]"
+  confidence: Float!
+
+  "Detected violations"
+  detectedViolations: [String!]!
+
+  "Analysis timestamp"
+  timestamp: DateTime!
+
+  "Agent that analyzed this citation (may be null if agent unavailable)"
+  agent: Agent
+
+  "ID of the agent that analyzed this citation"
+  agentId: ID!
+
+  "Behavior used for analysis"
+  behaviorUsed: CitationBehavior!
+
+  "Analysis metadata"
+  metadata: JSON
+}
+
+"""
+Citation analysis consensus from multiple agents
+"""
+type CitationConsensus {
+  "Citation being analyzed"
+  citation: Citation!
+
+  "Mean integrity score across agents"
+  meanIntegrity: Float!
+
+  "Consensus level [0, 1]"
+  consensus: Float!
+
+  "Number of agents in consensus"
+  numAgents: Int!
+
+  "Behavior distribution"
+  behaviorDistribution: JSON!
+
+  "Individual agent results"
+  agentResults: [AgentResult!]!
+
+  "Recommendations"
+  recommendations: [String!]!
+}
+
+"""
+Individual agent result in consensus (lighter than full Citation)
+"""
+type AgentResult {
+  agentId: ID!
+  integrityScore: Float!
+  behaviorUsed: CitationBehavior!
+  confidence: Float!
+  detectedViolations: [String!]!
+}
+
+# ===== Platform Types =====
+
+"""
+Platform health and status
+"""
+type PlatformStatus {
+  "Overall health score [0, 10]"
+  health: Float!
+
+  "Total active agents"
+  activeAgents: Int!
+
+  "Redis queue depth"
+  queueDepth: Int!
+
+  "Citations processed (last hour)"
+  citationsLastHour: Int!
+
+  "Average latency (ms)"
+  avgLatency: Float!
+
+  "Error rate (%)"
+  errorRate: Float!
+
+  "Database status"
+  databaseStatus: ComponentStatus!
+
+  "Redis status"
+  redisStatus: ComponentStatus!
+
+  "Async rollout percentage"
+  asyncRolloutPercent: Int!
+
+  "Last update"
+  timestamp: DateTime!
+}
+
+"""
+Component status
+"""
+type ComponentStatus {
+  "Component is healthy"
+  healthy: Boolean!
+
+  "Status message"
+  message: String
+
+  "Last check timestamp"
+  lastCheck: DateTime!
+}
+
+"""
+Platform performance benchmarks
+"""
+type PlatformBenchmark {
+  "Benchmark name"
+  name: String!
+
+  "Throughput (citations/sec)"
+  throughput: Float!
+
+  "Latency p50 (ms)"
+  latencyP50: Float!
+
+  "Latency p95 (ms)"
+  latencyP95: Float!
+
+  "Latency p99 (ms)"
+  latencyP99: Float!
+
+  "Accuracy (%)"
+  accuracy: Float!
+
+  "F1 score"
+  f1Score: Float!
+
+  "Run timestamp"
+  timestamp: DateTime!
+}
+
+# ===== Query Root =====
+
+type Query {
+  # Agent queries
+  "Get agent by ID"
+  agent(id: ID!): Agent
+
+  "List all agents"
+  agents(
+    limit: Int = 10
+    offset: Int = 0
+    sortBy: AgentSortField = REPUTATION
+    sortOrder: SortOrder = DESC
+  ): [Agent!]!
+
+  "Get agents by behavior"
+  agentsByBehavior(behavior: CitationBehavior!): [Agent!]!
+
+  # Citation queries
+  "Get citation by ID"
+  citation(id: ID!): Citation
+
+  "List citations"
+  citations(
+    limit: Int = 10
+    offset: Int = 0
+    agentId: ID
+    minIntegrity: Float
+    maxIntegrity: Float
+    startDate: DateTime
+    endDate: DateTime
+  ): [Citation!]!
+
+  """
+  Analyze citation with multiple agents (consensus).
+  NOTE: Requires orchestrator with Python agents to be running.
+  Returns error if orchestrator is not available.
+  """
+  analyzeCitation(
+    text: String!
+    claimedSource: String!
+    actualSource: String
+    numAgents: Int = 5
+  ): CitationConsensus!
+
+  # Platform queries
+  "Get platform status"
+  platformStatus: PlatformStatus!
+
+  "Get platform benchmarks"
+  platformBenchmarks(limit: Int = 10): [PlatformBenchmark!]!
+
+  "Get agent statistics summary"
+  agentStats: AgentStats!
+}
+
+"""
+Agent sorting fields
+"""
+enum AgentSortField {
+  REPUTATION
+  TOTAL_CITATIONS
+  DETECTED_VIOLATIONS
+  TIMESTAMP
+}
+
+"""
+Sort order
+"""
+enum SortOrder {
+  ASC
+  DESC
+}
+
+"""
+Agent statistics summary
+"""
+type AgentStats {
+  "Total agents"
+  totalAgents: Int!
+
+  "Active agents (processed citations in last hour)"
+  activeAgents: Int!
+
+  "Average reputation"
+  avgReputation: Float!
+
+  "Total citations processed"
+  totalCitations: Int!
+
+  "Total violations detected"
+  totalViolations: Int!
+
+  "Agents by mode"
+  agentsByMode: AgentModeDistribution!
+}
+
+"""
+Agent mode distribution
+"""
+type AgentModeDistribution {
+  sync: Int!
+  async: Int!
+}
+
+# ===== Mutation Root =====
+# M2 FIX: Only include mutations that are actually implemented.
+# Removed: createAgent, updateAgent, resetAgent, updateAsyncRollout, triggerBenchmark
+# These can be added back when implemented.
+
+type Mutation {
+  """
+  Analyze a citation (mutation variant for side effects).
+  Use this when you want to store the result.
+  """
+  analyzeCitationAndStore(
+    text: String!
+    claimedSource: String!
+    actualSource: String
+  ): CitationConsensus!
+
+  """
+  Placeholder mutation - GraphQL requires at least one mutation.
+  Returns current server time.
+  """
+  ping: DateTime!
+}
+
+# ===== Subscriptions =====
+
+type Subscription {
+  "Subscribe to citation analysis events"
+  citationAnalyzed: Citation!
+
+  "Subscribe to platform status updates"
+  platformStatusUpdated: PlatformStatus!
+
+  "Subscribe to agent updates"
+  agentUpdated(agentId: ID): Agent!
+}

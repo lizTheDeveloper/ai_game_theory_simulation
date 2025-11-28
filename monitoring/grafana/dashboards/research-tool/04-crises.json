@@ -1,0 +1,536 @@
+{
+  "dashboard": {
+    "title": "Crisis Management",
+    "uid": "sim-crises-04",
+    "tags": ["simulation", "research-tool", "crises", "alerts"],
+    "timezone": "browser",
+    "schemaVersion": 38,
+    "version": 1,
+    "refresh": "5s",
+    "time": {
+      "from": "now-3h",
+      "to": "now"
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 1,
+    "panels": [
+      {
+        "id": 1,
+        "type": "stat",
+        "title": "Active Crises",
+        "gridPos": { "x": 0, "y": 0, "w": 6, "h": 6 },
+        "datasource": { "type": "prometheus", "uid": "prometheus" },
+        "targets": [
+          {
+            "expr": "crisis_active_count",
+            "refId": "A",
+            "legendFormat": "Active"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "color": "rgba(0, 255, 136, 0.3)", "value": null },
+                { "color": "#FFB000", "value": 1 },
+                { "color": "#FF6B00", "value": 3 },
+                { "color": "#FF0040", "value": 5 }
+              ]
+            },
+            "unit": "none",
+            "decimals": 0
+          },
+          "overrides": []
+        },
+        "options": {
+          "colorMode": "background",
+          "graphMode": "none",
+          "justifyMode": "center",
+          "orientation": "auto",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          },
+          "textMode": "value",
+          "text": {
+            "titleSize": 14,
+            "valueSize": 48
+          }
+        }
+      },
+      {
+        "id": 2,
+        "type": "stat",
+        "title": "Cascade Depth",
+        "gridPos": { "x": 6, "y": 0, "w": 6, "h": 6 },
+        "datasource": { "type": "prometheus", "uid": "prometheus" },
+        "targets": [
+          {
+            "expr": "crisis_cascade_depth",
+            "refId": "A",
+            "legendFormat": "Depth"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "color": "rgba(255, 255, 255, 0.2)", "value": null },
+                { "color": "#FFB000", "value": 1 },
+                { "color": "#FF6B00", "value": 2 },
+                { "color": "#FF0040", "value": 3 }
+              ]
+            },
+            "unit": "none",
+            "decimals": 0
+          },
+          "overrides": []
+        },
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "center",
+          "orientation": "auto",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          },
+          "textMode": "value",
+          "text": {
+            "titleSize": 14,
+            "valueSize": 48
+          }
+        }
+      },
+      {
+        "id": 3,
+        "type": "stat",
+        "title": "Cascading Crises",
+        "gridPos": { "x": 12, "y": 0, "w": 6, "h": 6 },
+        "datasource": { "type": "prometheus", "uid": "prometheus" },
+        "targets": [
+          {
+            "expr": "crisis_cascade_count",
+            "refId": "A",
+            "legendFormat": "Cascades"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "color": "rgba(255, 255, 255, 0.2)", "value": null },
+                { "color": "#FFB000", "value": 1 },
+                { "color": "#FF0040", "value": 2 }
+              ]
+            },
+            "unit": "none",
+            "decimals": 0
+          },
+          "overrides": []
+        },
+        "options": {
+          "colorMode": "value",
+          "graphMode": "none",
+          "justifyMode": "center",
+          "orientation": "auto",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          },
+          "textMode": "value",
+          "text": {
+            "titleSize": 14,
+            "valueSize": 48
+          }
+        }
+      },
+      {
+        "id": 4,
+        "type": "stat",
+        "title": "Crisis Alert Level",
+        "gridPos": { "x": 18, "y": 0, "w": 6, "h": 6 },
+        "datasource": { "type": "prometheus", "uid": "prometheus" },
+        "targets": [
+          {
+            "expr": "max(crisis_severity) * 100",
+            "refId": "A",
+            "legendFormat": "Alert"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [
+              {
+                "type": "range",
+                "options": {
+                  "from": 0,
+                  "to": 25,
+                  "result": {
+                    "text": "LOW",
+                    "index": 0
+                  }
+                }
+              },
+              {
+                "type": "range",
+                "options": {
+                  "from": 25,
+                  "to": 50,
+                  "result": {
+                    "text": "MODERATE",
+                    "index": 1
+                  }
+                }
+              },
+              {
+                "type": "range",
+                "options": {
+                  "from": 50,
+                  "to": 75,
+                  "result": {
+                    "text": "HIGH",
+                    "index": 2
+                  }
+                }
+              },
+              {
+                "type": "range",
+                "options": {
+                  "from": 75,
+                  "to": 100,
+                  "result": {
+                    "text": "CRITICAL",
+                    "index": 3
+                  }
+                }
+              }
+            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "color": "rgba(0, 255, 136, 0.3)", "value": null },
+                { "color": "#FFB000", "value": 25 },
+                { "color": "#FF6B00", "value": 50 },
+                { "color": "#FF0040", "value": 75 }
+              ]
+            },
+            "unit": "percent",
+            "decimals": 0
+          },
+          "overrides": []
+        },
+        "options": {
+          "colorMode": "background",
+          "graphMode": "none",
+          "justifyMode": "center",
+          "orientation": "auto",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          },
+          "textMode": "value",
+          "text": {
+            "titleSize": 14,
+            "valueSize": 24
+          }
+        }
+      },
+      {
+        "id": 5,
+        "type": "barchart",
+        "title": "Crisis Severity by Type",
+        "gridPos": { "x": 0, "y": 6, "w": 24, "h": 8 },
+        "datasource": { "type": "prometheus", "uid": "prometheus" },
+        "targets": [
+          {
+            "expr": "crisis_severity{type=\"climate\"}",
+            "refId": "A",
+            "legendFormat": "Climate"
+          },
+          {
+            "expr": "crisis_severity{type=\"nuclear\"}",
+            "refId": "B",
+            "legendFormat": "Nuclear"
+          },
+          {
+            "expr": "crisis_severity{type=\"pandemic\"}",
+            "refId": "C",
+            "legendFormat": "Pandemic"
+          },
+          {
+            "expr": "crisis_severity{type=\"economic\"}",
+            "refId": "D",
+            "legendFormat": "Economic"
+          },
+          {
+            "expr": "crisis_severity{type=\"social\"}",
+            "refId": "E",
+            "legendFormat": "Social"
+          },
+          {
+            "expr": "crisis_severity{type=\"technological\"}",
+            "refId": "F",
+            "legendFormat": "Technological"
+          },
+          {
+            "expr": "crisis_severity{type=\"resource\"}",
+            "refId": "G",
+            "legendFormat": "Resource"
+          },
+          {
+            "expr": "crisis_severity{type=\"geopolitical\"}",
+            "refId": "H",
+            "legendFormat": "Geopolitical"
+          },
+          {
+            "expr": "crisis_severity{type=\"conflict\"}",
+            "refId": "I",
+            "legendFormat": "Conflict"
+          },
+          {
+            "expr": "crisis_severity{type=\"environmental\"}",
+            "refId": "J",
+            "legendFormat": "Environmental"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "Severity",
+              "axisPlacement": "auto",
+              "fillOpacity": 85,
+              "gradientMode": "scheme",
+              "hideFrom": {
+                "tooltip": false,
+                "viz": false,
+                "legend": false
+              },
+              "lineWidth": 0,
+              "scaleDistribution": {
+                "type": "linear"
+              }
+            },
+            "mappings": [],
+            "min": 0,
+            "max": 1,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "color": "rgba(255, 255, 255, 0.1)", "value": null },
+                { "color": "#FFB000", "value": 0.25 },
+                { "color": "#FF6B00", "value": 0.5 },
+                { "color": "#FF0040", "value": 0.75 }
+              ]
+            },
+            "unit": "percentunit"
+          },
+          "overrides": []
+        },
+        "options": {
+          "groupWidth": 0.8,
+          "legend": {
+            "displayMode": "hidden",
+            "placement": "bottom",
+            "showLegend": false
+          },
+          "orientation": "horizontal",
+          "showValue": "always",
+          "stacking": "none",
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          },
+          "xField": "__name",
+          "xTickLabelRotation": -45,
+          "xTickLabelSpacing": 100,
+          "barCornerRadius": 2
+        },
+        "transformations": [
+          {
+            "id": "reduce",
+            "options": {
+              "reducers": ["lastNotNull"]
+            }
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "type": "timeseries",
+        "title": "Crisis Severity Timeline",
+        "gridPos": { "x": 0, "y": 14, "w": 24, "h": 10 },
+        "datasource": { "type": "prometheus", "uid": "prometheus" },
+        "targets": [
+          {
+            "expr": "crisis_severity{type=\"climate\"}",
+            "refId": "A",
+            "legendFormat": "Climate"
+          },
+          {
+            "expr": "crisis_severity{type=\"nuclear\"}",
+            "refId": "B",
+            "legendFormat": "Nuclear"
+          },
+          {
+            "expr": "crisis_severity{type=\"pandemic\"}",
+            "refId": "C",
+            "legendFormat": "Pandemic"
+          },
+          {
+            "expr": "crisis_severity{type=\"conflict\"}",
+            "refId": "D",
+            "legendFormat": "Conflict"
+          },
+          {
+            "expr": "crisis_severity{type=\"economic\"}",
+            "refId": "E",
+            "legendFormat": "Economic"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "Severity",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 20,
+              "gradientMode": "opacity",
+              "hideFrom": {
+                "tooltip": false,
+                "viz": false,
+                "legend": false
+              },
+              "lineInterpolation": "smooth",
+              "lineWidth": 2,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "never",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "area"
+              }
+            },
+            "mappings": [],
+            "min": 0,
+            "max": 1,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "color": "transparent", "value": null },
+                { "color": "rgba(255, 176, 0, 0.1)", "value": 0.25 },
+                { "color": "rgba(255, 107, 0, 0.2)", "value": 0.5 },
+                { "color": "rgba(255, 0, 64, 0.3)", "value": 0.75 }
+              ]
+            },
+            "unit": "percentunit"
+          },
+          "overrides": [
+            {
+              "matcher": { "id": "byName", "options": "Nuclear" },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": { "mode": "fixed", "fixedColor": "#FF0040" }
+                }
+              ]
+            },
+            {
+              "matcher": { "id": "byName", "options": "Climate" },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": { "mode": "fixed", "fixedColor": "#FFB000" }
+                }
+              ]
+            },
+            {
+              "matcher": { "id": "byName", "options": "Pandemic" },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": { "mode": "fixed", "fixedColor": "#FF00FF" }
+                }
+              ]
+            }
+          ]
+        },
+        "options": {
+          "tooltip": {
+            "mode": "multi",
+            "sort": "desc"
+          },
+          "legend": {
+            "displayMode": "table",
+            "placement": "bottom",
+            "showLegend": true,
+            "calcs": ["lastNotNull", "max"]
+          }
+        }
+      }
+    ],
+    "style": "dark",
+    "templating": {
+      "list": []
+    },
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": {
+            "type": "datasource",
+            "uid": "grafana"
+          },
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(255, 0, 64, 1)",
+          "name": "Crisis Events",
+          "target": {
+            "limit": 100,
+            "matchAny": false,
+            "tags": ["crisis"],
+            "type": "tags"
+          }
+        }
+      ]
+    }
+  },
+  "folderUid": "ef4v15yhwmjggd",
+  "overwrite": true
+}

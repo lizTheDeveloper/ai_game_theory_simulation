@@ -1,0 +1,41 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    monitor: 'marcus-3.0'
+
+# Alert rules configuration
+rule_files:
+  - '/etc/prometheus/alerts/*.yml'
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+            - 'alertmanager:9093'
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'orchestrator'
+    static_configs:
+      - targets: ['orchestrator:3000']
+    metrics_path: '/metrics'
+
+  - job_name: 'citation-agents'
+    dns_sd_configs:
+      - names:
+          - 'citation-agent'
+        type: 'A'
+        port: 8000
+
+  - job_name: 'postgres'
+    static_configs:
+      - targets: ['postgres:5432']
+
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis:6379']

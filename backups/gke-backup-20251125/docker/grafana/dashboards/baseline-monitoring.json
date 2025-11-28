@@ -1,0 +1,322 @@
+{
+  "dashboard": {
+    "title": "MARCUS - Baseline Monitoring & Anomaly Detection",
+    "tags": ["marcus", "baseline", "anomaly", "performance"],
+    "timezone": "browser",
+    "editable": true,
+    "graphTooltip": 1,
+    "time": {
+      "from": "now-24h",
+      "to": "now"
+    },
+    "refresh": "1m",
+    "templating": {
+      "list": [
+        {
+          "name": "environment",
+          "type": "custom",
+          "options": [
+            {"text": "Production", "value": "prod"},
+            {"text": "Staging", "value": "staging"},
+            {"text": "Development", "value": "dev"}
+          ],
+          "current": {"text": "Production", "value": "prod"}
+        }
+      ]
+    },
+    "panels": [
+      {
+        "id": 1,
+        "title": "Latency vs Baseline (with tolerance bands)",
+        "type": "graph",
+        "gridPos": {"x": 0, "y": 0, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, rate(citation_latency_ms_bucket{environment=\"$environment\"}[5m]))",
+            "legendFormat": "Current p95",
+            "refId": "A"
+          },
+          {
+            "expr": "baseline_latency_p95",
+            "legendFormat": "Baseline p95",
+            "refId": "B"
+          },
+          {
+            "expr": "baseline_latency_p95 * 1.2",
+            "legendFormat": "Upper Tolerance (+20%)",
+            "refId": "C"
+          },
+          {
+            "expr": "baseline_latency_p95 * 0.8",
+            "legendFormat": "Lower Tolerance (-20%)",
+            "refId": "D"
+          }
+        ],
+        "yaxes": [
+          {"format": "ms", "label": "Latency"},
+          {"format": "short"}
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "custom": {
+              "fillOpacity": 10
+            }
+          },
+          "overrides": [
+            {
+              "matcher": {"id": "byName", "options": "Upper Tolerance (+20%)"},
+              "properties": [
+                {"id": "custom.lineStyle", "value": {"dash": [10, 10], "fill": "dash"}},
+                {"id": "color", "value": {"mode": "fixed", "fixedColor": "orange"}}
+              ]
+            },
+            {
+              "matcher": {"id": "byName", "options": "Lower Tolerance (-20%)"},
+              "properties": [
+                {"id": "custom.lineStyle", "value": {"dash": [10, 10], "fill": "dash"}},
+                {"id": "color", "value": {"mode": "fixed", "fixedColor": "orange"}}
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": 2,
+        "title": "Throughput vs Baseline",
+        "type": "graph",
+        "gridPos": {"x": 12, "y": 0, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "rate(citation_analyses_total{environment=\"$environment\"}[5m])",
+            "legendFormat": "Current Throughput",
+            "refId": "A"
+          },
+          {
+            "expr": "baseline_throughput",
+            "legendFormat": "Baseline Throughput",
+            "refId": "B"
+          },
+          {
+            "expr": "baseline_throughput * 1.2",
+            "legendFormat": "Upper Tolerance (+20%)",
+            "refId": "C"
+          },
+          {
+            "expr": "baseline_throughput * 0.8",
+            "legendFormat": "Lower Tolerance (-20%)",
+            "refId": "D"
+          }
+        ],
+        "yaxes": [
+          {"format": "short", "label": "Citations/sec"},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Accuracy Anomaly Detection",
+        "type": "graph",
+        "gridPos": {"x": 0, "y": 8, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "citation_accuracy_total{environment=\"$environment\"}",
+            "legendFormat": "Current Accuracy",
+            "refId": "A"
+          },
+          {
+            "expr": "baseline_accuracy",
+            "legendFormat": "Baseline Accuracy",
+            "refId": "B"
+          },
+          {
+            "expr": "baseline_accuracy - (baseline_accuracy_stddev * 3)",
+            "legendFormat": "3σ Lower Bound",
+            "refId": "C"
+          }
+        ],
+        "yaxes": [
+          {"format": "percentunit", "label": "Accuracy", "min": 0, "max": 1},
+          {"format": "short"}
+        ],
+        "thresholds": [
+          {"value": 0.8, "colorMode": "critical", "op": "lt", "fill": true, "line": true}
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Consensus Trend (7-day moving average)",
+        "type": "graph",
+        "gridPos": {"x": 12, "y": 8, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "avg(citation_consensus{environment=\"$environment\"})",
+            "legendFormat": "Current Consensus",
+            "refId": "A"
+          },
+          {
+            "expr": "avg_over_time(citation_consensus{environment=\"$environment\"}[7d])",
+            "legendFormat": "7-day Average",
+            "refId": "B"
+          },
+          {
+            "expr": "baseline_consensus",
+            "legendFormat": "Baseline Consensus",
+            "refId": "C"
+          }
+        ],
+        "yaxes": [
+          {"format": "percentunit", "label": "Consensus", "min": 0, "max": 1},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Anomaly Score (Standard Deviations from Baseline)",
+        "type": "graph",
+        "gridPos": {"x": 0, "y": 16, "w": 24, "h": 8},
+        "targets": [
+          {
+            "expr": "(histogram_quantile(0.95, rate(citation_latency_ms_bucket{environment=\"$environment\"}[5m])) - baseline_latency_p95) / baseline_latency_stddev",
+            "legendFormat": "Latency Anomaly (σ)",
+            "refId": "A"
+          },
+          {
+            "expr": "(rate(citation_analyses_total{environment=\"$environment\"}[5m]) - baseline_throughput) / baseline_throughput_stddev",
+            "legendFormat": "Throughput Anomaly (σ)",
+            "refId": "B"
+          },
+          {
+            "expr": "(citation_accuracy_total{environment=\"$environment\"} - baseline_accuracy) / baseline_accuracy_stddev",
+            "legendFormat": "Accuracy Anomaly (σ)",
+            "refId": "C"
+          }
+        ],
+        "yaxes": [
+          {"format": "short", "label": "Standard Deviations", "decimals": 2},
+          {"format": "short"}
+        ],
+        "thresholds": [
+          {"value": 3, "colorMode": "critical", "op": "gt", "fill": false, "line": true},
+          {"value": -3, "colorMode": "critical", "op": "lt", "fill": false, "line": true}
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Performance Degradation Alert",
+        "type": "stat",
+        "gridPos": {"x": 0, "y": 24, "w": 6, "h": 4},
+        "targets": [
+          {
+            "expr": "((histogram_quantile(0.95, rate(citation_latency_ms_bucket{environment=\"$environment\"}[5m])) - baseline_latency_p95) / baseline_latency_p95) > 0.5",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "mappings": [
+              {"type": "value", "value": "0", "text": "Normal"},
+              {"type": "value", "value": "1", "text": "DEGRADED"}
+            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"value": 0, "color": "green"},
+                {"value": 1, "color": "red"}
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 7,
+        "title": "Baseline Statistics Summary",
+        "type": "table",
+        "gridPos": {"x": 6, "y": 24, "w": 18, "h": 8},
+        "targets": [
+          {
+            "expr": "baseline_latency_p95",
+            "format": "table",
+            "instant": true,
+            "refId": "A"
+          },
+          {
+            "expr": "baseline_throughput",
+            "format": "table",
+            "instant": true,
+            "refId": "B"
+          },
+          {
+            "expr": "baseline_accuracy",
+            "format": "table",
+            "instant": true,
+            "refId": "C"
+          },
+          {
+            "expr": "baseline_consensus",
+            "format": "table",
+            "instant": true,
+            "refId": "D"
+          }
+        ],
+        "transformations": [
+          {
+            "id": "merge"
+          },
+          {
+            "id": "organize",
+            "options": {
+              "renameByName": {
+                "__name__": "Metric",
+                "Value": "Baseline Value"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "title": "Database Latency vs Baseline",
+        "type": "graph",
+        "gridPos": {"x": 0, "y": 32, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, rate(db_query_duration_ms_bucket{environment=\"$environment\"}[5m]))",
+            "legendFormat": "Current DB p95",
+            "refId": "A"
+          },
+          {
+            "expr": "baseline_db_query_latency_p95",
+            "legendFormat": "Baseline DB p95",
+            "refId": "B"
+          }
+        ],
+        "yaxes": [
+          {"format": "ms", "label": "Query Latency"},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 9,
+        "title": "Cache Hit Rate vs Baseline",
+        "type": "graph",
+        "gridPos": {"x": 12, "y": 32, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "redis_cache_hit_rate{environment=\"$environment\"}",
+            "legendFormat": "Current Hit Rate",
+            "refId": "A"
+          },
+          {
+            "expr": "baseline_cache_hit_rate",
+            "legendFormat": "Baseline Hit Rate",
+            "refId": "B"
+          }
+        ],
+        "yaxes": [
+          {"format": "percentunit", "label": "Hit Rate", "min": 0, "max": 1},
+          {"format": "short"}
+        ]
+      }
+    ]
+  }
+}

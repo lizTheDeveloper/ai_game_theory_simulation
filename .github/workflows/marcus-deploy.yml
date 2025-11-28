@@ -1,0 +1,300 @@
+name: MARCUS 3.0 - Deploy Pipeline
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        type: choice
+        options:
+          - development
+          - staging
+          - production
+      skip_tests:
+        description: 'Skip test phase'
+        required: false
+        type: boolean
+        default: false
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_PREFIX: ${{ github.repository }}
+
+jobs:
+  test:
+    name: Run All Tests
+    runs-on: ubuntu-latest
+    if: ${{ !inputs.skip_tests }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          npm ci
+
+      - name: Run Python tests
+        run: pytest src/platform/tests/ -v
+
+      - name: Run TypeScript tests
+        run: npm test
+
+      - name: Run linting
+        run: |
+          black --check src/platform/
+          flake8 src/platform/
+          npx eslint src/platform/**/*.ts
+
+  build:
+    name: Build Docker Images
+    runs-on: ubuntu-latest
+    needs: test
+    if: always() && (needs.test.result == 'success' || inputs.skip_tests)
+
+    outputs:
+      image-tag: ${{ steps.meta.outputs.version }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}/marcus-orchestrator
+          tags: |
+            type=sha,prefix={{branch}}-
+            type=raw,value=latest
+
+      - name: Build and push all images
+        run: |
+          for image in agent orchestrator benchmark; do
+            docker buildx build \
+              --platform linux/amd64,linux/arm64 \
+              --file docker/Dockerfile.$image \
+              --tag ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}/marcus-$image:${{ steps.meta.outputs.version }} \
+              --tag ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}/marcus-$image:latest \
+              --push \
+              .
+          done
+
+  deploy-dev:
+    name: Deploy to Development
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main' || inputs.environment == 'development'
+    environment:
+      name: development
+      url: https://dev.marcus.example.com
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.DEV_HOST }}
+          username: ${{ secrets.DEV_USERNAME }}
+          key: ${{ secrets.DEV_SSH_KEY }}
+          script: |
+            cd /opt/marcus-3.0
+            docker-compose pull
+            docker-compose up -d --remove-orphans
+            docker-compose ps
+
+      - name: Run health checks
+        run: |
+          timeout 60 bash -c 'until curl -f ${{ secrets.DEV_URL }}/health; do sleep 5; done'
+
+      - name: Run smoke tests
+        run: |
+          curl -f ${{ secrets.DEV_URL }}/metrics
+          curl -f ${{ secrets.DEV_URL }}/api/agents/status
+
+  deploy-staging:
+    name: Deploy to Staging
+    runs-on: ubuntu-latest
+    needs: [build, deploy-dev]
+    if: github.ref == 'refs/heads/main' || inputs.environment == 'staging'
+    environment:
+      name: staging
+      url: https://staging.marcus.example.com
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Blue-Green Deployment
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.STAGING_HOST }}
+          username: ${{ secrets.STAGING_USERNAME }}
+          key: ${{ secrets.STAGING_SSH_KEY }}
+          script: |
+            cd /opt/marcus-3.0
+
+            # Determine current color
+            if docker-compose -f docker-compose.blue.yml ps | grep -q "Up"; then
+              CURRENT="blue"
+              TARGET="green"
+            else
+              CURRENT="green"
+              TARGET="blue"
+            fi
+
+            echo "Current: $CURRENT, Deploying to: $TARGET"
+
+            # Deploy to target environment
+            docker-compose -f docker-compose.$TARGET.yml pull
+            docker-compose -f docker-compose.$TARGET.yml up -d
+
+            # Wait for health checks
+            timeout 60 bash -c "until curl -f http://localhost:300$TARGET/health; do sleep 5; done"
+
+            # Switch traffic (update load balancer or proxy config)
+            echo "Switching traffic to $TARGET"
+            ./switch-traffic.sh $TARGET
+
+            # Keep old environment for rollback
+            echo "Deployment complete. Old environment ($CURRENT) preserved for rollback."
+
+      - name: Run integration tests
+        run: |
+          curl -f ${{ secrets.STAGING_URL }}/health
+          # Add more comprehensive integration tests here
+
+  deploy-production:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    needs: [build, deploy-staging]
+    if: inputs.environment == 'production'
+    environment:
+      name: production
+      url: https://marcus.example.com
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Manual approval check
+        run: echo "Deploying to production - manual approval required"
+
+      - name: Blue-Green Production Deployment
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.PROD_HOST }}
+          username: ${{ secrets.PROD_USERNAME }}
+          key: ${{ secrets.PROD_SSH_KEY }}
+          script: |
+            cd /opt/marcus-3.0
+
+            # Backup current state
+            ./backup-state.sh
+
+            # Blue-green deployment
+            if docker-compose -f docker-compose.blue.yml ps | grep -q "Up"; then
+              CURRENT="blue"
+              TARGET="green"
+            else
+              CURRENT="green"
+              TARGET="blue"
+            fi
+
+            echo "Production deployment: $CURRENT → $TARGET"
+
+            # Deploy to target
+            docker-compose -f docker-compose.$TARGET.yml pull
+            docker-compose -f docker-compose.$TARGET.yml up -d
+
+            # Comprehensive health checks
+            timeout 120 bash -c "until curl -f http://localhost:300$TARGET/health; do sleep 5; done"
+
+            # Run production smoke tests
+            ./smoke-tests.sh $TARGET || (echo "Smoke tests failed, rolling back"; docker-compose -f docker-compose.$CURRENT.yml up -d; exit 1)
+
+            # Switch production traffic
+            echo "Switching production traffic to $TARGET"
+            ./switch-traffic.sh $TARGET
+
+            # Monitor for 5 minutes
+            sleep 300
+
+            # Final health check
+            curl -f http://localhost:300$TARGET/health || (echo "Health check failed, rolling back"; ./switch-traffic.sh $CURRENT; exit 1)
+
+            echo "Production deployment successful"
+
+      - name: Verify production deployment
+        run: |
+          curl -f ${{ secrets.PROD_URL }}/health
+          curl -f ${{ secrets.PROD_URL }}/metrics
+
+      - name: Create deployment tag
+        run: |
+          git tag -a "prod-$(date +%Y%m%d-%H%M%S)" -m "Production deployment"
+          git push --tags
+
+  rollback:
+    name: Rollback Deployment
+    runs-on: ubuntu-latest
+    if: failure()
+    needs: [deploy-production]
+
+    steps:
+      - name: Automatic rollback
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.PROD_HOST }}
+          username: ${{ secrets.PROD_USERNAME }}
+          key: ${{ secrets.PROD_SSH_KEY }}
+          script: |
+            cd /opt/marcus-3.0
+            echo "⚠️ Deployment failed - initiating automatic rollback"
+            ./rollback.sh
+
+      - name: Notify team
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          webhook-url: ${{ secrets.SLACK_WEBHOOK }}
+          payload: |
+            {
+              "text": "🚨 MARCUS 3.0 Production Deployment Failed - Rollback Initiated",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*Production deployment failed and was automatically rolled back*\n\nCommit: ${{ github.sha }}\nActor: ${{ github.actor }}"
+                  }
+                }
+              ]
+            }

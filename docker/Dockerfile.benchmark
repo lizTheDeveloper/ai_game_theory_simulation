@@ -1,0 +1,66 @@
+# MARCUS 3.0 - Benchmark Evaluation Framework
+FROM python:3.11-slim as python-base
+
+WORKDIR /app
+
+# Install Python dependencies
+RUN apt-get update && apt-get install -y \
+    libpq-dev \
+    gcc \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Use CPU-only requirements to avoid 4GB CUDA dependency
+COPY requirements-benchmark.txt .
+RUN pip install --no-cache-dir -r requirements-benchmark.txt
+
+FROM node:20-slim as node-base
+
+WORKDIR /app
+
+# Install Node dependencies
+COPY package*.json ./
+RUN npm ci --only=production
+
+# Final stage - combine Python and Node
+FROM python:3.11-slim
+
+LABEL org.opencontainers.image.source="https://github.com/your-org/ai_game_theory_simulation"
+LABEL org.opencontainers.image.description="MARCUS 3.0 Benchmark Suite"
+LABEL maintainer="marcus@platform.engineering"
+
+WORKDIR /app
+
+# Install runtime dependencies
+RUN apt-get update && apt-get install -y \
+    libpq-dev \
+    nodejs \
+    npm \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create non-root user
+RUN useradd -m -u 1000 -s /bin/bash marcus && \
+    chown -R marcus:marcus /app
+
+# Copy Python dependencies from python-base
+COPY --from=python-base /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
+COPY --from=python-base /usr/local/bin /usr/local/bin
+
+# Copy Node dependencies from node-base
+COPY --from=node-base /app/node_modules /app/node_modules
+
+# Copy platform code
+COPY src/platform /app/src/platform
+COPY requirements.txt package*.json tsconfig.json ./
+
+# Set ownership
+RUN chown -R marcus:marcus /app
+
+# Switch to non-root user
+USER marcus
+
+ENV PYTHONPATH=/app/src
+ENV PYTHONUNBUFFERED=1
+
+# Run benchmark suite
+CMD ["python", "/app/src/platform/evaluation/citation_evaluation_benchmarks.py"]

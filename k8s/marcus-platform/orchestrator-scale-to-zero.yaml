@@ -1,0 +1,26 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: orchestrator-scaler
+  namespace: marcus-platform
+spec:
+  scaleTargetRef:
+    name: orchestrator
+    kind: Deployment
+  # Scale to ZERO when idle
+  minReplicaCount: 0
+  maxReplicaCount: 10
+  # Check every 30 seconds
+  pollingInterval: 30
+  # Wait 2 minutes before scaling down (short for cost savings)
+  cooldownPeriod: 120
+  triggers:
+  # Use Redis queue length as trigger (simpler than Prometheus)
+  - type: redis
+    metadata:
+      address: redis-0.redis-headless.marcus-platform.svc.cluster.local:6379
+      listName: orchestrator-tasks
+      listLength: '5'  # Scale up if more than 5 tasks
+      activationListLength: '1'  # Wake from 0 if ANY tasks
+    authenticationRef:
+      name: redis-trigger-auth

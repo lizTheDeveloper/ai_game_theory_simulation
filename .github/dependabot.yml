@@ -1,0 +1,76 @@
+# GitHub Dependabot Configuration
+# Automated dependency updates with security vulnerability scanning
+#
+# Dependabot will:
+# - Check for security vulnerabilities daily
+# - Create PRs for dependency updates weekly
+# - Group updates by type (npm, GitHub Actions)
+# - Label PRs for easy triage
+
+version: 2
+updates:
+  # npm dependencies (TypeScript/Node.js)
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "America/Los_Angeles"
+    # Security updates checked daily
+    open-pull-requests-limit: 10
+    reviewers:
+      - "platform-team"
+    assignees:
+      - "marcus"
+    labels:
+      - "dependencies"
+      - "security"
+    commit-message:
+      prefix: "deps"
+      prefix-development: "deps-dev"
+      include: "scope"
+    # Group minor and patch updates together
+    groups:
+      production-dependencies:
+        patterns:
+          - "*"
+        exclude-patterns:
+          - "@types/*"
+        update-types:
+          - "minor"
+          - "patch"
+      development-dependencies:
+        patterns:
+          - "@types/*"
+          - "eslint*"
+          - "typescript"
+          - "tsx"
+        update-types:
+          - "minor"
+          - "patch"
+    # Ignore major version updates (review manually)
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+    # Allow updates for vulnerable dependencies
+    allow:
+      - dependency-type: "all"
+
+  # GitHub Actions dependencies
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "America/Los_Angeles"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "platform-team"
+    labels:
+      - "dependencies"
+      - "github-actions"
+    commit-message:
+      prefix: "ci"
+      include: "scope"

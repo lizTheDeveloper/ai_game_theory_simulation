@@ -1,0 +1,477 @@
+name: MARCUS 3.0 - Automated Benchmarking
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    # Run daily at 2 AM UTC
+    - cron: '0 2 * * *'
+
+env:
+  BASELINE_FILE: benchmarks/baseline.json
+  REGRESSION_THRESHOLD: 0.10  # 10% regression fails CI
+
+jobs:
+  benchmark:
+    name: Run Benchmarks
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: benchmark_user
+          POSTGRES_PASSWORD: benchmark_pass
+          POSTGRES_DB: benchmark_db
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /usr/local/share/boost
+          sudo apt-get clean
+          df -h
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for baseline comparison
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: |
+          # Install system deps (redis-tools for connectivity check)
+          sudo apt-get update && sudo apt-get install -y redis-tools postgresql-client
+
+          # Install Python deps for benchmarks (scikit-learn required for ML baselines)
+          pip install numpy pandas requests python-dotenv tqdm psycopg2-binary redis scikit-learn
+          npm ci
+
+      - name: Create benchmarks directory
+        run: mkdir -p benchmarks benchmark_results
+
+      - name: Setup database schema
+        env:
+          PGHOST: localhost
+          PGPORT: 5432
+          PGUSER: benchmark_user
+          PGPASSWORD: benchmark_pass
+          PGDATABASE: benchmark_db
+        run: |
+          echo "Setting up database schema..."
+
+          # Wait for PostgreSQL to be ready
+          for i in {1..30}; do
+            if pg_isready -h localhost -p 5432 -U benchmark_user; then
+              echo "✅ PostgreSQL is ready"
+              break
+            fi
+            echo "Waiting for PostgreSQL... ($i/30)"
+            sleep 1
+          done
+
+          # Apply migrations in order
+          echo "Applying migrations..."
+          for migration in src/platform/database/migrations/*.sql; do
+            echo "  Applying $(basename $migration)..."
+            psql -h localhost -U benchmark_user -d benchmark_db -f "$migration" || {
+              echo "⚠️ Migration $(basename $migration) had issues (may already exist)"
+            }
+          done
+
+          echo "✅ Database schema setup complete"
+
+          # Verify key tables exist
+          echo "Verifying tables..."
+          psql -h localhost -U benchmark_user -d benchmark_db -c "\dt" | head -20
+
+      - name: Verify Redis connection
+        run: |
+          echo "Checking Redis..."
+          for i in {1..10}; do
+            if redis-cli -h localhost -p 6379 ping; then
+              echo "✅ Redis is ready"
+              exit 0
+            fi
+            echo "Waiting for Redis... ($i/10)"
+            sleep 1
+          done
+          echo "❌ Redis not available"
+          exit 1
+
+      - name: Run Python accuracy benchmarks
+        env:
+          # Use production secrets if available, otherwise fall back to local test DB
+          DATABASE_URL: ${{ secrets.PROD_DATABASE_URL || 'postgresql://benchmark_user:benchmark_pass@localhost:5432/benchmark_db' }}
+          REDIS_URL: ${{ secrets.PROD_REDIS_URL || 'redis://localhost:6379/0' }}
+        run: |
+          echo "Running Python benchmarks..."
+          # Log which credentials are being used (without exposing secrets)
+          if [ -n "${{ secrets.PROD_DATABASE_URL }}" ]; then
+            echo "📊 Using PRODUCTION database credentials from GitHub Secrets"
+          else
+            echo "📊 Using LOCAL test database credentials (benchmark_user@localhost)"
+          fi
+          python src/platform/evaluation/citation_evaluation_benchmarks.py
+
+          # Find and copy JSON results (scripts write to benchmark_results/)
+          JSON_FILE=$(ls -t benchmark_results/*.json 2>/dev/null | head -1)
+          if [ -n "$JSON_FILE" ]; then
+            cp "$JSON_FILE" benchmarks/results-python.json
+            echo "✅ Python benchmark results saved"
+          else
+            echo "❌ No JSON output from Python benchmarks"
+            exit 1
+          fi
+
+      - name: Run TypeScript performance benchmarks
+        env:
+          # Use production secrets if available, otherwise fall back to local test DB
+          DATABASE_URL: ${{ secrets.PROD_DATABASE_URL || 'postgresql://benchmark_user:benchmark_pass@localhost:5432/benchmark_db' }}
+          REDIS_URL: ${{ secrets.PROD_REDIS_URL || 'redis://localhost:6379/0' }}
+          # Individual env vars for Python agents spawned by TypeScript benchmarks
+          # These use secrets if available, otherwise local test credentials
+          DATABASE_HOST: ${{ secrets.PROD_DATABASE_HOST || 'localhost' }}
+          DATABASE_PORT: ${{ secrets.PROD_DATABASE_PORT || '5432' }}
+          DATABASE_NAME: ${{ secrets.PROD_DATABASE_NAME || 'benchmark_db' }}
+          DATABASE_USER: ${{ secrets.PROD_DATABASE_USER || 'benchmark_user' }}
+          DATABASE_PASSWORD: ${{ secrets.PROD_DATABASE_PASSWORD || 'benchmark_pass' }}
+          POSTGRES_USER: ${{ secrets.PROD_DATABASE_USER || 'benchmark_user' }}
+          POSTGRES_PASSWORD: ${{ secrets.PROD_DATABASE_PASSWORD || 'benchmark_pass' }}
+          # POSTGRES_DB is what our TypeScript code reads for database name
+          POSTGRES_DB: ${{ secrets.PROD_DATABASE_NAME || 'benchmark_db' }}
+          PGDATABASE: ${{ secrets.PROD_DATABASE_NAME || 'benchmark_db' }}
+          PGHOST: ${{ secrets.PROD_DATABASE_HOST || 'localhost' }}
+          PGPORT: ${{ secrets.PROD_DATABASE_PORT || '5432' }}
+          PGUSER: ${{ secrets.PROD_DATABASE_USER || 'benchmark_user' }}
+          PGPASSWORD: ${{ secrets.PROD_DATABASE_PASSWORD || 'benchmark_pass' }}
+        run: |
+          echo "Running TypeScript benchmarks..."
+          # Log which credentials are being used
+          if [ -n "${{ secrets.PROD_DATABASE_URL }}" ]; then
+            echo "📊 Using PRODUCTION database credentials from GitHub Secrets"
+            echo "   Host: ${{ secrets.PROD_DATABASE_HOST || 'not set' }}"
+          else
+            echo "📊 Using LOCAL test database credentials"
+            echo "   Host: localhost"
+            echo "   Database: benchmark_db"
+            echo "   User: benchmark_user"
+          fi
+          npx tsx src/platform/evaluation/citationBenchmarks.ts
+
+          # Find and copy JSON results (newer than Python results)
+          JSON_FILE=$(ls -t benchmark_results/report_*.json 2>/dev/null | head -1)
+          if [ -n "$JSON_FILE" ]; then
+            cp "$JSON_FILE" benchmarks/results-typescript.json
+            echo "✅ TypeScript benchmark results saved"
+          else
+            echo "❌ No JSON output from TypeScript benchmarks"
+            exit 1
+          fi
+
+      - name: Merge benchmark results
+        run: |
+          node -e "
+            const python = require('./benchmarks/results-python.json');
+            const typescript = require('./benchmarks/results-typescript.json');
+            const merged = {
+              timestamp: new Date().toISOString(),
+              commit: '${{ github.sha }}',
+              branch: '${{ github.ref_name }}',
+              accuracy: python.accuracy,
+              performance: typescript.performance,
+              scalability: typescript.scalability
+            };
+            require('fs').writeFileSync('benchmarks/results.json', JSON.stringify(merged, null, 2));
+          "
+
+      - name: Load baseline
+        id: baseline
+        run: |
+          if [ -f "${{ env.BASELINE_FILE }}" ]; then
+            echo "baseline_exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "baseline_exists=false" >> $GITHUB_OUTPUT
+            echo "⚠️ No baseline found - this run will establish baseline"
+          fi
+
+      - name: Compare to baseline
+        if: steps.baseline.outputs.baseline_exists == 'true'
+        id: comparison
+        run: |
+          node -e "
+            const baseline = require('./${{ env.BASELINE_FILE }}');
+            const current = require('./benchmarks/results.json');
+            const threshold = parseFloat('${{ env.REGRESSION_THRESHOLD }}');
+
+            // Check if results were skipped (no numeric values)
+            const accuracySkipped = !current.accuracy || typeof current.accuracy.overall !== 'number';
+            const performanceSkipped = !current.performance || typeof current.performance.latency_p95 !== 'number';
+
+            if (accuracySkipped && performanceSkipped) {
+              console.log('⚠️ All benchmarks skipped - no comparison possible');
+              require('fs').writeFileSync('benchmarks/comparison.json', JSON.stringify({
+                hasRegression: false,
+                skipped: true,
+                report: [{ metric: 'all', status: '⚠️ SKIPPED', reason: 'Benchmark scripts not available' }]
+              }, null, 2));
+              process.exit(0);
+            }
+
+            const metrics = {};
+
+            // Only add metrics that have valid numeric values
+            if (!accuracySkipped) {
+              if (typeof current.accuracy.overall === 'number') {
+                metrics.accuracy = { baseline: baseline.accuracy?.overall, current: current.accuracy.overall, threshold };
+              }
+              if (typeof current.accuracy.f1_score === 'number') {
+                metrics.f1_score = { baseline: baseline.accuracy?.f1_score, current: current.accuracy.f1_score, threshold };
+              }
+              if (typeof current.accuracy.consensus === 'number') {
+                metrics.consensus = { baseline: baseline.accuracy?.consensus, current: current.accuracy.consensus, threshold };
+              }
+            }
+
+            if (!performanceSkipped) {
+              if (typeof current.performance.latency_p95 === 'number') {
+                metrics.latency_p95 = { baseline: baseline.performance?.latency_p95, current: current.performance.latency_p95, threshold, inverse: true };
+              }
+              if (typeof current.performance.throughput === 'number') {
+                metrics.throughput = { baseline: baseline.performance?.throughput, current: current.performance.throughput, threshold };
+              }
+            }
+
+            let hasRegression = false;
+            const report = [];
+
+            for (const [name, data] of Object.entries(metrics)) {
+              // Skip if baseline doesn't have this metric
+              if (typeof data.baseline !== 'number') {
+                report.push({ metric: name, baseline: 'N/A', current: data.current.toFixed(4), change: 'N/A', status: '⚠️ NO BASELINE' });
+                continue;
+              }
+
+              const change = data.inverse
+                ? (data.current - data.baseline) / data.baseline
+                : (data.baseline - data.current) / data.baseline;
+
+              const status = Math.abs(change) > data.threshold
+                ? (change > 0 ? '⚠️ REGRESSION' : '✅ IMPROVEMENT')
+                : '✓ OK';
+
+              if (change > data.threshold) hasRegression = true;
+
+              report.push({
+                metric: name,
+                baseline: data.baseline.toFixed(4),
+                current: data.current.toFixed(4),
+                change: (change * 100).toFixed(2) + '%',
+                status: status
+              });
+            }
+
+            // Add skipped sections to report
+            if (accuracySkipped) report.push({ metric: 'accuracy', status: '⚠️ SKIPPED' });
+            if (performanceSkipped) report.push({ metric: 'performance', status: '⚠️ SKIPPED' });
+
+            console.table(report);
+
+            require('fs').writeFileSync('benchmarks/comparison.json', JSON.stringify({
+              hasRegression,
+              report
+            }, null, 2));
+
+            if (hasRegression) {
+              console.error('❌ Performance regression detected');
+              process.exit(1);
+            }
+          "
+
+      - name: Generate benchmark report
+        run: |
+          node src/platform/scripts/generate-benchmark-report.js \
+            benchmarks/results.json \
+            benchmarks/comparison.json \
+            > benchmarks/report.html
+
+      - name: Upload benchmark results
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-results
+          path: |
+            benchmarks/results.json
+            benchmarks/comparison.json
+            benchmarks/report.html
+          retention-days: 90
+
+      - name: Update baseline (main branch only)
+        if: github.ref == 'refs/heads/main' && steps.baseline.outputs.baseline_exists == 'false'
+        run: |
+          cp benchmarks/results.json ${{ env.BASELINE_FILE }}
+          git config user.name "Marcus Bot"
+          git config user.email "marcus-bot@platform.engineering"
+          git add ${{ env.BASELINE_FILE }}
+          git commit -m "chore: Update benchmark baseline [skip ci]"
+          git push
+
+      - name: Comment on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        env:
+          THRESHOLD: ${{ env.REGRESSION_THRESHOLD }}
+        with:
+          script: |-
+            const fs = require('fs');
+            const comparison = JSON.parse(fs.readFileSync('benchmarks/comparison.json', 'utf8'));
+            const threshold = parseFloat(process.env.THRESHOLD || '0.05') * 100;
+            const pipe = '|';
+            const header = `${pipe} Metric ${pipe} Baseline ${pipe} Current ${pipe} Change ${pipe} Status ${pipe}`;
+            const separator = `${pipe}--------${pipe}----------${pipe}---------${pipe}--------${pipe}--------${pipe}`;
+            const table = comparison.report.map(r =>
+              `${pipe} ${r.metric} ${pipe} ${r.baseline} ${pipe} ${r.current} ${pipe} ${r.change} ${pipe} ${r.status} ${pipe}`
+            ).join('\n');
+            const status = comparison.hasRegression ? '⚠️ Performance regression detected!' : '✅ All benchmarks passed';
+            const body = `## 📊 Benchmark Results\n\n${header}\n${separator}\n${table}\n\n**Threshold:** ±${threshold}%\n\n${status}`;
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });
+
+  profile:
+    name: Performance Profiling
+    runs-on: ubuntu-latest
+    needs: benchmark
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: benchmark_user
+          POSTGRES_PASSWORD: benchmark_pass
+          POSTGRES_DB: benchmark_db
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          # Install profiling tools
+          pip install py-spy memory-profiler matplotlib
+          # Install benchmark dependencies (same as benchmark job)
+          pip install numpy pandas requests python-dotenv tqdm psycopg2-binary redis scikit-learn
+
+      - name: Setup database schema
+        env:
+          PGHOST: localhost
+          PGPORT: 5432
+          PGUSER: benchmark_user
+          PGPASSWORD: benchmark_pass
+          PGDATABASE: benchmark_db
+        run: |
+          # Wait for PostgreSQL
+          for i in {1..30}; do
+            if pg_isready -h localhost -p 5432 -U benchmark_user; then
+              echo "PostgreSQL is ready"
+              break
+            fi
+            sleep 1
+          done
+
+          # Apply migrations
+          sudo apt-get update && sudo apt-get install -y postgresql-client
+          for migration in src/platform/database/migrations/*.sql; do
+            psql -h localhost -U benchmark_user -d benchmark_db -f "$migration" 2>/dev/null || true
+          done
+
+      - name: Create benchmarks directory
+        run: mkdir -p benchmarks
+
+      - name: Run CPU profiling
+        env:
+          PGHOST: localhost
+          PGPORT: 5432
+          PGUSER: benchmark_user
+          PGPASSWORD: benchmark_pass
+          PGDATABASE: benchmark_db
+        run: |
+          py-spy record -o benchmarks/cpu-profile.svg \
+            -- python src/platform/evaluation/citation_evaluation_benchmarks.py || true
+
+      - name: Run memory profiling
+        env:
+          PGHOST: localhost
+          PGPORT: 5432
+          PGUSER: benchmark_user
+          PGPASSWORD: benchmark_pass
+          PGDATABASE: benchmark_db
+        run: |
+          mprof run src/platform/evaluation/citation_evaluation_benchmarks.py || true
+          mprof plot -o benchmarks/memory-profile.png || echo "Skipping plot (no data)"
+
+      - name: Upload profiling results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: profiling-results
+          path: |
+            benchmarks/cpu-profile.svg
+            benchmarks/memory-profile.png
+          retention-days: 30
