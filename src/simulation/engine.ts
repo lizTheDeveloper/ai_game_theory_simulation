@@ -170,6 +170,7 @@ import { ClimateSystemPhase } from './engine/phases/ClimateSystemPhase';  // Con
 import { ClimateDeploymentPhase } from './engine/phases/ClimateDeploymentPhase';  // TIER 1 CRITICAL (Nov 2025): Climate tech phased deployment + energy constraints
 import { ClimateDeploymentDelayPhase } from './engine/phases/ClimateDeploymentDelayPhase';  // TIER 1 CRITICAL (Nov 18, 2025): Three-delay model
 import { VolcanicForcingPhase } from './engine/phases/VolcanicForcingPhase';  // HIGH PRIORITY (Nov 27, 2025): Stratospheric aerosol forcing for hindcast validation
+import { PermafrostCarbonPhase } from './engine/phases/PermafrostCarbonPhase';  // TIER 2 RD-1 (Nov 28, 2025): Permafrost carbon feedback loop
 import { ResourceSoilPhase } from './engine/phases/ResourceSoilPhase';  // Consolidated phosphorus + novel entities
 import { ResourceWaterPhase } from './engine/phases/ResourceWaterPhase';  // Consolidated freshwater + ocean acidification
 // Batch 4 Consolidation: Crisis & Mortality (14 → 5, Nov 9, 2025)
@@ -582,6 +583,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new ClimateDeploymentPhase());  // TIER 1 CRITICAL (Nov 2025): Climate tech phased deployment + energy constraints (order 8.5)
     this.orchestrator.registerPhase(new ClimateDeploymentDelayPhase());  // TIER 1 CRITICAL (Nov 18, 2025): Three-delay model for realistic deployment timescales (order 16.0)
     this.orchestrator.registerPhase(new VolcanicForcingPhase());  // HIGH PRIORITY (Nov 27, 2025): Stratospheric aerosol forcing for hindcast validation (order 16.5)
+    this.orchestrator.registerPhase(new PermafrostCarbonPhase());  // TIER 2 RD-1 (Nov 28, 2025): Permafrost carbon feedback loop (order 18.5)
     // === BATCH 4 CONSOLIDATED SURVIVAL SYSTEM (Nov 9, 2025) ===
     this.orchestrator.registerPhase(new HumanSurvivalSystemPhase());  // Consolidated: FamineSystemPhase + FoodSecurityDegradationPhase + MortalityStabilizersPhase (order 19.7)
     // DEPRECATED (Nov 21, 2025): TransitionMortalityPhase superseded by CoordinatedDeploymentPhase (order 10.5)

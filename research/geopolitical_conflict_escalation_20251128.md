@@ -38,8 +38,15 @@ This research synthesizes 2024-2025 academic literature on nuclear conflict esca
 - **Climate stress:** 4.9-9.8% increase in group conflict by 2050 under average climate scenarios
 - **Social trust collapse:** Disinformation erosion of diplomatic trust, polarization, authoritarianism linkages
 
-**Implementation Recommendation:**
-Start with 0.1% base monthly probability (1.2% annual), apply 4× AI multiplier → 0.4% monthly baseline. Add regional flashpoint risks and trigger multipliers dynamically based on game state.
+**Implementation Recommendation (CORRECTED per Sylvia's Validation):**
+Start with 0.05% base monthly probability (0.6% annual), apply 2× AI multiplier with 0.6× deterrence discount → 0.06% monthly baseline. Cap compound multiplier at 4× maximum. Add regional flashpoint risks and trigger multipliers dynamically based on game state.
+
+**Corrections Applied:**
+- Base rate: 0.1% → 0.05% monthly (evidence shows deterrence working)
+- AI multiplier: 4× → 2× (range 1.5-3×, avoids escalation bias)
+- Social trust multiplier: REMOVED (no empirical basis)
+- Compound cap: 4× maximum (prevents doom spiral)
+- Deterrence discount: 0.6× (MAD doctrine still effective)
 
 ---
 
@@ -566,20 +573,22 @@ This estimate is synthesized from multiple 2024-2025 sources describing qualitat
 ### Base Monthly Conflict Probability
 
 **Parameter:** `baseMonthlyConflictProbability`
-**Value:** **0.1%** (range: 0.04-0.17%)
+**Value:** **0.05%** (range: 0.03-0.08%) **[CORRECTED]**
 **Source:** Cold War annual risk (0.5-2%) converted to monthly
-**Justification:** Moderate estimate within expert consensus range
+**Justification:** Conservative estimate accounting for successful deterrence (Cuban Missile Crisis, Able Archer, Ukraine 2022)
+**Correction Rationale:** Original 0.1% produced 80% annual probability in high-risk scenarios (doom spiral). Reduced per Sylvia's validation.
 
 ### AI Era Multiplier
 
 **Parameter:** `aiEraMultiplier`
-**Value:** **4.0** (range: 3.0-5.0)
-**Source:** Synthesis of five AI escalation mechanisms (2024-2025 literature)
-**Justification:** Decision compression, first-strike incentives, misattribution, disinformation, strategic uncertainty each contribute ~20-100% increase
+**Value:** **2.0** (range: 1.5-3.0) **[CORRECTED]**
+**Source:** Synthesis of five AI escalation mechanisms (2024-2025 literature), balanced with AI stabilizing effects
+**Justification:** AI increases risk via decision compression and misattribution, BUT also improves early warning and crisis communication
+**Correction Rationale:** Original 4× ignored stabilizing effects and combined uncertain mechanisms without validation. Reduced per Sylvia's critique.
 **Application:** Multiply by AI capability score (0-1 scale)
   - AI capability <0.3 → 1.0× (minimal AI integration)
-  - AI capability 0.3-0.7 → 1.0-4.0× (linear scaling)
-  - AI capability >0.7 → 4.0-5.0× (full military AI integration)
+  - AI capability 0.3-0.7 → 1.0-2.0× (linear scaling)
+  - AI capability >0.7 → 2.0-3.0× (full military AI integration)
 
 ### Regional Flashpoint Probabilities (Monthly)
 
@@ -636,50 +645,63 @@ climateMultiplier = tempMultiplier * disasterMultiplier
 
 **Source:** 2024-2025 climate-conflict research
 
-### Social Trust Collapse Multiplier
+### Social Trust Collapse Multiplier **[REMOVED]**
 
 **Parameter:** `socialTrustMultiplier`
-**Mechanism:** Low social trust → reduced crisis communication → increased conflict
-**Value (proposed):** Each 20-point reduction in social trust (0-100 scale) → **+30% conflict risk**
+**Status:** **REMOVED from implementation**
+**Reason:** No direct empirical data linking trust scores to conflict probability. Original estimate was theoretical synthesis without quantitative validation.
+**Sylvia's Critique:** "This violates research standards requiring empirical basis for parameters. The research explicitly states 'no direct quantitative estimate available' yet proposes a specific formula."
+**Alternative:** If social trust effects are needed, model through diplomatic effectiveness or crisis communication quality (indirect pathways with stronger evidence).
 
-**Formula:**
-```
-trustMultiplier = 1.0 + max(0, (80 - socialTrust) / 20) * 0.30
-```
-
-**Example:** Social trust = 40 → (80-40)/20 * 0.30 = **+60% conflict risk** (2.0× baseline)
-
-**Source:** Theoretical synthesis from AI disinformation and diplomatic trust erosion literature (2024-2025)
-**Uncertainty:** High—no direct empirical data. Recommend sensitivity analysis.
-
-### Combined Monthly Conflict Probability Formula
+### Combined Monthly Conflict Probability Formula **[CORRECTED]**
 
 ```typescript
-monthlyConflictProbability =
-  baseMonthlyConflictProbability *
+// Calculate compound multiplier (with CAP to prevent doom spiral)
+compoundMultiplier = Math.min(
   aiEraMultiplier *
   aiCapabilitySpikeMultiplier *
   resourceScarcityMultiplier *
-  climateStressMultiplier *
-  socialTrustMultiplier +
-  regionalFlashpointRisk
+  climateStressMultiplier,
+  4.0  // Maximum 4× compound multiplier
+);
+
+// Apply deterrence discount (MAD doctrine still effective)
+const DETERRENCE_DISCOUNT = 0.6;
+
+monthlyConflictProbability =
+  baseMonthlyConflictProbability *
+  compoundMultiplier *
+  DETERRENCE_DISCOUNT +
+  regionalFlashpointRisk;
 
 // Clamp to reasonable range
-monthlyConflictProbability = Math.min(monthlyConflictProbability, 0.30) // Cap at 30% monthly
+monthlyConflictProbability = Math.min(monthlyConflictProbability, 0.15); // Cap at 15% monthly
 ```
 
-**Example calculation (high-risk scenario):**
-- Base: 0.1%
-- AI multiplier: 4.0× (high AI capability)
+**Corrections Applied:**
+1. Social trust multiplier REMOVED (no empirical basis)
+2. Compound multiplier capped at 4× (prevents unrealistic scenarios)
+3. Deterrence discount 0.6× added (MAD still working, per Brookings 2024)
+4. Base rate reduced to 0.05% (from 0.1%)
+5. Maximum monthly probability capped at 15% (from 30%)
+
+**Example calculation (high-risk scenario - CORRECTED):**
+- Base: 0.05%
+- AI multiplier: 2.0× (high AI capability) [was 4.0×]
 - AI spike: 1.5× (recent capability jump)
 - Resource scarcity: 2.0× (50% food + 50% water insecurity)
 - Climate stress: 1.3× (2°C warming + recent disaster)
-- Social trust: 1.6× (trust score = 47)
+- Compound: 2.0 × 1.5 × 2.0 × 1.3 = 7.8× → **CAPPED at 4.0×**
+- Deterrence discount: 4.0 × 0.6 = 2.4×
 - Regional flashpoints: +6.6%
+- **Total: 0.05% × 2.4 + 6.6% = 6.72% monthly (~55% annual)**
 
-**Result:** 0.1% × 4 × 1.5 × 2 × 1.3 × 1.6 + 6.6% = **~13% monthly conflict probability**
+**Comparison to Original (Uncorrected):**
+- Original: 0.1% × 4 × 1.5 × 2 × 1.3 × 1.6 + 6.6% = **~13% monthly** (~80% annual)
+- Corrected: 0.05% × 2.4 + 6.6% = **6.72% monthly** (~55% annual)
+- **Reduction: 48% less conflict probability in extreme scenarios**
 
-**Interpretation:** In worst-case scenario (all risk factors elevated), monthly conflict probability reaches 10-15% range, implying ~70-80% annual probability—consistent with expert assessments of extreme crisis periods.
+**Interpretation:** Even in worst-case scenarios (all risk factors elevated + Taiwan crisis active), monthly conflict probability remains under 7%, implying ~55% annual probability during peak crisis years. This is consistent with historical evidence that deterrence works even under extreme stress.
 
 ---
 
