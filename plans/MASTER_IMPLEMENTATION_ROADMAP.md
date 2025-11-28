@@ -5,34 +5,36 @@
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**Current Status:** 🟢 **HIGH PRIORITY CALIBRATION COMPLETE** (Nov 28, 2025 - Sessions 20251128_031537 + 20251128_040001)
+**Current Status:** 🟢 **ARCHITECTURE INTEGRATION VERIFIED** (Nov 28, 2025 - Session 20251128_050001)
 - **Research Quality:** A- (95%+ sources from 2024-2025, high-priority updates identified)
-- **Architecture Health:** A- (0 CRITICAL, 1 HIGH resolved, 2 MEDIUM items, 2 infrastructure items)
+- **Architecture Health:** A (0 CRITICAL, 0 HIGH, 2 MEDIUM deferred, 2 infrastructure planned for Devon)
 - **System Performance:** 0% crash rate ✅, determinism verified (CV=0.000% ✅), historical accuracy CONDITIONAL PASS (29.3% overall)
-- **System Trajectory:** 🟢 **PROGRESSING** - HIGH-8 RESOLVED, HIGH-6/7 downgraded to MEDIUM priority
+- **System Trajectory:** 🟢 **STABLE** - All CRITICAL/HIGH items resolved, unified historical mode detection deployed
 - **Roadmap Coherence:** CURRENT - Updated Nov 28 end-of-session cleanup (Architect)
-- **Recent Work (Nov 28 Sessions - HIGH-6/7/8 VALIDATION COMPLETE):**
+- **Recent Work (Nov 28 Session 3 - CRITICAL-1 RESOLVED, Integration Review Complete):**
+  - ✅ **CRITICAL-1 RESOLVED** (commit 5c7fec87) - Unified historical mode detection pattern
+    - **Root cause:** Dual incompatible patterns (state.config.historicalMode vs isHistoricalModeActive())
+    - **Impact:** Split-brain guard behavior - likely caused HIGH-8 biodiversity regression
+    - **Fix:** Migrated 17 violations across 10 files to canonical utility function
+    - **Year corrections:** Fixed hardcoded 2020 → 2024 cutoffs (HIGH-2, HIGH-3)
+    - **Validation:** Type check ✅, god mode ✅, hindcast ✅
+    - **Archive:** plans/completed/CRITICAL1_historical_mode_unification_20251128.md
+  - ✅ **Architecture Integration Review** (post HIGH-6/7/8 validation sprint)
+    - **Grade:** B- → A (CRITICAL-1 fixed, all HIGH items resolved)
+    - **Issues found:** CRITICAL-1 (fixed), HIGH-1/2/3 (fixed), MEDIUM-1/2/3 (deferred)
+    - **Performance:** O(n²) fixes holding, Welford's algorithm intact
+    - **Phase dependencies:** No circular dependencies or ordering violations
+    - **Archive:** plans/completed/architecture_integration_review_20251128.md
+- **Recent Work (Nov 28 Sessions 1-2 - HIGH-6/7/8 VALIDATION COMPLETE):**
   - ✅ **HIGH-8 RESOLVED** (commit 47a6b52a) - Biodiversity calibration FIXED
-    - N=10 error: 77.3% ❌ → Single-run fix: 1.2% ✅ (49.59% vs 49% target)
-    - Root cause: 14 locations modifying biodiversity during historical mode (double-counting)
-    - Solution: Applied isHistoricalModeActive() guards across 6 files
-    - Validation: -1.18%/yr decline rate matches WWF LPI -1.236%/yr ✅
-    - Status: **RESOLVED** - biodiversity now calibrated to historical data
-  - ⚠️ **HIGH-7 → MEDIUM** - Population 24.5% error (acceptable for research model)
-    - N=10 validation: +24.5% average deviation (8.12B target)
-    - Improved from -76% to +24.5% (massive improvement, but still overshoots)
-    - Recommendation: Downgrade to MEDIUM priority refinement (within 30% threshold)
-    - Action: Optional demographic transition calibration (birth/death rates by region)
-  - ⚠️ **HIGH-6 → MEDIUM/LOW** - Temperature 11.5% error (acceptable for climate modeling)
-    - N=10 validation: +11.5% average deviation (1.28°C target)
-    - Improved from +64% to +11.5% (82% improvement, narrowly missed 10% threshold)
-    - Recommendation: Downgrade to MEDIUM/LOW priority (11.5% acceptable for research)
-    - Action: Optional climate sensitivity refinement
+    - N=10 error: 77.3% ❌ → 1.2% ✅ (49.59% vs 49% target)
+    - Root cause: 14 historical mode guards missing (now unified via CRITICAL-1 fix)
+  - ⚠️ **HIGH-6/7 → MEDIUM** - Temperature/population downgraded (acceptable errors)
+    - Temperature: +11.5% (narrowly missed 10% threshold, acceptable for climate modeling)
+    - Population: +24.5% (within 30% threshold, demographic refinement optional)
   - 📊 **VALIDATION RESULTS** - Overall: 29.3% average deviation (CONDITIONAL PASS)
     - Report: reviews/HIGH678_validation_results_20251128.md
-    - Log: logs/hindcast/full_validation_20251128_031632.log (45MB, 1.3M lines)
-    - Devlog: devlogs/20251128_HIGH678_validation.md
-  - ✅ **HIGH-9 CLOSED** - FALSE ALARM documented (determinism is NOT broken)
+  - ✅ **HIGH-9 CLOSED** - FALSE ALARM documented (determinism NOT broken)
 - **Recent Work (Nov 27 Morning - CRITICAL FIXES COMPLETE):**
   - ✅ **CRITICAL-1 RESOLVED** - environmentalHealth NaN crashes fixed (commit 8596afd8b)
     - Root cause: Division operations in resourceDepletion.ts producing NaN
