@@ -11,10 +11,10 @@
  *
  * **EXECUTION ORDER:** 28.0 (After government actions, before crisis cascades)
  * **DEPENDENCIES:**
- * - AI capabilities (for AI multiplier)
- * - Economic state (for stress indicators)
- * - Climate system (for displacement, resource scarcity)
- * - Nuclear infrastructure (for MAD deterrence)
+ * - ai-lifecycle (order 4.0): AI capabilities for escalation multiplier
+ * - government-actions (order 9.0): Government policy affects tensions
+ * - quality-of-life (order 19.5): Resource scarcity (food/water security)
+ * - refugee_crisis (order 20.6): Displacement data (climate/war/famine)
  *
  * **SIDE EFFECTS:**
  * - Updates geopoliticalConflict.tension
@@ -96,11 +96,12 @@ export class GeopoliticalConflictPhase implements SimulationPhase {
   readonly name = 'Geopolitical Conflict Escalation';
   readonly order = 28.0;
 
-  // DEPENDENCIES: Requires AI capabilities, economic state, climate system, nuclear infrastructure
+  // DEPENDENCIES: Requires AI capabilities, economic state, refugee crisis, QoL systems
   readonly dependencies = [
-    'ai-lifecycle',           // Order 3.0: AI capabilities affect escalation
+    'ai-lifecycle',           // Order 4.0: AI capabilities affect escalation
     'government-actions',     // Order 9.0: Government policy affects tensions
-    'climate_system',         // Order ~20.0: Climate impacts (displacement, resources)
+    'refugee_crisis',         // Order 20.6: Refugee displacement data (climate/war/famine)
+    'quality-of-life',        // Order 19.5: Resource scarcity (food/water security)
   ] as const;
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
