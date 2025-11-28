@@ -1,6 +1,6 @@
 # Research Update Queue
-**Generated:** 11/28/2025, 9:30:03 PM
-**Files Scanned:** 482
+**Generated:** 11/28/2025, 10:30:04 PM
+**Files Scanned:** 485
 
 ---
 
@@ -12,7 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 162 (33.6%)
+**Count:** 164 (33.8%)
 
 ### `CRISIS_MITIGATION_RESEARCH_CRITIQUE_20251029.md`
 - **Oldest source:** 2001 (24 years old)
@@ -559,6 +559,16 @@
 - **Status:** Not used in simulation
 - **Path:** `research/nuclear_winter_climate_effects_20251113.md`
 
+### `ocean_acidification_cascades_20251128.md`
+- **Oldest source:** 2002 (23 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/ocean_acidification_cascades_20251128.md`
+
+### `ocean_acidification_cascades_REVISED_20251128.md`
+- **Oldest source:** 2002 (23 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/ocean_acidification_cascades_REVISED_20251128.md`
+
 ### `organizational-technology-deployment-timelines_20251019.md`
 - **Oldest source:** 1990 (35 years old)
 - **Status:** Not used in simulation
@@ -828,7 +838,7 @@
 
 ## 📋 MEDIUM (Review Within Quarter)
 
-**Count:** 21 (4.4%)
+**Count:** 21 (4.3%)
 
 - `LAYER2_COMPREHENSIVE_STATUS_20251030.md` - Oldest: 2020 (5 years)
 - `LAYER2_DEBATE_SUMMARY_20251030.md` - Oldest: 2020 (5 years)
@@ -856,7 +866,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 299 (62.0%)
+**Count:** 300 (61.9%)
 
 All sources <3 years old. No action required.
 
@@ -866,11 +876,11 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 482 |
+| Total files | 485 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 162 (33.6%) |
-| MEDIUM | 21 (4.4%) |
-| LOW | 299 (62.0%) |
+| HIGH | 164 (33.8%) |
+| MEDIUM | 21 (4.3%) |
+| LOW | 300 (61.9%) |
 | Average age | 7.8 years |
 | Oldest source | 1955 (70 years ago) |
 
@@ -878,21 +888,21 @@ All sources <3 years old. No action required.
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 299 | 62.0% |
-| Warning (3-5yr) | 21 | 4.4% |
-| Critical (>5yr) | 162 | 33.6% |
+| Current (<3yr) | 300 | 61.9% |
+| Warning (3-5yr) | 21 | 4.3% |
+| Critical (>5yr) | 164 | 33.8% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-- **Current:** 33.6% critical (>5yr)
+- **Current:** 33.8% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
-1. Update 162 HIGH priority file(s) within 1 month
+1. Update 164 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 

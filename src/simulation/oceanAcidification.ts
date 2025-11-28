@@ -22,13 +22,64 @@ import { isHistoricalModeActive } from './utils/historicalMode';
  */
 export function initializeOceanAcidificationSystem(): OceanAcidificationSystem {
   return {
+<<<<<<< Updated upstream
     aragoniteSaturation: 0.78,       // Just below 0.80 boundary (Sept 2025)
     pHLevel: 0.96,                   // Slight decline from pre-industrial 8.2
+=======
+    // Research-backed fields (RD-2 Nov 28 2025)
+    aragoniteSaturation: 2.8,        // Current (2025): 2.8-3.3, down from 4.6 pre-industrial
+    pH: 7.95,                        // Current (2025): 7.95 (above cascade threshold, allows grace period)
+    pHLevel: 0.96,                   // LEGACY: Slight decline from pre-industrial 8.2
+>>>>>>> Stashed changes
     co2AbsorptionCapacity: 0.85,     // Still strong but declining
     coralReefHealth: 0.65,           // Already stressed (bleaching events)
     shellfishPopulation: 0.80,       // Larvae struggling but not collapsed yet
     marineFoodWeb: 0.75,             // Moderately healthy
     fishDependentImpact: 0.0,        // Not yet impacting food supply
+<<<<<<< Updated upstream
+=======
+    irreversibleLoss: 5,             // 5% already extinct (coral species)
+    speciesSensitivity,              // 0.8-1.2 randomized (Monte Carlo variation)
+    cascadeActive: false,            // pH still at threshold (7.9), cascade not yet triggered
+
+    // Regional cascades (RD-2 Nov 28 2025)
+    regionalCoralHealth: {
+      seAsia: 0.65,           // SE Asia / Coral Triangle: Lower (higher pressure)
+      pacificIslands: 0.75,   // Pacific Islands: Moderate
+      caribbean: 0.60,        // Caribbean: Most degraded baseline
+      indianOcean: 0.70,      // Indian Ocean: Less degraded
+      globalAverage: 0.70,    // Weighted average (matches coralReefHealth)
+    },
+    regionalResilience: {
+      seAsia: 0.3,          // Low (<35% MPAs, high fishing pressure)
+      pacificIslands: 0.5,  // Moderate (some MPAs)
+      caribbean: 0.4,       // Moderate-low (degraded + some restoration)
+      indianOcean: 0.6,     // Higher (less pressure, some intact)
+    },
+    regionalSpeciesSensitivity: {
+      seAsia: 1.1,          // Slightly higher (more Acropora)
+      pacificIslands: 0.9,  // Slightly lower (mix)
+      caribbean: 1.2,       // Higher (Acropora-dominated)
+      indianOcean: 1.0,     // Average mix
+    },
+    compoundStressMultiplier: 1.0,  // No compounding yet (SST normal)
+    warmingContribution: 0.0,       // Baseline
+    acidificationContribution: 0.0, // Baseline
+    monthsSinceStressOnset: 0,      // Cascade not yet active
+    recoveryPotential: 1.0,         // Full recovery potential initially
+    adaptationFloor: 0.4,           // 40% floor (transformation not collapse)
+    thresholdsCrossed: {
+      moderateStress: false,  // pH 7.9 at threshold, not crossed yet
+      severeStress: false,
+      ecosystemCollapse: false,
+    },
+    economicValueAtRisk: 100,       // $100B/year baseline (conservative)
+    populationDependent: 350,       // 350M people (midpoint 330-500M)
+    pHHistory: [7.95],              // Historical tracking (Month 0)
+    coralHealthHistory: [70],       // Historical tracking (Month 0)
+
+    // Existing fields
+>>>>>>> Stashed changes
     boundaryBreached: true,          // Breached Sept 2025
     coralExtinctionActive: false,
     shellfishCollapseActive: false,
@@ -67,6 +118,7 @@ export function updateOceanAcidificationSystem(state: GameState): void {
   if (oa.boundaryBreached) {
     oa.monthsSinceBreach++;
   }
+<<<<<<< Updated upstream
   
   // === ARAGONITE SATURATION DECLINE ===
   // Driven by CO2 absorption from atmosphere
@@ -80,6 +132,37 @@ export function updateOceanAcidificationSystem(state: GameState): void {
   acidificationRate += economicStage * 0.0004; // 0.04%/month at Stage 1, 0.16%/month at Stage 4
   
   // Ocean alkalinity enhancement mitigates
+=======
+
+  // === pH DECLINE (SSP Scenario-Based) ===
+  // Research: Jiang et al. (2023), IPCC AR6
+  // Monthly rates from RCP/SSP projections (2025-2100, 900 months)
+  // CALIBRATION (Nov 28, 2025): Reduced by 50% to match research timelines
+
+  const pH_DECLINE_RATE_PER_MONTH = {
+    SSP1_1_9: -0.000005,  // Was -0.00001 → 50% reduction
+    SSP1_2_6: -0.000045,  // Was -0.00009 → 50% reduction
+    SSP2_4_5: -0.000095,  // Was -0.00019 → 50% reduction (moderate)
+    SSP3_7_0: -0.000095,  // Capped at SSP2 level (was -0.00030)
+    SSP5_8_5: -0.000095,  // Capped at SSP2 level (was -0.00043, business as usual)
+  };
+
+  // Map climate stability to SSP scenario (higher stability = better mitigation)
+  let pHDeclineRate: number;
+  if (climateStability > 0.9) {
+    pHDeclineRate = pH_DECLINE_RATE_PER_MONTH.SSP1_1_9;
+  } else if (climateStability > 0.75) {
+    pHDeclineRate = pH_DECLINE_RATE_PER_MONTH.SSP1_2_6;
+  } else if (climateStability > 0.55) {
+    pHDeclineRate = pH_DECLINE_RATE_PER_MONTH.SSP2_4_5;
+  } else if (climateStability > 0.35) {
+    pHDeclineRate = pH_DECLINE_RATE_PER_MONTH.SSP3_7_0;
+  } else {
+    pHDeclineRate = pH_DECLINE_RATE_PER_MONTH.SSP5_8_5;
+  }
+
+  // Ocean alkalinity enhancement mitigates pH decline
+>>>>>>> Stashed changes
   if (oa.alkalinityEnhancementDeployment > 0) {
     // Research: OAE can restore pH over decades
     acidificationRate -= oa.alkalinityEnhancementDeployment * 0.001; // -0.1%/month at full deployment
@@ -181,6 +264,7 @@ export function updateOceanAcidificationSystem(state: GameState): void {
     // Food impact for coastal populations
     state.qualityOfLifeSystems.materialAbundance = Math.max(0, state.qualityOfLifeSystems.materialAbundance - 0.04);
   }
+<<<<<<< Updated upstream
   
   // === MARINE FOOD WEB COLLAPSE ===
   // Timeline: 2075-2100 (cascading from bottom up)
@@ -190,6 +274,43 @@ export function updateOceanAcidificationSystem(state: GameState): void {
   const avgHealth = (oa.coralReefHealth + oa.shellfishPopulation + oa.aragoniteSaturation) / 3;
   oa.marineFoodWeb = avgHealth;
   
+=======
+
+  // === COASTAL FISHERIES YIELD (Power Law) ===
+  // Research: Exponential decline (coralHealth/100)^1.2 (calibrated Nov 28, 2025)
+  // Species composition factor: resistant species maintain higher yields
+  // CALIBRATION: Reduced exponent from 1.5 to 1.2 (gentler decline curve)
+
+  const speciesCompositionFactor = 0.7 + (0.6 * (1.0 - oa.speciesSensitivity));  // More resistant = higher yield
+  const baseFisheriesYield = Math.pow(oa.coralReefHealth / 100, 1.2);
+  oa.coastalFisheriesYield = assertFinite(baseFisheriesYield * speciesCompositionFactor, {
+    location: 'updateOceanAcidificationSystem[fisheries yield]',
+    valueName: 'coastalFisheriesYield',
+    month: state.currentMonth,
+    additionalInfo: { coralHealth: oa.coralReefHealth, speciesCompositionFactor }
+  });
+
+  oa.coastalFisheriesYield = assertInRange(oa.coastalFisheriesYield, 0, 1, {
+    location: 'updateOceanAcidificationSystem[fisheries clamp]',
+    valueName: 'coastalFisheriesYield',
+    month: state.currentMonth
+  });
+
+  // === MARINE ECOSYSTEM FUNCTION ===
+  // Broader than food web - includes biodiversity, nutrient cycling
+  // Average of coral, shellfish, aragonite saturation (normalized)
+
+  const avgHealth = (oa.coralReefHealth / 100 + oa.shellfishPopulation + oa.aragoniteSaturation / 4.6) / 3;
+  oa.marineEcosystemFunction = assertFinite(avgHealth * 100, {
+    location: 'updateOceanAcidificationSystem[ecosystem function]',
+    valueName: 'marineEcosystemFunction',
+    month: state.currentMonth
+  });
+
+  // Update LEGACY marineFoodWeb field
+  oa.marineFoodWeb = oa.marineEcosystemFunction / 100;
+
+>>>>>>> Stashed changes
   // Marine food web collapse
   if (oa.marineFoodWeb < 0.30 && !oa.marineFoodWebCollapseActive) {
     oa.marineFoodWebCollapseActive = true;
