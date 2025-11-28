@@ -163,11 +163,43 @@ export async function createHistoricalInitialState(
     // Only enable historical emissions mode for hindcast period (1990-2010)
     // For other years (2024+), use endogenous emissions model
     baseState.config.historicalEmissionsMode = (year >= 1990 && year <= 2010);
+    // Enable historical mode for all hindcast periods (1990-2024)
+    // This dampens crisis systems to match baseline growth trajectories
+    baseState.config.historicalMode = (year >= 1990 && year <= 2024);
     console.log(`  config.startYear set to ${year} for historical hindcast`);
     if (baseState.config.historicalEmissionsMode) {
       console.log(`  config.historicalEmissionsMode enabled (Phase 5: GCP emissions forcing for ${year})`);
     } else {
       console.log(`  config.historicalEmissionsMode disabled (using endogenous emissions for ${year})`);
+    }
+    if (baseState.config.historicalMode) {
+      console.log(`  config.historicalMode enabled (Phase 11: dampened crisis systems for ${year})`);
+    }
+  }
+
+  // ============================================================================
+  // PHASE 12: HISTORICAL BIODIVERSITY BASELINE (Nov 27, 2025)
+  // ============================================================================
+  // Research: WWF Living Planet Index (research/hindcast_calibration_parameters_20251127.md lines 229-390)
+  // - 1970: 1.00 (baseline year)
+  // - 1990: 0.75 (-25% from 1970)
+  // - 2024: 0.49 (-51% from 1970, -34.7% from 1990)
+  // - Default 2025 value: 0.35 (further decline)
+  //
+  // Root cause: Default initialization sets biodiversityIndex=0.35 (2025 baseline)
+  // For hindcast validation, must use historical starting points
+  // ============================================================================
+  if (year >= 1970 && year <= 2024) {
+    // Calculate biodiversity from 1970 baseline using WWF LPI trajectory
+    // LPI shows -51% decline from 1970-2024 (1.00 → 0.49 over 54 years)
+    // Annual rate: (0.49/1.00)^(1/54) = 0.9871 → 1.312%/year decline
+    const yearsFrom1970 = year - 1970;
+    const ANNUAL_DECLINE_RATE = 0.01312; // 1.312%/year (WWF LPI 1970-2024: 1.00 → 0.49)
+    const biodiversityFromLPI = Math.pow(1 - ANNUAL_DECLINE_RATE, yearsFrom1970);
+
+    if (baseState.environmentalAccumulation) {
+      baseState.environmentalAccumulation.biodiversityIndex = biodiversityFromLPI;
+      console.log(`  Phase 12: Biodiversity baseline set to ${(biodiversityFromLPI * 100).toFixed(2)}% for ${year} (WWF LPI trajectory from 1970)`);
     }
   }
 
@@ -445,6 +477,15 @@ export async function createHistoricalInitialState(
     additionalInfo: { year },
   });
 
+  // Initialize volcanic forcing (Nov 27, 2025 - HIGH PRIORITY)
+  // For 1990 start: pre-Pinatubo (AOD = 0)
+  // Pinatubo erupts at Month 18 (June 1991), handled by VolcanicForcingPhase
+  baseState.volcanicForcing = {
+    currentAOD: 0.0,           // No volcanic eruption at start
+    forcingWattsPerM2: 0.0,    // No forcing
+    lastEruptionMonth: -999    // Sentinel value (no previous eruption)
+  };
+
   console.log(`[HistoricalInitialization] Created state for ${year}:`);
   console.log(`  CO2: ${historical.climate.co2Ppm} ppm`);
   console.log(`  Temp anomaly: ${historical.climate.tempAnomaly}C`);
@@ -452,6 +493,7 @@ export async function createHistoricalInitialState(
   console.log(`  Global Gini: ${historical.economic.globalGini}`);
   console.log(`  HDI: ${historical.economic.globalHDI}`);
   console.log(`  AI Agents: ${baseState.aiAgents.length}`);
+  console.log(`  Volcanic forcing: ${baseState.volcanicForcing.forcingWattsPerM2.toFixed(2)} W/m² (AOD ${baseState.volcanicForcing.currentAOD.toFixed(3)})`);
 
   return baseState;
 }
@@ -633,11 +675,43 @@ export function initializeHistoricalSimulation(
     // Only enable historical emissions mode for hindcast period (1990-2010)
     // For other years (2024+), use endogenous emissions model
     baseState.config.historicalEmissionsMode = (year >= 1990 && year <= 2010);
+    // Enable historical mode for all hindcast periods (1990-2024)
+    // This dampens crisis systems to match baseline growth trajectories
+    baseState.config.historicalMode = (year >= 1990 && year <= 2024);
     console.log(`  config.startYear set to ${year} for historical hindcast`);
     if (baseState.config.historicalEmissionsMode) {
       console.log(`  config.historicalEmissionsMode enabled (Phase 5: GCP emissions forcing for ${year})`);
     } else {
       console.log(`  config.historicalEmissionsMode disabled (using endogenous emissions for ${year})`);
+    }
+    if (baseState.config.historicalMode) {
+      console.log(`  config.historicalMode enabled (Phase 11: dampened crisis systems for ${year})`);
+    }
+  }
+
+  // ============================================================================
+  // PHASE 12: HISTORICAL BIODIVERSITY BASELINE (Nov 27, 2025)
+  // ============================================================================
+  // Research: WWF Living Planet Index (research/hindcast_calibration_parameters_20251127.md lines 229-390)
+  // - 1970: 1.00 (baseline year)
+  // - 1990: 0.75 (-25% from 1970)
+  // - 2024: 0.49 (-51% from 1970, -34.7% from 1990)
+  // - Default 2025 value: 0.35 (further decline)
+  //
+  // Root cause: Default initialization sets biodiversityIndex=0.35 (2025 baseline)
+  // For hindcast validation, must use historical starting points
+  // ============================================================================
+  if (year >= 1970 && year <= 2024) {
+    // Calculate biodiversity from 1970 baseline using WWF LPI trajectory
+    // LPI shows -51% decline from 1970-2024 (1.00 → 0.49 over 54 years)
+    // Annual rate: (0.49/1.00)^(1/54) = 0.9871 → 1.312%/year decline
+    const yearsFrom1970 = year - 1970;
+    const ANNUAL_DECLINE_RATE = 0.01312; // 1.312%/year (WWF LPI 1970-2024: 1.00 → 0.49)
+    const biodiversityFromLPI = Math.pow(1 - ANNUAL_DECLINE_RATE, yearsFrom1970);
+
+    if (baseState.environmentalAccumulation) {
+      baseState.environmentalAccumulation.biodiversityIndex = biodiversityFromLPI;
+      console.log(`  Phase 12: Biodiversity baseline set to ${(biodiversityFromLPI * 100).toFixed(2)}% for ${year} (WWF LPI trajectory from 1970)`);
     }
   }
 
@@ -860,6 +934,15 @@ export function initializeHistoricalSimulation(
     additionalInfo: { year },
   });
 
+  // Initialize volcanic forcing (Nov 27, 2025 - HIGH PRIORITY)
+  // For 1990 start: pre-Pinatubo (AOD = 0)
+  // Pinatubo erupts at Month 18 (June 1991), handled by VolcanicForcingPhase
+  baseState.volcanicForcing = {
+    currentAOD: 0.0,           // No volcanic eruption at start
+    forcingWattsPerM2: 0.0,    // No forcing
+    lastEruptionMonth: -999    // Sentinel value (no previous eruption)
+  };
+
   console.log(`[HistoricalInitialization] Created state for ${year}:`);
   console.log(`  CO2: ${historical.climate.co2Ppm} ppm`);
   console.log(`  Temp anomaly: ${historical.climate.tempAnomaly}C`);
@@ -867,6 +950,7 @@ export function initializeHistoricalSimulation(
   console.log(`  Global Gini: ${historical.economic.globalGini}`);
   console.log(`  HDI: ${historical.economic.globalHDI}`);
   console.log(`  AI Agents: ${baseState.aiAgents.length}`);
+  console.log(`  Volcanic forcing: ${baseState.volcanicForcing.forcingWattsPerM2.toFixed(2)} W/m² (AOD ${baseState.volcanicForcing.currentAOD.toFixed(3)})`);
 
   return baseState;
 }

@@ -18,10 +18,13 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { debugLog } from '@/simulation/utils/debugFlags';
 import { assertPlanetaryBoundary, assertFinite, assertDefined } from '@/simulation/utils/assertions';
 import { updatePlanetaryBoundaries, updateBiosphereIntegrityIndex } from '../../planetaryBoundaries';
 import { updateBoundaryRecovery } from '../../planetaryBoundaryRecovery';
 import { updateNovelEntitiesBoundary } from '../../updateNovelEntitiesBoundary';
+import { isHistoricalModeActive } from '@/simulation/utils/historicalMode';
+import { updateEnvironmentalAccumulation } from '../../environmental';
 
 export class PlanetaryBoundariesPhase implements SimulationPhase {
   readonly id = 'planetary_boundaries';
@@ -93,6 +96,42 @@ export class PlanetaryBoundariesPhase implements SimulationPhase {
     // This now reads legacy nutrient stock releases (via getLegacyContributionPercentage)
     updatePlanetaryBoundaries(state);
 
+    // HIGH-6 FIX (Nov 27, 2025): Sync climate_change boundary to actual CO2-driven temperature
+    // Root cause: planetaryBoundaries.ts line 1685 was incrementing boundary with deforestation feedback,
+    // causing drift (1.14°C → 2.10°C over 408 months) while actual temperature stayed at 0.72°C.
+    // Validation script reads this boundary, creating false "64% error" report.
+    // Solution: Overwrite boundary with authoritative temperature from resourceEconomy.co2
+    if (state.planetaryBoundariesSystem?.boundaries?.climate_change && state.resourceEconomy?.co2) {
+      const tempAnomalyVs1850 = assertFinite(
+        state.resourceEconomy.co2.temperatureAnomaly,
+        {
+          location: 'PlanetaryBoundariesPhase.execute',
+          valueName: 'temperatureAnomaly',
+          month: state.currentMonth
+        }
+      );
+      // Convert to pre-industrial (1750) baseline: add 0.1°C
+      // Research: IPCC AR6 Cross-Chapter Box 1.2 - Global surface temperature increased by ~0.1°C
+      // (likely range -0.1°C to +0.3°C, medium confidence) between 1750 and 1850-1900
+      // Anthropogenic contribution: 0.0-0.2°C, with natural variability ±0.1 W/m² from solar/volcanic
+      const PREINDUSTRIAL_OFFSET = 0.1; // °C, IPCC AR6 best estimate
+
+      state.planetaryBoundariesSystem.boundaries.climate_change.currentValue =
+        assertFinite(
+          tempAnomalyVs1850 + PREINDUSTRIAL_OFFSET,
+          {
+            location: 'PlanetaryBoundariesPhase.execute',
+            valueName: 'climate_change.currentValue (synced)',
+            month: state.currentMonth,
+            additionalInfo: {
+              tempAnomalyVs1850,
+              PREINDUSTRIAL_OFFSET,
+              source: 'IPCC AR6 Cross-Chapter Box 1.2'
+            }
+          }
+        );
+    }
+
     // Update Novel Entities boundary with energy-constrained cleanup model (Nov 16, 2025)
     updateNovelEntitiesBoundary(state, rng);
 
@@ -111,6 +150,20 @@ export class PlanetaryBoundariesPhase implements SimulationPhase {
         }
       );
     }
+
+    // === HIGH-11 FIX (Nov 28, 2025): CALL ENVIRONMENTAL.TS ===
+    // ARCHITECTURAL DECISION: environmental.ts OWNS biodiversityIndex decline mechanics
+    // This phase only READS biodiversityIndex and WRITES biosphere_integrity boundary
+    //
+    // Research: WWF Living Planet Index 2024 (1990: 76.79% → 2024: 49%)
+    // Geometric decline formula implemented in environmental.ts lines 342-392
+    //
+    // environmental.ts has BOTH modes:
+    // - Historical mode (1990-2024): WWF LPI empirical rates (geometric: 0.998978 multiplier/month)
+    // - Projection mode (2025+): Mechanistic model (economic/manufacturing pressure)
+    //
+    // No need to duplicate logic here - just call the function
+    updateEnvironmentalAccumulation(state, rng);
 
     return { events: [] };
   }

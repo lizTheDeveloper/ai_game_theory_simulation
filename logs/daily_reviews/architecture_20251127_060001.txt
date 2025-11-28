@@ -1,0 +1,1 @@
+./scripts/daily-codebase-review.sh: line 110: claude: command not found

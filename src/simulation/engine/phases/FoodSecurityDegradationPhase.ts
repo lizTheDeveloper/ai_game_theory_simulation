@@ -23,6 +23,7 @@ import {
   assertInRange,
   assertStateProperty
 } from '@/simulation/utils/assertions';
+import { isHistoricalModeActive } from '@/simulation/utils/historicalMode';
 // REMOVED (Nov 20, 2025): updateNitrogenFoodCoupling import
 // This phase no longer calls it directly - reads cached values from state instead
 
@@ -60,8 +61,10 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
     // This degradation phase models future AI-era stress that didn't exist then.
     // Skip degradation to allow hindcast validation against actual history.
     // Source: FAO State of Food Insecurity reports (1999-2015) show stable/improving trends
+    // HIGH-7 FIX (Nov 27, 2025): Use historicalMode flag for hindcast calibration
+    // HIGH-2 FIX (Nov 28, 2025): Use isHistoricalModeActive() + correct year (2024 not 2020)
     // ============================================================================
-    if (state.config?.scenarioMode === 'historical' && state.currentYear < 2020) {
+    if (isHistoricalModeActive(state)) {
       // Don't degrade food security in historical mode - it was actually stable
       return { events: [] };
     }

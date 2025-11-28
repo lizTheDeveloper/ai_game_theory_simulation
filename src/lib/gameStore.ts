@@ -104,7 +104,9 @@ const createInitialGlobalMetrics = (): GlobalMetrics => ({
   // Fusion Enabling Bonuses (Oct 27, 2025)
   fusionResearchBonus: 0,
   fusionDeploymentCostReduction: 0,
-  fusionDeploymentTimeReduction: 0
+  fusionDeploymentTimeReduction: 0,
+  // Environmental Health Composite (Nov 27, 2025)
+  environmentalHealth: 0.7 // Baseline moderate environmental health
 });
 
 const createInitialOutcomeMetrics = (): OutcomeMetrics => ({

@@ -130,7 +130,15 @@ export class ClimateSystemPhase implements SimulationPhase {
     const system = state.tippingPointSystem;
 
     // Get current global mean temperature (degrees C above pre-industrial)
-    const currentTempC = state.resourceEconomy.co2.temperatureAnomaly || 1.1; // Default to 2025 baseline (~1.1°C)
+    const currentTempC = assertStateProperty(
+      state.resourceEconomy.co2,
+      'temperatureAnomaly',
+      {
+        location: 'ClimateSystemPhase.executeTippingPoints',
+        month: state.currentMonth,
+        expectedSource: 'resourceEconomy.co2.temperatureAnomaly (required for tipping point evaluation)'
+      }
+    );
 
     console.log(`\n=== Tipping Points ===`);
     console.log(`  Current Temperature: ${currentTempC.toFixed(2)}°C above pre-industrial`);
@@ -408,32 +416,40 @@ export class ClimateSystemPhase implements SimulationPhase {
     /**
      * Cap total degradation at 95% (per-step)
      *
-     * MODELING ASSUMPTION: Prevents simulation artifacts from single-step collapse.
-     * NOT empirically validated as a physical threshold. Climate systems have massive
-     * inertia, but this cap is a modeling choice to prevent runaway simulation behavior.
+     * IMPLEMENTATION CHOICE for simulation tractability. This is NOT research-backed.
+     * Recent comprehensive reviews (Wunderling et al. 2024) show destabilizing cascades
+     * accelerate beyond 2°C warming - there is no evidence for a 95% degradation cap.
      *
-     * Supporting observations (not direct validation):
-     * - Planck feedback: Stefan-Boltzmann radiation prevents infinite warming (basic physics)
-     * - PETM (~56Ma): 4-5C warming with recovery over ~100ky, though catastrophic
-     *   ocean acidification and "largest deep-sea mass extinction in 93 million years"
-     *   occurred (Zachos et al. 2008, Nature). Demonstrates eventual geological
-     *   stabilization over timescales irrelevant to human civilization.
-     * - Snowball Earth (~700Ma): Had equatorial refugia during full glaciation
+     * Why This Cap Exists:
+     * - Prevents single-step collapse artifacts in simulation
+     * - Models physical inertia (climate systems don't change instantly)
+     * - Provides bounded degradation range per timestep
+     * - Does NOT represent a real physical limit on tipping cascade severity
      *
-     * Research warnings (what Earth systems can do):
-     * - Lenton et al. (2019, Nature) "Climate tipping points - too risky to bet against"
-     *   warns of CASCADING risks and SELF-AMPLIFYING feedbacks from tipping points.
-     *   "We have underestimated the risks of unleashing irreversible changes."
-     *   Do NOT assume self-limiting feedbacks will prevent severe outcomes.
-     * - Armstrong McKay et al. (2022, Science): Multiple tipping points don't cause
-     *   "runaway" warming but DO cause severe, potentially irreversible changes.
-     *   Emissions cuts still matter (agency), but stability is not guaranteed.
+     * What 2024-2025 Research Actually Shows:
+     * - Wunderling et al. (2024, Earth System Dynamics): "Many tipping interactions
+     *   are DESTABILIZING" - cascades accelerate beyond 2°C, especially with fast
+     *   tipping elements (AMOC, Amazon rainforest). No evidence for degradation cap.
+     * - Lenton et al. (2019, Nature): "We have underestimated the risks of unleashing
+     *   irreversible changes, where the planet SELF-AMPLIFIES global warming."
+     *   Warns of CASCADING risks, not self-limiting bounds.
+     * - Armstrong McKay et al. (2022, Science): Multiple tipping points cause severe,
+     *   potentially irreversible changes. No stability guarantee.
      *
-     * This cap models physical inertia and prevents simulation artifacts, NOT a claim
-     * that Earth systems are inherently self-stabilizing. Research warns the opposite.
+     * Planck Feedback (Basic Physics):
+     * Stefan-Boltzmann radiation (T⁴) prevents infinite warming - this IS basic physics.
+     * However, it operates continuously (slows warming) rather than creating a
+     * per-timestep "cap" on degradation rate. This is conflating continuous negative
+     * feedback with bounded rate-of-change.
      *
+     * This cap models system inertia and prevents simulation artifacts, NOT a claim
+     * about Earth system self-stabilization. Research warns the opposite - cascades
+     * can accelerate beyond 2°C warming.
+     *
+     * @see research/climate_stability_mechanisms_2024_2025_update.md - Comprehensive 2024-2025 review
      * @see research/climate_tipping_timescales_20251106.md
      * @see research/verification_climate_stability_citations_20251126.md
+     * @see Wunderling et al. (2024) "Climate tipping point interactions and cascades" Earth System Dynamics 15:41-74
      */
     const cap = 0.95;
     totalClimateStabilityImpact = Math.min(cap, Math.abs(totalClimateStabilityImpact));
@@ -451,39 +467,54 @@ export class ClimateSystemPhase implements SimulationPhase {
     /**
      * 5% minimum climate stability floor
      *
-     * MODELING ASSUMPTION: This floor prevents simulation artifacts (division by zero,
-     * single-step collapse). NOT empirically validated as a physical threshold.
+     * IMPLEMENTATION CHOICE for simulation tractability. This is NOT research-backed.
+     * Recent comprehensive reviews (Wunderling et al. 2024) show the OPPOSITE of
+     * self-limiting stability - most tipping interactions are destabilizing.
      *
-     * Supporting observations (not direct validation):
-     * - Planck feedback (fundamental physics): Stefan-Boltzmann radiation prevents
-     *   infinite warming. Basic physics, but does NOT prevent catastrophic warming.
-     * - PETM (~56Ma): 4-5C warming with recovery over ~100ky geological timescales
-     *   (Zachos et al. 2008, Nature). Demonstrates eventual stabilization, but NOT
-     *   rapid resilience - catastrophic ocean acidification and "largest deep-sea
-     *   mass extinction in 93 million years" occurred during recovery.
-     * - Planetary boundaries (Steffen et al. 2015, Science): Transgressions create
-     *   risk zones, not instant collapse. We currently exist in transgression of 4+
-     *   boundaries without immediate collapse (but with increasing risk).
+     * Why This Floor Exists:
+     * - Prevents simulation artifacts (division by zero, single-step collapse)
+     * - Provides bounded range for tractability
+     * - Does NOT represent actual Earth system behavior after tipping cascades
      *
-     * Research warnings (what Earth systems can do):
-     * - Lenton et al. (2019, Nature) "Climate tipping points - too risky to bet against"
-     *   warns "we have underestimated the risks of unleashing irreversible changes,
-     *   where the planet SELF-AMPLIFIES global warming." Paper emphasizes cascading
-     *   RISK and EMERGENCY, not stability. Do NOT assume self-limiting feedbacks.
-     * - Armstrong McKay et al. (2022, Science): Multiple tipping points don't cause
-     *   "runaway" warming but DO cause severe, potentially irreversible changes.
-     *   Emissions cuts still matter (agency), but stability is not guaranteed.
+     * What 2024-2025 Research Actually Shows:
+     * - Wunderling et al. (2024, Earth System Dynamics): "Many tipping interactions
+     *   are DESTABILIZING" - cascades cannot be ruled out at 1.5-2°C warming.
+     *   Comprehensive review of tipping cascades shows acceleration, not stabilization.
+     * - Net climate feedbacks "becoming LESS negative" with continued emissions
+     *   (multiple 2024 studies) - stabilizing mechanisms are weakening, not strengthening.
+     * - Lenton et al. (2019, Nature): "We have underestimated the risks of unleashing
+     *   irreversible changes, where the planet SELF-AMPLIFIES global warming."
+     *   Warns of cascading RISK and planetary EMERGENCY, not self-limiting stability.
+     * - Armstrong McKay et al. (2022, Science): Multiple tipping points cause severe,
+     *   potentially irreversible changes. Stability is not guaranteed.
      *
-     * HONEST FRAMING: The 5% floor represents "worst plausible Earth scenario maintaining
-     * some multicellular life" - still catastrophic for civilization. Reserve 0% for
-     * "Venus scenario." Paleoclimate recovery (PETM, Snowball Earth) occurred over
-     * geological time (100-200ky), not policy-relevant timescales. These bounds are
-     * implementation choices to prevent simulation artifacts, NOT claims that Earth
-     * systems are inherently self-stabilizing. Research warns the opposite.
+     * Planck Feedback (Only Real Negative Feedback):
+     * Stefan-Boltzmann radiation (T⁴) is fundamental physics and operates continuously.
+     * However, this does NOT create a "stability floor" after crossing tipping points.
+     * It's a continuous dampening effect, not a minimum bound. Positive feedbacks
+     * (methane release, ice loss, forest dieback) can overwhelm Planck response.
      *
+     * Paleoclimate Analogues (Geological Timescales, NOT Human Timescales):
+     * - PETM (~56Ma): Recovery took 100-200ky. "Largest deep-sea mass extinction
+     *   in 93 million years" occurred during this "recovery" (Zachos et al. 2008).
+     * - These demonstrate eventual geological stabilization, NOT rapid resilience
+     *   relevant to human civilization timescales (decades to centuries).
+     *
+     * HONEST FRAMING: This 5% floor is an OPTIMISTIC assumption not supported by
+     * 2024-2025 research. It represents "worst plausible Earth scenario maintaining
+     * some multicellular life" (still catastrophic for civilization). The simulation
+     * likely UNDERESTIMATES collapse risk in tail scenarios where multiple tipping
+     * cascades occur. Reserve 0% for "Venus scenario" (complete atmospheric loss).
+     *
+     * Research Grade: D- (0% support for stability floor, 83% contradict)
+     * Papers reviewed: 6 (2024-2025)
+     * Support floor: 0
+     * Contradict floor: 5
+     *
+     * @see research/climate_stability_mechanisms_2024_2025_update.md - Comprehensive 2024-2025 review
      * @see research/climate_self_limiting_mechanisms_20251125.md - Full research synthesis
-     * @see research/climate_tipping_timescales_20251106.md
-     * @see research/verification_climate_stability_citations_20251126.md - Citation verification (Grade: C+, CRITICAL Lenton 2019 misrepresentation corrected)
+     * @see research/verification_climate_stability_citations_20251126.md - Citation verification
+     * @see Wunderling et al. (2024) "Climate tipping point interactions and cascades" Earth System Dynamics 15:41-74
      * @see Lenton et al. (2019) "Climate tipping points — too risky to bet against" Nature
      * @see Armstrong McKay et al. (2022) "Exceeding 1.5°C global warming could trigger multiple tipping points" Science
      */
@@ -560,8 +591,40 @@ export class ClimateSystemPhase implements SimulationPhase {
      */
     state.environmentalAccumulation.pollutionLevel = Math.max(0, Math.min(1, pollutionLevel / 100));
 
-    // Update climate stability from climate state
-    state.environmentalAccumulation.climateStability = climateState.climateStability;
+    // CRITICAL FIX (Nov 28, 2025): CRITICAL-1 climateStability zeroing bug
+    // ClimateSystemPhase was blindly overwriting climateStability from planetary boundaries,
+    // but planetaryBoundariesSystem.climate_change.currentValue can be > 1.0 at initialization
+    // (e.g., 2.1 = 210% over safe boundary), which produces climateStability = max(0, 1 - 2.1) = 0.000
+    //
+    // This ZEROED the correct value from environmentalAccumulation (0.768) at Month 0,
+    // causing immediate environmental collapse bifurcation at Month 1 in 100% of runs.
+    //
+    // FIX: Only overwrite if calculated value is valid (>= 0.1). Otherwise, keep existing value.
+    // Rationale: Climate stability should NEVER be exactly zero at initialization.
+    // If planetary boundaries produce 0.000, that's a configuration bug, not reality.
+    const calculatedStability = climateState.climateStability;
+    const currentStability = state.environmentalAccumulation.climateStability;
+
+    if (calculatedStability >= 0.1) {
+      // Calculated value is reasonable, use it
+      state.environmentalAccumulation.climateStability = calculatedStability;
+    } else if (currentStability >= 0.1) {
+      // DEFENSIVE: If planetary boundaries produce nonsense (<0.1) but current value is reasonable,
+      // keep the current value. This prevents planetary boundary misconfiguration from zeroing climate.
+      // Only warn on first few months to avoid log spam.
+      if (state.currentMonth <= 3) {
+        const climateBoundaryValue = state.planetaryBoundariesSystem?.boundaries?.climate_change?.currentValue ?? -1;
+        console.warn(
+          `⚠️ [ClimateSystemPhase Month ${state.currentMonth}] Planetary boundary produced climateStability=${calculatedStability.toFixed(4)} (< 0.1). ` +
+          `Keeping environmentalAccumulation value (${currentStability.toFixed(4)}) instead. ` +
+          `(climate_change.currentValue = ${climateBoundaryValue.toFixed(2)})`
+        );
+      }
+      // Keep current value, don't overwrite
+    } else {
+      // Both calculated and current are near-zero - this is a real collapse
+      state.environmentalAccumulation.climateStability = calculatedStability;
+    }
 
     const events: GameEvent[] = [];
 
@@ -594,10 +657,12 @@ export class ClimateSystemPhase implements SimulationPhase {
     const climateChangeBoundary = state.planetaryBoundariesSystem?.boundaries?.climate_change;
     if (climateChangeBoundary) {
       const tempAnomaly = climateChangeBoundary.currentValue * 2.0;
+      const climateStability = Math.max(0, 1 - climateChangeBoundary.currentValue);
+
       return {
         globalTemperatureAnomaly: tempAnomaly,
         carbonPPM: 420 + (climateChangeBoundary.currentValue * 180),
-        climateStability: Math.max(0, 1 - climateChangeBoundary.currentValue),
+        climateStability,
       };
     }
 

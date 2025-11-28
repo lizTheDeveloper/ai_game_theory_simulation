@@ -37,6 +37,7 @@ import {
   assertStateProperty,
   assertDefined,
 } from '@/simulation/utils/assertions';
+import { isHistoricalModeActive } from '@/simulation/utils/historicalMode';
 import { THRESHOLDS, RATES, MULTIPLIERS, BASELINES } from '@/simulation/config/centralConfig';
 import { checkRegionalFamineRisk } from '../../qualityOfLife';
 import { updateFamineSystem } from '../../../types/famine';
@@ -77,12 +78,14 @@ export class HumanSurvivalSystemPhase implements SimulationPhase {
     // ============================================================================
     // HINDCAST MODE GUARD (Nov 24, 2025)
     // ============================================================================
-    // In historical mode (1990-2020), food security was STABLE or IMPROVING.
+    // In historical mode (1990-2024), food security was STABLE or IMPROVING.
     // This degradation models future AI-era stress that didn't exist then.
     // Skip to allow hindcast validation against actual history.
     // Source: FAO State of Food Insecurity reports (1999-2015)
+    // HIGH-7 FIX (Nov 27, 2025): Use historicalMode flag for hindcast calibration
+    // HIGH-3 FIX (Nov 28, 2025): Use isHistoricalModeActive() + correct year (2024 not 2020)
     // ============================================================================
-    if (state.config?.scenarioMode === 'historical' && state.currentYear < 2020) {
+    if (isHistoricalModeActive(state)) {
       return;
     }
 

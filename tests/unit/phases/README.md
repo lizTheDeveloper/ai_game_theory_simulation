@@ -45,6 +45,28 @@ npx tsx --test --experimental-test-coverage tests/unit/phases/*.test.ts
 
 ## Current Phase Tests
 
+### ClimateSystemPhase.test.ts (Nov 26, 2025)
+**Coverage:** 85%+ lines (estimated)
+**Tests:** 45 tests across 11 suites (1,426 lines)
+
+Comprehensive coverage of:
+- Phase metadata and dependencies
+- Tipping point detection at temperature thresholds
+- Threshold lowering from cascade interactions (Nov 2025 feature)
+- Tipping point progression (sigmoid curves)
+- Cascade amplification (1.0x to 1.6x based on triggered count)
+- Tipping point impacts (climate stability, habitability, food security, freshwater)
+- Environmental feedback aggregation
+- Climate impact cascades → food security → famine → mortality
+- Delayed climate impacts
+- Edge cases and error handling (NaN detection, fail-loudly)
+
+Research foundation:
+- Armstrong McKay et al. (2022): Climate tipping thresholds
+- Lenton et al. (2023): Tipping element interactions
+- IPCC AR6 (2021): Climate feedbacks and impacts
+- Wunderling et al. (2024): Threshold lowering from cascades
+
 ### AISufferingPhase.test.ts
 **Coverage:** 88.07% lines, 88.00% branches, 100.00% functions
 **Tests:** 36 tests across 11 suites

@@ -123,6 +123,21 @@ aggregateGlobalPopulation(state);
 6. **Update tracking:** Automatically updates `deathsByCategory` and `deathsByRootCause`
 7. **Clear queue:** Empties `mortalityRisks` array for next month
 
+**⚠️ Historical Mode Exception (Nov 27 2025, commit 59032f2):**
+
+In **pre-2024 hindcast mode** (`config.historicalMode = true`):
+- `BaselineMortalityPhase` is **SKIPPED entirely** (returns empty events)
+- Regional system applies deaths directly: `netGrowthRate = births - deaths`
+- Crisis/war multipliers are **DISABLED** (set to 1.0)
+- Healthcare reduction multipliers are **DISABLED** (set to 1.0)
+
+**Rationale:** Historical CDR (crude death rate) data from UN WPP already incorporates:
+- Real-world conflicts, wars, and violence from that era
+- Healthcare quality as it existed in 1990
+- Baseline mortality including famines, diseases, etc.
+
+Applying simulation multipliers on top of historical CDR double-counts these effects, producing death rates 2-3× too high (83.7M/yr vs expected 49.5M/yr). The fix bypasses Bayesian mortality for historical periods, using direct CDR-based mortality in the regional population system instead.
+
 **Returns:** `MortalityResult` with:
 - `totalDeaths` - Total deaths (in billions)
 - `deaths` - Per-demographic segment breakdown

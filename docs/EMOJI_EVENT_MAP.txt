@@ -37,6 +37,7 @@
 🌡️ | Climate tipping point
 🔥 | Deadly heat event
 🌱 | Climate recovery
+🌋 | Volcanic eruption
 🌊 | Ocean acidification
 🐟 | Ocean anoxia
 💧 | Day zero drought
@@ -192,3 +193,8 @@
 # International Migration (Phase 8, Nov 25 2025)
 🚢 | International migration flows
 😷 | COVID-19 pandemic effects
+
+# Climate Geoengineering (Phase 17.5, Nov 27 2025)
+❄️ | Geoengineering cooling effects
+🌫️ | Aerosol cooling effects (anthropogenic air pollution masking global warming)
+💨 | Methane release

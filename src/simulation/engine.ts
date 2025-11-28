@@ -20,7 +20,7 @@ import {
   detectCrisis,
   determineActualOutcome,
   updateGoldenAgeState,  // Phase: Golden Age & Accumulation Systems
-  updateEnvironmentalAccumulation,  // Phase 2: Environmental Accumulation
+  // updateEnvironmentalAccumulation - REMOVED (Nov 28, 2025): Migrated to PlanetaryBoundariesPhase (HIGH-11 fix)
   updateSocialAccumulation,  // Phase 3: Social Cohesion
   updateTechnologicalRisk  // Phase 4: Technological Risk
 } from './calculations';
@@ -77,6 +77,7 @@ import {
   // MADDeterrencePhase removed - merged into InternationalRelationsPhase (Batch 5, Nov 9, 2025)
   NuclearCommandControlPhase,  // TIER 1 Phase 1B (Oct 16, 2025): Circuit breakers (human-in-the-loop, kill switches, time delays)
   ResourceEconomyPhase,  // UPDATED (Batch 3, Nov 9, 2025): Absorbed ResourceTechnologyPhase + PowerGenerationPhase
+  TechCoolingPhase,  // CRITICAL FIX (Nov 27, 2025): Applies geoengineering cooling AFTER ResourceEconomyPhase
   // ResourceTechnologyPhase removed - merged into ResourceEconomyPhase (Batch 3, Nov 9, 2025)
   // GeoengineringPhase removed - merged into ClimateSystemPhase (Batch 3, Nov 9, 2025)
   DefensiveAIPhase,
@@ -168,6 +169,10 @@ import { UnknownUnknownPhase } from './engine/phases/UnknownUnknownPhase';  // P
 import { ClimateSystemPhase } from './engine/phases/ClimateSystemPhase';  // Consolidated 4 climate phases
 import { ClimateDeploymentPhase } from './engine/phases/ClimateDeploymentPhase';  // TIER 1 CRITICAL (Nov 2025): Climate tech phased deployment + energy constraints
 import { ClimateDeploymentDelayPhase } from './engine/phases/ClimateDeploymentDelayPhase';  // TIER 1 CRITICAL (Nov 18, 2025): Three-delay model
+import { VolcanicForcingPhase } from './engine/phases/VolcanicForcingPhase';  // HIGH PRIORITY (Nov 27, 2025): Stratospheric aerosol forcing for hindcast validation
+import { PermafrostCarbonPhase } from './engine/phases/PermafrostCarbonPhase';  // TIER 2 RD-1 (Nov 28, 2025): Permafrost carbon feedback loop
+import { OceanAcidificationCascadePhase } from './engine/phases/OceanAcidificationCascadePhase';  // TIER 2 RD-2 (Nov 28, 2025): Regional ocean acidification cascades
+import { GeopoliticalConflictPhase } from './engine/phases/GeopoliticalConflictPhase';  // TIER 2 RD-3 (Nov 28, 2025): AI-era conflict escalation
 import { ResourceSoilPhase } from './engine/phases/ResourceSoilPhase';  // Consolidated phosphorus + novel entities
 import { ResourceWaterPhase } from './engine/phases/ResourceWaterPhase';  // Consolidated freshwater + ocean acidification
 // Batch 4 Consolidation: Crisis & Mortality (14 → 5, Nov 9, 2025)
@@ -548,6 +553,7 @@ export class SimulationEngine {
     // MADDeterrencePhase removed - merged into InternationalRelationsPhase (Batch 5, Nov 9, 2025)
     this.orchestrator.registerPhase(new NuclearCommandControlPhase());  // TIER 1 Phase 1B: Circuit breakers
     this.orchestrator.registerPhase(new ResourceEconomyPhase());  // UPDATED (Batch 3): Absorbed ResourceTechnologyPhase + PowerGenerationPhase
+    this.orchestrator.registerPhase(new TechCoolingPhase());  // CRITICAL FIX (Nov 27, 2025): Applies accumulated geoengineering cooling
     // ResourceTechnologyPhase removed - merged into ResourceEconomyPhase (Batch 3, Nov 9, 2025)
     // GeoengineringPhase removed - merged into ClimateSystemPhase (Batch 3, Nov 9, 2025)
     this.orchestrator.registerPhase(new DefensiveAIPhase());
@@ -578,6 +584,9 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new ClimateSystemPhase());  // Consolidated: GeoengineringPhase + TippingPointPhase + EnvironmentalFeedbackPhase + ClimateImpactCascadePhase
     this.orchestrator.registerPhase(new ClimateDeploymentPhase());  // TIER 1 CRITICAL (Nov 2025): Climate tech phased deployment + energy constraints (order 8.5)
     this.orchestrator.registerPhase(new ClimateDeploymentDelayPhase());  // TIER 1 CRITICAL (Nov 18, 2025): Three-delay model for realistic deployment timescales (order 16.0)
+    this.orchestrator.registerPhase(new VolcanicForcingPhase());  // HIGH PRIORITY (Nov 27, 2025): Stratospheric aerosol forcing for hindcast validation (order 16.5)
+    this.orchestrator.registerPhase(new PermafrostCarbonPhase());  // TIER 2 RD-1 (Nov 28, 2025): Permafrost carbon feedback loop (order 18.5)
+    this.orchestrator.registerPhase(new OceanAcidificationCascadePhase());  // TIER 2 RD-2 (Nov 28, 2025): Regional ocean acidification cascades (order 18.7)
     // === BATCH 4 CONSOLIDATED SURVIVAL SYSTEM (Nov 9, 2025) ===
     this.orchestrator.registerPhase(new HumanSurvivalSystemPhase());  // Consolidated: FamineSystemPhase + FoodSecurityDegradationPhase + MortalityStabilizersPhase (order 19.7)
     // DEPRECATED (Nov 21, 2025): TransitionMortalityPhase superseded by CoordinatedDeploymentPhase (order 10.5)
@@ -637,6 +646,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new SocialStabilitySystemPhase());  // Consolidated: SocialStabilityPhase (33.0), SocialCohesionUpdatePhase (26.1), ParanoiaPhase (32.0), TrustRecoveryPhase (24.5) → order 26.1
     this.orchestrator.registerPhase(new CooperativeSystemsPhase());  // Consolidated: CollectiveFormationPhase (4.2), CollectiveActionsPhase (5.5), CooperativeOwnershipPhase (15.5), CooperativeSpiralsPhase (11.5), UpwardSpiralsPhase (11.0) → order 11.5
     this.orchestrator.registerPhase(new InternationalRelationsPhase());  // Consolidated: DiplomaticAIPhase (14.0), ConflictResolutionPhase (13.0), MADDeterrencePhase (16.0), FlashWarEscalationPhase (29.0) → order 13.0
+    this.orchestrator.registerPhase(new GeopoliticalConflictPhase());  // TIER 2 RD-3 (Nov 28, 2025): AI-era geopolitical conflict escalation (order 28.0)
 
     // Batch 5: Final phases (37.0 - 40.0, 98.0 - 99.0)
     // ExtinctionTriggersPhase + ExtinctionProgressPhase + CatastrophicScenariosPhase removed - merged into ExtinctionSystemPhase (Batch 4, Nov 9, 2025)
@@ -797,6 +807,9 @@ export class SimulationEngine {
     // Phase 1B (Oct 17, 2025): Capture initial population BEFORE any mutations
     // This is critical because state = initialState (same reference), so mutations affect both
     const savedInitialPopulation = initialState.humanPopulationSystem.population;
+    // FIX (Nov 21, 2025): Set initialPopulation on state at START of simulation
+    // Previously was only set at END after simulation loop, causing undefined access
+    initialState.initialPopulation = savedInitialPopulation;
 
     // Reset crisis points for this run
     const { resetCrisisPoints } = require('./crisisPoints');
@@ -962,15 +975,16 @@ export class SimulationEngine {
       // Phase: Golden Age & Accumulation Systems
       // Update Golden Age state each month (tracks entry/exit/duration)
       updateGoldenAgeState(state, month);
-      
+
       // Phase 2: Environmental Accumulation
-      // Track environmental debt from production/growth
-      updateEnvironmentalAccumulation(state, rng);
-      
+      // MIGRATED TO PHASE: PlanetaryBoundariesPhase (order 21.0) now calls updateEnvironmentalAccumulation()
+      // CRITICAL FIX (Nov 28, 2025): Removed duplicate call - was causing 2x biodiversity decline, 2x pollution, 2x resource depletion
+      // See: HIGH-11 architecture review
+
       // Phase 3: Social Cohesion & Meaning Crisis
       // Track psychological and social costs from automation
       updateSocialAccumulation(state, rng);
-      
+
       // Phase 4: Technological Risk Accumulation
       // Track AI safety debt and complacency
       updateTechnologicalRisk(state);

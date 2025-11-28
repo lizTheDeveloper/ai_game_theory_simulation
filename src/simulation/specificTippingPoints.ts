@@ -19,6 +19,7 @@ import { GameState } from '@/types/game';
 import { assertFinite } from './utils/assertions';
 import { RootCause } from '@/types/population';
 import { addMortalityRisk } from './bayesianMortality';
+import { isHistoricalModeActive } from './utils/historicalMode';
 
 /**
  * Amazon Rainforest Tipping Point
@@ -298,9 +299,12 @@ export function updateAmazonRainforest(state: GameState): void {
     // Global climate feedback
     // Released carbon accelerates warming
     env.climateStability = Math.max(0, env.climateStability - (carbonReleaseRate * 0.0001));
-    
+
     // Biodiversity impact (Amazon holds 10% of world's species)
-    env.biodiversityIndex = Math.max(0, env.biodiversityIndex - 0.0001);
+    // HIGH-8 FIX (Nov 28, 2025): Guard during historical mode
+    if (!isHistoricalModeActive(state)) {
+      env.biodiversityIndex = Math.max(0, env.biodiversityIndex - 0.0001);
+    }
     
     // Log milestone
     if (monthsSince === 120) { // 10 years
@@ -430,7 +434,10 @@ export function updateCoralReefs(state: GameState): void {
     }
     
     // Global biodiversity impact (25-30% of marine species)
-    env.biodiversityIndex = Math.max(0, env.biodiversityIndex - 0.00005);
+    // HIGH-8 FIX (Nov 28, 2025): Guard during historical mode
+    if (!isHistoricalModeActive(state)) {
+      env.biodiversityIndex = Math.max(0, env.biodiversityIndex - 0.00005);
+    }
 
     // HIGH-1 FIX (Roy, Nov 20, 2025): Use intermediate state instead of direct write
     // Ocean health metric - coral collapse increases marine pollution

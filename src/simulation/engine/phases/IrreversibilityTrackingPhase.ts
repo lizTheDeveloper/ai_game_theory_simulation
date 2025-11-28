@@ -39,6 +39,7 @@ import {
   assertDefined,
   assertStateProperty,
 } from '@/simulation/utils/assertions';
+import { isHistoricalModeActive } from '@/simulation/utils/historicalMode';
 
 export class IrreversibilityTrackingPhase implements SimulationPhase {
   readonly id = 'irreversibility_tracking';
@@ -49,6 +50,14 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     const events: any[] = [];
+
+    // HIGH-8 FIX (Nov 28, 2025): Disable irreversibility tracking during historical mode
+    // Rationale: Historical period (1990-2024) did NOT cross irreversible tipping points
+    // (no Greenland collapse, no AMOC shutdown, no Amazon dieback - these are projection concerns)
+    // Prevents indigenous knowledge loss biodiversity impacts from corrupting hindcast calibration
+    if (isHistoricalModeActive(state)) {
+      return { events };
+    }
 
     // === 1. ICE SHEET HYSTERESIS (Probabilistic Thresholds) ===
     // Research: Nature 2023 (Greenland threshold +0.8-3.2°C, 95% CI)

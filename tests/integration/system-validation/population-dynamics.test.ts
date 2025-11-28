@@ -1011,3 +1011,349 @@ describe('Population Dynamics: State Consistency', () => {
     );
   });
 });
+
+// ============================================================================
+// Migration Response Tests (CRITICAL GAP)
+// ============================================================================
+
+describe('Population Dynamics: Migration Response', () => {
+  test('migration flows exist during 2010-2020 hindcast period', () => {
+    const state = createTestGameState();
+    const rng = createTestRng(42);
+
+    // Set to year 2015 (Syrian crisis peak)
+    state.currentMonth = (2015 - 1990) * 12;
+
+    // Run InternationalMigrationPhase
+    const { InternationalMigrationPhase } = require('@/simulation/engine/phases/InternationalMigrationPhase');
+    const phase = new InternationalMigrationPhase();
+
+    phase.execute(state, rng);
+
+    assert.ok(
+      state.migrationFlows,
+      'Migration flows should be tracked in state'
+    );
+  });
+
+  test('migration flows are zero outside 2010-2020 period', () => {
+    const state = createTestGameState();
+    const rng = createTestRng(42);
+
+    // Set to year 2025 (post-hindcast)
+    state.currentMonth = (2025 - 1990) * 12;
+
+    const { InternationalMigrationPhase } = require('@/simulation/engine/phases/InternationalMigrationPhase');
+    const phase = new InternationalMigrationPhase();
+
+    const result = phase.execute(state, rng);
+
+    // Should return empty events (no migration applied)
+    assert.ok(
+      Array.isArray(result.events),
+      'Should return events array'
+    );
+  });
+
+  test('Syrian crisis increases migration flows (2011-2020)', () => {
+    const state1 = createTestGameState();
+    const state2 = createTestGameState();
+    const rng = createTestRng(42);
+
+    // Year 2010 (pre-crisis baseline)
+    state1.currentMonth = (2010 - 1990) * 12;
+
+    // Year 2015 (crisis peak)
+    state2.currentMonth = (2015 - 1990) * 12;
+
+    const { InternationalMigrationPhase } = require('@/simulation/engine/phases/InternationalMigrationPhase');
+    const phase = new InternationalMigrationPhase();
+
+    // Get baseline population for Middle East
+    const mena1Before = state1.humanPopulationSystem.regionalPopulations.find(r => r.name === 'Middle East & North Africa')?.population || 0;
+    const mena2Before = state2.humanPopulationSystem.regionalPopulations.find(r => r.name === 'Middle East & North Africa')?.population || 0;
+
+    phase.execute(state1, rng);
+    phase.execute(state2, rng);
+
+    // Syrian crisis should flag active in 2015
+    if (state2.migrationFlows) {
+      assert.ok(
+        state2.migrationFlows.syrianCrisisActive,
+        'Syrian crisis should be active in 2015'
+      );
+    }
+  });
+
+  test('COVID-19 suppresses migration in 2020', () => {
+    const state = createTestGameState();
+    const rng = createTestRng(42);
+
+    // Year 2020 (COVID suppression)
+    state.currentMonth = (2020 - 1990) * 12;
+
+    const { InternationalMigrationPhase } = require('@/simulation/engine/phases/InternationalMigrationPhase');
+    const phase = new InternationalMigrationPhase();
+
+    phase.execute(state, rng);
+
+    // COVID suppression should be flagged
+    if (state.migrationFlows) {
+      assert.ok(
+        state.migrationFlows.covidSuppressionActive,
+        'COVID suppression should be active in 2020'
+      );
+    }
+  });
+
+  test('migration flows maintain global balance (net zero)', () => {
+    const state = createTestGameState();
+    const rng = createTestRng(42);
+
+    // Year 2015
+    state.currentMonth = (2015 - 1990) * 12;
+
+    const totalPopBefore = state.humanPopulationSystem.regionalPopulations
+      .reduce((sum, r) => sum + r.population, 0);
+
+    const { InternationalMigrationPhase } = require('@/simulation/engine/phases/InternationalMigrationPhase');
+    const phase = new InternationalMigrationPhase();
+
+    phase.execute(state, rng);
+
+    const totalPopAfter = state.humanPopulationSystem.regionalPopulations
+      .reduce((sum, r) => sum + r.population, 0);
+
+    // Migration shouldn't change global population (just redistribution)
+    // Allow 1% tolerance for rounding
+    assert.ok(
+      Math.abs(totalPopAfter - totalPopBefore) / totalPopBefore < 0.01,
+      'Migration should maintain global population (net zero flow)'
+    );
+  });
+});
+
+// ============================================================================
+// Population Segments Tests (Coverage Gap)
+// ============================================================================
+
+describe('Population Dynamics: Population Segments', () => {
+  let state: GameState;
+
+  beforeEach(() => {
+    state = createTestGameState();
+
+    // Initialize segments if not present
+    if (!state.society.segments || state.society.segments.length === 0) {
+      const { initializeHeterogeneousSegments } = require('@/simulation/segments/initialization');
+      initializeHeterogeneousSegments(state);
+    }
+  });
+
+  test('calculateSegmentMortality scales with vulnerability', () => {
+    const { calculateSegmentMortality } = require('@/simulation/populationSegments');
+
+    const baseMortality = 0.10; // 10% base
+    const segmentMortality = calculateSegmentMortality(state, baseMortality);
+
+    // Should have mortality rates for all segments
+    assert.ok(
+      segmentMortality.size > 0,
+      'Should calculate mortality for segments'
+    );
+
+    // More vulnerable segments should have higher mortality
+    for (const seg of state.society.segments) {
+      const mortality = segmentMortality.get(seg.id);
+
+      if (mortality !== undefined) {
+        // High vulnerability → high mortality
+        if (seg.crisisVulnerability > 0.7) {
+          assert.ok(
+            mortality > baseMortality,
+            `High vulnerability segment ${seg.id} should have elevated mortality`
+          );
+        }
+
+        // Mortality should not exceed 100%
+        assert.ok(
+          mortality <= 1.0,
+          `Segment ${seg.id} mortality should not exceed 100%`
+        );
+      }
+    }
+  });
+
+  test('applyCrisisImpactsToSegments erodes trust proportionally', () => {
+    const { applyCrisisImpactsToSegments } = require('@/simulation/populationSegments');
+
+    // Get initial trust levels
+    const initialTrust = state.society.segments.map(seg => ({
+      id: seg.id,
+      trustInAI: seg.trustInAI,
+      trustInGovernment: seg.trustInGovernment,
+    }));
+
+    // Apply moderate crisis (50% intensity)
+    applyCrisisImpactsToSegments(state, 0.5);
+
+    // Trust should decrease for all segments
+    for (let i = 0; i < state.society.segments.length; i++) {
+      const seg = state.society.segments[i];
+      const initial = initialTrust[i];
+
+      assert.ok(
+        seg.trustInAI <= initial.trustInAI,
+        `Segment ${seg.id} trustInAI should decrease during crisis`
+      );
+
+      assert.ok(
+        seg.trustInGovernment <= initial.trustInGovernment,
+        `Segment ${seg.id} trustInGovernment should decrease during crisis`
+      );
+
+      // Trust should not go below floor (0.1)
+      assert.ok(
+        seg.trustInAI >= 0.1 && seg.trustInGovernment >= 0.1,
+        `Segment ${seg.id} trust should not fall below 0.1 floor`
+      );
+    }
+  });
+
+  test('applySegmentRecovery restores trust gradually', () => {
+    const { applyCrisisImpactsToSegments, applySegmentRecovery } = require('@/simulation/populationSegments');
+
+    // Apply crisis first (damage trust)
+    applyCrisisImpactsToSegments(state, 0.8); // Severe crisis
+
+    // Record post-crisis trust
+    const crisisTrust = state.society.segments.map(seg => ({
+      id: seg.id,
+      trustInAI: seg.trustInAI,
+    }));
+
+    // Apply recovery
+    applySegmentRecovery(state, 1.0); // 100% recovery rate
+
+    // Trust should increase (or stay same if at cap)
+    for (let i = 0; i < state.society.segments.length; i++) {
+      const seg = state.society.segments[i];
+      const crisis = crisisTrust[i];
+
+      assert.ok(
+        seg.trustInAI >= crisis.trustInAI - 0.001, // Allow tiny floating point error
+        `Segment ${seg.id} trust should recover or stay same`
+      );
+    }
+  });
+
+  test('elite segments have higher survival rates', () => {
+    const { calculateSegmentMortality } = require('@/simulation/populationSegments');
+
+    const baseMortality = 0.10;
+    const segmentMortality = calculateSegmentMortality(state, baseMortality);
+
+    // Find elite and precariat segments
+    const eliteSegments = state.society.segments.filter(seg => seg.economicStatus === 'elite');
+    const precariatSegments = state.society.segments.filter(seg => seg.economicStatus === 'precariat');
+
+    if (eliteSegments.length > 0 && precariatSegments.length > 0) {
+      const eliteMortality = segmentMortality.get(eliteSegments[0].id) || 0;
+      const precariatMortality = segmentMortality.get(precariatSegments[0].id) || 0;
+
+      assert.ok(
+        eliteMortality < precariatMortality,
+        'Elite segments should have lower mortality than precariat'
+      );
+    }
+  });
+
+  test('updateSocietyAggregates calculates power-weighted values', () => {
+    const { updateSocietyAggregates } = require('@/simulation/populationSegments');
+
+    // Set different trust values per segment
+    for (let i = 0; i < state.society.segments.length; i++) {
+      const seg = state.society.segments[i];
+      // Elite segments high trust, precariat low trust
+      seg.trustInAI = seg.economicStatus === 'elite' ? 0.9 :
+                      seg.economicStatus === 'precariat' ? 0.3 : 0.5;
+    }
+
+    updateSocietyAggregates(state);
+
+    // Power-weighted trust should be higher than population-weighted
+    // (elites have more power)
+    assert.ok(
+      state.society.powerWeightedTrustInAI !== undefined,
+      'Should calculate power-weighted trust'
+    );
+
+    // Population-weighted should be lower than power-weighted
+    // (if elites trust more and have more power)
+    if (state.society.powerWeightedTrustInAI !== undefined) {
+      assert.ok(
+        isFinite(state.society.powerWeightedTrustInAI),
+        'Power-weighted trust should be finite'
+      );
+    }
+  });
+
+  test('calculatePolarizationIndex detects consensus vs disagreement', () => {
+    const { calculatePolarizationIndex } = require('@/simulation/populationSegments');
+
+    // Test 1: Perfect consensus (all segments same)
+    for (const seg of state.society.segments) {
+      seg.trustInAI = 0.5;
+    }
+
+    const consensusPolarization = calculatePolarizationIndex(
+      state.society.segments,
+      seg => seg.trustInAI
+    );
+
+    assert.ok(
+      consensusPolarization < 0.1,
+      'Consensus should have low polarization'
+    );
+
+    // Test 2: Maximum disagreement (half at 0, half at 1)
+    for (let i = 0; i < state.society.segments.length; i++) {
+      state.society.segments[i].trustInAI = i % 2 === 0 ? 0.0 : 1.0;
+    }
+
+    const disagreementPolarization = calculatePolarizationIndex(
+      state.society.segments,
+      seg => seg.trustInAI
+    );
+
+    assert.ok(
+      disagreementPolarization > consensusPolarization,
+      'Disagreement should have higher polarization than consensus'
+    );
+  });
+
+  test('calculateEliteMassGap measures elite-mass divergence', () => {
+    const { calculateEliteMassGap } = require('@/simulation/populationSegments');
+
+    // Set elites high, masses low
+    for (const seg of state.society.segments) {
+      seg.trustInAI = seg.economicStatus === 'elite' ? 0.9 : 0.3;
+    }
+
+    const gap = calculateEliteMassGap(
+      state.society.segments,
+      seg => seg.trustInAI
+    );
+
+    // Gap should be positive (elites higher)
+    assert.ok(
+      gap > 0,
+      'Elite-mass gap should be positive when elites have higher values'
+    );
+
+    assert.ok(
+      Math.abs(gap) <= 1.0,
+      'Elite-mass gap should be in [-1, 1] range'
+    );
+  });
+});

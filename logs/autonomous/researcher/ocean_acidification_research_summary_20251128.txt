@@ -1,0 +1,151 @@
+OCEAN ACIDIFICATION CASCADES RESEARCH - COMPLETE
+Date: 2025-11-28
+Researcher: Cynthia (super-alignment-researcher-1)
+Output: research/ocean_acidification_cascades_20251128.md (532 lines)
+
+=== EXECUTIVE SUMMARY ===
+
+Ocean acidification = Earth's FIRST crossed climate tipping point (2024-2025).
+Tipping point crossed at 1.2-1.4°C warming. Even Paris 1.5°C → >99% coral loss.
+Recovery requires not just stabilization but COOLING planet to ~1°C above pre-industrial.
+
+=== KEY FINDINGS ===
+
+pH THRESHOLDS (high confidence):
+- Current: 7.9 (30% more acidic than pre-industrial 8.1)
+- Stress: pH < 7.9, aragonite Ω < 3.0
+- Severe: pH < 7.8, Ω < 2.5 (pteropod dissolution, synergistic bleaching)
+- Collapse: pH < 7.7, Ω < 2.0 (calcification ceases)
+- 2100 range: 7.68 (RCP8.5) to 8.06 (RCP1.9)
+
+CORAL LOSS TIMELINE:
+- 2024-2025: Tipping point crossed (Nature 2025)
+- 2050: 70-90% loss under RCP8.5 (IPCC AR6)
+- 2100: >99% loss even at 1.5°C warming (very high confidence)
+
+HUMAN IMPACT:
+- Population at risk: 500M-1B people (130M in Coral Triangle alone)
+- Protein dependence: 50-60% in Pacific Islands, 30-50% SE Asia coastal
+- Economic value: $9.9-11T/year ecosystem services
+  - Fisheries: $6.8B/year
+  - Tourism: $19.5B/year (Asia-Pacific)
+  - Coastal protection: $80B+/year avoided damages
+
+CASCADE MECHANISM:
+1. Coral bleaching (pH < 7.9) → 70-90% coral loss by 2050
+2. Fisheries collapse (5-15 year lag) → 50-90% fish biomass decline
+3. Food insecurity (immediate) → 500M-1B lose primary protein source
+
+COMPOUND STRESSORS:
+- Warming + acidification = SYNERGISTIC (more than additive)
+- 31°C + pH 7.8 → severe bleaching within 5 days
+- Overfishing removes herbivores → algal overgrowth → prevents recovery
+
+REVERSIBILITY:
+- Chemical changes "irreversible on centennial to millennial timescales"
+- Lab experiments: pH restoration CAN increase calcification (Albright 2016)
+- Reality: Ocean-basin scale reversal requires massive carbon removal
+- Recovery timescale: 50-200 years IF pH returns to 8.1 + cooling to 1°C
+
+OCEAN ALKALINIZATION (potential tech):
+- Lab/mesocosm: Proven to increase calcification
+- Great Barrier Reef: Could offset acidification by ~10 years
+- Current status: Lab scale only
+- 2030-2050 potential: Small-scale (protected lagoons, 0.1-1 km²)
+- Large-scale: Unknown feasibility, ecological safety unvalidated
+
+=== RESEARCH QUALITY ===
+
+Sources: 21 peer-reviewed primary sources
+- IPCC AR6 WG1 & WG2 (2021-2022)
+- Nature (2025) tipping point research
+- PNAS, Scientific Reports, Global Change Biology (2003-2024)
+- UNEP, FAO, NOAA assessments
+
+Coverage:
+✅ pH thresholds with uncertainty ranges (±0.1 pH units)
+✅ RCP/SSP scenario projections to 2100
+✅ Regional population & economic data
+✅ Cascade mechanisms quantified
+✅ Reversibility analysis (lab vs field)
+✅ Compound stressor synergies
+✅ Contradictions documented & resolved
+
+=== IMPLEMENTATION PARAMETERS (for Roy) ===
+
+Monthly pH decline rates:
+- SSP1-1.9: -0.00001/month
+- SSP1-2.6: -0.00009/month
+- SSP2-4.5: -0.00019/month
+- SSP3-7.0: -0.00030/month
+- SSP5-8.5: -0.00043/month
+
+Coral health decline (per month):
+- pH < 7.5: -5.0%
+- pH < 7.7: -2.0%
+- pH < 7.8: -0.8%
+- pH < 7.9: -0.3%
+- pH < 8.0: -0.1%
+
+Warming synergy multiplier:
+- SST > 31.5°C: 3x
+- SST > 30°C: 2x
+
+Fisheries yield: (coralHealth/100)^1.5
+Food insecurity: regionalProteinDependence × (1 - fisheriesYield)
+
+Economic loss: 
+- Fisheries: $6.8B × (1 - yield)
+- Tourism: $19.5B × (1 - health/100)
+- Coastal: $80B × (1 - health/100)
+
+Tipping point: crossed when warming ≥ 1.2°C OR coralHealth < 30%
+
+=== UNCERTAINTIES ===
+
+High confidence:
+- pH decline, aragonite saturation trends
+- Coral loss projections (70-90% at 1.5°C)
+- Population dependence (500M-1B)
+- Synergistic warming effects
+
+Moderate uncertainty (±10-20%):
+- Exact pH thresholds (species variation)
+- Economic valuations
+- Recovery timescales
+
+High uncertainty:
+- Coral adaptation potential
+- OAE feasibility at scale
+- Tipping point reversibility (depends on damage extent)
+
+=== NEXT STEPS ===
+
+1. Quality Gate 1 Review (Sylvia - research-skeptic)
+   - Verify pH thresholds (check contradictory studies)
+   - Validate economic claims ($9.9-11T - overcounting?)
+   - Assess tipping point (2024-2025 claim premature?)
+   - Critique OAE feasibility (overpromised?)
+
+2. Implementation (Roy - simulation-maintainer)
+   - Create OceanAcidificationCascadePhase
+   - Add GameState.oceanHealth fields
+   - Integrate with HumanPopulationPhase (food security)
+   - Integrate with EconomicSystemPhase (losses)
+   - Add TIER 2 tech: OceanAlkalinizationTech (2030+, small-scale)
+
+3. Validation (Priya - quantitative-validator)
+   - N≥10 Monte Carlo runs (determinism check)
+   - Verify 70-90% coral loss by 2050 (RCP8.5)
+   - Check food insecurity timing (Coral Triangle)
+   - Validate economic losses ($75-100B/year by 2050)
+
+=== STATUS ===
+
+Research: COMPLETE ✅
+Quality Gate 1: PENDING (awaiting Sylvia)
+Implementation: BLOCKED (needs QG1 approval)
+Validation: BLOCKED (needs implementation)
+
+File: /home/lizthedeveloper_gmail_com/ai_game_theory_simulation/research/ocean_acidification_cascades_20251128.md
+Lines: 532

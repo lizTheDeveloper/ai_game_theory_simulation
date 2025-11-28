@@ -452,7 +452,43 @@ export interface GameState {
   nuclearStates: import('../types/nuclearStates').NuclearState[]; // Specific nuclear-armed nations
   madDeterrence: import('../types/nuclearStates').MADDeterrence; // MAD deterrence system
   bilateralTensions: import('../types/nuclearStates').BilateralTension[]; // Bilateral relationships
-  
+
+  /**
+   * Geopolitical Conflict Escalation System (TIER 2, RD-3, Nov 28, 2025)
+   *
+   * Models AI-era conflict escalation with:
+   * - Base risk: 0.05% monthly (0.6% annual)
+   * - AI multiplier: 2× range [1.5, 3.0] (corrected from 4×)
+   * - Compound cap: 4× maximum (prevents doom spiral)
+   * - Deterrence discount: 0.6× (MAD still effective)
+   * - Regional flashpoints: Taiwan (3.3%), Middle East (2%), Kashmir (0.8%), Ukraine (0.5%)
+   * - Resource scarcity multipliers: food (+0.18 per 25%), water (+0.09 per 25%)
+   * - Climate stress: +0.075× per °C above 1.5°C
+   *
+   * Research: geopolitical_conflict_escalation_20251128.md (30+ sources)
+   * Validation: rd3_geopolitical_conflict_critique_20251128.md (PASSED with corrections)
+   * Expected impact: Realistic nuclear risk (not doom spiral), regional hotspot modeling
+   */
+  geopoliticalConflict: {
+    tension: number;  // 0-100 scale (global geopolitical tension)
+    nuclearEscalationRisk: number;  // Monthly probability [0, 1] of nuclear event
+    regionalFlashpoints: Map<string, {
+      risk: number;  // Monthly escalation probability [0, 1]
+      triggers: string[];  // Active triggers (e.g., "AI arms race", "resource scarcity")
+      lastUpdate: number;  // Month last updated
+    }>;
+    activeConflicts: {
+      conventional: number;  // Count of active conventional conflicts
+      nuclear: boolean;  // Has nuclear exchange occurred this simulation
+    };
+    historicalEvents: Array<{
+      month: number;
+      type: 'escalation' | 'deescalation' | 'nuclear_event';
+      region: string;
+      severity: number;  // 0-1 scale
+    }>;
+  };
+
   // Resource Economy (Phase 2.9)
   resourceEconomy: import('../types/resources').ResourceEconomy; // Comprehensive resource modeling with CO2 coupling
   
@@ -474,6 +510,19 @@ export interface GameState {
   // Novel Entities Crisis (TIER 1.5)
   novelEntitiesSystem: import('../types/novelEntities').NovelEntitiesSystem; // Chemical pollution & slow poisoning
 
+  /**
+   * Permafrost Carbon Feedback System (TIER 2, RD-1, Nov 28, 2025)
+   *
+   * Models positive feedback loop from thawing permafrost releasing CO2 and CH4.
+   * Arctic amplification (3×) causes accelerated thaw, exposing ancient carbon.
+   *
+   * Research: Schuur et al. (2022) AREP, Turetsky et al. (2020) Nature Geoscience,
+   *           IPCC AR6 WG1 (2021), McGuire et al. (2018) Nature
+   * Expected impact: +0.1-0.3°C warming by 2100 in baseline scenarios,
+   *                  critical tipping point risk above 1.5°C warming
+   */
+  permafrostSystem: import('../types/permafrost').PermafrostSystem;
+
   // Planetary Boundaries (TIER 3.1)
   planetaryBoundariesSystem: import('../types/planetaryBoundaries').PlanetaryBoundariesSystem; // Kate Raworth's Doughnut Economics & tipping point cascades
 
@@ -493,6 +542,34 @@ export interface GameState {
    * Expected impact: Eliminates unrealistic instant climate collapse, enables multi-decade scenarios
    */
   tippingPointSystem: TippingPointSystem;
+
+  /**
+   * Volcanic Forcing System (Nov 27, 2025) - HIGH PRIORITY
+   *
+   * Tracks stratospheric aerosol optical depth (AOD) from volcanic eruptions
+   * and applies radiative forcing to climate system. Critical for historical
+   * validation (1990-2010 hindcast) - captures Mount Pinatubo cooling 1991-1993.
+   *
+   * Research: IPCC AR6 WG1 Chapter 7 (volcanic forcing reconstructions)
+   *           Sato et al. (1993) stratospheric aerosol data
+   *           NASA GISS volcanic forcing datasets
+   *
+   * Physics: volcanicForcingWattsPerM2 = -25 * AOD (IPCC AR6 formula)
+   *          AOD(t) = AOD_peak * exp(-t / τ) where τ ≈ 1.5 years (18 months)
+   *
+   * Expected impact: Fixes 50% → 70% temperature validation pass rate by adding
+   *                  missing 0.2-0.3°C cooling during 1991-1993 (Pinatubo eruption)
+   */
+  volcanicForcing: {
+    /** Current stratospheric aerosol optical depth (dimensionless, 0-1) */
+    currentAOD: number;
+
+    /** Radiative forcing from volcanic aerosols (W/m²) */
+    forcingWattsPerM2: number;
+
+    /** Month when last major eruption occurred (for decay tracking) */
+    lastEruptionMonth: number;
+  };
 
   /**
    * Irreversibility Framework (Nov 16, 2025) - TIER 1 CRITICAL
@@ -624,6 +701,9 @@ export interface GameState {
 
   // TIER 1 Phase 1B: Nuclear Command & Control - Circuit Breakers (Oct 16, 2025)
   nuclearCommandControlState: import('../simulation/nuclearCommandControl').NuclearCommandControlState; // Human-in-the-loop, kill switches, time delays
+
+  // Technology Effects Accumulator (Nov 27, 2025) - Prevents phase order bugs
+  technologyEffects: import('../types/technologyEffects').TechnologyEffectsState; // Accumulated tech effects applied after resource economy updates
 
   // Universal Basic Income + Purpose Infrastructure (TIER 2.1)
   ubiSystem: import('../types/ubi').UBISystem; // Enhanced UBI with purpose infrastructure for post-work society
@@ -831,7 +911,7 @@ export interface GameState {
    * - Trust Recovery Rate: Meta-analysis - Beta(α=2, β=5)
    * - Climate Sensitivity: IPCC AR6 - Log-Normal(μ=3.0, σ=0.75)
    * - Government Legitimacy Crisis: Historical cases - Triangular(0.25, 0.30, 0.40)
-   * - Automation Job Loss: Acemoglu & Restrepo (2022) - 35% ± 5%
+   * - Automation Job Loss: Acemoglu & Restrepo (2019) - 35% ± 5%
    *
    * Tier 2 Thresholds (Historical Ranges - Semi-known):
    * - Government Legitimacy Crisis: Weimar, USSR, Arab Spring - Triangular(0.25, 0.30, 0.40)

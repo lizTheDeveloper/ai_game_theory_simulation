@@ -29,6 +29,7 @@ import {
   assertInRange,
   assertPlanetaryBoundary
 } from './utils/assertions';
+import { isHistoricalModeActive } from './utils/historicalMode';
 
 // Helper to add events
 function addEvent(state: GameState, event: Omit<GameEvent, 'id' | 'timestamp'>): void {
@@ -47,7 +48,15 @@ function addEvent(state: GameState, event: Omit<GameEvent, 'id' | 'timestamp'>):
 export function updateGeoengineering(state: GameState): void {
   const resources = state.resourceEconomy;
   if (!resources) return;
-  
+
+  // HISTORICAL MODE (Nov 27, 2025): Skip geoengineering for hindcast validation
+  // Research: No large-scale geoengineering deployment occurred 1990-2024
+  // Prevents temperature overrides that distort climate sensitivity validation
+  // CRITICAL-1 FIX (Nov 28, 2025): Unified historical mode detection via isHistoricalModeActive()
+  if (isHistoricalModeActive(state)) {
+    return;
+  }
+
   const geoeng = resources.geoengineering;
   
   // Update each active geoengineering technology
@@ -453,7 +462,10 @@ function updateBioengineeredCleaners(state: GameState, tech: BioengineeredCleane
         // 40%: Outcompetes native species
         ocean.fishStocks = Math.max(0, ocean.fishStocks - 0.3);
         ocean.phytoplanktonPopulation = Math.max(0, ocean.phytoplanktonPopulation - 0.2);
-        state.environmentalAccumulation.biodiversityIndex = Math.max(0, state.environmentalAccumulation.biodiversityIndex - 0.15);
+        // HIGH-8 FIX (Nov 28, 2025): Guard during historical mode
+        if (!isHistoricalModeActive(state)) {
+          state.environmentalAccumulation.biodiversityIndex = Math.max(0, state.environmentalAccumulation.biodiversityIndex - 0.15);
+        }
 
         addEvent(state, {
           type: 'crisis',
@@ -571,7 +583,10 @@ function triggerTerminationShock(state: GameState, techName: string, adaptationL
   
   // Ecosystem collapse
   ocean.phytoplanktonPopulation = Math.max(0, ocean.phytoplanktonPopulation - 0.4);
-  state.environmentalAccumulation.biodiversityIndex = Math.max(0, state.environmentalAccumulation.biodiversityIndex - 0.3);
+  // HIGH-8 FIX (Nov 28, 2025): Guard during historical mode
+  if (!isHistoricalModeActive(state)) {
+    state.environmentalAccumulation.biodiversityIndex = Math.max(0, state.environmentalAccumulation.biodiversityIndex - 0.3);
+  }
   
   // Trigger extinction event
   if (!state.extinctionState.active) {

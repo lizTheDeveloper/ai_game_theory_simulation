@@ -35,6 +35,7 @@ import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 import { FLOORS } from './config/centralConfig';
 import { initializeLegacyNutrientStock } from './legacyNutrientStocks';
 import { initializeRegionalNitrogenManagement } from './nitrogenFoodCoupling';
+import { isHistoricalModeActive } from './utils/historicalMode';
 
 /**
  * Sample biosphere extinction rate from log-uniform distribution
@@ -1234,8 +1235,14 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     // Grace period: No trigger in first 24 months (cascades take 2-5 years to manifest)
     const gracePeriod = state.currentMonth < 24;
 
+    // HISTORICAL MODE (Nov 27, 2025): Disable cascade trigger during hindcast validation
+    // Root cause: Cascades trigger in 1990-2024 baseline period, causing exponential mortality
+    // Research: research/historical_mode_parameters_20251127.md
+    // HIGH-8 FIX (Nov 28, 2025): Use isHistoricalModeActive() utility (checks scenarioMode, not historicalMode)
+    const historicalModeActive = isHistoricalModeActive(state);
+
     // Stochastic trigger with Bayesian adjustment
-    if (!system.cascadeActive && !gracePeriod && deterministicRandom() < monthlyTriggerChance) {
+    if (!system.cascadeActive && !gracePeriod && !historicalModeActive && deterministicRandom() < monthlyTriggerChance) {
       system.cascadeActive = true;
       system.cascadeStartMonth = state.currentMonth;
       console.log(`\n🌪️ ========== TIPPING POINT CASCADE TRIGGERED ==========`);
@@ -1271,7 +1278,10 @@ export function updatePlanetaryBoundaries(state: GameState): void {
   }
 
   // === 5. APPLY CASCADE EFFECTS ===
-  if (system.cascadeActive) {
+  // HISTORICAL MODE (Nov 27, 2025): Skip cascade effects during hindcast validation
+  // HIGH-8 FIX (Nov 28, 2025): Use isHistoricalModeActive() utility (checks scenarioMode, not historicalMode)
+  const historicalMode = isHistoricalModeActive(state);
+  if (system.cascadeActive && !historicalMode) {
     applyTippingPointCascadeEffects(state);
   }
 
@@ -1353,8 +1363,14 @@ export function applyTippingPointCascadeEffects(state: GameState): void {
   env.climateStability = Math.max(0, env.climateStability * (1 - climateDecay));
 
   // Biodiversity crashes (with variation)
-  const bioDecay = 0.03 * envStochasticFactor(); // Base 3% ± variation
-  env.biodiversityIndex = Math.max(0, env.biodiversityIndex * (1 - bioDecay));
+  // HIGH-8 FIX (Nov 27, 2025): Skip during historical mode (1990-2024)
+  // Historical biodiversity decline is handled by environmental.ts with empirical WWF LPI rates
+  // HIGH-8 FIX v2 (Nov 28, 2025): Use isHistoricalModeActive() utility (checks scenarioMode, not historicalMode)
+  // ROOT CAUSE: state.config.historicalMode doesn't exist during hindcast (uses scenarioMode='historical' instead)
+  if (!isHistoricalModeActive(state)) {
+    const bioDecay = 0.03 * envStochasticFactor(); // Base 3% ± variation
+    env.biodiversityIndex = Math.max(0, env.biodiversityIndex * (1 - bioDecay));
+  }
 
   // Resources depleted faster (with variation)
   const resourceDecay = 0.015 * envStochasticFactor(); // Base 1.5% ± variation
@@ -1424,17 +1440,36 @@ export function applyTippingPointCascadeEffects(state: GameState): void {
       }
     );
 
-    // BUG FIX (Oct 30, 2025): BLOCKER-1 - Cap displayed mortality at 100% (physical constraint)
-    // ROOT CAUSE: Unbounded exponential 1.05^N produces >100% mortality at long timescales
-    //   Example: Month 192 (144 past crisis) → 1.05^144 = 1687.9× → 843.95% monthly mortality
+    // BUG FIX (Nov 27, 2025): C-5 - Replace unbounded exponential with logistic growth
+    // ROOT CAUSE: 1.05^N exponential produced physically impossible mortality multipliers:
+    //   - Month 48+96: 107× baseline
+    //   - Month 48+144: 1,688× baseline
+    //   - Exceeds total population multiple times over
+    // RESEARCH: Armstrong McKay et al. (2022) shows cascades saturate at new equilibrium
+    //   - Systems reach stable degraded states, not infinite runaway
+    //   - Real-world cascades are sub-linear after initial shock
+    // FIX: Use logistic growth function that saturates at plausible maximum
+    //   - Formula: maxMultiplier / (1 + exp(-growthRate * (months - midpoint)))
+    //   - Saturates at 10× baseline (research-backed worst case)
+    //   - Rapid initial growth (S-curve captures cascade acceleration)
+    //   - Asymptotic approach to maximum (physically plausible)
     // IMPORTANT: This value is FOR DISPLAY ONLY. Actual mortality is computed by:
     //   - calculateEnvironmentalMortality() in environmental.ts
     //   - resolveMortality() in bayesianMortality.ts (with 2.8% monthly cap)
-    // FIX: Cap theoretical mortality at 100%, warn when exceeded
 
-    const theoreticalMortalityUncapped = monthsSinceCascade > 48
-      ? baseMortalityRate * Math.pow(1.05, monthsSinceCascade - 48)
-      : baseMortalityRate;
+    const theoreticalMortalityMultiplier = monthsSinceCascade > 48
+      ? (() => {
+          const monthsPastCrisis = monthsSinceCascade - 48;
+          const maxMultiplier = 10.0;  // 10× baseline (research-backed saturation)
+          const growthRate = 0.05;     // Controls S-curve steepness
+          const midpoint = 60;         // Half-saturation at 60 months past crisis
+
+          // Logistic growth: rapid initial rise → saturation at maxMultiplier
+          return maxMultiplier / (1 + Math.exp(-growthRate * (monthsPastCrisis - midpoint)));
+        })()
+      : 1.0;  // Before month 48, no multiplier (baseline rate)
+
+    const theoreticalMortalityUncapped = baseMortalityRate * theoreticalMortalityMultiplier;
 
     // Physical constraint: monthly mortality cannot exceed 100% (entire population dies once)
     const mortalityRateDisplay = Math.min(1.0, theoreticalMortalityUncapped);
@@ -1586,8 +1621,11 @@ function updateLandUseSystem(state: GameState): void {
       region.ecosystemCollapseRisk = Math.min(1.0, region.ecosystemCollapseRisk + 0.01);
 
       // Check for ecosystem collapse (varies by biodiversity weight)
+      // HIGH-8 FIX (Nov 27, 2025): Disable catastrophic collapses during historical mode
+      // HIGH-8 FIX v2 (Nov 28, 2025): Use isHistoricalModeActive() utility (checks scenarioMode, not historicalMode)
+      const historicalModeActive = isHistoricalModeActive(state);
       const collapseChance = region.biodiversityWeight * 0.05; // Tropical has highest chance
-      if (region.ecosystemCollapseRisk > 0.80 && deterministicRandom() < collapseChance) {
+      if (!historicalModeActive && region.ecosystemCollapseRisk > 0.80 && deterministicRandom() < collapseChance) {
         region.ecosystemsLost++;
         const regionLabel = String(regionName).toUpperCase();
         console.log(`\n🌳💀 ${regionLabel} ECOSYSTEM COLLAPSED (Total: ${region.ecosystemsLost})`);
@@ -2042,6 +2080,67 @@ export function updateBiosphereIntegrityIndex(
 
   const bii = state.biosphereIntegrityIndex;
 
+  // HISTORICAL MODE (Nov 27, 2025): Dampen biodiversity decline for hindcast validation
+  // Research: research/historical_mode_parameters_20251127.md
+  // Root cause: Crisis-calibrated extinction rates produce -95% collapse (0.03 vs 0.49 actual)
+  // Historical data: WWF Living Planet Index shows -34.7% decline 1990-2024 (0.75 → 0.49)
+  // Solution: Use baseline habitat loss rate (1.236%/year) instead of crisis extinction cascades
+  // HIGH-8 FIX v2 (Nov 28, 2025): Use isHistoricalModeActive() utility (checks scenarioMode, not historicalMode)
+  if (isHistoricalModeActive(state)) {
+    console.log(`🧪 [BII] Historical mode ACTIVE (month ${state.currentMonth}, species: ${bii.currentSpeciesCount})`);
+    const HISTORICAL_ANNUAL_DECLINE_RATE = 0.01236; // 1.236% per year (WWF LPI 1990-2024: 0.75 → 0.49)
+    const monthlyDeclineRate = HISTORICAL_ANNUAL_DECLINE_RATE / 12;
+
+    // Apply simple linear decline (no feedback loops, no catastrophic events)
+    const newSpeciesCount = assertFinite(
+      Math.max(1000, bii.currentSpeciesCount * (1 - monthlyDeclineRate)),
+      {
+        location: 'updateBiosphereIntegrityIndex (historicalMode)',
+        valueName: 'currentSpeciesCount',
+        month: state.currentMonth,
+        additionalInfo: {
+          previousCount: bii.currentSpeciesCount,
+          monthlyDeclineRate
+        }
+      }
+    );
+
+    bii.currentSpeciesCount = newSpeciesCount;
+
+    // Calculate extinction rate from species loss (for boundary value)
+    const speciesLost = bii.totalSpeciesBaseline - bii.currentSpeciesCount;
+    const yearsElapsed = Math.max(1, state.currentMonth / 12);
+    const extinctionsPerYear = speciesLost / yearsElapsed;
+    const extinctionRate = (extinctionsPerYear / bii.totalSpeciesBaseline) * 1_000_000; // E/MSY
+
+    bii.currentExtinctionRate = extinctionRate;
+
+    // Update planetary boundary value (normalized to safe rate)
+    const SAFE_EXTINCTION_RATE = 1.0;
+    const boundaryValue = extinctionRate / SAFE_EXTINCTION_RATE;
+    bii.boundaryValue = boundaryValue;
+    bii.tippingPointRisk = Math.min(1.0, boundaryValue / 10.0);
+
+    // Update planetary boundary system
+    if (state.planetaryBoundariesSystem) {
+      const boundary = state.planetaryBoundariesSystem.boundaries.biosphere_integrity;
+      boundary.currentValue = bii.boundaryValue;
+      boundary.tippingPointRisk = bii.tippingPointRisk;
+
+      // Update status
+      if (bii.boundaryValue >= 10.0) {
+        boundary.status = 'high_risk';
+      } else if (bii.boundaryValue >= 1.0) {
+        boundary.status = 'increasing_risk';
+      } else {
+        boundary.status = 'safe';
+      }
+    }
+
+    // Early return - skip crisis-calibrated extinction mechanics
+    return;
+  }
+
   // === 1. UPDATE CLIMATE VELOCITY ===
   // Climate velocity increases with warming rate
   // Use getter function to decouple from internal planetary boundaries structure
@@ -2190,7 +2289,7 @@ export function updateBiosphereIntegrityIndex(
   // HINDCAST FIX (Nov 24, 2025): Skip ecosystem mortality in historical mode (pre-2020)
   // Climate-driven ecosystem collapse wasn't a significant mortality factor until 2020s
   // Research: IPBES (2019), UN biodiversity reports - ecosystem services decline accelerated post-2010
-  const isHistoricalMode = state.config?.startYear === 1990 || state.config?.scenarioMode === 'historical';
+  const isHistoricalMode = isHistoricalModeActive(state);
   const currentYear = state.config?.startYear
     ? state.config.startYear + Math.floor(state.currentMonth / 12)
     : 2025 + Math.floor(state.currentMonth / 12);

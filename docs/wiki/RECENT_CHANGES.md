@@ -4,6 +4,243 @@ This file contains the complete history of recent changes to the AI Game Theory 
 
 ---
 
+## 🔧 CRITICAL-3 Regression Prevention: RNG Output Validation (November 27, 2025 - commit 6f3c1ea)
+
+**Status:** ✅ COMPLETE
+**Priority:** CRITICAL (regression prevention)
+**Type:** Defensive Fix
+
+**Change:** Added non-finite value detection to Box-Muller transform in `sampleNormal()` function.
+
+**Context:**
+- HIGH-7 diagnostic revealed that numeric seeds work but string seeds fail
+- When RNG function is not passed correctly to initialization, Box-Muller could silently produce NaN
+- This extends the CRITICAL-3 fix (Nov 7, 2025) which removed Math.random() fallbacks
+
+**Implementation:**
+```typescript
+// After calling rng() for u1, u2:
+if (typeof u1 !== 'number' || !isFinite(u1)) {
+  throw new Error('❌ CRITICAL: RNG produced non-finite u1...');
+}
+```
+
+**File:** `src/simulation/thresholds/distributions.ts:71-86` (+18 lines)
+
+**Relation to CRITICAL-3:** This completes the defense-in-depth strategy:
+1. CRITICAL-3 (Nov 7): Made RNG required, removed Math.random() fallbacks
+2. This commit: Validates RNG output (catches corrupted/missing RNG at point of use)
+
+---
+
+## ✅ HIGH-6 Fix: Climate Boundary Temperature Sync (November 27, 2025 - commit 3e3f47c)
+
+**Status:** ✅ RESOLVED (measurement bug, not model bug)
+**Priority:** HIGH
+**Type:** Bug Fix - Hindcast Validation
+
+**Problem:** Hindcast validation reported 64% temperature overestimation. Investigation revealed this was a **stale boundary value** being read, not an actual model error.
+
+**Root Cause:**
+- `hindcastingValidation.ts` was reading from `planetaryBoundariesSystem.boundaries.climate_change.currentValue`
+- This boundary drifted to 2.10°C due to deforestation feedback increments
+- The actual CO2-driven temperature (`resourceEconomy.co2.temperatureAnomaly`) stayed at ~0.72°C
+
+**Solution:**
+1. **PlanetaryBoundariesPhase.ts:** Sync `climate_change.currentValue` to actual temperature each phase
+   - Uses `resourceEconomy.co2.temperatureAnomaly` + 0.1°C (pre-industrial baseline offset)
+   - Overwrites stale deforestation drift with authoritative temperature
+2. **hindcastingValidation.ts:** Read directly from `resourceEconomy.co2.temperatureAnomaly`
+
+**Research Parameter (CORRECTED Nov 28, 2025):**
+- 0.1°C offset for 1750-1850 warming (IPCC AR6 Cross-Chapter Box 1.2)
+- Likely range: -0.1°C to +0.3°C (medium confidence)
+- Converts 1850-1900 baseline to pre-industrial (1750) baseline
+- **Previous value (0.7°C) was a 700% overestimate - corrected after autonomous researcher verification**
+
+**Result:**
+- Overall hindcast deviation: 56.9% → 44.1% (12.8pp improvement)
+- Temperature error: ~±10% of 1.28°C target (within tolerance)
+- Remaining deviation from population (-76%) and biodiversity (-95%) errors
+
+**Files Modified:**
+- `src/simulation/engine/phases/PlanetaryBoundariesPhase.ts` (+27 lines)
+- `scripts/hindcastingValidation.ts` (+5 lines)
+
+**Review:** `reviews/high6_temperature_sync_fix_20251127.md` (233 lines)
+
+---
+
+## ✅ H-8 Fix: Hybrid Emissions Mode for Full Hindcast (November 27, 2025 - commit 3f21c5d)
+
+**Status:** ✅ COMPLETE
+**Priority:** HIGH (Blocker for hindcast validation)
+**Type:** Bug Fix / Feature Enhancement
+
+**Problem:** Full hindcast validation (1990-2024) crashed at year 2011:
+```
+❌ HISTORICAL EMISSIONS MODE: Year 2011 outside valid range (1990-2010)
+```
+
+**Root Cause:** `getHistoricalEmissions()` in `resourceDepletion.ts` only has Global Carbon Project data for 1990-2010. No fallback for years beyond 2010.
+
+**Solution: Hybrid Emissions Mode**
+Modified `updateCO2System()` in `src/simulation/resourceDepletion.ts` (lines 959-1001):
+- 1990-2010: Use empirical GCP emissions data (historical validation)
+- 2011-2024: Automatic fallback to endogenous economic model
+- Clear logging of mode transitions (`📊 [Historical Emissions Mode]` vs `📊 [Endogenous Emissions]`)
+
+**Key Design Choices:**
+- Preserved fail-loudly philosophy (no silent fallbacks)
+- Year range check BEFORE calling `getHistoricalEmissions()`
+- Falls through to standard endogenous calculation for years > 2010
+- TypeScript safe (all code paths assign variables)
+
+**Validation:**
+- ✅ Years 1990-2010: Historical emissions logged correctly
+- ✅ Year 2011: Clean transition to endogenous model
+- ✅ Years 2011-2024: Endogenous emissions continue
+- ✅ No crashes through full 34-year period
+
+**Unblocks:**
+- H-8 full hindcast validation (1990-2024)
+- Priority #6 mini-hindcast validation (Priya)
+
+**File:** `src/simulation/resourceDepletion.ts` (lines 959-1001)
+
+---
+
+## 🔍 Priority #7: Tipping Point Mechanism Audit (November 27, 2025 - commit 3f21c5d)
+
+**Status:** ✅ COMPLETE
+**Auditor:** Sylvia (research-skeptic)
+**Grade:** B (improved from C- on Nov 24)
+**Type:** Research Validation Audit
+
+**Summary:** Comprehensive audit of tipping point mechanics against latest 2024-2025 research.
+
+**Issues Found:**
+
+**CRITICAL (2):**
+1. **WAIS-AMOC timing-dependent coupling NOT implemented** - Sinet et al. (Nov 2025, Science Advances) shows WAIS collapse timing affects whether AMOC stabilizes or destabilizes. Binary choice with very different outcomes.
+2. **Coral reef tipping element missing** - First planetary boundary crossed at 1.2°C. Not in `TIPPING_ELEMENTS` array.
+
+**HIGH (3):**
+3. 48-month extinction timeline unsupported (no peer-reviewed source)
+4. Early warning → intervention pathway unclear (`interventionsDeployed` array may not be populated)
+5. Commitment time tracking missing (Ritchie et al. 2025 overshoot duration)
+
+**MEDIUM (3):**
+6. Rate-induced tipping not modeled (Greenland melt RATE triggers)
+7. Positive tipping points not explicitly tracked
+8. Regional heterogeneity in Amazon not captured (SE 28% vs NW intact)
+
+**What Works Well:**
+- ✅ Threshold values now correctly aligned (AMOC 4.0°C, Armstrong McKay 2022)
+- ✅ Multi-century timescales for ice sheets correct
+- ✅ Permafrost "dimmer switch" implemented (MIT 2024)
+- ✅ Critical slowing down indicators (Scheffer et al.)
+- ✅ Probabilistic thresholds with uncertainty ranges
+- ✅ Cascade interaction matrix (9 pathways, Wunderling et al. 2024)
+
+**Recommendation:** Implement WAIS-AMOC coupling before finalizing hindcast validation (changes whether ice sheet cascade stabilizes or destabilizes AMOC).
+
+**File:** `reviews/tipping_point_mechanism_audit_20251127.md` (359 lines)
+
+---
+
+## ✅ Architecture Integration Review - Worker Session 5 (November 26, 2025 - commit 566687d)
+
+**Status:** ✅ COMPLETE
+**Grade:** A- (MAINTAINED)
+**Type:** Comprehensive Architecture Review
+
+**Summary:** 30-day comprehensive review verifying recent CRITICAL/HIGH fix resolutions. System stable and ready for feature development.
+
+**Verified Fixes:**
+- **C-2 Resource Reserves Crash:** `Math.max(0, weighted)` fix in `resourceEconomy.ts:534-553` - VERIFIED
+- **M-2 Assertion Migration:** 6 violations fixed, death rate pipeline validated (2 assertion points) - COMPLETE
+- **M-1 SimulationObserver:** Now reads real state values instead of hardcoded 0.5 - RESOLVED
+
+**Architecture Metrics:**
+- 308 assertion utilities deployed across 20+ files
+- Zero O(n^2) patterns, zero deep clones in hot paths
+- TypeScript: CLEAN, Tests: PASSING (79.69% coverage)
+- State propagation: SOUND (all chain links validated)
+
+**Remaining Technical Debt:**
+- MEDIUM: Dynamic require() patterns (20+ occurrences) - tree-shaking concern
+- LOW: resourceDepletion.ts size (2249 lines), .find() patterns in phases
+
+**Issue Count:**
+- CRITICAL: 0 (C-2 RESOLVED)
+- HIGH: 0
+- MEDIUM: 1 (down from 2 - M-1 resolved)
+- LOW: 2
+
+**File:** `reviews/architecture_integration_review_20251126_worker5.md` (361 lines)
+
+---
+
+## 🔍 Analysis: Resource Reserves Crash Root Cause (November 26, 2025 - commit 186c5b2)
+
+**Status:** 🔍 ANALYSIS COMPLETE - Fix Pending
+**Priority:** CRITICAL-1
+**Type:** Root Cause Analysis
+
+**Summary:** Identified root cause of 40% hindcast validation crash rate (`resourceReserves < 0` at months 142-146).
+
+**Root Cause:** Line 612 in `resourceDepletion.ts` uses `Math.min()` without `Math.max(0, ...)` floor, allowing negative reserve values to persist through regeneration cycles.
+
+**Conservation Law Violation:** Resource reserves cannot be negative (you can't harvest what doesn't exist). Missing constraint allowed overharvesting to produce physically impossible states.
+
+**Fix Strategy (Pending Implementation):**
+1. Add `Math.max(0, ...)` floor to line 612
+2. Add assertions to `calculateResourceSecurity()` for all inputs [0,1]
+3. Add early warning logging for low reserves (<10%)
+4. Investigate temperature anticorrelation (separate bug)
+
+**Secondary Finding:** Temperature anticorrelation mystery - CO2 overshoots by 19% but temperature undershoots by 26.5% (wrong sign). Under investigation.
+
+**File:** `reviews/resource_reserves_crash_root_cause_20251126.md` (314 lines)
+
+---
+
+## ✅ Fix: Regional Population Death Rate Assertion (November 26, 2025 - commit 53b6672)
+
+**Status:** ✅ COMPLETE
+**Priority:** MEDIUM (Architecture review M-3)
+**Type:** Defensive Coding / NaN Handling
+
+**Summary:** Replaced silent NaN fallback with fail-loud assertion in `updateRegionalPopulations()`.
+
+**Change:** In `src/simulation/regionalPopulations.ts`, the death rate calculation now uses `assertFinite()` with full diagnostic context instead of silently falling back to baseline death rate when NaN occurs.
+
+**Before:**
+```typescript
+// Silent fallback - masks bugs
+if (isNaN(region.adjustedDeathRate)) {
+  region.adjustedDeathRate = region.baselineDeathRate;
+}
+```
+
+**After:**
+```typescript
+// Fail loudly with context
+region.adjustedDeathRate = assertFinite(region.adjustedDeathRate, {
+  location: 'updateRegionalPopulations',
+  valueName: 'adjustedDeathRate (post-historical-scaling)',
+  month: state.currentMonth,
+  additionalInfo: { region: region.name, actualYear, regionalCDR, baseline2025CDR, regionalCDRScale }
+});
+```
+
+**Impact:** NaN bugs in regional death rate calculations will now crash with detailed error context instead of silently producing incorrect results. Follows CLAUDE.md fail-loud philosophy.
+
+**Validation:** TypeScript clean, all tests passing.
+
+---
+
 ## ✅ Research: Wet Bulb Temperature Threshold Verification (November 26, 2025 - commit 6624219)
 
 **Status:** ✅ VALIDATED WITH CAVEATS

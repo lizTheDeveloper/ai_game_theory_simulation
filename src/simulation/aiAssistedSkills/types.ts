@@ -28,7 +28,7 @@ export interface AIAccessBarriers {
 }
 
 /**
- * Phase of automation economics (Acemoglu & Restrepo 2022)
+ * Phase of automation economics (Acemoglu & Restrepo 2019)
  *
  * **TRL: 9** (Validated by 40+ years of historical automation data)
  *
@@ -37,7 +37,7 @@ export interface AIAccessBarriers {
  * - **Transition:** AI approaching task complexity, benefits declining (next 5-10 years)
  * - **Substitution:** AI exceeds task complexity, replaces workers (10-20 years)
  *
- * @see Acemoglu & Restrepo (2022) - "Tasks, Automation, and Wage Inequality"
+ * @see Acemoglu & Restrepo (2019) - "Tasks, Automation, and Wage Inequality"
  *      Econometrica 90(5), pp. 1973-2016. Analysis of 40+ years of US automation.
  *      Finding: 50-70% of wage structure changes from automation displacing middle-skill jobs.
  *      Mechanism: Technology shifts from complementing to substituting as capability exceeds task complexity.
@@ -116,7 +116,7 @@ export interface AIAssistedSkillsMetrics {
   moderatelyEnhanced: number;             // [0,1] Fraction with 30-70% enhancement
   baseline: number;                       // [0,1] Fraction with <30% enhancement
 
-  // Phase 2: Phase Transition Distribution (Acemoglu & Restrepo 2022)
+  // Phase 2: Phase Transition Distribution (Acemoglu & Restrepo 2019)
   phaseDistribution: {
     complementarity: number;              // [0,1] Fraction in complementarity phase (AI helps)
     transition: number;                   // [0,1] Fraction in transition phase (benefits declining)

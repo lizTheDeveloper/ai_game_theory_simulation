@@ -183,6 +183,21 @@ export class BifurcationLogicPhase implements SimulationPhase {
         }
       }
     });
+
+    // DEBUG (Nov 28, 2025): Log environmental health at Month 1 to diagnose 0.000 bug
+    if (state.currentMonth === 1) {
+      console.log(`🔍 MONTH 1 ENV HEALTH DEBUG:`);
+      console.log(`   climateStability: ${climateStabilityValid.toFixed(4)}`);
+      console.log(`   biodiversityIndex: ${biodiversityIndexValid.toFixed(4)}`);
+      console.log(`   resourceReserves: ${resourceReservesValid.toFixed(4)}`);
+      console.log(`   pollutionLevel: ${pollutionLevelValid.toFixed(4)}`);
+      console.log(`   product: ${envHealthProductValid.toFixed(6)}`);
+      console.log(`   envHealth: ${envHealthFinite.toFixed(4)}`);
+    }
+
+    // CRITICAL-1 FIX: Write environmentalHealth to state for other phases to access
+    // This prevents NaN propagation from undefined field access
+    state.globalMetrics.environmentalHealth = envHealthFinite;
     // CRITICAL FIX (CRITICAL-1): For collapse thresholds (trigger when BELOW), distance should be 0 when at/below threshold
     // If value > threshold: safe, distance = (value - threshold)
     // If value <= threshold: collapsing, distance = 0 (maximum amplification)

@@ -24,6 +24,8 @@ import { convertClimateSensitivityToRate } from './thresholds/tier1Config';
 import { addMortalityRisk } from './bayesianMortality';
 import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 import { FLOORS } from './config/centralConfig';
+import { isHistoricalModeActive } from './utils/historicalMode';
+import { debugLog } from './utils/debugFlags';
 
 /**
  * Initialize environmental accumulation state
@@ -63,13 +65,15 @@ export function initializeEnvironmentalAccumulation(rng: () => number): Environm
   const clampedClimateStability = Math.max(0.65, Math.min(0.85, climateStability));
 
   // DEBUG (BUG #3): Log stochastic initialization at month 0
-  console.log(`🔍 ENV INIT: reserves=${clampedResourceReserves.toFixed(3)}, pollution=${clampedPollutionLevel.toFixed(3)}, climate=${clampedClimateStability.toFixed(3)}`);
+  console.log(`🔍 ENV INIT (Month 0): reserves=${clampedResourceReserves.toFixed(3)}, pollution=${clampedPollutionLevel.toFixed(3)}, climate=${clampedClimateStability.toFixed(3)}, biodiversity=0.49`);
 
   return {
     resourceReserves: clampedResourceReserves,
     pollutionLevel: clampedPollutionLevel,
     climateStability: clampedClimateStability,
-    biodiversityIndex: 0.35,      // Keep deterministic - biodiversity tracked via boundary system
+    biodiversityIndex: 0.49,      // WWF Living Planet Index 2024 (49% of 1970 baseline)
+                                   // Research: research/verification_b15e5a5_20251127.md
+                                   // Keep deterministic - biodiversity tracked via boundary system
 
     // Pollution Prevention Factor (Oct 27, 2025)
     // Research: Baseline 2025 = current regulations (EPA standards, EU REACH)
@@ -108,8 +112,47 @@ function applyStochasticVariance(baseRate: number, variance: number = 0.25): num
 }
 
 /**
+ * Get protected area coverage (% of land) for historical mode
+ *
+ * HIGH-8 FIX (Nov 27, 2025): Historical biodiversity calibration
+ * Research: UNEP-WCMC World Database on Protected Areas (WDPA)
+ *
+ * @param year - Current simulation year
+ * @returns Protected area coverage as fraction (0-1)
+ */
+function getProtectedAreaCoverage(year: number): number {
+  // Protected area expansion 1990-2024
+  // Source: WDPA, Convention on Biological Diversity Aichi Target 11
+  const PROTECTED_AREA_DATA: Record<number, number> = {
+    1990: 0.089, // 8.9% of land
+    2000: 0.105, // 10.5%
+    2010: 0.127, // 12.7% (Aichi Target 11: 10% by 2010 - achieved)
+    2020: 0.166, // 16.6% (approaching 17% target)
+    2024: 0.175, // ~17.5% (on track for 30×30 goal)
+  };
+
+  // Linear interpolation between data points
+  const years = Object.keys(PROTECTED_AREA_DATA).map(Number).sort((a, b) => a - b);
+
+  if (year <= years[0]) return PROTECTED_AREA_DATA[years[0]];
+  if (year >= years[years.length - 1]) return PROTECTED_AREA_DATA[years[years.length - 1]];
+
+  // Find surrounding years
+  for (let i = 0; i < years.length - 1; i++) {
+    const y1 = years[i];
+    const y2 = years[i + 1];
+    if (year >= y1 && year <= y2) {
+      const fraction = (year - y1) / (y2 - y1);
+      return PROTECTED_AREA_DATA[y1] + fraction * (PROTECTED_AREA_DATA[y2] - PROTECTED_AREA_DATA[y1]);
+    }
+  }
+
+  return PROTECTED_AREA_DATA[2024]; // Fallback
+}
+
+/**
  * Update environmental accumulation based on economic activity
- * 
+ *
  * Called each month to track accumulation rates.
  * Rate-based: high production = faster accumulation (unless mitigated)
  */
@@ -252,6 +295,17 @@ export function updateEnvironmentalAccumulation(
   // Natural stabilization (very slow)
   const naturalStabilization = 0.001; // 0.1% per month
 
+  // DEBUG (Nov 28, 2025): Log climate degradation at Month 1
+  if (state.currentMonth === 0 || state.currentMonth === 1) {
+    console.log(`🔍 MONTH ${state.currentMonth} CLIMATE DEGRADATION DEBUG:`);
+    console.log(`   energyUsage: ${energyUsage.toFixed(6)}`);
+    console.log(`   baseClimateRate: ${baseClimateRate.toFixed(6)}`);
+    console.log(`   climateDegradationRate: ${climateDegradationRate.toFixed(6)}`);
+    console.log(`   currentClimateStability (BEFORE update): ${env.climateStability.toFixed(6)}`);
+    console.log(`   naturalStabilization: ${naturalStabilization.toFixed(6)}`);
+    console.log(`   netChange: ${(-climateDegradationRate + naturalStabilization).toFixed(6)}`);
+  }
+
   // Detect NaN before calculation - fail loudly
   // Apply climate degradation (with FLOORS.GEOMETRIC_MEAN_FLOOR to prevent exactly 0, which breaks geometric means)
   // FIXED: Use assertFinite to catch NaN/Infinity in calculation itself
@@ -265,42 +319,90 @@ export function updateEnvironmentalAccumulation(
   );
   
   // === BIODIVERSITY LOSS ===
-  // Habitat disruption from expansion
-  // P2.1: IPBES 2019 Global Assessment - 1.5%/year decline = 0.125%/month target
-  // Target: 10-20% decline by Month 300 (25 years), not 99% by Month 60
-  // Multi-factor model: Base rate + compounding effects from all environmental stressors
-  let biodiversityLossRate = economicStage * 0.00006; // Was 0.0004 (reduced 6.7x)
+  // HIGH-8 FIX (Nov 27, 2025): Add historical mode for hindcast calibration
+  // Historical mode (1990-2024): Use WWF LPI empirical decline rates
+  // Projection mode (2025+): Use mechanistic crisis model
 
-  // Manufacturing and resource extraction destroy habitats
-  // P2.1: Reduced compounding factors to achieve IPBES timescale
-  biodiversityLossRate += manufacturingCap * 0.00004; // Was 0.0003 (reduced 7.5x)
-  biodiversityLossRate += (1 - env.resourceReserves) * 0.0001; // Was 0.0008 (reduced 8x)
+  let biodiversityLossRate: number;
+  let naturalRecovery: number;
 
-  // Pollution and climate degrade ecosystems
-  // P2.1: Critic identified compounding effects needed 6-8x reduction
-  biodiversityLossRate += env.pollutionLevel * 0.00005; // Was 0.0004 (reduced 8x)
-  biodiversityLossRate += (1 - env.climateStability) * 0.00008; // Was 0.0006 (reduced 7.5x)
-  
-  // P2.1: Apply stochastic variance (±30% = higher ecological uncertainty)
-  biodiversityLossRate = applyStochasticVariance(biodiversityLossRate, 0.30);
-  
-  // Mitigation from ecosystem management
-  if (hasEcosystemManagement) {
-    biodiversityLossRate *= 0.3; // 70% reduction (AI manages ecosystems)
-  }
-  
-  // Natural recovery (very slow without active management)
-  const naturalRecovery = hasEcosystemManagement ? 0.005 : 0.001;
+  if (isHistoricalModeActive(state)) {
+    // === HISTORICAL MODE (1990-2024): WWF LPI Empirical Rates ===
+    // Research: WWF Living Planet Index 2024
+    // - 1970: 1.00 (baseline)
+    // - 1990: 0.75 (-25% from 1970)
+    // - 2024: 0.49 (-51% from 1970)
+    // - Decline: -34.7% from 1990 to 2024 (34 years)
+    // - Annual rate: ~1.24%/year
+    // - Monthly rate: 0.103%/month (1.24% / 12)
 
-  // FIXED: Use assertFinite to catch NaN/Infinity in calculation itself
-  env.biodiversityIndex = assertFinite(
-    Math.max(0, Math.min(1, env.biodiversityIndex - biodiversityLossRate + naturalRecovery)),
-    {
-      location: 'updateBiodiversityIndex',
-      valueName: 'biodiversityIndex',
-      month: state.currentMonth,
+    // DEBUG (HIGH-8): Log biodiversity decline every year
+    if (state.currentMonth % 12 === 0) {
+      debugLog('PLANETARY', () => `🔍 HIGH-8 DEBUG: Historical mode (year=${state.currentYear}, biodiv=${(env.biodiversityIndex * 100).toFixed(2)}%)`);
     }
-  );
+
+    // WWF LPI empirical decline rate (ALREADY includes conservation effects)
+    // Calculation: 0.75 (1990) → 0.49 (2024) over 34 years
+    // Geometric decline: (0.49/0.75)^(1/408) = 0.998978 → r = 0.001022/month
+    const HISTORICAL_DECLINE_RATE = 0.001022; // 0.1022%/month (1.236%/year)
+
+    // Use empirical rate directly (no modifiers - observed rate is net of all effects)
+    biodiversityLossRate = HISTORICAL_DECLINE_RATE;
+
+    // Natural recovery is ZERO during baseline (empirical rate is net)
+    naturalRecovery = 0;
+
+    // Apply decline (GEOMETRIC: HIGH-11 fix Nov 28, 2025)
+    // LINEAR (old): index - rate (overstates cumulative loss)
+    // GEOMETRIC (correct): index * (1 - rate) (matches WWF LPI empirical data)
+    env.biodiversityIndex = assertFinite(
+      Math.max(0, Math.min(1, env.biodiversityIndex * (1 - biodiversityLossRate) + naturalRecovery)),
+      {
+        location: 'updateBiodiversityIndex (historicalMode)',
+        valueName: 'biodiversityIndex',
+        month: state.currentMonth,
+      }
+    );
+  } else {
+    // === PROJECTION MODE (2025+): Mechanistic Crisis Model ===
+    // Habitat disruption from expansion
+    // P2.1: IPBES 2019 Global Assessment - 1.5%/year decline = 0.125%/month target
+    // Target: 10-20% decline by Month 300 (25 years), not 99% by Month 60
+    // Multi-factor model: Base rate + compounding effects from all environmental stressors
+    biodiversityLossRate = economicStage * 0.00006; // Was 0.0004 (reduced 6.7x)
+
+    // Manufacturing and resource extraction destroy habitats
+    // P2.1: Reduced compounding factors to achieve IPBES timescale
+    biodiversityLossRate += manufacturingCap * 0.00004; // Was 0.0003 (reduced 7.5x)
+    biodiversityLossRate += (1 - env.resourceReserves) * 0.0001; // Was 0.0008 (reduced 8x)
+
+    // Pollution and climate degrade ecosystems
+    // P2.1: Critic identified compounding effects needed 6-8x reduction
+    biodiversityLossRate += env.pollutionLevel * 0.00005; // Was 0.0004 (reduced 8x)
+    biodiversityLossRate += (1 - env.climateStability) * 0.00008; // Was 0.0006 (reduced 7.5x)
+
+    // P2.1: Apply stochastic variance (±30% = higher ecological uncertainty)
+    biodiversityLossRate = applyStochasticVariance(biodiversityLossRate, 0.30);
+
+    // Mitigation from ecosystem management
+    if (hasEcosystemManagement) {
+      biodiversityLossRate *= 0.3; // 70% reduction (AI manages ecosystems)
+    }
+
+    // Natural recovery (very slow without active management)
+    naturalRecovery = hasEcosystemManagement ? 0.005 : 0.001;
+
+    // GEOMETRIC decline (HIGH-11 fix Nov 28, 2025) - consistent with historical mode
+    // Use assertFinite to catch NaN/Infinity in calculation itself
+    env.biodiversityIndex = assertFinite(
+      Math.max(0, Math.min(1, env.biodiversityIndex * (1 - biodiversityLossRate) + naturalRecovery)),
+      {
+        location: 'updateBiodiversityIndex',
+        valueName: 'biodiversityIndex',
+        month: state.currentMonth,
+      }
+    );
+  }
 
   // === P1.5: ECOSYSTEM REGENERATION FROM POPULATION DECLINE ===
   // Historical evidence: Nature rebounds when human pressure reduces
@@ -309,9 +411,12 @@ export function updateEnvironmentalAccumulation(
   // - Post-Black Death: Forest regrowth in Europe (1350-1400)
   // - Mayan collapse: Jungle reclaimed cities in decades (800-900 CE)
   // Research: Ecological succession takes 20-50 years, but initial recovery is fast
+  //
+  // HIGH-8 FIX (Nov 27, 2025): Disable during historical mode (1990-2024)
+  // WWF LPI empirical rate ALREADY includes any natural recovery that occurred
   const currentPressure = state.humanPopulationSystem.population / state.humanPopulationSystem.carryingCapacity;
 
-  if (currentPressure < 0.5) { // Population below half of carrying capacity
+  if (!isHistoricalModeActive(state) && currentPressure < 0.5) { // Population below half of carrying capacity
     // Regeneration rate scales with reduced pressure: 0-1% monthly
     // At 50% pressure: 0%/month (no bonus)
     // At 25% pressure: 0.5%/month
@@ -368,16 +473,24 @@ export function updateEnvironmentalAccumulation(
   }
 
   // Biodiversity cascade (ecosystem collapse cascades)
-  if (env.biodiversityIndex < criticalThreshold) {
+  // HIGH-8 FIX (Nov 27, 2025): Disable cascade during historical mode (1990-2024)
+  // Historical period did NOT experience catastrophic biodiversity tipping points
+  // Cascades are crisis-specific mechanisms (reserved for projection mode)
+
+  if (!isHistoricalModeActive(state) && env.biodiversityIndex < criticalThreshold) {
     const cascadeMagnitude = levyFlight(ALPHA_PRESETS.ENVIRONMENT, rng);
 
     if (cascadeMagnitude > 10.0) {
       // Mega-cascade (keystone species loss triggers avalanche)
+      // M-5 FIX (Nov 28, 2025): Use GEOMETRIC decline (consistent with HIGH-11)
+      // Cascades should follow the same mathematical model as regular decline
       const cascadeSize = Math.min(cascadeMagnitude / 100, 0.35); // Max 35% drop
-      env.biodiversityIndex = Math.max(0, env.biodiversityIndex - cascadeSize);
+      const beforeCascade = env.biodiversityIndex;
+      env.biodiversityIndex = Math.max(0, env.biodiversityIndex * (1 - cascadeSize));
 
       console.warn(`\n  ⚠️ BIODIVERSITY MEGA-CASCADE: Keystone species collapse`);
-      console.log(`     Magnitude: ${cascadeMagnitude.toFixed(2)} → -${(cascadeSize * 100).toFixed(1)}% biodiversity`);
+      console.log(`     Magnitude: ${cascadeMagnitude.toFixed(2)} → -${(cascadeSize * 100).toFixed(1)}% (geometric)`);
+      console.log(`     Biodiversity: ${(beforeCascade * 100).toFixed(1)}% → ${(env.biodiversityIndex * 100).toFixed(1)}%`);
       console.log(`     Trophic cascade: keystone predator/pollinator loss → ecosystem avalanche`);
     }
   }

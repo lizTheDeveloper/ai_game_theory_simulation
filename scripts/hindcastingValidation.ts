@@ -116,7 +116,11 @@ interface HindcastMetrics {
 }
 
 function extractMetrics(state: any): HindcastMetrics {
-  const simTemp = state.planetaryBoundariesSystem?.boundaries?.climate_change?.currentValue || 0;
+  // HIGH-6 FIX (Nov 27, 2025): Read temperature from authoritative source
+  // Previously read from planetaryBoundariesSystem.boundaries.climate_change.currentValue,
+  // which drifted due to deforestation feedback increments (1.14°C → 2.10°C).
+  // Now read from resourceEconomy.co2.temperatureAnomaly (actual CO2-driven temperature).
+  const simTemp = state.resourceEconomy?.co2?.temperatureAnomaly || 0;
   const simPop = state.humanPopulationSystem?.population || 0;
   const simQoL = state.globalMetrics?.qualityOfLife || 0;
   const simSocial = state.globalMetrics?.socialStability || 0;
@@ -221,8 +225,6 @@ async function runHindcast(): Promise<void> {
 
   for (let i = 0; i < CONFIG.numRuns; i++) {
     const seed = CONFIG.baseSeed + i + 1;
-    const rng = createSeededRng(seed);
-    setDeterministicRng(rng);
 
     console.log(`--- Run ${i + 1} (seed: ${seed}) ---`);
 
@@ -240,19 +242,30 @@ async function runHindcast(): Promise<void> {
     };
 
     try {
-      // Create historical state using proper initialization function
+      // HIGH-9 FIX (Nov 28, 2025): Use engine's RNG for initialization
+      // ROOT CAUSE: hindcast script created TWO RNGs with same seed but different LCG parameters:
+      //   1. createSeededRng(seed) - LCG multiplier 1103515245
+      //   2. SimulationEngine SeededRandom - LCG multiplier 1664525
+      // Different multipliers produce different sequences → non-determinism (CV=6.7%)
+      // FIX: Create engine first, extract its RNG, use for initialization
+      const engine = new SimulationEngine({ seed, maxMonths: CONFIG.totalMonths });
+      const engineRng = (engine as any).rng.next.bind((engine as any).rng);
+
+      // Set global RNG for deterministicRandom() calls in initialization
+      setDeterministicRng(engineRng);
+
+      // Create historical state using engine's RNG for determinism
       // This applies all research-backed calibrations:
       // - Regional population scaling (7.4B → 5.3B for 1990)
       // - FAO-verified food security by region
       // - config.startYear for year tracking
       // - Historical temperature in BOTH fields
-      const state = initializeHistoricalSimulation(CONFIG.startYear, rng);
+      const state = initializeHistoricalSimulation(CONFIG.startYear, engineRng);
 
       console.log(`  Initial state: Year ${state.currentYear}, Population: ${state.humanPopulationSystem?.population?.toFixed(2)}B`);
       console.log(`  Initial climate: ${state.planetaryBoundariesSystem?.boundaries?.climate_change?.currentValue?.toFixed(2)}C`);
 
-      // Run simulation for 408 months using SimulationEngine
-      const engine = new SimulationEngine({ seed, maxMonths: CONFIG.totalMonths });
+      // Run simulation for 408 months using same engine (and same RNG)
       const result = engine.run(state, { maxMonths: CONFIG.totalMonths });
       const finalState = result.finalState;
 
