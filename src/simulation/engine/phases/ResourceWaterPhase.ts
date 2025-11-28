@@ -74,12 +74,20 @@ export class ResourceWaterPhase implements SimulationPhase {
 
     // === OCEAN ACIDIFICATION SYSTEM (TIER 1.3) ===
     // Updates ocean acidification, coral/shellfish collapse, marine food web, tech breakthroughs
+    // RD-2 (Nov 28, 2025): Research-backed cascades with species sensitivity, warming synergy
 
     // Validate ocean acidification system state before update
     if (state.oceanAcidificationSystem) {
+      // pH is now absolute units (7.5-8.3), not normalized [0,1]
+      assertFinite(state.oceanAcidificationSystem.pH, {
+        location: 'ResourceWaterPhase.execute (pre-ocean)',
+        valueName: 'pH',
+        month: state.currentMonth
+      });
+      // LEGACY pHLevel [0,1] maintained for backward compatibility
       assertProbability(state.oceanAcidificationSystem.pHLevel, {
         location: 'ResourceWaterPhase.execute (pre-ocean)',
-        valueName: 'pHLevel',
+        valueName: 'pHLevel (legacy)',
         month: state.currentMonth
       });
       // PRIYA FIX (Nov 28, 2025): aragoniteSaturation is NOT a probability (0-1)
@@ -91,15 +99,21 @@ export class ResourceWaterPhase implements SimulationPhase {
       });
     }
 
-    // RD-2 FIX (Nov 28, 2025): Pass RNG to ocean acidification system (now REQUIRED)
-    updateOceanAcidificationSystem(state, rng);
+    updateOceanAcidificationSystem(state, rng);  // RD-2: Pass RNG for determinism
     checkOceanAcidificationTechUnlocks(state);
 
     // Validate ocean acidification system state after update
     if (state.oceanAcidificationSystem) {
+      // pH is now absolute units (7.5-8.3), not normalized [0,1]
+      assertFinite(state.oceanAcidificationSystem.pH, {
+        location: 'ResourceWaterPhase.execute (post-ocean)',
+        valueName: 'pH',
+        month: state.currentMonth
+      });
+      // LEGACY pHLevel [0,1] maintained for backward compatibility
       assertProbability(state.oceanAcidificationSystem.pHLevel, {
         location: 'ResourceWaterPhase.execute (post-ocean)',
-        valueName: 'pHLevel',
+        valueName: 'pHLevel (legacy)',
         month: state.currentMonth
       });
       // PRIYA FIX (Nov 28, 2025): aragoniteSaturation is NOT a probability (0-1)
