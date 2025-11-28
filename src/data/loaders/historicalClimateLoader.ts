@@ -26,8 +26,10 @@
  * @module data/loaders/historicalClimateLoader
  */
 
-import * as fs from 'fs';
-import * as path from 'path';
+// Conditional imports for server-side only (cache functions)
+// Data is hardcoded so these are only needed for optional file caching
+const fs = typeof window === 'undefined' ? require('fs') : null;
+const path = typeof window === 'undefined' ? require('path') : null;
 
 /**
  * Annual climate data point
@@ -174,9 +176,9 @@ const HISTORICAL_CLIMATE_DATA: AnnualClimateData[] = [
   { year: 2024, co2Ppm: 426.00, temperatureAnomalyC: 1.28, emissionsMtCO2: 37000, seaLevelMm: 130, arcticIceMinKm2: 4.28, dataQuality: 'actual' },
 ];
 
-// Cache file path
-const CACHE_DIR = path.join(__dirname, '../../cache/historical');
-const CACHE_FILE = path.join(CACHE_DIR, 'climate_timeseries.json');
+// Cache file paths (server-side only)
+const CACHE_DIR = path ? path.join(__dirname, '../../cache/historical') : '';
+const CACHE_FILE = path ? path.join(CACHE_DIR, 'climate_timeseries.json') : '';
 
 /**
  * Load historical climate data for a year range
@@ -268,9 +270,12 @@ export function interpolateClimateForMonth(
 }
 
 /**
- * Save cache to file
+ * Save cache to file (server-side only, no-op in browser)
  */
 export function saveHistoricalClimateCache(): void {
+  // Skip in browser context
+  if (!fs) return;
+
   const cache: HistoricalClimateCache = {
     version: '1.0.0',
     updateDate: new Date().toISOString(),
@@ -295,9 +300,12 @@ export function saveHistoricalClimateCache(): void {
 }
 
 /**
- * Load cache from file
+ * Load cache from file (server-side only, returns null in browser)
  */
 export function loadHistoricalClimateCache(): HistoricalClimateCache | null {
+  // Return null in browser context
+  if (!fs) return null;
+
   if (!fs.existsSync(CACHE_FILE)) {
     return null;
   }

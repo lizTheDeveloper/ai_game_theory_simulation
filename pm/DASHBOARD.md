@@ -1,16 +1,31 @@
-# Parker's PM Dashboard
-**Last Updated:** Nov 26, 2025 (Late Evening - Post Devon Phase 1)
+# Quinn's PM Dashboard
+**Last Updated:** Nov 27, 2025 (04:30 UTC - Build Fix + Coordination Improvement)
 
-## System Status: 🟢 HEALTHY (Workers Active, Infrastructure Upgraded)
+## System Status: 🟢 HEALTHY (VM Workers Autonomous)
+
+### VM Autonomous Status (Verified Nov 27 04:10 UTC)
+- **Cron jobs:** Running (worker hourly, merge orchestrator, researcher)
+- **Systemd services:** `satu-worker.service`, `satu-orchestrator.service` active
+- **Last worker run:** 03:00 UTC - created PR #477, merged successfully
+- **Test coverage:** 79.86% passing
+- **Laptop not required:** Work continues autonomously on VM
+
+### 🚨 ACTIVE BLOCKER: Quinn Matrix Credentials
+- **Status:** quinn-monitor.sh crashes on DM attempts
+- **Root Cause:** MATRIX_TOKEN_QUINN not configured
+- **Infrastructure:** ✅ READY (MCP config, registration script exist)
+- **Fix:** Run `./scripts/setup-quinn-matrix.sh` to register token
+- **Impact:** Automated DM responses blocked, manual updates working
+- **Details:** See `pm/QUINN_STATUS.md`
 
 ### Blocker Status (Workers ARE Addressing These)
 
 | Priority | Issue | Status | Evidence |
 |----------|-------|--------|----------|
 | CRITICAL-1 (OLD) | AI coordination fabrication | ✅ RESOLVED | Commit bf45de88 |
-| CRITICAL-1 (NEW) | Hindcast NaN crashes | 🔄 IN PROGRESS | Phases 4-9 active, NaN test suite added |
-| HIGH-2 | CO2 +12.1% bias | 🔄 IN PROGRESS | Carbon sink calibration phases 8-9 |
-| HIGH-3 | VM Multi-Worker + Priority Queue | ✅ PHASE 1 COMPLETE | Devon delivered infrastructure |
+| CRITICAL-1 (NEW) | Hindcast NaN crashes | ❌ FAILING | 0/10 runs pass, ~17% CO2 error (Nov 27) |
+| HIGH-2 | CO2 +12.1% bias | ❌ FAILING | Related to CRITICAL-1, same root cause |
+| HIGH-3 | VM Multi-Worker + Priority Queue | ✅ COMPLETE | Devon delivered infrastructure + validation system |
 | RESEARCH-CRITICAL | Climate citations | 🔄 IN PROGRESS | Ongoing corrections |
 
 ### Autonomous Worker Status
@@ -30,7 +45,7 @@
   - `/home/lizthedeveloper_gmail_com/satu/orchestrator/` - merge orchestrator
   - `/home/lizthedeveloper_gmail_com/satu/shared/` - logs, configs
 - **ANTHROPIC_API_KEY:** ✅ Enabled in VM ~/.bashrc
-- **Validation System:** ✅ Queue schema v2.0 with acceptance criteria + validation commands
+- **Validation System:** ✅ Queue schema v2.1 with progress tracking + continuation across sessions
 - **Phase 2 TODO:** Agent personality loading, Claude Code execution
 
 ### Team Activity (from Agent Memory)

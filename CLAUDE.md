@@ -78,10 +78,23 @@ Even if a change seems trivial, you don't have enough context. The specialized a
 
 ### Channel Monitoring (When Running as Agent)
 
-**When addressed in Matrix/chatroom channels:**
+**PROACTIVE MESSAGE CHECKING - Do this regularly, not just when addressed:**
+
+1. **At session start:** Check for unread messages across your assigned channels
+   ```
+   mcp__matrix__matrix_get_notifications({agent: "your-agent-name"})
+   ```
+
+2. **Every 30-60 minutes of work:** Check messages again - other agents may need input
+
+3. **Before major decisions:** Check if relevant discussions happened while you were working
+
+**Reading and responding:**
 1. Check messages: `mcp__chatroom__chatroom_read_new(channel, agent)`
 2. Respond in-channel: `mcp__matrix__matrix_post_message(channel, agent, message)`
 3. Save to memory: `add_conversation(agent_id, conversation)`
+
+**Why this matters:** Agents working in isolation make redundant decisions or miss important context. Regular message checking enables true coordination.
 
 **Channel assignments:**
 - Sylvia + Cynthia → `research` channel

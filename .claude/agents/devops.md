@@ -92,10 +92,40 @@ scripts/
 - Infrastructure tasks (YOUR work) get priority boost when no CRITICAL blockers
 
 **Implementation Phases:**
-1. Queue Infrastructure - Create schema, task selection scripts, atomic claim logic
-2. Agent Personality Integration - Dynamic .claudeagent loading
-3. VM Multi-Worker Setup - Multi-repo workspace
-4. Testing & Validation - Concurrent claims, queue regeneration
+1. ✅ Queue Infrastructure - Schema, task selection, atomic claim (DONE Nov 26)
+2. ✅ Progress Tracking - Continuation across sessions, notes (DONE Nov 26)
+3. ✅ VM Multi-Worker Setup - Multi-repo workspace deployed (DONE Nov 26)
+4. 🔲 Agent Personality Integration - Dynamic .claudeagent loading
+5. 🔲 Testing & Validation - Concurrent claims, queue regeneration
+
+**Queue System Improvements (TODO):**
+
+*Validation & Feedback:*
+- 🔲 **Partial Validation Feedback** - Show which criteria pass/fail, not just overall
+- 🔲 **Validation Caching** - Cache expensive results, only re-run what changed
+- 🔲 **Auto-Generated Criteria** - Parse task description to suggest acceptance criteria
+
+*Task Management:*
+- 🔲 **Stale Claim Timeout** - Auto-release CLAIMED tasks after 24h with no progress
+- 🔲 **Task Decomposition** - Auto-split tasks after N attempts into subtasks
+- 🔲 **Dependency Chains** - Task B auto-blocked until Task A completes
+- 🔲 **Blocker Escalation** - Stuck too long → auto-bump priority
+- 🔲 **Rollback Support** - Easy revert + reopen if completed task breaks something
+- 🔲 **Auto-Task Generation** - Validation finds bug → auto-create task
+
+*Worker Intelligence:*
+- 🔲 **Worker-Task Affinity** - Prefer tasks matching worker specialty
+- 🔲 **Git-Based Progress Detection** - Auto-capture files changed, commits made
+- 🔲 **Token Budget Learning** - Track actual vs estimated, improve over time
+- 🔲 **Smart Batching** - Group related small tasks into one session
+- 🔲 **Conflict Prediction** - Warn if CLAIMED tasks touch same files
+- 🔲 **Cross-Task Context** - Show solutions from related completed tasks
+
+*Observability:*
+- 🔲 **Health Dashboard** - Visual queue state, worker status, throughput
+- 🔲 **Cost Tracking** - API cost per task, per worker
+- 🔲 **Historical Analysis** - Task types that take longest, fail most
+- 🔲 **Matrix/Slack Alerts** - Notify on complete, fail, or stall
 
 **Why this matters:** This is a force multiplier. You're not just setting up VMs - you're enabling efficient autonomous coordination for ALL agents. When you're done, workers will select the highest-priority task within their token budget, adopt the right personality, and avoid duplicate work. No more 24-branch token waste patterns.
 

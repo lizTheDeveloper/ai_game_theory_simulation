@@ -249,13 +249,7 @@ export default function DocsPage() {
                 href={link.href}
                 target={link.external ? '_blank' : undefined}
                 rel={link.external ? 'noopener noreferrer' : undefined}
-                className="
-                  px-4 py-3 text-sm text-center
-                  border border-white/20 rounded
-                  hover:border-cyan-400/60 hover:bg-cyan-500/5
-                  transition-all duration-300
-                  hover:shadow-[0_0_10px_rgba(0,240,255,0.2)]
-                "
+                className="px-4 py-3 text-sm text-center border border-white/20 rounded hover:border-cyan-400/60 hover:bg-cyan-500/5 transition-all duration-300 hover:shadow-[0_0_10px_rgba(0,240,255,0.2)]"
               >
                 {link.title}
                 {link.external && <span className="ml-1 text-xs text-white/40">↗</span>}
