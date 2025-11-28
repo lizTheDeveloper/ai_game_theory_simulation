@@ -5,12 +5,16 @@
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**Current Status:** 🟢 **ARCHITECTURE INTEGRATION VERIFIED** (Nov 28, 2025 - Session 20251128_050001)
+**Current Status:** 🟢 **ARCHITECTURE INTEGRATION VERIFIED** (Nov 28, 2025 - Daily Review 20251128_060000)
 - **Research Quality:** A- (95%+ sources from 2024-2025, high-priority updates identified)
-- **Architecture Health:** A (0 CRITICAL, 0 HIGH, 2 MEDIUM deferred, 2 infrastructure planned for Devon)
+- **Architecture Health:** A (0 CRITICAL, 0 HIGH, 3 MEDIUM deferred)
 - **System Performance:** 0% crash rate ✅, determinism verified (CV=0.000% ✅), historical accuracy CONDITIONAL PASS (29.3% overall)
 - **System Trajectory:** 🟢 **STABLE** - All CRITICAL/HIGH items resolved, unified historical mode detection deployed
-- **Roadmap Coherence:** CURRENT - Updated Nov 28 end-of-session cleanup (Architect)
+- **Roadmap Coherence:** CURRENT - Updated Nov 28 daily review (Architect 06:00 UTC)
+- **Daily Review (Nov 28 06:00 UTC):**
+  - Architecture Review: ✅ GOOD (0 CRITICAL, 0 HIGH, 3 MEDIUM)
+  - Research Skeptic: ⚠️ CONDITIONAL PASS (1 revalidation required)
+  - **Action Item:** HIGH-8 biodiversity Monte Carlo revalidation post-CRITICAL-1 (added to HIGH priority)
 - **Recent Work (Nov 28 Session 3 - CRITICAL-1 RESOLVED, Integration Review Complete):**
   - ✅ **CRITICAL-1 RESOLVED** (commit 5c7fec87) - Unified historical mode detection pattern
     - **Root cause:** Dual incompatible patterns (state.config.historicalMode vs isHistoricalModeActive())
@@ -517,6 +521,25 @@
   - `logs/determinism_roy_investigation_20251128_*.log` - Revalidation (CV=0.000%)
 - **Minor Fix Applied:** Sorted `Object.entries()` in TechTreePhase assertion loop (defensive)
 - **Recommendation:** Focus on calibration issues (HIGH-6, HIGH-7, HIGH-8), not non-existent determinism bugs
+
+**HIGH-10: HIGH-8 Biodiversity Monte Carlo Revalidation Post-CRITICAL-1** ⏳ PENDING (Nov 28, 2025)
+- **Status:** ⏳ PENDING - Requires N=10 Monte Carlo validation after CRITICAL-1 fix
+- **Discovery:** Daily Review Nov 28, 2025 (Sylvia - Research Skeptic)
+- **Source:** `logs/daily_reviews/sylvia_20251128_060000.txt` (lines 78-91)
+- **Problem:** HIGH-8 biodiversity fix showed discrepancy between single-run and Monte Carlo results:
+  - Single-run test: 3.25% error (PASSED)
+  - N=10 Monte Carlo: 77.3% error (CATASTROPHIC FAILURE)
+  - The CRITICAL-1 unification fix (17 violations across 10 files) SHOULD address this
+  - However, **revalidation is required** to confirm Monte Carlo passes post-unification
+- **Action Required:**
+  1. Run N=10 Monte Carlo validation with seeds 19900102-19900111
+  2. Verify biodiversity now passes across all seeds (not just single-run)
+  3. If still failing: investigate remaining dual-pattern historical mode guards
+- **Command:** `npx tsx scripts/hindcastingValidation.ts > logs/HIGH10_mc_revalidation_$(date +%Y%m%d_%H%M%S).log 2>&1 &`
+- **Success Criteria:** N=10 average biodiversity error < 5%
+- **Assignee:** simulation-maintainer (Roy) OR priya (quantitative validation)
+- **Effort:** 1-2 hours (run + verify)
+- **Priority:** HIGH - Monte Carlo is the gold standard; single-run pass is insufficient
 
 ### 🟡 MEDIUM Priority Items
 
