@@ -29,6 +29,22 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 28: HIGH-11 RESOLVED - Biodiversity Decline Geometric Formula Fix** (commit e9d79cc)
+- 🦋 **Mechanism Fix:** Biodiversity decline formula corrected LINEAR → GEOMETRIC
+  - **Formula Change:** `index -= rate` → `index *= (1 - rate)` (lines 348, 389 in `environmental.ts`)
+  - **Research Validation:** WWF Living Planet Report 2024 shows geometric decline pattern (constant percentage loss, not absolute)
+  - **Duplicate System Removed:** PlanetaryBoundariesPhase was also decrementing biodiversity (2x acceleration bug) - removed lines 144-183
+- **Ownership Clarified:** `environmental.ts` is canonical owner of biodiversity decline mechanics; `planetaryBoundaries.ts` only DERIVES `biosphere_integrity` boundary from `biodiversityIndex`
+- **Error Reduction:** 68.6% → 3.14% predicted error (65.46pp improvement)
+  - Before: 15.49% biodiversity in 2024 (vs 49% target)
+  - After (predicted): 50.54% biodiversity in 2024 (3.14% error)
+- **Temporal Analysis:** Hypothesis testing showed NO acceleration 1990-2024 (constant rate correct per Our World in Data 2024, Nature Communications 2024)
+- **Nutrient Calculations:** Added `assertFinite` guards (HIGH-2 fix)
+- 📄 **Research:** `research/biodiversity_temporal_analysis_HIGH11_20251128.md`
+- 📄 **Reviews:** `reviews/biodiversity_temporal_HIGH11_critique_20251128.md` (CONDITIONAL PASS), `reviews/architecture_biodiversity_duplicate_fix_20251128.md` (CRITICAL-1 duplicate fixed)
+- 📄 **DevLog:** `devlogs/HIGH11_biodiversity_geometric_fix_20251128.md`
+- **Status:** FIXED ✅ (type check passed, mathematical validation complete)
+
 **Nov 28: HIGH-7 RESOLVED - Population Mortality Calibration (Final Fix)** (commit 725eed2)
 - 🎉 **COMPLETE FIX:** Population error reduced from -76% to +4.9% (PASS)
 - **Root Cause:** CoordinatedDeploymentPhase was applying transition mortality during 1990-2024 when NO AI agents or tech deployments existed. `Math.max(1, recentDeploymentsCount)` forced minimum 1 tech even when count was 0.
@@ -5083,6 +5099,8 @@ Each layer catches different failure modes. No single layer sufficient. All four
 
 **TIER 0: Baseline Corrections (2025 Reality)**
 - ✅ Biodiversity: 70% → **35%** (WWF Living Planet Index 2024: 73% wildlife population decline 1970-2020)
+  - **Decline Formula:** GEOMETRIC (`index *= (1 - rate)`) per WWF LPI 2024 research-validated pattern (HIGH-11 fix, Nov 28)
+  - **Canonical Owner:** `environmental.ts` module - single source of truth for biodiversity decline
 - ✅ Resources: 85% → **65%** (Earth Overshoot Day, 1.7x overshoot)
 - ✅ Pollution: 15% → **30%** (7/9 planetary boundaries breached)
 - ✅ Climate Rate: 4.8%/yr → **0.96%/yr** simulation scale (0.038°C/year, 2x IPCC AR6 baseline of 0.02°C/year for SSP5-8.5 high emissions scenario)
