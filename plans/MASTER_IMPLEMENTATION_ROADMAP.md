@@ -686,21 +686,24 @@
 - **Priority Rationale:** Within 30% threshold (acceptable), but refinement would improve scenario realism
 - **Full Details:** See archived HIGH-7 entry (lines 424-452)
 
-**M-5: Biodiversity Cascade Formula Consistency** (Identified Nov 28, 2025 - Session 5)
-- **Status:** ACTIVE - Minor architectural inconsistency
+**M-5: Biodiversity Cascade Formula Consistency** ✅ RESOLVED (Nov 28, 2025)
+- **Status:** ✅ RESOLVED - Cascade now uses geometric decline (commits 87ec5834, a66f1a7b)
 - **Discovery:** Architecture Integration Review (Session 5, reviews/architecture_integration_review_20251128_session5.md)
-- **Problem:** Biodiversity decline uses linear cascade in BiodiversityPhase, geometric mean in environmental.ts
-  - **BiodiversityPhase (disaster response):** Linear impact calculations for nuclear/climate disasters
-  - **environmental.ts (accumulation):** Geometric mean of 4 dimensions (climate × nature × pollution × resources)^0.25
-- **Impact:** MEDIUM - Minor inconsistency, both approaches scientifically valid for different contexts
-  - Linear: Appropriate for acute disaster impacts (nuclear winter, ecosystem collapse)
-  - Geometric: Appropriate for chronic accumulation (multi-factor degradation)
-- **Recommendation:** Document the dual-formula approach and when each applies
-  - Short-term shocks → linear cascades (BiodiversityPhase)
-  - Long-term accumulation → geometric mean (environmental.ts)
-- **Effort:** 1-2 hours (documentation + validation that both formulas used appropriately)
-- **Priority Rationale:** Not blocking, both formulas mathematically valid, just needs clarity
-- **Assignee:** simulation-maintainer (Roy) or wiki-documentation-updater
+- **Problem:** Biodiversity cascade events used linear decline (`index - cascadeSize`) while regular decline used geometric (`index * (1 - rate)`)
+  - **Initial state:** Mega-cascade at environmental.ts:472 used `env.biodiversityIndex = Math.max(0, env.biodiversityIndex - cascadeSize)`
+  - **Issue:** Inconsistent with HIGH-11 geometric decline model
+- **Solution Applied:**
+  - Changed cascade to geometric: `env.biodiversityIndex = Math.max(0, env.biodiversityIndex * (1 - cascadeSize))`
+  - Added comment documenting M-5 fix (environmental.ts:472)
+  - Updated console log to show "(geometric)" for consistency
+- **Impact:** MEDIUM - Now consistent across all biodiversity decline paths (regular + cascade)
+- **Verification:** Code review confirms geometric decline used in:
+  - Historical mode (line 346): `index * (1 - rate) + naturalRecovery`
+  - Projection mode (line 385): `index * (1 - rate) + naturalRecovery`
+  - Mega-cascade (line 476): `index * (1 - cascadeSize)`
+- **Effort:** 15 minutes actual (as estimated: 1-2 hours for doc + validation)
+- **Priority Rationale:** Consistency in mathematical models critical for research simulation
+- **Assignee:** simulation-maintainer (Roy) - completed same session as HIGH-11
 
 ### Validation Priority Stack (Nov 28 Update - SPRINT COMPLETE)
 
