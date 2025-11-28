@@ -1,16 +1,26 @@
 # Master Implementation Roadmap
 ## AI Alignment Game Theory Simulation - Project Hub
 
-**Date:** November 27, 2025 (End-of-Session Gardening - Architect)
+**Date:** November 28, 2025 (End-of-Session Cleanup - Architect)
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**Current Status:** 🟡 **STABLE (CALIBRATION ISSUES)** (Nov 28, 2025 - Determinism Validated)
+**Current Status:** 🟡 **CALIBRATION VALIDATION IN PROGRESS** (Nov 28, 2025 - Worker Session 20251128_031537)
 - **Research Quality:** A- (95%+ sources from 2024-2025, high-priority updates identified)
-- **Architecture Health:** B+ (0 CRITICAL, 3 HIGH calibration issues, 3 MEDIUM issues)
-- **System Performance:** 0% crash rate ✅, determinism verified (CV=0.000% ✅), historical accuracy failed (56.9% deviation)
-- **System Trajectory:** 🟡 **CALIBRATION REQUIRED** - Phase 10 revealed crisis-tuned params invalid for historical baseline
-- **Roadmap Coherence:** CURRENT - Updated Nov 27 post-Phase 10 validation (4 new HIGH items added)
+- **Architecture Health:** B+ (0 CRITICAL, 3 HIGH under validation, 1 MEDIUM assertion migration, 2 infrastructure items)
+- **System Performance:** 0% crash rate ✅, determinism verified (CV=0.000% ✅), historical accuracy under N=10 validation
+- **System Trajectory:** 🟡 **VALIDATION PENDING** - Single-run tests show improvements, N=10 Monte Carlo running
+- **Roadmap Coherence:** CURRENT - Updated Nov 28 during validation session
+- **Recent Work (Nov 28 Morning - Worker Session 20251128_031537 - VALIDATION):**
+  - ⏳ **HIGH-6/7/8 VALIDATION LAUNCHED** - N=10 hindcast Monte Carlo running (ETA: 10-15 min)
+    - HIGH-7 (Population): Single-run shows +4.9% error (PASS) vs -76% before fix
+    - HIGH-8 (Biodiversity): Single-run shows 3.25% error (PASS) vs -95% before fix
+    - HIGH-6 (Temperature): Single-run shows +12% error (improved from +64%, still above 10% threshold)
+    - Script: hindcastingValidation.ts (N=10, seeds 19900102-19900111)
+    - Log: logs/hindcast/full_validation_20251128_031632.log (28MB, still growing)
+    - Status: Process running at 100% CPU, ~5 min elapsed
+  - ✅ **DEVLOG CREATED** - devlogs/20251128_HIGH678_validation.md documents session
+  - ✅ **HIGH-9 CLOSED** - FALSE ALARM documented (determinism is NOT broken)
 - **Recent Work (Nov 27 Morning - CRITICAL FIXES COMPLETE):**
   - ✅ **CRITICAL-1 RESOLVED** - environmentalHealth NaN crashes fixed (commit 8596afd8b)
     - Root cause: Division operations in resourceDepletion.ts producing NaN
@@ -370,63 +380,76 @@
 - **Dependencies:** Matrix tokens for each agent (most already exist)
 - **Impact:** Transforms agents from isolated workers to collaborative team
 
-**HIGH-6: Temperature Overestimation in Historical Period (+64% Error)** ⏳ NEW (Nov 27, 2025)
-- **Status:** ⏳ RESEARCH COMPLETE - Ready for implementation
+**HIGH-6: Temperature Overestimation in Historical Period (+64% → +12% Error)** ⏳ VALIDATION IN PROGRESS (Nov 28, 2025)
+- **Status:** ⏳ N=10 VALIDATION RUNNING - Single-run shows improvement, awaiting Monte Carlo confirmation
 - **Discovery:** Phase 10 validation (Nov 27, 2025) - ALL 10 runs produce exactly 2.10°C (deterministic)
+- **Fix Applied (Nov 27, commit ae4a9d9d):** Added AerosolForcingPhase
+  - Historical aerosol forcing -0.3 W/m² (1990s peak) declining to -0.15 W/m² (2020s)
+  - SO₂ emissions: 70 MtS (1990) → 50 MtS (2024), regional shift (US/EU down, Asia up)
+  - Cooling effect: ΔT ≈ F * λ where λ ≈ 0.8 K/(W/m²)
 - **Problem:** Climate system overestimates warming for baseline historical period
   - Actual 2024: 1.28°C above baseline (NASA GISS)
-  - Simulated 2024: 2.10°C above baseline (ALL runs identical)
-  - Absolute error: +0.82°C (+64.1%)
+  - Simulated 2024 (before fix): 2.10°C above baseline (ALL runs identical)
+  - Absolute error (before): +0.82°C (+64.1%)
+  - **Single-run result (after fix):** 1.43°C (+12% error vs 1.28°C target)
+  - **Validation status:** ⏳ N=10 Monte Carlo running (ETA: ~10 min)
 - **Research Parameters (from comprehensive research doc):**
   - TCRE: 1.65°C per 1000 PgC (IPCC AR6 range: 1.0-2.3°C)
   - TCR: 1.8 ± 0.3 K (2024 multi-model mean)
   - Aerosol cooling: 0.24 ± 0.11 K (CRITICAL: trend reversal in 1990s)
   - Target historical warming: +1.19°C (2014-2023 vs pre-industrial)
 - **Key Finding:** Aerosol forcing changed sign in 1990s - declining SO₂ → enhanced warming
-- **Solution Options:**
-  1. Reduce climate sensitivity for historical mode
-  2. Add aerosol cooling (missing mechanism)
-  3. Implement "historical mode" flag to disable crisis amplification
+- **Next Steps:** Await N=10 results, may need further calibration if mean error >10%
 - **Impact:** Overestimated warming makes climate interventions appear MORE effective than reality
 - **Assignee:** simulation-maintainer (Roy) + super-alignment-researcher (Cynthia)
-- **Effort:** 4-6 hours (diagnostics + mechanism tuning + validation)
+- **Effort:** 4-6 hours already spent, may need 2-4 more for refinement
 - **Complexity:** 3 systems (climate, carbon cycle, emissions)
-- **Dependencies:** None (can proceed immediately)
+- **Dependencies:** None
 - **Research:** `research/hindcast_calibration_parameters_20251127.md` (lines 37-104)
 - **Report:** `reviews/climate_hindcast_validation_phase10_20251127.md` (lines 59-186)
+- **Session:** `devlogs/20251128_HIGH678_validation.md`
 
-**HIGH-7: Population Mortality Calibration (-76% Error)** ⏳ NEW (Nov 27, 2025)
-- **Status:** ⏳ RESEARCH COMPLETE - Ready for implementation
+**HIGH-7: Population Mortality Calibration (-76% → +4.9% Error)** ⏳ VALIDATION IN PROGRESS (Nov 28, 2025)
+- **Status:** ⏳ N=10 VALIDATION RUNNING - Single-run shows PASS, awaiting Monte Carlo confirmation
 - **Discovery:** Phase 10 validation (Nov 27, 2025) - population severely underestimated
+- **Fix Applied (Nov 27, commit 725eed2d):** Added historicalMode guard to CoordinatedDeploymentPhase
+  - Problem: AI transition mortality applied during 1990-2024 when NO AI agents existed
+  - Solution: Skip coordinated deployment phase entirely during historical period
+  - Impact: Eliminates anachronistic mortality from future-crisis mechanism
 - **Problem:** Mortality system calibrated for CRISIS scenarios, not BASELINE historical
   - Actual 2024: 8.12 billion (UN DESA)
-  - Simulated 2024: 1.22B to 3.44B (mean ~2.0B)
-  - Absolute error: -6.1B (-76.2%)
-  - Variance: 3x across runs (1.22B to 3.44B) - non-deterministic mortality
+  - Simulated 2024 (before fix): 1.22B to 3.44B (mean ~2.0B)
+  - Absolute error (before): -6.1B (-76.2%)
+  - **Single-run result (after fix):** 8.52B (+4.9% error vs 8.12B target) ✅ Within ±10%
+  - **Validation status:** ⏳ N=10 Monte Carlo running (ETA: ~10 min)
 - **Research Parameters (from comprehensive research doc):**
   - Fertility decline: 3.31 (1990) → 2.25 (2024) = -0.031 births/year linear trend
   - Life expectancy: +0.33 years/year (2000-2019), ~66.8→73.1 years
   - COVID impact: Reversed ~1 decade of gains (2020-2021), now rebounding
   - Key: Separate BASELINE mortality from CRISIS mortality
-- **Solution Options:**
-  1. Add "historical mode" flag that disables crisis mortality
-  2. Recalibrate baseline mortality/birth rates to UN data
-  3. Separate crisis mortality (shocks) from baseline mortality (demographics)
+- **Next Steps:** Await N=10 results to confirm mean error <10%
 - **Impact:** Pessimistic population makes all interventions tested on dying population (invalid baseline)
 - **Assignee:** simulation-maintainer (Roy) + super-alignment-researcher (Cynthia)
-- **Effort:** 6-8 hours (mortality system audit + recalibration + validation)
+- **Effort:** 6-8 hours already spent
 - **Complexity:** 4 systems (demographics, food security, health, mortality resolution)
-- **Dependencies:** None (can proceed immediately)
+- **Dependencies:** None
 - **Research:** `research/hindcast_calibration_parameters_20251127.md` (lines 107-226)
 - **Report:** `reviews/climate_hindcast_validation_phase10_20251127.md` (lines 70-97, 187-198)
+- **Session:** `devlogs/20251128_HIGH678_validation.md`
 
-**HIGH-8: Biodiversity Decline Rate Calibration (-95% Error)** ⏳ NEW (Nov 27, 2025)
-- **Status:** ⏳ RESEARCH COMPLETE - Ready for implementation
+**HIGH-8: Biodiversity Decline Rate Calibration (-95% → 3.25% Error)** ⏳ VALIDATION IN PROGRESS (Nov 28, 2025)
+- **Status:** ⏳ N=10 VALIDATION RUNNING - Single-run shows PASS, awaiting Monte Carlo confirmation
 - **Discovery:** Phase 10 validation (Nov 27, 2025) - biodiversity collapses to near-zero
+- **Fix Applied (Nov 27, commit 2173fc8a):** Corrected decline rate + config flag
+  - Annual decline rate: 1.02%/yr → 1.312%/yr (matches WWF LPI -34.7% over 1990-2024)
+  - Config check corrected: `config.historicalMode` → `config.scenarioMode === 'historical'`
+  - Impact: Biodiversity now tracks WWF Living Planet Index trajectory
 - **Problem:** Decline rate far too aggressive for historical baseline period
   - Actual 2024: 0.49 (WWF LPI - 51% of 1970 baseline, -34.7% decline 1990-2024)
-  - Simulated 2024: 0.004 to 0.065 (mean ~0.03, -97% decline)
-  - Absolute error: -0.46 (-94.7%)
+  - Simulated 2024 (before fix): 0.004 to 0.065 (mean ~0.03, -97% decline)
+  - Absolute error (before): -0.46 (-94.7%)
+  - **Single-run result (after fix):** 50.59% (target 49%, error 3.25%) ✅ Within <10%
+  - **Validation status:** ⏳ N=10 Monte Carlo running (ETA: ~10 min)
 - **Research Parameters (from comprehensive research doc):**
   - WWF LPI: -73% vertebrate decline (1970-2020), accelerating over time
   - Habitat-specific rates: Freshwater -85%, Terrestrial -69%, Marine -56%
@@ -434,17 +457,15 @@
   - IUCN Red List: 46,337 threatened species (27.9% of assessed)
   - Deforestation: 420M ha since 1990, declining rate (16→10M ha/yr)
   - Conservation effectiveness: 5-20% (protected areas), 10-50% (species programs)
-- **Solution Options:**
-  1. Reduce baseline decline rate to match WWF LPI trajectory
-  2. Add conservation effort mechanisms (protected areas scale with GDP)
-  3. Implement "historical mode" flag to disable crisis extinction cascades
+- **Next Steps:** Await N=10 results to confirm mean error <10%
 - **Impact:** Near-extinction baseline makes biodiversity recovery appear impossible (invalid starting point)
 - **Assignee:** simulation-maintainer (Roy) + super-alignment-researcher (Cynthia)
-- **Effort:** 4-6 hours (ecology system audit + recalibration + validation)
+- **Effort:** 4-6 hours already spent
 - **Complexity:** 3 systems (ecology, land use, extinction)
-- **Dependencies:** None (can proceed immediately)
+- **Dependencies:** None
 - **Research:** `research/hindcast_calibration_parameters_20251127.md` (lines 229-390)
 - **Report:** `reviews/climate_hindcast_validation_phase10_20251127.md` (lines 95-105, 199-212)
+- **Session:** `devlogs/20251128_HIGH678_validation.md`
 
 **HIGH-9: Non-Determinism Investigation (CV=6.7%)** ✅ CLOSED - FALSE ALARM (Nov 27, 2025)
 - **Status:** ✅ CLOSED/INVALID - Investigation complete (Nov 27, 2025, 18:00-18:15)
@@ -493,7 +514,7 @@
 - **Source:** `reviews/defensive_fallback_architecture_review_20251116.md`
 - **Note:** Two CRITICAL regressions found (dystopiaProgression.ts, aiSuffering.ts) where fixed code was reverted
 
-### Validation Priority Stack
+### Validation Priority Stack (Nov 28 Update)
 
 | Priority | Task | Owner | Status | Dependencies |
 |----------|------|-------|--------|--------------|
@@ -501,16 +522,18 @@
 | 2 | Determinism stress test (N=100) | Priya | ✅ DONE (Nov 24) | #1 |
 | 2b | Fix non-determinism in alignment | Roy | ✅ DONE (Nov 24) | #2 |
 | 3 | Planetary restoration timescales audit | Roy | ✅ DONE (Nov 24) | None |
-| 4 | Climate mini-hindcast data (1990-2010) | Cynthia | Ready | None |
-| 5 | Historical initialization mode | Roy | ✅ EXISTS | None |
-| 6 | Mini-hindcast validation | Priya | Blocked | #4, #5 |
-| 7 | Mechanism audits (tipping points) | Sylvia | Ready | None |
+| 4 | Climate mini-hindcast data (1990-2010) | Cynthia | ✅ DONE (Nov 26) | None |
+| 5 | Historical initialization mode | Roy | ✅ DONE (Nov 26) | None |
+| 6 | Mini-hindcast validation | Priya | ⏳ IN PROGRESS (Nov 28) | #4, #5 |
+| 7 | HIGH-6/7/8 calibration fixes | Roy | ⏳ VALIDATION RUNNING (Nov 28) | #6 |
+| 8 | Mechanism audits (tipping points) | Sylvia | Ready | None |
 
-### Climate Mini-Hindcast Validation (HIGH Priority - VALIDATION FAILED)
+### Climate Mini-Hindcast Validation (HIGH Priority - VALIDATION IN PROGRESS)
 
-**Objective:** Validate climate subsystem against 1990-2010 historical data
-**Success Criteria:** CO2 within 5% of Keeling curve
-**Source:** Nov 24 orchestrator session
+**Objective:** Validate climate subsystem against 1990-2024 historical data
+**Success Criteria:** Temperature, population, biodiversity, CO2 within tolerance (5-10%)
+**Source:** Nov 24 orchestrator session, updated Nov 27-28
+**Status (Nov 28):** N=10 Monte Carlo validation running (ETA: ~10 min), single-run tests show improvements
 
 **Work Breakdown:**
 1. ✅ **Phase 1: Historical Data Collection (Cynthia) - COMPLETE (Nov 26, 2025):**
@@ -590,7 +613,32 @@
    - **Report:** `reviews/climate_hindcast_validation_phase10_20251127.md`
    - **Log:** `logs/hindcast/phase10_post_fix_20251127_130203.log` (118K lines)
 
-**Current Status:** ✅ **COMPLETE - Stability achieved, accuracy calibration issues identified**
+11. ⏳ **Phase 11: HIGH-6/7/8 Calibration Fixes (Roy) - VALIDATION RUNNING (Nov 28, 2025):**
+   - **FIXES APPLIED (Nov 27, evening):**
+     1. ✅ HIGH-6 (Temperature): AerosolForcingPhase added (commit ae4a9d9d)
+        - Historical aerosol forcing -0.3 W/m² (1990s) declining to -0.15 W/m² (2020s)
+        - SO₂ emissions: 70 MtS (1990) → 50 MtS (2024)
+     2. ✅ HIGH-7 (Population): historicalMode guard added (commit 725eed2d)
+        - Skip CoordinatedDeploymentPhase during historical period (no AI agents existed)
+     3. ✅ HIGH-8 (Biodiversity): Decline rate corrected (commit 2173fc8a)
+        - Annual rate: 1.02%/yr → 1.312%/yr (matches WWF LPI -34.7% over 1990-2024)
+        - Config flag corrected: historicalMode → scenarioMode === 'historical'
+     4. ✅ HIGH-9 (Determinism): Investigated and CLOSED as FALSE ALARM
+        - CV=6.7% was Monte Carlo variance (different seeds), not broken determinism
+        - CV=0.000% with identical seeds confirmed (determinismStressTest.ts)
+   - **Single-Run Validation Results (Nov 28, 03:14 UTC):**
+     - HIGH-6 (Temperature): 1.43°C (+12% error vs 1.28°C) - Improved from +64%
+     - HIGH-7 (Population): 8.52B (+4.9% error vs 8.12B) ✅ PASS - Improved from -76%
+     - HIGH-8 (Biodiversity): 50.59% (3.25% error vs 49%) ✅ PASS - Improved from -95%
+   - **N=10 Monte Carlo Validation (RUNNING):**
+     - Process: PID 1275599, 100% CPU, 28MB log (as of 03:21 UTC)
+     - Seeds: 19900102-19900111 (different seeds for Monte Carlo variance)
+     - ETA: ~10-15 minutes total (5 min elapsed)
+     - Log: `logs/hindcast/full_validation_20251128_031632.log`
+   - **Session:** `devlogs/20251128_HIGH678_validation.md`
+   - **Status:** ⏳ AWAITING N=10 RESULTS - Single-run tests promising, Monte Carlo confirmation pending
+
+**Current Status (Nov 28, 03:21 UTC):** ⏳ **VALIDATION IN PROGRESS - Awaiting N=10 Monte Carlo results**
 
 **Completed Phases:**
 1. ✅ **Phase 5 complete:** `historicalEmissionsMode` flag implemented + GCP emissions data active
