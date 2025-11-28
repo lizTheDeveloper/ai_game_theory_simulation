@@ -851,7 +851,16 @@ async function main() {
 }
 
 if (require.main === module) {
-  main().catch(console.error);
+  main()
+    .then(() => {
+      // Force exit after cleanup - Prometheus metrics server may keep event loop alive
+      console.log('👋 Exiting...');
+      process.exit(0);
+    })
+    .catch((err) => {
+      console.error('❌ Benchmark failed:', err);
+      process.exit(1);
+    });
 }
 
 // Classes are already exported with `export class` declarations above
