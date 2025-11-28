@@ -1,6 +1,6 @@
 # Research Update Queue
-**Generated:** 11/28/2025, 4:30:03 PM
-**Files Scanned:** 474
+**Generated:** 11/28/2025, 5:30:04 PM
+**Files Scanned:** 475
 
 ---
 
@@ -12,7 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 159 (33.5%)
+**Count:** 160 (33.7%)
 
 ### `CRISIS_MITIGATION_RESEARCH_CRITIQUE_20251029.md`
 - **Oldest source:** 2001 (24 years old)
@@ -669,6 +669,11 @@
 - **Status:** Not used in simulation
 - **Path:** `research/source_validation_audit_20251128.md`
 
+### `source_validation_audit_20251128_afternoon.md`
+- **Oldest source:** 2019 (6 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/source_validation_audit_20251128_afternoon.md`
+
 ### `spanish_flu_1918_historical_validation_20251101.md`
 - **Oldest source:** 2002 (23 years old)
 - **Status:** Not used in simulation
@@ -841,7 +846,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 294 (62.0%)
+**Count:** 294 (61.9%)
 
 All sources <3 years old. No action required.
 
@@ -851,11 +856,11 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 474 |
+| Total files | 475 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 159 (33.5%) |
+| HIGH | 160 (33.7%) |
 | MEDIUM | 21 (4.4%) |
-| LOW | 294 (62.0%) |
+| LOW | 294 (61.9%) |
 | Average age | 7.8 years |
 | Oldest source | 1955 (70 years ago) |
 
@@ -863,21 +868,21 @@ All sources <3 years old. No action required.
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 294 | 62.0% |
+| Current (<3yr) | 294 | 61.9% |
 | Warning (3-5yr) | 21 | 4.4% |
-| Critical (>5yr) | 159 | 33.5% |
+| Critical (>5yr) | 160 | 33.7% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-- **Current:** 33.5% critical (>5yr)
+- **Current:** 33.7% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
-1. Update 159 HIGH priority file(s) within 1 month
+1. Update 160 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 
