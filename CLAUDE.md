@@ -2,6 +2,21 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## 🚨 TOKEN CONSERVATION MODE - ACTIVE (Nov 28, 2025)
+
+**CRITICAL: Project in extreme token conservation mode. Goal: Finish roadmap with HALF normal tokens.**
+
+**All agents MUST:**
+1. **Exit early** - Complete only critical/high priority work, then stop
+2. **Grep aggressively** - Never read files without targeted search first
+3. **Skip documentation** - Unless explicitly required for task
+4. **Batch all operations** - One tool call, not five
+5. **No exploration** - Stay laser-focused on assigned task
+6. **Commit partial work** - Don't perfect, just progress
+7. **Be brutally concise** - No explanations, just code
+
+**Autonomous workers:** Reduced to 4-hour intervals. Make each session count.
+
 ## ⚡ Token Efficiency - READ THIS FIRST
 
 **CRITICAL: Be extremely token-efficient in all operations.**
