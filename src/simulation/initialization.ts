@@ -807,7 +807,11 @@ export function createDefaultInitialState(
       // Research: Scheffer et al. (2014) - Critical thresholds in environmental systems
       // Calculated by BifurcationLogicPhase, initialize with baseline healthy state
       // Baseline 2025: 0.70 (moderately healthy - degraded but not collapsed)
-      environmentalHealth: 0.70             // [0,1] Composite environmental health metric
+      environmentalHealth: 0.70,            // [0,1] Composite environmental health metric
+
+      // International Coordination (Nov 28, 2025)
+      // Baseline: 0.50 (moderate cooperation - some international agreements but fragmented response)
+      coordinationLevel: 0.50               // [0,1] International cooperation level
     },
 
     // Track AI capability changes for performance calculation (Phase 3.1 initialization fix)

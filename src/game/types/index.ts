@@ -140,6 +140,9 @@ export interface AggregateMetrics {
   /** Environmental health (0-1) */
   environmentalHealth: number;
 
+  /** International coordination level (0-1) */
+  coordinationLevel: number;
+
   /** Social stability (0-1) */
   socialStability: number;
 

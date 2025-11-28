@@ -43,6 +43,7 @@ export class OutcomeInterpreter {
       outcomeClassification: this.classifyOutcome(state),
       overallQoL: this.computeOverallQoL(state),
       environmentalHealth: this.computeEnvironmentalHealth(state),
+      coordinationLevel: this.computeCoordinationLevel(state),
       socialStability: this.computeSocialStability(state),
       aiAlignmentStatus: this.computeAIAlignmentStatus(state),
       governanceEffectiveness: this.computeGovernanceEffectiveness(state),
@@ -147,6 +148,15 @@ export class OutcomeInterpreter {
     }
 
     return Math.max(0, Math.min(1, score));
+  }
+
+  private computeCoordinationLevel(state: GameStateSnapshot): number {
+    const globalMetrics = (state as Record<string, unknown>).globalMetrics as Record<string, unknown> | undefined;
+
+    if (!globalMetrics) return 0.5;
+
+    const coordinationLevel = globalMetrics.coordinationLevel as number | undefined;
+    return typeof coordinationLevel === 'number' ? coordinationLevel : 0.5;
   }
 
   /**

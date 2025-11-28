@@ -106,7 +106,9 @@ const createInitialGlobalMetrics = (): GlobalMetrics => ({
   fusionDeploymentCostReduction: 0,
   fusionDeploymentTimeReduction: 0,
   // Environmental Health Composite (Nov 27, 2025)
-  environmentalHealth: 0.7 // Baseline moderate environmental health
+  environmentalHealth: 0.7, // Baseline moderate environmental health
+  // International Coordination (Nov 28, 2025)
+  coordinationLevel: 0.5 // Baseline moderate international cooperation
 });
 
 const createInitialOutcomeMetrics = (): OutcomeMetrics => ({
