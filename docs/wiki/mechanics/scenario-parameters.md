@@ -331,9 +331,19 @@ if (isHistoricalEmissionsModeActive(state)) {
 }
 ```
 
-**Utility functions (Nov 27, 2025):**
-- `isHistoricalModeActive(state)` - Checks `scenarioMode === 'historical' && currentYear <= endYear` (config-driven)
-- `isHistoricalEmissionsModeActive(state)` - Checks `historicalEmissionsMode` flag for emissions forcing
+**Historical mode flags (Nov 27-28, 2025):**
+
+There are **two parallel mechanisms** for historical/hindcast mode:
+
+1. **`config.historicalMode`** (boolean) - Set directly by `createHistoricalInitialState()` for years 1990-2024
+   - Used by: `environmental.ts` (biodiversity), `planetaryBoundaries.ts`, `geoengineering.ts`, `regionalPopulations.ts`
+   - ⚠️ **Nov 28 fix (5a78f20):** `environmental.ts` was checking wrong flag; now consistently uses `historicalMode`
+
+2. **`isHistoricalModeActive(state)`** (utility function) - Checks `scenarioMode === 'historical' && currentYear <= endYear`
+   - Used by: Phases checking `scenarioMode` string for crisis parameter variants
+   - **`isHistoricalEmissionsModeActive(state)`** - Checks `historicalEmissionsMode` flag for emissions forcing
+
+**Best practice:** For new hindcast calibration code, use `config.historicalMode` directly (aligns with majority of calibration code).
 
 📄 **Full research:** `research/historical_mode_parameters_20251127.md`
 📄 **Architecture review:** `reviews/architecture_review_historical_calibration_20251127.md` (H-1 fix)
