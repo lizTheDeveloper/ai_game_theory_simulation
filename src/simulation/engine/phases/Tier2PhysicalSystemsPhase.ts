@@ -328,7 +328,10 @@ export class Tier2PhysicalSystemsPhase implements SimulationPhase {
 
       ecosystemState.keystoneSpeciesProtected = Math.floor(ecosystemState.activePrograms * 0.60);
 
-      if (state.environmentalAccumulation.biodiversityIndex !== undefined) {
+      // HIGH-8 (Nov 28, 2025): Historical mode guard - biodiversity recovery only for future projections
+      const isHistoricalMode = state.config?.historicalMode ?? false;
+
+      if (!isHistoricalMode && state.environmentalAccumulation.biodiversityIndex !== undefined) {
         const SAFE_BIODIVERSITY = 0.70;
         const currentBiodiversity = state.environmentalAccumulation.biodiversityIndex;
 

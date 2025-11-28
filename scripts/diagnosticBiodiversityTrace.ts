@@ -61,16 +61,15 @@ async function traceBiodiversity() {
       }
 
       // Detect changes >0.1%
-      if (Math.abs(currentBio - lastBio) > 0.001) {
+      if (Math.abs(currentBio - lastBio) > 0.001 && changesDetected < 20) {
         const year = Math.floor(state.currentMonth / 12) + 1990;
         const delta = ((currentBio - lastBio) * 100).toFixed(3);
         console.log(`  Month ${month} (Year ${year}): ${(lastBio * 100).toFixed(2)}% → ${(currentBio * 100).toFixed(2)}% (Δ ${delta}%)`);
         changesDetected++;
 
-        // If too many changes, stop detailed logging
-        if (changesDetected > 20) {
-          console.log(`  ... (stopping detailed trace after 20 changes)`);
-          break;
+        // If too many changes, stop detailed logging (but continue simulation)
+        if (changesDetected === 20) {
+          console.log(`  ... (stopping detailed change logging, continuing simulation)`);
         }
       }
 
