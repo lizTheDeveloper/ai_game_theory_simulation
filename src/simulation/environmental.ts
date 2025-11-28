@@ -24,6 +24,7 @@ import { convertClimateSensitivityToRate } from './thresholds/tier1Config';
 import { addMortalityRisk } from './bayesianMortality';
 import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 import { FLOORS } from './config/centralConfig';
+import { isHistoricalModeActive } from './utils/historicalMode';
 
 /**
  * Initialize environmental accumulation state
@@ -396,10 +397,9 @@ export function updateEnvironmentalAccumulation(
   //
   // HIGH-8 FIX (Nov 27, 2025): Disable during historical mode (1990-2024)
   // WWF LPI empirical rate ALREADY includes any natural recovery that occurred
-  const historicalModeActive = state.config.scenarioMode === 'historical' && state.currentYear <= 2024;
   const currentPressure = state.humanPopulationSystem.population / state.humanPopulationSystem.carryingCapacity;
 
-  if (!historicalModeActive && currentPressure < 0.5) { // Population below half of carrying capacity
+  if (!isHistoricalModeActive(state) && currentPressure < 0.5) { // Population below half of carrying capacity
     // Regeneration rate scales with reduced pressure: 0-1% monthly
     // At 50% pressure: 0%/month (no bonus)
     // At 25% pressure: 0.5%/month
@@ -459,9 +459,8 @@ export function updateEnvironmentalAccumulation(
   // HIGH-8 FIX (Nov 27, 2025): Disable cascade during historical mode (1990-2024)
   // Historical period did NOT experience catastrophic biodiversity tipping points
   // Cascades are crisis-specific mechanisms (reserved for projection mode)
-  // NOTE: historicalModeActive already defined above (line 399)
 
-  if (!historicalModeActive && env.biodiversityIndex < criticalThreshold) {
+  if (!isHistoricalModeActive(state) && env.biodiversityIndex < criticalThreshold) {
     const cascadeMagnitude = levyFlight(ALPHA_PRESETS.ENVIRONMENT, rng);
 
     if (cascadeMagnitude > 10.0) {

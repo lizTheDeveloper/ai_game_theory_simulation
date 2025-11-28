@@ -16,6 +16,7 @@ import { GameState } from '@/types/game';
 import { PhosphorusSystem, PhosphorusSupplyShock } from '@/types/phosphorus';
 import { assertStateProperty } from './utils/assertions';
 import { deterministicRandom } from '@/simulation/utils/deterministicRng';
+import { isHistoricalModeActive } from './utils/historicalMode';
 
 /**
  * Initialize phosphorus system state (2025 baseline)
@@ -183,7 +184,8 @@ export function updatePhosphorusSystem(state: GameState): void {
     );
     
     // Eutrophication damages biodiversity (freshwater dead zones)
-    if (p.pollutionLevel > 0.50) {
+    // HIGH-8 FIX (Nov 28, 2025): Guard during historical mode
+    if (!isHistoricalModeActive(state) && p.pollutionLevel > 0.50) {
       const biodiversityDamage = (p.pollutionLevel - 0.50) * 0.002; // Up to 0.1%/month
       state.environmentalAccumulation.biodiversityIndex = Math.max(0,
         state.environmentalAccumulation.biodiversityIndex - biodiversityDamage
