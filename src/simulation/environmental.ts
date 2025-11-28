@@ -25,6 +25,7 @@ import { addMortalityRisk } from './bayesianMortality';
 import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 import { FLOORS } from './config/centralConfig';
 import { isHistoricalModeActive } from './utils/historicalMode';
+import { debugLog } from './utils/debugFlags';
 
 /**
  * Initialize environmental accumulation state
@@ -324,7 +325,7 @@ export function updateEnvironmentalAccumulation(
 
     // DEBUG (HIGH-8): Log biodiversity decline every year
     if (state.currentMonth % 12 === 0) {
-      console.log(`🔍 HIGH-8 DEBUG: Historical mode (year=${state.currentYear}, biodiv=${(env.biodiversityIndex * 100).toFixed(2)}%)`);
+      debugLog('PLANETARY', () => `🔍 HIGH-8 DEBUG: Historical mode (year=${state.currentYear}, biodiv=${(env.biodiversityIndex * 100).toFixed(2)}%)`);
     }
 
     // WWF LPI empirical decline rate (ALREADY includes conservation effects)

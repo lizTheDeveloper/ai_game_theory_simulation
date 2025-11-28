@@ -18,6 +18,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { debugLog } from '@/simulation/utils/debugFlags';
 import { assertPlanetaryBoundary, assertFinite, assertDefined } from '@/simulation/utils/assertions';
 import { updatePlanetaryBoundaries, updateBiosphereIntegrityIndex } from '../../planetaryBoundaries';
 import { updateBoundaryRecovery } from '../../planetaryBoundaryRecovery';
@@ -165,7 +166,7 @@ export class PlanetaryBoundariesPhase implements SimulationPhase {
 
       // DEBUG: Log decline every 12 months
       if (state.currentMonth % 12 === 0) {
-        console.log(`🔍 HIGH-8 DEBUG: Historical biodiversity decline (year=${state.currentYear}, biodiv=${(env.biodiversityIndex * 100).toFixed(2)}%)`);
+        debugLog('PLANETARY', () => `🔍 HIGH-8 DEBUG: Historical biodiversity decline (year=${state.currentYear}, biodiv=${(env.biodiversityIndex * 100).toFixed(2)}%)`);
       }
     } else {
       // === PROJECTION MODE (2025+): Mechanistic Crisis Model ===
