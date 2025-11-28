@@ -25,6 +25,15 @@
     - **Monte Carlo:** ✅ PASS (emissions 1.7-7.0 Gt C/year, Arctic cascades 66 events, +0.41-0.46 ppm/month feedback)
     - **Architecture:** B+ (HIGH-2 comment fix ✅, MEDIUM-1 dependency ✅, HIGH-3 temperature fallback documented)
     - **Archive:** plans/completed/RD1_permafrost_carbon_feedback_20251128.md
+  - ⚠️ **RD-2 OCEAN ACIDIFICATION CASCADES** (commits 8c571abd, 2d109499, 66ac20e6, eb7a2909) - CONDITIONAL
+    - **Implementation:** OceanAcidificationCascadePhase (275 lines, order 21.8), oceanAcidification.ts
+    - **Features:** pH decline tracking (7.95 → 7.68-8.06), regional cascades (4 regions), fisheries collapse, food security impacts
+    - **Research:** 21 sources (2019-2025), 500M-1B people at risk, $100-500B/year economic damage
+    - **Quality Gate 1:** ✅ PASSED (Cynthia + Sylvia approval, conservative estimates)
+    - **Architecture:** A- (HIGH-1 duplicate coral health ✅, HIGH-2 tech effects clobbering ✅)
+    - **Monte Carlo:** ⏳ PENDING (timeout during validation, needs re-run)
+    - **Known Issue:** CRITICAL-1 partially addressed (pH → 7.95 applied, decline rate/floor NOT applied)
+    - **Archive:** plans/completed/RD2_ocean_acidification_cascades_20251128.md
   - ✅ **RD-3 GEOPOLITICAL CONFLICT ESCALATION** (commits 95d7b06d, 3a8c52fc, 02ae2a44, adfb784f) - CONDITIONAL PASS
     - **Implementation:** GeopoliticalConflictPhase.ts (541 lines, order 22.5)
     - **Features:** Regional flashpoints, AI de-escalation, MAD deterrence, climate/economic stress multipliers
@@ -995,7 +1004,7 @@
 
 ### 🟡 MEDIUM Priority Research Items (TIER 2 Systems)
 
-**TIER 2 Progress: 2/7 Complete** (RD-1 ✅, RD-3 ⚠️)
+**TIER 2 Progress: 3/7 Complete** (RD-1 ✅, RD-2 ⚠️, RD-3 ⚠️)
 
 **RD-1: Permafrost Carbon Feedback Implementation** ✅ PRODUCTION READY
 - **Status:** ✅ COMPLETE (Session 11, Nov 28, 2025)
@@ -1012,25 +1021,25 @@
 - **Known Issues:** None (systemic 100% dystopia rate NOT caused by RD-1)
 
 **RD-2: Ocean Acidification Cascades**
-- **Status:** NOT STARTED - Planetary boundary tracked but NO cascade implementation
-- **Assignee:** cynthia (research) + roy (implementation)
-- **Problem:** pH 8.1 → 7.9 (30% more acidic since pre-industrial), cascades not modeled
-  - Coral reef collapse = fisheries collapse = 1B+ people food insecurity
-  - IPCC AR6 WG2: "Irreversible changes already occurring"
-  - Current model: Tracks boundary transgression but not downstream effects
-- **Research Requirements:**
-  - pH thresholds for coral bleaching (7.9), shellfish disruption (7.7), ecosystem collapse (7.5)
-  - Fisheries dependence by region (Southeast Asia, Pacific Islands highest)
-  - Timeline: Coral reefs 70-90% loss by 2050 under RCP8.5 (Hughes et al. 2018)
-  - Economic impact: $1T+ coastal protection + fisheries loss
-- **Implementation Scope:**
-  - Extend existing ocean acidification tracking (planetaryBoundaries.oceanAcidification)
-  - New cascade phase: OceanAcidificationCascadePhase
-  - State fields: coralReefHealth, marineEcosystemFunction, coastalFisheriesYield
-  - Integration: Affects food security, regional economies, biodiversity
-  - Tipping point: pH < 7.9 triggers irreversible coral collapse
-- **Expected Impact:** Major food security crisis in coastal regions (500M-1B people affected by 2050)
-- **Effort:** 3-4 days (2 days research on thresholds/cascades, 1-2 days implementation + validation)
+- **Status:** ⚠️ CONDITIONAL COMPLETE (Session 11, Nov 28, 2025) - Monte Carlo validation pending
+- **Implementation:** OceanAcidificationCascadePhase (275 lines, order 21.8), oceanAcidification.ts
+- **Research:** Quality Gate 1 PASSED (21 sources, 2019-2025, Cynthia + Sylvia approval)
+- **Architecture:** Grade A- (HIGH-1 duplicate coral health ✅, HIGH-2 tech effects ✅)
+- **Validation:** Monte Carlo PENDING (timeout during review, needs re-run)
+- **Archive:** plans/completed/RD2_ocean_acidification_cascades_20251128.md
+- **Key Features:**
+  - pH decline tracking (7.95 → 7.68-8.06 by 2100, SSP-dependent)
+  - Regional cascades (SE Asia, Pacific Islands, Caribbean, Indian Ocean)
+  - Fisheries collapse modeling (power law with coral health)
+  - Food security impacts (500M-1B people at risk)
+  - Economic damage ($100-500B/year conservative estimate)
+  - 47 defensive assertions (no silent fallbacks)
+- **Known Issues:**
+  - CRITICAL-1 partially addressed: pH → 7.95 (grace period) applied
+  - Decline rate reduction NOT applied (architecture review recommendation)
+  - Population floor NOT applied (extinction at month 388 without tech intervention)
+- **Production Readiness:** Code quality A-, requires Monte Carlo validation before merge
+- **Next Steps:** Run Monte Carlo (N≥10), verify no extinctions before year 30, calibrate if needed
 - **Priority Rationale:** TIER 2 - Already past safe boundary, cascades imminent in baseline scenarios
 
 **RD-3: Geopolitical Conflict Escalation Dynamics** ⚠️ CONDITIONAL PASS
@@ -1232,18 +1241,21 @@
 
 **Immediate Actions (This Week):**
 1. ✅ **RD-1 Permafrost** (3-4 days) - COMPLETE, PRODUCTION READY
-2. ✅ **RD-3 Geopolitical Conflict** (4-6 days) - COMPLETE, CONDITIONAL PASS
-3. ❌ **CRITICAL: Environmental Month 1 Collapse** (4-8 hours) - BLOCKS TIER 2 CONTINUATION
+2. ✅ **RD-2 Ocean Acidification** (3-4 days) - COMPLETE, CONDITIONAL (Monte Carlo pending)
+3. ✅ **RD-3 Geopolitical Conflict** (4-6 days) - COMPLETE, CONDITIONAL PASS
+4. ❌ **CRITICAL: Environmental Month 1 Collapse** (4-8 hours) - BLOCKS TIER 2 CONTINUATION
 
 **Next Week (TIER 2 Priority):**
-1. **Fix environmental initialization** (CRITICAL) - Unblock outcome variance
-2. **RD-3 Calibration** (2-4 hours) - Escalation frequency tuning, add deterrence failures
-3. **RD-2 Ocean Acidification** (3-4 days) - Already past safe boundary
+1. **Fix environmental initialization** (CRITICAL) - Unblock outcome variance (100% dystopia rate)
+2. **RD-2 Monte Carlo Validation** (2-4 hours) - Complete conditional approval for ocean acidification
+3. **RD-3 Calibration** (2-4 hours) - Escalation frequency tuning, add deterrence failures
 
-**Next Quarter (TIER 3 Priority):**
-1. **RD-4 Insect Collapse** (5-7 days) - Ecological function loss
-2. **RD-5 AMR Pandemic** (5-7 days) - Tail risk but catastrophic
-3. **RD-6 Soil Degradation** (4-6 days) - Long-term food security
+**Next Quarter (TIER 2 Elevated):**
+1. **RD-4 Insect Collapse** (5-7 days) - Ecological function loss (elevated from TIER 3, Nov 28)
+2. **RD-6 Soil Degradation** (4-6 days) - Long-term food security (elevated from TIER 3, Nov 28)
+
+**Deferred (TIER 3 Priority):**
+1. **RD-5 AMR Pandemic** (5-7 days) - Tail risk but catastrophic
 
 **Total Effort:** 24-34 days across all 6 items (approximately 5-7 weeks with validation overhead)
 
