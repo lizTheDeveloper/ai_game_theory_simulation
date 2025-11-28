@@ -7,8 +7,8 @@
  * and identify what triggers the collapse.
  */
 
-import { createInitialState } from '../src/simulation/initialization';
-import { simulateMonth } from '../src/simulation/engine/PhaseOrchestrator';
+import { createDefaultInitialState } from '../src/simulation/initialization';
+import { PhaseOrchestrator } from '../src/simulation/engine/PhaseOrchestrator';
 import { mulberry32 } from '../src/simulation/utils/math';
 
 const SEED = 42000;
@@ -20,7 +20,8 @@ console.log(`Max months: ${MAX_MONTHS}\n`);
 
 // Create initial state
 const rng = mulberry32(SEED);
-const state = createInitialState(rng);
+const state = createDefaultInitialState(rng, undefined, 'historical');
+const orchestrator = new PhaseOrchestrator();
 
 console.log(`\n=== INITIAL STATE (Month 0) ===`);
 console.log(`Environmental Accumulation:`);
@@ -57,7 +58,7 @@ for (let month = 1; month <= MAX_MONTHS; month++) {
   console.log(`\n=== SIMULATING MONTH ${month} ===`);
 
   try {
-    const result = simulateMonth(state, rng);
+    const result = orchestrator.executeAll(state, rng);
 
     console.log(`Simulation successful. Key metrics:`);
     console.log(`  climateStability: ${state.environmentalAccumulation.climateStability.toFixed(4)}`);

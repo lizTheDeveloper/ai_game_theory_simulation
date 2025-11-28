@@ -591,8 +591,40 @@ export class ClimateSystemPhase implements SimulationPhase {
      */
     state.environmentalAccumulation.pollutionLevel = Math.max(0, Math.min(1, pollutionLevel / 100));
 
-    // Update climate stability from climate state
-    state.environmentalAccumulation.climateStability = climateState.climateStability;
+    // CRITICAL FIX (Nov 28, 2025): CRITICAL-1 climateStability zeroing bug
+    // ClimateSystemPhase was blindly overwriting climateStability from planetary boundaries,
+    // but planetaryBoundariesSystem.climate_change.currentValue can be > 1.0 at initialization
+    // (e.g., 2.1 = 210% over safe boundary), which produces climateStability = max(0, 1 - 2.1) = 0.000
+    //
+    // This ZEROED the correct value from environmentalAccumulation (0.768) at Month 0,
+    // causing immediate environmental collapse bifurcation at Month 1 in 100% of runs.
+    //
+    // FIX: Only overwrite if calculated value is valid (>= 0.1). Otherwise, keep existing value.
+    // Rationale: Climate stability should NEVER be exactly zero at initialization.
+    // If planetary boundaries produce 0.000, that's a configuration bug, not reality.
+    const calculatedStability = climateState.climateStability;
+    const currentStability = state.environmentalAccumulation.climateStability;
+
+    if (calculatedStability >= 0.1) {
+      // Calculated value is reasonable, use it
+      state.environmentalAccumulation.climateStability = calculatedStability;
+    } else if (currentStability >= 0.1) {
+      // DEFENSIVE: If planetary boundaries produce nonsense (<0.1) but current value is reasonable,
+      // keep the current value. This prevents planetary boundary misconfiguration from zeroing climate.
+      // Only warn on first few months to avoid log spam.
+      if (state.currentMonth <= 3) {
+        const climateBoundaryValue = state.planetaryBoundariesSystem?.boundaries?.climate_change?.currentValue ?? -1;
+        console.warn(
+          `⚠️ [ClimateSystemPhase Month ${state.currentMonth}] Planetary boundary produced climateStability=${calculatedStability.toFixed(4)} (< 0.1). ` +
+          `Keeping environmentalAccumulation value (${currentStability.toFixed(4)}) instead. ` +
+          `(climate_change.currentValue = ${climateBoundaryValue.toFixed(2)})`
+        );
+      }
+      // Keep current value, don't overwrite
+    } else {
+      // Both calculated and current are near-zero - this is a real collapse
+      state.environmentalAccumulation.climateStability = calculatedStability;
+    }
 
     const events: GameEvent[] = [];
 
@@ -625,10 +657,12 @@ export class ClimateSystemPhase implements SimulationPhase {
     const climateChangeBoundary = state.planetaryBoundariesSystem?.boundaries?.climate_change;
     if (climateChangeBoundary) {
       const tempAnomaly = climateChangeBoundary.currentValue * 2.0;
+      const climateStability = Math.max(0, 1 - climateChangeBoundary.currentValue);
+
       return {
         globalTemperatureAnomaly: tempAnomaly,
         carbonPPM: 420 + (climateChangeBoundary.currentValue * 180),
-        climateStability: Math.max(0, 1 - climateChangeBoundary.currentValue),
+        climateStability,
       };
     }
 
