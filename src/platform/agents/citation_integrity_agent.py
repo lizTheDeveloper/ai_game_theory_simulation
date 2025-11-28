@@ -16,6 +16,7 @@ Architecture:
 
 Author: Marcus (Platform Engineer)
 Date: 2025-11-17
+Updated: 2025-11-28 (H3 fix: explicit exit after cleanup)
 """
 
 import json
@@ -904,6 +905,7 @@ def run_ipc_server(agent_id: str):
     signal.signal(signal.SIGINT, signal_handler)
 
     # Create agent with database connection
+    agent = None
     try:
         # Read Redis password from environment (optional for non-auth setups)
         redis_password = os.environ.get('REDIS_PASSWORD')
@@ -947,6 +949,7 @@ def run_ipc_server(agent_id: str):
 
     # Main IPC loop
     logger.info(f"🔄 Agent {agent_id} entering IPC loop...")
+    exit_code = 0
     try:
         while not shutdown_requested:
             try:
@@ -1060,14 +1063,24 @@ def run_ipc_server(agent_id: str):
                 logger.error(f"Error in IPC loop: {e}")
                 # Continue processing despite errors
 
+    except Exception as e:
+        logger.error(f"Fatal error in IPC server: {e}")
+        exit_code = 1
+
     finally:
         # Cleanup
         logger.info(f"🛑 Agent {agent_id} shutting down...")
         try:
-            agent.cleanup()
+            if agent:
+                agent.cleanup()
         except Exception as e:
             logger.error(f"Error during cleanup: {e}")
         logger.info(f"✅ Agent {agent_id} shutdown complete")
+        
+        # H3 FIX: Explicitly exit to ensure process terminates
+        # This is critical - without this, Python may hang if there are
+        # any lingering threads, timers, or file handles
+        sys.exit(exit_code)
 
 
 if __name__ == "__main__":

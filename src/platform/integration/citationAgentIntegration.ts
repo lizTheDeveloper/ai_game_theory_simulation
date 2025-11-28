@@ -13,9 +13,11 @@
  * TypeScript Platform → Python Agents → PostgreSQL/Redis
  *
  * KEY FIX (H2): Version-based conflict resolution for concurrent state updates
+ * KEY FIX (H3): Stream destruction bug - health check continues after process exit
  *
  * Author: Marcus (Platform Engineer)
  * Date: 2025-11-17
+ * Updated: 2025-11-27 (H3 fix: stream destruction in health checks)
  */
 
 import { spawn, ChildProcess } from 'child_process';
@@ -154,6 +156,8 @@ export class PythonAgentWrapper extends EventEmitter {
   private lastHealthCheck: Date | null = null;
   private requestQueue: Array<{ method: string; params: any; resolve: Function; reject: Function }> = [];
   private processRegistry: ProcessRegistry;
+  
+  // H3 FIX: Track health check interval to clear on process exit
   private healthCheckInterval?: NodeJS.Timeout;
 
   constructor(
@@ -335,7 +339,7 @@ export class PythonAgentWrapper extends EventEmitter {
 
     // Handle process exit
     this.process.on('exit', (code, signal) => {
-      // CRITICAL: Stop health checks immediately to prevent write-to-destroyed-stream
+      // H3 FIX: Stop health checks immediately to prevent writes to destroyed stream
       if (this.healthCheckInterval) {
         clearInterval(this.healthCheckInterval);
         this.healthCheckInterval = undefined;
@@ -446,20 +450,34 @@ export class PythonAgentWrapper extends EventEmitter {
     return retryableErrors.some(retryable => error.toLowerCase().includes(retryable.toLowerCase()));
   }
 
+  /**
+   * H3 FIX: Check if the process stdin is writable
+   * This prevents "Cannot call write after a stream was destroyed" errors
+   */
+  private isStreamWritable(): boolean {
+    return !!(
+      this.process &&
+      this.process.stdin &&
+      !this.process.stdin.destroyed &&
+      this.process.stdin.writable &&
+      !this.process.killed
+    );
+  }
+
   async invoke(method: string, params: any, maxRetries: number = 3): Promise<any> {
     return this.invokeInternal(method, params, 0, maxRetries);
   }
 
   private async invokeInternal(method: string, params: any, retryCount: number, maxRetries: number): Promise<any> {
-    // If agent is not healthy, queue request for later
-    if (!this.process || !this.process.stdin) {
+    // H3 FIX: Check stream state before attempting write
+    if (!this.isStreamWritable()) {
       if (retryCount < maxRetries) {
-        console.warn(`⚠️ Agent ${this.agentId} not available, queueing request for retry...`);
+        console.warn(`⚠️ Agent ${this.agentId} stream not writable, queueing request for retry...`);
         return new Promise((resolve, reject) => {
           this.requestQueue.push({ method, params, resolve, reject });
         });
       } else {
-        throw new Error(`Agent ${this.agentId} not started after ${maxRetries} retries`);
+        throw new Error(`Agent ${this.agentId} stream not writable after ${maxRetries} retries`);
       }
     }
 
@@ -505,16 +523,21 @@ export class PythonAgentWrapper extends EventEmitter {
         params
       }) + '\n';
 
-      // Check stream state before writing
-      if (!this.process || !this.process.stdin || this.process.stdin.destroyed || !this.process.stdin.writable) {
+      // H3 FIX: Double-check stream is still writable before write
+      if (!this.isStreamWritable()) {
         clearTimeout(timeoutHandle);
         this.pendingRequests.delete(requestId);
-        this.isHealthy = false;
-        reject(new Error(`Agent ${this.agentId} stdin stream not available (destroyed or not writable)`));
+        
+        if (retryCount < maxRetries) {
+          console.warn(`⚠️ Agent ${this.agentId} stream became unwritable, retrying (${retryCount + 1}/${maxRetries})...`);
+          this.retryRequest(method, params, resolve, reject, retryCount + 1, maxRetries);
+        } else {
+          reject(new Error(`Agent ${this.agentId} stream destroyed before write after ${maxRetries} retries`));
+        }
         return;
       }
 
-      this.process.stdin.write(request, (err) => {
+      this.process!.stdin!.write(request, (err) => {
         if (err) {
           clearTimeout(timeoutHandle);
           const pending = this.pendingRequests.get(requestId);
@@ -566,10 +589,14 @@ export class PythonAgentWrapper extends EventEmitter {
     return this.invoke('get_status', {});
   }
 
+  /**
+   * H3 FIX: Health monitor now checks stream state before invoking
+   * and stores interval reference for cleanup on process exit
+   */
   private setupHealthMonitor(): void {
     this.healthCheckInterval = setInterval(async () => {
-      // Check if process is still alive before health check
-      if (!this.process || this.process.killed || !this.process.stdin || this.process.stdin.destroyed) {
+      // H3 FIX: Check if process is still alive before health check
+      if (!this.isStreamWritable()) {
         console.warn(`⚠️ Skipping health check for ${this.agentId} - process not available`);
         this.isHealthy = false;
         return;
@@ -591,7 +618,7 @@ export class PythonAgentWrapper extends EventEmitter {
   }
 
   async stop(): Promise<void> {
-    // Stop health checks first
+    // H3 FIX: Stop health checks first to prevent writes during shutdown
     if (this.healthCheckInterval) {
       clearInterval(this.healthCheckInterval);
       this.healthCheckInterval = undefined;
@@ -612,48 +639,27 @@ export class PythonAgentWrapper extends EventEmitter {
     }
     this.pendingRequests.clear();
 
-    // H3 FIX: Return a promise that resolves ONLY when process actually exits
-    // This ensures shutdown() waits for all processes before continuing
-    const processRef = this.process;
-    const agentId = this.agentId;
-
+    // H3 FIX: Return a promise that resolves when the process actually exits
+    // This ensures shutdown() waits for all processes to terminate
     return new Promise<void>((resolve) => {
-      let resolved = false;
-      const safeResolve = () => {
-        if (!resolved) {
-          resolved = true;
-          this.processRegistry.unregister(agentId);
-          resolve();
-        }
-      };
-
-      // Force kill after 5s if graceful shutdown fails
+      // H3 FIX: Track the force-kill timeout so we can clear it on graceful exit
       const forceKillTimeout = setTimeout(() => {
-        if (processRef && !processRef.killed) {
-          console.warn(`⚠️ Force killing agent ${agentId}`);
-          processRef.kill('SIGKILL');
+        if (this.process && !this.process.killed) {
+          console.warn(`⚠️ Force killing agent ${this.agentId}`);
+          this.process.kill('SIGKILL');
         }
       }, 5000);
 
-      // H4 FIX: Safety timeout - resolve even if process doesn't exit cleanly
-      // This prevents hanging if the Python process ignores SIGKILL (shouldn't happen,
-      // but better safe than hanging forever)
-      const safetyTimeout = setTimeout(() => {
+      // H3 FIX: Resolve when process exits (gracefully or forced)
+      this.process!.once('exit', () => {
         clearTimeout(forceKillTimeout);
-        console.warn(`⚠️ Agent ${agentId} shutdown safety timeout - forcing resolve`);
-        safeResolve();
-      }, 6000);
-
-      // Resolve promise when process actually exits
-      processRef.once('exit', () => {
-        clearTimeout(forceKillTimeout);
-        clearTimeout(safetyTimeout);
-        console.log(`🛑 Agent ${agentId} stopped`);
-        safeResolve();
+        this.processRegistry.unregister(this.agentId);
+        console.log(`🛑 Agent ${this.agentId} stopped`);
+        resolve();
       });
 
       // Send graceful shutdown signal
-      processRef.kill('SIGTERM');
+      this.process!.kill('SIGTERM');
     });
   }
 
@@ -921,11 +927,6 @@ export class AgentStateManager {
     await this.db.end();
     // H1 FIX: Don't close pool here - it's shared across components
     // Pool will be closed by global shutdown
-
-    // H3 FIX: Close the lock manager's dedicated Redis connection
-    // This prevents process hang on shutdown
-    await this.lockManager.close();
-
     console.log('✅ AgentStateManager cleanup complete');
   }
 }
