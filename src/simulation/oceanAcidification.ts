@@ -276,19 +276,12 @@ export function updateOceanAcidificationSystem(state: GameState, rng: () => numb
   // Protected areas help
   coralDeclineRate *= (1.0 - oa.marineProtectedAreasDeployment * 0.3);
 
-  // Apply decline with assertion
-  const newCoralHealth = assertFinite(oa.coralReefHealth + coralDeclineRate, {
-    location: 'updateOceanAcidificationSystem[coral decline]',
-    valueName: 'coralHealth',
-    month: state.currentMonth,
-    additionalInfo: { oldHealth: oa.coralReefHealth, declineRate: coralDeclineRate, pH: oa.pH, speciesSensitivity: oa.speciesSensitivity }
-  });
-
-  oa.coralReefHealth = assertInRange(newCoralHealth, 0, 100, {
-    location: 'updateOceanAcidificationSystem[coral clamp]',
-    valueName: 'coralHealth',
-    month: state.currentMonth
-  });
+  // HIGH-1 FIX (Nov 28, 2025): Removed duplicate coral health calculation
+  // OceanAcidificationCascadePhase (order 21.8) is sole authority for coralReefHealth
+  // This phase (ResourceWaterPhase order 20.2) previously calculated coralReefHealth here,
+  // but cascade phase overwrote it with regional average. Removed to prevent duplicate writes.
+  // Lines 237-277 (decline rate calculation) kept for research documentation.
+  // coralReefHealth is now set exclusively by OceanAcidificationCascadePhase.
 
   // === IRREVERSIBLE LOSS ACCUMULATION ===
   // Research: Hoegh-Guldberg et al. (2017) - ocean-scale changes irreversible on centennial timescales
