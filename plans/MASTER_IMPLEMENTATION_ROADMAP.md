@@ -5,10 +5,10 @@
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**Current Status:** 🟡 **STABLE (CALIBRATION ISSUES)** (Nov 27, 2025 - Phase 10 Validation Complete)
+**Current Status:** 🟡 **STABLE (CALIBRATION ISSUES)** (Nov 28, 2025 - Determinism Validated)
 - **Research Quality:** A- (95%+ sources from 2024-2025, high-priority updates identified)
-- **Architecture Health:** B+ (0 CRITICAL, 4 NEW HIGH calibration issues, 3 MEDIUM issues)
-- **System Performance:** 0% crash rate ✅, determinism compromised (CV=6.7%), historical accuracy failed (56.9% deviation)
+- **Architecture Health:** B+ (0 CRITICAL, 3 HIGH calibration issues, 3 MEDIUM issues)
+- **System Performance:** 0% crash rate ✅, determinism verified (CV=0.000% ✅), historical accuracy failed (56.9% deviation)
 - **System Trajectory:** 🟡 **CALIBRATION REQUIRED** - Phase 10 revealed crisis-tuned params invalid for historical baseline
 - **Roadmap Coherence:** CURRENT - Updated Nov 27 post-Phase 10 validation (4 new HIGH items added)
 - **Recent Work (Nov 27 Morning - CRITICAL FIXES COMPLETE):**
@@ -446,37 +446,30 @@
 - **Research:** `research/hindcast_calibration_parameters_20251127.md` (lines 229-390)
 - **Report:** `reviews/climate_hindcast_validation_phase10_20251127.md` (lines 95-105, 199-212)
 
-**HIGH-9: Non-Determinism Investigation (CV=6.7%)** ⏳ NEW (Nov 27, 2025)
-- **Status:** ⏳ NEW - Identified in Phase 10 hindcast validation
-- **Discovery:** Phase 10 validation (Nov 27, 2025) - identical seeds produce different results
-- **Problem:** Coefficient of variation (CV) = 6.7% across 10 runs with IDENTICAL seeds
-  - Target: CV < 0.1% (near-perfect reproducibility for research simulation)
-  - Observed: CV = 6.7% (67x higher than target)
-  - Population varies 3x across runs (1.22B to 3.44B)
-  - Deviation scores range 51.3% to 63.1%
-- **Root Cause Hypotheses:**
-  1. Optional RNG parameters with `Math.random()` fallback (CRITICAL-3 regression pattern)
-  2. Object.entries() iteration order issues (non-deterministic object traversal)
-  3. Async operations completing in different order
-  4. Floating point accumulation errors (unlikely to cause 3x variance)
-- **Diagnostic Steps:**
-  1. Run determinism audit: N=3 runs, SAME seed, verify CV → 0%
-  2. Grep for `Math.random` usage (should be ZERO in simulation code)
-  3. Audit all RNG parameters - must be REQUIRED, never optional
-  4. Check for Object.entries() in phase execution loops
-  5. Review mortality/birth rate calculations for non-deterministic elements
-- **Solution - Nuclear Option:**
-  1. Make ALL RNG parameters REQUIRED (no optional with fallbacks)
-  2. Replace Object.entries() with deterministic iteration (sorted keys)
-  3. Add RNG assertion at phase entry (fail if undefined)
-  4. Run N=100 stress test to verify CV < 0.01%
-- **Impact:** Non-determinism breaks Monte Carlo reproducibility (research invalidation risk)
-- **Assignee:** simulation-maintainer (Roy) + quantitative-validator (Priya)
-- **Effort:** 3-5 hours (audit + fixes + N=100 stress test)
-- **Complexity:** 2 systems (RNG infrastructure, phase orchestration)
-- **Dependencies:** None (can proceed immediately)
-- **Priority Justification:** Research simulation MUST be deterministic - this is foundational
-- **Report:** `reviews/climate_hindcast_validation_phase10_20251127.md` (lines 41-55, 123-143)
+**HIGH-9: Non-Determinism Investigation (CV=6.7%)** ✅ CLOSED - FALSE ALARM (Nov 27, 2025)
+- **Status:** ✅ CLOSED/INVALID - Investigation complete (Nov 27, 2025, 18:00-18:15)
+- **Discovery:** Phase 10 validation (Nov 27, 2025) - CV=6.7% variance reported
+- **Verdict:** ❌ **NO BUG** - Simulation IS deterministic (CV=0.000% with identical seeds)
+- **Root Cause of Confusion:** Report stated "IDENTICAL seeds" but script uses DIFFERENT seeds (19900102-19900111)
+  - Temperature identical (2.1°C all runs) → deterministic (uses no RNG)
+  - Population varies (1.22B-3.44B) → stochastic with different seeds (EXPECTED)
+  - CV=6.7% is normal Monte Carlo variance across different random samples
+- **Evidence:**
+  1. `scripts/hindcastingValidation.ts:227` uses `seed = baseSeed + i + 1` (different seeds)
+  2. `scripts/determinismStressTest.ts` run (Nov 28): CV=0.000% with SAME seed (perfect determinism)
+  3. No `Math.random()` in simulation code (verified)
+  4. All RNG parameters are REQUIRED (verified)
+- **Analogy:** "I rolled 10 different dice and got different numbers" ≠ "dice are broken"
+- **Real Issues (Not Determinism):**
+  - HIGH-6: Temperature calibration (+64% error)
+  - HIGH-7: Population calibration (-75% error)
+  - HIGH-8: Biodiversity calibration (-94% error)
+- **Reports:**
+  - `reviews/HIGH-9_determinism_investigation_20251127.md` - Full investigation
+  - `devlogs/20251127_HIGH-9_FALSE_ALARM.md` - Summary
+  - `logs/determinism_roy_investigation_20251128_*.log` - Revalidation (CV=0.000%)
+- **Minor Fix Applied:** Sorted `Object.entries()` in TechTreePhase assertion loop (defensive)
+- **Recommendation:** Focus on calibration issues (HIGH-6, HIGH-7, HIGH-8), not non-existent determinism bugs
 
 ### 🟡 MEDIUM Priority Items
 
