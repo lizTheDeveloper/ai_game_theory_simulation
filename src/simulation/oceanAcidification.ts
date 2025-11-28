@@ -1,43 +1,52 @@
 /**
  * Ocean Acidification Crisis System (TIER 1.3)
- * 
+ *
  * Models ocean acidification - 7th planetary boundary breached Sept 2025.
- * Research: PIK Potsdam 2025, Stockholm Resilience Centre, Kate Raworth
- * 
+ * Research: RD-2 (Nov 28, 2025) - research/ocean_acidification_cascades_REVISED_20251128.md
+ *
  * Key findings:
- * - Aragonite saturation just below 80% threshold (Sept 2025)
- * - 3 billion people depend on fish for protein
- * - Coral reefs support 25% of marine species
- * - Slow collapse timeline: 75 years (2025-2100)
- * - Feedback loop: Acidification → phytoplankton decline → less CO₂ buffer
+ * - pH decline: 8.1 (pre-industrial) → 7.9 (2025) → 7.68-8.06 (2100 depending on SSP)
+ * - Aragonite saturation: 4.6 → 2.8 (current) → 2.0-3.5 (2100)
+ * - Coral reefs: 70% remaining (2025) → 70-90% loss by 2050 (1.5°C), >99% by 2100 (2°C)
+ * - 330-500M people directly depend on reefs for protein (Coral Triangle 130M)
+ * - Species sensitivity varies widely: 0.3 (Pocillopora resistant) to 1.5 (Acropora sensitive)
+ * - Warming synergy: 2-3x stress multiplier when SST > 30°C AND pH < 7.9
+ * - Economic: $100-500B/year conservative (fisheries $6.8B, tourism $19.5B, coastal protection $80B+)
+ * - Tipping point: Evidence suggests likely approached/passed at 1.2°C ±0.3°C warming
  */
 
 import { GameState } from '@/types/game';
 import { OceanAcidificationSystem } from '@/types/oceanAcidification';
-import { assertStateProperty } from './utils/assertions';
+import {
+  assertFinite,
+  assertInRange,
+  assertStateProperty,
+  assertProbability
+} from './utils/assertions';
 import { isHistoricalModeActive } from './utils/historicalMode';
 
 /**
  * Initialize ocean acidification system state (2025 baseline - JUST BREACHED)
+ * Research: RD-2 (Nov 28, 2025) - research/ocean_acidification_cascades_REVISED_20251128.md
  */
-export function initializeOceanAcidificationSystem(): OceanAcidificationSystem {
+export function initializeOceanAcidificationSystem(rng?: () => number): OceanAcidificationSystem {
+  // Species sensitivity: randomized 0.8-1.2 for Monte Carlo variation
+  // (0.3 = Pocillopora resistant, 1.0 = average, 1.5 = Acropora sensitive)
+  // Use narrower range (0.8-1.2) for baseline runs, agents can shift composition later
+  const speciesSensitivity = rng ? (0.8 + rng() * 0.4) : 1.0;
+
   return {
-<<<<<<< Updated upstream
-    aragoniteSaturation: 0.78,       // Just below 0.80 boundary (Sept 2025)
-    pHLevel: 0.96,                   // Slight decline from pre-industrial 8.2
-=======
     // Research-backed fields (RD-2 Nov 28 2025)
     aragoniteSaturation: 2.8,        // Current (2025): 2.8-3.3, down from 4.6 pre-industrial
     pH: 7.95,                        // Current (2025): 7.95 (above cascade threshold, allows grace period)
     pHLevel: 0.96,                   // LEGACY: Slight decline from pre-industrial 8.2
->>>>>>> Stashed changes
     co2AbsorptionCapacity: 0.85,     // Still strong but declining
-    coralReefHealth: 0.65,           // Already stressed (bleaching events)
+    coralReefHealth: 70,             // 70% (30% degradation from baseline)
     shellfishPopulation: 0.80,       // Larvae struggling but not collapsed yet
-    marineFoodWeb: 0.75,             // Moderately healthy
+    marineEcosystemFunction: 80,     // Broader ecosystem health
+    marineFoodWeb: 0.75,             // LEGACY: Moderately healthy
+    coastalFisheriesYield: 0.85,     // 15% below baseline
     fishDependentImpact: 0.0,        // Not yet impacting food supply
-<<<<<<< Updated upstream
-=======
     irreversibleLoss: 5,             // 5% already extinct (coral species)
     speciesSensitivity,              // 0.8-1.2 randomized (Monte Carlo variation)
     cascadeActive: false,            // pH still at threshold (7.9), cascade not yet triggered
@@ -79,7 +88,6 @@ export function initializeOceanAcidificationSystem(): OceanAcidificationSystem {
     coralHealthHistory: [70],       // Historical tracking (Month 0)
 
     // Existing fields
->>>>>>> Stashed changes
     boundaryBreached: true,          // Breached Sept 2025
     coralExtinctionActive: false,
     shellfishCollapseActive: false,
@@ -97,42 +105,48 @@ export function initializeOceanAcidificationSystem(): OceanAcidificationSystem {
 
 /**
  * Update ocean acidification system each month
+ * Research: RD-2 (Nov 28, 2025) - research/ocean_acidification_cascades_REVISED_20251128.md
+ *
+ * @param state - Game state
+ * @param rng - REQUIRED deterministic RNG function (no fallback, fail loudly)
  */
-export function updateOceanAcidificationSystem(state: GameState): void {
+export function updateOceanAcidificationSystem(state: GameState, rng: () => number): void {
   if (!state.oceanAcidificationSystem) return;
 
+  // ❌ DEFENSIVE CODING: RNG REQUIRED (no silent fallback)
+  if (!rng || typeof rng !== 'function') {
+    throw new Error('❌ CRITICAL: RNG required for deterministic simulation (oceanAcidification)');
+  }
+
   const oa = state.oceanAcidificationSystem;
+
+  // === ACCESS STATE WITH ASSERTIONS (NO SILENT FALLBACKS) ===
+
   const climateStability = assertStateProperty(
     state.environmentalAccumulation,
     'climateStability',
     { location: 'updateOceanAcidificationSystem', month: state.currentMonth }
   );
+
   const pollutionLevel = assertStateProperty(
     state.environmentalAccumulation,
     'pollutionLevel',
     { location: 'updateOceanAcidificationSystem', month: state.currentMonth }
   );
+
   const economicStage = state.globalMetrics.economicTransitionStage;
-  
+
+  // Access temperature for warming synergy
+  const temperatureAnomaly = assertStateProperty(
+    state.resourceEconomy.co2,
+    'temperatureAnomaly',
+    { location: 'updateOceanAcidificationSystem[warming synergy]', month: state.currentMonth }
+  );
+
   // Track time since breach
   if (oa.boundaryBreached) {
     oa.monthsSinceBreach++;
   }
-<<<<<<< Updated upstream
-  
-  // === ARAGONITE SATURATION DECLINE ===
-  // Driven by CO2 absorption from atmosphere
-  // Research: ~0.002 pH units per decade = 0.00017/month
-  
-  // Climate instability = more CO2 emissions = more acidification
-  const climateStress = 1.0 - climateStability;
-  let acidificationRate = climateStress * 0.0008; // 0.08%/month at max climate stress
-  
-  // Economic activity drives CO2 emissions
-  acidificationRate += economicStage * 0.0004; // 0.04%/month at Stage 1, 0.16%/month at Stage 4
-  
-  // Ocean alkalinity enhancement mitigates
-=======
 
   // === pH DECLINE (SSP Scenario-Based) ===
   // Research: Jiang et al. (2023), IPCC AR6
@@ -162,119 +176,178 @@ export function updateOceanAcidificationSystem(state: GameState): void {
   }
 
   // Ocean alkalinity enhancement mitigates pH decline
->>>>>>> Stashed changes
   if (oa.alkalinityEnhancementDeployment > 0) {
-    // Research: OAE can restore pH over decades
-    acidificationRate -= oa.alkalinityEnhancementDeployment * 0.001; // -0.1%/month at full deployment
+    // Research: Albright et al. (2016) - pH restoration increases calcification
+    // At full deployment (1.0), can offset SSP5-8.5 rate completely
+    const mitigationRate = oa.alkalinityEnhancementDeployment * 0.00043;
+    pHDeclineRate += mitigationRate; // Positive = pH increase
   }
-  
-  oa.aragoniteSaturation = Math.max(0, oa.aragoniteSaturation - acidificationRate);
-  
-  // pH level tracks aragonite saturation (correlated)
-  oa.pHLevel = 0.90 + (oa.aragoniteSaturation * 0.10); // 0.90-1.00 range
-  
-  // === CO2 ABSORPTION CAPACITY DECLINE ===
-  // Feedback loop: As oceans acidify, they absorb less CO2
-  // Research: Stockholm Resilience - "degrading oceans' ability to act as Earth's stabiliser"
-  
-  const absorptionDecline = (1.0 - oa.aragoniteSaturation) * 0.0005; // Faster as saturation drops
-  oa.co2AbsorptionCapacity = Math.max(0.50, oa.co2AbsorptionCapacity - absorptionDecline);
 
-  // Feedback to climate: Lower absorption = more atmospheric CO2
-  // Phase 5.1 (Oct 26, 2025): Use assertStateProperty for REQUIRED environmentalAccumulation
-  if (oa.co2AbsorptionCapacity < 0.75) {
-    const climateAcceleration = (0.75 - oa.co2AbsorptionCapacity) * 0.0002;
-    const currentClimateStability = assertStateProperty(
-      state.environmentalAccumulation,
-      'climateStability',
-      { location: 'updateOceanAcidificationSystem[climate feedback]', month: state.currentMonth }
-    );
-    state.environmentalAccumulation.climateStability = Math.max(0,
-      currentClimateStability - climateAcceleration
-    );
-  }
-  
-  // === CORAL REEF COLLAPSE ===
-  // Timeline: 2025-2050 (25 years = 300 months)
-  // Corals need aragonite > 0.75 to calcify properly
-  
-  let coralDeclineRate = 0;
-  if (oa.aragoniteSaturation < 0.75) {
-    // Below threshold: Active decline
-    coralDeclineRate = (0.75 - oa.aragoniteSaturation) * 0.015; // Up to 1.5%/month
+  // Apply pH decline with fail-loudly assertion
+  oa.pH = assertFinite(oa.pH + pHDeclineRate, {
+    location: 'updateOceanAcidificationSystem[pH decline]',
+    valueName: 'pH',
+    month: state.currentMonth,
+    additionalInfo: { oldpH: oa.pH, pHDeclineRate }
+  });
+
+  // Clamp pH to realistic range [7.5, 8.3]
+  oa.pH = assertInRange(oa.pH, 7.5, 8.3, {
+    location: 'updateOceanAcidificationSystem[pH clamp]',
+    valueName: 'pH',
+    month: state.currentMonth
+  });
+
+  // Update LEGACY pHLevel field (0-1 scale) for backward compatibility
+  // Map: 7.5 → 0.85, 7.9 → 0.96, 8.1 → 1.0
+  oa.pHLevel = assertProbability(0.85 + (oa.pH - 7.5) * 0.15 / 0.6, {
+    location: 'updateOceanAcidificationSystem[pHLevel legacy]',
+    valueName: 'pHLevel',
+    month: state.currentMonth
+  });
+
+  // === ARAGONITE SATURATION (tracks pH) ===
+  // Research: Kleypas & Langdon (2006) - Ωar correlates with pH
+  // Mapping: pH 8.1 → Ωar 4.6, pH 7.9 → Ωar 3.3, pH 7.7 → Ωar 2.0
+
+  if (oa.pH >= 8.0) {
+    oa.aragoniteSaturation = 3.3 + (oa.pH - 7.9) * 13.0; // Linear 7.9-8.1 → 3.3-4.6
+  } else if (oa.pH >= 7.7) {
+    oa.aragoniteSaturation = 2.0 + (oa.pH - 7.7) * 6.5;  // Linear 7.7-7.9 → 2.0-3.3
   } else {
-    // Above threshold but stressed
-    coralDeclineRate = 0.001; // Slow decline from bleaching
+    oa.aragoniteSaturation = 1.0 + (oa.pH - 7.5) * 5.0;  // Linear 7.5-7.7 → 1.0-2.0
   }
-  
+
+  oa.aragoniteSaturation = assertFinite(oa.aragoniteSaturation, {
+    location: 'updateOceanAcidificationSystem[aragonite]',
+    valueName: 'aragoniteSaturation',
+    month: state.currentMonth,
+    additionalInfo: { pH: oa.pH }
+  });
+
+  // === CASCADE ACTIVATION ===
+  // Trigger cascade when pH < 7.9 (population-average threshold)
+  if (oa.pH < 7.9 && !oa.cascadeActive) {
+    oa.cascadeActive = true;
+    console.log(`🌊⚠️ Ocean acidification cascade triggered (pH ${oa.pH.toFixed(2)})`);
+  }
+
+  // === CORAL HEALTH DECLINE (Species-Adjusted) ===
+  // Research: IPCC AR6, field studies (species variation wide)
+
+  let coralDeclineRate = 0.0;
+
+  if (oa.pH < 7.5) {
+    coralDeclineRate = -5.0;      // Severe: -5%/month
+  } else if (oa.pH < 7.7) {
+    coralDeclineRate = -2.0;      // Collapse: -2%/month (±0.2 uncertainty)
+  } else if (oa.pH < 7.8) {
+    coralDeclineRate = -0.8;      // Severe stress: -0.8%/month
+  } else if (oa.pH < 7.9) {
+    coralDeclineRate = -0.3;      // Moderate: -0.3%/month
+  } else if (oa.pH < 8.0) {
+    coralDeclineRate = -0.1;      // Mild: -0.1%/month
+  }
+
+  // Apply species sensitivity multiplier (0.3-1.5 range)
+  coralDeclineRate *= oa.speciesSensitivity;
+
+  // === WARMING SYNERGY (Compound Stress) ===
+  // Research: Anthony et al. (2008) - Warming + acidification = synergistic (2-3x)
+  // 31°C + pH 7.8 → severe bleaching within 5 days
+
+  // Estimate SST from temperature anomaly (baseline ~27°C tropical surface)
+  const baselineSST = 27.0;
+  const estimatedSST = baselineSST + temperatureAnomaly;
+
+  if (estimatedSST > 31.5 && oa.pH < 7.9) {
+    coralDeclineRate *= 3.0;  // Severe synergy
+    console.log(`🌡️🪸 Synergistic coral stress (SST ${estimatedSST.toFixed(1)}°C, pH ${oa.pH.toFixed(2)}): 3× multiplier`);
+  } else if (estimatedSST > 30.0 && oa.pH < 7.9) {
+    coralDeclineRate *= 2.0;  // Moderate synergy
+  }
+
   // Climate stress accelerates (heat + acid = double hit)
-  coralDeclineRate *= (1.0 + climateStress * 0.5);
-  
+  const climateStressMultiplier = 1.0 + (1.0 - climateStability) * 0.5;
+  coralDeclineRate *= climateStressMultiplier;
+
   // Coral restoration helps
   coralDeclineRate *= (1.0 - oa.coralRestorationDeployment * 0.4);
-  
+
   // Protected areas help
   coralDeclineRate *= (1.0 - oa.marineProtectedAreasDeployment * 0.3);
-  
-  oa.coralReefHealth = Math.max(0, oa.coralReefHealth - coralDeclineRate);
-  
+
+  // HIGH-1 FIX (Nov 28, 2025): Removed duplicate coral health calculation
+  // OceanAcidificationCascadePhase (order 21.8) is sole authority for coralReefHealth
+  // This phase (ResourceWaterPhase order 20.2) previously calculated coralReefHealth here,
+  // but cascade phase overwrote it with regional average. Removed to prevent duplicate writes.
+  // Lines 237-277 (decline rate calculation) kept for research documentation.
+  // coralReefHealth is now set exclusively by OceanAcidificationCascadePhase.
+
+  // === IRREVERSIBLE LOSS ACCUMULATION ===
+  // Research: Hoegh-Guldberg et al. (2017) - ocean-scale changes irreversible on centennial timescales
+  // Permanent damage accumulates when coral health < 20% (species extinctions, regime shifts)
+
+  if (oa.coralReefHealth < 20) {
+    // Below 20% health, 10% of remaining corals die permanently each year
+    // Monthly: 10% / 12 = 0.833%/month of remaining coral capacity
+    const monthlyIrreversibleRate = (100 - oa.irreversibleLoss) * 0.00833;
+    oa.irreversibleLoss = assertFinite(oa.irreversibleLoss + monthlyIrreversibleRate, {
+      location: 'updateOceanAcidificationSystem[irreversible loss]',
+      valueName: 'irreversibleLoss',
+      month: state.currentMonth,
+      additionalInfo: { coralHealth: oa.coralReefHealth }
+    });
+    oa.irreversibleLoss = assertInRange(oa.irreversibleLoss, 0, 100, {
+      location: 'updateOceanAcidificationSystem[irreversible clamp]',
+      valueName: 'irreversibleLoss',
+      month: state.currentMonth
+    });
+  }
+
   // Coral extinction phase
-  if (oa.coralReefHealth < 0.30 && !oa.coralExtinctionActive) {
+  if (oa.coralReefHealth < 30 && !oa.coralExtinctionActive) {
     oa.coralExtinctionActive = true;
-    console.log(`🚨 CORAL EXTINCTION PHASE: Reefs collapsing globally`);
-    console.log(`   Coral health: ${(oa.coralReefHealth * 100).toFixed(0)}%`);
-    console.log(`   Aragonite saturation: ${(oa.aragoniteSaturation * 100).toFixed(0)}%`);
+    console.log(`🪸💀 Coral reef collapse (health ${oa.coralReefHealth.toFixed(1)}%)`);
+    console.log(`   pH: ${oa.pH.toFixed(2)}, Aragonite Ω: ${oa.aragoniteSaturation.toFixed(1)}`);
     console.log(`   25% of marine species losing habitat`);
-    
+
     // Impact biodiversity
-    // HIGH-8 FIX (Nov 28, 2025): Guard during historical mode
     if (!isHistoricalModeActive(state) && state.environmentalAccumulation) {
       state.environmentalAccumulation.biodiversityIndex = Math.max(0,
         state.environmentalAccumulation.biodiversityIndex - 0.05 // -5% instant hit
       );
     }
   }
-  
+
   // === SHELLFISH COLLAPSE ===
+  // Research: Bednaršek et al. (2021) - 37% shell thickness decline pH 8.03 → 7.77
   // Timeline: 2050-2075 (after corals die)
-  // Shellfish larvae need aragonite to form shells
-  
+
   let shellfishDeclineRate = 0;
-  if (oa.aragoniteSaturation < 0.70) {
-    // Critical: Larvae can't form shells
-    shellfishDeclineRate = (0.70 - oa.aragoniteSaturation) * 0.012; // Up to 1.2%/month
-  } else if (oa.aragoniteSaturation < 0.75) {
+  if (oa.aragoniteSaturation < 2.0) {
+    // Critical: Active dissolution, larvae can't form shells
+    shellfishDeclineRate = (2.0 - oa.aragoniteSaturation) * 0.012; // Up to 1.2%/month
+  } else if (oa.aragoniteSaturation < 2.5) {
     // Stressed: Struggling larvae
     shellfishDeclineRate = 0.003; // 0.3%/month
   }
-  
+
   // Ocean alkalinity helps
   shellfishDeclineRate *= (1.0 - oa.alkalinityEnhancementDeployment * 0.6);
-  
+
   oa.shellfishPopulation = Math.max(0, oa.shellfishPopulation - shellfishDeclineRate);
-  
+
   // Shellfish collapse phase
   if (oa.shellfishPopulation < 0.40 && !oa.shellfishCollapseActive) {
     oa.shellfishCollapseActive = true;
-    console.log(`🚨 SHELLFISH FISHERIES COLLAPSE`);
-    console.log(`   Shellfish population: ${(oa.shellfishPopulation * 100).toFixed(0)}%`);
-    console.log(`   Aragonite saturation: ${(oa.aragoniteSaturation * 100).toFixed(0)}%`);
+    console.log(`🐟📉 Shellfish fisheries collapse (population ${(oa.shellfishPopulation * 100).toFixed(0)}%)`);
+    console.log(`   Aragonite Ω: ${oa.aragoniteSaturation.toFixed(1)} (below 2.5 stress threshold)`);
     console.log(`   Oyster, clam, mussel fisheries failing`);
-    
+
     // Food impact for coastal populations
     state.qualityOfLifeSystems.materialAbundance = Math.max(0, state.qualityOfLifeSystems.materialAbundance - 0.04);
   }
-<<<<<<< Updated upstream
-  
-  // === MARINE FOOD WEB COLLAPSE ===
-  // Timeline: 2075-2100 (cascading from bottom up)
-  // Pteropods (sea butterflies) dissolve → fish starve → apex predators decline
-  
-  // Food web integrity depends on all components
-  const avgHealth = (oa.coralReefHealth + oa.shellfishPopulation + oa.aragoniteSaturation) / 3;
-  oa.marineFoodWeb = avgHealth;
-  
-=======
 
   // === COASTAL FISHERIES YIELD (Power Law) ===
   // Research: Exponential decline (coralHealth/100)^1.2 (calibrated Nov 28, 2025)
@@ -310,60 +383,75 @@ export function updateOceanAcidificationSystem(state: GameState): void {
   // Update LEGACY marineFoodWeb field
   oa.marineFoodWeb = oa.marineEcosystemFunction / 100;
 
->>>>>>> Stashed changes
   // Marine food web collapse
-  if (oa.marineFoodWeb < 0.30 && !oa.marineFoodWebCollapseActive) {
+  if (oa.marineEcosystemFunction < 30 && !oa.marineFoodWebCollapseActive) {
     oa.marineFoodWebCollapseActive = true;
-    console.log(`🚨 MARINE FOOD WEB COLLAPSE`);
-    console.log(`   Food web integrity: ${(oa.marineFoodWeb * 100).toFixed(0)}%`);
-    console.log(`   Coral: ${(oa.coralReefHealth * 100).toFixed(0)}%`);
-    console.log(`   Shellfish: ${(oa.shellfishPopulation * 100).toFixed(0)}%`);
-    console.log(`   3 billion people depend on fish for protein`);
-    
+    console.log(`🌊💀 Marine ecosystem collapse (function ${oa.marineEcosystemFunction.toFixed(1)}%)`);
+    console.log(`   Coral: ${oa.coralReefHealth.toFixed(1)}%, Shellfish: ${(oa.shellfishPopulation * 100).toFixed(0)}%`);
+    console.log(`   330-500M people depend on reefs for protein`);
+
     // Major biodiversity hit
-    // HIGH-8 FIX (Nov 28, 2025): Guard during historical mode
     if (!isHistoricalModeActive(state) && state.environmentalAccumulation) {
       state.environmentalAccumulation.biodiversityIndex = Math.max(0,
         state.environmentalAccumulation.biodiversityIndex - 0.10 // -10% instant hit
       );
     }
   }
-  
+
   // === FISH-DEPENDENT POPULATION IMPACT ===
-  // 3 billion people (37.5% of 8 billion) depend on fish
-  // Impact scales with marine food web collapse
-  
-  if (oa.marineFoodWeb < 0.50) {
-    // Food web stressed: Fish catches declining
-    oa.fishDependentImpact = (0.50 - oa.marineFoodWeb) * 2.0; // 0-100% impact
-    
-    // Food QoL impact
-    const foodImpact = oa.fishDependentImpact * 0.375 * 0.005; // 37.5% of people, up to 0.5%/month
+  // Research: 330-500M direct dependence (within 30km of reefs), up to 1B indirect
+  // Regional variation: Coral Triangle 130M, Pacific Islands 10M (60% protein from fish)
+
+  if (oa.marineEcosystemFunction < 50) {
+    // Ecosystem stressed: Fish catches declining
+    oa.fishDependentImpact = (50 - oa.marineEcosystemFunction) / 50; // 0-100% impact
+
+    // Food QoL impact (37.5% of 8B = 3B people, but using 500M/8B = 6.25% more conservative)
+    const foodImpact = oa.fishDependentImpact * 0.0625 * 0.005; // Up to 0.03%/month
     state.qualityOfLifeSystems.materialAbundance = Math.max(0, state.qualityOfLifeSystems.materialAbundance - foodImpact);
   }
-  
+
+  // === CO2 ABSORPTION CAPACITY DECLINE (Feedback Loop) ===
+  // Research: Stockholm Resilience - "degrading oceans' ability to act as Earth's stabiliser"
+
+  const absorptionDecline = (1.0 - oa.marineEcosystemFunction / 100) * 0.0005; // Faster as ecosystem degrades
+  oa.co2AbsorptionCapacity = Math.max(0.50, oa.co2AbsorptionCapacity - absorptionDecline);
+
+  // Feedback to climate: Lower absorption = more atmospheric CO2
+  if (oa.co2AbsorptionCapacity < 0.75) {
+    const climateAcceleration = (0.75 - oa.co2AbsorptionCapacity) * 0.0002;
+    const currentClimateStability = assertStateProperty(
+      state.environmentalAccumulation,
+      'climateStability',
+      { location: 'updateOceanAcidificationSystem[climate feedback]', month: state.currentMonth }
+    );
+    state.environmentalAccumulation.climateStability = Math.max(0,
+      currentClimateStability - climateAcceleration
+    );
+  }
+
   // === EXTINCTION PATHWAY ===
-  // Slow collapse: Marine food web fails + no alternatives = famine for 3B people
-  
+  // Slow collapse: Marine food web fails + no alternatives = famine for 330-500M people
+
   if (oa.marineFoodWebCollapseActive && oa.fishDependentImpact > 0.70) {
     const materialAbundance = state.qualityOfLifeSystems.materialAbundance;
-    
+
     // Check if alternative proteins developed
     const hasAlternatives = economicStage >= 3.5; // Post-scarcity has alternatives
-    
+
     if (materialAbundance < 0.30 && !hasAlternatives) {
-      console.log(`☠️ OCEAN ACIDIFICATION EXTINCTION: Marine food system collapse`);
+      console.log(`☠️ Ocean acidification extinction risk: Marine food system collapse`);
       console.log(`   Material Abundance: ${(materialAbundance * 100).toFixed(0)}%`);
-      console.log(`   Marine food web: ${(oa.marineFoodWeb * 100).toFixed(0)}%`);
+      console.log(`   Marine ecosystem: ${oa.marineEcosystemFunction.toFixed(1)}%`);
       console.log(`   Fish-dependent impact: ${(oa.fishDependentImpact * 100).toFixed(0)}%`);
-      console.log(`   3 billion people depend on fish - famine spreading`);
-      
+      console.log(`   330-500M people depend on reefs - famine spreading`);
+
       if (!state.extinctionState.extinctionTriggered) {
         state.extinctionState.extinctionTriggered = true;
         state.extinctionState.extinctionType = 'environmental_collapse';
         state.extinctionState.extinctionMechanism = 'ocean_acidification_famine';
         state.extinctionState.monthsUntilExtinction = 48; // 4 years of slow collapse
-        state.extinctionState.description = 'Ocean acidification destroyed marine food webs. 3 billion fish-dependent people facing famine. Slow collapse over 48 months.';
+        state.extinctionState.description = 'Ocean acidification destroyed marine ecosystems. 330-500M reef-dependent people facing famine. Slow collapse over 48 months.';
       }
     }
   }
@@ -378,82 +466,4 @@ export function updateOceanAcidificationSystem(state: GameState): void {
 export function checkOceanAcidificationTechUnlocks(state: GameState): void {
   if (!state.oceanAcidificationSystem) return;
   return; // Early return - tech tree handles all unlocking now
-
-  /* const oa = state.oceanAcidificationSystem;
-  const tech: any = state.techTreeState; // Cast to any for legacy code compatibility
-  const avgAICapability = state.aiAgents.length > 0
-    ? state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length
-    : 0;
-  const totalResearch = state.government.researchInvestments.physical +
-    state.government.researchInvestments.digital +
-    state.government.researchInvestments.cognitive +
-    state.government.researchInvestments.social;
-  
-  // === 1. OCEAN ALKALINITY ENHANCEMENT (OAE) ===
-  // Research: Biogeosciences 2025, field tests 2023-2024, NO termination shock
-  if (!tech.oceanAlkalinityEnhancement?.unlocked) {
-    if (avgAICapability > 2.5 && totalResearch > 150 && oa.boundaryBreached) {
-      tech.oceanAlkalinityEnhancement = {
-        unlocked: true,
-        deploymentLevel: 0.0,
-        breakthroughYear: Math.floor(state.currentMonth / 12) + 2025
-      };
-      console.log(`🔬 BREAKTHROUGH: Ocean Alkalinity Enhancement`);
-      console.log(`   Permanent CO2 removal (10,000 years)`);
-      console.log(`   Mitigates acidification + sequesters carbon`);
-      console.log(`   NO termination shock (gradual deployment)`);
-    }
-  }
-  
-  // === 2. CORAL RESTORATION ===
-  // Heat-resistant coral strains, AI-optimized restoration
-  if (!tech.coralRestoration?.unlocked) {
-    const biotech = state.aiAgents[0]?.researchCapabilities?.biotech?.geneEditing || 0;
-    if (biotech > 2.0 && totalResearch > 100 && oa.coralReefHealth < 0.70) {
-      tech.coralRestoration = {
-        unlocked: true,
-        deploymentLevel: 0.0,
-        breakthroughYear: Math.floor(state.currentMonth / 12) + 2025
-      };
-      console.log(`🔬 BREAKTHROUGH: Heat-Resistant Coral Restoration`);
-      console.log(`   Gene-edited corals survive higher temps`);
-      console.log(`   AI-optimized reef restoration`);
-    }
-  }
-  
-  // === 3. MARINE PROTECTED AREAS (POLICY) ===
-  // Expansion to 30% of oceans (UN target)
-  if (!tech.marineProtectedAreas?.unlocked) {
-    if (state.government.legitimacy > 0.60 && oa.marineFoodWeb < 0.60) {
-      tech.marineProtectedAreas = {
-        unlocked: true,
-        deploymentLevel: 0.0,
-        breakthroughYear: Math.floor(state.currentMonth / 12) + 2025
-      };
-      console.log(`🔬 POLICY: Marine Protected Areas Expansion`);
-      console.log(`   UN target: 30% of oceans protected by 2030`);
-      console.log(`   Allows ecosystem recovery`);
-    }
-  }
-  
-  // === AUTO-DEPLOYMENT ===
-  
-  if (tech.oceanAlkalinityEnhancement?.unlocked && oa.aragoniteSaturation < 0.75) {
-    // Acidification motivates OAE deployment
-    const adoptionRate = 0.012; // 1.2%/month (gradual 5-year ramp)
-    oa.alkalinityEnhancementDeployment = Math.min(1.0, oa.alkalinityEnhancementDeployment + adoptionRate);
-  }
-  
-  if (tech.coralRestoration?.unlocked && oa.coralReefHealth < 0.50) {
-    // Coral collapse motivates restoration
-    const adoptionRate = 0.015; // 1.5%/month
-    oa.coralRestorationDeployment = Math.min(1.0, oa.coralRestorationDeployment + adoptionRate);
-  }
-  
-  if (tech.marineProtectedAreas?.unlocked) {
-    // Policy rollout (slower)
-    const adoptionRate = 0.008; // 0.8%/month (10+ years to 30%)
-    oa.marineProtectedAreasDeployment = Math.min(0.30, oa.marineProtectedAreasDeployment + adoptionRate);
-  } */
 }
-
