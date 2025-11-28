@@ -339,9 +339,14 @@ export function updateEnvironmentalAccumulation(
     // Natural recovery is ZERO during baseline (empirical rate is net)
     naturalRecovery = 0;
 
-    // Apply decline
+    // Apply GEOMETRIC decline (HIGH-11 fix: Nov 28, 2025)
+    // Research shows biodiversity loss did NOT accelerate 1990-2024 (constant rate)
+    // Problem was LINEAR vs GEOMETRIC formula application
+    // LINEAR: index -= rate (gives 0.333 after 34 years, too low)
+    // GEOMETRIC: index *= (1-rate) (gives 0.490 after 34 years, matches WWF LPI)
+    // See: /research/biodiversity_temporal_analysis_HIGH11_20251128.md
     env.biodiversityIndex = assertFinite(
-      Math.max(0, Math.min(1, env.biodiversityIndex - biodiversityLossRate + naturalRecovery)),
+      Math.max(0, Math.min(1, env.biodiversityIndex * (1 - biodiversityLossRate) + naturalRecovery)),
       {
         location: 'updateBiodiversityIndex (historicalMode)',
         valueName: 'biodiversityIndex',
@@ -377,9 +382,12 @@ export function updateEnvironmentalAccumulation(
     // Natural recovery (very slow without active management)
     naturalRecovery = hasEcosystemManagement ? 0.005 : 0.001;
 
-    // FIXED: Use assertFinite to catch NaN/Infinity in calculation itself
+    // Apply GEOMETRIC decline (HIGH-11 fix: Nov 28, 2025)
+    // Changed from LINEAR (index -= rate) to GEOMETRIC (index *= (1-rate))
+    // Geometric decline is biologically correct: populations decline by percentage, not fixed amount
+    // See: /research/biodiversity_temporal_analysis_HIGH11_20251128.md
     env.biodiversityIndex = assertFinite(
-      Math.max(0, Math.min(1, env.biodiversityIndex - biodiversityLossRate + naturalRecovery)),
+      Math.max(0, Math.min(1, env.biodiversityIndex * (1 - biodiversityLossRate) + naturalRecovery)),
       {
         location: 'updateBiodiversityIndex',
         valueName: 'biodiversityIndex',
