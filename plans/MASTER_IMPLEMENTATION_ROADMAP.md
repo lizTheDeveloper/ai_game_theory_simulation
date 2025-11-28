@@ -900,6 +900,176 @@
 
 ---
 
+## 🔬 Research Debate Findings (Nov 28, 2025)
+
+**Context:** Productive research debate between Cynthia (super-alignment-researcher) and Sylvia (research-skeptic) identified critical gaps in simulation coverage. While current validation shows excellent mechanistic accuracy (A- grade), five missing systems could each independently trigger collapse scenarios.
+
+**Debate Document:** [`reviews/research_debate_20251128_roadmap_priorities.md`](../reviews/research_debate_20251128_roadmap_priorities.md)
+
+**Overall Assessment:**
+- **Current Simulation Grade:** B+ (excellent validation framework, but missing critical ecological/geopolitical dynamics)
+- **Validation Status:** SUFFICIENT for Tier 1 scenarios (alignment success, coordinated response)
+- **Research Quality:** A- (78.7% sources from 2024-2025)
+- **Missing Coverage:** 6 critical systems identified for Tier 2+ scenario confidence
+
+### 🟡 MEDIUM Priority Research Items (TIER 2 Systems)
+
+**RD-1: Permafrost Carbon Feedback Implementation**
+- **Status:** NOT STARTED - Research + phase creation required
+- **Assignee:** cynthia (research) + roy (implementation)
+- **Problem:** 1,700 Gt carbon in permafrost (2× atmospheric CO2) currently undermodeled
+  - Self-reinforcing cascade: warming → thaw → emissions → warming
+  - Thawing accelerating (Natali et al. 2021)
+  - Current model may capture via carbon cycle but NOT explicitly modeled
+- **Research Requirements:**
+  - Quantify thaw rates vs temperature (permafrost degradation curves)
+  - CH4 vs CO2 release ratios (methane 28× more potent over 100 years)
+  - Regional variation (Siberia, Alaska, Canada permafrost extent)
+  - Tipping point threshold (likely 1.5-2.0°C warming)
+- **Implementation Scope:**
+  - New phase: PermafrostCarbonPhase (order TBD, after ClimateSystemPhase)
+  - State fields: permafrostExtent, permafrostCarbon, annualThawRate
+  - Integration: Feeds into carbon cycle emissions
+  - Cascades: Accelerates warming, triggers methane release tipping point
+- **Expected Impact:** Could increase warming trajectory 0.2-0.4°C by 2100 in high-emission scenarios
+- **Effort:** 3-4 days (2 days research, 1-2 days implementation + validation)
+- **Priority Rationale:** TIER 2 - Major climate feedback missing, affects medium-term (2050+) scenarios
+
+**RD-2: Ocean Acidification Cascades**
+- **Status:** NOT STARTED - Planetary boundary tracked but NO cascade implementation
+- **Assignee:** cynthia (research) + roy (implementation)
+- **Problem:** pH 8.1 → 7.9 (30% more acidic since pre-industrial), cascades not modeled
+  - Coral reef collapse = fisheries collapse = 1B+ people food insecurity
+  - IPCC AR6 WG2: "Irreversible changes already occurring"
+  - Current model: Tracks boundary transgression but not downstream effects
+- **Research Requirements:**
+  - pH thresholds for coral bleaching (7.9), shellfish disruption (7.7), ecosystem collapse (7.5)
+  - Fisheries dependence by region (Southeast Asia, Pacific Islands highest)
+  - Timeline: Coral reefs 70-90% loss by 2050 under RCP8.5 (Hughes et al. 2018)
+  - Economic impact: $1T+ coastal protection + fisheries loss
+- **Implementation Scope:**
+  - Extend existing ocean acidification tracking (planetaryBoundaries.oceanAcidification)
+  - New cascade phase: OceanAcidificationCascadePhase
+  - State fields: coralReefHealth, marineEcosystemFunction, coastalFisheriesYield
+  - Integration: Affects food security, regional economies, biodiversity
+  - Tipping point: pH < 7.9 triggers irreversible coral collapse
+- **Expected Impact:** Major food security crisis in coastal regions (500M-1B people affected by 2050)
+- **Effort:** 3-4 days (2 days research on thresholds/cascades, 1-2 days implementation + validation)
+- **Priority Rationale:** TIER 2 - Already past safe boundary, cascades imminent in baseline scenarios
+
+**RD-3: Geopolitical Conflict Escalation Dynamics**
+- **Status:** NOT STARTED - Nuclear winter modeled but NOT escalation pathways
+- **Assignee:** cynthia (research) + moss (game theory implementation)
+- **Problem:** Current geopolitical tensions 10-100× higher than Cold War baseline
+  - Russia-Ukraine war (2022-present) shows major powers willing to risk nuclear escalation
+  - China-Taiwan tensions escalating (2023-2025)
+  - Middle East instability (Gaza, Iran nuclear program)
+  - AI-accelerated misinformation undermining diplomacy
+  - Nuclear winter risk may be severely underestimated
+- **Research Requirements:**
+  - Quantify escalation pathways (Schelling 1960, Barrett et al. 2013 on inadvertent war)
+  - AI impact on conflict (autonomous weapons, decision compression, misattribution)
+  - Regional flashpoints: Taiwan (40% risk by 2030), Ukraine (ongoing), Middle East (20% risk)
+  - Probability calibration: Base rate 0.5-2% annual risk → AI era 2-8% (4× multiplier plausible)
+- **Implementation Scope:**
+  - New phase: GeopoliticalConflictPhase (order TBD, interacts with AI capabilities + social trust)
+  - State fields: regionalTensions (10 regions), escalationRisk, diplomaticCapacity
+  - Triggers: AI capability spikes, resource scarcity, social trust collapse
+  - Cascades: Nuclear exchange → nuclear winter → agricultural collapse → famine
+  - Game theory: Multi-agent security dilemma, first-strike incentives
+- **Expected Impact:** Major pathway to catastrophic outcomes currently missing (could dominate risk in 2030-2050 window)
+- **Effort:** 4-6 days (3 days research on escalation modeling, 2-3 days game theory implementation + validation)
+- **Priority Rationale:** TIER 2 - Plausibly the HIGHEST near-term extinction risk, completely missing from model
+
+### 🟢 LOW Priority Research Items (TIER 3 Systems)
+
+**RD-4: Insect Collapse Ecological Function Loss**
+- **Status:** NOT STARTED - Captured in biodiversity aggregate but function loss NOT modeled
+- **Assignee:** cynthia (research) + roy (implementation)
+- **Problem:** 40% of insect species declining (Sánchez-Bayo & Wyckhuys 2019)
+  - Pollinator loss = 75% of food crops at risk
+  - Cascades to birds, mammals, entire ecosystems
+  - Current biodiversity tracking: Captures population decline but NOT functional collapse
+- **Research Requirements:**
+  - Pollination dependence by crop type (apples 100%, wheat 0%, average 35%)
+  - Insect decline rates (2.5% annual loss observed 2000-2020)
+  - Tipping point: 60% loss triggers ecosystem function collapse
+  - Economic impact: $577B annual pollination services (Lautenbach et al. 2012)
+- **Implementation Scope:**
+  - Extend BiodiversityPhase with functional ecology tracking
+  - State fields: pollinatorAbundance, ecosystemServices.pollination
+  - Integration: Affects agricultural yields independent of climate
+  - Cascades: Food production → social instability → biodiversity further decline
+- **Expected Impact:** Moderate - 10-20% food production decline in long-term scenarios (2050+)
+- **Effort:** 5-7 days (3 days research on functional ecology, 2-4 days biodiversity cascade extension + validation)
+- **Priority Rationale:** TIER 3 - Important but slower timescale (decades), lower priority than geopolitics/permafrost
+
+**RD-5: Antimicrobial Resistance (AMR) Pandemic Risk**
+- **Status:** NOT STARTED - Health system collapse scenarios missing
+- **Assignee:** cynthia (research) + roy (implementation)
+- **Problem:** 10M deaths/year by 2050 if unchecked (O'Neill Review 2016)
+  - AI-designed pathogens + AMR = pandemic risk spike
+  - Healthcare system collapse scenarios not modeled
+  - Current model: No disease dynamics beyond mortality baseline
+- **Research Requirements:**
+  - AMR mortality projections (O'Neill 2016: 10M deaths/year by 2050, 1M currently)
+  - AI-biosecurity intersection (synthetic biology, gain-of-function risks)
+  - Healthcare system fragility thresholds (when does capacity collapse?)
+  - Probability of engineered pandemic: 1-5% per decade (Sandberg & Bostrom 2008, updated for AI era)
+- **Implementation Scope:**
+  - New phase: PandemicRiskPhase (order TBD, interacts with AI capabilities + healthcare capacity)
+  - State fields: amrPrevalence, pandemicRisk, healthcareCapacity
+  - Triggers: AI biotech capabilities, global connectivity, healthcare deterioration
+  - Cascades: Mortality spike → economic collapse → social trust erosion
+- **Expected Impact:** Low probability but catastrophic (1-10% civilization-ending risk in tail scenarios)
+- **Effort:** 5-7 days (3 days research on AMR + AI-bio risk, 2-4 days health system integration + validation)
+- **Priority Rationale:** TIER 3 - Important tail risk but lower base rate than climate/geopolitics
+
+**RD-6: Soil Degradation Food Production Decline**
+- **Status:** NOT STARTED - Resource depletion tracked but soil-specific dynamics ABSENT
+- **Assignee:** cynthia (research) + roy (implementation)
+- **Problem:** 33% of global soils degraded (FAO 2020)
+  - Desertification accelerating (20M hectares/year)
+  - Food production capacity declining independent of climate change
+  - Current model: General resource depletion but NOT soil-specific mechanisms
+- **Research Requirements:**
+  - Soil degradation rates by region (Sub-Saharan Africa 3%/year, Asia 2%/year)
+  - Yield impact curves (10% degradation → 5-15% yield loss depending on crop)
+  - Restoration timescales (natural recovery 100-500 years, managed recovery 10-50 years)
+  - Economic impact: $400B annual agricultural losses (Nkonya et al. 2016)
+- **Implementation Scope:**
+  - Extend AgriculturePhase with soil health tracking
+  - State fields: soilHealthByRegion, landDegradationRate, restorationInvestment
+  - Integration: Affects food security independent of climate impacts (cumulative)
+  - Cascades: Agricultural decline → food insecurity → migration → conflict
+  - Breakthroughs: Regenerative agriculture tech can reverse degradation
+- **Expected Impact:** Moderate - 5-15% food production decline over 50 years (cumulative with climate)
+- **Effort:** 4-6 days (2 days research on soil science, 2-4 days agriculture system extension + validation)
+- **Priority Rationale:** TIER 3 - Slow cumulative effect, important for long-term realism but not immediate
+
+### Implementation Recommendations
+
+**Immediate Actions (This Week):**
+1. Continue existing M-2 (assertion migration), M-4 (population demographics) work
+2. Implement HIGH-5 (agent monitoring infrastructure)
+3. Add uncertainty quantification for AI timelines (1-2 days) - captures Sylvia's concern about overconfidence
+
+**Next Month (TIER 2 Priority):**
+1. **RD-1 Permafrost** (3-4 days) - Major climate feedback
+2. **RD-2 Ocean Acidification** (3-4 days) - Already past safe boundary
+3. **RD-3 Geopolitical Conflict** (4-6 days) - Highest near-term extinction risk
+
+**Next Quarter (TIER 3 Priority):**
+1. **RD-4 Insect Collapse** (5-7 days) - Ecological function loss
+2. **RD-5 AMR Pandemic** (5-7 days) - Tail risk but catastrophic
+3. **RD-6 Soil Degradation** (4-6 days) - Long-term food security
+
+**Total Effort:** 24-34 days across all 6 items (approximately 5-7 weeks with validation overhead)
+
+**Strategic Note:** Debate consensus recognizes current validation as SUFFICIENT for Tier 1 scenarios but flags Tier 2+ scenarios as EXPLORATORY until these systems are implemented. This maintains research integrity while allowing continued scenario exploration.
+
+---
+
 ## 🎮 Game Development Roadmap (Parallel Track)
 
 **Status:** 🟢 **PHASE 2 COMPLETE** (Nov 26, 2025) - All React components built, wired to GameStateSnapshot
