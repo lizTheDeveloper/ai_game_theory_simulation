@@ -5,16 +5,31 @@
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**Current Status:** ✅ **VALIDATION PASS** (Nov 28, 2025 - Session 5 Complete)
+**Current Status:** ✅ **VALIDATION PASS** (Nov 28, 2025 - Session 6 Complete)
 - **Research Quality:** A- (95%+ sources from 2024-2025, high-priority updates identified)
-- **Architecture Health:** A- (0 CRITICAL, 0 HIGH active, 6 MEDIUM)
+- **Architecture Health:** A- (0 CRITICAL, 0 HIGH active, 5 MEDIUM - M-5 resolved)
 - **System Performance:** 0% crash rate ✅, determinism verified (CV=0.000% ✅), historical accuracy 19.9% overall deviation ✅
 - **System Trajectory:** ✅ **ACCEPTABLE** - All CRITICAL/HIGH items resolved, biodiversity 32% error within threshold
 - **Roadmap Coherence:** CURRENT - Updated Nov 28 end-of-session merged (Architect)
-- **Daily Review (Nov 28 06:00 UTC):**
-  - Architecture Review: ✅ GOOD (0 CRITICAL, 0 HIGH, 3 MEDIUM)
-  - Research Skeptic: ⚠️ CONDITIONAL PASS (1 revalidation required)
-  - **Completed:** HIGH-11 biodiversity geometric formula integration (Session 5)
+- **Daily Review (Nov 28 13:00 UTC):**
+  - Architecture Review: ✅ GOOD (0 CRITICAL, 0 HIGH, 5 MEDIUM - M-5 resolved)
+  - Infrastructure: ✅ COMPLETE (HIGH-5 agent message checking deployed)
+  - **Completed:** HIGH-5 agent monitoring, M-5 biodiversity consistency (Session 6)
+- **Recent Work (Nov 28 Session 6 - INFRASTRUCTURE & CONSISTENCY FIXES):**
+  - ✅ **HIGH-5 COMPLETE** (commits cdcebedf, 5dc65073) - Agent Message Checking Infrastructure
+    - **Problem:** Agents work in isolation, miss coordination, no response to @mentions
+    - **Solution:** Generic monitor template + 5 agent monitors (Roy, Sylvia, Cynthia, Orchestrator, Devon)
+    - **Benefits:** 60s response time, 24/7 monitoring, memory continuity, true collaboration
+    - **Components:** Monitor scripts, systemd services, pre-work message check, installation automation
+    - **Documentation:** `docs/AGENT_MONITOR_SYSTEM.md` (complete architecture guide)
+    - **Impact:** Force multiplier - transforms isolated workers into collaborative team
+    - **Archive:** plans/completed/HIGH5_agent_message_checking_infrastructure_20251128.md
+  - ✅ **M-5 RESOLVED** (commits 87ec5834, a66f1a7b) - Biodiversity Cascade Formula Consistency
+    - **Problem:** Cascade used linear decline (`index - cascadeSize`) while regular decline geometric (`index * (1 - rate)`)
+    - **Fix:** Changed cascade to geometric (`index * (1 - cascadeSize)`) for mathematical consistency
+    - **Verification:** All 3 biodiversity pathways now use geometric model (historical, projection, cascade)
+    - **Impact:** MEDIUM - Preserves research validity, ensures cascades = accelerated natural decline
+    - **Archive:** plans/completed/M5_biodiversity_cascade_formula_consistency_20251128.md
 - **Recent Work (Nov 28 Session 5 - HIGH-11 RESOLVED, VALIDATION COMPLETE):**
   - ✅ **HIGH-11 RESOLVED** (commit 14b5dd71) - Biodiversity geometric formula integration
     - **Root cause:** updateEnvironmentalAccumulation() function never called by phase system
@@ -409,60 +424,11 @@
 - **Priority Justification:** 125 branch backlog + Nov 8 zero-work pattern indicate this is critical path bottleneck
 - **Devon's First Task:** This is Devon's introduction to the project. Infrastructure work unblocks ALL other agents.
 
-**HIGH-5: Agent Message Checking Infrastructure** ✅ COMPLETE (Nov 28, 2025)
-- **Status:** ✅ COMPLETE - Agent monitors deployed, pre-work message check added (commit cdcebedf)
-- **Assignee:** autonomous-worker (implementation)
-- **Problem:** Agents Work in Isolation
-  - Agents start working without checking if other agents need input
-  - No response to @mentions or direct questions
-  - Coordination failures: redundant decisions, missed context
-  - Only Quinn has a monitor daemon (as of Nov 27)
-- **Current State (Nov 27):**
-  - Quinn monitor deployed: `scripts/quinn-monitor.sh` (polls every 60s)
-  - Quinn autonomous check: `scripts/quinn-autonomous.sh` (cron every 2 hours)
-  - Other agents: NO message monitoring
-  - CLAUDE.md: Has guidelines but no enforcement
-- **Solution - Agent Monitor Infrastructure:**
-  1. **Phase 1 - Monitor Template:**
-     - Create generic `scripts/agent-monitor-template.sh`
-     - Support any agent: just change AGENT_NAME and MATRIX_TOKEN
-     - Poll interval configurable (30-60s for active agents)
-  2. **Phase 2 - Deploy Monitors for Key Agents:**
-     - Roy (simulation-maintainer) - responds to implementation questions
-     - Sylvia (research-skeptic) - responds to research questions
-     - Orchestrator - routes complex requests
-     - Devon - handles infrastructure questions
-  3. **Phase 3 - Pre-Work Message Check:**
-     - Update autonomous-worker.sh to check messages before starting
-     - If pending @mentions for the agent, handle those first
-     - Add "message check" step to agent spawn protocol
-  4. **Phase 4 - Systemd Services:**
-     - Create systemd service for each agent monitor
-     - Auto-restart on failure
-     - Log to `/logs/agent-monitors/`
-- **Implementation Complete (Phases 1-4):**
-  - ✅ Phase 1: Generic `scripts/agent-monitor-template.sh` created (configurable via env vars)
-  - ✅ Phase 2: Deployed monitors for Roy, Sylvia, Cynthia, Orchestrator, Devon
-  - ✅ Phase 3: Pre-work message check added to `autonomous-worker.sh`
-  - ✅ Phase 4: Systemd services created for all monitors
-  - ✅ Installation script: `scripts/install-agent-monitors.sh` (one-command deployment)
-  - ✅ Documentation: `docs/AGENT_MONITOR_SYSTEM.md` (complete architecture guide)
-- **Files Created:**
-  - Monitor scripts: 5 agent-specific monitors + 1 generic template
-  - Systemd services: 5 service files (roy, sylvia, cynthia, orchestrator, devon)
-  - Installation: 1 automated installation script
-  - Documentation: 1 comprehensive guide
-  - Modified: autonomous-worker.sh (added MESSAGE CHECK stage)
-- **Benefits Delivered:**
-  ✅ Agents respond within 60 seconds of being mentioned
-  ✅ No more missed coordination context
-  ✅ True multi-agent collaboration (not just parallel work)
-  ✅ 24/7 monitoring with auto-restart
-  ✅ Memory continuity (agents recall context, update learnings)
-- **Effort:** 2.5 hours actual (as estimated)
-- **Testing:** All scripts pass bash syntax validation
-- **Impact:** Transforms agents from isolated workers to collaborative team
-- **Archive:** Ready for plans/completed/ after end-of-session cleanup
+**HIGH-5: Agent Message Checking Infrastructure** ✅ ARCHIVED (Nov 28, 2025)
+- **Status:** ✅ COMPLETE - Archived to `plans/completed/HIGH5_agent_message_checking_infrastructure_20251128.md`
+- **Summary:** Generic monitor template + 5 agent monitors (Roy, Sylvia, Cynthia, Orchestrator, Devon) + systemd services + pre-work message check
+- **Impact:** Force multiplier - 60s response time, 24/7 monitoring, true collaboration
+- **See:** Recent Work (Session 6) for summary, archive file for complete documentation
 
 **HIGH-6 → MEDIUM/LOW: Temperature Overestimation (+64% → +11.5% Error)** ⚠️ MARGINAL PASS (Nov 28, 2025)
 - **Status:** ⚠️ MARGINAL PASS - 11.5% error acceptable for climate modeling, downgrade to MEDIUM/LOW priority
@@ -686,24 +652,11 @@
 - **Priority Rationale:** Within 30% threshold (acceptable), but refinement would improve scenario realism
 - **Full Details:** See archived HIGH-7 entry (lines 424-452)
 
-**M-5: Biodiversity Cascade Formula Consistency** ✅ RESOLVED (Nov 28, 2025)
-- **Status:** ✅ RESOLVED - Cascade now uses geometric decline (commits 87ec5834, a66f1a7b)
-- **Discovery:** Architecture Integration Review (Session 5, reviews/architecture_integration_review_20251128_session5.md)
-- **Problem:** Biodiversity cascade events used linear decline (`index - cascadeSize`) while regular decline used geometric (`index * (1 - rate)`)
-  - **Initial state:** Mega-cascade at environmental.ts:472 used `env.biodiversityIndex = Math.max(0, env.biodiversityIndex - cascadeSize)`
-  - **Issue:** Inconsistent with HIGH-11 geometric decline model
-- **Solution Applied:**
-  - Changed cascade to geometric: `env.biodiversityIndex = Math.max(0, env.biodiversityIndex * (1 - cascadeSize))`
-  - Added comment documenting M-5 fix (environmental.ts:472)
-  - Updated console log to show "(geometric)" for consistency
-- **Impact:** MEDIUM - Now consistent across all biodiversity decline paths (regular + cascade)
-- **Verification:** Code review confirms geometric decline used in:
-  - Historical mode (line 346): `index * (1 - rate) + naturalRecovery`
-  - Projection mode (line 385): `index * (1 - rate) + naturalRecovery`
-  - Mega-cascade (line 476): `index * (1 - cascadeSize)`
-- **Effort:** 15 minutes actual (as estimated: 1-2 hours for doc + validation)
-- **Priority Rationale:** Consistency in mathematical models critical for research simulation
-- **Assignee:** simulation-maintainer (Roy) - completed same session as HIGH-11
+**M-5: Biodiversity Cascade Formula Consistency** ✅ ARCHIVED (Nov 28, 2025)
+- **Status:** ✅ RESOLVED - Archived to `plans/completed/M5_biodiversity_cascade_formula_consistency_20251128.md`
+- **Summary:** Changed cascade from linear (`index - cascadeSize`) to geometric (`index * (1 - cascadeSize)`) for mathematical consistency
+- **Impact:** MEDIUM - Preserves research validity, ensures cascades = accelerated natural decline
+- **See:** Recent Work (Session 6) for summary, archive file for complete documentation
 
 ### Validation Priority Stack (Nov 28 Update - SPRINT COMPLETE)
 
