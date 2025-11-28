@@ -24,10 +24,27 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **Research Quality:** B+ (56.5% sources 2023-2025, 4 CRITICAL parameter issues resolved/documented, 8 research gaps identified) ✅ GOOD
 - **Research Currency:** ✅ EXCELLENT (all simulation-critical files updated within 14 days, autonomous system working effectively)
 - **Implementation Fidelity:** A- (assertion coverage 97.2%, 24 integration tests for CoordinatedDeploymentPhase) ✅ EXCELLENT
-- **Architecture Health:** B+ (0 CRITICAL, 2 HIGH technical debt non-urgent, deep clone optimization complete) ✅ GOOD
+- **Architecture Health:** A- (0 CRITICAL post-CRITICAL-2 fix, 2 HIGH technical debt non-urgent, deep clone optimization complete) ✅ EXCELLENT
 - **System Trajectory:** 🟢 READY (Nov 26: Phase 4 Coordination Layer strategic pivot - testing coordinated deployment)
 
 **Recent Major Achievements:**
+
+**Nov 28: CRITICAL-2 RESOLVED - Double Environmental Accumulation Bug** (commit ef986a43)
+- 🐛 **CRITICAL REGRESSION:** HIGH-11 fix added `updateEnvironmentalAccumulation()` to PlanetaryBoundariesPhase but legacy call in `engine.ts` was not removed
+- **IMPACT:** Environmental metrics updated TWICE per simulation step
+  - Biodiversity decline: 2x rate (DOUBLED - explains validation regression)
+  - Climate degradation: 2x rate (DOUBLED)
+  - Pollution accumulation: 2x rate (DOUBLED)
+  - Resource depletion: 2x rate (DOUBLED)
+- **ROOT CAUSE:** M-1 audit (Nov 28 Session 4) found `environmental.ts` was "dead code" for old engine (CORRECT at that time). HIGH-11 fix (Session 5) added call from PlanetaryBoundariesPhase to reactivate code. Legacy `engine.ts` call was not removed → duplication.
+- **FIX:** Removed legacy accumulation calls from `engine.ts` lines 969-983
+  - Removed `updateEnvironmentalAccumulation(state, rng)` (line 975)
+  - Removed import from `engine.ts` line 23
+  - PlanetaryBoundariesPhase (order 21.0) is now SOLE owner
+- **VALIDATION:** Type check ✅, verification script confirms only 1 call path remains
+- 📄 **Review:** `reviews/architecture_integration_review_20251128_session8.md`
+- 📄 **Verification:** `scripts/verifyAccumulationFix.ts`
+- **Status:** RESOLVED ✅ - Environmental accumulation now called once per step
 
 **Nov 28: CRITICAL-1 RESOLVED - Unified Historical Mode Detection Pattern** (commit 5c7fec87)
 - 🔧 **ROOT CAUSE:** Dual incompatible patterns causing split-brain guard behavior
@@ -174,6 +191,20 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 🔧 **Merge Cleanup:** Removed duplicate `volcanicForcing` declaration (was at line 437, canonical at 514)
 - 🔧 **GlobalMetrics:** Added optional `environmentalHealth` composite metric
 - 📄 **Files:** `src/types/game.ts`, `src/types/metrics.ts`
+
+**Nov 27: AerosolForcingPhase Added for Projection Mode** (commit ae4a9d9)
+- 🌫️ **New Phase (17.8):** Anthropogenic aerosol cooling effects for projection mode (2025+)
+- **Purpose:** Model declining aerosol cooling as air quality improves (SSP2-4.5 pathway)
+- **Research Basis:** IPCC AR6 - Aerosols have masked ~30% of anthropogenic warming
+  - ERF: -1.1 W/m² (1990) → -0.8 W/m² (2024) → -0.3 W/m² (2050)
+  - Expected cooling: -0.64°C to -0.24°C in projection mode
+- **Architecture (Hybrid Model):**
+  - Hindcast mode (1990-2024): SKIPS - NASA GISS data already includes aerosol effects
+  - Projection mode (2025+): Applies declining aerosol cooling (linear interpolation)
+  - Formula: Temperature = Equilibrium(CO2) + AerosolCooling + VolcanicForcing
+- **Phase Order:** 17.8 (after TechCoolingPhase 17.5, before ResourceTechnologyPhase 24.5)
+- 📄 **Files:** `AerosolForcingPhase.ts`, `phases/index.ts`, `EMOJI_EVENT_MAP.txt` (registered 🌫️)
+- **Validation:** Type check ✅, tests ✅, research validation CONDITIONAL APPROVE
 
 **Nov 27: VolcanicForcingPhase Added** (commits 6f3037c, previous)
 - 🌋 **New Phase (16.5):** Models stratospheric aerosol optical depth (AOD) from volcanic eruptions
@@ -9027,6 +9058,7 @@ The simulation runs via a **phase-based architecture** with **100 phases** execu
 - MADDeterrencePhase (23.0): Nuclear deterrence, escalation
 - ResourceEconomyPhase (17.0): Resource extraction, depletion (**REORDERED** - was 24.0)
 - **TechCoolingPhase (17.5)**: Applies accumulated geoengineering cooling AFTER ResourceEconomyPhase recalculates temperature (**CRITICAL FIX Nov 27, 2025** - phase existed but was never registered)
+- **AerosolForcingPhase (17.8)**: Anthropogenic aerosol cooling effects for projection mode (2025+). IPCC AR6: Aerosol ERF -1.1 W/m² (1990) → -0.8 W/m² (2024) → -0.3 W/m² (2050, SSP2-4.5). Hindcast mode SKIPS (NASA data already includes aerosol effects). Expected cooling: -0.64°C to -0.24°C in projection mode. (**NEW Nov 27, 2025**)
 - ResourceTechnologyPhase (24.5): Tech effects on resources
 - **GovernmentResponsePhase (25.0)**: Policy responses with comprehension lag (**NEW Oct 20**)
 - **PolicyImplementationPhase (25.5)**: Policy lifecycle tracking - sigmoid ramp-up, political will decay, abandonment risk (**NEW Oct 30**)
