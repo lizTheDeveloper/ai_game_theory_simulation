@@ -142,9 +142,6 @@ export class GeopoliticalConflictPhase implements SimulationPhase {
     this.updateRegionalFlashpoints(state, rng);
 
     return {
-      success: true,
-      stateChanged: true,
-      message: `🌍 Geopolitical tension: ${state.geopoliticalConflict.tension.toFixed(1)}, Risk: ${(riskCalculation.totalRisk * 100).toFixed(3)}%`,
       events
     };
   }
