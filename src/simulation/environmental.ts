@@ -469,11 +469,15 @@ export function updateEnvironmentalAccumulation(
 
     if (cascadeMagnitude > 10.0) {
       // Mega-cascade (keystone species loss triggers avalanche)
+      // M-5 FIX (Nov 28, 2025): Use GEOMETRIC decline (consistent with HIGH-11)
+      // Cascades should follow the same mathematical model as regular decline
       const cascadeSize = Math.min(cascadeMagnitude / 100, 0.35); // Max 35% drop
-      env.biodiversityIndex = Math.max(0, env.biodiversityIndex - cascadeSize);
+      const beforeCascade = env.biodiversityIndex;
+      env.biodiversityIndex = Math.max(0, env.biodiversityIndex * (1 - cascadeSize));
 
       console.warn(`\n  ⚠️ BIODIVERSITY MEGA-CASCADE: Keystone species collapse`);
-      console.log(`     Magnitude: ${cascadeMagnitude.toFixed(2)} → -${(cascadeSize * 100).toFixed(1)}% biodiversity`);
+      console.log(`     Magnitude: ${cascadeMagnitude.toFixed(2)} → -${(cascadeSize * 100).toFixed(1)}% (geometric)`);
+      console.log(`     Biodiversity: ${(beforeCascade * 100).toFixed(1)}% → ${(env.biodiversityIndex * 100).toFixed(1)}%`);
       console.log(`     Trophic cascade: keystone predator/pollinator loss → ecosystem avalanche`);
     }
   }
