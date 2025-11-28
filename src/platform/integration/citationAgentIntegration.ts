@@ -618,6 +618,15 @@ export class PythonAgentWrapper extends EventEmitter {
     const agentId = this.agentId;
 
     return new Promise<void>((resolve) => {
+      let resolved = false;
+      const safeResolve = () => {
+        if (!resolved) {
+          resolved = true;
+          this.processRegistry.unregister(agentId);
+          resolve();
+        }
+      };
+
       // Force kill after 5s if graceful shutdown fails
       const forceKillTimeout = setTimeout(() => {
         if (processRef && !processRef.killed) {
@@ -626,12 +635,21 @@ export class PythonAgentWrapper extends EventEmitter {
         }
       }, 5000);
 
+      // H4 FIX: Safety timeout - resolve even if process doesn't exit cleanly
+      // This prevents hanging if the Python process ignores SIGKILL (shouldn't happen,
+      // but better safe than hanging forever)
+      const safetyTimeout = setTimeout(() => {
+        clearTimeout(forceKillTimeout);
+        console.warn(`⚠️ Agent ${agentId} shutdown safety timeout - forcing resolve`);
+        safeResolve();
+      }, 6000);
+
       // Resolve promise when process actually exits
       processRef.once('exit', () => {
         clearTimeout(forceKillTimeout);
-        this.processRegistry.unregister(agentId);
+        clearTimeout(safetyTimeout);
         console.log(`🛑 Agent ${agentId} stopped`);
-        resolve();
+        safeResolve();
       });
 
       // Send graceful shutdown signal

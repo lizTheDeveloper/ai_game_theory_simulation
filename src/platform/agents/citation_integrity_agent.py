@@ -888,6 +888,7 @@ def run_ipc_server(agent_id: str):
     import sys
     import signal
     import os
+    import select
 
     # Global shutdown flag
     shutdown_requested = False
@@ -949,7 +950,16 @@ def run_ipc_server(agent_id: str):
     try:
         while not shutdown_requested:
             try:
-                # Read line from stdin (blocking)
+                # H4 FIX: Use select with timeout to check for stdin data
+                # This allows the shutdown_requested flag to be checked periodically
+                # instead of blocking forever on readline()
+                readable, _, _ = select.select([sys.stdin], [], [], 0.5)  # 500ms timeout
+
+                if not readable:
+                    # No data available, check shutdown flag and continue
+                    continue
+
+                # Read line from stdin (non-blocking now since we know data is available)
                 line = sys.stdin.readline()
 
                 if not line:
