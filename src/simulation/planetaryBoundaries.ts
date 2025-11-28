@@ -2289,7 +2289,7 @@ export function updateBiosphereIntegrityIndex(
   // HINDCAST FIX (Nov 24, 2025): Skip ecosystem mortality in historical mode (pre-2020)
   // Climate-driven ecosystem collapse wasn't a significant mortality factor until 2020s
   // Research: IPBES (2019), UN biodiversity reports - ecosystem services decline accelerated post-2010
-  const isHistoricalMode = state.config?.startYear === 1990 || state.config?.scenarioMode === 'historical';
+  const isHistoricalMode = isHistoricalModeActive(state);
   const currentYear = state.config?.startYear
     ? state.config.startYear + Math.floor(state.currentMonth / 12)
     : 2025 + Math.floor(state.currentMonth / 12);

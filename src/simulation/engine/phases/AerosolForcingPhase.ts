@@ -25,6 +25,7 @@
 
 import type { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { assertFinite } from '@/simulation/utils/assertions';
+import { isHistoricalModeActive } from '@/simulation/utils/historicalMode';
 
 export class AerosolForcingPhase implements SimulationPhase {
   readonly id = 'aerosol-forcing';
@@ -138,8 +139,7 @@ export class AerosolForcingPhase implements SimulationPhase {
    */
   private isHistoricalBaselinePeriod(state: GameState): boolean {
     // Check scenario mode
-    const isHistorical = state.config?.scenarioMode === 'historical';
-    if (!isHistorical) return false;
+    if (!isHistoricalModeActive(state)) return false;
 
     // Check year range
     const startYear = state.config?.startYear;

@@ -312,7 +312,7 @@ export function updateEnvironmentalAccumulation(
   let biodiversityLossRate: number;
   let naturalRecovery: number;
 
-  if (state.config.scenarioMode === 'historical' && state.currentYear <= 2024) {
+  if (isHistoricalModeActive(state)) {
     // === HISTORICAL MODE (1990-2024): WWF LPI Empirical Rates ===
     // Research: WWF Living Planet Index 2024
     // - 1970: 1.00 (baseline)
