@@ -612,25 +612,31 @@ export class PythonAgentWrapper extends EventEmitter {
     }
     this.pendingRequests.clear();
 
-    // Graceful shutdown
-    this.process.kill('SIGTERM');
+    // H3 FIX: Return a promise that resolves ONLY when process actually exits
+    // This ensures shutdown() waits for all processes before continuing
+    const processRef = this.process;
+    const agentId = this.agentId;
 
-    // H3 FIX: Track the force-kill timeout so we can clear it on graceful exit
-    const forceKillTimeout = setTimeout(() => {
-      if (this.process && !this.process.killed) {
-        console.warn(`⚠️ Force killing agent ${this.agentId}`);
-        this.process.kill('SIGKILL');
-      }
-      this.processRegistry.unregister(this.agentId);
-    }, 5000);
+    return new Promise<void>((resolve) => {
+      // Force kill after 5s if graceful shutdown fails
+      const forceKillTimeout = setTimeout(() => {
+        if (processRef && !processRef.killed) {
+          console.warn(`⚠️ Force killing agent ${agentId}`);
+          processRef.kill('SIGKILL');
+        }
+      }, 5000);
 
-    // H3 FIX: Clear timeout when process exits gracefully (prevents event loop hang)
-    this.process.once('exit', () => {
-      clearTimeout(forceKillTimeout);
-      this.processRegistry.unregister(this.agentId);
+      // Resolve promise when process actually exits
+      processRef.once('exit', () => {
+        clearTimeout(forceKillTimeout);
+        this.processRegistry.unregister(agentId);
+        console.log(`🛑 Agent ${agentId} stopped`);
+        resolve();
+      });
+
+      // Send graceful shutdown signal
+      processRef.kill('SIGTERM');
     });
-
-    console.log(`🛑 Agent ${this.agentId} stopped`);
   }
 
   getHealthStatus(): boolean {
