@@ -35,6 +35,7 @@ import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 import { FLOORS } from './config/centralConfig';
 import { initializeLegacyNutrientStock } from './legacyNutrientStocks';
 import { initializeRegionalNitrogenManagement } from './nitrogenFoodCoupling';
+import { isHistoricalModeActive } from './utils/historicalMode';
 
 /**
  * Sample biosphere extinction rate from log-uniform distribution
@@ -1237,7 +1238,8 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     // HISTORICAL MODE (Nov 27, 2025): Disable cascade trigger during hindcast validation
     // Root cause: Cascades trigger in 1990-2024 baseline period, causing exponential mortality
     // Research: research/historical_mode_parameters_20251127.md
-    const historicalModeActive = state.config.historicalMode ?? false;
+    // HIGH-8 FIX v2 (Nov 28, 2025): Use isHistoricalModeActive() utility (checks scenarioMode, not historicalMode)
+    const historicalModeActive = isHistoricalModeActive(state);
 
     // Stochastic trigger with Bayesian adjustment
     if (!system.cascadeActive && !gracePeriod && !historicalModeActive && deterministicRandom() < monthlyTriggerChance) {
@@ -1277,7 +1279,8 @@ export function updatePlanetaryBoundaries(state: GameState): void {
 
   // === 5. APPLY CASCADE EFFECTS ===
   // HISTORICAL MODE (Nov 27, 2025): Skip cascade effects during hindcast validation
-  const historicalMode = state.config.historicalMode ?? false;
+  // HIGH-8 FIX v2 (Nov 28, 2025): Use isHistoricalModeActive() utility (checks scenarioMode, not historicalMode)
+  const historicalMode = isHistoricalModeActive(state);
   if (system.cascadeActive && !historicalMode) {
     applyTippingPointCascadeEffects(state);
   }
@@ -1362,8 +1365,9 @@ export function applyTippingPointCascadeEffects(state: GameState): void {
   // Biodiversity crashes (with variation)
   // HIGH-8 FIX (Nov 27, 2025): Skip during historical mode (1990-2024)
   // Historical biodiversity decline is handled by environmental.ts with empirical WWF LPI rates
-  const historicalModeActive = state.config.historicalMode && state.currentYear <= 2024;
-  if (!historicalModeActive) {
+  // HIGH-8 FIX v2 (Nov 28, 2025): Use isHistoricalModeActive() utility (checks scenarioMode, not historicalMode)
+  // ROOT CAUSE: state.config.historicalMode doesn't exist during hindcast (uses scenarioMode='historical' instead)
+  if (!isHistoricalModeActive(state)) {
     const bioDecay = 0.03 * envStochasticFactor(); // Base 3% ± variation
     env.biodiversityIndex = Math.max(0, env.biodiversityIndex * (1 - bioDecay));
   }
@@ -1618,7 +1622,8 @@ function updateLandUseSystem(state: GameState): void {
 
       // Check for ecosystem collapse (varies by biodiversity weight)
       // HIGH-8 FIX (Nov 27, 2025): Disable catastrophic collapses during historical mode
-      const historicalModeActive = state.config.historicalMode && state.currentYear <= 2024;
+      // HIGH-8 FIX v2 (Nov 28, 2025): Use isHistoricalModeActive() utility (checks scenarioMode, not historicalMode)
+      const historicalModeActive = isHistoricalModeActive(state);
       const collapseChance = region.biodiversityWeight * 0.05; // Tropical has highest chance
       if (!historicalModeActive && region.ecosystemCollapseRisk > 0.80 && deterministicRandom() < collapseChance) {
         region.ecosystemsLost++;
@@ -2080,7 +2085,8 @@ export function updateBiosphereIntegrityIndex(
   // Root cause: Crisis-calibrated extinction rates produce -95% collapse (0.03 vs 0.49 actual)
   // Historical data: WWF Living Planet Index shows -34.7% decline 1990-2024 (0.75 → 0.49)
   // Solution: Use baseline habitat loss rate (1.236%/year) instead of crisis extinction cascades
-  if (state.config.historicalMode) {
+  // HIGH-8 FIX v2 (Nov 28, 2025): Use isHistoricalModeActive() utility (checks scenarioMode, not historicalMode)
+  if (isHistoricalModeActive(state)) {
     console.log(`🧪 [BII] Historical mode ACTIVE (month ${state.currentMonth}, species: ${bii.currentSpeciesCount})`);
     const HISTORICAL_ANNUAL_DECLINE_RATE = 0.01236; // 1.236% per year (WWF LPI 1990-2024: 0.75 → 0.49)
     const monthlyDeclineRate = HISTORICAL_ANNUAL_DECLINE_RATE / 12;
