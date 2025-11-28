@@ -45,6 +45,7 @@ import {
   assertFinite,
   assertDefined,
 } from '@/simulation/utils/assertions';
+import { isHistoricalModeActive } from '@/simulation/utils/historicalMode';
 
 /**
  * Get historical baseline death rate (crude death rate per 1000)
@@ -502,8 +503,9 @@ export class BaselineMortalityPhase implements SimulationPhase {
     // Solution: In historical mode (1990-2024 hindcast), skip Bayesian baseline mortality entirely.
     // The regional population system handles ALL mortality with historical CDR scaling.
     // HIGH-7 FIX (Nov 27, 2025): Use historicalMode flag (not scenarioMode) for hindcast calibration
+    // CRITICAL-1 FIX (Nov 28, 2025): Unified historical mode detection via isHistoricalModeActive()
     // historicalMode = empirical UN data (1990-2024), scenarioMode = crisis severity when crises occur
-    if (state.config.historicalMode && state.currentYear <= 2024) {
+    if (isHistoricalModeActive(state)) {
       return { events: [] };
     }
 
@@ -567,7 +569,7 @@ export class BaselineMortalityPhase implements SimulationPhase {
     // DIAGNOSTIC LOGGING (historical demographics)
     if (state.currentMonth % 12 === 0) {
       const cdr = getHistoricalCrudeDeathRate(actualYear);
-      if (state.config.historicalMode) {
+      if (isHistoricalModeActive(state)) {
         const cbr = getHistoricalCrudeBirthRate(actualYear);
         const netGrowthPer1000 = cbr - cdr;
         console.log(`👶 Historical demographics (${actualYear}):`);

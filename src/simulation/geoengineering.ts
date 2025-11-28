@@ -52,7 +52,8 @@ export function updateGeoengineering(state: GameState): void {
   // HISTORICAL MODE (Nov 27, 2025): Skip geoengineering for hindcast validation
   // Research: No large-scale geoengineering deployment occurred 1990-2024
   // Prevents temperature overrides that distort climate sensitivity validation
-  if (state.config.historicalMode) {
+  // CRITICAL-1 FIX (Nov 28, 2025): Unified historical mode detection via isHistoricalModeActive()
+  if (isHistoricalModeActive(state)) {
     return;
   }
 
