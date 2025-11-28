@@ -1,0 +1,16 @@
+[Unit]
+Description=Sylvia (Research Skeptic) Matrix Monitor
+After=network.target
+
+[Service]
+Type=simple
+User=lizthedeveloper_gmail_com
+WorkingDirectory=/home/lizthedeveloper_gmail_com/ai_game_theory_simulation
+ExecStart=/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/scripts/sylvia-monitor.sh
+Restart=always
+RestartSec=10
+StandardOutput=append:/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/logs/agent-monitors/sylvia-monitor-service.log
+StandardError=append:/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/logs/agent-monitors/sylvia-monitor-service-error.log
+
+[Install]
+WantedBy=multi-user.target
