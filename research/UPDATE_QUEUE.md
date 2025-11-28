@@ -1,6 +1,6 @@
 # Research Update Queue
-**Generated:** 11/28/2025, 12:30:03 PM
-**Files Scanned:** 470
+**Generated:** 11/28/2025, 1:30:04 PM
+**Files Scanned:** 471
 
 ---
 
@@ -813,7 +813,7 @@
 
 ## 📋 MEDIUM (Review Within Quarter)
 
-**Count:** 21 (4.5%)
+**Count:** 22 (4.7%)
 
 - `LAYER2_COMPREHENSIVE_STATUS_20251030.md` - Oldest: 2020 (5 years)
 - `LAYER2_DEBATE_SUMMARY_20251030.md` - Oldest: 2020 (5 years)
@@ -833,6 +833,7 @@
 - `irreversibility_reconciliation_20251120.md` - Oldest: 2020 (5 years)
 - `kangas_ubi_finland_verification_20251030.md` - Oldest: 2020 (5 years)
 - `malthusian-overshoot-causation-attribution_20251018.md` - Oldest: 2020 (5 years)
+- `permafrost_carbon_feedback_20251128.md` - Oldest: 2020 (5 years)
 - `planetary-boundary-recovery-mechanisms_20251017.md` - Oldest: 2020 (5 years)
 - `structured_clone_performance_20251107.md` - Oldest: 2021 (4 years)
 - `threshold_uncertainty_verification_20251031.md` - Oldest: 2020 (5 years)
@@ -841,7 +842,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 290 (61.7%)
+**Count:** 290 (61.6%)
 
 All sources <3 years old. No action required.
 
@@ -851,11 +852,11 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 470 |
+| Total files | 471 |
 | CRITICAL | 0 (0.0%) |
 | HIGH | 159 (33.8%) |
-| MEDIUM | 21 (4.5%) |
-| LOW | 290 (61.7%) |
+| MEDIUM | 22 (4.7%) |
+| LOW | 290 (61.6%) |
 | Average age | 7.9 years |
 | Oldest source | 1955 (70 years ago) |
 
@@ -863,8 +864,8 @@ All sources <3 years old. No action required.
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 290 | 61.7% |
-| Warning (3-5yr) | 21 | 4.5% |
+| Current (<3yr) | 290 | 61.6% |
+| Warning (3-5yr) | 22 | 4.7% |
 | Critical (>5yr) | 159 | 33.8% |
 
 ### Targets
