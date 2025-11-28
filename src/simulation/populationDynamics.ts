@@ -25,6 +25,138 @@ import { assertFinite, assertStateProperty, assertInRange, assertProbability } f
 import { debugLog, DEBUG_FLAGS } from './utils/debugFlags';
 
 /**
+ * Demographic transition parameters (1990 → 2024)
+ * Source: UN World Population Prospects 2024
+ * Research: research/population_demographics_regional_20251128.md
+ *
+ * M-4 Implementation (Nov 28, 2025): Time-varying birth/death rates for hindcast calibration
+ * Replaces static 2024 rates with linear interpolation across demographic transition period.
+ * Goal: Reduce 2024 population error from +24.5% to <15%
+ */
+const DEMOGRAPHIC_PARAMS_1990_2024: Record<string, {
+  birthRate1990: number;
+  birthRate2024: number;
+  deathRate1990: number;
+  deathRate2024: number;
+}> = {
+  'East Asia': {
+    birthRate1990: 0.0176,  // TFR 2.2
+    birthRate2024: 0.0096,  // TFR 1.2
+    deathRate1990: 0.0070,
+    deathRate2024: 0.0080   // INCREASES (aging effect)
+  },
+  'South Asia': {
+    birthRate1990: 0.0336,  // TFR 4.2
+    birthRate2024: 0.0160,  // TFR 2.0
+    deathRate1990: 0.0100,
+    deathRate2024: 0.0065   // Declines (healthcare improvements)
+  },
+  'Sub-Saharan Africa': {
+    birthRate1990: 0.0520,  // TFR 6.5
+    birthRate2024: 0.0344,  // TFR 4.3
+    deathRate1990: 0.0130,
+    deathRate2024: 0.0079   // MAJOR decline (healthcare from low baseline)
+  },
+  'Europe': {
+    birthRate1990: 0.0140,  // TFR 1.75
+    birthRate2024: 0.0120,  // TFR 1.5
+    deathRate1990: 0.0105,
+    deathRate2024: 0.0108   // Slight increase (aging)
+  },
+  'Latin America': {
+    birthRate1990: 0.0264,  // TFR 3.3
+    birthRate2024: 0.0144,  // TFR 1.8
+    deathRate1990: 0.0065,
+    deathRate2024: 0.0055
+  },
+  'North America': {
+    birthRate1990: 0.0160,  // TFR 2.0
+    birthRate2024: 0.0136,  // TFR 1.7
+    deathRate1990: 0.0085,
+    deathRate2024: 0.0090   // Slight increase (aging)
+  },
+  'Middle East & North Africa': {
+    birthRate1990: 0.0400,  // TFR 5.0
+    birthRate2024: 0.0213,  // TFR 2.66
+    deathRate1990: 0.0070,
+    deathRate2024: 0.0045   // Major decline (young pop + oil wealth)
+  },
+  'Southeast Asia': {
+    birthRate1990: 0.0280,  // TFR 3.5
+    birthRate2024: 0.0168,  // TFR 2.1
+    deathRate1990: 0.0075,
+    deathRate2024: 0.0060
+  }
+  // Note: Central Asia and Oceania use static rates (small populations, <2% of global)
+};
+
+/**
+ * Calculate time-varying birth rate for a region
+ * Linear interpolation from 1990 baseline to 2024 current values
+ *
+ * M-4 Implementation: Simple linear transition replaces complex scaling logic
+ * Addresses root cause of +24.5% error: static rates don't capture 1990-2024 demographic transition
+ */
+export function getTimeVaryingBirthRate(regionName: string, year: number): number {
+  const params = DEMOGRAPHIC_PARAMS_1990_2024[regionName];
+  if (!params) {
+    // Regions without time-varying data use static rates
+    return 0; // Caller should use baseline instead
+  }
+
+  // Clamp year to valid range
+  const clampedYear = assertInRange(year, 1990, 2100, {
+    location: 'getTimeVaryingBirthRate',
+    valueName: 'year',
+    additionalInfo: { regionName }
+  });
+
+  // Linear interpolation: 1990 → 2024
+  const t = (clampedYear - 1990) / (2024 - 1990);
+  const normalizedT = Math.max(0, Math.min(1, t));
+
+  const rate = params.birthRate1990 - (params.birthRate1990 - params.birthRate2024) * normalizedT;
+
+  // Validate rate is positive and reasonable
+  return assertInRange(rate, 0.001, 0.1, {
+    location: 'getTimeVaryingBirthRate',
+    valueName: 'birthRate',
+    additionalInfo: { regionName, year: clampedYear, t: normalizedT }
+  });
+}
+
+/**
+ * Calculate time-varying death rate for a region
+ * Linear interpolation from 1990 baseline to 2024 current values
+ * Note: Some regions (East Asia, Europe, N. America) have INCREASING CDR due to aging
+ *
+ * M-4 Implementation: Captures both declining CDR (healthcare) AND rising CDR (aging) patterns
+ */
+export function getTimeVaryingDeathRate(regionName: string, year: number): number {
+  const params = DEMOGRAPHIC_PARAMS_1990_2024[regionName];
+  if (!params) {
+    return 0; // Caller should use baseline instead
+  }
+
+  const clampedYear = assertInRange(year, 1990, 2100, {
+    location: 'getTimeVaryingDeathRate',
+    valueName: 'year',
+    additionalInfo: { regionName }
+  });
+
+  const t = (clampedYear - 1990) / (2024 - 1990);
+  const normalizedT = Math.max(0, Math.min(1, t));
+
+  const rate = params.deathRate1990 - (params.deathRate1990 - params.deathRate2024) * normalizedT;
+
+  return assertInRange(rate, 0.001, 0.05, {
+    location: 'getTimeVaryingDeathRate',
+    valueName: 'deathRate',
+    additionalInfo: { regionName, year: clampedYear, t: normalizedT }
+  });
+}
+
+/**
  * Initialize regional populations (2025 baseline)
  *
  * Based on UN World Population Prospects 2024 data for major world regions.
