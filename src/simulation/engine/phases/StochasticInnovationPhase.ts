@@ -21,6 +21,7 @@
 import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { getTechDeploymentSafe } from '../../techTree/helpers';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { isHistoricalModeActive } from '@/simulation/utils/historicalMode';
 import {
   assertFinite,
   assertProbability,
@@ -210,6 +211,13 @@ export class StochasticInnovationPhase implements SimulationPhase {
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const events: GameEvent[] = [];
     setDeterministicRng(rng);
+
+    // HIGH-8 FIX (Nov 28, 2025): Disable stochastic breakthroughs during historical mode
+    // Rationale: Historical period (1990-2024) did NOT experience fusion power, room-temp superconductors, etc.
+    // These speculative innovations are for projection mode only (2025+)
+    if (isHistoricalModeActive(state)) {
+      return { events };
+    }
 
     // === 1. CALCULATE BREAKTHROUGH PROBABILITY MODIFIERS ===
 
