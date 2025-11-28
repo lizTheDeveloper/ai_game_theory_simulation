@@ -964,7 +964,8 @@ export function createDefaultInitialState(
     freshwaterSystem: initializeFreshwaterSystem(),
     
     // Ocean Acidification Crisis (TIER 1.3)
-    oceanAcidificationSystem: initializeOceanAcidificationSystem(),
+    // RD-2 (Nov 28, 2025): Pass RNG for species sensitivity randomization
+    oceanAcidificationSystem: initializeOceanAcidificationSystem(rngFunction),
     
     // Novel Entities Crisis (TIER 1.5)
     novelEntitiesSystem: initializeNovelEntitiesSystem(),

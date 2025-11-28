@@ -74,32 +74,49 @@ export class ResourceWaterPhase implements SimulationPhase {
 
     // === OCEAN ACIDIFICATION SYSTEM (TIER 1.3) ===
     // Updates ocean acidification, coral/shellfish collapse, marine food web, tech breakthroughs
+    // RD-2 (Nov 28, 2025): Research-backed cascades with species sensitivity, warming synergy
 
     // Validate ocean acidification system state before update
     if (state.oceanAcidificationSystem) {
-      assertProbability(state.oceanAcidificationSystem.pHLevel, {
+      // pH is now absolute units (7.5-8.3), not normalized [0,1]
+      assertFinite(state.oceanAcidificationSystem.pH, {
         location: 'ResourceWaterPhase.execute (pre-ocean)',
-        valueName: 'pHLevel',
+        valueName: 'pH',
         month: state.currentMonth
       });
-      assertProbability(state.oceanAcidificationSystem.aragoniteSaturation, {
+      // LEGACY pHLevel [0,1] maintained for backward compatibility
+      assertProbability(state.oceanAcidificationSystem.pHLevel, {
+        location: 'ResourceWaterPhase.execute (pre-ocean)',
+        valueName: 'pHLevel (legacy)',
+        month: state.currentMonth
+      });
+      // Aragonite saturation now in Ω units (1.0-4.6), not [0,1]
+      assertFinite(state.oceanAcidificationSystem.aragoniteSaturation, {
         location: 'ResourceWaterPhase.execute (pre-ocean)',
         valueName: 'aragoniteSaturation',
         month: state.currentMonth
       });
     }
 
-    updateOceanAcidificationSystem(state);
+    updateOceanAcidificationSystem(state, rng);  // RD-2: Pass RNG for determinism
     checkOceanAcidificationTechUnlocks(state);
 
     // Validate ocean acidification system state after update
     if (state.oceanAcidificationSystem) {
-      assertProbability(state.oceanAcidificationSystem.pHLevel, {
+      // pH is now absolute units (7.5-8.3), not normalized [0,1]
+      assertFinite(state.oceanAcidificationSystem.pH, {
         location: 'ResourceWaterPhase.execute (post-ocean)',
-        valueName: 'pHLevel',
+        valueName: 'pH',
         month: state.currentMonth
       });
-      assertProbability(state.oceanAcidificationSystem.aragoniteSaturation, {
+      // LEGACY pHLevel [0,1] maintained for backward compatibility
+      assertProbability(state.oceanAcidificationSystem.pHLevel, {
+        location: 'ResourceWaterPhase.execute (post-ocean)',
+        valueName: 'pHLevel (legacy)',
+        month: state.currentMonth
+      });
+      // Aragonite saturation now in Ω units (1.0-4.6), not [0,1]
+      assertFinite(state.oceanAcidificationSystem.aragoniteSaturation, {
         location: 'ResourceWaterPhase.execute (post-ocean)',
         valueName: 'aragoniteSaturation',
         month: state.currentMonth

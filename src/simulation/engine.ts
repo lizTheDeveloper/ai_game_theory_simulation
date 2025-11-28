@@ -171,6 +171,7 @@ import { ClimateDeploymentPhase } from './engine/phases/ClimateDeploymentPhase';
 import { ClimateDeploymentDelayPhase } from './engine/phases/ClimateDeploymentDelayPhase';  // TIER 1 CRITICAL (Nov 18, 2025): Three-delay model
 import { VolcanicForcingPhase } from './engine/phases/VolcanicForcingPhase';  // HIGH PRIORITY (Nov 27, 2025): Stratospheric aerosol forcing for hindcast validation
 import { PermafrostCarbonPhase } from './engine/phases/PermafrostCarbonPhase';  // TIER 2 RD-1 (Nov 28, 2025): Permafrost carbon feedback loop
+import { OceanAcidificationCascadePhase } from './engine/phases/OceanAcidificationCascadePhase';  // TIER 2 RD-2 (Nov 28, 2025): Regional ocean acidification cascades
 import { GeopoliticalConflictPhase } from './engine/phases/GeopoliticalConflictPhase';  // TIER 2 RD-3 (Nov 28, 2025): AI-era conflict escalation
 import { ResourceSoilPhase } from './engine/phases/ResourceSoilPhase';  // Consolidated phosphorus + novel entities
 import { ResourceWaterPhase } from './engine/phases/ResourceWaterPhase';  // Consolidated freshwater + ocean acidification
@@ -585,6 +586,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new ClimateDeploymentDelayPhase());  // TIER 1 CRITICAL (Nov 18, 2025): Three-delay model for realistic deployment timescales (order 16.0)
     this.orchestrator.registerPhase(new VolcanicForcingPhase());  // HIGH PRIORITY (Nov 27, 2025): Stratospheric aerosol forcing for hindcast validation (order 16.5)
     this.orchestrator.registerPhase(new PermafrostCarbonPhase());  // TIER 2 RD-1 (Nov 28, 2025): Permafrost carbon feedback loop (order 18.5)
+    this.orchestrator.registerPhase(new OceanAcidificationCascadePhase());  // TIER 2 RD-2 (Nov 28, 2025): Regional ocean acidification cascades (order 18.7)
     // === BATCH 4 CONSOLIDATED SURVIVAL SYSTEM (Nov 9, 2025) ===
     this.orchestrator.registerPhase(new HumanSurvivalSystemPhase());  // Consolidated: FamineSystemPhase + FoodSecurityDegradationPhase + MortalityStabilizersPhase (order 19.7)
     // DEPRECATED (Nov 21, 2025): TransitionMortalityPhase superseded by CoordinatedDeploymentPhase (order 10.5)
