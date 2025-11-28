@@ -125,7 +125,7 @@ aggregateGlobalPopulation(state);
 
 **⚠️ Historical Mode Exception (Nov 27 2025, commit 59032f2):**
 
-In **pre-2000 hindcast mode** (`config.scenarioMode === 'historical'`):
+In **pre-2024 hindcast mode** (`config.historicalMode = true`):
 - `BaselineMortalityPhase` is **SKIPPED entirely** (returns empty events)
 - Regional system applies deaths directly: `netGrowthRate = births - deaths`
 - Crisis/war multipliers are **DISABLED** (set to 1.0)
