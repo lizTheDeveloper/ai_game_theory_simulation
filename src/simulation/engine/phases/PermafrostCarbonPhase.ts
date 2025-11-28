@@ -57,7 +57,10 @@ export class PermafrostCarbonPhase implements SimulationPhase {
   private static readonly THAW_SENSITIVITY_KM2_PER_C = 3.5e6; // km² per °C
   private static readonly CO2_FRACTION = 0.9; // 90% of emissions
   private static readonly CH4_FRACTION = 0.1; // 10% of emissions
-  private static readonly CH4_GWP = 28; // 100-year global warming potential
+  private static readonly CH4_GWP = 28; // 100-year global warming potential (mass basis)
+  // CH4 carbon → CO2-equivalent carbon conversion:
+  // 1 Gt C (in CH4) → (16/12) Gt CH4 → (16/12)×28 Gt CO2-eq → (16/12)×28×(12/44) Gt C-eq = 10.18 Gt C-eq
+  private static readonly CH4_TO_CO2_CARBON_EQUIVALENT = 28 * (16/12) * (12/44); // ≈ 10.18
   private static readonly MIN_FLOOR = 1e-6; // Minimum floor to prevent exactly zero
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
@@ -149,34 +152,42 @@ export class PermafrostCarbonPhase implements SimulationPhase {
       }
     );
 
-    state.permafrostSystem.permafrostExtent = newExtent;
     state.permafrostSystem.annualThawRate = annualThawRate;
 
-    // Calculate carbon density (Gt C per km²)
-    // Prevent division by zero with MIN_FLOOR
+    // Calculate carbon density (Gt C per km²) from OLD extent BEFORE thaw
+    // This gives the density of the portion being thawed, not the remaining permafrost
+    // BUG FIX (Nov 28, 2025): Was using newExtent, which inflates density and causes
+    // runaway carbon release. Must use oldExtent to get density of thawed portion.
     const carbonDensity = assertFinite(
-      state.permafrostSystem.permafrostCarbon / Math.max(PermafrostCarbonPhase.MIN_FLOOR, newExtent),
+      state.permafrostSystem.permafrostCarbon / Math.max(PermafrostCarbonPhase.MIN_FLOOR, oldExtent),
       {
         location: 'PermafrostCarbonPhase.execute',
         valueName: 'carbonDensity',
         month: state.currentMonth,
         additionalInfo: {
           permafrostCarbon: state.permafrostSystem.permafrostCarbon,
-          permafrostExtent: newExtent
+          permafrostExtent: oldExtent
         }
       }
     );
 
     // Carbon exposed this month (Gt C)
+    // Can't expose more than total remaining carbon
     const carbonExposed = assertFinite(
-      monthlyThaw * carbonDensity,
+      Math.min(
+        monthlyThaw * carbonDensity,
+        state.permafrostSystem.permafrostCarbon
+      ),
       {
         location: 'PermafrostCarbonPhase.execute',
         valueName: 'carbonExposed',
         month: state.currentMonth,
-        additionalInfo: { monthlyThaw, carbonDensity }
+        additionalInfo: { monthlyThaw, carbonDensity, permafrostCarbon: state.permafrostSystem.permafrostCarbon }
       }
     );
+
+    // Update extent AFTER calculating exposure (need old extent for density)
+    state.permafrostSystem.permafrostExtent = newExtent;
 
     // Decomposition rate: 1-5%/year (sampled) of exposed carbon (CORRECTED from 7.5%)
     // Research: Schuur et al. (2022), Turetsky et al. (2020)
@@ -241,14 +252,20 @@ export class PermafrostCarbonPhase implements SimulationPhase {
 
     // Integrate with carbon cycle
     // Add CO2 emissions to atmospheric CO2
-    // CH4 emissions converted to CO2-equivalent (28× GWP)
+    // CH4 emissions converted to CO2-equivalent carbon (GWP × molecular weight corrections)
+    // BUG FIX (Nov 28, 2025): Was using raw GWP (28), but GWP is mass-based, not carbon-based.
+    // Correct conversion: CH4 C → CH4 mass → CO2-eq mass → CO2-eq C = multiply by 10.18
     const co2Equivalent = assertFinite(
-      co2Emissions + (ch4Emissions * PermafrostCarbonPhase.CH4_GWP),
+      co2Emissions + (ch4Emissions * PermafrostCarbonPhase.CH4_TO_CO2_CARBON_EQUIVALENT),
       {
         location: 'PermafrostCarbonPhase.execute',
         valueName: 'co2Equivalent',
         month: state.currentMonth,
-        additionalInfo: { co2Emissions, ch4Emissions }
+        additionalInfo: {
+          co2Emissions,
+          ch4Emissions,
+          ch4Multiplier: PermafrostCarbonPhase.CH4_TO_CO2_CARBON_EQUIVALENT
+        }
       }
     );
 
@@ -298,7 +315,7 @@ export class PermafrostCarbonPhase implements SimulationPhase {
       console.log(`  💨 Carbon remaining: ${newCarbon.toFixed(0)} Gt C`);
       console.log(`  💨 Annual emissions: ${state.permafrostSystem.annualEmissions.toFixed(2)} Gt C/year`);
       console.log(`     - CO2: ${(co2Emissions * 12).toFixed(2)} Gt C/year`);
-      console.log(`     - CH4: ${(ch4Emissions * 12).toFixed(2)} Gt C/year (${(ch4Emissions * 12 * PermafrostCarbonPhase.CH4_GWP).toFixed(1)} Gt CO2-eq/year)`);
+      console.log(`     - CH4: ${(ch4Emissions * 12).toFixed(2)} Gt C/year (${(ch4Emissions * 12 * PermafrostCarbonPhase.CH4_TO_CO2_CARBON_EQUIVALENT).toFixed(1)} Gt C-eq CO2/year)`);
 
       // Warning thresholds
       if (newExtent < 0.5 * 17.8e6) {
