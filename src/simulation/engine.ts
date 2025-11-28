@@ -171,6 +171,7 @@ import { ClimateDeploymentPhase } from './engine/phases/ClimateDeploymentPhase';
 import { ClimateDeploymentDelayPhase } from './engine/phases/ClimateDeploymentDelayPhase';  // TIER 1 CRITICAL (Nov 18, 2025): Three-delay model
 import { VolcanicForcingPhase } from './engine/phases/VolcanicForcingPhase';  // HIGH PRIORITY (Nov 27, 2025): Stratospheric aerosol forcing for hindcast validation
 import { PermafrostCarbonPhase } from './engine/phases/PermafrostCarbonPhase';  // TIER 2 RD-1 (Nov 28, 2025): Permafrost carbon feedback loop
+import { GeopoliticalConflictPhase } from './engine/phases/GeopoliticalConflictPhase';  // TIER 2 RD-3 (Nov 28, 2025): AI-era conflict escalation
 import { ResourceSoilPhase } from './engine/phases/ResourceSoilPhase';  // Consolidated phosphorus + novel entities
 import { ResourceWaterPhase } from './engine/phases/ResourceWaterPhase';  // Consolidated freshwater + ocean acidification
 // Batch 4 Consolidation: Crisis & Mortality (14 → 5, Nov 9, 2025)
@@ -643,6 +644,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new SocialStabilitySystemPhase());  // Consolidated: SocialStabilityPhase (33.0), SocialCohesionUpdatePhase (26.1), ParanoiaPhase (32.0), TrustRecoveryPhase (24.5) → order 26.1
     this.orchestrator.registerPhase(new CooperativeSystemsPhase());  // Consolidated: CollectiveFormationPhase (4.2), CollectiveActionsPhase (5.5), CooperativeOwnershipPhase (15.5), CooperativeSpiralsPhase (11.5), UpwardSpiralsPhase (11.0) → order 11.5
     this.orchestrator.registerPhase(new InternationalRelationsPhase());  // Consolidated: DiplomaticAIPhase (14.0), ConflictResolutionPhase (13.0), MADDeterrencePhase (16.0), FlashWarEscalationPhase (29.0) → order 13.0
+    this.orchestrator.registerPhase(new GeopoliticalConflictPhase());  // TIER 2 RD-3 (Nov 28, 2025): AI-era geopolitical conflict escalation (order 28.0)
 
     // Batch 5: Final phases (37.0 - 40.0, 98.0 - 99.0)
     // ExtinctionTriggersPhase + ExtinctionProgressPhase + CatastrophicScenariosPhase removed - merged into ExtinctionSystemPhase (Batch 4, Nov 9, 2025)
