@@ -22,6 +22,7 @@ import {
   initializeRegionalResilienceProfile
 } from './mortalityStabilizersInit';
 import { assertFinite } from './utils/assertions';
+import { isHistoricalModeActive } from './utils/historicalMode';
 
 /**
  * Initialize regional populations with 2025 baseline data
@@ -370,7 +371,8 @@ export function updateRegionalPopulations(state: GameState): void {
     // by historical CBR curves (see lines 393-419 below). We don't want to overwrite
     // the historical initialization with 2025 modifiers.
     // HIGH-7 FIX (Nov 27, 2025): Use historicalMode flag for hindcast calibration
-    if (!state.config.historicalMode) {
+    // CRITICAL-1 FIX (Nov 28, 2025): Unified historical mode detection via isHistoricalModeActive()
+    if (!isHistoricalModeActive(state)) {
       // Use inverse healthcare-fertility relationship (implemented in populationDynamics.ts)
       const healthcareFertilityModifier = calculateHealthcareFertilityModifier(region.healthcareQuality);
       const developmentModifier = calculateDevelopmentModifier(region.economicStage);
@@ -457,7 +459,8 @@ export function updateRegionalPopulations(state: GameState): void {
     const skipScaling = (state as any)._skipHistoricalBirthRateScaling;
 
     // HIGH-7 FIX (Nov 27, 2025): Use historicalMode flag for hindcast calibration
-    if (state.config.historicalMode && skipScaling) {
+    // CRITICAL-1 FIX (Nov 28, 2025): Unified historical mode detection via isHistoricalModeActive()
+    if (isHistoricalModeActive(state) && skipScaling) {
       // DIRECT HISTORICAL CBR MODE (Nov 27, 2025)
       // Fertility is already initialized to historical values (e.g., SSA TFR 6.35)
       // Calculate birth rate DIRECTLY from historical CBR data (not from fertility formula)
@@ -492,7 +495,7 @@ export function updateRegionalPopulations(state: GameState): void {
         console.log(`    Adjusted birth rate: ${(region.adjustedBirthRate * 100).toFixed(2)}%`);
         console.log(`    Fertility (TFR): ${region.fertilityRate.toFixed(2)}`);
       }
-    } else if (state.config.historicalMode && !skipScaling) {
+    } else if (isHistoricalModeActive(state) && !skipScaling) {
       // LEGACY HISTORICAL SCALING MODE (pre-Nov 27, 2025)
       // Calculate from fertility formula, then scale by historical CBR
       region.adjustedBirthRate = region.baselineBirthRate *
@@ -544,8 +547,9 @@ export function updateRegionalPopulations(state: GameState): void {
     // Example: SSA 1990 baseline 0.9% × healthcare 0.76 × historical scale 1.95 = 1.33%
     // But expected is 15.6/1000 = 1.56% (historical CDR directly).
     // HIGH-7 FIX (Nov 27, 2025): Use historicalMode flag for hindcast calibration
+    // CRITICAL-1 FIX (Nov 28, 2025): Unified historical mode detection via isHistoricalModeActive()
     // historicalMode = empirical UN data (1990-2024), scenarioMode = crisis severity
-    const isHistoricalMode = state.config.historicalMode && state.currentYear <= 2024;
+    const isHistoricalMode = isHistoricalModeActive(state);
     const healthcareReduction = isHistoricalMode ? 1.0 : Math.max(0.3, 1 - (region.healthcareQuality * 0.7));
 
     // Detect NaN in resource reserves - fail loudly
@@ -628,7 +632,8 @@ export function updateRegionalPopulations(state: GameState): void {
     // Without scaling: Population grows too fast in high-mortality regions → 500M overshoot by 2020
     // Research: /research/regional_cdr_un_wpp_2024_20251125.md
     // HIGH-7 FIX (Nov 27, 2025): Use historicalMode flag for hindcast calibration
-    if (state.config.historicalMode) {
+    // CRITICAL-1 FIX (Nov 28, 2025): Unified historical mode detection via isHistoricalModeActive()
+    if (isHistoricalModeActive(state)) {
       const { getRegionalHistoricalDeathRate } = require('./engine/phases/BaselineMortalityPhase');
       const actualYear = state.currentYear;
 
@@ -692,8 +697,9 @@ export function updateRegionalPopulations(state: GameState): void {
     // Solution: In historical mode, apply regional death rates directly (births - deaths).
     // In modern mode, use Bayesian system (births only, deaths via BaselineMortalityPhase).
     // HIGH-7 FIX (Nov 27, 2025): Use historicalMode flag for hindcast calibration
+    // CRITICAL-1 FIX (Nov 28, 2025): Unified historical mode detection via isHistoricalModeActive()
     // historicalMode = empirical UN data (1990-2024), scenarioMode = crisis severity
-    const useDirectDeaths = state.config.historicalMode && state.currentYear <= 2024;
+    const useDirectDeaths = isHistoricalModeActive(state);
     region.netGrowthRate = useDirectDeaths
       ? (region.adjustedBirthRate - region.adjustedDeathRate)  // Historical: apply deaths here
       : region.adjustedBirthRate;                               // Modern: Bayesian handles deaths

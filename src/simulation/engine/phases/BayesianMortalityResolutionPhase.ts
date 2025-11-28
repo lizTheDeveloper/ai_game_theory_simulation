@@ -35,6 +35,7 @@ import {
   assertProbability
 } from '@/simulation/utils/assertions';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { isHistoricalModeActive } from '@/simulation/utils/historicalMode';
 
 export class BayesianMortalityResolutionPhase implements SimulationPhase {
   readonly id = 'bayesian_mortality_resolution';
@@ -61,8 +62,9 @@ export class BayesianMortalityResolutionPhase implements SimulationPhase {
     // double-count deaths by applying crisis mortality on top of historical rates.
     // Solution: Disable Bayesian mortality entirely for hindcast validation (1990-2024).
     // Historical CDR data already incorporates real-world mortality from all causes.
+    // CRITICAL-1 FIX (Nov 28, 2025): Unified historical mode detection via isHistoricalModeActive()
     // historicalMode = empirical UN data (1990-2024), scenarioMode = crisis severity
-    if (state.config.historicalMode && state.currentYear <= 2024) {
+    if (isHistoricalModeActive(state)) {
       // Clear any accumulated risks to prevent memory leaks
       if (state.humanPopulationSystem?.mortalityRisks) {
         state.humanPopulationSystem.mortalityRisks = [];

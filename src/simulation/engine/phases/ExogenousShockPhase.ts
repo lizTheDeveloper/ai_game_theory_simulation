@@ -29,6 +29,7 @@ import {
 } from '@/simulation/utils/assertions';
 import { addMortalityRisk } from '@/simulation/bayesianMortality';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
+import { isHistoricalModeActive } from '@/simulation/utils/historicalMode';
 
 /**
  * CRITICAL FIX (Nov 8, 2025): Round capabilities to discrete levels [0-5]
@@ -1253,8 +1254,9 @@ export class ExogenousShockPhase implements SimulationPhase {
     // HISTORICAL MODE (Nov 27, 2025): Dampen crisis systems for hindcast validation
     // Research: research/historical_mode_parameters_20251127.md
     // Root cause: Crisis-calibrated systems produce massive errors on baseline period (1990-2024)
+    // CRITICAL-1 FIX (Nov 28, 2025): Unified historical mode detection via isHistoricalModeActive()
     // Solution: Disable extreme shocks (nuclear/asteroid), reduce gray swan frequency by 90%
-    if (state.config.historicalMode) {
+    if (isHistoricalModeActive(state)) {
       console.log(`[ExogenousShockPhase] Historical dampening active (month ${state.currentMonth})`);
 
       // BLACK SWAN: DISABLED in historical mode (no nuclear war or asteroids in 1990-2024)

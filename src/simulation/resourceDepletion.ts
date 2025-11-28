@@ -25,6 +25,7 @@ import {
 import { assertEconomicStage, assertStateProperty, assertFinite, assertPlanetaryBoundary, assertProbability } from './utils/assertions';
 import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 import { interpolateClimateForMonth } from '@/data/loaders/historicalClimateLoader';
+import { isHistoricalModeActive } from './utils/historicalMode';
 
 // Helper to add events to state
 function addEvent(state: GameState, event: Omit<GameEvent, 'id' | 'timestamp'>): void {
@@ -2294,7 +2295,8 @@ function checkResourceEvents(state: GameState, resources: ResourceEconomy): void
   // Research: research/historical_mode_parameters_20251127.md
   // Root cause: Crisis-calibrated resource depletion produces unrealistic shortages during baseline period
   // Solution: Reduce warning frequency by 80% (only trigger if reserves VERY low)
-  if (state.config.historicalMode) {
+  // CRITICAL-1 FIX (Nov 28, 2025): Unified historical mode detection via isHistoricalModeActive()
+  if (isHistoricalModeActive(state)) {
     // More stringent thresholds for historical mode (only severe shortages trigger warnings)
     const HISTORICAL_DAMPENING = 0.2; // 80% reduction in sensitivity
 
