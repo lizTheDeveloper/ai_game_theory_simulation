@@ -181,3 +181,32 @@ resource-water (20.2) → resource-soil (20.1) → wet_bulb_temperature (20.45) 
 
 **Reviewer:** Architecture Skeptic
 **Confidence:** HIGH (verified patterns across 20+ files, TypeScript compilation clean)
+
+## UPDATE: M-1 Audit Complete (Nov 28, 2025)
+
+**M-1: Dual Biodiversity Decline Mechanisms** - RESOLVED (No Issue)
+
+**Investigation:**
+- PlanetaryBoundariesPhase.ts (lines 143-187): Applies biodiversity decline ✓ ACTIVE
+- environmental.ts (lines 307-389): Contains biodiversity decline code ✓ INACTIVE
+
+**Finding:** NO DUPLICATION
+- `updateEnvironmentalAccumulation()` in environmental.ts is NOT called by PhaseOrchestrator
+- Function only exists for legacy engine.ts (deprecated)
+- PhaseOrchestrator uses phase-based system exclusively
+- Single source of truth: PlanetaryBoundariesPhase.ts (order 21.0)
+
+**Verification:**
+```bash
+# Phase orchestrator imports
+grep -rn "PhaseOrchestrator" scripts/hindcastingValidation.ts
+# → Uses PhaseOrchestrator (NOT old engine)
+
+# Function calls
+grep -rn "updateEnvironmentalAccumulation" src/simulation/engine/phases/
+# → Zero calls from phase system
+```
+
+**Conclusion:** False alarm. No action required. The biodiversity decline code in environmental.ts is dead code for the old engine.
+
+**Recommendation:** Consider removing `updateEnvironmentalAccumulation()` biodiversity logic to avoid confusion (LOW priority cleanup).
