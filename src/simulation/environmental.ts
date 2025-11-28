@@ -435,11 +435,13 @@ export function updateEnvironmentalAccumulation(
 
     if (cascadeMagnitude > 10.0) {
       // Mega-cascade (rare but devastating - supply chain collapse, hoarding)
+      // NOTE: Uses LINEAR subtraction (consistent with regular resource depletion model)
+      // Resources are extracted/consumed at fixed rates, not multiplicative cascades
       const cascadeSize = Math.min(cascadeMagnitude / 100, 0.3); // Max 30% drop
       env.resourceReserves = Math.max(0, env.resourceReserves - cascadeSize);
 
       console.warn(`\n  ⚠️ RESOURCE MEGA-CASCADE: Lévy flight triggered`);
-      console.log(`     Magnitude: ${cascadeMagnitude.toFixed(2)} → -${(cascadeSize * 100).toFixed(1)}% reserves`);
+      console.log(`     Magnitude: ${cascadeMagnitude.toFixed(2)} → -${(cascadeSize * 100).toFixed(1)}% reserves (linear)`);
       console.log(`     Triggered at ${(env.resourceReserves * 100).toFixed(1)}% (critical threshold)`);
     }
   }
@@ -450,11 +452,13 @@ export function updateEnvironmentalAccumulation(
 
     if (cascadeMagnitude > 10.0) {
       // Mega-cascade (tipping point triggers positive feedbacks)
+      // NOTE: Uses LINEAR subtraction (consistent with regular climate degradation model)
+      // Climate forcing accumulates additively (GtCO2e), not multiplicatively
       const cascadeSize = Math.min(cascadeMagnitude / 150, 0.25); // Max 25% drop
       env.climateStability = Math.max(0, env.climateStability - cascadeSize);
 
       console.warn(`\n  ⚠️ CLIMATE MEGA-CASCADE: Tipping point cascade`);
-      console.log(`     Magnitude: ${cascadeMagnitude.toFixed(2)} → -${(cascadeSize * 100).toFixed(1)}% stability`);
+      console.log(`     Magnitude: ${cascadeMagnitude.toFixed(2)} → -${(cascadeSize * 100).toFixed(1)}% stability (linear)`);
       console.log(`     Feedback loop: permafrost methane / ice-albedo effect activated`);
     }
   }
