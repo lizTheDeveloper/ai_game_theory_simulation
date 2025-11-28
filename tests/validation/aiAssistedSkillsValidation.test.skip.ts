@@ -9,7 +9,7 @@
  * 5. Edge cases (extreme scenarios)
  *
  * **Research Foundation:**
- * - Acemoglu & Restrepo (2022) - Automation economics
+ * - Acemoglu & Restrepo (2019) - Automation economics
  * - Economic Policy Institute (2024) - Productivity-wage gap
  * - Cognitive Research (2024) - Skill retention with AI
  *

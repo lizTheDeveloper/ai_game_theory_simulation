@@ -9047,7 +9047,7 @@ The simulation runs via a **phase-based architecture** with **100 phases** execu
 - SocialSafetyNetsPhase (18.0): Community programs
 - InformationWarfarePhase (19.0): Truth decay, deepfakes
 - NuclearCommandControlPhase (20.0): Circuit breakers
-- PlanetaryBoundariesPhase (21.0): 9 planetary boundaries tracking (**FIX Nov 27** - syncs `climate_change.currentValue` to actual CO2-driven temperature + 0.7°C pre-industrial offset)
+- PlanetaryBoundariesPhase (21.0): 9 planetary boundaries tracking (**FIX Nov 28** - syncs `climate_change.currentValue` to actual CO2-driven temperature + 0.1°C pre-industrial offset)
 - DystopiaProgressionPhase (21.01): Dystopia variant tracking
 - Tier2PhysicalSystemsPhase (21.1): Physical breakthrough effects
 - IrreversibilityTrackingPhase (21.4): Irreversible threshold tracking

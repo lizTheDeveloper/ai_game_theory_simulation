@@ -62,11 +62,13 @@ if (state.planetaryBoundariesSystem?.boundaries?.climate_change && state.resourc
       month: state.currentMonth
     }
   );
-  // Convert to pre-industrial (1750) baseline: add 0.7°C
-  // Research: 1750-1850 warming ~0.7°C (IPCC AR6)
+  // Convert to pre-industrial (1750) baseline: add 0.1°C
+  // Research: IPCC AR6 Cross-Chapter Box 1.2 - 0.1°C warming (range: -0.1 to +0.3°C)
+  // CORRECTED Nov 28, 2025: Previous value (0.7°C) was 700% overestimate
+  const PREINDUSTRIAL_OFFSET = 0.1; // °C, IPCC AR6 best estimate
   state.planetaryBoundariesSystem.boundaries.climate_change.currentValue =
     assertFinite(
-      tempAnomalyVs1850 + 0.7,
+      tempAnomalyVs1850 + PREINDUSTRIAL_OFFSET,
       {
         location: 'PlanetaryBoundariesPhase.execute',
         valueName: 'climate_change.currentValue (synced)',

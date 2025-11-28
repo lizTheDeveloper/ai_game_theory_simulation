@@ -38,8 +38,8 @@ export class PermafrostCarbonPhase implements SimulationPhase {
   readonly name = 'Permafrost Carbon Feedback';
   readonly order = 18.5;
 
-  // Dependencies: Need temperature anomaly from climate system
-  readonly dependencies = ['climate_system'] as const;
+  // No phase dependencies - uses state.resourceEconomy.co2.temperatureAnomaly
+  // (set by ResourceEconomyPhase at order 17.0, which runs before this phase)
 
   // Constants (validated parameters)
   private static readonly ARCTIC_AMPLIFICATION = 3.0; // 3× global warming in Arctic
