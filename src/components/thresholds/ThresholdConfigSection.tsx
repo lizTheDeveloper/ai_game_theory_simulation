@@ -79,7 +79,7 @@ const TIER1_THRESHOLDS: ThresholdMetadata[] = [
     distributionType: 'beta',
     params: { alpha: 2, beta: 5, min: 0.05, max: 0.30 },
     range: '5-30% per year (mode ~8%)',
-    citation: 'Acemoglu & Restrepo (2022) - automation and task displacement',
+    citation: 'Acemoglu & Restrepo (2019) - automation and task displacement',
     impact: 'How fast AI automation displaces human labor across sectors'
   },
   {
@@ -126,7 +126,7 @@ const TIER2_THRESHOLDS: ThresholdMetadata[] = [
     distributionType: 'triangular',
     params: { min: 0.40, mode: 0.50, max: 0.60 },
     range: '40-60% (mode: 50%)',
-    citation: 'Industrial Revolution, Great Depression, Acemoglu & Restrepo (2022)',
+    citation: 'Industrial Revolution, Great Depression, Acemoglu & Restrepo (2019)',
     impact: 'Unemployment rate triggering social crisis and instability'
   },
   {

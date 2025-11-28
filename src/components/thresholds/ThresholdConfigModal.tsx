@@ -56,7 +56,7 @@ const THRESHOLDS: ThresholdInfo[] = [
     id: 'automationJobLossThreshold',
     name: 'Automation Job Loss Crisis',
     icon: '💼',
-    description: 'Unemployment level at which automation-driven crises trigger. Acemoglu & Restrepo (2022): 25-45% threshold range.',
+    description: 'Unemployment level at which automation-driven crises trigger. Acemoglu & Restrepo (2019): 25-45% threshold range.',
     defaultMin: 0.25,
     defaultMax: 0.45,
     type: 'Normal',

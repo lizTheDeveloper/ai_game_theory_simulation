@@ -110,15 +110,24 @@ export class PlanetaryBoundariesPhase implements SimulationPhase {
           month: state.currentMonth
         }
       );
-      // Convert to pre-industrial (1750) baseline: add 0.7°C
-      // Research: 1750-1850 warming ~0.7°C (IPCC AR6, historical temperature reconstruction)
+      // Convert to pre-industrial (1750) baseline: add 0.1°C
+      // Research: IPCC AR6 Cross-Chapter Box 1.2 - Global surface temperature increased by ~0.1°C
+      // (likely range -0.1°C to +0.3°C, medium confidence) between 1750 and 1850-1900
+      // Anthropogenic contribution: 0.0-0.2°C, with natural variability ±0.1 W/m² from solar/volcanic
+      const PREINDUSTRIAL_OFFSET = 0.1; // °C, IPCC AR6 best estimate
+
       state.planetaryBoundariesSystem.boundaries.climate_change.currentValue =
         assertFinite(
-          tempAnomalyVs1850 + 0.7,
+          tempAnomalyVs1850 + PREINDUSTRIAL_OFFSET,
           {
             location: 'PlanetaryBoundariesPhase.execute',
             valueName: 'climate_change.currentValue (synced)',
-            month: state.currentMonth
+            month: state.currentMonth,
+            additionalInfo: {
+              tempAnomalyVs1850,
+              PREINDUSTRIAL_OFFSET,
+              source: 'IPCC AR6 Cross-Chapter Box 1.2'
+            }
           }
         );
     }
