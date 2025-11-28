@@ -48,13 +48,15 @@ if (typeof u1 !== 'number' || !isFinite(u1)) {
 
 **Solution:**
 1. **PlanetaryBoundariesPhase.ts:** Sync `climate_change.currentValue` to actual temperature each phase
-   - Uses `resourceEconomy.co2.temperatureAnomaly` + 0.7°C (pre-industrial baseline offset)
+   - Uses `resourceEconomy.co2.temperatureAnomaly` + 0.1°C (pre-industrial baseline offset)
    - Overwrites stale deforestation drift with authoritative temperature
 2. **hindcastingValidation.ts:** Read directly from `resourceEconomy.co2.temperatureAnomaly`
 
-**Research Parameter:**
-- 0.7°C offset for 1750-1850 warming (IPCC AR6 historical temperature reconstruction)
+**Research Parameter (CORRECTED Nov 28, 2025):**
+- 0.1°C offset for 1750-1850 warming (IPCC AR6 Cross-Chapter Box 1.2)
+- Likely range: -0.1°C to +0.3°C (medium confidence)
 - Converts 1850-1900 baseline to pre-industrial (1750) baseline
+- **Previous value (0.7°C) was a 700% overestimate - corrected after autonomous researcher verification**
 
 **Result:**
 - Overall hindcast deviation: 56.9% → 44.1% (12.8pp improvement)
