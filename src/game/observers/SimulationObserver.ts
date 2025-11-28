@@ -136,6 +136,7 @@ export class SimulationObserver implements ISimulationObserver {
         outcomeClassification: 'unknown',
         overallQoL: 0,
         environmentalHealth: 0,
+        coordinationLevel: 0.5,
         socialStability: 0,
         aiAlignmentStatus: 0,
         governanceEffectiveness: 0,
@@ -326,6 +327,10 @@ export class SimulationObserver implements ISimulationObserver {
     const envAccum = (state as Record<string, unknown>).environmentalAccumulation as Record<string, number> | undefined;
     const environmentalHealth = envAccum?.climateStability ?? 0.5;
 
+    // International coordination level from globalMetrics
+    const globalMetrics = (state as Record<string, unknown>).globalMetrics as Record<string, number> | undefined;
+    const coordinationLevel = globalMetrics?.coordinationLevel ?? 0.5;
+
     // Social stability from society system
     const society = (state as Record<string, unknown>).society as Record<string, number> | undefined;
     const socialStability = society?.trust ?? society?.stability ?? 0.5;
@@ -358,6 +363,7 @@ export class SimulationObserver implements ISimulationObserver {
       outcomeClassification: this.getOutcomeClassification(state),
       overallQoL,
       environmentalHealth,
+      coordinationLevel,
       socialStability,
       aiAlignmentStatus,
       governanceEffectiveness,

@@ -193,6 +193,7 @@ export class GameSession implements GameSessionInterface {
         outcomeClassification: 'unknown',
         overallQoL: 0,
         environmentalHealth: 0,
+        coordinationLevel: 0.5,
         socialStability: 0,
         aiAlignmentStatus: 0,
         governanceEffectiveness: 0,

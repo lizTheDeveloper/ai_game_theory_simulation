@@ -70,4 +70,10 @@ export interface GlobalMetrics {
   // Formula: (climateStability × biodiversityIndex × resourceReserves × (1 - pollution))^0.25
   // Used by bifurcation threshold detection (environmental collapse at ~0.35)
   environmentalHealth: number;           // [0,1] Composite environmental health metric
+
+  // === INTERNATIONAL COORDINATION (Nov 28, 2025) ===
+  // Research: Needed for ocean acidification food security dampening
+  // Tracks level of international cooperation on global challenges
+  // Used by ocean acidification system to model food aid/trade redistribution
+  coordinationLevel: number;             // [0,1] International cooperation level
 }
