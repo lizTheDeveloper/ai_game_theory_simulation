@@ -615,16 +615,20 @@ export class PythonAgentWrapper extends EventEmitter {
     // Graceful shutdown
     this.process.kill('SIGTERM');
 
-    // Force kill after 5s
-    setTimeout(() => {
+    // H3 FIX: Track the force-kill timeout so we can clear it on graceful exit
+    const forceKillTimeout = setTimeout(() => {
       if (this.process && !this.process.killed) {
         console.warn(`⚠️ Force killing agent ${this.agentId}`);
         this.process.kill('SIGKILL');
       }
-
-      // CRITICAL FIX: Unregister from registry after cleanup
       this.processRegistry.unregister(this.agentId);
     }, 5000);
+
+    // H3 FIX: Clear timeout when process exits gracefully (prevents event loop hang)
+    this.process.once('exit', () => {
+      clearTimeout(forceKillTimeout);
+      this.processRegistry.unregister(this.agentId);
+    });
 
     console.log(`🛑 Agent ${this.agentId} stopped`);
   }
