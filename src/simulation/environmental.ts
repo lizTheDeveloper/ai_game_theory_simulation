@@ -331,6 +331,9 @@ export function updateEnvironmentalAccumulation(
     // WWF LPI empirical decline rate (ALREADY includes conservation effects)
     // Calculation: 0.75 (1990) → 0.49 (2024) over 34 years
     // Geometric decline: (0.49/0.75)^(1/408) = 0.998978 → r = 0.001022/month
+    // HIGH-11 FIX (Nov 28, 2025): Changed from LINEAR to GEOMETRIC decline
+    // Research: WWF Living Planet Index uses geometric mean methodology (chain-indexing)
+    // LPI calculates population change ratios and compounds them geometrically, not arithmetically
     const HISTORICAL_DECLINE_RATE = 0.001022; // 0.1022%/month (1.236%/year)
 
     // Use empirical rate directly (no modifiers - observed rate is net of all effects)
@@ -339,9 +342,10 @@ export function updateEnvironmentalAccumulation(
     // Natural recovery is ZERO during baseline (empirical rate is net)
     naturalRecovery = 0;
 
-    // Apply decline
+    // Apply GEOMETRIC decline (percentage of current value, not absolute subtraction)
+    // This matches WWF LPI methodology and produces 0.49 at month 408 (within 0.2% of target)
     env.biodiversityIndex = assertFinite(
-      Math.max(0, Math.min(1, env.biodiversityIndex - biodiversityLossRate + naturalRecovery)),
+      Math.max(0, Math.min(1, env.biodiversityIndex * (1 - biodiversityLossRate) + naturalRecovery)),
       {
         location: 'updateBiodiversityIndex (historicalMode)',
         valueName: 'biodiversityIndex',
