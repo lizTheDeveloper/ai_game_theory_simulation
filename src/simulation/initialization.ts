@@ -930,7 +930,24 @@ export function createDefaultInitialState(
     nuclearStates: initializeNuclearStates(),
     madDeterrence: initializeMADDeterrence(),
     bilateralTensions: initializeBilateralTensions(),
-    
+
+    // Geopolitical Conflict Escalation (TIER 2, RD-3, Nov 28, 2025)
+    geopoliticalConflict: {
+      tension: 50,
+      nuclearEscalationRisk: 0.0005,
+      regionalFlashpoints: new Map([
+        ['Taiwan', { risk: 0.033, triggers: [], lastUpdate: 0 }],
+        ['Ukraine', { risk: 0.005, triggers: [], lastUpdate: 0 }],
+        ['Middle East', { risk: 0.020, triggers: [], lastUpdate: 0 }],
+        ['Kashmir', { risk: 0.008, triggers: [], lastUpdate: 0 }]
+      ]),
+      activeConflicts: {
+        conventional: 0,
+        nuclear: false
+      },
+      historicalEvents: []
+    },
+
     // Resource Economy (Phase 2.9)
     resourceEconomy: initializeResourceEconomy(),
     

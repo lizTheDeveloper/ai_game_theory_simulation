@@ -452,7 +452,38 @@ export interface GameState {
   nuclearStates: import('../types/nuclearStates').NuclearState[]; // Specific nuclear-armed nations
   madDeterrence: import('../types/nuclearStates').MADDeterrence; // MAD deterrence system
   bilateralTensions: import('../types/nuclearStates').BilateralTension[]; // Bilateral relationships
-  
+
+  /**
+   * Geopolitical Conflict Escalation System (TIER 2, RD-3, Nov 28, 2025)
+   *
+   * Models AI-era conflict escalation with corrected parameters:
+   * - Base risk: 0.05% monthly (0.6% annual)
+   * - AI multiplier: 2× range [1.5, 3.0]
+   * - Compound cap: 4× maximum
+   * - Deterrence discount: 0.6×
+   *
+   * Research: geopolitical_conflict_escalation_20251128.md (30+ sources)
+   */
+  geopoliticalConflict: {
+    tension: number;
+    nuclearEscalationRisk: number;
+    regionalFlashpoints: Map<string, {
+      risk: number;
+      triggers: string[];
+      lastUpdate: number;
+    }>;
+    activeConflicts: {
+      conventional: number;
+      nuclear: boolean;
+    };
+    historicalEvents: Array<{
+      month: number;
+      type: 'escalation' | 'deescalation' | 'nuclear_event';
+      region: string;
+      severity: number;
+    }>;
+  };
+
   // Resource Economy (Phase 2.9)
   resourceEconomy: import('../types/resources').ResourceEconomy; // Comprehensive resource modeling with CO2 coupling
   
