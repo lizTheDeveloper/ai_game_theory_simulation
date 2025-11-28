@@ -1,6 +1,6 @@
 # Research Update Queue
-**Generated:** 11/27/2025, 10:30:04 PM
-**Files Scanned:** 464
+**Generated:** 11/28/2025, 8:30:03 AM
+**Files Scanned:** 467
 
 ---
 
@@ -12,7 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 158 (34.1%)
+**Count:** 158 (33.8%)
 
 ### `CRISIS_MITIGATION_RESEARCH_CRITIQUE_20251029.md`
 - **Oldest source:** 2001 (24 years old)
@@ -836,7 +836,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 285 (61.4%)
+**Count:** 288 (61.7%)
 
 All sources <3 years old. No action required.
 
@@ -846,26 +846,26 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 464 |
+| Total files | 467 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 158 (34.1%) |
+| HIGH | 158 (33.8%) |
 | MEDIUM | 21 (4.5%) |
-| LOW | 285 (61.4%) |
-| Average age | 8.0 years |
+| LOW | 288 (61.7%) |
+| Average age | 7.9 years |
 | Oldest source | 1955 (70 years ago) |
 
 ### Research Currency
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 285 | 61.4% |
+| Current (<3yr) | 288 | 61.7% |
 | Warning (3-5yr) | 21 | 4.5% |
-| Critical (>5yr) | 158 | 34.1% |
+| Critical (>5yr) | 158 | 33.8% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-- **Current:** 34.1% critical (>5yr)
+- **Current:** 33.8% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
