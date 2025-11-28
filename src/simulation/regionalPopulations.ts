@@ -573,6 +573,15 @@ export function updateRegionalPopulations(state: GameState): void {
     }
 
     // === 2. CALCULATE DEATH RATE ===
+    // M-4 FIX (Nov 28, 2025): Declare debug variables outside block for TypeScript flow analysis
+    let healthcareReduction = 1.0;
+    let crisisMultiplier = 1.0;
+    let foodWaterStress = 0;
+    let climateStress = 0;
+    let pollutionStress = 0;
+    let warMultiplier = 1.0;
+    let waterStock = 0;
+
     // M-4 FIX (Nov 28, 2025): Skip death rate calculation if using time-varying rates
     // Time-varying death rates already incorporate healthcare quality, aging, and historical patterns
     if (!useTimeVaryingRates) {
@@ -586,7 +595,7 @@ export function updateRegionalPopulations(state: GameState): void {
       // CRITICAL-1 FIX (Nov 28, 2025): Unified historical mode detection via isHistoricalModeActive()
       // historicalMode = empirical UN data (1990-2024), scenarioMode = crisis severity
       const isHistoricalMode = isHistoricalModeActive(state);
-      const healthcareReduction = isHistoricalMode ? 1.0 : Math.max(0.3, 1 - (region.healthcareQuality * 0.7));
+      healthcareReduction = isHistoricalMode ? 1.0 : Math.max(0.3, 1 - (region.healthcareQuality * 0.7));
 
     // Detect NaN in resource reserves - fail loudly
     if (isNaN(state.resourceEconomy.food.reserves)) {
@@ -599,8 +608,8 @@ export function updateRegionalPopulations(state: GameState): void {
     }
 
     const foodStock = state.resourceEconomy.food.reserves;
-    const waterStock = state.resourceEconomy.water.reserves;
-    const foodWaterStress = Math.max(0,
+    waterStock = state.resourceEconomy.water.reserves;
+    foodWaterStress = Math.max(0,
       (1 - foodStock) * 0.3 +
       (1 - waterStock) * 0.3
     );
@@ -618,7 +627,7 @@ export function updateRegionalPopulations(state: GameState): void {
     const climateStability = state.environmentalAccumulation.climateStability;
 
     // Base climate stress from general climate degradation
-    let climateStress = (1 - climateStability) * 0.4 * region.climateVulnerability;
+    climateStress = (1 - climateStability) * 0.4 * region.climateVulnerability;
 
     // Add tipping point impacts (if any active)
     // TippingPointPhase (order 21.6) stores impacts in state for regional variation
@@ -629,7 +638,7 @@ export function updateRegionalPopulations(state: GameState): void {
       climateStress += tippingStress;
     }
     const pollutionLevel = state.environmentalAccumulation.pollutionLevel;
-    const pollutionStress = pollutionLevel * 0.3;
+    pollutionStress = pollutionLevel * 0.3;
 
     // CRITICAL FIX (Nov 27, 2025): Disable crisis/war multipliers in historical mode
     // Root cause of C-4 population decline: Historical CDR data already incorporates
@@ -640,8 +649,8 @@ export function updateRegionalPopulations(state: GameState): void {
     // Solution: In historical mode (pre-2000), use neutral multipliers (1.0).
     // The historical CDR scaling (lines 605-644) will apply correct mortality rates.
     // (isHistoricalMode defined above at line 544)
-    const warMultiplier = isHistoricalMode ? 1.0 : (region.conflictRisk > 0.5 ? 1.5 : 1.0);
-    const crisisMultiplier = isHistoricalMode ? 1.0 : (1 + foodWaterStress + climateStress + pollutionStress);
+    warMultiplier = isHistoricalMode ? 1.0 : (region.conflictRisk > 0.5 ? 1.5 : 1.0);
+    crisisMultiplier = isHistoricalMode ? 1.0 : (1 + foodWaterStress + climateStress + pollutionStress);
 
     region.adjustedDeathRate = region.baselineDeathRate *
       healthcareReduction *
