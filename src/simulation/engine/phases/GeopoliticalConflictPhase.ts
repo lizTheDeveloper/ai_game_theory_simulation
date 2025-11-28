@@ -100,7 +100,7 @@ export class GeopoliticalConflictPhase implements SimulationPhase {
   readonly dependencies = [
     'ai-lifecycle',           // Order 3.0: AI capabilities affect escalation
     'government-actions',     // Order 9.0: Government policy affects tensions
-    'climate-system',         // Order ~20.0: Climate impacts (displacement, resources)
+    'climate_system',         // Order ~20.0: Climate impacts (displacement, resources)
   ] as const;
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
