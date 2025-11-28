@@ -1238,7 +1238,7 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     // HISTORICAL MODE (Nov 27, 2025): Disable cascade trigger during hindcast validation
     // Root cause: Cascades trigger in 1990-2024 baseline period, causing exponential mortality
     // Research: research/historical_mode_parameters_20251127.md
-    // HIGH-8 FIX v2 (Nov 28, 2025): Use isHistoricalModeActive() utility (checks scenarioMode, not historicalMode)
+    // HIGH-8 FIX (Nov 28, 2025): Use isHistoricalModeActive() utility (checks scenarioMode, not historicalMode)
     const historicalModeActive = isHistoricalModeActive(state);
 
     // Stochastic trigger with Bayesian adjustment
@@ -1279,7 +1279,7 @@ export function updatePlanetaryBoundaries(state: GameState): void {
 
   // === 5. APPLY CASCADE EFFECTS ===
   // HISTORICAL MODE (Nov 27, 2025): Skip cascade effects during hindcast validation
-  // HIGH-8 FIX v2 (Nov 28, 2025): Use isHistoricalModeActive() utility (checks scenarioMode, not historicalMode)
+  // HIGH-8 FIX (Nov 28, 2025): Use isHistoricalModeActive() utility (checks scenarioMode, not historicalMode)
   const historicalMode = isHistoricalModeActive(state);
   if (system.cascadeActive && !historicalMode) {
     applyTippingPointCascadeEffects(state);
