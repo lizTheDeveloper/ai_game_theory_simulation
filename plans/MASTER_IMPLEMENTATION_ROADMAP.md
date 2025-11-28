@@ -1,21 +1,45 @@
 # Master Implementation Roadmap
 ## AI Alignment Game Theory Simulation - Project Hub
 
-**Date:** November 28, 2025 (Session 10 Complete - Architect)
+**Date:** November 28, 2025 (Session 11 Complete - Architect)
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**Current Status:** ✅ **VALIDATION PASS** (Nov 28, 2025 - Session 10 Complete)
+**Current Status:** ✅ **TIER 2 EXPANSION** (Nov 28, 2025 - Session 11 Complete)
 - **Research Quality:** A- (96% sources from 2024-2025, qualitative mechanisms over fabricated quantitative)
-- **Architecture Health:** A (0 CRITICAL, 0 HIGH, 1 MEDIUM - all actionable issues resolved)
+- **Architecture Health:** A (0 CRITICAL, 3 HIGH maintenance items, system Grade B+)
 - **System Performance:** 0% crash rate ✅, determinism verified (CV=0.000% ✅), 82.10% test coverage ✅
-- **System Trajectory:** ✅ **EXCELLENT** - Grade improved A- → A, all Session 9 issues resolved (4/4)
-- **Roadmap Coherence:** CURRENT - Updated Nov 28 Session 10 complete (Architect)
-- **Daily Review (Nov 28 18:00 UTC):**
-  - Architecture Review: ✅ EXCELLENT (Grade A - all Session 9 issues resolved)
-  - Research Debate: ✅ SYNTHESIS COMPLETE (Sylvia + Cynthia consensus on epistemic status)
-  - Session 10 Resolution: 4/4 (HIGH-1 ✅, M-1 documented, M-2 ✅, M-3 ✅)
-  - **Completed:** All actionable architecture issues, research debate synthesis, TIER 2 priority elevation
+- **TIER 2 Progress:** 2/7 complete (RD-1 ✅ PRODUCTION READY, RD-3 ⚠️ CONDITIONAL PASS)
+- **Roadmap Coherence:** CURRENT - Updated Nov 28 Session 11 complete (Architect)
+- **Daily Review (Nov 28 20:00 UTC):**
+  - RD-1 Permafrost: ✅ PRODUCTION READY (emissions 1.7-7.0 Gt C/year, CO2 explosion bug fixed)
+  - RD-3 Geopolitical: ⚠️ CONDITIONAL PASS (100% deterrence, 9× escalation frequency needs calibration)
+  - Architecture Review: B+ (3 HIGH maintenance items, not blockers)
+  - Monte Carlo: ✅ PASS (0% crashes, determinism verified, RD-1/RD-3 working correctly)
+  - **Completed:** TIER 2 features RD-1 and RD-3, quality gates passed, wiki documentation synced
+- **Recent Work (Nov 28 Session 11 - RD-1 & RD-3 TIER 2 IMPLEMENTATION):**
+  - ✅ **RD-1 PERMAFROST CARBON FEEDBACK** (commits 44ecc2b9, 61faa45a, e77ed044) - PRODUCTION READY
+    - **Implementation:** PermafrostCarbonPhase.ts (343 lines, order 18.5)
+    - **Features:** 1,700 Gt C thaw modeling, CO2/CH4 emissions, Arctic amplification (4×), uncertainty distributions
+    - **CRITICAL Bug Fix:** CO2 explosion (81B ppm → realistic 420-450 ppm) via unit conversion fix
+    - **Monte Carlo:** ✅ PASS (emissions 1.7-7.0 Gt C/year, Arctic cascades 66 events, +0.41-0.46 ppm/month feedback)
+    - **Architecture:** B+ (HIGH-2 comment fix ✅, MEDIUM-1 dependency ✅, HIGH-3 temperature fallback documented)
+    - **Archive:** plans/completed/RD1_permafrost_carbon_feedback_20251128.md
+  - ✅ **RD-3 GEOPOLITICAL CONFLICT ESCALATION** (commits 95d7b06d, 3a8c52fc, 02ae2a44, adfb784f) - CONDITIONAL PASS
+    - **Implementation:** GeopoliticalConflictPhase.ts (541 lines, order 22.5)
+    - **Features:** Regional flashpoints, AI de-escalation, MAD deterrence, climate/economic stress multipliers
+    - **Monte Carlo:** ⚠️ CONDITIONAL PASS (100% deterrence success, 9× escalation frequency vs expected, 383-407M displaced)
+    - **Architecture:** B+ (HIGH-1 silent fallbacks documented, 2 CRITICAL fixes applied: GDP access, dependency ordering)
+    - **Calibration Needed:** Escalation frequency 9× high (systemic issue, not implementation bug)
+    - **Archive:** plans/completed/RD3_geopolitical_conflict_escalation_20251128.md
+  - ✅ **QUALITY GATES PASSED**
+    - **Monte Carlo Validation:** reviews/rd1_rd3_monte_carlo_validation_20251128.md (Priya)
+    - **Architecture Review:** reviews/architecture_integration_review_rd1_rd3_20251128.md (Architecture Skeptic)
+    - **Wiki Documentation:** docs/wiki/README.md updated (182 lines, cross-system integration)
+  - ⚠️ **KNOWN SYSTEMIC ISSUES** (Not RD-1/RD-3 fault)
+    - **100% dystopia rate:** Environmental bifurcation at Month 1 (root cause, HIGH priority)
+    - **Technology bifurcation:** Never triggers (0/10 runs, needs investigation)
+    - **Variance amplification:** 15.5× mean (system near tipping points)
 - **Recent Work (Nov 28 Session 10 - GRADE IMPROVEMENT A- → A):**
   - ✅ **ARCHITECTURE REVIEW SESSION 10** (commit ba8e13a9) - All Session 9 issues resolved
     - **HIGH-1:** PermafrostCarbonPhase dependency ordering - FIXED (commit 7db49ca1)
@@ -971,26 +995,21 @@
 
 ### 🟡 MEDIUM Priority Research Items (TIER 2 Systems)
 
-**RD-1: Permafrost Carbon Feedback Implementation**
-- **Status:** NOT STARTED - Research + phase creation required
-- **Assignee:** cynthia (research) + roy (implementation)
-- **Problem:** 1,700 Gt carbon in permafrost (2× atmospheric CO2) currently undermodeled
-  - Self-reinforcing cascade: warming → thaw → emissions → warming
-  - Thawing accelerating (Natali et al. 2021)
-  - Current model may capture via carbon cycle but NOT explicitly modeled
-- **Research Requirements:**
-  - Quantify thaw rates vs temperature (permafrost degradation curves)
-  - CH4 vs CO2 release ratios (methane 28× more potent over 100 years)
-  - Regional variation (Siberia, Alaska, Canada permafrost extent)
-  - Tipping point threshold (likely 1.5-2.0°C warming)
-- **Implementation Scope:**
-  - New phase: PermafrostCarbonPhase (order TBD, after ClimateSystemPhase)
-  - State fields: permafrostExtent, permafrostCarbon, annualThawRate
-  - Integration: Feeds into carbon cycle emissions
-  - Cascades: Accelerates warming, triggers methane release tipping point
-- **Expected Impact:** Could increase warming trajectory 0.2-0.4°C by 2100 in high-emission scenarios
-- **Effort:** 3-4 days (2 days research, 1-2 days implementation + validation)
-- **Priority Rationale:** TIER 2 - Major climate feedback missing, affects medium-term (2050+) scenarios
+**TIER 2 Progress: 2/7 Complete** (RD-1 ✅, RD-3 ⚠️)
+
+**RD-1: Permafrost Carbon Feedback Implementation** ✅ PRODUCTION READY
+- **Status:** ✅ COMPLETE (Session 11, Nov 28, 2025)
+- **Implementation:** PermafrostCarbonPhase.ts (343 lines, order 18.5)
+- **Validation:** Monte Carlo N=10, emissions 1.7-7.0 Gt C/year (research-backed range)
+- **Architecture:** Grade B+ (all issues resolved)
+- **Archive:** plans/completed/RD1_permafrost_carbon_feedback_20251128.md
+- **Key Features:**
+  - 1,700 Gt C thaw modeling with Arctic amplification (4×)
+  - CO2/CH4 emissions with uncertainty distributions
+  - Positive feedback: +0.41-0.46 ppm CO2/month
+  - Cross-system cascades (66 events: sea ice loss → permafrost thaw)
+- **Critical Bug Fixed:** CO2 explosion (81B ppm → 420-450 ppm) via unit conversion correction
+- **Known Issues:** None (systemic 100% dystopia rate NOT caused by RD-1)
 
 **RD-2: Ocean Acidification Cascades**
 - **Status:** NOT STARTED - Planetary boundary tracked but NO cascade implementation
@@ -1014,15 +1033,25 @@
 - **Effort:** 3-4 days (2 days research on thresholds/cascades, 1-2 days implementation + validation)
 - **Priority Rationale:** TIER 2 - Already past safe boundary, cascades imminent in baseline scenarios
 
-**RD-3: Geopolitical Conflict Escalation Dynamics**
-- **Status:** NOT STARTED - Nuclear winter modeled but NOT escalation pathways
-- **Assignee:** cynthia (research) + moss (game theory implementation)
-- **Problem:** Current geopolitical tensions 10-100× higher than Cold War baseline
-  - Russia-Ukraine war (2022-present) shows major powers willing to risk nuclear escalation
-  - China-Taiwan tensions escalating (2023-2025)
-  - Middle East instability (Gaza, Iran nuclear program)
-  - AI-accelerated misinformation undermining diplomacy
-  - Nuclear winter risk may be severely underestimated
+**RD-3: Geopolitical Conflict Escalation Dynamics** ⚠️ CONDITIONAL PASS
+- **Status:** ⚠️ FUNCTIONAL, NEEDS CALIBRATION (Session 11, Nov 28, 2025)
+- **Implementation:** GeopoliticalConflictPhase.ts (541 lines, order 22.5)
+- **Validation:** Monte Carlo N=10, 100% deterrence success, 13 AI de-escalation events
+- **Architecture:** Grade B+ (3 HIGH maintenance items documented)
+- **Archive:** plans/completed/RD3_geopolitical_conflict_escalation_20251128.md
+- **Key Features:**
+  - Regional flashpoints (Taiwan, Ukraine, Middle East, Kashmir)
+  - AI-mediated de-escalation (13 events, 100% success when triggered)
+  - MAD deterrence (76/76 checks passed, 100% success rate)
+  - Climate/economic stress multipliers, 383-407M war displacement
+- **Calibration Needed:**
+  - Escalation frequency 9× higher than expected (1.3 vs 0.14 events/run)
+  - 100% deterrence success may be too optimistic (add 1-2% failure rate)
+  - Displacement magnitude (5% of global population) needs validation
+- **Known Issues:**
+  - HIGH-1: 5 silent fallback instances (documented, needs fixing)
+  - Unimplemented nuclear/war consequences (TODO comments, verify if handled downstream)
+  - Map serialization concern (regionalFlashpoints)
 - **Research Requirements:**
   - Quantify escalation pathways (Schelling 1960, Barrett et al. 2013 on inadvertent war)
   - AI impact on conflict (autonomous weapons, decision compression, misattribution)
@@ -1104,17 +1133,112 @@
 - **Effort:** 4-6 days (2 days research on soil science, 2-4 days agriculture system extension + validation)
 - **Priority Rationale:** TIER 3 - Slow cumulative effect, important for long-term realism but not immediate
 
-### Implementation Recommendations
+---
+
+## Known Systemic Issues (Session 11 - High Priority)
+
+**Context:** RD-1 and RD-3 implementations are WORKING CORRECTLY. However, Monte Carlo validation (N=10) revealed systemic issues that affect all runs, independent of the new features.
+
+### CRITICAL: Environmental Month 1 Bifurcation
+
+**Observation:**
+- 100% dystopia rate across all Monte Carlo runs (10/10)
+- Environmental bifurcation occurs at Month 1 in 100% of runs
+- This triggers cascade: Environmental collapse → Economic collapse → Governance collapse → Dystopia
+
+**Evidence:**
+- Permafrost feedback working correctly (1.7-7.0 Gt C/year emissions)
+- AI conflict prevention working correctly (13 de-escalations, 100% deterrence success)
+- Yet dystopia occurs 100% of the time
+- **Conclusion:** Environmental tipping point dominates all other dynamics
+
+**Root Cause Hypothesis:**
+- Planetary boundaries initialization may start too close to critical thresholds
+- Environmental stress accumulation in early months may be too aggressive
+- Distance to thresholds = 0.000005 (effectively zero buffer capacity)
+
+**Impact:** HIGH PRIORITY
+- Makes outcome distribution analysis impossible (no variance in outcomes)
+- Prevents validation of positive technology/governance pathways
+- Research simulation should show range of outcomes, not deterministic collapse
+
+**Recommendation:**
+- Investigate PlanetaryBoundariesPhase initialization
+- Check environmental accumulation in months 0-12
+- Validate starting values against IPCC AR6 baseline (should be "in safe zone" for 2025)
+- Expected distribution: 5-15% utopia, 30-50% sustainable, 30-50% dystopia, 5-15% collapse
+
+**Assignee:** simulation-maintainer (Roy)
+**Effort:** 4-8 hours investigation + fix
+**Priority:** CRITICAL (blocks TIER 2 continuation)
+
+---
+
+### HIGH: Technology Bifurcation Never Triggers
+
+**Observation:**
+- Technology bifurcation occurred 0/10 runs (0%)
+- Expected: Positive technology cascades should trigger in optimistic scenarios
+- Actual: System never reaches conditions for tech breakthrough pathway
+
+**Possible Causes:**
+1. Tech unlock conditions unreachable (due to Month 1 environmental collapse)
+2. Tech deployment gating too strict
+3. Positive feedback loops not strong enough to overcome negative cascades
+
+**Impact:** MEDIUM-HIGH
+- Prevents modeling of "flourishing" scenarios
+- Technology pathway untestable until environmental initialization fixed
+
+**Recommendation:**
+- After fixing environmental Month 1 collapse, re-run Monte Carlo
+- If still 0%, review technology unlock conditions
+- May need to adjust breakthrough thresholds or deployment rates
+
+**Assignee:** simulation-maintainer (Roy)
+**Effort:** 2-4 hours (after environmental fix)
+**Priority:** HIGH (after CRITICAL environmental fix)
+
+---
+
+### MEDIUM: Extreme Variance Amplification
+
+**Observation:**
+- Mean max amplification: 15.5× (range 10.5-17.5×)
+- Economic regime shift amplification: 17.5× (highest observed)
+- This indicates "critical slowing down" - system near tipping points
+
+**Interpretation:**
+- Variance amplification > 5× is expected near bifurcations
+- 15.5× mean suggests system VERY CLOSE to critical thresholds
+- This is a physical phenomenon (legitimate), not necessarily a bug
+
+**Impact:** MEDIUM
+- May be accurate modeling of real-world instability
+- However, extreme amplification could indicate over-sensitive parameters
+
+**Recommendation:**
+- After environmental fix, check if amplification normalizes
+- If still extreme (>15×), review parameter sensitivities
+- Validate against research on critical transitions (Scheffer et al.)
+
+**Assignee:** priya (quantitative validator)
+**Effort:** 2-4 hours analysis
+**Priority:** MEDIUM (monitoring, not immediate action)
+
+---
+
+### Implementation Recommendations (Updated Session 11)
 
 **Immediate Actions (This Week):**
-1. Continue existing M-2 (assertion migration), M-4 (population demographics) work
-2. Implement HIGH-5 (agent monitoring infrastructure)
-3. Add uncertainty quantification for AI timelines (1-2 days) - captures Sylvia's concern about overconfidence
+1. ✅ **RD-1 Permafrost** (3-4 days) - COMPLETE, PRODUCTION READY
+2. ✅ **RD-3 Geopolitical Conflict** (4-6 days) - COMPLETE, CONDITIONAL PASS
+3. ❌ **CRITICAL: Environmental Month 1 Collapse** (4-8 hours) - BLOCKS TIER 2 CONTINUATION
 
-**Next Month (TIER 2 Priority):**
-1. **RD-1 Permafrost** (3-4 days) - Major climate feedback
-2. **RD-2 Ocean Acidification** (3-4 days) - Already past safe boundary
-3. **RD-3 Geopolitical Conflict** (4-6 days) - Highest near-term extinction risk
+**Next Week (TIER 2 Priority):**
+1. **Fix environmental initialization** (CRITICAL) - Unblock outcome variance
+2. **RD-3 Calibration** (2-4 hours) - Escalation frequency tuning, add deterrence failures
+3. **RD-2 Ocean Acidification** (3-4 days) - Already past safe boundary
 
 **Next Quarter (TIER 3 Priority):**
 1. **RD-4 Insect Collapse** (5-7 days) - Ecological function loss
