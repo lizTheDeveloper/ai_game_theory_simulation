@@ -394,55 +394,58 @@ export function updateRegionalPopulations(state: GameState): void {
       // This models the demographic transition that occurred historically
       const actualYear = state.currentYear;
 
-      // Only apply transition during hindcast period (1990-2020)
-      // After 2020, use endogenous modifiers
-      if (actualYear >= 1990 && actualYear <= 2020 && !(state as any)._skipHistoricalBirthRateScaling) {
-        // Target 2020 TFR values (UN WPP 2024)
-        const REGIONAL_TFR_2020: Record<string, number> = {
-          'Sub-Saharan Africa': 4.6,    // Still high but declining
-          'Middle East & North Africa': 2.9,
-          'South Asia': 2.3,            // Near replacement
-          'East Asia': 1.5,             // Below replacement
-          'Southeast Asia': 2.0,
-          'Latin America': 2.0,
-          'Europe': 1.5,                // Well below replacement
-          'North America': 1.7,
-          'Oceania': 2.4,               // Stable (Australia + Pacific Islands)
-          'Central Asia': 2.5,
+      // Only apply transition during hindcast period (1990-2024)
+      // After 2024, use endogenous modifiers
+      // M-4 FIX (Nov 28, 2025): Extended to 2024 endpoint, updated parameters per UN WPP 2024
+      // Research: research/population_demographics_regional_20251128.md (Cynthia)
+      // Validation: reviews/m4_demographics_research_critique_20251128.md (Sylvia)
+      if (actualYear >= 1990 && actualYear <= 2024 && !(state as any)._skipHistoricalBirthRateScaling) {
+        // Target 2024 TFR values (UN WPP 2024 - Cynthia's research)
+        const REGIONAL_TFR_2024: Record<string, number> = {
+          'Sub-Saharan Africa': 4.30,   // UN WPP 2024 (was 4.6 in 2020)
+          'Middle East & North Africa': 2.66,  // UN WPP 2024 (was 2.9 in 2020)
+          'South Asia': 2.00,           // Below replacement (India crossed threshold 2024)
+          'East Asia': 1.20,            // Ultra-low (South Korea 0.75, China 1.7)
+          'Southeast Asia': 2.10,       // Near replacement (range 1.0-2.4)
+          'Latin America': 1.80,        // Below replacement (UN ECLAC 2024)
+          'Europe': 1.50,               // Persistent below-replacement
+          'North America': 1.70,        // Record low (US 1.599 in 2024)
+          'Oceania': 1.80,              // Below replacement (was 2.4 in 2020)
+          'Central Asia': 2.70,         // High
         };
 
-        // 1990 baseline (from initialization)
+        // 1990 baseline (UN WPP 2024 - Cynthia's research Table 4.2)
         const REGIONAL_TFR_1990: Record<string, number> = {
-          'Sub-Saharan Africa': 6.35,
-          'Middle East & North Africa': 4.6,
-          'South Asia': 4.3,
-          'East Asia': 2.5,
-          'Southeast Asia': 2.7,
-          'Latin America': 3.0,
-          'Europe': 1.6,
-          'North America': 2.0,
-          'Oceania': 2.4,
-          'Central Asia': 2.7,
+          'Sub-Saharan Africa': 6.50,   // Pre-transition high
+          'Middle East & North Africa': 5.00,  // Dramatic decline begins
+          'South Asia': 4.20,           // Mid-transition
+          'East Asia': 2.20,            // Post-one-child policy
+          'Southeast Asia': 3.50,       // Mid-transition
+          'Latin America': 3.30,        // Mid-transition
+          'Europe': 1.75,               // Already post-transition
+          'North America': 2.00,        // Near replacement
+          'Oceania': 2.40,              // Stable (immigration-sustained)
+          'Central Asia': 2.70,         // Stable
         };
 
         const tfr1990 = REGIONAL_TFR_1990[region.name];
-        const tfr2020 = REGIONAL_TFR_2020[region.name];
+        const tfr2024 = REGIONAL_TFR_2024[region.name];
 
-        if (tfr1990 === undefined || tfr2020 === undefined) {
+        if (tfr1990 === undefined || tfr2024 === undefined) {
           throw new Error(
             `❌ CRITICAL: Unknown region '${region.name}' in fertility transition. ` +
             `Valid regions: ${Object.keys(REGIONAL_TFR_1990).join(', ')}`
           );
         }
 
-        // Linear interpolation: TFR(year) = TFR1990 + (TFR2020 - TFR1990) * (year - 1990) / 30
-        const progress = (actualYear - 1990) / 30; // 0.0 in 1990, 1.0 in 2020
-        region.fertilityRate = tfr1990 + (tfr2020 - tfr1990) * progress;
+        // Linear interpolation: TFR(year) = TFR1990 + (TFR2024 - TFR1990) * (year - 1990) / 34
+        const progress = (actualYear - 1990) / 34; // 0.0 in 1990, 1.0 in 2024
+        region.fertilityRate = tfr1990 + (tfr2024 - tfr1990) * progress;
 
         // Diagnostic logging (once per year for one region)
         if (state.currentMonth % 12 === 0 && region.name === 'Sub-Saharan Africa') {
           console.log(`  Fertility transition (${actualYear}):`);
-          console.log(`    ${region.name}: ${tfr1990.toFixed(2)} (1990) → ${region.fertilityRate.toFixed(2)} (${actualYear}) → ${tfr2020.toFixed(2)} (2020)`);
+          console.log(`    ${region.name}: ${tfr1990.toFixed(2)} (1990) → ${region.fertilityRate.toFixed(2)} (${actualYear}) → ${tfr2024.toFixed(2)} (2024)`);
           console.log(`    Progress: ${(progress * 100).toFixed(1)}%`);
         }
       }
