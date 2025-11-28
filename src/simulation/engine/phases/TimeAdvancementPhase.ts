@@ -68,14 +68,6 @@ export class TimeAdvancementPhase implements SimulationPhase {
     const simulationStartYear = state.config?.startYear ?? 2025;
     state.currentYear = simulationStartYear + Math.floor(state.currentMonth / 12);
 
-    // DEBUG (Nov 24, 2025): Verify start year is propagating correctly
-    if (state.currentMonth === 1) {
-      console.log(`[TimeAdvancementPhase DEBUG] Month 1:`);
-      console.log(`  simulationStartYear: ${simulationStartYear}`);
-      console.log(`  currentMonth: ${state.currentMonth}`);
-      console.log(`  currentYear: ${state.currentYear}`);
-    }
-
     return { events: [] };
   }
 }
