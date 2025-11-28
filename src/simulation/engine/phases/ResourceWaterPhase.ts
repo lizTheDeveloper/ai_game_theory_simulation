@@ -17,7 +17,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
-import { assertFinite, assertProbability } from '@/simulation/utils/assertions';
+import { assertFinite, assertProbability, assertInRange } from '@/simulation/utils/assertions';
 import { updateFreshwaterSystem, checkFreshwaterTechUnlocks } from '../../freshwaterDepletion';
 import { updateOceanAcidificationSystem, checkOceanAcidificationTechUnlocks } from '../../oceanAcidification';
 
@@ -82,14 +82,16 @@ export class ResourceWaterPhase implements SimulationPhase {
         valueName: 'pHLevel',
         month: state.currentMonth
       });
-      assertProbability(state.oceanAcidificationSystem.aragoniteSaturation, {
+      // PRIYA FIX (Nov 28, 2025): aragoniteSaturation is NOT a probability (0-1)
+      // It's a chemical ratio (Ωar) ranging from ~1.0 (dissolution) to 5.0 (pre-industrial 4.6)
+      assertInRange(state.oceanAcidificationSystem.aragoniteSaturation, 1.0, 5.0, {
         location: 'ResourceWaterPhase.execute (pre-ocean)',
         valueName: 'aragoniteSaturation',
         month: state.currentMonth
       });
     }
 
-    updateOceanAcidificationSystem(state);
+    updateOceanAcidificationSystem(state, rng);
     checkOceanAcidificationTechUnlocks(state);
 
     // Validate ocean acidification system state after update
@@ -99,7 +101,9 @@ export class ResourceWaterPhase implements SimulationPhase {
         valueName: 'pHLevel',
         month: state.currentMonth
       });
-      assertProbability(state.oceanAcidificationSystem.aragoniteSaturation, {
+      // PRIYA FIX (Nov 28, 2025): aragoniteSaturation is NOT a probability (0-1)
+      // It's a chemical ratio (Ωar) ranging from ~1.0 (dissolution) to 5.0 (pre-industrial 4.6)
+      assertInRange(state.oceanAcidificationSystem.aragoniteSaturation, 1.0, 5.0, {
         location: 'ResourceWaterPhase.execute (post-ocean)',
         valueName: 'aragoniteSaturation',
         month: state.currentMonth
