@@ -44,6 +44,16 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📄 **Validation Script:** `scripts/validateHIGH7Fix.ts`
 - **Status:** RESOLVED ✅
 
+**Nov 28: HIGH-8 Flag Fix - Biodiversity historicalMode Correction** (commit 5a78f20)
+- 🦋 **Flag Check Corrected:** Biodiversity decline was checking wrong config flag
+- **Root Cause:** `environmental.ts` checked `scenarioMode === 'historical'` instead of `historicalMode`
+- **Impact:** Empirical WWF LPI decline rate (0.1022%/month) never activated → 91% error
+- **Fix:** Updated two lines (314 & 399) to check `config.historicalMode` consistently
+- **Validation:** 1990-2024, seed=42 → 51.59% biodiversity (5.3% error vs 49% target) ✅ PASS
+- **Pattern Alignment:** Now matches `planetaryBoundaries.ts` line 1365, `geoengineering.ts`, `regionalPopulations.ts`
+- 📄 **Review:** `reviews/high8_biodiversity_fix_validation_20251128.md`
+- **Status:** VALIDATED ✅
+
 **Nov 27: Historical Mode Utility + Architecture Review** (commit 123dcf3)
 - 🏗️ **H-1 Fix:** New `src/simulation/utils/historicalMode.ts` utility centralizes scattered historical mode checks
 - **Functions:** `isHistoricalModeActive()` and `isHistoricalEmissionsModeActive()` - replaces copy-pasted pattern across 9+ files
@@ -70,19 +80,16 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📄 **Investigation:** `reviews/HIGH-9_determinism_investigation_20251127.md`, `devlogs/20251127_HIGH-9_FALSE_ALARM.md`
 - **Status:** CLOSED AS INVALID - Focus on real calibration issues (HIGH-6, HIGH-7, HIGH-8)
 
-**Nov 27: HIGH-8 FIX - Biodiversity Decline Calibration** (commit 2173fc8)
-- 🦋 **Catastrophic Collapse Fixed:** -95% error → 3.25% error (PASS)
-- **Root Cause:** Wrong annual decline rate (1.02%/year instead of 1.312%/year) + wrong config flag check
-- **Solution:** Corrected WWF Living Planet Index empirical decline rate:
+**Nov 27: HIGH-8 - Biodiversity Decline Calibration (Partial)** (commit 2173fc8)
+- 🦋 **Decline Rate Fixed:** Corrected WWF Living Planet Index empirical decline rate:
   - WWF LPI: 1.00 (1970) → 0.49 (2024) = -51% over 54 years
   - Corrected rate: 1.312%/year (from (0.49)^(1/54) = 0.9871)
-  - Fixed config check: `config.scenarioMode === 'historical'` (not `config.historicalMode`)
   - Added historicalMode guard to ecosystem regeneration (no double-counting recovery)
-- **Validation:** 1990: 76.79% (target 75%), 2024: 50.59% (target 49%, error 3.25%)
+- ⚠️ **Note:** This commit used wrong flag check (`scenarioMode === 'historical'`). **Corrected in commit 5a78f20 (Nov 28)** to use `historicalMode`.
 - **Implementation Pattern:** WWF LPI empirical rate ALREADY includes natural recovery
 - 📄 **Research:** `research/hindcast_calibration_parameters_20251127.md` lines 229-390
 - 📄 **Files:** `historicalInitialization.ts`, `environmental.ts`
-- **Status:** VALIDATED ✓
+- **Status:** SUPERSEDED by Nov 28 flag fix (5a78f20) ✓
 
 **Nov 27: Comprehensive Hindcast Calibration Parameters Research** (commit 60c98e2)
 - 📚 **572-Line Research Document:** Peer-reviewed parameters for HIGH-6, HIGH-7, HIGH-8, HIGH-9 hindcast calibration
