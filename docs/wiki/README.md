@@ -44,6 +44,32 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📄 **Validation Script:** `scripts/validateHIGH7Fix.ts`
 - **Status:** RESOLVED ✅
 
+**Nov 27: Historical Mode Utility + Architecture Review** (commit 123dcf3)
+- 🏗️ **H-1 Fix:** New `src/simulation/utils/historicalMode.ts` utility centralizes scattered historical mode checks
+- **Functions:** `isHistoricalModeActive()` and `isHistoricalEmissionsModeActive()` - replaces copy-pasted pattern across 9+ files
+- **Architecture Review:** Comprehensive integration analysis of HIGH-6/7/8 calibration fixes (`reviews/architecture_review_historical_calibration_20251127.md`)
+- **Findings:** 1 HIGH, 4 MEDIUM, 2 LOW priority items identified. No CRITICAL blocking issues.
+- **Status:** Utility ready for integration into affected phases
+
+**Nov 27: Research Validation Complete for HIGH Priority Items** (commit fbe8042)
+- 📚 **All HIGH priority roadmap items validated:** Grade A- across the board
+- **HIGH-6 (Temperature):** 90% from 2024-2025 sources (IPCC AR6, ACP 2024) - READY
+- **HIGH-7 (Population):** 100% from UN WPP 2024 - READY
+- **HIGH-8 (Biodiversity):** 100% from WWF LPI 2024 - READY
+- **HIGH-9 (Determinism):** Technical debugging task, not research-dependent
+- Re-validated Climate Mortality Phase 2 and Cooperative AI Ownership (Nov 3 audit)
+- 📄 **Report:** `research/ROADMAP_RESEARCH_VALIDATION_20251127.md`
+- **Status:** ✅ NO RESEARCH GAPS - Implementation can proceed
+
+**Nov 27: HIGH-9 CLOSED - False Alarm (Simulation IS Deterministic)** (commit f58156f)
+- ❌ **NO BUG:** HIGH-9 reported CV=6.7% as "non-determinism" - investigation confirmed simulation IS deterministic
+- **Root Cause of Confusion:** Phase 10 report claimed "identical seeds" but script used DIFFERENT seeds (19900102-19900111)
+- **Evidence:** Temperature identical (2.1°C) across runs; population varies because it's STOCHASTIC (uses RNG)
+- **Defensive Audit:** ✅ No Math.random(), ✅ No optional RNG fallbacks, ✅ RNG propagation correct
+- **Minor Fix:** TechTreePhase - sorted Object.entries() for deterministic iteration (error message order only)
+- 📄 **Investigation:** `reviews/HIGH-9_determinism_investigation_20251127.md`, `devlogs/20251127_HIGH-9_FALSE_ALARM.md`
+- **Status:** CLOSED AS INVALID - Focus on real calibration issues (HIGH-6, HIGH-7, HIGH-8)
+
 **Nov 27: HIGH-8 FIX - Biodiversity Decline Calibration** (commit 2173fc8)
 - 🦋 **Catastrophic Collapse Fixed:** -95% error → 3.25% error (PASS)
 - **Root Cause:** Wrong annual decline rate (1.02%/year instead of 1.312%/year) + wrong config flag check
