@@ -1,8 +1,20 @@
 # Agent Monitor System
 
 **Date:** November 28, 2025
-**Status:** ✅ COMPLETE - HIGH-5 Implementation
+**Status:** ✅ INFRASTRUCTURE COMPLETE - ⚠️ VM DEPLOYMENT PENDING
 **Purpose:** Enable agents to respond to @mentions and questions in Matrix channels
+
+**⚠️ IMPORTANT: DEPLOYMENT REQUIRED**
+
+The monitoring infrastructure (scripts, services, documentation) is complete and committed. However, the services are NOT yet deployed to the VM. To activate the monitors:
+
+```bash
+# On the VM (requires sudo):
+cd /home/lizthedeveloper_gmail_com/ai_game_theory_simulation
+sudo ./scripts/install-agent-monitors.sh
+```
+
+Until deployment, agents will NOT respond to Matrix mentions. See "Deployment Status" section below.
 
 ## Overview
 
@@ -84,6 +96,33 @@ The Agent Monitor System transforms agents from isolated workers into a collabor
    - Agents recall their context: `mcp__agent-memory__recall_context({agent_id})`
    - Agents update their memory: `mcp__agent-memory__add_recent_task({agent_id})`
    - Maintains continuity across monitor invocations
+
+## Deployment Status
+
+**Current Status (Nov 28, 2025 13:00 UTC):**
+- ✅ Infrastructure: COMPLETE (scripts, services, docs committed)
+- ⚠️ VM Deployment: PENDING (services not installed)
+- 🔴 Monitoring: INACTIVE (agents NOT responding to mentions)
+
+**To Activate:**
+1. SSH to VM as user with sudo access
+2. Run: `sudo ./scripts/install-agent-monitors.sh`
+3. Verify: `sudo systemctl status *-monitor.service`
+
+**Known Issues (from Architecture Review B):**
+- CRITICAL-1: Legacy services failing (implementation-monitor, research-monitor) - need cleanup before install
+- HIGH-1: Sylvia/Cynthia both monitor research channel - potential race condition
+- HIGH-2: No concurrency limits on Claude sessions - could spawn 5 parallel sessions
+
+**Recommended Pre-Deployment Actions:**
+```bash
+# 1. Stop failing legacy services
+sudo systemctl stop implementation-monitor research-monitor
+sudo systemctl disable implementation-monitor research-monitor
+
+# 2. Then deploy new HIGH-5 monitors
+sudo ./scripts/install-agent-monitors.sh
+```
 
 ## Installation
 
