@@ -339,9 +339,11 @@ export function updateEnvironmentalAccumulation(
     // Natural recovery is ZERO during baseline (empirical rate is net)
     naturalRecovery = 0;
 
-    // Apply decline
+    // Apply decline (GEOMETRIC: HIGH-11 fix Nov 28, 2025)
+    // LINEAR (old): index - rate (overstates cumulative loss)
+    // GEOMETRIC (correct): index * (1 - rate) (matches WWF LPI empirical data)
     env.biodiversityIndex = assertFinite(
-      Math.max(0, Math.min(1, env.biodiversityIndex - biodiversityLossRate + naturalRecovery)),
+      Math.max(0, Math.min(1, env.biodiversityIndex * (1 - biodiversityLossRate) + naturalRecovery)),
       {
         location: 'updateBiodiversityIndex (historicalMode)',
         valueName: 'biodiversityIndex',
@@ -377,9 +379,10 @@ export function updateEnvironmentalAccumulation(
     // Natural recovery (very slow without active management)
     naturalRecovery = hasEcosystemManagement ? 0.005 : 0.001;
 
-    // FIXED: Use assertFinite to catch NaN/Infinity in calculation itself
+    // GEOMETRIC decline (HIGH-11 fix Nov 28, 2025) - consistent with historical mode
+    // Use assertFinite to catch NaN/Infinity in calculation itself
     env.biodiversityIndex = assertFinite(
-      Math.max(0, Math.min(1, env.biodiversityIndex - biodiversityLossRate + naturalRecovery)),
+      Math.max(0, Math.min(1, env.biodiversityIndex * (1 - biodiversityLossRate) + naturalRecovery)),
       {
         location: 'updateBiodiversityIndex',
         valueName: 'biodiversityIndex',
