@@ -11,22 +11,40 @@
 - **MEDIUM/LOW:** Deferred until token budget restored
 - **All agents:** Extreme efficiency - grep first, skip docs, exit early
 
-**Current Status:** 🟢 **ALL CRITICAL/HIGH BLOCKERS RESOLVED** (Nov 29, 2025 - Post-Validation)
-- **Research Quality:** A- (90%) - Climate stability citations resolved (commit b580b1c8)
-- **Architecture Health:** A (0 CRITICAL, 0 HIGH blockers) - Grade A integration review (Nov 29)
+**Current Status:** 🟡 **NEW CRITICAL/HIGH ISSUES IDENTIFIED** (Nov 29, 2025 - Post-Audit)
+- **Research Quality:** B+ (79%) - Outdated citations found (ocean acidification rate -6yr, AI automation -11yr, biodiversity -6yr)
+- **Architecture Health:** B+ (0 CRITICAL, 0 HIGH blockers) - Grade B+ integration review (v2, Nov 29)
 - **System Performance:** Monte Carlo deterministic, indices operational (98% op reduction)
-- **System Trajectory:** ✅ Outcome variance RESTORED - HIGH-4 validated (Grade B+), technology bifurcation → M-3
-- **Roadmap Coherence:** CURRENT - All completed work archived, validation results documented
-- **Recent Work (Nov 29 - Validation Complete):**
+- **System Trajectory:** ✅ Outcome variance RESTORED - HIGH-4 validated (Grade B+), M-3 investigation complete
+- **Roadmap Coherence:** CURRENT - Recent work archived, new findings added
+- **Recent Work (Nov 29 Session 2 - Audits + Fixes):**
+  - ✅ **M-3 RESOLVED (Technology Bifurcation):** Root cause identified + fixed
+    - Problem: TECHNO_OPTIMIST scenario used unimplemented 'adaptive' strategy (deployed 0 techs)
+    - Fix: Changed to FOUNDATIONS_FIRST ('sequenced' strategy, deploys 40/71 techs = 56% tree)
+    - Commits: 23738ef0, d8edb0a4
+    - Reports: reviews/m3_technology_bifurcation_investigation_20251129.md, reviews/m3_quick_summary.md
+    - Validation: Monte Carlo N=10 in progress
+  - ✅ **HIGH-1 RESOLVED (Ocean → Food Integration):** Fisheries collapse now triggers famines
+    - Problem: Ocean acidification calculated `coastalFisheriesYield` but food security never read it
+    - Fix: Wired coastalFisheriesYield into FoodSecurityDegradationPhase (commit ec29d541)
+    - Impact: 65% fisheries loss → +12% monthly food degradation → famine risk
+    - Report: logs/HIGH-1_validation_20251129_081254.md
+  - 🆕 **Architecture Integration Review v2 (Grade B+):** 1 HIGH resolved + 2 MEDIUM findings
+    - HIGH-1 (Ocean-Food gap): ✅ RESOLVED (see above)
+    - MEDIUM-1: Unimplemented 'adaptive' tech strategy still documented (trap for users)
+    - MEDIUM-2: 25+ silent fallbacks remain (ongoing technical debt)
+    - Report: reviews/architecture_integration_review_20251129_v2.md
+  - 🆕 **Research Validation Audit (Grade B+):** 1 CRITICAL + 2 HIGH outdated citations found
+    - CRITICAL: Ocean acidification rate (IPCC SROCC 2019 → Jiang 2023, -20-30% underestimate)
+    - HIGH: AI automation threshold (Frey & Osborne 2013 → need 2024 sources, pre-GPT-4)
+    - HIGH: IPBES biodiversity metrics (2019 → 2023-2024 updates)
+    - Report: research/RESEARCH_VALIDATION_AUDIT_20251129.md
+- **Recent Work (Nov 29 Session 1 - Validation Complete):**
   - ✅ **HIGH-4 VALIDATED (Grade B+):** Outcome variance restored, technology bifurcation → M-3
     - Pre-fix: 10/10 Pyrrhic Dystopia (0% variance)
     - Post-fix: 2 Pyrrhic, 6 Dystopia, 2 Stable Dystopia (variance restored ✅)
     - Technology bifurcation: 0/10 runs (expected 30-40%) → Downgraded to M-3 for investigation
     - Reports: reviews/high4_validation_results_20251129.md, reviews/architecture_integration_review_20251129_fallback.md
-  - ✅ **Architecture Integration Review (Grade A):** 0 CRITICAL, 0 HIGH issues
-    - Ocean acidification phase: WELL-INTEGRATED
-    - Carbon cycle fixes: CLEAN implementation
-    - Test suite: 79.70% coverage, all passing
   - ✅ **CRITICAL-1 RESOLVED** - Hindcast validation crashes fixed (commit cceb556a)
     - Added environmentalHealth to GlobalMetrics interface
     - Validation: 0% crash rate (was 30%)
@@ -406,31 +424,91 @@
 - **Dependencies:** Matrix tokens for each agent (most already exist)
 - **Impact:** Transforms agents from isolated workers to collaborative team
 
+## 🔴 CRITICAL Priority Items
+
+**RV-1: Ocean Acidification Rate Outdated (-6 Years)** 🆕 NEW (Nov 29, 2025)
+- **Status:** 🆕 NEW - Research Validation Audit
+- **Assignee:** super-alignment-researcher (Cynthia)
+- **Problem:** Ocean acidification parameter uses IPCC SROCC (2019) data, now 6 years old
+  - Current: `OCEAN_ACIDIFICATION_RATE: 0.000167` (centralConfig.ts line 316)
+  - Source: IPCC SROCC (2019)
+  - Update: Jiang et al. (2023) shows 20-30% acceleration post-2009
+  - Impact: Underestimates current acidification rate significantly
+- **Action:**
+  1. Search Jiang et al. (2023) for updated rate
+  2. Update centralConfig.ts parameter with 2023 value
+  3. Re-validate ocean acidification cascade timing
+- **Effort:** 1-2 hours (literature search + parameter update)
+- **Report:** research/RESEARCH_VALIDATION_AUDIT_20251129.md
+
+## 🟠 HIGH Priority Items
+
+**RV-2: AI Automation Threshold Outdated (-11 Years, Pre-GPT-4)** 🆕 NEW (Nov 29, 2025)
+- **Status:** 🆕 NEW - Research Validation Audit
+- **Assignee:** super-alignment-researcher (Cynthia)
+- **Problem:** AI displacement threshold cites Frey & Osborne (2013), pre-dates LLM era entirely
+  - Current: `AUTOMATION_DISPLACEMENT_THRESHOLD: 0.47` (centralConfig.ts line 61)
+  - Source: Frey & Osborne (2013), Arntz (2016)
+  - Context: Written before GPT-4, Claude 3.5, generative AI revolution
+  - Impact: May underestimate AI displacement potential by 50-100%
+- **Action:**
+  1. Search 2024-2025 literature on AI labor displacement post-GPT-4
+  2. Update threshold with current research findings
+  3. Re-validate automation transition dynamics
+- **Effort:** 2-3 hours (literature search + scenario validation)
+- **Report:** research/RESEARCH_VALIDATION_AUDIT_20251129.md
+
+**RV-3: IPBES Biodiversity Metrics Outdated (-6 Years)** 🆕 NEW (Nov 29, 2025)
+- **Status:** 🆕 NEW - Research Validation Audit
+- **Assignee:** super-alignment-researcher (Cynthia)
+- **Problem:** Multiple biodiversity parameters cite IPBES (2019), 6-year-old data
+  - Lines affected: 151, 306, 1073, 1338, 1346, 1356 (centralConfig.ts)
+  - Source: IPBES Global Assessment (2019)
+  - Update: IPBES released new assessments 2023-2024
+  - Impact: Background extinction rates, biodiversity intactness thresholds may have changed
+- **Action:**
+  1. Search IPBES 2023-2024 reports for updated values
+  2. Update 6 parameters in centralConfig.ts
+  3. Validate planetary boundaries recalculation
+- **Effort:** 2-3 hours (multi-parameter update)
+- **Report:** research/RESEARCH_VALIDATION_AUDIT_20251129.md
+
 ### 🟡 MEDIUM Priority Items
 
-**M-3: Technology Bifurcation Investigation (0/10 Runs)** ✅ RESOLVED (Nov 29, 2025)
-- **Status:** ✅ RESOLVED - Root cause fixed, commits applied
-- **Assignee:** Autonomous Worker (Fallback Workflow 4)
-- **Problem:** Despite fixing scenario application (HIGH-4), 0/10 runs cross technology bifurcation threshold
-  - Expected: 30-40% of runs unlock 55-60% of tech tree (65-71 technologies out of 119 total)
-  - Observed: 0/10 runs cross threshold (validation run Nov 29 07:01 UTC)
-- **Root Cause:** TECHNO_OPTIMIST used adaptive deployment strategy
-  - Adaptive strategy waits for social stability before deploying techs
-  - In dystopia runs (resentment 0.715-0.940), stability never improves
-  - Result: Tech schedule exists but techs never deploy
-- **Solution:** Changed deployment strategy from adaptive → immediate (commit acc5f0d8)
-  - Immediate strategy deploys techs unconditionally (ignores resentment)
-  - Expected result: 30-40% of runs unlock 65-71 technologies
-- **Secondary Fix:** Updated tech count from 71 → 119 throughout codebase (commit 47d75fc1)
-  - Fixed ocean acidification tech conflicts (duplicate IDs)
-  - Updated wiki documentation
-- **Validation:**
-  - Architecture integration review: Grade A (0 CRITICAL/HIGH issues)
-  - Research source validation: Grade A (no critical blockers)
-  - Monte Carlo validation deferred (token conservation)
-- **Deferred Issue:** techUnlockedCount field goes missing mid-simulation (future session)
-- **Archive:** `plans/completed/technology_bifurcation_investigation_M-3_20251129.md`
-- **Reports:** reviews/architecture_integration_review_20251129_fallback.md, reviews/research_source_validation_20251129_fallback.md
+**M-3: Technology Bifurcation Investigation** ✅ RESOLVED (Nov 29, 2025)
+- **Status:** ✅ RESOLVED - Commits 23738ef0, d8edb0a4
+- **Problem:** TECHNO_OPTIMIST scenario used unimplemented 'adaptive' strategy → deployed 0 technologies
+- **Solution:** Changed Monte Carlo script to use FOUNDATIONS_FIRST scenario ('sequenced' strategy)
+  - Deploys 40/71 technologies (56% of tree)
+  - Crosses 55-60% bifurcation threshold
+- **Validation:** Monte Carlo N=10 in progress
+- **Reports:** reviews/m3_technology_bifurcation_investigation_20251129.md, reviews/m3_quick_summary.md
+
+**M-4: Unimplemented 'adaptive' Technology Strategy** 🆕 NEW (Nov 29, 2025)
+- **Status:** 🆕 NEW - Architecture Review v2 finding
+- **Assignee:** simulation-maintainer (Roy)
+- **Problem:** TECHNO_OPTIMIST scenario documents `strategy: 'adaptive'` but implementation is a no-op
+  - Code path: src/simulation/scenarios/apply.ts:219-223
+  - Behavior: Logs message, returns without creating deployment schedule
+  - Impact: Silent trap - any scenario using 'adaptive' deploys 0 techs
+- **Options:**
+  1. Add warning in TECHNO_OPTIMIST definition (quick)
+  2. Implement 'adaptive' strategy (medium effort)
+  3. Deprecate TECHNO_OPTIMIST until 'adaptive' implemented
+- **Effort:** 1 hour (documentation) OR 4-6 hours (implementation)
+- **Report:** reviews/architecture_integration_review_20251129_v2.md
+
+**M-5: Silent Fallbacks Remain (25+ Patterns)** 🆕 NEW (Nov 29, 2025)
+- **Status:** 🆕 NEW - Architecture Review v2 finding
+- **Assignee:** simulation-maintainer (Roy)
+- **Problem:** 25+ `?? defaultValue` patterns remain in phase code
+  - Most are legitimate (config defaults, uncertainty parameters)
+  - Some may mask state initialization bugs
+  - Previous review noted 76 patterns project-wide
+- **Action:** Schedule comprehensive audit after current roadmap sprint
+- **Priority:** MEDIUM - Technical debt, not blocking
+- **Token Conservation:** Defer until CRITICAL/HIGH cleared
+- **Report:** reviews/architecture_integration_review_20251129_v2.md
 
 **M-1: Dead Code Cleanup** ✅ RESOLVED (Nov 26, 2025)
 - **Status:** ✅ RESOLVED - Commit 8ef9b822e (Nov 26, 2025)
