@@ -1,6 +1,6 @@
 # Research Update Queue
-**Generated:** 11/29/2025, 4:30:04 PM
-**Files Scanned:** 493
+**Generated:** 11/29/2025, 8:30:03 PM
+**Files Scanned:** 495
 
 ---
 
@@ -12,7 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 168 (34.1%)
+**Count:** 169 (34.1%)
 
 ### `CRISIS_MITIGATION_RESEARCH_CRITIQUE_20251029.md`
 - **Oldest source:** 2001 (24 years old)
@@ -348,6 +348,11 @@
 - **Oldest source:** 2002 (23 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/climate_self_limiting_mechanisms_20251125.md`
+
+### `climate_stability_floor_final_verdict_20251129.md`
+- **Oldest source:** 2019 (6 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/climate_stability_floor_final_verdict_20251129.md`
 
 ### `climate_stability_mechanisms_2024_2025.md`
 - **Oldest source:** 2008 (17 years old)
@@ -858,7 +863,7 @@
 
 ## 📋 MEDIUM (Review Within Quarter)
 
-**Count:** 21 (4.3%)
+**Count:** 21 (4.2%)
 
 - `LAYER2_COMPREHENSIVE_STATUS_20251030.md` - Oldest: 2020 (5 years)
 - `LAYER2_DEBATE_SUMMARY_20251030.md` - Oldest: 2020 (5 years)
@@ -886,7 +891,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 304 (61.7%)
+**Count:** 305 (61.6%)
 
 All sources <3 years old. No action required.
 
@@ -896,11 +901,11 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 493 |
+| Total files | 495 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 168 (34.1%) |
-| MEDIUM | 21 (4.3%) |
-| LOW | 304 (61.7%) |
+| HIGH | 169 (34.1%) |
+| MEDIUM | 21 (4.2%) |
+| LOW | 305 (61.6%) |
 | Average age | 7.8 years |
 | Oldest source | 1955 (70 years ago) |
 
@@ -908,9 +913,9 @@ All sources <3 years old. No action required.
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 304 | 61.7% |
-| Warning (3-5yr) | 21 | 4.3% |
-| Critical (>5yr) | 168 | 34.1% |
+| Current (<3yr) | 305 | 61.6% |
+| Warning (3-5yr) | 21 | 4.2% |
+| Critical (>5yr) | 169 | 34.1% |
 
 ### Targets
 
@@ -922,7 +927,7 @@ All sources <3 years old. No action required.
 
 ## 🔄 Next Steps
 
-1. Update 168 HIGH priority file(s) within 1 month
+1. Update 169 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 
