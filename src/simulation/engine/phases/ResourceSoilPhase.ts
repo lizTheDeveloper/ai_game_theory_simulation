@@ -57,13 +57,8 @@ export class ResourceSoilPhase implements SimulationPhase {
     // Calculate current monthly N/P inputs from phosphorus system
     // Baseline (2025): ~120 Mt N/year = ~10 Mt N/month, ~25 Mt P/year = ~2.1 Mt P/month
     // Inputs scale with phosphorus pollution level and population
-    const phosphorusSystem = assertStateProperty(state, 'phosphorusSystem', {
+    const phosphorusPollution = assertStateProperty(state, 'phosphorusSystem.pollutionLevel', {
       location: 'ResourceSoilPhase.execute',
-      month: state.currentMonth,
-    });
-    const phosphorusPollution = assertFinite(phosphorusSystem.pollutionLevel, {
-      location: 'ResourceSoilPhase.execute',
-      valueName: 'phosphorusPollution',
       month: state.currentMonth,
     });
     const baselineNInput = 10.0;  // Mt N/month at 2025 baseline
