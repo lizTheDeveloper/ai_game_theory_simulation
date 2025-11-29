@@ -111,8 +111,13 @@ function executeSocialCohesionUpdate(state: GameState, rng: RNGFunction): GameEv
   const displacement = calculateDisplacement(state);
   const purposeInfrastructure = calculatePurposeInfrastructure(state);
 
+  // HIGH-4 (Nov 29, 2025): Regime-based feedback loops
+  // Social-breakdown regime accelerates decay via positive feedbacks
+  // Research: Scheffer et al. (2024) - regime shifts create self-reinforcing dynamics
+  const regimeMultiplier = state.bifurcationState?.currentRegime === 'social-breakdown' ? 1.5 : 1.0;
+
   // Social Trust Update
-  const trustChange = calculateTrustChange(inequality, aiDeception, trust, state);
+  const trustChange = calculateTrustChange(inequality, aiDeception, trust, state) * regimeMultiplier;
   trust = Math.max(0, Math.min(100, trust + trustChange));
 
   // Community Bonds Update
@@ -121,7 +126,7 @@ function executeSocialCohesionUpdate(state: GameState, rng: RNGFunction): GameEv
     unemployment,
     communityBonds,
     state
-  );
+  ) * regimeMultiplier;
   communityBonds = Math.max(0, Math.min(100, communityBonds + bondsChange));
 
   // Meaning Crisis Update
@@ -131,7 +136,7 @@ function executeSocialCohesionUpdate(state: GameState, rng: RNGFunction): GameEv
     purposeInfrastructure,
     communityBonds,
     meaningCrisisPercent
-  );
+  ) * regimeMultiplier;
   accumulation.meaningCrisisLevel = Math.max(
     0,
     Math.min(1, accumulation.meaningCrisisLevel + meaningChange / 100)

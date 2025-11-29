@@ -366,8 +366,16 @@ export function applyAllTechEffects(
       // Scale effects by deployment level
       // 🚀 PERFORMANCE (Nov 10, 2025): Sort effects once per deployment (NOT inside inner loop)
       const sortedEffects = Object.entries(deployment.effects).sort((a, b) => a[0].localeCompare(b[0]));
+
+      // HIGH-4 (Nov 29, 2025): Regime-based feedback loops
+      // Any collapse regime reduces tech effectiveness via institutional breakdown
+      // Research: Scheffer et al. (2024) - regime shifts disrupt implementation capacity
+      const regimeMultiplier = (gameState.bifurcationState?.currentRegime === 'ecological-collapse' ||
+                                gameState.bifurcationState?.currentRegime === 'social-breakdown' ||
+                                gameState.bifurcationState?.currentRegime === 'economic-collapse') ? 0.7 : 1.0;
+
       for (const [effectName, effectValue] of sortedEffects) {
-        let scaledValue = effectValue * deployment.deploymentLevel;
+        let scaledValue = effectValue * deployment.deploymentLevel * regimeMultiplier;
 
         // CRITICAL FIX (Nov 13, 2025): Novel Entities remediation gating logic
         // Research: Ling 2024, Cousins 2022, Kane 2022

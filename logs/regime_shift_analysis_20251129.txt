@@ -1,0 +1,128 @@
+REGIME SHIFT IMPACT ANALYSIS
+Generated: 2025-11-29
+Roy (simulation-maintainer)
+
+SUMMARY:
+Regime shifts trigger correctly (2-4 per run) but don't affect outcomes because they only modify:
+1. Outcome score adjustments (+0.3 to already-high scores)
+2. Emergency response deployment (but crises may not be active)
+
+ROOT CAUSE ANALYSIS:
+
+1. OUTCOME SCORE ADJUSTMENTS (outcomes.ts:100-142)
+   - Regime shifts add/multiply dystopia/extinction/utopia scores
+   - Example: ecological-collapse adds +0.3 to extinctionScore, +0.2 to dystopiaScore
+   - PROBLEM: These are absolute additions to scores that are already >0.6
+   - If dystopiaScore is 0.6 and regime adds +0.3, new score is 0.9
+   - Both 0.6 and 0.9 classify as "high dystopia" - no meaningful change
+   - Outcome classification uses thresholds (not continuous scores)
+
+2. EMERGENCY RESPONSE TRIGGERS (EmergencyResponsePhase.ts:375-540)
+   - Regime shifts deploy emergency responses for matching crisis types
+   - Example: ecological-collapse deploys climate emergency response
+   - Emergency responses reduce crisis severity when completed
+   - PROBLEM: Responses only help if crisis is ALREADY ACTIVE
+   - If no climate crisis is active, ecological-collapse emergency does nothing
+   - Timing: Regime shift at Month 80, but climate crisis might not start until Month 120
+
+3. VARIANCE AMPLIFICATION (BifurcationLogicPhase.ts:377-519)
+   - Near thresholds: amplification → 100×
+   - Far from thresholds: amplification → 1×
+   - PROBLEM: No system actually USES this amplification value
+   - It's calculated and stored in bifState.varianceAmplification
+   - But no phases read it to modify their behavior
+   - Dead variable - calculated but never consumed
+
+MISSING FEEDBACK LOOPS:
+
+The research says regime shifts "lock in trajectories" (Scheffer et al. 2024).
+Current implementation: regime shifts just log events and tweak scores.
+
+What SHOULD happen when crossing ecological-collapse threshold:
+- Environmental degradation accelerates (positive feedback)
+- Technology effectiveness decreases (ecosystem too damaged for restoration)
+- Social cohesion decays faster (resource conflicts)
+- QoL drops harder (cascading failures)
+
+What ACTUALLY happens:
+- Log message "🌀 REGIME SHIFT: status-quo → ecological-collapse"
+- extinctionScore += 0.3 (might go from 0.6 to 0.9, both "high")
+- Climate emergency deploys (if climate crisis active, else does nothing)
+- Simulation continues normally
+
+PROPOSED FIXES:
+
+Option 1: REGIME-BASED STATE MULTIPLIERS (Easiest)
+Add regime multipliers to system update phases:
+
+```typescript
+// In EnvironmentalAccumulationPhase
+let degradationRate = baseRate;
+if (state.bifurcationState?.currentRegime === 'ecological-collapse') {
+  degradationRate *= 1.5; // Positive feedback: collapse accelerates
+}
+state.environmentalAccumulation.pollutionLevel += degradationRate;
+```
+
+Apply to:
+- Environmental: degradation 1.5× faster in ecological-collapse
+- Social: cohesion decay 1.5× faster in social-breakdown
+- Economic: wealth inequality increases 1.5× in economic-collapse
+- Technology: effectiveness 0.7× in any collapse regime (tech can't fix systemic failures)
+
+Option 2: VARIANCE AMPLIFICATION CONSUMPTION (Medium)
+Make phases actually USE the varianceAmplification value:
+
+```typescript
+// In TechnologyDeploymentPhase
+const baseEffectiveness = 0.8;
+const amplification = state.bifurcationState?.varianceAmplification || 1.0;
+// Near thresholds: tech becomes less predictable (might fail catastrophically)
+const variance = rng() * amplification * 0.1; // 0-10% variance at 100× amplification
+const actualEffectiveness = baseEffectiveness * (1 - variance);
+```
+
+This makes outcomes more divergent near thresholds (research-backed).
+
+Option 3: REGIME-SPECIFIC OUTCOME THRESHOLDS (Hardest)
+Make outcome classification regime-dependent:
+
+```typescript
+// In outcomes.ts
+const dystopiaThreshold = currentRegime.includes('collapse') ? 0.4 : 0.6;
+if (dystopiaScore > dystopiaThreshold) {
+  // Classify as dystopia
+}
+```
+
+Problem: Changes outcome mechanics significantly, needs research justification.
+
+RECOMMENDATION:
+
+Implement Option 1 (regime-based state multipliers) because:
+1. Research-backed: Scheffer et al. (2024) - regime shifts create positive feedback loops
+2. Simple to implement: 5-10 lines per affected phase
+3. Immediate impact: Regime shifts will materially change trajectories
+4. Low risk: Multipliers are bounded (1.5× max), won't break simulation
+
+CONCRETE IMPLEMENTATION:
+
+Add to these phases:
+1. EnvironmentalAccumulationPhase - pollution/degradation multipliers
+2. SocialCohesionPhase - decay multipliers
+3. QualityOfLifePhase - reduction multipliers
+4. TechnologyEffectivenessPhase (if exists) - effectiveness dampeners
+
+Test with Monte Carlo N=10:
+- Before: 2-4 regime shifts, 100% dystopia
+- After: 2-4 regime shifts, divergent outcomes (some collapse faster, some recover)
+
+ESTIMATED EFFORT: 2-3 hours (add multipliers + Monte Carlo validation)
+
+FILES TO MODIFY:
+- src/simulation/engine/phases/EnvironmentalAccumulationPhase.ts (if exists, else create)
+- src/simulation/engine/phases/SocialCohesionPhase.ts
+- src/simulation/engine/phases/QualityOfLifePhase.ts
+- Add tests to verify multipliers apply correctly
+
+END ANALYSIS
