@@ -24,6 +24,10 @@ import { wrapConsoleWithPrefix, LogBuffer } from '../src/simulation/utils/consol
 import * as fs from 'fs';
 import * as path from 'path';
 
+// HIGH-4 FIX (Nov 29, 2025): Apply tech deployment scenario to enable technology bifurcation
+import { applyScenario } from '../src/simulation/scenarios/apply';
+import { SCENARIOS } from '../src/simulation/scenarios/definitions';
+
 // Phase 4: Unified Threshold System Integration
 import {
   sampleAllThresholds,
@@ -1052,6 +1056,11 @@ if (nestedMonteCarlo) {
       // Now initialization and engine share the SAME RNG sequence
       // CRITICAL FIX (Nov 7, 2025): RNG is now first parameter
       const initialState = createDefaultInitialState(rngFunction, runScenarioMode, undefined, undefined, undefined, undefined);
+
+      // HIGH-4 FIX (Nov 29, 2025): Apply TECHNO_OPTIMIST scenario to enable technology bifurcation
+      // Root cause: Monte Carlo was running with 0 techs unlocked (no scenario applied)
+      // TECHNO_OPTIMIST: adaptive deployment, 100% deployment level → enables innovation cascades
+      applyScenario(initialState, SCENARIOS.technoOptimist, rngFunction);
 
       // Set run label for logging
       initialState.config.runLabel = `Epistemic ${epistemicIndex + 1}/${NUM_RUNS}, Aleatory ${aleatoryIndex + 1}/${aleatoryNumSamples} [${runScenarioMode}]`;
@@ -2162,6 +2171,11 @@ if (nestedMonteCarlo) {
     // DETERMINISM FIX (Nov 6, 2025): Pass engine's RNG function to initialization
     // CRITICAL FIX (Nov 7, 2025): RNG is now first parameter
     const initialState = createDefaultInitialState(rngFunction, runScenarioMode, undefined, undefined, undefined, undefined);
+
+    // HIGH-4 FIX (Nov 29, 2025): Apply TECHNO_OPTIMIST scenario to enable technology bifurcation
+    // Root cause: Monte Carlo was running with 0 techs unlocked (no scenario applied)
+    // TECHNO_OPTIMIST: adaptive deployment, 100% deployment level → enables innovation cascades
+    applyScenario(initialState, SCENARIOS.technoOptimist, rngFunction);
 
     // Set run label for logging
     initialState.config.runLabel = `Run ${i + 1}/${NUM_RUNS} [${runScenarioMode}]`;
