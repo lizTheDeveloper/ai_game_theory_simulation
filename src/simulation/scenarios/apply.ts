@@ -35,9 +35,7 @@ export function applyScenario(
 
   // CRITICAL: Store scenario configuration for enforcement during simulation
   // (Nov 10, 2025 - Fix for "declarative only" bug)
-  // (Nov 29, 2025 - M-3 Fix: Also set state.scenario for phase compatibility)
   state.scenarioConfig = scenario;
-  state.scenario = scenario;
   console.log(`  ✓ Scenario config stored in state (government will enforce priorities)`);
 
   // Apply starting condition modifications

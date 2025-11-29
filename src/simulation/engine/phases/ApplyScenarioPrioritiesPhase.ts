@@ -398,12 +398,12 @@ export class ApplyScenarioPrioritiesPhase implements SimulationPhase {
     const events: GameEvent[] = [];
 
     // Check if scenario is active
-    if (!state.scenario || !state.scenario.governmentPriorities) {
+    if (!state.scenarioConfig || !state.scenarioConfig.governmentPriorities) {
       // No scenario or no priorities - skip this phase
       return { events };
     }
 
-    const priorities = state.scenario.governmentPriorities;
+    const priorities = state.scenarioConfig.governmentPriorities;
 
     // === VALIDATION (Nov 14, 2025) ===
     // Validate all overrides BEFORE applying any mutations
@@ -670,7 +670,7 @@ export class ApplyScenarioPrioritiesPhase implements SimulationPhase {
     // Log overrides (only if any were applied)
     if (overridesApplied.length > 0 && state.currentMonth % 6 === 0) {
       console.log(`\n🎯 SCENARIO PRIORITIES (Month ${state.currentMonth})`);
-      console.log(`   Scenario: ${state.scenario.name}`);
+      console.log(`   Scenario: ${state.scenarioConfig.name}`);
       console.log(`   Overrides applied:`);
       for (const override of overridesApplied) {
         console.log(`     - ${override}`);
@@ -688,13 +688,13 @@ export class ApplyScenarioPrioritiesPhase implements SimulationPhase {
     // Create event for first override application
     if (overridesApplied.length > 0 && state.currentMonth === 0) {
       events.push({
-        id: `scenario_start_${state.scenario.id}`,
+        id: `scenario_start_${state.scenarioConfig.name.replace(/\s+/g, '_').toLowerCase()}`,
         timestamp: state.currentMonth,
         type: 'policy',
         severity: 'info',
         agent: 'Scenario System',
-        title: `🎬 Scenario Started: ${state.scenario.name}`,
-        description: `${state.scenario.description}\n\nPriority overrides: ${overridesApplied.join(', ')}`,
+        title: `🎬 Scenario Started: ${state.scenarioConfig.name}`,
+        description: `${state.scenarioConfig.description}\n\nPriority overrides: ${overridesApplied.join(', ')}`,
         effects: {}
       });
     }

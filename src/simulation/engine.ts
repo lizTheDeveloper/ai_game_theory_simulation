@@ -844,7 +844,7 @@ export class SimulationEngine {
     // Current: 12-month interval = ~100 snapshots per 1200 months (~1-2GB RAM)
 
     // DEBUG (Nov 12, 2025): Month 49 termination bug investigation
-    const DEBUG_SCENARIO_BUG = state.scenario !== undefined;
+    const DEBUG_SCENARIO_BUG = state.scenarioConfig !== undefined;
 
     for (let month = 0; month < maxMonths; month++) {
       // DEBUG: Log loop entry for scenario runs

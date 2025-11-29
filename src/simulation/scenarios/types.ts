@@ -23,8 +23,29 @@ export interface GovernmentPriorityOverride {
   /** Redistribution target (lower Gini) (0-1) */
   redistributionLevel?: number;
 
+  /** Redistribution rate (alias for redistributionLevel) */
+  redistributionRate?: number;
+
   /** AI alignment research investment priority (0-1) */
   alignmentResearch?: number;
+
+  /** Research investment (absolute value) */
+  researchInvestment?: number;
+
+  /** Research investment rate (0-1) */
+  researchInvestmentRate?: number;
+
+  /** AI safety budget (absolute value) */
+  aiSafetyBudget?: number;
+
+  /** AI safety budget rate (0-1) */
+  aiSafetyBudgetRate?: number;
+
+  /** Democracy level (0-1) */
+  democracyLevel?: number;
+
+  /** Government type override */
+  governmentType?: 'democratic' | 'authoritarian' | 'technocratic' | 'mixed';
 
   /** Democratic participation investment (0-1) */
   democraticParticipation?: number;

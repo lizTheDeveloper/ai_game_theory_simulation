@@ -74,7 +74,7 @@ export function checkEndGameTransition(state: GameState): boolean {
   // trigger end-game at month 0-1, then timeout after 48 months → ALL runs terminate at month 49
   // Scenarios are testing spiral dynamics, not end-game competition.
   // End-game should only activate in normal (non-scenario) gameplay.
-  if (state.scenario) {
+  if (state.scenarioConfig) {
     return false; // Don't trigger end-game during scenario testing
   }
 
