@@ -560,6 +560,7 @@ export class SimulationEngine {
     // === BATCH 3 CONSOLIDATED PHASES (Nov 9, 2025) ===
     this.orchestrator.registerPhase(new ResourceSoilPhase());  // Consolidated: PhosphorusPhase + NovelEntitiesPhase
     this.orchestrator.registerPhase(new ResourceWaterPhase());  // Consolidated: FreshwaterPhase + OceanAcidificationPhase
+    this.orchestrator.registerPhase(new OceanAcidificationCascadePhase());  // RD-2 (Nov 28, 2025): Regional coral cascades
     // FIX (Oct 28, 2025): Applies births to regions, then aggregates → global
     this.orchestrator.registerPhase(new HumanPopulationPhase());
     this.orchestrator.registerPhase(new InternationalMigrationPhase()); // Phase 8 - Hindcast Calibration (Nov 25 2025)

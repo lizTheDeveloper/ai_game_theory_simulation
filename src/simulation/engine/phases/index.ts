@@ -115,6 +115,7 @@ export { ClimateDeploymentDelayPhase } from './ClimateDeploymentDelayPhase';  //
 export { PermafrostCarbonPhase } from './PermafrostCarbonPhase';  // TIER 2 (Nov 28, 2025): Permafrost carbon feedback loop
 export { ResourceSoilPhase } from './ResourceSoilPhase';  // Consolidates: Phosphorus, NovelEntities
 export { ResourceWaterPhase } from './ResourceWaterPhase';  // Consolidates: Freshwater, OceanAcidification
+export { OceanAcidificationCascadePhase } from './OceanAcidificationCascadePhase';  // TIER 2 RD-2 (Nov 28, 2025): Regional coral cascades, compound stress
 export { BaselineMortalityPhase } from './BaselineMortalityPhase';  // Phase 34.8 (Nov 24, 2025) - Baseline demographic mortality
 export { BayesianMortalityResolutionPhase } from './BayesianMortalityResolutionPhase';  // Phase 35 (Oct 27, 2025) - Centralized mortality resolution
 export { AntimicrobialResistancePhase } from './AntimicrobialResistancePhase';  // TIER 1.8 (Oct 17, 2025)
