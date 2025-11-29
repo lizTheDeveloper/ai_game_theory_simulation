@@ -11,18 +11,35 @@
 - **MEDIUM/LOW:** Deferred until token budget restored
 - **All agents:** Extreme efficiency - grep first, skip docs, exit early
 
-**Current Status:** 🟡 **OUTCOME BIFURCATION BLOCKED** (Nov 29, 2025 - Post-Validation)
+**Current Status:** 🟢 **INITIALIZATION BUGS RESOLVED** (Nov 29, 2025 04:42 UTC)
 - **Research Quality:** A- (90%) - Climate stability citations resolved (commit b580b1c8)
-- **Architecture Health:** A- (0 CRITICAL, 0 HIGH blockers resolved)
+- **Architecture Health:** A- (0 CRITICAL, 0 HIGH blockers)
 - **System Performance:** Monte Carlo deterministic, indices operational (98% op reduction)
-- **System Trajectory:** ⚠️ **100% DYSTOPIA** - Monte Carlo N=10 shows zero outcome variance
+- **System Trajectory:** 🟡 **100% DYSTOPIA (Governance Failure)** - Initialization bugs fixed, now Western Liberal paradigm dominance
 - **Roadmap Coherence:** CURRENT - All completed work archived, status updated
-- **Recent Work (Nov 29 - Validation Complete):**
+- **Recent Work (Nov 29 - Initialization Bugs RESOLVED):**
+  - ✅ **CRITICAL-1 RESOLVED** - Month 0 Social/Economic Collapse (commit 5392ba3e)
+    - **Problem:** coordinationCapacity = 0.4 (below social breakdown threshold ~0.15-0.25)
+    - **Impact:** Triggered Month 0 economic/social bifurcations, 17.5x variance amplification
+    - **Fix:** coordinationCapacity 0.4 → 0.65 (realistic 2025 baseline)
+    - **Validation:** NO Month 0 bifurcations in Monte Carlo N=3
+    - **File:** src/simulation/initialization.ts:745
+  - ✅ **CRITICAL-2 RESOLVED** - Early-Game Bifurcation Protection (commit 5392ba3e)
+    - **Problem:** Bifurcation logic ran at Month 0, treating initialization artifacts as real regime shifts
+    - **Impact:** Month 0 regime shift cascaded to environmental collapse at Month 1
+    - **Fix:** Skip bifurcation checks for months 0-11 (real bifurcations emerge from dynamics)
+    - **Validation:** NO Month 0/1 false collapses
+    - **File:** src/simulation/engine/phases/BifurcationLogicPhase.ts:44-48
+  - ✅ **Architecture Review COMPLETE** (Nov 29 04:30 UTC)
+    - Identified root cause: Semantic mismatch between bifurcation thresholds and proxy metrics
+    - economicTransitionStage=0 means "status quo" not "collapse"
+    - coordinationCapacity=0.4 was initialization bug
+    - **Report:** reviews/architecture_dystopia_investigation_20251129.md
   - ✅ **Monte Carlo N=10 Validation COMPLETE** (Nov 29 03:58 UTC)
     - 10/10 runs: Pyrrhic Dystopia (88-99% mortality)
     - 0/10 technology bifurcation (expected 30-40%)
     - Resentment blocking utopia paths (0.715-0.940 range)
-  - ✅ **CRITICAL-1 RESOLVED** - Hindcast validation crashes fixed (commit cceb556a)
+  - ✅ **Hindcast Validation Crashes Fixed** (commit cceb556a)
     - Added environmentalHealth to GlobalMetrics interface
     - Validation: 0% crash rate (was 30%)
   - ✅ **HIGH-2 RESOLVED** - Carbon cycle calibration corrected (commit 3caab24a)
@@ -174,7 +191,40 @@
 
 ### 🚨 CRITICAL Priority Items
 
-**CRITICAL-1: Hindcast Validation Crashes (environmentalHealth NaN)** ✅ RESOLVED (Nov 27, 2025)
+**CRITICAL-1 (Initialization): Month 0 Social/Economic Collapse** ✅ RESOLVED (Nov 29, 2025)
+- **Status:** ✅ RESOLVED - NO Month 0 bifurcations in Monte Carlo N=3
+- **Discovery:** Nov 29, 2025 - Architecture review of 100% dystopia Monte Carlo results
+- **Problem:** coordinationCapacity = 0.4 triggered Month 0 economic/social bifurcations
+  - coordinationCapacity 0.4 below typical social breakdown threshold (~0.15-0.25)
+  - 100% of runs started in economic-collapse or social-breakdown regime
+  - Triggered 17.5x variance amplification immediately
+  - Environmental health dropped from 0.768 to 0.117 by Month 1 (cascade effect)
+- **Root Cause:** Semantic mismatch between bifurcation thresholds and proxy metrics
+  - economicTransitionStage=0 means "2025 status quo" not "collapse"
+  - coordinationCapacity=0.4 was initialization bug (no modern society has 40% coordination)
+- **Solution:** coordinationCapacity 0.4 → 0.65 (realistic 2025 baseline) - commit 5392ba3e
+- **Validation:** Monte Carlo N=3 shows NO Month 0 bifurcations (Roy, Nov 29)
+- **Assignee:** simulation-maintainer (Roy) - COMPLETE
+- **Impact:** Eliminated initialization-driven collapse bugs
+- **File:** src/simulation/initialization.ts:745
+- **Report:** reviews/architecture_dystopia_investigation_20251129.md
+
+**CRITICAL-2 (Initialization): Early-Game Bifurcation Protection** ✅ RESOLVED (Nov 29, 2025)
+- **Status:** ✅ RESOLVED - NO Month 0/1 false collapses in Monte Carlo N=3
+- **Discovery:** Nov 29, 2025 - Architecture review identified Month 0 regime shifts
+- **Problem:** Bifurcation logic ran at Month 0, treating initialization artifacts as real regime shifts
+  - Month 0 regime shift cascaded to environmental collapse at Month 1
+  - Real bifurcations should emerge from dynamics, not initial conditions
+- **Solution:** Skip bifurcation checks for months 0-11 (commit 5392ba3e)
+  - Added early return: `if (state.currentMonth < 12) return;`
+  - Warm start approach - bifurcations emerge after 1 year of dynamics
+- **Validation:** Monte Carlo N=3 shows NO Month 0/1 false collapses (Roy, Nov 29)
+- **Assignee:** simulation-maintainer (Roy) - COMPLETE
+- **Impact:** Eliminated Month 0 regime shift cascades
+- **File:** src/simulation/engine/phases/BifurcationLogicPhase.ts:44-48
+- **Report:** reviews/architecture_dystopia_investigation_20251129.md
+
+**CRITICAL-1 (Hindcast): Hindcast Validation Crashes (environmentalHealth NaN)** ✅ RESOLVED (Nov 27, 2025)
 - **Status:** ✅ RESOLVED - Crash rate 0% (was 30%)
 - **Discovery:** Nov 26, 2025 late night - Autonomous worker Phase 10 validation
 - **Problem:** 3 of 10 hindcast runs crashed with `environmentalHealth → NaN` propagation
@@ -240,14 +290,23 @@
 
 ## ✅ Recently Resolved (Nov 26-29, 2025)
 
-**Week of Nov 26-29: Three Critical Blockers RESOLVED**
-- ✅ **CRITICAL-1:** Hindcast validation crashes (environmentalHealth NaN) → Fixed Nov 27 (commit cceb556a)
+**Week of Nov 26-29: Five Critical Blockers RESOLVED**
+- ✅ **CRITICAL-1 (Initialization):** Month 0 Social/Economic Collapse → Fixed Nov 29 (commit 5392ba3e)
+  - coordinationCapacity 0.4 → 0.65 (realistic 2025 baseline)
+  - Eliminated Month 0 economic/social bifurcations, 17.5x variance amplification
+- ✅ **CRITICAL-2 (Initialization):** Early-Game Bifurcation Protection → Fixed Nov 29 (commit 5392ba3e)
+  - Skip bifurcation checks for months 0-11 (real bifurcations emerge from dynamics)
+  - Eliminated Month 0/1 false collapses from initialization artifacts
+- ✅ **CRITICAL-1 (Hindcast):** Hindcast validation crashes (environmentalHealth NaN) → Fixed Nov 27 (commit cceb556a)
 - ✅ **RESEARCH-CRITICAL:** Climate stability citation failures → Fixed Nov 27 (commit b580b1c8)
 - ✅ **HIGH-2:** Carbon cycle over-calibration (+12.1% error) → Fixed Nov 29 (commit 3caab24a)
 
-**Impact:** Hindcast validation unblocked, research integrity restored, CO2 calibration within ±5% threshold.
+**Impact:**
+- **Initialization bugs eliminated:** Monte Carlo N=3 shows NO Month 0/1 bifurcations (humane dystopia vs catastrophic collapse)
+- **100% dystopia now stems from governance failure** (Western Liberal paradigm dominance), not initialization artifacts
+- Hindcast validation unblocked, research integrity restored, CO2 calibration within ±5% threshold
 
-**Next Focus:** Technology bifurcation investigation (100% dystopia outcomes, 0% variance in Monte Carlo N=10).
+**Next Focus:** Full Monte Carlo N=10 revalidation to confirm initialization bug fixes, then investigate remaining 100% dystopia outcomes (governance/democracy metrics).
 
 ---
 
