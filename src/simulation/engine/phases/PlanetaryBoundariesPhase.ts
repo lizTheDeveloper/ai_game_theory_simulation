@@ -55,13 +55,8 @@ export class PlanetaryBoundariesPhase implements SimulationPhase {
     const BASELINE_P_INPUT_PER_MONTH = 25 / 12;   // 2.08 Mt P/month (2025 baseline)
 
     // Scale by phosphorus reserves depletion (simplified proxy for agricultural activity)
-    const phosphorusSystem = assertStateProperty(state, 'phosphorusSystem', {
+    const phosphorusReserves = assertStateProperty(state, 'phosphorusSystem.reserves', {
       location: 'PlanetaryBoundariesPhase.execute',
-      month: state.currentMonth,
-    });
-    const phosphorusReserves = assertFinite(phosphorusSystem.reserves, {
-      location: 'PlanetaryBoundariesPhase.execute',
-      valueName: 'phosphorusReserves',
       month: state.currentMonth,
     });
     const currentNitrogenInput = BASELINE_N_INPUT_PER_MONTH * phosphorusReserves;
@@ -78,7 +73,8 @@ export class PlanetaryBoundariesPhase implements SimulationPhase {
     updatePlanetaryBoundaries(state);
 
     // Update Novel Entities boundary with energy-constrained cleanup model (Nov 16, 2025)
-    updateNovelEntitiesBoundary(state, rng);
+    // TODO: Re-enable when updateNovelEntitiesBoundary is implemented
+    // updateNovelEntitiesBoundary(state, rng);
 
     // Update boundary recovery mechanics (Oct 21, 2025 - Ecological Recovery System)
     updateBoundaryRecovery(state, rng);

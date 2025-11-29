@@ -151,13 +151,8 @@ function calculateCoordinationQuality(state: GameState): number {
   const govEffectiveness = 0.5; // TODO: Connect to actual governance metrics
 
   // International cooperation (from governmentSystem)
-  const govSystem = assertStateProperty(state, 'governmentSystem', {
+  const intlCooperation = assertStateProperty(state, 'governmentSystem.internationalCoordination', {
     location: 'calculateCoordinationQuality',
-    month: state.currentMonth,
-  });
-  const intlCooperation = assertFinite(govSystem.internationalCoordination, {
-    location: 'calculateCoordinationQuality',
-    valueName: 'internationalCoordination',
     month: state.currentMonth,
   });
 
@@ -206,13 +201,8 @@ function calculateSupportSystemCoverage(state: GameState): number {
   const healthcareAccess = 0.5; // Default middle value
 
   // Retraining programs (if policyInterventions exists)
-  const policyInterventions = assertStateProperty(state, 'policyInterventions', {
+  const retrainingLevel = assertStateProperty(state, 'policyInterventions.retrainingLevel', {
     location: 'calculateSupportSystemCoverage',
-    month: state.currentMonth,
-  });
-  const retrainingLevel = assertFinite(policyInterventions.retrainingLevel, {
-    location: 'calculateSupportSystemCoverage',
-    valueName: 'retrainingLevel',
     month: state.currentMonth,
   });
 
@@ -533,15 +523,11 @@ export const TransitionMortalityPhase: SimulationPhase = {
     state.transitionMortality.supportSystems.cashTransferAmount = 0; // Not easily accessible
     state.transitionMortality.supportSystems.foodSecurityCoverage = 0.5; // TODO: Connect to actual metrics
     state.transitionMortality.supportSystems.healthcareAccessIndex = 0.5; // Default proxy
-    const policyInterventions = assertStateProperty(state, 'policyInterventions', {
-      location: 'TransitionMortalityPhase.execute',
-      month: state.currentMonth,
-    });
-    state.transitionMortality.supportSystems.retrainingProgramQuality = assertFinite(
-      policyInterventions.retrainingLevel,
+    state.transitionMortality.supportSystems.retrainingProgramQuality = assertStateProperty(
+      state,
+      'policyInterventions.retrainingLevel',
       {
         location: 'TransitionMortalityPhase.execute',
-        valueName: 'retrainingLevel',
         month: state.currentMonth,
       }
     );

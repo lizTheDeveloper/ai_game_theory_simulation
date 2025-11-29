@@ -873,18 +873,6 @@ const ALL_TECH: TechDefinition[] = [
       biodiversityBonus: 0.05,
     },
     citations: ['research/nitrogen_food_coupling_20251115.md - Nitroplast section'],
-    minMonth: 24,
-    researchMonthsRequired: 24,
-    researchCost: 800,
-    deploymentCost: 60000,
-    deploymentMonthsRequired: 60,
-    deploymentLevel: 0,
-    effects: {
-      phosphorusRecovery: 0.25,          // 25% additional recovery
-      legacyPhosphorusRemediation: 0.10, // Accelerates sediment stock decay
-      pollutionReduction: 0.20,          // Reduces eutrophication
-    },
-    citations: ['Lake Erie case study: Internal sediment loading = 10,000-11,000 MT P/year'],
   },
   {
     id: 'algae_nutrient_capture',
@@ -2586,38 +2574,6 @@ const ALL_TECH: TechDefinition[] = [
       lakeRestorationBonus: 0.50,  // Accelerates recovery
       economicCost: -0.02,  // Expensive (2% GDP cost)
     },
-    category: 'pollution',
-    status: 'unlockable',
-    prerequisites: [],
-    minAICapability: 1.5,
-    minEconomicStage: 3.0,
-    researchMonthsRequired: 18,
-    researchCost: 1500,
-    deploymentCost: 80000,
-    deploymentMonthsRequired: 60,
-    deploymentLevel: 0,
-    effects: {
-      nitrogenRemoval: 0.63,  // Median removal from 335 field experiments (research line 471)
-      phosphorusRemoval: 0.72,  // Median P removal (research line 478)
-      habitatRestoration: 0.50,  // Wetland ecosystem benefits
-      biodiversityBonus: 0.30,  // Constructed wetlands support wildlife
-    },
-    citations: ['research/nitrogen_food_coupling_20251115.md', 'Constructed wetlands meta-analysis'],
-    status: 'unlockable',
-    prerequisites: [],
-    minAICapability: 1.0,
-    minEconomicStage: 2.0,
-    researchMonthsRequired: 12,
-    researchCost: 1500,
-    deploymentCost: 120000,
-    deploymentMonthsRequired: 180,     // 15 years to deploy globally
-    deploymentLevel: 0,
-    effects: {
-      nitrogenReduction: 0.63,           // Median from 335 field experiments
-      phosphorusReduction: 0.72,         // Median from field data
-      habitatRestoration: 0.50,
-      biodiversityBonus: 0.25,
-    },
   },
 
   // AI Safety Capstone (2)
@@ -2773,6 +2729,11 @@ const ALL_TECH: TechDefinition[] = [
     },
   },
 ];
+
+/**
+ * Total count of breakthrough technologies in the tech tree
+ */
+export const TOTAL_TECH_COUNT = ALL_TECH.length;
 
 /**
  * Get all technologies
