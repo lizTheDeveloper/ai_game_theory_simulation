@@ -297,11 +297,11 @@ export const TECHNO_OPTIMIST: ScenarioDefinition = {
   name: 'Techno-Optimist Path',
   description: 'Accelerationist approach: maximize innovation, minimal regulation, market-driven solutions',
   governmentPriorities: {
-    climateSpending: 0.4, // Tech solutions over regulation
-    redistributionLevel: 0.2, // Minimal redistribution (market-driven)
-    alignmentResearch: 0.5, // Moderate safety (not zero)
-    democraticParticipation: 0.3, // Low regulation, fast deployment
-    scientificResearch: 0.9, // MAXIMUM innovation velocity
+    climateSpending: 0.05, // M-3 FIX: 5% GDP/month (moderate tech investment, not crisis-level)
+    redistributionLevel: 0.02, // M-3 FIX: 2% GDP/month (minimal redistribution, market-driven)
+    alignmentResearch: 0.05, // M-3 FIX: 5% GDP/month (moderate safety, not zero)
+    democraticParticipation: 0.03, // M-3 FIX: 3% GDP/month (low regulation, fast deployment)
+    scientificResearch: 0.09, // M-3 FIX: 9% GDP/month (maximum innovation velocity)
   },
   startingConditions: {
     gini: 0.40, // Accept higher inequality for growth
