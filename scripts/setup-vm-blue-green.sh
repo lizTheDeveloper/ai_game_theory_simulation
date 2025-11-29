@@ -5,8 +5,8 @@
 set -euo pipefail
 
 # Configuration
-SATU_DIR="/home/user/satu"
-REPO_URL="https://github.com/annhoward/superalignmenttoutopia.git"
+SATU_DIR="$HOME/satu"
+REPO_URL="https://github.com/lizTheDeveloper/ai_game_theory_simulation.git"
 BRANCH="production"
 
 # Colors for output
