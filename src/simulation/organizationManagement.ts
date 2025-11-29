@@ -102,23 +102,11 @@ export function shouldBuildDataCenter(
   // Market demand - removed gate, AI companies are always expanding
   // Real world: OpenAI/Anthropic/Meta building compute as fast as possible
   const marketDemand = true; // Always true in AI gold rush era
-
-  // PERFORMANCE FIX (Nov 20, 2025 - HIGH-1): O(n²) → O(n)
-  // Build index of organizations currently building datacenters (O(n))
-  // Before: Nested loop (200 orgs × 200 orgs × projects) = 40,000+ ops
-  // After: Single pass + O(1) check
-  const buildingOrgs = new Set<string>();
-  for (const o of state.organizations) {
-    if (o.type === 'private' && o.id !== org.id) {
-      const isBuilding = o.currentProjects.some(p => p.type === 'datacenter_construction');
-      if (isBuilding) {
-        buildingOrgs.add(o.id);
-      }
-    }
-  }
-
+  
   // Competitive pressure - if others are building, we should too
-  const competitorBuilding = buildingOrgs.size > 0;
+  const competitorBuilding = state.organizations
+    .filter(o => o.id !== org.id && o.type === 'private')
+    .some(o => o.currentProjects.some(p => p.type === 'datacenter_construction'));
   
   // Strategic priorities
   const hasCapabilityRacePriority = org.priorities.capabilityRace > 0.5;
@@ -258,13 +246,9 @@ export function updateProjects(org: Organization, state: GameState): void {
   });
   
   // Remove completed projects
-  // PERFORMANCE: In-place splice instead of filter() to avoid O(n) allocations per org per month
-  // Backward iteration prevents index shifting issues when removing elements
-  for (let i = org.currentProjects.length - 1; i >= 0; i--) {
-    if (absoluteMonth >= org.currentProjects[i].completionMonth) {
-      org.currentProjects.splice(i, 1);
-    }
-  }
+  org.currentProjects = org.currentProjects.filter(
+    p => absoluteMonth < p.completionMonth
+  );
 }
 
 /**
@@ -390,23 +374,22 @@ export function shouldTrainNewModel(
   if (org.type !== 'private') {
     return false;
   }
-
+  
   // Check if already training
   const alreadyTraining = org.currentProjects.some(p => p.type === 'model_training');
   if (alreadyTraining) return false;
-
+  
   // Spare compute check - need <70% utilization to have room for new model
   const utilization = calculateComputeUtilization(org, state);
   const hasSpare = utilization < 0.7;
-
+  
   // Technology has advanced check - is capability floor significantly higher?
   const capFloor = getCapabilityFloorForNewAI(state);
   const capFloorTotal = calculateTotalCapabilityFromProfile(capFloor);
-
-  // PERFORMANCE: O(n²) → O(n) optimization - use Set for O(1) membership test (Nov 13, 2025)
-  const ownedAISet = new Set(org.ownedAIModels);
-
+  
   // Note: AIAgent doesn't have createdAt field, use capability as proxy for "newest"
+  // O(n²) FIX (Nov 13, 2025): Build Set once for O(1) membership test
+  const ownedAISet = new Set(org.ownedAIModels);
   const newestModel = state.aiAgents
     .filter(ai => ownedAISet.has(ai.id))
     .sort((a, b) => b.capability - a.capability)[0];
@@ -472,7 +455,15 @@ export function startModelTraining(
   // === SIDE EFFECT: LAYOFFS SLOW AI TRAINING ===
   // Fewer engineers → longer training runs (coordination overhead, slower debugging)
   // NOTE: workforceMultiplier is genuinely optional (only set when org takes distress measures)
-  const workforceMultiplier = org.workforceMultiplier ?? 1.0;
+  const workforceMultiplier = assertFinite(
+    org.workforceMultiplier !== undefined ? org.workforceMultiplier : 1.0,
+    {
+      location: 'startAITrainingProject',
+      valueName: 'workforceMultiplier',
+      month: state.currentMonth,
+      additionalInfo: { orgId: org.id }
+    }
+  );
   if (workforceMultiplier < 1.0) {
     // 10% layoffs → +5% training time
     // 30% layoffs → +15% training time
@@ -482,11 +473,10 @@ export function startModelTraining(
   
   // Cost: 2x monthly revenue (reduced from 5x based on research: GPT-4 ~$100-200M, largest ~$1B)
   const cost = 2 * org.monthlyRevenue;
-
-  // PERFORMANCE: O(n²) → O(n) optimization - use Set for O(1) membership test (Nov 13, 2025)
-  const ownedDCSet = new Set(org.ownedDataCenters);
-
+  
   // Compute reservation: 10-30% of org's compute
+  // O(n²) FIX (Nov 13, 2025): Build Set once for O(1) membership test
+  const ownedDCSet = new Set(org.ownedDataCenters);
   const ownedCompute = state.computeInfrastructure.dataCenters
     .filter(dc => ownedDCSet.has(dc.id) && dc.operational)
     .reduce((sum, dc) => sum + dc.capacity * dc.efficiency, 0);
@@ -779,24 +769,22 @@ export function calculateAIRevenue(org: Organization, state: GameState): number 
 
 /**
  * Calculate revenue from selling unused compute capacity
- *
+ * 
  * IMPORTANT: Government doesn't sell capacity (they use it internally)
  */
 export function calculateComputeRevenue(org: Organization, state: GameState): number {
   // Government doesn't sell compute
   if (org.type === 'government') return 0;
 
-// PERFORMANCE: O(n²) → O(n) optimization - use Set for O(1) membership test (Nov 13, 2025)
+  // Calculate unused capacity
+  // O(n²) FIX (Nov 13, 2025): Build Set once for O(1) membership test
   const ownedDCSet = new Set(org.ownedDataCenters);
-  const ownedAISet = new Set(org.ownedAIModels);
-
-  // Calculate unused capacity - O(n) with O(1) Set lookup
   const ownedDCs = state.computeInfrastructure.dataCenters.filter(dc =>
     ownedDCSet.has(dc.id) && dc.operational
   );
-
+  
   const totalCapacity = ownedDCs.reduce((sum, dc) => sum + dc.capacity * dc.efficiency, 0);
-
+  
   // Handle computeAllocations as either Map or Object (after JSON serialization)
   const allocations = state.computeInfrastructure.computeAllocations;
   // FIX (Nov 7, 2025): Sort for deterministic iteration (Issue #11)
@@ -804,7 +792,8 @@ export function calculateComputeRevenue(org: Organization, state: GameState): nu
     ? Array.from(allocations.entries()).sort((a, b) => String(a[0]).localeCompare(String(b[0]))).map(e => e[1])
     : Object.entries(allocations).sort((a, b) => a[0].localeCompare(b[0])).map(e => e[1]);
 
-// O(n) with O(1) Set lookup
+  // O(n²) FIX (Nov 13, 2025): Build Set once for O(1) membership test
+  const ownedAISet = new Set(org.ownedAIModels);
   const allocatedCompute = allocationValues
     .filter((alloc: any) => ownedAISet.has(alloc.aiId))
     .reduce((sum: number, alloc: any) => sum + alloc.allocated, 0);
@@ -901,8 +890,24 @@ export function calculateTotalExpenses(org: Organization, state: GameState): {
   // Layoffs reduce workforce → lower payroll (45% of base expenses)
   // R&D cuts reduce research budget (20% of base expenses)
   // NOTE: These are genuinely optional (only set when org takes distress measures)
-  const workforceMultiplier = org.workforceMultiplier ?? 1.0;
-  const rdBudgetMultiplier = org.rdBudgetMultiplier ?? 1.0;
+  const workforceMultiplier = assertFinite(
+    org.workforceMultiplier !== undefined ? org.workforceMultiplier : 1.0,
+    {
+      location: 'calculateOrganizationExpenses',
+      valueName: 'workforceMultiplier',
+      month: state.currentMonth,
+      additionalInfo: { orgId: org.id }
+    }
+  );
+  const rdBudgetMultiplier = assertFinite(
+    org.rdBudgetMultiplier !== undefined ? org.rdBudgetMultiplier : 1.0,
+    {
+      location: 'calculateOrganizationExpenses',
+      valueName: 'rdBudgetMultiplier',
+      month: state.currentMonth,
+      additionalInfo: { orgId: org.id }
+    }
+  );
 
   const payrollExpenses = baseExpenses * 0.45;
   const rdExpenses = baseExpenses * 0.20;
@@ -925,9 +930,8 @@ export function calculateTotalExpenses(org: Organization, state: GameState): {
   // - Shareholder returns: 5-10% (dividends, buybacks if profitable)
   
   // === DATA CENTER OPERATIONAL COSTS (additional) ===
-  // PERFORMANCE: O(n²) → O(n) optimization - use Set for O(1) membership test (Nov 13, 2025)
+  // O(n²) FIX (Nov 13, 2025): Build Set once for O(1) membership test
   const ownedDCSet = new Set(org.ownedDataCenters);
-
   let dcOperational = state.computeInfrastructure.dataCenters
     .filter(dc => ownedDCSet.has(dc.id) && dc.operational)
     .reduce((sum, dc) => sum + dc.operationalCost, 0);
@@ -1163,19 +1167,19 @@ export function handleFinancialDistress(org: Organization, state: GameState): vo
       const sortedProjects = [...trainingProjects].sort((a, b) => a.progress - b.progress);
       const toCancel = sortedProjects.slice(0, Math.min(2, trainingProjects.length));
 
+      // O(n²) FIX: Build Set once for O(1) lookup, filter once at end
+      const cancelSet = new Set<string>();
+
       toCancel.forEach(project => {
         const recoveredCapital = project.capitalInvested * (1 - project.cancellationPenalty) * (1 - project.progress);
         capitalRaised += recoveredCapital;
-
-        // Remove from org projects
-        // PERFORMANCE: In-place splice instead of filter() to avoid O(n) allocations
-        const projectIndex = org.currentProjects.findIndex(p => p.id === project.id);
-        if (projectIndex !== -1) {
-          org.currentProjects.splice(projectIndex, 1);
-        }
+        cancelSet.add(project.id);
 
         console.log(`   ❌ PROJECT CANCELED: ${project.id} (recovered $${recoveredCapital.toFixed(1)}M)`);
       });
+
+      // O(n): Single filter pass using Set lookup
+      org.currentProjects = org.currentProjects.filter(p => !cancelSet.has(p.id));
 
       console.log(`       Side effect: Lost competitive position, delayed product launches`);
       measuresTakenThisMonth.push('project_cancellations');
@@ -1260,6 +1264,9 @@ export function handleFinancialDistress(org: Organization, state: GameState): vo
         let governmentAcquiredCount = 0;
         let privateAcquiredCount = 0;
 
+        // O(n²) FIX: Build Set of sold DC IDs, filter once at end
+        const soldDCSet = new Set<string>();
+
         console.log(`   🏢 ASSET SALES: Divesting ${dcsToSell.length} data centers`);
 
         dcsToSell.forEach(dc => {
@@ -1279,17 +1286,11 @@ export function handleFinancialDistress(org: Organization, state: GameState): vo
             govOrg.capital -= salePrice;
             org.capital += salePrice;
 
-            // Remove from seller's ownership
-            // PERFORMANCE: In-place splice instead of filter() to avoid O(n) allocations
-            const dcIndex = org.ownedDataCenters.indexOf(dc.id);
-            if (dcIndex !== -1) {
-              org.ownedDataCenters.splice(dcIndex, 1);
-            }
-
             assetSaleCapital += salePrice;
             assetSaleCostReduction += dc.operationalCost;
             governmentAcquiredCount++;
             sold = true;
+            soldDCSet.add(dc.id);
 
             console.log(`       🏛️  Sold to government: ${dc.name} (${dc.capacity.toFixed(0)} PF, $${salePrice.toFixed(1)}M)`);
           }
@@ -1308,17 +1309,11 @@ export function handleFinancialDistress(org: Organization, state: GameState): vo
               buyer.capital -= salePrice;
               org.capital += salePrice;
 
-              // Remove from seller's ownership
-              // PERFORMANCE: In-place splice instead of filter() to avoid O(n) allocations
-              const dcIndex = org.ownedDataCenters.indexOf(dc.id);
-              if (dcIndex !== -1) {
-                org.ownedDataCenters.splice(dcIndex, 1);
-              }
-
               assetSaleCapital += salePrice;
               assetSaleCostReduction += dc.operationalCost;
               privateAcquiredCount++;
               sold = true;
+              soldDCSet.add(dc.id);
 
               console.log(`       🏢 Sold to ${buyer.name}: ${dc.name} (${dc.capacity.toFixed(0)} PF, $${salePrice.toFixed(1)}M)`);
             }
@@ -1329,6 +1324,9 @@ export function handleFinancialDistress(org: Organization, state: GameState): vo
             console.log(`       ⚠️  No buyer for ${dc.name} (keeping for now)`);
           }
         });
+
+        // O(n): Single filter pass to remove sold DCs
+        org.ownedDataCenters = org.ownedDataCenters.filter(id => !soldDCSet.has(id));
 
         if (assetSaleCapital > 0) {
           capitalRaised += assetSaleCapital;
@@ -1404,11 +1402,11 @@ export function handleBankruptcy(org: Organization, state: GameState): void {
   });
   org.currentProjects = [];
 
-// PERFORMANCE: O(n²) → O(n) optimization - use Set for O(1) membership test (Nov 13, 2025)
+  // O(n²) FIX (Nov 13, 2025): Build Sets once for O(1) membership tests
   const ownedDCSet = new Set(org.ownedDataCenters);
   const ownedAISet = new Set(org.ownedAIModels);
 
-  // Sell data centers to government or other orgs - O(n) with O(1) Set lookup
+  // Sell data centers to government or other orgs
   const dcValue = state.computeInfrastructure.dataCenters
     .filter(dc => ownedDCSet.has(dc.id))
     .reduce((sum, dc) => sum + dc.capacity * 5, 0); // $5M per PF
@@ -1416,7 +1414,7 @@ export function handleBankruptcy(org: Organization, state: GameState): void {
   org.capital += dcValue * 0.5; // Firesale: 50% value
   console.log(`   Sold ${org.ownedDataCenters.length} data centers for $${(dcValue * 0.5).toFixed(1)}M`);
 
-  // Transfer data centers to government - O(n) with O(1) Set lookup
+  // Transfer data centers to government
   state.computeInfrastructure.dataCenters
     .filter(dc => ownedDCSet.has(dc.id))
     .forEach(dc => {
@@ -1433,7 +1431,6 @@ export function handleBankruptcy(org: Organization, state: GameState): void {
 
   // ENHANCEMENT: Government may purchase high-capability AI models
   // (User suggestion: "some AI models might wanna be purchased by the government")
-  // O(n) with O(1) Set lookup
   const bankruptAIs = state.aiAgents.filter(ai => ownedAISet.has(ai.id));
   let governmentAcquired = 0;
   let retiredCount = 0;
@@ -1576,7 +1573,7 @@ export function handleBankruptcy(org: Organization, state: GameState): void {
   // HIGH-4 FIX v2 (Oct 30, 2025): Transfer data centers to government/orgs when organization goes bankrupt
   // Data centers are critical infrastructure - they get sold/transferred, not destroyed
   if (state.computeInfrastructure && org.ownedDataCenters.length > 0) {
-    // PERFORMANCE: O(n²) → O(n) optimization - use Set for O(1) membership test (Nov 13, 2025)
+    // O(n²) FIX (Nov 13, 2025): Build Set once for O(1) membership test
     const ownedDCSet = new Set(org.ownedDataCenters);
     const bankruptDCs = state.computeInfrastructure.dataCenters
       .filter(dc => ownedDCSet.has(dc.id) && dc.operational);

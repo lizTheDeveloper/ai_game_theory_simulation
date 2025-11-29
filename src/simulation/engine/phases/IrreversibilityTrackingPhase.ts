@@ -16,12 +16,7 @@
  * 4. Uncertainty ranges for ALL parameters
  * 5. Empirical vs model-derived flagged
  *
- * Order: 21.4 (after planetary boundaries update, before crisis detection)
- *
- * @reads state.resourceEconomy.co2, state.amazonForest, state.coralReefs, state.iceSheets, etc.
- * @writes state.planetaryBoundariesSystem.novelEntitiesIncrementalImpact (adds coral collapse impact)
- *         state.environmentalAccumulation.biodiversityIndex
- *         state.tippingPoints.* (various tipping point states)
+ * Order: 21.5 (after planetary boundaries update, before crisis detection)
  */
 
 import {
@@ -39,25 +34,16 @@ import {
   assertDefined,
   assertStateProperty,
 } from '@/simulation/utils/assertions';
-import { isHistoricalModeActive } from '@/simulation/utils/historicalMode';
 
 export class IrreversibilityTrackingPhase implements SimulationPhase {
   readonly id = 'irreversibility_tracking';
   readonly name = 'Irreversibility Tracking';
-  readonly order = 21.4; // After planetary boundaries (21.0), before legacy nutrients (21.5)
+  readonly order = 21.5; // After planetary boundaries (21.0), before crisis detection
 
   readonly dependencies = ['planetary_boundaries'] as const;
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     const events: any[] = [];
-
-    // HIGH-8 FIX (Nov 28, 2025): Disable irreversibility tracking during historical mode
-    // Rationale: Historical period (1990-2024) did NOT cross irreversible tipping points
-    // (no Greenland collapse, no AMOC shutdown, no Amazon dieback - these are projection concerns)
-    // Prevents indigenous knowledge loss biodiversity impacts from corrupting hindcast calibration
-    if (isHistoricalModeActive(state)) {
-      return { events };
-    }
 
     // === 1. ICE SHEET HYSTERESIS (Probabilistic Thresholds) ===
     // Research: Nature 2023 (Greenland threshold +0.8-3.2°C, 95% CI)
@@ -116,41 +102,41 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     rng: RNGFunction,
     events: any[]
   ): void {
-    // Get current temperature anomaly - no silent fallbacks
-    const tempAnomaly = assertStateProperty(
-      state,
-      'resourceEconomy.co2.temperatureAnomaly',
-      {
-        location: 'trackIceSheetHysteresis',
-        month: state.currentMonth,
-      }
-    );
+    // Get current temperature anomaly
+    const co2System = assertStateProperty(state, 'resourceEconomy.co2', {
+      location: 'trackIceSheetHysteresis',
+      month: state.currentMonth,
+    });
+    const tempAnomaly = assertFinite(co2System.temperatureAnomaly, {
+      location: 'trackIceSheetHysteresis',
+      valueName: 'temperatureAnomaly',
+      month: state.currentMonth,
+    });
 
     // === PROBABILISTIC THRESHOLD (Sylvia condition #1) ===
     // Research: Nature 2023 - Greenland threshold +0.8-3.2°C (95% CI)
-    // UNCERTAINTY PROPAGATION (Nov 23, 2025): Use sampled threshold if available
-    // Range: [0.8, 3.2]C - Nature (2023)
+    // Using normal distribution centered at +1.5°C with σ=0.5°C
+    // This gives ~95% probability between 0.5-2.5°C (matches research range)
 
-    // Use sampled threshold or default to midpoint (2.0°C)
-    const COLLAPSE_THRESHOLD_MEAN = state.uncertaintyParameters?.greenlandCollapseThreshold ?? 2.0; // [MODEL-DERIVED] °C
+    const COLLAPSE_THRESHOLD_MEAN = 1.5; // [MODEL-DERIVED] °C
     const COLLAPSE_THRESHOLD_STDDEV = 0.5; // [MODEL-DERIVED] Uncertainty range
-    const RECOVERY_THRESHOLD = COLLAPSE_THRESHOLD_MEAN - 0.5; // [MODEL-DERIVED] Hysteresis gap: need cooling below threshold
+    const RECOVERY_THRESHOLD = 1.0; // [MODEL-DERIVED] Hysteresis gap: need cooling to <+1°C to recover
 
-    // CRITICAL FIX (Nov 22, 2025): tippingPoints initialized in createDefaultInitialState
-    // No more dynamic creation with `as any` - fail loudly if missing
-    const tippingPoints = assertDefined(state.tippingPoints, {
-      location: 'trackIceSheetHysteresis',
-      valueName: 'state.tippingPoints',
-      month: state.currentMonth,
-      additionalInfo: { context: 'CRITICAL: tippingPoints must be initialized in createDefaultInitialState' }
-    });
+    // Initialize ice sheet state if needed
+    if (!state.tippingPoints) {
+      state.tippingPoints = {} as any;
+    }
+    if (!state.tippingPoints!.iceSheets) {
+      state.tippingPoints!.iceSheets = {
+        greenlandCollapsed: false,
+        antarcticWAISCollapsed: false,
+        collapseMonth: null,
+        seaLevelCommitmentMeters: 0,
+        collapseProbability: 0,
+      };
+    }
 
-    const iceSheets = assertDefined(tippingPoints.iceSheets, {
-      location: 'trackIceSheetHysteresis',
-      valueName: 'tippingPoints.iceSheets',
-      month: state.currentMonth,
-      additionalInfo: { context: 'CRITICAL: iceSheets must be initialized in initializeIrreversibilityState' }
-    });
+    const iceSheets = state.tippingPoints!.iceSheets;
 
     // Calculate collapse probability using sigmoid (NOT deterministic on/off switch)
     // P(collapse) = sigmoid((T - threshold_mean) / threshold_stddev)
@@ -227,32 +213,35 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     rng: RNGFunction,
     events: any[]
   ): void {
-    const tempAnomaly = assertStateProperty(
-      state,
-      'resourceEconomy.co2.temperatureAnomaly',
-      {
-        location: 'trackPermafrostThaw',
-        month: state.currentMonth,
-      }
-    );
+    const co2System = assertStateProperty(state, 'resourceEconomy.co2', {
+      location: 'trackPermafrostThaw',
+      month: state.currentMonth,
+    });
+    const tempAnomaly = assertFinite(co2System.temperatureAnomaly, {
+      location: 'trackPermafrostThaw',
+      valueName: 'temperatureAnomaly',
+      month: state.currentMonth,
+    });
 
     // === ARCTIC AMPLIFICATION (4x global warming) ===
     // Research: Nature Climate Change 2022 - Arctic warming 4x global average
     const ARCTIC_AMPLIFICATION = 4.0; // [EMPIRICAL]
     const arcticTempAnomaly = tempAnomaly * ARCTIC_AMPLIFICATION;
 
-    // CRITICAL FIX (Nov 22, 2025): Use proper assertions instead of dynamic creation
-    const tippingPoints = assertDefined(state.tippingPoints, {
-      location: 'trackPermafrostThaw',
-      valueName: 'state.tippingPoints',
-      month: state.currentMonth,
-    });
+    // Initialize permafrost state
+    if (!state.tippingPoints) {
+      state.tippingPoints = {} as any;
+    }
+    if (!state.tippingPoints!.permafrost) {
+      state.tippingPoints!.permafrost = {
+        percentThawed: 0, // [0, 100]
+        cumulativeCarbonReleased: 0, // Gt C
+        methaneReleaseRate: 0, // Mt CH4/year
+        irreversible: true, // Cannot refreeze on <500 year timescales
+      };
+    }
 
-    const permafrost = assertDefined(tippingPoints.permafrost, {
-      location: 'trackPermafrostThaw',
-      valueName: 'tippingPoints.permafrost',
-      month: state.currentMonth,
-    });
+    const permafrost = state.tippingPoints!.permafrost;
 
     // === CONTINUOUS THAW FUNCTION (Dimmer Switch - Sylvia condition #2) ===
     // Research: MIT 2024 - "dimmer switch model", not on/off tipping point
@@ -288,9 +277,7 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     // === CARBON RELEASE (Progressive with thaw) ===
     // Research: Harvard 2024 - 1,500 Gt C in permafrost (2x atmospheric carbon)
     // Nature Climate Change 2022 - +9% methane emissions since 2002
-    // UNCERTAINTY PROPAGATION (Nov 23, 2025): Use sampled carbon pool if available
-    // Range: [1460, 1600] Gt C - Nature Climate Change (2022)
-    const TOTAL_PERMAFROST_CARBON = state.uncertaintyParameters?.permafrostCarbonPool ?? 1500; // [EMPIRICAL] Gt C
+    const TOTAL_PERMAFROST_CARBON = 1500; // [EMPIRICAL] Gt C
     const CARBON_RELEASE_FRACTION = 0.15; // [MODEL-DERIVED] 15% released as CO2/CH4 when thawed
 
     const thawedThisMonth = permafrost.percentThawed - previousPercentThawed;
@@ -337,91 +324,40 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     rng: RNGFunction,
     events: any[]
   ): void {
-    const tempAnomaly = assertStateProperty(
-      state,
-      'resourceEconomy.co2.temperatureAnomaly',
-      {
-        location: 'trackAMOCWeakening',
-        month: state.currentMonth,
-      }
-    );
-
-    // CRITICAL FIX (Nov 22, 2025): Use proper assertions
-    const tippingPoints = assertDefined(state.tippingPoints, {
+    const co2System = assertStateProperty(state, 'resourceEconomy.co2', {
       location: 'trackAMOCWeakening',
-      valueName: 'state.tippingPoints',
+      month: state.currentMonth,
+    });
+    const tempAnomaly = assertFinite(co2System.temperatureAnomaly, {
+      location: 'trackAMOCWeakening',
+      valueName: 'temperatureAnomaly',
       month: state.currentMonth,
     });
 
-    const amoc = assertDefined(tippingPoints.amoc, {
-      location: 'trackAMOCWeakening',
-      valueName: 'tippingPoints.amoc',
-      month: state.currentMonth,
-    });
+    // Initialize AMOC state
+    if (!state.tippingPoints) {
+      state.tippingPoints = {} as any;
+    }
+    if (!state.tippingPoints!.amoc) {
+      state.tippingPoints!.amoc = {
+        strength: 1.0, // [0, 1] 1.0 = pre-industrial baseline
+        collapsed: false,
+        weakeningSincePreindustrial: 0.15, // [EMPIRICAL] NOAA 2025: ~15% weaker than pre-industrial
+      };
+    }
+
+    const amoc = state.tippingPoints!.amoc;
 
     // === GRADUAL WEAKENING (Sylvia condition #3) ===
     // Research: Nature Feb 2025 - AMOC resilient across 34 models, Southern Ocean sustains weak circulation
     // NOAA Jan 2025 - Extensive weakening 2000s, paused since early 2010s
     // Type: EMPIRICAL observations (RAPID array) + MODEL consensus
 
-    // === TEMPERATURE-DEPENDENT COLLAPSE PROBABILITY ===
-    // Original Sources (traced from Armstrong McKay et al. 2022):
-    // - Stommel (1961) Tellus - Bistability theory (salt-advection feedback)
-    // - Rahmstorf (1996) Climate Dynamics - Freshwater transport criterion
-    // - Weijer et al. (2020) GRL - CMIP6 projections (27 models: -18% to -74% by 2100)
-    // - Van Westen et al. (2024) Science Advances - First ESM collapse (CESM1)
-    // - Qin et al. (2025) Nature - Resilience across 34 models (Southern Ocean sustains weak AMOC)
-    // Synthesis: Armstrong McKay et al. (2022) Science
-    //
-    // See: research/amoc_collapse_probability_20251120.md
-    // See: research/amoc_tipping_point_original_sources_20251120.md
-    //
-    // CRITICAL UPDATE (Nov 20, 2025): Fixed 5% probability replaced with temperature-dependent function
-    // - <+2°C: ~0.5% (extremely unlikely)
-    // - +2-2.2°C: ~1-5% (outlier tail risk)
-    // - +2.2-3°C: ~5-50% (rising risk)
-    // - +3-3.9°C: ~50-90% (high risk)
-    // - >+3.9°C: ~90% (very likely)
-    //
+    // CRITICAL: NO COLLAPSE before +4°C (consensus view)
     // Gradual weakening: ~15% per degree of warming (linear approximation)
     const WEAKENING_RATE_PER_DEGREE = 0.15; // [MODEL-DERIVED from EMPIRICAL observations]
-    const COLLAPSE_THRESHOLD = 4.0; // [MODEL-DERIVED] °C - consensus threshold (Armstrong McKay 2022: range 1.4-8°C)
-
-    // === TEMPERATURE-DEPENDENT COLLAPSE PROBABILITY FUNCTION ===
-    // Based on Weijer et al. (2020), Van Westen et al. (2024), Qin et al. (2025)
-    // RECALIBRATED (Nov 24, 2025): Default raised from 3.0 to 4.0°C (median estimate)
-    // Sylvia audit: reviews/mechanism_audit_tipping_cascades_20251124.md
-    // Baker et al. (2025) Nature: 34/35 CMIP6 models show AMOC resilience via Southern Ocean compensation
-    // UNCERTAINTY PROPAGATION (Nov 23, 2025): Use sampled AMOC threshold if available
-    // Range: [2.2, 5.0]C - Updated range per Armstrong McKay 2022 (median 4°C, range 1.4-8°C)
-    const amocThreshold = state.uncertaintyParameters?.amocCollapseThreshold ?? 4.0;
-
-    const calculateAMOCCollapseProbability = (temp: number): number => {
-      // Dynamically scale probability based on sampled threshold
-      // Low threshold → crisis triggers earlier, High threshold → more resilient
-      const lowThreshold = amocThreshold - 0.8;   // e.g., 2.2 if sampled=3.0
-      const midThreshold = amocThreshold;          // e.g., 3.0
-      const highThreshold = amocThreshold + 0.9;   // e.g., 3.9
-
-      if (temp < lowThreshold - 0.2) {
-        // Extremely unlikely well below threshold
-        return 0.005; // 0.5% annual probability
-      } else if (temp < lowThreshold) {
-        // Linear interpolation: 0.5% → 5%
-        return 0.005 + ((temp - (lowThreshold - 0.2)) / 0.2) * (0.05 - 0.005);
-      } else if (temp < midThreshold) {
-        // Linear interpolation: 5% → 50%
-        const range = midThreshold - lowThreshold;
-        return 0.05 + ((temp - lowThreshold) / range) * (0.50 - 0.05);
-      } else if (temp < highThreshold) {
-        // Linear interpolation: 50% → 90%
-        const range = highThreshold - midThreshold;
-        return 0.50 + ((temp - midThreshold) / range) * (0.90 - 0.50);
-      } else {
-        // Very likely above high threshold
-        return 0.90; // 90% annual probability
-      }
-    };
+    const COLLAPSE_THRESHOLD = 4.0; // [MODEL-DERIVED] °C - consensus threshold
+    const OUTLIER_COLLAPSE_PROBABILITY = 0.05; // [MODEL-DERIVED] 5% tail risk at +2-3°C (outlier scenario)
 
     // Calculate target strength based on temperature
     let targetStrength = 1.0 - (tempAnomaly * WEAKENING_RATE_PER_DEGREE);
@@ -438,46 +374,51 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
       month: state.currentMonth,
     });
 
-    // === COLLAPSE CHECK (Temperature-Dependent Probability) ===
-    if (!amoc.collapsed && tempAnomaly >= 2.0) {
-      // Calculate temperature-dependent annual collapse probability
-      const annualCollapseProbability = calculateAMOCCollapseProbability(tempAnomaly);
-      const monthlyCollapseProbability = annualCollapseProbability / 12;
+    // === COLLAPSE CHECK (Only at extreme warming) ===
+    if (!amoc.collapsed) {
+      if (tempAnomaly >= COLLAPSE_THRESHOLD) {
+        // At +4°C, collapse becomes possible (consensus threshold)
+        const collapseProbability = 0.1; // [MODEL-DERIVED] 10% annual probability at +4°C
+        const monthlyCollapseProbability = collapseProbability / 12;
 
-      // Validate probability is in [0, 1]
-      assertProbability(monthlyCollapseProbability, {
-        location: 'trackAMOCWeakening',
-        valueName: 'monthlyCollapseProbability',
-        month: state.currentMonth,
-        additionalInfo: {
-          tempAnomaly,
-          annualProbability: annualCollapseProbability,
-        },
-      });
+        if (rng() < monthlyCollapseProbability) {
+          amoc.collapsed = true;
+          amoc.strength = 0.1; // Near-zero but not complete shutdown (eddies sustain weak circulation)
 
-      if (rng() < monthlyCollapseProbability) {
-        amoc.collapsed = true;
-        amoc.strength = 0.1; // Near-zero but not complete shutdown (eddies sustain weak circulation)
+          events.push({
+            type: 'tipping_point_crossed',
+            severity: 0.85,
+            description: `🌊🚨 AMOC COLLAPSE: Atlantic circulation collapsed at +${tempAnomaly.toFixed(2)}°C. Northern Europe cooling, sea level rise, monsoon disruption.`,
+            impact:
+              'Regional cooling 2-5°C (Northern Europe), accelerated sea level rise (North Atlantic), African monsoon disruption',
+            month: state.currentMonth,
+          });
 
-        const isOutlier = tempAnomaly < COLLAPSE_THRESHOLD;
-        const severityLabel = isOutlier ? 'OUTLIER' : 'EXPECTED';
-        const emoji = isOutlier ? '🌊⚠️' : '🌊🚨';
+          console.log(`\n🌊🚨 AMOC COLLAPSE (Month ${state.currentMonth})`);
+          console.log(`   Temperature: +${tempAnomaly.toFixed(2)}°C (threshold: +${COLLAPSE_THRESHOLD}°C)`);
+          console.log(`   Residual strength: ${(amoc.strength * 100).toFixed(1)}% (eddies sustain weak circulation)`);
+          console.log(`   Recovery timescale: 500-2000 years`);
+        }
+      } else if (tempAnomaly >= 2.0 && tempAnomaly < COLLAPSE_THRESHOLD) {
+        // Outlier scenario: Small tail risk of early collapse (Sylvia approved 5%)
+        const earlyCollapseProbability = OUTLIER_COLLAPSE_PROBABILITY / 12; // Annual → monthly
+        if (rng() < earlyCollapseProbability) {
+          amoc.collapsed = true;
+          amoc.strength = 0.1;
 
-        events.push({
-          type: 'tipping_point_crossed',
-          severity: 0.85,
-          description: `${emoji} AMOC COLLAPSE ${isOutlier ? '(Outlier)' : ''}: Atlantic circulation collapsed at +${tempAnomaly.toFixed(2)}°C. Northern Europe cooling, sea level rise, monsoon disruption. Annual probability: ${(annualCollapseProbability * 100).toFixed(1)}%.`,
-          impact:
-            'Regional cooling 2-5°C (Northern Europe), accelerated sea level rise (North Atlantic), African monsoon disruption',
-          month: state.currentMonth,
-        });
+          events.push({
+            type: 'tipping_point_crossed',
+            severity: 0.85,
+            description: `🌊⚠️ EARLY AMOC COLLAPSE (Outlier): Atlantic circulation collapsed at +${tempAnomaly.toFixed(2)}°C (below consensus +4°C threshold). Rare event (<5% probability).`,
+            impact:
+              'Regional cooling 2-5°C, sea level rise, monsoon disruption. Earlier than expected.',
+            month: state.currentMonth,
+          });
 
-        console.log(`\n${emoji} AMOC COLLAPSE - ${severityLabel} (Month ${state.currentMonth})`);
-        console.log(`   Temperature: +${tempAnomaly.toFixed(2)}°C`);
-        console.log(`   Annual collapse probability: ${(annualCollapseProbability * 100).toFixed(1)}%`);
-        console.log(`   Consensus threshold: +${COLLAPSE_THRESHOLD}°C`);
-        console.log(`   Residual strength: ${(amoc.strength * 100).toFixed(1)}% (eddies sustain weak circulation)`);
-        console.log(`   Recovery timescale: 500-2000 years`);
+          console.log(`\n🌊⚠️ EARLY AMOC COLLAPSE - OUTLIER SCENARIO (Month ${state.currentMonth})`);
+          console.log(`   Temperature: +${tempAnomaly.toFixed(2)}°C (consensus threshold: +${COLLAPSE_THRESHOLD}°C)`);
+          console.log(`   Probability: <5% (outlier scenario per Sylvia's critique)`);
+        }
       }
     }
 
@@ -500,31 +441,45 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     rng: RNGFunction,
     events: any[]
   ): void {
-    // CRITICAL FIX (Nov 22, 2025): Use proper assertions
-    const tippingPoints = assertDefined(state.tippingPoints, {
-      location: 'trackAmazonDieback',
-      valueName: 'state.tippingPoints',
-      month: state.currentMonth,
-    });
+    // Initialize Amazon state
+    if (!state.tippingPoints) {
+      state.tippingPoints = {} as any;
+    }
+    if (!state.tippingPoints!.amazon) {
+      state.tippingPoints!.amazon = {
+        deforestationPercent: 16, // [EMPIRICAL] Full biome 2023: 16% loss + 17% degradation
+        regions: {
+          southeast: {
+            deforestation: 28, // [EMPIRICAL] RAISG 2023: 28% (PAST THRESHOLD)
+            tipped: false,
+            savannaTransitionProgress: 0, // [0, 1]
+          },
+          northwest: {
+            deforestation: 8, // [EMPIRICAL] Estimated: <10% (still resilient)
+            tipped: false,
+            savannaTransitionProgress: 0,
+          },
+          brazilian: {
+            deforestation: 25, // [EMPIRICAL] RAISG 2023: 25% transformation (AT THRESHOLD)
+            tipped: false,
+            savannaTransitionProgress: 0,
+          },
+        },
+        collapsed: false,
+        carbonReleased: 0, // Gt C
+      };
+    }
 
-    const amazon = assertDefined(tippingPoints.amazon, {
-      location: 'trackAmazonDieback',
-      valueName: 'tippingPoints.amazon',
-      month: state.currentMonth,
-    });
+    const amazon = state.tippingPoints!.amazon;
 
     // === REGIONAL THRESHOLDS (Sylvia condition #4: Regional Heterogeneity) ===
     // Research: Nature Feb 2024 - 10-47% exposed to tipping by 2050
     //           RAISG 2023 - Regional variation SE 28%, Brazilian 25%, NW <10%
     //           Lovejoy & Nobre 2019 - 20-25% threshold (classic estimate)
-    // UNCERTAINTY PROPAGATION (Nov 23, 2025): Use sampled threshold if available
-    // Range: [0.20, 0.25] - Frontiers in Public Health (2025)
 
     // Threshold is PROBABILISTIC with regional variation
-    // Use sampled threshold (as percentage 0-1) converted to percent, or default
-    const sampledThreshold = state.uncertaintyParameters?.amazonDiebackDeforestation;
-    const DEFORESTATION_THRESHOLD_MEAN = sampledThreshold ? sampledThreshold * 100 : 22.5; // [EXPERT-ESTIMATE] %
-    const DEFORESTATION_THRESHOLD_RANGE = 2.5; // [EXPERT-ESTIMATE] +/- range
+    const DEFORESTATION_THRESHOLD_MEAN = 22.5; // [EXPERT-ESTIMATE] % (midpoint of 20-25%)
+    const DEFORESTATION_THRESHOLD_RANGE = 2.5; // [EXPERT-ESTIMATE] ± range
     const TRANSITION_TIMESCALE_YEARS = 50; // [MODEL-DERIVED] Years for savanna transition once tipped
 
     // Check each region
@@ -614,48 +569,25 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
   // ============================================================================
   // 5. EXTINCTION DEBT (50-150 year time lag)
   // ============================================================================
-  //
-  // COMPLEXITY ANALYSIS (Nov 20, 2025 optimization):
-  // - Time: O(n) per month where n = current queue size
-  //   Previous: O(n²) with splice() causing n element shifts per deletion
-  //   Optimized: O(n) single pass with two-pointer compaction
-  // - Space: O(1) in-place modification (no allocations)
-  // - Determinism: PRESERVED (same iteration order, same RNG consumption)
-  //
-  // Performance characteristics:
-  // - Normal queue size: <100 debts (150-year max lag → ~10 debts/decade)
-  // - Extreme scenarios: ~500 debts (warning threshold)
-  // - Cost per month: O(n) iterate + O(1) truncate = O(n) total
-  //
-  // Regression detection: Performance assertion warns if queue exceeds 500 items
 
   private trackExtinctionDebt(
     state: GameState,
     rng: RNGFunction,
     events: any[]
   ): void {
-    // CRITICAL FIX (Nov 22, 2025): Use proper assertions
-    const tippingPoints = assertDefined(state.tippingPoints, {
-      location: 'trackExtinctionDebt',
-      valueName: 'state.tippingPoints',
-      month: state.currentMonth,
-    });
-
-    const extinctionDebt = assertDefined(tippingPoints.extinctionDebt, {
-      location: 'trackExtinctionDebt',
-      valueName: 'tippingPoints.extinctionDebt',
-      month: state.currentMonth,
-    });
-
-    // PERFORMANCE ASSERTION: Detect pathological queue growth
-    // Normal: <100 debts (150-year max lag → ~10 debts per decade)
-    // Warning: 100-500 debts (investigate debt accumulation rate)
-    // Critical: >500 debts (likely bug or extreme scenario)
-    if (extinctionDebt.debtQueue.length > 500) {
-      console.warn(
-        `⚠️ PERFORMANCE: Extinction debt queue size ${extinctionDebt.debtQueue.length} exceeds 500. Investigate accumulation rate (Month ${state.currentMonth}).`
-      );
+    // Initialize extinction debt state
+    if (!state.tippingPoints) {
+      state.tippingPoints = {} as any;
     }
+    if (!state.tippingPoints!.extinctionDebt) {
+      state.tippingPoints!.extinctionDebt = {
+        debtQueue: [], // Array of {species, debtTimescaleMonths, extinctionProbabilityPerMonth}
+        totalDebt: 0, // Count of species in debt queue
+        paidDebt: 0, // Count of extinctions from historical habitat loss
+      };
+    }
+
+    const extinctionDebt = state.tippingPoints!.extinctionDebt;
 
     // === ADD NEW DEBT (from current habitat loss) ===
     // Research: Conservation Letters 2024 - 150-year avian extinction debt
@@ -665,19 +597,11 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     // Get current habitat loss rate from land use system
     if (state.planetaryBoundariesSystem?.landUse) {
       const landUse = state.planetaryBoundariesSystem.landUse;
-      const globalHabitatCover = assertFinite(
-        assertDefined(landUse.globalHabitatCoverPercent, {
-          location: 'trackExtinctionDebt',
-          valueName: 'landUse.globalHabitatCoverPercent',
-          month: state.currentMonth,
-          additionalInfo: { context: 'Required for extinction debt calculation' }
-        }),
-        {
-          location: 'trackExtinctionDebt',
-          valueName: 'globalHabitatCover',
-          month: state.currentMonth,
-        }
-      );
+      const globalHabitatCover = assertFinite(landUse.globalHabitatCoverPercent, {
+        location: 'trackExtinctionDebt',
+        valueName: 'globalHabitatCoverPercent',
+        month: state.currentMonth,
+      });
 
       // Habitat loss this month (estimate from rate of change)
       // This is a simplified proxy - full implementation would track monthly changes
@@ -719,18 +643,11 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     }
 
     // === PAY DEBT (extinctions from historical habitat loss) ===
-    // PERFORMANCE FIX (Nov 20, 2025): O(n) compaction with two-pointer technique
-    // Previous: splice() causes O(n²) with n deletions × n array shifts each
-    // Optimized: Single O(n) pass with in-place compaction (no shifts, no allocations)
-
-    let writeIndex = 0; // Write pointer for keeping valid debts
-
-    for (let readIndex = 0; readIndex < extinctionDebt.debtQueue.length; readIndex++) {
-      const debt = extinctionDebt.debtQueue[readIndex];
+    for (const debt of extinctionDebt.debtQueue) {
       debt.monthsRemaining -= 1;
 
       if (debt.monthsRemaining <= 0) {
-        // Debt fully paid - extinctions occur (skip in compaction)
+        // Debt fully paid - extinctions occur
         extinctionDebt.paidDebt += debt.speciesCount;
         extinctionDebt.totalDebt -= debt.speciesCount;
 
@@ -744,25 +661,16 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
           biosphere.currentValue += debt.speciesCount * 0.01; // Increase extinction rate
           biosphere.extinctionContribution += 0.05; // Debt contributes to risk
         }
-        // Skip: don't copy to writeIndex, don't increment writeIndex
-      } else {
-        // Keep this debt - copy to writeIndex if different from readIndex
-        if (writeIndex !== readIndex) {
-          extinctionDebt.debtQueue[writeIndex] = debt;
-        }
-        writeIndex++;
-
+      } else if (debt.monthsRemaining % 120 === 0) {
         // Log every 10 years
-        if (debt.monthsRemaining % 120 === 0) {
-          console.log(
-            `🦴 Extinction debt: ${debt.speciesCount.toFixed(1)} species (${(debt.monthsRemaining / 12).toFixed(0)} years remaining)`
-          );
-        }
+        console.log(
+          `🦴 Extinction debt: ${debt.speciesCount.toFixed(1)} species (${(debt.monthsRemaining / 12).toFixed(0)} years remaining)`
+        );
       }
     }
 
-    // Truncate array to new length (O(1) operation)
-    extinctionDebt.debtQueue.length = writeIndex;
+    // Remove fully paid debts
+    extinctionDebt.debtQueue = extinctionDebt.debtQueue.filter((d) => d.monthsRemaining > 0);
   }
 
   // ============================================================================
@@ -774,45 +682,48 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     rng: RNGFunction,
     events: any[]
   ): void {
-    const tempAnomaly = assertStateProperty(
-      state,
-      'resourceEconomy.co2.temperatureAnomaly',
-      {
-        location: 'trackCoralReefCollapse',
-        month: state.currentMonth,
-      }
-    );
-    const oceanPH = assertStateProperty(
-      state,
-      'oceanAcidificationSystem.pHLevel',
-      {
-        location: 'trackCoralReefCollapse',
-        month: state.currentMonth,
-      }
-    );
-
-    // CRITICAL FIX (Nov 22, 2025): Use proper assertions
-    const tippingPoints = assertDefined(state.tippingPoints, {
+    const co2System = assertStateProperty(state, 'resourceEconomy.co2', {
       location: 'trackCoralReefCollapse',
-      valueName: 'state.tippingPoints',
+      month: state.currentMonth,
+    });
+    const tempAnomaly = assertFinite(co2System.temperatureAnomaly, {
+      location: 'trackCoralReefCollapse',
+      valueName: 'temperatureAnomaly',
       month: state.currentMonth,
     });
 
-    const coral = assertDefined(tippingPoints.coralReefs, {
+    const oceanSystem = assertStateProperty(state, 'oceanAcidificationSystem', {
       location: 'trackCoralReefCollapse',
-      valueName: 'tippingPoints.coralReefs',
       month: state.currentMonth,
     });
+    const oceanPH = assertFinite(oceanSystem.pHLevel, {
+      location: 'trackCoralReefCollapse',
+      valueName: 'oceanPH',
+      month: state.currentMonth,
+    });
+
+    // Initialize coral state
+    if (!state.tippingPoints) {
+      state.tippingPoints = {} as any;
+    }
+    if (!state.tippingPoints!.coralReefs) {
+      state.tippingPoints!.coralReefs = {
+        liveCoverPercent: 27.1, // [EMPIRICAL] GBR 2024-2025: 27.1% (down from 32.8% in 2010)
+        bleachedPercent: 0,
+        recoveryPossible: true,
+        dissolutionActive: false,
+      };
+    }
+
+    const coral = state.tippingPoints!.coralReefs;
 
     // === THERMAL BLEACHING ===
     // Research: NOAA 2024 - 4th global bleaching event, 84.4% of reefs affected
     //           Nature Comms 2024 - Recovery possible if <+2°C
     // Type: EMPIRICAL bleaching events + MODEL recovery projections
-    // UNCERTAINTY PROPAGATION (Nov 23, 2025): Use sampled threshold if available
-    // Range: [1.0, 1.5]C - IPCC AR6 (2021)
 
-    const BLEACHING_THRESHOLD = state.uncertaintyParameters?.coralReefThreshold ?? 1.2; // [EMPIRICAL] C - crossed in 2024
-    const EXTINCTION_THRESHOLD = BLEACHING_THRESHOLD + 0.8; // [MODEL-DERIVED] C - recovery impossible above this
+    const BLEACHING_THRESHOLD = 1.2; // [EMPIRICAL] °C - crossed in 2024
+    const EXTINCTION_THRESHOLD = 2.0; // [MODEL-DERIVED] °C - recovery impossible above this
     const BLEACHING_PROBABILITY_PER_MONTH = 0.02; // [EMPIRICAL] ~20% annual at current temps
 
     if (tempAnomaly >= BLEACHING_THRESHOLD && rng() < BLEACHING_PROBABILITY_PER_MONTH) {
@@ -888,18 +799,20 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     rng: RNGFunction,
     events: any[]
   ): void {
-    // CRITICAL FIX (Nov 22, 2025): Use proper assertions
-    const tippingPoints = assertDefined(state.tippingPoints, {
-      location: 'trackIndigenousKnowledgeLoss',
-      valueName: 'state.tippingPoints',
-      month: state.currentMonth,
-    });
+    // Initialize indigenous knowledge state
+    if (!state.tippingPoints) {
+      state.tippingPoints = {} as any;
+    }
+    if (!state.tippingPoints!.indigenousKnowledge) {
+      state.tippingPoints!.indigenousKnowledge = {
+        languagesExtinct: 0,
+        languagesAtRisk: 3330, // [EMPIRICAL] UNESCO 2024: 40% of 8,325 languages
+        knowledgeLost: 0, // Unitless metric (0-1 scale)
+        extinctionRatePerMonth: 2 / 12, // [EMPIRICAL] 2 languages/month
+      };
+    }
 
-    const knowledge = assertDefined(tippingPoints.indigenousKnowledge, {
-      location: 'trackIndigenousKnowledgeLoss',
-      valueName: 'tippingPoints.indigenousKnowledge',
-      month: state.currentMonth,
-    });
+    const knowledge = state.tippingPoints!.indigenousKnowledge;
 
     // === LANGUAGE EXTINCTION (Irreversible) ===
     // Research: UNESCO 2024 - 2 languages lost per month, 40% threatened
@@ -947,18 +860,22 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     rng: RNGFunction,
     events: any[]
   ): void {
-    // CRITICAL FIX (Nov 22, 2025): Use proper assertions
-    const tippingPoints = assertDefined(state.tippingPoints, {
-      location: 'trackInstitutionalCollapse',
-      valueName: 'state.tippingPoints',
-      month: state.currentMonth,
-    });
+    // Initialize institutional state
+    if (!state.tippingPoints) {
+      state.tippingPoints = {} as any;
+    }
+    if (!state.tippingPoints!.institutional) {
+      state.tippingPoints!.institutional = {
+        corruptionIndex: 30, // [QUALITATIVE] 0-100 (100 = total corruption)
+        trustInGovernment: 0.5, // [QUALITATIVE] [0, 1]
+        armedGroupControl: 0.05, // [QUALITATIVE] [0, 1] % territory
+        collapsed: false,
+        gradualDeclineMonths: 0,
+        recoveryWindowMonths: null, // 5-15 years after crossing threshold
+      };
+    }
 
-    const institutional = assertDefined(tippingPoints.institutional, {
-      location: 'trackInstitutionalCollapse',
-      valueName: 'tippingPoints.institutional',
-      month: state.currentMonth,
-    });
+    const institutional = state.tippingPoints!.institutional;
 
     // === "HEMINGWAY BANKRUPTCY" DYNAMICS ===
     // Research: Urban Institute 2024 - "First gradually, then suddenly"
@@ -974,19 +891,15 @@ export class IrreversibilityTrackingPhase implements SimulationPhase {
     // Gradual decline phase
     if (!institutional.collapsed) {
       // Deterioration accelerates with crises
-      const crisisCount = assertFinite(
-        assertDefined(state.planetaryBoundariesSystem?.boundariesBreached, {
-          location: 'trackInstitutionalCollapse',
-          valueName: 'state.planetaryBoundariesSystem.boundariesBreached',
-          month: state.currentMonth,
-          additionalInfo: { context: 'Required for institutional deterioration calculation' }
-        }),
-        {
-          location: 'trackInstitutionalCollapse',
-          valueName: 'crisisCount',
-          month: state.currentMonth,
-        }
-      );
+      const pbSystem = assertStateProperty(state, 'planetaryBoundariesSystem', {
+        location: 'trackInstitutionalCollapse',
+        month: state.currentMonth,
+      });
+      const crisisCount = assertFinite(pbSystem.boundariesBreached, {
+        location: 'trackInstitutionalCollapse',
+        valueName: 'boundariesBreached',
+        month: state.currentMonth,
+      });
       const deteriorationRate = Math.min(0.5, crisisCount * 0.05); // [EXPERT-ESTIMATE]
 
       institutional.corruptionIndex += deteriorationRate * rng();

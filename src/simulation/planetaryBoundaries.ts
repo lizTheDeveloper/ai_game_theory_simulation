@@ -35,7 +35,6 @@ import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 import { FLOORS } from './config/centralConfig';
 import { initializeLegacyNutrientStock } from './legacyNutrientStocks';
 import { initializeRegionalNitrogenManagement } from './nitrogenFoodCoupling';
-import { isHistoricalModeActive } from './utils/historicalMode';
 
 /**
  * Sample biosphere extinction rate from log-uniform distribution
@@ -119,12 +118,6 @@ export function initializePlanetaryBoundariesSystem(rng: RNGFunction): Planetary
     timescaleYears: 50,
     extinctionContribution: 0.25,
     tippingPointRisk: 0.30,
-    // === POST-2100 COMMITMENT TRACKING (Nov 22, 2025) ===
-    // Research: Drüke et al. (2024) - Ice sheet recovery 450 years (100-800 range)
-    // Post-2100 commitment: 30-50% of ice loss irreversible (35% central estimate)
-    // Even after full decarbonization, ice sheets retain committed melting
-    recoveryHalfLife: 450,                 // Years for half-life exponential recovery (ice sheet inertia)
-    minimumAsymptoticValue: 0.35,          // 35% irreversible floor (30-50% range, committed SLR)
   };
 
   // 2. BIOSPHERE INTEGRITY (Core Boundary) - Current ~10× safe boundary
@@ -220,15 +213,9 @@ export function initializePlanetaryBoundariesSystem(rng: RNGFunction): Planetary
     isCoreBoundary: false,
     interactionStrength: 0.8,
     reversible: true,                      // Reduce fertilizer use
-    timescaleYears: 75,                    // 50-200 year range (Drüke et al. 2024, Nov 22 fix)
+    timescaleYears: 20,
     extinctionContribution: 0.15,
     tippingPointRisk: 0.30,
-    // === NITROGEN ASYMPTOTIC RECOVERY (Nov 22, 2025) ===
-    // Research: Drüke et al. (2024) - Nitrogen recovery 125 years (50-200 range)
-    // Nitrogen has atmospheric cycle (unlike phosphorus), but legacy soil stocks persist
-    // Recovery approaches asymptotic minimum (not full recovery to pre-industrial)
-    recoveryHalfLife: 125,                 // Years for half-life exponential recovery
-    minimumAsymptoticValue: 0.10,          // 10% floor (legacy soil nitrogen stocks)
   };
 
   // 6. NOVEL ENTITIES (Chemical Pollution) - Microplastics, PFAS
@@ -382,9 +369,6 @@ export function initializePlanetaryBoundariesSystem(rng: RNGFunction): Planetary
     // Research: Regional overuse patterns (55% South Asian rice), yield penalty curves
     // Expected impact: Realistic nitrogen-food coupling with regional differentiation
     regionalNitrogenManagement: initializeRegionalNitrogenManagement(),
-    // Global Food Production Index (Nov 20, 2025)
-    // Initialized to baseline (1.0), updated by NitrogenFoodCouplingPhase each step
-    globalFoodProductionIndex: 1.0,
   };
 }
 
@@ -902,6 +886,8 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     let effectiveNitrogen = 0;
     let effectivePhosphorus = 0;
     let globalFoodProductionIndex = 1.0;
+    let currentNInput = 0;
+    let currentPInput = 0;
 
     // 2025 baseline: 120 Mt N/year = 10 Mt N/month, 25 Mt P/year = 2.08 Mt P/month
     const BASELINE_N_INPUT_PER_MONTH = 10;  // Mt N/month
@@ -910,23 +896,27 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     if (system.legacyNutrientStock) {
       // Import update functions dynamically to avoid circular dependencies
       const { updateLegacyNutrientStocks } = require('@/simulation/legacyNutrientStocks');
+      const { updateNitrogenFoodCoupling } = require('@/simulation/nitrogenFoodCoupling');
 
-      // CRITICAL FIX (Nov 20, 2025): Read globalFoodProductionIndex from state
-      // NitrogenFoodCouplingPhase (order 19.6) writes this value
-      // This prevents race condition from calling updateNitrogenFoodCoupling() multiple times
-      globalFoodProductionIndex = assertStateProperty(
-        state.planetaryBoundariesSystem,
-        'globalFoodProductionIndex',
-        {
-          location: 'updatePlanetaryBoundaries (requires NitrogenFoodCouplingPhase)',
-          month: state.currentMonth
-        }
-      );
+      // Get deployed nitrogen-reducing technologies
+      // TODO (TIER 2 HIGH): Connect to actual technology deployment
+      // 6 biogeochemical restoration technologies from research (nitrogen_food_coupling_20251115.md):
+      // 1. Precision agriculture (25-30% N reduction) - TIER 3 or god mode policy
+      // 2. Vertical/indoor farming (60% N reduction) - TIER 3 or god mode policy
+      // 3. Food waste reduction (30% demand reduction) - TIER 3 or god mode policy
+      // 4. Nitroplast integration (20-40% reduction, 2040+, 40% success probability) - TIER 4 breakthrough
+      // 5. Precision fermentation (30-50% agricultural N reduction) - TIER 3 or god mode policy
+      // 6. Dietary shift (protein transition 50:50 A:P ratio) - TIER 3 or god mode policy
+      const deployedTechEffectiveness: number[] = [];
+      // For now, no technologies deployed (baseline scenario)
+
+      // Update nitrogen-food coupling and get global food production impact
+      globalFoodProductionIndex = updateNitrogenFoodCoupling(state, deployedTechEffectiveness);
 
       // Current nitrogen and phosphorus inputs (Mt/month)
       // Food production index can modify this (lower food production = less nitrogen needed)
-      const currentNInput = BASELINE_N_INPUT_PER_MONTH * globalFoodProductionIndex;  // Mt N/month
-      const currentPInput = BASELINE_P_INPUT_PER_MONTH * Math.sqrt(globalFoodProductionIndex);  // Mt P/month (less elastic than N)
+      currentNInput = BASELINE_N_INPUT_PER_MONTH * globalFoodProductionIndex;  // Mt N/month
+      currentPInput = BASELINE_P_INPUT_PER_MONTH * Math.sqrt(globalFoodProductionIndex);  // Mt P/month (less elastic than N)
 
       // Update stocks and get effective pollution (current + legacy releases)
       const effective = updateLegacyNutrientStocks(state, currentNInput, currentPInput);
@@ -934,41 +924,44 @@ export function updatePlanetaryBoundaries(state: GameState): void {
       effectivePhosphorus = effective.effectivePhosphorus;
     } else {
       // No legacy tracking - inputs scale with depletion
-      const currentNitrogenInput = BASELINE_N_INPUT_PER_MONTH * (1 - depletion);
-      const currentPhosphorusInput = BASELINE_P_INPUT_PER_MONTH * (1 - depletion);
-      effectiveNitrogen = currentNitrogenInput;
-      effectivePhosphorus = currentPhosphorusInput;
+      currentNInput = BASELINE_N_INPUT_PER_MONTH * (1 - depletion);
+      currentPInput = BASELINE_P_INPUT_PER_MONTH * (1 - depletion);
+      effectiveNitrogen = currentNInput;
+      effectivePhosphorus = currentPInput;
     }
 
-    // NOTE (Roy, Nov 18 & Nov 20, 2025): Removed DUPLICATE biogeochemical calculation
-    // - Lines 897-928 already update legacy nutrients AND set effectiveNitrogen/Phosphorus
-    // - Duplicate block (lines 935-946) was calling updateLegacyNutrientStocks() AGAIN with wrong variables
-    // - This was leftover dead code from refactoring
+    // Boundary value calculation
+    // Baseline (2025): 2.94 (294% of safe boundary)
+    // Scale by effective pollution vs baseline pollution
+    // Baseline total: 12.1 Mt/month (10 N + 2.1 P)
+    const baselinePollution = 12.1;
+    const currentEffectivePollution = effectiveNitrogen + effectivePhosphorus;
+    const pollutionRatio = currentEffectivePollution / baselinePollution;
 
-    // Normalize to boundary scale
-    // Baseline (2025): 10 Mt N/month + 2.08 Mt P/month = 12.08 Mt/month total → boundary value 2.94
-    // Scaling: 2.94 / 12.08 = 0.243 boundary units per Mt/month
-    const POLLUTION_TO_BOUNDARY_SCALE = 0.243;
-    const effectivePollutionBoundaryValue = (effectiveNitrogen + effectivePhosphorus) * POLLUTION_TO_BOUNDARY_SCALE;
+    // Legacy contribution = effective pollution minus current inputs
+    // Shows how much pollution comes from legacy stocks vs current inputs
+    const legacyContribution = Math.max(0, effectiveNitrogen + effectivePhosphorus - currentNInput - currentPInput);
 
-    // Boundary value = effective pollution (includes current inputs + legacy releases)
+    // Boundary value = baseline × pollution ratio + depletion factor
+    // Depletion factor: phosphorus reserves declining increases boundary value
     // This creates INERTIA: reducing current inputs helps, but legacy stocks slow recovery dramatically
-    const biogeochemicalValue = assertFinite(Math.max(0, effectivePollutionBoundaryValue), {
+    const biogeochemicalValue = assertFinite(Math.max(0, 2.94 * pollutionRatio + depletion * 0.5), {
       location: 'updatePlanetaryBoundaries:biogeochemical',
       valueName: 'biogeochemical_flows.currentValue',
       month: state.currentMonth,
       additionalInfo: {
+        reserves,
+        depletion,
+        legacyContribution,
         effectiveNitrogen,
         effectivePhosphorus,
+        currentNInput,
+        currentPInput,
         globalFoodProductionIndex
       }
     });
     system.boundaries.biogeochemical_flows.currentValue = biogeochemicalValue;
   }
-  // NOTE (Roy, Nov 18, 2025): Removed duplicate biogeochemicalValue calculation (lines 988-1004)
-  // - Extra closing brace at line 986 was closing function prematurely
-  // - Duplicate calculation used different formula (pollutionRatio vs effectivePollutionBoundaryValue)
-  // - Kept the effectivePollutionBoundaryValue version (includes legacy stock inertia)
   updateBoundaryStatus(system.boundaries.biogeochemical_flows);
 
   // Novel entities (from environmental pollution)
@@ -1000,15 +993,7 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     novelEntitiesBoundary.peak = Math.max(novelEntitiesBoundary.peak, novelEntitiesValue);
   }
 
-  // HIGH-1 FIX (Roy, Nov 20, 2025): Read and apply incremental impacts from other phases
-  // Single-owner pattern: This phase is the ONLY writer to boundaries.novel_entities.currentValue
-  // Other phases (IrreversibilityTracking, UnknownUnknown) write to novelEntitiesIncrementalImpact
-  const incrementalImpact = system.novelEntitiesIncrementalImpact || 0;
-
-  let finalNovelEntitiesValue = novelEntitiesValue + incrementalImpact;
-
-  // Reset incremental impact for next step
-  system.novelEntitiesIncrementalImpact = 0;
+  let finalNovelEntitiesValue = novelEntitiesValue;
 
   // === LEGACY STOCK RELEASE (if enabled) ===
   if (novelEntitiesBoundary.legacyStock !== undefined && novelEntitiesBoundary.legacyStock > 0) {
@@ -1077,23 +1062,6 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     console.log(`     Attempted: ${finalNovelEntitiesValue.toFixed(3)} | Actual: ${flooredValue.toFixed(3)}`);
     console.log(`     Cousins 2022: Global PFAS distribution prevents full remediation`);
   }
-
-  // HIGH-1 FIX (Roy, Nov 20, 2025): CRITICAL - Actually assign the computed value!
-  // This was computed but never written - classic race condition setup
-  // SINGLE-OWNER ENFORCEMENT: Only this phase writes to novel_entities.currentValue
-  system.boundaries.novel_entities.currentValue = assertFinite(flooredValue, {
-    location: 'updatePlanetaryBoundaries:novelEntities[final]',
-    valueName: 'novel_entities.currentValue',
-    month: state.currentMonth,
-    additionalInfo: {
-      novelEntitiesValue,
-      finalNovelEntitiesValue,
-      flooredValue,
-      irreversibleFloor,
-      peak: novelEntitiesBoundary.peak,
-      incrementalImpact
-    }
-  });
 
   updateBoundaryStatus(system.boundaries.novel_entities);
 
@@ -1235,14 +1203,8 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     // Grace period: No trigger in first 24 months (cascades take 2-5 years to manifest)
     const gracePeriod = state.currentMonth < 24;
 
-    // HISTORICAL MODE (Nov 27, 2025): Disable cascade trigger during hindcast validation
-    // Root cause: Cascades trigger in 1990-2024 baseline period, causing exponential mortality
-    // Research: research/historical_mode_parameters_20251127.md
-    // HIGH-8 FIX (Nov 28, 2025): Use isHistoricalModeActive() utility (checks scenarioMode, not historicalMode)
-    const historicalModeActive = isHistoricalModeActive(state);
-
     // Stochastic trigger with Bayesian adjustment
-    if (!system.cascadeActive && !gracePeriod && !historicalModeActive && deterministicRandom() < monthlyTriggerChance) {
+    if (!system.cascadeActive && !gracePeriod && deterministicRandom() < monthlyTriggerChance) {
       system.cascadeActive = true;
       system.cascadeStartMonth = state.currentMonth;
       console.log(`\n🌪️ ========== TIPPING POINT CASCADE TRIGGERED ==========`);
@@ -1278,10 +1240,7 @@ export function updatePlanetaryBoundaries(state: GameState): void {
   }
 
   // === 5. APPLY CASCADE EFFECTS ===
-  // HISTORICAL MODE (Nov 27, 2025): Skip cascade effects during hindcast validation
-  // HIGH-8 FIX (Nov 28, 2025): Use isHistoricalModeActive() utility (checks scenarioMode, not historicalMode)
-  const historicalMode = isHistoricalModeActive(state);
-  if (system.cascadeActive && !historicalMode) {
+  if (system.cascadeActive) {
     applyTippingPointCascadeEffects(state);
   }
 
@@ -1363,14 +1322,8 @@ export function applyTippingPointCascadeEffects(state: GameState): void {
   env.climateStability = Math.max(0, env.climateStability * (1 - climateDecay));
 
   // Biodiversity crashes (with variation)
-  // HIGH-8 FIX (Nov 27, 2025): Skip during historical mode (1990-2024)
-  // Historical biodiversity decline is handled by environmental.ts with empirical WWF LPI rates
-  // HIGH-8 FIX v2 (Nov 28, 2025): Use isHistoricalModeActive() utility (checks scenarioMode, not historicalMode)
-  // ROOT CAUSE: state.config.historicalMode doesn't exist during hindcast (uses scenarioMode='historical' instead)
-  if (!isHistoricalModeActive(state)) {
-    const bioDecay = 0.03 * envStochasticFactor(); // Base 3% ± variation
-    env.biodiversityIndex = Math.max(0, env.biodiversityIndex * (1 - bioDecay));
-  }
+  const bioDecay = 0.03 * envStochasticFactor(); // Base 3% ± variation
+  env.biodiversityIndex = Math.max(0, env.biodiversityIndex * (1 - bioDecay));
 
   // Resources depleted faster (with variation)
   const resourceDecay = 0.015 * envStochasticFactor(); // Base 1.5% ± variation
@@ -1440,36 +1393,17 @@ export function applyTippingPointCascadeEffects(state: GameState): void {
       }
     );
 
-    // BUG FIX (Nov 27, 2025): C-5 - Replace unbounded exponential with logistic growth
-    // ROOT CAUSE: 1.05^N exponential produced physically impossible mortality multipliers:
-    //   - Month 48+96: 107× baseline
-    //   - Month 48+144: 1,688× baseline
-    //   - Exceeds total population multiple times over
-    // RESEARCH: Armstrong McKay et al. (2022) shows cascades saturate at new equilibrium
-    //   - Systems reach stable degraded states, not infinite runaway
-    //   - Real-world cascades are sub-linear after initial shock
-    // FIX: Use logistic growth function that saturates at plausible maximum
-    //   - Formula: maxMultiplier / (1 + exp(-growthRate * (months - midpoint)))
-    //   - Saturates at 10× baseline (research-backed worst case)
-    //   - Rapid initial growth (S-curve captures cascade acceleration)
-    //   - Asymptotic approach to maximum (physically plausible)
+    // BUG FIX (Oct 30, 2025): BLOCKER-1 - Cap displayed mortality at 100% (physical constraint)
+    // ROOT CAUSE: Unbounded exponential 1.05^N produces >100% mortality at long timescales
+    //   Example: Month 192 (144 past crisis) → 1.05^144 = 1687.9× → 843.95% monthly mortality
     // IMPORTANT: This value is FOR DISPLAY ONLY. Actual mortality is computed by:
     //   - calculateEnvironmentalMortality() in environmental.ts
     //   - resolveMortality() in bayesianMortality.ts (with 2.8% monthly cap)
+    // FIX: Cap theoretical mortality at 100%, warn when exceeded
 
-    const theoreticalMortalityMultiplier = monthsSinceCascade > 48
-      ? (() => {
-          const monthsPastCrisis = monthsSinceCascade - 48;
-          const maxMultiplier = 10.0;  // 10× baseline (research-backed saturation)
-          const growthRate = 0.05;     // Controls S-curve steepness
-          const midpoint = 60;         // Half-saturation at 60 months past crisis
-
-          // Logistic growth: rapid initial rise → saturation at maxMultiplier
-          return maxMultiplier / (1 + Math.exp(-growthRate * (monthsPastCrisis - midpoint)));
-        })()
-      : 1.0;  // Before month 48, no multiplier (baseline rate)
-
-    const theoreticalMortalityUncapped = baseMortalityRate * theoreticalMortalityMultiplier;
+    const theoreticalMortalityUncapped = monthsSinceCascade > 48
+      ? baseMortalityRate * Math.pow(1.05, monthsSinceCascade - 48)
+      : baseMortalityRate;
 
     // Physical constraint: monthly mortality cannot exceed 100% (entire population dies once)
     const mortalityRateDisplay = Math.min(1.0, theoreticalMortalityUncapped);
@@ -1621,11 +1555,8 @@ function updateLandUseSystem(state: GameState): void {
       region.ecosystemCollapseRisk = Math.min(1.0, region.ecosystemCollapseRisk + 0.01);
 
       // Check for ecosystem collapse (varies by biodiversity weight)
-      // HIGH-8 FIX (Nov 27, 2025): Disable catastrophic collapses during historical mode
-      // HIGH-8 FIX v2 (Nov 28, 2025): Use isHistoricalModeActive() utility (checks scenarioMode, not historicalMode)
-      const historicalModeActive = isHistoricalModeActive(state);
       const collapseChance = region.biodiversityWeight * 0.05; // Tropical has highest chance
-      if (!historicalModeActive && region.ecosystemCollapseRisk > 0.80 && deterministicRandom() < collapseChance) {
+      if (region.ecosystemCollapseRisk > 0.80 && deterministicRandom() < collapseChance) {
         region.ecosystemsLost++;
         const regionLabel = String(regionName).toUpperCase();
         console.log(`\n🌳💀 ${regionLabel} ECOSYSTEM COLLAPSED (Total: ${region.ecosystemsLost})`);
@@ -2080,67 +2011,6 @@ export function updateBiosphereIntegrityIndex(
 
   const bii = state.biosphereIntegrityIndex;
 
-  // HISTORICAL MODE (Nov 27, 2025): Dampen biodiversity decline for hindcast validation
-  // Research: research/historical_mode_parameters_20251127.md
-  // Root cause: Crisis-calibrated extinction rates produce -95% collapse (0.03 vs 0.49 actual)
-  // Historical data: WWF Living Planet Index shows -34.7% decline 1990-2024 (0.75 → 0.49)
-  // Solution: Use baseline habitat loss rate (1.236%/year) instead of crisis extinction cascades
-  // HIGH-8 FIX v2 (Nov 28, 2025): Use isHistoricalModeActive() utility (checks scenarioMode, not historicalMode)
-  if (isHistoricalModeActive(state)) {
-    console.log(`🧪 [BII] Historical mode ACTIVE (month ${state.currentMonth}, species: ${bii.currentSpeciesCount})`);
-    const HISTORICAL_ANNUAL_DECLINE_RATE = 0.01236; // 1.236% per year (WWF LPI 1990-2024: 0.75 → 0.49)
-    const monthlyDeclineRate = HISTORICAL_ANNUAL_DECLINE_RATE / 12;
-
-    // Apply simple linear decline (no feedback loops, no catastrophic events)
-    const newSpeciesCount = assertFinite(
-      Math.max(1000, bii.currentSpeciesCount * (1 - monthlyDeclineRate)),
-      {
-        location: 'updateBiosphereIntegrityIndex (historicalMode)',
-        valueName: 'currentSpeciesCount',
-        month: state.currentMonth,
-        additionalInfo: {
-          previousCount: bii.currentSpeciesCount,
-          monthlyDeclineRate
-        }
-      }
-    );
-
-    bii.currentSpeciesCount = newSpeciesCount;
-
-    // Calculate extinction rate from species loss (for boundary value)
-    const speciesLost = bii.totalSpeciesBaseline - bii.currentSpeciesCount;
-    const yearsElapsed = Math.max(1, state.currentMonth / 12);
-    const extinctionsPerYear = speciesLost / yearsElapsed;
-    const extinctionRate = (extinctionsPerYear / bii.totalSpeciesBaseline) * 1_000_000; // E/MSY
-
-    bii.currentExtinctionRate = extinctionRate;
-
-    // Update planetary boundary value (normalized to safe rate)
-    const SAFE_EXTINCTION_RATE = 1.0;
-    const boundaryValue = extinctionRate / SAFE_EXTINCTION_RATE;
-    bii.boundaryValue = boundaryValue;
-    bii.tippingPointRisk = Math.min(1.0, boundaryValue / 10.0);
-
-    // Update planetary boundary system
-    if (state.planetaryBoundariesSystem) {
-      const boundary = state.planetaryBoundariesSystem.boundaries.biosphere_integrity;
-      boundary.currentValue = bii.boundaryValue;
-      boundary.tippingPointRisk = bii.tippingPointRisk;
-
-      // Update status
-      if (bii.boundaryValue >= 10.0) {
-        boundary.status = 'high_risk';
-      } else if (bii.boundaryValue >= 1.0) {
-        boundary.status = 'increasing_risk';
-      } else {
-        boundary.status = 'safe';
-      }
-    }
-
-    // Early return - skip crisis-calibrated extinction mechanics
-    return;
-  }
-
   // === 1. UPDATE CLIMATE VELOCITY ===
   // Climate velocity increases with warming rate
   // Use getter function to decouple from internal planetary boundaries structure
@@ -2226,12 +2096,7 @@ export function updateBiosphereIntegrityIndex(
     }
   });
 
-  // Roy's fix (Nov 20, 2025): currentMonth should ALWAYS exist - if undefined, that's a bug
-  const yearsElapsed = assertFinite(state.currentMonth, {
-    location: 'updateBiosphereIntegrityIndex',
-    valueName: 'state.currentMonth',
-    month: state.currentMonth
-  }) / 12;
+  const yearsElapsed = (state.currentMonth || 1) / 12;
   const extinctionsPerYear = assertFinite(speciesLost / Math.max(1, yearsElapsed), {
     location: 'updateBiosphereIntegrityIndex:extinctionRate',
     valueName: 'extinctionsPerYear',
@@ -2286,18 +2151,7 @@ export function updateBiosphereIntegrityIndex(
 
   // === 6. INTEGRATE WITH BAYESIAN MORTALITY ===
   // Species extinction causes indirect human mortality (ecosystem collapse)
-  // HINDCAST FIX (Nov 24, 2025): Skip ecosystem mortality in historical mode (pre-2020)
-  // Climate-driven ecosystem collapse wasn't a significant mortality factor until 2020s
-  // Research: IPBES (2019), UN biodiversity reports - ecosystem services decline accelerated post-2010
-  const isHistoricalMode = isHistoricalModeActive(state);
-  const currentYear = state.config?.startYear
-    ? state.config.startYear + Math.floor(state.currentMonth / 12)
-    : 2025 + Math.floor(state.currentMonth / 12);
-
-  // Only apply ecosystem mortality if:
-  // 1. Tracking failure > 50% (ecosystem collapse threshold)
-  // 2. NOT in historical mode OR current year >= 2020
-  if (bii.trackingFailureRate > 0.5 && (!isHistoricalMode || currentYear >= 2020)) {
+  if (bii.trackingFailureRate > 0.5) {
     const { addMortalityRisk } = require('./bayesianMortality');
     const humanPop = state.humanPopulationSystem;
 

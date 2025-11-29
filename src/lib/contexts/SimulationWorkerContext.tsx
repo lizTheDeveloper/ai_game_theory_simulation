@@ -17,6 +17,8 @@
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from 'react'
 import { SimulationWorkerClient, type StateDelta, type InitialStateSnapshot } from '@/lib/simulationWorkerClient'
 import { eventDatabase } from '@/lib/eventDatabase'
+import { indexedDBLLMStorage } from '@/lib/llmStorageAdapter'
+import { setLLMLogStorage } from '@/simulation/llm/logging'
 import type { ScenarioMode } from '@/types/game'
 
 interface SimulationWorkerContextValue {
@@ -74,6 +76,10 @@ export function SimulationWorkerProvider({ children }: { children: ReactNode }) 
     // Only create if doesn't exist
     if (!clientRef.current) {
       try {
+        // Inject LLM log storage (dependency injection for module boundary separation)
+        setLLMLogStorage(indexedDBLLMStorage)
+        console.log('[WorkerContext] Injected IndexedDB LLM log storage')
+
         const client = new SimulationWorkerClient()
         clientRef.current = client
 

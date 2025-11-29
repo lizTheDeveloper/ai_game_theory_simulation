@@ -434,13 +434,25 @@ export function calculateCoordinationBonus(
   targetRegion: string
 ): number {
   const regionKeys = Object.keys(allRegions);
-  const targetPreparedness = allRegions[targetRegion]?.preparedness ?? 0;
-  const targetStage = allRegions[targetRegion]?.stage ?? 'dormant';
+
+  // Validate target region exists in map
+  const targetData = allRegions[targetRegion];
+  if (!targetData) {
+    throw new Error(`❌ Target region '${targetRegion}' not found in allRegions map (calculateCoordinationBonus)`);
+  }
+
+  const targetPreparedness = targetData.preparedness;
+  const targetStage = targetData.stage;
 
   // Count regions at same stage
   let regionsAtSameStage = 0;
   for (const key of regionKeys) {
-    if (key !== targetRegion && allRegions[key]?.stage === targetStage) {
+    const regionData = allRegions[key];
+    if (!regionData) {
+      console.warn(`⚠️ Missing region data for key '${key}' in calculateCoordinationBonus`);
+      continue;
+    }
+    if (key !== targetRegion && regionData.stage === targetStage) {
       regionsAtSameStage++;
     }
   }
@@ -449,7 +461,10 @@ export function calculateCoordinationBonus(
   const coordinationBonus = Math.min(regionsAtSameStage * 0.05, 0.20);
 
   // Norm cascade threshold: If 2+ regions at 'recognition', add +10% to all regions at 'precautionary'
-  const regionsAtRecognition = regionKeys.filter(k => allRegions[k]?.stage === 'recognition').length;
+  const regionsAtRecognition = regionKeys.filter(k => {
+    const data = allRegions[k];
+    return data && data.stage === 'recognition';
+  }).length;
   const normCascadeBonus = (regionsAtRecognition >= 2 && targetStage === 'precautionary') ? 0.10 : 0;
 
   return coordinationBonus + normCascadeBonus;
@@ -465,9 +480,17 @@ export function calculateHegemonicInfluence(
   globalSouthPreparedness: number
 ): number {
   // Find leading region (highest preparedness among EU/US/China)
-  const euPrep = allRegions['eu']?.preparedness ?? 0;
-  const usPrep = allRegions['us']?.preparedness ?? 0;
-  const chinaPrep = allRegions['china']?.preparedness ?? 0;
+  const euData = allRegions['eu'];
+  const usData = allRegions['us'];
+  const chinaData = allRegions['china'];
+
+  if (!euData || !usData || !chinaData) {
+    throw new Error(`❌ Missing hegemonic power region data in calculateHegemonicInfluence (eu=${!!euData}, us=${!!usData}, china=${!!chinaData})`);
+  }
+
+  const euPrep = euData.preparedness;
+  const usPrep = usData.preparedness;
+  const chinaPrep = chinaData.preparedness;
 
   const leadingPreparedness = Math.max(euPrep, usPrep, chinaPrep);
   const gapToLeader = leadingPreparedness - globalSouthPreparedness;

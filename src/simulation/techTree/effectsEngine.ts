@@ -951,8 +951,12 @@ function applyGlobalEffects(
         // The actual coupling calculation happens in planetaryBoundaries.ts (legacy stocks)
         // and affects food production via regional yield penalties
         if (gameState.globalMetrics) {
-          // Accumulate nitrogen reduction effectiveness (will be used by updateNitrogenFoodCoupling)
-          const currentReduction = gameState.globalMetrics.nitrogenReductionTotal ?? 0;
+          // Initialize nitrogenReductionTotal if undefined (first tech applying nitrogen reduction)
+          if (gameState.globalMetrics.nitrogenReductionTotal === undefined) {
+            gameState.globalMetrics.nitrogenReductionTotal = 0;
+          }
+
+          const currentReduction = gameState.globalMetrics.nitrogenReductionTotal;
 
           // Multiplicative stacking: 1 - (1 - r1)(1 - r2)...(1 - rN)
           // This prevents >100% reduction and models realistic synergies
