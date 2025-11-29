@@ -31,6 +31,7 @@ import type { ScenarioMode } from '../types/game';
 import type { LandUseSystem } from '../types/planetaryBoundaries';
 import { eventDatabase } from '../lib/eventDatabase';
 import { assertStateProperty, assertDefined } from '../simulation/utils/assertions';
+import { TOTAL_TECH_COUNT } from '../simulation/techTree/comprehensiveTechTree';
 
 // Worker state
 let engine: SimulationEngine | null = null;
@@ -1819,7 +1820,7 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
   const developmentComponents = {
     gdpPerCapita: state.globalMetrics.qualityOfLife * 100,  // Proxy from QoL
     infrastructureAccess: (state.qualityOfLifeSystems?.energyAvailability ?? 0.5) * 100,
-    technologyAdoption: (state.techTreeState?.unlockedTech?.length ?? 0) / 71 * 100,  // Fraction of 71 total techs
+    technologyAdoption: (state.techTreeState?.unlockedTech?.length ?? 0) / TOTAL_TECH_COUNT * 100,  // Fraction of 119 breakthrough technologies
     urbanization: 65,  // Static estimate for now
     educationQuality: (state.qualityOfLifeSystems?.healthcareQuality ?? 0.5) * 100,  // Proxy: healthcare as education indicator
   };
