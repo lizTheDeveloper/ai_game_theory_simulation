@@ -24,6 +24,7 @@ import {
   assertStateProperty
 } from '@/simulation/utils/assertions';
 import { isHistoricalModeActive } from '@/simulation/utils/historicalMode';
+import { getGDPProxy } from '@/simulation/utils/recoveryCalculations';
 // REMOVED (Nov 20, 2025): updateNitrogenFoodCoupling import
 // This phase no longer calls it directly - reads cached values from state instead
 
@@ -42,6 +43,73 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
     'nitrogen-food-coupling',   // Order 19.6: CRITICAL - Nitrogen values must be calculated BEFORE this phase reads them
   ];
 
+  // ============================================================================
+  // FAMINE DAMPENING FACTORS (Nov 28, 2025)
+  // ============================================================================
+  // Research: Historical famine mortality curves show 1-4 year timescales, NOT months
+  // Prevents overly aggressive population crashes that don't account for adaptation
+  // ============================================================================
+
+  /**
+   * Food Security Floor (15% minimum)
+   *
+   * Even in worst-case scenarios, emergency rationing provides baseline food security.
+   *
+   * Research:
+   * - WWII rationing: UK maintained 90%+ caloric intake despite shipping blockade
+   * - Siege economies: Leningrad (1941-44) maintained ~15% pre-war food supply
+   * - Modern food aid: UN WFP emergency rations = 2,100 kcal/person/day baseline
+   *
+   * Historical precedent: Total food system collapse (0% security) requires
+   * societal breakdown beyond even nuclear winter scenarios. Emergency measures
+   * (rationing, stockpiles, aid) prevent complete failure.
+   *
+   * Source: FAO Emergency Food Security Assessment Handbook (2022)
+   */
+  private static readonly FOOD_SECURITY_FLOOR = 0.15;
+
+  /**
+   * International Aid Dampening (15% reduction when GDP > $100T)
+   *
+   * When global economy is functioning, food can be redistributed internationally.
+   *
+   * Research:
+   * - FAO World Food Programme: Redistributes 15B rations/year ($9B budget)
+   * - Historical capacity: 10-15% of regional food deficits addressed by aid
+   * - Scalability: With functional economy (GDP > $100T), logistics enable transfer
+   *
+   * Mechanism: When global GDP > $100T, international aid reduces food security
+   * loss by 15% through redistribution from surplus regions to deficit regions.
+   * Scales linearly below $100T (50% GDP → 7.5% dampening).
+   *
+   * Source: FAO State of Food Security and Nutrition (2024)
+   */
+  private static readonly AID_DAMPENING_MAX = 0.15;
+  private static readonly AID_DAMPENING_GDP_THRESHOLD = 100; // Trillions USD
+
+  /**
+   * Adaptation Recovery (0.5% monthly when climate stabilizes)
+   *
+   * When climate stress is not worsening, food security can slowly recover.
+   *
+   * Research:
+   * - Hultgren & Hsiang (2025): 33% adaptation offset to climate yield losses
+   * - Agricultural adaptation rates: 2-5 years for crop substitution, infrastructure
+   * - Recovery timeline: 0.5%/month = 6%/year = 50% recovery in ~8 years
+   *
+   * Mechanism: When active crises are stable (not increasing), agricultural
+   * adaptation enables gradual food security improvement through:
+   * - Crop substitution (drought-resistant varieties)
+   * - Infrastructure repair (irrigation, storage)
+   * - Technology deployment (precision agriculture)
+   *
+   * Only applies when crisis count is stable or declining (adaptation possible).
+   *
+   * Source: Hultgren & Hsiang, "Adaptation Reduces Climate Damages Substantially
+   *         but Fails to Prevent Productivity Loss" (2025)
+   */
+  private static readonly ADAPTATION_RECOVERY_RATE = 0.005; // 0.5% monthly
+
   execute(state: GameState, _rng: RNGFunction): PhaseResult {
     // FIX (Oct 25, 2025 REGIONALIZATION): Food security is now REGIONAL
     setDeterministicRng(_rng);
@@ -53,6 +121,30 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
     if (!pop.regionalPopulations || pop.regionalPopulations.length === 0) {
       return { events: [] };
     }
+
+    // Calculate global GDP for international aid dampening
+    // getGDPProxy returns GDP in trillions USD (e.g., 114.0 = $114T)
+    const globalGDP = getGDPProxy(state);
+    const aidDampeningFactor = Math.min(
+      FoodSecurityDegradationPhase.AID_DAMPENING_MAX,
+      (globalGDP / FoodSecurityDegradationPhase.AID_DAMPENING_GDP_THRESHOLD) *
+        FoodSecurityDegradationPhase.AID_DAMPENING_MAX
+    );
+
+    // Validate GDP and aid dampening
+    assertFinite(globalGDP, {
+      location: 'FoodSecurityDegradationPhase.execute',
+      valueName: 'globalGDP',
+      month: state.currentMonth,
+      additionalInfo: { unit: 'trillions USD' }
+    });
+
+    assertProbability(aidDampeningFactor, {
+      location: 'FoodSecurityDegradationPhase.execute',
+      valueName: 'aidDampeningFactor',
+      month: state.currentMonth,
+      additionalInfo: { globalGDP, threshold: FoodSecurityDegradationPhase.AID_DAMPENING_GDP_THRESHOLD }
+    });
 
     // ============================================================================
     // HINDCAST MODE GUARD (Nov 24, 2025)
@@ -262,6 +354,66 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
       // Now applies ONCE (before degradation only, lines 194-236)
       // Example: 20% penalty was being applied as 0.8² = 64% (36% total loss instead of 20%)
 
+      // ============================================================================
+      // DAMPENING FACTORS (Nov 28, 2025)
+      // ============================================================================
+      // Apply three research-backed dampening factors to prevent overly aggressive crashes
+      // ============================================================================
+
+      // 1. INTERNATIONAL AID DAMPENING
+      // When global economy is functioning (GDP > $100T), reduce food security loss by up to 15%
+      // Mechanism: International redistribution from surplus to deficit regions
+      if (aidDampeningFactor > 0 && degradationRateCapped > 0) {
+        const lossBeforeAid = currentFood - newFood; // How much food security was lost
+        const aidReduction = lossBeforeAid * aidDampeningFactor; // Aid prevents some loss
+        newFood = Math.min(currentFood, newFood + aidReduction); // Add aid back
+
+        // Validate aid-adjusted food security
+        newFood = assertProbability(newFood, {
+          location: 'FoodSecurityDegradationPhase.execute',
+          valueName: `${region.name}.foodSecurity (after aid dampening)`,
+          month: state.currentMonth,
+          additionalInfo: {
+            lossBeforeAid,
+            aidReduction,
+            aidDampeningFactor
+          }
+        });
+      }
+
+      // 2. ADAPTATION RECOVERY
+      // When crisis count is stable/declining, agricultural adaptation enables gradual recovery
+      // 0.5% monthly recovery rate (6%/year → 50% recovery in ~8 years)
+      const previousCrisisCount = (region as any).previousActiveCrises ?? activeCrises;
+      const crisisStable = activeCrises <= previousCrisisCount; // Not worsening
+
+      if (crisisStable && newFood < 0.8) {
+        // Only recover if below 80% (diminishing returns above that)
+        const recoveryAmount = newFood * FoodSecurityDegradationPhase.ADAPTATION_RECOVERY_RATE;
+        newFood = Math.min(0.8, newFood + recoveryAmount);
+
+        // Validate recovery-adjusted food security
+        newFood = assertProbability(newFood, {
+          location: 'FoodSecurityDegradationPhase.execute',
+          valueName: `${region.name}.foodSecurity (after adaptation recovery)`,
+          month: state.currentMonth,
+          additionalInfo: {
+            recoveryAmount,
+            crisisStable,
+            activeCrises,
+            previousCrisisCount
+          }
+        });
+      }
+
+      // Store crisis count for next month's comparison
+      (region as any).previousActiveCrises = activeCrises;
+
+      // 3. FOOD SECURITY FLOOR (15% minimum)
+      // Even in worst-case scenarios, emergency rationing provides baseline
+      // Applied LAST to ensure floor is always respected
+      newFood = Math.max(FoodSecurityDegradationPhase.FOOD_SECURITY_FLOOR, newFood);
+
       // Final validation
       newFood = assertProbability(newFood, {
         location: 'FoodSecurityDegradationPhase.execute',
@@ -269,11 +421,29 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
         month: state.currentMonth
       });
 
+      // Validate floor is respected
+      if (newFood < FoodSecurityDegradationPhase.FOOD_SECURITY_FLOOR - 0.001) {
+        throw new Error(
+          `❌ Food security floor violated in ${region.name}\n` +
+          `   foodSecurity = ${newFood.toFixed(4)}\n` +
+          `   FLOOR = ${FoodSecurityDegradationPhase.FOOD_SECURITY_FLOOR}\n` +
+          `   Month: ${state.currentMonth}\n` +
+          `   This should be impossible - floor applied at line 362.`
+        );
+      }
+
       region.foodSecurity = newFood;
 
-      // DEBUG: Log for each region annually
+      // DEBUG: Log for each region annually (include dampening factors)
       if (state.currentMonth % 12 === 0 && activeCrises > 0.5) {
-        console.log(`  [${region.name}] Food: ${(currentFood * 100).toFixed(1)}% → ${(newFood * 100).toFixed(1)}% | Crises: ${activeCrises.toFixed(2)}, Rate: ${(degradationRate * 100).toFixed(2)}%/mo`);
+        const atFloor = newFood <= FoodSecurityDegradationPhase.FOOD_SECURITY_FLOOR + 0.01;
+        console.log(
+          `  [${region.name}] Food: ${(currentFood * 100).toFixed(1)}% → ${(newFood * 100).toFixed(1)}% | ` +
+          `Crises: ${activeCrises.toFixed(2)}, Rate: ${(degradationRate * 100).toFixed(2)}%/mo, ` +
+          `Aid: ${(aidDampeningFactor * 100).toFixed(1)}%` +
+          (crisisStable ? `, Adapting: +${(FoodSecurityDegradationPhase.ADAPTATION_RECOVERY_RATE * 100).toFixed(1)}%/mo` : '') +
+          (atFloor ? ` [AT FLOOR]` : '')
+        );
       }
     }
 
