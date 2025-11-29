@@ -24,7 +24,6 @@ import { updatePlanetaryBoundaries, updateBiosphereIntegrityIndex } from '../../
 import { updateBoundaryRecovery } from '../../planetaryBoundaryRecovery';
 import { updateNovelEntitiesBoundary } from '../../updateNovelEntitiesBoundary';
 import { isHistoricalModeActive } from '@/simulation/utils/historicalMode';
-import { updateEnvironmentalAccumulation } from '../../environmental';
 
 export class PlanetaryBoundariesPhase implements SimulationPhase {
   readonly id = 'planetary_boundaries';
@@ -80,8 +79,25 @@ export class PlanetaryBoundariesPhase implements SimulationPhase {
         month: state.currentMonth,
       }
     );
-    const currentNitrogenInput = BASELINE_N_INPUT_PER_MONTH * phosphorusReserves;
-    const currentPhosphorusInput = BASELINE_P_INPUT_PER_MONTH * phosphorusReserves;
+    // HIGH-2 FIX (Nov 28, 2025): Add assertFinite to nutrient input calculations
+    const currentNitrogenInput = assertFinite(
+      BASELINE_N_INPUT_PER_MONTH * phosphorusReserves,
+      {
+        location: 'PlanetaryBoundariesPhase.execute',
+        valueName: 'currentNitrogenInput',
+        month: state.currentMonth,
+        additionalInfo: { baseline: BASELINE_N_INPUT_PER_MONTH, phosphorusReserves }
+      }
+    );
+    const currentPhosphorusInput = assertFinite(
+      BASELINE_P_INPUT_PER_MONTH * phosphorusReserves,
+      {
+        location: 'PlanetaryBoundariesPhase.execute',
+        valueName: 'currentPhosphorusInput',
+        month: state.currentMonth,
+        additionalInfo: { baseline: BASELINE_P_INPUT_PER_MONTH, phosphorusReserves }
+      }
+    );
 
     updateLegacyNutrientStocks(state, currentNitrogenInput, currentPhosphorusInput);
 
@@ -110,24 +126,15 @@ export class PlanetaryBoundariesPhase implements SimulationPhase {
           month: state.currentMonth
         }
       );
-      // Convert to pre-industrial (1750) baseline: add 0.1°C
-      // Research: IPCC AR6 Cross-Chapter Box 1.2 - Global surface temperature increased by ~0.1°C
-      // (likely range -0.1°C to +0.3°C, medium confidence) between 1750 and 1850-1900
-      // Anthropogenic contribution: 0.0-0.2°C, with natural variability ±0.1 W/m² from solar/volcanic
-      const PREINDUSTRIAL_OFFSET = 0.1; // °C, IPCC AR6 best estimate
-
+      // Convert to pre-industrial (1750) baseline: add 0.7°C
+      // Research: 1750-1850 warming ~0.7°C (IPCC AR6, historical temperature reconstruction)
       state.planetaryBoundariesSystem.boundaries.climate_change.currentValue =
         assertFinite(
-          tempAnomalyVs1850 + PREINDUSTRIAL_OFFSET,
+          tempAnomalyVs1850 + 0.7,
           {
             location: 'PlanetaryBoundariesPhase.execute',
             valueName: 'climate_change.currentValue (synced)',
-            month: state.currentMonth,
-            additionalInfo: {
-              tempAnomalyVs1850,
-              PREINDUSTRIAL_OFFSET,
-              source: 'IPCC AR6 Cross-Chapter Box 1.2'
-            }
+            month: state.currentMonth
           }
         );
     }
@@ -151,19 +158,25 @@ export class PlanetaryBoundariesPhase implements SimulationPhase {
       );
     }
 
-    // === HIGH-11 FIX (Nov 28, 2025): CALL ENVIRONMENTAL.TS ===
-    // ARCHITECTURAL DECISION: environmental.ts OWNS biodiversityIndex decline mechanics
-    // This phase only READS biodiversityIndex and WRITES biosphere_integrity boundary
+    // === BIODIVERSITY DECLINE OWNERSHIP (Nov 28, 2025 - DUPLICATE FIX) ===
+    // ROOT CAUSE: HIGH-8 incorrectly added biodiversity decline here, but it's ALREADY applied
+    // by environmental.ts updateEnvironmentalAccumulation() (called from engine.ts:975 EVERY step)
     //
-    // Research: WWF Living Planet Index 2024 (1990: 76.79% → 2024: 49%)
-    // Geometric decline formula implemented in environmental.ts lines 342-392
+    // ARCHITECTURAL DECISION (Option A):
+    // - environmental.ts OWNS biodiversityIndex decline mechanics (accumulation system)
+    // - PlanetaryBoundariesPhase READS biodiversityIndex, WRITES biosphere_integrity boundary (sync only)
+    // - This maintains separation of concerns: mechanics vs boundary tracking
     //
-    // environmental.ts has BOTH modes:
-    // - Historical mode (1990-2024): WWF LPI empirical rates (geometric: 0.998978 multiplier/month)
-    // - Projection mode (2025+): Mechanistic model (economic/manufacturing pressure)
+    // RATIONALE:
+    // 1. Biodiversity loss is environmental debt (fits accumulation paradigm)
+    // 2. environmental.ts has research-validated GEOMETRIC formula (HIGH-11 fix)
+    // 3. This phase had duplicate LINEAR formula (mathematically wrong)
+    // 4. Prevents double-decrement bug (2x acceleration)
     //
-    // No need to duplicate logic here - just call the function
-    updateEnvironmentalAccumulation(state, rng);
+    // REMOVED: Lines 144-183 (duplicate biodiversity decline code)
+    // KEPT: Line 96 updatePlanetaryBoundaries() syncs biodiversityIndex → biosphere_integrity
+    //
+    // See: /src/simulation/environmental.ts lines 308-397 (canonical biodiversity decline owner)
 
     return { events: [] };
   }
