@@ -529,7 +529,7 @@ export class ClimateSystemPhase implements SimulationPhase {
     );
 
     // Store tipping point impacts for other systems
-    (state as any)._tippingPointImpacts = {
+    state._tippingPointImpacts = {
       climateStability: totalClimateStabilityImpact,
       habitability: totalHabitabilityImpact,
       foodSecurity: totalFoodSecurityImpact,
