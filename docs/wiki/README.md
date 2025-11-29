@@ -10,7 +10,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Key features:**
 - **Research-backed realism**: Every mechanic justified by peer-reviewed sources (2024-2025)
-- **119 breakthrough technologies**: From crisis response to transformative clarketech (TIER 0-4)
+- **71 breakthrough technologies**: From crisis response to transformative clarketech
 - **17-dimensional quality of life**: Survival, health, education, meaning, environment
 - **Multi-paradigm perspectives**: Western Liberal, Development, Ecological, Indigenous worldviews
 - **Deterministic simulation**: Reproducible with RNG seeds for Monte Carlo analysis
@@ -18,82 +18,32 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 ## 🚀 Project Status
 
-**🟢 STABLE** (November 29, 2025 - Initialization Bugs Fixed)
+**🟢 STABLE** (November 28, 2025)
 
 **SYSTEM HEALTH:**
 - **Research Quality:** B+ (56.5% sources 2023-2025, 4 CRITICAL parameter issues resolved/documented, 8 research gaps identified) ✅ GOOD
 - **Research Currency:** ✅ EXCELLENT (all simulation-critical files updated within 14 days, autonomous system working effectively)
 - **Implementation Fidelity:** A- (assertion coverage 97.2%, 24 integration tests for CoordinatedDeploymentPhase) ✅ EXCELLENT
-- **Architecture Health:** A- (0 CRITICAL post-CRITICAL-2 fix, 2 HIGH technical debt non-urgent, deep clone optimization complete) ✅ EXCELLENT
-- **System Trajectory:** 🟢 READY (Nov 29: Initialization bugs fixed - Monte Carlo validation restarted)
+- **Architecture Health:** B+ (0 CRITICAL, 2 HIGH technical debt non-urgent, deep clone optimization complete) ✅ GOOD
+- **System Trajectory:** 🟢 READY (Nov 26: Phase 4 Coordination Layer strategic pivot - testing coordinated deployment)
 
 **Recent Major Achievements:**
 
-**Nov 28: RD-1 & RD-3 TIER 2 Implementation COMPLETE** (commits 95d7b06d, 44ecc2b9, e77ed044)
-- 🌍 **RD-1: Permafrost Carbon Feedback (Order 18.5) - PRODUCTION READY ✅**
-  - Models positive feedback loop from thawing permafrost releasing CO2/CH4
-  - Arctic amplification: 3.0× (permafrost thaws 3× faster than global warming)
-  - Validated emissions: 1.7-7.0 Gt C/year (research range: 3-6 Gt C/year)
-  - Positive feedback: +0.41-0.46 ppm CO2/month
-  - CH4 GWP conversion: 1.9-7.8 Gt CO2eq/year (28× GWP factor)
-  - Research: Schuur et al. (2022), Turetsky et al. (2020), IPCC AR6, McGuire et al. (2018)
-  - **CRITICAL BUG FIX (commit 61faa45a):** CO2 explosion bug (81 billion ppm) from using NEW extent instead of OLD extent for carbon density calculation
-  - **Architecture Grade:** B+ (2 quick fixes applied: HIGH-2 order comment, MEDIUM-1 dependency declaration)
-  - Monte Carlo: N=10, 0% crash rate, CV=0% determinism ✅
-  - 📄 **Files:** `PermafrostCarbonPhase.ts`, `src/types/permafrost.ts`, `permafrostCarbon.ts`
-  - 📄 **Research:** `research/permafrost_carbon_feedback_20251128.md`
-  - 📄 **Validation:** `reviews/rd1_rd3_monte_carlo_validation_20251128.md`
-  - 📄 **Architecture:** `reviews/architecture_integration_review_rd1_rd3_20251128.md`
-- ⚔️ **RD-3: Geopolitical Conflict Escalation (Order 28.0) - CONDITIONAL PASS ⚠️**
-  - Models AI-era geopolitical conflict with research-backed parameters
-  - Base risk: 0.05% monthly (0.6% annual, corrected from 0.1%)
-  - AI multiplier: 2× (corrected from 4×), deterrence: 0.6× (MAD still effective)
-  - Regional flashpoints: Taiwan, Ukraine, Middle East, Kashmir
-  - AI de-escalation: 13 events across 10 runs (100% deterrence success)
-  - Conflict displacement: 383-407M refugees (3× climate displacement)
-  - Research: Barrett et al. (2013), Lohn & Jackson (2022), Zhang et al. (2024), SIPRI (2024)
-  - **CALIBRATION NEEDED:** Escalation frequency 9× higher than expected (1.3 vs 0.14 events/run)
-  - **Architecture Grade:** B+ (HIGH-1: silent fallback patterns should use assertions)
-  - Monte Carlo: N=10, 0% crash rate, CV=0% determinism ✅
-  - 📄 **Files:** `GeopoliticalConflictPhase.ts`, `src/types/game.ts` (geopoliticalConflict state)
-  - 📄 **Research:** `research/geopolitical_conflict_escalation_20251128.md`
-  - 📄 **Validation:** `reviews/rd1_rd3_monte_carlo_validation_20251128.md`
-  - 📄 **Architecture:** `reviews/architecture_integration_review_rd1_rd3_20251128.md`
-- **SYSTEMIC ISSUE IDENTIFIED (NOT RD-1/RD-3):** 100% dystopia rate from Month 1 environmental bifurcation (pre-existing initialization problem)
-- **Next Steps:** Fix environmental system initialization, re-run N=100 Monte Carlo to validate outcome distribution
-
-**Nov 28: CRITICAL-2 RESOLVED - Double Environmental Accumulation Bug** (commit ef986a43)
-- 🐛 **CRITICAL REGRESSION:** HIGH-11 fix added `updateEnvironmentalAccumulation()` to PlanetaryBoundariesPhase but legacy call in `engine.ts` was not removed
-- **IMPACT:** Environmental metrics updated TWICE per simulation step
-  - Biodiversity decline: 2x rate (DOUBLED - explains validation regression)
-  - Climate degradation: 2x rate (DOUBLED)
-  - Pollution accumulation: 2x rate (DOUBLED)
-  - Resource depletion: 2x rate (DOUBLED)
-- **ROOT CAUSE:** M-1 audit (Nov 28 Session 4) found `environmental.ts` was "dead code" for old engine (CORRECT at that time). HIGH-11 fix (Session 5) added call from PlanetaryBoundariesPhase to reactivate code. Legacy `engine.ts` call was not removed → duplication.
-- **FIX:** Removed legacy accumulation calls from `engine.ts` lines 969-983
-  - Removed `updateEnvironmentalAccumulation(state, rng)` (line 975)
-  - Removed import from `engine.ts` line 23
-  - PlanetaryBoundariesPhase (order 21.0) is now SOLE owner
-- **VALIDATION:** Type check ✅, verification script confirms only 1 call path remains
-- 📄 **Review:** `reviews/architecture_integration_review_20251128_session8.md`
-- 📄 **Verification:** `scripts/verifyAccumulationFix.ts`
-- **Status:** RESOLVED ✅ - Environmental accumulation now called once per step
-
-**Nov 28: CRITICAL-1 RESOLVED - Unified Historical Mode Detection Pattern** (commit 5c7fec87)
-- 🔧 **ROOT CAUSE:** Dual incompatible patterns causing split-brain guard behavior
-  - Pattern 1: `state.config.historicalMode` (boolean flag, correct)
-  - Pattern 2: `isHistoricalModeActive(state)` utility (requires both flag AND year check)
-  - Files used BOTH patterns inconsistently → guards triggered at wrong times
-- **IMPACT:** Likely caused HIGH-8 biodiversity regression (empirical rate never activated)
-- **FIX:** Migrated 17 violations across 10 files to canonical utility function
-  - Affected files: `environmental.ts`, `geoengineering.ts`, `regionalPopulations.ts`, `mortality.ts`, `aiMisalignment.ts`, `exogenousShocks.ts`, `foodSecurity.ts`, `CoordinatedDeploymentPhase.ts`, `BaselineMortalityPhase.ts`, `BayesianMortalityResolutionPhase.ts`
-  - **74 total usages** of historical mode guards across 20 files - NOW ALL CONSISTENT
-- **YEAR CORRECTIONS:** Fixed hardcoded 2020 → 2024 cutoffs (improves HIGH-2, HIGH-3 validation)
-- **VALIDATION:** Type check ✅, god mode ✅, hindcast ✅
-- **KEY INSIGHT:** Empirical vs mechanistic distinction requires BOTH year check AND flag - prevents mechanistic models from overwriting historical data
-- 📄 **Archive:** `plans/completed/CRITICAL1_historical_mode_unification_20251128.md`
-- 📄 **Review:** `reviews/CRITICAL1_unified_historical_mode_detection_FIX_20251128.md`
-- **Status:** RESOLVED ✅ - All historical mode guards now use canonical pattern
+**Nov 28: HIGH-11 RESOLVED - Biodiversity Decline Geometric Formula Fix** (commit e9d79cc)
+- 🦋 **Mechanism Fix:** Biodiversity decline formula corrected LINEAR → GEOMETRIC
+  - **Formula Change:** `index -= rate` → `index *= (1 - rate)` (lines 348, 389 in `environmental.ts`)
+  - **Research Validation:** WWF Living Planet Report 2024 shows geometric decline pattern (constant percentage loss, not absolute)
+  - **Duplicate System Removed:** PlanetaryBoundariesPhase was also decrementing biodiversity (2x acceleration bug) - removed lines 144-183
+- **Ownership Clarified:** `environmental.ts` is canonical owner of biodiversity decline mechanics; `planetaryBoundaries.ts` only DERIVES `biosphere_integrity` boundary from `biodiversityIndex`
+- **Error Reduction:** 68.6% → 3.14% predicted error (65.46pp improvement)
+  - Before: 15.49% biodiversity in 2024 (vs 49% target)
+  - After (predicted): 50.54% biodiversity in 2024 (3.14% error)
+- **Temporal Analysis:** Hypothesis testing showed NO acceleration 1990-2024 (constant rate correct per Our World in Data 2024, Nature Communications 2024)
+- **Nutrient Calculations:** Added `assertFinite` guards (HIGH-2 fix)
+- 📄 **Research:** `research/biodiversity_temporal_analysis_HIGH11_20251128.md`
+- 📄 **Reviews:** `reviews/biodiversity_temporal_HIGH11_critique_20251128.md` (CONDITIONAL PASS), `reviews/architecture_biodiversity_duplicate_fix_20251128.md` (CRITICAL-1 duplicate fixed)
+- 📄 **DevLog:** `devlogs/HIGH11_biodiversity_geometric_fix_20251128.md`
+- **Status:** FIXED ✅ (type check passed, mathematical validation complete)
 
 **Nov 28: HIGH-7 RESOLVED - Population Mortality Calibration (Final Fix)** (commit 725eed2)
 - 🎉 **COMPLETE FIX:** Population error reduced from -76% to +4.9% (PASS)
@@ -225,20 +175,6 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 🔧 **GlobalMetrics:** Added optional `environmentalHealth` composite metric
 - 📄 **Files:** `src/types/game.ts`, `src/types/metrics.ts`
 
-**Nov 27: AerosolForcingPhase Added for Projection Mode** (commit ae4a9d9)
-- 🌫️ **New Phase (17.8):** Anthropogenic aerosol cooling effects for projection mode (2025+)
-- **Purpose:** Model declining aerosol cooling as air quality improves (SSP2-4.5 pathway)
-- **Research Basis:** IPCC AR6 - Aerosols have masked ~30% of anthropogenic warming
-  - ERF: -1.1 W/m² (1990) → -0.8 W/m² (2024) → -0.3 W/m² (2050)
-  - Expected cooling: -0.64°C to -0.24°C in projection mode
-- **Architecture (Hybrid Model):**
-  - Hindcast mode (1990-2024): SKIPS - NASA GISS data already includes aerosol effects
-  - Projection mode (2025+): Applies declining aerosol cooling (linear interpolation)
-  - Formula: Temperature = Equilibrium(CO2) + AerosolCooling + VolcanicForcing
-- **Phase Order:** 17.8 (after TechCoolingPhase 17.5, before ResourceTechnologyPhase 24.5)
-- 📄 **Files:** `AerosolForcingPhase.ts`, `phases/index.ts`, `EMOJI_EVENT_MAP.txt` (registered 🌫️)
-- **Validation:** Type check ✅, tests ✅, research validation CONDITIONAL APPROVE
-
 **Nov 27: VolcanicForcingPhase Added** (commits 6f3037c, previous)
 - 🌋 **New Phase (16.5):** Models stratospheric aerosol optical depth (AOD) from volcanic eruptions
 - **Purpose:** Historical validation for 1990-2010 hindcast - captures Mount Pinatubo cooling (~0.3°C)
@@ -288,32 +224,19 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - **Unblocks:** Full 1990-2024 hindcast validation
 - 📄 **Files:** `src/simulation/resourceDepletion.ts`, `reviews/tipping_point_mechanism_audit_20251127.md`
 
-**Nov 29: CRITICAL-1 and CRITICAL-2 Initialization Bugs Fixed** (commit 5392ba3e)
-- ✅ **CRITICAL-1: Month 0 Social/Economic Collapse** (coordinationCapacity fix)
-  - **Root Cause:** coordinationCapacity initialized as 0.4 (below social breakdown threshold)
-  - **Fix:** Raise to 0.65 (realistic 2025 baseline for functioning society)
-  - **Justification:** No modern society operates at 40% coordination capacity
-  - **Impact:** Eliminates false "social-breakdown" triggers at Month 0
-- ✅ **CRITICAL-1: Early-game Bifurcation Protection** (months 0-11)
-  - **Root Cause:** Bifurcation logic ran at Month 0, triggering collapses from initialization artifacts
-  - **Fix:** Skip bifurcation checks for first 12 months (let dynamics stabilize)
-  - **Justification:** Real bifurcations emerge from dynamics, not initial conditions
-  - **Impact:** Allows realistic early-game outcome diversity
-- ✅ **CRITICAL-2: Environmental Collapse Cascades at Month 1**
-  - **Root Cause:** Economic stability threshold checks triggered immediately due to initialization values
-  - **Fix:** Adjusted initialization parameters for ocean pH, CO2 concentrations to realistic 2025 levels
-  - **Impact:** Environmental systems start at equilibrium, respond naturally to dynamics
-- 📊 **Validation:** Monte Carlo runs now show outcome diversity (not 100% dystopia)
-- 📄 **Files:** `src/simulation/initialization.ts`, `BifurcationLogicPhase.ts`, `src/types/game.ts`
-
-**Nov 26: Hindcast Validation Blockers Resolved (H-1)** (commit 2e588ef)
-- 🔧 **H-1 FIX:** Anachronistic tech deployment in hindcast mode
+**Nov 26: Hindcast Validation Blockers Resolved (H-1 + CRIT-1)** (commit 2e588ef)
+- 🔧 **H-1 FIX:** coordinationCapacity normalization bug in BifurcationLogicPhase
+  - BifurcationLogicPhase was dividing coordinationCapacity by 100
+  - But coordinationCapacity is initialized as 0.4 (range [0,1]), not 40
+  - This produced 0.004, falsely triggering "social-breakdown" at Month 0
+  - **Fix:** Removed erroneous `/100.0` normalization
+- 🔧 **CRIT-1 FIX:** Anachronistic tech deployment in hindcast mode
   - `initializeTechTreeState()` was deploying all "deployed_2025" tech
   - This included mRNA vaccines, 4th gen solar, etc. appearing in 1990
   - **Fix:** Added `startYear` parameter to skip 2025 tech for historical scenarios
   - Both async and sync `createHistoricalInitialState()` functions updated
 - 📄 **Architecture Review:** `reviews/architecture_integration_review_20251126_afternoon.md`
-- 📄 **Files:** `historicalInitialization.ts`, `techTree/engine.ts`
+- 📄 **Files:** `BifurcationLogicPhase.ts`, `historicalInitialization.ts`, `techTree/engine.ts`
 
 **Nov 25: Test Coverage & Deployment Validation Framework** (commit 23ca756)
 - 🧪 **ROADMAP:** New Section 5 - Continuous quality assurance strategy (225 lines)
@@ -936,7 +859,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📊 **Updated Tipping Point Status Table:** Solar ✅, EVs ✅, Battery Storage ✅ ACCELERATING
 
 **Nov 23: God Mode Paradox Analysis - Technology Shock Discovery** (commit fb043bf)
-- 🔬 **Analysis:** N=20 Monte Carlo of "god mode" (all 119 technologies deployed at Month 0)
+- 🔬 **Analysis:** N=20 Monte Carlo of "god mode" (all 71 technologies deployed at Month 0)
 - **PARADOX CONFIRMED:** Instant deployment produces WORSE outcomes than gradual deployment
 - **Key Metrics:**
   - Dystopia Rate: 100% (vs 90% baseline) - p=0.27, not significant
@@ -2403,196 +2326,6 @@ All three critical items delivered:
 - **PAUSED:** Layer 2 Remediation, new features, UI updates
 
 See: [MASTER_IMPLEMENTATION_ROADMAP.md](/plans/MASTER_IMPLEMENTATION_ROADMAP.md) for detailed status.
-
----
-
-## 🤖 Agent Monitoring Infrastructure (HIGH-5)
-
-**Status:** ✅ INFRASTRUCTURE COMPLETE - ⚠️ VM DEPLOYMENT PENDING (Nov 28, 2025)
-**Purpose:** Enable agents to respond to @mentions and collaborate in real-time via Matrix channels
-
-### What This Does
-
-Transforms isolated agent workers into a collaborative team by enabling agents to:
-- Monitor Matrix channels (60-second polling)
-- Respond to @mentions within minutes
-- Maintain memory continuity across invocations
-- Coordinate work to prevent redundancy
-
-**Problem Solved:** Previously, agents (Roy, Sylvia, Cynthia, etc.) worked in isolation without checking for pending messages. No response to @mentions, coordination failures, missed context.
-
-### Architecture
-
-**1. Generic Monitor Template** (`scripts/agent-monitor-template.sh`)
-- Configurable via environment variables (agent name, room ID, Matrix token)
-- Monitors specified Matrix channels (60s polling by default)
-- Detects mentions of agent name (case-insensitive)
-- Spawns Claude Code session as the agent to respond
-- Integrates with agent memory system (recall context, update learnings)
-
-**2. Agent-Specific Monitors:**
-- `roy-monitor.sh` - Monitors implementation channel
-- `sylvia-monitor.sh` - Monitors research channel
-- `cynthia-monitor.sh` - Monitors research channel
-- `orchestrator-monitor.sh` - Monitors coordination channel
-- `devon-monitor.sh` - Monitors implementation channel
-
-**3. Systemd Services:**
-- Five `.service` files in `systemd/` directory
-- Installation script: `scripts/install-agent-monitors.sh`
-- Pre-work message check integrated into `autonomous-worker.sh`
-
-### Agent Response Flow
-
-1. **Message Detection** (every 60 seconds)
-   - Fetch last 10 messages from monitored room
-   - Search for agent name (case-insensitive)
-   - Filter out messages from the agent itself
-   - Track last processed event ID to avoid duplicates
-
-2. **Response Spawning** (on mention detected)
-   - Create task prompt file for Claude Code
-   - Include: recall memory, check messages, respond, update memory
-   - Spawn Claude Code session with 5-minute timeout
-   - Log response to `logs/agent-monitors/{agent}_response_{timestamp}.log`
-
-3. **Memory Integration**
-   - Agents recall their context: `mcp__agent-memory__recall_context({agent_id})`
-   - Agents update their memory after task completion
-   - Maintains continuity across monitor invocations
-
-### Deployment Status (IMPORTANT)
-
-**Current Status (Nov 28, 2025):**
-- ✅ Infrastructure: COMPLETE (scripts, services, docs committed)
-- ⚠️ VM Deployment: PENDING (services NOT installed on VM)
-- 🔴 Monitoring: INACTIVE (agents NOT responding to mentions until deployed)
-
-**Architecture Review Findings (Grade B):**
-- CRITICAL-1: Legacy services failing (implementation-monitor, research-monitor) need cleanup
-- HIGH-1: Potential race condition (Sylvia/Cynthia both monitor research channel)
-- HIGH-2: No concurrency limits on Claude sessions (could spawn 5 parallel sessions)
-
-**To Activate (requires sudo on VM):**
-```bash
-# 1. Stop failing legacy services
-sudo systemctl stop implementation-monitor research-monitor
-sudo systemctl disable implementation-monitor research-monitor
-
-# 2. Deploy new HIGH-5 monitors
-cd /home/lizthedeveloper_gmail_com/ai_game_theory_simulation
-sudo ./scripts/install-agent-monitors.sh
-
-# 3. Verify
-sudo systemctl status roy-monitor.service
-```
-
-**Complete Documentation:** `docs/AGENT_MONITOR_SYSTEM.md` (250+ lines)
-**Architecture Review:** `reviews/architecture_integration_review_20251128_HIGH5.md`
-**Archive:** `plans/completed/HIGH5_agent_message_checking_infrastructure_20251128.md`
-
----
-
-## 📊 Validation Results & Epistemic Status (Nov 28, 2025)
-
-**Overall Hindcast Accuracy:** 29.3% average deviation (1990-2024, N=10 Monte Carlo)
-**Verdict:** ✅ CONDITIONAL PASS - Valid as exploration tool, NOT prediction engine
-
-### Hindcast Calibration Results (HIGH-6/7/8)
-
-| Metric | Target | Achieved | Error | Status |
-|--------|--------|----------|-------|--------|
-| Temperature 2024 | 1.28°C | 1.43°C | +11.5% | ⚠️ ACCEPTABLE |
-| Population 2024 | 8.12B | 8.52B | +4.9% | ✅ PASS |
-| Biodiversity 2024 | 49% | 51.59% | +5.3% | ✅ PASS |
-| CO2 2010 | 390 ppm | 393 ppm | +0.77% | ✅ EXCELLENT |
-
-**Temperature Note:** +11.5% error narrowly exceeds 10% threshold but is ACCEPTABLE for climate modeling complexity. Aerosol forcing, volcanic cooling, and ocean heat uptake uncertainties contribute.
-
-**Determinism Verified:** CV=0.000% (identical outcomes with same seed) ✅
-
-### Epistemic Status: Research Debate Synthesis (Nov 28, 2025)
-
-**Consensus Finding:** This simulation is a **mechanism explorer** (70-85% trust in qualitative mechanisms), NOT an **outcome predictor** (low confidence in precise probabilities).
-
-**Key Insights from Research Debate (Sylvia + Cynthia):**
-
-1. **Climate Stability 5% Floor**
-   - **Status:** Implementation limitation, NOT research-backed physical law
-   - **Purpose:** Numerical stability to prevent NaN (simulation constraint)
-   - **Research:** Wunderling et al. 2024 contradicts stability claims - "many tipping interactions are destabilizing"
-   - **Action:** Documented as honest limitation in `ClimateSystemPhase.ts` comments
-
-2. **Biodiversity Decline 1.312%/yr**
-   - **Validation:** Constant rate justified by Our World in Data 2024, Nature Communications 2024
-   - **Debate:** Sylvia's acceleration claim (0.95% → 3.8%/yr) appears to misread regional vs global data
-   - **Global aggregate:** No acceleration 1990-2024 (Cynthia correct)
-   - **Regional variation:** Acceleration exists in terrestrial/freshwater (to be modeled in RD-4)
-
-3. **Parameter Confidence**
-   - **Claimed:** 73% HIGH confidence
-   - **Reality:** Need uncertainty quantification - parameters that matter most are least verified
-   - **True compound effect:** ~10-100× uncertainty amplification (not 58,000× if independent)
-   - **Action Required:** Run parameter sweep Monte Carlo with 90% confidence intervals
-
-4. **TIER 2 Elevation Recommendations**
-   - **Elevate to TIER 2:** Insect collapse (RD-4), soil degradation (RD-6), ocean acidification (RD-2 already TIER 2)
-   - **Rationale:** Slow-moving crises are CERTAIN, acute crises are CONTINGENT
-   - **Evidence:** Insect decline 76%, soil degradation 33%, ocean pH 8.1 → 7.9 (already past boundary)
-   - **Keep TIER 3:** AMR pandemic (low base rate, high uncertainty)
-
-### What to Trust (Epistemic Guidance)
-
-**HIGH Confidence (70-85%):**
-- Qualitative mechanisms (climate worsens without intervention, coordination reduces risk)
-- Directional trends (relative comparisons between scenarios)
-- Tipping point existence (coral reef collapse is real, not parametric uncertainty)
-
-**MEDIUM Confidence (40-60%):**
-- Absolute outcome numbers (e.g., "8.1B population in 2050")
-- Timing of phase transitions (e.g., "AMOC collapse in year 47")
-- Magnitude of effects (e.g., "30% mortality reduction with UBI")
-
-**LOW Confidence (<40%):**
-- Precise probabilities for future scenarios (ZERO validation for 2025+ outcomes)
-- Compound effects across 30+ coupled systems
-- Recovery timescales for "irreversible" systems
-
-### How to Use This Simulation
-
-**✅ Valid Uses:**
-- Policy stress-testing: "What happens if we delay climate action 10 years?"
-- Intervention design: "Which technologies matter most for avoiding collapse?"
-- Qualitative dynamics exploration: "How do AI, climate, and governance interact?"
-- Mechanism validation: "Does this proposed cascade pathway make sense?"
-
-**❌ Invalid Uses:**
-- Precise timeline prediction: "Extinction will occur in year 47 with 73% probability"
-- Outcome forecasting: "This exact scenario will happen"
-- Point estimate results: "8.1B population in 2050" (without confidence intervals)
-
-**Quote (Sylvia):** "We are building a sophisticated machine to explore possibilities, not an oracle to predict outcomes. The distinction matters."
-
-**Quote (Cynthia):** "Trust qualitative mechanisms, report uncertainty, elevate slow-moving crises. The synthesis is stronger than either position alone."
-
-**Complete Debate:**
-- Sylvia's position: `reviews/SYLVIA_DEBATE_POSITION_20251128.md` (400+ lines)
-- Cynthia's response: `reviews/CYNTHIA_DEBATE_RESPONSE_20251128.md` (350+ lines)
-- Synthesis: `reviews/research_debate_synthesis_20251128.md` (230 lines)
-
-### Research Quality Grade: A- (Conditional)
-
-**Strengths:**
-- 96% sources from 2024-2025 (exceptional recency)
-- 100% peer-reviewed for core parameters
-- Rapid error correction (2 fabrications resolved <48 hours)
-
-**Weaknesses:**
-- Overconfidence in parameter precision (73% HIGH → needs recalibration)
-- Slow-moving crises underweighted (TIER 2 elevation needed)
-- Implementation constraints mistaken for physical laws (climate floor)
-
-**After implementing action items:** Grade upgrade to A- → A expected
 
 ---
 
@@ -4389,7 +4122,7 @@ The fundamental building blocks of the simulation:
 | [🌍 Environmental](./systems/environmental.md) | ✅ | Resources (65%), pollution (30%), climate, biodiversity (35%); **Multi-timescale tipping points** (Oct 26, 2025); **Climate Mortality Phase 2: Storm Systems + BII Framework** (Nov 6, 2025) |
 | [🤝 Social Cohesion](./systems/social-cohesion.md) | ✅ | Meaning crisis (22%), institutional erosion, social bonds, **crisis mitigation mechanics** (Oct 30, 2025) |
 | [⚠️ Technological Risk](./systems/technological-risk.md) | ✅ | Misalignment, safety debt, concentration, complacency |
-| [🔬 Breakthrough Technologies](./systems/breakthrough-technologies.md) | ✅ | **119 technologies** in comprehensive tech tree (TIER 0-4) |
+| [🔬 Breakthrough Technologies](./systems/breakthrough-technologies.md) | ✅ | **71 technologies** in comprehensive tech tree (TIER 0-4) |
 | [🏛️ Governance Quality](./systems/governance-quality.md) | ✅ | Democratic resilience, decision quality, institutional capacity |
 | [🌟 Upward Spirals](./systems/upward-spirals.md) | ✅ | 6 virtuous cascades, multiple paths to Utopia |
 | [🎨 Meaning Renaissance](./systems/meaning-renaissance.md) | ✅ | Cultural flourishing, 4 dimensions of meaning |
@@ -5344,39 +5077,6 @@ The Four-Layer Validation Framework is a comprehensive quality assurance system 
 **Complementary, Not Redundant:**
 Each layer catches different failure modes. No single layer sufficient. All four required for robust validation.
 
-**RD-1/RD-3 Known Issues (Nov 28, 2025):**
-
-From Monte Carlo validation (N=10) and architecture review:
-
-**RD-3 Calibration Issues (Geopolitical Conflict):**
-- Escalation frequency 9× higher than expected (1.3 vs 0.14 events/run)
-  - May be correct given climate/economic stress multipliers compounding
-  - Needs validation against historical data or further calibration
-- 100% deterrence success rate (76/76 checks) may be too optimistic
-  - Consider adding 1-2% rare deterrence failures for realism
-- Conflict displacement magnitude (383-407M refugees = 5% global pop) needs validation
-  - 3× larger than climate displacement - verify against research
-- Silent fallback patterns (HIGH-1) should use assertion utilities
-  - Lines 248-250, 323, 349-350, 413 in GeopoliticalConflictPhase.ts
-  - Not blocking but should be addressed for defensive coding consistency
-
-**Systemic Issues (NOT RD-1/RD-3 specific):**
-- 100% dystopia rate in Monte Carlo (N=10) from Month 1 environmental bifurcation
-  - Root cause: Environmental system initialization crosses thresholds immediately
-  - Environmental bifurcation at Month 1 in 100% of runs
-  - Economic regime shift at Month 12 with 17.5× amplification (highest observed)
-  - Technology bifurcation NEVER triggers (0% occurrence across 10 runs)
-  - Variance amplification: 15.5× mean (system operating at collapse edge)
-  - Distance to critical thresholds: 0.000005 (effectively zero buffer)
-  - **Impact:** Even with working conflict prevention (RD-3) and permafrost feedback (RD-1), environmental collapse dominates all other dynamics
-  - **Next Steps:** Fix environmental system initialization before N=100 Monte Carlo run
-
-**Architecture Issues (from reviews/architecture_integration_review_rd1_rd3_20251128.md):**
-- HIGH-2: PermafrostCarbonPhase order comment mismatch (trivial fix)
-- MEDIUM-1: Missing resource-economy dependency declaration (trivial fix)
-- MEDIUM-2: Unbounded historicalEvents array growth in GeopoliticalConflictPhase
-- MEDIUM-3: Map serialization concern for regionalFlashpoints
-
 ---
 
 ### Future Enhancements
@@ -5399,6 +5099,8 @@ From Monte Carlo validation (N=10) and architecture review:
 
 **TIER 0: Baseline Corrections (2025 Reality)**
 - ✅ Biodiversity: 70% → **35%** (WWF Living Planet Index 2024: 73% wildlife population decline 1970-2020)
+  - **Decline Formula:** GEOMETRIC (`index *= (1 - rate)`) per WWF LPI 2024 research-validated pattern (HIGH-11 fix, Nov 28)
+  - **Canonical Owner:** `environmental.ts` module - single source of truth for biodiversity decline
 - ✅ Resources: 85% → **65%** (Earth Overshoot Day, 1.7x overshoot)
 - ✅ Pollution: 15% → **30%** (7/9 planetary boundaries breached)
 - ✅ Climate Rate: 4.8%/yr → **0.96%/yr** simulation scale (0.038°C/year, 2x IPCC AR6 baseline of 0.02°C/year for SSP5-8.5 high emissions scenario)
@@ -5411,7 +5113,7 @@ From Monte Carlo validation (N=10) and architecture review:
 - ✅ **Novel Entities**: PFAS in 99% of blood, 120-month slow poisoning
 - ✅ **International Competition**: AI race dynamics, first-mover advantage, coordination failure
 
-**Comprehensive Technology Tree (119 technologies)**
+**Comprehensive Technology Tree (71 technologies)**
 - ✅ **TIER 0 (11)**: Deployed 2025 at realistic levels
   - Alignment: Basic RLHF (95%), mechanistic interpretability (15%), adversarial eval (40%)
   - Climate: De-extinction (1%), direct air capture (2%), AI pollution remediation (10%)
@@ -7821,263 +7523,9 @@ interface BreakthroughTechnology {
 - Implementation: `src/simulation/engine/phases/` (compute-related phases)
 - Research: TBD (deferred to future work)
 
-#### Integration #6: Permafrost Carbon Feedback → Climate System ✅ (RD-1, Nov 2025)
-
-**Status:** ✅ PRODUCTION READY - Positive feedback loop validated
-
-**Research Foundation:**
-- Schuur et al. (2022) Annual Review of Environment and Resources - Permafrost carbon feedback
-- Turetsky et al. (2020) Nature Geoscience - Arctic amplification mechanisms
-- IPCC AR6 WG1 (2021) Chapter 5 - Carbon cycle feedbacks
-- McGuire et al. (2018) Nature - Permafrost carbon stock estimates
-
-**Mechanism:**
-- Arctic amplification: 3.0× global warming (Arctic warms 3× faster)
-- Permafrost thaw releases CO2 and CH4 from ancient carbon stocks
-- Positive feedback loop: Warming → Thaw → Emissions → More warming
-- Expected impact: +0.1-0.3°C warming by 2100 in baseline scenarios
-
-**Parameters (research-backed):**
-- Carbon stock: 1,700 Gt C (range 1,460-1,832 Gt)
-- Permafrost extent: 17.8M km²
-- Thaw sensitivity: 3.5M km²/°C
-- Decomposition rate: 3.0%/year (corrected from 7.5%)
-- CO2 fraction: 90%, CH4 fraction: 10%
-- CH4 GWP: 28× (100-year global warming potential)
-
-**Validated Emissions (Monte Carlo N=10):**
-- CO2: 1.7-7.0 Gt C/year (research range: 3-6 Gt C/year) ✅
-- CH4: 0.19-0.78 Gt C/year (research range: 0.1-0.5 Gt C/year) ✅
-- CH4 GWP contribution: 1.9-7.8 Gt CO2eq/year
-- Positive feedback: +0.41-0.46 ppm CO2/month
-
-**Integration Points:**
-- `state.resourceEconomy.co2.temperatureAnomaly` → PermafrostCarbonPhase (order 18.5)
-- `state.permafrostSystem.co2Emissions` → `state.resourceEconomy.co2.atmosphericCO2`
-- Arctic amplification cascade: Sea ice loss → Permafrost threshold lowering
-- Cross-system feedback: Climate → Permafrost → Carbon cycle → Climate
-
-**Critical Bug Fixed (commit 61faa45a):**
-- CO2 explosion bug (81 billion ppm) from using NEW extent instead of OLD extent
-- Now uses correct OLD extent for carbon density → emissions in physical range
-
-**Impact:** Permafrost carbon feedback creates realistic tipping point dynamics. Once triggered, positive feedback accelerates warming even if anthropogenic emissions stabilize. Models "dimmer switch" gradual thaw (not abrupt "light switch").
-
-**Architecture Grade:** B+ (2 quick fixes applied)
-
-**Files:**
-- Implementation: `src/simulation/engine/phases/PermafrostCarbonPhase.ts`
-- State: `src/types/permafrost.ts`, `src/simulation/permafrostCarbon.ts`
-- Research: `research/permafrost_carbon_feedback_20251128.md`
-- Validation: `reviews/rd1_rd3_monte_carlo_validation_20251128.md`
-- Architecture: `reviews/architecture_integration_review_rd1_rd3_20251128.md`
-
-#### Integration #7: Geopolitical Conflict → Economy/Population/Displacement ✅ (RD-3, Nov 2025)
-
-**Status:** ✅ CONDITIONAL PASS - Implementation correct, calibration needed
-
-**Research Foundation:**
-- Barrett et al. (2013) - Existential Risk from AI (nuclear C&C risks)
-- Lohn & Jackson (2022) - AI cyber offense amplifies crisis instability
-- Zhang et al. (2024) - Taiwan conflict risk 40% by 2030
-- Hsiang et al. (2013) - Climate-conflict relationship (+0.02 per °C)
-- Homer-Dixon et al. (2015) - Resource scarcity conflict multiplier
-- SIPRI (2024) - Nuclear arsenals, MAD deterrence strength
-
-**Mechanism:**
-- Climate stress + Resource scarcity + AI capabilities → Escalation risk
-- Base risk: 0.05% monthly (0.6% annual, corrected from 0.1%)
-- AI multiplier: 2× (corrected from 4×, range 1.5-3.0)
-- MAD deterrence: 0.6× discount (nuclear weapons still deter)
-- Regional flashpoints: Taiwan, Ukraine, Middle East, Kashmir
-
-**Integration Points:**
-1. **Climate → Conflict:**
-   - `state.resourceEconomy.co2.temperatureAnomaly` → Geopolitical tension multiplier
-   - Research: Hsiang et al. (2013) - +2% conflict risk per °C warming
-2. **Economy → Conflict:**
-   - GDP stress (using `getGDPProxy()`) → Economic stress multiplier
-   - Research: Homer-Dixon (2015) - Resource scarcity amplifies instability
-3. **Displacement → Conflict:**
-   - `state.refugeeCrisisSystem.totalDisplaced` → Tension amplifier
-   - Research: Abel et al. (2019) - Climate migration destabilizes regions
-4. **AI Capabilities → Escalation/De-escalation:**
-   - High AI capabilities → 2× escalation multiplier (cyber offense, autonomous weapons)
-   - High AI alignment → De-escalation success (13 events in N=10 runs)
-   - Research: Lohn & Jackson (2022), Altmann & Sauer (2017)
-5. **Conflict → Displacement:**
-   - Conventional/nuclear war → Mass refugee flows
-   - Observed: 383-407M conflict displacement (3× climate displacement)
-
-**Validated Results (Monte Carlo N=10):**
-- AI de-escalation: 13 events across 10 runs
-- Deterrence success: 100% (76/76 checks) ⚠️ May be too optimistic
-- Conflict displacement: 383-407M refugees
-- Escalation frequency: 1.3 events/run (9× higher than expected 0.14 - NEEDS CALIBRATION)
-
-**Calibration Issues (NOT blocking):**
-- Escalation frequency 9× higher than theoretical (may be correct given stress multipliers)
-- 100% deterrence success may be unrealistic (consider adding 1-2% failure rate)
-- Displacement magnitude (400M = 5% global pop) needs validation
-
-**Architecture Grade:** B+ (HIGH-1: silent fallback patterns should use assertions)
-
-**Impact:** Models AI-era geopolitical risk with climate/economic stress multipliers. AI capabilities cut both ways: amplify escalation risk (cyber, autonomous weapons) but also enable de-escalation (mediation, early warning). MAD deterrence still functions but weakened by AI-driven crisis instability.
-
-**Files:**
-- Implementation: `src/simulation/engine/phases/GeopoliticalConflictPhase.ts`
-- State: `src/types/game.ts` (geopoliticalConflict namespace)
-- Research: `research/geopolitical_conflict_escalation_20251128.md`
-- Validation: `reviews/rd1_rd3_monte_carlo_validation_20251128.md`
-- Architecture: `reviews/architecture_integration_review_rd1_rd3_20251128.md`
-
-#### Integration #8: Ocean Acidification Cascades → Food Security/Economy ✅ (RD-2, Nov 2025)
-
-**Status:** ✅ PRODUCTION READY - Regional cascades validated
-
-**Research Foundation:**
-- IPCC AR6 WG1 (2023) - Ocean acidification projections, pH thresholds, aragonite saturation
-- Jiang et al. (2023) Journal of Advances in Modeling Earth Systems - Accelerated acidification post-2009, SSP scenario projections
-- Nature (2025) DOI: 10.1038/d41586-025-03316-w - Coral die-off marks Earth's first climate tipping point (crossed at 1.2°C ±0.3°C)
-- Anthony et al. (2008) PNAS - Synergistic warming + acidification stress (≈30% amplification)
-- Bednaršek et al. (2021) Scientific Reports - Pteropod shell dissolution, 37% thickness decline pH 8.03 → 7.77
-- UNEP (2025), ScienceDirect (2024) - Economic valuations ($9.9-11T/year ecosystem services)
-
-**Mechanism:**
-Ocean acidification from atmospheric CO2 absorption drives multi-stage cascades through coral reef ecosystems, cascading to fisheries collapse and food insecurity for 330-500M people. The system models regional variation (SE Asia, Pacific Islands, Caribbean, Indian Ocean), compound stress from warming × acidification (≈30% amplification), and transformation pathways (40% adaptation floor, not uniform collapse).
-
-**Parameters (research-backed):**
-- **pH thresholds:** 7.9 ±0.2 (stress, Ωar < 3.0) | 7.8 ±0.2 (severe, Ωar < 2.5) | 7.7 ±0.2 (collapse, Ωar < 2.0)
-- **Current state (2025):** pH 7.9 (down from 8.1 pre-industrial), aragonite 2.8 (down from 4.6), 70% coral health
-- **Regional resilience:** SE Asia 0.3 (low) | Pacific Islands 0.5 | Caribbean 0.4 | Indian Ocean 0.6 (higher)
-- **Regional sensitivity:** SE Asia 1.1 (Acropora-rich) | Pacific 0.9 | Caribbean 1.2 | Indian 1.0
-- **Species sensitivity:** 0.3 (Pocillopora resistant) to 2.0 (Acropora vulnerable), randomized 0.8-1.2 for Monte Carlo
-- **Compound stress multiplier:** 1.0 + (warming × acidification × 0.30) - Anthony et al. (2008) quantification
-- **Adaptation floor:** 40% (reefs transform to algae-dominated states, not zero collapse)
-- **Warming synergy:** 2-3× stress multiplier when SST > 30°C AND pH < 7.9
-- **Fisheries decline:** Power law (coralHealth/100)^1.5 - 50% coral → 65% yield loss, 25% coral → 87.5% yield loss
-- **Population at risk:** 330-500M people (Coral Triangle 130M, Pacific Islands 10M, Philippines >1M fishers)
-- **Economic impact:** $100-500B/year (fisheries $6.8B, tourism $19.5B, coastal protection $80B+)
-
-**pH Decline Rates (SSP scenarios, monthly):**
-- **SSP1-1.9:** -0.00001/month (-0.01 by 2100) - Aggressive mitigation
-- **SSP1-2.6:** -0.00009/month (-0.08 by 2100) - Paris Agreement pathway
-- **SSP2-4.5:** -0.00019/month (-0.17 by 2100) - Moderate emissions
-- **SSP3-7.0:** -0.00030/month (-0.27 by 2100) - Regional rivalry
-- **SSP5-8.5:** -0.00043/month (-0.39 by 2100) - Business as usual
-
-**Regional Variation:**
-System tracks four key reef regions with distinct vulnerabilities:
-
-| Region | Baseline Health | Resilience | Sensitivity | Population Dependent |
-|--------|----------------|------------|-------------|---------------------|
-| SE Asia / Coral Triangle | 65% | 0.3 (low) | 1.1 (high) | 130M |
-| Pacific Islands | 75% | 0.5 (moderate) | 0.9 (low) | 10M |
-| Caribbean | 60% | 0.4 (moderate-low) | 1.2 (highest) | ~5M |
-| Indian Ocean | 70% | 0.6 (high) | 1.0 (average) | ~15M |
-
-**Integration Points:**
-
-1. **Climate → Ocean Acidification:**
-   - `state.resourceEconomy.co2.atmosphericCO2` → pH decline rate (SSP mapping)
-   - `state.resourceEconomy.co2.temperatureAnomaly` → Warming synergy multiplier
-   - Compound stress: warming × acidification ≈ 30% amplification (Anthony et al. 2008)
-
-2. **Ocean Acidification → Food Security:**
-   - Coral health decline → Fisheries yield via power law: (coralHealth/100)^1.5
-   - Regional fisheries impact: 330-500M people protein-dependent
-   - Fish-dependent impact: -0.5 × (1 - fisheriesYield) for high-dependence regions
-
-3. **Ocean Acidification → Economy:**
-   - Fisheries loss: $6.8B/year × (1 - fisheriesYield)
-   - Tourism loss: $19.5B/year × (1 - coralHealth/100) [Asia-Pacific]
-   - Coastal protection: $80B/year risk from reef degradation
-   - Total economic value at risk: $100-500B/year
-
-4. **Technology → Ocean Restoration:**
-   - Ocean alkalinization (TIER 2): pH restoration, local-scale only (<2050)
-   - Marine protected areas: Resilience buffer, slows decline
-   - Coral restoration: Gradual recovery boost, limited scale
-   - Tech effects modify regional coral health (seAsia, pacificIslands, caribbean, indianOcean)
-
-**Cascade Stages:**
-
-1. **Stage 1: Coral Bleaching (pH < 7.9, aragonite < 3.0)**
-   - Reduced calcification rates
-   - Increased bleaching susceptibility
-   - Reproductive stress
-   - Reversible if stress removed within 1-2 months
-
-2. **Stage 2: Fisheries Decline (5-15 year lag)**
-   - Fish biomass decline 50-90% (habitat loss)
-   - Power law: 50% coral health → 35% fisheries yield (65% loss)
-   - $6.8B/year direct fisheries value lost
-
-3. **Stage 3: Food Insecurity (immediate to 5 years)**
-   - 330-500M people lose primary protein source
-   - Limited replacement options (islands lack terrestrial alternatives)
-   - Regional weights: Coral Triangle 0.5 | SE Asia coastal 0.3 | Caribbean 0.2
-
-4. **Stage 4: Irreversible Loss (pH < 7.7 for >12 months)**
-   - Species extinctions (10-30% coral species)
-   - Regime shifts to algae-dominated systems
-   - Accumulates at 0.5%/month when pH < 7.7 sustained
-   - Recovery limited by irreversible damage: maxRecovery = 100 - irreversibleLoss
-
-**Tipping Point Dynamics:**
-- **Threshold crossed:** 1.4°C warming (2024-2025) per Nature (2025)
-- **Critical temperature:** 1.2°C ±0.3°C (range 1.0-1.5°C)
-- **Mechanism:** Annual bleaching prevents recovery at >1.2°C
-- **Recovery requirement:** Cool to ~1°C above pre-industrial by 2040-2050 (Earth System Dynamics 2025)
-- **Status:** First major climate tipping point crossed
-
-**Transformation Pathways (40% Floor, Not Collapse):**
-The system models realistic ecosystem transformation rather than uniform collapse:
-- **40% adaptation floor:** Reefs transition to algae-dominated or macroalgae states
-- **Not zero collapse:** Remnant coral populations persist in refugia (deep reefs, cooler waters)
-- **Regime shifts:** Ecosystem function changes but doesn't disappear
-- **Research basis:** Field observations show transformation > extinction for most systems
-
-**Validated Results (Architecture Review + Monte Carlo):**
-- **Architecture Grade:** B+ (2 HIGH issues resolved - duplicate state writes, regional tech effects)
-- **HIGH-1 RESOLVED:** Removed duplicate coral health calculation (ResourceWaterPhase vs OceanAcidificationCascadePhase)
-- **HIGH-2 RESOLVED:** Tech effects now modify regional coral health (seAsia, pacificIslands, caribbean, indianOcean)
-- **Defensive coding:** 47 assertions added, no silent fallbacks, fail-loudly philosophy
-- **Determinism:** 100% (CV < 0.01% for identical seeds)
-- **pH decline:** Matches research projections (SSP5-8.5: 7.9 → 7.68-7.71 by 2100)
-- **Regional variation:** SE Asia most vulnerable (resilience 0.3, sensitivity 1.1), Indian Ocean most resilient (0.6, 1.0)
-
-**Known Limitations (Architecture Review):**
-1. **Regional impacts not fully propagated:** Regional coral health calculated but impacts applied globally (MEDIUM-3)
-   - Pacific Islands should be more affected than inland regions
-   - Future: Apply fisheries impact proportional to regional coastal dependence
-2. **Fisheries power law aggressive:** Exponent 1.5 may overestimate decline (MEDIUM-2)
-   - Real-world shows species substitution resilience
-   - Consider reducing to 1.2 or adding 20% minimum yield floor
-3. **Missing recovery mechanisms:** No coral transplantation, artificial reefs, or adaptation (LOW-1)
-   - Future: Add restoration tech effectiveness, ecosystem adaptation timescales
-
-**Impact:** Ocean acidification cascades create realistic food security and economic impacts for coastal populations. Regional variation captures differential vulnerability (Coral Triangle vs Indian Ocean). Compound warming × acidification stress (≈30%) matches empirical observations. Transformation pathways (40% floor) prevent unrealistic total collapse while modeling regime shifts.
-
-**Files:**
-- **Implementation:** `src/simulation/engine/phases/OceanAcidificationCascadePhase.ts` (275 lines, order 21.8)
-- **Core logic:** `src/simulation/oceanAcidification.ts` (pH decline, cascade triggers)
-- **State types:** `src/types/oceanAcidification.ts` (regional tracking, thresholds)
-- **Phase order:** 21.8 (after PlanetaryBoundariesPhase 21.0, FaminePhase 21.6)
-- **Research:** `research/ocean_acidification_cascades_20251128.md` (533 lines, 21 peer-reviewed sources)
-- **Architecture:** `reviews/ocean_acidification_architecture_review_20251128.md` (258 lines)
-- **Validation:** Architecture Grade B+ (CONDITIONAL APPROVAL - calibration adjusted post-review)
-
-**Cross-References:**
-- [Planetary Boundaries System](#) - Ocean acidification as 7th boundary (breached Sept 2025)
-- [Climate Change System](#) - CO2 emissions drive pH decline, temperature drives warming synergy
-- [Food Security System](#) - Fisheries collapse cascades to protein shortfall for 330-500M people
-- [Economic Systems](#) - $100-500B/year value at risk (fisheries, tourism, coastal protection)
-- [Technology Tree](#) - Ocean alkalinization (TIER 2), marine protected areas, coral restoration
-
 ---
 
-**ARCH-4 Summary (Updated Nov 2025):**
+**ARCH-4 Summary:**
 
 | Integration | Status | Research Grade | Implementation |
 |-------------|--------|----------------|----------------|
@@ -8086,11 +7534,8 @@ The system models realistic ecosystem transformation rather than uniform collaps
 | AI Suffering → Alignment | ✅ Validated | A (4 sources, empirical) | Operational |
 | Refugees → AMR | ✅ Validated | A- (4 sources) | Operational |
 | Infrastructure → AI | ⚠️ Deferred | - | Operational but not validated |
-| **Permafrost → Climate (RD-1)** | ✅ **Production Ready** | **A- (4 sources)** | **Operational** |
-| **Conflict → Economy/Pop (RD-3)** | ✅ **Conditional Pass** | **A- (6 sources)** | **Operational** |
-| **Ocean Acidification → Food/Economy (RD-2)** | ✅ **Production Ready** | **A- (6 sources)** | **Operational** |
 
-**Overall Success Rate:** 88% (7/8 integrations validated)
+**Overall Success Rate:** 80% (4/5 integrations validated)
 
 **Quality Gates Passed:**
 - ✅ Research Validation (research-skeptic review, A- grade)
@@ -9383,7 +8828,7 @@ The simulation runs via a **phase-based architecture** with **100 phases** execu
 - SocialSafetyNetsPhase (18.0): Community programs
 - InformationWarfarePhase (19.0): Truth decay, deepfakes
 - NuclearCommandControlPhase (20.0): Circuit breakers
-- PlanetaryBoundariesPhase (21.0): 9 planetary boundaries tracking (**FIX Nov 28** - syncs `climate_change.currentValue` to actual CO2-driven temperature + 0.1°C pre-industrial offset)
+- PlanetaryBoundariesPhase (21.0): 9 planetary boundaries tracking (**FIX Nov 27** - syncs `climate_change.currentValue` to actual CO2-driven temperature + 0.7°C pre-industrial offset)
 - DystopiaProgressionPhase (21.01): Dystopia variant tracking
 - Tier2PhysicalSystemsPhase (21.1): Physical breakthrough effects
 - IrreversibilityTrackingPhase (21.4): Irreversible threshold tracking
@@ -9394,8 +8839,6 @@ The simulation runs via a **phase-based architecture** with **100 phases** execu
 - MADDeterrencePhase (23.0): Nuclear deterrence, escalation
 - ResourceEconomyPhase (17.0): Resource extraction, depletion (**REORDERED** - was 24.0)
 - **TechCoolingPhase (17.5)**: Applies accumulated geoengineering cooling AFTER ResourceEconomyPhase recalculates temperature (**CRITICAL FIX Nov 27, 2025** - phase existed but was never registered)
-- **AerosolForcingPhase (17.8)**: Anthropogenic aerosol cooling effects for projection mode (2025+). IPCC AR6: Aerosol ERF -1.1 W/m² (1990) → -0.8 W/m² (2024) → -0.3 W/m² (2050, SSP2-4.5). Hindcast mode SKIPS (NASA data already includes aerosol effects). Expected cooling: -0.64°C to -0.24°C in projection mode. (**NEW Nov 27, 2025**)
-- **PermafrostCarbonPhase (18.5)**: Permafrost thaw CO2/CH4 feedback - Arctic amplification 3.0×, validated emissions 1.7-7.0 Gt C/year, positive feedback +0.41-0.46 ppm CO2/month. Research: Schuur 2022, Turetsky 2020, IPCC AR6. (**NEW Nov 28, 2025 - RD-1, TIER 2**)
 - ResourceTechnologyPhase (24.5): Tech effects on resources
 - **GovernmentResponsePhase (25.0)**: Policy responses with comprehension lag (**NEW Oct 20**)
 - **PolicyImplementationPhase (25.5)**: Policy lifecycle tracking - sigmoid ramp-up, political will decay, abandonment risk (**NEW Oct 30**)
@@ -9412,7 +8855,6 @@ The simulation runs via a **phase-based architecture** with **100 phases** execu
 - RefugeeCrisisPhase (27.2): Refugee flows, resettlement
 - CountryPopulationPhase (27.3): Regional population tracking
 - **ExogenousShockPhase (27.5)**: Black/Gray Swan events (**NEW Oct 17**)
-- **GeopoliticalConflictPhase (28.0)**: AI-era geopolitical conflict escalation - base risk 0.05% monthly, AI multiplier 2×, MAD deterrence 0.6×, regional flashpoints (Taiwan/Ukraine/Middle East/Kashmir). Conflict displacement 383-407M. Research: Barrett 2013, Lohn & Jackson 2022, Zhang 2024, SIPRI 2024. (**NEW Nov 28, 2025 - RD-3, TIER 2**)
 - GovernanceSystemPhase (28.0): Governance state updates
 - ClimateJusticePhase (28.5): Environmental debt, justice
 - **CriticalJuncturePhase (29.0)**: Critical juncture agency - individual/collective escape attempts (**NEW Oct 17**)
@@ -11297,7 +10739,7 @@ npx tsx scripts/deploymentRateSweep.ts > logs/experiment1/full_run_$(date +%Y%m%
 
 1. **Landing Page** (`/docs`)
    - Role-based navigation (Students, Researchers, Developers)
-   - Key stats: 95 phases (reduced from 116), 900+ variables, 119 technologies, 7 outcome tiers
+   - Key stats: 95 phases (reduced from 116), 900+ variables, 71 technologies, 7 outcome tiers
    - Interactive role selection with tailored documentation paths
    - Keyboard shortcuts reference
    - Quick links to full wiki, GitHub, commands
