@@ -721,7 +721,7 @@ describe('ClimateSystemPhase', () => {
       const context = createTestContext();
       phase.execute(state, rng, context);
 
-      const impacts = (state as any)._tippingPointImpacts;
+      const impacts = state._tippingPointImpacts;
       assert.ok(impacts);
       // Impacts are negative values (degradation), stored as-is
       assert.ok(impacts.climateStability !== undefined);
