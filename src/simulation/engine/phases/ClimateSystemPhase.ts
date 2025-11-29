@@ -518,8 +518,13 @@ export class ClimateSystemPhase implements SimulationPhase {
      * @see Lenton et al. (2019) "Climate tipping points — too risky to bet against" Nature
      * @see Armstrong McKay et al. (2022) "Exceeding 1.5°C global warming could trigger multiple tipping points" Science
      */
+    // HIGH-4 (Nov 29, 2025): Regime-based feedback loops
+    // Ecological-collapse regime accelerates degradation via positive feedbacks
+    // Research: Scheffer et al. (2024) - regime shifts create self-reinforcing dynamics
+    const regimeMultiplier = state.bifurcationState?.currentRegime === 'ecological-collapse' ? 1.5 : 1.0;
+
     state.environmentalAccumulation.climateStability = assertInRange(
-      Math.max(0.05, oldStability * (1 - totalClimateStabilityImpact * 0.01)),
+      Math.max(0.05, oldStability * (1 - totalClimateStabilityImpact * 0.01 * regimeMultiplier)),
       0, 1,
       {
         location: 'ClimateSystemPhase.applyTippingImpacts',
