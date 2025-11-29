@@ -631,7 +631,7 @@ export function updateRegionalPopulations(state: GameState): void {
 
     // Add tipping point impacts (if any active)
     // TippingPointPhase (order 21.6) stores impacts in state for regional variation
-    const tippingImpacts = (state as any)._tippingPointImpacts;
+    const tippingImpacts = state._tippingPointImpacts;
     if (tippingImpacts) {
       // Each tipping element has regional multipliers (e.g., AMOC hits Europe 1.4x harder)
       const tippingStress = tippingImpacts.habitability * 0.5 * region.climateVulnerability;
