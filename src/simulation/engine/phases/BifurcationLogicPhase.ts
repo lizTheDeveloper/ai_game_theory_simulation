@@ -25,6 +25,7 @@
 import type { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import type { BifurcationThreshold, RegimeType } from '@/types/bifurcation';
 import { assertFinite, assertInRange, assertStateProperty, assertDefined } from '@/simulation/utils/assertions';
+import { TOTAL_TECH_COUNT } from '@/simulation/techTree/comprehensiveTechTree';
 
 export class BifurcationLogicPhase implements SimulationPhase {
   readonly id = 'bifurcation-logic';
@@ -325,9 +326,9 @@ export class BifurcationLogicPhase implements SimulationPhase {
     // Technology breakthrough threshold (tech deployment progress)
     // FIX HIGH-4: Use deployed tech count, not unlocked count
     const techState = state.techTreeState;
-    // Count deployed techs (keys in deployedTechMap) out of total 71 techs
+    // Count deployed techs (keys in deployedTechMap) out of total breakthrough techs
     const deployedCount = Object.keys(techState.deployedTechMap).length;
-    const avgDeployment = deployedCount / 71;
+    const avgDeployment = deployedCount / TOTAL_TECH_COUNT;  // 119 total breakthrough technologies
     const avgDeploymentFinite = assertFinite(avgDeployment, {
       location: 'BifurcationLogicPhase.calculateProximities',
       valueName: 'avgDeployment',
