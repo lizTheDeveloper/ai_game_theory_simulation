@@ -359,6 +359,24 @@ export interface GameState {
   technologicalRisk: TechnologicalRisk; // Phase 4: AI capability risk tracking
 
   /**
+   * Tipping Point Impacts (ClimateSystemPhase Integration)
+   *
+   * Stores cross-system impacts from activated climate tipping points.
+   * ClimateSystemPhase (order 20) calculates these impacts; other phases consume them.
+   *
+   * Research: Lenton et al. (2019) - Cascade dynamics between tipping elements
+   *           Armstrong McKay et al. (2022) - Regional variation in tipping impacts
+   *
+   * Expected impact: Regional populations, food security, resource availability
+   */
+  _tippingPointImpacts?: {
+    climateStability: number;  // Impact on climate stability [0, 1]
+    habitability: number;      // Impact on regional habitability [0, 1]
+    foodSecurity: number;      // Impact on food production [0, 1]
+    freshwater: number;        // Impact on water availability [0, 1]
+  };
+
+  /**
    * Bifurcation Logic System (Nov 6, 2025 - Monte Carlo Issue #5)
    *
    * Tracks threshold-based branching points that create outcome variance.
@@ -1146,4 +1164,9 @@ export interface GameState {
   previousQoL?: number; // Previous month's QoL for trend calculation (initialized in globalMetrics)
   previousAICapability?: number; // Previous month's average AI capability
   previousMisalignedCount?: number; // Previous month's misaligned AI count
+
+  // AI Infrastructure tracking fields (aiInfrastructureResources.ts)
+  previousTotalCapability?: number; // Previous month's total AI capability (for water consumption calculation)
+  waterConstraintLogged?: boolean; // Flag to prevent duplicate water constraint logging
+  energyConstraintLogged?: boolean; // Flag to prevent duplicate energy constraint logging
 }

@@ -919,7 +919,7 @@ function calculateCapabilityFear(state: GameState): number {
   const capabilityChange = currentCapability - previousCapability;
 
   // Store for next iteration
-  (state as any).previousAICapability = currentCapability;
+  state.previousAICapability = currentCapability;
 
   // Fear only triggers on rapid changes (>0.5/month)
   if (capabilityChange > CAPABILITY_CHANGE_FEAR_THRESHOLD) {
@@ -1060,7 +1060,7 @@ export function updateTrustRecovery(state: GameState): void {
   );
   const newMisalignments = Math.max(0, misalignedAIs - previousMisaligned);
   baseTrustChange -= newMisalignments * TRUST_DECAY_FROM_MISALIGNMENT;
-  (state as any).previousMisalignedCount = misalignedAIs;
+  state.previousMisalignedCount = misalignedAIs;
 
   // 3. Common mistakes (-0.5%/month if high error rate)
   // Proxy: Low QoL despite high AI capability suggests mistakes

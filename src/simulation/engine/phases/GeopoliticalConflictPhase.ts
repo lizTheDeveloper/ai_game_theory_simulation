@@ -245,9 +245,18 @@ export class GeopoliticalConflictPhase implements SimulationPhase {
     // Calculate average capability across deployed agents
     // Dimensions relevant for conflict: digital (cyber), social (persuasion/deception), cognitive (strategic)
     const relevantCapabilities = deployedAgents.map(agent => {
-      const digital = agent.capabilityProfile.digital ?? 0;
-      const social = agent.capabilityProfile.social ?? 0;
-      const cognitive = agent.capabilityProfile.cognitive ?? 0;
+      const digital = assertStateProperty(agent.capabilityProfile, 'digital', {
+        location: `GeopoliticalConflictPhase.calculateAIMultiplier (agent ${agent.id})`,
+        month: state.currentMonth
+      });
+      const social = assertStateProperty(agent.capabilityProfile, 'social', {
+        location: `GeopoliticalConflictPhase.calculateAIMultiplier (agent ${agent.id})`,
+        month: state.currentMonth
+      });
+      const cognitive = assertStateProperty(agent.capabilityProfile, 'cognitive', {
+        location: `GeopoliticalConflictPhase.calculateAIMultiplier (agent ${agent.id})`,
+        month: state.currentMonth
+      });
       return (digital + social + cognitive) / 3;
     });
 
@@ -320,7 +329,10 @@ export class GeopoliticalConflictPhase implements SimulationPhase {
   private calculateClimateStressMultiplier(state: GameState): number {
     // Get displaced population from refugee crisis system
     // NOTE: refugeeCrisisSystem tracks climate/war/famine displacement
-    const totalDisplacedMillions = state.refugeeCrisisSystem?.totalDisplaced ?? 0;
+    const totalDisplacedMillions = assertStateProperty(state, 'refugeeCrisisSystem.totalDisplaced', {
+      location: 'GeopoliticalConflictPhase.calculateClimateStressMultiplier',
+      month: state.currentMonth
+    });
 
     // +0.3× per 100M displaced
     const multiplier = 1.0 + (CLIMATE_DISPLACEMENT_COEFF * (totalDisplacedMillions / 100));
@@ -346,8 +358,14 @@ export class GeopoliticalConflictPhase implements SimulationPhase {
    */
   private calculateResourceScarcityMultiplier(state: GameState): number {
     // Get food and water security from QoL systems
-    const foodSecurity = state.qualityOfLifeSystems?.survivalFundamentals?.foodSecurity ?? 1.0;
-    const waterSecurity = state.qualityOfLifeSystems?.survivalFundamentals?.waterSecurity ?? 1.0;
+    const foodSecurity = assertStateProperty(state, 'qualityOfLifeSystems.survivalFundamentals.foodSecurity', {
+      location: 'GeopoliticalConflictPhase.calculateResourceScarcityMultiplier',
+      month: state.currentMonth
+    });
+    const waterSecurity = assertStateProperty(state, 'qualityOfLifeSystems.survivalFundamentals.waterSecurity', {
+      location: 'GeopoliticalConflictPhase.calculateResourceScarcityMultiplier',
+      month: state.currentMonth
+    });
 
     // If either food or water security drops below 20%, apply scarcity multiplier
     const isCritical = foodSecurity < 0.20 || waterSecurity < 0.20;
@@ -410,7 +428,10 @@ export class GeopoliticalConflictPhase implements SimulationPhase {
    */
   private triggerConflictEvent(state: GameState, rng: RNGFunction, riskCalc: any): any {
     // Determine if nuclear (based on MAD deterrence strength)
-    const madStrength = state.madDeterrence?.madStrength ?? 0.8;
+    const madStrength = assertStateProperty(state, 'madDeterrence.madStrength', {
+      location: 'GeopoliticalConflictPhase.triggerConflictEvent',
+      month: state.currentMonth
+    });
     const nuclearProbability = (1.0 - madStrength) * 0.1;  // Low probability even with weak MAD
     const isNuclear = rng() < nuclearProbability;
 
