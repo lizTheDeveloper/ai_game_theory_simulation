@@ -167,11 +167,11 @@ function detectCapabilityIncrease(state: GameState): number {
     ? state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0)
     : 0;
 
-  const previousCapability = (state as any).previousTotalCapability || 0;
+  const previousCapability = state.previousTotalCapability || 0;
   const capabilityIncrease = Math.max(0, currentCapability - previousCapability);
 
   // Store for next check
-  (state as any).previousTotalCapability = currentCapability;
+  state.previousTotalCapability = currentCapability;
 
   // Training water scales with capability increase (10M L per capability point)
   // Represents one-time training cost, not monthly
@@ -217,11 +217,11 @@ export function applyResourceConstraints(
     constrainedGrowth *= 0.5;
 
     // Log constraint (only when first triggered)
-    if (!(state as any).waterConstraintLogged) {
+    if (!state.waterConstraintLogged) {
       console.log(`\n💧 WATER CONSTRAINT: AI capability growth slowed 50% (water stress > 70%)`);
       console.log(`   Total AI capability: ${totalCapability.toFixed(2)}`);
       console.log(`   Water stress: ${((state.freshwaterSystem?.waterStress || 0) * 100).toFixed(0)}%`);
-      (state as any).waterConstraintLogged = true;
+      state.waterConstraintLogged = true;
     }
   }
 
@@ -230,10 +230,10 @@ export function applyResourceConstraints(
     constrainedGrowth *= 0.7;
 
     // Log constraint (only when first triggered)
-    if (!(state as any).energyConstraintLogged) {
+    if (!state.energyConstraintLogged) {
       console.log(`\n⚡ ENERGY CONSTRAINT: AI capability growth slowed 30% (insufficient power)`);
       console.log(`   Total AI capability: ${totalCapability.toFixed(2)}`);
-      (state as any).energyConstraintLogged = true;
+      state.energyConstraintLogged = true;
     }
   }
 
