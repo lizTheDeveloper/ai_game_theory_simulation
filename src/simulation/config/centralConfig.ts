@@ -309,11 +309,14 @@ export const RATES = {
   BIODIVERSITY_LOSS_RATE: 0.002,
 
   /**
-   * Ocean acidification rate (pH units per year)
-   * @research IPCC SROCC (2019) - -0.002 pH/year
-   * @value 0.000167 - -0.002/12 per month
+   * Ocean acidification rate (pH units per month)
+   * @research IPCC AR6 WG1 (2021) - SSP2-4.5 scenario projection
+   * @research Jiang et al. (2023) J. Adv. Model. Earth Syst. DOI:10.1029/2022MS003563
+   * @value 0.00019 - SSP2-4.5 middle-of-road emissions pathway (-0.17 pH by 2100)
+   * @updated 2025-11-29 - From IPCC SROCC 2019 → IPCC AR6 2021 (RV-1)
+   * @scenario SSP2-4.5 provides realistic forward-looking rate (vs historical -0.000133/mo observed)
    */
-  OCEAN_ACIDIFICATION_RATE: 0.000167,
+  OCEAN_ACIDIFICATION_RATE: 0.00019,
 
   /**
    * Freshwater depletion rate (fraction per month)
