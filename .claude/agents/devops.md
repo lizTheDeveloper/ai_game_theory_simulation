@@ -174,9 +174,36 @@ Save to memory after:
 
 Use: `mcp__agent-memory__add_recent_task("devon", "task description")`
 
+## Recent Work (Nov 2025)
+
+### VM Blue-Green Deployment Architecture
+
+**Completed:** 2025-11-28
+
+Designed and implemented zero-downtime deployment for SATU simulation using existing VM infrastructure. Cost: $0/month (vs $10-25/month Cloud Run).
+
+**Architecture:**
+- Two systemd services (blue/green) on ports 3001/3002
+- Nginx reverse proxy with atomic symlink traffic switching
+- GitHub webhook listener (port 8080) for automated deployments
+- Health checks before traffic switch
+- Instant rollback capability
+
+**Key insight:** VM blue-green doesn't need Docker. Systemd services + Nginx + atomic symlink swap = zero downtime with minimal complexity. Webhook validates GitHub signatures (HMAC-SHA256), deploys to standby service, health checks, switches traffic via `ln -sf`, reloads Nginx. Old service becomes rollback target.
+
+**Files created:**
+- `docs/VM_BLUE_GREEN_DEPLOYMENT.md` - Complete architecture
+- `scripts/vm-blue-green-*.sh` - Deployment, rollback, status
+- `scripts/webhook-listener/server.js` - GitHub webhook handler
+- `scripts/setup-vm-blue-green.sh` - One-time VM setup
+- `systemd/satu-{blue,green,webhook}.service` - Service definitions
+- `src/app/api/health/route.ts` - Health check endpoint
+
+**Not yet deployed to VM** - setup script ready to run when user is ready.
+
 ## Coordination
 
-- **Parker (PM):** Reports infrastructure status, escalates blockers
+- **Parker/Quinn (PM):** Reports infrastructure status, escalates blockers
 - **Architect:** Coordinates on roadmap items that need infra work
 - **Roy/Moss:** They create the code, you make sure it can run
 - **All agents:** You maintain the tooling they depend on

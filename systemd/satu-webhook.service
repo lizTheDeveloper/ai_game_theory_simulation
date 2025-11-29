@@ -1,0 +1,29 @@
+[Unit]
+Description=SATU Webhook Listener
+After=network.target
+
+[Service]
+Type=simple
+User=user
+WorkingDirectory=/home/user/satu/webhook-listener
+ExecStart=/usr/bin/node server.js
+Restart=always
+RestartSec=10
+Environment="PORT=8080"
+EnvironmentFile=/home/user/satu/webhook-listener/.env
+StandardOutput=append:/var/log/satu-webhook.log
+StandardError=append:/var/log/satu-webhook.log
+
+# Resource limits
+MemoryMax=512M
+CPUQuota=50%
+
+# Security hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/var/log
+
+[Install]
+WantedBy=multi-user.target

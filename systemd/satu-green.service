@@ -1,0 +1,30 @@
+[Unit]
+Description=SATU Production Service (Green)
+After=network.target
+
+[Service]
+Type=simple
+User=user
+WorkingDirectory=/home/user/satu/production-green
+ExecStart=/usr/bin/npm start
+Restart=always
+RestartSec=10
+Environment="NODE_ENV=production"
+Environment="PORT=3002"
+Environment="SERVICE_NAME=green"
+StandardOutput=append:/var/log/satu-green.log
+StandardError=append:/var/log/satu-green.log
+
+# Resource limits
+MemoryMax=2G
+CPUQuota=100%
+
+# Security hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/var/log
+
+[Install]
+WantedBy=multi-user.target

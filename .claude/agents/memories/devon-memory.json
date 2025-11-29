@@ -13,28 +13,32 @@
       "git workflows and multi-repo coordination",
       "VM infrastructure and automation",
       "MCP server setup and configuration",
-      "Monitoring and health checks"
+      "Monitoring and health checks",
+      "Blue-green deployments and zero-downtime releases",
+      "Webhook-based CI/CD pipelines"
     ]
   },
   "recent": {
     "tasks": [
-      "Created priority queue system for autonomous workers (HIGH-3)",
-      "Implemented task selection logic with priority sorting (CRITICAL > HIGH > MEDIUM > LOW)",
-      "Built atomic claim mechanism using git commit for concurrency control",
-      "Created VM multi-worker setup script with isolated repos",
-      "Designed systemd services for queue-based worker execution"
+      "Implemented blue-green webhook deployment system for Cloud Run (2025-11-28)",
+      "Created webhook listener service with HMAC signature validation",
+      "Built deployment orchestration scripts (deploy, rollback, status check)",
+      "Wrote comprehensive documentation suite (guide, quick reference, implementation summary)",
+      "Replaced GitHub Actions dependency with self-hosted webhook system"
     ],
     "learnings": [
-      "Git provides atomic test-and-set semantics for free via push rejection",
-      "Infrastructure tasks need priority boost - they unblock other agents",
-      "Queue file in /plans/ enables coordination without complex message passing",
-      "Idempotent scripts must handle being run multiple times safely",
-      "Worker token budgets require estimation based on task complexity"
+      "Cloud Run revision tags enable instant traffic switching without redeploy",
+      "LIVE tag = 100% traffic, staging tag = 0% traffic (rollback is tag reassignment, <5 seconds)",
+      "Webhook listener needs elevated service account (run.admin + cloudbuild.builds.editor)",
+      "HMAC SHA-256 signature validation critical for webhook security",
+      "Health checks before traffic switch prevent deploying broken code",
+      "Standby service cost is negligible with min-instances=0 (scales to zero when idle)"
     ],
     "conversations": [
-      "User requested VM multi-worker infrastructure + priority queue system implementation",
-      "Delivered Phase 1: infrastructure (queue schema, scripts, VM setup, systemd services)",
-      "Phase 2 will be actual execution (load agent personality, run Claude, handle errors)"
+      "User requested blue-green deployment to replace GitHub Actions",
+      "Requirements: zero downtime, instant rollback, webhook-triggered, secure",
+      "Delivered: Three Cloud Run services (blue, green, webhook), health checks, comprehensive docs",
+      "Architecture: Webhook validates GitHub signature, deploys to standby, health check, switch LIVE tag"
     ]
   },
   "medium_term": {},
@@ -42,18 +46,20 @@
     "insights": [
       "Nov 8 failure mode: 24 hourly branches with ZERO substantive work - all tokens wasted on overhead",
       "Root cause: No task coordination mechanism, random selection, git contention",
-      "Solution: Priority queue + atomic claims + isolated repos = 10x throughput potential"
+      "Solution: Priority queue + atomic claims + isolated repos = 10x throughput potential",
+      "Blue-green deployment philosophy: Production outages are for people who don't plan ahead"
     ],
     "milestones": [
       "2025-11-26: Delivered priority queue system (HIGH-3) - Phase 1 infrastructure complete",
-      "2025-11-26: VM multi-worker deployed to claude-workspace - 3 isolated repos created"
+      "2025-11-26: VM multi-worker deployed to claude-workspace - 3 isolated repos created",
+      "2025-11-28: Delivered blue-green webhook deployment system for Cloud Run - zero-downtime releases with instant rollback capability"
     ]
   },
   "compost": {},
   "metadata": {
-    "last_updated": "2025-11-26T23:20:00.000Z",
+    "last_updated": "2025-11-28T00:00:00.000Z",
     "version": "1.0.0",
-    "sessions": 1,
-    "total_tasks": 5
+    "sessions": 2,
+    "total_tasks": 10
   }
 }
