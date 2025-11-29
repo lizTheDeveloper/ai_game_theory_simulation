@@ -283,6 +283,33 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
         }
       }
 
+      // HIGH-1 FIX (Nov 29, 2025): Integrate ocean acidification fisheries effects
+      // Ocean acidification reduces coastal fisheries yield (0-1 multiplier, baseline 1.0)
+      // Research: 20% of global protein comes from fish, 415M people at risk
+      // Degradation mechanism: Coral collapse → fisheries failure → protein deficiency
+      if (state.oceanAcidificationSystem) {
+        const fisheriesYield = assertProbability(state.oceanAcidificationSystem.coastalFisheriesYield, {
+          location: 'FoodSecurityDegradationPhase.execute',
+          valueName: 'oceanAcidificationSystem.coastalFisheriesYield',
+          month: state.currentMonth
+        });
+
+        // Fish provides ~20% of global protein (FAO 2024)
+        // When fisheries collapse (yield → 0), lose 20% of food security
+        // Apply as multiplicative loss: 80% fisheries = 0.96× food (4% loss)
+        const FISH_PROTEIN_FRACTION = 0.20; // 20% of global protein from fish
+        const fisheriesLoss = (1 - fisheriesYield) * FISH_PROTEIN_FRACTION;
+
+        // Add to degradation rate (fisheries loss compounds with other crises)
+        // At 40% fisheries yield (60% loss), add 12% degradation (0.60 × 0.20)
+        degradationRate += fisheriesLoss;
+
+        // Log fisheries effects annually when significant
+        if (state.currentMonth % 12 === 0 && fisheriesYield < 0.9) {
+          console.log(`  [${region.name}] 🌊 Ocean acidification: Fisheries ${(fisheriesYield * 100).toFixed(0)}%, Food loss: +${(fisheriesLoss * 100).toFixed(1)}%/mo`);
+        }
+      }
+
       // Cap at 5% per month (DOWN from 15%)
       const degradationRateCapped = assertInRange(Math.min(0.05, degradationRate), 0, 0.05, {
         location: 'FoodSecurityDegradationPhase.execute',
