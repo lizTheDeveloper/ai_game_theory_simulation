@@ -1127,39 +1127,36 @@ function updateCO2System(state: GameState, resources: ResourceEconomy): void {
       const progressFraction = yearsSince1990 / 20.0;  // 0.0 at 1990, 1.0 at 2010
 
       // Linear interpolation from 1990 to 2010 values
-      // FIX (Nov 27, 2025 - Phase 11): Empirical recalibration to fix +12.1% CO2 bias
+      // FIX (Nov 29, 2025 - Phase 12): REVERT to research values (Roy's fix for HIGH-2)
       //
-      // RESEARCH VALUES (methodologically correct, but produce excessive CO2 accumulation):
-      //   Ocean: 8.1 → 9.9 GtCO2/yr (Gruber et al. 2022, Gregor & Gruber 2020)
-      //   Land:  5.1 → 8.8 GtCO2/yr (Wang et al. 2023 interpolated)
+      // ROOT CAUSE ANALYSIS:
+      //   Phase 10 (Nov 26): Sinks 12.2 + 13.1 = 25.3 GtCO2/yr → produced 437 ppm (too high)
+      //   Phase 11 (Nov 27): Sinks 14.2 + 16.1 = 30.3 GtCO2/yr → overcorrected to ~365 ppm at 2005 (too low)
+      //   Phase 12 (Nov 29): REVERT to GCP research values → target 390 ppm at 2010
       //
-      // PHASE 10 CALIBRATED VALUES (Nov 26, produced 437 ppm vs 390 ppm observed, +12.1% error):
-      //   Ocean: 8.1 → 12.2 GtCO2/yr
-      //   Land:  5.1 → 13.1 GtCO2/yr
-      //   Result: Sinks too weak, CO2 accumulated to 437 ppm (should be 390 ppm)
+      // CARBON BUDGET MATH (2010):
+      //   Emissions: 33.5 GtCO2/yr (GCP historical data)
+      //   Target airborne fraction: 44-46% (GCP observed)
+      //   Target net to atmosphere: 33.5 * 0.45 = 15.1 GtCO2/yr
+      //   Required total sink: 33.5 - 15.1 = 18.4 GtCO2/yr
       //
-      // PHASE 11 RECALIBRATED VALUES (Nov 27, targeting ≤5% error at 2010):
-      //   Ocean: 8.1 → 14.2 GtCO2/yr (+43% vs research, +16% vs Phase 10)
-      //   Land:  5.1 → 16.1 GtCO2/yr (+83% vs research, +23% vs Phase 10)
-      //   Total 2010 sink: 30.3 GtCO2/yr (vs 25.3 in Phase 10, vs 18.7 research)
+      // RESEARCH VALUES (Global Carbon Project, IPCC AR6):
+      //   Ocean 2010: 9.9 GtCO2/yr (Gruber et al. 2022, Gregor & Gruber 2020)
+      //   Land 2010:  8.8 GtCO2/yr (Wang et al. 2023 interpolated)
+      //   Total sink: 18.7 GtCO2/yr (matches required 18.4 within 2%)
+      //   Expected airborne fraction: 44.2% (within target range)
       //
-      // RATIONALE: Hindcast validation shows 47 ppm excess CO2 at 2010 (437 vs 390 ppm).
-      // Calculation: Need additional 5.0 GtCO2/yr average sink over 1990-2010 period.
-      // This represents ~20% increase in 2010 endpoint sinks to match observations.
+      // LESSON LEARNED: "Empirical recalibration" was compensating for a bug elsewhere
+      // (likely initial CO2 value, conversion factor, or accumulation logic).
+      // Using correct research values is the right approach - if CO2 doesn't match,
+      // find the actual bug instead of fudging the sinks.
       //
-      // This discrepancy suggests either:
-      // 1. Missing sink mechanisms (CO2 fertilization feedbacks, regional heterogeneity)
-      // 2. GCP emissions overestimated for 1990-2010 period
-      // 3. Sink saturation effects in literature underestimate actual carbon uptake
-      // 4. Atmospheric carbon budget closure problem (missing flux terms)
-      //
-      // Research: research/carbon_sinks_1990_2025_20251126.md (base values)
-      //          research/carbon_sink_2010_verification_DETAILED_20251126.md (verification)
-      //          scripts/calculate_optimal_sinks.ts (Roy's recalibration analysis, Nov 27 2025)
+      // Research: research/carbon_sinks_1990_2025_20251126.md
+      //          research/carbon_sink_2010_verification_DETAILED_20251126.md
       const ocean1990 = 8.1;   // GtCO2/yr (2.2 GtC/yr × 3.67) - IPCC 1990s baseline
-      const ocean2010 = 14.2;  // GtCO2/yr - Empirically recalibrated (+43% vs research value of 9.9)
+      const ocean2010 = 9.9;   // GtCO2/yr (2.7 GtC/yr × 3.67) - Gruber et al. 2022
       const land1990 = 5.1;    // GtCO2/yr (1.4 GtC/yr × 3.67) - IPCC 1990s baseline
-      const land2010 = 16.1;   // GtCO2/yr - Empirically recalibrated (+83% vs research value of 8.8)
+      const land2010 = 8.8;    // GtCO2/yr (2.4 GtC/yr × 3.67) - Wang et al. 2023
 
       co2.oceanAbsorption = assertFinite(
         ocean1990 + (ocean2010 - ocean1990) * progressFraction,
