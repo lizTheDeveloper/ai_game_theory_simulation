@@ -28,6 +28,7 @@
 
 import type { GameState, RNGFunction } from '../types/game';
 import type { BoundaryName } from '../types/planetaryBoundaries';
+import { isHistoricalModeActive } from './utils/historicalMode';
 import { assertFinite, assertDefined, assertStateProperty } from './utils/assertions';
 import { addSimulationEvent } from './utils/eventLogger';
 import { asymptoteRecovery, legacyStockRelease } from './utils/irreversibility';
@@ -639,7 +640,9 @@ function updateBiosphereStabilization(state: GameState, rng: RNGFunction): void 
   // FIX (Oct 21, 2025): ACTUALLY IMPROVE BIODIVERSITY (population recovery, not species restoration)
   // Research: Saiga antelope recovered from ~50,000 to 1.3M in 15 years (population, not extinction reversal)
   // Stabilization allows POPULATION RECOVERY for surviving species
-  if (isStabilizing) {
+  // HIGH-11 FIX (Nov 28, 2025): Disable biodiversity recovery during historical mode
+  // Historical biodiversity decline is handled by environmental.ts with empirical WWF LPI rates
+  if (isStabilizing && !isHistoricalModeActive(state)) {
     boundary.stabilizing = true;
     boundary.trend = 'stable'; // Not "improving" - damage is permanent
 

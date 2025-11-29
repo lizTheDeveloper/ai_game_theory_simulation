@@ -65,15 +65,13 @@ export function initializeEnvironmentalAccumulation(rng: () => number): Environm
   const clampedClimateStability = Math.max(0.65, Math.min(0.85, climateStability));
 
   // DEBUG (BUG #3): Log stochastic initialization at month 0
-  console.log(`🔍 ENV INIT (Month 0): reserves=${clampedResourceReserves.toFixed(3)}, pollution=${clampedPollutionLevel.toFixed(3)}, climate=${clampedClimateStability.toFixed(3)}, biodiversity=0.49`);
+  console.log(`🔍 ENV INIT: reserves=${clampedResourceReserves.toFixed(3)}, pollution=${clampedPollutionLevel.toFixed(3)}, climate=${clampedClimateStability.toFixed(3)}`);
 
   return {
     resourceReserves: clampedResourceReserves,
     pollutionLevel: clampedPollutionLevel,
     climateStability: clampedClimateStability,
-    biodiversityIndex: 0.49,      // WWF Living Planet Index 2024 (49% of 1970 baseline)
-                                   // Research: research/verification_b15e5a5_20251127.md
-                                   // Keep deterministic - biodiversity tracked via boundary system
+    biodiversityIndex: 0.35,      // Keep deterministic - biodiversity tracked via boundary system
 
     // Pollution Prevention Factor (Oct 27, 2025)
     // Research: Baseline 2025 = current regulations (EPA standards, EU REACH)
@@ -295,17 +293,6 @@ export function updateEnvironmentalAccumulation(
   // Natural stabilization (very slow)
   const naturalStabilization = 0.001; // 0.1% per month
 
-  // DEBUG (Nov 28, 2025): Log climate degradation at Month 1
-  if (state.currentMonth === 0 || state.currentMonth === 1) {
-    console.log(`🔍 MONTH ${state.currentMonth} CLIMATE DEGRADATION DEBUG:`);
-    console.log(`   energyUsage: ${energyUsage.toFixed(6)}`);
-    console.log(`   baseClimateRate: ${baseClimateRate.toFixed(6)}`);
-    console.log(`   climateDegradationRate: ${climateDegradationRate.toFixed(6)}`);
-    console.log(`   currentClimateStability (BEFORE update): ${env.climateStability.toFixed(6)}`);
-    console.log(`   naturalStabilization: ${naturalStabilization.toFixed(6)}`);
-    console.log(`   netChange: ${(-climateDegradationRate + naturalStabilization).toFixed(6)}`);
-  }
-
   // Detect NaN before calculation - fail loudly
   // Apply climate degradation (with FLOORS.GEOMETRIC_MEAN_FLOOR to prevent exactly 0, which breaks geometric means)
   // FIXED: Use assertFinite to catch NaN/Infinity in calculation itself
@@ -344,6 +331,9 @@ export function updateEnvironmentalAccumulation(
     // WWF LPI empirical decline rate (ALREADY includes conservation effects)
     // Calculation: 0.75 (1990) → 0.49 (2024) over 34 years
     // Geometric decline: (0.49/0.75)^(1/408) = 0.998978 → r = 0.001022/month
+    // HIGH-11 FIX (Nov 28, 2025): Changed from LINEAR to GEOMETRIC decline
+    // Research: WWF Living Planet Index uses geometric mean methodology (chain-indexing)
+    // LPI calculates population change ratios and compounds them geometrically, not arithmetically
     const HISTORICAL_DECLINE_RATE = 0.001022; // 0.1022%/month (1.236%/year)
 
     // Use empirical rate directly (no modifiers - observed rate is net of all effects)
@@ -352,9 +342,8 @@ export function updateEnvironmentalAccumulation(
     // Natural recovery is ZERO during baseline (empirical rate is net)
     naturalRecovery = 0;
 
-    // Apply decline (GEOMETRIC: HIGH-11 fix Nov 28, 2025)
-    // LINEAR (old): index - rate (overstates cumulative loss)
-    // GEOMETRIC (correct): index * (1 - rate) (matches WWF LPI empirical data)
+    // Apply GEOMETRIC decline (percentage of current value, not absolute subtraction)
+    // This matches WWF LPI methodology and produces 0.49 at month 408 (within 0.2% of target)
     env.biodiversityIndex = assertFinite(
       Math.max(0, Math.min(1, env.biodiversityIndex * (1 - biodiversityLossRate) + naturalRecovery)),
       {
@@ -392,10 +381,9 @@ export function updateEnvironmentalAccumulation(
     // Natural recovery (very slow without active management)
     naturalRecovery = hasEcosystemManagement ? 0.005 : 0.001;
 
-    // GEOMETRIC decline (HIGH-11 fix Nov 28, 2025) - consistent with historical mode
-    // Use assertFinite to catch NaN/Infinity in calculation itself
+    // FIXED: Use assertFinite to catch NaN/Infinity in calculation itself
     env.biodiversityIndex = assertFinite(
-      Math.max(0, Math.min(1, env.biodiversityIndex * (1 - biodiversityLossRate) + naturalRecovery)),
+      Math.max(0, Math.min(1, env.biodiversityIndex - biodiversityLossRate + naturalRecovery)),
       {
         location: 'updateBiodiversityIndex',
         valueName: 'biodiversityIndex',
@@ -482,15 +470,11 @@ export function updateEnvironmentalAccumulation(
 
     if (cascadeMagnitude > 10.0) {
       // Mega-cascade (keystone species loss triggers avalanche)
-      // M-5 FIX (Nov 28, 2025): Use GEOMETRIC decline (consistent with HIGH-11)
-      // Cascades should follow the same mathematical model as regular decline
       const cascadeSize = Math.min(cascadeMagnitude / 100, 0.35); // Max 35% drop
-      const beforeCascade = env.biodiversityIndex;
-      env.biodiversityIndex = Math.max(0, env.biodiversityIndex * (1 - cascadeSize));
+      env.biodiversityIndex = Math.max(0, env.biodiversityIndex - cascadeSize);
 
       console.warn(`\n  ⚠️ BIODIVERSITY MEGA-CASCADE: Keystone species collapse`);
-      console.log(`     Magnitude: ${cascadeMagnitude.toFixed(2)} → -${(cascadeSize * 100).toFixed(1)}% (geometric)`);
-      console.log(`     Biodiversity: ${(beforeCascade * 100).toFixed(1)}% → ${(env.biodiversityIndex * 100).toFixed(1)}%`);
+      console.log(`     Magnitude: ${cascadeMagnitude.toFixed(2)} → -${(cascadeSize * 100).toFixed(1)}% biodiversity`);
       console.log(`     Trophic cascade: keystone predator/pollinator loss → ecosystem avalanche`);
     }
   }
@@ -541,7 +525,7 @@ function checkEnvironmentalCrises(state: GameState): void {
       valueName: 'materialAbundance',
       month: state.currentMonth,
     }); // 30% drop in material goods
-    qol.energyAvailability = assertInRange(qol.energyAvailability * 0.8, 0, 3,
+    qol.energyAvailability = assertInRange(qol.energyAvailability * 0.8, 0, 2,
       {
       location: 'resourceCrisis_energyAvailability',
       valueName: 'energyAvailability',
