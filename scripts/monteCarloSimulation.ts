@@ -460,6 +460,12 @@ interface RunResult {
     distanceToNearest: number;          // Distance to nearest threshold (0.0 to 1.0)
     nearestSystem: string;              // Which system is nearest to threshold
   }>;
+
+  // === TECH TREE PROGRESSION (Nov 29, 2025 - MEDIUM-3 DIAGNOSTICS) ===
+  techUnlockedCount: number;            // Final count of unlocked technologies
+  techUnlockedPercent: number;          // Final percentage of tech tree unlocked (0-100)
+  techBifurcationCrossed: boolean;      // Did run cross 55-60% threshold?
+  monthBifurcationCrossed?: number;     // Month when threshold crossed (if applicable)
 }
 
 /**
@@ -1974,7 +1980,13 @@ if (nestedMonteCarlo) {
     finalRegime: finalState.bifurcationState?.currentRegime ?? 'status-quo',
 
     // Bifurcation time series (Nov 13, 2025 - CRITICAL-1 INSTRUMENTATION)
-    amplificationTimeSeries: finalState.bifurcationState?.metrics?.amplificationTimeSeries ?? []
+    amplificationTimeSeries: finalState.bifurcationState?.metrics?.amplificationTimeSeries ?? [],
+
+    // Tech tree progression (Nov 29, 2025 - MEDIUM-3 DIAGNOSTICS)
+    techUnlockedCount: finalState.techTreeState?.techUnlockedCount ?? 0,
+    techUnlockedPercent: ((finalState.techTreeState?.techUnlockedCount ?? 0) / 71) * 100,
+    techBifurcationCrossed: ((finalState.techTreeState?.techUnlockedCount ?? 0) / 71) >= 0.55,
+    monthBifurcationCrossed: undefined, // TODO: Track when threshold first crossed
   };
 
   // Push result to appropriate array (aleatoryResults in nested mode, results in single-level mode)
@@ -4783,6 +4795,36 @@ log(`    Avg Survival Rate: ${(avgOrgSurvival*100).toFixed(1)}% (of 4 private or
 log(`    Avg Orgs Alive at End: ${avgAliveOrgs.toFixed(1)} / 4`);
 log(`    Total Bankruptcies: ${totalBankruptcies} across ${NUM_RUNS} runs`);
 log(`    Avg Capital Accumulation: $${(avgCapAccumulation/1000).toFixed(1)}B`);
+
+// ============================================================================
+log('\n\n' + '='.repeat(80));
+log('🔬 TECHNOLOGY BIFURCATION (MEDIUM-3 Diagnostic)');
+log('='.repeat(80));
+
+const techCrossedCount = results.filter(r => r.techBifurcationCrossed).length;
+const techCrossedPercent = (techCrossedCount / results.length) * 100;
+const avgTechUnlocked = results.reduce((sum, r) => sum + r.techUnlockedCount, 0) / results.length;
+const avgTechPercent = results.reduce((sum, r) => sum + r.techUnlockedPercent, 0) / results.length;
+const maxTechUnlocked = Math.max(...results.map(r => r.techUnlockedCount));
+const minTechUnlocked = Math.min(...results.map(r => r.techUnlockedCount));
+
+log(`\n  BIFURCATION THRESHOLD CROSSING (55-60% of 71 techs = 39-43 techs):`);
+log(`    Runs Crossing Threshold: ${techCrossedCount} / ${results.length} (${techCrossedPercent.toFixed(1)}%)`);
+log(`    Expected: 30-40% of runs (research-backed target)`);
+log(`    ${techCrossedPercent < 20 ? '❌ BELOW TARGET' : techCrossedPercent > 50 ? '⚠️  ABOVE TARGET' : '✅ WITHIN TARGET'}`);
+
+log(`\n  TECH TREE PROGRESSION:`);
+log(`    Average Unlocked: ${avgTechUnlocked.toFixed(1)} / 71 (${avgTechPercent.toFixed(1)}%)`);
+log(`    Range: ${minTechUnlocked} - ${maxTechUnlocked} techs`);
+log(`    Threshold: 39-43 techs (55-60%)`);
+
+if (techCrossedPercent === 0) {
+  log(`\n  ⚠️  WARNING: 0% bifurcation crossing!`);
+  log(`    Possible causes:`);
+  log(`      1. Resentment mechanics blocking tech unlocks`);
+  log(`      2. Scenario not deploying technologies (check techDeployment strategy)`);
+  log(`      3. Bifurcation threshold miscalibrated (55-60% too high?)`);
+}
 
 if (avgOrgSurvival < 0.5) {
   log(`\n    ⚠️  WARNING: High bankruptcy rate! Economy too harsh.`);
