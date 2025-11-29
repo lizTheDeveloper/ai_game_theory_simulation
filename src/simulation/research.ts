@@ -207,6 +207,37 @@ export function calculateDimensionGrowth(
   // AI capability multiplier - better AIs research faster in their strong domains
   const aiMultiplier = 1.0 + (aiCapabilityInDimension * 0.15);
 
+  // CRISIS-DRIVEN INNOVATION ACCELERATION (Nov 29, 2025)
+  // Historical precedent: Manhattan Project (10x), COVID vaccines (100x), Apollo Program (10x)
+  // When facing existential threats → massive resource mobilization → breakthrough acceleration
+  // Research: Technological surge during WWII, Cold War, COVID-19
+  let crisisInnovationMultiplier = 1.0;
+
+  if (state) {
+    const { getCrisisSeverity } = require('./techTree/deploymentSpeed');
+    const crisisSeverity = getCrisisSeverity(state);
+
+    // Crisis acceleration multipliers (research-backed)
+    // Normal: 1x (baseline)
+    // Moderate: 2x (COVID digital transformation speed)
+    // Severe: 5x (COVID vaccine development speed - 4-5x normal)
+    // Existential: 10x (Manhattan Project - theory to deployment in 3.5 years)
+    const CRISIS_RESEARCH_MULTIPLIERS: Record<string, number> = {
+      'normal': 1.0,
+      'moderate': 2.0,   // 2x during moderate crises
+      'severe': 5.0,     // 5x during severe crises
+      'existential': 10.0 // 10x during existential threats (Manhattan Project)
+    };
+
+    crisisInnovationMultiplier = CRISIS_RESEARCH_MULTIPLIERS[crisisSeverity] || 1.0;
+
+    // Log crisis mobilization (probabilistic to avoid spam, deterministic)
+    if (crisisInnovationMultiplier > 1.0 && deterministicRandom() < 0.01) {
+      console.log(`🚨🔬 CRISIS INNOVATION MODE: ${crisisSeverity} crisis → ${crisisInnovationMultiplier}x research acceleration`);
+      console.log(`   Precedent: Manhattan Project (10x), COVID vaccines (5x), Apollo Program (10x)`);
+    }
+  }
+
   // P0.1 FIX: Recursive self-improvement acceleration
   // When AI capability exceeds 2.0 (superhuman), growth accelerates exponentially
   // This models the "intelligence explosion" scenario from AI safety literature
@@ -254,9 +285,10 @@ export function calculateDimensionGrowth(
 
   const embodimentMultiplier = embodimentLagMultipliers[dimension];
 
-  // Phase 4 + TIER 4.4 + TIER 0C + P0.1 + Embodiment Lag: Include all multipliers
+  // Phase 4 + TIER 4.4 + TIER 0C + P0.1 + Embodiment Lag + CRISIS INNOVATION: Include all multipliers
   // Physical bottlenecks (energy, infrastructure, embodiment) are hard constraints - no compute can bypass them
-  return baseGrowth * computeMultiplier * energyMultiplier * infrastructureMultiplier * diminishingReturns * govMultiplier * aiMultiplier * recursiveMultiplier * penaltyMultiplier * embodimentMultiplier;
+  // Crisis mobilization (Manhattan Project) can override normal constraints temporarily
+  return baseGrowth * computeMultiplier * energyMultiplier * infrastructureMultiplier * diminishingReturns * govMultiplier * aiMultiplier * recursiveMultiplier * penaltyMultiplier * embodimentMultiplier * crisisInnovationMultiplier;
 }
 
 /**
@@ -331,7 +363,25 @@ export function calculateResearchGrowth(
   
   // AI research capability multiplier - compounding effect
   const aiMultiplier = 1.0 + (aiResearchCapability * 0.2);
-  
+
+  // CRISIS-DRIVEN INNOVATION ACCELERATION (Nov 29, 2025)
+  // Apply same Manhattan Project-style acceleration to research domains
+  let crisisInnovationMultiplier = 1.0;
+
+  if (state) {
+    const { getCrisisSeverity } = require('./techTree/deploymentSpeed');
+    const crisisSeverity = getCrisisSeverity(state);
+
+    const CRISIS_RESEARCH_MULTIPLIERS: Record<string, number> = {
+      'normal': 1.0,
+      'moderate': 2.0,
+      'severe': 5.0,
+      'existential': 10.0
+    };
+
+    crisisInnovationMultiplier = CRISIS_RESEARCH_MULTIPLIERS[crisisSeverity] || 1.0;
+  }
+
   // Risk multiplier - misaligned AIs accelerate risky research
   let riskMultiplier = 1.0;
   const riskySubfields = ['syntheticBiology', 'geneEditing', 'nanotechnology', 'intervention'];
@@ -339,7 +389,7 @@ export function calculateResearchGrowth(
     // Low alignment → faster risky research (dangerous!)
     riskMultiplier = 1.0 + ((1.0 - alignment) * 0.3);
   }
-  
+
   // Prerequisite gates (some research needs other research first)
   let prerequisiteGate = 1.0;
   if (subfield === 'intervention') {
@@ -350,10 +400,11 @@ export function calculateResearchGrowth(
     }
   }
   
-  // Phase 4 + TIER 4.4 + TIER 0C: Include compute, energy, and infrastructure multipliers
+  // Phase 4 + TIER 4.4 + TIER 0C + CRISIS INNOVATION: Include all multipliers
   // Physical bottlenecks (energy, infrastructure) are hard constraints - no compute can bypass them
+  // Crisis mobilization (Manhattan Project) can override normal constraints temporarily
   return baseGrowth * computeMultiplier * energyMultiplier * infrastructureMultiplier * diminishingReturns * govMultiplier * aiMultiplier *
-    riskMultiplier * prerequisiteGate * regulationPenalty;
+    riskMultiplier * prerequisiteGate * regulationPenalty * crisisInnovationMultiplier;
 }
 
 /**
