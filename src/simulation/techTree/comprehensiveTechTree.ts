@@ -3191,6 +3191,12 @@ for (const tech of ALL_TECH) {
 }
 
 /**
+ * Total count of all breakthrough technologies in comprehensive tech tree
+ * Used for bifurcation thresholds and progress calculations
+ */
+export const TOTAL_TECH_COUNT = ALL_TECH.length;  // 119 breakthrough technologies
+
+/**
  * Get all technologies
  */
 export function getAllTech(): TechDefinition[] {
