@@ -10,7 +10,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Key features:**
 - **Research-backed realism**: Every mechanic justified by peer-reviewed sources (2024-2025)
-- **71 breakthrough technologies**: From crisis response to transformative clarketech
+- **119 breakthrough technologies**: From crisis response to transformative clarketech (TIER 0-4)
 - **17-dimensional quality of life**: Survival, health, education, meaning, environment
 - **Multi-paradigm perspectives**: Western Liberal, Development, Ecological, Indigenous worldviews
 - **Deterministic simulation**: Reproducible with RNG seeds for Monte Carlo analysis
@@ -936,7 +936,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📊 **Updated Tipping Point Status Table:** Solar ✅, EVs ✅, Battery Storage ✅ ACCELERATING
 
 **Nov 23: God Mode Paradox Analysis - Technology Shock Discovery** (commit fb043bf)
-- 🔬 **Analysis:** N=20 Monte Carlo of "god mode" (all 71 technologies deployed at Month 0)
+- 🔬 **Analysis:** N=20 Monte Carlo of "god mode" (all 119 technologies deployed at Month 0)
 - **PARADOX CONFIRMED:** Instant deployment produces WORSE outcomes than gradual deployment
 - **Key Metrics:**
   - Dystopia Rate: 100% (vs 90% baseline) - p=0.27, not significant
@@ -4389,7 +4389,7 @@ The fundamental building blocks of the simulation:
 | [🌍 Environmental](./systems/environmental.md) | ✅ | Resources (65%), pollution (30%), climate, biodiversity (35%); **Multi-timescale tipping points** (Oct 26, 2025); **Climate Mortality Phase 2: Storm Systems + BII Framework** (Nov 6, 2025) |
 | [🤝 Social Cohesion](./systems/social-cohesion.md) | ✅ | Meaning crisis (22%), institutional erosion, social bonds, **crisis mitigation mechanics** (Oct 30, 2025) |
 | [⚠️ Technological Risk](./systems/technological-risk.md) | ✅ | Misalignment, safety debt, concentration, complacency |
-| [🔬 Breakthrough Technologies](./systems/breakthrough-technologies.md) | ✅ | **71 technologies** in comprehensive tech tree (TIER 0-4) |
+| [🔬 Breakthrough Technologies](./systems/breakthrough-technologies.md) | ✅ | **119 technologies** in comprehensive tech tree (TIER 0-4) |
 | [🏛️ Governance Quality](./systems/governance-quality.md) | ✅ | Democratic resilience, decision quality, institutional capacity |
 | [🌟 Upward Spirals](./systems/upward-spirals.md) | ✅ | 6 virtuous cascades, multiple paths to Utopia |
 | [🎨 Meaning Renaissance](./systems/meaning-renaissance.md) | ✅ | Cultural flourishing, 4 dimensions of meaning |
@@ -5411,7 +5411,7 @@ From Monte Carlo validation (N=10) and architecture review:
 - ✅ **Novel Entities**: PFAS in 99% of blood, 120-month slow poisoning
 - ✅ **International Competition**: AI race dynamics, first-mover advantage, coordination failure
 
-**Comprehensive Technology Tree (71 technologies)**
+**Comprehensive Technology Tree (119 technologies)**
 - ✅ **TIER 0 (11)**: Deployed 2025 at realistic levels
   - Alignment: Basic RLHF (95%), mechanistic interpretability (15%), adversarial eval (40%)
   - Climate: De-extinction (1%), direct air capture (2%), AI pollution remediation (10%)
@@ -11297,7 +11297,7 @@ npx tsx scripts/deploymentRateSweep.ts > logs/experiment1/full_run_$(date +%Y%m%
 
 1. **Landing Page** (`/docs`)
    - Role-based navigation (Students, Researchers, Developers)
-   - Key stats: 95 phases (reduced from 116), 900+ variables, 71 technologies, 7 outcome tiers
+   - Key stats: 95 phases (reduced from 116), 900+ variables, 119 technologies, 7 outcome tiers
    - Interactive role selection with tailored documentation paths
    - Keyboard shortcuts reference
    - Quick links to full wiki, GitHub, commands
