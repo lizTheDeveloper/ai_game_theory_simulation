@@ -1,0 +1,21 @@
+{
+  "name": "satu-webhook-listener",
+  "version": "1.0.0",
+  "description": "GitHub webhook listener for SATU blue-green deployments",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "webhook",
+    "github",
+    "deployment",
+    "blue-green"
+  ],
+  "author": "SATU Team",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
