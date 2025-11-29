@@ -332,8 +332,10 @@ export class BifurcationLogicPhase implements SimulationPhase {
     // Technology breakthrough threshold (tech unlock progress)
     // This is a proxy - we calculate fraction of technologies unlocked
     const techState = state.techTreeState;
-    // Count unlocked techs out of total 71 techs
-    const avgDeployment = techState.unlockedTech ? techState.unlockedTech.length / 71 : 0.0;
+    // MEDIUM-3 FIX (Nov 29, 2025): Tech tree has 119 techs now (was 71)
+    // Threshold: 55-60% of 119 = 65-71 techs
+    const TOTAL_TECH_COUNT = 119;
+    const avgDeployment = techState.unlockedTech ? techState.unlockedTech.length / TOTAL_TECH_COUNT : 0.0;
     const avgDeploymentFinite = assertFinite(avgDeployment, {
       location: 'BifurcationLogicPhase.calculateProximities',
       valueName: 'avgDeployment',

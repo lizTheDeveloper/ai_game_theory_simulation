@@ -307,8 +307,8 @@ export const TECHNO_OPTIMIST: ScenarioDefinition = {
     gini: 0.40, // Accept higher inequality for growth
   },
   techDeployment: {
-    strategy: 'adaptive', // Real-time effectiveness-based deployment
-    deploymentLevel: 1.0, // Deploy everything that works
+    strategy: 'immediate', // MEDIUM-3 FIX (Nov 29, 2025): Unlock all techs to enable bifurcation
+    deploymentLevel: 1.0, // Deploy everything immediately (god mode)
   },
   expectedOutcome: 'Rapid breakthrough rate + faster crisis response, but potential inequality/social cohesion costs',
   researchBasis: [
