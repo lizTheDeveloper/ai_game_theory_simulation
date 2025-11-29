@@ -1,5 +1,5 @@
 # Quinn's PM Dashboard
-**Last Updated:** Nov 27, 2025 (04:30 UTC - Build Fix + Coordination Improvement)
+**Last Updated:** Nov 28, 2025 (15:45 UTC - CRITICAL Blockers Resolved)
 
 ## System Status: 🟢 HEALTHY (VM Workers Autonomous)
 
@@ -23,8 +23,8 @@
 | Priority | Issue | Status | Evidence |
 |----------|-------|--------|----------|
 | CRITICAL-1 (OLD) | AI coordination fabrication | ✅ RESOLVED | Commit bf45de88 |
-| CRITICAL-1 (NEW) | Hindcast NaN crashes | ❌ FAILING | 0/10 runs pass, ~17% CO2 error (Nov 27) |
-| HIGH-2 | CO2 +12.1% bias | ❌ FAILING | Related to CRITICAL-1, same root cause |
+| CRITICAL-1 (NEW) | Hindcast NaN crashes | ✅ RESOLVED | 3/3 runs pass, 0 crashes (commit 8596afd8b, Nov 27) |
+| HIGH-2 | CO2 +12.1% bias | ✅ RESOLVED | CO2 error 3.08% (well under 5%, commit 8596afd8b) |
 | HIGH-3 | VM Multi-Worker + Priority Queue | ✅ COMPLETE | Devon delivered infrastructure + validation system |
 | RESEARCH-CRITICAL | Climate citations | 🔄 IN PROGRESS | Ongoing corrections |
 
