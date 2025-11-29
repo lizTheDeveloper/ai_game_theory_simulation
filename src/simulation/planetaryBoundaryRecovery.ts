@@ -281,12 +281,14 @@ function updateClimateRecovery(state: GameState, rng: RNGFunction): void {
     // Recovery only happens with net-negative emissions
     if (netNegative) {
       // Get ice sheet recovery parameters
-      const recoveryHalfLife = assertStateProperty(boundary, 'recoveryHalfLife', {
+      const recoveryHalfLife = assertDefined(boundary.recoveryHalfLife, {
         location: 'updateClimateRecovery',
+        valueName: 'boundary.recoveryHalfLife',
         month: state.currentMonth
       });
-      const minimumAsymptoticValue = assertStateProperty(boundary, 'minimumAsymptoticValue', {
+      const minimumAsymptoticValue = assertDefined(boundary.minimumAsymptoticValue, {
         location: 'updateClimateRecovery',
+        valueName: 'boundary.minimumAsymptoticValue',
         month: state.currentMonth
       });
 
@@ -470,19 +472,22 @@ function updateNitrogenRecovery(state: GameState, rng: RNGFunction): void {
 
   if (isImproving && governanceMultiplier >= 0.3) {
     // recoveryMonths is REQUIRED field - must be initialized
-    const currentRecoveryMonths = assertStateProperty(boundary, 'recoveryMonths', {
+    const currentRecoveryMonths = assertDefined(boundary.recoveryMonths, {
       location: 'tryRecoverNitrogen (nitrogen boundary)',
+      valueName: 'boundary.recoveryMonths',
       month: state.currentMonth
     });
     boundary.recoveryMonths = currentRecoveryMonths + governanceMultiplier;
 
     // Get nitrogen recovery parameters
-    const recoveryHalfLife = assertStateProperty(boundary, 'recoveryHalfLife', {
+    const recoveryHalfLife = assertDefined(boundary.recoveryHalfLife, {
       location: 'updateNitrogenRecovery',
+      valueName: 'boundary.recoveryHalfLife',
       month: state.currentMonth
     });
-    const minimumAsymptoticValue = assertStateProperty(boundary, 'minimumAsymptoticValue', {
+    const minimumAsymptoticValue = assertDefined(boundary.minimumAsymptoticValue, {
       location: 'updateNitrogenRecovery',
+      valueName: 'boundary.minimumAsymptoticValue',
       month: state.currentMonth
     });
 
