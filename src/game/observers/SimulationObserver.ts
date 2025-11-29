@@ -322,9 +322,12 @@ export class SimulationObserver implements ISimulationObserver {
       ? ((state as Record<string, unknown>).globalMetrics as Record<string, number>).qualityOfLife ?? 0.5
       : 0.5;
 
-    // Environmental health from climate stability or environmental accumulation
-    const envAccum = (state as Record<string, unknown>).environmentalAccumulation as Record<string, number> | undefined;
-    const environmentalHealth = envAccum?.climateStability ?? 0.5;
+    // Environmental health from globalMetrics (CRITICAL-1 fix, Nov 27, 2025)
+    // BifurcationLogicPhase calculates this as geometric mean of 4 environmental metrics
+    // Research: Scheffer et al. (2014) - Critical thresholds in environmental systems
+    const environmentalHealth = (state as Record<string, unknown>).globalMetrics
+      ? ((state as Record<string, unknown>).globalMetrics as Record<string, number>).environmentalHealth ?? 0.5
+      : 0.5;
 
     // Social stability from society system
     const society = (state as Record<string, unknown>).society as Record<string, number> | undefined;
