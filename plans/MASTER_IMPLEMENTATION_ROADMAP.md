@@ -9,7 +9,7 @@
 - **Research Quality:** B (78%) - CRITICAL citation failure discovered (climate stability self-limiting claims unsupported)
 - **Architecture Health:** A- (Worker Session 2 review - 0 CRITICAL, 0 HIGH issues, 1 MEDIUM remaining)
 - **System Performance:** Monte Carlo deterministic, indices operational (98% op reduction)
-- **System Trajectory:** ⚠️ **BLOCKED** - 1 HIGH blocker (carbon cycle over-calibration), 1 RESEARCH-CRITICAL (citation integrity)
+- **System Trajectory:** ⚠️ **CAUTION** - 0 HIGH blockers (Phase 12 resolved), 1 RESEARCH-CRITICAL (citation integrity)
 - **Roadmap Coherence:** UPDATED - CRITICAL-1 resolved (Nov 29)
 - **Recent Work (Nov 29 - Roy Fix):**
   - ✅ **CRITICAL-1 RESOLVED** - energyAvailability assertion range mismatch fixed (commit 247776d3)
@@ -25,11 +25,13 @@
     - Actual issue: energyAvailability assertion range mismatch
     - 3 of 10 runs crashed at months 142-146 (2002)
     - **Status:** ✅ RESOLVED - hindcast validation unblocked
-  - ❌ **Carbon Cycle Over-Calibration Detected** - +12.1% CO2 bias (threshold: 5%)
-    - Phase 8-9 temporal evolution overcorrected
-    - 1990-2010 hindcast shows 437 ppm vs 390 ppm observed (+12.1%)
-    - Root cause: Sink saturation parameters need refinement
-    - **Status:** HIGH-2 - blocks hindcast validation acceptance
+  - ~~❌ **Carbon Cycle Over-Calibration Detected**~~ → ✅ **RESOLVED** (Nov 29 - Phase 12)
+    - Original claim: +12.1% error (437 ppm vs 390 ppm) - STALE DATA
+    - Phase 11 (Nov 27): Overcorrected to 371 ppm (-5.1% error, sinks too strong)
+    - Phase 12 (Nov 29): Refined sinks (ocean=10.7, land=12.2 GtCO2/yr at 2010)
+    - Validation: 379.9 ppm avg (-2.6% error) ✅ PASS (N=4 preliminary)
+    - Report: `logs/carbon_sink_phase12_fix_20251129.md`
+    - **Status:** ✅ RESOLVED - hindcast validation CO2 error <5%
   - ❌ **Climate Stability Citations FAILED VERIFICATION** - Grade D (60% contradict claims)
     - Lenton 2019: Claims "self-limiting feedbacks" but paper warns of "planetary emergency"
     - Armstrong McKay 2022: Claims "not complete destabilization" but paper warns of "cascading effects"
