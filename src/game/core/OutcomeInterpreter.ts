@@ -116,37 +116,21 @@ export class OutcomeInterpreter {
 
   /**
    * Compute environmental health (0-1)
+   *
+   * HIGH-2 FIX (Nov 29, 2025): Read from canonical source
+   * BifurcationLogicPhase calculates environmentalHealth as geometric mean of 4 metrics
+   * and writes to state.globalMetrics.environmentalHealth
    */
   private computeEnvironmentalHealth(state: GameStateSnapshot): number {
-    const globalMetrics = (state as Record<string, unknown>).globalMetrics as Record<string, unknown> | undefined;
+    const globalMetrics = (state as Record<string, unknown>).globalMetrics as Record<string, number> | undefined;
 
-    if (!globalMetrics) return 0.5;
-
-    let score = 1.0;
-
-    // Temperature penalty (worse above 1.5C)
-    const tempDelta = globalMetrics.globalTemperatureDelta as number | undefined;
-    if (typeof tempDelta === 'number') {
-      if (tempDelta > 1.5) {
-        score -= Math.min(0.3, (tempDelta - 1.5) * 0.1);
-      }
+    // Read from canonical source (BifurcationLogicPhase output)
+    if (globalMetrics && typeof globalMetrics.environmentalHealth === 'number') {
+      return globalMetrics.environmentalHealth;
     }
 
-    // CO2 penalty (worse above 450ppm)
-    const co2 = globalMetrics.co2Concentration as number | undefined;
-    if (typeof co2 === 'number') {
-      if (co2 > 450) {
-        score -= Math.min(0.3, (co2 - 450) / 500);
-      }
-    }
-
-    // Extinction rate penalty
-    const extinctionRate = globalMetrics.extinctionRate as number | undefined;
-    if (typeof extinctionRate === 'number') {
-      score -= Math.min(0.4, extinctionRate * 0.1);
-    }
-
-    return Math.max(0, Math.min(1, score));
+    // Fallback for states without calculated environmentalHealth (e.g., pre-simulation)
+    return 0.5;
   }
 
   /**
