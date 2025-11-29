@@ -161,9 +161,9 @@ describe('State Mappers Integration Tests', () => {
       const research = currencies.find(c => c.name === 'Research');
 
       assert.ok(research, 'Should have Research currency');
-      // 10 techs / 71 total = ~14%
+      // 10 techs / 119 total = ~8%
       assert.ok(
-        research.value >= 10 && research.value <= 20,
+        research.value >= 5 && research.value <= 15,
         `Research value should reflect unlocked tech count: ${research.value}`
       );
     });

@@ -2,12 +2,13 @@
 /**
  * Check Tech Unlock vs Deployment Gap (HIGH-4 Diagnostic)
  *
- * Bug hypothesis: Bifurcation phase uses unlockedTech.length / 71
- * but should use deployed tech count / 71
+ * Bug hypothesis: Bifurcation phase uses unlockedTech.length / TOTAL_TECH_COUNT
+ * but should use deployed tech count / TOTAL_TECH_COUNT
  */
 
 import { runSimulationStep } from '../src/simulation/engine';
 import { initializeGameState } from '../src/simulation/initialization';
+import { TOTAL_TECH_COUNT } from '../src/simulation/techTree/comprehensiveTechTree';
 import seedrandom from 'seedrandom';
 
 const state = initializeGameState(42000);
@@ -25,12 +26,12 @@ for (let month = 0; month < 240; month++) {
       id => state.techTreeState.deployedTechMap[id] > 0
     ).length;
 
-    const avgUnlock = unlocked / 71;
-    const avgDeploy = deployed / 71;
+    const avgUnlock = unlocked / TOTAL_TECH_COUNT;
+    const avgDeploy = deployed / TOTAL_TECH_COUNT;
 
     console.log(`Month ${month} (Year ${(month / 12).toFixed(1)}):`);
-    console.log(`  Unlocked: ${unlocked}/71 (${(avgUnlock * 100).toFixed(1)}%)`);
-    console.log(`  Deployed: ${deployed}/71 (${(avgDeploy * 100).toFixed(1)}%)`);
+    console.log(`  Unlocked: ${unlocked}/${TOTAL_TECH_COUNT} (${(avgUnlock * 100).toFixed(1)}%)`);
+    console.log(`  Deployed: ${deployed}/${TOTAL_TECH_COUNT} (${(avgDeploy * 100).toFixed(1)}%)`);
     console.log(`  Gap: ${unlocked - deployed} techs unlocked but not deployed`);
 
     if (avgUnlock >= 0.60) {
