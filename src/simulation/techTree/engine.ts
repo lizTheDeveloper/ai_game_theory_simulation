@@ -534,26 +534,44 @@ function updateResearchProgress(
     // Calculate progress this month
     // Base: 1 / researchMonthsRequired per month
     const baseProgress = 1.0 / tech.researchMonthsRequired;
-    
+
     // Modifiers:
     const aiCapability = getAverageAICapability(gameState);
     const aiBonus = Math.min(2.0, 1.0 + (aiCapability / 5.0)); // 1.0x to 2.0x
-    
+
     // Research investment bonus (government + private)
     const totalResearch = getTotalResearchInvestment(gameState);
     const researchBonus = 1.0 + Math.min(1.0, totalResearch / 1000); // Up to 2x at $1T/month
-    
+
     // Energy constraints
     const energyMultiplier = getEnergyMultiplier(gameState);
-    
+
+    // Crisis innovation acceleration (matches research.ts logic)
+    // Normal: 1x, Moderate: 2x, Severe: 5x, Existential: 10x
+    const { getCrisisSeverity } = require('./deploymentSpeed');
+    const crisisSeverity = getCrisisSeverity(gameState);
+    const CRISIS_RESEARCH_MULTIPLIERS: Record<string, number> = {
+      'normal': 1.0,
+      'moderate': 2.0,
+      'severe': 5.0,
+      'existential': 10.0
+    };
+    const crisisMultiplier = CRISIS_RESEARCH_MULTIPLIERS[crisisSeverity] || 1.0;
+
+    // Log crisis mobilization (probabilistic to avoid spam, deterministic)
+    if (crisisMultiplier > 1.0 && deterministicRandom() < 0.01) {
+      console.log(`🚨🔬 CRISIS TECH ACCELERATION: ${crisisSeverity} → ${crisisMultiplier}x unlock speed`);
+      console.log(`   Tech unlock now matches AI capability acceleration (Manhattan Project parity)`);
+    }
+
     // Combined progress
-    const progressThisMonth = baseProgress * aiBonus * researchBonus * energyMultiplier;
+    const progressThisMonth = baseProgress * aiBonus * researchBonus * energyMultiplier * crisisMultiplier;
     
     progress = Math.min(1.0, progress + progressThisMonth);
     techTreeState.researchProgress[tech.id] = progress;
     
-    // Debug logging for first tech (probabilistic)
-    if (deterministicRandom() < 0.1 && tech.id === 'struvite_recovery') {
+    // Debug logging for first tech (probabilistic, 1% to reduce spam)
+    if (deterministicRandom() < 0.01 && tech.id === 'struvite_recovery') {
       console.log(`\n🔬 RESEARCH DEBUG (Month ${gameState.currentMonth}):`);
       console.log(`   Tech: ${tech.name}`);
       console.log(`   Research months required: ${tech.researchMonthsRequired}`);
@@ -561,6 +579,7 @@ function updateResearchProgress(
       console.log(`   AI bonus: ${aiBonus.toFixed(2)}x`);
       console.log(`   Research bonus: ${researchBonus.toFixed(2)}x`);
       console.log(`   Energy multiplier: ${energyMultiplier.toFixed(2)}x`);
+      console.log(`   Crisis multiplier: ${crisisMultiplier.toFixed(2)}x (${crisisSeverity})`);
       console.log(`   Progress this month: ${progressThisMonth.toFixed(4)}`);
       console.log(`   Old progress: ${((progress - progressThisMonth) * 100).toFixed(1)}%`);
       console.log(`   New progress: ${(progress * 100).toFixed(1)}%`);
