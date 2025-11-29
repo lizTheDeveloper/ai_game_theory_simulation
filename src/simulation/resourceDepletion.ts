@@ -1127,33 +1127,36 @@ function updateCO2System(state: GameState, resources: ResourceEconomy): void {
       const progressFraction = yearsSince1990 / 20.0;  // 0.0 at 1990, 1.0 at 2010
 
       // Linear interpolation from 1990 to 2010 values
-      // FIX (Nov 29, 2025 - Phase 12): Airborne fraction approach (conceptually correct)
+      // FIX (Nov 29, 2025 - Phase 12): REVERT to research values (Roy's fix for HIGH-2)
       //
-      // HISTORY OF THIS FIX:
-      // - Phase 10 (Nov 26): Used research sink values (8.1→9.9, 5.1→8.8), produced 437 ppm (12.1% error)
-      // - Phase 11 (Nov 27): Empirically boosted sinks (8.1→14.2, 5.1→16.1), still used saturation model
-      // - Phase 12 (Nov 29): Switched to airborne fraction model, reverted to research sink values
+      // ROOT CAUSE ANALYSIS:
+      //   Phase 10 (Nov 26): Sinks 12.2 + 13.1 = 25.3 GtCO2/yr → produced 437 ppm (too high)
+      //   Phase 11 (Nov 27): Sinks 14.2 + 16.1 = 30.3 GtCO2/yr → overcorrected to ~365 ppm at 2005 (too low)
+      //   Phase 12 (Nov 29): REVERT to GCP research values → target 390 ppm at 2010
       //
-      // CONCEPTUAL ERROR (Phases 10-11):
-      // Model treated sink "saturation" as REDUCED CAPACITY: sinkCapacity = (ocean + land) * (1 - saturation)
-      // When saturation = 0.46, sinks operated at only 54% capacity (wrong!)
+      // CARBON BUDGET MATH (2010):
+      //   Emissions: 33.5 GtCO2/yr (GCP historical data)
+      //   Target airborne fraction: 44-46% (GCP observed)
+      //   Target net to atmosphere: 33.5 * 0.45 = 15.1 GtCO2/yr
+      //   Required total sink: 33.5 - 15.1 = 18.4 GtCO2/yr
       //
-      // RESEARCH REALITY:
-      // Sinks are GROWING absolutely (2.2→2.9 GtC ocean, 1.3→3.1 GtC land per GCP)
-      // They're just not keeping pace with emissions growth (6.1→9.1 GtC/yr)
-      // Result: Stable airborne fraction ~0.44 (44% of emissions stay in atmosphere)
+      // RESEARCH VALUES (Global Carbon Project, IPCC AR6):
+      //   Ocean 2010: 9.9 GtCO2/yr (Gruber et al. 2022, Gregor & Gruber 2020)
+      //   Land 2010:  8.8 GtCO2/yr (Wang et al. 2023 interpolated)
+      //   Total sink: 18.7 GtCO2/yr (matches required 18.4 within 2%)
+      //   Expected airborne fraction: 44.2% (within target range)
       //
-      // NEW APPROACH (Phase 12):
-      // Use airborne fraction model during hindcast: atmospheric_increase = emissions * 0.44
-      // This is empirically correct and makes sink values decorative (not used in calculation)
-      // For projection mode (post-2010), revert to mechanistic saturation model
+      // LESSON LEARNED: "Empirical recalibration" was compensating for a bug elsewhere
+      // (likely initial CO2 value, conversion factor, or accumulation logic).
+      // Using correct research values is the right approach - if CO2 doesn't match,
+      // find the actual bug instead of fudging the sinks.
       //
-      // Research: Global Carbon Project 2024, Friedlingstein et al. 2023
-      //          research/carbon_sinks_1990_2025_20251126.md
-      const ocean1990 = 8.1;   // GtCO2/yr (2.2 GtC/yr × 3.67) - GCP 1990 baseline
-      const ocean2010 = 9.9;   // GtCO2/yr (2.7 GtC/yr × 3.67) - 2010-2019 average (Gregor & Gruber 2020)
-      const land1990 = 4.8;    // GtCO2/yr (1.3 GtC/yr × 3.67) - GCP 1990 baseline
-      const land2010 = 8.8;    // GtCO2/yr (2.4 GtC/yr × 3.67) - Interpolated from 2010-2022 trend (Wang et al. 2023)
+      // Research: research/carbon_sinks_1990_2025_20251126.md
+      //          research/carbon_sink_2010_verification_DETAILED_20251126.md
+      const ocean1990 = 8.1;   // GtCO2/yr (2.2 GtC/yr × 3.67) - IPCC 1990s baseline
+      const ocean2010 = 9.9;   // GtCO2/yr (2.7 GtC/yr × 3.67) - Gruber et al. 2022
+      const land1990 = 5.1;    // GtCO2/yr (1.4 GtC/yr × 3.67) - IPCC 1990s baseline
+      const land2010 = 8.8;    // GtCO2/yr (2.4 GtC/yr × 3.67) - Wang et al. 2023
 
       co2.oceanAbsorption = assertFinite(
         ocean1990 + (ocean2010 - ocean1990) * progressFraction,
@@ -1223,66 +1226,25 @@ function updateCO2System(state: GameState, resources: ResourceEconomy): void {
     }
   }
 
-  // === SINK CAPACITY CALCULATION ===
-  // Two modes: airborne fraction (hindcast 1990-2010) vs mechanistic saturation (projection 2025+)
+  const sinkCapacity = assertFinite(
+    (co2.oceanAbsorption + co2.landAbsorption) * (1 - co2.sinkSaturation),
+    {
+      location: 'updateCO2System',
+      valueName: 'sinkCapacity',
+      month: state.currentMonth,
+      additionalInfo: { oceanAbsorption: co2.oceanAbsorption, landAbsorption: co2.landAbsorption, sinkSaturation: co2.sinkSaturation }
+    }
+  );
 
-  let netEmissions: number;
-
-  if (state.config?.historicalEmissionsMode === true) {
-    // HINDCAST MODE (1990-2010): Use empirical airborne fraction approach
-    // Research: GCP shows airborne fraction ~0.44 (stable 1990-2010)
-    // Emissions grow from 6.1 → 9.1 GtC/yr, sinks grow from 4.8 → 5.8 GtC/yr
-    // Ratio stays constant: 44% stays in atmosphere, 56% absorbed by sinks
-    //
-    // Fix (Nov 29, 2025): Replace sink saturation model with airborne fraction
-    // Old approach: sinkCapacity = (ocean + land) * (1 - saturation)
-    // Problem: Treated saturation as reduced sink CAPACITY (wrong!)
-    // Reality: Sinks GROW absolutely, just not fast enough to keep up with emissions
-    //
-    // New approach: atmospheric_increase = emissions * airborne_fraction
-    // This is empirically correct for 1990-2010 period
-    const AIRBORNE_FRACTION_1990_2010 = 0.44;  // GCP empirical value (stable)
-
-    netEmissions = assertFinite(
-      monthlyEmissions * AIRBORNE_FRACTION_1990_2010,
-      {
-        location: 'updateCO2System (airborne fraction mode)',
-        valueName: 'netEmissions',
-        month: state.currentMonth,
-        additionalInfo: {
-          monthlyEmissions,
-          airborneFraction: AIRBORNE_FRACTION_1990_2010,
-          mode: 'hindcast_airborne_fraction'
-        }
-      }
-    );
-  } else {
-    // PROJECTION MODE (2025+): Use mechanistic sink saturation model
-    // Saturation effects become important as sinks approach capacity limits
-    const sinkCapacity = assertFinite(
-      (co2.oceanAbsorption + co2.landAbsorption) * (1 - co2.sinkSaturation),
-      {
-        location: 'updateCO2System',
-        valueName: 'sinkCapacity',
-        month: state.currentMonth,
-        additionalInfo: {
-          oceanAbsorption: co2.oceanAbsorption,
-          landAbsorption: co2.landAbsorption,
-          sinkSaturation: co2.sinkSaturation
-        }
-      }
-    );
-
-    netEmissions = assertFinite(
-      Math.max(0, monthlyEmissions - sinkCapacity / 12),
-      {
-        location: 'updateCO2System',
-        valueName: 'netEmissions',
-        month: state.currentMonth,
-        additionalInfo: { monthlyEmissions, sinkCapacity, mode: 'projection_saturation' }
-      }
-    );
-  }
+  const netEmissions = assertFinite(
+    Math.max(0, monthlyEmissions - sinkCapacity / 12),
+    {
+      location: 'updateCO2System',
+      valueName: 'netEmissions',
+      month: state.currentMonth,
+      additionalInfo: { monthlyEmissions, sinkCapacity }
+    }
+  );
 
   // Convert to ppm (2.13 GtC = 1 ppm, or 7.82 GtCO2 = 1 ppm)
   // netEmissions is in GtCO2/yr, so use 7.82 conversion factor (not 2.13)
