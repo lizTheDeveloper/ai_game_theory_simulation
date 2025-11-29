@@ -13,8 +13,8 @@
       "blockedBy": [],
       "roadmapSection": "CRITICAL Priority Items",
       "createdAt": "2025-11-26T04:30:00Z",
-      "claimedBy": "parker-test",
-      "claimedAt": "2025-11-27T04:07:11.199Z",
+      "claimedBy": "roy-orchestrator-session",
+      "claimedAt": "2025-11-28T15:35:00Z",
       "description": "30% crash rate at months 142-146 (Year 2002). environmentalHealth becomes NaN, propagates to dependent systems.",
       "acceptanceCriteria": [
         "All 10 hindcast runs complete without crashes",
@@ -25,11 +25,12 @@
       "validationCommand": "npx tsx scripts/hindcastValidation.ts --runs=10 --start=1990 --end=2010 --check-environmental-health",
       "validationStatus": "FAILED",
       "progress": {
-        "attempts": 1,
-        "lastWorkedBy": "test-worker",
-        "lastWorkedAt": "2025-11-27T03:54:21.621Z",
+        "attempts": 2,
+        "lastWorkedBy": "orchestrator-reassignment",
+        "lastWorkedAt": "2025-11-28T15:35:00Z",
         "notes": [
-          "[2025-11-27T03:54:21.621Z] Testing progress tracking - this is a test note"
+          "[2025-11-27T03:54:21.621Z] Testing progress tracking - this is a test note",
+          "[2025-11-28T15:35:00Z] REASSIGNED from parker-test (stalled >24h) to roy-orchestrator-session"
         ]
       }
     },
@@ -56,7 +57,15 @@
         "No regression in 1990 baseline accuracy"
       ],
       "validationCommand": "npx tsx scripts/hindcastValidation.ts --runs=10 --start=1990 --end=2010 --check-co2-accuracy",
-      "validationStatus": null
+      "validationStatus": null,
+      "progress": {
+        "attempts": 1,
+        "lastWorkedBy": "orchestrator-session",
+        "lastWorkedAt": "2025-11-28T15:35:00Z",
+        "notes": [
+          "[2025-11-28T15:35:00Z] CLAIMED for immediate fix - CO2 over-calibration Phase 8-9 carbon sink timing"
+        ]
+      }
     },
     {
       "id": "HIGH-3",
