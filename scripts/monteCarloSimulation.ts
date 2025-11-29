@@ -1063,10 +1063,11 @@ if (nestedMonteCarlo) {
       // CRITICAL FIX (Nov 7, 2025): RNG is now first parameter
       const initialState = createDefaultInitialState(rngFunction, runScenarioMode, undefined, undefined, undefined, undefined);
 
-      // HIGH-4 FIX (Nov 29, 2025): Apply TECHNO_OPTIMIST scenario to enable technology bifurcation
-      // Root cause: Monte Carlo was running with 0 techs unlocked (no scenario applied)
-      // TECHNO_OPTIMIST: adaptive deployment, 100% deployment level → enables innovation cascades
-      applyScenario(initialState, SCENARIOS.technoOptimist, rngFunction);
+      // M-3 FIX (Nov 29, 2025): Apply FOUNDATIONS_FIRST scenario (sequenced deployment)
+      // Root cause: TECHNO_OPTIMIST used 'adaptive' strategy which is unimplemented (does nothing)
+      // FOUNDATIONS_FIRST: sequenced deployment (1 tech/6mo) → ~40 techs over 240mo → 56% tree unlocked
+      // Expected: 30-40% of runs cross 55-60% bifurcation threshold
+      applyScenario(initialState, SCENARIOS.foundationsFirst, rngFunction);
 
       // Set run label for logging
       initialState.config.runLabel = `Epistemic ${epistemicIndex + 1}/${NUM_RUNS}, Aleatory ${aleatoryIndex + 1}/${aleatoryNumSamples} [${runScenarioMode}]`;
@@ -2185,10 +2186,11 @@ if (nestedMonteCarlo) {
     // CRITICAL FIX (Nov 7, 2025): RNG is now first parameter
     const initialState = createDefaultInitialState(rngFunction, runScenarioMode, undefined, undefined, undefined, undefined);
 
-    // HIGH-4 FIX (Nov 29, 2025): Apply TECHNO_OPTIMIST scenario to enable technology bifurcation
-    // Root cause: Monte Carlo was running with 0 techs unlocked (no scenario applied)
-    // TECHNO_OPTIMIST: adaptive deployment, 100% deployment level → enables innovation cascades
-    applyScenario(initialState, SCENARIOS.technoOptimist, rngFunction);
+    // M-3 FIX (Nov 29, 2025): Apply FOUNDATIONS_FIRST scenario (sequenced deployment)
+    // Root cause: TECHNO_OPTIMIST used 'adaptive' strategy which is unimplemented (does nothing)
+    // FOUNDATIONS_FIRST: sequenced deployment (1 tech/6mo) → ~40 techs over 240mo → 56% tree unlocked
+    // Expected: 30-40% of runs cross 55-60% bifurcation threshold
+    applyScenario(initialState, SCENARIOS.foundationsFirst, rngFunction);
 
     // Set run label for logging
     initialState.config.runLabel = `Run ${i + 1}/${NUM_RUNS} [${runScenarioMode}]`;
