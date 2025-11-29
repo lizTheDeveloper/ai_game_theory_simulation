@@ -560,6 +560,7 @@ export class SimulationEngine {
     // === BATCH 3 CONSOLIDATED PHASES (Nov 9, 2025) ===
     this.orchestrator.registerPhase(new ResourceSoilPhase());  // Consolidated: PhosphorusPhase + NovelEntitiesPhase
     this.orchestrator.registerPhase(new ResourceWaterPhase());  // Consolidated: FreshwaterPhase + OceanAcidificationPhase
+    this.orchestrator.registerPhase(new OceanAcidificationCascadePhase());  // RD-2 (Nov 28, 2025): Regional coral cascades
     // FIX (Oct 28, 2025): Applies births to regions, then aggregates → global
     this.orchestrator.registerPhase(new HumanPopulationPhase());
     this.orchestrator.registerPhase(new InternationalMigrationPhase()); // Phase 8 - Hindcast Calibration (Nov 25 2025)
@@ -586,7 +587,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new ClimateDeploymentDelayPhase());  // TIER 1 CRITICAL (Nov 18, 2025): Three-delay model for realistic deployment timescales (order 16.0)
     this.orchestrator.registerPhase(new VolcanicForcingPhase());  // HIGH PRIORITY (Nov 27, 2025): Stratospheric aerosol forcing for hindcast validation (order 16.5)
     this.orchestrator.registerPhase(new PermafrostCarbonPhase());  // TIER 2 RD-1 (Nov 28, 2025): Permafrost carbon feedback loop (order 18.5)
-    this.orchestrator.registerPhase(new OceanAcidificationCascadePhase());  // TIER 2 RD-2 (Nov 28, 2025): Regional ocean acidification cascades (order 18.7)
+    // NOTE: OceanAcidificationCascadePhase registered at line 563 (order 21.8, after ResourceWaterPhase)
     // === BATCH 4 CONSOLIDATED SURVIVAL SYSTEM (Nov 9, 2025) ===
     this.orchestrator.registerPhase(new HumanSurvivalSystemPhase());  // Consolidated: FamineSystemPhase + FoodSecurityDegradationPhase + MortalityStabilizersPhase (order 19.7)
     // DEPRECATED (Nov 21, 2025): TransitionMortalityPhase superseded by CoordinatedDeploymentPhase (order 10.5)
