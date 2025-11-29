@@ -1164,4 +1164,9 @@ export interface GameState {
   previousQoL?: number; // Previous month's QoL for trend calculation (initialized in globalMetrics)
   previousAICapability?: number; // Previous month's average AI capability
   previousMisalignedCount?: number; // Previous month's misaligned AI count
+
+  // AI Infrastructure tracking fields (aiInfrastructureResources.ts)
+  previousTotalCapability?: number; // Previous month's total AI capability (for water consumption calculation)
+  waterConstraintLogged?: boolean; // Flag to prevent duplicate water constraint logging
+  energyConstraintLogged?: boolean; // Flag to prevent duplicate energy constraint logging
 }
