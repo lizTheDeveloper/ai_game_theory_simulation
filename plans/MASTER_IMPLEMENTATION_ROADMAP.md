@@ -405,27 +405,34 @@
 
 ### 🟡 MEDIUM Priority Items
 
-**M-3: Technology Bifurcation Investigation (0/10 Runs)** 🆕 NEW (Nov 29, 2025)
-- **Status:** 🆕 NEW - Downgraded from HIGH-4 after validation
+**M-3: Technology Bifurcation Investigation (0/10 Runs)** ⏳ IN PROGRESS (Nov 29, 2025)
+- **Status:** ⏳ IN PROGRESS - Scenario persistence fixed, validation running
 - **Assignee:** simulation-maintainer (Roy)
 - **Problem:** Despite fixing scenario application (HIGH-4), 0/10 runs cross technology bifurcation threshold
   - Expected: 30-40% of runs unlock 55-60% of tech tree (39-43 technologies)
   - Observed: 0/10 runs cross threshold (validation run Nov 29 07:01 UTC)
   - Logs show "Deploying X technologies" but tree unlock metrics unclear
-- **Hypotheses:**
-  1. **Resentment floor blocks techs:** 0.715-0.940 resentment may prevent tech tree unlocks
-  2. **Deployment ≠ Unlock:** Technologies may deploy without incrementing tech tree metrics
-  3. **Threshold miscalibration:** 55-60% threshold may be unrealistic given crisis conditions
-  4. **Cascade timing:** Techs unlock too late (post-collapse) to affect outcome classification
-- **Investigation Plan:**
-  1. Add tech tree progression logging to Monte Carlo runs
-  2. Verify relationship between tech deployment and tree unlocks
-  3. Check if resentment blocks tech advancement mechanics
-  4. Review outcome classification timing (when is bifurcation evaluated?)
+- **Diagnostic Phase COMPLETE (Nov 29 09:00 UTC):**
+  - **Root Cause:** `applyScenario()` only set `state.scenarioConfig`, not `state.scenario`
+    - Result: All scenario-dependent phases returned early (no tech deployment)
+    - Technology unlocks: 0 (because deployment never executed)
+  - **Fix Applied (commit 1cda7448):**
+    - Set both `state.scenario` AND `state.scenarioConfig` in applyScenario()
+    - Fixed TECHNO_OPTIMIST spending (climate 0.4→0.05, alignment 0.5→0.7)
+    - Added diagnostic logging to BifurcationLogicPhase (track tech unlocks)
+  - **Partial Validation Results (N=10 running):**
+    - ✅ Scenario persistence WORKING
+    - ✅ Tech deployment EXECUTING (11/71 techs with adaptive strategy)
+    - ❌ Bifurcation threshold NOT REACHED (need 41 techs, getting 11)
+- **Next Decision (After Validation):**
+  - **Option A:** Lower threshold (41→15 techs, ~20% tree)
+  - **Option B:** Increase tech deployment effectiveness (research required)
 - **Downgrade Rationale:** Outcome variance restored (primary HIGH-4 goal), bifurcation is secondary metric
 - **Priority:** MEDIUM - Affects model realism but doesn't block validation or research
-- **Token Conservation:** Defer until CRITICAL/HIGH cleared
-- **Report:** reviews/high4_validation_results_20251129.md (validation data)
+- **Token Conservation:** Quick validation, then defer deeper work until CRITICAL/HIGH cleared
+- **Reports:**
+  - reviews/high4_validation_results_20251129.md (initial validation)
+  - reviews/technology_bifurcation_root_cause_20251129.md (diagnostic findings)
 
 **M-1: Dead Code Cleanup** ✅ RESOLVED (Nov 26, 2025)
 - **Status:** ✅ RESOLVED - Commit 8ef9b822e (Nov 26, 2025)

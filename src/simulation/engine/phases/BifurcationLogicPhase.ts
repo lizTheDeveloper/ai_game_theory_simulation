@@ -339,6 +339,11 @@ export class BifurcationLogicPhase implements SimulationPhase {
       valueName: 'avgDeployment',
       month: state.currentMonth,
     });
+
+    // M-3 DIAGNOSTIC (Nov 29, 2025): Track tech unlock progression
+    if (state.currentMonth % 12 === 0 || techState.unlockedTech.length > 0) {
+      console.log(`  [Tech Bifurcation] Month ${state.currentMonth}: ${techState.unlockedTech.length}/71 techs (${(avgDeploymentFinite * 100).toFixed(1)}%), threshold ${(bifState.technologyBreakthroughThreshold.location * 100).toFixed(1)}%`);
+    }
     // CRITICAL FIX (CRITICAL-1): For technology thresholds (trigger when ABOVE), distance should be 0 when at/above threshold
     // If value < threshold: distance to reach = (threshold - value)
     // If value >= threshold: achieved, distance = 0 (maximum amplification for innovation cascades)
