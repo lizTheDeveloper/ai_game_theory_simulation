@@ -317,27 +317,29 @@
 - **Priority Justification:** 125 branch backlog + Nov 8 zero-work pattern indicate this is critical path bottleneck
 - **Devon's First Task:** This is Devon's introduction to the project. Infrastructure work unblocks ALL other agents.
 
-**HIGH-4: Technology Bifurcation Investigation (100% Dystopia Outcomes)** ⏳ ACTIVE (Nov 29, 2025)
-- **Status:** ⏳ INVESTIGATION REQUIRED - Monte Carlo N=10 shows zero outcome variance
+**HIGH-4: Technology Bifurcation Investigation (100% Dystopia Outcomes)** ⏳ PARTIAL PROGRESS (Nov 29, 2025)
+- **Status:** ⏳ BUG FIXED, DEEPER ISSUE REMAINS - Bifurcation logic now triggers, but outcomes unchanged
 - **Discovery:** Nov 29, 2025 - Monte Carlo validation post-CRITICAL-1/HIGH-2 resolution
-- **Problem:** Expected 30-40% technology bifurcation, observed 0%
-  - 10/10 runs: Pyrrhic Dystopia (88-99% mortality)
-  - 0/10 runs: Technology-enabled recovery or utopia paths
-  - High resentment (0.715-0.940) blocking utopia paths
-  - No variance in final outcomes despite deterministic randomness
-- **Root Cause Hypotheses (from coordination channel):**
-  1. Resentment accumulation too aggressive (caps near 0.94 consistently)
-  2. Technology effectiveness gated behind unachievable cooperation thresholds
-  3. Recovery timescales mismatched with simulation duration (200 months)
-  4. Missing positive feedback loops (technology → cooperation → more technology)
-- **Investigation Plan:**
-  - Phase 1: Diagnostic run with resentment logging (identify accumulation sources)
-  - Phase 2: Technology effectiveness analysis (deployment vs impact gap)
-  - Phase 3: Cooperation threshold audit (are gates too strict?)
-  - Phase 4: Parameter sensitivity analysis (which levers enable bifurcation?)
+- **Root Cause (IDENTIFIED):** Wrong metric in BifurcationLogicPhase.ts:329
+  - Code used `unlockedTech.length / 71` (research completed)
+  - Should use `Object.keys(deployedTechMap).length / 71` (actual deployment)
+  - **FIX APPLIED:** Commit a41f65fe - Now uses deployed tech count
+- **Validation Results (Post-Fix):**
+  - ✅ Regime shifts now occurring: 2-4 shifts per run (was 0)
+  - ❌ Still 100% dystopia outcomes (11/11 valid runs)
+  - Bifurcation logic triggering correctly but not changing outcomes
+- **Deeper Problem:** Regime shifts trigger but don't enable recovery
+  1. Shifts may be happening too late (after collapse already inevitable)
+  2. Technology deployment insufficient even when shifts occur
+  3. Resentment/cooperation dynamics still blocking recovery paths
+  4. Missing feedback loops: regime shift → enhanced tech effectiveness
+- **Next Investigation Phase:**
+  - Analyze timing: when do shifts occur vs when is recovery still possible?
+  - Check if shifts actually change state dynamics or just get logged
+  - Review BifurcationLogicPhase impact on downstream phases
 - **Assignee:** simulation-maintainer (Roy) + research-skeptic (Sylvia)
-- **Priority:** HIGH - Model shows no pathway diversity (research question validity at risk)
-- **Impact:** If unsolved, simulation produces deterministic dystopia regardless of interventions
+- **Priority:** HIGH - Bifurcation infrastructure works, but doesn't affect outcomes
+- **Impact:** Model shows regime awareness but no pathway diversity
 
 **HIGH-5: Agent Message Checking Infrastructure** ⏳ PLANNED (Nov 27, 2025)
 - **Status:** ⏳ PLANNED - Agents currently don't check Matrix messages before/during work
