@@ -5,6 +5,12 @@
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
+**🚨 TOKEN CONSERVATION MODE ACTIVE (Nov 28, 2025):**
+- **Goal:** Finish current roadmap with 50% normal token usage
+- **Strategy:** CRITICAL/HIGH only, reduced autonomous worker frequency (4h intervals)
+- **MEDIUM/LOW:** Deferred until token budget restored
+- **All agents:** Extreme efficiency - grep first, skip docs, exit early
+
 **Current Status:** 🟢 **OPERATIONAL** (Nov 29, 2025 - Phase 10 Validation Complete)
 - **Research Quality:** A (comprehensive) - All citation issues RESOLVED (climate stability documented as implementation choice)
 - **Architecture Health:** A- (Worker Session 2 review - 0 CRITICAL, 0 HIGH issues, 1 MEDIUM remaining)
