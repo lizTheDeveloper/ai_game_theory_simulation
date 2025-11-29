@@ -237,8 +237,15 @@ export class BifurcationLogicPhase implements SimulationPhase {
     });
 
     // Economic collapse threshold
-    // Use combination of economicTransitionStage (progress) and wealthDistribution (equity)
-    // Higher stage + higher equity = more stable economy
+    // HOTFIX (Nov 28, 2025): Add baseline offset to prevent Month 0 collapse
+    // BUG FIX: Previous formula started at 0.19 with stage=0, wealthDist=0.38
+    //          This is BELOW the economic collapse threshold range [0.15, 0.25]
+    //          Result: 50% of runs collapsed at Month 0 (initialization!)
+    // ROOT CAUSE: economicTransitionStage is a PROGRESSION metric (0=pre-AI, 4=post-scarcity)
+    //             NOT a stability metric. Stage 0 should be "functioning 2025 economy", not "collapsed"
+    // TODO (TIER 2 cleanup): Replace with actual distress metrics (unemployment, poverty)
+    //       Research: Economic collapse = >40% unemployment, >50% GDP drop
+    //       Current: Just measures "haven't reached post-scarcity yet"
     const economicStage = assertStateProperty(state.globalMetrics, 'economicTransitionStage', {
       location: 'BifurcationLogicPhase.calculateProximities',
       month: state.currentMonth,
@@ -247,8 +254,11 @@ export class BifurcationLogicPhase implements SimulationPhase {
       location: 'BifurcationLogicPhase.calculateProximities',
       month: state.currentMonth,
     });
-    // Normalize economicStage to [0,1] (from [0,4]) and average with wealthDistribution
-    const economicStability = (economicStage / 4.0 + wealthDist) / 2.0;
+    // HOTFIX: Add +2 offset to economicStage to ensure 2025 baseline starts above max threshold
+    // Formula: ((stage + 2) / 6 + wealthDist) / 2
+    // - Stage 0, wealthDist=0.38: ((0+2)/6 + 0.38)/2 = 0.355 ✅ Above max threshold (0.25)
+    // - Stage 4, wealthDist=0.38: ((4+2)/6 + 0.38)/2 = 0.69 ✅ Still increases with post-scarcity
+    const economicStability = ((economicStage + 2.0) / 6.0 + wealthDist) / 2.0;
     const economicStabilityFinite = assertFinite(economicStability, {
       location: 'BifurcationLogicPhase.calculateProximities',
       valueName: 'economicStability',

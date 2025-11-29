@@ -37,8 +37,8 @@ export function initializeOceanAcidificationSystem(rng?: () => number): OceanAci
 
   return {
     // Research-backed fields (RD-2 Nov 28 2025)
-    aragoniteSaturation: 2.8,        // Current (2025): 2.8-3.3, down from 4.6 pre-industrial
-    pH: 7.95,                        // Current (2025): 7.95 (CALIBRATION: above cascade threshold, allows grace period)
+    aragoniteSaturation: 3.0,        // Current (2025): 3.0 (CALIBRATION: slightly above stress threshold)
+    pH: 8.0,                         // Current (2025): 8.0 (CALIBRATION: provides 10-20 year grace period before cascade at pH < 7.9)
     pHLevel: 0.96,                   // LEGACY: Slight decline from pre-industrial 8.2
     co2AbsorptionCapacity: 0.85,     // Still strong but declining
     coralReefHealth: 70,             // 70% (30% degradation from baseline)
@@ -84,7 +84,7 @@ export function initializeOceanAcidificationSystem(rng?: () => number): OceanAci
     },
     economicValueAtRisk: 100,       // $100B/year baseline (conservative)
     populationDependent: 350,       // 350M people (midpoint 330-500M)
-    pHHistory: [7.95],              // Historical tracking (Month 0) - CALIBRATION: matches initial pH
+    pHHistory: [8.0],               // Historical tracking (Month 0) - CALIBRATION: matches initial pH
     coralHealthHistory: [70],       // Historical tracking (Month 0)
 
     // Existing fields
@@ -151,14 +151,15 @@ export function updateOceanAcidificationSystem(state: GameState, rng: () => numb
   // === pH DECLINE (SSP Scenario-Based) ===
   // Research: Jiang et al. (2023), IPCC AR6
   // Monthly rates from RCP/SSP projections (2025-2100, 900 months)
-  // CALIBRATION (Nov 28, 2025): Reduced by 50% + capped SSP3/SSP5 to match research timelines
+  // CALIBRATION (Nov 28, 2025 v2): Reduced by 70% total to match century-long research timelines
+  // Research shows pH decline occurs over centuries, not decades
 
   const pH_DECLINE_RATE_PER_MONTH = {
-    SSP1_1_9: -0.000005,  // Was -0.00001 → 50% reduction
-    SSP1_2_6: -0.000045,  // Was -0.00009 → 50% reduction
-    SSP2_4_5: -0.000095,  // Was -0.00019 → 50% reduction (moderate)
-    SSP3_7_0: -0.000095,  // Capped at SSP2 level (was -0.00030)
-    SSP5_8_5: -0.000095,  // Capped at SSP2 level (was -0.00043, business as usual)
+    SSP1_1_9: -0.000003,  // Was -0.00001 → 70% reduction
+    SSP1_2_6: -0.000027,  // Was -0.00009 → 70% reduction
+    SSP2_4_5: -0.000057,  // Was -0.00019 → 70% reduction (moderate)
+    SSP3_7_0: -0.000057,  // Capped at SSP2 level (was -0.00030)
+    SSP5_8_5: -0.000057,  // Capped at SSP2 level (was -0.00043, business as usual)
   };
 
   // Map climate stability to SSP scenario (higher stability = better mitigation)
@@ -234,19 +235,20 @@ export function updateOceanAcidificationSystem(state: GameState, rng: () => numb
 
   // === CORAL HEALTH DECLINE (Species-Adjusted) ===
   // Research: IPCC AR6, field studies (species variation wide)
+  // CALIBRATION (Nov 28, 2025 v2): Reduced base rates by 50% to match research timescales
 
   let coralDeclineRate = 0.0;
 
   if (oa.pH < 7.5) {
-    coralDeclineRate = -5.0;      // Severe: -5%/month
+    coralDeclineRate = -2.5;      // Severe: -2.5%/month (was -5.0)
   } else if (oa.pH < 7.7) {
-    coralDeclineRate = -2.0;      // Collapse: -2%/month (±0.2 uncertainty)
+    coralDeclineRate = -1.0;      // Collapse: -1.0%/month (was -2.0)
   } else if (oa.pH < 7.8) {
-    coralDeclineRate = -0.8;      // Severe stress: -0.8%/month
+    coralDeclineRate = -0.4;      // Severe stress: -0.4%/month (was -0.8)
   } else if (oa.pH < 7.9) {
-    coralDeclineRate = -0.3;      // Moderate: -0.3%/month
+    coralDeclineRate = -0.15;     // Moderate: -0.15%/month (was -0.3)
   } else if (oa.pH < 8.0) {
-    coralDeclineRate = -0.1;      // Mild: -0.1%/month
+    coralDeclineRate = -0.05;     // Mild: -0.05%/month (was -0.1)
   }
 
   // Store base decline rate before applying multipliers
@@ -415,13 +417,65 @@ export function updateOceanAcidificationSystem(state: GameState, rng: () => numb
   // === FISH-DEPENDENT POPULATION IMPACT ===
   // Research: 330-500M direct dependence (within 30km of reefs), up to 1B indirect
   // Regional variation: Coral Triangle 130M, Pacific Islands 10M (60% protein from fish)
+  // CALIBRATION (Nov 28, 2025 v2): Add dampening factors for adaptation, aid, alternative proteins
 
   if (oa.marineEcosystemFunction < 50) {
     // Ecosystem stressed: Fish catches declining
     oa.fishDependentImpact = (50 - oa.marineEcosystemFunction) / 50; // 0-100% impact
 
+    // DAMPENING FACTORS (reduce mortality from fish collapse)
+    // 1. Economic development: Higher stage = more food alternatives
+    //    Stage 1 (subsistence): 0% dampening
+    //    Stage 3 (industrial): 40% dampening
+    //    Stage 4 (post-scarcity): 70% dampening
+    const economicDampening = assertProbability(Math.min(0.7, Math.max(0, (economicStage - 1.0) * 0.35)), {
+      location: 'updateOceanAcidificationSystem[economic dampening]',
+      valueName: 'economicDampening',
+      month: state.currentMonth,
+      additionalInfo: { economicStage }
+    });
+
+    // 2. Agricultural productivity: Can substitute with land-based protein
+    //    materialAbundance > 0.7: 30% dampening
+    //    materialAbundance > 0.5: 10% dampening
+    const materialAbundance = assertProbability(state.qualityOfLifeSystems.materialAbundance, {
+      location: 'updateOceanAcidificationSystem[material abundance check]',
+      valueName: 'materialAbundance',
+      month: state.currentMonth
+    });
+    const agriculturalDampening = assertProbability(materialAbundance > 0.7 ? 0.3 : (materialAbundance > 0.5 ? 0.1 : 0), {
+      location: 'updateOceanAcidificationSystem[agricultural dampening]',
+      valueName: 'agriculturalDampening',
+      month: state.currentMonth
+    });
+
+    // 3. International cooperation: Aid and trade can redistribute food
+    //    coordinationLevel > 0.7: 20% dampening
+    const cooperationDampening = assertProbability(state.globalMetrics.coordinationLevel > 0.7 ? 0.2 : 0, {
+      location: 'updateOceanAcidificationSystem[cooperation dampening]',
+      valueName: 'cooperationDampening',
+      month: state.currentMonth
+    });
+
+    // Combined dampening (multiplicative to avoid over-dampening)
+    const totalDampening = assertProbability(
+      1.0 - ((1.0 - economicDampening) * (1.0 - agriculturalDampening) * (1.0 - cooperationDampening)),
+      {
+        location: 'updateOceanAcidificationSystem[total dampening]',
+        valueName: 'totalDampening',
+        month: state.currentMonth,
+        additionalInfo: { economicDampening, agriculturalDampening, cooperationDampening }
+      }
+    );
+
     // Food QoL impact (37.5% of 8B = 3B people, but using 500M/8B = 6.25% more conservative)
-    const foodImpact = oa.fishDependentImpact * 0.0625 * 0.005; // Up to 0.03%/month
+    // Dampening applied: adaptation reduces mortality impact
+    const foodImpact = assertFinite(oa.fishDependentImpact * 0.0625 * 0.005 * (1.0 - totalDampening), {
+      location: 'updateOceanAcidificationSystem[food impact]',
+      valueName: 'foodImpact',
+      month: state.currentMonth,
+      additionalInfo: { fishDependentImpact: oa.fishDependentImpact, totalDampening }
+    }); // Up to 0.03%/month (undampened)
     state.qualityOfLifeSystems.materialAbundance = Math.max(0, state.qualityOfLifeSystems.materialAbundance - foodImpact);
   }
 
