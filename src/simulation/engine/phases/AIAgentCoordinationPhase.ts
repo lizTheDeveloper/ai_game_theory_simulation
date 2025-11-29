@@ -452,7 +452,8 @@ export class AIAgentCoordinationPhase implements SimulationPhase {
         (t.fromAgentId === agent2Id && t.toAgentId === agent1Id)
     );
 
-    return entry?.trustLevel ?? 0.5; // Default 50% trust
+    // INITIALIZATION: Return default trust if no prior relationship exists
+    return entry?.trustLevel ?? 0.5;
   }
 
   /**
