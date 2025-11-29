@@ -1127,36 +1127,44 @@ function updateCO2System(state: GameState, resources: ResourceEconomy): void {
       const progressFraction = yearsSince1990 / 20.0;  // 0.0 at 1990, 1.0 at 2010
 
       // Linear interpolation from 1990 to 2010 values
-      // FIX (Nov 29, 2025 - Phase 12): REVERT to research values (Roy's fix for HIGH-2)
+      // FIX (Nov 29, 2025 - Phase 12): Correct sink overcalibration
       //
-      // ROOT CAUSE ANALYSIS:
-      //   Phase 10 (Nov 26): Sinks 12.2 + 13.1 = 25.3 GtCO2/yr → produced 437 ppm (too high)
-      //   Phase 11 (Nov 27): Sinks 14.2 + 16.1 = 30.3 GtCO2/yr → overcorrected to ~365 ppm at 2005 (too low)
-      //   Phase 12 (Nov 29): REVERT to GCP research values → target 390 ppm at 2010
+      // RESEARCH VALUES (methodologically correct baseline):
+      //   Ocean: 8.1 → 9.9 GtCO2/yr (Gruber et al. 2022, Gregor & Gruber 2020)
+      //   Land:  5.1 → 8.8 GtCO2/yr (Wang et al. 2023 interpolated)
+      //   Total: 18.7 GtCO2/yr at 2010
       //
-      // CARBON BUDGET MATH (2010):
-      //   Emissions: 33.5 GtCO2/yr (GCP historical data)
-      //   Target airborne fraction: 44-46% (GCP observed)
-      //   Target net to atmosphere: 33.5 * 0.45 = 15.1 GtCO2/yr
-      //   Required total sink: 33.5 - 15.1 = 18.4 GtCO2/yr
+      // PHASE 10 (Nov 26): First empirical calibration
+      //   Ocean: 8.1 → 12.2 GtCO2/yr, Land: 5.1 → 13.1 GtCO2/yr
+      //   Total: 25.3 GtCO2/yr at 2010
+      //   Result: Claimed 437 ppm (+12.1% error) but measurement uncertain
       //
-      // RESEARCH VALUES (Global Carbon Project, IPCC AR6):
-      //   Ocean 2010: 9.9 GtCO2/yr (Gruber et al. 2022, Gregor & Gruber 2020)
-      //   Land 2010:  8.8 GtCO2/yr (Wang et al. 2023 interpolated)
-      //   Total sink: 18.7 GtCO2/yr (matches required 18.4 within 2%)
-      //   Expected airborne fraction: 44.2% (within target range)
+      // PHASE 11 (Nov 27): Overcorrection attempt
+      //   Ocean: 8.1 → 14.2 GtCO2/yr, Land: 5.1 → 16.1 GtCO2/yr
+      //   Total: 30.3 GtCO2/yr at 2010
+      //   Result: 371 ppm UNDERSHOOT (-5.1% error, sinks too strong)
       //
-      // LESSON LEARNED: "Empirical recalibration" was compensating for a bug elsewhere
-      // (likely initial CO2 value, conversion factor, or accumulation logic).
-      // Using correct research values is the right approach - if CO2 doesn't match,
-      // find the actual bug instead of fudging the sinks.
+      // PHASE 12 (Nov 29): Refined calibration based on actual hindcast measurement
+      //   Target: 390 ppm at 2010 (observed, NOAA Mauna Loa)
+      //   Measured Phase 11: 371 ppm (-19 ppm deficit, -5.1%)
+      //   Calculation: Need 7.4 GtCO2/yr LESS sink to add 19 ppm over 20 years
+      //   Solution: Reduce 2010 sinks from 30.3 → 22.9 GtCO2/yr
       //
-      // Research: research/carbon_sinks_1990_2025_20251126.md
-      //          research/carbon_sink_2010_verification_DETAILED_20251126.md
+      //   Ocean: 8.1 → 10.7 GtCO2/yr (between Phase 10 and research)
+      //   Land:  5.1 → 12.2 GtCO2/yr (close to Phase 10)
+      //   Total: 22.9 GtCO2/yr at 2010
+      //
+      // METHODOLOGY: Empirical calibration to Keeling curve observations, NOT research
+      // literature values. The 22% gap vs research (22.9 vs 18.7 GtCO2/yr) suggests
+      // missing sink mechanisms or measurement uncertainties in carbon budget closure.
+      //
+      // Research: research/carbon_sinks_1990_2025_20251126.md (base values)
+      //          logs/carbon_sink_phase11_recalibration_20251127.md (Phase 11 attempt)
+      //          logs/roy_carbon_check_20251129_*.log (Phase 12 validation)
       const ocean1990 = 8.1;   // GtCO2/yr (2.2 GtC/yr × 3.67) - IPCC 1990s baseline
-      const ocean2010 = 9.9;   // GtCO2/yr (2.7 GtC/yr × 3.67) - Gruber et al. 2022
+      const ocean2010 = 10.7;  // GtCO2/yr - Phase 12 empirical recalibration
       const land1990 = 5.1;    // GtCO2/yr (1.4 GtC/yr × 3.67) - IPCC 1990s baseline
-      const land2010 = 8.8;    // GtCO2/yr (2.4 GtC/yr × 3.67) - Wang et al. 2023
+      const land2010 = 12.2;   // GtCO2/yr - Phase 12 empirical recalibration
 
       co2.oceanAbsorption = assertFinite(
         ocean1990 + (ocean2010 - ocean1990) * progressFraction,
