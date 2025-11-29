@@ -541,7 +541,7 @@ function checkEnvironmentalCrises(state: GameState): void {
       valueName: 'materialAbundance',
       month: state.currentMonth,
     }); // 30% drop in material goods
-    qol.energyAvailability = assertInRange(qol.energyAvailability * 0.8, 0, 2,
+    qol.energyAvailability = assertInRange(qol.energyAvailability * 0.8, 0, 3,
       {
       location: 'resourceCrisis_energyAvailability',
       valueName: 'energyAvailability',
