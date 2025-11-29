@@ -41,6 +41,13 @@ export class BifurcationLogicPhase implements SimulationPhase {
       expectedSource: 'initialization.ts - bifurcationState should be initialized'
     });
 
+    // CRITICAL FIX (Nov 29, 2025): Early-game protection (months 0-11)
+    // Prevent initialization artifacts from triggering false bifurcations
+    // Research: Real bifurcations emerge from dynamics, not initial conditions
+    if (state.currentMonth < 12) {
+      return { events: [] };
+    }
+
     // Calculate proximity to all thresholds
     const proximities = this.calculateProximities(state, bifState);
 

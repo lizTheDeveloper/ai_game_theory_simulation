@@ -742,7 +742,7 @@ export function createDefaultInitialState(
       paranoia: 0.1,  // Alias for paranoiaLevel (backward compatibility)
       communityStrength: 0.63,  // Phase 2E: Community bonds (medium-high baseline)
       institutionalTrust: 0.70,  // Phase 2E: Trust in institutions (democratic baseline)
-      coordinationCapacity: 0.4,
+      coordinationCapacity: 0.65,  // FIX (Nov 29, 2025): Realistic 2025 baseline (was 0.4, caused Month 0 social collapse)
       unemploymentLevel: 0.049,  // ILO (2024): Global unemployment rate 4.9% (World Employment and Social Outlook: Trends 2025)
       socialAdaptation: 0.1,
       activeMovements: [],
