@@ -86,44 +86,30 @@ export function applyEnergyConstrainedCleanup(
   });
 
   // 1. Check if tech has energy requirement (legacy tech without energy model uses old behavior)
-  const energyReq = typeof tech.energyRequirement === 'object'
-    ? (tech.energyRequirement as any).kWhPerKg
-      ?? (tech.energyRequirement as any).kWhPerM3
-      ?? (tech.energyRequirement as any).annualTWhRequired
-    : tech.energyRequirement;
+  let energyReq: number | undefined;
+  if (typeof tech.energyRequirement === 'object') {
+    // Object with kWhPerKg or annualTWhRequired
+    if (tech.energyRequirement.kWhPerKg !== undefined) {
+      energyReq = tech.energyRequirement.kWhPerKg;
+    } else if (tech.energyRequirement.annualTWhRequired !== undefined) {
+      energyReq = tech.energyRequirement.annualTWhRequired;
+    } else {
+      throw new Error(`❌ Tech '${tech.id}' has energyRequirement object but neither kWhPerKg nor annualTWhRequired is defined`);
+    }
+  } else {
+    energyReq = tech.energyRequirement;
+  }
 
   if (!energyReq || !tech.minimumConcentration) {
     // Legacy cleanup tech without energy model - use base effectiveness
-    // Roy's fix: No silent fallbacks - if tech is missing properties, error surfaces immediately
-    // Check for specific reduction effects first, then fall back to generic
-    const reduction = (tech.effects as any).pfasReduction
-      ?? (tech.effects as any).microplasticReduction
-      ?? tech.effects.novelEntitiesReduction
-      ?? tech.effects.pollutionReduction;
+    if (!tech.effects.novelEntitiesReduction) {
+      throw new Error(`❌ Tech '${tech.id}' missing novelEntitiesReduction effect (required for cleanup tech)`);
+    }
+    if (tech.deploymentLevel === undefined) {
+      throw new Error(`❌ Tech '${tech.id}' missing deploymentLevel (required for cleanup tech)`);
+    }
 
-    if (reduction === undefined) {
-      throw new Error(
-        `❌ Tech missing cleanup effect: ${tech.id}\n` +
-        `   Location: applyEnergyConstrainedCleanup (legacy tech path)\n` +
-        `   Expected: pfasReduction, microplasticReduction, novelEntitiesReduction, or pollutionReduction\n` +
-        `   Month: ${state.currentMonth}\n` +
-        `   Tech should not be in cleanup filter without an effect.`
-      );
-    }
-    const deployment = tech.deploymentLevel;
-    if (deployment === undefined) {
-      throw new Error(
-        `❌ Tech missing deploymentLevel: ${tech.id}\n` +
-        `   Location: applyEnergyConstrainedCleanup\n` +
-        `   Month: ${state.currentMonth}`
-      );
-    }
-    const baseEffect = assertFinite(reduction * deployment, {
-      location: 'applyEnergyConstrainedCleanup',
-      valueName: 'legacyBaseEffect',
-      month: state.currentMonth,
-      additionalInfo: { techId: tech.id, reduction, deployment },
-    });
+    const baseEffect = tech.effects.novelEntitiesReduction * tech.deploymentLevel;
     return {
       grossEffectiveness: baseEffect,
       concentrationFactor: 1.0,
@@ -134,49 +120,51 @@ export function applyEnergyConstrainedCleanup(
   }
 
   // 2. Calculate concentration factor (power law scaling)
-  // Research: Fennell 2024 - efficiency drops with dilution
+  // Research: Fennell 2024 - efficiency drops with dilution, modeled as square root penalty
+  const concentrationType = (tech.minimumConcentration as any).concentrationPenalty !== undefined
+    ? 'concentratedWaste' // If no concentration type specified, assume best case
+    : 'groundwater'; // Default to groundwater (6 orders gap)
 
-  let concentrationFactor: number;
+  const contaminationLevel = CONTAMINATION_LEVELS[concentrationType as keyof typeof CONTAMINATION_LEVELS];
 
-  // If tech specifies an explicit concentration penalty, use it directly
-  const explicitPenalty = (tech.minimumConcentration as any).concentrationPenalty;
-  if (explicitPenalty !== undefined) {
-    // Tech tree maintainer specified the penalty directly (e.g., 0.01 = 1% effectiveness)
-    concentrationFactor = explicitPenalty;
-  } else {
-    // Legacy tech without explicit penalty: calculate from concentration gap
-    // Default to groundwater (6 orders gap)
-    const contaminationLevel = CONTAMINATION_LEVELS.groundwater;
+  // Convert minimum concentration from ng/L to kg/L for comparison
+  const minConcentration = (tech.minimumConcentration as any).ngPerL
+    ? (tech.minimumConcentration as any).ngPerL * 1e-12  // ng/L to kg/L
+    : 1000 * 1e-6; // Default: 1000 mg/L = 1e-3 kg/L
 
-    // Convert minimum concentration from ng/L to kg/L for comparison
-    const minConcentration = (tech.minimumConcentration as any).ngPerL
-      ? (tech.minimumConcentration as any).ngPerL * 1e-12  // ng/L to kg/L
-      : 1000 * 1e-6; // Default: 1000 mg/L = 1e-3 kg/L
+  const concentrationGap = minConcentration / contaminationLevel.typical;
 
-    const concentrationGap = minConcentration / contaminationLevel.typical;
-
-    // Power law scaling: effectiveness ∝ 1/√(gap)
-    // At 1 order of magnitude gap: 32% effectiveness
-    // At 2 orders: 10% effectiveness
-    // At 6 orders (groundwater): 2-3% effectiveness
-    // At 9 orders (rainwater): 0.003% effectiveness
-    concentrationFactor = Math.pow(1 / concentrationGap, 0.5);
-  }
+  // Power law scaling: effectiveness ∝ 1/√(gap)
+  // At 1 order of magnitude gap: 32% effectiveness
+  // At 2 orders: 10% effectiveness
+  // At 6 orders (groundwater): 0.05% effectiveness
+  // At 9 orders (rainwater): 0.003% effectiveness
+  const concentrationFactor = Math.pow(1 / concentrationGap, 0.5);
 
   // 3. Calculate energy factor (energy availability constraint)
   // Research: EPA 2024 - 75 GJ/ton median, IEA 2024 - 600 EJ/year global energy
   // Cleanup competes with other energy uses
 
-  // Access renewable energy surplus (calculated by ClimateDeploymentPhase)
-  // This represents TWh available after baseline consumption
-  const renewableSurplus = assertStateProperty(
+  // Access renewable energy surplus (total renewable capacity - demand)
+  const renewableCapacity = assertStateProperty(
     state.resourceEconomy?.energy,
-    'renewableSurplus',
+    'renewableCapacity',
     {
       location: 'applyEnergyConstrainedCleanup',
       month: state.currentMonth,
     }
   );
+
+  const energyDemand = assertStateProperty(
+    state.resourceEconomy?.energy,
+    'demand',
+    {
+      location: 'applyEnergyConstrainedCleanup',
+      month: state.currentMonth,
+    }
+  );
+
+  const renewableSurplus = Math.max(0, renewableCapacity - energyDemand);
 
   // Estimate energy required for cleanup (very rough - assumes boundary value correlates with stock)
   // TODO: Better stock tracking (needs contamination mass estimates)
@@ -187,37 +175,15 @@ export function applyEnergyConstrainedCleanup(
   const requiredEnergy = (estimatedStock * energyPerTon) / 1000; // Convert GJ to EJ
   const energyFactor = Math.min(1.0, renewableSurplus / Math.max(0.001, requiredEnergy));
 
-  // 4. Base effectiveness (from tech definition) - Roy's fix: no silent fallbacks
-  // Check for specific reduction effects first (pfasReduction, microplasticReduction)
-  // then fall back to generic effects (novelEntitiesReduction, pollutionReduction)
-  const reduction = (tech.effects as any).pfasReduction
-    ?? (tech.effects as any).microplasticReduction
-    ?? tech.effects.novelEntitiesReduction
-    ?? tech.effects.pollutionReduction;
+  // 4. Base effectiveness (from tech definition)
+  if (!tech.effects.novelEntitiesReduction) {
+    throw new Error(`❌ Tech '${tech.id}' missing novelEntitiesReduction effect (required for cleanup tech with energy model)`);
+  }
+  if (tech.deploymentLevel === undefined) {
+    throw new Error(`❌ Tech '${tech.id}' missing deploymentLevel (required for cleanup tech with energy model)`);
+  }
 
-  if (reduction === undefined) {
-    throw new Error(
-      `❌ Tech missing cleanup effect: ${tech.id}\n` +
-      `   Location: applyEnergyConstrainedCleanup\n` +
-      `   Expected: pfasReduction, microplasticReduction, novelEntitiesReduction, or pollutionReduction\n` +
-      `   Month: ${state.currentMonth}\n` +
-      `   Tech has energy model but no effectiveness value - this is a bug.`
-    );
-  }
-  const deployment = tech.deploymentLevel;
-  if (deployment === undefined) {
-    throw new Error(
-      `❌ Tech missing deploymentLevel: ${tech.id}\n` +
-      `   Location: applyEnergyConstrainedCleanup\n` +
-      `   Month: ${state.currentMonth}`
-    );
-  }
-  const baseEffectiveness = assertFinite(reduction * deployment, {
-    location: 'applyEnergyConstrainedCleanup',
-    valueName: 'baseEffectiveness',
-    month: state.currentMonth,
-    additionalInfo: { techId: tech.id, reduction, deployment },
-  });
+  const baseEffectiveness = tech.effects.novelEntitiesReduction * tech.deploymentLevel;
 
   // 5. Apply constraints
   const grossEffectiveness = baseEffectiveness * concentrationFactor * energyFactor;

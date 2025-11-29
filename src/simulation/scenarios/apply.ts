@@ -235,71 +235,24 @@ function applyTechDeployment(
     techsToDeploy = allTech.map(t => t.id);
     console.log(`     Deploying ALL ${techsToDeploy.length} technologies (god mode)`);
   } else if (deployment.strategy === 'sequenced') {
-    // SEQUENCED DEPLOYMENT: Create schedule for simulation loop (Nov 25, 2025)
+    // For sequenced, we'll deploy all tech but with a delay
+    // (Implementation note: This requires simulation loop support)
     const allTech = getAllTech();
-    const gapMonths = deployment.deploymentInterval || 6;
-    const tierOrder = [0, 1, 2, 3, 4]; // Default tier order
-
-    // Group technologies by tier (based on minAICapability)
-    const techsByTier = new Map<number, typeof allTech>();
-    for (const tech of allTech) {
-      const capability = tech.minAICapability ?? 0;
-      let tier = 0;
-      if (capability >= 4.0) tier = 4;
-      else if (capability >= 3.0) tier = 3;
-      else if (capability >= 2.0) tier = 2;
-      else if (capability >= 1.0) tier = 1;
-      else tier = 0;
-
-      if (!techsByTier.has(tier)) {
-        techsByTier.set(tier, []);
-      }
-      techsByTier.get(tier)!.push(tech);
-    }
-
-    // Build deployment schedule
-    const schedule: Array<{ techId: string; deployMonth: number; deployed: boolean }> = [];
-    let currentMonth = 0;
-
-    console.log(`\n🔬 TECH DEPLOYMENT SCHEDULE`);
-    console.log(`   Mode: sequenced`);
-    console.log(`   Total techs: ${allTech.length}`);
-    console.log(`   Gap between tiers: ${gapMonths} months`);
-
-    for (const tier of tierOrder) {
-      const techs = techsByTier.get(tier) || [];
-      if (techs.length === 0) continue;
-
-      console.log(`   TIER ${tier} (Month ${currentMonth}): ${techs.length} technologies`);
-      for (const tech of techs) {
-        schedule.push({
-          techId: tech.id,
-          deployMonth: currentMonth,
-          deployed: false
-        });
-      }
-
-      currentMonth += gapMonths;
-    }
-
-    console.log(`   Deployment window: Months 0-${currentMonth - gapMonths}`);
-
-    // Store schedule in state
-    state.techDeploymentSchedule = {
-      mode: 'sequenced',
-      scheduledDeployments: schedule,
-      deploymentLevel: deployment.deploymentLevel ?? 1.0,
-      deploymentInterval: gapMonths
-    };
-
-    console.log(`   ✅ Schedule created: ${schedule.length} deployments over ${currentMonth - gapMonths} months`);
-
-    // Don't deploy anything immediately - let the phase handle it
-    return;
+    techsToDeploy = allTech.map(t => t.id);
+    console.log(`     Sequenced deployment: ${techsToDeploy.length} technologies`);
+    console.log(`     Interval: ${deployment.deploymentInterval || 6} months between deployments`);
+    console.log(`     ⚠️  NOTE: Sequenced deployment requires simulation loop integration`);
   }
 
-  // Deploy technologies immediately (for non-scheduled modes)
-  const deploymentLevel = deployment.deploymentLevel ?? 1.0;
+  // Deploy technologies
+  const deploymentLevel = assertFinite(
+    deployment.deploymentLevel !== undefined ? deployment.deploymentLevel : 1.0,
+    {
+      location: 'applyTechnologyDeployment',
+      valueName: 'deploymentLevel',
+      month: state.currentMonth,
+    }
+  );
   deployTechnologies(state, techsToDeploy, deploymentLevel);
 }
 

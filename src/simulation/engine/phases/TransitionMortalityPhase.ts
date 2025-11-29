@@ -1,44 +1,16 @@
 /**
- * ⚠️ DEPRECATED: TransitionMortalityPhase (Nov 21, 2025)
+ * Transition Mortality Phase
  *
- * **STATUS:** This phase is DEPRECATED and should NOT be used.
- * **REPLACEMENT:** CoordinatedDeploymentPhase (order 10.5)
+ * Calculates mortality from rapid technology deployment and economic transitions
+ * based on comprehensive historical evidence.
  *
- * **Reason for deprecation:**
- * This phase was superseded by CoordinatedDeploymentPhase which uses validated
- * research (Grade B+, Nov 21, 2025) with critical corrections:
- * - CRITICAL-1: Time-based pace factor (deployment duration matters)
- * - CRITICAL-2: Bottleneck constraints (trust/governance ceilings)
- * - CRITICAL-3: Regional inequality (documented limitations)
- * - HIGH-1: Evidence-weighted support systems (retraining removed, weak evidence)
- *
- * **Double-counting issue:**
- * Both phases calculate transition mortality from the same tech deployments.
- * Running both phases would double-count deaths. CoordinatedDeploymentPhase
- * runs earlier (order 10.5) and has more validated research backing.
- *
- * **Original research:** /research/transition_mortality_coordination_effectiveness_20251115.md
+ * Research: /research/transition_mortality_coordination_effectiveness_20251115.md
  * - 27 peer-reviewed sources (2009-2025)
  * - Calibrated against 3 historical cases
  * - KEY FINDING: 20-50x mortality differential between chaotic and coordinated transitions
  *
- * **Replacement research:** /research/ai_coordination_transition_mechanics_VALIDATED_20251121.md
- * - Grade B+ validation (Sylvia review)
- * - 3 CRITICAL corrections applied
- * - Power-law scaling (not linear)
- * - Time-based pace factor
- *
- * **To remove this phase:**
- * 1. Remove registration from src/simulation/engine.ts (line 577)
- * 2. Remove import from src/simulation/engine.ts (line 171)
- * 3. Delete this file
- * 4. Update documentation references to point to CoordinatedDeploymentPhase
- *
- * ===================================================================
- * DEPRECATED CODE BELOW - DO NOT USE
- * ===================================================================
- *
- * Original implementation preserved for reference only.
+ * Runs after: Technology deployment phases, AI governance phases, economic systems
+ * Runs before: Population update phases, QoL calculation
  *
  * DEFENSIVE CODING (Roy's NaN Checklist):
  * ✅ All calculations use assertFinite
@@ -55,8 +27,7 @@ import {
   assertFinite,
   assertInRange,
   assertProbability,
-  assertStateProperty,
-  assertDefined
+  assertStateProperty
 } from '@/simulation/utils/assertions';
 
 /**
@@ -68,19 +39,7 @@ import {
  */
 function calculateSystemComplexity(state: GameState): number {
   // Check for multiple active transitions via unlocked techs
-  // techTreeState is REQUIRED field (initialized in initialization.ts)
-  const techTreeState = assertDefined(state.techTreeState, {
-    location: 'calculateSystemComplexity',
-    valueName: 'state.techTreeState',
-    month: state.currentMonth,
-    expectedSource: 'initialization.ts (techTree system)'
-  });
-  const unlockedTechs = assertDefined(techTreeState.unlockedTech, {
-    location: 'calculateSystemComplexity',
-    valueName: 'techTreeState.unlockedTech',
-    month: state.currentMonth,
-    expectedSource: 'initializeTechTreeState()'
-  });
+  const unlockedTechs = state.techTreeState?.unlockedTech ?? [];
 
   const energyTransition = unlockedTechs.some(
     id => id.includes('renewable-energy') || id.includes('nuclear-energy') || id.includes('fusion')
@@ -133,19 +92,7 @@ function calculateSystemComplexity(state: GameState): number {
 function calculateDeploymentSpeed(state: GameState): number {
   // Use number of unlocked TIER 2+ techs as proxy for deployment speed
   // This is a simplification - ideally track month-over-month changes
-  // techTreeState is REQUIRED field (initialized in initialization.ts)
-  const techTreeState = assertDefined(state.techTreeState, {
-    location: 'calculateDeploymentSpeed',
-    valueName: 'state.techTreeState',
-    month: state.currentMonth,
-    expectedSource: 'initialization.ts (techTree system)'
-  });
-  const unlockedTechs = assertDefined(techTreeState.unlockedTech, {
-    location: 'calculateDeploymentSpeed',
-    valueName: 'techTreeState.unlockedTech',
-    month: state.currentMonth,
-    expectedSource: 'initializeTechTreeState()'
-  });
+  const unlockedTechs = state.techTreeState?.unlockedTech ?? [];
 
   // Count high-tier transformative techs (TIER 2+)
   // Rough heuristic: tier2-, tier3-, tier4- prefixes
@@ -186,26 +133,15 @@ function calculateDeploymentSpeed(state: GameState): number {
  */
 function calculateCoordinationQuality(state: GameState): number {
   // Base: AI agent capability (proxy for AI governance quality)
-  const aiAgents = assertDefined(state.aiAgents, {
-    location: 'calculateCoordinationQuality',
-    valueName: 'state.aiAgents',
-    additionalInfo: { context: 'Required for AI governance quality calculation' }
-  });
-
+  const aiAgents = state.aiAgents ?? [];
   const avgAICapability = aiAgents.length > 0
     ? aiAgents.reduce((sum, a) => {
-        const capability = assertFinite(
-          assertDefined(a.capability, {
-            location: 'calculateCoordinationQuality',
-            valueName: `agent[${a.id}].capability`,
-            additionalInfo: { context: 'Required for average AI capability calculation', agentId: a.id }
-          }),
-          {
-            location: 'calculateCoordinationQuality',
-            valueName: `agent[${a.id}].capability`,
-            additionalInfo: { agentId: a.id }
-          }
-        );
+        const capability = assertFinite(a.capability, {
+          location: 'calculateCoordinationQuality',
+          valueName: 'agent.capability',
+          month: state.currentMonth,
+          additionalInfo: { agentId: a.id }
+        });
         return sum + capability;
       }, 0) / aiAgents.length
     : 0;
@@ -215,15 +151,15 @@ function calculateCoordinationQuality(state: GameState): number {
   const govEffectiveness = 0.5; // TODO: Connect to actual governance metrics
 
   // International cooperation (from governmentSystem)
-  const intlCooperation = assertStateProperty(
-    state.governmentSystem,
-    'internationalCoordination',
-    {
-      location: 'calculateCoordinationQuality',
-      month: state.currentMonth,
-      expectedSource: 'governmentSystem initialization (required for coordination calculation)'
-    }
-  );
+  const govSystem = assertStateProperty(state, 'governmentSystem', {
+    location: 'calculateCoordinationQuality',
+    month: state.currentMonth,
+  });
+  const intlCooperation = assertFinite(govSystem.internationalCoordination, {
+    location: 'calculateCoordinationQuality',
+    valueName: 'internationalCoordination',
+    month: state.currentMonth,
+  });
 
   // Social cohesion (simplified proxy)
   const socialCohesion = 0.5; // TODO: Connect to actual social cohesion metrics
@@ -269,8 +205,16 @@ function calculateSupportSystemCoverage(state: GameState): number {
   // Healthcare access (rough proxy)
   const healthcareAccess = 0.5; // Default middle value
 
-  // Retraining programs (LEGITIMATE FALLBACK: policyInterventions is optional field)
-  const retrainingLevel = state.policyInterventions?.retrainingLevel ?? 0;
+  // Retraining programs (if policyInterventions exists)
+  const policyInterventions = assertStateProperty(state, 'policyInterventions', {
+    location: 'calculateSupportSystemCoverage',
+    month: state.currentMonth,
+  });
+  const retrainingLevel = assertFinite(policyInterventions.retrainingLevel, {
+    location: 'calculateSupportSystemCoverage',
+    valueName: 'retrainingLevel',
+    month: state.currentMonth,
+  });
 
   // Aggregate coverage (weighted by effectiveness from research)
   const cashWeight = 0.30; // Cash transfers most effective
@@ -589,27 +533,24 @@ export const TransitionMortalityPhase: SimulationPhase = {
     state.transitionMortality.supportSystems.cashTransferAmount = 0; // Not easily accessible
     state.transitionMortality.supportSystems.foodSecurityCoverage = 0.5; // TODO: Connect to actual metrics
     state.transitionMortality.supportSystems.healthcareAccessIndex = 0.5; // Default proxy
-    // LEGITIMATE FALLBACK: policyInterventions is optional field
-    state.transitionMortality.supportSystems.retrainingProgramQuality = state.policyInterventions?.retrainingLevel ?? 0;
+    const policyInterventions = assertStateProperty(state, 'policyInterventions', {
+      location: 'TransitionMortalityPhase.execute',
+      month: state.currentMonth,
+    });
+    state.transitionMortality.supportSystems.retrainingProgramQuality = assertFinite(
+      policyInterventions.retrainingLevel,
+      {
+        location: 'TransitionMortalityPhase.execute',
+        valueName: 'retrainingLevel',
+        month: state.currentMonth,
+      }
+    );
 
     // Update economic disruption from automation/tech deployment
     // Use unlocked tech count as rough proxy
-    // techTreeState is REQUIRED field (initialized in initialization.ts)
-    const _techTreeState = assertDefined(state.techTreeState, {
-      location: 'TransitionMortalityPhase.execute',
-      valueName: 'state.techTreeState',
-      month: state.currentMonth,
-      expectedSource: 'initialization.ts (techTree system)'
-    });
-    const _unlockedTech = assertDefined(_techTreeState.unlockedTech, {
-      location: 'TransitionMortalityPhase.execute',
-      valueName: 'techTreeState.unlockedTech',
-      month: state.currentMonth,
-      expectedSource: 'initializeTechTreeState()'
-    });
-    const automationTechCount = _unlockedTech.filter(
+    const automationTechCount = state.techTreeState?.unlockedTech?.filter(
       id => id.includes('automation') || id.includes('ai-manufacturing')
-    ).length;
+    ).length ?? 0;
     state.transitionMortality.economicDisruption.automationUnemploymentRate = Math.min(
       automationTechCount * 0.01, // 1% unemployment per automation tech
       0.3
@@ -628,27 +569,8 @@ export const TransitionMortalityPhase: SimulationPhase = {
     state.transitionMortality.annualTransitionMortality = mortalityResults.annualExcessMortality;
     state.transitionMortality.mortalityByMechanism = mortalityResults.mortalityByMechanism;
 
-    // CRITICAL FIX (Nov 21, 2025): Apply deaths to regional populations FIRST
-    // to prevent race condition with HumanPopulationPhase aggregation.
-    //
-    // Same bug as CoordinatedDeploymentPhase: modifying global population
-    // without updating regions causes silent data loss when aggregation runs.
-    const regions = state.humanPopulationSystem.regionalPopulations;
-    if (!regions || regions.length === 0) {
-      throw new Error(
-        `❌ CRITICAL: regionalPopulations missing at month ${state.currentMonth}\n` +
-        `  Regional populations required to apply transition deaths.\n` +
-        `  This indicates initialization.ts failed to create regional populations.`
-      );
-    }
-
-    // CRITICAL: Use regional sum as source of truth (NOT global value)
-    // If a previous phase modified regions without updating global, using global
-    // would cause wrong death distribution fractions.
-    const regionalSumMillions = regions.reduce((sum, r) => sum + r.population, 0);
-    const population = regionalSumMillions / 1000; // Convert millions → billions
-
     // Apply population reduction
+    const population = state.humanPopulationSystem.population;
     const annualDeaths = assertFinite(
       (mortalityResults.annualExcessMortality / 1000) * population,
       {
@@ -669,31 +591,6 @@ export const TransitionMortalityPhase: SimulationPhase = {
       }
     );
 
-    // Apply deaths proportionally to each region
-    for (const region of regions) {
-      const regionFraction = region.population / regionalSumMillions; // Fraction of REGIONAL sum
-      const regionalDeaths = (monthlyDeaths * 1000) * regionFraction; // Convert billions → millions for regional scale
-
-      region.population = assertFinite(
-        Math.max(0, region.population - regionalDeaths),
-        {
-          location: 'TransitionMortalityPhase.execute (regional mortality)',
-          valueName: `${region.name} population after transition deaths`,
-          month: state.currentMonth,
-          additionalInfo: {
-            regionalDeaths,
-            populationBefore: region.population,
-            regionFraction
-          }
-        }
-      );
-
-      // Track at regional level
-      region.monthlyExcessDeaths = (region.monthlyExcessDeaths || 0) + regionalDeaths;
-      region.cumulativeCrisisDeaths = (region.cumulativeCrisisDeaths || 0) + regionalDeaths;
-    }
-
-    // Update global population (will be re-aggregated later, but set correctly now)
     state.humanPopulationSystem.population = assertFinite(
       Math.max(0, population - monthlyDeaths),
       {
@@ -703,24 +600,6 @@ export const TransitionMortalityPhase: SimulationPhase = {
         additionalInfo: { oldPopulation: population, monthlyDeaths }
       }
     );
-
-    // ASSERTION: Verify regional sum matches global value
-    // NOTE: Regional populations are in MILLIONS, global is in BILLIONS
-    // Recalculate regional sum AFTER applying deaths
-    const regionalSumMillionsAfter = regions.reduce((sum, r) => sum + r.population, 0);
-    const regionalSumBillions = regionalSumMillionsAfter / 1000;
-    const globalValue = state.humanPopulationSystem.population;
-    const discrepancy = Math.abs(regionalSumBillions - globalValue);
-
-    if (discrepancy > 0.001) {
-      throw new Error(
-        `❌ RACE CONDITION DETECTED: Regional/global population desync after transition deaths (TransitionMortalityPhase)\n` +
-        `  Month: ${state.currentMonth}\n` +
-        `  Global value: ${globalValue.toFixed(6)}B\n` +
-        `  Regional sum: ${regionalSumBillions.toFixed(6)}B (${regionalSumMillions.toFixed(2)}M)\n` +
-        `  Discrepancy: ${discrepancy.toFixed(6)}B`
-      );
-    }
 
     state.transitionMortality.cumulativeTransitionDeaths += monthlyDeaths;
 

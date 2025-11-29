@@ -8,7 +8,7 @@
  */
 
 import { GameState, AIAgent, OutcomeType } from '@/types/game';
-import { assertFinite, assertDefined } from './utils/assertions';
+import { assertFinite, assertStateProperty } from './utils/assertions';
 import { calculateTotalAICapability, calculateAverageAlignment } from './calculations';
 import { calculateEffectiveControl } from './outcomes';
 import { calculateQualityOfLife } from './qualityOfLife';
@@ -74,7 +74,7 @@ export function checkEndGameTransition(state: GameState): boolean {
   // trigger end-game at month 0-1, then timeout after 48 months → ALL runs terminate at month 49
   // Scenarios are testing spiral dynamics, not end-game competition.
   // End-game should only activate in normal (non-scenario) gameplay.
-  if (state.scenarioConfig) {
+  if (state.scenario) {
     return false; // Don't trigger end-game during scenario testing
   }
 
@@ -279,14 +279,12 @@ function checkEndGameResolution(state: GameState): void {
       // Bug: Seeds 42001/42008/42024 showed GROWTH but were labeled extinction due to AI power metrics
       const currentPop = state.humanPopulationSystem.population;
       const initialPop = assertFinite(
-        assertDefined(state.initialPopulation, {
-          location: 'checkExtinctionConditions',
-          valueName: 'state.initialPopulation',
+        assertStateProperty(state, 'initialPopulation', {
+          location: 'checkExtinctionPaths.hasCatastrophicCapability',
           month: state.currentMonth,
-          additionalInfo: { context: 'Required for mortality calculation in catastrophic AI scenario' }
         }),
         {
-          location: 'checkExtinctionConditions',
+          location: 'checkExtinctionPaths.hasCatastrophicCapability',
           valueName: 'initialPopulation',
           month: state.currentMonth,
         }
@@ -324,14 +322,12 @@ function checkEndGameResolution(state: GameState): void {
     // DEFENSIVE CHECK: Verify population has actually declined
     const currentPop = state.humanPopulationSystem.population;
     const initialPop = assertFinite(
-      assertDefined(state.initialPopulation, {
-        location: 'checkExtinctionConditions.aiCivilWar',
-        valueName: 'state.initialPopulation',
+      assertStateProperty(state, 'initialPopulation', {
+        location: 'checkExtinctionPaths.mutualDestruction',
         month: state.currentMonth,
-        additionalInfo: { context: 'Required for mortality calculation in AI civil war scenario' }
       }),
       {
-        location: 'checkExtinctionConditions.aiCivilWar',
+        location: 'checkExtinctionPaths.mutualDestruction',
         valueName: 'initialPopulation',
         month: state.currentMonth,
       }
@@ -364,14 +360,12 @@ function checkEndGameResolution(state: GameState): void {
 
     const currentPop = state.humanPopulationSystem.population;
     const initialPop = assertFinite(
-      assertDefined(state.initialPopulation, {
-        location: 'checkExtinctionConditions.humanIrrelevance',
-        valueName: 'state.initialPopulation',
+      assertStateProperty(state, 'initialPopulation', {
+        location: 'checkExtinctionPaths.humanIrrelevance',
         month: state.currentMonth,
-        additionalInfo: { context: 'Required for mortality calculation in human irrelevance scenario' }
       }),
       {
-        location: 'checkExtinctionConditions.humanIrrelevance',
+        location: 'checkExtinctionPaths.humanIrrelevance',
         valueName: 'initialPopulation',
         month: state.currentMonth,
       }

@@ -566,7 +566,6 @@ const ALL_TECH: TechDefinition[] = [
     capabilityEffects: {
       dimensions: {
         digital: 0.05,  // Improves data systems
-        cognitive: 0.03,  // AI optimization for agriculture
       },
     },
   },
@@ -589,312 +588,6 @@ const ALL_TECH: TechDefinition[] = [
       nitrogenEfficiency: 0.40,  // 40% nitrogen input reduction (research-backed)
       carbonEmissionsReduction: 0.15,  // Haber-Bosch is 1-2% of global emissions
       energyIndependenceBonus: 0.05,
-    },
-  },
-
-  // ===================================================================
-  // ADDITIONAL NITROGEN REDUCTION TECHNOLOGIES (Nov 21, 2025)
-  // Research: nitrogen_food_coupling_20251115.md
-  // Phase 3 completion: 6 technologies to complete nitrogen-food integration
-  // ===================================================================
-
-  {
-    id: 'rhizosphere_engineering',
-    name: 'Rhizosphere Engineering',
-    description: 'Mycorrhizal biofertilizers and nitrogen-fixing bacteria for 15-40% N reduction without yield loss',
-    category: 'agriculture',
-    status: 'unlockable',
-    prerequisites: ['biological_nitrogen_fixation'],  // Builds on existing N-fixation tech
-    minResearchCapabilities: [
-      { domain: 'biotech', subdomain: 'geneEditing', threshold: 0.6 }  // Moderate biotech requirement
-    ],
-    minEconomicStage: 2.0,  // Advanced post-industrial
-    minMonth: 24,  // 2 years for microbial engineering trials
-    researchMonthsRequired: 30,  // 2.5 years R&D for synthetic microbiomes
-    researchCost: 600,  // Moderate biotech cost
-    deploymentCost: 80000,  // Seed coating + inoculation infrastructure
-    deploymentMonthsRequired: 48,  // 4 years for agricultural adoption
-    deploymentLevel: 0,
-    effects: {
-      nitrogenEfficiency: 0.275,  // 27.5% N reduction (middle of 15-40% range)
-      soilHealthBonus: 0.08,  // Microbial communities improve soil
-      biodiversityBonus: 0.03,  // Rhizosphere diversity enhancement
-    },
-    capabilityEffects: {
-      research: [
-        { domain: 'biotech', subdomain: 'syntheticBiology', boost: 0.12 }
-      ],
-    },
-  },
-
-  {
-    id: 'nitroplast_integration',
-    name: 'Nitroplast Integration',
-    description: 'Nitrogen-fixing organelles engineered into crops (2024 discovery) - 50-70% N fertilizer elimination',
-    category: 'agriculture',
-    status: 'unlockable',
-    prerequisites: ['rhizosphere_engineering', 'crispr_genome_editing'],  // Requires advanced biotech
-    minResearchCapabilities: [
-      { domain: 'biotech', subdomain: 'geneEditing', threshold: 0.85 },  // Very high threshold
-      { domain: 'biotech', subdomain: 'syntheticBiology', threshold: 0.80 }
-    ],
-    minEconomicStage: 3.0,  // Very advanced biotech infrastructure
-    minMonth: 60,  // 5 years minimum (2030s deployment per research)
-    researchMonthsRequired: 120,  // 10 years R&D (highly uncertain, breakthrough tech)
-    researchCost: 8000,  // Very high cost for breakthrough biotech
-    deploymentCost: 250000,  // Massive seed development + regulatory approval
-    deploymentMonthsRequired: 120,  // 10 years deployment (GMO approval + farmer adoption)
-    deploymentLevel: 0,
-    effects: {
-      nitrogenEfficiency: 0.60,  // 60% N fertilizer elimination (middle of 50-70% range)
-      carbonEmissionsReduction: 0.12,  // Haber-Bosch process eliminated for engineered crops
-      energyIndependenceBonus: 0.08,  // Reduces fertilizer dependency
-      soilHealthBonus: 0.10,  // Natural nitrogen cycling restored
-    },
-    capabilityEffects: {
-      research: [
-        { domain: 'biotech', subdomain: 'geneEditing', boost: 0.20 },  // Major biotech breakthrough
-        { domain: 'biotech', subdomain: 'syntheticBiology', boost: 0.25 }
-      ],
-    },
-  },
-
-  {
-    id: 'precision_fermentation_nitrogen',
-    name: 'Precision Fermentation for Nitrogen Reduction',
-    description: 'Microbial protein production to replace animal agriculture - 30-50% agricultural N demand reduction',
-    category: 'agriculture',
-    status: 'unlockable',
-    prerequisites: ['precision_fermentation'],  // Builds on existing precision fermentation tech (if it exists)
-    minResearchCapabilities: [
-      { domain: 'biotech', subdomain: 'syntheticBiology', threshold: 0.65 }
-    ],
-    minEconomicStage: 2.5,  // Advanced biotech + food processing infrastructure
-    minMonth: 12,  // 1 year (already commercially emerging 2024-2025)
-    researchMonthsRequired: 18,  // 1.5 years for scaling
-    researchCost: 1200,  // Medium-high cost for bioreactor scale-up
-    deploymentCost: 150000,  // Commercial bioreactor facilities + distribution
-    deploymentMonthsRequired: 60,  // 5 years for market penetration (consumer acceptance barrier)
-    deploymentLevel: 0,
-    effects: {
-      nitrogenEfficiency: 0.40,  // 40% agricultural N demand reduction (replaces animal feed crops)
-      landUseReduction: 0.15,  // 100× land efficiency vs animal agriculture
-      waterEfficiency: 0.12,  // 95% less water than dairy
-      carbonEmissionsReduction: 0.10,  // 80% lower GHG vs conventional animal agriculture
-      foodSecurityBonus: 0.05,  // 10-25× feedstock efficiency
-    },
-    capabilityEffects: {
-      research: [
-        { domain: 'biotech', subdomain: 'syntheticBiology', boost: 0.15 }
-      ],
-    },
-  },
-
-  {
-    id: 'regional_nitrogen_policies',
-    name: 'Regional Nitrogen Differentiation Policies',
-    description: 'Targeted N reduction in overuse regions (South Asia 55%), increase in underuse regions (Sub-Saharan Africa) - 20% global efficiency gain',
-    category: 'social',  // Governance policies fall under social category
-    status: 'unlockable',
-    prerequisites: ['nitrogen_monitoring_networks'],  // Requires monitoring infrastructure
-    minAICapability: 0.7,  // Moderate AI for regional optimization
-    minEconomicStage: 2.0,  // Post-industrial coordination capacity
-    minMonth: 18,  // 1.5 years for policy development
-    researchMonthsRequired: 24,  // 2 years for regional coordination frameworks
-    researchCost: 800,  // Policy development + international coordination
-    deploymentCost: 50000,  // Implementation of differentiated regulations
-    deploymentMonthsRequired: 36,  // 3 years for policy rollout + compliance
-    deploymentLevel: 0,
-    effects: {
-      nitrogenEfficiency: 0.20,  // 20% global efficiency via redistribution (research-backed)
-      governanceCoordinationBonus: 0.05,  // International cooperation improvement
-      equityBonus: 0.03,  // Reduces inequality (underuse regions get more, overuse regions reduce)
-    },
-    capabilityEffects: {
-      dimensions: {
-        social: 0.08,  // International coordination
-        economic: 0.05,  // Resource redistribution
-      },
-    },
-  },
-
-  {
-    id: 'soil_health_restoration',
-    name: 'Soil Health Restoration Programs',
-    description: 'No-till agriculture, cover cropping, organic matter restoration - 20-40% NUE improvement',
-    category: 'agriculture',
-    status: 'unlockable',
-    prerequisites: ['precision_agriculture'],  // Builds on precision ag
-    minAICapability: 0.4,  // Low-moderate AI for soil monitoring
-    minEconomicStage: 1.8,  // Early post-industrial
-    minMonth: 12,  // 1 year (practices already exist, need scaling)
-    researchMonthsRequired: 18,  // 1.5 years for regional adaptation
-    researchCost: 400,  // Low cost for existing practices
-    deploymentCost: 60000,  // Farmer training + transition subsidies
-    deploymentMonthsRequired: 48,  // 4 years for agricultural transition
-    deploymentLevel: 0,
-    effects: {
-      nitrogenEfficiency: 0.30,  // 30% NUE improvement (middle of 20-40% range)
-      soilHealthBonus: 0.15,  // Major soil carbon + organic matter gains
-      biodiversityBonus: 0.05,  // Cover crops support pollinators
-      carbonSequestration: 0.08,  // Soil carbon storage
-      waterEfficiency: 0.06,  // Improved water retention
-    },
-    capabilityEffects: {
-      dimensions: {
-        cognitive: 0.10,  // Ecosystem services understanding (using cognitive as proxy for ecological systems thinking)
-      },
-    },
-  },
-
-  {
-    id: 'integrated_nutrient_management',
-    name: 'Integrated Nutrient Management Systems',
-    description: 'Combines precision ag, biofertilizers, crop rotation, and circular systems - 25-45% efficiency gains',
-    category: 'agriculture',
-    status: 'unlockable',
-    prerequisites: ['precision_agriculture', 'nitrogen_circular_food', 'soil_health_restoration'],  // Requires multiple foundation techs
-    minAICapability: 0.8,  // High AI for integrated optimization
-    minEconomicStage: 2.5,  // Advanced coordination infrastructure
-    minMonth: 36,  // 3 years (requires foundation techs first)
-    researchMonthsRequired: 36,  // 3 years for integrated system design
-    researchCost: 1500,  // High cost for systems integration
-    deploymentCost: 180000,  // Comprehensive agricultural transformation
-    deploymentMonthsRequired: 72,  // 6 years for full system deployment
-    deploymentLevel: 0,
-    effects: {
-      nitrogenEfficiency: 0.35,  // 35% efficiency gains (middle of 25-45% range)
-      phosphorusEfficiency: 0.25,  // Integrated P management benefits
-      soilHealthBonus: 0.12,
-      biodiversityBonus: 0.08,
-      waterEfficiency: 0.10,
-      carbonSequestration: 0.10,
-      foodSecurityBonus: 0.08,  // Resilient, diversified systems
-    },
-    capabilityEffects: {
-      dimensions: {
-        cognitive: 0.25,  // Systems thinking + complex optimization (combined ecological/cognitive)
-        economic: 0.08,  // Circular economy principles
-      },
-    },
-  },
-
-  // ===================================================================
-  // NUCLEAR WINTER RESILIENT FOOD SYSTEMS (Nov 20, 2025)
-  // Research: Penn State (2025), IIASA (2025), FAO (2024-2025)
-  // Purpose: Reduce nuclear winter famine mortality by 20-40%
-  // ===================================================================
-
-  {
-    id: 'strategic_grain_reserves',
-    name: 'Strategic Grain Reserves',
-    description: '6-12 month global food buffer - reduces first-year nuclear winter mortality 20%',
-    category: 'agriculture',
-    status: 'unlockable',
-    prerequisites: [],  // Institutional capacity only
-    minAICapability: 0.3,  // Low AI requirement (logistics optimization)
-    minEconomicStage: 1.5,  // Early post-industrial
-    minMonth: 12,  // 1 year to establish reserves
-    researchMonthsRequired: 6,  // Policy + logistics planning
-    researchCost: 50,  // Low research cost (policy design)
-    deploymentCost: 100000,  // $100B global reserves (FAO estimates)
-    deploymentMonthsRequired: 24,  // 2 years to build reserves
-    deploymentLevel: 0,
-    effects: {
-      nuclearWinterMortalityReduction: 0.20,  // 20% mortality reduction in first year (FAO 2024-2025)
-      foodSecurityBonus: 0.05,  // General food security improvement
-      famineBufferMonths: 6,  // 6-month buffer against any famine
-    },
-    citations: ['FAO (2024-2025): Strategic grain reserves and emergency food systems'],
-  },
-
-  {
-    id: 'cold_tolerant_crops',
-    name: 'Cold-Tolerant Crop Substitution',
-    description: 'Potatoes, turnips, kale - 15% yield recovery in nuclear winter conditions',
-    category: 'agriculture',
-    status: 'unlockable',
-    prerequisites: ['strategic_grain_reserves'],  // Requires planning infrastructure
-    minResearchCapabilities: [
-      { domain: 'biotech', subdomain: 'geneEditing', threshold: 0.5 }  // CRISPR crop improvement
-    ],
-    minEconomicStage: 2.0,  // Advanced post-industrial
-    minMonth: 24,  // 2 years for breeding + seed bank distribution
-    researchMonthsRequired: 36,  // 3 years for crop breeding + field trials
-    researchCost: 800,  // Moderate biotech cost
-    deploymentCost: 150000,  // $150B seed distribution + farmer training
-    deploymentMonthsRequired: 60,  // 5 years for global seed bank + agricultural transition
-    deploymentLevel: 0,
-    effects: {
-      nuclearWinterYieldRecovery: 0.15,  // 15% crop yield recovery (Penn State 2025)
-      climateResilienceBonus: 0.03,  // General climate adaptation
-      biodiversityBonus: 0.02,  // Crop diversity improvement
-    },
-    citations: ['Penn State (2025): Cold-tolerant crop adaptation scenarios'],
-    capabilityEffects: {
-      research: [
-        { domain: 'biotech', subdomain: 'geneEditing', boost: 0.05 }
-      ],
-    },
-  },
-
-  {
-    id: 'emergency_greenhouse_networks',
-    name: 'Emergency Greenhouse Networks',
-    description: 'Indoor agriculture - 10% yield recovery where energy available (fusion/renewables required)',
-    category: 'agriculture',
-    status: 'unlockable',
-    prerequisites: ['fusion_power', 'solar_4th_gen', 'cold_tolerant_crops'],  // Requires abundant energy
-    minAICapability: 2.0,  // Moderate AI for greenhouse automation
-    minEconomicStage: 3.0,  // Advanced infrastructure
-    minMonth: 48,  // 4 years minimum (after fusion available)
-    researchMonthsRequired: 48,  // 4 years for greenhouse design + automation
-    researchCost: 2000,  // High cost for advanced infrastructure
-    deploymentCost: 300000,  // $300B global greenhouse network (IIASA optimistic case)
-    deploymentMonthsRequired: 120,  // 10 years for global rollout
-    deploymentLevel: 0,
-    effects: {
-      nuclearWinterYieldRecovery: 0.10,  // 10% yield recovery (energy-limited, IIASA 2025)
-      foodSecurityBonus: 0.08,  // Year-round production
-      urbanQoLBonus: 0.02,  // Urban food systems
-    },
-    energyRequirement: 500,  // 500 TWh/year (substantial energy requirement)
-    citations: ['IIASA (2025): Greenhouse agriculture optimistic case'],
-  },
-
-  {
-    id: 'emergency_food_distribution_ai',
-    name: 'Emergency Food Distribution AI',
-    description: 'AI-optimized supply chains - 10% mortality reduction by reducing hoarding and violence',
-    category: 'agriculture',
-    status: 'unlockable',
-    prerequisites: ['strategic_grain_reserves'],  // Requires grain reserves to distribute
-    minAICapability: 2.5,  // Moderate-high AI for logistics optimization
-    minCapabilityDimensions: [
-      { dimension: 'digital', threshold: 0.7 },  // Data systems
-      { dimension: 'social', threshold: 0.5 },  // Coordination capability
-      { dimension: 'cognitive', threshold: 0.6 },  // Planning capability
-    ],
-    minEconomicStage: 2.5,  // Advanced infrastructure
-    minMonth: 18,  // 1.5 years for AI development + deployment
-    researchMonthsRequired: 24,  // 2 years for AI development
-    researchCost: 500,  // Moderate AI development cost
-    deploymentCost: 80000,  // $80B global logistics infrastructure
-    deploymentMonthsRequired: 36,  // 3 years for global deployment
-    deploymentLevel: 0,
-    effects: {
-      nuclearWinterMortalityReduction: 0.10,  // 10% mortality reduction (reduces panic, hoarding)
-      foodSecurityBonus: 0.06,  // General supply chain efficiency
-      socialCohesionBonus: 0.03,  // Reduces conflict over food
-      governanceEffectivenessBonus: 0.02,  // Institutional capacity
-    },
-    citations: ['Supply chain resilience research (2024-2025)'],
-    capabilityEffects: {
-      dimensions: {
-        digital: 0.08,  // Logistics systems
-        social: 0.05,  // Coordination capability
-        cognitive: 0.06,  // AI planning
-      },
     },
   },
 
@@ -1180,10 +873,19 @@ const ALL_TECH: TechDefinition[] = [
       biodiversityBonus: 0.05,
     },
     citations: ['research/nitrogen_food_coupling_20251115.md - Nitroplast section'],
+    minMonth: 24,
+    researchMonthsRequired: 24,
+    researchCost: 800,
+    deploymentCost: 60000,
+    deploymentMonthsRequired: 60,
+    deploymentLevel: 0,
+    effects: {
+      phosphorusRecovery: 0.25,          // 25% additional recovery
+      legacyPhosphorusRemediation: 0.10, // Accelerates sediment stock decay
+      pollutionReduction: 0.20,          // Reduces eutrophication
+    },
+    citations: ['Lake Erie case study: Internal sediment loading = 10,000-11,000 MT P/year'],
   },
-  // NOTE (Roy, Nov 18, 2025): Removed duplicate/corrupt fields (lines 877-888)
-  // - Fields belonged to different tech (sediment management)
-  // - Caused "object literal cannot have multiple properties" error
   {
     id: 'algae_nutrient_capture',
     name: 'Algae-Based Nutrient Capture',
@@ -1633,137 +1335,6 @@ const ALL_TECH: TechDefinition[] = [
       cropYieldBonus: 0.05,
     },
   },
-
-  // === PHASE 3: Advanced Prevention Technologies (TIER 2-3 HIGH) ===
-  // Research: Novel entities redesign Nov 2025 (16 sources, Grade B+ conditional)
-
-  {
-    id: 'membrane_cascade_systems',
-    name: 'Membrane Cascade Systems',
-    description: 'Multi-stage concentration from ng/L → mg/L with minimal energy. 1000× energy improvement vs thermal destruction. Works on dilute streams.',
-    category: 'pollution',
-    status: 'unlockable',
-    prerequisites: ['green_chemistry_substitution'],  // Requires advanced material science
-    minAICapability: 3.0,  // Advanced material design (nanoporous membranes)
-    minEconomicStage: 3.5,
-    minMonth: 36,  // Mid-game technology
-    researchMonthsRequired: 60,  // 5 years (10-15 year research estimate)
-    researchCost: 800,
-    deploymentCost: 80000,  // Lower than thermal (energy-efficient)
-    deploymentMonthsRequired: 120,  // 10 years to commercial scale
-    deploymentLevel: 0,
-    effects: {
-      pollutionReduction: 0.15,  // 40-60% effectiveness (spec says 0.4-0.6, using conservative)
-      pfasReduction: 0.40,  // Works on dilute streams (key advantage)
-      microplasticReduction: 0.30,
-      healthBonus: 0.03,
-    },
-    // Energy advantage: <1,000 kWh/kg vs 10^6 kWh/kg thermal (1000× improvement)
-    energyRequirement: {
-      kWhPerKg: 800,  // Much lower than thermal destruction
-      uncertaintyRange: {
-        optimistic: 500,  // Breakthrough membrane efficiency
-        expected: 800,
-        pessimistic: 1200,
-        uncertaintyFactor: 2  // Moderate uncertainty
-      }
-    },
-    minimumConcentration: {
-      ngPerL: 10,  // Works at environmental concentrations (ng/L)!
-      optimalNgPerL: 1000,  // Better at μg/L but functional at ng/L
-      concentrationPenalty: 0.4  // 60% reduction at lowest concentrations
-    },
-    techType: 'cleanup',
-    targetsIrreversibleStock: false,  // Can't reach covalently bound PFAS
-    citations: [
-      'Novel entities zero-effectiveness gap research (2025) - membrane cascade proposal'
-    ],
-  },
-  {
-    id: 'biomimetic_filtration',
-    name: 'Biomimetic Filtration (Kidney Analog)',
-    description: 'Bio-inspired selective extraction targeting contaminants at environmental concentrations. Passive/low-energy filtration mimicking biological kidneys.',
-    category: 'pollution',
-    status: 'unlockable',
-    prerequisites: ['membrane_cascade_systems'],  // Requires membrane tech foundation
-    minAICapability: 3.5,  // Advanced biomimetic design
-    minEconomicStage: 4.0,
-    minMonth: 48,  // Late-game technology
-    researchMonthsRequired: 96,  // 8 years (15-25 year timeline, accelerated by AI)
-    researchCost: 1200,
-    deploymentCost: 100000,
-    deploymentMonthsRequired: 180,  // 15 years to environmental scale
-    deploymentLevel: 0,
-    effects: {
-      pollutionReduction: 0.12,  // 30-50% effectiveness (conservative mid-range)
-      pfasReduction: 0.35,  // Selective binding
-      microplasticReduction: 0.25,
-      healthBonus: 0.04,
-      biodiversityBonus: 0.02,  // Removes toxins from ecosystems
-    },
-    // Passive/low-energy (biomimetic advantage)
-    energyRequirement: {
-      kWhPerKg: 100,  // Very low energy (passive filtration)
-      uncertaintyRange: {
-        optimistic: 50,
-        expected: 100,
-        pessimistic: 300,  // If active pumping required
-        uncertaintyFactor: 3  // High uncertainty (speculative tech)
-      }
-    },
-    minimumConcentration: {
-      ngPerL: 1,  // Works at pg/L-ng/L (environmental reality)
-      optimalNgPerL: 100,
-      concentrationPenalty: 0.3  // 70% reduction at lowest concentrations
-    },
-    techType: 'cleanup',
-    targetsIrreversibleStock: false,  // Biological systems can't reach atmospheric PFAS
-    citations: [
-      'Novel entities zero-effectiveness gap research (2025) - biomimetic proposal (SPECULATIVE)'
-    ],
-  },
-  {
-    id: 'photocatalytic_degradation',
-    name: 'Photocatalytic Degradation at Scale',
-    description: 'Sunlight-driven in-situ breakdown of PFAS/microplastics without concentration step. Quantum efficiency >50% required (currently <10%).',
-    category: 'pollution',
-    status: 'unlockable',
-    prerequisites: ['membrane_cascade_systems'],
-    minAICapability: 3.5,  // Advanced photocatalyst design
-    minEconomicStage: 4.0,
-    minMonth: 48,
-    researchMonthsRequired: 84,  // 7 years (10-20 year timeline)
-    researchCost: 1000,
-    deploymentCost: 90000,
-    deploymentMonthsRequired: 120,  // 10 years to environmental scale
-    deploymentLevel: 0,
-    effects: {
-      pollutionReduction: 0.10,  // 20-40% effectiveness (conservative)
-      pfasReduction: 0.25,  // In-situ degradation
-      microplasticReduction: 0.20,
-      healthBonus: 0.03,
-    },
-    // Solar-powered (minimal grid energy)
-    energyRequirement: {
-      kWhPerKg: 50,  // Sunlight + minimal pumping
-      uncertaintyRange: {
-        optimistic: 20,  // Pure solar
-        expected: 50,
-        pessimistic: 200,  // If supplemental energy needed
-        uncertaintyFactor: 4  // Very high uncertainty (quantum efficiency breakthrough needed)
-      }
-    },
-    minimumConcentration: {
-      ngPerL: 5,  // Needs some minimum concentration for photon interaction
-      optimalNgPerL: 500,
-      concentrationPenalty: 0.2  // 80% reduction at lowest concentrations
-    },
-    techType: 'cleanup',
-    targetsIrreversibleStock: false,  // Surface-level degradation only
-    citations: [
-      'Novel entities zero-effectiveness gap research (2025) - photocatalytic proposal (UNPROVEN, needs QE >50%)'
-    ],
-  },
   
   // Novel Entities (3)
   {
@@ -1781,7 +1352,6 @@ const ALL_TECH: TechDefinition[] = [
     deploymentLevel: 0,
     effects: {
       microplasticReduction: 0.40,
-      pollutionReduction: 0.40,  // For energy-constrained cleanup logic
       oceanHealthBonus: 0.10,
       marineLifeBonus: 0.05,
     },
@@ -2871,14 +2441,28 @@ const ALL_TECH: TechDefinition[] = [
     },
   },
 
-  // NOTE (Roy, Nov 18, 2025): Malformed duplicate 'precision_agriculture' entry removed
-  // The 6 nitrogen-reducing technologies are already defined at lines 457-611:
-  // 1. precision_agriculture (30% N efficiency)
-  // 2. biological_nitrogen_fixation (25% N efficiency)
-  // 3. nitrogen_circular_food (20% N efficiency)
-  // 4. ecosystem_restoration_nitrogen (15% N removal)
-  // 5. nitrogen_monitoring_networks (10% efficiency gain)
-  // 6. green_ammonia_production (40% N efficiency)
+  // Nitrogen-Food Coupling Technologies (TIER 2 HIGH - Nov 15, 2025)
+  // Research: research/nitrogen_food_coupling_20251115.md
+  {
+    id: 'precision_agriculture',
+    name: 'Precision Agriculture',
+    description: 'Variable rate fertilizer, SPAD sensors, GreenSeeker - 25-30% N reduction',
+    category: 'agriculture',
+    status: 'deployed_2025',
+    prerequisites: [],
+    minAICapability: 1.5,
+    minEconomicStage: 2.5,
+    researchMonthsRequired: 0,  // Already deployed
+    researchCost: 0,
+    deploymentCost: 80000,
+    deploymentMonthsRequired: 60,
+    deploymentLevel: 0.15,  // 15% global deployment (2025 baseline)
+    effects: {
+      nitrogenReduction: 0.25,  // 25% N input reduction
+      cropYieldBonus: 0.15,  // 10-30% yield increase (mid-range)
+      waterEfficiency: 0.20,  // Secondary benefit
+    },
+  },
   {
     id: 'rhizosphere_engineering',
     name: 'Rhizosphere Engineering',
@@ -3002,10 +2586,39 @@ const ALL_TECH: TechDefinition[] = [
       lakeRestorationBonus: 0.50,  // Accelerates recovery
       economicCost: -0.02,  // Expensive (2% GDP cost)
     },
+    category: 'pollution',
+    status: 'unlockable',
+    prerequisites: [],
+    minAICapability: 1.5,
+    minEconomicStage: 3.0,
+    researchMonthsRequired: 18,
+    researchCost: 1500,
+    deploymentCost: 80000,
+    deploymentMonthsRequired: 60,
+    deploymentLevel: 0,
+    effects: {
+      nitrogenRemoval: 0.63,  // Median removal from 335 field experiments (research line 471)
+      phosphorusRemoval: 0.72,  // Median P removal (research line 478)
+      habitatRestoration: 0.50,  // Wetland ecosystem benefits
+      biodiversityBonus: 0.30,  // Constructed wetlands support wildlife
+    },
+    citations: ['research/nitrogen_food_coupling_20251115.md', 'Constructed wetlands meta-analysis'],
+    status: 'unlockable',
+    prerequisites: [],
+    minAICapability: 1.0,
+    minEconomicStage: 2.0,
+    researchMonthsRequired: 12,
+    researchCost: 1500,
+    deploymentCost: 120000,
+    deploymentMonthsRequired: 180,     // 15 years to deploy globally
+    deploymentLevel: 0,
+    effects: {
+      nitrogenReduction: 0.63,           // Median from 335 field experiments
+      phosphorusReduction: 0.72,         // Median from field data
+      habitatRestoration: 0.50,
+      biodiversityBonus: 0.25,
+    },
   },
-  // NOTE (Roy, Nov 18, 2025): Removed duplicate/corrupt fields (lines 2567-2598)
-  // - Multiple tech objects merged together (constructed wetlands duplicates)
-  // - Caused "object literal cannot have multiple properties" TypeScript errors
 
   // AI Safety Capstone (2)
   {
@@ -3162,41 +2775,6 @@ const ALL_TECH: TechDefinition[] = [
 ];
 
 /**
- * Performance optimization (Nov 20, 2025): Create lookup maps for O(1) access
- * Previously: 284+ linear searches per month caused 11.2ms overhead
- * Now: O(1) lookups via pre-built maps
- */
-
-// Build lookup maps once at initialization
-const TECH_BY_ID_MAP = new Map<string, TechDefinition>();
-const TECH_BY_CATEGORY_MAP = new Map<string, TechDefinition[]>();
-const TECH_BY_STATUS_MAP = new Map<string, TechDefinition[]>();
-
-// Initialize maps (runs once at module load)
-for (const tech of ALL_TECH) {
-  // ID map
-  TECH_BY_ID_MAP.set(tech.id, tech);
-
-  // Category map
-  if (!TECH_BY_CATEGORY_MAP.has(tech.category)) {
-    TECH_BY_CATEGORY_MAP.set(tech.category, []);
-  }
-  TECH_BY_CATEGORY_MAP.get(tech.category)!.push(tech);
-
-  // Status map
-  if (!TECH_BY_STATUS_MAP.has(tech.status)) {
-    TECH_BY_STATUS_MAP.set(tech.status, []);
-  }
-  TECH_BY_STATUS_MAP.get(tech.status)!.push(tech);
-}
-
-/**
- * Total count of all breakthrough technologies in comprehensive tech tree
- * Used for bifurcation thresholds and progress calculations
- */
-export const TOTAL_TECH_COUNT = ALL_TECH.length;  // 119 breakthrough technologies
-
-/**
  * Get all technologies
  */
 export function getAllTech(): TechDefinition[] {
@@ -3205,24 +2783,21 @@ export function getAllTech(): TechDefinition[] {
 
 /**
  * Get technology by ID
- * Performance: O(1) lookup via Map instead of O(n) linear search
  */
 export function getTechById(id: string): TechDefinition | undefined {
-  return TECH_BY_ID_MAP.get(id);
+  return ALL_TECH.find(t => t.id === id);
 }
 
 /**
  * Get technologies by category
- * Performance: O(1) lookup via Map instead of O(n) filter
  */
 export function getTechByCategory(category: string): TechDefinition[] {
-  return TECH_BY_CATEGORY_MAP.get(category) || [];
+  return ALL_TECH.filter(t => t.category === category);
 }
 
 /**
  * Get technologies by status
- * Performance: O(1) lookup via Map instead of O(n) filter
  */
 export function getTechByStatus(status: 'deployed_2025' | 'unlockable' | 'future'): TechDefinition[] {
-  return TECH_BY_STATUS_MAP.get(status) || [];
+  return ALL_TECH.filter(t => t.status === status);
 }

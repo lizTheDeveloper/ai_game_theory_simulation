@@ -18,7 +18,7 @@ import { GameState } from '@/types/game';
 import { addMortalityRisk } from '@/simulation/bayesianMortality';
 import { deterministicRandom } from '@/simulation/utils/deterministicRng';
 import { THRESHOLDS, RATES } from '@/simulation/config/centralConfig';
-import { assertStateProperty } from '@/simulation/utils/assertions';
+import { assertStateProperty, assertFinite } from '@/simulation/utils/assertions';
 
 /**
  * Environmental mortality breakdown by cause
@@ -278,9 +278,27 @@ export function calculateEnvironmentalMortality(state: GameState, month: number)
   // Historical: 2% base + scaling = 2-15% event probability, 150-300% spikes
   // Unprecedented: 5% base + scaling = 5-25% event probability, 250-450% spikes
   const scenarioParams = state.config.scenarioParameters;
-  const baseProb = scenarioParams?.environmentalShockProbability ?? 0.02;
+  const baseProb = assertFinite(
+    scenarioParams?.environmentalShockProbability !== undefined
+      ? scenarioParams.environmentalShockProbability
+      : 0.02,
+    {
+      location: 'calculateEnvironmentalMortality',
+      valueName: 'environmentalShockProbability',
+      month: state.currentMonth,
+    }
+  );
   const maxProb = baseProb + 0.13; // Scale to 13% above base
-  const baseMag = scenarioParams?.environmentalShockMagnitude ?? 2.0;
+  const baseMag = assertFinite(
+    scenarioParams?.environmentalShockMagnitude !== undefined
+      ? scenarioParams.environmentalShockMagnitude
+      : 2.0,
+    {
+      location: 'calculateEnvironmentalMortality',
+      valueName: 'environmentalShockMagnitude',
+      month: state.currentMonth,
+    }
+  );
 
   // Event probability scales with environmental stress
   const breachedCount = boundaries.boundariesBreached;
