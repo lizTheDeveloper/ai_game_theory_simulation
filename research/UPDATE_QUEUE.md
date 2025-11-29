@@ -1,6 +1,11 @@
 # Research Update Queue
+<<<<<<< Updated upstream
 **Generated:** 11/29/2025, 8:30:04 AM
 **Files Scanned:** 488
+=======
+**Generated:** 11/28/2025, 10:30:04 PM
+**Files Scanned:** 485
+>>>>>>> Stashed changes
 
 ---
 
@@ -12,7 +17,11 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
+<<<<<<< Updated upstream
 **Count:** 167 (34.2%)
+=======
+**Count:** 164 (33.8%)
+>>>>>>> Stashed changes
 
 ### `CRISIS_MITIGATION_RESEARCH_CRITIQUE_20251029.md`
 - **Oldest source:** 2001 (24 years old)
@@ -881,7 +890,11 @@
 
 ## ✅ LOW (Monitor Only)
 
+<<<<<<< Updated upstream
 **Count:** 300 (61.5%)
+=======
+**Count:** 300 (61.9%)
+>>>>>>> Stashed changes
 
 All sources <3 years old. No action required.
 
@@ -891,11 +904,19 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
+<<<<<<< Updated upstream
 | Total files | 488 |
 | CRITICAL | 0 (0.0%) |
 | HIGH | 167 (34.2%) |
 | MEDIUM | 21 (4.3%) |
 | LOW | 300 (61.5%) |
+=======
+| Total files | 485 |
+| CRITICAL | 0 (0.0%) |
+| HIGH | 164 (33.8%) |
+| MEDIUM | 21 (4.3%) |
+| LOW | 300 (61.9%) |
+>>>>>>> Stashed changes
 | Average age | 7.8 years |
 | Oldest source | 1955 (70 years ago) |
 
@@ -903,21 +924,35 @@ All sources <3 years old. No action required.
 
 | Status | Files | Percentage |
 |--------|-------|------------|
+<<<<<<< Updated upstream
 | Current (<3yr) | 300 | 61.5% |
 | Warning (3-5yr) | 21 | 4.3% |
 | Critical (>5yr) | 167 | 34.2% |
+=======
+| Current (<3yr) | 300 | 61.9% |
+| Warning (3-5yr) | 21 | 4.3% |
+| Critical (>5yr) | 164 | 33.8% |
+>>>>>>> Stashed changes
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
+<<<<<<< Updated upstream
 - **Current:** 34.2% critical (>5yr)
+=======
+- **Current:** 33.8% critical (>5yr)
+>>>>>>> Stashed changes
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
+<<<<<<< Updated upstream
 1. Update 167 HIGH priority file(s) within 1 month
+=======
+1. Update 164 HIGH priority file(s) within 1 month
+>>>>>>> Stashed changes
 2. Schedule research update sprint
 3. Coordinate with research team
 
