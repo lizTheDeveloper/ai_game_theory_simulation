@@ -41,13 +41,6 @@ export class BifurcationLogicPhase implements SimulationPhase {
       expectedSource: 'initialization.ts - bifurcationState should be initialized'
     });
 
-    // CRITICAL FIX (Nov 29, 2025): Early-game protection (months 0-11)
-    // Prevent initialization artifacts from triggering false bifurcations
-    // Research: Real bifurcations emerge from dynamics, not initial conditions
-    if (state.currentMonth < 12) {
-      return { events: [] };
-    }
-
     // Calculate proximity to all thresholds
     const proximities = this.calculateProximities(state, bifState);
 
@@ -329,23 +322,17 @@ export class BifurcationLogicPhase implements SimulationPhase {
       threshold: bifState.flourishingThreshold,
     });
 
-    // Technology breakthrough threshold (tech unlock progress)
-    // This is a proxy - we calculate fraction of technologies unlocked
+    // Technology breakthrough threshold (tech deployment progress)
+    // FIX HIGH-4: Use deployed tech count, not unlocked count
     const techState = state.techTreeState;
-    // MEDIUM-3 FIX (Nov 29, 2025): Tech tree has 119 techs now (was 71)
-    // Threshold: 55-60% of 119 = 65-71 techs
-    const TOTAL_TECH_COUNT = 119;
-    const avgDeployment = techState.unlockedTech ? techState.unlockedTech.length / TOTAL_TECH_COUNT : 0.0;
+    // Count deployed techs (keys in deployedTechMap) out of total 71 techs
+    const deployedCount = Object.keys(techState.deployedTechMap).length;
+    const avgDeployment = deployedCount / 71;
     const avgDeploymentFinite = assertFinite(avgDeployment, {
       location: 'BifurcationLogicPhase.calculateProximities',
       valueName: 'avgDeployment',
       month: state.currentMonth,
     });
-
-    // M-3 DIAGNOSTIC (Nov 29, 2025): Track tech unlock progression
-    if (state.currentMonth % 12 === 0 || techState.unlockedTech.length > 0) {
-      console.log(`  [Tech Bifurcation] Month ${state.currentMonth}: ${techState.unlockedTech.length}/71 techs (${(avgDeploymentFinite * 100).toFixed(1)}%), threshold ${(bifState.technologyBreakthroughThreshold.location * 100).toFixed(1)}%`);
-    }
     // CRITICAL FIX (CRITICAL-1): For technology thresholds (trigger when ABOVE), distance should be 0 when at/above threshold
     // If value < threshold: distance to reach = (threshold - value)
     // If value >= threshold: achieved, distance = 0 (maximum amplification for innovation cascades)

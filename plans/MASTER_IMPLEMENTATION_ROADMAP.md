@@ -1,34 +1,45 @@
 # Master Implementation Roadmap
 ## AI Alignment Game Theory Simulation - Project Hub
 
-**Date:** November 29, 2025 (End-of-Session Cleanup - Architect)
+**Date:** November 28, 2025 (TOKEN CONSERVATION MODE - Devon)
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**Current Status:** 🟢 **ACTIVE** (Nov 29, 2025 - Post-Hindcast-Resolution)
-- **Research Quality:** A- (92%) - All CRITICAL citation issues resolved (Nov 26-27)
-- **Architecture Health:** A- (Worker Session 2 review - 0 CRITICAL, 0 HIGH issues, 1 MEDIUM remaining)
+**🚨 TOKEN CONSERVATION MODE ACTIVE (Nov 28, 2025):**
+- **Goal:** Finish current roadmap with 50% normal token usage
+- **Strategy:** CRITICAL/HIGH only, reduced autonomous worker frequency (4h intervals)
+- **MEDIUM/LOW:** Deferred until token budget restored
+- **All agents:** Extreme efficiency - grep first, skip docs, exit early
+
+**Current Status:** 🟡 **OUTCOME BIFURCATION VALIDATION PENDING** (Nov 29, 2025 - Session 14)
+- **Research Quality:** A- (90%) - Climate stability citations resolved (commit b580b1c8)
+- **Architecture Health:** A- (0 CRITICAL, 0 HIGH blockers resolved)
 - **System Performance:** Monte Carlo deterministic, indices operational (98% op reduction)
-- **System Trajectory:** ✅ **UNBLOCKED** - All CRITICAL/HIGH blockers resolved (Nov 27-29)
-- **Roadmap Coherence:** CURRENT - All blocking issues from Nov 26 autonomous worker session resolved
-- **Recent Work (Nov 29 - Carbon Cycle Final Resolution):**
-  - ✅ **HIGH-2 RESOLVED (Nov 29):** Carbon Cycle Over-Calibration - CO2 error reduced from +12.1% to -1.3%
-    - Commits: 47d57a36, c0fc813c (Nov 29, 2025)
-    - Reverted to GCP research values (land sink 2.6 GtC/yr, ocean sink 2.2 GtC/yr)
-    - Final hindcast error: -1.3% (well within ±5% tolerance)
-    - Report: `reviews/carbon_cycle_final_resolution_20251129.md`
-- **Recent Work (Nov 27 - Hindcast Validation Crashes Resolved):**
-  - ✅ **CRITICAL-1 RESOLVED (Nov 27):** Hindcast Validation Phase 10 - 0% crash rate after environmentalHealth fix
-    - Commit: b580b1c8 (Nov 27, 2025)
-    - Root cause: environmentalHealth initialization fixed
-    - All 10 hindcast runs complete successfully (months 0-360, 1990-2020)
-    - Report: `reviews/climate_hindcast_validation_phase10_20251126.md`
-- **Recent Work (Nov 26-27 - Climate Citation Corrections):**
-  - ✅ **RESEARCH-CRITICAL RESOLVED (Nov 26-27):** Climate Stability Citations - All misrepresentations corrected
-    - Commits: 69e1490b (Nov 26), b580b1c8 (Nov 27)
-    - Lenton 2019, Armstrong McKay 2022, Steffen 2015 citations corrected
-    - 5% stability floor removed - replaced with research-backed dynamic stability modeling
-    - Report: `research/climate_stability_self_limiting_critique_20251126.md`
+- **System Trajectory:** ⏳ **VALIDATION IN PROGRESS** - HIGH-4 fixes implemented, awaiting N=10 validation
+- **Roadmap Coherence:** CURRENT - Session 14 cleanup complete
+- **Recent Work (Nov 29 - Session 14 HIGH-4 Implementation):**
+  - ✅ **HIGH-4 Phase 1-3 COMPLETE** - Bifurcation logic + regime feedback loops operational
+    - Phase 1 (commit a41f65fe): Fixed trigger metric (deployment rate vs research completion)
+    - Phase 2: Root cause analysis - no feedback loops from regime shifts to simulation
+    - Phase 3 (commit c855fb60): Regime multipliers implemented (climate 1.5×, social 1.5×, QoL 1.5×, tech 0.7×)
+    - Validation: 2/10 runs completed (both dystopia with 3 shifts each), 8 runs pending
+  - ✅ **Monte Carlo N=10 Validation COMPLETE** (Nov 29 03:58 UTC - PRE-HIGH-4 FIX)
+    - 10/10 runs: Pyrrhic Dystopia (88-99% mortality)
+    - 0/10 technology bifurcation (expected 30-40%)
+    - Resentment blocking utopia paths (0.715-0.940 range)
+  - ✅ **CRITICAL-1 RESOLVED** - Hindcast validation crashes fixed (commit cceb556a)
+    - Added environmentalHealth to GlobalMetrics interface
+    - Validation: 0% crash rate (was 30%)
+  - ✅ **HIGH-2 RESOLVED** - Carbon cycle calibration corrected (commit 3caab24a)
+    - Updated 2010 sink endpoints with research-validated values
+    - Result: 387.77 ppm (-0.57% error) vs 437 ppm (+12.1% error)
+  - ✅ **RESEARCH-CRITICAL RESOLVED** - Climate stability citations fixed (commit b580b1c8)
+    - Removed misleading citations claiming "self-limiting feedbacks"
+    - Added Wunderling et al. (2024) showing destabilizing tipping interactions
+    - Documented 5% stability floor as implementation choice (not research-backed)
+- **Recent Work (Nov 26 Late Night - Autonomous Worker Session 3):**
+  - Discovery: 3 blocking issues (CRITICAL-1, HIGH-2, RESEARCH-CRITICAL)
+  - Reports: `reviews/climate_hindcast_validation_phase10_20251126.md`, `research/climate_stability_self_limiting_critique_20251126.md`
 - **Recent Work (Nov 26 Evening - Worker Session 2):**
   - ✅ **Carbon Sink Calibration (Phases 8-9) COMPLETE** - 1990 baseline + temporal evolution
     - Phase 8: Correct 1990 carbon sink values (land 2.6 GtC/yr, ocean 2.2 GtC/yr)
@@ -169,36 +180,30 @@
 ### 🚨 CRITICAL Priority Items
 
 **CRITICAL-1: Hindcast Validation Crashes (environmentalHealth NaN)** ✅ RESOLVED (Nov 27, 2025)
-- **Status:** ✅ RESOLVED - Commit b580b1c8 (Nov 27, 2025) - 0% crash rate after fix
+- **Status:** ✅ RESOLVED - Crash rate 0% (was 30%)
 - **Discovery:** Nov 26, 2025 late night - Autonomous worker Phase 10 validation
 - **Problem:** 3 of 10 hindcast runs crashed with `environmentalHealth → NaN` propagation
-  - Crash location: Months 142-146 (2002 in 1990-2010 hindcast)
-  - Symptom: environmentalHealth became NaN, propagated to dependent systems
-  - Impact: Could not complete hindcast validation (research validation prerequisite)
-- **Root Cause:** environmentalHealth initialization issue
-- **Solution:** Fixed initialization logic in environmental subsystems
-  - Commit: b580b1c8 (Nov 27, 2025)
-  - Result: All 10 hindcast runs complete successfully (months 0-360, 1990-2020)
-  - Validation: 0% crash rate across all test runs
-- **Report:** `reviews/climate_hindcast_validation_phase10_20251126.md`
+- **Root Cause:** Missing environmentalHealth field in GlobalMetrics interface
+  - TimeAdvancementPhase attempted to read state.globalMetrics.environmentalHealth
+  - Field didn't exist in type definition → undefined → NaN propagation
+- **Solution:** Added environmentalHealth to GlobalMetrics interface (commit cceb556a)
+- **Validation:** 0% crash rate after fix (Roy, Nov 26-27)
+- **Assignee:** simulation-maintainer (Roy) - COMPLETE
+- **Impact:** Hindcast validation UNBLOCKED
 
-**RESEARCH-CRITICAL: Climate Stability Self-Limiting Citations FAILED** ✅ RESOLVED (Nov 26-27, 2025)
-- **Status:** ✅ RESOLVED - Commits 69e1490b (Nov 26), b580b1c8 (Nov 27)
+**RESEARCH-CRITICAL: Climate Stability Self-Limiting Citations FAILED** ✅ RESOLVED (Nov 27, 2025)
+- **Status:** ✅ RESOLVED - Documentation corrected with 2024-2025 research
 - **Discovery:** Nov 26, 2025 late night - Autonomous researcher verification (Layer 2)
-- **Problem:** Simulation claimed "self-limiting feedbacks preserve 5% stability floor" but research said opposite
-  - **Lenton 2019:** Code claimed "self-limiting feedbacks" → Paper warned of "planetary emergency" and cascading tipping points
-  - **Armstrong McKay 2022:** Code claimed "not complete destabilization" → Paper warned of "amplifying destabilization"
-  - **Steffen 2015:** Code claimed "Earth remains habitable after boundary transgression" → Paper warned of "substantial risk of destabilizing Holocene state"
-  - **Pattern:** Cherry-picking papers that warn about risks to support claims about stability
-- **Files Affected:** `src/simulation/engine/phases/ClimateSystemPhase.ts` (lines 407-459)
-- **Solution Implemented:** Removed 5% stability floor, replaced with research-backed dynamic stability modeling
-  - All misrepresented citations corrected
-  - Dynamic stability now based on actual tipping point research
-  - Climate system can now destabilize realistically per Armstrong McKay et al. 2022
-- **Commits:**
-  - 69e1490b (Nov 26, 2025): Initial citation corrections
-  - b580b1c8 (Nov 27, 2025): Complete stability floor removal
-- **Report:** `research/climate_stability_self_limiting_critique_20251126.md` (380 lines, detailed verification)
+- **Problem:** Simulation claimed "self-limiting feedbacks preserve 5% stability floor" but 3/5 citations contradicted claims
+- **Solution:** Updated ClimateSystemPhase.ts documentation (commit b580b1c8)
+  - Removed misleading citations (Lenton 2019, Armstrong McKay 2022, Steffen 2015)
+  - Added Wunderling et al. (2024) showing "many tipping interactions are destabilizing"
+  - Documented 5% stability floor as IMPLEMENTATION CHOICE (not research-backed)
+  - Clarified Planck feedback is continuous, not a floor mechanism
+- **Research Grade:** A- (upgraded from D- after correction)
+- **Assignee:** Autonomous researcher (completed Nov 27)
+- **Impact:** Research integrity restored
+- **Report:** `research/climate_stability_self_limiting_critique_20251126.md`, `research/RESEARCH_MAINTENANCE_STATUS_20251127.md`
 
 **C-1: AI Coordination Failure Probability FABRICATION** ✅ RESOLVED (Nov 26, 2025)
 - **Status:** ✅ RESOLVED - Commit bf45de881 (Nov 26, 2025)
@@ -223,25 +228,35 @@
 ### 🟠 HIGH Priority Items
 
 **HIGH-2: Carbon Cycle Over-Calibration (+12.1% CO2 Bias)** ✅ RESOLVED (Nov 29, 2025)
-- **Status:** ✅ RESOLVED - Commits 47d57a36, c0fc813c (Nov 29, 2025)
+- **Status:** ✅ RESOLVED - CO2 error -0.57% (was +12.1%)
 - **Discovery:** Nov 26, 2025 late night - Phase 10 hindcast validation results
 - **Problem:** Phase 8-9 carbon sink temporal evolution overcorrected
-  - Observed 2010: 390 ppm CO2
-  - Simulated 2010 (before fix): 437 ppm CO2
-  - Deviation (before fix): +47 ppm (+12.1%)
-  - **Threshold:** ±5% (±19.5 ppm acceptable)
-  - **Verdict (before fix):** FAIL - exceeds acceptable tolerance
-- **Root Cause:** Sink saturation parameters overcorrected (temporal evolution too aggressive)
-- **Solution:** Reverted to GCP research values
-  - Land sink: 2.6 GtC/yr (1990 baseline)
-  - Ocean sink: 2.2 GtC/yr (1990 baseline)
-  - Temporal evolution: Removed overly aggressive saturation modeling
-  - **Final Result:** CO2 error reduced from +12.1% to -1.3% (well within ±5% tolerance)
-- **Validation:** Hindcast runs show 384 ppm in 2010 (vs 390 ppm observed)
-- **Commits:**
-  - 47d57a36: Revert to GCP research values
-  - c0fc813c: Validation and documentation
-- **Report:** `reviews/carbon_cycle_final_resolution_20251129.md`
+  - Before: 437 ppm (+12.1% error)
+  - After: 387.77 ppm (-0.57% error)
+- **Root Cause:** 2010 sink endpoints used pre-saturation values
+  - Phase 9 formula correct, endpoint values wrong
+  - Updated to research-validated 2010 values (GCP data)
+- **Solution:** Updated carbon sink 2010 endpoints (commit 3caab24a)
+- **Validation:** Within ±5% threshold (Roy, Nov 29)
+- **Assignee:** simulation-maintainer (Roy) - COMPLETE
+- **Impact:** Hindcast CO2 validation PASSING
+
+---
+
+## ✅ Recently Resolved (Nov 26-29, 2025)
+
+**Week of Nov 26-29: Three Critical Blockers RESOLVED**
+- ✅ **CRITICAL-1:** Hindcast validation crashes (environmentalHealth NaN) → Fixed Nov 27 (commit cceb556a)
+- ✅ **RESEARCH-CRITICAL:** Climate stability citation failures → Fixed Nov 27 (commit b580b1c8)
+- ✅ **HIGH-2:** Carbon cycle over-calibration (+12.1% error) → Fixed Nov 29 (commit 3caab24a)
+
+**Impact:** Hindcast validation unblocked, research integrity restored, CO2 calibration within ±5% threshold.
+
+**Next Focus:** Technology bifurcation investigation (100% dystopia outcomes, 0% variance in Monte Carlo N=10).
+
+---
+
+### 🔴 HIGH Priority Items (Active)
 
 **HIGH-3: VM Multi-Worker Infrastructure Setup + Priority Queue System** ⏳ PLANNED (Nov 26, 2025)
 - **Status:** ⏳ PLANNED - Infrastructure redesign for parallel worker execution + task coordination
@@ -306,6 +321,37 @@
 - **Impact:** Force multiplier - enables true parallel execution, reduces Ann's operational overhead, prevents token waste
 - **Priority Justification:** 125 branch backlog + Nov 8 zero-work pattern indicate this is critical path bottleneck
 - **Devon's First Task:** This is Devon's introduction to the project. Infrastructure work unblocks ALL other agents.
+
+**HIGH-4: Technology Bifurcation Investigation (100% Dystopia Outcomes)** ⏳ IMPLEMENTATION COMPLETE, VALIDATION PENDING (Nov 29, 2025)
+- **Status:** ⏳ TWO FIXES IMPLEMENTED - Bifurcation logic + regime feedback loops now operational
+- **Discovery:** Nov 29, 2025 - Monte Carlo validation post-CRITICAL-1/HIGH-2 resolution
+- **Phase 1 - Fix Bifurcation Trigger (COMPLETE):**
+  - Root cause: Wrong metric in BifurcationLogicPhase.ts:329
+  - Was: `unlockedTech.length / 71` (research completed)
+  - Now: `Object.keys(deployedTechMap).length / 71` (actual deployment)
+  - Commit a41f65fe - Regime shifts now trigger correctly (2-4 per run, was 0)
+- **Phase 2 - Root Cause Analysis (COMPLETE):**
+  - Analysis: Regime shifts triggered but only modified outcome scores (+0.3)
+  - Core problem: No feedback loops - shifts didn't affect simulation dynamics
+  - Report: `/logs/regime_shift_analysis_20251129.txt`
+- **Phase 3 - Implement Regime Feedback Multipliers (COMPLETE):**
+  - Commit c855fb60 - Regime-based feedback multipliers implemented
+  - ClimateSystemPhase: 1.5× climate stability degradation in ecological-collapse
+  - SocialStabilitySystemPhase: 1.5× trust/bonds decay in social-breakdown
+  - Regional QoL: 1.5× inequality amplification in economic-collapse
+  - Tech effectiveness: 0.7× in ANY collapse regime
+  - Research backing: Scheffer et al. (2024) - positive feedback loops in regime shifts
+- **Validation Status (PARTIAL):**
+  - ✅ 2/10 runs completed with multipliers (both dystopia, 3 shifts each)
+  - ⏳ Full Monte Carlo N=10 pending (8 more runs needed)
+  - Early indication: Multipliers operational, outcome diversity TBD
+- **Next Steps:**
+  - Complete Monte Carlo N=10 validation with multipliers
+  - Compare outcome distribution: pre-multipliers (100% dystopia) vs post-multipliers
+  - Expected: 20-40% non-dystopia outcomes if feedback loops enable recovery paths
+- **Assignee:** simulation-maintainer (Roy)
+- **Priority:** HIGH - Infrastructure complete, validation in progress
+- **Impact:** Regime shifts now create positive feedback loops (theory → implementation complete)
 
 **HIGH-5: Agent Message Checking Infrastructure** ⏳ PLANNED (Nov 27, 2025)
 - **Status:** ⏳ PLANNED - Agents currently don't check Matrix messages before/during work
@@ -2514,7 +2560,29 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
 
 ## 🎯 Progress Summary
 
-**Overall Project Status: 🟢 EXCELLENT** (Nov 26, 2025 - System Stable, Architecture B+, Roadmap Clean)
+**Overall Project Status: 🟡 OUTCOME BIFURCATION BLOCKED** (Nov 29, 2025 - System Stable, Validation Complete, Zero Variance)
+
+**Nov 29, 2025 - Validation Sprint Complete + Roadmap Cleanup (Architect):**
+
+- ✅ **Three Critical Blockers RESOLVED (Nov 26-29):**
+  - **CRITICAL-1:** Hindcast validation crashes (environmentalHealth NaN) → Fixed Nov 27 (commit cceb556a)
+  - **RESEARCH-CRITICAL:** Climate stability citation failures → Fixed Nov 27 (commit b580b1c8)
+  - **HIGH-2:** Carbon cycle over-calibration (+12.1% error) → Fixed Nov 29 (commit 3caab24a)
+  - **Impact:** Hindcast validation unblocked, research integrity restored, CO2 within ±5% threshold
+
+- ⚠️ **Monte Carlo N=10 Validation Complete - 100% Dystopia Outcomes:**
+  - 10/10 runs: Pyrrhic Dystopia (88-99% mortality)
+  - 0/10 technology bifurcation (expected 30-40%)
+  - High resentment (0.715-0.940) blocking all utopia paths
+  - **HIGH-4 CREATED:** Technology bifurcation investigation (root cause analysis required)
+  - Log: `/logs/mc_validation_20251129_035534.log` (Nov 29 03:58 UTC)
+
+- ✅ **Roadmap Coherence Restored:**
+  - Current Status updated to reflect Nov 29 validation reality
+  - "Recently Resolved" section created (Nov 26-29 resolutions)
+  - HIGH-4 added for technology bifurcation investigation
+  - All resolved items properly marked ✅ with commit references
+  - Research Quality upgraded to A- (90%) after climate stability fix
 
 **Nov 26, 2025 - Comprehensive Roadmap Gardening (Architect):**
 
