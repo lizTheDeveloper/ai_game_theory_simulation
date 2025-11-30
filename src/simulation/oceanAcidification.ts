@@ -37,14 +37,9 @@ export function initializeOceanAcidificationSystem(rng?: () => number): OceanAci
 
   return {
     // Research-backed fields (RD-2 Nov 28 2025)
-<<<<<<< Updated upstream
     // MEDIUM-3 FIX (Nov 29, 2025): Resolved merge conflict - using updated upstream values
     aragoniteSaturation: 3.0,        // Current (2025): 3.0 (CALIBRATION: slightly above stress threshold)
     pH: 8.0,                         // Current (2025): 8.0 (CALIBRATION: provides 10-20 year grace period before cascade at pH < 7.9)
-=======
-    aragoniteSaturation: 2.8,        // Current (2025): 2.8-3.3, down from 4.6 pre-industrial
-    pH: 7.95,                        // Current (2025): 7.95 (above cascade threshold, allows grace period)
->>>>>>> Stashed changes
     pHLevel: 0.96,                   // LEGACY: Slight decline from pre-industrial 8.2
     co2AbsorptionCapacity: 0.85,     // Still strong but declining
     coralReefHealth: 70,             // 70% (30% degradation from baseline)
