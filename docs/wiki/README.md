@@ -1892,7 +1892,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 **Bifurcation-Emergency Integration (6h)**
 - ✅ **Bifurcation → Emergency Response** escalation operational
 - ✅ **Regime Shift Detection → Crisis Cascades** (variance amplification triggers)
-- ✅ **Research:** Scheffer et al. 2024, Lenton et al. 2023 (15-200× variance before regime shifts)
+- ✅ **Research:** Scheffer et al. (2014) Phil. Trans. R. Soc. B, Lenton et al. 2023 (15-200× variance before regime shifts)
 - ✅ **Early Warning System:** Operational
 
 **Roadmap Status:**
@@ -2056,7 +2056,7 @@ The comprehensive post-Week 4 assessment revealed a critical distinction: **Plan
   - Bifurcation detection → Emergency response escalation
   - Variance amplification → Crisis cascade prevention
   - Regime shift proximity → Risk alert system
-- **Research:** Scheffer et al. 2024 (15-200× variance before regime shifts), Lenton et al. 2023, Dakos et al. 2012
+- **Research:** Scheffer et al. (2014) Phil. Trans. R. Soc. B (15-200× variance before regime shifts), Lenton et al. 2023, Dakos et al. 2012
 - **Early Warning System:** Operational (variance amplification triggers preventive protocols)
 - **Validation:** N=3 Monte Carlo runs, bifurcation events trigger appropriate emergency responses
 - **Archive:** `plans/completed/roadmap_next_steps_bifurcation_20251108.md`
@@ -3507,7 +3507,7 @@ Commit: 5c6e9d0 (Nov 6, 2025)
 **Problem Identified:** 10× variance cap was artificially constraining outcome diversity, preventing research-backed variance in crisis outcomes.
 
 **Research Evidence (Sylvia + Cynthia consensus):**
-- Scheffer et al. 2024: 15-200× observed amplification in real regime shifts
+- Scheffer et al. (2014) Phil. Trans. R. Soc. B: 15-200× observed amplification in real regime shifts
 - Financial crisis 2008: 40× documented amplification
 - Ecosystem collapses: 100× amplification in biodiversity cascades
 - Disaster cascades: 200× amplification in compound crises
@@ -3555,7 +3555,7 @@ Addressed **HIGH-1** from architecture review (architecture-post-week4-integrati
    - Heat wave intensity: Base intensity amplified by `varianceAmplification / 5.0`
    - Drought intensity: Base intensity amplified by `varianceAmplification / 5.0`
    - Ecosystem collapse: Base intensity amplified by `varianceAmplification / 5.0`
-   - Near tipping points (varianceAmp=100×): Extreme variance in climate impacts (**Updated Nov 6, 2025:** 10× → 100× per Scheffer et al. 2024)
+   - Near tipping points (varianceAmp=100×): Extreme variance in climate impacts (**Updated Nov 6, 2025:** 10× → 100× per Scheffer et al. 2014)
    - Far from thresholds (varianceAmp=1×): Deterministic climate impacts
 
 3. **Research foundation:**
@@ -6421,7 +6421,7 @@ The Bifurcation system models a fundamental principle from dynamical systems the
 **Key Insight:** Near tipping points, identical initial conditions with tiny differences produce radically divergent outcomes. This explains why Monte Carlo simulations show high variance (20-70% coefficient of variation) rather than converging to a single outcome.
 
 **Research Foundation:** 12 peer-reviewed papers (2012-2025) from ecology, climate science, financial systems, and bifurcation theory:
-- Scheffer et al. (2024) - Environmental fold catastrophes
+- Scheffer et al. (2014) Phil. Trans. R. Soc. B - Environmental regime shifts
 - Dakos et al. (2012) - Variance as early warning signal
 - Manda (2010), Fed (2016) - Financial crisis amplification (2008 VIX: 4-5× baseline)
 - Richardson et al. (2023) - Planetary boundary transgression
@@ -6488,7 +6488,7 @@ Different systems exhibit different amplification based on their underlying bifu
 
 | System | Multiplier | Bifurcation Type | Research Basis |
 |--------|------------|------------------|----------------|
-| Environmental | 1.5× | Fold catastrophe | Scheffer et al. (2024) |
+| Environmental | 1.5× | Fold catastrophe (phenomenological calibration) | Scheffer et al. (2014) |
 | Social | 2.5× | Hopf bifurcation | Dakos et al. (2012) |
 | Economic | 2.5× | Cascade dynamics | Manda (2010), Fed (2016) - 2008 crisis |
 | Governance | 2.0× | Feedback loops | Regime change literature |
@@ -10099,6 +10099,22 @@ state.history.exogenousShocks?: Array<{
   - Reduces risk of version-related issues
 - **Location**: `autonomous-worker.sh` (lines 79-86, in PRE-FLIGHT CHECKS)
 - Commit: 14c8a3e (Oct 31, 2025)
+
+**VM Multi-Worker Infrastructure with Agent Personalities** ✅ PHASE 2 COMPLETE (Nov 30, 2025)
+- **Priority queue system**: Task selection via `AUTONOMOUS_WORKER_QUEUE.json` (HIGH-3 Phase 1)
+  - Tasks sorted by priority: CRITICAL → HIGH → MEDIUM → LOW
+  - Claim/release/validate/complete scripts prevent concurrent work on same task
+  - `scripts/autonomousWorkerSelectTask.ts` returns highest-priority available task
+- **Agent personality integration** (HIGH-3 Phase 2):
+  - **10-agent mapping**: roy→simulation-maintainer, devon→devops, sylvia→research-skeptic, cynthia→super-alignment-researcher, moss→feature-implementer, tessa→far-future-ux-designer, historian→wiki-documentation-updater, ray→sci-fi-tech-visionary, priya→quantitative-validator, architect→architect
+  - **Context injection**: `scripts/setup-vm-multiworker.sh` loads agent .md file via `$(cat "$AGENT_PATH")`
+  - **Memory recall**: Agents instructed to recall context with `mcp__agent-memory__recall_context({agent_id: "AGENT_PERSONALITY"})`
+  - Tasks specify `agentPersonality` field to route work to correct specialist
+- **VM deployment status**: Phase 3-4 blocked on SSH credentials, GitHub key, API key
+  - Setup script ready: `scripts/setup-vm-multiworker.sh` (3-repo deployment with systemd timers)
+  - Deployment guide: `docs/VM_QUEUE_DEPLOYMENT_STATUS.md`
+- **Benefits**: Specialists handle domain-specific work with deep context (defensive coding, emoji conventions, research validation, etc.)
+- **Commits**: d4049ea (Phase 1 queue), 623891c (Phase 2 personalities), 6b3fedb (status doc)
 
 **Autonomous Worker Timeout & Cleanup** ✅ DOCUMENTED
 - **45-minute main timeout**: Worker sessions have 45 minutes (2700s) to complete tasks
