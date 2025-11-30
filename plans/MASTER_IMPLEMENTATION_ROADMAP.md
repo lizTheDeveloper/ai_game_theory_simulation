@@ -293,8 +293,8 @@
 
 **Next Focus (MEDIUM Priority):**
 1. **VM deployment (HIGH-3, HIGH-5 Phase 3-4)** - Infrastructure ready, blocked on VM access
-2. **Parameter sweep execution (M-3)** - Methodology validated, blocked on parameter injection system (4-6h)
-3. **Assertion audit (M-2)** - 55 remaining patterns, identify legitimate vs violations (2h)
+2. **Parameter injection system** - 2-3h, blocker for M-3 parameter sweep execution
+3. **Parameter sweep execution (M-3)** - Methodology validated, deferred until VM deployment + parameter injection complete
 
 ---
 
@@ -454,34 +454,27 @@
 - **Token Efficiency:** 25k tokens (50% of 8-12h estimate)
 - **Files:** `research/parameter_sweep_methodology_20251130.md`, `reviews/parameter_sweep_critique_20251130.md`, `reviews/parameter_sweep_implementation_status_20251130.md`, `reviews/parameter_sweep_architecture_review_20251130.md`
 - **Next Steps (MEDIUM-NEW "Parameter Sweep Execution"):** Parameter injection → N=200 sweep → Sobol indices → 90% CI report
-- **Recommendation:** Execute AFTER VM deployment (parallel workers benefit)### 🟡 MEDIUM Priority Items
+- **Recommendation:** Execute AFTER VM deployment (parallel workers benefit)
 
-**Status:** 2 active MEDIUM items (M-2 assertion audit, M-3 parameter sweep execution)
+### 🟡 MEDIUM Priority Items
 
-**Archive:** M-1 (dead code cleanup) archived to `plans/completed/validation_sprint_nov26_29_20251129.md`
+**Status:** 1 active MEDIUM item (M-3 parameter sweep execution)
 
-**M-3: Parameter Sweep Execution** (Created from HIGH-6, Nov 30, 2025)
-- **Status:** 🟡 NEW - Methodology validated, implementation ready
-- **Assignee:** roy (simulation-maintainer) or priya (quantitative validator)
-- **Prerequisites:** Parameter injection system (4-6 hours)
-- **Execution:** N=200 LHS hindcast sweep (13 minutes estimated)
-- **Analysis:** Sobol indices, 90% CI for temperature/population/biodiversity
-- **Dependencies:** None (can proceed independently)
-- **Recommendation:** Execute AFTER VM deployment for parallel worker benefit
-- **Framework:** `scripts/parameterSweepPilot.ts` (LHS sampler complete)
-- **Methodology:** `research/parameter_sweep_methodology_20251130.md` (peer-reviewed)
-- **Architecture:** `reviews/parameter_sweep_architecture_review_20251130.md` (Option A: typed overrides)
-- **Impact:** Quantifies outcome robustness, validates "pathways" claim, provides 90% CI for all future scenarios
+**Archives:**
+- M-1 (dead code cleanup) → `plans/completed/validation_sprint_nov26_29_20251129.md`
+- M-2 (assertion audit) → `plans/completed/session20_fallback_workflows_complete_20251130.md`
 
-**M-2: Audit Remaining Assertion Migration Patterns** (Identified Nov 16, 2025, Scoped Nov 30, 2025)
-- **Status:** 55 remaining fallback patterns (91 already using assertion utilities)
-- **Issue:** Split-brain error handling (some paths fail loudly, some silently)
-- **Impact:** MEDIUM - Regression risk, inconsistent debugging experience
-- **Effort:** 2h audit (identify legitimate vs violations), NOT 2-3 day migration
-- **Recommendation (Sylvia, Nov 30):** Audit 55 remaining patterns, many likely legitimate (initialization, UI, external interfaces)
-- **Source:** `reviews/defensive_fallback_architecture_review_20251116.md`, `reviews/research_debate_session16_20251130.md`
-- **Note:** Two CRITICAL regressions found (dystopiaProgression.ts, aiSuffering.ts) where fixed code was reverted
-- **Deferred:** Full migration deferred until token budget restored (CLAUDE.md warning applies)
+**M-2: Assertion Pattern Audit** ✅ COMPLETE (Nov 30, 2025)
+- **Status:** ✅ AUDIT COMPLETE - No migration warranted
+- **Findings:** 124 fallback patterns (53 legitimate, 71 violations)
+- **Verdict:** Split-brain risk overstated
+  - 2626 assertion utility calls across codebase (strong discipline)
+  - 43% of fallback patterns legitimate (config, initialization, external APIs, accumulators)
+  - Actual HIGH priority violations: ~26 phase execution fallbacks
+- **Recommendation:** 2-4h targeted fix for phase execution fallbacks (deferred until token budget restored)
+- **Report:** `reviews/fallback_pattern_audit_20251130.md`
+- **Archive:** `plans/completed/session20_fallback_workflows_complete_20251130.md`
+- **Impact:** Avoided 2-3 day full migration, preserved token budget for CRITICAL/HIGH work
 
 **M-3: Parameter Sweep Execution** (Created Nov 30, 2025, from HIGH-6 completion)
 - **Status:** 🟢 METHODOLOGY VALIDATED - Execution blocked on parameter injection system
