@@ -118,6 +118,8 @@ export function initializePlanetaryBoundariesSystem(rng: RNGFunction): Planetary
     timescaleYears: 50,
     extinctionContribution: 0.25,
     tippingPointRisk: 0.30,
+    recoveryHalfLife: 450,                 // 450 months (37.5 years) - atmospheric CO2 multi-century persistence
+    minimumAsymptoticValue: 0.35,          // 35% floor from committed warming + ocean CO2 release
   };
 
   // 2. BIOSPHERE INTEGRITY (Core Boundary) - Current ~10× safe boundary
@@ -216,6 +218,8 @@ export function initializePlanetaryBoundariesSystem(rng: RNGFunction): Planetary
     timescaleYears: 20,
     extinctionContribution: 0.15,
     tippingPointRisk: 0.30,
+    recoveryHalfLife: 125,                 // 125 months (~10 years) - soil nutrient cycling timescale
+    minimumAsymptoticValue: 0.10,          // 10% floor from natural background nutrient flows
   };
 
   // 6. NOVEL ENTITIES (Chemical Pollution) - Microplastics, PFAS
