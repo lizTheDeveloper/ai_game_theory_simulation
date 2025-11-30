@@ -123,6 +123,7 @@ export function initializePlanetaryBoundariesSystem(rng: RNGFunction): Planetary
     // Ice sheet inertia: 100-800 year response time (median 450)
     // Committed warming: 0.3-0.5C even with net-zero (AR6 Table SPM.2)
     // Temperature CAN stabilize, but ice sheets have multi-century lag
+    irreversible: false,                   // Temperature CAN stabilize, but ice sheets have multi-century lag
     recoveryHalfLife: 450,                 // Years for half-life recovery (ice sheet inertia, Drüke et al. 2024)
     minimumAsymptoticValue: 0.35,          // 35% committed warming/SLR floor (thermal inertia + ice sheet lag)
   };
