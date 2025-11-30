@@ -87,29 +87,78 @@ export function applyEnergyConstrainedCleanup(
 
   // 1. Check if tech has energy requirement (legacy tech without energy model uses old behavior)
   let energyReq: number | undefined;
+  let energyReqType: 'perKg' | 'annual' = 'perKg';  // Track which type for later calculation
+
   if (typeof tech.energyRequirement === 'object') {
-    // Object with kWhPerKg or annualTWhRequired
+    // Object with kWhPerKg, kWhPerM3, or annualTWhRequired
     if (tech.energyRequirement.kWhPerKg !== undefined) {
       energyReq = tech.energyRequirement.kWhPerKg;
+      energyReqType = 'perKg';
+    } else if (tech.energyRequirement.kWhPerM3 !== undefined) {
+      // Volume-based energy (kWh/m³ water treated)
+      // Convert to annualTWhRequired for compatibility with energy constraint model
+      //
+      // Rough estimate approach:
+      // - Global water treatment capacity: ~1000 km³/year (municipal + industrial)
+      // - Cleanup tech at full deployment might treat 1-10% of this
+      // - Use 50 km³/year as baseline (5% of global treatment capacity)
+      //
+      // This is a placeholder until we have proper water volume tracking
+
+      const kWhPerM3 = tech.energyRequirement.kWhPerM3;
+      const deploymentLevel = tech.deploymentLevel || 0;
+
+      // Estimate annual water volume treated at full deployment (km³/year)
+      const fullDeploymentVolume = 50;  // km³/year (5% of global treatment)
+      const currentVolume = fullDeploymentVolume * deploymentLevel;  // km³/year
+
+      // Convert to m³/year: 1 km³ = 1e9 m³
+      const volumeM3PerYear = currentVolume * 1e9;
+
+      // Annual energy: volume × energy/volume
+      const annualKWh = volumeM3PerYear * kWhPerM3;
+
+      // Convert kWh to TWh: 1 TWh = 1e9 kWh
+      energyReq = assertFinite(annualKWh / 1e9, {
+        location: 'applyEnergyConstrainedCleanup',
+        valueName: 'energyReq (converted from kWhPerM3)',
+        month: state.currentMonth,
+        additionalInfo: {
+          techId: tech.id,
+          kWhPerM3,
+          deploymentLevel,
+          volumeKm3PerYear: currentVolume,
+          annualTWh: annualKWh / 1e9,
+        },
+      });
+      energyReqType = 'annual';  // Treat as annual budget, not per-kg
     } else if (tech.energyRequirement.annualTWhRequired !== undefined) {
       energyReq = tech.energyRequirement.annualTWhRequired;
+      energyReqType = 'annual';
     } else {
-      throw new Error(`❌ Tech '${tech.id}' has energyRequirement object but neither kWhPerKg nor annualTWhRequired is defined`);
+      throw new Error(`❌ Tech '${tech.id}' has energyRequirement object but none of kWhPerKg, kWhPerM3, or annualTWhRequired is defined`);
     }
   } else {
     energyReq = tech.energyRequirement;
+    energyReqType = 'perKg';
   }
 
   if (!energyReq || !tech.minimumConcentration) {
     // Legacy cleanup tech without energy model - use base effectiveness
-    if (!tech.effects.novelEntitiesReduction) {
-      throw new Error(`❌ Tech '${tech.id}' missing novelEntitiesReduction effect (required for cleanup tech)`);
+    // Support multiple effect names for cleanup tech
+    const effectValue = tech.effects.novelEntitiesReduction ||
+                        (tech.effects as any).pfasReduction ||
+                        (tech.effects as any).microplasticReduction ||
+                        tech.effects.pollutionReduction;
+
+    if (!effectValue) {
+      throw new Error(`❌ Tech '${tech.id}' missing cleanup effect (novelEntitiesReduction/pfasReduction/microplasticReduction/pollutionReduction)`);
     }
     if (tech.deploymentLevel === undefined) {
       throw new Error(`❌ Tech '${tech.id}' missing deploymentLevel (required for cleanup tech)`);
     }
 
-    const baseEffect = tech.effects.novelEntitiesReduction * tech.deploymentLevel;
+    const baseEffect = effectValue * tech.deploymentLevel;
     return {
       grossEffectiveness: baseEffect,
       concentrationFactor: 1.0,
@@ -157,7 +206,7 @@ export function applyEnergyConstrainedCleanup(
 
   const energyDemand = assertStateProperty(
     state.resourceEconomy?.energy,
-    'demand',
+    'totalDemand',
     {
       location: 'applyEnergyConstrainedCleanup',
       month: state.currentMonth,
@@ -166,24 +215,42 @@ export function applyEnergyConstrainedCleanup(
 
   const renewableSurplus = Math.max(0, renewableCapacity - energyDemand);
 
-  // Estimate energy required for cleanup (very rough - assumes boundary value correlates with stock)
-  // TODO: Better stock tracking (needs contamination mass estimates)
-  // For now: boundary value [0,2] × 1000 Mt (rough stock) × energy/ton
-  const estimatedStock = boundaryCurrentValue * 1000; // Mt (very rough)
-  const energyPerTon = typeof energyReq === 'number' ? energyReq : 75; // GJ/ton default
+  // Calculate required energy based on type
+  let requiredEnergy: number;  // in EJ
 
-  const requiredEnergy = (estimatedStock * energyPerTon) / 1000; // Convert GJ to EJ
+  if (energyReqType === 'annual') {
+    // Energy requirement is already annualized (TWh/year)
+    // Convert to EJ: 1 EJ = 277.778 TWh
+    const annualTWh = typeof energyReq === 'number' ? energyReq : 0;
+    requiredEnergy = annualTWh / 277.778;  // TWh to EJ
+  } else {
+    // Energy requirement is per-kg (GJ/ton default)
+    // Estimate energy required for cleanup (very rough - assumes boundary value correlates with stock)
+    // TODO: Better stock tracking (needs contamination mass estimates)
+    // For now: boundary value [0,2] × 1000 Mt (rough stock) × energy/ton
+    const estimatedStock = boundaryCurrentValue * 1000; // Mt (very rough)
+    const energyPerTon = typeof energyReq === 'number' ? energyReq : 75; // GJ/ton default
+
+    requiredEnergy = (estimatedStock * energyPerTon) / 1000; // Convert GJ to EJ
+  }
+
   const energyFactor = Math.min(1.0, renewableSurplus / Math.max(0.001, requiredEnergy));
 
   // 4. Base effectiveness (from tech definition)
-  if (!tech.effects.novelEntitiesReduction) {
-    throw new Error(`❌ Tech '${tech.id}' missing novelEntitiesReduction effect (required for cleanup tech with energy model)`);
+  // Support multiple effect names for cleanup tech
+  const effectValue = tech.effects.novelEntitiesReduction ||
+                      (tech.effects as any).pfasReduction ||
+                      (tech.effects as any).microplasticReduction ||
+                      tech.effects.pollutionReduction;
+
+  if (!effectValue) {
+    throw new Error(`❌ Tech '${tech.id}' missing cleanup effect (novelEntitiesReduction/pfasReduction/microplasticReduction/pollutionReduction)`);
   }
   if (tech.deploymentLevel === undefined) {
     throw new Error(`❌ Tech '${tech.id}' missing deploymentLevel (required for cleanup tech with energy model)`);
   }
 
-  const baseEffectiveness = tech.effects.novelEntitiesReduction * tech.deploymentLevel;
+  const baseEffectiveness = effectValue * tech.deploymentLevel;
 
   // 5. Apply constraints
   const grossEffectiveness = baseEffectiveness * concentrationFactor * energyFactor;
