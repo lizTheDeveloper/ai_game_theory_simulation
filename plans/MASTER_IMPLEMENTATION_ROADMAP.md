@@ -17,12 +17,27 @@
 - **System Performance:** Monte Carlo deterministic, first utopia achieved, all novel entities tests passing
 - **System Trajectory:** ✅ **BREAKTHROUGH** - Technology bifurcation operational, outcome diversity restored
 - **Infrastructure:** ✅ **READY** - Multi-worker queue + agent monitors complete, awaiting VM deployment
-- **Roadmap Coherence:** CURRENT - Nov 30 Session 20 complete (CRITICAL-2 resolved, M-2 complete)
+- **Roadmap Coherence:** CURRENT - Nov 30 Session 21 complete (architecture review B, research validation A-)
 - **Archives:**
   - `plans/completed/session20_fallback_workflows_and_critical2_resolved_20251130.md`
   - `plans/completed/session18_parameter_sweep_and_assertion_audit_20251130.md`
   - `plans/completed/high6_parameter_sweep_methodology_validated_20251130.md`
   - `plans/completed/validation_sprint_nov26_29_20251129.md`
+- **Recent Work (Nov 30 - Session 21):**
+  - ✅ **Architecture Integration Review** (commit 8d4488fe) - Grade B
+    - CRITICAL-1: Merge conflict in oceanAcidification.ts resolved (was breaking all tests)
+    - Resolution: Chose upstream calibration (70% pH decline reduction, pH=8.0)
+    - Impact: All 8 test files passing (was TransformError cascade)
+  - ✅ **Research Source Validation** - Grade A-
+    - 61.6% sources <3 years old (305/495 files)
+    - Ocean acidification: 2023-2025 literature validated
+    - Parameter sweep methodology: Saltelli/IPCC AR6 validated
+    - Issues: 3 MEDIUM (Scheffer citation year, Anthony 2008 synergy needs replication check, 169 files >5yr)
+  - ✅ **Research Debate** - Key findings:
+    - Regime multipliers (1.5x): MECHANISM validated (Scheffer 2014), MAGNITUDE phenomenological (calibrated Nov 13)
+    - Extinction debt identified as MEDIUM-HIGH gap (Kuussaari 2009, Halley 2016, 50-400yr lag)
+    - Roadmap priorities confirmed correct given token constraints
+  - Token efficiency: <15k tokens per agent (excellent)
 - **Recent Work (Nov 30 - Session 20):**
   - ✅ **CRITICAL-2 RESOLVED** - Cleanup effectiveness calculation fixed (commit 1fddba66)
     - Bug: `Math.pow(1 / concentrationGap, 0.5)` produced >3000% effectiveness when gap < 1
@@ -437,22 +452,9 @@
 - **Next Steps (MEDIUM-NEW "Parameter Sweep Execution"):** Parameter injection → N=200 sweep → Sobol indices → 90% CI report
 - **Recommendation:** Execute AFTER VM deployment (parallel workers benefit)### 🟡 MEDIUM Priority Items
 
-**Status:** 2 active MEDIUM items (M-2 assertion audit, M-3 parameter sweep execution)
+**Status:** 3 active MEDIUM items (M-2 assertion audit, M-3 parameter sweep execution, M-4 extinction debt)
 
 **Archive:** M-1 (dead code cleanup) archived to `plans/completed/validation_sprint_nov26_29_20251129.md`
-
-**M-3: Parameter Sweep Execution** (Created from HIGH-6, Nov 30, 2025)
-- **Status:** 🟡 NEW - Methodology validated, implementation ready
-- **Assignee:** roy (simulation-maintainer) or priya (quantitative validator)
-- **Prerequisites:** Parameter injection system (4-6 hours)
-- **Execution:** N=200 LHS hindcast sweep (13 minutes estimated)
-- **Analysis:** Sobol indices, 90% CI for temperature/population/biodiversity
-- **Dependencies:** None (can proceed independently)
-- **Recommendation:** Execute AFTER VM deployment for parallel worker benefit
-- **Framework:** `scripts/parameterSweepPilot.ts` (LHS sampler complete)
-- **Methodology:** `research/parameter_sweep_methodology_20251130.md` (peer-reviewed)
-- **Architecture:** `reviews/parameter_sweep_architecture_review_20251130.md` (Option A: typed overrides)
-- **Impact:** Quantifies outcome robustness, validates "pathways" claim, provides 90% CI for all future scenarios
 
 **M-2: Audit Remaining Assertion Migration Patterns** (Identified Nov 16, 2025, Scoped Nov 30, 2025)
 - **Status:** 55 remaining fallback patterns (91 already using assertion utilities)
@@ -493,6 +495,21 @@
 - **Effort:** 4-6h implementation + 13min execution + 2h analysis = ~7-9h total
 - **Priority:** MEDIUM (methodology validated, execution is enhancement, not blocker)
 - **Recommendation:** Execute after VM deployment for parallel worker benefit
+
+**M-4: Extinction Debt Modeling** (Identified Session 21, Nov 30, 2025)
+- **Status:** 🟡 NEW - Research validated, implementation gap identified
+- **Assignee:** roy (simulation-maintainer) + cynthia (research)
+- **Problem:** Model assumes biodiversity recovery when stressors removed; real ecosystems have 50-400yr extinction lag
+- **Research Backing:**
+  - Kuussaari et al. (2009): 50-400 year extinction debt in tropical forests
+  - Halley et al. (2016): Meta-analysis across 36 studies confirms lag effects
+  - Tilman et al. (1994): Original theoretical foundation
+- **Current Impact:** Overly optimistic biodiversity recovery, technology-driven restoration appears more effective than realistic
+- **Implementation Approach:** Queue-based species loss with configurable lag time (Allee effects, genetic bottlenecks, small population dynamics)
+- **Effort:** ~4 hours (add queue system to BiodiversitySystemPhase)
+- **Priority:** MEDIUM-HIGH (research credibility, not blocking current validation)
+- **Recommendation:** Execute AFTER VM deployment and parameter sweep
+- **Source:** `reviews/research_debate_session21_20251130.md` (Sylvia critique)
 
 ### Validation Priority Stack
 
