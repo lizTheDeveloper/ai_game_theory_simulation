@@ -118,6 +118,12 @@ export function initializePlanetaryBoundariesSystem(rng: RNGFunction): Planetary
     timescaleYears: 50,
     extinctionContribution: 0.25,
     tippingPointRisk: 0.30,
+    // === IRREVERSIBILITY FRAMEWORK (Nov 30, 2025) ===
+    // Research: IPCC AR6 WG1 (2021), Schellnhuber et al. (2016)
+    // Ice sheet inertia: 100-800 year response time (median 450)
+    // Committed warming: 0.3-0.5C even with net-zero (AR6 Table SPM.2)
+    recoveryHalfLife: 450,                 // Years for half-life recovery (ice sheet inertia)
+    minimumAsymptoticValue: 0.35,          // 35% committed warming floor
   };
 
   // 2. BIOSPHERE INTEGRITY (Core Boundary) - Current ~10× safe boundary
