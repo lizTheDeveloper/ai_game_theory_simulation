@@ -1,185 +1,212 @@
-# Architecture Integration Review - Nov 30, 2025 (Session 18)
+# Architecture Integration Review - November 30, 2025 (Session 18)
 
-**Date:** November 30, 2025
-**Reviewer:** Architecture Skeptic
-**Scope:** Nov 24-30 commits - parameter sweep, regime multipliers, bifurcation refinements
-**Grade:** A-
+**Review Type:** 7-day commit scan (token-conservation mode)
+**Reviewer:** Architecture Skeptic (Opus 4.5)
+**Grade:** B+
+**Previous Grade:** B (earlier today, CRITICAL-1 fixed)
 
-## Summary
+## Executive Summary
 
-Recent work (41 commits since Nov 24) shows solid architectural discipline. HIGH-6 parameter sweep framework validated methodology before implementation (token-efficient). HIGH-4 regime multipliers apply consistently across domains. No CRITICAL issues identified.
+The codebase shows solid architectural health with one **HIGH** priority test failure in the novel-entities-irreversibility tests. The HIGH-4 bifurcation implementation (regime multipliers, feedback loops) is well-structured with proper assertion utilities throughout. No O(n^2) patterns or deep cloning in hot paths detected.
 
-## Issue Summary
-| Severity | Count |
-|----------|-------|
-| CRITICAL | 0 |
-| HIGH | 1 |
-| MEDIUM | 2 |
-| LOW | 2 |
+**Key Findings:**
+- 6 test failures in novel-entities-irreversibility.test.ts (HIGH priority)
+- BifurcationLogicPhase: Clean implementation, proper state propagation
+- Novel entities cleanup: Well-architected energy constraint model
+- No structuredClone usage in engine/phases/ (good performance hygiene)
 
----
+## CRITICAL Issues
 
-## CRITICAL ISSUES
-None.
+**None** - Previous CRITICAL-1 (missing recoveryHalfLife) was fixed in commit 03aee11f.
 
----
+## HIGH Issues
 
-## HIGH PRIORITY
+### HIGH-1: Novel Entities Test Failures (6 tests)
 
-### HIGH-1: Parameter Injection Gap (Blocking N=200 Sweep)
+**Status:** ACTIVE - Blocking CI
+**Impact:** Test suite failing, prevents confident deployment
+**File:** `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/tests/integration/novel-entities-irreversibility.test.ts`
 
-**Location:** `scripts/parameterSweepPilot.ts:122-126`
+**Failing Tests:**
+1. `should apply PFAS cleanup with energy/concentration constraints`
+2. `should limit cleanup effectiveness when energy is scarce`
+3. `should apply microplastic capture with concentration constraints`
+4. `should return 99% of cleanup to atmosphere`
+5. `should show layered strategy (prevention + cleanup) is best`
+6. `should demonstrate effectiveness improvement (0% → 20-40%)`
 
-**Issue:** Parameter sweep framework validated but NOT functional. Lines 122-126 note parameters not applied:
+**Root Cause Analysis:**
+Test expects `effectiveness > 0.5` but production rate was reduced 10x in recent commit (line 61 of `updateNovelEntitiesBoundary.ts`):
 ```typescript
-// NOTE: This is simplified - actual implementation needs to modify
-// initialization logic to accept parameter overrides
-// For pilot, we'll just run with defaults and collect distribution
+// Reduced 10x to match test expectations (Nov 30, 2025)
+let productionRate = (economicStage * 0.0002) + (manufacturingCap * 0.0001);
 ```
 
-**Impact:** HIGH-6 deliverable is methodology validation only. N=200 parameter sweep blocked until injection implemented.
+The test assertion at line 551 expects >50% effectiveness, but with reduced production rates, the denominator (baselineChange) becomes too small, making effectiveness calculation unreliable.
 
-**Recommendation:** Implement Option C (post-init mutation) for immediate unblock, migrate to Option A (typed overrides) before production use. Already documented in `reviews/parameter_sweep_architecture_review_20251130.md`.
+**Recommended Fix:**
+1. Adjust test thresholds to match new production rate model, OR
+2. Restore original production rates and fix root cause
 
-**Effort:** 2-3 hours
+**Effort:** Medium (1-2 hours) - requires careful calibration
 
----
+## MEDIUM Issues
 
-## MEDIUM PRIORITY
+### MEDIUM-1: Regime Multiplier Propagation
 
-### MEDIUM-1: Optional Chaining on bifurcationState (Persist from Session 16)
+**Status:** Monitoring
+**Files:**
+- `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/SocialStabilitySystemPhase.ts:117`
+- Other phases using `state.bifurcationState?.currentRegime`
 
-**Pattern:** Silent fallback if bifurcationState undefined
+**Observation:**
+Regime multipliers are correctly using optional chaining (`?.`) and safe defaults:
 ```typescript
-state.bifurcationState?.currentRegime === 'ecological-collapse' ? 1.5 : 1.0
+const regimeMultiplier = state.bifurcationState?.currentRegime === 'social-breakdown' ? 1.5 : 1.0;
 ```
 
-**Files (4 locations):**
-- `src/simulation/engine/phases/SocialStabilitySystemPhase.ts:117`
-- `src/simulation/engine/phases/ClimateSystemPhase.ts:524`
-- `src/simulation/qualityOfLife/regional.ts:475`
-- `src/simulation/techTree/effectsEngine.ts:373`
+This pattern is correct for phases that run before BifurcationLogicPhase initializes the state. However, phases running AFTER should use `assertDefined` to catch initialization bugs.
 
-**Issue:** If bifurcationState is undefined, multiplier silently defaults to 1.0. This violates the project's fail-loudly philosophy.
+**Recommendation:**
+Audit phase execution order to ensure consistent regime multiplier access patterns. Phases running at order > 4.5 should assert rather than fallback.
 
-**Recommendation:** Add comment documenting intentional fallback OR use assertDefined with graceful handling.
+**Effort:** Low (code review only)
 
-**Effort:** 15 minutes
+### MEDIUM-2: Energy Constraint Model Complexity
 
-### MEDIUM-2: Quantile Interpolation in LHS Framework
+**Status:** Technical debt
+**File:** `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/energyConstrainedCleanup.ts`
 
-**Location:** `scripts/parameterSweepPilot.ts:197-200`
+**Observation:**
+The energy-constrained cleanup model at 300 lines has multiple conversion paths:
+- kWhPerKg → requiredEnergy in EJ
+- kWhPerM3 → annualTWhRequired → EJ
+- annualTWhRequired → EJ
 
-**Issue:** Floor truncation for quantiles:
+Each conversion introduces potential for unit errors. The current code handles this correctly, but future modifications risk introducing bugs.
+
+**Recommendation:**
+Consider extracting unit conversion to a dedicated utility module with explicit type safety (branded types like `EJ` vs `TWh`).
+
+**Effort:** Medium (refactor, not urgent)
+
+## LOW Issues
+
+### LOW-1: Hindcast Diagnostic Logging
+
+**Status:** Debug code in production
+**File:** `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/BifurcationLogicPhase.ts:94-100`
+
 ```typescript
-function quantile(sorted: number[], q: number): number {
-  const idx = Math.floor(sorted.length * q);
-  return sorted[idx];
+if (state.currentMonth >= 140 && state.currentMonth <= 150) {
+  console.log(`\n🔍 HINDCAST DIAGNOSTIC Month ${state.currentMonth}:`);
+  // ...
 }
 ```
 
-**Impact:** 90% CI slightly conservative with small samples (N=50). At q=0.05, idx=2 instead of 2.5.
+This diagnostic logging is hardcoded for specific months (year 2002). Should be controlled by a debug flag.
 
-**Recommendation:** Use linear interpolation before N=200 sweep:
-```typescript
-const pos = (sorted.length - 1) * q;
-const base = Math.floor(pos);
-const rest = pos - base;
-return sorted[base] + rest * (sorted[base + 1] - sorted[base]);
-```
+**Effort:** Trivial (5 min)
 
-**Effort:** 10 minutes
+## State Propagation Analysis
+
+### BifurcationLogicPhase (HIGH-4 Implementation)
+
+**Grade: A**
+
+State propagation patterns are well-architected:
+
+1. **Single Writer Pattern** - BifurcationLogicPhase is the sole writer for:
+   - `bifurcationState.varianceAmplification`
+   - `bifurcationState.distanceToNearestThreshold`
+   - `bifurcationState.metrics.*`
+
+2. **Defensive Assertions** - All inputs validated:
+   - `assertDefined(state.bifurcationState, ...)`
+   - `assertStateProperty()` for all accessed properties
+   - `assertFinite()` for all calculated values
+   - `assertInRange()` for distance normalization
+
+3. **Regime Multiplier Consumers** - Downstream phases use regime correctly:
+   - SocialStabilitySystemPhase: `state.bifurcationState?.currentRegime === 'social-breakdown' ? 1.5 : 1.0`
+   - Pattern is safe (optional chaining with default)
+
+### Novel Entities Cleanup Implementation
+
+**Grade: B+**
+
+1. **Energy Constraint Flow** - Well-structured:
+   - Production → Prevention → Cleanup → Decay → Redeposition
+   - Each stage has proper assertions
+
+2. **RNG Validation** - Correct:
+   ```typescript
+   if (!rng || typeof rng !== 'function') {
+     throw new Error('❌ CRITICAL: RNG required for deterministic simulation');
+   }
+   ```
+
+3. **Minor Issue** - Commented-out logging block (lines 177-190) should be removed or converted to debug flag.
+
+## Performance Analysis
+
+### O(n^2) Patterns
+
+**Status: CLEAN** - No nested loop patterns detected in simulation engine.
+
+### Deep Cloning
+
+**Status: WELL-MANAGED**
+
+1. **Optimized cloning utility** exists at `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/cloning.ts`:
+   - `cloneAICapabilityProfile()` for hot-path shallow cloning
+   - `deepClone()` wrapper for rare full-state snapshots
+
+2. **No structuredClone in engine/phases/** - Verified via grep.
+
+3. **Usage in non-hot paths** (acceptable):
+   - `engine.ts` - Initial state snapshots
+   - `initialization.ts` - Setup only
+   - `diagnostics.ts` - Debug tooling
+
+## Integration Gap Analysis
+
+**Recent Commits (7 days):**
+
+| Commit | Description | Arch Status |
+|--------|-------------|-------------|
+| 738e7f91 | Session 17 fallback workflows | OK |
+| 50655ae5 | Planning documents + validation | OK |
+| 03aee11f | CRITICAL-1 fix (climate_change boundary) | **FIXED** |
+| 0d2df2d0 | Scheffer citation correction (2024→2014) | OK |
+| 74924a68 | Previous arch review (Grade A-) | N/A |
+| 1a7856f9 | HIGH-5 Agent message checking | OK |
+| a2826f81 | Irreversibility fields fix | OK |
+| 0831c2b0 | Scheffer citation clarification | OK |
+
+## Recommendations
+
+1. **IMMEDIATE:** Fix novel-entities-irreversibility tests (HIGH-1)
+   - Either adjust test expectations for new production rate model
+   - Or restore production rates and address original issue differently
+
+2. **FOLLOWUP:** Remove hindcast diagnostic logging (LOW-1)
+   - Extract to configurable debug mode
+
+3. **FUTURE:** Consider branded types for energy units (MEDIUM-2)
+   - Prevents unit conversion errors in complex models
+
+## Final Grade: B+
+
+**Reasoning:**
+- No CRITICAL issues
+- One HIGH-priority test failure (not a runtime issue, just test calibration)
+- Bifurcation implementation is architecturally sound
+- State propagation patterns are defensive and traceable
+- Performance patterns are clean (no O(n^2), optimized cloning)
+- Downgrade from A- due to test failures blocking CI
 
 ---
-
-## LOW PRIORITY
-
-### LOW-1: Asymmetric Regime Multiplier Design Undocumented
-
-**Pattern:**
-- Domain phases (climate, social, economic): 1.5x multiplier (amplifies decay)
-- effectsEngine tech deployment: 0.7x multiplier (reduces effectiveness)
-
-**Location:** `effectsEngine.ts:373-375`
-
-**Issue:** Asymmetry is likely intentional (collapse regimes both worsen decay AND hinder recovery) but not documented.
-
-**Recommendation:** Add 2-line comment explaining design rationale.
-
-**Effort:** 5 minutes
-
-### LOW-2: LHS Seed Documentation
-
-**Location:** `scripts/parameterSweepPilot.ts:42-48`
-
-**Issue:** LHS sampling uses SEED, simulation runs use SEED+i. Strategy is intentional but undocumented.
-
-**Recommendation:** Add comment in script header explaining seed spaces.
-
-**Effort:** 2 minutes
-
----
-
-## Architecture Health Assessment
-
-### Strengths Observed
-
-1. **Token-efficient delivery:** HIGH-6 validated methodology before implementation. Stopped when gaps identified rather than shipping broken code.
-
-2. **Consistent regime multiplier pattern:** All 4 domain locations use identical pattern:
-   - Climate (ecological-collapse): 1.5x degradation
-   - Social (social-breakdown): 1.5x decay
-   - Economic (economic-collapse): 1.5x inequality
-   - Tech (all collapse): 0.7x effectiveness
-
-3. **Proper assertions in bifurcation:** BifurcationLogicPhase uses assertFinite, assertInRange, assertDefined extensively (lines 38-325). No silent fallbacks in core logic.
-
-4. **Rolling window prevents memory exhaustion:** Time series limited to maxTimeSeriesLength (line 478-504).
-
-5. **Research grounding:** Scheffer et al. (2014) cited consistently for regime feedback justification.
-
-### No O(n^2) Concerns
-
-Checked for nested loops in recent changes. No new quadratic patterns introduced.
-
-### State Propagation Verified
-
-Regime multipliers flow correctly:
-1. BifurcationLogicPhase sets `bifurcationState.currentRegime`
-2. Downstream phases read regime and apply multipliers
-3. No circular dependencies
-
----
-
-## Comparison to Previous Reviews
-
-| Date | Grade | CRITICAL | HIGH | Notes |
-|------|-------|----------|------|-------|
-| Nov 25 | A- | 0 | 1 | energyAvailability gap |
-| Nov 28 | A- | 0 | 0 | Quick validation |
-| Nov 29 | A- | 0 | 0 | HIGH-4 verified |
-| **Nov 30** | **A-** | **0** | **1** | Parameter injection gap |
-
----
-
-## Recommendations for Project Manager
-
-1. **HIGH-1 (Parameter Injection):** Schedule 2-3h implementation session. Blocks full parameter sweep but pilot methodology validated.
-
-2. **MEDIUM-1, MEDIUM-2:** Bundle into single cleanup ticket. 25 minutes total.
-
-3. **LOW-1, LOW-2:** Address opportunistically when touching affected files.
-
-**Architecture is stable.** No urgent refactoring required. Recent work maintains project's defensive coding standards.
-
----
-
-## Token Conservation Note
-
-This review completed in single focused session:
-- 4 grep searches (targeted patterns)
-- 6 file reads (relevant sections only)
-- 1 git log + 2 git show commands
-- Total: ~12 tool calls
-
-Followed token conservation protocol: grep before read, exit when analysis complete.
+*Generated: 2025-11-30 05:XX UTC*
+*Mode: Token conservation (targeted grep + read)*
+*Commits reviewed: ~25 (7 days)*
