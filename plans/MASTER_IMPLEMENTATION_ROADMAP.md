@@ -1,7 +1,7 @@
 # Master Implementation Roadmap
 ## AI Alignment Game Theory Simulation - Project Hub
 
-**Date:** November 30, 2025 (TOKEN CONSERVATION MODE - Infrastructure Complete)
+**Date:** November 30, 2025 (TOKEN CONSERVATION MODE - ALL HIGH ITEMS COMPLETE)
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
@@ -56,7 +56,55 @@
     1. Parameter Sweep Monte Carlo → **HIGH priority** (research integrity) ✅ COMPLETE
     2. Assertion Migration (M-2) → **MEDIUM** (audit 55 remaining, don't migrate yet)
   - **Impact:** Parallel worker execution enabled, agent coordination automated, 125 branch backlog addressable
-- **Recent Work (Nov 29 - Session 15 HIGH-4 Validation):**
+**Current Status:** 🔴 **CRITICAL BUG DISCOVERED** (Nov 30, 2025 - Session 19)
+- **Research Quality:** A- (90%) - Parameter sweep methodology validated
+- **Architecture Health:** B+ → CRITICAL (1 CRITICAL bug discovered in cleanup effectiveness)
+- **System Performance:** Monte Carlo deterministic, first utopia achieved
+- **System Trajectory:** ✅ **BREAKTHROUGH** - Technology bifurcation operational, outcome diversity restored
+- **Infrastructure:** ✅ **READY** - Multi-worker queue + agent monitors complete, awaiting VM deployment
+- **Roadmap Coherence:** CURRENT - Nov 30 Session 19 complete (fallback workflows + CRITICAL bug discovery)
+- **Archives:**
+  - `plans/completed/validation_sprint_nov26_29_20251129.md`
+  - `plans/completed/high6_parameter_sweep_methodology_validated_20251130.md`
+- **Recent Work (Nov 30 - Session 19):**
+  - 🔴 **CRITICAL BUG DISCOVERED** - Cleanup effectiveness calculation broken
+    - Location: `src/simulation/utils/energyConstrainedCleanup.ts` line 191
+    - Bug: `Math.pow(1 / concentrationGap, 0.5)` produces >100000% effectiveness when gap < 1
+    - Impact: All cleanup technologies produce nonsense values (8 test failures)
+    - Root cause: Power law backwards for concentrated waste (gap < 1)
+    - **Status:** Documented, needs proper fix by simulation-maintainer
+  - ✅ **Architecture Integration Review** (Grade B+)
+    - HIGH-1: Novel entities test failures (8 tests) - led to CRITICAL bug discovery
+    - No other CRITICAL/HIGH issues
+    - Report: `reviews/architecture_integration_review_session19_20251130.md`
+  - ✅ **Research Source Validation** (Grade A-)
+    - All critical Nov 12 issues resolved
+    - 1 MEDIUM: Verify Scheffer 2024 vs 2014 citation
+    - Report: `reviews/research_source_validation_session19_20251130.md`
+  - ✅ **Roadmap Gardening** (Architect)
+    - HIGH-6 archived to completed/
+    - M-3 created for parameter sweep execution
+    - All HIGH items confirmed complete
+    - Commit: da60c741
+- **Recent Work (Nov 30 - Sessions 16-18):**
+  - ✅ **SESSION 18: HIGH-6 COMPLETE** - Parameter sweep methodology validated (commit 72f00d26)
+    - Research validation: Saltelli, IPCC AR6, Progressive LHS
+    - LHS framework: `scripts/parameterSweepPilot.ts` (262 lines, deterministic)
+    - Critical review: 4 HIGH cautions documented
+    - Architecture review: Grade A- (1 HIGH issue - quantile interpolation)
+    - Gap identified: Parameter injection system (blocker for execution)
+    - **Outcome:** Methodology validated, execution deferred to M-3 (MEDIUM)
+  - ✅ **SESSION 18: Validation Reviews** - Architecture + Research
+    - Architecture review (commit 94e89b2f): Grade B+ (post-integration)
+    - Parameter validation audit (commit b8e9c6ab): Grade B+
+    - 3 planning documents created from findings (commit f9b48916)
+  - ✅ **SESSION 16: Infrastructure Complete**
+    - HIGH-3 Phases 1-2: VM multi-worker infrastructure ready (commits 35c75453, bf2f46eb)
+    - HIGH-5 Phases 1-3: Agent message checking ready (commit 1a7856f9)
+    - Architecture Review: Grade A-, 0 new issues (commit 74924a68)
+    - Research Source Validation: Grade B+, Scheffer citations fixed (commit 0d2df2d0)
+    - Research Debate: 3 topics, HIGH-6 promoted to HIGH priority
+  - **Impact:** All HIGH items complete, research quality A-, infrastructure ready for VM deployment- **Recent Work (Nov 29 - Session 15 HIGH-4 Validation):**
   - ✅ **HIGH-4 VALIDATION COMPLETE** (Nov 29 12:06 UTC - POST-FIX)
     - Technology bifurcation: 10/10 (100% vs 0% pre-fix) ✅ FIXED
     - Outcome diversity: 9 dystopia, 1 utopia (vs 10/10 dystopia pre-fix)
@@ -223,15 +271,49 @@
 
 ### 🚨 CRITICAL Priority Items
 
-**Status:** 0 active CRITICAL items (all resolved Nov 26-29)
+**Status:** 1 active CRITICAL item (discovered Nov 30, Session 19)
 
-**Archive:** All CRITICAL items from Nov 26-29 validation sprint archived to `plans/completed/validation_sprint_nov26_29_20251129.md`
+**CRITICAL-2: Cleanup Effectiveness Calculation Bug** (Discovered Nov 30, 2025)
+- **Status:** 🔴 NEW - Discovered during HIGH-1 investigation
+- **Assignee:** simulation-maintainer (Roy)
+- **Discovery:** Architecture integration review found 8 test failures in novel-entities-irreversibility.test.ts
+- **Location:** `src/simulation/utils/energyConstrainedCleanup.ts` line 191
+- **Bug:** `const concentrationFactor = Math.pow(1 / concentrationGap, 0.5);`
+- **Problem:** When `concentrationGap < 1` (concentrated waste where tech works), produces massive amplification
+  - Example: `concentrationGap = 0.001` → `concentrationFactor = 31.6` (3160% effectiveness!)
+  - Expected: Concentration factor should be ≤ 1.0 (penalty for dilution), not >1.0 (reward)
+- **Root Cause:** Power law is backwards for concentrated waste (gap < 1)
+- **Impact:**
+  - All cleanup technologies produce nonsense effectiveness values
+  - 8 test failures in novel-entities-irreversibility.test.ts
+  - Tests correctly expect cleanup to work, but implementation is broken
+- **Fix Required:**
+  ```typescript
+  const concentrationFactor = concentrationGap >= 1
+    ? Math.pow(1 / concentrationGap, 0.5)  // Dilute: penalty
+    : 1.0;  // Concentrated: no penalty (or maybe slight bonus)
+  ```
+- **Testing:** All 8 failing tests should pass after fix
+- **Priority Justification:** Cleanup effectiveness is core mechanic for novel entities boundary, currently producing garbage values
+- **Discovery Report:** `reviews/architecture_integration_review_session19_20251130.md` (HIGH-1 investigation)
+- **Effort:** 1-2 hours (fix + validation + research backing for concentrated waste behavior)
+
+**Archive:** Previous CRITICAL items from Nov 26-29 validation sprint archived to `plans/completed/validation_sprint_nov26_29_20251129.md`
 
 ### 🟠 HIGH Priority Items
 
-**Status:** 1 active HIGH item
+**Status:** 0 active HIGH items (all complete Nov 30, 2025)
 
-## ✅ Recently Resolved (Nov 26-29, 2025)
+## ✅ Recently Resolved (Nov 26-30, 2025)
+
+**Nov 30 - Session 18: Research Quality Milestone**
+- ✅ **HIGH-6:** Parameter sweep methodology validation → Complete Nov 30 (commit 72f00d26)
+  - Research validation: Saltelli, IPCC AR6, Progressive LHS
+  - LHS framework: `scripts/parameterSweepPilot.ts` (262 lines, deterministic)
+  - Critical review: 4 HIGH cautions documented
+  - Architecture review: Grade A- (1 HIGH issue - quantile interpolation)
+  - Gap identified: Parameter injection system (execution deferred to M-3)
+  - Archive: `plans/completed/high6_parameter_sweep_methodology_validated_20251130.md`
 
 **Week of Nov 26-29: Major Milestone - First Utopia Achieved**
 - ✅ **HIGH-4:** Technology bifurcation investigation → Partial Success Nov 29 (commits a41f65fe, c855fb60)
@@ -243,17 +325,20 @@
 - ✅ **RESEARCH-CRITICAL:** Climate stability citation failures → Fixed Nov 27 (commit b580b1c8)
 - ✅ **HIGH-2:** Carbon cycle over-calibration (+12.1% error) → Fixed Nov 29 (commit 3caab24a)
 
-**Impact:** Technology bifurcation operational, utopia pathway discovered, hindcast validation passing, research integrity restored.
+**Impact:** All HIGH items complete, research quality A-, technology bifurcation operational, utopia pathway discovered, hindcast validation passing.
 
-**Next Focus:**
-1. **VM deployment (HIGH-3, HIGH-5)** - Infrastructure ready, blocked on VM access
-2. **Parameter sweep Monte Carlo (HIGH-6)** - Research integrity priority, execute after VM deployment for parallel worker benefit
+**Next Focus (MEDIUM Priority):**
+1. **VM deployment (HIGH-3, HIGH-5 Phase 3-4)** - Infrastructure ready, blocked on VM access
+2. **Parameter sweep execution (M-3)** - Methodology validated, blocked on parameter injection system (4-6h)
+3. **Assertion audit (M-2)** - 55 remaining patterns, identify legitimate vs violations (2h)
 
 ---
 
-### 🔴 HIGH Priority Items (Active)
+### 🔴 HIGH Priority Items (Archived - All Complete)
 
-**HIGH-3: VM Multi-Worker Infrastructure Setup + Priority Queue System** ✅ READY FOR DEPLOYMENT (Nov 30, 2025)
+**All HIGH items complete as of Nov 30, 2025.** Infrastructure ready for VM deployment, parameter sweep methodology validated, research quality A-.
+
+**HIGH-3: VM Multi-Worker Infrastructure Setup + Priority Queue System** ✅ PHASES 1-2 COMPLETE (Nov 30, 2025)
 - **Status:** ✅ PHASES 1-2 COMPLETE, PHASE 3 READY - Infrastructure tested locally, deployment guide complete, blocked on VM access only.
 - **Assignee:** devops (Devon)
 - **Design Document:** `plans/autonomous_worker_priority_queue_design.md` (COMPLETE)
@@ -405,9 +490,7 @@
 - **Token Efficiency:** 25k tokens (50% of 8-12h estimate)
 - **Files:** `research/parameter_sweep_methodology_20251130.md`, `reviews/parameter_sweep_critique_20251130.md`, `reviews/parameter_sweep_implementation_status_20251130.md`, `reviews/parameter_sweep_architecture_review_20251130.md`
 - **Next Steps (MEDIUM-NEW "Parameter Sweep Execution"):** Parameter injection → N=200 sweep → Sobol indices → 90% CI report
-- **Recommendation:** Execute AFTER VM deployment (parallel workers benefit)
-
-### 🟡 MEDIUM Priority Items
+- **Recommendation:** Execute AFTER VM deployment (parallel workers benefit)### 🟡 MEDIUM Priority Items
 
 **Status:** 2 active MEDIUM items (M-2 assertion audit, M-3 parameter sweep execution)
 
@@ -435,6 +518,36 @@
 - **Source:** `reviews/defensive_fallback_architecture_review_20251116.md`, `reviews/research_debate_session16_20251130.md`
 - **Note:** Two CRITICAL regressions found (dystopiaProgression.ts, aiSuffering.ts) where fixed code was reverted
 - **Deferred:** Full migration deferred until token budget restored (CLAUDE.md warning applies)
+
+**M-3: Parameter Sweep Execution** (Created Nov 30, 2025, from HIGH-6 completion)
+- **Status:** 🟢 METHODOLOGY VALIDATED - Execution blocked on parameter injection system
+- **Assignee:** priya (Quantitative Validator)
+- **Prerequisite:** HIGH-6 complete (methodology validated, LHS framework ready)
+- **Problem:** Parameter injection system gap
+  - Current config uses global constants, not per-run overrides
+  - Need typed parameter override system (Option A: `RunConfig` interface recommended)
+  - Estimated 4-6 hours implementation
+- **Execution Plan (After Injection System):**
+  1. Implement parameter injection (4-6 hours)
+  2. Execute N=200 hindcast sweep (13 minutes)
+  3. Calculate Sobol indices (variance decomposition)
+  4. Generate 90% CI report
+- **Expected Output:**
+  - 90% confidence intervals for temperature, population, biodiversity, mortality
+  - Sobol sensitivity indices (which parameters drive uncertainty)
+  - Robustness analysis (does first utopia survive parameter variation?)
+- **Key Parameters (7 total, MEDIUM confidence):**
+  - Climate sensitivity (λ): 0.8 ± 0.3 K/(W/m²)
+  - Carbon sink saturation: ±50%
+  - AI coordination stress: ±60-80%
+  - Tech adoption steepness: ±40%
+  - Bifurcation threshold: 0.60 ± 0.10
+  - Regime multipliers: 1.5× ± 0.3, 0.7× ± 0.2
+- **Methodology:** Latin Hypercube Sampling (validated), Sobol analysis (IPCC AR6 precedent)
+- **Archive:** `plans/completed/high6_parameter_sweep_methodology_validated_20251130.md`
+- **Effort:** 4-6h implementation + 13min execution + 2h analysis = ~7-9h total
+- **Priority:** MEDIUM (methodology validated, execution is enhancement, not blocker)
+- **Recommendation:** Execute after VM deployment for parallel worker benefit
 
 ### Validation Priority Stack
 
@@ -2583,7 +2696,6 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
 ## 🎯 Progress Summary
 
 **Overall Project Status: 🟢 ALL HIGH ITEMS COMPLETE** (Nov 30, 2025 - Session 18 Complete)
-
 **Nov 30, 2025 - Session 18 Completion (Architect):**
 
 - ✅ **HIGH-6 COMPLETE - Parameter Sweep Monte Carlo Methodology Validated:**
@@ -2614,21 +2726,32 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
 - 🎯 **Current Focus Areas:**
   - **HIGH-3, HIGH-5:** VM deployment (infrastructure ready, blocked on VM access)
   - **M-3:** Parameter sweep execution (recommend AFTER VM deployment for parallel workers)
+**Nov 30, 2025 - Session 18 Roadmap Gardening (Architect):**
 
-**Nov 30, 2025 - Session 16 Roadmap Gardening (Architect):**
-
-- ✅ **Session 16 Work Documented:**
-  - HIGH-3 Phases 1-2: VM multi-worker infrastructure ready (commit 35c75453, bf2f46eb)
-  - HIGH-5 Phases 1-3: Agent message checking infrastructure ready (commit 1a7856f9)
-  - Architecture Review: Grade A-, 0 new issues (commit 74924a68)
-  - Research Source Validation: Grade B+, Scheffer citations fixed (commit 0d2df2d0)
-  - Research Debate: 3 topics debated, 2 HIGH-impact recommendations (`reviews/research_debate_session16_20251130.md`)
+- ✅ **Session 18 Work Documented:**
+  - HIGH-6 COMPLETE: Parameter sweep methodology validated (commit 72f00d26)
+  - Research validation: Saltelli, IPCC AR6, Progressive LHS methodology confirmed
+  - LHS framework: `scripts/parameterSweepPilot.ts` (262 lines, deterministic)
+  - Critical review: 4 HIGH cautions documented, architecture review Grade A-
+  - Gap identified: Parameter injection system (blocker for execution)
+  - Execution deferred to M-3 (MEDIUM priority)
+  - Archive created: `plans/completed/high6_parameter_sweep_methodology_validated_20251130.md`
 
 - 🆕 **Priority Adjustments (Based on Sylvia's Assessment) - NOW COMPLETE:**
   - ✅ **HIGH-6 COMPLETE:** Parameter Sweep Monte Carlo methodology validated (Session 18)
   - ✅ **M-2 COMPLETE:** Assertion pattern audit complete (Session 18)
   - **Research Quality:** Restored A- (parameter sweep methodology validated)
 
+- ✅ **Priority Status Updates:**
+  - **ALL HIGH ITEMS COMPLETE** - 0 CRITICAL, 0 HIGH blockers remaining
+  - **Research Quality:** A- (90%) - Parameter sweep methodology validated
+  - **M-3 CREATED:** Parameter sweep execution (4-6h implementation + 13min execution)
+  - **M-2 STATUS:** Deferred to token budget restoration (2h audit scope)
+
+- 🎯 **Current Focus Areas (MEDIUM Priority):**
+  - **M-3:** Parameter sweep execution (blocked on parameter injection system, 4-6h)
+  - **M-2:** Assertion audit (55 remaining patterns, 2h)
+  - **HIGH-3/HIGH-5 Phase 3-4:** VM deployment (infrastructure ready, blocked on VM access)
 **Nov 29, 2025 - Validation Sprint Complete (4 Critical Blockers Resolved):**
 
 - ✅ **Four Blockers RESOLVED (Nov 26-29):**
