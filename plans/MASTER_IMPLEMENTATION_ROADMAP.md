@@ -12,23 +12,28 @@
 - **All agents:** Extreme efficiency - grep first, skip docs, exit early
 
 **Current Status:** 🟢 **ALL HIGH ITEMS READY FOR DEPLOYMENT** (Nov 30, 2025)
-- **Research Quality:** A- (90%) - Climate stability citations resolved, coordination fabrication removed
-- **Architecture Health:** A (0 CRITICAL, 0 HIGH blockers)
+- **Research Quality:** B+ (85%) - Scheffer citations fixed, parameter sweep needed for research integrity
+- **Architecture Health:** A- (0 CRITICAL, 0 HIGH blockers)
 - **System Performance:** Monte Carlo deterministic, first utopia achieved
 - **System Trajectory:** ✅ **BREAKTHROUGH** - Technology bifurcation operational, outcome diversity restored
 - **Infrastructure:** ✅ **READY** - Multi-worker queue + agent monitors complete, awaiting VM deployment
-- **Roadmap Coherence:** CURRENT - Nov 26-29 validation sprint archived, Nov 30 infrastructure ready
+- **Roadmap Coherence:** CURRENT - Nov 30 Session 16 complete (infrastructure + validation)
 - **Archive:** `plans/completed/validation_sprint_nov26_29_20251129.md`
-- **Recent Work (Nov 30 - Session 16 Infrastructure):**
+- **Recent Work (Nov 30 - Session 16):**
   - ✅ **HIGH-3 PHASES 1-2 COMPLETE** - VM multi-worker infrastructure ready
-    - Phase 1: Priority queue system with agent personality integration
-    - Phase 2: Multi-repo workspace design (`docs/VM_MULTIWORKER_DEPLOYMENT.md`)
+    - Phase 1: Priority queue system with agent personality integration (commit 35c75453)
+    - Phase 2: Multi-repo workspace design (`docs/VM_MULTIWORKER_DEPLOYMENT.md`) (commit bf2f46eb)
     - Phase 3: READY (blocked on VM access for deployment)
   - ✅ **HIGH-5 PHASES 1-3 COMPLETE** - Agent message checking infrastructure ready
-    - Phase 1: Monitor template (`scripts/agent-monitor-template.sh`)
+    - Phase 1: Monitor template (`scripts/agent-monitor-template.sh`) (commit 1a7856f9)
     - Phase 2: Pre-work checks pattern (Quinn implementation reference)
     - Phase 3: VM deployment guide (`docs/VM_MULTIWORKER_DEPLOYMENT.md`)
     - Phase 4: READY (blocked on VM access for deployment)
+  - ✅ **Architecture Review Complete** (commit 74924a68) - Grade A-, 0 new issues
+  - ✅ **Research Source Validation** (commit 0d2df2d0) - Grade B+, Scheffer citations corrected (2024→2014)
+  - ✅ **Research Debate** (`reviews/research_debate_session16_20251130.md`) - 3 topics, 2 HIGH-impact recommendations:
+    1. Parameter Sweep Monte Carlo → **HIGH priority** (research integrity)
+    2. Assertion Migration (M-2) → **MEDIUM** (audit 55 remaining, don't migrate yet)
   - **Impact:** Parallel worker execution enabled, agent coordination automated, 125 branch backlog addressable
 - **Recent Work (Nov 29 - Session 15 HIGH-4 Validation):**
   - ✅ **HIGH-4 VALIDATION COMPLETE** (Nov 29 12:06 UTC - POST-FIX)
@@ -219,7 +224,9 @@
 
 **Impact:** Technology bifurcation operational, utopia pathway discovered, hindcast validation passing, research integrity restored.
 
-**Next Focus:** VM deployment (HIGH-3, HIGH-5) - infrastructure ready, awaiting access.
+**Next Focus:**
+1. **VM deployment (HIGH-3, HIGH-5)** - Infrastructure ready, blocked on VM access
+2. **Parameter sweep Monte Carlo (HIGH-6)** - Research integrity priority, execute after VM deployment for parallel worker benefit
 
 ---
 
@@ -365,20 +372,48 @@
 - **Testing:** Local testing ready, VM deployment requires Matrix token verification
 - **Impact:** Agents can now respond to coordination requests proactively
 
+**HIGH-6: Parameter Sweep Monte Carlo Validation** (Promoted from Proposed, Nov 30, 2025)
+- **Status:** 🔴 NEW - Promoted to HIGH based on Sylvia's research integrity assessment
+- **Assignee:** priya (Quantitative Validator) + cynthia (Super-Alignment Researcher)
+- **Problem:** Outcome Distribution Under Parameter Uncertainty
+  - First utopia achieved (run 42007) but don't know if robust finding or edge case
+  - 27% MEDIUM confidence parameters not validated via sweep
+  - "High-Impact Claim Support Rate: Only 20%" (Layer 2 Debate finding)
+  - Cannot claim to model "pathways" (plural) without characterizing outcome distribution
+- **Key Parameters to Vary (MEDIUM Confidence):**
+  - Climate sensitivity (λ): 0.8 ± 0.3 K/(W/m²)
+  - Carbon sink saturation rates: ±50%
+  - AI coordination stress weights: ±60-80%
+  - Technology adoption S-curve steepness: ±40%
+  - Bifurcation threshold: 0.60 ± 0.10
+  - Regime multipliers: 1.5× ± 0.3, 0.7× ± 0.2
+- **Expected Output:**
+  - Outcome distribution heatmaps (parameter pairs vs outcomes)
+  - Robustness analysis (which utopia paths survive parameter variation?)
+  - Sensitivity rankings (which parameters most affect outcomes?)
+  - Confidence intervals for key metrics (mortality, QoL, tech deployment)
+- **Proposal Document:** `plans/proposed_parameter_sweep_monte_carlo_20251128.md`
+- **Effort:** 8-12 hours (sweep design + execution + analysis)
+- **Complexity:** 4 systems (Monte Carlo engine, parameter space sampling, outcome classification, statistical analysis)
+- **Dependencies:** None (parallel with VM deployment)
+- **Priority Justification (Sylvia, Nov 30):** "Research integrity, not enhancement. Without parameter sweep, central claim is unjustified."
+- **Recommendation:** Execute AFTER VM deployment (benefit from parallel workers for larger N)
+
 ### 🟡 MEDIUM Priority Items
 
 **Status:** 1 active MEDIUM item (M-2 assertion migration)
 
 **Archive:** M-1 (dead code cleanup) archived to `plans/completed/validation_sprint_nov26_29_20251129.md`
 
-**M-2: Complete Assertion Migration** (Identified Nov 16, 2025)
-- **Status:** 71 remaining fallback patterns (20 violations fixed Nov 18, total 169)
+**M-2: Audit Remaining Assertion Migration Patterns** (Identified Nov 16, 2025, Scoped Nov 30, 2025)
+- **Status:** 55 remaining fallback patterns (91 already using assertion utilities)
 - **Issue:** Split-brain error handling (some paths fail loudly, some silently)
 - **Impact:** MEDIUM - Regression risk, inconsistent debugging experience
-- **Effort:** 2-3 day sprint to complete remaining 71 violations
-- **Recommendation:** Either complete fully or accept current state (don't leave in limbo)
-- **Source:** `reviews/defensive_fallback_architecture_review_20251116.md`
+- **Effort:** 2h audit (identify legitimate vs violations), NOT 2-3 day migration
+- **Recommendation (Sylvia, Nov 30):** Audit 55 remaining patterns, many likely legitimate (initialization, UI, external interfaces)
+- **Source:** `reviews/defensive_fallback_architecture_review_20251116.md`, `reviews/research_debate_session16_20251130.md`
 - **Note:** Two CRITICAL regressions found (dystopiaProgression.ts, aiSuffering.ts) where fixed code was reverted
+- **Deferred:** Full migration deferred until token budget restored (CLAUDE.md warning applies)
 
 ### Validation Priority Stack
 
@@ -2526,21 +2561,26 @@ Based on comprehensive assessments by Architecture Skeptic, Cynthia (Research), 
 
 ## 🎯 Progress Summary
 
-**Overall Project Status: 🟢 ALL CRITICAL/HIGH RESOLVED** (Nov 29, 2025 - First Utopia Achieved)
+**Overall Project Status: 🟢 ALL HIGH ITEMS READY FOR DEPLOYMENT** (Nov 30, 2025 - Session 16 Complete)
 
-**Nov 29, 2025 - End-of-Session Roadmap Gardening (Architect):**
+**Nov 30, 2025 - Session 16 Roadmap Gardening (Architect):**
 
-- ✅ **Roadmap Cleanup Complete:**
-  - Archived: Nov 26-29 validation sprint to `plans/completed/validation_sprint_nov26_29_20251129.md`
-  - Items archived: CRITICAL-1, RESEARCH-CRITICAL, C-1, HIGH-2, HIGH-4, M-1 (6 resolved items)
-  - Current Status updated: 0 CRITICAL, 0 HIGH blockers
-  - Priority sections cleaned: Active items only, completed items in archive
-  - Progress Summary updated: Reflects first utopia breakthrough
+- ✅ **Session 16 Work Documented:**
+  - HIGH-3 Phases 1-2: VM multi-worker infrastructure ready (commit 35c75453, bf2f46eb)
+  - HIGH-5 Phases 1-3: Agent message checking infrastructure ready (commit 1a7856f9)
+  - Architecture Review: Grade A-, 0 new issues (commit 74924a68)
+  - Research Source Validation: Grade B+, Scheffer citations fixed (commit 0d2df2d0)
+  - Research Debate: 3 topics debated, 2 HIGH-impact recommendations (`reviews/research_debate_session16_20251130.md`)
+
+- 🆕 **Priority Adjustments (Based on Sylvia's Assessment):**
+  - **HIGH-6 ADDED:** Parameter Sweep Monte Carlo (research integrity - cannot claim "pathways" without characterizing outcome distribution)
+  - **M-2 RESCOPED:** Audit 55 remaining fallback patterns (2h), defer full migration (2-3 days blocked by token budget)
+  - **Research Quality:** Downgraded A- → B+ (parameter sweep needed for research integrity)
 
 - 🎯 **Current Focus Areas:**
-  - **HIGH-3:** VM multi-worker infrastructure (Devon - devops agent)
-  - **M-2:** Assertion migration (71 remaining patterns - deferred in token conservation)
-  - **Next validation:** Scenario persistence testing (M-3)
+  - **HIGH-3, HIGH-5:** VM deployment (infrastructure ready, blocked on VM access)
+  - **HIGH-6:** Parameter sweep Monte Carlo (execute AFTER VM deployment for parallel worker benefit)
+  - **M-2:** Audit remaining 55 fallback patterns (deferred in token conservation)
 
 **Nov 29, 2025 - Validation Sprint Complete (4 Critical Blockers Resolved):**
 
