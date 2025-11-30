@@ -66,7 +66,7 @@ export function calculateOutcomeProbabilities(state: GameState): OutcomeMetrics 
   const trustInAI = getTrustInAI(state.society); // Phase 2: Use paranoia-derived trust
 
   // BIFURCATION INTEGRATION (Nov 8, 2025): Regime influences outcome trajectories
-  // Research: Scheffer et al. (2024) - regime shifts lock in outcomes
+  // Research: Scheffer et al. (2014) - regime shifts lock in outcomes
   const bifState = state.bifurcationState;
   const currentRegime = bifState?.currentRegime || 'status-quo';
 
@@ -98,7 +98,7 @@ export function calculateOutcomeProbabilities(state: GameState): OutcomeMetrics 
   );
 
   // BIFURCATION REGIME ADJUSTMENTS
-  // Regime shifts lock in trajectories (research: Scheffer et al. 2024)
+  // Regime shifts lock in trajectories (research: Scheffer et al. 2014)
   switch (currentRegime) {
     case 'ecological-collapse':
       // Ecological collapse → increased extinction risk (ecosystem failure)
