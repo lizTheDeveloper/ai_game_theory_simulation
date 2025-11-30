@@ -114,6 +114,26 @@ Major validation sprint resolving 4 blocking issues and achieving first utopia o
   - TypeScript compilation: ✅ Clean
 - **Impact:** Codebase maintenance improved, removes confusion for future developers
 
+### M-2: Complete Assertion Migration ✅
+- **Status:** RESOLVED (Nov 26, 2025)
+- **Problem:** Original audit found 71 `?? fallback` patterns, believed to be anti-pattern violations
+- **Investigation:** Complete file-by-file analysis revealed reality
+  - **Total violations:** 6 actual anti-patterns (not 71)
+  - **Legitimate patterns:** 65 were configuration defaults, compatibility layers, UI display (correct usage)
+- **Files Fixed:**
+  - `historicalInitialization.ts` (2 violations) - Replaced ?? with assertions
+  - `recoveryCalculations.ts` (2 violations) - Replaced ?? with assertions
+  - `strategicDeception.ts` (2 violations) - Replaced ?? with assertions
+- **Critical Regressions Verified:**
+  - `dystopiaProgression.ts` - Assertions still present (no regression)
+  - `aiSuffering.ts` - Assertions still present (no regression)
+- **Validation:**
+  - TypeScript: Clean compilation
+  - Monte Carlo: N=10 complete, deterministic
+  - Static analysis: 0 assertion anti-patterns found
+- **Report:** `reviews/assertion_migration_status_20251126.md`
+- **Impact:** Anti-pattern cleanup complete, legitimate defensive patterns preserved
+
 ---
 
 ## Monte Carlo Baselines

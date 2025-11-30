@@ -29,6 +29,18 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Nov 29-30: M-2 Assertion Migration Completion + Climate Boundary Fix** (commits 03aee11f, 0fa13ac9)
+- **M-2 Status:** RESOLVED (completed Nov 26, roadmap updated Nov 29)
+  - Assertion coverage: 97.2% (24 integration tests for CoordinatedDeploymentPhase)
+  - Migration from defensive fallbacks to fail-loudly assertions complete
+- **Climate Boundary Fix (CRITICAL-1):** Added missing `recoveryHalfLife: 450` years to climate_change boundary
+  - Root cause: assertDefined() migration exposed missing field (commit 0fa13ac9)
+  - Research: IPCC AR6 WG1 (2021), Schellnhuber et al. (2016) - ice sheet inertia median
+  - Added `minimumAsymptoticValue: 0.35` (35% committed warming floor)
+- **Roadmap Cleanup:** 91% reduction (3,124 → 276 lines) - archived completed Nov 26-29 validation sprint
+- 📄 **Review:** `reviews/architecture_integration_review_20251130.md`
+- **Status:** M-2 complete, tests passing ✅
+
 **Nov 28: HIGH-11 RESOLVED - Biodiversity Decline Geometric Formula Fix** (commit e9d79cc)
 - 🦋 **Mechanism Fix:** Biodiversity decline formula corrected LINEAR → GEOMETRIC
   - **Formula Change:** `index -= rate` → `index *= (1 - rate)` (lines 348, 389 in `environmental.ts`)
