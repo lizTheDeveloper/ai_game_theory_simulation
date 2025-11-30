@@ -41,6 +41,20 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📄 **Review:** `reviews/architecture_integration_review_20251130.md`
 - **Status:** M-2 complete, tests passing ✅
 
+**Nov 30: CRITICAL-2 Novel Entities Cleanup Effectiveness Fix** (commit d366e3e4)
+- 🔧 **Concentration Factor Formula:** Capped at 100% to prevent impossible >100000% values when gap < 1
+  - BUG: `Math.pow(1 / concentrationGap, 0.5)` exploded for concentrated waste
+  - FIX: `Math.min(1.0, Math.pow(1 / concentrationGap, 0.5))` with assertInRange validation
+- 🔧 **Concentration Type Logic:** Corrected reversal in energyConstrainedCleanup.ts
+  - BUG: concentrationPenalty defined → used concentrated waste (gap=1, 100% effectiveness)
+  - FIX: concentrationPenalty defined → use groundwater (gap=2e6, 2.24% effectiveness)
+  - Effect: PFAS remediation now correctly penalized for 6 orders magnitude concentration gap
+- 🔧 **Redeposition Formula:** Fixed mutation bug in updateNovelEntitiesBoundary.ts
+  - BUG: Mutated totalCleanup before use → caused ADDITION instead of subtraction
+  - FIX: `netCleanup = totalCleanup * 0.01; netChange = production - netCleanup - decay`
+- **Research:** Fennell (2024) 6-order concentration gap, Cousins et al. (2022) 99% redeposition, EPA (2024) 75 GJ/ton
+- ✅ **Impact:** Fixed 8 test failures in novel-entities-irreversibility.test.ts, PFAS cleanup now realistically modeled
+
 **Nov 28: HIGH-11 RESOLVED - Biodiversity Decline Geometric Formula Fix** (commit e9d79cc)
 - 🦋 **Mechanism Fix:** Biodiversity decline formula corrected LINEAR → GEOMETRIC
   - **Formula Change:** `index -= rate` → `index *= (1 - rate)` (lines 348, 389 in `environmental.ts`)
