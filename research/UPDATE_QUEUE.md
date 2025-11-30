@@ -878,7 +878,6 @@
 
 ## 📋 MEDIUM (Review Within Quarter)
 
-**Count:** 21 (4.2%)
 
 - `LAYER2_COMPREHENSIVE_STATUS_20251030.md` - Oldest: 2020 (5 years)
 - `LAYER2_DEBATE_SUMMARY_20251030.md` - Oldest: 2020 (5 years)
@@ -906,7 +905,6 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 308 (61.5%)
 
 All sources <3 years old. No action required.
 
@@ -916,11 +914,6 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 501 |
-| CRITICAL | 0 (0.0%) |
-| HIGH | 172 (34.3%) |
-| MEDIUM | 21 (4.2%) |
-| LOW | 308 (61.5%) |
 | Average age | 7.8 years |
 | Oldest source | 1955 (70 years ago) |
 
@@ -928,21 +921,16 @@ All sources <3 years old. No action required.
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 308 | 61.5% |
-| Warning (3-5yr) | 21 | 4.2% |
-| Critical (>5yr) | 172 | 34.3% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-- **Current:** 34.3% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
-1. Update 172 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 

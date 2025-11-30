@@ -37,7 +37,7 @@ export function initializeOceanAcidificationSystem(rng?: () => number): OceanAci
 
   return {
     // Research-backed fields (RD-2 Nov 28 2025)
-    // MEDIUM-3 FIX (Nov 29, 2025): Resolved merge conflict - using updated upstream values
+    // MEDIUM-3 FIX (Nov 29, 2025): Resolved merge conflict - using calibrated values
     aragoniteSaturation: 3.0,        // Current (2025): 3.0 (CALIBRATION: slightly above stress threshold)
     pH: 8.0,                         // Current (2025): 8.0 (CALIBRATION: provides 10-20 year grace period before cascade at pH < 7.9)
     pHLevel: 0.96,                   // LEGACY: Slight decline from pre-industrial 8.2
@@ -156,9 +156,9 @@ export function updateOceanAcidificationSystem(state: GameState, rng: () => numb
   // Research shows pH decline occurs over centuries, not decades
 
   const pH_DECLINE_RATE_PER_MONTH = {
-    SSP1_1_9: -0.000003,  // Was -0.00001 → 70% reduction
-    SSP1_2_6: -0.000027,  // Was -0.00009 → 70% reduction
-    SSP2_4_5: -0.000057,  // Was -0.00019 → 70% reduction (moderate)
+    SSP1_1_9: -0.000003,  // Was -0.00001 -> 70% reduction
+    SSP1_2_6: -0.000027,  // Was -0.00009 -> 70% reduction
+    SSP2_4_5: -0.000057,  // Was -0.00019 -> 70% reduction (moderate)
     SSP3_7_0: -0.000057,  // Capped at SSP2 level (was -0.00030)
     SSP5_8_5: -0.000057,  // Capped at SSP2 level (was -0.00043, business as usual)
   };
