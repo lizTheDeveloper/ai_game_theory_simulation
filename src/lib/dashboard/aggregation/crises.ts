@@ -14,7 +14,19 @@ export interface CrisisSummary {
   totalAffectedPopulation: number;
 }
 
-export function getCrisisSummary(state: GameState): CrisisSummary {
+/**
+ * Extended state type for potential crisis fields.
+ * Note: These fields are not currently written by simulation phases,
+ * but this type documents the expected structure if they were to be added.
+ */
+type StateWithOptionalCrises = GameState & {
+  phosphorusCrisis?: { active: boolean; severity: number; startMonth: number };
+  freshwaterCrisis?: { active: boolean; severity: number; startMonth: number };
+  novelEntitiesCrisis?: { active: boolean; severity: number; startMonth: number };
+  oceanAcidificationCrisis?: { active: boolean; severity: number; startMonth: number };
+};
+
+export function getCrisisSummary(state: StateWithOptionalCrises): CrisisSummary {
   const crisisTypes: CrisisSummary['crisisTypes'] = [];
   let totalAffectedPopulation = 0;
 
@@ -31,57 +43,57 @@ export function getCrisisSummary(state: GameState): CrisisSummary {
   }
 
   // Phosphorus crisis
-  if ((state as any).phosphorusCrisis?.active) {
+  if (state.phosphorusCrisis?.active) {
     const pop = state.globalMetrics?.population || 0;
-    const affectedPop = pop * ((state as any).phosphorusCrisis?.severity || 0);
+    const affectedPop = pop * (state.phosphorusCrisis?.severity || 0);
     crisisTypes.push({
       type: 'phosphorus_crisis',
-      severity: (state as any).phosphorusCrisis?.severity || 0,
+      severity: state.phosphorusCrisis?.severity || 0,
       affectedPopulation: affectedPop,
-      startMonth: (state as any).phosphorusCrisis?.startMonth || 0,
-      duration: state.currentMonth - ((state as any).phosphorusCrisis?.startMonth || 0),
+      startMonth: state.phosphorusCrisis?.startMonth || 0,
+      duration: state.currentMonth - (state.phosphorusCrisis?.startMonth || 0),
     });
     totalAffectedPopulation = Math.max(totalAffectedPopulation, affectedPop);
   }
 
   // Freshwater crisis
-  if ((state as any).freshwaterCrisis?.active) {
+  if (state.freshwaterCrisis?.active) {
     const pop = state.globalMetrics?.population || 0;
-    const affectedPop = pop * ((state as any).freshwaterCrisis?.severity || 0);
+    const affectedPop = pop * (state.freshwaterCrisis?.severity || 0);
     crisisTypes.push({
       type: 'freshwater_crisis',
-      severity: (state as any).freshwaterCrisis?.severity || 0,
+      severity: state.freshwaterCrisis?.severity || 0,
       affectedPopulation: affectedPop,
-      startMonth: (state as any).freshwaterCrisis?.startMonth || 0,
-      duration: state.currentMonth - ((state as any).freshwaterCrisis?.startMonth || 0),
+      startMonth: state.freshwaterCrisis?.startMonth || 0,
+      duration: state.currentMonth - (state.freshwaterCrisis?.startMonth || 0),
     });
     totalAffectedPopulation = Math.max(totalAffectedPopulation, affectedPop);
   }
 
   // Novel entities crisis (PFAS, microplastics)
-  if ((state as any).novelEntitiesCrisis?.active) {
+  if (state.novelEntitiesCrisis?.active) {
     const pop = state.globalMetrics?.population || 0;
-    const affectedPop = pop * ((state as any).novelEntitiesCrisis?.severity || 0);
+    const affectedPop = pop * (state.novelEntitiesCrisis?.severity || 0);
     crisisTypes.push({
       type: 'novel_entities_crisis',
-      severity: (state as any).novelEntitiesCrisis?.severity || 0,
+      severity: state.novelEntitiesCrisis?.severity || 0,
       affectedPopulation: affectedPop,
-      startMonth: (state as any).novelEntitiesCrisis?.startMonth || 0,
-      duration: state.currentMonth - ((state as any).novelEntitiesCrisis?.startMonth || 0),
+      startMonth: state.novelEntitiesCrisis?.startMonth || 0,
+      duration: state.currentMonth - (state.novelEntitiesCrisis?.startMonth || 0),
     });
     totalAffectedPopulation = Math.max(totalAffectedPopulation, affectedPop);
   }
 
   // Ocean acidification crisis
-  if ((state as any).oceanAcidificationCrisis?.active) {
+  if (state.oceanAcidificationCrisis?.active) {
     const pop = state.globalMetrics?.population || 0;
-    const affectedPop = pop * ((state as any).oceanAcidificationCrisis?.severity || 0);
+    const affectedPop = pop * (state.oceanAcidificationCrisis?.severity || 0);
     crisisTypes.push({
       type: 'ocean_acidification_crisis',
-      severity: (state as any).oceanAcidificationCrisis?.severity || 0,
+      severity: state.oceanAcidificationCrisis?.severity || 0,
       affectedPopulation: affectedPop,
-      startMonth: (state as any).oceanAcidificationCrisis?.startMonth || 0,
-      duration: state.currentMonth - ((state as any).oceanAcidificationCrisis?.startMonth || 0),
+      startMonth: state.oceanAcidificationCrisis?.startMonth || 0,
+      duration: state.currentMonth - (state.oceanAcidificationCrisis?.startMonth || 0),
     });
     totalAffectedPopulation = Math.max(totalAffectedPopulation, affectedPop);
   }
