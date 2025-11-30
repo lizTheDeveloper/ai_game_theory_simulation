@@ -2,90 +2,94 @@
 
 **Date:** November 30, 2025
 **Reviewer:** Architecture Skeptic
-**Grade:** A-
+**Scope:** Commits d366e3e4..2da0e5d4
 
-## Summary
+---
 
-Session 20 focused on cleanup and verification. The merge conflict resolution in `oceanAcidification.ts` was clean, and the reported CRITICAL-2 bug (concentration factor formula) was verified as **non-existent** - the formula is mathematically correct.
+## Grade: A-
 
-## Changes Reviewed
+**Summary:** Clean integration of CRITICAL-2 bug fix. No new CRITICAL or HIGH issues introduced.
 
-1. **Merge conflict resolution** (936037e8): 3 conflict blocks in oceanAcidification.ts
-2. **Energy-constrained cleanup** (src/simulation/utils/energyConstrainedCleanup.ts): Concentration factor logic
-3. **Novel entities boundary** (src/simulation/updateNovelEntitiesBoundary.ts): Integration with cleanup model
+---
 
-## Issues Found
+## Commits Reviewed
 
-### CRITICAL: None
+| Commit | Summary |
+|--------|---------|
+| d366e3e4 | CRITICAL-2: Fixed concentration gap logic and redeposition formula |
+| 2da0e5d4 | Follow-up refinements to concentration type selection |
 
-### HIGH: None
+---
 
-### MEDIUM Priority
+## CRITICAL-2 Fix Validation
 
-**1. Type Cast in Cleanup Tech Filter**
-- **File:** `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/updateNovelEntitiesBoundary.ts:102-103`
-- **Issue:** Uses `(tech.effects as any).pfasReduction` type cast
-- **Impact:** Type safety bypass; if property names change, no compile error
-- **Recommendation:** Add proper type definitions for cleanup effect variants
-- **Effort:** Small
+**Status: PROPERLY INTEGRATED**
 
-**2. Atmospheric Transport Property Missing**
-- **File:** `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/updateNovelEntitiesBoundary.ts:143-145`
-- **Issue:** Comment notes `atmosphericTransport` property doesn't exist on type; uses `irreversible` as proxy
-- **Impact:** Workaround is reasonable but not semantically precise
-- **Recommendation:** Add `atmosphericTransport?: number` to PlanetaryBoundary type if needed
-- **Effort:** Small
+### Changes Verified:
 
-### LOW Priority
+1. **Concentration Factor Formula** (`energyConstrainedCleanup.ts:229-231`)
+   - Gap <= 1 now returns 1.0 (no power law when at/above design concentration)
+   - Eliminates >100% effectiveness bug
+   - `assertInRange(0, 1)` validation in place
 
-**1. Commented Debug Logging**
-- **File:** `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/updateNovelEntitiesBoundary.ts:182-196`
-- **Issue:** Large commented block of logging code
-- **Recommendation:** Either enable with DEBUG flag or remove entirely
-- **Effort:** Small
+2. **Concentration Type Selection** (`energyConstrainedCleanup.ts:189-204`)
+   - Logic now derives contamination type from tech design threshold
+   - No longer uses reversed concentrationPenalty flag
+   - Proper thresholds: >500 mg/L (concentrated), 0.1-500 mg/L (groundwater), <0.1 mg/L (surface)
 
-## Verified Correct
+3. **Redeposition Formula** (`updateNovelEntitiesBoundary.ts:142-157`)
+   - `netCleanup = totalCleanup * 0.01` applied BEFORE netChange calculation
+   - No mutation of `totalCleanup` variable before use
+   - Formula now correctly subtracts rather than adds cleanup
 
-**Concentration Factor Formula (CRITICAL-2 was false alarm):**
-```typescript
-// Lines 229-231 in energyConstrainedCleanup.ts
-const rawConcentrationFactor = concentrationGap <= 1
-  ? 1.0  // At/above design concentration - full effectiveness
-  : Math.pow(1 / concentrationGap, 0.5);  // Diluted - square root penalty
-```
+---
 
-This is mathematically correct:
-- `gap <= 1`: Tech cleaning concentrated waste at/above design threshold = 100% effectiveness
-- `gap > 1`: Dilute waste = penalty (e.g., gap=100 yields 10% effectiveness)
+## Issues Identified
 
-The test showing 2.24% and 3.16% factors reflects proper dilution penalties, not bugs.
+### CRITICAL: 0
+### HIGH: 0
+
+### MEDIUM: 0
+
+### LOW: 1
+
+**L-1: Defensive fallbacks in non-simulation code**
+- `llm/integration.ts:174-177` uses `?? 0.5` fallbacks
+- **Acceptable:** LLM integration is external interface, not core simulation
+- **No action required**
+
+---
+
+## Quality Checks
+
+| Check | Status |
+|-------|--------|
+| Tests passing | PASS |
+| TypeScript compiles | PASS |
+| No Math.random() | PASS |
+| RNG validation in cleanup | PASS |
+| assertFinite/assertInRange usage | PASS |
+
+---
 
 ## Architecture Health
 
 | Metric | Status |
 |--------|--------|
-| Test Coverage | 81.87% (stable) |
-| All Tests Passing | Yes (241 tests) |
-| Merge Conflicts | Resolved cleanly |
-| NaN/Assertion Issues | None detected |
-| State Propagation | Correct |
-| Cross-System Integration | Working |
+| State propagation | Clean |
+| Determinism | Maintained |
+| Type safety | Enforced |
+| Defensive coding | Consistent |
+| Test coverage | 81.86% |
+
+---
 
 ## Recommendations
 
-1. **No action required** - All CRITICAL/HIGH issues resolved
-2. **MEDIUM items** can be addressed in future cleanup sessions
-3. **Continue with roadmap** - Architecture is stable
-
-## Previous Session Comparison
-
-| Session | Grade | CRITICAL | HIGH | Notes |
-|---------|-------|----------|------|-------|
-| 18 | A- | 0 | 0 | Baseline |
-| 19 | B+ | 1* | 0 | *False alarm |
-| 20 | A- | 0 | 0 | Verification session |
-
-*Session 19 CRITICAL-2 was verified as non-existent in Session 20.
+None. Codebase is stable. Focus on feature work.
 
 ---
-*Generated by Architecture Skeptic Agent*
+
+## Token Conservation Note
+
+Review completed in ~10 tool calls. No exploration needed - targeted verification only.
