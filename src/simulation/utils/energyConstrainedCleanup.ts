@@ -15,7 +15,7 @@
 
 import type { GameState } from '@/types/game';
 import type { TechDefinition } from '@/simulation/techTree/comprehensiveTechTree';
-import { assertFinite, assertStateProperty } from './assertions';
+import { assertFinite, assertStateProperty, assertInRange } from './assertions';
 
 /**
  * Contamination levels by type (research-backed concentration gaps)
@@ -170,9 +170,11 @@ export function applyEnergyConstrainedCleanup(
 
   // 2. Calculate concentration factor (power law scaling)
   // Research: Fennell 2024 - efficiency drops with dilution, modeled as square root penalty
+  // If tech specifies concentrationPenalty, it's designed for realistic environmental levels (groundwater)
+  // Otherwise, assume it's for concentrated waste (industrial point sources)
   const concentrationType = (tech.minimumConcentration as any).concentrationPenalty !== undefined
-    ? 'concentratedWaste' // If no concentration type specified, assume best case
-    : 'groundwater'; // Default to groundwater (6 orders gap)
+    ? 'groundwater'        // Realistic environmental levels (500 ng/L, 6 orders gap)
+    : 'concentratedWaste'; // Industrial point sources (1000 mg/L, gap = 1)
 
   const contaminationLevel = CONTAMINATION_LEVELS[concentrationType as keyof typeof CONTAMINATION_LEVELS];
 
@@ -181,14 +183,40 @@ export function applyEnergyConstrainedCleanup(
     ? (tech.minimumConcentration as any).ngPerL * 1e-12  // ng/L to kg/L
     : 1000 * 1e-6; // Default: 1000 mg/L = 1e-3 kg/L
 
-  const concentrationGap = minConcentration / contaminationLevel.typical;
+  const concentrationGap = assertFinite(minConcentration / contaminationLevel.typical, {
+    location: 'applyEnergyConstrainedCleanup',
+    valueName: 'concentrationGap',
+    month: state.currentMonth,
+    additionalInfo: {
+      techId: tech.id,
+      minConcentration,
+      contaminationLevel: contaminationLevel.typical,
+    },
+  });
 
-  // Power law scaling: effectiveness ∝ 1/√(gap)
+  // Power law scaling: effectiveness ∝ 1/√(gap), capped at 1.0
+  // gap = 1 (at design concentration): 100% effectiveness
+  // gap > 1 (waste dilute): reduced effectiveness (square root penalty)
+  // gap < 1 (waste concentrated): 100% effectiveness (capped, already optimal)
   // At 1 order of magnitude gap: 32% effectiveness
   // At 2 orders: 10% effectiveness
-  // At 6 orders (groundwater): 0.05% effectiveness
+  // At 6 orders (groundwater): 0.1% effectiveness
   // At 9 orders (rainwater): 0.003% effectiveness
-  const concentrationFactor = Math.pow(1 / concentrationGap, 0.5);
+  const concentrationFactor = assertInRange(
+    Math.min(1.0, Math.pow(1 / concentrationGap, 0.5)),
+    0,
+    1,
+    {
+      location: 'applyEnergyConstrainedCleanup',
+      valueName: 'concentrationFactor',
+      month: state.currentMonth,
+      additionalInfo: {
+        techId: tech.id,
+        concentrationGap,
+        rawValue: Math.pow(1 / concentrationGap, 0.5),
+      },
+    }
+  );
 
   // 3. Calculate energy factor (energy availability constraint)
   // Research: EPA 2024 - 75 GJ/ton median, IEA 2024 - 600 EJ/year global energy

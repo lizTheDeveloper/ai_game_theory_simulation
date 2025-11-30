@@ -139,16 +139,22 @@ export function updateNovelEntitiesBoundary(state: GameState, rng: RNGFunction):
 
   // === 5. ATMOSPHERIC REDEPOSITION (counteracts cleanup) ===
   let redepositionRate = 0;
+  let netCleanup = totalCleanup;
   // NOTE: atmosphericTransport property doesn't exist on PlanetaryBoundary type
   // Using irreversible flag as proxy (PFAS has global atmospheric distribution)
   if (boundary.irreversible && totalCleanup > 0) {
     // Research: Cousins et al. 2022 - 99% of cleanup rains back down globally
+    // Gross cleanup removes X, but 99% rains back → net removal = 1%
     redepositionRate = totalCleanup * 0.99;
-    totalCleanup *= 0.01;  // Only 1% stays removed
+    netCleanup = totalCleanup * 0.01;  // Only 1% stays removed
   }
 
   // === 6. UPDATE BOUNDARY VALUE ===
-  const netChange = productionRate - totalCleanup - decayRate + redepositionRate;
+  // Formula: production adds pollution, cleanup removes it, redeposition adds it back, decay removes it
+  // netChange = +production - cleanup + redeposition - decay
+  //           = +production - (cleanup - redeposition) - decay
+  //           = +production - netCleanup - decay
+  const netChange = productionRate - netCleanup - decayRate;
 
   boundary.currentValue += netChange;
   boundary.currentValue = Math.max(0, Math.min(2, boundary.currentValue));  // Clamp [0, 2]
