@@ -118,10 +118,12 @@ export function initializePlanetaryBoundariesSystem(rng: RNGFunction): Planetary
     timescaleYears: 50,
     extinctionContribution: 0.25,
     tippingPointRisk: 0.30,
-    // === IRREVERSIBILITY FRAMEWORK (Nov 16, 2025) ===
-    // Ice sheet inertia - committed warming/SLR from thermal lag
-    irreversible: false,                   // Temperature CAN stabilize, but ice sheets have multi-century lag
-    recoveryHalfLife: 450,                 // Ice sheet recovery timescale (Drüke et al. 2024)
+    // === IRREVERSIBILITY FRAMEWORK (Nov 30, 2025) ===
+    // Research: IPCC AR6 WG1 (2021), Schellnhuber et al. (2016), Drüke et al. (2024)
+    // Ice sheet inertia: 100-800 year response time (median 450)
+    // Committed warming: 0.3-0.5C even with net-zero (AR6 Table SPM.2)
+    // Temperature CAN stabilize, but ice sheets have multi-century lag
+    recoveryHalfLife: 450,                 // Years for half-life recovery (ice sheet inertia, Drüke et al. 2024)
     minimumAsymptoticValue: 0.35,          // 35% committed warming/SLR floor (thermal inertia + ice sheet lag)
   };
 
