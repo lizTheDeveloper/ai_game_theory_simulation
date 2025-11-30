@@ -11,18 +11,18 @@
 - **MEDIUM/LOW:** Deferred until token budget restored
 - **All agents:** Extreme efficiency - grep first, skip docs, exit early
 
-**Current Status:** 🟢 **ALL HIGH ITEMS COMPLETE** (Nov 30, 2025 - Session 20)
+**Current Status:** 🟢 **ALL HIGH ITEMS COMPLETE** (Nov 30, 2025 - Session 22)
 - **Research Quality:** A- (90%) - Parameter sweep methodology validated
 - **Architecture Health:** A- (0 CRITICAL, 0 HIGH blockers)
 - **System Performance:** Monte Carlo deterministic, all 460 tests passing
 - **System Trajectory:** ✅ **BREAKTHROUGH** - Technology bifurcation operational, outcome diversity restored
 - **Infrastructure:** ✅ **READY** - Multi-worker queue + agent monitors complete, awaiting VM deployment
-- **Roadmap Coherence:** CURRENT - Session 20 complete (M-2 archived)
+- **Roadmap Coherence:** CURRENT - Session 22 complete, validation sprint archived
 - **Archives:**
   - `plans/completed/validation_sprint_nov26_29_20251129.md`
   - `plans/completed/high6_parameter_sweep_methodology_validated_20251130.md`
   - `plans/completed/m2_assertion_migration_audit_20251130.md`
-- **Recent Work (Nov 30 - Session 20):**
+- **Recent Work (Nov 30 - Session 22):**
   - ✅ **M-2 COMPLETE** - Assertion migration audit complete, HIGH violation fixed
     - Audit: 95 total patterns (72 legitimate, 18 low-risk, 5 violations, 0 CRITICAL)
     - HIGH violation fixed: diplomaticAI.ts capability profile access (commit 4afa5f1a)
@@ -215,32 +215,7 @@
 
 ### 🚨 CRITICAL Priority Items
 
-**Status:** 1 active CRITICAL item (discovered Nov 30, Session 19)
-
-**CRITICAL-2: Cleanup Effectiveness Calculation Bug** (Discovered Nov 30, 2025)
-- **Status:** 🔴 NEW - Discovered during HIGH-1 investigation
-- **Assignee:** simulation-maintainer (Roy)
-- **Discovery:** Architecture integration review found 8 test failures in novel-entities-irreversibility.test.ts
-- **Location:** `src/simulation/utils/energyConstrainedCleanup.ts` line 191
-- **Bug:** `const concentrationFactor = Math.pow(1 / concentrationGap, 0.5);`
-- **Problem:** When `concentrationGap < 1` (concentrated waste where tech works), produces massive amplification
-  - Example: `concentrationGap = 0.001` → `concentrationFactor = 31.6` (3160% effectiveness!)
-  - Expected: Concentration factor should be ≤ 1.0 (penalty for dilution), not >1.0 (reward)
-- **Root Cause:** Power law is backwards for concentrated waste (gap < 1)
-- **Impact:**
-  - All cleanup technologies produce nonsense effectiveness values
-  - 8 test failures in novel-entities-irreversibility.test.ts
-  - Tests correctly expect cleanup to work, but implementation is broken
-- **Fix Required:**
-  ```typescript
-  const concentrationFactor = concentrationGap >= 1
-    ? Math.pow(1 / concentrationGap, 0.5)  // Dilute: penalty
-    : 1.0;  // Concentrated: no penalty (or maybe slight bonus)
-  ```
-- **Testing:** All 8 failing tests should pass after fix
-- **Priority Justification:** Cleanup effectiveness is core mechanic for novel entities boundary, currently producing garbage values
-- **Discovery Report:** `reviews/architecture_integration_review_session19_20251130.md` (HIGH-1 investigation)
-- **Effort:** 1-2 hours (fix + validation + research backing for concentrated waste behavior)
+**Status:** 0 active CRITICAL items (all resolved Nov 30)
 
 **Archive:** Previous CRITICAL items from Nov 26-29 validation sprint archived to `plans/completed/validation_sprint_nov26_29_20251129.md`
 
