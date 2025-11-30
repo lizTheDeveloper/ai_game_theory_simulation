@@ -1,6 +1,6 @@
 # Research Update Queue
-**Generated:** 11/29/2025, 8:30:03 PM
-**Files Scanned:** 495
+**Generated:** 11/30/2025, 8:30:04 AM
+**Files Scanned:** 498
 
 ---
 
@@ -12,7 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 169 (34.1%)
+**Count:** 170 (34.1%)
 
 ### `CRISIS_MITIGATION_RESEARCH_CRITIQUE_20251029.md`
 - **Oldest source:** 2001 (24 years old)
@@ -629,6 +629,11 @@
 - **Status:** Not used in simulation
 - **Path:** `research/paradigm_metric_mapping_20251019.md`
 
+### `parameter_sweep_methodology_20251130.md`
+- **Oldest source:** 2017 (8 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/parameter_sweep_methodology_20251130.md`
+
 ### `parameter_verification_nitrogen_phosphorus_20251119.md`
 - **Oldest source:** 2015 (10 years old)
 - **Status:** Not used in simulation
@@ -891,7 +896,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 305 (61.6%)
+**Count:** 307 (61.6%)
 
 All sources <3 years old. No action required.
 
@@ -901,21 +906,21 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 495 |
+| Total files | 498 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 169 (34.1%) |
+| HIGH | 170 (34.1%) |
 | MEDIUM | 21 (4.2%) |
-| LOW | 305 (61.6%) |
-| Average age | 7.8 years |
+| LOW | 307 (61.6%) |
+| Average age | 7.7 years |
 | Oldest source | 1955 (70 years ago) |
 
 ### Research Currency
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 305 | 61.6% |
+| Current (<3yr) | 307 | 61.6% |
 | Warning (3-5yr) | 21 | 4.2% |
-| Critical (>5yr) | 169 | 34.1% |
+| Critical (>5yr) | 170 | 34.1% |
 
 ### Targets
 
@@ -927,7 +932,7 @@ All sources <3 years old. No action required.
 
 ## 🔄 Next Steps
 
-1. Update 169 HIGH priority file(s) within 1 month
+1. Update 170 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 
