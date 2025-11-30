@@ -356,18 +356,17 @@
 
 ### 🟡 MEDIUM Priority Items
 
-**Status:** 1 active MEDIUM item (M-2 assertion migration)
+**Status:** 0 active MEDIUM items (M-2 resolved Nov 26, M-1 archived)
 
 **Archive:** M-1 (dead code cleanup) archived to `plans/completed/validation_sprint_nov26_29_20251129.md`
 
-**M-2: Complete Assertion Migration** (Identified Nov 16, 2025)
-- **Status:** 71 remaining fallback patterns (20 violations fixed Nov 18, total 169)
-- **Issue:** Split-brain error handling (some paths fail loudly, some silently)
-- **Impact:** MEDIUM - Regression risk, inconsistent debugging experience
-- **Effort:** 2-3 day sprint to complete remaining 71 violations
-- **Recommendation:** Either complete fully or accept current state (don't leave in limbo)
-- **Source:** `reviews/defensive_fallback_architecture_review_20251116.md`
-- **Note:** Two CRITICAL regressions found (dystopiaProgression.ts, aiSuffering.ts) where fixed code was reverted
+**M-2: Complete Assertion Migration** ✅ **RESOLVED** (Nov 26, 2025)
+- **Status:** COMPLETE - All 6 actual violations fixed (original 71 estimate included legitimate config defaults)
+- **Files Fixed:** historicalInitialization.ts (2), recoveryCalculations.ts (2), strategicDeception.ts (2)
+- **CRITICAL Regressions:** dystopiaProgression.ts, aiSuffering.ts - verified fixed
+- **Validation:** TypeScript clean, Monte Carlo N=10 complete, 0 assertion anti-patterns found
+- **Report:** `reviews/assertion_migration_status_20251126.md`
+- **Archive:** See line 2560 for completion details
 
 ### Validation Priority Stack
 
