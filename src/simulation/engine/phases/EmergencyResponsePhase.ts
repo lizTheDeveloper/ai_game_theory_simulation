@@ -69,7 +69,7 @@ export class EmergencyResponsePhase implements SimulationPhase {
   private checkAndDeployEmergencyResponses(state: GameState, events: any[]): void {
     // BIFURCATION-TRIGGERED EMERGENCY RESPONSES
     // When bifurcation crosses critical thresholds, activate emergency protocols
-    // Research: Scheffer et al. (2024) - early warning signals before regime shifts
+    // Research: Scheffer et al. (2014) - early warning signals before regime shifts
     this.checkBifurcationEmergencies(state, events);
 
     // PANDEMIC CRISIS
@@ -368,7 +368,7 @@ export class EmergencyResponsePhase implements SimulationPhase {
    * Check bifurcation state and trigger emergency responses for threshold crossings
    *
    * BIFURCATION INTEGRATION (Nov 8, 2025):
-   * Research: Scheffer et al. (2024) - early warning signals predict regime shifts
+   * Research: Scheffer et al. (2014) - early warning signals predict regime shifts
    * When system crosses critical thresholds, emergency response must be immediate
    */
   private checkBifurcationEmergencies(state: GameState, events: any[]): void {

@@ -1,112 +1,84 @@
-# Architecture Integration Review - Nov 30, 2025
+# Architecture Integration Review - Nov 30, 2025 (Session 16)
 
 **Reviewer:** Architecture Skeptic
-**Date:** November 30, 2025
-**Scope:** 30-day commit scan, focused on recent fixes (HIGH-4 bifurcation, CRITICAL-1 hindcast, HIGH-2 carbon cycle)
+**Scope:** Changes since last review (Nov 29, 2025)
+**Grade:** A-
 
 ---
 
 ## Executive Summary
 
-**Overall Grade: A-**
+Session 16 focused on infrastructure (HIGH-3 queue, HIGH-5 agent monitoring) rather than simulation code. The simulation core remains stable. TypeScript compiles clean.
 
-Architecture remains healthy. Previous review issues (Nov 29) have been addressed:
-- HIGH-1 (`_tippingPointImpacts` type bypass): FIXED - now in GameState interface
-- HIGH-2 (stale environmentalHealth source): FIXED - SimulationObserver now reads `globalMetrics.environmentalHealth`
-- HIGH-3 (silent fallbacks): Mostly addressed - 529 assertion usages vs 3 residual `?? 0.` patterns
-
-Recent commits are maintenance/chores. No new architectural regressions detected.
+**Changes reviewed:**
+- 30 files modified since last review
+- No simulation logic changes - mostly docs, scripts, devops
+- planetaryBoundaryRecovery.ts fix verified: `assertStateProperty` -> `assertDefined`
 
 ---
 
 ## CRITICAL ISSUES
 
-**None.**
+**None identified.**
 
 ---
 
 ## HIGH PRIORITY
 
-### HIGH-1: Hidden State Flags Using `(state as any)`
+### HIGH-1: `(state as any).eventAggregator` Pattern (INHERITED)
 
-**Files:**
-- `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/regionalPopulations.ts` (lines 432, 492)
-- `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/historicalInitialization.ts` (lines 445, 905)
+**Files:** 15+ occurrences across simulation code
 
-**Pattern:**
-```typescript
-(state as any)._skipHistoricalBirthRateScaling = true;
-```
+This pattern persists from previous reviews. eventAggregator should be added to GameState interface.
 
-**Problem:** Hidden cross-phase flag bypasses TypeScript. If refactored, could silently break historical birth rate calibration.
-
-**Risk:** Medium - affects hindcast validation accuracy.
-
-**Recommendation:** Add `_skipHistoricalBirthRateScaling?: boolean` to GameState interface.
-
-**Effort:** Small (15 min)
+**Status:** Tracked, not blocking.
 
 ---
 
-### HIGH-2: Dashboard Uses `(state as any)` for Crisis State
+## MEDIUM PRIORITY
 
-**File:** `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/lib/dashboard/aggregation/crises.ts` (lines 34-56)
+### MEDIUM-1: SimulationObserver environmentalHealth Source (INHERITED)
 
-**Pattern:**
-```typescript
-if ((state as any).phosphorusCrisis?.active) { ... }
-if ((state as any).freshwaterCrisis?.active) { ... }
-```
+**File:** `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/game/observers/SimulationObserver.ts`
 
-**Problem:** Crisis systems write to state but types not declared. UI reads via type bypass.
+Still reads single component instead of geometric mean. UI/simulation value mismatch.
 
-**Risk:** Low-Medium - UI display issue, not simulation correctness.
+**Status:** Tracked, not blocking.
 
-**Recommendation:** Add crisis types to GameState or use explicit optional typing.
+### MEDIUM-2: Phase Count Continues to Grow
 
-**Effort:** Small (30 min)
+**Observation:** 28,662 lines of phase code across simulation/engine/phases/
+
+102+ phases documented in Nov 29 review. Architecture handles this but future optimization may be needed.
 
 ---
 
-## Summary Counts
+## LOW PRIORITY
 
-| Priority | Count |
-|----------|-------|
-| CRITICAL | 0 |
-| HIGH | 2 |
-| MEDIUM | 5 (not detailed per token conservation) |
-| LOW | 8 (not detailed per token conservation) |
+### LOW-1: TODO Comments in UI Code
 
-**MEDIUM issues (summary only):**
-- 110 phase files (complexity creep from 37 in Oct)
-- Some legacy `(state as any)` in asyncLogger
-- 3 residual `?? 0.` defensive patterns
-- ClimateSystemPhase internal `_sampledTransitionTime` flag
-- PhaseContext.data underutilized for cross-phase communication
+31 TODO comments identified, primarily in:
+- MonteCarloManager.ts (IndexedDB integration)
+- Dashboard aggregation files
+- ControlsTab.tsx
 
-**LOW issues (summary only):**
-- Minor code duplication in bifurcation proximity calculations
-- Some assertion context messages could be more specific
-- Time series rolling window logic could be extracted to utility
-- Various comment/documentation updates needed
+These are UI-layer, not affecting simulation determinism.
 
 ---
 
-## Recommendations
+## Positive Findings
 
-1. **Address HIGH-1 and HIGH-2 between feature work** (combined effort: 45 min)
-2. **Continue assertion utility migration** - 529 usages is excellent coverage
-3. **No urgent architectural changes required** - system stable despite growth to 110 phases
-
----
-
-**Grade Justification:**
-- A-: No CRITICAL issues, only 2 HIGH issues (both typing papercuts, not stability threats)
-- Previous A- review findings mostly addressed
-- Bifurcation logic (HIGH-4) implementation is solid with proper assertions
-- 529 assertion utility usages indicates good defensive coding adoption
+1. **Math.random() clean in simulation/** - No direct calls found
+2. **planetaryBoundaryRecovery.ts** - Properly uses assertion utilities (19 assertion calls)
+3. **endGame.ts, behavioralDetection.ts** - No defensive fallbacks found in recently modified files
+4. **TypeScript clean** - No compilation errors
 
 ---
 
-*Generated by Architecture Skeptic*
-*Token Conservation Mode: Exiting early per CLAUDE.md guidelines*
+## Verdict
+
+**Grade: A-**
+
+The codebase is architecturally healthy. No new issues introduced by Session 16 work (infrastructure focus). Previously identified issues remain tracked but non-blocking.
+
+**Recommendation:** Continue with feature work. Address HIGH-1 (eventAggregator typing) when convenient but not urgent.
