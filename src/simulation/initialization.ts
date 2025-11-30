@@ -77,6 +77,41 @@ import { validateSimulationConfig } from './config/validateConfig';
 import { sampleUncertaintyParameters } from './uncertainty';
 
 /**
+ * Parameter Sweep Configuration (M-3)
+ * Allows overriding key uncertain parameters for Latin Hypercube Sampling
+ *
+ * Research Context:
+ * - Methodology: research/parameter_sweep_methodology_20251130.md
+ * - Ranges derived from peer-reviewed uncertainty bounds (IPCC AR6, meta-analyses)
+ * - Used for Sobol sensitivity analysis to identify high-impact parameters
+ */
+export interface ParameterSweepConfig {
+  /** Climate sensitivity: K/(W/m²), baseline 0.8, range [0.5, 1.1] (IPCC AR6: ±0.3) */
+  climateSensitivity?: number;
+
+  /** Carbon sink saturation multiplier, baseline 1.0, range [0.5, 1.5] (±50%) */
+  carbonSinkMultiplier?: number;
+
+  /** AI coordination stress multiplier, baseline TBD, range ±60-80% */
+  aiCoordinationStress?: number;
+
+  /** Technology adoption steepness multiplier, baseline 1.0, range [0.6, 1.4] (±40%) */
+  techAdoptionSteepness?: number;
+
+  /** Bifurcation threshold (tech deployment %), baseline 0.58, range [0.48, 0.68] (±0.10)
+   * Research: technology_bifurcation_threshold_validation_20251130.md
+   * Empirical tipping point 5-25%, simulation uses 58% (conservative)
+   */
+  bifurcationThreshold?: number;
+
+  /** Collapse regime tech effectiveness multiplier, baseline 0.7, range [0.5, 0.9] (±0.2) */
+  collapseRegimeMultiplier?: number;
+
+  /** Social breakdown regime decay multiplier, baseline 1.5, range [1.2, 1.8] (±0.3) */
+  breakdownRegimeMultiplier?: number;
+}
+
+/**
  * P2.3: Initialize Heterogeneous Population Segments (Oct 16, 2025)
  * 
  * Creates 5 distinct social segments based on Pew Research typology (2021-2024):
@@ -536,7 +571,8 @@ export function createDefaultInitialState(
   climatePriorityConfig?: any,
   thresholdSliders?: import('../components/thresholds/ThresholdConfigModal').ThresholdSliders, // Phase 4: Slider-based threshold control
   speculativeScenario?: 'doom' | 'cautious' | 'baseline' | 'progressive' | 'utopia',
-  historicalOverrides?: HistoricalOverrides  // Climate Mini-Hindcast (Nov 24, 2025)
+  historicalOverrides?: HistoricalOverrides,  // Climate Mini-Hindcast (Nov 24, 2025)
+  parameterSweepConfig?: ParameterSweepConfig  // M-3: Parameter injection for LHS sweep (Nov 30, 2025)
 ): GameState {
   // WEEK 2 Task 2.1 (Nov 6, 2025): Validate central configuration at startup
   // Fail-loudly if any parameter is invalid (research simulation rigor)
@@ -1735,6 +1771,64 @@ export function createDefaultInitialState(
 
     console.log(`  Hindcast initialization complete`);
     console.log(`=================================\n`);
+  }
+
+  // M-3 PARAMETER SWEEP OVERRIDES (Nov 30, 2025)
+  // Applied AFTER default initialization to inject LHS-sampled parameter values
+  if (parameterSweepConfig) {
+    console.log(`\n=== M-3 Parameter Sweep Overrides ===`);
+
+    // Climate sensitivity
+    if (parameterSweepConfig.climateSensitivity !== undefined) {
+      state.thresholds.climateSensitivity = parameterSweepConfig.climateSensitivity;
+      console.log(`  climateSensitivity: ${parameterSweepConfig.climateSensitivity.toFixed(3)}`);
+    }
+
+    // Carbon sink saturation
+    if (parameterSweepConfig.carbonSinkMultiplier !== undefined) {
+      state.planetaryBoundariesSystem.landUse.carbonSinkLossMultiplier = parameterSweepConfig.carbonSinkMultiplier;
+      console.log(`  carbonSinkLossMultiplier: ${parameterSweepConfig.carbonSinkMultiplier.toFixed(3)}`);
+    }
+
+    // AI coordination stress
+    if (parameterSweepConfig.aiCoordinationStress !== undefined) {
+      state.transitionManagementSystem.aiCoordinationCapability = 1.0 - parameterSweepConfig.aiCoordinationStress;
+      console.log(`  aiCoordinationCapability: ${(1.0 - parameterSweepConfig.aiCoordinationStress).toFixed(3)} (stress=${parameterSweepConfig.aiCoordinationStress.toFixed(3)})`);
+    }
+
+    // Tech adoption steepness (apply to all positive tipping point technologies)
+    if (parameterSweepConfig.techAdoptionSteepness !== undefined) {
+      const adoptionTech = state.positiveTippingPoints.adoptionTracking;
+      adoptionTech.solarPV.adoptionRate *= parameterSweepConfig.techAdoptionSteepness;
+      adoptionTech.electricVehicles.adoptionRate *= parameterSweepConfig.techAdoptionSteepness;
+      adoptionTech.windPower.adoptionRate *= parameterSweepConfig.techAdoptionSteepness;
+      adoptionTech.heatPumps.adoptionRate *= parameterSweepConfig.techAdoptionSteepness;
+      adoptionTech.batteryStorage.adoptionRate *= parameterSweepConfig.techAdoptionSteepness;
+      console.log(`  techAdoptionSteepness: ${parameterSweepConfig.techAdoptionSteepness.toFixed(3)} (multiplied all adoption rates)`);
+    }
+
+    // Bifurcation threshold - override tech deployment threshold in bifurcation state
+    if (parameterSweepConfig.bifurcationThreshold !== undefined) {
+      state.bifurcationState.technologyBreakthroughThreshold.base = parameterSweepConfig.bifurcationThreshold;
+      state.bifurcationState.technologyBreakthroughThreshold.location = parameterSweepConfig.bifurcationThreshold;
+      console.log(`  bifurcationThreshold: ${parameterSweepConfig.bifurcationThreshold.toFixed(3)} (tech deployment threshold)`);
+    }
+
+    // Collapse regime multiplier - store in simulationConfig
+    if (parameterSweepConfig.collapseRegimeMultiplier !== undefined) {
+      state.simulationConfig = state.simulationConfig ?? {};
+      state.simulationConfig.collapseRegimeMultiplier = parameterSweepConfig.collapseRegimeMultiplier;
+      console.log(`  collapseRegimeMultiplier: ${parameterSweepConfig.collapseRegimeMultiplier.toFixed(3)}`);
+    }
+
+    // Breakdown regime multiplier - store in simulationConfig
+    if (parameterSweepConfig.breakdownRegimeMultiplier !== undefined) {
+      state.simulationConfig = state.simulationConfig ?? {};
+      state.simulationConfig.breakdownRegimeMultiplier = parameterSweepConfig.breakdownRegimeMultiplier;
+      console.log(`  breakdownRegimeMultiplier: ${parameterSweepConfig.breakdownRegimeMultiplier.toFixed(3)}`);
+    }
+
+    console.log(`======================================\n`);
   }
 
   // Wrap with validation proxy in dev mode (zero overhead in production)

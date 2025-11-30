@@ -401,7 +401,13 @@ export class BifurcationLogicPhase implements SimulationPhase {
     });
 
     // Calculate base amplification using bifurcation theory formula
-    // Formula: 1 / √(0.01 + normalizedDistance)
+    // Formula: 1 / √(epsilon + normalizedDistance)
+    // Epsilon (proximity threshold) controls how close you need to be for amplification
+    // - Default epsilon = 0.01 (1% proximity triggers strong amplification)
+    // - Higher epsilon = more conservative (need to be closer to threshold)
+    // - Lower epsilon = more aggressive (amplification activates earlier)
+    //
+    // Examples with default epsilon=0.01:
     // - Distance = 0.0 (at threshold): base = 1 / 0.1 = 10×
     // - Distance = 0.1 (near threshold): base = 1 / √0.11 ≈ 3×
     // - Distance = 0.5 (mid-range): base = 1 / √0.51 ≈ 1.4×
@@ -409,7 +415,8 @@ export class BifurcationLogicPhase implements SimulationPhase {
     //
     // Research basis: Bifurcation theory predicts variance scales as 1/√d near saddle-node bifurcations
     // (Scheffer et al. 2009, standard dynamical systems textbook result)
-    const baseAmplification = 1.0 / Math.sqrt(0.01 + minDistanceValidated);
+    const epsilon = 0.01;  // Variance amplification smoothing factor (NOT tech deployment threshold)
+    const baseAmplification = 1.0 / Math.sqrt(epsilon + minDistanceValidated);
 
     // Apply system-dependent multiplier
     // Different systems exhibit different amplification dynamics based on bifurcation type

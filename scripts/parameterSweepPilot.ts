@@ -14,7 +14,7 @@
  */
 
 import { SimulationEngine } from '../src/simulation/engine';
-import { createDefaultInitialState } from '../src/simulation/initialization';
+import { createDefaultInitialState, ParameterSweepConfig } from '../src/simulation/initialization';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -115,13 +115,31 @@ async function runHindcast(
   runId: number,
   rng: () => number
 ): Promise<RunResult> {
-  // Create initial state (1990)
-  const state = createDefaultInitialState();
+  // M-3: Create parameter sweep config from sampled parameters
+  const parameterSweepConfig: ParameterSweepConfig = {
+    climateSensitivity: parameters.climateSensitivity,
+    // carbonSinkMultiplier: parameters.carbonSinkSaturation,  // TODO: field location TBD
+    // techAdoptionSteepness: parameters.techAdoptionSteepness, // TODO: field location TBD
+  };
 
-  // Apply parameter overrides
-  // NOTE: This is simplified - actual implementation needs to modify
-  // initialization logic to accept parameter overrides
-  // For pilot, we'll just run with defaults and collect distribution
+  // Create initial state (1990) with parameter overrides
+  const state = createDefaultInitialState(
+    rng,
+    'historical',
+    undefined, // alignmentDynamicsConfig
+    undefined, // climatePriorityConfig
+    undefined, // thresholdSliders
+    undefined, // speculativeScenario
+    {  // historicalOverrides (1990 baseline from HISTORICAL_BASELINES)
+      startYear: 1990,
+      co2Ppm: 354,  // Keeling curve 1990
+      temperatureAnomalyC: 0.45,  // HadCRUT5 1990
+      globalPopulationBillions: 5.3,  // UN WPP 1990
+      globalGdpTrillions: 22.6,  // World Bank 1990 (constant USD)
+      emissionsGtCO2PerYear: 22.6  // Global Carbon Project 1990
+    },
+    parameterSweepConfig // M-3: parameter injection
+  );
 
   const engine = new SimulationEngine();
 
@@ -146,7 +164,7 @@ async function runHindcast(
 // ============================================================================
 
 async function main() {
-  const N_RUNS = 50;
+  const N_RUNS = 3;  // M-3: Quick validation (was 50)
   const N_PARAMS = PARAMETERS.length;
   const SEED = 42;
 
