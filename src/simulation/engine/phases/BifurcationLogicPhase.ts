@@ -357,14 +357,14 @@ export class BifurcationLogicPhase implements SimulationPhase {
    * Far from thresholds (distance → 1), amplification → 1× (no effect)
    *
    * Research basis:
-   * - Scheffer et al. (2024) Science - Environmental systems: fold catastrophe, 1.5× multiplier
+   * - Scheffer et al. (2014) Science - Environmental systems: fold catastrophe, 1.5× multiplier
    * - Dakos et al. (2012) Ecology - Social systems: Hopf bifurcation, oscillatory dynamics, 2.5× multiplier
    * - Manda (2010), Fed (2016) - Financial crises: cascade effects, 3.5× multiplier (2008 VIX calibrated)
    * - Bifurcation theory - Base amplification: 1/√(distance), governs generic threshold proximity
    * - Permian-Triassic extinction - Max amplification: 100× (empirical upper bound)
    *
    * System-dependent multipliers account for different bifurcation dynamics:
-   * - Environmental: fold catastrophe (Scheffer et al. 2024)
+   * - Environmental: fold catastrophe (Scheffer et al. 2014)
    * - Social: Hopf bifurcation with oscillations
    * - Economic: cascade amplification (2008 crisis) - REDUCED from 3.5× to 2.5× (Nov 13 2025 - architecture review)
    * - Governance: feedback loop amplification
@@ -526,7 +526,7 @@ export class BifurcationLogicPhase implements SimulationPhase {
    * based on their underlying bifurcation dynamics.
    *
    * Research basis:
-   * - Environmental (1.05×): Fold catastrophe with hysteresis (Scheffer et al. 2024) - Nov 13 2025: 30% reduction to achieve 43-58% mortality target
+   * - Environmental (1.05×): Fold catastrophe with hysteresis (Scheffer et al. 2014) - Nov 13 2025: 30% reduction to achieve 43-58% mortality target
    * - Social (1.75×): Hopf bifurcation with oscillatory dynamics (Dakos et al. 2012) - Nov 13 2025: 30% reduction (was 2.5×)
    * - Economic (1.75×): Cascade amplification - Nov 13 2025: 30% reduction (was 2.5×)
    * - Governance (1.4×): Feedback loop amplification in regime change - Nov 13 2025: 30% reduction (was 2.0×)
@@ -539,7 +539,7 @@ export class BifurcationLogicPhase implements SimulationPhase {
    */
   private getSystemMultiplier(thresholdName: string, state: GameState): number {
     const multipliers: Record<string, number> = {
-      'environmental': 1.05,  // Fold catastrophe (Scheffer et al. 2024) - Nov 13 2025: 30% reduction (1.5 × 0.7 = 1.05)
+      'environmental': 1.05,  // Fold catastrophe (Scheffer et al. 2014) - Nov 13 2025: 30% reduction (1.5 × 0.7 = 1.05)
       'social': 1.75,         // Hopf bifurcation, oscillatory dynamics (Dakos et al. 2012) - Nov 13 2025: 30% reduction (2.5 × 0.7 = 1.75)
       'economic': 1.75,       // Cascade effects - Nov 13 2025: 30% reduction (2.5 × 0.7 = 1.75)
       'governance': 1.4,      // Feedback loops in regime change - Nov 13 2025: 30% reduction (2.0 × 0.7 = 1.4)
