@@ -15,6 +15,7 @@ import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 import { assertPlanetaryBoundary, assertStateProperty, assertFinite } from '@/simulation/utils/assertions';
 import { updatePlanetaryBoundaries, updateBiosphereIntegrityIndex } from '../../planetaryBoundaries';
 import { updateBoundaryRecovery } from '../../planetaryBoundaryRecovery';
+import { updateNovelEntitiesBoundary } from '../../updateNovelEntitiesBoundary';
 
 export class PlanetaryBoundariesPhase implements SimulationPhase {
   readonly id = 'planetary_boundaries';
@@ -73,8 +74,7 @@ export class PlanetaryBoundariesPhase implements SimulationPhase {
     updatePlanetaryBoundaries(state);
 
     // Update Novel Entities boundary with energy-constrained cleanup model (Nov 16, 2025)
-    // TODO: Re-enable when updateNovelEntitiesBoundary is implemented
-    // updateNovelEntitiesBoundary(state, rng);
+    updateNovelEntitiesBoundary(state, rng);
 
     // Update boundary recovery mechanics (Oct 21, 2025 - Ecological Recovery System)
     updateBoundaryRecovery(state, rng);
