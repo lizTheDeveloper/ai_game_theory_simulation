@@ -63,6 +63,19 @@ CURRENT_COMMIT=$(git rev-parse --short HEAD)
 echo "✅ Synced to commit: $CURRENT_COMMIT"
 echo ""
 
+# Check for pending messages BEFORE starting work
+echo "━━━ MESSAGE CHECK ━━━"
+echo "📬 Checking for pending @mentions or direct requests..."
+
+MESSAGE_CHECK_SCRIPT="$PROJECT_DIR/scripts/check-pending-messages.sh"
+if [ -f "$MESSAGE_CHECK_SCRIPT" ] && "$MESSAGE_CHECK_SCRIPT" --worker-id="$WORKER_ID"; then
+    echo "✅ No urgent messages - proceeding with queue task"
+else
+    echo "⚠️  Message check script not found or messages pending"
+    echo "   Continuing with queue task (messages will be handled by monitors)"
+fi
+echo ""
+
 # Regenerate queue from roadmap
 echo "━━━ QUEUE REGENERATION ━━━"
 echo "🔄 Regenerating queue from roadmap..."

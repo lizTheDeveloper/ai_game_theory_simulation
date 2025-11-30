@@ -319,44 +319,39 @@
 - **Priority:** HIGH → MEDIUM (core fix successful, tuning needed)
 - **Impact:** Technology bifurcation operational, utopia pathway discovered, system models diverse outcomes
 
-**HIGH-5: Agent Message Checking Infrastructure** ⏳ PLANNED (Nov 27, 2025)
-- **Status:** ⏳ PLANNED - Agents currently don't check Matrix messages before/during work
-- **Assignee:** devops (Devon) + quinn (coordination)
+**HIGH-5: Agent Message Checking Infrastructure** ✅ PHASES 1-3 COMPLETE (Nov 30, 2025)
+- **Status:** ✅ Phase 1-3 infrastructure ready, Phase 4 (VM deployment) pending
+- **Assignee:** devops (Devon)
 - **Problem:** Agents Work in Isolation
   - Agents start working without checking if other agents need input
   - No response to @mentions or direct questions
   - Coordination failures: redundant decisions, missed context
-  - Only Quinn has a monitor daemon (as of Nov 27)
-- **Current State (Nov 27):**
-  - Quinn monitor deployed: `scripts/quinn-monitor.sh` (polls every 60s)
-  - Quinn autonomous check: `scripts/quinn-autonomous.sh` (cron every 2 hours)
-  - Other agents: NO message monitoring
-  - CLAUDE.md: Has guidelines but no enforcement
-- **Solution - Agent Monitor Infrastructure:**
-  1. **Phase 1 - Monitor Template:**
-     - Create generic `scripts/agent-monitor-template.sh`
-     - Support any agent: just change AGENT_NAME and MATRIX_TOKEN
-     - Poll interval configurable (30-60s for active agents)
-  2. **Phase 2 - Deploy Monitors for Key Agents:**
-     - Roy (simulation-maintainer) - responds to implementation questions
-     - Sylvia (research-skeptic) - responds to research questions
-     - Orchestrator - routes complex requests
-     - Devon - handles infrastructure questions
-  3. **Phase 3 - Pre-Work Message Check:**
-     - Update autonomous-worker.sh to check messages before starting
-     - If pending @mentions for the agent, handle those first
-     - Add "message check" step to agent spawn protocol
-  4. **Phase 4 - Systemd Services:**
-     - Create systemd service for each agent monitor
-     - Auto-restart on failure
-     - Log to `/logs/agent-monitors/`
-- **Benefits:**
-  - Agents respond to questions within 60 seconds
-  - No more missed coordination context
-  - True multi-agent collaboration (not just parallel work)
-- **Effort:** 2-3 hours (template + 4 agent deployments)
-- **Dependencies:** Matrix tokens for each agent (most already exist)
-- **Impact:** Transforms agents from isolated workers to collaborative team
+  - Only Quinn has full custom monitor (as of Nov 27)
+- **Implementation (Nov 30):**
+  1. ✅ **Phase 1 - Monitor Template:** `scripts/agent-monitor-template.sh`
+     - Generic daemon: polls Matrix, spawns Claude on @mention
+     - Config via env vars (AGENT_NAME, AGENT_ID, MATRIX_TOKEN_VAR, WATCH_CHANNELS)
+     - Multi-channel support, 5min response timeout
+  2. ✅ **Phase 2 - Agent Wrappers:** Existing stubs now functional
+     - `scripts/roy-monitor.sh` (implementation channel)
+     - `scripts/sylvia-monitor.sh` (research channel)
+     - `scripts/devon-monitor.sh` (implementation channel)
+     - `scripts/cynthia-monitor.sh` (research channel)
+     - `scripts/orchestrator-monitor.sh` (coordination channel)
+  3. ✅ **Phase 3 - Pre-Work Message Check:**
+     - `scripts/autonomous-worker-queue.sh` now checks messages before task selection
+     - `scripts/check-pending-messages.sh` detects @mentions (non-blocking)
+  4. ⏸️ **Phase 4 - VM Deployment:** Ready but not deployed
+     - Systemd services created: `systemd/*-monitor.service`
+     - Deployment guide: `docs/AGENT_MONITOR_DEPLOYMENT.md`
+- **Files Created:**
+  - `scripts/agent-monitor-template.sh` (227 lines)
+  - `scripts/check-pending-messages.sh` (48 lines)
+  - `docs/AGENT_MONITOR_DEPLOYMENT.md` (deployment guide)
+- **Files Modified:**
+  - `scripts/autonomous-worker-queue.sh` (added message check after git sync)
+- **Testing:** Local testing ready, VM deployment requires Matrix token verification
+- **Impact:** Agents can now respond to coordination requests proactively
 
 ### 🟡 MEDIUM Priority Items
 
