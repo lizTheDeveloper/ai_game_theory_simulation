@@ -118,6 +118,11 @@ export function initializePlanetaryBoundariesSystem(rng: RNGFunction): Planetary
     timescaleYears: 50,
     extinctionContribution: 0.25,
     tippingPointRisk: 0.30,
+    // === IRREVERSIBILITY FRAMEWORK (Nov 16, 2025) ===
+    // Ice sheet inertia - committed warming/SLR from thermal lag
+    irreversible: false,                   // Temperature CAN stabilize, but ice sheets have multi-century lag
+    recoveryHalfLife: 450,                 // Ice sheet recovery timescale (Drüke et al. 2024)
+    minimumAsymptoticValue: 0.35,          // 35% committed warming/SLR floor (thermal inertia + ice sheet lag)
   };
 
   // 2. BIOSPHERE INTEGRITY (Core Boundary) - Current ~10× safe boundary

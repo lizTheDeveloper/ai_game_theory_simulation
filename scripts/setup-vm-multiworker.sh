@@ -223,12 +223,122 @@ fi
 
 log "✅ Task claimed successfully"
 
-# TODO: Load agent personality from .claude/agents/$AGENT_PERSONALITY.claudeagent
-# TODO: Execute task with Claude Code
-# TODO: On completion, release task with autonomousWorkerReleaseTask.ts
+# Map agent personality to agent file
+declare -A AGENT_MAP=(
+  ["roy"]="simulation-maintainer"
+  ["devon"]="devops"
+  ["cynthia"]="super-alignment-researcher"
+  ["sylvia"]="research-skeptic"
+  ["moss"]="feature-implementer"
+  ["tessa"]="far-future-ux-designer"
+  ["historian"]="wiki-documentation-updater"
+  ["architect"]="architect"
+  ["orchestrator"]="orchestrator"
+  ["priya"]="quantitative-validator"
+)
 
-log "⚠️  Worker implementation incomplete - task claimed but not executed"
-log "   This is Phase 1 (infrastructure) - Phase 2 will add execution"
+AGENT_FILE="${AGENT_MAP[$AGENT_PERSONALITY]}"
+if [ -z "$AGENT_FILE" ]; then
+  log "❌ Unknown agent personality: $AGENT_PERSONALITY"
+  npx tsx scripts/autonomousWorkerReleaseTask.ts "$TASK_ID" "ABANDONED" "Unknown agent personality"
+  exit 1
+fi
+
+AGENT_PATH=".claude/agents/${AGENT_FILE}.md"
+if [ ! -f "$AGENT_PATH" ]; then
+  log "❌ Agent file not found: $AGENT_PATH"
+  npx tsx scripts/autonomousWorkerReleaseTask.ts "$TASK_ID" "ABANDONED" "Agent file missing"
+  exit 1
+fi
+
+log "📄 Loading agent context: $AGENT_PATH"
+
+# Create work branch
+BRANCH_NAME="auto/queue-${TASK_ID}-${TIMESTAMP}"
+git checkout -b "$BRANCH_NAME"
+
+# Execute task with Claude Code
+log "🤖 Executing task as $AGENT_PERSONALITY..."
+
+PROMPT_FILE="/tmp/worker_prompt_${TIMESTAMP}.txt"
+
+# Build prompt with agent identity injection
+cat > "$PROMPT_FILE" << PROMPT_EOF
+You are working on task $TASK_ID from the autonomous worker queue.
+
+You are operating as **$AGENT_PERSONALITY** - adopt this agent's expertise and personality.
+
+## Your Agent Identity
+
+Read your agent definition:
+$(cat "$AGENT_PATH")
+
+## Task Details
+ID: $TASK_ID
+Title: $TASK_TITLE
+Assigned Agent: $AGENT_PERSONALITY
+
+## Instructions
+1. Recall your memory: mcp__agent-memory__recall_context({agent_id: "$AGENT_PERSONALITY"})
+2. Review task specification: Read plans/AUTONOMOUS_WORKER_QUEUE.json, find task $TASK_ID
+3. Complete work per acceptance criteria
+4. Add progress notes: npx tsx scripts/autonomousWorkerGetProgress.ts "$TASK_ID" --add-note "your note"
+5. Commit changes with descriptive messages
+6. Stay within token budget
+
+## Completion Workflow
+- **If complete:** Work will be auto-validated. If validation passes, task marked COMPLETED.
+- **If blocked:** Add diagnostic notes explaining blocker
+- **If failed:** Add notes with failure reason
+
+## Critical Constraints
+- Token conservation mode is ACTIVE - be brutally efficient
+- Grep before reading files
+- No optional docs unless task-critical
+- Exit when task complete, don't explore
+
+Work now.
+PROMPT_EOF
+
+# Run Claude Code with timeout (45 minutes max)
+set +e
+timeout 2700 claude --model sonnet --dangerously-skip-permissions < "$PROMPT_FILE" >> "$LOG_FILE" 2>&1
+CLAUDE_EXIT=$?
+set -e
+
+rm -f "$PROMPT_FILE"
+
+if [ $CLAUDE_EXIT -eq 124 ]; then
+  log "⏱️  Claude execution timed out after 45 minutes"
+  npx tsx scripts/autonomousWorkerReleaseTask.ts "$TASK_ID" "ABANDONED" "Timeout after 45min"
+  exit 1
+elif [ $CLAUDE_EXIT -ne 0 ]; then
+  log "❌ Claude execution failed with exit code $CLAUDE_EXIT"
+  npx tsx scripts/autonomousWorkerReleaseTask.ts "$TASK_ID" "ABANDONED" "Claude exit code $CLAUDE_EXIT"
+  exit 1
+fi
+
+log "✅ Task execution complete"
+
+# Validate task completion
+log "🔍 Validating task completion..."
+VALIDATION_RESULT=$(npx tsx scripts/autonomousWorkerValidateTask.ts "$TASK_ID" 2>&1)
+VALIDATION_EXIT=$?
+
+if [ $VALIDATION_EXIT -eq 0 ]; then
+  log "✅ Task validation passed"
+  npx tsx scripts/autonomousWorkerCompleteTask.ts "$TASK_ID" "$WORKER_ID"
+else
+  log "⚠️  Task validation failed:"
+  log "$VALIDATION_RESULT"
+  npx tsx scripts/autonomousWorkerReleaseTask.ts "$TASK_ID" "AVAILABLE" "Validation failed"
+fi
+
+# Push work branch
+log "⬆️  Pushing work branch..."
+git push origin "$BRANCH_NAME"
+
+log "🏁 Worker execution complete"
 
 WORKER_EOF
 
