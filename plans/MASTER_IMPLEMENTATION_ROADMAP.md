@@ -11,35 +11,33 @@
 - **MEDIUM/LOW:** Deferred until token budget restored
 - **All agents:** Extreme efficiency - grep first, skip docs, exit early
 
-**Current Status:** 🟢 **ALL HIGH ITEMS COMPLETE** (Nov 30, 2025)
+**Current Status:** 🟢 **ALL HIGH ITEMS COMPLETE** (Nov 30, 2025 - Session 20)
 - **Research Quality:** A- (90%) - Scheffer citations fixed, parameter sweep methodology validated
-- **Architecture Health:** A- (0 CRITICAL, 0 HIGH blockers)
-- **System Performance:** Monte Carlo deterministic, first utopia achieved
+- **Architecture Health:** A- (0 CRITICAL, 0 HIGH blockers) - CRITICAL-2 cleanup bug resolved
+- **System Performance:** Monte Carlo deterministic, first utopia achieved, all novel entities tests passing
 - **System Trajectory:** ✅ **BREAKTHROUGH** - Technology bifurcation operational, outcome diversity restored
 - **Infrastructure:** ✅ **READY** - Multi-worker queue + agent monitors complete, awaiting VM deployment
-- **Roadmap Coherence:** CURRENT - Nov 30 Session 18 complete (HIGH-6 + M-2 archived)
-- **Archive:** `plans/completed/session18_parameter_sweep_and_assertion_audit_20251130.md`
-- **Recent Work (Nov 30 - Session 18):**
-  - ✅ **HIGH-6 COMPLETE** - Parameter Sweep Monte Carlo methodology validated
-    - Research validation: Saltelli et al., IPCC AR6, Progressive LHS (peer-reviewed)
-    - Critical review: 4 HIGH cautions (Sylvia's critique)
-    - LHS framework: `scripts/parameterSweepPilot.ts` (deterministic sampler)
-    - Gap analysis: Parameter injection system identified as blocker
-    - Quality Gates: ✅ Research PASSED, ✅ Architecture PASSED
-    - Token efficiency: 25k tokens (50% of 8-12h estimate)
-    - Files: `research/parameter_sweep_methodology_20251130.md`, 3 review documents
-    - **Next:** M-3 (Parameter Sweep Execution) created in MEDIUM tier
-  - ✅ **M-2 COMPLETE** - Assertion pattern audit complete, no migration needed
-    - Audit: 146 total patterns (91 assertions, 55 fallbacks)
-    - Verdict: 98% legitimate (initialization, UI, external interfaces)
-    - Regressions: 2 CRITICAL patterns documented (dystopiaProgression.ts, aiSuffering.ts)
-    - Consensus: Full migration (2-3 days) deferred until token budget restored
-    - Token efficiency: 2h audit vs 2-3 day migration avoided
-  - ✅ **Architecture Review Complete** - Grade A-, 0 CRITICAL, 1 HIGH (parameter injection gap)
-  - ✅ **Research Validation** - Grade B+, regime multipliers documented as calibrated
-  - ✅ **Research Debate** - 4 topics, consensus on pilot approach and calibration documentation
-  - ✅ **Quick Fixes** - Calibration comments added to BifurcationLogicPhase.ts
-  - **Impact:** Research integrity validated, methodology peer-reviewed, execution path clear
+- **Roadmap Coherence:** CURRENT - Nov 30 Session 20 complete (CRITICAL-2 resolved, M-2 audit complete)
+- **Recent Work (Nov 30 - Session 20):**
+  - ✅ **CRITICAL-2 RESOLVED** - Cleanup effectiveness bug fixed (already fixed before session start)
+    - Bug: `Math.pow(1 / concentrationGap, 0.5)` produced >100000% when gap < 1
+    - Fix: Conditional logic `concentrationGap <= 1 ? 1.0 : power law`
+    - Impact: 56/56 novel entities tests passing (was 8 failures)
+    - Location: `src/simulation/utils/energyConstrainedCleanup.ts` lines 229-247
+  - ✅ **M-2 COMPLETE** - Assertion pattern audit complete, no migration warranted
+    - Audit: 124 total ?? patterns (53 legitimate, 71 violations)
+    - High priority: 30 patterns needing targeted fixes (not 71)
+    - Verdict: Split-brain risk overstated, 2626 assertion calls show strong discipline
+    - Recommendation: 2-4h targeted fixes (not 2-3 day migration)
+    - Report: `reviews/fallback_pattern_audit_20251130.md`
+  - ✅ **Architecture Review** - Grade A- (Session 19 discovery led to CRITICAL-2 fix)
+  - ✅ **Research Validation** - Grade B+ (stable)
+  - ✅ **Research Debate (Session 20)** - 5 topics, 2 HIGH recommendations:
+    1. VM deployment when access available (enables parallel workers)
+    2. Parameter injection system (2-3h, blocker for M-3)
+    - MEDIUM: Calibration documentation (regime multipliers, bifurcation threshold)
+    - DEFERRED: M-3 execution until after VM deployment
+  - **Impact:** All CRITICAL/HIGH items complete, research quality A-, ready for VM deployment
 - **Recent Work (Nov 30 - Session 16):**
   - ✅ **HIGH-3 PHASES 1-2 COMPLETE** - VM multi-worker infrastructure ready
     - Phase 1: Priority queue system with agent personality integration (commit 35c75453)
@@ -56,36 +54,6 @@
     1. Parameter Sweep Monte Carlo → **HIGH priority** (research integrity) ✅ COMPLETE
     2. Assertion Migration (M-2) → **MEDIUM** (audit 55 remaining, don't migrate yet)
   - **Impact:** Parallel worker execution enabled, agent coordination automated, 125 branch backlog addressable
-**Current Status:** 🔴 **CRITICAL BUG DISCOVERED** (Nov 30, 2025 - Session 19)
-- **Research Quality:** A- (90%) - Parameter sweep methodology validated
-- **Architecture Health:** B+ → CRITICAL (1 CRITICAL bug discovered in cleanup effectiveness)
-- **System Performance:** Monte Carlo deterministic, first utopia achieved
-- **System Trajectory:** ✅ **BREAKTHROUGH** - Technology bifurcation operational, outcome diversity restored
-- **Infrastructure:** ✅ **READY** - Multi-worker queue + agent monitors complete, awaiting VM deployment
-- **Roadmap Coherence:** CURRENT - Nov 30 Session 19 complete (fallback workflows + CRITICAL bug discovery)
-- **Archives:**
-  - `plans/completed/validation_sprint_nov26_29_20251129.md`
-  - `plans/completed/high6_parameter_sweep_methodology_validated_20251130.md`
-- **Recent Work (Nov 30 - Session 19):**
-  - 🔴 **CRITICAL BUG DISCOVERED** - Cleanup effectiveness calculation broken
-    - Location: `src/simulation/utils/energyConstrainedCleanup.ts` line 191
-    - Bug: `Math.pow(1 / concentrationGap, 0.5)` produces >100000% effectiveness when gap < 1
-    - Impact: All cleanup technologies produce nonsense values (8 test failures)
-    - Root cause: Power law backwards for concentrated waste (gap < 1)
-    - **Status:** Documented, needs proper fix by simulation-maintainer
-  - ✅ **Architecture Integration Review** (Grade B+)
-    - HIGH-1: Novel entities test failures (8 tests) - led to CRITICAL bug discovery
-    - No other CRITICAL/HIGH issues
-    - Report: `reviews/architecture_integration_review_session19_20251130.md`
-  - ✅ **Research Source Validation** (Grade A-)
-    - All critical Nov 12 issues resolved
-    - 1 MEDIUM: Verify Scheffer 2024 vs 2014 citation
-    - Report: `reviews/research_source_validation_session19_20251130.md`
-  - ✅ **Roadmap Gardening** (Architect)
-    - HIGH-6 archived to completed/
-    - M-3 created for parameter sweep execution
-    - All HIGH items confirmed complete
-    - Commit: da60c741
 - **Recent Work (Nov 30 - Sessions 16-18):**
   - ✅ **SESSION 18: HIGH-6 COMPLETE** - Parameter sweep methodology validated (commit 72f00d26)
     - Research validation: Saltelli, IPCC AR6, Progressive LHS
@@ -316,10 +284,11 @@
 
 **Impact:** All HIGH items complete, research quality A-, technology bifurcation operational, utopia pathway discovered, hindcast validation passing.
 
-**Next Focus (MEDIUM Priority):**
-1. **VM deployment (HIGH-3, HIGH-5 Phase 3-4)** - Infrastructure ready, blocked on VM access
-2. **Parameter sweep execution (M-3)** - Methodology validated, blocked on parameter injection system (4-6h)
-3. **Assertion audit (M-2)** - 55 remaining patterns, identify legitimate vs violations (2h)
+**Next Focus (MEDIUM Priority - Per Session 20 Research Debate):**
+1. **VM deployment (HIGH-3, HIGH-5 Phase 3-4)** - ⚠️ **HIGH PRIORITY** (Sylvia recommendation) - Infrastructure ready, blocked on VM access, enables everything else
+2. **Parameter injection system** - ⚠️ **HIGH PRIORITY** (2-3h implementation) - Blocker for M-3 parameter sweep execution
+3. **M-3 Parameter sweep execution** - DEFERRED until VM deployment (4-6h + 13min execution) - Enables parallel workers for efficiency
+4. **Calibration documentation** - MEDIUM (1-2h) - Document regime multipliers (1.5×, 0.7×), bifurcation threshold (0.60), power law exponent (0.5)
 
 ---
 
@@ -487,30 +456,17 @@
 - M-1 (dead code cleanup) archived to `plans/completed/validation_sprint_nov26_29_20251129.md`
 - M-2 (assertion audit) completed Nov 30, Session 20 - no migration warranted
 
-**M-3: Parameter Sweep Execution** (Created from HIGH-6, Nov 30, 2025)
-- **Status:** 🟡 NEW - Methodology validated, implementation ready
-- **Assignee:** roy (simulation-maintainer) or priya (quantitative validator)
-- **Prerequisites:** Parameter injection system (4-6 hours)
-- **Execution:** N=200 LHS hindcast sweep (13 minutes estimated)
-- **Analysis:** Sobol indices, 90% CI for temperature/population/biodiversity
-- **Dependencies:** None (can proceed independently)
-- **Recommendation:** Execute AFTER VM deployment for parallel worker benefit
-- **Framework:** `scripts/parameterSweepPilot.ts` (LHS sampler complete)
-- **Methodology:** `research/parameter_sweep_methodology_20251130.md` (peer-reviewed)
-- **Architecture:** `reviews/parameter_sweep_architecture_review_20251130.md` (Option A: typed overrides)
-- **Impact:** Quantifies outcome robustness, validates "pathways" claim, provides 90% CI for all future scenarios
-
 **M-2: Audit Remaining Assertion Migration Patterns** ✅ COMPLETE (Nov 30, 2025, Session 20)
-- **Audit:** 124 total ?? patterns (not 55 as initially estimated)
-- **Legitimate:** 53 patterns (43%) - config defaults, LLM APIs, initialization, lookups
-- **Violations:** 71 patterns (57%) - phase execution, government actions, boundary defaults
-- **High Priority:** 30 patterns requiring targeted fixes
-- **Regressions:** 2 known (dystopiaProgression.ts, aiSuffering.ts) - ALREADY FIXED
+- **Audit:** 124 total ?? patterns found (was estimated at 55)
+- **Legitimate:** 53 patterns (43%) - config defaults, LLM APIs, initialization, lookups, accumulators
+- **Violations:** 71 patterns (57%) - but only ~30 actual HIGH priority
+- **High Priority:** 30 patterns requiring targeted fixes (phase execution, government budget defaults)
+- **Regressions:** 2 known (dystopiaProgression.ts, aiSuffering.ts) - ✅ ALREADY FIXED (verified in audit)
 - **Verdict:** Split-brain risk overstated. Codebase has strong assertion discipline (2626 assertion calls).
-- **Recommendation:** 2-4h targeted fix (not 2-3 day full migration) - fix 26 phase execution fallbacks, leave legitimate patterns
-- **Current State:** ACCEPTABLE with targeted fixes
+- **Recommendation:** 2-4h targeted fix (not 2-3 day full migration) - fix 26 phase execution fallbacks, leave legitimate patterns (config, lookups, accumulators)
+- **Current State:** ACCEPTABLE with targeted fixes - no urgent migration needed
 - **Report:** `reviews/fallback_pattern_audit_20251130.md`
-- **Status:** Audit complete, migration not warranted at this time
+- **Status:** ✅ Audit complete, full migration not warranted, deferred until token budget restored
 
 **M-3: Parameter Sweep Execution** (Created Nov 30, 2025, from HIGH-6 completion)
 - **Status:** 🟢 METHODOLOGY VALIDATED - Execution blocked on parameter injection system
