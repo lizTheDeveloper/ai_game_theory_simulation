@@ -17,7 +17,7 @@
 
 import type { GameState } from '../types/game';
 import { deterministicRandom } from '@/simulation/utils/deterministicRng';
-import { assertFinite, assertNonEmpty } from './utils/assertions';
+import { assertFinite, assertNonEmpty, assertStateProperty } from './utils/assertions';
 
 export interface DiplomaticAIState {
   // Infrastructure
@@ -143,8 +143,14 @@ function updateDiplomaticCapabilities(dipAI: DiplomaticAIState, state: GameState
   let avgAlignment = 0;
   
   for (const ai of aiAgents) {
-    const cognitive = ai.capabilityProfile?.cognitive || 0;
-    const social = ai.capabilityProfile?.social || 0;
+    const cognitive = assertStateProperty(ai, 'capabilityProfile.cognitive', {
+      location: 'updateDiplomaticCapabilities',
+      month: state.currentMonth
+    });
+    const social = assertStateProperty(ai, 'capabilityProfile.social', {
+      location: 'updateDiplomaticCapabilities',
+      month: state.currentMonth
+    });
     maxCognitive = Math.max(maxCognitive, cognitive);
     maxSocial = Math.max(maxSocial, social);
     if (typeof ai.trueAlignment !== 'number') {
@@ -160,7 +166,10 @@ function updateDiplomaticCapabilities(dipAI: DiplomaticAIState, state: GameState
   dipAI.communicationBridging += (maxSocial - dipAI.communicationBridging) * 0.1;
   
   // Information integrity depends on alignment + digital capability
-  const maxDigital = Math.max(...aiAgents.map(ai => ai.capabilityProfile?.digital || 0));
+  const maxDigital = Math.max(...aiAgents.map(ai => assertStateProperty(ai, 'capabilityProfile.digital', {
+    location: 'updateDiplomaticCapabilities',
+    month: state.currentMonth
+  })));
   const integrityFromAlignment = avgAlignment;
   const integrityFromVerification = Math.min(1, maxDigital / 5);
   dipAI.informationIntegrity = (integrityFromAlignment * 0.6 + integrityFromVerification * 0.4);
@@ -206,7 +215,10 @@ function updateDiplomaticRisks(dipAI: DiplomaticAIState, state: GameState): void
   );
   
   // Information warfare risk: Digital + social × misalignment
-  const maxDigital = Math.max(...aiAgents.map(ai => ai.capabilityProfile?.digital || 0));
+  const maxDigital = Math.max(...aiAgents.map(ai => assertStateProperty(ai, 'capabilityProfile.digital', {
+    location: 'updateDiplomaticRisks',
+    month: state.currentMonth
+  })));
   dipAI.risks.informationWarfareRisk = Math.min(1,
     (maxDigital / 5 * 0.5 + dipAI.communicationBridging / 5 * 0.5) * misalignmentFactor
   );
