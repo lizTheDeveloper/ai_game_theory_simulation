@@ -217,6 +217,19 @@ export interface GameState {
   scenario?: import('./scenarios').ScenarioDefinition;
 
   /**
+   * Internal Flag: Skip Historical Birth Rate Scaling (Nov 30, 2025)
+   *
+   * When true, disables historical birth rate scaling in regional population calculations.
+   * Used during hindcast validation to prevent circular dependencies between population
+   * initialization and regional birth rate adjustments.
+   *
+   * Context: Hindcast validation script needs to initialize state without triggering
+   *          birth rate corrections that depend on complete historical data.
+   * Expected impact: Enables clean validation of population initialization logic
+   */
+  _skipHistoricalBirthRateScaling?: boolean;
+
+  /**
    * Technology Deployment Schedule (Nov 25, 2025)
    *
    * Tracks scheduled technology deployments for sequenced/adaptive/prioritized modes.
