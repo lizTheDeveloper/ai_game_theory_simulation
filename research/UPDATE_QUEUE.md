@@ -1,6 +1,6 @@
 # Research Update Queue
-**Generated:** 11/30/2025, 4:30:04 PM
-**Files Scanned:** 499
+**Generated:** 11/30/2025, 8:30:03 PM
+**Files Scanned:** 501
 
 ---
 
@@ -12,7 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 171 (34.3%)
+**Count:** 172 (34.3%)
 
 ### `CRISIS_MITIGATION_RESEARCH_CRITIQUE_20251029.md`
 - **Oldest source:** 2001 (24 years old)
@@ -118,6 +118,11 @@
 - **Oldest source:** 2019 (6 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/ROADMAP_RESEARCH_STATUS_20251127.md`
+
+### `ROADMAP_RESEARCH_STATUS_20251130.md`
+- **Oldest source:** 2012 (13 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/ROADMAP_RESEARCH_STATUS_20251130.md`
 
 ### `ROUND2_SYLVIA_CRITIQUE_20251030.md`
 - **Oldest source:** 2006 (19 years old)
@@ -901,7 +906,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 307 (61.5%)
+**Count:** 308 (61.5%)
 
 All sources <3 years old. No action required.
 
@@ -911,11 +916,11 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 499 |
+| Total files | 501 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 171 (34.3%) |
+| HIGH | 172 (34.3%) |
 | MEDIUM | 21 (4.2%) |
-| LOW | 307 (61.5%) |
+| LOW | 308 (61.5%) |
 | Average age | 7.8 years |
 | Oldest source | 1955 (70 years ago) |
 
@@ -923,9 +928,9 @@ All sources <3 years old. No action required.
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 307 | 61.5% |
+| Current (<3yr) | 308 | 61.5% |
 | Warning (3-5yr) | 21 | 4.2% |
-| Critical (>5yr) | 171 | 34.3% |
+| Critical (>5yr) | 172 | 34.3% |
 
 ### Targets
 
@@ -937,7 +942,7 @@ All sources <3 years old. No action required.
 
 ## 🔄 Next Steps
 
-1. Update 171 HIGH priority file(s) within 1 month
+1. Update 172 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 
