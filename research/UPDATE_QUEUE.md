@@ -1,6 +1,6 @@
 # Research Update Queue
-**Generated:** 11/30/2025, 12:30:04 PM
-**Files Scanned:** 498
+**Generated:** 11/30/2025, 4:30:04 PM
+**Files Scanned:** 499
 
 ---
 
@@ -12,7 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 170 (34.1%)
+**Count:** 171 (34.3%)
 
 ### `CRISIS_MITIGATION_RESEARCH_CRITIQUE_20251029.md`
 - **Oldest source:** 2001 (24 years old)
@@ -739,6 +739,11 @@
 - **Status:** Not used in simulation
 - **Path:** `research/technology-diffusion-io-psychology_20251019.md`
 
+### `technology_bifurcation_threshold_validation_20251130.md`
+- **Oldest source:** 2003 (22 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/technology_bifurcation_threshold_validation_20251130.md`
+
 ### `technology_diffusion_io_psychology_verification_20251101.md`
 - **Oldest source:** 1982 (43 years old)
 - **Status:** Not used in simulation
@@ -896,7 +901,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 307 (61.6%)
+**Count:** 307 (61.5%)
 
 All sources <3 years old. No action required.
 
@@ -906,33 +911,33 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 498 |
+| Total files | 499 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 170 (34.1%) |
+| HIGH | 171 (34.3%) |
 | MEDIUM | 21 (4.2%) |
-| LOW | 307 (61.6%) |
-| Average age | 7.7 years |
+| LOW | 307 (61.5%) |
+| Average age | 7.8 years |
 | Oldest source | 1955 (70 years ago) |
 
 ### Research Currency
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 307 | 61.6% |
+| Current (<3yr) | 307 | 61.5% |
 | Warning (3-5yr) | 21 | 4.2% |
-| Critical (>5yr) | 170 | 34.1% |
+| Critical (>5yr) | 171 | 34.3% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-- **Current:** 34.1% critical (>5yr)
+- **Current:** 34.3% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
-1. Update 170 HIGH priority file(s) within 1 month
+1. Update 171 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 
