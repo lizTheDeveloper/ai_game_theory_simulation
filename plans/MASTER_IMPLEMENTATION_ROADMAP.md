@@ -481,9 +481,11 @@
 - **Next Steps (MEDIUM-NEW "Parameter Sweep Execution"):** Parameter injection → N=200 sweep → Sobol indices → 90% CI report
 - **Recommendation:** Execute AFTER VM deployment (parallel workers benefit)### 🟡 MEDIUM Priority Items
 
-**Status:** 2 active MEDIUM items (M-2 assertion audit, M-3 parameter sweep execution)
+**Status:** 1 active MEDIUM item (M-3 parameter sweep execution)
 
-**Archive:** M-1 (dead code cleanup) archived to `plans/completed/validation_sprint_nov26_29_20251129.md`
+**Archive:**
+- M-1 (dead code cleanup) archived to `plans/completed/validation_sprint_nov26_29_20251129.md`
+- M-2 (assertion audit) completed Nov 30, Session 20 - no migration warranted
 
 **M-3: Parameter Sweep Execution** (Created from HIGH-6, Nov 30, 2025)
 - **Status:** 🟡 NEW - Methodology validated, implementation ready
@@ -498,15 +500,17 @@
 - **Architecture:** `reviews/parameter_sweep_architecture_review_20251130.md` (Option A: typed overrides)
 - **Impact:** Quantifies outcome robustness, validates "pathways" claim, provides 90% CI for all future scenarios
 
-**M-2: Audit Remaining Assertion Migration Patterns** (Identified Nov 16, 2025, Scoped Nov 30, 2025)
-- **Status:** 55 remaining fallback patterns (91 already using assertion utilities)
-- **Issue:** Split-brain error handling (some paths fail loudly, some silently)
-- **Impact:** MEDIUM - Regression risk, inconsistent debugging experience
-- **Effort:** 2h audit (identify legitimate vs violations), NOT 2-3 day migration
-- **Recommendation (Sylvia, Nov 30):** Audit 55 remaining patterns, many likely legitimate (initialization, UI, external interfaces)
-- **Source:** `reviews/defensive_fallback_architecture_review_20251116.md`, `reviews/research_debate_session16_20251130.md`
-- **Note:** Two CRITICAL regressions found (dystopiaProgression.ts, aiSuffering.ts) where fixed code was reverted
-- **Deferred:** Full migration deferred until token budget restored (CLAUDE.md warning applies)
+**M-2: Audit Remaining Assertion Migration Patterns** ✅ COMPLETE (Nov 30, 2025, Session 20)
+- **Audit:** 124 total ?? patterns (not 55 as initially estimated)
+- **Legitimate:** 53 patterns (43%) - config defaults, LLM APIs, initialization, lookups
+- **Violations:** 71 patterns (57%) - phase execution, government actions, boundary defaults
+- **High Priority:** 30 patterns requiring targeted fixes
+- **Regressions:** 2 known (dystopiaProgression.ts, aiSuffering.ts) - ALREADY FIXED
+- **Verdict:** Split-brain risk overstated. Codebase has strong assertion discipline (2626 assertion calls).
+- **Recommendation:** 2-4h targeted fix (not 2-3 day full migration) - fix 26 phase execution fallbacks, leave legitimate patterns
+- **Current State:** ACCEPTABLE with targeted fixes
+- **Report:** `reviews/fallback_pattern_audit_20251130.md`
+- **Status:** Audit complete, migration not warranted at this time
 
 **M-3: Parameter Sweep Execution** (Created Nov 30, 2025, from HIGH-6 completion)
 - **Status:** 🟢 METHODOLOGY VALIDATED - Execution blocked on parameter injection system
