@@ -290,6 +290,15 @@ describe('Novel Entities Irreversibility - Integration Tests', () => {
       updateNovelEntitiesBoundary(state, rng);
       const change = boundary.currentValue - initialValue;
 
+      // DEBUG
+      console.log('\n=== DEBUG: PFAS cleanup test ===');
+      console.log('Initial:', initialValue);
+      console.log('Final:', boundary.currentValue);
+      console.log('Change:', change);
+      console.log('Expected production:', (3.0 * 0.0002) + (0.8 * 0.0001));
+      console.log('Test expects: change < 0.01');
+      console.log('===\n');
+
       // Cleanup should reduce contamination (net production + cleanup < production alone)
       // But not by much due to energy/concentration constraints
       assert.ok(change < 0.01); // Minimal cleanup effectiveness
