@@ -85,11 +85,7 @@ export function initializeOceanAcidificationSystem(rng?: () => number): OceanAci
     },
     economicValueAtRisk: 100,       // $100B/year baseline (conservative)
     populationDependent: 350,       // 350M people (midpoint 330-500M)
-<<<<<<< Updated upstream
     pHHistory: [8.0],               // Historical tracking (Month 0) - CALIBRATION: matches initial pH
-=======
-    pHHistory: [7.95],              // Historical tracking (Month 0)
->>>>>>> Stashed changes
     coralHealthHistory: [70],       // Historical tracking (Month 0)
 
     // Existing fields
@@ -156,7 +152,6 @@ export function updateOceanAcidificationSystem(state: GameState, rng: () => numb
   // === pH DECLINE (SSP Scenario-Based) ===
   // Research: Jiang et al. (2023), IPCC AR6
   // Monthly rates from RCP/SSP projections (2025-2100, 900 months)
-<<<<<<< Updated upstream
   // CALIBRATION (Nov 28, 2025 v2): Reduced by 70% total to match century-long research timelines
   // Research shows pH decline occurs over centuries, not decades
 
@@ -166,16 +161,6 @@ export function updateOceanAcidificationSystem(state: GameState, rng: () => numb
     SSP2_4_5: -0.000057,  // Was -0.00019 → 70% reduction (moderate)
     SSP3_7_0: -0.000057,  // Capped at SSP2 level (was -0.00030)
     SSP5_8_5: -0.000057,  // Capped at SSP2 level (was -0.00043, business as usual)
-=======
-  // CALIBRATION (Nov 28, 2025): Reduced by 50% to match research timelines
-
-  const pH_DECLINE_RATE_PER_MONTH = {
-    SSP1_1_9: -0.000005,  // Was -0.00001 → 50% reduction
-    SSP1_2_6: -0.000045,  // Was -0.00009 → 50% reduction
-    SSP2_4_5: -0.000095,  // Was -0.00019 → 50% reduction (moderate)
-    SSP3_7_0: -0.000095,  // Capped at SSP2 level (was -0.00030)
-    SSP5_8_5: -0.000095,  // Capped at SSP2 level (was -0.00043, business as usual)
->>>>>>> Stashed changes
   };
 
   // Map climate stability to SSP scenario (higher stability = better mitigation)
@@ -382,15 +367,9 @@ export function updateOceanAcidificationSystem(state: GameState, rng: () => numb
   }
 
   // === COASTAL FISHERIES YIELD (Power Law) ===
-<<<<<<< Updated upstream
   // Research: Exponential decline (coralHealth/100)^1.2
   // Species composition factor: resistant species maintain higher yields
   // CALIBRATION (Nov 28, 2025): Reduced exponent from 1.5 to 1.2 (gentler decline curve)
-=======
-  // Research: Exponential decline (coralHealth/100)^1.2 (calibrated Nov 28, 2025)
-  // Species composition factor: resistant species maintain higher yields
-  // CALIBRATION: Reduced exponent from 1.5 to 1.2 (gentler decline curve)
->>>>>>> Stashed changes
 
   const speciesCompositionFactor = 0.7 + (0.6 * (1.0 - oa.speciesSensitivity));  // More resistant = higher yield
   const baseFisheriesYield = Math.pow(oa.coralReefHealth / 100, 1.2);
