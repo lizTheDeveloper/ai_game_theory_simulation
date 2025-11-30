@@ -357,14 +357,17 @@ export class BifurcationLogicPhase implements SimulationPhase {
    * Far from thresholds (distance → 1), amplification → 1× (no effect)
    *
    * Research basis:
-   * - Scheffer et al. (2024) Science - Environmental systems: fold catastrophe, 1.5× multiplier
-   * - Dakos et al. (2012) Ecology - Social systems: Hopf bifurcation, oscillatory dynamics, 2.5× multiplier
-   * - Manda (2010), Fed (2016) - Financial crises: cascade effects, 3.5× multiplier (2008 VIX calibrated)
+   * - Scheffer et al. (2014) Phil. Trans. R. Soc. B 370: 20130263 - Critical slowing down, regime shifts
+   * - Dakos et al. (2012) Ecology - Social systems: Hopf bifurcation, oscillatory dynamics
    * - Bifurcation theory - Base amplification: 1/√(distance), governs generic threshold proximity
    * - Permian-Triassic extinction - Max amplification: 100× (empirical upper bound)
    *
+   * NOTE: System-specific multipliers (1.5×, 2.5×, etc.) are PHENOMENOLOGICAL CALIBRATION,
+   * fit to Monte Carlo mortality outcomes (Nov 13-29, 2025), not direct empirical measurements.
+   * Scheffer (2014) provides bifurcation mechanism, multipliers tuned to match outcome diversity.
+   *
    * System-dependent multipliers account for different bifurcation dynamics:
-   * - Environmental: fold catastrophe (Scheffer et al. 2024)
+   * - Environmental: fold catastrophe (phenomenological 1.5× calibration)
    * - Social: Hopf bifurcation with oscillations
    * - Economic: cascade amplification (2008 crisis) - REDUCED from 3.5× to 2.5× (Nov 13 2025 - architecture review)
    * - Governance: feedback loop amplification
