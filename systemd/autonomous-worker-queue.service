@@ -1,0 +1,18 @@
+[Unit]
+Description=SATU Autonomous Worker (Queue-Based)
+After=network.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/lizthedeveloper_gmail_com/ai_game_theory_simulation
+ExecStart=/bin/bash /home/lizthedeveloper_gmail_com/ai_game_theory_simulation/scripts/autonomous-worker-queue.sh
+StandardOutput=append:/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/logs/autonomous/service.log
+StandardError=append:/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/logs/autonomous/service-error.log
+Environment="PATH=/usr/local/bin:/usr/bin:/bin"
+Environment="NODE_ENV=production"
+
+# Conservative timeout (2 hours max per session)
+TimeoutStartSec=7200
+
+[Install]
+WantedBy=multi-user.target
