@@ -271,40 +271,29 @@
 
 ### 🚨 CRITICAL Priority Items
 
-**Status:** 1 active CRITICAL item (discovered Nov 30, Session 19)
+**Status:** ✅ 0 active CRITICAL items (CRITICAL-2 resolved Nov 30, Session 20)
 
-**CRITICAL-2: Cleanup Effectiveness Calculation Bug** (Discovered Nov 30, 2025)
-- **Status:** 🔴 NEW - Discovered during HIGH-1 investigation
-- **Assignee:** simulation-maintainer (Roy)
-- **Discovery:** Architecture integration review found 8 test failures in novel-entities-irreversibility.test.ts
-- **Location:** `src/simulation/utils/energyConstrainedCleanup.ts` line 191
-- **Bug:** `const concentrationFactor = Math.pow(1 / concentrationGap, 0.5);`
-- **Problem:** When `concentrationGap < 1` (concentrated waste where tech works), produces massive amplification
-  - Example: `concentrationGap = 0.001` → `concentrationFactor = 31.6` (3160% effectiveness!)
-  - Expected: Concentration factor should be ≤ 1.0 (penalty for dilution), not >1.0 (reward)
-- **Root Cause:** Power law is backwards for concentrated waste (gap < 1)
-- **Impact:**
-  - All cleanup technologies produce nonsense effectiveness values
-  - 8 test failures in novel-entities-irreversibility.test.ts
-  - Tests correctly expect cleanup to work, but implementation is broken
-- **Fix Required:**
-  ```typescript
-  const concentrationFactor = concentrationGap >= 1
-    ? Math.pow(1 / concentrationGap, 0.5)  // Dilute: penalty
-    : 1.0;  // Concentrated: no penalty (or maybe slight bonus)
-  ```
-- **Testing:** All 8 failing tests should pass after fix
-- **Priority Justification:** Cleanup effectiveness is core mechanic for novel entities boundary, currently producing garbage values
-- **Discovery Report:** `reviews/architecture_integration_review_session19_20251130.md` (HIGH-1 investigation)
-- **Effort:** 1-2 hours (fix + validation + research backing for concentrated waste behavior)
+**Archive:** All CRITICAL items resolved. See "Recently Resolved" section below for details.
 
-**Archive:** Previous CRITICAL items from Nov 26-29 validation sprint archived to `plans/completed/validation_sprint_nov26_29_20251129.md`
+**Previous Archives:**
+- Nov 26-29 validation sprint: `plans/completed/validation_sprint_nov26_29_20251129.md`
+- CRITICAL-2 (Cleanup Effectiveness Bug): Resolved Nov 30, 2025 (see below)
 
 ### 🟠 HIGH Priority Items
 
 **Status:** 0 active HIGH items (all complete Nov 30, 2025)
 
 ## ✅ Recently Resolved (Nov 26-30, 2025)
+
+**Nov 30 - Session 20: CRITICAL-2 Resolved**
+- ✅ **CRITICAL-2:** Cleanup Effectiveness Calculation Bug → Fixed (already resolved, discovered in Session 19)
+  - **Bug:** `Math.pow(1 / concentrationGap, 0.5)` produced >100000% effectiveness when gap < 1
+  - **Fix:** Added conditional: `concentrationGap <= 1 ? 1.0 : Math.pow(1 / concentrationGap, 0.5)`
+  - **Impact:** All 56 novel entities tests passing (was 8 failures)
+  - **Location:** `src/simulation/utils/energyConstrainedCleanup.ts` lines 229-247
+  - **Safeguards:** `assertInRange(concentrationFactor, 0, 1)` validates result
+  - **Discovery:** Architecture integration review (Session 19)
+  - **Resolution:** Bug was already fixed prior to Session 20 start
 
 **Nov 30 - Session 18: Research Quality Milestone**
 - ✅ **HIGH-6:** Parameter sweep methodology validation → Complete Nov 30 (commit 72f00d26)
