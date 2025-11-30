@@ -11,16 +11,36 @@
 - **MEDIUM/LOW:** Deferred until token budget restored
 - **All agents:** Extreme efficiency - grep first, skip docs, exit early
 
-**Current Status:** 🟢 **ALL HIGH ITEMS COMPLETE** (Nov 30, 2025)
+**Current Status:** 🔴 **CRITICAL BUG DISCOVERED** (Nov 30, 2025 - Session 19)
 - **Research Quality:** A- (90%) - Parameter sweep methodology validated
-- **Architecture Health:** A- (0 CRITICAL, 0 HIGH blockers)
+- **Architecture Health:** B+ → CRITICAL (1 CRITICAL bug discovered in cleanup effectiveness)
 - **System Performance:** Monte Carlo deterministic, first utopia achieved
 - **System Trajectory:** ✅ **BREAKTHROUGH** - Technology bifurcation operational, outcome diversity restored
 - **Infrastructure:** ✅ **READY** - Multi-worker queue + agent monitors complete, awaiting VM deployment
-- **Roadmap Coherence:** CURRENT - Nov 30 Session 18 complete (parameter sweep methodology + validation reviews)
+- **Roadmap Coherence:** CURRENT - Nov 30 Session 19 complete (fallback workflows + CRITICAL bug discovery)
 - **Archives:**
   - `plans/completed/validation_sprint_nov26_29_20251129.md`
   - `plans/completed/high6_parameter_sweep_methodology_validated_20251130.md`
+- **Recent Work (Nov 30 - Session 19):**
+  - 🔴 **CRITICAL BUG DISCOVERED** - Cleanup effectiveness calculation broken
+    - Location: `src/simulation/utils/energyConstrainedCleanup.ts` line 191
+    - Bug: `Math.pow(1 / concentrationGap, 0.5)` produces >100000% effectiveness when gap < 1
+    - Impact: All cleanup technologies produce nonsense values (8 test failures)
+    - Root cause: Power law backwards for concentrated waste (gap < 1)
+    - **Status:** Documented, needs proper fix by simulation-maintainer
+  - ✅ **Architecture Integration Review** (Grade B+)
+    - HIGH-1: Novel entities test failures (8 tests) - led to CRITICAL bug discovery
+    - No other CRITICAL/HIGH issues
+    - Report: `reviews/architecture_integration_review_session19_20251130.md`
+  - ✅ **Research Source Validation** (Grade A-)
+    - All critical Nov 12 issues resolved
+    - 1 MEDIUM: Verify Scheffer 2024 vs 2014 citation
+    - Report: `reviews/research_source_validation_session19_20251130.md`
+  - ✅ **Roadmap Gardening** (Architect)
+    - HIGH-6 archived to completed/
+    - M-3 created for parameter sweep execution
+    - All HIGH items confirmed complete
+    - Commit: da60c741
 - **Recent Work (Nov 30 - Sessions 16-18):**
   - ✅ **SESSION 18: HIGH-6 COMPLETE** - Parameter sweep methodology validated (commit 72f00d26)
     - Research validation: Saltelli, IPCC AR6, Progressive LHS
@@ -207,9 +227,34 @@
 
 ### 🚨 CRITICAL Priority Items
 
-**Status:** 0 active CRITICAL items (all resolved Nov 26-29)
+**Status:** 1 active CRITICAL item (discovered Nov 30, Session 19)
 
-**Archive:** All CRITICAL items from Nov 26-29 validation sprint archived to `plans/completed/validation_sprint_nov26_29_20251129.md`
+**CRITICAL-2: Cleanup Effectiveness Calculation Bug** (Discovered Nov 30, 2025)
+- **Status:** 🔴 NEW - Discovered during HIGH-1 investigation
+- **Assignee:** simulation-maintainer (Roy)
+- **Discovery:** Architecture integration review found 8 test failures in novel-entities-irreversibility.test.ts
+- **Location:** `src/simulation/utils/energyConstrainedCleanup.ts` line 191
+- **Bug:** `const concentrationFactor = Math.pow(1 / concentrationGap, 0.5);`
+- **Problem:** When `concentrationGap < 1` (concentrated waste where tech works), produces massive amplification
+  - Example: `concentrationGap = 0.001` → `concentrationFactor = 31.6` (3160% effectiveness!)
+  - Expected: Concentration factor should be ≤ 1.0 (penalty for dilution), not >1.0 (reward)
+- **Root Cause:** Power law is backwards for concentrated waste (gap < 1)
+- **Impact:**
+  - All cleanup technologies produce nonsense effectiveness values
+  - 8 test failures in novel-entities-irreversibility.test.ts
+  - Tests correctly expect cleanup to work, but implementation is broken
+- **Fix Required:**
+  ```typescript
+  const concentrationFactor = concentrationGap >= 1
+    ? Math.pow(1 / concentrationGap, 0.5)  // Dilute: penalty
+    : 1.0;  // Concentrated: no penalty (or maybe slight bonus)
+  ```
+- **Testing:** All 8 failing tests should pass after fix
+- **Priority Justification:** Cleanup effectiveness is core mechanic for novel entities boundary, currently producing garbage values
+- **Discovery Report:** `reviews/architecture_integration_review_session19_20251130.md` (HIGH-1 investigation)
+- **Effort:** 1-2 hours (fix + validation + research backing for concentrated waste behavior)
+
+**Archive:** Previous CRITICAL items from Nov 26-29 validation sprint archived to `plans/completed/validation_sprint_nov26_29_20251129.md`
 
 ### 🟠 HIGH Priority Items
 
