@@ -429,7 +429,7 @@ export function updateRegionalPopulations(state: GameState): void {
       // M-4 FIX (Nov 28, 2025): Extended to 2024 endpoint, updated parameters per UN WPP 2024
       // Research: research/population_demographics_regional_20251128.md (Cynthia)
       // Validation: reviews/m4_demographics_research_critique_20251128.md (Sylvia)
-      if (actualYear >= 1990 && actualYear <= 2024 && !(state as any)._skipHistoricalBirthRateScaling) {
+      if (actualYear >= 1990 && actualYear <= 2024 && !state._skipHistoricalBirthRateScaling) {
         // Target 2024 TFR values (UN WPP 2024 - Cynthia's research)
         const REGIONAL_TFR_2024: Record<string, number> = {
           'Sub-Saharan Africa': 4.30,   // UN WPP 2024 (was 4.6 in 2020)
@@ -489,7 +489,7 @@ export function updateRegionalPopulations(state: GameState): void {
     //
     // FIX: When _skipHistoricalBirthRateScaling=true, DIRECTLY use historical CBR data
     // instead of scaling baseline birth rates by fertility ratio.
-    const skipScaling = (state as any)._skipHistoricalBirthRateScaling;
+    const skipScaling = state._skipHistoricalBirthRateScaling;
 
     // M-4 FIX (Nov 28, 2025): Skip historical scaling if using time-varying rates
     // Time-varying rates already incorporate the demographic transition
