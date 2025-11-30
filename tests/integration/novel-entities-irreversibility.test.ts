@@ -283,6 +283,10 @@ describe('Novel Entities Irreversibility - Integration Tests', () => {
       const boundary = state.planetaryBoundariesSystem.boundaries.novel_entities;
       boundary.currentValue = 1.5;
 
+      // Disable production to isolate cleanup effectiveness
+      state.globalMetrics.economicTransitionStage = 0;
+      state.globalMetrics.manufacturingCapability = 0;
+
       // Deploy PFAS remediation
       deployTechnology('pfas_remediation', 1.0);
 
@@ -290,23 +294,19 @@ describe('Novel Entities Irreversibility - Integration Tests', () => {
       updateNovelEntitiesBoundary(state, rng);
       const change = boundary.currentValue - initialValue;
 
-      // DEBUG
-      console.log('\n=== DEBUG: PFAS cleanup test ===');
-      console.log('Initial:', initialValue);
-      console.log('Final:', boundary.currentValue);
-      console.log('Change:', change);
-      console.log('Expected production:', (3.0 * 0.0002) + (0.8 * 0.0001));
-      console.log('Test expects: change < 0.01');
-      console.log('===\n');
-
-      // Cleanup should reduce contamination (net production + cleanup < production alone)
-      // But not by much due to energy/concentration constraints
-      assert.ok(change < 0.01); // Minimal cleanup effectiveness
+      // Cleanup should reduce contamination (change < 0)
+      // But constrained by concentration gap (6 orders magnitude = ~2% effectiveness)
+      assert.ok(change < 0); // Cleanup working
+      assert.ok(change > -0.001); // But heavily constrained
     });
 
     it('should limit cleanup effectiveness when energy is scarce', () => {
       const boundary = state.planetaryBoundariesSystem.boundaries.novel_entities;
       boundary.currentValue = 1.5;
+
+      // Disable production to isolate cleanup effectiveness
+      state.globalMetrics.economicTransitionStage = 0;
+      state.globalMetrics.manufacturingCapability = 0;
 
       // Limit renewable energy
       state.resourceEconomy.energy.renewableCapacity = 55;
@@ -319,15 +319,18 @@ describe('Novel Entities Irreversibility - Integration Tests', () => {
       const finalValue = boundary.currentValue;
 
       // Cleanup effectiveness heavily constrained by energy + concentration
-      // Production still dominates, so value increases but less than without cleanup
       const netChange = finalValue - initialValue;
-      assert.ok(netChange > 0); // Still increases (production dominates)
-      assert.ok(netChange < 0.01); // But small due to constraints
+      assert.ok(netChange < 0); // Cleanup working (but constrained)
+      assert.ok(netChange > -0.0005); // Very limited by energy scarcity
     });
 
     it('should apply microplastic capture with concentration constraints', () => {
       const boundary = state.planetaryBoundariesSystem.boundaries.novel_entities;
       boundary.currentValue = 1.3;
+
+      // Disable production to isolate cleanup effectiveness
+      state.globalMetrics.economicTransitionStage = 0;
+      state.globalMetrics.manufacturingCapability = 0;
 
       deployTechnology('microplastic_capture', 1.0);
 
@@ -336,7 +339,8 @@ describe('Novel Entities Irreversibility - Integration Tests', () => {
       const change = boundary.currentValue - initialValue;
 
       // Cleanup effectiveness heavily constrained by concentration gap
-      assert.ok(Math.abs(change) < 0.01);
+      assert.ok(change < 0); // Cleanup working
+      assert.ok(change > -0.001); // But heavily constrained
     });
 
     it('should apply rebound effects to cleanup (Jevons paradox)', () => {
@@ -413,6 +417,10 @@ describe('Novel Entities Irreversibility - Integration Tests', () => {
       const boundary = state.planetaryBoundariesSystem.boundaries.novel_entities;
       boundary.currentValue = 1.5;
 
+      // Disable production to isolate cleanup effectiveness
+      state.globalMetrics.economicTransitionStage = 0;
+      state.globalMetrics.manufacturingCapability = 0;
+
       // Deploy cleanup with ample energy
       state.resourceEconomy.energy.renewableCapacity = 1000;
       state.resourceEconomy.energy.demand = 50;
@@ -423,11 +431,10 @@ describe('Novel Entities Irreversibility - Integration Tests', () => {
       updateNovelEntitiesBoundary(state, rng);
       const netChange = boundary.currentValue - initialValue;
 
-      // Production still dominates even with cleanup + redeposition
       // Cleanup is heavily constrained by concentration gap (6 orders = ~2% effectiveness)
-      // Then 99% redeposition further reduces net effectiveness
-      assert.ok(netChange > 0); // Production dominates
-      assert.ok(netChange < 0.01); // But constrained
+      // Then 99% redeposition further reduces net effectiveness to ~0.02%
+      assert.ok(netChange < 0); // Cleanup working
+      assert.ok(netChange > -0.0001); // But 99% redeposited (minimal net effect)
     });
 
     it('should only affect novel_entities boundary (PFAS-specific)', () => {
@@ -506,12 +513,14 @@ describe('Novel Entities Irreversibility - Integration Tests', () => {
       const finalValue = boundary.currentValue;
       const change = finalValue - initialValue;
 
-      // With full prevention + cleanup, contamination should stabilize or decrease slightly
-      // (prevention dominates, cleanup helps at margins)
-      assert.ok(change < 0.1); // Minimal increase over 10 years
+      // With full prevention + cleanup, contamination growth should be minimal
+      // Prevention blocks 99% of production, cleanup adds marginal benefit
+      // But 500-year half-life means natural decay is very slow (~0.14%/year)
+      // Net result: small increase (residual 1% production > slow decay + constrained cleanup)
+      assert.ok(change < 0.05); // Minimal increase over 10 years (vs ~0.3 without tech)
     });
 
-    it('should demonstrate effectiveness improvement (0% → 20-40%)', () => {
+    it('should demonstrate effectiveness improvement (0% → 99%+)', () => {
       const boundary = state.planetaryBoundariesSystem.boundaries.novel_entities;
 
       // Baseline: no tech (0% effectiveness)
@@ -547,9 +556,10 @@ describe('Novel Entities Irreversibility - Integration Tests', () => {
       // Cleanup adds marginal benefit (heavily constrained)
       const effectiveness = (baselineChange - techChange) / baselineChange;
 
-      // Prevention-first strategy: expect significant reduction in growth rate
-      assert.ok(effectiveness > 0.5); // > 50% reduction in contamination rate
-      assert.ok(baselineChange > techChange); // Tech should reduce growth
+      // Prevention-first strategy: expect massive reduction in growth rate
+      assert.ok(effectiveness > 0.95); // > 95% reduction in contamination rate
+      assert.ok(baselineChange > 0); // Baseline increases
+      assert.ok(techChange < baselineChange / 10); // Tech reduces growth by >90%
     });
   });
 
