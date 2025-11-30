@@ -1,7 +1,7 @@
 ---
-oldest_source: 2010
+oldest_source: 2020
 newest_source: 2025
-last_verified: 2025-11-24
+last_verified: 2025-11-30
 ---
 
 # Mortality Stabilizers: Failure Conditions and Conditional Application Logic
@@ -199,14 +199,20 @@ function calculateAidEffectiveness(state: GameState): number {
 - **Values:** "Considerably lower than the widely publicized theoretical threshold of 35°C"
 - **Implication:** "Some of the most populated regions... violate this threshold well before 3°C of warming"
 
-**Source:** Sherwood & Huber (2010) + Raymond et al. (2020)
+**Source:** Raymond et al. (2020), *Science Advances* + Kenney et al. (2025), *PNAS*
 
-**Key Data:**
+**Key Data (Raymond 2020):**
 - **Historical:** Some coastal subtropical locations have already reported 35°C wet-bulb
 - **Trend:** Extreme humid heat has more than DOUBLED in frequency since 1979
 - **Future:** "Moist heat extremes will lie outside the bounds of past human experience"
 
-**Implication:** Physiological adaptation FAILS at 26-31°C wet-bulb (NOT 35°C), severely limiting adaptation in moist tropics.
+**Key Data (Kenney et al. 2025 - Validation Study):**
+- **Experiment:** Participants exposed to Twb ~33.7°C (above inflection point) for up to 9 hours
+- **Result:** Core temperature rose continuously, heat stroke temperatures (40.2°C) projected within 10 hours
+- **Lower threshold validation:** Critical wet-bulb temperatures ranged from 25-28°C (hot-dry) and 30-31°C (warm-humid)
+- **Age effects:** Older female adults have limits ~7.2-13.1°C LOWER than theoretical 35°C in dry conditions
+
+**Implication:** Physiological adaptation FAILS at 26-31°C wet-bulb (NOT 35°C). 2025 validation confirms core temperature cannot be maintained even in young healthy subjects above ~31°C Twb, severely limiting adaptation in moist tropics.
 
 #### Economic Constraints on Infrastructure Adaptation
 
