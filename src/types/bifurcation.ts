@@ -288,6 +288,10 @@ export function initializeBifurcationState(rng: () => number): BifurcationState 
 
     technologyBreakthroughThreshold: {
       metric: 'techTreeState.deploymentProgress', // Proxy: average tech deployment
+      // [MODELING ASSUMPTION] 60% tech deployment threshold
+      // Rationale: Above majority adoption (50%), below saturation (80-90%)
+      // Sensitivity: MEDIUM confidence (0.60 ± 0.10), included in parameter sweep
+      // Related: Rogers (1962) - majority adoption, Centola et al. (2018) - 25% tipping point
       base: 0.60,
       variance: 0.05,
       location: sampleThreshold(0.60, 0.05),
