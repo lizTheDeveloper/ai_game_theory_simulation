@@ -170,40 +170,68 @@ export function applyEnergyConstrainedCleanup(
 
   // 2. Calculate concentration factor (power law scaling)
   // Research: Fennell 2024 - efficiency drops with dilution, modeled as square root penalty
-  // If tech specifies concentrationPenalty, it's designed for realistic environmental levels (groundwater)
-  // Otherwise, assume it's for concentrated waste (industrial point sources)
-  const concentrationType = (tech.minimumConcentration as any).concentrationPenalty !== undefined
-    ? 'groundwater'        // Realistic environmental levels (500 ng/L, 6 orders gap)
-    : 'concentratedWaste'; // Industrial point sources (1000 mg/L, gap = 1)
-
-  const contaminationLevel = CONTAMINATION_LEVELS[concentrationType as keyof typeof CONTAMINATION_LEVELS];
-
+  //
+  // CRITICAL FIX (Nov 30, 2025): Determine contamination level from tech design concentration
+  // - Tech designed for high concentrations (>500 mg/L): assume cleaning concentrated waste streams
+  // - Tech designed for medium concentrations (0.1-500 mg/L): assume groundwater remediation
+  // - Tech designed for low concentrations (<0.1 mg/L): assume surface water treatment
+  //
   // Convert minimum concentration from ng/L to kg/L for comparison
   const minConcentration = (tech.minimumConcentration as any).ngPerL
     ? (tech.minimumConcentration as any).ngPerL * 1e-12  // ng/L to kg/L
     : 1000 * 1e-6; // Default: 1000 mg/L = 1e-3 kg/L
 
-  const concentrationGap = assertFinite(minConcentration / contaminationLevel.typical, {
+  // Determine realistic environmental concentration based on tech design threshold
+  const minConc_mgPerL = minConcentration * 1e6;  // Convert kg/L to mg/L
+  let actualConcentration: number;
+  let contaminationType: string;
+
+  if (minConc_mgPerL >= 500) {
+    // Tech designed for concentrated industrial effluent (>500 mg/L threshold)
+    // Realistic: Industrial point sources at ~1000 mg/L (close to design concentration)
+    actualConcentration = 1.0 * 1e-3;  // 1000 mg/L in kg/L
+    contaminationType = 'concentratedWaste';
+  } else if (minConc_mgPerL >= 0.1) {
+    // Tech designed for groundwater/wastewater (0.1-500 mg/L threshold)
+    // Realistic: Contaminated groundwater at ~0.5 mg/L (500 ng/L)
+    actualConcentration = 500e-12;  // 500 ng/L in kg/L
+    contaminationType = 'groundwater';
+  } else {
+    // Tech designed for surface water (<0.1 mg/L threshold)
+    // Realistic: Surface water at ~0.0001 mg/L (100 ng/L)
+    actualConcentration = 100e-12;  // 100 ng/L in kg/L
+    contaminationType = 'surfaceWater';
+  }
+
+  const concentrationGap = assertFinite(minConcentration / actualConcentration, {
     location: 'applyEnergyConstrainedCleanup',
     valueName: 'concentrationGap',
     month: state.currentMonth,
     additionalInfo: {
       techId: tech.id,
       minConcentration,
-      contaminationLevel: contaminationLevel.typical,
+      minConc_mgPerL,
+      actualConcentration,
+      contaminationType,
     },
   });
 
-  // Power law scaling: effectiveness ∝ 1/√(gap), capped at 1.0
-  // gap = 1 (at design concentration): 100% effectiveness
+  // Power law scaling: effectiveness ∝ 1/√(gap)
+  // gap ≤ 1 (waste at/above design concentration): 100% effectiveness (no penalty)
   // gap > 1 (waste dilute): reduced effectiveness (square root penalty)
-  // gap < 1 (waste concentrated): 100% effectiveness (capped, already optimal)
   // At 1 order of magnitude gap: 32% effectiveness
   // At 2 orders: 10% effectiveness
   // At 6 orders (groundwater): 0.1% effectiveness
   // At 9 orders (rainwater): 0.003% effectiveness
+  //
+  // CRITICAL FIX (Nov 30, 2025): Don't apply power law when gap ≤ 1
+  // Bug: Math.pow(1/0.5, 0.5) = 1.414, producing >100% effectiveness
+  const rawConcentrationFactor = concentrationGap <= 1
+    ? 1.0  // Already at/above design concentration - full effectiveness
+    : Math.pow(1 / concentrationGap, 0.5);  // Diluted - apply square root penalty
+
   const concentrationFactor = assertInRange(
-    Math.min(1.0, Math.pow(1 / concentrationGap, 0.5)),
+    rawConcentrationFactor,
     0,
     1,
     {
@@ -213,7 +241,7 @@ export function applyEnergyConstrainedCleanup(
       additionalInfo: {
         techId: tech.id,
         concentrationGap,
-        rawValue: Math.pow(1 / concentrationGap, 0.5),
+        rawValue: rawConcentrationFactor,
       },
     }
   );
