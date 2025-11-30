@@ -369,7 +369,7 @@ export function applyAllTechEffects(
 
       // HIGH-4 (Nov 29, 2025): Regime-based feedback loops
       // Any collapse regime reduces tech effectiveness via institutional breakdown
-      // Research: Scheffer et al. (2024) - regime shifts disrupt implementation capacity
+      // Research: Scheffer et al. (2014) - regime shifts disrupt implementation capacity
       const regimeMultiplier = (gameState.bifurcationState?.currentRegime === 'ecological-collapse' ||
                                 gameState.bifurcationState?.currentRegime === 'social-breakdown' ||
                                 gameState.bifurcationState?.currentRegime === 'economic-collapse') ? 0.7 : 1.0;

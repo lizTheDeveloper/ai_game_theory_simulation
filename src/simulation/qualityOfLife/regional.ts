@@ -471,7 +471,7 @@ export function calculateRegionalInequality(
 
   // HIGH-4 (Nov 29, 2025): Regime-based feedback loops
   // Economic-collapse regime amplifies inequality via resource hoarding
-  // Research: Scheffer et al. (2024) - regime shifts create self-reinforcing dynamics
+  // Research: Scheffer et al. (2014) - regime shifts create self-reinforcing dynamics
   const regimeMultiplier = state.bifurcationState?.currentRegime === 'economic-collapse' ? 1.5 : 1.0;
 
   // Calculate Gini coefficient

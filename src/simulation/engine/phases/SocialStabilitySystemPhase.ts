@@ -113,7 +113,7 @@ function executeSocialCohesionUpdate(state: GameState, rng: RNGFunction): GameEv
 
   // HIGH-4 (Nov 29, 2025): Regime-based feedback loops
   // Social-breakdown regime accelerates decay via positive feedbacks
-  // Research: Scheffer et al. (2024) - regime shifts create self-reinforcing dynamics
+  // Research: Scheffer et al. (2014) - regime shifts create self-reinforcing dynamics
   const regimeMultiplier = state.bifurcationState?.currentRegime === 'social-breakdown' ? 1.5 : 1.0;
 
   // Social Trust Update

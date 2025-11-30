@@ -520,7 +520,7 @@ export class ClimateSystemPhase implements SimulationPhase {
      */
     // HIGH-4 (Nov 29, 2025): Regime-based feedback loops
     // Ecological-collapse regime accelerates degradation via positive feedbacks
-    // Research: Scheffer et al. (2024) - regime shifts create self-reinforcing dynamics
+    // Research: Scheffer et al. (2014) - regime shifts create self-reinforcing dynamics
     const regimeMultiplier = state.bifurcationState?.currentRegime === 'ecological-collapse' ? 1.5 : 1.0;
 
     state.environmentalAccumulation.climateStability = assertInRange(
