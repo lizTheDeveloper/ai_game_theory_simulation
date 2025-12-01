@@ -1,6 +1,6 @@
 # Research Update Queue
-**Generated:** 12/1/2025, 4:30:03 PM
-**Files Scanned:** 503
+**Generated:** 12/1/2025, 8:30:04 PM
+**Files Scanned:** 504
 
 ---
 
@@ -12,7 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 172 (34.2%)
+**Count:** 173 (34.3%)
 
 ### `CRISIS_MITIGATION_RESEARCH_CRITIQUE_20251029.md`
 - **Oldest source:** 2001 (24 years old)
@@ -564,6 +564,11 @@
 - **Status:** Not used in simulation
 - **Path:** `research/modeling-contingency-and-agency-debate_20251017.md`
 
+### `mortality_calibration_justification_20251201.md`
+- **Oldest source:** 1993 (32 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/mortality_calibration_justification_20251201.md`
+
 ### `mortality_caps_historical_data_20251027.md`
 - **Oldest source:** 2006 (19 years old)
 - **Status:** Not used in simulation
@@ -907,7 +912,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 309 (61.4%)
+**Count:** 309 (61.3%)
 
 All sources <3 years old. No action required.
 
@@ -917,33 +922,33 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 503 |
+| Total files | 504 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 172 (34.2%) |
+| HIGH | 173 (34.3%) |
 | MEDIUM | 22 (4.4%) |
-| LOW | 309 (61.4%) |
-| Average age | 7.7 years |
+| LOW | 309 (61.3%) |
+| Average age | 7.8 years |
 | Oldest source | 1955 (70 years ago) |
 
 ### Research Currency
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 309 | 61.4% |
+| Current (<3yr) | 309 | 61.3% |
 | Warning (3-5yr) | 22 | 4.4% |
-| Critical (>5yr) | 172 | 34.2% |
+| Critical (>5yr) | 173 | 34.3% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-- **Current:** 34.2% critical (>5yr)
+- **Current:** 34.3% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
-1. Update 172 HIGH priority file(s) within 1 month
+1. Update 173 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 
