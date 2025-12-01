@@ -3265,3 +3265,43 @@ Then proceed with phase consolidation implementation.
 - ✅ HIGH-6: Assertion coverage 97.2% achieved (4 bugs found/fixed during expansion)
 - 🟡 CRITICAL-4: Defensive coding Phase 1 complete (hot paths fixed, ~90 files remain for audit)
 - 🟠 HIGH-5: Research integrity ongoing (peer-review gates, source labeling)
+
+---
+
+## 🔵 LOW Priority Items
+
+**Status:** 1 active LOW item (created Dec 1, 2025)
+
+**L-1: Bifurcation Threshold Validation & Calibration** 📊
+- **Status:** 🟡 RESEARCH COMPLETE, EXECUTION DEFERRED
+- **Priority:** LOW (model refinement, not blocking)
+- **Effort:** 4-6 hours (sweep execution + analysis + parameter update)
+- **Problem:** Current bifurcation threshold (58%) is 3-6× HIGHER than empirical research
+  - **Empirical range:** 5-25% adoption triggers S-curve tipping point (Rogers 1962, Centola 2018)
+  - **Critical mass:** 10-20% most commonly cited
+  - **Current value:** 58% (HIGH end, potentially too conservative)
+- **Research Foundation:** ✅ COMPLETE
+  - Research document: `research/technology_bifurcation_threshold_validation_20251130.md`
+  - Contemporary evidence: EV adoption (5%), crypto (10-15%), AI (10-15%)
+  - Bass diffusion parameters validated
+  - Recommendation: Parameterize with uncertainty range 10-25%
+- **Implementation Scripts:** ✅ READY
+  - `scripts/bifurcationThresholdSweep.ts` (verbose)
+  - `scripts/bifurcationThresholdSweepMinimal.ts` (token-efficient)
+  - Experiment: 6 thresholds (0.10-0.60) × N=10 runs = 60 simulations
+- **Blocker:** Excessive console output (warnings overwhelming logs)
+  - Sweep produces gigabytes of warning messages
+  - Needs console.warn suppression or filtering
+  - Token conservation mode makes this lower priority
+- **Impact:** Model calibration - better alignment with empirical adoption curves
+- **Risk:** LOW - current 58% is defensible (conservative), just not optimal
+- **Next Steps:**
+  1. Suppress console.warn during simulation runs (modify SimulationEngine or script)
+  2. Execute parameter sweep (N=60, ~10-15 minutes runtime)
+  3. Analyze outcome sensitivity to threshold value
+  4. Update bifurcationThreshold with empirically justified value (likely 0.15-0.25)
+  5. Document parameter change with research justification
+- **Assignee:** Priya (quantitative analysis) + Roy (parameter update)
+- **Dependencies:** None (can run anytime)
+- **Recommendation:** Execute AFTER token budget restored OR during low-priority maintenance window
+
