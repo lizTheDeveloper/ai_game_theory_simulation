@@ -369,7 +369,8 @@ export function applyAllTechEffects(
 
       // HIGH-4 (Nov 29, 2025): Regime-based feedback loops
       // Any collapse regime reduces tech effectiveness via institutional breakdown
-      // Research: Scheffer et al. (2014) - regime shifts disrupt implementation capacity
+      // Research mechanism: Scheffer et al. (2014) - regime shifts disrupt implementation capacity via positive feedbacks
+      // Magnitude calibrated: Nov 13 god mode outcomes (0.7 produces realistic deployment constraints)
       // M-3 (Nov 30, 2025): Configurable via parameter sweep (baseline 0.7, range [0.5, 0.9])
       const collapseMultiplier = gameState.simulationConfig?.collapseRegimeMultiplier ?? 0.7;
       const regimeMultiplier = (gameState.bifurcationState?.currentRegime === 'ecological-collapse' ||
