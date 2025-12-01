@@ -26,6 +26,7 @@ import type { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction
 import type { BifurcationThreshold, RegimeType } from '@/types/bifurcation';
 import { assertFinite, assertInRange, assertStateProperty, assertDefined } from '@/simulation/utils/assertions';
 import { TOTAL_TECH_COUNT } from '@/simulation/techTree/comprehensiveTechTree';
+import { simLog } from '@/simulation/utils/logger';
 
 export class BifurcationLogicPhase implements SimulationPhase {
   readonly id = 'bifurcation-logic';
@@ -91,7 +92,7 @@ export class BifurcationLogicPhase implements SimulationPhase {
     // CRITICAL-1 FIX: Validate ALL inputs before calculation to catch NaN propagation early
     // Each input must be finite AND non-negative (except pollutionLevel which must be [0,1])
     // HINDCAST DIAGNOSTIC: Add detailed logging for months 140-150 (year 2002 crash window)
-    if (state.currentMonth >= 140 && state.currentMonth <= 150) {
+    if (!simLog.isQuiet() && state.currentMonth >= 140 && state.currentMonth <= 150) {
       console.log(`\n🔍 HINDCAST DIAGNOSTIC Month ${state.currentMonth}:`);
       console.log(`  climateStability: ${climateStability} (${typeof climateStability})`);
       console.log(`  biodiversityIndex: ${biodiversityIndex} (${typeof biodiversityIndex})`);
@@ -186,7 +187,7 @@ export class BifurcationLogicPhase implements SimulationPhase {
     });
 
     // DEBUG (Nov 28, 2025): Log environmental health at Month 1 to diagnose 0.000 bug
-    if (state.currentMonth === 1) {
+    if (!simLog.isQuiet() && state.currentMonth === 1) {
       console.log(`🔍 MONTH 1 ENV HEALTH DEBUG:`);
       console.log(`   climateStability: ${climateStabilityValid.toFixed(4)}`);
       console.log(`   biodiversityIndex: ${biodiversityIndexValid.toFixed(4)}`);
@@ -485,9 +486,9 @@ export class BifurcationLogicPhase implements SimulationPhase {
         if (timeSeries.length > maxLength) {
           // Log on first trim only (prevent log spam)
           if (!bifState.metrics._rollingWindowLogged) {
-            console.log(
-              `🔧 Bifurcation time series rolling window active at Month ${state.currentMonth} ` +
-              `(capped at ${maxLength} entries, prevents memory exhaustion)`
+            simLog.data(
+              `Bifurcation time series rolling window active at Month ${state.currentMonth}`,
+              { maxLength, purpose: 'prevents memory exhaustion' }
             );
             bifState.metrics._rollingWindowLogged = true;
           }
@@ -517,7 +518,7 @@ export class BifurcationLogicPhase implements SimulationPhase {
         bifState.metrics.totalAmplificationBySystem[nearestThresholdName] += amplificationValidated;
       } else {
         // Handle unknown system gracefully
-        console.log(`⚠️ Unknown bifurcation system: ${nearestThresholdName}, tracking as 'unknown'`);
+        simLog.warning(`Unknown bifurcation system: ${nearestThresholdName}, tracking as 'unknown'`);
         if (!bifState.metrics.totalAmplificationBySystem['unknown']) {
           bifState.metrics.totalAmplificationBySystem['unknown'] = 0;
         }
@@ -572,7 +573,7 @@ export class BifurcationLogicPhase implements SimulationPhase {
     const multiplier = multipliers[thresholdName];
 
     if (multiplier === undefined) {
-      console.log(`⚠️ Unknown threshold name in bifurcation multiplier: ${thresholdName}, defaulting to 2.0`);
+      simLog.warning(`Unknown threshold name in bifurcation multiplier: ${thresholdName}, defaulting to 2.0`);
       return 2.0; // Generic default if threshold type not recognized
     }
 
@@ -614,11 +615,13 @@ export class BifurcationLogicPhase implements SimulationPhase {
         // Update current regime to threshold's regime
         bifState.currentRegime = threshold.regime;
 
-        console.log(
-          `🔀 BIFURCATION: ${name} threshold crossed at Month ${state.currentMonth} ` +
-          `(value: ${currentValue.toFixed(3)}, threshold: ${threshold.location.toFixed(3)}, ` +
-          `regime: ${threshold.regime})`
-        );
+        if (!simLog.isQuiet()) {
+          console.log(
+            `🔀 BIFURCATION: ${name} threshold crossed at Month ${state.currentMonth} ` +
+            `(value: ${currentValue.toFixed(3)}, threshold: ${threshold.location.toFixed(3)}, ` +
+            `regime: ${threshold.regime})`
+          );
+        }
       }
     }
 
@@ -720,10 +723,12 @@ export class BifurcationLogicPhase implements SimulationPhase {
         });
       }
 
-      console.log(
-        `🌀 REGIME SHIFT at Month ${state.currentMonth}: ${bifState.previousRegime} → ${bifState.currentRegime} ` +
-        `(variance amplification: ${bifState.varianceAmplification.toFixed(2)}×)`
-      );
+      if (!simLog.isQuiet()) {
+        console.log(
+          `🌀 REGIME SHIFT at Month ${state.currentMonth}: ${bifState.previousRegime} → ${bifState.currentRegime} ` +
+          `(variance amplification: ${bifState.varianceAmplification.toFixed(2)}×)`
+        );
+      }
 
       // Create event for regime shift
       events.push({
