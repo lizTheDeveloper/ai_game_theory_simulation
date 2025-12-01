@@ -2491,6 +2491,38 @@ This section documents **critical parameter uncertainty findings** identified du
 
 **For the complete changelog, see [RECENT_CHANGES.md](./RECENT_CHANGES.md)**
 
+**December 1, 2025 - Physical Constraints Validation (L-1)**
+
+**Achievement:** Development-mode validation tooling catches physically impossible states before they cascade through simulation.
+
+**Implementation:**
+- Created `src/simulation/utils/physicalConstraints.ts` with domain-specific validators:
+  - `assertPhysicalClimate()`: CO2 (280-1000 ppm), temp (-2 to +8°C), methane (700-5000 ppb), ocean pH (7.0-8.5)
+  - `assertPhysicalPopulation()`: Population (0-20B), birth/death rates (0-10%)
+  - `assertPhysicalEnergy()`: Energy production bounds, deployment percentages (0-100%)
+  - `assertPhysicalFood()`: Regional food security (0-100)
+  - `validatePhysicalConstraints()`: Master validation function
+- Integrated into PhaseOrchestrator (development mode only, zero production overhead)
+- Added to Monte Carlo validation (logs violations without halting analysis)
+- Comprehensive test coverage (472 lines, boundary value tests)
+
+**Research Basis:**
+- CO2 bounds: IPCC AR6 paleoclimate records (280 ppm pre-industrial → 1000 ppm runaway greenhouse)
+- Temperature: Ice age minimum (-2°C) to Venus scenario (+8°C)
+- Ocean pH: Extreme acidification (7.0) to pre-industrial (8.5)
+- Population: Zero extinction floor to 20B maximum plausibility
+- Food security: Regional scale (0-100 index)
+
+**Rationale:** Complements assertion utilities (NaN/undefined detection) with physics-aware validation. Catches bugs like negative populations, 2000 ppm CO2, or 150% food security before they propagate through dozens of phases.
+
+**Impact:** Development safety net for catching impossible states early, especially during parameter sweeps and new feature development.
+
+**Files:** `src/simulation/utils/physicalConstraints.ts`, `tests/simulation/utils/physicalConstraints.test.ts`, `src/simulation/engine/PhaseOrchestrator.ts`, `scripts/monteCarloSimulation.ts`
+
+**Archive:** `plans/completed/l1_physical_constraints_validation_20251201.md`
+
+---
+
 **November 30, 2025 - Parameter Sweep Infrastructure (M-3)**
 
 **Achievement:** Latin Hypercube Sampling (LHS) infrastructure complete - 7 uncertain parameters now configurable for uncertainty quantification.
@@ -9679,6 +9711,8 @@ Paradigm scores → Public awareness → Government policy → Control systems �
 ### Assertion Utilities
 
 **Location**: `src/simulation/utils/assertions.ts`
+
+**Physical Constraints Validation** (Dec 1, 2025): Domain-specific validators in `src/simulation/utils/physicalConstraints.ts` complement assertion utilities with physics-aware bounds checking. Integrated into PhaseOrchestrator (dev mode) and Monte Carlo validation. See [Recent Changes](#recent-changes) for details.
 
 **Core Functions:**
 
