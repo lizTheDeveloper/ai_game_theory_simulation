@@ -9,7 +9,13 @@ export interface GlobalMetrics {
   qualityOfLife: number; // [0,∞) Key discriminator between outcomes
   informationIntegrity: number; // [0,1] Truth vs noise ratio
   trustInAI: number; // [0,1] Public trust in AI technology (used by breakthrough technologies)
-  population?: number; // [0,∞) Current population in billions (convenience accessor for state.humanPopulationSystem.population)
+
+  /**
+   * @deprecated This field is NOT synced after initialization. ALWAYS use humanPopulationSystem.population instead.
+   * This field is written during initialization for legacy compatibility only.
+   * See: Nov 2025 god mode NaN bug - reading from wrong population field caused silent failure.
+   */
+  population?: number; // [0,∞) DEPRECATED - Use humanPopulationSystem.population
 
   // FIX #2A (Oct 19, 2025): AI Performance tracking for evidence-based trust model
   // Research: U Melbourne + KPMG (2025), Edelman (2024), DORA (2024)
