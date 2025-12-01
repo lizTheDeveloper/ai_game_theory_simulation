@@ -158,6 +158,9 @@ function applyNuclearWarShock(state: GameState, rng: RNGFunction): GameEvent[] {
   if (state.planetaryBoundariesSystem?.boundaries) {
     const boundaries = state.planetaryBoundariesSystem.boundaries;
     if (boundaries.climate_change) {
+      // CRITICAL-1 FIX (Dec 1, 2025): climate_change.currentValue is TEMPERATURE (°C), not probability
+      // Nuclear winter: ~0.5°C cooling initially, then heating from CO2/smoke effects
+      // Research: Robock et al. (2007) - nuclear winter temperature perturbations
       const climateDelta = assertShockMagnitude(0.5, {
         location: 'applyNuclearWarShock',
         valueName: 'climateDelta',
@@ -165,11 +168,12 @@ function applyNuclearWarShock(state: GameState, rng: RNGFunction): GameEvent[] {
         shockType: 'nuclear_war'
       });
 
-      boundaries.climate_change.currentValue = assertProbability(
-        Math.min(1.0, boundaries.climate_change.currentValue + climateDelta),
+      // Use assertFinite (NOT assertProbability - temperature can exceed 1.0°C!)
+      boundaries.climate_change.currentValue = assertFinite(
+        boundaries.climate_change.currentValue + climateDelta,
         {
           location: 'applyNuclearWarShock',
-          valueName: 'climate_change.currentValue',
+          valueName: 'climate_change.currentValue (temperature in °C)',
           month: state.currentMonth
         }
       );
@@ -447,6 +451,9 @@ function applyAsteroidImpactShock(state: GameState, rng: RNGFunction): GameEvent
   if (state.planetaryBoundariesSystem?.boundaries) {
     const boundaries = state.planetaryBoundariesSystem.boundaries;
     if (boundaries.climate_change) {
+      // CRITICAL-1 FIX (Dec 1, 2025): climate_change.currentValue is TEMPERATURE (°C), not probability
+      // Asteroid impact: cooling from dust/ejecta, warming from wildfires/greenhouse
+      // Research: Toon et al. (2016) - impact winter temperature perturbations
       const climateDelta = assertShockMagnitude(impactSize * 0.4, {
         location: 'applyAsteroidImpactShock',
         valueName: 'climateDelta',
@@ -454,11 +461,12 @@ function applyAsteroidImpactShock(state: GameState, rng: RNGFunction): GameEvent
         shockType: 'asteroid_impact'
       });
 
-      boundaries.climate_change.currentValue = assertProbability(
-        Math.min(1.0, boundaries.climate_change.currentValue + climateDelta),
+      // Use assertFinite (NOT assertProbability - temperature can exceed 1.0°C!)
+      boundaries.climate_change.currentValue = assertFinite(
+        boundaries.climate_change.currentValue + climateDelta,
         {
           location: 'applyAsteroidImpactShock',
-          valueName: 'climate_change.currentValue',
+          valueName: 'climate_change.currentValue (temperature in °C)',
           month: state.currentMonth
         }
       );

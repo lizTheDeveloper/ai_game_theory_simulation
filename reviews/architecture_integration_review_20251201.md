@@ -1,153 +1,125 @@
 # Architecture Integration Review - December 1, 2025
 
-**Review Type:** 30-day integration review (fallback workflow #1)
-**Reviewer:** Architecture Skeptic (Opus 4.5)
-**Grade:** B+ (upgrade from D on Nov 30 after fixes)
-**Session:** 2 (follow-up validation)
+**Reviewer:** Architecture Skeptic
+**Grade:** B-
+**Period:** Nov 24 - Dec 1, 2025 (46 commits analyzed)
 
-## Executive Summary
+## Summary
 
-System healthy. Tests pass with 81.64% coverage. Recent regime multiplier implementation (HIGH-4, M-3) is well-integrated with proper parameter injection. No CRITICAL issues. Previous CRITICAL regressions (missing boundary properties) have been resolved.
-
-## Recent Commits Reviewed
-
-| Commit | Feature | Integration Status |
-|--------|---------|-------------------|
-| 77510ed6 | M-3: Parameter injection (7 params) | CLEAN - All consumers verified |
-| a41f65fe | HIGH-4: Tech bifurcation fix | CLEAN - Uses deployed vs unlocked |
-| 3caab24a | HIGH-2: Carbon sink calibration | CLEAN - 2010 endpoint corrected |
-| 4afa5f1a | M-2: Assertion migration | CLEAN - diplomaticAI.ts fixed |
-| de2dc90, bc83b68, 6fd0d5b | VM scripts | CLEAN - User detection fixed |
+TypeScript passes with 0 errors. **3 test failures detected** in population-dynamics.test.ts. The failures stem from a CRITICAL semantic conflict in the `climate_change.currentValue` field - different parts of the codebase interpret this as either **degrees Celsius** (0-6+ range) or **probability/percentage** (0-1 range).
 
 ## CRITICAL ISSUES
 
-**None.**
+### CRITICAL-1: Semantic Conflict in climate_change.currentValue
+
+**Location:** Multiple files
+**Impact:** Test failures, potential runtime crashes in production simulations
+
+The `planetaryBoundariesSystem.boundaries.climate_change.currentValue` field has conflicting semantics:
+
+**As Degrees Celsius (correct for hindcasting):**
+- `src/simulation/historicalInitialization.ts:214` - Sets to `tempVsPreindustrial` (e.g., 1.15C for 1990)
+- `src/simulation/planetaryBoundaries.ts:644-662` - `getGlobalTemperatureIncrease()` returns it as degrees
+- `src/simulation/extremeWeatherEvents.ts:77` - Validates with `assertInRange(globalTempIncrease, 0, 6, ...)` (6C = 6 degrees max)
+
+**As Probability (0-1 range):**
+- `src/simulation/engine/phases/ExogenousShockPhase.ts:168` - Uses `assertProbability()` and caps at 1.0
+- `src/simulation/engine/phases/ExogenousShockPhase.ts:457` - Same issue for asteroid impacts
+- `src/simulation/initialization.ts:1746` - Checks `>= 1.0` as "breached" threshold
+
+**Root Cause:**
+When running a 10-year hindcast from 1990, the climate simulation accelerates warming beyond 6C (error message shows `globalTempIncrease = 6.32702585798502`). This triggers the assertion failure in `calculateCategoryDistribution()`.
+
+**Evidence:**
+```
+Error: Out-of-range value in calculateCategoryDistribution
+   globalTempIncrease = 6.32702585798502
+   Valid range: [0, 6]
+   Month: 0
+```
+
+**Failing Tests:**
+1. `should maintain population stability from 1990 to 2000`
+2. `should maintain regional-global consistency during simulation`
+3. `High pollution scenario shows cumulative mortality impact`
+
+**Resolution Options:**
+1. **Normalize** - Convert currentValue to 0-1 scale everywhere (breaking change)
+2. **Split fields** - Create separate `tempDegrees` and `tempNormalized` fields
+3. **Fix assertion bounds** - Expand `assertInRange` to allow higher values (quick fix, masks problem)
+4. **Fix climate acceleration** - Debug why hindcast mode allows 6C+ warming in 10 years (root cause)
+
+**Recommendation:** Option 4 (fix climate acceleration) - The hindcast from 1990 should not reach 6C in 10 years. Historical records show ~0.3C warming 1990-2000.
+
+---
 
 ## HIGH PRIORITY
 
-**None.**
+### HIGH-1: ExogenousShockPhase Corrupts Climate Data
+
+**Location:** `src/simulation/engine/phases/ExogenousShockPhase.ts:168-175, 457-464`
+**Impact:** Nuclear war and asteroid impacts cap climate change at 1.0 (treating it as probability)
+
+```typescript
+// This CORRUPTS climate data by treating degrees as probability
+boundaries.climate_change.currentValue = assertProbability(
+  Math.min(1.0, boundaries.climate_change.currentValue + climateDelta),
+  ...
+);
+```
+
+If `currentValue` is 1.15C (1990 pre-industrial) and a shock occurs, it gets capped to 1.0, losing climate data.
+
+**Resolution:** Use `assertFinite()` or `assertInRange(value, 0, 10, ...)` instead of `assertProbability()`.
+
+---
 
 ## MEDIUM PRIORITY
 
-### M-1: Parameter Injection Dual Definition
+### MEDIUM-1: Inconsistent Breach Detection Logic
 
-**Files:**
-- `src/simulation/initialization.ts:88` (ParameterSweepConfig)
-- `src/lib/MonteCarloManager.ts:110` (ParameterSweepConfig)
+**Location:** `src/simulation/initialization.ts:1746`
+```typescript
+boundaries.climate_change.currentValue >= 1.0 &&
+```
 
-**Issue:** Two independent ParameterSweepConfig interface definitions. Could diverge.
+This treats 1.0C warming as "breached" when it should probably be ~2.0C (Paris Agreement target) or use normalized scale.
 
-**Risk:** LOW - Current definitions are compatible. MonteCarloManager is UI layer.
+### MEDIUM-2: Comment Documents Known Bug Without Fix
 
-**Recommendation:** Consider importing simulation version in UI layer.
+**Location:** `src/simulation/utils/irreversibility.ts:62`
+```typescript
+// Bug: climate_change.currentValue can be 2.0+ (degrees Celsius), not a percentage!
+```
 
-### M-2: Regime Multiplier Consumers Limited
+This comment acknowledges the semantic conflict but no fix was applied.
 
-**Files with regime multipliers:**
-- `effectsEngine.ts:374` - collapseRegimeMultiplier (0.7 default)
-- `SocialStabilitySystemPhase.ts:118` - breakdownRegimeMultiplier (1.5 default)
-- `ClimateSystemPhase.ts:524` - hardcoded 1.5 (not configurable)
-- `qualityOfLife/regional.ts:475` - hardcoded 1.5 (not configurable)
-
-**Issue:** Only 2 of 4 regime multiplier usages are configurable via M-3.
-
-**Recommendation:** Either document intentional difference or extend M-3 to cover remaining hardcoded values.
-
-### M-3: Low Coverage - radiation.ts
-
-**Coverage:** 59.60% (lowest in codebase)
-**Status:** Existing issue, no regression
+---
 
 ## LOW PRIORITY
 
-### L-1: VM Scripts npm ci vs npm install
+None identified.
 
-**File:** `scripts/vm-blue-green-deploy.sh:60`
+---
 
-Uses `npm ci --production` which may fail if package-lock.json is out of sync. Recent commit bc83b68a fixed this in production branch.
+## Commits Analyzed
 
-**Status:** Already resolved.
+| Commit | Description | Assessment |
+|--------|-------------|------------|
+| eb3f50b7 | fix(M-4): carbonSinkMultiplier runtime overwrite | OK |
+| 77510ed6 | feat(m3): Parameter injection system complete | OK |
+| c855fb60 | HIGH-4: Regime-based feedback multipliers | OK |
+| 03aee11f | fix(CRITICAL-1): Add missing recoveryHalfLife | OK |
+| f0330078 | fix(CRITICAL-1): Prevent ClimateSystemPhase zeroing | OK |
 
-## State Propagation Analysis
+Most commits show good practices. The issue is **pre-existing** - the semantic conflict in `climate_change.currentValue` has been latent for some time and is now surfacing in hindcast validation.
 
-### Bifurcation State Flow (Verified)
-```
-BifurcationLogicPhase calculates proximities
-  -> Uses deployedTechMap.length (HIGH-4 fix)
-  -> Writes state.bifurcationState.currentRegime
-  -> Consumed by:
-     - effectsEngine.ts (collapseRegimeMultiplier)
-     - SocialStabilitySystemPhase.ts (breakdownRegimeMultiplier)
-     - ClimateSystemPhase.ts (hardcoded 1.5)
-     - EmergencyResponsePhase.ts (regime-specific responses)
-     - outcomes.ts (final outcome classification)
-```
+---
 
-**No gaps detected.** Regime state properly propagates to all consumers.
+## Recommendation
 
-### Parameter Injection Flow (Verified)
-```
-createInitialState(parameterSweepConfig)
-  -> climateSensitivity -> thresholds.climateSensitivity
-     -> environmental.ts:276 (consumed)
-  -> carbonSinkMultiplier -> landUse.carbonSinkLossMultiplier
-     -> planetaryBoundaries.ts (consumed)
-  -> aiCoordinationStress -> transitionManagementSystem
-     -> (consumed by coordination calculations)
-  -> techAdoptionSteepness -> all 5 adoption rates
-     -> (consumed by adoption calculations)
-  -> bifurcationThreshold -> bifurcationState.location
-     -> BifurcationLogicPhase.ts:340 (consumed)
-  -> collapse/breakdownRegimeMultiplier -> simulationConfig
-     -> effectsEngine.ts, SocialStabilitySystemPhase.ts (consumed)
-```
+**CRITICAL-1 must be resolved before next merge.** The semantic conflict causes test failures and could produce incorrect simulation results.
 
-**All 7 M-3 parameters properly wired.**
+**Immediate action:** Fix the climate acceleration in hindcast mode so 1990-2000 produces realistic ~0.3-0.5C warming instead of 6C+.
 
-## RNG Compliance
-
-Searched `|| Math.random`, `rng ?? Math.random`, `Math.random()` in simulation code - **no violations**.
-
-## Performance Assessment
-
-### O(n^2) Patterns
-- `nationalAI/` - Uses CountryInteractionCache (mitigated)
-- Nested iteration on bounded collections (AI agents ~20, boundaries ~9)
-
-**No unbounded O(n^2) issues detected.**
-
-### Deep Cloning
-- `structuredClone` used sparingly (history snapshots only)
-- Optimized shallow clone utilities in use
-- Comment in `cloning.ts` documents performance rationale
-
-## Verification
-
-```
-TypeScript: PASS (0 errors)
-Tests: PASS (459 tests)
-Coverage: 81.64%
-Silent Fallbacks: None in core simulation (LLM boundary exceptions documented)
-RNG Compliance: PASS
-State Propagation: PASS
-```
-
-## Recommendations
-
-1. **No immediate action required**
-2. **Consider extending regime multipliers** to cover hardcoded values in ClimateSystemPhase and regional.ts (MEDIUM priority)
-3. **Monitor radiation.ts coverage** in future maintenance windows
-
-## Grade Justification
-
-**B+** - System healthy, recent integrations clean, no critical or high issues. Minor technical debt items (M-1, M-2) do not impact stability. Downgraded from A- due to hardcoded regime multipliers in 2 of 4 locations.
-
-## Session 2 Validation (Dec 1, 04:00 UTC)
-
-Confirmed:
-- Tests passing (81.64% coverage)
-- 174 assertions across 20 phase files
-- Bifurcation state properly consumed by 10 files
-- No O(n^2) patterns detected
-- Deep cloning optimized via cloneAICapabilityProfile()
-- Parameter sweep infrastructure complete (7 parameters)
+**Follow-up:** Audit all uses of `climate_change.currentValue` and establish single semantic (recommend degrees Celsius, 0-10 range).
