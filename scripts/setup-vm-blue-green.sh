@@ -101,20 +101,20 @@ log "Building as user: $ACTUAL_USER"
 log "Building blue service..."
 cd "$SATU_DIR/production-blue"
 if [ "$ACTUAL_USER" != "root" ] && [ -n "$SUDO_USER" ]; then
-    sudo -u "$ACTUAL_USER" npm ci --production
+    sudo -u "$ACTUAL_USER" npm install --omit=dev
     sudo -u "$ACTUAL_USER" npm run build
 else
-    npm ci --production
+    npm install --omit=dev
     npm run build
 fi
 
 log "Building green service..."
 cd "$SATU_DIR/production-green"
 if [ "$ACTUAL_USER" != "root" ] && [ -n "$SUDO_USER" ]; then
-    sudo -u "$ACTUAL_USER" npm ci --production
+    sudo -u "$ACTUAL_USER" npm install --omit=dev
     sudo -u "$ACTUAL_USER" npm run build
 else
-    npm ci --production
+    npm install --omit=dev
     npm run build
 fi
 
