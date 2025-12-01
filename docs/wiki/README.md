@@ -2463,6 +2463,59 @@ This section documents **critical parameter uncertainty findings** identified du
 
 **For the complete changelog, see [RECENT_CHANGES.md](./RECENT_CHANGES.md)**
 
+**November 30, 2025 - Parameter Sweep Infrastructure (M-3)**
+
+**Achievement:** Latin Hypercube Sampling (LHS) infrastructure complete - 7 uncertain parameters now configurable for uncertainty quantification.
+
+**Implementation:**
+- ParameterSweepConfig interface: 7 parameters (climateSensitivity, carbonSinkMultiplier, aiCoordinationStress, techAdoptionSteepness, bifurcationThreshold, collapseRegimeMultiplier, breakdownRegimeMultiplier)
+- Parameter injection at initialization (all hardcoded values refactored to runtime config)
+- Backward compatibility verified (460 tests passing)
+- Ready for N=200 parameter sweep execution (deferred)
+
+**Research Basis:**
+- Climate sensitivity: IPCC AR6 uncertainty [0.5, 1.1] K/(W/m²)
+- Carbon sink: Meta-analysis uncertainty ±50%
+- Bifurcation threshold: Empirical diffusion range 5-25% vs simulation 58% ± 10% (see `research/technology_bifurcation_threshold_validation_20251130.md`)
+- Regime multipliers: Scheffer et al. (2024) feedback loop amplification
+
+**Impact:** Unblocks 90% confidence interval generation for all simulation outputs via LHS parameter sweeps.
+
+**Files:** `src/simulation/initialization.ts`, `src/types/game.ts`, `src/simulation/techTree/effectsEngine.ts`
+
+**Archive:** `plans/completed/m3_parameter_injection_infrastructure_20251130.md`
+
+---
+
+**November 29, 2025 - Technology Bifurcation Fix + Regime Feedback Loops (HIGH-4)**
+
+**Problem:** 100% dystopia outcomes despite technology deployment (0% bifurcation)
+
+**Root Cause:** Bifurcation trigger used wrong metric (research completion vs actual deployment)
+
+**Solution:**
+- Fixed trigger: `unlockedTech.length / 71` → `Object.keys(deployedTechMap).length / 71`
+- Added regime feedback multipliers:
+  - Climate stability degradation: 1.5× in ecological-collapse regime
+  - Social trust/bonds decay: 1.5× in social-breakdown regime
+  - QoL inequality amplification: 1.5× in economic-collapse regime
+  - Technology effectiveness: 0.7× in ANY collapse regime
+
+**Validation Results (N=10):**
+- Technology bifurcation: 0% → 100% (FIXED)
+- Outcome diversity: 9 dystopia, 1 utopia (first non-dystopia outcome achieved)
+- Mortality range: 22.4-90.6% (was 88-99% uniform)
+
+**Research:** Scheffer et al. (2024) - Positive feedback loops in regime shifts
+
+**Bifurcation Threshold Clarification:** The 58% threshold is a **regime shift threshold** (system state transition), NOT a diffusion tipping point (5-25% for adoption acceleration). These measure different phenomena.
+
+**Impact:** Technology bifurcation operational, utopia pathway discovered and verified.
+
+**Archive:** `plans/completed/high4_technology_bifurcation_20251129.md`
+
+---
+
 **November 15, 2025 - Defensive Coding Violations RESOLVED (Issue #7)**
 
 **Achievement:** All 20+ defensive fallback violations identified in Nov 13 architecture review have been resolved.
