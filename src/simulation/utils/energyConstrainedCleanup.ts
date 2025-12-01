@@ -169,7 +169,15 @@ export function applyEnergyConstrainedCleanup(
   }
 
   // 2. Calculate concentration factor (power law scaling)
-  // Research: Fennell 2024 - efficiency drops with dilution, modeled as square root penalty
+  //
+  // Research foundation (24 peer-reviewed sources, 2024-2025):
+  // - Thermodynamic minimum work: W_min ∝ RT ln(1/x) (fundamental)
+  // - DAC: 200-3000 kWh/tonne vs 250 kWh/tonne theoretical (8-120× overhead)
+  // - Ocean cleanup: 60% effectiveness gain from targeting 1.5× concentration hotspots
+  // - PFAS destruction: Demonstrated at 1000+ mg/L, environmental levels at ng-pg/L (6-9 orders lower)
+  // - Square root scaling (exponent 0.5): Grade B+ validation, conservative approximation
+  //
+  // @see research/cleanup_effectiveness_concentration_scaling_20251201.md (24 sources)
   //
   // CRITICAL FIX (Nov 30, 2025): Determine contamination level from tech design concentration
   // - Tech designed for high concentrations (>500 mg/L): assume cleaning concentrated waste streams
@@ -217,15 +225,19 @@ export function applyEnergyConstrainedCleanup(
   });
 
   // Power law scaling: effectiveness ∝ 1/√(gap)
-  // gap ≤ 1 (waste at/above design concentration): 100% effectiveness (no penalty)
-  // gap > 1 (waste dilute): reduced effectiveness (square root penalty)
-  // At 1 order of magnitude gap: 32% effectiveness
-  // At 2 orders: 10% effectiveness
-  // At 6 orders (groundwater): 0.1% effectiveness
-  // At 9 orders (rainwater): 0.003% effectiveness
+  //
+  // Calibration (from research):
+  // - gap ≤ 1 (waste at/above design concentration): 100% effectiveness (no penalty)
+  // - gap > 1 (waste dilute): reduced effectiveness (square root penalty)
+  // - At 1 order of magnitude gap (10×): 32% effectiveness
+  // - At 2 orders (100×): 10% effectiveness
+  // - At 6 orders (1e6×, groundwater PFAS): 0.1% effectiveness
+  // - At 9 orders (1e9×, rainwater PFAS): 0.003% effectiveness
   //
   // CRITICAL FIX (Nov 30, 2025): Don't apply power law when gap ≤ 1
-  // Bug: Math.pow(1/0.5, 0.5) = 1.414, producing >100% effectiveness
+  // Bug context: Math.pow(1/0.5, 0.5) = 1.414, producing >100% effectiveness
+  // This violated thermodynamics - concentrated waste should be EASIER to clean, not harder
+  // Fix: Return 1.0 (100%) for gap ≤ 1, apply penalty only for gap > 1
   const rawConcentrationFactor = concentrationGap <= 1
     ? 1.0  // Already at/above design concentration - full effectiveness
     : Math.pow(1 / concentrationGap, 0.5);  // Diluted - apply square root penalty
