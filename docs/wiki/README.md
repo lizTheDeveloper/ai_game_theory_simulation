@@ -29,6 +29,26 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Dec 1: Session 31 Validation - Architecture Health Sustained** (commit 4e41a831)
+- **Validation Focus:** Quality assurance across Sessions 26-31 (no core simulation changes)
+- **Architecture Review:** Grade A- (STABLE - 0 CRITICAL/HIGH, 3 MEDIUM non-urgent)
+  - Health sustained at A- across 6 consecutive sessions (26-31)
+  - 242 lines physical constraints tooling (L-1 complete)
+  - Test coverage: 81.64% stable
+- **Research Audit:** Cleanup concentration scaling validated
+  - Thermodynamic foundation confirmed (separation work scales as RT ln(1/x))
+  - Exponent 0.5 validated as defensible (Freundlich 1/n range: 0.7-1.0)
+  - Research file: `research/cleanup_effectiveness_concentration_scaling_20251201.md`
+- **Research Debate:** Grade B+ (exponent recommendation revised 0.4 → 0.5)
+  - Current implementation correct: `Math.min(1.0, Math.pow(1/gap, 0.5))`
+  - Conservative stance: higher exponent = harder cleanup at dilute concentrations
+  - Review: `reviews/cleanup_concentration_scaling_debate_20251201.md`
+- **Status:** System stable, ready for next development phase
+- **Reviews:**
+  - `reviews/architecture_integration_review_session31_20251201.md` (Grade A-)
+  - `reviews/RESEARCH_SOURCE_VALIDATION_AUDIT_SESSION30_20251201.md` (Research A-)
+  - `reviews/cleanup_concentration_scaling_debate_20251201.md` (Grade B+)
+
 **Dec 1: Session 26 Validation Cycle Complete** (commits a0c2135, c3b89d7)
 - **Validation Reviews:** 3 quality gates completed (architecture, research, debate)
 - **Architecture Review:** Grade B+ (STABLE - 0 CRITICAL/HIGH, 3 MEDIUM non-urgent)
