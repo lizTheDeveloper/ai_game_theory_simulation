@@ -1789,8 +1789,10 @@ export function createDefaultInitialState(
       console.log(`  climateSensitivity: ${parameterSweepConfig.climateSensitivity.toFixed(3)}`);
     }
 
-    // Carbon sink saturation
+    // Carbon sink saturation - store in simulationConfig for runtime use
     if (parameterSweepConfig.carbonSinkMultiplier !== undefined) {
+      state.simulationConfig = state.simulationConfig ?? {};
+      state.simulationConfig.carbonSinkMultiplier = parameterSweepConfig.carbonSinkMultiplier;
       state.planetaryBoundariesSystem.landUse.carbonSinkLossMultiplier = parameterSweepConfig.carbonSinkMultiplier;
       console.log(`  carbonSinkLossMultiplier: ${parameterSweepConfig.carbonSinkMultiplier.toFixed(3)}`);
     }

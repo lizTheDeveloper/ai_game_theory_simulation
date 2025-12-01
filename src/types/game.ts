@@ -221,6 +221,8 @@ export interface GameState {
     collapseRegimeMultiplier?: number;
     /** Social breakdown regime decay multiplier, baseline 1.5 */
     breakdownRegimeMultiplier?: number;
+    /** Carbon sink loss base multiplier (deforestation impact), baseline 1.0 */
+    carbonSinkMultiplier?: number;
   };
 
   /**

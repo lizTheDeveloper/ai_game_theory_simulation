@@ -1635,7 +1635,20 @@ function updateLandUseSystem(state: GameState): void {
   const weightedDeficit = tropicalDeficit * 0.60 + borealDeficit * 0.30 +
     ((regions.temperate.habitatCoverSafe - regions.temperate.habitatCoverPercent) / regions.temperate.habitatCoverSafe) * 0.10;
 
-  landUse.carbonSinkLossMultiplier = 1.0 + Math.max(0, weightedDeficit * 2.0);
+  // Use injected base multiplier (for parameter sweeps) × dynamic deforestation feedback
+  // Base multiplier allows testing carbon sink sensitivity without recalculation overwriting it
+  const baseMultiplier = assertFinite(
+    state.simulationConfig?.carbonSinkMultiplier ?? 1.0,
+    {
+      location: 'updatePlanetaryBoundaries (land use → carbon sink)',
+      valueName: 'baseMultiplier',
+      month: state.currentMonth,
+      additionalInfo: { configValue: state.simulationConfig?.carbonSinkMultiplier }
+    }
+  );
+
+  const deforestationFeedback = Math.max(0, weightedDeficit * 2.0);
+  landUse.carbonSinkLossMultiplier = baseMultiplier * (1.0 + deforestationFeedback);
 
   // Apply to climate boundary
   if (system.boundaries.climate_change) {
