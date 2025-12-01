@@ -1102,6 +1102,18 @@ if (nestedMonteCarlo) {
 
   const finalState = simulationResult.finalState;
 
+  // PHYSICAL CONSTRAINTS VALIDATION (Dec 1, 2025)
+  // Validate final state obeys physical laws (climate, population, energy, food)
+  try {
+    const { validatePhysicalConstraints } = require('../src/simulation/utils/physicalConstraints');
+    validatePhysicalConstraints(finalState, finalState.currentMonth);
+  } catch (error) {
+    logError(`\n❌ PHYSICAL CONSTRAINT VIOLATION (Run ${i + 1}, seed ${seed}):`);
+    logError(`   Month: ${finalState.currentMonth}`);
+    logError(`   ${error instanceof Error ? error.message : String(error)}`);
+    // Continue with run analysis but flag the violation
+  }
+
   // DEBUG (Oct 29, 2025): Log globalMetrics to find NaN source
   console.log(`\n🔍 DEBUG - globalMetrics (Run ${i + 1}):`);
   console.log(`   economicTransitionStage: ${finalState.globalMetrics?.economicTransitionStage}`);
@@ -2235,6 +2247,18 @@ if (nestedMonteCarlo) {
   }
 
   const finalState = simulationResult.finalState;
+
+  // PHYSICAL CONSTRAINTS VALIDATION (Dec 1, 2025)
+  // Validate final state obeys physical laws (climate, population, energy, food)
+  try {
+    const { validatePhysicalConstraints } = require('../src/simulation/utils/physicalConstraints');
+    validatePhysicalConstraints(finalState, finalState.currentMonth);
+  } catch (error) {
+    logError(`\n❌ PHYSICAL CONSTRAINT VIOLATION (Run ${i + 1}, seed ${seed}):`);
+    logError(`   Month: ${finalState.currentMonth}`);
+    logError(`   ${error instanceof Error ? error.message : String(error)}`);
+    // Continue with run analysis but flag the violation
+  }
 
   // DEBUG (Oct 29, 2025): Log globalMetrics to find NaN source
   console.log(`\n🔍 DEBUG - globalMetrics (Run ${i + 1}):`);
