@@ -18,16 +18,40 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 ## 🚀 Project Status
 
-**🟢 STABLE** (November 28, 2025)
+**🟢 STABLE** (December 1, 2025)
 
 **SYSTEM HEALTH:**
-- **Research Quality:** B+ (56.5% sources 2023-2025, 4 CRITICAL parameter issues resolved/documented, 8 research gaps identified) ✅ GOOD
-- **Research Currency:** ✅ EXCELLENT (all simulation-critical files updated within 14 days, autonomous system working effectively)
-- **Implementation Fidelity:** A- (assertion coverage 97.2%, 24 integration tests for CoordinatedDeploymentPhase) ✅ EXCELLENT
-- **Architecture Health:** B+ (0 CRITICAL, 2 HIGH technical debt non-urgent, deep clone optimization complete) ✅ GOOD
-- **System Trajectory:** 🟢 READY (Nov 26: Phase 4 Coordination Layer strategic pivot - testing coordinated deployment)
+- **Research Quality:** A- (90% sources validated, bifurcation threshold queued for empirical testing via M-3) ✅ EXCELLENT
+- **Research Currency:** ✅ EXCELLENT (all simulation-critical files updated within 14 days, autonomous system working)
+- **Implementation Fidelity:** A (M-3 parameter injection complete, M-4 runtime bug fixed, 460 tests passing) ✅ EXCELLENT
+- **Architecture Health:** A (0 CRITICAL, 0 HIGH issues, type checking clean) ✅ EXCELLENT
+- **System Trajectory:** 🟢 BREAKTHROUGH (Technology bifurcation operational, outcome diversity restored, parameter sweep ready)
 
 **Recent Major Achievements:**
+
+**Dec 1: Session 25 - Research Validation + Debate Complete** (Grade A-)
+- ✅ **Architecture Integration Review:** Grade A (0 CRITICAL, 0 HIGH issues)
+  - TypeScript: 0 errors, 460 tests passing, 81.64% coverage
+  - M-3 parameter injection validated
+  - Report: `reviews/architecture_integration_review_session25_20251201.md`
+- ✅ **Research Source Validation:** Grade A- (90% sources current/validated)
+  - Report: `reviews/research_source_validation_session25_20251201.md`
+- ✅ **Research Debate:** Grade A- (3 substantive debates)
+  - **Bifurcation threshold (0.60):** Defensible as "systemic transformation" (60% portfolio deployment) vs market adoption (5-25%). Recommendation: Test empirically via M-3 parameter sweep [0.10, 0.20, 0.30, 0.40, 0.50, 0.60]
+  - **Regime multipliers (1.5x, 0.7x):** Phenomenological, calibrated against god mode outcomes (Nov 13). Update attribution from "Scheffer 2014" (mechanism only) to "[CALIBRATED]"
+  - **Extinction debt:** Identified in Kuussaari et al. 2009 (PNAS) - "significant extinction debt exists in European butterfly/plant communities." Not currently modeled - queued as MEDIUM priority
+  - Report: `reviews/research_debate_session25_20251201.md`
+- **Follow-up Items Added:**
+  - MEDIUM: M-3 bifurcation threshold sweep, extinction debt modeling, regime multiplier documentation
+  - LOW: Regime empirical search, rebound effects (Jevons paradox), financial contagion modeling
+
+**Nov 30: Session 24 - Parameter Sweep Infrastructure Fix (M-4)** (commit aecd84d4)
+- 🔧 **M-4 COMPLETE:** carbonSinkMultiplier runtime overwrite bug fixed
+  - **Problem:** Parameter sweep sets `carbonSinkMultiplier` at init, but `planetaryBoundaries.ts` recalculated it every step, defeating sensitivity analysis
+  - **Solution:** Store injected value in `state.simulationConfig.carbonSinkMultiplier`, use as BASE multiplier, apply dynamic feedback as `base × (1 + deforestationFeedback)`
+  - **Files Modified:** `src/types/game.ts` (SimulationConfig interface), `src/simulation/initialization.ts`, `src/simulation/planetaryBoundaries.ts`
+  - **Validation:** Type checking passes, 460 tests passing, parameter injection verified (0.8, 1.0, 1.2 configs)
+- **Status:** M-4 resolved - parameter sweep infrastructure complete, ready for N=200 LHS sensitivity analysis
 
 **Nov 29-30: M-2 Assertion Migration Completion + Climate Boundary Fix** (commits 03aee11f, 0fa13ac9)
 - **M-2 Status:** RESOLVED (completed Nov 26, roadmap updated Nov 29)
@@ -6487,9 +6511,15 @@ The system tracks distance to critical thresholds across 6 domains:
    - Bifurcation Type: Positive feedback loops (rare in current literature)
 
 6. **Technology** (`capability_explosion`)
-   - Threshold: Breakthrough deployment rate
-   - Current: Tech tree unlock velocity
+   - Threshold: 0.60 (60% average technology deployment = regime shift)
+   - Current: `techTreeState.deploymentProgress` (portfolio-average deployment)
    - Bifurcation Type: Innovation spike dynamics
+   - **Rationale (Dec 2025):** Represents **systemic transformation** (infrastructure + institutions + coordination), not market adoption. Empirical diffusion thresholds (5-25% per Rogers 1962, Centola 2018) measure single-technology tipping points. Portfolio-wide regime shifts require majority deployment.
+   - **Research Basis:** `research/technology_bifurcation_threshold_validation_20251130.md`
+     - Empirical range: 5-25% for market adoption (EVs, AI, crypto)
+     - Simulation threshold: 60% (3-6× higher, conservative modeling choice)
+     - **Status:** Untested assumption - queued for M-3 parameter sweep [0.10, 0.20, 0.30, 0.40, 0.50, 0.60] to validate outcome sensitivity
+   - **Implementation:** Sampled from uniform(0.55, 0.65) per run (BifurcationLogicPhase.ts line 329)
 
 ### Variance Amplification Formula
 
@@ -6514,12 +6544,16 @@ Different systems exhibit different amplification based on their underlying bifu
 
 | System | Multiplier | Bifurcation Type | Research Basis |
 |--------|------------|------------------|----------------|
-| Environmental | 1.5× | Fold catastrophe (phenomenological calibration) | Scheffer et al. (2014) |
-| Social | 2.5× | Hopf bifurcation | Dakos et al. (2012) |
-| Economic | 2.5× | Cascade dynamics | Manda (2010), Fed (2016) - 2008 crisis |
-| Governance | 2.0× | Feedback loops | Regime change literature |
-| Flourishing | 2.0× | Positive cascades | Innovation theory (INCREASED Nov 13) |
-| Technology | 2.0× | Innovation spikes | Breakthrough dynamics (INCREASED Nov 13) |
+| Environmental | 1.5× | Fold catastrophe | **[CALIBRATED]** Nov 13 god mode (Mechanism: Scheffer 2014) |
+| Social | 2.5× | Hopf bifurcation | **[CALIBRATED]** Nov 13 god mode (Mechanism: Dakos 2012) |
+| Economic | 2.5× | Cascade dynamics | **[CALIBRATED]** Nov 13 god mode (Bounds: Manda 2010, Fed 2016 - 2008 VIX 4-5×) |
+| Governance | 2.0× | Feedback loops | **[CALIBRATED]** Nov 13 god mode |
+| Flourishing | 2.0× | Positive cascades | **[CALIBRATED]** Nov 13 god mode (INCREASED from 1.0×) |
+| Technology | 2.0× | Innovation spikes | **[CALIBRATED]** Nov 13 god mode (INCREASED from 1.0×) |
+
+**Calibration Provenance (Dec 2025):** Magnitude values are **phenomenological** - tuned against Nov 13 Monte Carlo god mode outcomes (1 utopia / 9 dystopia target distribution). Research sources provide **mechanism** (variance amplification occurs near tipping points) but NOT **magnitude** (1.5×, 2.5×, etc). Values are within empirical bounds (4-5× financial crisis baseline, 100× extinction event cap) but not directly derived from peer-reviewed sources.
+
+**Documentation Gap (Session 25):** Code comments previously suggested direct research derivation ("Scheffer et al. 2014"). Actual process: calibration against simulation outcomes. This is legitimate modeling practice but requires honest attribution.
 
 **Max Amplification:** 100× (capped) - based on Permian-Triassic extinction event (empirical upper bound from nature)
 
