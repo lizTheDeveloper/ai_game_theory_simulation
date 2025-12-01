@@ -11,13 +11,25 @@
 
 ## Executive Summary
 
-**Finding:** The simulation's 58% technology deployment threshold for bifurcation/regime shifts is **consistent with academic literature but on the HIGHER end** of empirical ranges.
+**⚠️ CLARIFICATION (Dec 1, 2025 - Research Debate Finding):**
+This document compares **regime shift thresholds** (58%) with **diffusion tipping points** (5-25%), which measure **different phenomena**:
 
-**Empirical Range:** 5-25% adoption triggers rapid growth phase in S-curve diffusion
-**Critical Mass Range:** 10-20% is most commonly cited as tipping point
-**Simulation Value:** 58% (HIGH end, may be too conservative)
+- **Diffusion Tipping Point (5-25%):** When does adoption accelerate in an S-curve? (Market dynamics)
+- **Regime Shift Threshold (58%):** When does the system enter a fundamentally new state? (System dynamics)
 
-**Recommendation:** Current 58% threshold is **defensible but high**. Consider parameterizing with uncertainty range of **10-25%** to reflect empirical variation across technology types and contexts.
+The 58% threshold is used for **regime classification** (determining which outcome trajectory the simulation follows), NOT for modeling adoption cascades. The comparison below is therefore **not directly applicable** and should be used cautiously.
+
+**Original Finding (Retained for Context):**
+The simulation's 58% technology deployment threshold for bifurcation/regime shifts is **on the HIGHER end** compared to empirical diffusion tipping points (5-25%). However, these measure different phenomena and are not directly comparable.
+
+**Empirical Range (Diffusion):** 5-25% adoption triggers rapid growth phase in S-curve diffusion
+**Critical Mass Range (Diffusion):** 10-20% is most commonly cited as tipping point for adoption acceleration
+**Simulation Value (Regime Shift):** 58% (for determining system state transitions)
+
+**Revised Recommendation:**
+1. **If modeling adoption cascades:** Use 10-25% thresholds (empirically grounded)
+2. **If classifying regime states:** Current 58% may be appropriate but lacks citation
+3. **For parameter sweep:** Include 0.58 ± 0.10 range to test sensitivity (M-3 infrastructure ready)
 
 ---
 
