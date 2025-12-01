@@ -86,19 +86,15 @@ async function runSimulation(
   const engine = new SimulationEngine();
   const initialPopulation = state.humanPopulationSystem.population;
 
-  // Suppress console logging during simulation
-  const originalLog = console.log;
-  const originalWarn = console.warn;
-  console.log = () => {};
-  console.warn = () => {};
+  // Enable quiet mode for simulation (suppresses non-critical logging)
+  process.env.SIMULATION_QUIET_MODE = 'true';
 
   while (state.currentMonth < SIMULATION_MONTHS) {
     engine.step(state, rng);
   }
 
-  // Restore logging
-  console.log = originalLog;
-  console.warn = originalWarn;
+  // Disable quiet mode after simulation
+  delete process.env.SIMULATION_QUIET_MODE;
 
   const qolAvg = Object.values(state.qualityOfLife).reduce((sum: number, tier: any) => sum + tier.score, 0) / 5;
   const mortality = 1 - (state.humanPopulationSystem.population / initialPopulation);
