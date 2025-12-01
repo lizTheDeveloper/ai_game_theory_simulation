@@ -5,7 +5,15 @@
 set -euo pipefail
 
 # Configuration
-SATU_DIR="$HOME/satu"
+# Detect actual user and their home directory (in case running with sudo)
+ACTUAL_USER="${SUDO_USER:-$(whoami)}"
+if [ "$ACTUAL_USER" != "root" ] && [ -n "$SUDO_USER" ]; then
+    ACTUAL_HOME=$(eval echo "~$ACTUAL_USER")
+else
+    ACTUAL_HOME="$HOME"
+fi
+
+SATU_DIR="$ACTUAL_HOME/satu"
 REPO_URL="https://github.com/lizTheDeveloper/ai_game_theory_simulation.git"
 BRANCH="production"
 
@@ -94,9 +102,7 @@ log "✅ Repositories cloned"
 # Install dependencies and build
 header "Building Applications"
 
-# Detect actual user (in case running with sudo)
-ACTUAL_USER="${SUDO_USER:-$(whoami)}"
-log "Building as user: $ACTUAL_USER"
+log "Building as user: $ACTUAL_USER (home: $ACTUAL_HOME)"
 
 log "Building blue service..."
 cd "$SATU_DIR/production-blue"
@@ -223,7 +229,7 @@ for service in satu-blue satu-green satu-webhook; do
     # Replace User=user with actual user
     sudo sed -i "s|^User=user|User=$ACTUAL_USER|" /etc/systemd/system/${service}.service
     # Replace /home/user with actual home
-    sudo sed -i "s|/home/user|$HOME|g" /etc/systemd/system/${service}.service
+    sudo sed -i "s|/home/user|$ACTUAL_HOME|g" /etc/systemd/system/${service}.service
 done
 
 sudo systemctl daemon-reload
