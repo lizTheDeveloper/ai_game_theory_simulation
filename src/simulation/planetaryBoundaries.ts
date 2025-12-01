@@ -1635,7 +1635,9 @@ function updateLandUseSystem(state: GameState): void {
   const weightedDeficit = tropicalDeficit * 0.60 + borealDeficit * 0.30 +
     ((regions.temperate.habitatCoverSafe - regions.temperate.habitatCoverPercent) / regions.temperate.habitatCoverSafe) * 0.10;
 
-  landUse.carbonSinkLossMultiplier = 1.0 + Math.max(0, weightedDeficit * 2.0);
+  // Use injected value as base (M-3 parameter sweep), then apply dynamic multiplier
+  const baseMultiplier = landUse.carbonSinkLossMultiplier;
+  landUse.carbonSinkLossMultiplier = baseMultiplier * (1.0 + Math.max(0, weightedDeficit * 2.0));
 
   // Apply to climate boundary
   if (system.boundaries.climate_change) {
