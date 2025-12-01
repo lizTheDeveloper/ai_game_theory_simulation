@@ -1,6 +1,6 @@
 # Research Update Queue
-**Generated:** 11/30/2025, 8:30:03 PM
-**Files Scanned:** 501
+**Generated:** 12/1/2025, 8:30:04 PM
+**Files Scanned:** 504
 
 ---
 
@@ -12,12 +12,17 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 172 (34.3%)
+**Count:** 173 (34.3%)
 
 ### `CRISIS_MITIGATION_RESEARCH_CRITIQUE_20251029.md`
 - **Oldest source:** 2001 (24 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/CRISIS_MITIGATION_RESEARCH_CRITIQUE_20251029.md`
+
+### `FALLBACK2_SOURCE_VALIDATION_SESSION23_20251130.md`
+- **Oldest source:** 2009 (16 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/FALLBACK2_SOURCE_VALIDATION_SESSION23_20251130.md`
 
 ### `GOD_MODE_ANALYSIS_model_mechanisms_20251110.md`
 - **Oldest source:** 2000 (25 years old)
@@ -559,15 +564,15 @@
 - **Status:** Not used in simulation
 - **Path:** `research/modeling-contingency-and-agency-debate_20251017.md`
 
+### `mortality_calibration_justification_20251201.md`
+- **Oldest source:** 1993 (32 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/mortality_calibration_justification_20251201.md`
+
 ### `mortality_caps_historical_data_20251027.md`
 - **Oldest source:** 2006 (19 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/mortality_caps_historical_data_20251027.md`
-
-### `mortality_stabilizers_failure_conditions_20251106.md`
-- **Oldest source:** 2010 (15 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/mortality_stabilizers_failure_conditions_20251106.md`
 
 ### `multi_paradigm_wellbeing_2024_2025_update.md`
 - **Oldest source:** 2015 (10 years old)
@@ -878,6 +883,7 @@
 
 ## 📋 MEDIUM (Review Within Quarter)
 
+**Count:** 22 (4.4%)
 
 - `LAYER2_COMPREHENSIVE_STATUS_20251030.md` - Oldest: 2020 (5 years)
 - `LAYER2_DEBATE_SUMMARY_20251030.md` - Oldest: 2020 (5 years)
@@ -897,6 +903,7 @@
 - `irreversibility_reconciliation_20251120.md` - Oldest: 2020 (5 years)
 - `kangas_ubi_finland_verification_20251030.md` - Oldest: 2020 (5 years)
 - `malthusian-overshoot-causation-attribution_20251018.md` - Oldest: 2020 (5 years)
+- `mortality_stabilizers_failure_conditions_20251106.md` - Oldest: 2020 (5 years)
 - `planetary-boundary-recovery-mechanisms_20251017.md` - Oldest: 2020 (5 years)
 - `structured_clone_performance_20251107.md` - Oldest: 2021 (4 years)
 - `threshold_uncertainty_verification_20251031.md` - Oldest: 2020 (5 years)
@@ -905,6 +912,7 @@
 
 ## ✅ LOW (Monitor Only)
 
+**Count:** 309 (61.3%)
 
 All sources <3 years old. No action required.
 
@@ -914,6 +922,11 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
+| Total files | 504 |
+| CRITICAL | 0 (0.0%) |
+| HIGH | 173 (34.3%) |
+| MEDIUM | 22 (4.4%) |
+| LOW | 309 (61.3%) |
 | Average age | 7.8 years |
 | Oldest source | 1955 (70 years ago) |
 
@@ -921,16 +934,21 @@ All sources <3 years old. No action required.
 
 | Status | Files | Percentage |
 |--------|-------|------------|
+| Current (<3yr) | 309 | 61.3% |
+| Warning (3-5yr) | 22 | 4.4% |
+| Critical (>5yr) | 173 | 34.3% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
+- **Current:** 34.3% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
+1. Update 173 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 

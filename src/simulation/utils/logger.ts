@@ -66,6 +66,19 @@ type LogLevel = 'event' | 'data' | 'warning' | 'emergency' | 'error';
  * Pictographic logger for simulation events
  */
 class SimulationLogger {
+  private quietMode: boolean;
+
+  constructor() {
+    this.quietMode = process.env.SIMULATION_QUIET_MODE === 'true';
+  }
+
+  /**
+   * Check if quiet mode is active (parameter sweeps)
+   */
+  isQuiet(): boolean {
+    return this.quietMode;
+  }
+
   /**
    * Log a simulation event
    *
@@ -78,6 +91,7 @@ class SimulationLogger {
    * simLog.event('🕊️'); // Just emoji for ultra-compression
    */
   event(emoji: EventEmoji, message?: string, data?: Record<string, any>): void {
+    if (this.quietMode) return;
     if (message && data) {
       console.log(`${emoji} ${message}`, data);
     } else if (message) {
@@ -97,6 +111,7 @@ class SimulationLogger {
    * simLog.data('Monthly mortality', { deaths: 1000, population: 8000 });
    */
   data(message: string, data?: Record<string, any>): void {
+    if (this.quietMode) return;
     if (data) {
       console.log(`📊 ${message}`, data);
     } else {
@@ -107,6 +122,8 @@ class SimulationLogger {
   /**
    * Log a warning (uses ⚠️ emoji)
    *
+   * Suppressed during parameter sweeps (SIMULATION_QUIET_MODE=true)
+   *
    * @param message - Warning message
    * @param context - Optional context
    *
@@ -114,6 +131,7 @@ class SimulationLogger {
    * simLog.warning('High mortality risk', { region: 'Asia', risk: 0.15 });
    */
   warning(message: string, context?: Record<string, any>): void {
+    if (this.quietMode) return;
     if (context) {
       console.log(`⚠️ ${message}`, context);
     } else {
@@ -183,6 +201,7 @@ class SimulationLogger {
    * // "M12: 🔬💡🚀✅"
    */
   monthTimeline(month: number, events: EventEmoji[]): void {
+    if (this.quietMode) return;
     console.log(`M${month}: ${this.timeline(events)}`);
   }
 }
