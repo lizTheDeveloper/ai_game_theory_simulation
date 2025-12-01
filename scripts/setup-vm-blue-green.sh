@@ -94,15 +94,29 @@ log "✅ Repositories cloned"
 # Install dependencies and build
 header "Building Applications"
 
+# Detect actual user (in case running with sudo)
+ACTUAL_USER="${SUDO_USER:-$(whoami)}"
+log "Building as user: $ACTUAL_USER"
+
 log "Building blue service..."
 cd "$SATU_DIR/production-blue"
-npm ci --production
-npm run build
+if [ "$ACTUAL_USER" != "root" ] && [ -n "$SUDO_USER" ]; then
+    sudo -u "$ACTUAL_USER" npm ci --production
+    sudo -u "$ACTUAL_USER" npm run build
+else
+    npm ci --production
+    npm run build
+fi
 
 log "Building green service..."
 cd "$SATU_DIR/production-green"
-npm ci --production
-npm run build
+if [ "$ACTUAL_USER" != "root" ] && [ -n "$SUDO_USER" ]; then
+    sudo -u "$ACTUAL_USER" npm ci --production
+    sudo -u "$ACTUAL_USER" npm run build
+else
+    npm ci --production
+    npm run build
+fi
 
 log "✅ Applications built"
 
@@ -116,7 +130,7 @@ if [ ! -f "$SATU_DIR/webhook-listener/.env" ]; then
     cat > "$SATU_DIR/webhook-listener/.env" <<EOF
 WEBHOOK_SECRET=$(openssl rand -hex 32)
 PORT=8080
-DEPLOY_SCRIPT=/home/user/satu/deployment/deploy-vm-blue-green.sh
+DEPLOY_SCRIPT=$SATU_DIR/deployment/deploy-vm-blue-green.sh
 LOG_FILE=/var/log/satu-webhook.log
 EOF
     chmod 600 "$SATU_DIR/webhook-listener/.env"
@@ -128,7 +142,11 @@ else
 fi
 
 cd "$SATU_DIR/webhook-listener"
-npm install
+if [ "$ACTUAL_USER" != "root" ] && [ -n "$SUDO_USER" ]; then
+    sudo -u "$ACTUAL_USER" npm install
+else
+    npm install
+fi
 
 log "✅ Webhook listener configured"
 
@@ -199,30 +217,35 @@ fi
 # Install systemd services
 header "Installing Systemd Services"
 
-sudo cp "$SATU_DIR/production-blue/systemd/satu-blue.service" /etc/systemd/system/
-sudo cp "$SATU_DIR/production-blue/systemd/satu-green.service" /etc/systemd/system/
-sudo cp "$SATU_DIR/production-blue/systemd/satu-webhook.service" /etc/systemd/system/
+# Copy service files and replace placeholders
+for service in satu-blue satu-green satu-webhook; do
+    sudo cp "$SATU_DIR/production-blue/systemd/${service}.service" /etc/systemd/system/
+    # Replace User=user with actual user
+    sudo sed -i "s|^User=user|User=$ACTUAL_USER|" /etc/systemd/system/${service}.service
+    # Replace /home/user with actual home
+    sudo sed -i "s|/home/user|$HOME|g" /etc/systemd/system/${service}.service
+done
 
 sudo systemctl daemon-reload
 
-log "✅ Systemd services installed"
+log "✅ Systemd services installed and configured for user $ACTUAL_USER"
 
 # Configure sudo permissions for deployment
 header "Configuring Sudo Permissions"
 
-sudo tee /etc/sudoers.d/satu-deploy > /dev/null <<'EOF'
-# Allow user to run deployment commands without password
-user ALL=(ALL) NOPASSWD: /usr/sbin/nginx -t
-user ALL=(ALL) NOPASSWD: /bin/systemctl reload nginx
-user ALL=(ALL) NOPASSWD: /bin/systemctl restart satu-blue
-user ALL=(ALL) NOPASSWD: /bin/systemctl restart satu-green
-user ALL=(ALL) NOPASSWD: /bin/systemctl status satu-blue
-user ALL=(ALL) NOPASSWD: /bin/systemctl status satu-green
-user ALL=(ALL) NOPASSWD: /bin/systemctl status satu-webhook
-user ALL=(ALL) NOPASSWD: /usr/bin/journalctl -u satu-blue*
-user ALL=(ALL) NOPASSWD: /usr/bin/journalctl -u satu-green*
-user ALL=(ALL) NOPASSWD: /usr/bin/journalctl -u satu-webhook*
-user ALL=(ALL) NOPASSWD: /usr/bin/tee -a /var/log/satu-deployments.log
+sudo tee /etc/sudoers.d/satu-deploy > /dev/null <<EOF
+# Allow $ACTUAL_USER to run deployment commands without password
+$ACTUAL_USER ALL=(ALL) NOPASSWD: /usr/sbin/nginx -t
+$ACTUAL_USER ALL=(ALL) NOPASSWD: /bin/systemctl reload nginx
+$ACTUAL_USER ALL=(ALL) NOPASSWD: /bin/systemctl restart satu-blue
+$ACTUAL_USER ALL=(ALL) NOPASSWD: /bin/systemctl restart satu-green
+$ACTUAL_USER ALL=(ALL) NOPASSWD: /bin/systemctl status satu-blue
+$ACTUAL_USER ALL=(ALL) NOPASSWD: /bin/systemctl status satu-green
+$ACTUAL_USER ALL=(ALL) NOPASSWD: /bin/systemctl status satu-webhook
+$ACTUAL_USER ALL=(ALL) NOPASSWD: /usr/bin/journalctl -u satu-blue*
+$ACTUAL_USER ALL=(ALL) NOPASSWD: /usr/bin/journalctl -u satu-green*
+$ACTUAL_USER ALL=(ALL) NOPASSWD: /usr/bin/journalctl -u satu-webhook*
+$ACTUAL_USER ALL=(ALL) NOPASSWD: /usr/bin/tee -a /var/log/satu-deployments.log
 EOF
 
 sudo chmod 0440 /etc/sudoers.d/satu-deploy
@@ -231,7 +254,7 @@ log "✅ Sudo permissions configured"
 
 # Create log files
 sudo touch /var/log/satu-{blue,green,webhook,deployments}.log
-sudo chown user:user /var/log/satu-*.log
+sudo chown $ACTUAL_USER:$ACTUAL_USER /var/log/satu-*.log
 
 # Enable and start services
 header "Starting Services"
