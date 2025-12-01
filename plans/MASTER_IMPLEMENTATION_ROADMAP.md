@@ -1,7 +1,7 @@
 # Master Implementation Roadmap
 ## AI Alignment Game Theory Simulation - Project Hub
 
-**Date:** November 30, 2025 (TOKEN CONSERVATION MODE - ALL HIGH ITEMS COMPLETE)
+**Date:** December 1, 2025 (TOKEN CONSERVATION MODE - ALL HIGH ITEMS COMPLETE)
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
@@ -11,18 +11,31 @@
 - **MEDIUM/LOW:** Deferred until token budget restored
 - **All agents:** Extreme efficiency - grep first, skip docs, exit early
 
-**Current Status:** 🟢 **ALL MEDIUM ITEMS COMPLETE** (Nov 30, 2025 - Session 23)
-- **Research Quality:** A- (90%) - Parameter sweep infrastructure operational
-- **Architecture Health:** A- (0 CRITICAL, 0 HIGH blockers)
+**Current Status:** 🟢 **ALL HIGH ITEMS COMPLETE** (Dec 1, 2025 - Session 25)
+- **Research Quality:** A- (90%) - Bifurcation threshold empirical testing queued
+- **Architecture Health:** A (0 CRITICAL, 0 HIGH blockers)
 - **System Performance:** Monte Carlo deterministic, all 460 tests passing
 - **System Trajectory:** ✅ **BREAKTHROUGH** - Technology bifurcation operational, outcome diversity restored
 - **Infrastructure:** ✅ **READY** - Multi-worker queue + agent monitors complete, awaiting VM deployment
-- **Roadmap Coherence:** CURRENT - Session 23 complete, M-3 archived, ready for LOW tier
+- **Roadmap Coherence:** CURRENT - Session 25 complete, 3 MEDIUM + 3 LOW follow-up items added
 - **Archives:**
   - `plans/completed/validation_sprint_nov26_29_20251129.md`
   - `plans/completed/high6_parameter_sweep_methodology_validated_20251130.md`
   - `plans/completed/m2_assertion_migration_audit_20251130.md`
   - `plans/completed/m3_parameter_injection_infrastructure_20251130.md`
+- **Recent Work (Dec 1 - Session 25):**
+  - ✅ **Architecture Integration Review** - Grade A (0 CRITICAL, 0 HIGH issues)
+    - TypeScript: 0 errors, 460 tests passing, 81.64% coverage
+    - M-3 parameter injection properly integrated
+    - Clean state propagation verified
+    - Report: `reviews/architecture_integration_review_session25_20251201.md`
+  - ✅ **Research Source Validation** - Grade A-
+    - Report: `reviews/research_source_validation_session25_20251201.md`
+  - ✅ **Research Debate** - Grade A-
+    - 3 substantive debates (bifurcation threshold, regime multipliers, extinction debt)
+    - 3 MEDIUM follow-up items identified (bifurcation sweep, extinction debt modeling, regime documentation)
+    - 3 LOW follow-up items identified (regime empirical search, rebound effects, financial contagion)
+    - Report: `reviews/research_debate_session25_20251201.md`
 - **Recent Work (Nov 30 - Session 23):**
   - ✅ **M-3 COMPLETE** - Parameter injection infrastructure operational (commit 77510ed6)
     - ParameterSweepConfig interface created (7 parameters)
@@ -257,9 +270,71 @@
 
 **Impact:** All HIGH items complete, research quality A-, technology bifurcation operational, utopia pathway discovered, hindcast validation passing.
 
-**Next Focus (MEDIUM Priority):**
+**Next Focus:**
 1. **VM deployment (HIGH-3, HIGH-5 Phase 3-4)** - Infrastructure ready, blocked on VM access
-2. **Parameter sweep execution (M-3)** - Methodology validated, blocked on parameter injection system (4-6h)
+2. **Research debate follow-up items** - 3 MEDIUM + 3 LOW items from Session 25
+
+---
+
+## 🟡 MEDIUM Priority Items
+
+### M-1: Bifurcation Threshold Sensitivity Analysis
+- **Status:** READY - M-3 sweep infrastructure complete
+- **Description:** Test bifurcation threshold values [0.10, 0.20, 0.30, 0.40, 0.50, 0.60] to empirically validate outcome distribution sensitivity
+- **Context:** Research debate Session 25 identified that 0.60 threshold is model assumption, not empirical finding. Empirical diffusion research shows 5-25% thresholds.
+- **Effort:** 2-3 hours (sweep execution + analysis)
+- **Assignee:** priya (quantitative validator)
+- **Dependencies:** M-3 complete (parameter injection infrastructure)
+- **Impact:** Validates whether conservative threshold choice suppresses realistic positive outcomes
+- **Report:** `reviews/research_debate_session25_20251201.md` (lines 54-56)
+
+### M-2: Extinction Debt Modeling
+- **Status:** DEFERRED - Post-VM deployment
+- **Description:** Add queue-based species loss with 50-400 year configurable lag for realistic biodiversity recovery timelines
+- **Context:** Current model shows unrealistically fast ecosystem recovery when stressors removed. Kuussaari et al. (2009), Halley et al. (2016) document 50-400 year extinction lags.
+- **Effort:** 4 hours implementation
+- **Assignee:** roy (simulation maintainer)
+- **Dependencies:** VM deployment (token budget)
+- **Impact:** Required before publication claims about "pathways to flourishing" - prevents overstating restoration effectiveness
+- **Report:** `reviews/research_debate_session25_20251201.md` (lines 113-138)
+
+### M-3: Regime Multiplier Documentation Fix
+- **Status:** READY - 15 minute task
+- **Description:** Update code comments to distinguish mechanism (Scheffer et al. 2014) from magnitude (calibrated via Nov 13 god mode validation)
+- **Context:** Current comments suggest research backing for multiplier values. Actual derivation was outcome-calibrated (1 utopia / 9 dystopia target).
+- **Effort:** 15 minutes
+- **Assignee:** Any agent editing bifurcation code
+- **Dependencies:** None
+- **Impact:** Research integrity - honest documentation of calibration vs derivation
+- **Report:** `reviews/research_debate_session25_20251201.md` (lines 97-102)
+
+---
+
+## 🔵 LOW Priority Items
+
+### L-1: Regime Multiplier Empirical Search
+- **Status:** DEFERRED - Future token budget
+- **Description:** Literature review for domain-specific amplification factors. Differentiate climate/social/economic multipliers beyond current uniform 1.5x.
+- **Effort:** 5 hours research
+- **Assignee:** cynthia (super-alignment researcher)
+- **Dependencies:** Token budget restoration
+- **Report:** `reviews/research_debate_session25_20251201.md` (lines 198-202)
+
+### L-2: Rebound Effects Calibration
+- **Status:** DEFERRED - Future token budget
+- **Description:** Jevons paradox currently undermodeled. Technology deployment should increase consumption in some scenarios.
+- **Effort:** 8 hours implementation
+- **Assignee:** roy (simulation maintainer)
+- **Dependencies:** Token budget restoration
+- **Report:** `reviews/research_debate_session25_20251201.md` (lines 204-208)
+
+### L-3: Financial Contagion Modeling
+- **Status:** DEFERRED - Future token budget
+- **Description:** Economic collapse lacks cascade mechanics. 2008 crisis dynamics (contagion, fire sales, credit freezes) not represented.
+- **Effort:** 8-12 hours implementation
+- **Assignee:** roy (simulation maintainer)
+- **Dependencies:** Token budget restoration
+- **Report:** `reviews/research_debate_session25_20251201.md` (lines 210-214)
 
 ---
 
