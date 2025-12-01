@@ -1,8 +1,8 @@
 # Research Debate Follow-up Actions
 
-**Date:** December 1, 2025
+**Date:** December 1, 2025 (Session 25: Items #2-3 COMPLETE)
 **Source:** Session 24 Research Debate (`reviews/research_debate_session_20251201.md`)
-**Status:** PLANNING
+**Status:** 2 OF 3 COMPLETE - Item #1 blocked on token budget/VM
 **Priority:** MEDIUM (follow-up to completed MEDIUM work)
 
 ---
@@ -10,12 +10,16 @@
 ## Executive Summary
 
 Research debate session identified 4 actionable recommendations:
-1. **IMMEDIATE:** Fix bifurcation threshold docs ✅ **COMPLETE**
-2. **HIGH (when budget allows):** Execute parameter sweep N=50 minimum
-3. **MEDIUM:** Audit positive tipping thresholds
-4. **MEDIUM:** Validate cross-system interactions
+1. **IMMEDIATE:** Fix bifurcation threshold docs ✅ **COMPLETE** (Session 24)
+2. **HIGH (when budget allows):** Execute parameter sweep N=50 minimum ⏳ **BLOCKED**
+3. **MEDIUM:** Audit positive tipping thresholds ✅ **COMPLETE** (Session 25)
+4. **MEDIUM:** Validate cross-system interactions ✅ **COMPLETE** (Session 25)
 
-This plan documents the remaining 3 items for future roadmap prioritization.
+**Session 25 Deliverables:**
+- `reviews/positive_tipping_threshold_audit_20251201.md` (6,200 words, verdict: PASS - no miscategorizations)
+- `reviews/regime_multiplier_validation_20251201.md` (9,500 words, verdict: mechanistically justified, Grade B)
+
+This plan documents the remaining 1 item (parameter sweep) for future execution when token budget restored or VM deployed.
 
 ---
 
@@ -53,7 +57,7 @@ Execute N=50 minimum sweep (not full N=200) to:
 
 ---
 
-## 2. Audit Positive Tipping Thresholds (MEDIUM)
+## 2. Audit Positive Tipping Thresholds (MEDIUM) ✅ COMPLETE
 
 ### Problem
 Bifurcation threshold documentation revealed that 58% may be conflated with diffusion tipping points (5-25%). This suggests other positive tipping point thresholds may have similar issues.
@@ -89,17 +93,23 @@ Bifurcation threshold documentation revealed that 58% may be conflated with diff
 - **Report:** 1 hour
 - **Total:** 2-4 hours
 
-### Deliverables
-- `reviews/positive_tipping_threshold_audit_YYYYMMDD.md`
-- List of thresholds requiring citation/recalibration
-- Recommendations for fixes (if needed)
+### Deliverables ✅
+- `reviews/positive_tipping_threshold_audit_20251201.md` (6,200 words)
+- 12 threshold systems catalogued (6 diffusion, 1 regime shift, 5 non-tipping)
+- **Verdict:** PASS - no miscategorizations found
+- Technology cascades (5-20%) correctly use Rogers diffusion theory
+- Bifurcation (58%) correctly documented as regime transformation (NOT diffusion)
+- All thresholds appropriately categorized and cited
 
-### Priority Justification
-**MEDIUM** - Positive tipping points are less critical than collapse dynamics. However, if 58% was miscategorized, other thresholds may have similar issues. Low-effort audit with potentially high impact.
+### Results (Session 25, Dec 1, 2025)
+**Audit complete - no issues found.** All positive tipping thresholds are correctly categorized:
+- Diffusion cascades: 5-20% (OECD 2025, Nature Sustainability 2023)
+- Regime transformation: 58% (explicitly distinguished from diffusion)
+- Non-tipping thresholds: Quality gates, attitudinal states (not labeled as tipping points)
 
 ---
 
-## 3. Validate Cross-System Interactions (MEDIUM)
+## 3. Validate Cross-System Interactions (MEDIUM) ✅ COMPLETE
 
 ### Problem
 Debate identified 0.7× time scaling factor (collapse regime tech effectiveness) as potentially curve-fitting rather than mechanistically grounded.
@@ -138,14 +148,20 @@ Debate identified 0.7× time scaling factor (collapse regime tech effectiveness)
 - **Report + citations:** 1-2 hours
 - **Total:** 4-8 hours
 
-### Deliverables
-- `research/regime_multiplier_validation_YYYYMMDD.md`
-- Citations for 0.7× (if found)
-- OR documentation as phenomenological assumption (if not found)
-- Cross-system interaction map
+### Deliverables ✅
+- `reviews/regime_multiplier_validation_20251201.md` (9,500 words)
+- **0.7× collapse multiplier:** Grounded in Bronze Age Collapse (0.2-0.5×), Roman Empire (0.3-0.7×)
+- **1.5× breakdown multiplier:** Theory-grounded (Scheffer et al. 2012) but phenomenological
+- **Key finding:** Crisis is bidirectional - ACCELERATES innovation when institutions intact (WWII 1.5-2×, COVID-19 10×), DEGRADES when institutions destroyed (collapse 0.3-0.7×)
+- **Grade:** B (80%) - historically grounded, lacks precise quantitative calibration
 
-### Priority Justification
-**MEDIUM** - Regime multipliers are bounded and tested in M-3 parameter sweep. However, lack of citation for 0.7× is a research quality gap. This should be addressed when research budget allows.
+### Results (Session 25, Dec 1, 2025)
+**Both multipliers mechanistically justified:**
+- 0.7× applied ONLY to collapse regimes (correct)
+- Grounded in historical patterns (Bronze Age, Rome)
+- Simulation correctly distinguishes crisis (no penalty) from collapse (0.7×)
+- Citation fix needed: Scheffer et al. (2012) Science, not 2014
+- Future work: Consider crisis acceleration multiplier (WWII/COVID pattern) - LOW priority
 
 ---
 
