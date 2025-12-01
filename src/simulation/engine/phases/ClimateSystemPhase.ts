@@ -661,12 +661,17 @@ export class ClimateSystemPhase implements SimulationPhase {
   } {
     const climateChangeBoundary = state.planetaryBoundariesSystem?.boundaries?.climate_change;
     if (climateChangeBoundary) {
-      const tempAnomaly = climateChangeBoundary.currentValue * 2.0;
-      const climateStability = Math.max(0, 1 - climateChangeBoundary.currentValue);
+      // CRITICAL-1 FIX (Dec 1, 2025): currentValue is ALREADY temperature in °C
+      // Don't multiply by 2.0 - that was assuming a [0,1] probability scale
+      const tempAnomaly = climateChangeBoundary.currentValue;
+
+      // Climate stability = 1.0 at safe boundary (1.0°C), 0.0 at high risk (1.5°C+)
+      // Formula: stability = max(0, 1 - (temp - 1.0) / 0.5)
+      const climateStability = Math.max(0, Math.min(1, 1 - (tempAnomaly - 1.0) / 0.5));
 
       return {
         globalTemperatureAnomaly: tempAnomaly,
-        carbonPPM: 420 + (climateChangeBoundary.currentValue * 180),
+        carbonPPM: 420 + ((tempAnomaly - 1.0) * 360), // ~1.21°C = 495ppm, ~1.5°C = 600ppm
         climateStability,
       };
     }
