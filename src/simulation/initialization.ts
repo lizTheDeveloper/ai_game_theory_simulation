@@ -1523,6 +1523,11 @@ export function createDefaultInitialState(
     state.humanPopulationSystem.peakPopulation = targetPop;
     state.initialPopulation = targetPop;
     state.society.totalPopulation = targetPop;
+
+    // DEPRECATED: globalMetrics.population is NOT synced after initialization.
+    // ALWAYS read from humanPopulationSystem.population instead.
+    // This write is for legacy compatibility only and may be removed in future.
+    // See: Nov 2025 god mode NaN bug - reading from wrong population field caused silent failure.
     state.globalMetrics.population = targetPop;
 
     // Scale regional populations proportionally
@@ -1784,8 +1789,10 @@ export function createDefaultInitialState(
       console.log(`  climateSensitivity: ${parameterSweepConfig.climateSensitivity.toFixed(3)}`);
     }
 
-    // Carbon sink saturation
+    // Carbon sink saturation - store in simulationConfig for runtime use
     if (parameterSweepConfig.carbonSinkMultiplier !== undefined) {
+      state.simulationConfig = state.simulationConfig ?? {};
+      state.simulationConfig.carbonSinkMultiplier = parameterSweepConfig.carbonSinkMultiplier;
       state.planetaryBoundariesSystem.landUse.carbonSinkLossMultiplier = parameterSweepConfig.carbonSinkMultiplier;
       console.log(`  carbonSinkLossMultiplier: ${parameterSweepConfig.carbonSinkMultiplier.toFixed(3)}`);
     }

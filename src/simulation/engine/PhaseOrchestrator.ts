@@ -355,6 +355,21 @@ export class PhaseOrchestrator {
       }
     }
 
+    // PHYSICAL CONSTRAINTS VALIDATION (Dec 1, 2025) - Development mode only
+    // Validates state stays within physically plausible bounds (climate, population, energy, food)
+    // Catches impossible values early before they cascade into NaN or unrealistic outcomes
+    if (process.env.NODE_ENV === 'development') {
+      const { validatePhysicalConstraints } = require('../utils/physicalConstraints');
+      try {
+        validatePhysicalConstraints(state, state.currentMonth);
+      } catch (error) {
+        console.error(`\n❌ PHYSICAL CONSTRAINT VIOLATION after all phases:`);
+        console.error(`   Month: ${state.currentMonth}`);
+        console.error(`   ${error instanceof Error ? error.message : String(error)}`);
+        throw error;
+      }
+    }
+
     return allEvents;
   }
 
