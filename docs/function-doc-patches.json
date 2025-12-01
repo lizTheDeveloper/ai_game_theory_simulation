@@ -127,7 +127,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 3196,
+    "line": 2741,
     "name": "getAllTech",
     "doc": " Returns array of results."
   },
