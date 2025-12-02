@@ -13,6 +13,9 @@ export function createMockGameState(): GameState {
   return {
     currentMonth: 0,
     currentYear: 0,
+    config: {
+      runLabel: ''
+    },
     aiAgents: [],
     society: {
       trust: 0.5,
@@ -55,9 +58,12 @@ export function createMockGameState(): GameState {
     },
     computeInfrastructure: {
       datacenters: [],
+      dataCenters: [],
       totalCompute: 1.0,
       usedCompute: 0,
-      availableCompute: 1.0
+      availableCompute: 1.0,
+      hardwareEfficiency: 1.0,
+      algorithmsEfficiency: 1.0
     },
     eventLog: [],
     extinctionState: {
