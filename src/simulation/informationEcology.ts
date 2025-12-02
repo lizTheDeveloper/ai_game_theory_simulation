@@ -228,10 +228,7 @@ function updateAIPolarizationImpact(
 
   // Get AI social capability (proxy for recommendation algorithm sophistication)
   const aiSocialCapability = gameState.aiAgents.reduce((max, agent) => {
-    const socialCap = assertStateProperty(agent.capabilities, 'social', {
-      location: 'updateAIPolarizationImpact',
-      additionalInfo: { agentId: agent.id },
-    });
+    const socialCap = agent.capabilityProfile?.social ?? 0;
     return Math.max(max, socialCap);
   }, 0);
 

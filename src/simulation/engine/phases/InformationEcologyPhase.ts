@@ -58,16 +58,13 @@ export class InformationEcologyPhase implements SimulationPhase {
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     setDeterministicRng(rng);
 
-    const infoEcology = assertStateProperty(state, 'informationEcology', {
-      location: 'InformationEcologyPhase.execute',
-      additionalInfo: { month: state.currentMonth },
-    });
+    const infoEcology = state.informationEcology;
+    if (!infoEcology) {
+      throw new Error('❌ informationEcology not initialized');
+    }
 
     // Calculate days elapsed
-    const daysElapsed = assertStateProperty(state, 'daysInCurrentMonth', {
-      location: 'InformationEcologyPhase.execute',
-      additionalInfo: { month: state.currentMonth },
-    });
+    const daysElapsed = state.daysInCurrentMonth || 30;
 
     // Update information ecology dynamics
     updateInformationEcology(infoEcology, state, rng, daysElapsed);
@@ -78,23 +75,19 @@ export class InformationEcologyPhase implements SimulationPhase {
     // Calculate coordination modifier
     const coordinationModifier = calculateCoordinationModifier(infoEcology, rng);
 
-    // Apply to government coordination capacity
-    const govState = assertStateProperty(state.governmentAgent, 'state', {
-      location: 'InformationEcologyPhase.execute',
-      additionalInfo: { month: state.currentMonth },
-    });
+    // Apply to society coordination capacity
+    const society = state.society;
+    if (!society) {
+      throw new Error('❌ society not initialized');
+    }
 
-    const baseCoordination = assertStateProperty(govState, 'coordinationCapacity', {
-      location: 'InformationEcologyPhase.execute',
-      additionalInfo: { month: state.currentMonth },
-    });
+    const baseCoordination = society.coordinationCapacity ?? 0.5;
 
     // Modulate coordination capacity (soft constraint, not hard cutoff)
-    govState.coordinationCapacity = assertFinite(baseCoordination * coordinationModifier, {
+    society.coordinationCapacity = assertFinite(baseCoordination * coordinationModifier, {
       location: 'InformationEcologyPhase.execute',
       valueName: 'coordinationCapacity after epistemic modifier',
       month: state.currentMonth,
-      additionalInfo: { baseCoordination, coordinationModifier },
     });
 
     // Log significant changes
@@ -131,8 +124,9 @@ export class InformationEcologyPhase implements SimulationPhase {
     // Check for nuclear events (recent detonations)
     const recentNuclearEvents = state.eventLog.filter(
       (event) =>
-        event.month >= state.currentMonth - 1 && // Last month
-        event.type === 'nuclear_detonation'
+        event.timestamp >= state.currentMonth - 1 && // Last month
+        event.type === 'catastrophe' &&
+        event.description.toLowerCase().includes('nuclear')
     );
 
     if (recentNuclearEvents.length > 0) {
@@ -146,8 +140,10 @@ export class InformationEcologyPhase implements SimulationPhase {
     // Check for major AI deception events
     const recentDeceptionEvents = state.eventLog.filter(
       (event) =>
-        event.month >= state.currentMonth - 1 &&
-        (event.type === 'ai_deception_detected' || event.type === 'sleeper_agent_activation')
+        event.timestamp >= state.currentMonth - 1 &&
+        event.type === 'crisis' &&
+        (event.description.toLowerCase().includes('deception') ||
+         event.description.toLowerCase().includes('sleeper'))
     );
 
     if (recentDeceptionEvents.length > 0) {
@@ -161,8 +157,10 @@ export class InformationEcologyPhase implements SimulationPhase {
     // Check for extinction-tier events (civilizational collapse, severe crises)
     const recentCatastrophes = state.eventLog.filter(
       (event) =>
-        event.month >= state.currentMonth - 1 &&
-        (event.type === 'extinction_scenario_triggered' || event.type === 'catastrophic_event')
+        event.timestamp >= state.currentMonth - 1 &&
+        event.type === 'catastrophe' &&
+        (event.description.toLowerCase().includes('extinction') ||
+         event.description.toLowerCase().includes('collapse'))
     );
 
     if (recentCatastrophes.length > 0) {
