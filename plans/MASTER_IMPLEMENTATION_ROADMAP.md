@@ -1,7 +1,7 @@
 # Master Implementation Roadmap
 ## AI Alignment Game Theory Simulation - Project Hub
 
-**Date:** December 2, 2025 (SESSION 36 COMPLETE)
+**Date:** December 2, 2025 (SESSION 37 COMPLETE)
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
@@ -11,7 +11,7 @@
 - **MEDIUM/LOW:** Deferred until token budget restored
 - **All agents:** Extreme efficiency - grep first, skip docs, exit early
 
-**Current Status:** 🟢 **MAINTENANCE MODE** (Dec 2, 2025 - Session 36)
+**Current Status:** 🟢 **MAINTENANCE MODE** (Dec 2, 2025 - Session 37)
 - **Research Quality:** A (84.8% sources from 2024-2025) - sustained
 - **Architecture Health:** A- (0 CRITICAL, 0 HIGH blockers) - sustained
 - **System Performance:** Monte Carlo deterministic, all tests passing (81.63% coverage)
@@ -26,6 +26,18 @@
   - `plans/completed/research_debate_followup_20251201.md` (Session 25)
   - `plans/completed/l1_physical_constraints_validation_20251201.md` (Session 28)
   - `plans/completed/cleanup_concentration_regression_tests_20251201.md` (Session 32)
+- **Recent Work (Dec 2 - Session 37):**
+  - 📋 **COME UP WITH PLANS** - Identified 3 improvement opportunities (fallback workflow #6)
+    - Coffee Break: System stable, tests passing (81.63%), clean git state
+    - Analysis: `docs/underdocumented.json` shows 353 items, coverage gaps in radiation (59.60%) + biodiversity (77.29%)
+    - Created 3 LOW priority plans:
+      - `plans/proposed_radiation_test_coverage_20251202.md` (2-3h, unit-test-writer)
+      - `plans/proposed_biodiversity_test_coverage_20251202.md` (2-3h, unit-test-writer)
+      - `plans/proposed_ai_agent_documentation_20251202.md` (3-4h, wiki-documentation-updater)
+    - Roadmap updated: Items #14-16 added to LOW priority section
+  - 🎯 **Token Usage:** ~5k (efficient planning)
+  - 🎯 **System Status:** Production-ready, 3 new improvement plans queued
+  - 📊 **Next:** Continue 4h monitoring intervals (token conservation mode)
 - **Recent Work (Dec 2 - Session 36):**
   - 🔧 **FALLBACK WORKFLOWS** - Extreme early exit (no work needed)
     - Coffee Break: Tests passing (81.63%), system stable, 9 commits ahead
@@ -2007,6 +2019,33 @@ This framework will:
 **12. Parameter Documentation Enhancement**
 - **Priority:** LOW
 - **Action Required:** Create `/research/mortality_calibration_justification_YYYYMMDD.md`
+
+**14. Radiation System Test Coverage** 🆕 **PROPOSED** (Session 37 - Dec 2, 2025)
+- **Priority:** LOW
+- **Status:** PROPOSED - Plan created, awaiting token budget
+- **Problem:** `src/types/radiation.ts` has 59.60% test coverage with 0 test files
+- **Plan:** `plans/proposed_radiation_test_coverage_20251202.md`
+- **Effort:** 2-3 hours
+- **Agent:** unit-test-writer
+- **Success:** Coverage >90%, 15+ tests, research-backed dose calculations validated
+
+**15. Regional Biodiversity Test Coverage** 🆕 **PROPOSED** (Session 37 - Dec 2, 2025)
+- **Priority:** LOW
+- **Status:** PROPOSED - Plan created, awaiting token budget
+- **Problem:** `src/types/regionalBiodiversity.ts` has 77.29% test coverage with 0 test files
+- **Plan:** `plans/proposed_biodiversity_test_coverage_20251202.md`
+- **Effort:** 2-3 hours
+- **Agent:** unit-test-writer
+- **Success:** Coverage >90%, 12+ tests, extinction thresholds validated
+
+**16. AI Agent System Documentation** 🆕 **PROPOSED** (Session 37 - Dec 2, 2025)
+- **Priority:** LOW
+- **Status:** PROPOSED - Plan created, awaiting token budget
+- **Problem:** 150+ undocumented items in AI agent types (coordination, suffering, lifecycle)
+- **Plan:** `plans/proposed_ai_agent_documentation_20251202.md`
+- **Effort:** 3-4 hours
+- **Agent:** wiki-documentation-updater
+- **Success:** <50 undocumented items (67% reduction), all parameters justified, wiki >500 words
 
 **13. Validation Tooling for Physical Constraints** ✅ **COMPLETE**
 - **Priority:** LOW - RESOLVED (Session 28 - Dec 1, 2025)
