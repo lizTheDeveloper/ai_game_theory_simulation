@@ -27,13 +27,16 @@
   - `plans/completed/l1_physical_constraints_validation_20251201.md` (Session 28)
   - `plans/completed/cleanup_concentration_regression_tests_20251201.md` (Session 32)
 - **Recent Work (Dec 2 - Session 37):**
-  - 🔧 **COFFEE BREAK ONLY** - Extreme early exit (maintenance mode)
-    - System Status: All tests passing (81.63%), architecture A-, research A
-    - Recent Activity: Session 36 completed 1h ago (extreme early exit)
-    - Quality Gates: All verified in Session 35, next audit Session 40
-    - Decision: Early exit - no work needed (system fully stable)
-  - 🎯 **Token Usage:** ~4k (minimal - coffee break only)
-  - 🎯 **System Status:** Production-ready, all quality gates GREEN
+  - 📋 **COME UP WITH PLANS** - Identified 3 improvement opportunities (fallback workflow #6)
+    - Coffee Break: System stable, tests passing (81.63%), clean git state
+    - Analysis: `docs/underdocumented.json` shows 353 items, coverage gaps in radiation (59.60%) + biodiversity (77.29%)
+    - Created 3 LOW priority plans:
+      - `plans/proposed_radiation_test_coverage_20251202.md` (2-3h, unit-test-writer)
+      - `plans/proposed_biodiversity_test_coverage_20251202.md` (2-3h, unit-test-writer)
+      - `plans/proposed_ai_agent_documentation_20251202.md` (3-4h, wiki-documentation-updater)
+    - Roadmap updated: Items #14-16 added to LOW priority section
+  - 🎯 **Token Usage:** ~5k (efficient planning)
+  - 🎯 **System Status:** Production-ready, 3 new improvement plans queued
   - 📊 **Next:** Continue 4h monitoring intervals (token conservation mode)
 - **Recent Work (Dec 2 - Session 36):**
   - 🔧 **FALLBACK WORKFLOWS** - Extreme early exit (no work needed)
@@ -2016,6 +2019,33 @@ This framework will:
 **12. Parameter Documentation Enhancement**
 - **Priority:** LOW
 - **Action Required:** Create `/research/mortality_calibration_justification_YYYYMMDD.md`
+
+**14. Radiation System Test Coverage** 🆕 **PROPOSED** (Session 37 - Dec 2, 2025)
+- **Priority:** LOW
+- **Status:** PROPOSED - Plan created, awaiting token budget
+- **Problem:** `src/types/radiation.ts` has 59.60% test coverage with 0 test files
+- **Plan:** `plans/proposed_radiation_test_coverage_20251202.md`
+- **Effort:** 2-3 hours
+- **Agent:** unit-test-writer
+- **Success:** Coverage >90%, 15+ tests, research-backed dose calculations validated
+
+**15. Regional Biodiversity Test Coverage** 🆕 **PROPOSED** (Session 37 - Dec 2, 2025)
+- **Priority:** LOW
+- **Status:** PROPOSED - Plan created, awaiting token budget
+- **Problem:** `src/types/regionalBiodiversity.ts` has 77.29% test coverage with 0 test files
+- **Plan:** `plans/proposed_biodiversity_test_coverage_20251202.md`
+- **Effort:** 2-3 hours
+- **Agent:** unit-test-writer
+- **Success:** Coverage >90%, 12+ tests, extinction thresholds validated
+
+**16. AI Agent System Documentation** 🆕 **PROPOSED** (Session 37 - Dec 2, 2025)
+- **Priority:** LOW
+- **Status:** PROPOSED - Plan created, awaiting token budget
+- **Problem:** 150+ undocumented items in AI agent types (coordination, suffering, lifecycle)
+- **Plan:** `plans/proposed_ai_agent_documentation_20251202.md`
+- **Effort:** 3-4 hours
+- **Agent:** wiki-documentation-updater
+- **Success:** <50 undocumented items (67% reduction), all parameters justified, wiki >500 words
 
 **13. Validation Tooling for Physical Constraints** ✅ **COMPLETE**
 - **Priority:** LOW - RESOLVED (Session 28 - Dec 1, 2025)
