@@ -402,6 +402,7 @@ export interface GameState {
   environmentalAccumulation: EnvironmentalAccumulation; // Phase 2: Environmental debt tracking
   socialAccumulation: SocialAccumulation; // Phase 3: Social cohesion & meaning crisis tracking
   technologicalRisk: TechnologicalRisk; // Phase 4: AI capability risk tracking
+  informationEcology: import('../simulation/informationEcology').InformationEcologyState; // Phase: Information ecology & epistemic degradation
 
   /**
    * Tipping Point Impacts (ClimateSystemPhase Integration)

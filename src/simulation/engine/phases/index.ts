@@ -46,6 +46,7 @@ export { EconomicSystemPhase } from './EconomicSystemPhase';  // Batch 7 (Nov 9,
 export { WorkflowAdaptationPhase } from './WorkflowAdaptationPhase';  // FIX #4A (Oct 19, 2025)
 // export { SocialStabilityPhase } from './SocialStabilityPhase';  // CONSOLIDATED into SocialStabilitySystemPhase (Batch 5, Nov 9, 2025)
 export { DemocracyDynamicsPhase } from './DemocracyDynamicsPhase';  // Phase 6A (Oct 20, 2025) - Western Liberal paradigm
+export { InformationEcologyPhase } from './InformationEcologyPhase';  // Information ecology & epistemic degradation (Dec 2, 2025)
 // export { SocialCohesionUpdatePhase } from './SocialCohesionUpdatePhase';  // CONSOLIDATED into SocialStabilitySystemPhase (Batch 5, Nov 9, 2025)
 export { QualityOfLifePhase } from './QualityOfLifePhase';
 // export { EnvironmentalFeedbackPhase } from './EnvironmentalFeedbackPhase';  // CONSOLIDATED into ClimateSystemPhase (Batch 3, Nov 2025)

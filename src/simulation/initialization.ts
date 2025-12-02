@@ -20,6 +20,7 @@ import { initializeCatastrophicScenarios } from './catastrophicScenarios';
 import { initializeEnvironmentalAccumulation } from './environmental';
 import { initializeSocialAccumulation } from './socialCohesion';
 import { initializeTechnologicalRisk } from './technologicalRisk';
+import { initializeInformationEcology } from './informationEcology';
 import { initializeSpecificTippingPoints } from './specificTippingPoints';
 import { initializeUpwardSpirals } from './upwardSpirals';
 import { initializeMeaningRenaissance } from './meaningRenaissance';
@@ -933,6 +934,9 @@ export function createDefaultInitialState(
     
     // Phase 4: Technological Risk Accumulation
     technologicalRisk: initializeTechnologicalRisk(),
+
+    // Information Ecology & Epistemic Degradation
+    informationEcology: initializeInformationEcology(rngFunction),
 
     // Monte Carlo Issue #5 (Nov 6, 2025): Bifurcation Logic - Outcome variance mechanisms
     bifurcationState: initializeBifurcationState(rngFunction),
