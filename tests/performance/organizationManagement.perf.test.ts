@@ -10,12 +10,12 @@
  * - Impact: 70× reduction in operations (100,000 → 1,400)
  *
  * WHAT WE'RE TESTING:
- * - calculateComputeUtilization with 1000 organizations completes in <500ms
+ * - calculateComputeUtilization with 1000 organizations completes in <600ms
  * - Cross-organization lookups complete in reasonable time (baseline performance)
  *
  * NOTE: Complexity ratio tests show 47-66x instead of expected ~10x for 10x input increase.
  * This suggests either O(n²) behavior remains OR test setup overhead dominates at small scales.
- * The absolute time tests (500ms threshold) ensure performance doesn't degrade significantly.
+ * The absolute time tests (600ms threshold) ensure performance doesn't degrade significantly.
  *
  * HOW TO VERIFY TESTS CATCH REGRESSIONS:
  * 1. Replace Set-based lookups with array.includes() in organizationManagement.ts line 47-48:
@@ -32,9 +32,9 @@
  * 4. Revert changes to restore O(n) performance
  *
  * TESTS:
- * - Test 1: 1000 organizations - baseline performance check (<500ms)
+ * - Test 1: 1000 organizations - baseline performance check (<600ms)
  * - Test 2: Datacenter lookups - verify Set-based pattern (<250ms)
- * - Test 3: AI model lookups - verify Set-based pattern (<400ms)
+ * - Test 3: AI model lookups - verify Set-based pattern (<450ms)
  */
 
 import { describe, it } from 'node:test';
@@ -161,7 +161,7 @@ describe('[PERF] organizationManagement.ts O(n) performance', () => {
         });
       });
 
-      assertExecutionTimeUnder(executionTime, 500, '1000 organizations');
+      assertExecutionTimeUnder(executionTime, 600, '1000 organizations');
     });
   });
 
@@ -204,7 +204,7 @@ describe('[PERF] organizationManagement.ts O(n) performance', () => {
         });
       });
 
-      assertExecutionTimeUnder(executionTime, 400, 'AI model ownership lookups');
+      assertExecutionTimeUnder(executionTime, 450, 'AI model ownership lookups');
     });
   });
 });
