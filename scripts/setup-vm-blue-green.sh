@@ -105,12 +105,9 @@ header "Building Applications"
 log "Building as user: $ACTUAL_USER (home: $ACTUAL_HOME)"
 
 # Install TypeScript globally first (needed for workspace builds)
+# Must run as root to write to /usr/lib/node_modules
 log "Installing TypeScript globally..."
-if [ "$ACTUAL_USER" != "root" ] && [ -n "$SUDO_USER" ]; then
-    sudo -u "$ACTUAL_USER" npm install -g typescript
-else
-    npm install -g typescript
-fi
+npm install -g typescript
 
 log "Building blue service..."
 cd "$SATU_DIR/production-blue"
