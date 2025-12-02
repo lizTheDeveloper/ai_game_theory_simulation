@@ -74,7 +74,10 @@ mkdir -p "$SATU_DIR"/{production-blue,production-green,webhook-listener,deployme
 mkdir -p /etc/nginx/upstreams
 sudo mkdir -p /var/log
 
-log "✅ Directories created"
+# Fix ownership so user can write during build
+chown -R $ACTUAL_USER:$ACTUAL_USER "$SATU_DIR"
+
+log "✅ Directories created and ownership configured for $ACTUAL_USER"
 
 # Clone repos for blue and green
 header "Cloning Repositories"
