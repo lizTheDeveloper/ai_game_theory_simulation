@@ -163,6 +163,26 @@ export type {
   RNGFunction as PhaseRNGFunction
 } from '../simulation/engine/PhaseOrchestrator';
 
+/**
+ * Simulation Configuration Overrides (M-3, Nov 30, 2025 + Type Safety Dec 1, 2025)
+ *
+ * Runtime parameter overrides for parameter sweep analysis (Latin Hypercube Sampling).
+ * Used by Monte Carlo sensitivity analysis to vary uncertain parameters.
+ *
+ * Research: research/parameter_sweep_methodology_20251130.md
+ * Expected impact: Enables quantification of model uncertainty, 90% confidence intervals
+ */
+export interface SimulationConfig {
+  /** Bifurcation threshold override (tech deployment %), baseline 0.58 */
+  bifurcationThreshold?: number;
+  /** Collapse regime tech effectiveness multiplier, baseline 0.7 */
+  collapseRegimeMultiplier?: number;
+  /** Social breakdown regime decay multiplier, baseline 1.5 */
+  breakdownRegimeMultiplier?: number;
+  /** Carbon sink loss base multiplier (deforestation impact), baseline 1.0 */
+  carbonSinkMultiplier?: number;
+}
+
 export interface GameState {
   /**
    * Schema Version (State Migration System, Nov 21, 2025)
@@ -211,19 +231,11 @@ export interface GameState {
    * Runtime parameter overrides for parameter sweep analysis (Latin Hypercube Sampling).
    * Used by Monte Carlo sensitivity analysis to vary uncertain parameters.
    *
+   * See SimulationConfig interface for field definitions.
    * Research: research/parameter_sweep_methodology_20251130.md
    * Expected impact: Enables quantification of model uncertainty, 90% confidence intervals
    */
-  simulationConfig?: {
-    /** Bifurcation threshold override (tech deployment %), baseline 0.58 */
-    bifurcationThreshold?: number;
-    /** Collapse regime tech effectiveness multiplier, baseline 0.7 */
-    collapseRegimeMultiplier?: number;
-    /** Social breakdown regime decay multiplier, baseline 1.5 */
-    breakdownRegimeMultiplier?: number;
-    /** Carbon sink loss base multiplier (deforestation impact), baseline 1.0 */
-    carbonSinkMultiplier?: number;
-  };
+  simulationConfig?: SimulationConfig;
 
   /**
    * Active Scenario (Nov 10, 2025)
