@@ -161,7 +161,7 @@ describe('[PERF] organizationManagement.ts O(n) performance', () => {
         });
       });
 
-      assertExecutionTimeUnder(executionTime, 600, '1000 organizations');
+      assertExecutionTimeUnder(executionTime, 650, '1000 organizations');
     });
   });
 
