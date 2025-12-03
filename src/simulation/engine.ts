@@ -69,6 +69,7 @@ import {
   NationalAIPhase,
   UBIPhase,
   SocialSafetyNetsPhase,
+  InformationEcologyPhase,  // Information ecology & epistemic degradation (Dec 2, 2025)
   InformationWarfarePhase,
   // PowerGenerationPhase removed - merged into ResourceEconomyPhase (Batch 3, Nov 9, 2025)
   HumanEnhancementPhase,  // TIER 4.6 (Oct 16, 2025): Human Enhancement & Merger Pathways
@@ -541,6 +542,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new NationalAIPhase());
     this.orchestrator.registerPhase(new UBIPhase());
     this.orchestrator.registerPhase(new SocialSafetyNetsPhase());
+    this.orchestrator.registerPhase(new InformationEcologyPhase());  // Information ecology & epistemic degradation (Dec 2, 2025)
     this.orchestrator.registerPhase(new InformationWarfarePhase());
     // TIER 2 Consolidated Interventions (Batch 1: 9 → 3 phases, Nov 9, 2025)
     this.orchestrator.registerPhase(new Tier2SocialSystemsPhase());      // Order 12.6: Centaur + Community Cohesion
