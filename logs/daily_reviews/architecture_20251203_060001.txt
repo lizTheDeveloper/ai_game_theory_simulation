@@ -1,0 +1,1 @@
+/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/scripts/daily-codebase-review.sh: line 110: claude: command not found
