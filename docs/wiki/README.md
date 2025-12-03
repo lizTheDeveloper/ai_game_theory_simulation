@@ -214,6 +214,22 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📄 **Files:** `research/climate_stability_mechanisms_2024_2025_update.md` (336 lines), `ClimateSystemPhase.ts` (updated comments)
 - **Status:** ✅ COMPLETE - Code comments updated to honestly document implementation choices vs research claims
 
+**Dec 3: HIGH-7 - Conditional Climate Stability Floor (Paris Agreement Gate)**
+- 🔧 **Problem:** Unconditional 5% floor contradicts 83% of research (Wunderling et al. 2024) - creates systematic optimistic bias in tail scenarios
+- 🎯 **Solution:** Apply 5% floor ONLY when Paris Agreement targets are being met (<1.5°C warming)
+- **Implementation:**
+  - Floor is `0.05` when `planetaryBoundariesSystem.boundaries.climate_change.currentValue < 1.5` (Paris success)
+  - Floor is `0.0` when temperature ≥1.5°C (Paris failure - allows realistic collapse)
+  - Aligns with Wunderling 2024 distinction between stabilized and unstabilized scenarios
+- **Research Grade Improvement:** D- → B- (conditional approach research-aligned)
+- **Testing:**
+  - Unit tests verify both conditional branches
+  - Monte Carlo validation (N=10, seed 20251203) - all runs completed successfully, no errors
+  - Architecture review: Grade A- (clean implementation, no blocking issues)
+- 📄 **Files:** `ClimateSystemPhase.ts` (3 new lines), `tests/unit/phases/ClimateSystemPhase.test.ts` (2 new tests)
+- 📄 **Reviews:** `reviews/conditional_climate_floor_architecture_review_20251203.md`, `reviews/climate_stability_floor_debate_20251203.md`
+- **Status:** ✅ COMPLETE - Quality Gates 1 & 2 passed
+
 **Nov 27: CRITICAL-1 + HIGH-2 FIX - environmentalHealth NaN + Carbon Cycle Calibration** (commit 8596afd)
 - 🔧 **CRITICAL-1 FIX: environmentalHealth NaN Crashes (30% → 0% crash rate)**
   - **Problem:** `state.globalMetrics.environmentalHealth` was undefined, causing NaN propagation
