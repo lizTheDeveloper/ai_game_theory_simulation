@@ -523,8 +523,22 @@ export class ClimateSystemPhase implements SimulationPhase {
     // Research: Scheffer et al. (2014) - regime shifts create self-reinforcing dynamics
     const regimeMultiplier = state.bifurcationState?.currentRegime === 'ecological-collapse' ? 1.5 : 1.0;
 
+    // HIGH-7 (Dec 3, 2025): Conditional climate stability floor
+    // Research: Wunderling et al. (2024) "Climate tipping point interactions and cascades"
+    // - "Many tipping interactions are destabilizing" (not self-limiting)
+    // - Cascades cannot be ruled out at 1.5-2C warming
+    // Apply 5% floor ONLY when Paris Agreement targets are being met (<1.5C warming)
+    // In failure scenarios, allow natural collapse below 5% to reflect research findings
+    // Research Grade: B- (conditional approach aligns with Wunderling 2024)
+    // @see research/climate_stability_mechanisms_2024_2025_update.md
+    // @see reviews/climate_stability_floor_debate_20251203.md
+    // @see plans/proposed_climate_stability_floor_conditional_20251203.md
+    const currentTemperature = state.planetaryBoundariesSystem?.boundaries?.climate_change?.currentValue ?? 0;
+    const parisSuccess = currentTemperature < 1.5;  // Paris Agreement 1.5C target
+    const stabilityFloor = parisSuccess ? 0.05 : 0.0;  // Floor only applies when Paris targets met
+
     state.environmentalAccumulation.climateStability = assertInRange(
-      Math.max(0.05, oldStability * (1 - totalClimateStabilityImpact * 0.01 * regimeMultiplier)),
+      Math.max(stabilityFloor, oldStability * (1 - totalClimateStabilityImpact * 0.01 * regimeMultiplier)),
       0, 1,
       {
         location: 'ClimateSystemPhase.applyTippingImpacts',

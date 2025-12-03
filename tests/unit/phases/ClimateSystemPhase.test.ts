@@ -271,9 +271,9 @@ describe('ClimateSystemPhase', () => {
       assert.strictEqual(state.tippingPointSystem.triggers.length, 0);
     });
 
-    it('should use default temperature if temperatureAnomaly is missing', () => {
+    it('should throw error if temperatureAnomaly is missing (no silent fallbacks)', () => {
       const element = createTippingElement({
-        triggerTempC: 1.0, // Below default 1.1°C
+        triggerTempC: 1.0,
         triggered: false,
       });
 
@@ -294,10 +294,13 @@ describe('ClimateSystemPhase', () => {
       });
 
       const context = createTestContext();
-      phase.execute(state, rng, context);
 
-      // Default is 1.1°C, should trigger element with 1.0°C threshold
-      assert.strictEqual(element.triggered, true);
+      // Research simulation must fail loudly on missing required values (no silent fallbacks)
+      // This ensures bugs are caught immediately rather than producing wrong results
+      assert.throws(
+        () => phase.execute(state, rng, context),
+        /Missing state property.*temperatureAnomaly/
+      );
     });
   });
 
@@ -627,6 +630,26 @@ describe('ClimateSystemPhase', () => {
       });
 
       const state = createTestState({
+        planetaryBoundariesSystem: {
+          boundaries: {
+            climate_change: {
+              id: 'climate_change',
+              name: 'Climate Change',
+              currentValue: 2.0, // Above Paris target to avoid floor
+              safeThreshold: 1.0,
+              riskZone: 1.5,
+              status: 'exceeded',
+            } as PlanetaryBoundary,
+            biosphere_integrity: {
+              id: 'biosphere_integrity',
+              name: 'Biosphere Integrity',
+              currentValue: 0.8,
+              safeThreshold: 1.0,
+              riskZone: 1.2,
+              status: 'safe',
+            } as PlanetaryBoundary,
+          },
+        },
         environmentalAccumulation: {
           climateStability: 0.8,
           resourceReserves: 0.65,
@@ -658,7 +681,7 @@ describe('ClimateSystemPhase', () => {
       assert.ok(state.environmentalAccumulation.climateStability < initialStability);
     });
 
-    it('should enforce 5% minimum climate stability floor', () => {
+    it('should enforce 5% minimum climate stability floor when Paris Agreement targets met', () => {
       const element = createTippingElement({
         progress: 1.0,
         impactClimateStability: -1.0, // Extreme impact
@@ -666,6 +689,26 @@ describe('ClimateSystemPhase', () => {
       });
 
       const state = createTestState({
+        planetaryBoundariesSystem: {
+          boundaries: {
+            climate_change: {
+              id: 'climate_change',
+              name: 'Climate Change',
+              currentValue: 1.2, // Below 1.5C Paris target
+              safeThreshold: 1.0,
+              riskZone: 1.5,
+              status: 'safe',
+            } as PlanetaryBoundary,
+            biosphere_integrity: {
+              id: 'biosphere_integrity',
+              name: 'Biosphere Integrity',
+              currentValue: 0.8,
+              safeThreshold: 1.0,
+              riskZone: 1.2,
+              status: 'safe',
+            } as PlanetaryBoundary,
+          },
+        },
         environmentalAccumulation: {
           climateStability: 0.1, // Already low
           resourceReserves: 0.65,
@@ -692,8 +735,67 @@ describe('ClimateSystemPhase', () => {
       const context = createTestContext();
       phase.execute(state, rng, context);
 
-      // Should not go below 5%
+      // Should not go below 5% when Paris targets met (<1.5C)
       assert.ok(state.environmentalAccumulation.climateStability >= 0.05);
+    });
+
+    it('should allow collapse below 5% when Paris Agreement targets exceeded', () => {
+      const element = createTippingElement({
+        progress: 1.0,
+        impactClimateStability: -1.0, // Extreme impact
+        cascades: true,
+      });
+
+      const state = createTestState({
+        planetaryBoundariesSystem: {
+          boundaries: {
+            climate_change: {
+              id: 'climate_change',
+              name: 'Climate Change',
+              currentValue: 2.5, // Well above 1.5C Paris target (failure scenario)
+              safeThreshold: 1.0,
+              riskZone: 1.5,
+              status: 'exceeded',
+            } as PlanetaryBoundary,
+            biosphere_integrity: {
+              id: 'biosphere_integrity',
+              name: 'Biosphere Integrity',
+              currentValue: 0.8,
+              safeThreshold: 1.0,
+              riskZone: 1.2,
+              status: 'safe',
+            } as PlanetaryBoundary,
+          },
+        },
+        environmentalAccumulation: {
+          climateStability: 0.1, // Already low
+          resourceReserves: 0.65,
+          pollutionLevel: 0.40,
+          biodiversityIndex: 0.65,
+          pollutionPreventionFactor: 1.0,
+          monsoonDisruptionRisk: 0,
+          ozoneDepletionRisk: 0,
+          resourceCrisisActive: false,
+          pollutionCrisisActive: false,
+          climateCrisisActive: false,
+          ecosystemCrisisActive: false,
+        },
+        tippingPointSystem: {
+          elements: [element],
+          triggers: [],
+          triggeredCount: 1,
+          completedCount: 1,
+          totalProgress: 1.0,
+          cascadeMultiplier: 1.6, // Maximum cascade
+        },
+      });
+
+      const context = createTestContext();
+      phase.execute(state, rng, context);
+
+      // In Paris failure scenarios (>1.5C), no floor applies - can collapse below 5%
+      // Research: Wunderling et al. (2024) - "many tipping interactions are destabilizing"
+      assert.ok(state.environmentalAccumulation.climateStability < 0.05);
     });
 
     it('should store tipping point impacts for other systems', () => {
