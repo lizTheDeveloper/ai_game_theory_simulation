@@ -33,6 +33,7 @@ import type {
 import { GameSession, type GameSessionConfig } from '../core/GameSession';
 import { SimulationObserver } from '../observers/SimulationObserver';
 import { MetricsCollector, type MetricWithTrend, type TrendDirection } from '../observers/MetricsCollector';
+import { SimulationRunner } from '../core/SimulationRunner';
 
 /**
  * Currency data for UI display
@@ -203,6 +204,7 @@ export function GameStateProvider({
   const sessionRef = useRef<GameSession | null>(null);
   const observerRef = useRef<SimulationObserver | null>(null);
   const metricsRef = useRef<MetricsCollector | null>(null);
+  const simulationRef = useRef<SimulationRunner | null>(null);
 
   // State
   const [gameState, setGameState] = useState<GameStateSnapshot | null>(null);
@@ -215,16 +217,31 @@ export function GameStateProvider({
 
   // Initialize session and observers
   useEffect(() => {
+    const seed = initialSeed ?? Math.floor(Math.random() * 0x100000000);
+
     const session = new GameSession({
       scenario: initialScenario,
-      seed: initialSeed,
+      seed,
     });
     const observer = new SimulationObserver();
     const metrics = new MetricsCollector();
+    const simulation = new SimulationRunner({
+      seed,
+      label: `game_${initialScenario}`,
+    });
 
     sessionRef.current = session;
     observerRef.current = observer;
     metricsRef.current = metrics;
+    simulationRef.current = simulation;
+
+    // Set initial state from simulation
+    const initialState = simulation.getState();
+    session.updateSimulationState(initialState);
+    observer.updateState(initialState);
+    metrics.recordMetrics(initialState);
+    setGameState(initialState);
+    setCurrentMonth(initialState.currentMonth ?? 0);
 
     // Subscribe to events
     const unsubs = [
@@ -276,7 +293,7 @@ export function GameStateProvider({
 
   // Advance simulation by one month
   const advanceMonth = useCallback(() => {
-    if (!sessionRef.current || !observerRef.current || !metricsRef.current) {
+    if (!sessionRef.current || !observerRef.current || !metricsRef.current || !simulationRef.current) {
       return;
     }
 
@@ -291,50 +308,47 @@ export function GameStateProvider({
 
     setIsLoading(true);
 
-    // If external step function provided, use it
-    if (onSimulationStep) {
-      const newState = onSimulationStep();
-      if (newState) {
-        sessionRef.current.updateSimulationState(newState);
-        observerRef.current.updateState(newState);
-        metricsRef.current.recordMetrics(newState);
-        setGameState(newState);
-        const newMonth = newState.currentMonth ?? 0;
-        setCurrentMonth(newMonth);
+    try {
+      // Run simulation for 1 month
+      const result = simulationRef.current.runMonth();
 
-        // Check demo limit
-        if (newMonth >= maxMonths) {
-          setIsGameOver(true);
-          addEvent({
-            id: `demo_complete_${Date.now()}`,
-            text: `Demo complete: ${maxMonths} months simulated`,
-            severity: 'success',
-          });
-        }
-      }
-    } else {
-      // Mock advance for demo mode
-      const newMonth = currentMonth + 1;
+      // Update all observers
+      sessionRef.current.updateSimulationState(result.state);
+      observerRef.current.updateState(result.state);
+      metricsRef.current.recordMetrics(result.state);
+      setGameState(result.state);
+      const newMonth = result.state.currentMonth ?? 0;
       setCurrentMonth(newMonth);
-      addEvent({
-        id: `advance_${Date.now()}`,
-        text: `Month ${newMonth}/${maxMonths} (demo mode)`,
-        severity: 'info',
+
+      // Add events from simulation
+      result.events.forEach((event) => {
+        addEvent({
+          id: `sim_${Date.now()}_${Math.random()}`,
+          text: event.description,
+          severity: (event.severity as 'info' | 'success' | 'warning' | 'critical') ?? 'info',
+        });
       });
 
-      // Check demo limit
-      if (newMonth >= maxMonths) {
+      // Check game over
+      if (result.gameOver || newMonth >= maxMonths) {
         setIsGameOver(true);
         addEvent({
           id: `demo_complete_${Date.now()}`,
-          text: `Demo complete: ${maxMonths} months simulated`,
+          text: `Demo complete: ${newMonth} months simulated`,
           severity: 'success',
         });
       }
+    } catch (error) {
+      console.error('Simulation error:', error);
+      addEvent({
+        id: `error_${Date.now()}`,
+        text: `Simulation error: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        severity: 'critical',
+      });
     }
 
     setIsLoading(false);
-  }, [onSimulationStep, addEvent, isGameOver, currentMonth, maxMonths]);
+  }, [addEvent, isGameOver, maxMonths]);
 
   // Queue a player decision
   const queueDecision = useCallback((decisionId: string) => {
@@ -385,13 +399,34 @@ export function GameStateProvider({
 
   // Start new game
   const startNewGame = useCallback((scenario: ResearchScenarioId, seed?: number) => {
-    if (!sessionRef.current) return;
+    if (!sessionRef.current || !simulationRef.current) return;
 
     setIsLoading(true);
-    sessionRef.current.startNewGame(scenario, seed);
+
+    // Restart simulation with new seed
+    const newSeed = seed ?? Math.floor(Math.random() * 0x100000000);
+    const newSimulation = new SimulationRunner({
+      seed: newSeed,
+      label: `game_${scenario}`,
+    });
+    simulationRef.current = newSimulation;
+
+    // Reset session
+    sessionRef.current.startNewGame(scenario, newSeed);
+
+    // Set initial state
+    const initialState = newSimulation.getState();
+    sessionRef.current.updateSimulationState(initialState);
+    if (observerRef.current) {
+      observerRef.current.updateState(initialState);
+    }
+    if (metricsRef.current) {
+      metricsRef.current.recordMetrics(initialState);
+    }
+
+    setGameState(initialState);
     setCurrentMonth(0);
     setRecentEvents([]);
-    setGameState(null);
     setIsGameOver(false);
     setIsLoading(false);
 

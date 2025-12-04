@@ -1,0 +1,275 @@
+/* OutcomeScreen - Dramatic end-game results overlay */
+
+/* Full-screen overlay */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(20px);
+  animation: fadeIn 1s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Outcome-specific color schemes */
+.overlay.utopia {
+  background: radial-gradient(ellipse at center, rgba(0, 80, 40, 0.3), rgba(0, 0, 0, 0.95));
+}
+
+.overlay.stable {
+  background: radial-gradient(ellipse at center, rgba(0, 60, 80, 0.3), rgba(0, 0, 0, 0.95));
+}
+
+.overlay.struggle {
+  background: radial-gradient(ellipse at center, rgba(80, 60, 0, 0.3), rgba(0, 0, 0, 0.95));
+}
+
+.overlay.collapse {
+  background: radial-gradient(ellipse at center, rgba(80, 30, 0, 0.3), rgba(0, 0, 0, 0.95));
+}
+
+.overlay.extinction {
+  background: radial-gradient(ellipse at center, rgba(60, 0, 10, 0.3), rgba(0, 0, 0, 0.95));
+}
+
+/* Content container */
+.content {
+  max-width: 800px;
+  padding: 60px;
+  text-align: center;
+  animation: slideUp 0.8s ease-out 0.3s both;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Outcome header */
+.outcomeHeader {
+  margin-bottom: 30px;
+}
+
+.outcomeTitle {
+  font-size: 56px;
+  font-weight: 100;
+  letter-spacing: 12px;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+  animation: glowPulse 3s infinite;
+}
+
+.overlay.utopia .outcomeTitle {
+  color: #00FF88;
+  text-shadow: 0 0 60px rgba(0, 255, 136, 0.6), 0 0 120px rgba(0, 255, 136, 0.3);
+}
+
+.overlay.stable .outcomeTitle {
+  color: #00F0FF;
+  text-shadow: 0 0 60px rgba(0, 240, 255, 0.6), 0 0 120px rgba(0, 240, 255, 0.3);
+}
+
+.overlay.struggle .outcomeTitle {
+  color: #FFB000;
+  text-shadow: 0 0 60px rgba(255, 176, 0, 0.6), 0 0 120px rgba(255, 176, 0, 0.3);
+}
+
+.overlay.collapse .outcomeTitle {
+  color: #FF6B00;
+  text-shadow: 0 0 60px rgba(255, 107, 0, 0.6), 0 0 120px rgba(255, 107, 0, 0.3);
+}
+
+.overlay.extinction .outcomeTitle {
+  color: #FF0040;
+  text-shadow: 0 0 60px rgba(255, 0, 64, 0.6), 0 0 120px rgba(255, 0, 64, 0.3);
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+
+.outcomeSubtitle {
+  font-size: 20px;
+  font-weight: 300;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Description */
+.description {
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.7);
+  max-width: 600px;
+  margin: 0 auto 50px;
+}
+
+/* Metrics grid */
+.metricsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.metricCard {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.metricCard:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.metricLabel {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 10px;
+}
+
+.metricValue {
+  font-size: 32px;
+  font-weight: 200;
+  color: #fff;
+}
+
+/* Summary stats */
+.summaryStats {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  margin-bottom: 50px;
+  padding: 25px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.statLabel {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.statValue {
+  font-size: 28px;
+  font-weight: 200;
+  color: #fff;
+}
+
+/* Play again button */
+.playAgainBtn {
+  padding: 18px 48px;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  border-radius: 4px;
+  margin-bottom: 40px;
+}
+
+.playAgainBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 40px rgba(255, 255, 255, 0.1);
+}
+
+.overlay.utopia .playAgainBtn:hover {
+  border-color: #00FF88;
+  box-shadow: 0 10px 40px rgba(0, 255, 136, 0.3);
+}
+
+.overlay.stable .playAgainBtn:hover {
+  border-color: #00F0FF;
+  box-shadow: 0 10px 40px rgba(0, 240, 255, 0.3);
+}
+
+.overlay.extinction .playAgainBtn:hover {
+  border-color: #FF0040;
+  box-shadow: 0 10px 40px rgba(255, 0, 64, 0.3);
+}
+
+/* Attribution */
+.attribution {
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.2);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .content {
+    padding: 40px 20px;
+  }
+
+  .outcomeTitle {
+    font-size: 36px;
+    letter-spacing: 6px;
+  }
+
+  .outcomeSubtitle {
+    font-size: 16px;
+  }
+
+  .description {
+    font-size: 16px;
+  }
+
+  .metricsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+
+  .metricValue {
+    font-size: 24px;
+  }
+
+  .summaryStats {
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
+}
