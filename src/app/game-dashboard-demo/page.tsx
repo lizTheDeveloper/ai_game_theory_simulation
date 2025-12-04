@@ -165,6 +165,7 @@ function DashboardWithState() {
     currentYear,
     currentMonthName,
     isGameOver,
+    aggregateMetrics,
     recentEvents,
     advanceMonth,
     setSpeed,
@@ -218,6 +219,8 @@ function DashboardWithState() {
 
       <main className={styles.main}>
         <GameDashboard
+          isGameOver={isGameOver}
+          aggregateMetrics={aggregateMetrics}
           onAdvanceMonth={advanceMonth}
           onSpeedChange={handleSpeedChange}
           onModeChange={handleModeChange}

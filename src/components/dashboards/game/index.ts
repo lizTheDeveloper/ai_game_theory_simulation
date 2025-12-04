@@ -25,6 +25,8 @@ export type { EventStreamProps, Event } from './EventStream';
 export { ActionBar } from './ActionBar';
 export type { ActionBarProps } from './ActionBar';
 
+export { OutcomeScreen } from './OutcomeScreen';
+
 // Research Tree (V4 Production-Ready)
 export {
   ResearchTree,
