@@ -2,20 +2,19 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## 🚨 TOKEN CONSERVATION MODE - ACTIVE (Nov 28, 2025)
+## 🚨 TOKEN CONSERVATION MODE - DISABLED (Dec 4, 2025)
 
-**CRITICAL: Project in extreme token conservation mode. Goal: Finish roadmap with HALF normal tokens.**
+**PREVIOUSLY ACTIVE - NOW DISABLED PER PM REQUEST**
 
-**All agents MUST:**
-1. **Exit early** - Complete only critical/high priority work, then stop
-2. **Grep aggressively** - Never read files without targeted search first
-3. **Skip documentation** - Unless explicitly required for task
-4. **Batch all operations** - One tool call, not five
-5. **No exploration** - Stay laser-focused on assigned task
-6. **Commit partial work** - Don't perfect, just progress
-7. **Be brutally concise** - No explanations, just code
+~~CRITICAL: Project in extreme token conservation mode. Goal: Finish roadmap with HALF normal tokens.~~
 
-**Autonomous workers:** Reduced to 4-hour intervals. Make each session count.
+**Normal operation restored. Agents should:**
+1. **Work thoroughly** - Complete full features, not just critical work
+2. **Document properly** - Create comprehensive documentation
+3. **Explore as needed** - Understand context before implementing
+4. **Quality over speed** - Proper implementation, not rushed patches
+
+**Autonomous workers:** Running hourly. Full productivity mode.
 
 ## ⚡ Token Efficiency - READ THIS FIRST
 
