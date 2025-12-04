@@ -527,15 +527,48 @@ export class ClimateSystemPhase implements SimulationPhase {
     // Research: Wunderling et al. (2024) "Climate tipping point interactions and cascades"
     // - "Many tipping interactions are destabilizing" (not self-limiting)
     // - Cascades cannot be ruled out at 1.5-2C warming
-    // Apply 5% floor ONLY when Paris Agreement targets are being met (<1.5C warming)
-    // In failure scenarios, allow natural collapse below 5% to reflect research findings
-    // Research Grade: B- (conditional approach aligns with Wunderling 2024)
+    // - 83% of papers show destabilizing interactions (no support for stability floor)
+    //
+    // Option C: Conditional Floor (Policy Stabilization vs Natural Collapse)
+    // Apply 5% floor ONLY in stabilization scenarios (Paris success, few tipping cascades)
+    // Remove floor in tail risk scenarios (Paris failure + cascade risk) to match research
+    //
+    // Stabilization scenarios (floor applies):
+    // - Paris Agreement success (warming < 1.5°C)
+    // - Low cascade risk (< 3 triggered tipping elements OR warming < 2.0°C)
+    //
+    // Tail risk scenarios (no floor, natural collapse):
+    // - Paris failure (warming >= 2.0°C) AND cascade risk (>= 3 tipping elements)
+    //
+    // Research Grade: B- (conditional approach aligns with Wunderling 2024, ACCESS-ESM-1.5 2024)
     // @see research/climate_stability_mechanisms_2024_2025_update.md
     // @see reviews/climate_stability_floor_debate_20251203.md
     // @see plans/proposed_climate_stability_floor_conditional_20251203.md
-    const currentTemperature = state.planetaryBoundariesSystem?.boundaries?.climate_change?.currentValue ?? 0;
+    // @see Wunderling et al. (2024) DOI: 10.5194/esd-15-41-2024
+    // @see Zhang et al. (2024) ACCESS-ESM-1.5 DOI: 10.5194/esd-15-1353-2024
+    const currentTemperature = assertFinite(
+      state.planetaryBoundariesSystem?.boundaries?.climate_change?.currentValue ?? 0,
+      {
+        location: 'ClimateSystemPhase.conditionalStabilityFloor',
+        valueName: 'currentTemperature',
+        month: state.currentMonth
+      }
+    );
     const parisSuccess = currentTemperature < 1.5;  // Paris Agreement 1.5C target
-    const stabilityFloor = parisSuccess ? 0.05 : 0.0;  // Floor only applies when Paris targets met
+    const cascadeRisk = system.triggeredCount >= 3 && currentTemperature >= 2.0;  // Tail risk: many cascades + high warming
+
+    // Floor only applies in stabilization scenarios (policy intervention successful)
+    // In tail risk scenarios, allow natural collapse per Wunderling et al. (2024)
+    const stabilityFloor = (parisSuccess || !cascadeRisk) ? 0.05 : 0.0;
+
+    // Log when floor is removed in tail risk scenarios
+    if (stabilityFloor === 0.0 && system.triggeredCount > 0) {
+      console.warn(
+        `⚠️ Tail risk scenario: Climate stability floor removed ` +
+        `(${system.triggeredCount} tipping elements, ${currentTemperature.toFixed(2)}°C warming)`
+      );
+      console.log(`   Research: Wunderling et al. (2024) - "many tipping interactions are destabilizing"`);
+    }
 
     state.environmentalAccumulation.climateStability = assertInRange(
       Math.max(stabilityFloor, oldStability * (1 - totalClimateStabilityImpact * 0.01 * regimeMultiplier)),
