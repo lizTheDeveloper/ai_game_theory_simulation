@@ -1,10 +1,10 @@
 [Unit]
-Description=SATU Autonomous Worker Queue Timer (Every 4 hours)
+Description=SATU Autonomous Worker Queue Timer (Hourly)
 Requires=autonomous-worker-queue.service
 
 [Timer]
 OnBootSec=5min
-OnUnitActiveSec=4h
+OnUnitActiveSec=1h
 Persistent=true
 
 [Install]
