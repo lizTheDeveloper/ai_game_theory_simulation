@@ -85,3 +85,190 @@
 .debugInfo strong {
   color: rgba(0, 240, 255, 0.4);
 }
+
+.monthCounter {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.monthLabel {
+  font-size: 0.875rem;
+  font-weight: 300;
+  letter-spacing: 0.15em;
+  color: #00F0FF;
+  text-transform: uppercase;
+}
+
+.gameOverBadge {
+  font-size: 0.625rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  color: #FFD700;
+  padding: 0.25rem 0.75rem;
+  background: rgba(255, 215, 0, 0.1);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 2px;
+  text-transform: uppercase;
+}
+
+.gameOverText {
+  color: #FFD700;
+  font-weight: 400;
+}
+
+/* ================================================
+   SCENARIO SELECTOR - Elysium Aesthetic
+   ================================================ */
+
+.scenarioContainer {
+  min-height: 100vh;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.scenarioContent {
+  max-width: 960px;
+  width: 100%;
+}
+
+.scenarioHeader {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.scenarioTitle {
+  font-size: 2rem;
+  font-weight: 200;
+  letter-spacing: 0.4em;
+  color: #fff;
+  margin: 0 0 1rem 0;
+  text-transform: uppercase;
+}
+
+.scenarioSubtitle {
+  font-size: 0.875rem;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.scenarioGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+@media (max-width: 768px) {
+  .scenarioGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.scenarioCard {
+  position: relative;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  padding: 2rem 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.scenarioCard:hover {
+  background: rgba(0, 240, 255, 0.03);
+  border-color: rgba(0, 240, 255, 0.2);
+}
+
+.scenarioCardSelected {
+  background: rgba(0, 240, 255, 0.05);
+  border-color: rgba(0, 240, 255, 0.4);
+  box-shadow: 0 0 30px rgba(0, 240, 255, 0.1), inset 0 0 30px rgba(0, 240, 255, 0.02);
+}
+
+.scenarioIcon {
+  color: rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.scenarioIconActive {
+  color: #00F0FF;
+  filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.5));
+}
+
+.scenarioCardTitle {
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  color: #fff;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.scenarioCardDesc {
+  font-size: 0.75rem;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.4);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.scenarioSelectedIndicator {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  color: #00F0FF;
+  filter: drop-shadow(0 0 4px rgba(0, 240, 255, 0.6));
+}
+
+.scenarioActions {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.startButton {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2.5rem;
+  background: transparent;
+  border: 1px solid rgba(0, 240, 255, 0.4);
+  border-radius: 2px;
+  color: #00F0FF;
+  font-size: 0.875rem;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.startButton:hover {
+  background: rgba(0, 240, 255, 0.1);
+  border-color: rgba(0, 240, 255, 0.6);
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+}
+
+.startButtonText {
+  text-transform: uppercase;
+}
+
+.scenarioNote {
+  text-align: center;
+  font-size: 0.625rem;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.25);
+  letter-spacing: 0.05em;
+  margin: 0;
+}

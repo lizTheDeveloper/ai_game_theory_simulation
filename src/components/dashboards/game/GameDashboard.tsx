@@ -1,13 +1,14 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
-import type { GameStateSnapshot } from '@/game/types';
+import React, { useState, useMemo, useCallback } from 'react';
+import type { GameStateSnapshot, AggregateMetrics } from '@/game/types';
 import { GameDashboardHeader } from './GameDashboardHeader';
 import { CurrencyPanel } from './CurrencyPanel';
 import { PendingDecisions } from './PendingDecisions';
 import { WorldVisualization } from './WorldVisualization';
 import { EventStream } from './EventStream';
 import { ActionBar } from './ActionBar';
+import { OutcomeScreen } from './OutcomeScreen';
 import {
   mapCurrencies,
   mapOutcomes,
@@ -21,6 +22,8 @@ import styles from './game-dashboard.module.css';
 
 export interface GameDashboardProps {
   gameState?: GameStateSnapshot;
+  aggregateMetrics?: AggregateMetrics | null;
+  isGameOver?: boolean;
   onAdvanceMonth?: () => void;
   onSpeedChange?: (speed: number) => void;
   onModeChange?: (mode: string) => void;
@@ -33,6 +36,8 @@ export interface GameDashboardProps {
  */
 export function GameDashboard({
   gameState,
+  aggregateMetrics,
+  isGameOver = false,
   onAdvanceMonth,
   onSpeedChange,
   onModeChange,
@@ -40,6 +45,11 @@ export function GameDashboard({
 }: GameDashboardProps) {
   const [activeMode, setActiveMode] = useState('overview');
   const [simulationSpeed, setSimulationSpeed] = useState(1);
+
+  // Handle play again - reloads page to reset simulation
+  const handlePlayAgain = useCallback(() => {
+    window.location.reload();
+  }, []);
 
   const handleModeChange = (mode: string) => {
     setActiveMode(mode);
@@ -102,6 +112,14 @@ export function GameDashboard({
         onSpeedChange={handleSpeedChange}
         onAdvanceMonth={onAdvanceMonth}
       />
+
+      {/* Outcome screen overlay when game is over */}
+      {isGameOver && (
+        <OutcomeScreen
+          metrics={aggregateMetrics ?? null}
+          onPlayAgain={handlePlayAgain}
+        />
+      )}
     </div>
   );
 }
