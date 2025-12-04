@@ -88,6 +88,7 @@ export interface GameContextValue {
   currentMonth: number;
   currentYear: number;
   currentMonthName: string;
+  isGameOver: boolean;
 
   // Metrics for UI
   currencies: CurrencyData[];
@@ -100,6 +101,7 @@ export interface GameContextValue {
   advanceMonth: () => void;
   setSpeed: (speed: number) => void;
   queueDecision: (decisionId: string) => void;
+  queueAdvocacyAction: (actionId: string) => void;
 
   // Session management
   startNewGame: (scenario: ResearchScenarioId, seed?: number) => void;
@@ -114,6 +116,7 @@ const defaultContextValue: GameContextValue = {
   currentMonth: 0,
   currentYear: 2025,
   currentMonthName: 'January',
+  isGameOver: false,
   currencies: [],
   outcomes: {
     utopia: 0.1,
@@ -129,6 +132,7 @@ const defaultContextValue: GameContextValue = {
   advanceMonth: () => {},
   setSpeed: () => {},
   queueDecision: () => {},
+  queueAdvocacyAction: () => {},
   startNewGame: () => {},
   loadMockData: () => {},
 };
@@ -177,6 +181,8 @@ interface GameStateProviderProps {
   onSimulationStep?: () => GameStateSnapshot | null;
   /** External state updates (for integration with real simulation) */
   externalState?: GameStateSnapshot;
+  /** Max months for demo mode (default: 12) */
+  maxMonths?: number;
 }
 
 /**
@@ -191,6 +197,7 @@ export function GameStateProvider({
   initialSeed,
   onSimulationStep,
   externalState,
+  maxMonths = 12,
 }: GameStateProviderProps) {
   // Core game objects (refs to avoid re-renders)
   const sessionRef = useRef<GameSession | null>(null);
@@ -204,6 +211,7 @@ export function GameStateProvider({
   const [currentMonth, setCurrentMonth] = useState(0);
   const [speed, setSpeed] = useState(1);
   const [recentEvents, setRecentEvents] = useState<GameEventDisplay[]>([]);
+  const [isGameOver, setIsGameOver] = useState(false);
 
   // Initialize session and observers
   useEffect(() => {
@@ -272,6 +280,15 @@ export function GameStateProvider({
       return;
     }
 
+    if (isGameOver) {
+      addEvent({
+        id: `game_over_${Date.now()}`,
+        text: 'Game over - demo limit reached',
+        severity: 'warning',
+      });
+      return;
+    }
+
     setIsLoading(true);
 
     // If external step function provided, use it
@@ -282,20 +299,42 @@ export function GameStateProvider({
         observerRef.current.updateState(newState);
         metricsRef.current.recordMetrics(newState);
         setGameState(newState);
-        setCurrentMonth(newState.currentMonth ?? 0);
+        const newMonth = newState.currentMonth ?? 0;
+        setCurrentMonth(newMonth);
+
+        // Check demo limit
+        if (newMonth >= maxMonths) {
+          setIsGameOver(true);
+          addEvent({
+            id: `demo_complete_${Date.now()}`,
+            text: `Demo complete: ${maxMonths} months simulated`,
+            severity: 'success',
+          });
+        }
       }
     } else {
       // Mock advance for demo mode
-      setCurrentMonth((prev) => prev + 1);
+      const newMonth = currentMonth + 1;
+      setCurrentMonth(newMonth);
       addEvent({
         id: `advance_${Date.now()}`,
-        text: 'Month advanced (demo mode)',
+        text: `Month ${newMonth}/${maxMonths} (demo mode)`,
         severity: 'info',
       });
+
+      // Check demo limit
+      if (newMonth >= maxMonths) {
+        setIsGameOver(true);
+        addEvent({
+          id: `demo_complete_${Date.now()}`,
+          text: `Demo complete: ${maxMonths} months simulated`,
+          severity: 'success',
+        });
+      }
     }
 
     setIsLoading(false);
-  }, [onSimulationStep, addEvent]);
+  }, [onSimulationStep, addEvent, isGameOver, currentMonth, maxMonths]);
 
   // Queue a player decision
   const queueDecision = useCallback((decisionId: string) => {
@@ -304,8 +343,45 @@ export function GameStateProvider({
       text: `Decision queued: ${decisionId}`,
       severity: 'info',
     });
-    // In real implementation, this would call session.queueAdvocacyAction()
+    // Legacy decision queueing - use queueAdvocacyAction instead
   }, [addEvent]);
+
+  // Queue an advocacy action
+  const queueAdvocacyAction = useCallback((actionId: string) => {
+    if (!sessionRef.current) {
+      addEvent({
+        id: `error_${Date.now()}`,
+        text: 'Cannot queue action - session not initialized',
+        severity: 'critical',
+      });
+      return;
+    }
+
+    if (isGameOver) {
+      addEvent({
+        id: `error_${Date.now()}`,
+        text: 'Cannot queue action - game is over',
+        severity: 'warning',
+      });
+      return;
+    }
+
+    const result = sessionRef.current.queueAdvocacyAction(actionId);
+
+    if (result.success) {
+      addEvent({
+        id: `action_${Date.now()}`,
+        text: `Action queued: ${actionId}`,
+        severity: 'success',
+      });
+    } else {
+      addEvent({
+        id: `action_rejected_${Date.now()}`,
+        text: `Action rejected: ${result.rejectionReason ?? 'Unknown reason'}`,
+        severity: 'warning',
+      });
+    }
+  }, [addEvent, isGameOver]);
 
   // Start new game
   const startNewGame = useCallback((scenario: ResearchScenarioId, seed?: number) => {
@@ -316,6 +392,7 @@ export function GameStateProvider({
     setCurrentMonth(0);
     setRecentEvents([]);
     setGameState(null);
+    setIsGameOver(false);
     setIsLoading(false);
 
     addEvent({
@@ -367,6 +444,7 @@ export function GameStateProvider({
     currentMonth,
     currentYear,
     currentMonthName,
+    isGameOver,
     currencies,
     outcomes,
     aggregateMetrics,
@@ -375,6 +453,7 @@ export function GameStateProvider({
     advanceMonth,
     setSpeed,
     queueDecision,
+    queueAdvocacyAction,
     startNewGame,
     loadMockData,
   };
