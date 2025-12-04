@@ -533,25 +533,49 @@ export class ClimateSystemPhase implements SimulationPhase {
     // Research: Wunderling et al. (2024) "Climate tipping point interactions and cascades"
     // - "Many tipping interactions are destabilizing" (83% of papers, not self-limiting)
     // - Cascades cannot be ruled out at 1.5-2C warming
-    // - Multiple tipping cascades create accelerating degradation (no evidence for stability floor)
+    // - 83% of papers show destabilizing interactions (no support for stability floor)
     //
-    // Apply 5% floor ONLY when BOTH conditions met:
-    // 1. Paris Agreement success: temperature < 1.5C (stabilizing feedbacks dominate)
-    // 2. NOT in tail risk: < 3 tipping cascades (haven't overwhelmed system resilience)
+    // Option C: Conditional Floor (Policy Stabilization vs Natural Collapse)
+    // Apply 5% floor ONLY in stabilization scenarios (Paris success, few tipping cascades)
+    // Remove floor in tail risk scenarios (Paris failure + cascade risk) to match research
     //
-    // In tail scenarios (3+ cascades), remove floor entirely (0.0) to reflect research:
-    // - Destabilizing interactions dominate
-    // - Positive feedbacks (methane, ice loss, forest dieback) overwhelm Planck response
-    // - System can collapse below 5% in catastrophic cascade scenarios
+    // Stabilization scenarios (floor applies):
+    // - Paris Agreement success (warming < 1.5°C)
+    // - Low cascade risk (< 3 triggered tipping elements OR warming < 2.0°C)
     //
-    // Research Grade: B- (conditional approach aligns with Wunderling 2024)
+    // Tail risk scenarios (no floor, natural collapse):
+    // - Paris failure (warming >= 2.0°C) AND cascade risk (>= 3 tipping elements)
+    //
+    // Research Grade: B- (conditional approach aligns with Wunderling 2024, ACCESS-ESM-1.5 2024)
     // @see research/climate_stability_mechanisms_2024_2025_update.md
     // @see research/research_validation_session_51_20251203.md (lines 54-58)
     // @see reviews/climate_stability_floor_debate_20251203.md
-    const currentTemperature = state.planetaryBoundariesSystem?.boundaries?.climate_change?.currentValue ?? 0;
+    // @see plans/proposed_climate_stability_floor_conditional_20251203.md
+    // @see Wunderling et al. (2024) DOI: 10.5194/esd-15-41-2024
+    // @see Zhang et al. (2024) ACCESS-ESM-1.5 DOI: 10.5194/esd-15-1353-2024
+    const currentTemperature = assertFinite(
+      state.planetaryBoundariesSystem?.boundaries?.climate_change?.currentValue ?? 0,
+      {
+        location: 'ClimateSystemPhase.conditionalStabilityFloor',
+        valueName: 'currentTemperature',
+        month: state.currentMonth
+      }
+    );
     const parisSuccess = currentTemperature < 1.5;  // Paris Agreement 1.5C target
-    const tailRiskScenario = cascadeCount >= 3;  // 3+ tipping cascades = tail risk
-    const stabilityFloor = (parisSuccess && !tailRiskScenario) ? 0.05 : 0.0;
+    const cascadeRisk = system.triggeredCount >= 3 && currentTemperature >= 2.0;  // Tail risk: many cascades + high warming
+
+    // Floor only applies in stabilization scenarios (policy intervention successful)
+    // In tail risk scenarios, allow natural collapse per Wunderling et al. (2024)
+    const stabilityFloor = (parisSuccess || !cascadeRisk) ? 0.05 : 0.0;
+
+    // Log when floor is removed in tail risk scenarios
+    if (stabilityFloor === 0.0 && system.triggeredCount > 0) {
+      console.warn(
+        `⚠️ Tail risk scenario: Climate stability floor removed ` +
+        `(${system.triggeredCount} tipping elements, ${currentTemperature.toFixed(2)}°C warming)`
+      );
+      console.log(`   Research: Wunderling et al. (2024) - "many tipping interactions are destabilizing"`);
+    }
 
     state.environmentalAccumulation.climateStability = assertInRange(
       Math.max(stabilityFloor, oldStability * (1 - totalClimateStabilityImpact * 0.01 * regimeMultiplier)),
