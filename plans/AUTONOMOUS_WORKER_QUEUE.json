@@ -1,6 +1,24 @@
 {
   "queue": [
     {
+      "id": "CRITICAL-GAME-1",
+      "priority": "CRITICAL",
+      "title": "Build Playable Game Demo (NOT Research Simulation)",
+      "assignedAgent": "architect",
+      "agentPersonality": "architect",
+      "status": "AVAILABLE",
+      "complexity": 4,
+      "estimatedTokens": 60000,
+      "dependencies": [],
+      "blockedBy": [],
+      "roadmapSection": "PM URGENT REQUEST - End of Week Deadline",
+      "createdAt": "2025-12-04T23:17:36.176Z",
+      "claimedBy": null,
+      "claimedAt": null,
+      "description": "**PM URGENT:** Deploy playable game by end of week\n\n**Problem:** Current deployed demo (http://34.32.105.178/game-dashboard-demo) shows RESEARCH SIMULATION, not the game.\n\n**User Feedback:**\n- 'Load Mock Data' button - mock data only\n- Dashboards don't update when advancing months\n- Everything stuck at 50, no actual game mechanics\n- 'This is the research tool, not the game'\n\n**Game Architecture EXISTS in src/game/:**\n- core/GameSession.ts - Session management\n- core/InfluenceCalculator.ts - Player influence mechanics  \n- providers/GameStateProvider.tsx - React integration\n- scenarios/ - Scenario definitions (need parameters)\n\n**Requirements:**\n1. Player can select scenarios (baseline, optimistic, pessimistic)\n2. Player can make advocacy decisions (8-12 actions)\n3. Game state ACTUALLY UPDATES based on player influence\n4. Metrics CHANGE (not stuck at 50)\n5. Research-validated scenario parameters\n6. Event log with attribution ('Your advocacy contributed to...')\n\n**Deliverables:**\n- Playable game using GameSession + InfluenceCalculator\n- NOT simulation components (no SimulationWorkerContext)\n- Monte Carlo validation (N=100 per scenario)\n- Deployed to claude-workspace VM\n\n**Workflow:** Use orchestrator to coordinate:\n1. Research & Validation (Cynthia + Sylvia) - Extract scenario parameters\n2. Implementation (Roy + Tessa) - Player influence + UI  \n3. Architecture Review - Performance check\n4. Monte Carlo Validation (Priya) - Verify outcomes\n5. Deploy to VM\n\n**Priority:** CRITICAL - User expects demo by end of week",
+      "validationStatus": null
+    },
+    {
       "id": "HIGH-3",
       "priority": "HIGH",
       "title": "VM Multi-Worker Infrastructure Setup + Priority Queue System",
@@ -291,7 +309,7 @@
     }
   ],
   "metadata": {
-    "lastUpdated": "2025-12-01T01:45:15.719Z",
+    "lastUpdated": "2025-12-04T23:17:36.177Z",
     "version": "1.0.0",
     "generatedFrom": "MASTER_IMPLEMENTATION_ROADMAP.md"
   }
