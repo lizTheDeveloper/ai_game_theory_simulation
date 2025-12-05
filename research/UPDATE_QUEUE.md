@@ -1,6 +1,6 @@
 # Research Update Queue
-**Generated:** 12/5/2025, 8:30:08 AM
-**Files Scanned:** 511
+**Generated:** 12/5/2025, 12:30:06 PM
+**Files Scanned:** 512
 
 ---
 
@@ -12,7 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 174 (34.1%)
+**Count:** 175 (34.2%)
 
 ### `AUTONOMOUS_RESEARCHER_SESSION_20251203_2030.md`
 - **Oldest source:** 1981 (44 years old)
@@ -544,6 +544,11 @@
 - **Status:** Not used in simulation
 - **Path:** `research/lenton_2019_tipping_cascades_verification_20251029.md`
 
+### `marine_ice_sheet_instability_20251205.md`
+- **Oldest source:** 2019 (6 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/marine_ice_sheet_instability_20251205.md`
+
 ### `mayer_1995_trust_restoration_verification_20251029.md`
 - **Oldest source:** 1993 (32 years old)
 - **Status:** Not used in simulation
@@ -917,7 +922,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 315 (61.6%)
+**Count:** 315 (61.5%)
 
 All sources <3 years old. No action required.
 
@@ -927,11 +932,11 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 511 |
+| Total files | 512 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 174 (34.1%) |
+| HIGH | 175 (34.2%) |
 | MEDIUM | 22 (4.3%) |
-| LOW | 315 (61.6%) |
+| LOW | 315 (61.5%) |
 | Average age | 7.8 years |
 | Oldest source | 1955 (70 years ago) |
 
@@ -939,21 +944,21 @@ All sources <3 years old. No action required.
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 315 | 61.6% |
+| Current (<3yr) | 315 | 61.5% |
 | Warning (3-5yr) | 22 | 4.3% |
-| Critical (>5yr) | 174 | 34.1% |
+| Critical (>5yr) | 175 | 34.2% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-- **Current:** 34.1% critical (>5yr)
+- **Current:** 34.2% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
-1. Update 174 HIGH priority file(s) within 1 month
+1. Update 175 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 
