@@ -1,9 +1,10 @@
 # M-4: Abrupt Sea Level Rise
 
-**Priority:** MEDIUM  
-**Complexity:** 4 systems (climate, ice sheets, coastal populations, infrastructure)  
-**Status:** Phase 1 - Research  
-**Assignee:** simulation-maintainer (Roy)
+**Priority:** MEDIUM
+**Complexity:** 4 systems (climate, ice sheets, coastal populations, infrastructure)
+**Status:** Phase 4 - Monte Carlo Validation (Calibration Pending)
+**Assignee:** simulation-maintainer (Roy), priya (validation)
+**Progress:** 85% complete - implementation done, calibration needed
 
 ## Problem Statement
 
@@ -53,17 +54,19 @@ Current sea level rise in the simulation is gradual. Missing marine ice sheet in
 - [x] Model trigger conditions (temperature-based stochastic, conservative probabilities)
 - [x] Model cascading impacts (population displacement, infrastructure damage, agricultural loss)
 - [x] Use assertion utilities, maintain determinism
-- [ ] Unit tests for phase logic
+- [x] Unit tests for phase logic (47 test cases)
 
 ### Phase 3: Architecture Review (Quality Gate 2)
-- [ ] architecture-skeptic: Review state propagation
-- [ ] Check performance (O(1) ideally, avoid O(n²))
-- [ ] GATE: Address CRITICAL/HIGH issues
+- [x] architecture-skeptic: Review state propagation
+- [x] Check performance (O(1) ideally, avoid O(n²))
+- [x] GATE: PASS - No CRITICAL issues, minor optimizations identified
 
 ### Phase 4: Monte Carlo Validation
-- [ ] priya: Run N≥10 validation runs
-- [ ] Verify abrupt events occur in tail scenarios
-- [ ] Check outcome distributions (should increase extinction risk in hot scenarios)
+- [x] priya: Run N≥30 validation runs (3 scenarios × 10 runs)
+- [x] Fix CRITICAL bugs (monotonicity, mortality overflow, agricultural cap)
+- [ ] CALIBRATION PENDING: Adjust trigger probabilities (30% vs 5-15%, 100% vs 30-70%)
+- [ ] CALIBRATION PENDING: Adjust displacement calculations (0.43-0.78 ratio vs 1.0)
+- [ ] Re-run validation after calibration for final ✅ PASS
 
 ### Phase 5: Documentation & Archival
 - [ ] wiki-documentation-updater: Document new system in wiki
