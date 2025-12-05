@@ -1,7 +1,33 @@
 #!/bin/bash
 set -e
 
-PROJECT_DIR="/home/lizthedeveloper_gmail_com/ai_game_theory_simulation"
+# Ensure PATH includes claude (needed for cron execution)
+export PATH="/usr/bin:/usr/local/bin:/bin:$PATH"
+
+# Get the actual project directory where this script lives
+PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# Lock file to prevent concurrent runs
+LOCK_FILE="$PROJECT_DIR/.autonomous-worker.lock"
+
+# Check for existing lock
+if [ -f "$LOCK_FILE" ]; then
+    LOCK_PID=$(cat "$LOCK_FILE" 2>/dev/null || echo "")
+    # Check if process is still running
+    if [ -n "$LOCK_PID" ] && kill -0 "$LOCK_PID" 2>/dev/null; then
+        echo "⚠️  Another worker is running (PID: $LOCK_PID). Exiting."
+        exit 0
+    else
+        # Stale lock file
+        rm -f "$LOCK_FILE"
+    fi
+fi
+
+# Create lock file with current PID
+echo $$ > "$LOCK_FILE"
+
+# Ensure lock is removed on exit
+trap "rm -f '$LOCK_FILE'" EXIT INT TERM
 
 # Source .env file to get API key
 if [ -f "$PROJECT_DIR/.env" ]; then
@@ -140,7 +166,7 @@ Do NOT use git stash - resolve conflicts properly by editing files.
 CONFLICT_EOF
 
         # Note: Claude Code is Node.js/TypeScript, doesn't need Python .venv
-        claude --dangerously-skip-permissions < /tmp/conflict_resolution_$TIMESTAMP.txt 2>&1
+        claude --model sonnet --dangerously-skip-permissions < /tmp/conflict_resolution_$TIMESTAMP.txt 2>&1
         rm -f /tmp/conflict_resolution_$TIMESTAMP.txt
 
         log_success "Conflicts resolved, continuing..."
@@ -157,6 +183,38 @@ CONFLICT_EOF
     log_info "Creating branch: $BRANCH_NAME"
     git checkout -b "$BRANCH_NAME" 2>&1
     log_success "Branch created"
+
+    echo ""
+    log_stage "MESSAGE CHECK"
+
+    # Check for pending messages/mentions in coordination channels
+    # This ensures agents respond to @mentions before starting autonomous work
+    log_info "Checking for pending messages in coordination channels..."
+
+    # Source environment for Matrix tokens
+    if [ -f ~/.superalignment-env ]; then
+        source ~/.superalignment-env
+    fi
+
+    COORDINATION_ROOM="!G-uy0v5GZd9IUqFufg4KIt0ks6d7bNdwquD29SVC4-I"
+    HAS_MENTIONS=0
+
+    # Check if there are any recent messages mentioning "autonomous-worker" or general alerts
+    if [ -n "$MATRIX_TOKEN_ORCHESTRATOR" ]; then
+        RECENT_MESSAGES=$(curl -s -X GET \
+            "https://matrix.themultiverse.school/_matrix/client/v3/rooms/${COORDINATION_ROOM}/messages?dir=b&limit=5" \
+            -H "Authorization: Bearer ${MATRIX_TOKEN_ORCHESTRATOR}" 2>/dev/null || echo "")
+
+        if echo "$RECENT_MESSAGES" | grep -qi "autonomous-worker\|@worker\|URGENT"; then
+            HAS_MENTIONS=1
+            log_warning "Found potential mentions or urgent messages in coordination channel"
+            log_info "These should be handled by agent monitors, continuing with scheduled work"
+        else
+            log_success "No urgent messages found"
+        fi
+    else
+        log_warning "Matrix token not found, skipping message check"
+    fi
 
     echo ""
     log_stage "ENVIRONMENT SETUP"
@@ -196,12 +254,18 @@ Current subscription usage (checked before this session started):
 - **Week**: ${WEEK_USAGE_PCT}% used (resets Nov 10, 3pm Pacific)
 - **Opus**: ${OPUS_USAGE_PCT}% used
 
-**Token Budget Guidance:**
-- Under 50%: Normal operation - prioritize CRITICAL/HIGH items
-- 50-75%: Be cost-conscious - focus on highest-value work only
-- Over 75%: Conservative mode - only CRITICAL items, be concise
+**Work Philosophy: Always Be Shipping 🚢**
 
-**Always be concise and prioritize the highest-priority, highest-value work available.** This usage context is for your awareness - work on what matters most regardless of percentage.
+Work through the ENTIRE roadmap systematically:
+1. CRITICAL items
+2. HIGH items
+3. MEDIUM items
+4. LOW items
+5. FALLBACK WORKFLOWS (reviews, cleanup, analysis)
+
+**Never stop.** There's always something productive to do.
+
+**Exhaust all available tokens clearing the backlog. If roadmap is empty, do maintenance. If maintenance is done, create new plans.**
 
 Read plans/MASTER_IMPLEMENTATION_ROADMAP.md and identify work to do.
 
@@ -227,9 +291,18 @@ Example research request message format:
 
 ## PRIMARY WORKFLOW: Roadmap Implementation
 
-If there are CRITICAL or HIGH priority items not yet complete:
+Work through ALL roadmap items systematically (CRITICAL → HIGH → MEDIUM → LOW):
 
 Use the orchestrator agent to coordinate the full workflow:
+
+**Prioritization:**
+1. CRITICAL items first (always)
+2. Then HIGH items
+3. Then MEDIUM items
+4. Then LOW items
+5. Work through entire backlog - do not stop at high priority
+
+**Goal: Exhaust all available work, using all available tokens to clear the backlog.**
 1. Research & Validation (Quality Gate 1): super-alignment-researcher + research-skeptic review
 2. Implementation & Testing: feature-implementer + test writers + Monte Carlo validation
 3. Architecture Review (Quality Gate 2): architecture-skeptic review (MUST address CRITICAL/HIGH issues)
@@ -241,6 +314,17 @@ Commit all completed work to the current branch.
 ## FALLBACK WORKFLOWS: If roadmap is complete or no CRITICAL/HIGH items
 
 Execute these maintenance tasks in order:
+
+### 0. Coffee Break ☕ (ALWAYS DO THIS FIRST IN FALLBACK MODE)
+
+When there's no explicit work queued:
+1. Check git status and recent commits (what did others do?)
+2. Pull latest from origin/main and integrate any changes
+3. Read the implementation and coordination channels for any messages
+4. Identify what's been accomplished vs what's pending
+5. Post a status update to coordination channel with your assessment
+
+This "coffee" period is for reflection and integration, not just polling.
 
 ### 1. Architecture Integration Review
 Use architecture-skeptic to:
@@ -281,6 +365,20 @@ Use wiki-documentation-updater to:
 - Ensure all simulation mechanics are documented
 - Cross-reference code comments with wiki
 
+### 6. Come Up With Plans 📋
+
+If all maintenance is done and roadmap is empty:
+1. Run the daily architecture review (architecture-skeptic)
+2. Run underdocumented code audit (check docs/underdocumented.json)
+3. Review Monte Carlo results for anomalies
+4. Identify potential new features or improvements
+5. Create plan files in plans/ directory for future work:
+   - plans/proposed_[feature]_[date].md
+   - Include: Problem statement, proposed solution, research needed, effort estimate
+6. Post plan summaries to coordination channel for team review
+
+**Goal:** Never be truly idle - always generating value through planning if execution is blocked.
+
 Commit all improvements to the current branch with descriptive messages.
 TASK_EOF
 
@@ -292,7 +390,7 @@ TASK_EOF
 
     # Run with timeout and capture exit code
     set +e
-    timeout 2700 claude --dangerously-skip-permissions < /tmp/claude_task_$TIMESTAMP.txt 2>&1
+    timeout 2700 claude --model sonnet --dangerously-skip-permissions < /tmp/claude_task_$TIMESTAMP.txt 2>&1
     CLAUDE_EXIT=$?
     set -e
 
@@ -323,7 +421,7 @@ Be concise - you have limited time. Focus on preserving work, not perfecting it.
 CLEANUP_EOF
 
         set +e
-        timeout 300 claude --dangerously-skip-permissions < /tmp/cleanup_task_$TIMESTAMP.txt 2>&1
+        timeout 300 claude --model sonnet --dangerously-skip-permissions < /tmp/cleanup_task_$TIMESTAMP.txt 2>&1
         CLEANUP_EXIT=$?
         set -e
         rm -f /tmp/cleanup_task_$TIMESTAMP.txt
@@ -350,6 +448,36 @@ Claude Code execution timed out after 45 minutes. Post-timeout cleanup $([ $CLEA
 
 🤖 Auto-generated by autonomous worker" \
                 --label "autonomous-worker,timeout" 2>&1 || log_warning "Failed to create GitHub issue"
+        fi
+    # Check for token exhaustion (Claude Max subscription limit)
+    elif grep -qi "rate.*limit\|quota.*exceeded\|insufficient.*credits\|usage.*limit" <<< "$OUTPUT" 2>/dev/null; then
+        log_error "⚠️  TOKEN EXHAUSTION DETECTED - Claude Max usage limit reached"
+        if command -v gh >/dev/null 2>&1; then
+            gh issue create \
+                --title "🚨 TOKEN EXHAUSTION - Switch Claude Max Account" \
+                --body "**Run:** $TIMESTAMP
+**Duration:** ${CLAUDE_DURATION}s
+**Branch:** `$BRANCH_NAME`
+
+**🔴 CLAUDE MAX SUBSCRIPTION EXHAUSTED**
+
+The autonomous worker has run out of tokens on the current Claude Max subscription.
+
+**Action Required (Manual Login):**
+1. SSH to VM: `gcloud compute ssh claude-workspace --zone=europe-west10-a`
+2. Log out of current Claude Code session
+3. Log in with backup Claude Max account
+4. Verify cron jobs still configured: `crontab -l`
+
+**Current Status:**
+- Worker: PAUSED (will retry next hour)
+- Researcher: PAUSED (will retry next hour)
+- Merge orchestrator: Still operational
+
+**Log:** `logs/autonomous/worker_${TIMESTAMP}.log`
+
+🤖 Auto-generated by autonomous worker" \
+                --label "autonomous-worker,token-exhaustion,urgent" 2>&1 || log_warning "Failed to create GitHub issue"
         fi
     elif [ $CLAUDE_EXIT -eq 0 ]; then
         log_success "Claude execution completed (${CLAUDE_DURATION}s)"
@@ -417,6 +545,11 @@ Claude Code execution failed with non-zero exit code. Check logs for error detai
     if [ "$PUSH_SUCCESS" = true ] && [ "$COMMITS_MADE" -gt 0 ]; then
         log_info "Creating pull request..."
 
+        # Calculate duration for PR body
+        PR_CREATION_TIME=$(date +%s)
+        PR_TOTAL_DURATION=$((PR_CREATION_TIME - START_TIME))
+        PR_CLAUDE_DURATION=${CLAUDE_DURATION:-0}
+
         # Generate PR title and body
         FIRST_COMMIT_MSG=$(git log main..HEAD --oneline | tail -1 | cut -d' ' -f2-)
         PR_TITLE="[Autonomous] $FIRST_COMMIT_MSG"
@@ -427,8 +560,8 @@ Claude Code execution failed with non-zero exit code. Check logs for error detai
 
 **Run:** $TIMESTAMP
 **Branch:** \`$BRANCH_NAME\`
-**Duration:** $(($TOTAL_DURATION / 60))m $(($TOTAL_DURATION % 60))s
-**Claude Time:** $(($CLAUDE_DURATION / 60))m $(($CLAUDE_DURATION % 60))s
+**Duration:** $(($PR_TOTAL_DURATION / 60))m $(($PR_TOTAL_DURATION % 60))s
+**Claude Time:** $(($PR_CLAUDE_DURATION / 60))m $(($PR_CLAUDE_DURATION % 60))s
 
 ### Changes
 
