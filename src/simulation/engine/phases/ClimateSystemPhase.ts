@@ -382,16 +382,23 @@ export class ClimateSystemPhase implements SimulationPhase {
     if (cascadeCount === 0 || cascadeCount === 1) {
       cascadeMultiplier = 1.0;
     } else if (cascadeCount === 2) {
-      cascadeMultiplier = 1.15;
+      // Two elements: moderate amplification
+      cascadeMultiplier = 1.5;
     } else if (cascadeCount === 3) {
-      cascadeMultiplier = 1.35;
+      // THREE+ ELEMENTS: Critical compound threshold
+      // Research: Communications Earth & Environment (2024)
+      // "Alter expected tipped element count by more than factor of 2"
+      cascadeMultiplier = 2.0;  // Factor of 2x from research
+    } else if (cascadeCount === 4) {
+      cascadeMultiplier = 2.5;
     } else {
-      cascadeMultiplier = 1.60;
+      // 5+ elements: Full cascade ("Hothouse Earth" scenario)
+      cascadeMultiplier = 3.0;
     }
 
     system.cascadeMultiplier = assertInRange(
       cascadeMultiplier,
-      1.0, 2.0,
+      1.0, 3.0,
       {
         location: 'ClimateSystemPhase.calculateTippingCascades',
         valueName: 'system.cascadeMultiplier',
