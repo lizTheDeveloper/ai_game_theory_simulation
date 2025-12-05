@@ -666,6 +666,51 @@ export interface GameState {
    */
   tippingPoints?: import('../types/irreversibility').IrreversibilityState;
 
+  /**
+   * Marine Ice Sheet Instability (M-4, Dec 5, 2025)
+   *
+   * Abrupt sea level rise from West Antarctic Ice Sheet (WAIS) and Greenland Ice Sheet (GIS)
+   * collapse driven by subsurface ocean warming and marine ice cliff instability.
+   *
+   * Research: research/marine_ice_sheet_instability_20251205.md
+   * Critique: reviews/marine_ice_sheet_instability_critique_20251205.md
+   * Quality Gate 1: CONDITIONAL PASS
+   *
+   * Key parameters (adjusted from validation):
+   * - GIS threshold: +1.0°C (not 0.8°C per research)
+   * - Abrupt pulse probability: 2%/decade (not 5% - reduces to 17% by 2100)
+   * - Abrupt pulse magnitude: 0.5m (not 1.5m - no Holocene precedent)
+   * - Population displacement: 50M/meter (not 93.5M - exposure ≠ migration)
+   * - Damage quadratic coefficient: 2.0 (not 3.0 - unverified)
+   *
+   * CRITICAL: GIS recovery possible (Bochow 2023) - NOT permanently irreversible like research assumed
+   *
+   * Expected impact: Tail-risk sea level events, coastal displacement, infrastructure damage
+   */
+  marineIceSheetState?: {
+    // WAIS tracking (West Antarctic Ice Sheet)
+    waisTriggered: boolean;
+    waisStartMonth: number | null;
+
+    // GIS tracking (Greenland Ice Sheet) - recovery possible per Bochow 2023
+    gisTriggered: boolean;
+    gisStartMonth: number | null;
+    gisRecoveryEligible: boolean;  // Track if cooling enables recovery
+
+    // Abrupt pulse tracking
+    lastAbruptPulseMonth: number | null;  // Cooldown enforcement (10-20 years)
+    abruptPulseCount: number;
+
+    // Sea level tracking
+    cumulativeSeaLevelRise: number;  // Meters above 1990 baseline
+    lastMonthSeaLevel: number;       // For delta calculation
+
+    // Impact tracking
+    coastalPopulationDisplaced: number;  // Cumulative population displaced (millions)
+    coastalInfrastructureDamage: number; // Cumulative damage cost (trillion USD)
+    agriculturalLandLost: number;        // Cumulative land lost (km²)
+  };
+
   // Ecosystem Collapse Tracking (Realistic Timeline Recalibration)
   ecosystemCollapse?: {
     triggered: boolean;

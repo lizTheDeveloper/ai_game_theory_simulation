@@ -1040,6 +1040,22 @@ export function createDefaultInitialState(
     // CRITICAL-1 FIX: Initialize tippingPoints to prevent dynamic creation in IrreversibilityTrackingPhase
     tippingPoints: initializeIrreversibilityState(),
 
+    // Marine Ice Sheet Instability (M-4, Dec 5, 2025)
+    marineIceSheetState: {
+      waisTriggered: false,
+      waisStartMonth: null,
+      gisTriggered: false,
+      gisStartMonth: null,
+      gisRecoveryEligible: false,
+      lastAbruptPulseMonth: null,
+      abruptPulseCount: 0,
+      cumulativeSeaLevelRise: 0,
+      lastMonthSeaLevel: 0,
+      coastalPopulationDisplaced: 0,
+      coastalInfrastructureDamage: 0,
+      agriculturalLandLost: 0,
+    },
+
     // Population Dynamics & Refugee Crises (TIER 1.6)
     humanPopulationSystem: initializeHumanPopulationSystem(),
     refugeeCrisisSystem: initializeRefugeeCrisisSystem(),
