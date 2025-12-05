@@ -39,6 +39,7 @@ import {
   capWithBifurcationAwareness,
 } from '@/simulation/utils/assertions';
 import { updateGeoengineering } from '../../geoengineering';
+import { updateMICI } from '../../marineIceSheetInstability';
 
 /**
  * Climate impact event with delayed effects (from ClimateImpactCascade)
@@ -186,6 +187,11 @@ export class ClimateSystemPhase implements SimulationPhase {
       console.log(`  Total Progress: ${(system.totalProgress * 100).toFixed(1)}%`);
       console.log(`  Cascade Multiplier: ${system.cascadeMultiplier.toFixed(2)}x`);
     }
+
+    // === MARINE ICE SHEET INSTABILITY (Dec 5, 2025) ===
+    // M-4: Check for abrupt sea level rise pulses from ice sheet collapse
+    // Research: DeConto et al. (2021), Morlighem et al. (2024)
+    updateMICI(state, rng);
   }
 
   /**
