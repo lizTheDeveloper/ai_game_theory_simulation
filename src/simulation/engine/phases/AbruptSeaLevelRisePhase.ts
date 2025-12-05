@@ -101,10 +101,14 @@ export class AbruptSeaLevelRisePhase implements SimulationPhase {
    * - Initial decade: 0.1-0.2m (10-20cm)
    * - Sustained contribution: 0.3-0.5m cumulative by 2100 (if triggered early)
    * - Long-term potential: 3-8m by 2300
+   *
+   * FIX (CRITICAL): Use pre-rolled magnitudes to ensure monotonicity
+   * - Previously: Called rng() each month, re-rolling magnitudes → sea level DECREASED
+   * - Now: Use stored magnitudes from trigger time → monotonic increase guaranteed
    */
   private calculateSeaLevelRise(
     monthsSinceOnset: number,
-    rng: RNGFunction
+    rolledMagnitudes: { onset: number; acceleration: number; plateau: number }
   ): number {
     const yearsSinceOnset = monthsSinceOnset / 12;
 
@@ -112,44 +116,41 @@ export class AbruptSeaLevelRisePhase implements SimulationPhase {
     if (yearsSinceOnset < 10) {
       // Linear rise in first decade
       const decadeProgress = yearsSinceOnset / 10;
-      const onsetMagnitude = 0.1 + rng() * 0.1;  // 0.1-0.2m
       return assertFinite(
-        onsetMagnitude * decadeProgress,
+        rolledMagnitudes.onset * decadeProgress,
         {
           location: 'AbruptSeaLevelRisePhase.calculateSeaLevelRise',
           valueName: 'onsetRise',
-          additionalInfo: { yearsSinceOnset, decadeProgress }
+          additionalInfo: { yearsSinceOnset, decadeProgress, onsetMagnitude: rolledMagnitudes.onset }
         }
       );
     }
 
     // Acceleration phase (10-100 years): Additional 0.2-0.3m
     if (yearsSinceOnset < 100) {
-      const onsetContribution = 0.15;  // Average of 0.1-0.2m
+      const onsetContribution = rolledMagnitudes.onset;
       const accelerationProgress = (yearsSinceOnset - 10) / 90;
-      const accelerationMagnitude = 0.2 + rng() * 0.1;  // 0.2-0.3m
       const accelerationContribution = assertFinite(
-        accelerationMagnitude * accelerationProgress,
+        rolledMagnitudes.acceleration * accelerationProgress,
         {
           location: 'AbruptSeaLevelRisePhase.calculateSeaLevelRise',
           valueName: 'accelerationRise',
-          additionalInfo: { yearsSinceOnset, accelerationProgress }
+          additionalInfo: { yearsSinceOnset, accelerationProgress, accelerationMagnitude: rolledMagnitudes.acceleration }
         }
       );
       return onsetContribution + accelerationContribution;
     }
 
     // Plateau phase (100-300 years): Approach long-term potential 3-8m
-    const onsetContribution = 0.15;
-    const accelerationContribution = 0.25;
+    const onsetContribution = rolledMagnitudes.onset;
+    const accelerationContribution = rolledMagnitudes.acceleration;
     const plateauProgress = Math.min(1.0, (yearsSinceOnset - 100) / 200);
-    const longTermPotential = 3.0 + rng() * 5.0;  // 3-8m
     const plateauContribution = assertFinite(
-      (longTermPotential - onsetContribution - accelerationContribution) * plateauProgress,
+      (rolledMagnitudes.plateau - onsetContribution - accelerationContribution) * plateauProgress,
       {
         location: 'AbruptSeaLevelRisePhase.calculateSeaLevelRise',
         valueName: 'plateauRise',
-        additionalInfo: { yearsSinceOnset, plateauProgress, longTermPotential }
+        additionalInfo: { yearsSinceOnset, plateauProgress, longTermPotential: rolledMagnitudes.plateau }
       }
     );
 
@@ -222,13 +223,15 @@ export class AbruptSeaLevelRisePhase implements SimulationPhase {
 
     // Mortality risk from displacement (infrastructure loss, disease, conflict)
     // Conservative estimate: 0.5% mortality from displacement stress
+    // FIX (CRITICAL): Cap at 100% to prevent overflow when population collapses
     const displacementMortalityRate = 0.005;
-    const displacementMortalityRisk = assertFinite(
-      (displacedPopulation / currentPop) * displacementMortalityRate,
+    const rawMortalityRisk = (displacedPopulation / currentPop) * displacementMortalityRate;
+    const displacementMortalityRisk = assertProbability(
+      Math.min(1.0, rawMortalityRisk),  // Cap at 100%
       {
         location: 'AbruptSeaLevelRisePhase.applyCascadingImpacts',
         valueName: 'displacementMortalityRisk',
-        additionalInfo: { displacedPopulation, currentPop }
+        additionalInfo: { displacedPopulation, currentPop, rawMortalityRisk }
       }
     );
 
@@ -301,7 +304,11 @@ export class AbruptSeaLevelRisePhase implements SimulationPhase {
     );
 
     // Update cumulative agricultural loss
-    mici.agriculturalLoss += deltaAgriculturalLoss;
+    // FIX (HIGH): Cap at 100% - can't lose more than all coastal farmland
+    mici.agriculturalLoss = Math.min(
+      100,  // 100% = all coastal farmland lost
+      mici.agriculturalLoss + deltaAgriculturalLoss
+    );
 
     const newFoodSecurity = assertInRange(
       Math.max(0.01, foodSecurity - deltaAgriculturalLoss),
@@ -369,13 +376,36 @@ export class AbruptSeaLevelRisePhase implements SimulationPhase {
         mici.infrastructureDamage = 0;
         mici.agriculturalLoss = 0;
 
+        // FIX (CRITICAL): Roll magnitudes ONCE at trigger time for monotonic progression
+        // Research: DeConto & Pollard (2016), Edwards et al. (2019)
+        const onsetMagnitude = 0.1 + rng() * 0.1;  // 0.1-0.2m
+        const accelerationMagnitude = 0.2 + rng() * 0.1;  // 0.2-0.3m
+        const plateauMagnitude = 3.0 + rng() * 5.0;  // 3-8m
+
+        mici.rolledMagnitudes = {
+          onset: assertInRange(onsetMagnitude, 0.1, 0.2, {
+            location: 'AbruptSeaLevelRisePhase.execute (trigger)',
+            valueName: 'onsetMagnitude'
+          }),
+          acceleration: assertInRange(accelerationMagnitude, 0.2, 0.3, {
+            location: 'AbruptSeaLevelRisePhase.execute (trigger)',
+            valueName: 'accelerationMagnitude'
+          }),
+          plateau: assertInRange(plateauMagnitude, 3.0, 8.0, {
+            location: 'AbruptSeaLevelRisePhase.execute (trigger)',
+            valueName: 'plateauMagnitude'
+          })
+        };
+
         console.warn(`\n🚨 MARINE ICE SHEET INSTABILITY TRIGGERED`);
         console.log(`  🧊 Temperature: ${tempC.toFixed(2)}°C above pre-industrial`);
         console.log(`  🧊 Year: ${currentYear}`);
         console.log(`  🧊 Month: ${state.currentMonth}`);
         console.log(`  🧊 Annual probability: ${(annualProbability * 100).toFixed(3)}%`);
         console.log(`  🧊 This collapse is IRREVERSIBLE regardless of future temperature changes`);
-        console.log(`  🧊 Expected contribution: 0.3-0.5m by 2100, 3-8m by 2300`);
+        console.log(`  🧊 Expected contribution: ${mici.rolledMagnitudes.onset.toFixed(2)}m onset, ` +
+                    `${mici.rolledMagnitudes.acceleration.toFixed(2)}m acceleration, ` +
+                    `${mici.rolledMagnitudes.plateau.toFixed(1)}m long-term`);
       }
     }
 
@@ -383,8 +413,16 @@ export class AbruptSeaLevelRisePhase implements SimulationPhase {
     if (mici.triggered && typeof mici.triggerMonth === 'number') {
       const monthsSinceOnset = state.currentMonth - mici.triggerMonth;
 
-      // Calculate total sea level rise from MICI
-      const newSeaLevelRise = this.calculateSeaLevelRise(monthsSinceOnset, rng);
+      // Ensure rolled magnitudes exist (should have been set at trigger time)
+      if (!mici.rolledMagnitudes) {
+        throw new Error(
+          `❌ CRITICAL: rolledMagnitudes missing for triggered MICI (month ${state.currentMonth}). ` +
+          `This indicates a state initialization bug.`
+        );
+      }
+
+      // Calculate total sea level rise from MICI using pre-rolled magnitudes
+      const newSeaLevelRise = this.calculateSeaLevelRise(monthsSinceOnset, mici.rolledMagnitudes);
       const deltaSeaLevelRise = assertFinite(
         newSeaLevelRise - mici.cumulativeSeaLevelRise,
         {

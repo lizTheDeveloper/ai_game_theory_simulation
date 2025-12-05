@@ -618,6 +618,24 @@ export interface GameState {
 
     /** Cumulative agricultural loss (% of coastal farmland) */
     agriculturalLoss: number;
+
+    /**
+     * Rolled magnitudes for deterministic collapse progression
+     * (FIX: CRITICAL bug - prevents non-monotonic sea level rise)
+     *
+     * Research: DeConto & Pollard (2016), Edwards et al. (2019)
+     * - Onset: 0.1-0.2m over first decade
+     * - Acceleration: 0.2-0.3m additional over 10-100 years
+     * - Plateau: 3-8m long-term potential
+     */
+    rolledMagnitudes?: {
+      /** Magnitude of initial onset phase (0.1-0.2m) */
+      onset: number;
+      /** Magnitude of acceleration phase (0.2-0.3m) */
+      acceleration: number;
+      /** Long-term plateau potential (3-8m) */
+      plateau: number;
+    };
   };
 
   // Novel Entities Crisis (TIER 1.5)
