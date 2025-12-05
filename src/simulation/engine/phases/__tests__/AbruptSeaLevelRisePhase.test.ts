@@ -248,9 +248,9 @@ describe('AbruptSeaLevelRisePhase', () => {
 
       expect(result.events).toBeDefined();
       expect(state.marineIceSheetState).toBeDefined();
-      expect(state.marineIceSheetState?.waisTriggered).toBe(false);
-      expect(state.marineIceSheetState?.gisTriggered).toBe(false);
-      expect(state.marineIceSheetState?.cumulativeSeaLevelRise).toBe(0);
+      expect(state.marineIceSheetState!.waisTriggered).toBe(false);
+      expect(state.marineIceSheetState!.gisTriggered).toBe(false);
+      expect(state.marineIceSheetState!.cumulativeSeaLevelRise).toBe(0);
     });
   });
 
