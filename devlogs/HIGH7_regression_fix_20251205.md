@@ -129,6 +129,19 @@ if (calculatedStability >= 0.1) {
 
 ---
 
-**Status:** Fix applied, Monte Carlo validation running.
+## Final Status
+
+✅ **COMPLETE**
+
+**Monte Carlo Validation (N=3, 60 months):**
+- ✅ All runs completed successfully
+- ✅ No NaN/Infinity errors
+- ✅ Conditional floor logging working correctly:
+  - Run 1: 4-5 tipping elements, 2.22-2.44°C → floor removed (tail risk)
+  - Run 2: 5 tipping elements, 2.58-2.71°C → floor removed (tail risk)
+- ✅ Threshold working as expected: ≥3 tipping elements AND ≥2.0°C
+
+**Commit:** `1ee723cc` (auto/worker-20251205_180000 branch)
+
+**Status:** Fix applied, validated, committed.
 **Research Grade:** B- (conditional approach aligns with research)
-**Expected Completion:** ~5 minutes (Monte Carlo N=3)
