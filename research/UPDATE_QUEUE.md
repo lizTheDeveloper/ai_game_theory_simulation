@@ -1,6 +1,6 @@
 # Research Update Queue
-**Generated:** 12/4/2025, 8:30:04 PM
-**Files Scanned:** 511
+**Generated:** 11/28/2025, 10:30:04 PM
+**Files Scanned:** 485
 
 ---
 
@@ -12,22 +12,12 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 174 (34.1%)
-
-### `AUTONOMOUS_RESEARCHER_SESSION_20251203_2030.md`
-- **Oldest source:** 1981 (44 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/AUTONOMOUS_RESEARCHER_SESSION_20251203_2030.md`
+**Count:** 164 (33.8%)
 
 ### `CRISIS_MITIGATION_RESEARCH_CRITIQUE_20251029.md`
 - **Oldest source:** 2001 (24 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/CRISIS_MITIGATION_RESEARCH_CRITIQUE_20251029.md`
-
-### `FALLBACK2_SOURCE_VALIDATION_SESSION23_20251130.md`
-- **Oldest source:** 2009 (16 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/FALLBACK2_SOURCE_VALIDATION_SESSION23_20251130.md`
 
 ### `GOD_MODE_ANALYSIS_model_mechanisms_20251110.md`
 - **Oldest source:** 2000 (25 years old)
@@ -109,30 +99,15 @@
 - **Status:** Not used in simulation
 - **Path:** `research/RESEARCH_SOURCE_VALIDATION_AUDIT_20251128_AFTERNOON.md`
 
-### `RESEARCH_SOURCE_VALIDATION_AUDIT_20251129.md`
-- **Oldest source:** 2008 (17 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/RESEARCH_SOURCE_VALIDATION_AUDIT_20251129.md`
-
 ### `RESEARCH_STATUS_20251115.md`
 - **Oldest source:** 1981 (44 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/RESEARCH_STATUS_20251115.md`
 
-### `RESEARCH_VALIDATION_AUDIT_20251129.md`
-- **Oldest source:** 2013 (12 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/RESEARCH_VALIDATION_AUDIT_20251129.md`
-
 ### `ROADMAP_RESEARCH_STATUS_20251127.md`
 - **Oldest source:** 2019 (6 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/ROADMAP_RESEARCH_STATUS_20251127.md`
-
-### `ROADMAP_RESEARCH_STATUS_20251130.md`
-- **Oldest source:** 2012 (13 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/ROADMAP_RESEARCH_STATUS_20251130.md`
 
 ### `ROUND2_SYLVIA_CRITIQUE_20251030.md`
 - **Oldest source:** 2006 (19 years old)
@@ -143,11 +118,6 @@
 - **Oldest source:** 2009 (16 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/ROUND5_REMEDIATION_STRATEGY_20251030.md`
-
-### `SOURCE_VALIDATION_AUDIT_FALLBACK2_20251129.md`
-- **Oldest source:** 2012 (13 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/SOURCE_VALIDATION_AUDIT_FALLBACK2_20251129.md`
 
 ### `UNVERIFIED_CITATIONS_TRIAGE.md`
 - **Oldest source:** 2008 (17 years old)
@@ -364,20 +334,10 @@
 - **Status:** Not used in simulation
 - **Path:** `research/climate_self_limiting_mechanisms_20251125.md`
 
-### `climate_stability_floor_final_verdict_20251129.md`
-- **Oldest source:** 2019 (6 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/climate_stability_floor_final_verdict_20251129.md`
-
 ### `climate_stability_mechanisms_2024_2025.md`
 - **Oldest source:** 2008 (17 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/climate_stability_mechanisms_2024_2025.md`
-
-### `climate_stability_mechanisms_20251129.md`
-- **Oldest source:** 2018 (7 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/climate_stability_mechanisms_20251129.md`
 
 ### `climate_stability_parameters_20251127.md`
 - **Oldest source:** 2013 (12 years old)
@@ -569,15 +529,15 @@
 - **Status:** Not used in simulation
 - **Path:** `research/modeling-contingency-and-agency-debate_20251017.md`
 
-### `mortality_calibration_justification_20251201.md`
-- **Oldest source:** 1993 (32 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/mortality_calibration_justification_20251201.md`
-
 ### `mortality_caps_historical_data_20251027.md`
 - **Oldest source:** 2006 (19 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/mortality_caps_historical_data_20251027.md`
+
+### `mortality_stabilizers_failure_conditions_20251106.md`
+- **Oldest source:** 2010 (15 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/mortality_stabilizers_failure_conditions_20251106.md`
 
 ### `multi_paradigm_wellbeing_2024_2025_update.md`
 - **Oldest source:** 2015 (10 years old)
@@ -643,11 +603,6 @@
 - **Oldest source:** 2015 (10 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/paradigm_metric_mapping_20251019.md`
-
-### `parameter_sweep_methodology_20251130.md`
-- **Oldest source:** 2017 (8 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/parameter_sweep_methodology_20251130.md`
 
 ### `parameter_verification_nitrogen_phosphorus_20251119.md`
 - **Oldest source:** 2015 (10 years old)
@@ -753,11 +708,6 @@
 - **Oldest source:** 1989 (36 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/technology-diffusion-io-psychology_20251019.md`
-
-### `technology_bifurcation_threshold_validation_20251130.md`
-- **Oldest source:** 2003 (22 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/technology_bifurcation_threshold_validation_20251130.md`
 
 ### `technology_diffusion_io_psychology_verification_20251101.md`
 - **Oldest source:** 1982 (43 years old)
@@ -888,7 +838,7 @@
 
 ## 📋 MEDIUM (Review Within Quarter)
 
-**Count:** 22 (4.3%)
+**Count:** 21 (4.3%)
 
 - `LAYER2_COMPREHENSIVE_STATUS_20251030.md` - Oldest: 2020 (5 years)
 - `LAYER2_DEBATE_SUMMARY_20251030.md` - Oldest: 2020 (5 years)
@@ -908,7 +858,6 @@
 - `irreversibility_reconciliation_20251120.md` - Oldest: 2020 (5 years)
 - `kangas_ubi_finland_verification_20251030.md` - Oldest: 2020 (5 years)
 - `malthusian-overshoot-causation-attribution_20251018.md` - Oldest: 2020 (5 years)
-- `mortality_stabilizers_failure_conditions_20251106.md` - Oldest: 2020 (5 years)
 - `planetary-boundary-recovery-mechanisms_20251017.md` - Oldest: 2020 (5 years)
 - `structured_clone_performance_20251107.md` - Oldest: 2021 (4 years)
 - `threshold_uncertainty_verification_20251031.md` - Oldest: 2020 (5 years)
@@ -917,7 +866,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 315 (61.6%)
+**Count:** 300 (61.9%)
 
 All sources <3 years old. No action required.
 
@@ -927,11 +876,11 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 511 |
+| Total files | 485 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 174 (34.1%) |
-| MEDIUM | 22 (4.3%) |
-| LOW | 315 (61.6%) |
+| HIGH | 164 (33.8%) |
+| MEDIUM | 21 (4.3%) |
+| LOW | 300 (61.9%) |
 | Average age | 7.8 years |
 | Oldest source | 1955 (70 years ago) |
 
@@ -939,21 +888,21 @@ All sources <3 years old. No action required.
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 315 | 61.6% |
-| Warning (3-5yr) | 22 | 4.3% |
-| Critical (>5yr) | 174 | 34.1% |
+| Current (<3yr) | 300 | 61.9% |
+| Warning (3-5yr) | 21 | 4.3% |
+| Critical (>5yr) | 164 | 33.8% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-- **Current:** 34.1% critical (>5yr)
+- **Current:** 33.8% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
-1. Update 174 HIGH priority file(s) within 1 month
+1. Update 164 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 
