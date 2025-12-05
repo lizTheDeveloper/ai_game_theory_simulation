@@ -360,6 +360,58 @@ export class ClimateSystemPhase implements SimulationPhase {
           month: state.currentMonth
         }
       );
+
+      // === MARINE ICE SHEET INSTABILITY (M-4, Dec 5, 2025) ===
+      // Check for MICI trigger on WAIS and Greenland ice sheets
+      // Research: DeConto & Pollard (2016, 2021), Edwards et al. (2019)
+      // Validation: reviews/m4_m7_research_validation_20251205.md
+      if (element.marineInstabilityRisk && !element.marineInstabilityRisk.miciTriggered) {
+        const roll = rng();
+        if (roll < element.marineInstabilityRisk.miciProbability) {
+          element.marineInstabilityRisk.miciTriggered = true;
+          console.warn(`  ☢️ MARINE ICE SHEET INSTABILITY: ${element.name}`);
+          console.log(`     Abrupt collapse rate: ${element.marineInstabilityRisk.miciCollapseRate} mm/year`);
+          console.log(`     Total contribution potential: ${element.marineInstabilityRisk.totalContributionM}m`);
+        }
+      }
+
+      // Accumulate MICI sea level contribution if active
+      if (element.marineInstabilityRisk?.miciTriggered) {
+        // Convert mm/year to m/month
+        const contributionThisMonth = assertFinite(
+          (element.marineInstabilityRisk.miciCollapseRate / 1000) / 12,
+          {
+            location: 'ClimateSystemPhase.updateTippingTransitions (MICI)',
+            valueName: 'contributionThisMonth',
+            month: state.currentMonth,
+            additionalInfo: {
+              elementId: element.id,
+              collapseRate: element.marineInstabilityRisk.miciCollapseRate
+            }
+          }
+        );
+
+        element.marineInstabilityRisk.currentContributionM = assertInRange(
+          Math.min(
+            element.marineInstabilityRisk.currentContributionM + contributionThisMonth,
+            element.marineInstabilityRisk.totalContributionM
+          ),
+          0,
+          element.marineInstabilityRisk.totalContributionM,
+          {
+            location: 'ClimateSystemPhase.updateTippingTransitions (MICI)',
+            valueName: `element[${element.id}].marineInstabilityRisk.currentContributionM`,
+            month: state.currentMonth
+          }
+        );
+
+        // Log significant milestones (every 0.5m)
+        const milestoneM = Math.floor(element.marineInstabilityRisk.currentContributionM * 2) / 2;
+        const prevMilestoneM = Math.floor((element.marineInstabilityRisk.currentContributionM - contributionThisMonth) * 2) / 2;
+        if (milestoneM > prevMilestoneM && milestoneM > 0) {
+          console.log(`  🌊 ABRUPT SEA LEVEL RISE: ${element.name} contributed ${milestoneM.toFixed(1)}m (${(milestoneM / element.marineInstabilityRisk.totalContributionM * 100).toFixed(0)}%)`);
+        }
+      }
     }
   }
 
@@ -372,15 +424,28 @@ export class ClimateSystemPhase implements SimulationPhase {
 
     const cascadeCount = activeCascadingElements.length;
 
+    // === M-5: COMPOUND CLIMATE EVENTS (Dec 5, 2025) ===
+    // Research: Wunderling et al. (2024) ESD - 49% amplification from compound tipping
+    // Armstrong McKay et al. (2022) Science - network effects across 16 tipping elements
+    // Validation: reviews/m4_m7_research_validation_20251205.md - "widen uncertainty, add sensitivity analysis"
     let cascadeMultiplier: number;
     if (cascadeCount === 0 || cascadeCount === 1) {
-      cascadeMultiplier = 1.0;
+      cascadeMultiplier = 1.0; // No cascade effect
     } else if (cascadeCount === 2) {
+      // 2 tipping points: modest amplification (10-20%)
       cascadeMultiplier = 1.15;
     } else if (cascadeCount === 3) {
-      cascadeMultiplier = 1.35;
+      // 3 tipping points: COMPOUND CASCADE EFFECT
+      // Research: 49% amplification baseline (Wunderling et al. 2024)
+      // Validation adjustment: uncertainty range 25-75% (0.5x to 1.5x the 49% baseline)
+      cascadeMultiplier = 1.49;
+      console.warn(`  🚨 COMPOUND CLIMATE EVENT: ${cascadeCount} cascading tipping points active`);
+      console.log(`     Amplification factor: ${cascadeMultiplier.toFixed(2)}x (49% above baseline)`);
     } else {
-      cascadeMultiplier = 1.60;
+      // 4+ elements: runaway cascade (further amplification)
+      cascadeMultiplier = 1.75; // 75% amplification for extreme cases
+      console.warn(`  💥 RUNAWAY CASCADE: ${cascadeCount} cascading tipping points active`);
+      console.log(`     Amplification factor: ${cascadeMultiplier.toFixed(2)}x (EXTREME COMPOUND EVENT)`);
     }
 
     system.cascadeMultiplier = assertInRange(
@@ -389,7 +454,11 @@ export class ClimateSystemPhase implements SimulationPhase {
       {
         location: 'ClimateSystemPhase.calculateTippingCascades',
         valueName: 'system.cascadeMultiplier',
-        month: state.currentMonth
+        month: state.currentMonth,
+        additionalInfo: {
+          cascadeCount,
+          activeElements: activeCascadingElements.map(e => e.id)
+        }
       }
     );
   }
