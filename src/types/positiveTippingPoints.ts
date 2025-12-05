@@ -111,6 +111,45 @@ export interface TechnologySynergy {
 }
 
 /**
+ * Social tipping cascade types
+ * Research: Lenton et al. 2022, Alkemade et al. 2024
+ */
+export type CascadeSocialType =
+  | 'renewable-energy-norms'    // Solar/wind become culturally normalized
+  | 'policy-climate-action'     // Political will for climate policy
+  | 'behavioral-conservation'   // Energy/resource conservation behaviors
+  | 'consumption-shift';        // Low-carbon lifestyle adoption
+
+/**
+ * Social tipping cascade state
+ * Models behavioral contagion, policy cascades, and cultural transformations
+ * that accelerate decarbonization through human behavior change, not just tech
+ */
+export interface SocialTippingAdoption {
+  cascadeType: CascadeSocialType;
+
+  // Adoption metrics (0-1)
+  adoptionLevel: number;          // % population engaged
+  adoptionRate: number;           // Monthly change rate
+
+  // Cascade dynamics
+  cascadeActive: boolean;
+  cascadeStrength: number;        // 0-1 intensity
+  cascadeTriggeredMonth?: number;
+
+  // Drivers
+  trustLevel: number;             // From state.socialAccumulation.socialCohesion.trust (0-100)
+  policySupport: number;          // Government backing
+  mediaVisibility: number;        // Public awareness (0-1)
+  socialProofStrength: number;    // Neighbor effect
+
+  // Effects
+  technologyAcceleration: number; // Multiplier for tech adoption (1.0 = neutral)
+  emissionsReduction: number;     // Direct behavioral impact (GtCO2/yr)
+  politicalCapital: number;       // Enables stronger future policies
+}
+
+/**
  * Main positive tipping points system state
  */
 export interface PositiveTippingPointsState {
@@ -138,6 +177,14 @@ export interface PositiveTippingPointsState {
     implementedMonth: number;
     costPerMonth: number;           // $B/month budget requirement
   }[];
+
+  // Social tipping cascades (M-6)
+  socialCascades: {
+    renewableNorms: SocialTippingAdoption;
+    policyClimateAction: SocialTippingAdoption;
+    behavioralConservation: SocialTippingAdoption;
+    consumptionShift: SocialTippingAdoption;
+  };
 
   // Impact metrics
   cumulativeEmissionsReduction: number;   // Gt CO2 prevented

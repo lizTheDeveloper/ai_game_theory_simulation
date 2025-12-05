@@ -20,11 +20,13 @@ import type {
   TechnologyAdoption,
   CascadeTechnologyType,
   CascadePolicyType,
+  CascadeSocialType,
   PositiveTippingEvent,
-  TechnologySynergy
+  TechnologySynergy,
+  SocialTippingAdoption
 } from '../types/positiveTippingPoints';
 import { addSimulationEvent } from './utils/eventLogger';
-import { assertDefined } from './utils/assertions';
+import { assertDefined, assertFinite, assertInRange, assertProbability } from './utils/assertions';
 
 /**
  * Initialize positive tipping points system
@@ -106,6 +108,15 @@ export function initializePositiveTippingPoints(): PositiveTippingPointsState {
 
     activePolicies: [],
 
+    // Social tipping cascades (M-6)
+    // Research: Lenton et al. 2022, Alkemade et al. 2024, UN 2024 (trust → collective action)
+    socialCascades: {
+      renewableNorms: createSocialTippingAdoption('renewable-energy-norms', 0.10, 0.001),
+      policyClimateAction: createSocialTippingAdoption('policy-climate-action', 0.15, 0.002),
+      behavioralConservation: createSocialTippingAdoption('behavioral-conservation', 0.05, 0.001),
+      consumptionShift: createSocialTippingAdoption('consumption-shift', 0.03, 0.0005),
+    },
+
     cumulativeEmissionsReduction: 0,
     cumulativeCostSavings: 0,
     adoptionAcceleration: 1.0,         // 1.0 = business-as-usual baseline
@@ -160,6 +171,32 @@ function createTechnologyAdoption(
 }
 
 /**
+ * Helper: Create SocialTippingAdoption object
+ * Research: Lenton et al. 2022 (social tipping interventions), Alkemade et al. 2024 (behavioral cascades)
+ */
+function createSocialTippingAdoption(
+  cascadeType: CascadeSocialType,
+  adoptionLevel: number,
+  adoptionRate: number
+): SocialTippingAdoption {
+  return {
+    cascadeType,
+    adoptionLevel,
+    adoptionRate,
+    cascadeActive: false,
+    cascadeStrength: 0,
+    cascadeTriggeredMonth: undefined,
+    trustLevel: 50,              // Will be synced from state
+    policySupport: 0.1,          // Baseline policy support
+    mediaVisibility: 0.2,        // Baseline visibility
+    socialProofStrength: 0,
+    technologyAcceleration: 1.0, // Neutral initially
+    emissionsReduction: 0,       // No direct effect initially
+    politicalCapital: 0,         // No political capital initially
+  };
+}
+
+/**
  * Update positive tipping point cascades
  * Called each simulation month
  */
@@ -167,6 +204,10 @@ export function updatePositiveTippingPoints(
   state: GameState,
   rng: RNGFunction
 ): void {
+  if (!rng || typeof rng !== 'function') {
+    throw new Error('❌ CRITICAL: RNG required for deterministic simulation');
+  }
+
   const ptp = state.positiveTippingPoints;
 
   // Phase 1: Update learning curves (Wright's Law)
@@ -183,6 +224,12 @@ export function updatePositiveTippingPoints(
 
   // Phase 5: Calculate environmental impact
   calculateEnvironmentalImpact(state);
+
+  // NEW (M-6): Social tipping phases
+  updateSocialTippingState(state);
+  detectSocialTippingCascades(state, rng);
+  applySocialCascadeDynamics(state, rng);
+  applySocialCascadeEffects(state);
 
   // Phase 6: Update active cascade count
   // FIX (Nov 7, 2025): Sort for deterministic iteration (Issue #11)
@@ -646,6 +693,343 @@ function getTechnologyAdoption(
     case 'heat-pumps': return ptp.adoptionTracking.heatPumps;
     case 'battery-storage': return ptp.adoptionTracking.batteryStorage;
     default: return undefined;
+  }
+}
+
+/**
+ * M-6: Update social tipping cascade state
+ * Syncs trust, policy support, visibility from global state
+ */
+function updateSocialTippingState(state: GameState): void {
+  const ptp = state.positiveTippingPoints;
+  const socialCascades = ptp.socialCascades;
+
+  // Sync trust from social accumulation (0-100 scale)
+  const trust = state.socialAccumulation?.socialCohesion?.trust ?? 50;
+  const trustNormalized = assertInRange(trust / 100, 0, 1, {
+    location: 'updateSocialTippingState',
+    valueName: 'trustNormalized',
+    month: state.currentMonth,
+  });
+
+  // Calculate media visibility from renewable tech adoption
+  const solarShare = ptp.adoptionTracking.solarPV.marketShare;
+  const windShare = ptp.adoptionTracking.windPower.marketShare;
+  const evShare = ptp.adoptionTracking.electricVehicles.marketShare;
+  const renewableVisibility = assertInRange(
+    (solarShare + windShare + evShare) / 3,
+    0, 1,
+    { location: 'updateSocialTippingState', valueName: 'renewableVisibility', month: state.currentMonth }
+  );
+
+  // Calculate policy support (rough proxy from government action)
+  const policySupport = Math.min(1.0, ptp.activePolicies.length * 0.2);
+
+  // Update each social cascade
+  socialCascades.renewableNorms.trustLevel = trust;
+  socialCascades.renewableNorms.mediaVisibility = renewableVisibility;
+  socialCascades.renewableNorms.policySupport = policySupport;
+
+  socialCascades.policyClimateAction.trustLevel = trust;
+  socialCascades.policyClimateAction.mediaVisibility = renewableVisibility * 0.8; // Less visible
+  socialCascades.policyClimateAction.policySupport = policySupport;
+
+  socialCascades.behavioralConservation.trustLevel = trust;
+  socialCascades.behavioralConservation.mediaVisibility = 0.5; // Behavioral shifts less visible
+  socialCascades.behavioralConservation.policySupport = policySupport * 0.5;
+
+  socialCascades.consumptionShift.trustLevel = trust;
+  socialCascades.consumptionShift.mediaVisibility = 0.3; // Low-carbon lifestyles less visible
+  socialCascades.consumptionShift.policySupport = policySupport * 0.3;
+}
+
+/**
+ * M-6: Detect social tipping cascades
+ * Research: Lenton et al. 2022 (15-25% adoption threshold), UN 2024 (trust >0.60)
+ */
+function detectSocialTippingCascades(state: GameState, rng: RNGFunction): void {
+  if (!rng || typeof rng !== 'function') {
+    throw new Error('❌ CRITICAL: RNG required for deterministic simulation');
+  }
+
+  const ptp = state.positiveTippingPoints;
+  const cascades = ptp.socialCascades;
+
+  // Renewable norms cascade: Solar/wind market share >15% + high visibility
+  const renewableNorms = cascades.renewableNorms;
+  if (!renewableNorms.cascadeActive && renewableNorms.adoptionLevel > 0.15) {
+    const solarShare = ptp.adoptionTracking.solarPV.marketShare;
+    const windShare = ptp.adoptionTracking.windPower.marketShare;
+    const renewableShare = solarShare + windShare;
+
+    if (renewableShare > 0.15 && renewableNorms.mediaVisibility > 0.3) {
+      const triggerProb = Math.min(0.9, (renewableShare - 0.15) * 2 + renewableNorms.mediaVisibility);
+      if (rng() < triggerProb) {
+        renewableNorms.cascadeActive = true;
+        renewableNorms.cascadeTriggeredMonth = state.currentMonth;
+        renewableNorms.cascadeStrength = Math.min(1.0, renewableShare + renewableNorms.mediaVisibility);
+        console.log(`  🌍 SOCIAL CASCADE: Renewable energy norms (adoption=${(renewableNorms.adoptionLevel * 100).toFixed(1)}%, renewables=${(renewableShare * 100).toFixed(1)}%)`);
+
+        addSimulationEvent(state, {
+          type: 'positive-cascade-triggered',
+          severity: 'constructive',
+          agent: 'society',
+          title: '🌍 SOCIAL CASCADE: Renewable energy norms',
+          description: `Renewable energy has become culturally normalized. Solar/wind market share: ${(renewableShare * 100).toFixed(1)}%. This accelerates technology adoption through social proof.`,
+          effects: {
+            cascadeType: 'renewable-energy-norms',
+            adoptionLevel: renewableNorms.adoptionLevel,
+            renewableShare,
+            cascadeStrength: renewableNorms.cascadeStrength,
+          },
+        });
+      }
+    }
+  }
+
+  // Policy cascade: Trust >0.65 + adoption >20%
+  const policyAction = cascades.policyClimateAction;
+  if (!policyAction.cascadeActive && policyAction.adoptionLevel > 0.20) {
+    const trustNormalized = policyAction.trustLevel / 100;
+    if (trustNormalized > 0.65 && policyAction.policySupport > 0.3) {
+      const triggerProb = Math.min(0.9, (trustNormalized - 0.65) * 2 + policyAction.policySupport);
+      if (rng() < triggerProb) {
+        policyAction.cascadeActive = true;
+        policyAction.cascadeTriggeredMonth = state.currentMonth;
+        policyAction.cascadeStrength = Math.min(1.0, trustNormalized + policyAction.policySupport);
+        console.log(`  🌍 SOCIAL CASCADE: Policy climate action (trust=${(trustNormalized * 100).toFixed(0)}%, adoption=${(policyAction.adoptionLevel * 100).toFixed(1)}%)`);
+
+        addSimulationEvent(state, {
+          type: 'positive-cascade-triggered',
+          severity: 'constructive',
+          agent: 'government',
+          title: '🌍 SOCIAL CASCADE: Policy climate action',
+          description: `High trust (${(trustNormalized * 100).toFixed(0)}%) enables stronger climate policies. Political will cascade activated.`,
+          effects: {
+            cascadeType: 'policy-climate-action',
+            trust: trustNormalized,
+            adoptionLevel: policyAction.adoptionLevel,
+            cascadeStrength: policyAction.cascadeStrength,
+          },
+        });
+      }
+    }
+  }
+
+  // Behavioral conservation: Trust >0.60 + (price spike OR climate event)
+  const behavioral = cascades.behavioralConservation;
+  if (!behavioral.cascadeActive) {
+    const trustNormalized = behavioral.trustLevel / 100;
+    // Check for crisis conditions (any active crisis)
+    const crisisCondition = state.crises?.megaPandemic?.active || false;
+
+    if (trustNormalized > 0.60 && (crisisCondition || behavioral.adoptionLevel > 0.15)) {
+      const triggerProb = Math.min(0.8, (trustNormalized - 0.60) * 2 + (crisisCondition ? 0.4 : 0));
+      if (rng() < triggerProb) {
+        behavioral.cascadeActive = true;
+        behavioral.cascadeTriggeredMonth = state.currentMonth;
+        behavioral.cascadeStrength = Math.min(1.0, trustNormalized + (crisisCondition ? 0.3 : 0));
+        console.log(`  🌍 SOCIAL CASCADE: Behavioral conservation (trust=${(trustNormalized * 100).toFixed(0)}%, crisis=${crisisCondition})`);
+
+        addSimulationEvent(state, {
+          type: 'positive-cascade-triggered',
+          severity: 'constructive',
+          agent: 'society',
+          title: '🌍 SOCIAL CASCADE: Behavioral conservation',
+          description: `Social solidarity drives energy conservation. Trust: ${(trustNormalized * 100).toFixed(0)}%. Research: EU 19% natural gas reduction in 6 months (Alkemade 2024).`,
+          effects: {
+            cascadeType: 'behavioral-conservation',
+            trust: trustNormalized,
+            crisisCondition,
+            cascadeStrength: behavioral.cascadeStrength,
+          },
+        });
+      }
+    }
+  }
+
+  // Consumption shift: High QoL (>0.7) + low meaning crisis (<0.3)
+  const consumption = cascades.consumptionShift;
+  if (!consumption.cascadeActive && consumption.adoptionLevel > 0.10) {
+    // Rough QoL proxy (would use actual QoL metric in production)
+    const meaningCrisis = state.socialAccumulation?.meaningCrisisLevel ?? 0.5;
+    const highQoL = meaningCrisis < 0.3; // Inverse proxy
+
+    if (highQoL && consumption.adoptionLevel > 0.10) {
+      const triggerProb = Math.min(0.7, (0.3 - meaningCrisis) * 2);
+      if (rng() < triggerProb) {
+        consumption.cascadeActive = true;
+        consumption.cascadeTriggeredMonth = state.currentMonth;
+        consumption.cascadeStrength = Math.min(1.0, 0.5 + (0.3 - meaningCrisis));
+        console.log(`  🌍 SOCIAL CASCADE: Consumption shift (QoL high, meaningCrisis=${(meaningCrisis * 100).toFixed(0)}%)`);
+
+        addSimulationEvent(state, {
+          type: 'positive-cascade-triggered',
+          severity: 'constructive',
+          agent: 'society',
+          title: '🌍 SOCIAL CASCADE: Low-carbon consumption',
+          description: `Lifestyle shifts towards sustainable consumption. Meaning crisis low: ${(meaningCrisis * 100).toFixed(0)}%. Post-material values emerging.`,
+          effects: {
+            cascadeType: 'consumption-shift',
+            meaningCrisis,
+            adoptionLevel: consumption.adoptionLevel,
+            cascadeStrength: consumption.cascadeStrength,
+          },
+        });
+      }
+    }
+  }
+}
+
+/**
+ * M-6: Apply social cascade dynamics (exponential growth)
+ * Research: Alkemade et al. 2024 (19% in 6 months during crisis), typical 12-24 month doubling
+ */
+function applySocialCascadeDynamics(state: GameState, rng: RNGFunction): void {
+  if (!rng || typeof rng !== 'function') {
+    throw new Error('❌ CRITICAL: RNG required for deterministic simulation');
+  }
+
+  const ptp = state.positiveTippingPoints;
+  const cascades = ptp.socialCascades;
+
+  // Sort for deterministic iteration
+  const sortedCascades = Object.entries(cascades).sort((a, b) => a[0].localeCompare(b[0])).map(e => e[1]);
+
+  for (const cascade of sortedCascades) {
+    if (!cascade.cascadeActive) {
+      // Normal slow growth
+      cascade.adoptionLevel = assertInRange(
+        cascade.adoptionLevel + cascade.adoptionRate,
+        0, 1,
+        { location: 'applySocialCascadeDynamics', valueName: 'adoptionLevel', month: state.currentMonth }
+      );
+      continue;
+    }
+
+    // Cascade active - exponential growth
+    // Research: 12-24 month doubling (normal), 6 month doubling (crisis)
+    const doublingMonths = 18; // Conservative middle ground
+    const monthlyGrowthRate = Math.pow(2, 1 / doublingMonths) - 1; // ~3.9% per month
+    const cascadeMultiplier = 1 + (cascade.cascadeStrength * monthlyGrowthRate * 10); // Up to 39% monthly
+
+    const newAdoption = cascade.adoptionLevel * cascadeMultiplier;
+    cascade.adoptionLevel = assertInRange(
+      Math.min(0.80, newAdoption), // Saturation at 80%
+      0, 1,
+      { location: 'applySocialCascadeDynamics', valueName: 'newAdoption', month: state.currentMonth }
+    );
+
+    // Social proof strength grows with adoption
+    cascade.socialProofStrength = assertInRange(
+      cascade.adoptionLevel * cascade.mediaVisibility,
+      0, 1,
+      { location: 'applySocialCascadeDynamics', valueName: 'socialProofStrength', month: state.currentMonth }
+    );
+
+    // End cascade if saturated or trust declines
+    const trustNormalized = cascade.trustLevel / 100;
+    const duration = cascade.cascadeTriggeredMonth ? state.currentMonth - cascade.cascadeTriggeredMonth : 0;
+
+    if (cascade.adoptionLevel > 0.75 || trustNormalized < 0.50 || duration > 120) {
+      cascade.cascadeActive = false;
+      cascade.cascadeStrength = 0;
+      console.log(`  🌍 Social cascade completed: ${cascade.cascadeType} (final adoption=${(cascade.adoptionLevel * 100).toFixed(1)}%)`);
+    }
+  }
+}
+
+/**
+ * M-6: Apply social cascade effects
+ * Bidirectional coupling: social acceptance ↔ tech adoption
+ * Research: Lenton et al. 2022 (policy cascades), Alkemade et al. 2024 (behavioral impact)
+ */
+function applySocialCascadeEffects(state: GameState): void {
+  const ptp = state.positiveTippingPoints;
+  const cascades = ptp.socialCascades;
+
+  // Effect 1: Renewable norms amplify solar/wind adoption
+  if (cascades.renewableNorms.cascadeActive) {
+    const acceleration = assertFinite(
+      1.0 + cascades.renewableNorms.cascadeStrength * 0.5, // Up to 50% boost
+      { location: 'applySocialCascadeEffects', valueName: 'renewableNormsAcceleration', month: state.currentMonth }
+    );
+    cascades.renewableNorms.technologyAcceleration = acceleration;
+
+    ptp.adoptionTracking.solarPV.adoptionRate = assertFinite(
+      ptp.adoptionTracking.solarPV.adoptionRate * acceleration,
+      { location: 'applySocialCascadeEffects', valueName: 'solarAdoptionRate', month: state.currentMonth }
+    );
+    ptp.adoptionTracking.windPower.adoptionRate = assertFinite(
+      ptp.adoptionTracking.windPower.adoptionRate * acceleration,
+      { location: 'applySocialCascadeEffects', valueName: 'windAdoptionRate', month: state.currentMonth }
+    );
+  }
+
+  // Effect 2: Policy cascade increases policy strength
+  if (cascades.policyClimateAction.cascadeActive) {
+    const politicalCapital = assertFinite(
+      cascades.policyClimateAction.cascadeStrength * 0.3,
+      { location: 'applySocialCascadeEffects', valueName: 'politicalCapital', month: state.currentMonth }
+    );
+    cascades.policyClimateAction.politicalCapital = politicalCapital;
+
+    // Boost all renewable tech policy strength
+    for (const tech of Object.values(ptp.adoptionTracking)) {
+      tech.policyStrength = Math.min(1.0, tech.policyStrength + politicalCapital * 0.1);
+    }
+  }
+
+  // Effect 3: Behavioral conservation reduces emissions directly
+  if (cascades.behavioralConservation.cascadeActive) {
+    // Research: EU 19% gas reduction in 6 months
+    // At full cascade (80% adoption), 0.5-1.0 GtCO2/yr reduction
+    const emissionsReduction = assertFinite(
+      cascades.behavioralConservation.adoptionLevel * cascades.behavioralConservation.cascadeStrength * 1.0, // GtCO2/yr
+      { location: 'applySocialCascadeEffects', valueName: 'behavioralEmissionsReduction', month: state.currentMonth }
+    );
+    cascades.behavioralConservation.emissionsReduction = emissionsReduction;
+
+    // Apply to global emissions
+    if (state.resourceEconomy?.co2) {
+      const monthlyReduction = emissionsReduction / 12; // Convert annual to monthly
+      const currentEmissions = assertFinite(
+        state.resourceEconomy.co2.annualEmissions,
+        { location: 'applySocialCascadeEffects', valueName: 'currentEmissions', month: state.currentMonth }
+      );
+      state.resourceEconomy.co2.annualEmissions = Math.max(0, currentEmissions - monthlyReduction);
+    }
+  }
+
+  // Effect 4: Consumption shift reduces material throughput
+  if (cascades.consumptionShift.cascadeActive) {
+    const emissionsReduction = assertFinite(
+      cascades.consumptionShift.adoptionLevel * cascades.consumptionShift.cascadeStrength * 0.5, // Smaller effect
+      { location: 'applySocialCascadeEffects', valueName: 'consumptionEmissionsReduction', month: state.currentMonth }
+    );
+    cascades.consumptionShift.emissionsReduction = emissionsReduction;
+
+    if (state.resourceEconomy?.co2) {
+      const monthlyReduction = emissionsReduction / 12;
+      const currentEmissions = assertFinite(
+        state.resourceEconomy.co2.annualEmissions,
+        { location: 'applySocialCascadeEffects', valueName: 'currentEmissions2', month: state.currentMonth }
+      );
+      state.resourceEconomy.co2.annualEmissions = Math.max(0, currentEmissions - monthlyReduction);
+    }
+  }
+
+  // Feedback: Successful cascades boost trust (5-10%)
+  const activeCascadeCount = Object.values(cascades).filter(c => c.cascadeActive).length;
+  if (activeCascadeCount > 0 && state.socialAccumulation?.socialCohesion) {
+    const trustBoost = assertFinite(
+      activeCascadeCount * 0.5, // 0.5 points per active cascade per month
+      { location: 'applySocialCascadeEffects', valueName: 'trustBoost', month: state.currentMonth }
+    );
+    state.socialAccumulation.socialCohesion.trust = Math.min(
+      100,
+      state.socialAccumulation.socialCohesion.trust + trustBoost
+    );
   }
 }
 
