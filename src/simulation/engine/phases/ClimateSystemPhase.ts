@@ -677,9 +677,22 @@ export class ClimateSystemPhase implements SimulationPhase {
     const calculatedStability = climateState.climateStability;
     const currentStability = state.environmentalAccumulation.climateStability;
 
+    // HIGH-7: Calculate conditional stability floor (same logic as applyTippingImpacts)
+    const currentTemperature = assertFinite(
+      state.planetaryBoundariesSystem?.boundaries?.climate_change?.currentValue ?? 0,
+      {
+        location: 'ClimateSystemPhase.executeEnvironmentalFeedback.conditionalFloor',
+        valueName: 'currentTemperature',
+        month: state.currentMonth
+      }
+    );
+    const parisSuccess = currentTemperature < 1.5;  // Paris Agreement 1.5C target
+    const cascadeRisk = state.tippingPointSystem.triggeredCount >= 3 && currentTemperature >= 2.0;  // Tail risk
+    const stabilityFloor = (parisSuccess || !cascadeRisk) ? 0.05 : 0.0;
+
     if (calculatedStability >= 0.1) {
-      // Calculated value is reasonable, use it
-      state.environmentalAccumulation.climateStability = calculatedStability;
+      // Calculated value is reasonable, use it (with conditional floor)
+      state.environmentalAccumulation.climateStability = Math.max(stabilityFloor, calculatedStability);
     } else if (currentStability >= 0.1) {
       // DEFENSIVE: If planetary boundaries produce nonsense (<0.1) but current value is reasonable,
       // keep the current value. This prevents planetary boundary misconfiguration from zeroing climate.
@@ -692,10 +705,11 @@ export class ClimateSystemPhase implements SimulationPhase {
           `(climate_change.currentValue = ${climateBoundaryValue.toFixed(2)})`
         );
       }
-      // Keep current value, don't overwrite
+      // Keep current value, apply conditional floor
+      state.environmentalAccumulation.climateStability = Math.max(stabilityFloor, currentStability);
     } else {
-      // Both calculated and current are near-zero - this is a real collapse
-      state.environmentalAccumulation.climateStability = calculatedStability;
+      // Both calculated and current are near-zero - apply conditional floor (may be 0.0 in tail risk)
+      state.environmentalAccumulation.climateStability = Math.max(stabilityFloor, calculatedStability);
     }
 
     const events: GameEvent[] = [];
