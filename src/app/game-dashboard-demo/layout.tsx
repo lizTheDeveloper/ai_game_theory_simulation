@@ -11,5 +11,6 @@ export default function GameLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <>{children}</>;
+  // Minimal layout without Navigation sidebar
+  return <div className="game-layout w-full">{children}</div>;
 }
