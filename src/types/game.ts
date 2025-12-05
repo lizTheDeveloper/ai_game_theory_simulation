@@ -570,7 +570,56 @@ export interface GameState {
   
   // Ocean Acidification Crisis (TIER 1.3)
   oceanAcidificationSystem: import('../types/oceanAcidification').OceanAcidificationSystem; // Marine food web collapse
-  
+
+  /**
+   * Marine Ice Sheet Instability (M-4, Dec 5, 2025)
+   *
+   * Models abrupt sea level rise from West Antarctic Ice Sheet (WAIS) and Greenland
+   * collapse via marine ice cliff instability mechanism.
+   *
+   * Research: DeConto & Pollard (2016) Nature, Edwards et al. (2019) Nature,
+   *           Science Advances (2024) - WAIS 21st century downgrade
+   * Critique: PASS WITH MODIFICATIONS (reviews/marine_ice_sheet_instability_critique_20251205.md)
+   *
+   * Key mechanics:
+   * - Temperature-dependent stochastic trigger (1.5-2.0°C threshold)
+   * - Conservative 21st century probabilities (5-10x lower than Edwards 2019)
+   * - True irreversibility (collapse continues regardless of temperature)
+   * - Multi-phase progression: dormant → onset (10yr) → acceleration (90yr) → plateau (200yr)
+   * - Cumulative impacts: 0.1-0.2m (first decade) → 0.3-0.5m (by 2100) → 3-8m (by 2300)
+   *
+   * Expected impact: Tail risk in 21st century (1-5% under extreme warming),
+   *                  primary risk window in 22nd-23rd centuries
+   */
+  marineIceSheetInstability: {
+    /** Whether MICI has been triggered (irreversible once true) */
+    triggered: boolean;
+
+    /** Year when MICI was triggered (null if not triggered) */
+    yearTriggered?: number;
+
+    /** Month when MICI was triggered (null if not triggered) */
+    monthTriggered?: number;
+
+    /** Month when MICI was triggered (legacy field for compatibility) */
+    triggerMonth?: number;
+
+    /** Cumulative sea level rise from MICI (meters) */
+    cumulativeSeaLevelRise: number;
+
+    /** Current rate of sea level rise (meters/year) */
+    seaLevelRiseRate: number;
+
+    /** Total population displaced by sea level rise (millions) */
+    totalDisplacement: number;
+
+    /** Cumulative infrastructure damage (% of coastal GDP) */
+    infrastructureDamage: number;
+
+    /** Cumulative agricultural loss (% of coastal farmland) */
+    agriculturalLoss: number;
+  };
+
   // Novel Entities Crisis (TIER 1.5)
   novelEntitiesSystem: import('../types/novelEntities').NovelEntitiesSystem; // Chemical pollution & slow poisoning
 
