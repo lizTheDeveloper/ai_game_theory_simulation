@@ -111,6 +111,7 @@ export { FoodSecurityDegradationPhase } from './FoodSecurityDegradationPhase';  
 // export { ClimateImpactCascadePhase } from './ClimateImpactCascadePhase';  // CONSOLIDATED into ClimateSystemPhase (Batch 3, Nov 2025)
 // Batch 3 (Nov 2025): Climate & Environmental Consolidation
 export { ClimateSystemPhase } from './ClimateSystemPhase';  // Consolidates: Geoengineering, TippingPoint, EnvironmentalFeedback, ClimateImpactCascade
+export { AbruptSeaLevelRisePhase } from './AbruptSeaLevelRisePhase';  // M-4 (Dec 5, 2025): Marine ice sheet instability (WAIS/GIS collapse)
 export { ClimateDeploymentPhase } from './ClimateDeploymentPhase';  // TIER 1 CRITICAL (Nov 2025): Climate tech phased deployment + energy constraints
 export { ClimateDeploymentDelayPhase } from './ClimateDeploymentDelayPhase';  // TIER 1 CRITICAL (Nov 18, 2025): Three-delay model for realistic deployment
 export { PermafrostCarbonPhase } from './PermafrostCarbonPhase';  // TIER 2 (Nov 28, 2025): Permafrost carbon feedback loop
