@@ -34,14 +34,22 @@ import {
 /** MICI trigger thresholds (central estimates per validation) */
 const MICI_THRESHOLDS = {
   // Temperature thresholds (°C above pre-industrial)
+  // SYLVIA CRITIQUE (Dec 5, 2025): Adjusted from research values to avoid worst-case extremes
+  // Research: DeConto & Pollard (2021), Armstrong McKay et al. (2022)
+  // Critique: reviews/marine_ice_sheet_instability_critique_20251205.md Section 5.1
   WAIS_TEMP: 1.25,
-  GREENLAND_TEMP: 1.5,
+  GREENLAND_TEMP: 1.0, // ADJUSTED from 0.8C (worst-case extreme) per Sylvia critique
 
   // Ocean warming requirements for MICI (relative to baseline)
   OCEAN_WARMING_THRESHOLD: 0.5, // °C
 
   // Buttressing loss proxy: months since tipping point crossed
   BUTTRESSING_LOSS_MONTHS: 120, // 10 years
+
+  // === RECOVERY PARAMETERS (Dec 5, 2025) ===
+  // Sylvia critique Section 5.2.1: Allow reversal if cooling below 1.5C within 30 years
+  RECOVERY_TEMP_THRESHOLD: 1.5, // °C - if temp drops below this, allow recovery
+  RECOVERY_WINDOW_MONTHS: 360,  // 30 years - must cool within this window of trigger
 
   // Maximum contributions (meters)
   WAIS_MAX: 3.5,
@@ -51,26 +59,39 @@ const MICI_THRESHOLDS = {
 /** Abrupt pulse parameters (validated constraints) */
 const ABRUPT_PULSE = {
   // Magnitude range per event (meters)
-  MIN_MAGNITUDE: 0.5,
-  MAX_MAGNITUDE: 1.5, // Capped per validation (not 3.0m)
+  // SYLVIA CRITIQUE (Dec 5, 2025): Reduced from 1.5m max - no Holocene precedent for >0.5m pulses
+  // Critique: reviews/marine_ice_sheet_instability_critique_20251205.md Section 5.1
+  MIN_MAGNITUDE: 0.3,
+  MAX_MAGNITUDE: 0.5, // ADJUSTED from 1.5m per Sylvia critique (base case)
 
   // Base probability per decade if conditions met
-  BASE_PROBABILITY: 0.05, // 5% per decade
+  // ADJUSTED from 0.05 (5%) to 0.02 (2%) to avoid >10% cumulative by 2100
+  BASE_PROBABILITY: 0.02, // 2% per decade
 
   // Amplification with extreme warming (>3°C)
   EXTREME_WARMING_THRESHOLD: 3.0,
-  EXTREME_WARMING_MULTIPLIER: 2.0
+  EXTREME_WARMING_MULTIPLIER: 2.0,
+
+  // === COOLDOWN MECHANICS (Dec 5, 2025) ===
+  // Sylvia critique Section 5.2.2: Minimum gap between events per ice sheet sector
+  COOLDOWN_MONTHS: 2400, // 200 years between pulses (ice debris stabilization)
+
+  // === MELANGE STABILIZATION (Dec 5, 2025) ===
+  // Sylvia critique Section 5.2.4: Reduce probability after each pulse
+  STABILIZATION_FACTOR: 0.8 // Reduce probability by 20% after each pulse
 } as const;
 
 /** Coastal impact parameters (from research) */
 const COASTAL_IMPACTS = {
   // Population displacement (millions per meter)
-  DISPLACED_MIN: 50,
-  DISPLACED_MAX: 150,
+  // SYLVIA CRITIQUE (Dec 5, 2025): Exposure != displacement, use central estimate not range
+  // Critique: reviews/marine_ice_sheet_instability_critique_20251205.md Section 5.1
+  // HIGHEST UNCERTAINTY: This parameter has significant methodological critiques
+  DISPLACED_PER_METER: 50, // ADJUSTED from range [50,150] to central estimate
 
   // Infrastructure damage coefficients (trillion USD)
   DAMAGE_LINEAR: 5,
-  DAMAGE_QUADRATIC: 3,
+  DAMAGE_QUADRATIC: 2.0, // ADJUSTED from 3.0 - unverified coefficient per Sylvia critique
 
   // Agricultural land vulnerability
   AG_LAND_MIN_FRACTION: 0.0065, // 0.65%
@@ -145,6 +166,86 @@ export function checkMICIConditions(
 }
 
 /**
+ * Check if GIS recovery conditions are met (Greenland only)
+ *
+ * Sylvia critique Section 5.2.1: If cooling below 1.5C within 30 years of threshold crossing,
+ * allow reversal of abrupt mode.
+ *
+ * @param state - Game state
+ * @returns true if recovery should occur
+ */
+export function checkGISRecovery(state: GameState): boolean {
+  const system = state.tippingPointSystem;
+  const greenland = system.elements.find(e => e.id === 'greenland');
+
+  if (!greenland || !greenland.abruptMode) return false;
+
+  const temp = assertFinite(
+    assertStateProperty(state.resourceEconomy.co2, 'temperatureAnomaly', {
+      location: 'checkGISRecovery',
+      month: state.currentMonth
+    }),
+    {
+      location: 'checkGISRecovery',
+      valueName: 'temperatureAnomaly',
+      month: state.currentMonth
+    }
+  );
+
+  // Must cool below threshold
+  if (temp >= MICI_THRESHOLDS.RECOVERY_TEMP_THRESHOLD) return false;
+
+  // Must be within recovery window
+  if (greenland.monthsSinceTrigger > MICI_THRESHOLDS.RECOVERY_WINDOW_MONTHS) {
+    return false;
+  }
+
+  return true;
+}
+
+/**
+ * Execute GIS recovery (reversal of abrupt mode)
+ *
+ * @param state - Game state
+ */
+export function executeGISRecovery(state: GameState): void {
+  const system = state.tippingPointSystem;
+  const greenland = system.elements.find(e => e.id === 'greenland');
+
+  assertDefined(greenland, {
+    location: 'executeGISRecovery',
+    valueName: 'greenland',
+    month: state.currentMonth
+  });
+
+  if (!greenland) return; // Type guard
+
+  greenland.abruptMode = false;
+  greenland.abruptPulseCount = 0;
+  greenland.lastAbruptPulseMonth = undefined;
+
+  const temp = assertFinite(
+    assertStateProperty(state.resourceEconomy.co2, 'temperatureAnomaly', {
+      location: 'executeGISRecovery',
+      month: state.currentMonth
+    }),
+    {
+      location: 'executeGISRecovery',
+      valueName: 'temperatureAnomaly',
+      month: state.currentMonth
+    }
+  );
+
+  console.log(
+    `\n🌊✅ GREENLAND ICE SHEET RECOVERY: Abrupt mode reversed` +
+    `\n  Month: ${state.currentMonth}` +
+    `\n  Temperature: ${temp.toFixed(2)}°C` +
+    `\n  Months since trigger: ${greenland.monthsSinceTrigger}` +
+    `\n  Cooling below 1.5°C within 30-year window`
+  );
+}
+
+/**
  * Trigger abrupt MICI mode for an ice sheet
  *
  * @param state - Game state
@@ -167,6 +268,8 @@ export function triggerMICIAbruptMode(
 
   element.abruptMode = true;
   element.accumulatedAbruptSLR = element.accumulatedAbruptSLR ?? 0;
+  element.abruptPulseCount = element.abruptPulseCount ?? 0;
+  element.lastAbruptPulseMonth = element.lastAbruptPulseMonth ?? undefined;
 
   const temp = assertFinite(
     assertStateProperty(state.resourceEconomy.co2, 'temperatureAnomaly', {
@@ -233,6 +336,15 @@ export function checkAbruptPulse(
   const currentContribution = element.accumulatedAbruptSLR ?? 0;
   if (currentContribution >= maxContribution) return false;
 
+  // === COOLDOWN CHECK (Sylvia critique Section 5.2.2) ===
+  // Minimum 200-year gap between pulses (ice debris stabilization)
+  if (element.lastAbruptPulseMonth !== undefined) {
+    const monthsSinceLastPulse = state.currentMonth - element.lastAbruptPulseMonth;
+    if (monthsSinceLastPulse < ABRUPT_PULSE.COOLDOWN_MONTHS) {
+      return false; // Still in cooldown period
+    }
+  }
+
   // Calculate probability (per month)
   const temp = assertFinite(
     assertStateProperty(state.resourceEconomy.co2, 'temperatureAnomaly', {
@@ -253,11 +365,18 @@ export function checkAbruptPulse(
     probability *= (1 + excessWarming * ABRUPT_PULSE.EXTREME_WARMING_MULTIPLIER);
   }
 
+  // === MELANGE STABILIZATION (Sylvia critique Section 5.2.4) ===
+  // Reduce probability by 20% after each pulse (ice debris stabilization)
+  const pulseCount = element.abruptPulseCount ?? 0;
+  if (pulseCount > 0) {
+    probability *= Math.pow(ABRUPT_PULSE.STABILIZATION_FACTOR, pulseCount);
+  }
+
   probability = assertProbability(probability, {
     location: 'checkAbruptPulse',
     valueName: 'abruptPulseProbability',
     month: state.currentMonth,
-    additionalInfo: { temp, elementId }
+    additionalInfo: { temp, elementId, pulseCount, stabilizationApplied: pulseCount > 0 }
   });
 
   return rng() < probability;
@@ -318,6 +437,8 @@ export function executeAbruptPulse(
 
   // Update element state
   element.accumulatedAbruptSLR = currentContribution + cappedMagnitude;
+  element.lastAbruptPulseMonth = state.currentMonth; // Track for cooldown
+  element.abruptPulseCount = (element.abruptPulseCount ?? 0) + 1; // Track for stabilization
 
   // Update global sea level rise
   system.cumulativeSeaLevelRise = assertFinite(
@@ -436,18 +557,10 @@ export function updateCoastalImpacts(state: GameState, rng: RNGFunction): void {
   const system = state.tippingPointSystem;
   const slr = system.cumulativeSeaLevelRise;
 
-  // Population displacement (millions) - use range
-  const displacedPerMeter = assertInRange(
-    COASTAL_IMPACTS.DISPLACED_MIN +
-    rng() * (COASTAL_IMPACTS.DISPLACED_MAX - COASTAL_IMPACTS.DISPLACED_MIN),
-    COASTAL_IMPACTS.DISPLACED_MIN,
-    COASTAL_IMPACTS.DISPLACED_MAX,
-    {
-      location: 'updateCoastalImpacts',
-      valueName: 'displacedPerMeter',
-      month: state.currentMonth
-    }
-  );
+  // Population displacement (millions) - SYLVIA CRITIQUE: use central estimate, not range
+  // HIGHEST UNCERTAINTY: Exposure != displacement (methodological critique)
+  // Critique: reviews/marine_ice_sheet_instability_critique_20251205.md Section 4.2
+  const displacedPerMeter = COASTAL_IMPACTS.DISPLACED_PER_METER;
 
   system.coastalPopulationDisplaced = assertFinite(
     slr * displacedPerMeter,
@@ -455,7 +568,7 @@ export function updateCoastalImpacts(state: GameState, rng: RNGFunction): void {
       location: 'updateCoastalImpacts',
       valueName: 'coastalPopulationDisplaced',
       month: state.currentMonth,
-      additionalInfo: { slr, displacedPerMeter }
+      additionalInfo: { slr, displacedPerMeter, note: 'HIGHEST UNCERTAINTY parameter' }
     }
   );
 
@@ -498,6 +611,14 @@ export function updateCoastalImpacts(state: GameState, rng: RNGFunction): void {
       additionalInfo: { fraction, slr }
     }
   );
+
+  // === FOOD SECURITY IMPACTS (Sylvia critique Section 5.2.3) ===
+  // NOTE: Food security update NOT YET IMPLEMENTED
+  // When implemented, this should be CUMULATIVE (stock) not ANNUAL (flow)
+  // Formula: state.foodSecurity.globalYield *= (1 - fraction * 0.5)
+  // This represents PERMANENT loss of agricultural productivity from inundation
+  // NOT per-step compounding (which would produce unrealistic collapse)
+  // Critique: reviews/marine_ice_sheet_instability_critique_20251205.md Section 4.3
 }
 
 /**
@@ -513,6 +634,12 @@ export function updateMICI(state: GameState, rng: RNGFunction): void {
       `❌ CRITICAL: RNG required for deterministic MICI simulation ` +
       `(Month ${state.currentMonth})`
     );
+  }
+
+  // === GIS RECOVERY CHECK (Sylvia critique Section 5.2.1) ===
+  // Must check BEFORE triggering/pulses - cooling below 1.5C within 30 years reverses abrupt mode
+  if (checkGISRecovery(state)) {
+    executeGISRecovery(state);
   }
 
   // Check MICI conditions for each ice sheet
