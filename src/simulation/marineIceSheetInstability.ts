@@ -55,7 +55,9 @@ const ABRUPT_PULSE = {
   MAX_MAGNITUDE: 1.5, // Capped per validation (not 3.0m)
 
   // Base probability per decade if conditions met
-  BASE_PROBABILITY: 0.05, // 5% per decade
+  // VALIDATION ADJUSTMENT: Reduced from 0.05 to 0.01 per Sylvia's critique
+  // (2024 Morlighem et al. downgraded 21st century MICI catastrophe risk)
+  BASE_PROBABILITY: 0.01, // 1% per decade
 
   // Amplification with extreme warming (>3°C)
   EXTREME_WARMING_THRESHOLD: 3.0,
@@ -69,8 +71,10 @@ const COASTAL_IMPACTS = {
   DISPLACED_MAX: 150,
 
   // Infrastructure damage coefficients (trillion USD)
-  DAMAGE_LINEAR: 5,
-  DAMAGE_QUADRATIC: 3,
+  // VALIDATION ADJUSTMENT: Added uncertainty ranges per Sylvia's critique
+  // Research categorizes economic estimates as "Tier 3 (high uncertainty)"
+  DAMAGE_LINEAR: { min: 2, median: 5, max: 8 },
+  DAMAGE_QUADRATIC: { min: 1, median: 3, max: 5 },
 
   // Agricultural land vulnerability
   AG_LAND_MIN_FRACTION: 0.0065, // 0.65%
@@ -460,14 +464,47 @@ export function updateCoastalImpacts(state: GameState, rng: RNGFunction): void {
   );
 
   // Infrastructure damage (quadratic scaling)
+  // Sample from uncertainty ranges using triangular distribution (median-biased)
+  const sampleFromRange = (range: { min: number; median: number; max: number }): number => {
+    const u = rng();
+    if (u < 0.5) {
+      // Lower half: interpolate min → median
+      return range.min + 2 * u * (range.median - range.min);
+    } else {
+      // Upper half: interpolate median → max
+      return range.median + 2 * (u - 0.5) * (range.max - range.median);
+    }
+  };
+
+  const linearCoeff = assertInRange(
+    sampleFromRange(COASTAL_IMPACTS.DAMAGE_LINEAR),
+    COASTAL_IMPACTS.DAMAGE_LINEAR.min,
+    COASTAL_IMPACTS.DAMAGE_LINEAR.max,
+    {
+      location: 'updateCoastalImpacts',
+      valueName: 'linearCoeff',
+      month: state.currentMonth
+    }
+  );
+
+  const quadraticCoeff = assertInRange(
+    sampleFromRange(COASTAL_IMPACTS.DAMAGE_QUADRATIC),
+    COASTAL_IMPACTS.DAMAGE_QUADRATIC.min,
+    COASTAL_IMPACTS.DAMAGE_QUADRATIC.max,
+    {
+      location: 'updateCoastalImpacts',
+      valueName: 'quadraticCoeff',
+      month: state.currentMonth
+    }
+  );
+
   system.coastalInfrastructureDamage = assertFinite(
-    COASTAL_IMPACTS.DAMAGE_LINEAR * slr +
-    COASTAL_IMPACTS.DAMAGE_QUADRATIC * slr * slr,
+    linearCoeff * slr + quadraticCoeff * slr * slr,
     {
       location: 'updateCoastalImpacts',
       valueName: 'coastalInfrastructureDamage',
       month: state.currentMonth,
-      additionalInfo: { slr }
+      additionalInfo: { slr, linearCoeff, quadraticCoeff }
     }
   );
 
