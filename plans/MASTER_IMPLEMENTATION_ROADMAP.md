@@ -1,7 +1,7 @@
 # Master Implementation Roadmap
 ## AI Alignment Game Theory Simulation - Project Hub
 
-**Date:** December 3, 2025 (SESSION 51 COMPLETE)
+**Date:** December 5, 2025 (SESSION 52 COMPLETE)
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
@@ -26,6 +26,16 @@
   - `plans/completed/research_debate_followup_20251201.md` (Session 25)
   - `plans/completed/l1_physical_constraints_validation_20251201.md` (Session 28)
   - `plans/completed/cleanup_concentration_regression_tests_20251201.md` (Session 32)
+- **Recent Work (Dec 5 - Session 52):**
+  - 🔧 **M-4 COMPLETE** - Marine Ice Sheet Instability (MICI)
+    - Research: `research/marine_ice_sheet_instability_20251205.md` (Cynthia)
+    - Quality Gate 1: `reviews/marine_ice_sheet_instability_critique_20251205.md` (Sylvia - CONDITIONAL PASS)
+    - Implementation: Parameter adjustments in `src/simulation/marineIceSheetInstability.ts` (Roy)
+    - Commit: 37c593f2
+    - Status: ✅ COMPLETE (Monte Carlo validation pending)
+  - 🎯 **Token Usage:** ~15k (research + validation + implementation)
+  - 🎯 **System Status:** Production-ready, MICI integrated
+  - 📊 **Next:** Monte Carlo validation (N≥10 runs)
 - **Recent Work (Dec 3 - Session 51):**
   - 🔧 **VALIDATION CYCLE** - Research validation + Architecture review
     - Research Validation: Grade A- sustained (68.8% sources 2024-2025)
@@ -698,14 +708,18 @@
 
 **New Items (Dec 3, 2025 - Session 51):**
 
-**M-4: Abrupt Sea Level Rise** (Session 51 research gap)
+**M-4: Abrupt Sea Level Rise - COMPLETE** ✅ (Session 52, Dec 5, 2025)
 - **Problem:** Current sea level rise is gradual; missing marine ice sheet instability
 - **Research:** WAIS/Greenland marine instability (DeConto & Pollard 2016, Edwards 2019)
 - **Impact:** Abrupt 1-3m sea level rise events in tail scenarios
-- **Location:** New phase or integration into ClimateSystemPhase
+- **Location:** `src/simulation/marineIceSheetInstability.ts` (integrated into ClimateSystemPhase)
 - **Complexity:** 4 systems (climate, ice sheets, coastal populations, infrastructure)
-- **Assignee:** simulation-maintainer (Roy)
-- **Status:** DEFERRED (token conservation mode)
+- **Delivered:**
+  - Research: `research/marine_ice_sheet_instability_20251205.md` (Cynthia)
+  - Validation: `reviews/marine_ice_sheet_instability_critique_20251205.md` (Sylvia - CONDITIONAL PASS)
+  - Implementation: Parameter adjustments per critique (Roy)
+  - Commit: 37c593f2
+- **Status:** ✅ COMPLETE (Monte Carlo validation pending as next step)
 
 **M-5: Compound Climate Events** (Session 51 research gap)
 - **Problem:** Tipping points modeled independently; missing simultaneous cascade effects
@@ -738,6 +752,7 @@
 - M-1 (dead code cleanup) → `plans/completed/validation_sprint_nov26_29_20251129.md`
 - M-2 (assertion migration audit) → `plans/completed/m2_assertion_migration_audit_20251130.md`
 - M-3 (parameter injection infrastructure) → `plans/completed/m3_parameter_injection_infrastructure_20251130.md`
+- M-4 (marine ice sheet instability) → Research + implementation complete (Session 52, Dec 5, 2025) - commit 37c593f2
 
 **M-3: Parameter Sweep Execution - INFRASTRUCTURE COMPLETE** ✅ (Nov 30, 2025 - Session 23)
 - **Status:** 🟢 INFRASTRUCTURE COMPLETE - Execution deferred (can run anytime)
