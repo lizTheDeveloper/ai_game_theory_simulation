@@ -220,6 +220,11 @@ function testMonotonicity(scenario: ScenarioConfig): { pass: boolean; violations
   // Force trigger at start
   state.marineIceSheetInstability.triggered = true;
   state.marineIceSheetInstability.triggerMonth = 0;
+  state.marineIceSheetInstability.rolledMagnitudes = {
+    onset: 0.15,        // midpoint of [0.1, 0.2]
+    acceleration: 0.25, // midpoint of [0.2, 0.3]
+    plateau: 5.5        // midpoint of [3.0, 8.0]
+  };
   state.resourceEconomy.co2.temperatureAnomaly = scenario.initialTempC;
 
   const phase = new AbruptSeaLevelRisePhase();
