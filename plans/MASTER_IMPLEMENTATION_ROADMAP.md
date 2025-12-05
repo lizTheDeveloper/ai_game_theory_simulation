@@ -491,21 +491,20 @@
 
 **Status:** 1 active HIGH item (Session 51 research debate finding)
 
-**HIGH-7: Conditional Climate Stability Floor** (Dec 3, 2025 - Session 51)
-- **Problem:** 5% stability floor creates optimistic bias in tail scenarios
+**HIGH-7: Conditional Climate Stability Floor** ✅ COMPLETE (Dec 5, 2025)
+- **Problem:** 5% stability floor created optimistic bias in tail scenarios
 - **Research Finding:** Climate stability floor contradicted by Wunderling et al. 2024
   - "Many tipping interactions are destabilizing" (83% of papers)
-  - Current 5% floor assumes stabilizing feedbacks dominate
-- **Solution:** Apply stability floor ONLY in Paris Agreement success scenarios
-  - Tail risk scenarios (3+ tipping cascades): Remove floor, allow full collapse
-  - Mitigation success scenarios: Keep floor (represents human intervention)
-- **Location:** `src/simulation/phases/systems/ClimateSystemPhase.ts`
-- **Complexity:** 3 systems (climate, planetary boundaries, outcome classification)
-- **Source:** `research/research_validation_session_51_20251203.md` (lines 54-58)
-- **Assignee:** simulation-maintainer (Roy)
-- **Estimated Effort:** 2-3h (parameter conditional logic + Monte Carlo validation)
-- **Blocked By:** None
-- **Status:** QUEUED (token conservation mode - deferred until CRITICAL work arises)
+  - Unconditional floor assumes stabilizing feedbacks dominate
+- **Solution Implemented:** Conditional floor based on policy success (Option C)
+  - **Paris success** (<1.5°C): Apply 5% floor (human intervention)
+  - **Low cascade risk** (<3 tips OR <2°C): Apply 5% floor
+  - **Tail risk** (≥3 cascades AND ≥2°C): Remove floor, allow full collapse
+- **Implementation:** `ClimateSystemPhase.ts` lines 532-587
+- **Research Grade:** B- (aligns with Wunderling 2024 + ACCESS-ESM-1.5 2024)
+- **Impact:** Tail scenarios can now reach full climate collapse (research-accurate)
+- **Archive:** `plans/completed/HIGH_7_conditional_climate_stability_floor_20251205.md`
+- **Review:** `reviews/high7_implementation_summary_20251205.md`
 
 ## ✅ Recently Resolved (Nov 26-30, 2025)
 
