@@ -2465,11 +2465,11 @@ This section documents **critical parameter uncertainty findings** identified du
 
 **Missing Climate Cascade Systems (M-4 to M-7):**
 - **M-4: Abrupt Sea Level Rise** - Ice cliff instability, WAIS/Greenland coupling not modeled
-- **M-5: Compound Extreme Events** - Simultaneous droughts, heatwaves, floods (Zscheischler et al. 2020)
+- ✅ **M-5: Compound Extreme Events** - COMPLETE (Dec 5, 2025) - Cascade multipliers 1.5-3.0× based on Communications Earth & Environment (2024)
 - **M-6: Social Tipping Points** - Positive cascades for rapid transitions (Lenton et al. 2022)
 - **M-7: Climate System Hysteresis** - Bifurcation memory, path dependence in recovery
-- **Impact:** Medium priority gaps - model captures first-order climate dynamics but missing nonlinear cascade effects
-- **Status:** Identified in Session 51, not blocking current simulation accuracy
+- **Impact:** Medium priority gaps - model captures first-order climate dynamics, M-5 compound cascades now implemented
+- **Status:** M-5 complete, M-4/M-6/M-7 remain for future work
 
 ### Critical Uncertainties (Nov 21 Skeptic Critique)
 
@@ -4788,6 +4788,18 @@ All domain bounds are validated against peer-reviewed sources (2024-2025):
 - **Projected minimum:** ~7.5-7.9 by 2100 (extreme scenarios, 0.3-0.5 pH unit decline)
 - **Note:** Impacts occur across range; no specific "collapse threshold" found in literature
 - **Sources:** NOAA Ocean Acidification Program (2025), IPCC AR6
+
+**Tipping Cascade Multipliers:** [1.0, 3.0]
+- **No cascades (0-1 elements):** 1.0× (baseline transition speed)
+- **2 elements:** 1.5× (moderate compound amplification)
+- **3 elements:** 2.0× (critical threshold - "factor of 2" from research)
+- **4 elements:** 2.5× (severe compounding)
+- **5+ elements:** 3.0× (full "Hothouse Earth" cascade)
+- **Cascading elements:** AMOC, Amazon rainforest, Permafrost (3 of 6 total tipping elements)
+- **Impact:** Amplifies transition speed and regional damage when multiple elements tip simultaneously
+- **Research:** Communications Earth & Environment (2024) DOI: 10.1038/s43247-024-01799-5
+- **Implementation:** ClimateSystemPhase.ts lines 384-397
+- **Note:** Only 3 of 6 tipping elements have `cascades: true` (AMOC, Amazon, Permafrost); others (Arctic sea ice, WAIS, Greenland) affect global temperature but don't trigger cascade amplification
 
 #### AI Capabilities
 
