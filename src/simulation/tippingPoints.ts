@@ -12,7 +12,7 @@
  * - IPCC AR6 WG1 (2021) - Chapter 8, tipping elements
  */
 
-import { TippingPointSystem, TIPPING_ELEMENTS } from '../types/tipping-points';
+import { TippingPointSystem, TIPPING_ELEMENTS, TippingElementState } from '../types/tipping-points';
 import { assertFinite } from './utils/assertions';
 
 /**
@@ -20,6 +20,8 @@ import { assertFinite } from './utils/assertions';
  *
  * Creates initial state with all tipping elements untriggered.
  * Elements will be triggered during simulation based on global temperature thresholds.
+ *
+ * M-7 (Dec 5, 2025): Added state field for hysteresis state machine
  */
 export function initializeTippingPointSystem(): TippingPointSystem {
   return {
@@ -27,7 +29,8 @@ export function initializeTippingPointSystem(): TippingPointSystem {
       ...element,
       triggered: false,
       monthsSinceTrigger: 0,
-      progress: 0.0
+      progress: 0.0,
+      state: TippingElementState.NOT_TRIGGERED  // M-7: Initialize hysteresis state
     })),
     triggeredCount: 0,
     completedCount: 0,

@@ -708,18 +708,9 @@
 - **Next Steps (MEDIUM-NEW "Parameter Sweep Execution"):** Parameter injection → N=200 sweep → Sobol indices → 90% CI report
 - **Recommendation:** Execute AFTER VM deployment (parallel workers benefit)### 🟡 MEDIUM Priority Items
 
-**Status:** 4 new MEDIUM items added (Session 51 - missing climate system features)
+**Status:** 3 active MEDIUM items (M-5, M-6, M-7 - climate system features)
 
-**New Items (Dec 3, 2025 - Session 51):**
-
-**M-4: Abrupt Sea Level Rise** (Session 51 research gap)
-- **Problem:** Current sea level rise is gradual; missing marine ice sheet instability
-- **Research:** WAIS/Greenland marine instability (DeConto & Pollard 2016, Edwards 2019)
-- **Impact:** Abrupt 1-3m sea level rise events in tail scenarios
-- **Location:** New phase or integration into ClimateSystemPhase
-- **Complexity:** 4 systems (climate, ice sheets, coastal populations, infrastructure)
-- **Assignee:** simulation-maintainer (Roy)
-- **Status:** DEFERRED (token conservation mode)
+**Active Items:**
 
 **M-5: Compound Climate Events** (Session 51 research gap)
 - **Problem:** Tipping points modeled independently; missing simultaneous cascade effects
@@ -728,7 +719,7 @@
 - **Location:** ClimateSystemPhase + PlanetaryBoundariesPhase
 - **Complexity:** 5 systems (climate, ice sheets, AMOC, rainforests, permafrost)
 - **Assignee:** simulation-maintainer (Roy)
-- **Status:** DEFERRED (token conservation mode)
+- **Status:** ACTIVE (token conservation disabled Dec 4)
 
 **M-6: Social Tipping Points** (Session 51 research gap)
 - **Problem:** Only negative climate tipping points; missing positive social tipping points
@@ -737,7 +728,7 @@
 - **Location:** SocialStabilitySystemPhase or new SocialTippingPhase
 - **Complexity:** 4 systems (social, economy, technology, climate mitigation)
 - **Assignee:** simulation-maintainer (Roy)
-- **Status:** DEFERRED (token conservation mode)
+- **Status:** ACTIVE (token conservation disabled Dec 4)
 
 **M-7: Climate Hysteresis** (Session 51 research gap)
 - **Problem:** Climate state reversible; missing hysteresis after tipping point crossings
@@ -746,12 +737,13 @@
 - **Location:** ClimateSystemPhase (tipping point logic)
 - **Complexity:** 3 systems (climate, tipping points, planetary boundaries)
 - **Assignee:** simulation-maintainer (Roy)
-- **Status:** DEFERRED (token conservation mode)
+- **Status:** ACTIVE (token conservation disabled Dec 4)
 
 **Archives:**
 - M-1 (dead code cleanup) → `plans/completed/validation_sprint_nov26_29_20251129.md`
 - M-2 (assertion migration audit) → `plans/completed/m2_assertion_migration_audit_20251130.md`
 - M-3 (parameter injection infrastructure) → `plans/completed/m3_parameter_injection_infrastructure_20251130.md`
+- M-4 (abrupt sea level rise) → `plans/completed/m4_abrupt_sea_level_rise_20251205.md`
 
 **M-3: Parameter Sweep Execution - INFRASTRUCTURE COMPLETE** ✅ (Nov 30, 2025 - Session 23)
 - **Status:** 🟢 INFRASTRUCTURE COMPLETE - Execution deferred (can run anytime)

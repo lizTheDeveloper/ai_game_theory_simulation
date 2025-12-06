@@ -27,7 +27,7 @@
  */
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction, GameEvent } from '@/types/game';
-import { TIPPING_INTERACTIONS } from '@/types/tipping-points';
+import { TIPPING_INTERACTIONS, TippingElementState, TippingElement } from '@/types/tipping-points';
 import { addMortalityRisk } from '@/simulation/bayesianMortality';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 import {
@@ -147,11 +147,10 @@ export class ClimateSystemPhase implements SimulationPhase {
     // Research: Wunderling et al. (2024), Armstrong McKay et al. (2022)
     this.calculateThresholdLowering(state);
 
-    // Step 1: Check for new triggers
-    const newlyTriggered = this.detectTippingThresholds(state, currentTempC);
-
-    // Step 2: Progress active elements
-    this.updateTippingTransitions(state, rng);
+    // Step 1 & 2: Update tipping element states with bidirectional hysteresis (M-7, Dec 5, 2025)
+    // Research: Garbe et al. (2020) Nature, Drüke et al. (2024) ESD
+    // Replaces unidirectional trigger logic with state machine supporting recovery
+    this.updateTippingElementStates(state, currentTempC, rng);
 
     // Step 3: Calculate cascade amplification
     this.calculateTippingCascades(state);
@@ -180,7 +179,7 @@ export class ClimateSystemPhase implements SimulationPhase {
       }
     );
 
-    if (newlyTriggered.length > 0 || system.triggeredCount > 0) {
+    if (system.triggeredCount > 0) {
       console.log(`  Triggered Elements: ${system.triggeredCount}/${system.elements.length}`);
       console.log(`  Completed Transitions: ${system.completedCount}/${system.elements.length}`);
       console.log(`  Total Progress: ${(system.totalProgress * 100).toFixed(1)}%`);
@@ -266,100 +265,277 @@ export class ClimateSystemPhase implements SimulationPhase {
     }
   }
 
-  private detectTippingThresholds(state: GameState, currentTempC: number): string[] {
+  /**
+   * Bidirectional hysteresis state machine for tipping elements (M-7, Dec 5, 2025)
+   *
+   * Research: Garbe et al. (2020) Nature, Drüke et al. (2024) ESD
+   *
+   * Key insight: Recovery threshold << crossing threshold (hysteresis gap 0-3°C)
+   * Example (WAIS): Cross at +2.0°C, recover below -1.0°C = 3.0°C gap
+   *
+   * State transitions:
+   * - NOT_TRIGGERED → PROGRESSING: temp >= effectiveThreshold
+   * - PROGRESSING → FULLY_TIPPED: progress >= 1.0
+   * - FULLY_TIPPED → RECOVERING: temp < recoveryTempC (hysteresis!)
+   * - RECOVERING → RECOVERED: progress <= minimumAsymptoticValue
+   * - RECOVERING → PROGRESSING: temp rises above threshold during recovery
+   * - RECOVERED → PROGRESSING: temp rises above threshold again
+   */
+  private updateTippingElementStates(state: GameState, currentTempC: number, rng: RNGFunction): void {
     const system = state.tippingPointSystem;
-    const newlyTriggered: string[] = [];
 
     for (const element of system.elements) {
-      if (element.triggered) continue;
+      // Calculate effective threshold with cascade reduction (Nov 23, 2025)
+      const effectiveThreshold = this.getEffectiveThreshold(element, state);
 
-      // Calculate effective threshold with reduction from triggered elements (Nov 23, 2025)
-      // Research: Wunderling et al. (2024), Armstrong McKay et al. (2022)
-      const thresholdReduction = element.effectiveThresholdReduction || 0;
-      const effectiveThreshold = assertFinite(
-        element.triggerTempC - thresholdReduction,
-        {
-          location: 'ClimateSystemPhase.detectTippingThresholds',
-          valueName: 'effectiveThreshold',
-          month: state.currentMonth,
-          additionalInfo: {
-            elementId: element.id,
-            baseThreshold: element.triggerTempC,
-            thresholdReduction
+      // Get recovery threshold (undefined = irreversible, same as trigger = no hysteresis)
+      const recoveryThreshold = element.recoveryTempC ?? -Infinity; // If undefined, never recovers
+
+      // Initialize state if not set (backward compatibility)
+      if (!element.state) {
+        element.state = element.triggered ? TippingElementState.PROGRESSING : TippingElementState.NOT_TRIGGERED;
+      }
+
+      switch (element.state) {
+        case TippingElementState.NOT_TRIGGERED:
+          if (currentTempC >= effectiveThreshold) {
+            this.transitionToProgressing(element, state, currentTempC, effectiveThreshold);
           }
-        }
-      );
+          break;
 
-      if (currentTempC >= effectiveThreshold) {
-        element.triggered = true;
-        element.monthsSinceTrigger = 0;
+        case TippingElementState.PROGRESSING:
+          this.updateProgressingElement(element, state, rng);
+          if (element.progress >= 1.0) {
+            this.transitionToFullyTipped(element, state);
+          }
+          break;
 
-        system.triggers.push({
-          elementId: element.id,
-          monthTriggered: state.currentMonth,
-          tempAtTrigger: currentTempC
-        });
+        case TippingElementState.FULLY_TIPPED:
+          // Check if temperature dropped below RECOVERY threshold (hysteresis!)
+          if (currentTempC < recoveryThreshold) {
+            this.transitionToRecovering(element, state, currentTempC, recoveryThreshold);
+          }
+          break;
 
-        newlyTriggered.push(element.name);
+        case TippingElementState.RECOVERING:
+          // Check if temp rises again before recovery complete (re-triggering)
+          if (currentTempC >= effectiveThreshold) {
+            this.transitionToProgressing(element, state, currentTempC, effectiveThreshold);
+          } else {
+            this.updateRecoveringElement(element, state, rng);
+            const floor = element.minimumAsymptoticValue ?? 0.0;
+            if (element.progress <= floor) {
+              this.transitionToRecovered(element, state);
+            }
+          }
+          break;
 
-        // Log with cascade context if threshold was lowered
-        if (thresholdReduction > 0) {
-          console.warn(`  🚨 CASCADE TIPPING POINT: ${element.name}`);
-          console.log(`     Original threshold: ${element.triggerTempC}°C`);
-          console.log(`     Effective threshold: ${effectiveThreshold.toFixed(2)}°C (lowered by ${thresholdReduction.toFixed(2)}°C)`);
-          console.log(`     Current: ${currentTempC.toFixed(2)}°C`);
-        } else {
-          console.warn(`  ⚠️ TIPPING POINT TRIGGERED: ${element.name}`);
-          console.log(`     Threshold: ${element.triggerTempC}°C | Current: ${currentTempC.toFixed(2)}°C`);
-        }
-        console.log(`     Transition timescale: ${element.transitionMinMonths}-${element.transitionMaxMonths} months`);
+        case TippingElementState.RECOVERED:
+          // Can re-trigger if temperature crosses threshold again
+          if (currentTempC >= effectiveThreshold) {
+            this.transitionToProgressing(element, state, currentTempC, effectiveThreshold);
+          }
+          break;
       }
     }
-
-    return newlyTriggered;
   }
 
-  private updateTippingTransitions(state: GameState, rng: RNGFunction): void {
-    const system = state.tippingPointSystem;
-
-    for (const element of system.elements) {
-      if (!element.triggered) continue;
-
-      element.monthsSinceTrigger++;
-
-      // Sample random transition time within range (only on first update)
-      if (element.monthsSinceTrigger === 1) {
-        const transitionTime = element.transitionMinMonths +
-          rng() * (element.transitionMaxMonths - element.transitionMinMonths);
-        (element as any)._sampledTransitionTime = transitionTime;
+  /**
+   * Calculate effective threshold with cascade reductions (Nov 23, 2025)
+   * Research: Wunderling et al. (2024), Armstrong McKay et al. (2022)
+   */
+  private getEffectiveThreshold(element: TippingElement, state: GameState): number {
+    const thresholdReduction = element.effectiveThresholdReduction || 0;
+    return assertFinite(
+      element.triggerTempC - thresholdReduction,
+      {
+        location: 'ClimateSystemPhase.getEffectiveThreshold',
+        valueName: 'effectiveThreshold',
+        month: state.currentMonth,
+        additionalInfo: {
+          elementId: element.id,
+          baseThreshold: element.triggerTempC,
+          thresholdReduction
+        }
       }
+    );
+  }
 
-      const transitionTime = (element as any)._sampledTransitionTime || element.transitionMaxMonths;
+  /**
+   * Transition to PROGRESSING state (element begins tipping)
+   */
+  private transitionToProgressing(
+    element: TippingElement,
+    state: GameState,
+    currentTempC: number,
+    effectiveThreshold: number
+  ): void {
+    const previousState = element.state;
+    element.state = TippingElementState.PROGRESSING;
+    element.triggered = true;  // Keep for backward compatibility
+    element.monthsSinceTrigger = 0;
 
-      // Sigmoid curve parameters
-      const k = 4 / transitionTime;
-      const t = element.monthsSinceTrigger;
-      const t_mid = transitionTime / 2;
+    // Record trigger event
+    state.tippingPointSystem.triggers.push({
+      elementId: element.id,
+      monthTriggered: state.currentMonth,
+      tempAtTrigger: currentTempC
+    });
 
-      const newProgress = assertFinite(
-        1 / (1 + Math.exp(-k * (t - t_mid))),
-        {
-          location: 'ClimateSystemPhase.updateTippingTransitions',
-          valueName: 'newProgress',
-          month: state.currentMonth,
-          additionalInfo: { elementId: element.id, t, k, t_mid }
+    // Log with hysteresis context
+    const thresholdReduction = element.effectiveThresholdReduction || 0;
+    const gap = element.hysteresisGapC ?? 0;
+
+    if (previousState === TippingElementState.RECOVERING) {
+      console.warn(`  🔄 RE-TRIGGERING DURING RECOVERY: ${element.name}`);
+      console.log(`     Temperature rose to ${currentTempC.toFixed(2)}°C before recovery complete`);
+      console.log(`     Progress was: ${(element.progress * 100).toFixed(1)}%`);
+    } else if (thresholdReduction > 0) {
+      console.warn(`  🚨 CASCADE TIPPING POINT: ${element.name}`);
+      console.log(`     Original threshold: ${element.triggerTempC}°C`);
+      console.log(`     Effective threshold: ${effectiveThreshold.toFixed(2)}°C (lowered by ${thresholdReduction.toFixed(2)}°C)`);
+      console.log(`     Current: ${currentTempC.toFixed(2)}°C`);
+    } else {
+      console.warn(`  🚨 TIPPING POINT: ${element.name}`);
+      console.log(`     Trigger: ${element.triggerTempC}°C | Current: ${currentTempC.toFixed(2)}°C`);
+    }
+
+    if (gap > 0) {
+      console.log(`     🌡️ Hysteresis gap: ${gap.toFixed(1)}°C (recovers below ${element.recoveryTempC}°C)`);
+    }
+    console.log(`     Transition timescale: ${element.transitionMinMonths}-${element.transitionMaxMonths} months`);
+  }
+
+  /**
+   * Update PROGRESSING element (sigmoid curve toward fully tipped)
+   */
+  private updateProgressingElement(element: TippingElement, state: GameState, rng: RNGFunction): void {
+    element.monthsSinceTrigger++;
+
+    // Sample random transition time within range (only on first update)
+    if (element.monthsSinceTrigger === 1) {
+      const transitionTime = element.transitionMinMonths +
+        rng() * (element.transitionMaxMonths - element.transitionMinMonths);
+      (element as any)._sampledTransitionTime = transitionTime;
+    }
+
+    const transitionTime = (element as any)._sampledTransitionTime || element.transitionMaxMonths;
+
+    // Sigmoid curve parameters
+    const k = 4 / transitionTime;
+    const t = element.monthsSinceTrigger;
+    const t_mid = transitionTime / 2;
+
+    const newProgress = assertFinite(
+      1 / (1 + Math.exp(-k * (t - t_mid))),
+      {
+        location: 'ClimateSystemPhase.updateProgressingElement',
+        valueName: 'newProgress',
+        month: state.currentMonth,
+        additionalInfo: { elementId: element.id, t, k, t_mid }
+      }
+    );
+
+    element.progress = assertInRange(
+      Math.min(1.0, Math.max(0.0, newProgress)),
+      0, 1,
+      {
+        location: 'ClimateSystemPhase.updateProgressingElement',
+        valueName: `element[${element.id}].progress`,
+        month: state.currentMonth
+      }
+    );
+  }
+
+  /**
+   * Transition to FULLY_TIPPED state (progress reached 1.0)
+   */
+  private transitionToFullyTipped(element: TippingElement, state: GameState): void {
+    element.state = TippingElementState.FULLY_TIPPED;
+    console.log(`  ⚠️ FULLY TRANSITIONED: ${element.name} (progress = 100%)`);
+
+    const gap = element.hysteresisGapC ?? 0;
+    if (gap > 0) {
+      console.log(`     Recovery requires temp below ${element.recoveryTempC}°C (${gap.toFixed(1)}°C drop)`);
+    } else if (element.recoveryTempC === undefined) {
+      console.log(`     ⚠️ IRREVERSIBLE on human timescales`);
+    }
+  }
+
+  /**
+   * Transition to RECOVERING state (temp dropped below recovery threshold)
+   */
+  private transitionToRecovering(
+    element: TippingElement,
+    state: GameState,
+    currentTempC: number,
+    recoveryThreshold: number
+  ): void {
+    element.state = TippingElementState.RECOVERING;
+    element.monthsSinceTrigger = 0;  // Reset counter for recovery phase
+
+    console.log(`  🌱 RECOVERY BEGINS: ${element.name}`);
+    console.log(`     Temp dropped to ${currentTempC.toFixed(2)}°C (below recovery threshold ${recoveryThreshold.toFixed(2)}°C)`);
+    console.log(`     Progress will decrease from ${(element.progress * 100).toFixed(1)}% toward floor: ${((element.minimumAsymptoticValue ?? 0) * 100).toFixed(1)}%`);
+
+    const halfLife = element.recoveryHalfLife ?? 400;
+    console.log(`     Recovery half-life: ${halfLife} years`);
+  }
+
+  /**
+   * Update RECOVERING element (exponential decay toward floor)
+   * Research: Drüke et al. (2024) - recovery timescales 100-1000 years
+   */
+  private updateRecoveringElement(element: TippingElement, state: GameState, rng: RNGFunction): void {
+    element.monthsSinceTrigger++;
+
+    const halfLife = element.recoveryHalfLife ?? 400;  // Default 400 years
+    const floor = element.minimumAsymptoticValue ?? 0.0;
+
+    // Exponential decay toward floor: progress(t) = floor + (progress_0 - floor) * exp(-λt)
+    // λ = ln(2) / halfLife (in years)
+    const lambda = Math.log(2) / halfLife;
+    const t_years = element.monthsSinceTrigger / 12;
+
+    const newProgress = assertFinite(
+      floor + (element.progress - floor) * Math.exp(-lambda * t_years),
+      {
+        location: 'ClimateSystemPhase.updateRecoveringElement',
+        valueName: 'newProgress',
+        month: state.currentMonth,
+        additionalInfo: {
+          elementId: element.id,
+          halfLife,
+          floor,
+          t_years,
+          currentProgress: element.progress
         }
-      );
+      }
+    );
 
-      element.progress = assertInRange(
-        Math.min(1.0, Math.max(0.0, newProgress)),
-        0, 1,
-        {
-          location: 'ClimateSystemPhase.updateTippingTransitions',
-          valueName: `element[${element.id}].progress`,
-          month: state.currentMonth
-        }
-      );
+    element.progress = assertInRange(
+      Math.max(floor, newProgress),  // Never go below floor
+      0, 1,
+      {
+        location: 'ClimateSystemPhase.updateRecoveringElement',
+        valueName: `element[${element.id}].progress`,
+        month: state.currentMonth
+      }
+    );
+  }
+
+  /**
+   * Transition to RECOVERED state (progress reached floor)
+   */
+  private transitionToRecovered(element: TippingElement, state: GameState): void {
+    element.state = TippingElementState.RECOVERED;
+    const floor = element.minimumAsymptoticValue ?? 0.0;
+
+    console.log(`  ✅ RECOVERY COMPLETE: ${element.name}`);
+    console.log(`     Progress: ${(element.progress * 100).toFixed(1)}% (floor: ${(floor * 100).toFixed(1)}%)`);
+
+    if (floor > 0) {
+      console.log(`     ⚠️ Irreversible component: ${(floor * 100).toFixed(1)}% remains`);
     }
   }
 
