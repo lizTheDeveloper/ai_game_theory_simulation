@@ -1,26 +1,6 @@
 {
   "queue": [
     {
-      "id": "CRITICAL-GAME-1",
-      "priority": "CRITICAL",
-      "title": "Deploy Playable Game Demo (Code EXISTS, needs deployment)",
-      "assignedAgent": "architect",
-      "agentPersonality": "architect",
-      "status": "COMPLETED",
-      "complexity": 2,
-      "estimatedTokens": 25000,
-      "dependencies": [],
-      "blockedBy": [],
-      "roadmapSection": "PM URGENT - End of Week Deadline",
-      "createdAt": "2025-12-05T03:04:00.000Z",
-      "claimedBy": "autonomous-worker",
-      "claimedAt": "2025-12-05T05:00:00.000Z",
-      "description": "**STATUS:** Game code ALREADY EXISTS (Nov 2025 commits da319bbe, c9236be8, etc.)\n\n**Problem:** Deployed demo at http://34.32.105.178/game-dashboard-demo not working properly\n\n**What Exists:**\n- ✅ Complete playable game (Phases 1-4) - commit c9236be8\n- ✅ GameSession + player actions - commit fd687f59\n- ✅ Game dashboard components - commit 63ffd766\n- ✅ Test coverage - commit cc95d5b2\n- ✅ src/game/ architecture complete\n\n**What's Needed:**\n1. Build Next.js app on VM (`npm run build`)\n2. Ensure web server serving from correct directory\n3. Smoke test at http://34.32.105.178/game-dashboard-demo\n\n**This is a DEPLOYMENT task, not implementation.**\n\n**Estimated Time:** 1-2 hours (build + deploy + verify)\n\n**Priority:** CRITICAL - User expects working demo by end of week",
-      "validationStatus": "PASSED",
-      "completedAt": "2025-12-05T05:11:00.000Z",
-      "completionNotes": "✅ COMPLETE - Game demo deployed and tested. Build successful (6.2min), server restarted, external URL verified (HTTP 200 OK). Deployed at http://34.32.105.178/game-dashboard-demo. Log: logs/game_demo_deployment_20251205.md"
-    },
-    {
       "id": "HIGH-7",
       "priority": "HIGH",
       "title": "Conditional Climate Stability Floor",
@@ -329,7 +309,7 @@
     }
   ],
   "metadata": {
-    "lastUpdated": "2025-12-05T05:11:30.000Z",
+    "lastUpdated": "2025-12-05T00:00:41.940Z",
     "version": "1.0.0",
     "generatedFrom": "MASTER_IMPLEMENTATION_ROADMAP.md"
   }

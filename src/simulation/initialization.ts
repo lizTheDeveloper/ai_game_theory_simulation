@@ -1010,7 +1010,7 @@ export function createDefaultInitialState(
     // Ocean Acidification Crisis (TIER 1.3)
     // RD-2 (Nov 28, 2025): Pass RNG for species sensitivity randomization
     oceanAcidificationSystem: initializeOceanAcidificationSystem(rngFunction),
-    
+
     // Novel Entities Crisis (TIER 1.5)
     novelEntitiesSystem: initializeNovelEntitiesSystem(),
 
@@ -1034,6 +1034,18 @@ export function createDefaultInitialState(
       currentAOD: 0.0,           // No volcanic eruption at simulation start (2025)
       forcingWattsPerM2: 0.0,    // No forcing
       lastEruptionMonth: -999    // Sentinel value (no previous eruption)
+    },
+
+    // Marine Ice Sheet Instability (M-4, Dec 5, 2025)
+    // Initialized to dormant - stochastic trigger depends on temperature
+    marineIceSheetInstability: {
+      triggered: false,
+      triggerMonth: undefined,
+      cumulativeSeaLevelRise: 0.0,
+      seaLevelRiseRate: 0.0,
+      totalDisplacement: 0.0,
+      infrastructureDamage: 0.0,
+      agriculturalLoss: 0.0
     },
 
     // Irreversibility Tracking (Nov 22, 2025 - CRITICAL FIX)

@@ -143,13 +143,20 @@ cd "$PROJECT_DIR"
         log_warning "Uncommitted changes detected on main branch"
         log_info "Committing local changes before pull..."
         git add -A
-        git commit -m "chore: Auto-commit before pull (worker $TIMESTAMP)" 2>&1 || echo "Nothing to commit"
+        git commit -m "Auto-commit: Worker progress before sync
+
+⚠️ Note: Post-commit hook will run after this commit.
+The historian agent will be spawned to update documentation.
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>" 2>&1 || echo "Nothing to commit"
     fi
 
     # Pull latest changes
     log_info "Pulling latest from main..."
     PULL_START=$(date +%s)
-    if ! git fetch origin && git reset --hard origin/main origin main 2>&1; then
+    if ! git pull origin main 2>&1; then
         log_error "Pull failed - likely merge conflict"
         log_info "Invoking Claude to resolve merge conflicts..."
 
