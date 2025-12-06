@@ -182,34 +182,56 @@ function updateCognitiveSpiral(spiral: UpwardSpiral, state: GameState, month: nu
  * SPIRAL 3: Democratic Flourishing
  * Governance quality + Participation + Transparency
  * "Liquid democracy working, people engaged, decisions good"
+ *
+ * M-6 INTEGRATION (Dec 2025): Cross-amplification with social trust cascades
+ * Research: UN World Social Report 2024 - trust + governance = positive feedback
  */
 function updateDemocraticSpiral(spiral: UpwardSpiral, state: GameState, month: number): void {
   const gov = state.government.governanceQuality;
-  
+
   // High-quality governance
   const qualityGovernance = gov.decisionQuality > 0.7 && gov.institutionalCapacity > 0.7;
-  
+
   // Democratic engagement
   const democraticEngagement = gov.participationRate > 0.6 && gov.transparency > 0.7;
-  
+
   // Not authoritarian
   const notAuthoritarian = state.government.governmentType !== 'authoritarian';
-  
+
   const wasActive = spiral.active;
   spiral.active = qualityGovernance && democraticEngagement && notAuthoritarian;
-  
+
   if (spiral.active) {
-    spiral.strength = (
+    let baseStrength = (
       gov.decisionQuality * 0.25 +
       gov.institutionalCapacity * 0.2 +
       gov.participationRate * 0.25 +
       gov.transparency * 0.2 +
       gov.consensusBuildingEfficiency * 0.1
     );
+
+    // M-6: Amplify with social trust cascade (if active)
+    // Research: Trust cascades strengthen democratic institutions
+    const trustCascade = state.positiveTippingPoints.socialTrustCascade;
+    if (trustCascade.cascadeActive) {
+      const trustBoost = trustCascade.cascadeStrength * 0.15; // Up to 15% boost
+      baseStrength = assertFinite(baseStrength * (1 + trustBoost), {
+        location: 'updateDemocraticSpiral',
+        valueName: 'strengthWithTrustBoost',
+        month,
+        additionalInfo: {
+          baseStrength,
+          trustCascadeStrength: trustCascade.cascadeStrength,
+          trustBoost,
+        }
+      });
+    }
+
+    spiral.strength = Math.min(1.0, baseStrength);
   } else {
     spiral.strength = 0;
   }
-  
+
   updateSpiralTracking(spiral, wasActive, month);
 }
 

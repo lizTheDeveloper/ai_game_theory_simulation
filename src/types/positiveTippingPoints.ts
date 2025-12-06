@@ -111,6 +111,33 @@ export interface TechnologySynergy {
 }
 
 /**
+ * Social trust cascade state
+ * Research: UN World Social Report 2024, HEC Paris Social Capital 2025
+ * Mechanism: Governance success → citizen trust → policy cooperation → more governance success
+ */
+export interface SocialTrustCascade {
+  cascadeActive: boolean;           // Is trust cascade currently active?
+  cascadeTriggeredMonth?: number;   // When did cascade begin
+  cascadeStrength: number;          // [0, 1] Strength of positive feedback
+  cascadeMonths: number;            // How long has cascade been active
+
+  // Trust dynamics
+  institutionalTrust: number;       // [0, 1] Trust in government institutions
+  interpersonalTrust: number;       // [0, 1] Trust between citizens (social capital)
+  policyCooperation: number;        // [0, 1] Citizen cooperation with policies
+
+  // Trigger conditions
+  governanceQualityThreshold: number;    // 0.70 (70% governance quality required)
+  trustGrowthRate: number;               // Monthly trust increase during cascade
+  cooperationMultiplier: number;         // Policy effectiveness boost from cooperation
+
+  // Cascade parameters (research-backed)
+  cascadeThreshold: number;         // 0.65 (65% trust threshold to trigger cascade)
+  maxCascadeStrength: number;       // 0.80 (80% max strength)
+  cascadeDuration: number;          // 36-60 months typical duration
+}
+
+/**
  * Main positive tipping points system state
  */
 export interface PositiveTippingPointsState {
@@ -138,6 +165,9 @@ export interface PositiveTippingPointsState {
     implementedMonth: number;
     costPerMonth: number;           // $B/month budget requirement
   }[];
+
+  // M-6: Social trust cascades (NEW Nov 2025)
+  socialTrustCascade: SocialTrustCascade;
 
   // Impact metrics
   cumulativeEmissionsReduction: number;   // Gt CO2 prevented
