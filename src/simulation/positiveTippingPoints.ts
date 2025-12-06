@@ -24,7 +24,7 @@ import type {
   TechnologySynergy
 } from '../types/positiveTippingPoints';
 import { addSimulationEvent } from './utils/eventLogger';
-import { assertDefined } from './utils/assertions';
+import { assertDefined, assertFinite, assertInRange } from './utils/assertions';
 
 /**
  * Initialize positive tipping points system
@@ -110,6 +110,23 @@ export function initializePositiveTippingPoints(): PositiveTippingPointsState {
     cumulativeCostSavings: 0,
     adoptionAcceleration: 1.0,         // 1.0 = business-as-usual baseline
 
+    // M-6: Social norm cascades (Otto et al. 2020)
+    socialNorms: {
+      climateConcernLevel: 0.35,       // 35% baseline public support (2025 polling)
+      normTippingCrossed: false,
+      normCascadeActive: false,
+      normInfluenceRate: 0.005,        // 0.5%/month baseline spreading rate
+    },
+
+    // M-6: Political will tipping (Otto et al. 2020)
+    politicalWill: {
+      aggregatePolicyStrength: 0.20,   // 20% baseline policy stringency (weak, 2025)
+      lockInThresholdCrossed: false,
+      politicalMomentum: 0.01,         // 1%/month baseline momentum
+      backlashRisk: 0.15,              // 15% baseline backlash risk (moderate)
+      coalitionStrength: 0.30,         // 30% baseline coalition strength
+    },
+
     // Research parameters (OECD 2025, Nature Sustainability 2023)
     parameters: {
       cascadeThresholdMin: 0.05,       // 5% market share minimum (OECD 2025)
@@ -122,6 +139,16 @@ export function initializePositiveTippingPoints(): PositiveTippingPointsState {
       learningRateMax: 0.30,           // 30% cost reduction per doubling
       visibilityImpact: 0.3,           // 30% boost from high visibility
       earlyAdopterInfluence: 0.2,      // 20% adoption boost from social proof
+
+      // M-6: Social norm parameters
+      normTippingThreshold: 0.27,      // 27% critical mass (midpoint of 25-30% range)
+      normCascadeMultiplier: 2.0,      // 2x influence spreading acceleration
+      normCascadeDuration: 120,        // 10 years (midpoint of 5-15 year range)
+
+      // M-6: Political will parameters
+      politicalLockInThreshold: 0.45,  // 45% policy strength (midpoint of 40-50%)
+      policyRatchetRate: 0.015,        // 1.5%/month momentum increase
+      backlashThreshold: 0.30,         // 30% risk triggers reversal pressure
     },
   };
 }
@@ -184,7 +211,13 @@ export function updatePositiveTippingPoints(
   // Phase 5: Calculate environmental impact
   calculateEnvironmentalImpact(state);
 
-  // Phase 6: Update active cascade count
+  // Phase 6: M-6 - Update social norm cascades
+  updateSocialNormCascades(state, rng);
+
+  // Phase 7: M-6 - Update political will tipping
+  updatePoliticalWillTipping(state, rng);
+
+  // Phase 8: Update active cascade count
   // FIX (Nov 7, 2025): Sort for deterministic iteration (Issue #11)
   ptp.activeCascades = Object.entries(ptp.adoptionTracking)
     .sort((a, b) => a[0].localeCompare(b[0]))
@@ -712,4 +745,167 @@ export function logPositiveTippingPointDiagnostics(state: GameState): void {
   console.log(`     Adoption acceleration: ${ptp.adoptionAcceleration.toFixed(2)}x baseline`);
   console.log(`     Cumulative emissions reduction: ${ptp.cumulativeEmissionsReduction.toFixed(2)} Gt CO2`);
   console.log(`     Cumulative cost savings: $${ptp.cumulativeCostSavings.toFixed(1)}B`);
+}
+
+/**
+ * M-6: Update social norm cascades
+ * Research: Otto et al. 2020 - 25-30% critical mass triggers rapid norm shift
+ *
+ * Mechanism:
+ * 1. Climate concern spreads through social networks (baseline 0.5%/month)
+ * 2. Technology adoption boosts concern (EVs visible → awareness)
+ * 3. Climate impacts amplify concern (disasters → salience)
+ * 4. Once 25-30% threshold crossed → cascade (2x spreading rate)
+ * 5. Cascade persists for 5-15 years, then stabilizes
+ */
+function updateSocialNormCascades(state: GameState, rng: RNGFunction): void {
+  const ptp = state.positiveTippingPoints;
+  const norms = ptp.socialNorms;
+  const params = ptp.parameters;
+
+  // Input 1: Technology visibility boosts climate concern
+  // High-visibility tech adoption (EVs, solar rooftops) increases awareness
+  const avgVisibleAdoption = (
+    ptp.adoptionTracking.electricVehicles.marketShare * ptp.adoptionTracking.electricVehicles.visibility +
+    ptp.adoptionTracking.solarPV.marketShare * ptp.adoptionTracking.solarPV.visibility
+  ) / 2;
+
+  const techBoost = assertFinite(
+    avgVisibleAdoption * 0.01, // 1% concern boost per 100% visible adoption
+    { location: 'updateSocialNormCascades', valueName: 'techBoost', month: state.currentMonth }
+  );
+
+  // Input 2: Climate impacts amplify concern (disasters increase salience)
+  const surfaceTempDelta = state.climateState.surfaceTemperature - state.climateState.baselineTemperature;
+  const impactBoost = assertFinite(
+    Math.max(0, surfaceTempDelta * 0.02), // 2% concern boost per °C warming
+    { location: 'updateSocialNormCascades', valueName: 'impactBoost', month: state.currentMonth }
+  );
+
+  // Base spreading rate
+  let spreadingRate = norms.normInfluenceRate;
+
+  // Check for cascade trigger
+  if (!norms.normTippingCrossed && norms.climateConcernLevel >= params.normTippingThreshold) {
+    norms.normTippingCrossed = true;
+    norms.normCascadeActive = true;
+    norms.normCascadeTriggeredMonth = state.currentMonth;
+
+    console.log(`\n🌊💡 SOCIAL NORM CASCADE TRIGGERED (Month ${state.currentMonth})`);
+    console.log(`   Climate concern crossed ${(params.normTippingThreshold * 100).toFixed(0)}% threshold`);
+    console.log(`   Norm spreading accelerates ${params.normCascadeMultiplier}x`);
+  }
+
+  // Apply cascade acceleration if active
+  if (norms.normCascadeActive) {
+    const monthsSinceTrigger = state.currentMonth - (norms.normCascadeTriggeredMonth ?? 0);
+
+    // Cascade lasts for normCascadeDuration months
+    if (monthsSinceTrigger < params.normCascadeDuration) {
+      spreadingRate *= params.normCascadeMultiplier; // 2x acceleration
+    } else {
+      norms.normCascadeActive = false; // Cascade complete, stabilizes
+      console.log(`\n🌊✅ SOCIAL NORM CASCADE COMPLETE (Month ${state.currentMonth})`);
+      console.log(`   Norm shift stabilized after ${params.normCascadeDuration} months`);
+    }
+  }
+
+  // Update climate concern level
+  const concernDelta = spreadingRate + techBoost + impactBoost;
+  norms.climateConcernLevel = assertInRange(
+    norms.climateConcernLevel + concernDelta,
+    0, 1,
+    { location: 'updateSocialNormCascades', valueName: 'climateConcernLevel', month: state.currentMonth }
+  );
+}
+
+/**
+ * M-6: Update political will tipping
+ * Research: Otto et al. 2020 - 40-50% policy strength creates lock-in (hard to reverse)
+ *
+ * Mechanism:
+ * 1. Social norms drive political momentum (high concern → policy demand)
+ * 2. Technology success reinforces political will (EVs working → more support)
+ * 3. Once 40-50% policy strength reached → lock-in (ratchet effect)
+ * 4. Backlash risk can reverse momentum if too fast without public support
+ */
+function updatePoliticalWillTipping(state: GameState, rng: RNGFunction): void {
+  const ptp = state.positiveTippingPoints;
+  const will = ptp.politicalWill;
+  const norms = ptp.socialNorms;
+  const params = ptp.parameters;
+
+  // Input 1: Social norms drive political momentum
+  // High climate concern → stronger policy demand
+  const normBoost = assertFinite(
+    (norms.climateConcernLevel - 0.35) * 0.02, // Baseline 35%, each +1% → +0.02 momentum
+    { location: 'updatePoliticalWillTipping', valueName: 'normBoost', month: state.currentMonth }
+  );
+
+  // Input 2: Technology success reinforces political will
+  // Successful cascades prove policies work → more support
+  const cascadeCount = ptp.activeCascades;
+  const cascadeBoost = assertFinite(
+    cascadeCount * 0.005, // 0.5% momentum per active cascade
+    { location: 'updatePoliticalWillTipping', valueName: 'cascadeBoost', month: state.currentMonth }
+  );
+
+  // Input 3: Economic viability reduces backlash risk
+  // Price parity achieved → less economic resistance
+  const priceParityCount = Object.values(ptp.adoptionTracking).filter(t => t.priceParityAchieved).length;
+  const backlashReduction = assertFinite(
+    priceParityCount * 0.02, // 2% risk reduction per price-competitive tech
+    { location: 'updatePoliticalWillTipping', valueName: 'backlashReduction', month: state.currentMonth }
+  );
+
+  // Update political momentum
+  will.politicalMomentum = assertInRange(
+    will.politicalMomentum + normBoost + cascadeBoost,
+    0, 0.05, // Cap at 5%/month max momentum
+    { location: 'updatePoliticalWillTipping', valueName: 'politicalMomentum', month: state.currentMonth }
+  );
+
+  // Update backlash risk
+  will.backlashRisk = assertInRange(
+    will.backlashRisk - backlashReduction,
+    0, 1,
+    { location: 'updatePoliticalWillTipping', valueName: 'backlashRisk', month: state.currentMonth }
+  );
+
+  // Check if momentum outpaces public support (backlash trigger)
+  if (will.aggregatePolicyStrength > norms.climateConcernLevel + 0.15) {
+    will.backlashRisk = Math.min(1.0, will.backlashRisk + 0.05); // +5% risk if policies too far ahead
+  }
+
+  // Apply backlash if risk exceeds threshold
+  if (will.backlashRisk > params.backlashThreshold) {
+    will.politicalMomentum *= 0.5; // Halve momentum (political resistance)
+    will.backlashRisk -= 0.10; // Spending political capital reduces risk temporarily
+  }
+
+  // Update aggregate policy strength (momentum drives policy)
+  const policyDelta = will.politicalMomentum * (1.0 - will.backlashRisk);
+  will.aggregatePolicyStrength = assertInRange(
+    will.aggregatePolicyStrength + policyDelta,
+    0, 1,
+    { location: 'updatePoliticalWillTipping', valueName: 'aggregatePolicyStrength', month: state.currentMonth }
+  );
+
+  // Check for lock-in threshold
+  if (!will.lockInThresholdCrossed && will.aggregatePolicyStrength >= params.politicalLockInThreshold) {
+    will.lockInThresholdCrossed = true;
+    will.backlashRisk *= 0.5; // Lock-in halves reversal risk (policies institutionalized)
+
+    console.log(`\n🏛️💡 POLITICAL LOCK-IN ACHIEVED (Month ${state.currentMonth})`);
+    console.log(`   Policy strength: ${(will.aggregatePolicyStrength * 100).toFixed(0)}%`);
+    console.log(`   Climate policies now politically entrenched (hard to reverse)`);
+  }
+
+  // Update coalition strength (follows policy strength with lag)
+  const coalitionGap = will.aggregatePolicyStrength - will.coalitionStrength;
+  will.coalitionStrength = assertInRange(
+    will.coalitionStrength + coalitionGap * 0.1, // 10% catch-up per month
+    0, 1,
+    { location: 'updatePoliticalWillTipping', valueName: 'coalitionStrength', month: state.currentMonth }
+  );
 }
