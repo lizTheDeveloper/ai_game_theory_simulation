@@ -120,6 +120,7 @@ export function initializePositiveTippingPoints(): PositiveTippingPointsState {
         socialProofStrength: 0.30,
         technologyAcceleration: 1.0,
         emissionsReduction: 0,
+        politicalCapital: 0,
       },
       policyClimateAction: {
         cascadeType: 'policy-climate-action',
@@ -133,6 +134,7 @@ export function initializePositiveTippingPoints(): PositiveTippingPointsState {
         socialProofStrength: 0.20,
         technologyAcceleration: 1.0,
         emissionsReduction: 0,
+        politicalCapital: 0,
       },
       behavioralConservation: {
         cascadeType: 'behavioral-conservation',
@@ -146,6 +148,7 @@ export function initializePositiveTippingPoints(): PositiveTippingPointsState {
         socialProofStrength: 0.25,
         technologyAcceleration: 1.0,
         emissionsReduction: 0,
+        politicalCapital: 0,
       },
       consumptionShift: {
         cascadeType: 'consumption-shift',
@@ -159,6 +162,7 @@ export function initializePositiveTippingPoints(): PositiveTippingPointsState {
         socialProofStrength: 0.15,
         technologyAcceleration: 1.0,
         emissionsReduction: 0,
+        politicalCapital: 0,
       },
     },
 
