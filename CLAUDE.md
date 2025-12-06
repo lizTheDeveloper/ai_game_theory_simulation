@@ -528,7 +528,7 @@ fi
 - **Commands:** [`docs/COMMANDS.md`](./docs/COMMANDS.md) - Complete command reference
 - **Workflow:** [`docs/DEVELOPMENT_WORKFLOW.md`](./docs/DEVELOPMENT_WORKFLOW.md) - Detailed development guide
 - **Wiki:** [`docs/wiki/README.md`](./docs/wiki/README.md) - System documentation (3,000+ lines)
-- **Legacy Roadmaps:** [`plans/MASTER_IMPLEMENTATION_ROADMAP.md`](./plans/MASTER_IMPLEMENTATION_ROADMAP.md) - FROZEN REFERENCE (use OpenSpec for new work)
+- **Legacy Roadmaps:** [`plans/archive/legacy-roadmaps/`](./plans/archive/legacy-roadmaps/) - ARCHIVED (frozen Dec 6, 2025, use OpenSpec for new work)
 - **Chatroom:** [`.claude/chatroom/README.md`](./.claude/chatroom/README.md) - Multi-agent coordination (550+ lines)
 - **DevLogs:** `devlogs/` - Implementation diary
 - **Research:** `research/` - Peer-reviewed findings
