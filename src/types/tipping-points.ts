@@ -88,20 +88,6 @@ export interface TippingElement {
    * Tracks discrete collapse events separate from gradual collapse.
    */
   accumulatedAbruptSLR?: number;
-
-  /**
-   * Month of last abrupt pulse (for cooldown tracking)
-   * Sylvia critique: reviews/marine_ice_sheet_instability_critique_20251205.md Section 5.2.2
-   * Minimum 200-year gap between pulses per ice sheet sector.
-   */
-  lastAbruptPulseMonth?: number;
-
-  /**
-   * Count of abrupt pulses (for melange stabilization tracking)
-   * Sylvia critique: reviews/marine_ice_sheet_instability_critique_20251205.md Section 5.2.4
-   * Each pulse reduces probability by 20% (ice debris stabilization).
-   */
-  abruptPulseCount?: number;
 }
 
 /**
