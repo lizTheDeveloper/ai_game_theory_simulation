@@ -79,10 +79,31 @@ docs/
 - [x] `openspec/specs/research/spec.md` - Research standards
 - [x] `openspec/specs/research/verification-queue.md` - Active research verifications
 
-### ✅ Example Changes Created
+### ✅ Proposed Plans Migrated (15/15)
 
-- [x] `openspec/changes/biodiversity-test-coverage/` - Testing example
-- [x] `openspec/changes/coverage-report-dashboard/` - Frontend example
+**Simulation features:**
+- [x] `openspec/changes/energy-budget-constraints/`
+- [x] `openspec/changes/extinction-debt-modeling/`
+- [x] `openspec/changes/missing-climate-systems/`
+- [x] `openspec/changes/hindcast-demographic-tuning/`
+
+**Documentation:**
+- [x] `openspec/changes/documentation-debt-reduction/` (combined 3 proposals)
+
+**Testing:**
+- [x] `openspec/changes/biodiversity-test-coverage/`
+- [x] `openspec/changes/radiation-test-coverage/`
+
+**Infrastructure:**
+- [x] `openspec/changes/calibration-coordination/`
+- [x] `openspec/changes/git-workflow-improvements/`
+- [x] `openspec/changes/simulation-config-type-safety/`
+- [x] `openspec/changes/monte-carlo-outcome-analysis/`
+
+**Frontend:**
+- [x] `openspec/changes/coverage-report-dashboard/`
+
+**Total:** 13 change folders (some proposals were combined)
 
 ### ✅ Documentation
 
@@ -112,9 +133,9 @@ docs/
 
 ### Short-Term (Next 2-4 weeks)
 
-1. **Migrate remaining proposed_*.md files:**
-   - Convert 15 proposed features to `openspec/changes/` format
-   - Delete legacy proposed_*.md files (after migration)
+1. **✅ Migrate remaining proposed_*.md files: COMPLETE**
+   - ✅ All 15 proposed features migrated to `openspec/changes/` format
+   - ✅ Legacy proposed_*.md files deleted
 
 2. **Add tracking specs:**
    - `openspec/specs/quality-gates/spec.md` - QG1/QG2 tracking
@@ -152,7 +173,7 @@ docs/
 | `plans/MASTER_IMPLEMENTATION_ROADMAP.md` | `openspec/specs/project/spec.md` | ✅ Migrated |
 | `plans/SIMULATION_ROADMAP.md` | `openspec/specs/simulation/spec.md` | ✅ Migrated |
 | `plans/FRONTEND_ROADMAP.md` | `openspec/specs/frontend/spec.md` | ✅ Migrated |
-| `plans/proposed_*.md` (15 files) | `openspec/changes/[feature]/` | 🔄 2/15 migrated (examples) |
+| `plans/proposed_*.md` (15 files) | `openspec/changes/[feature]/` | ✅ 15/15 migrated (13 folders) |
 | Research verification queue (in SIMULATION roadmap) | `openspec/specs/research/verification-queue.md` | ✅ Migrated |
 | Quality gates (tracked in roadmaps) | `openspec/specs/quality-gates/spec.md` | ⏳ Planned |
 | Bug tracking (tracked in roadmaps) | `openspec/specs/bugs/critical-queue.md` | ⏳ Planned |
