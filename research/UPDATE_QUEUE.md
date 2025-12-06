@@ -1,11 +1,6 @@
 # Research Update Queue
-<<<<<<< Updated upstream
-**Generated:** 12/6/2025, 8:30:03 AM
-**Files Scanned:** 514
-=======
-**Generated:** 11/28/2025, 10:30:04 PM
-**Files Scanned:** 485
->>>>>>> Stashed changes
+**Generated:** 12/5/2025, 12:30:06 PM
+**Files Scanned:** 512
 
 ---
 
@@ -17,16 +12,12 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-<<<<<<< Updated upstream
-**Count:** 174 (33.9%)
+**Count:** 175 (34.2%)
 
 ### `AUTONOMOUS_RESEARCHER_SESSION_20251203_2030.md`
 - **Oldest source:** 1981 (44 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/AUTONOMOUS_RESEARCHER_SESSION_20251203_2030.md`
-=======
-**Count:** 164 (33.8%)
->>>>>>> Stashed changes
 
 ### `CRISIS_MITIGATION_RESEARCH_CRITIQUE_20251029.md`
 - **Oldest source:** 2001 (24 years old)
@@ -553,6 +544,11 @@
 - **Status:** Not used in simulation
 - **Path:** `research/lenton_2019_tipping_cascades_verification_20251029.md`
 
+### `marine_ice_sheet_instability_20251205.md`
+- **Oldest source:** 2019 (6 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/marine_ice_sheet_instability_20251205.md`
+
 ### `mayer_1995_trust_restoration_verification_20251029.md`
 - **Oldest source:** 1993 (32 years old)
 - **Status:** Not used in simulation
@@ -897,11 +893,7 @@
 
 ## 📋 MEDIUM (Review Within Quarter)
 
-<<<<<<< Updated upstream
-**Count:** 23 (4.5%)
-=======
-**Count:** 21 (4.3%)
->>>>>>> Stashed changes
+**Count:** 22 (4.3%)
 
 - `LAYER2_COMPREHENSIVE_STATUS_20251030.md` - Oldest: 2020 (5 years)
 - `LAYER2_DEBATE_SUMMARY_20251030.md` - Oldest: 2020 (5 years)
@@ -923,7 +915,6 @@
 - `malthusian-overshoot-causation-attribution_20251018.md` - Oldest: 2020 (5 years)
 - `mortality_stabilizers_failure_conditions_20251106.md` - Oldest: 2020 (5 years)
 - `planetary-boundary-recovery-mechanisms_20251017.md` - Oldest: 2020 (5 years)
-- `social_tipping_points_decarbonization_20251206.md` - Oldest: 2020 (5 years)
 - `structured_clone_performance_20251107.md` - Oldest: 2021 (4 years)
 - `threshold_uncertainty_verification_20251031.md` - Oldest: 2020 (5 years)
 
@@ -931,11 +922,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-<<<<<<< Updated upstream
-**Count:** 317 (61.7%)
-=======
-**Count:** 300 (61.9%)
->>>>>>> Stashed changes
+**Count:** 315 (61.5%)
 
 All sources <3 years old. No action required.
 
@@ -945,56 +932,33 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-<<<<<<< Updated upstream
-| Total files | 514 |
+| Total files | 512 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 174 (33.9%) |
-| MEDIUM | 23 (4.5%) |
-| LOW | 317 (61.7%) |
-| Average age | 7.7 years |
-=======
-| Total files | 485 |
-| CRITICAL | 0 (0.0%) |
-| HIGH | 164 (33.8%) |
-| MEDIUM | 21 (4.3%) |
-| LOW | 300 (61.9%) |
+| HIGH | 175 (34.2%) |
+| MEDIUM | 22 (4.3%) |
+| LOW | 315 (61.5%) |
 | Average age | 7.8 years |
->>>>>>> Stashed changes
 | Oldest source | 1955 (70 years ago) |
 
 ### Research Currency
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-<<<<<<< Updated upstream
-| Current (<3yr) | 317 | 61.7% |
-| Warning (3-5yr) | 23 | 4.5% |
-| Critical (>5yr) | 174 | 33.9% |
-=======
-| Current (<3yr) | 300 | 61.9% |
-| Warning (3-5yr) | 21 | 4.3% |
-| Critical (>5yr) | 164 | 33.8% |
->>>>>>> Stashed changes
+| Current (<3yr) | 315 | 61.5% |
+| Warning (3-5yr) | 22 | 4.3% |
+| Critical (>5yr) | 175 | 34.2% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-<<<<<<< Updated upstream
-- **Current:** 33.9% critical (>5yr)
-=======
-- **Current:** 33.8% critical (>5yr)
->>>>>>> Stashed changes
+- **Current:** 34.2% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
-<<<<<<< Updated upstream
-1. Update 174 HIGH priority file(s) within 1 month
-=======
-1. Update 164 HIGH priority file(s) within 1 month
->>>>>>> Stashed changes
+1. Update 175 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 

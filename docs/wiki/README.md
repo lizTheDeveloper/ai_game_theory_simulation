@@ -2368,7 +2368,7 @@ The comprehensive post-Week 4 assessment revealed a critical distinction: **Plan
   - 7 assertions added to climate tipping point calculations
   - Aggregate metrics: totalElementProgress (assertFinite), totalProgress (assertInRange [0,1])
   - Sigmoid transitions: newProgress (assertFinite), element.progress (assertInRange [0,1])
-  - Cascade multiplier: assertInRange [1.0, 2.0] (research-backed limits)
+  - Cascade multiplier: assertInRange [1.0, 3.0] (research-backed limits, updated Dec 2025)
   - Climate stability: before/after state mutations (assertInRange [0,1])
   - 100% mutation coverage (Math.exp edge cases now protected)
   - Priority 2: Climate Systems - Phase 1/4 complete
@@ -2572,6 +2572,32 @@ This section documents **critical parameter uncertainty findings** identified du
 ## Recent Changes
 
 **For the complete changelog, see [RECENT_CHANGES.md](./RECENT_CHANGES.md)**
+
+**December 5, 2025 - Compound Climate Events (M-5)**
+
+**Achievement:** Climate tipping cascades now model research-backed compound event amplification effects.
+
+**Implementation:**
+- Updated cascade multipliers in `ClimateSystemPhase.ts` (lines 384-397):
+  - 2 active elements: 1.15× → **1.5×** (moderate compounding)
+  - 3 active elements: 1.35× → **2.0×** (critical threshold - factor of 2 from research)
+  - 4 active elements: 1.60× → **2.5×** (severe compounding)
+  - 5+ active elements: **3.0×** (full "Hothouse Earth" cascade)
+- Cascading elements: AMOC, Amazon rainforest, Permafrost (3 of 6 total tipping elements)
+- Assertion range updated: `assertInRange(cascadeMultiplier, 1.0, 3.0)`
+
+**Research Foundation:**
+- Communications Earth & Environment (2024) DOI: 10.1038/s43247-024-01799-5
+- "Alter expected tipped element count by more than factor of 2"
+- Global Tipping Points Report 2025 - cascading interactions destabilize additional elements
+
+**Impact:** Tipping cascades now amplify transition speed and regional damage by 1.5-3.0× when multiple elements tip simultaneously, modeling compound extreme event dynamics.
+
+**Files:** `src/simulation/engine/phases/ClimateSystemPhase.ts`
+
+**Archive:** `plans/M-5_compound_climate_events_implementation.md`
+
+---
 
 **December 1, 2025 - Physical Constraints Validation (L-1)**
 

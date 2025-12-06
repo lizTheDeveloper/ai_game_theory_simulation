@@ -134,6 +134,21 @@ export interface TippingElement {
    * - Permafrost area: 0.0°C (no hysteresis - area reversible, carbon irreversible via minimumAsymptoticValue)
    */
   hysteresisGapC?: number;
+
+  /** === MARINE ICE SHEET INSTABILITY (Dec 5, 2025) === */
+  /**
+   * Is this element experiencing abrupt mode (Marine Ice Cliff Instability)?
+   * Research: DeConto et al. (2021), Morlighem et al. (2024)
+   * Only applies to WAIS and Greenland ice sheets.
+   */
+  abruptMode?: boolean;
+
+  /**
+   * Accumulated sea level rise from abrupt MICI pulses (meters)
+   * Research: M-4 MICI validation (Dec 5, 2025)
+   * Tracks discrete collapse events separate from gradual collapse.
+   */
+  accumulatedAbruptSLR?: number;
 }
 
 /**
@@ -199,6 +214,32 @@ export interface TippingPointSystem {
    * Validation: Monte Carlo required to verify effects not too strong
    */
   compoundCascadeMultiplier?: number;
+
+  /** === SEA LEVEL RISE TRACKING (Dec 5, 2025) === */
+  /**
+   * Cumulative sea level rise from all ice sheet collapses (meters)
+   * Research: M-4 MICI (Dec 5, 2025)
+   * Includes both gradual and abrupt contributions.
+   */
+  cumulativeSeaLevelRise: number;
+
+  /**
+   * Total coastal population displaced (millions)
+   * Research: 50-150 million per meter (Climate Central 2019)
+   */
+  coastalPopulationDisplaced: number;
+
+  /**
+   * Cumulative infrastructure damage (trillion USD)
+   * Research: Super-linear scaling ~quadratic (NCEL 2024)
+   */
+  coastalInfrastructureDamage: number;
+
+  /**
+   * Agricultural land lost to inundation (million hectares)
+   * Research: 0.65-23.43% of global ag land (ResearchGate 2014)
+   */
+  agriculturalLandLost: number;
 }
 
 /**

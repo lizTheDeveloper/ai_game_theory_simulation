@@ -30,12 +30,20 @@ export function initializeTippingPointSystem(): TippingPointSystem {
       triggered: false,
       monthsSinceTrigger: 0,
       progress: 0.0,
-      state: TippingElementState.NOT_TRIGGERED  // M-7: Initialize hysteresis state
+      state: TippingElementState.NOT_TRIGGERED,  // M-7: Initialize hysteresis state
+      // Initialize MICI fields for ice sheet elements
+      abruptMode: false,
+      accumulatedAbruptSLR: 0.0
     })),
     triggeredCount: 0,
     completedCount: 0,
     totalProgress: 0.0,
     cascadeMultiplier: 1.0,
-    triggers: []
+    triggers: [],
+    // Sea level rise tracking (Dec 5, 2025)
+    cumulativeSeaLevelRise: 0.0,
+    coastalPopulationDisplaced: 0.0,
+    coastalInfrastructureDamage: 0.0,
+    agriculturalLandLost: 0.0
   };
 }
