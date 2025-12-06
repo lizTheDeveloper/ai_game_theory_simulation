@@ -24,7 +24,7 @@ import type {
   TechnologySynergy
 } from '../types/positiveTippingPoints';
 import { addSimulationEvent } from './utils/eventLogger';
-import { assertDefined } from './utils/assertions';
+import { assertDefined, assertFinite } from './utils/assertions';
 
 /**
  * Initialize positive tipping points system
@@ -105,6 +105,29 @@ export function initializePositiveTippingPoints(): PositiveTippingPointsState {
     synergies: [],
 
     activePolicies: [],
+
+    // M-6: Social trust cascades (NEW Dec 2025)
+    // Research: UN World Social Report 2024, HEC Paris Social Capital 2025
+    socialTrustCascade: {
+      cascadeActive: false,
+      cascadeStrength: 0,
+      cascadeMonths: 0,
+
+      // Baseline trust levels (circa 2025, varies by region)
+      institutionalTrust: 0.50,        // 50% baseline trust in government
+      interpersonalTrust: 0.55,        // 55% baseline social trust
+      policyCooperation: 0.60,         // 60% baseline policy cooperation
+
+      // Trigger parameters (research-backed)
+      governanceQualityThreshold: 0.70, // 70% governance quality required
+      trustGrowthRate: 0.01,           // 1% monthly trust increase during cascade
+      cooperationMultiplier: 1.3,      // 30% policy effectiveness boost
+
+      // Cascade parameters
+      cascadeThreshold: 0.65,          // 65% trust threshold to trigger
+      maxCascadeStrength: 0.80,        // 80% max cascade strength
+      cascadeDuration: 48,             // 4 years typical duration (research midpoint)
+    },
 
     cumulativeEmissionsReduction: 0,
     cumulativeCostSavings: 0,
@@ -190,6 +213,9 @@ export function updatePositiveTippingPoints(
     .sort((a, b) => a[0].localeCompare(b[0]))
     .map(e => e[1])
     .filter(tech => tech.cascadeActive).length;
+
+  // Phase 7: M-6 Social trust cascades (NEW Dec 2025)
+  updateSocialTrustCascade(state, rng);
 }
 
 /**
@@ -646,6 +672,149 @@ function getTechnologyAdoption(
     case 'heat-pumps': return ptp.adoptionTracking.heatPumps;
     case 'battery-storage': return ptp.adoptionTracking.batteryStorage;
     default: return undefined;
+  }
+}
+
+/**
+ * Phase 7: M-6 Social trust cascades (NEW Dec 2025)
+ * Research: UN World Social Report 2024, HEC Paris Social Capital 2025
+ * Mechanism: Governance success → citizen trust → policy cooperation → more governance success
+ */
+function updateSocialTrustCascade(state: GameState, rng: RNGFunction): void {
+  const cascade = state.positiveTippingPoints.socialTrustCascade;
+  const gov = state.government.governanceQuality;
+
+  // Update institutional trust based on governance quality
+  // Research: UN World Social Report 2024 - "Institutional trust underpins state legitimacy"
+  const governanceQuality = assertFinite(
+    (gov.decisionQuality + gov.institutionalCapacity + gov.transparency) / 3,
+    {
+      location: 'updateSocialTrustCascade',
+      valueName: 'governanceQuality',
+      month: state.currentMonth,
+      additionalInfo: {
+        decisionQuality: gov.decisionQuality,
+        institutionalCapacity: gov.institutionalCapacity,
+        transparency: gov.transparency,
+      }
+    }
+  );
+
+  // Trust grows when governance is good, erodes when bad
+  const trustDelta = (governanceQuality - 0.5) * 0.005; // ±0.5% per month
+  cascade.institutionalTrust = Math.max(0, Math.min(1,
+    cascade.institutionalTrust + trustDelta
+  ));
+
+  // Interpersonal trust grows from social cohesion
+  // Research: HEC Paris 2025 - "Bridging social capital drives social progress"
+  const socialCohesion = assertFinite(
+    state.socialAccumulation.socialCohesion.trust / 100,
+    {
+      location: 'updateSocialTrustCascade',
+      valueName: 'socialCohesion',
+      month: state.currentMonth
+    }
+  );
+  cascade.interpersonalTrust = Math.max(0, Math.min(1,
+    0.7 * cascade.interpersonalTrust + 0.3 * socialCohesion // Converge to social cohesion
+  ));
+
+  // Policy cooperation depends on both institutional and interpersonal trust
+  cascade.policyCooperation = assertFinite(
+    (cascade.institutionalTrust * 0.6 + cascade.interpersonalTrust * 0.4),
+    {
+      location: 'updateSocialTrustCascade',
+      valueName: 'policyCooperation',
+      month: state.currentMonth,
+      additionalInfo: {
+        institutionalTrust: cascade.institutionalTrust,
+        interpersonalTrust: cascade.interpersonalTrust,
+      }
+    }
+  );
+
+  // Detect cascade trigger
+  const avgTrust = (cascade.institutionalTrust + cascade.interpersonalTrust) / 2;
+  const thresholdMet = avgTrust >= cascade.cascadeThreshold &&
+                       governanceQuality >= cascade.governanceQualityThreshold;
+
+  if (!cascade.cascadeActive && thresholdMet) {
+    // Trigger cascade!
+    cascade.cascadeActive = true;
+    cascade.cascadeTriggeredMonth = state.currentMonth;
+    cascade.cascadeStrength = Math.min(
+      cascade.maxCascadeStrength,
+      (avgTrust - cascade.cascadeThreshold) * 2  // Strength scales with how far past threshold
+    );
+    cascade.cascadeMonths = 0;
+
+    console.log(`\n🤝💡 SOCIAL TRUST CASCADE TRIGGERED (Month ${state.currentMonth})`);
+    console.log(`  Governance quality: ${(governanceQuality * 100).toFixed(0)}%`);
+    console.log(`  Institutional trust: ${(cascade.institutionalTrust * 100).toFixed(0)}%`);
+    console.log(`  Interpersonal trust: ${(cascade.interpersonalTrust * 100).toFixed(0)}%`);
+    console.log(`  Cascade strength: ${(cascade.cascadeStrength * 100).toFixed(0)}%`);
+
+    // Add event (reuse positive-cascade-triggered type)
+    addSimulationEvent(state, {
+      type: 'positive-cascade-triggered',
+      severity: 'constructive',
+      agent: 'society',
+      title: '🤝💡 SOCIAL TRUST CASCADE: Positive Feedback Loop Activated',
+      description: `Social trust cascade triggered. Governance quality ${(governanceQuality * 100).toFixed(0)}%, institutional trust ${(cascade.institutionalTrust * 100).toFixed(0)}%, interpersonal trust ${(cascade.interpersonalTrust * 100).toFixed(0)}%. Cascade strength ${(cascade.cascadeStrength * 100).toFixed(0)}%. This creates positive feedback: governance success → citizen trust → policy cooperation → more governance success.`,
+      effects: {
+        governanceQuality,
+        institutionalTrust: cascade.institutionalTrust,
+        interpersonalTrust: cascade.interpersonalTrust,
+        cascadeStrength: cascade.cascadeStrength,
+        cooperationMultiplier: cascade.cooperationMultiplier,
+      }
+    });
+  }
+
+  // Apply cascade effects if active
+  if (cascade.cascadeActive) {
+    cascade.cascadeMonths++;
+
+    // Trust grows faster during cascade (positive feedback)
+    cascade.institutionalTrust = Math.min(1,
+      cascade.institutionalTrust + cascade.trustGrowthRate * cascade.cascadeStrength
+    );
+    cascade.interpersonalTrust = Math.min(1,
+      cascade.interpersonalTrust + cascade.trustGrowthRate * cascade.cascadeStrength * 0.5
+    );
+
+    // Boost governance effectiveness (cooperation makes policies work better)
+    // Research: UN 2024 - "Trust required for policy implementation and compliance"
+    const cooperationBoost = assertFinite(
+      (cascade.cascadeStrength * (cascade.cooperationMultiplier - 1.0)),
+      {
+        location: 'updateSocialTrustCascade',
+        valueName: 'cooperationBoost',
+        month: state.currentMonth,
+        additionalInfo: {
+          cascadeStrength: cascade.cascadeStrength,
+          cooperationMultiplier: cascade.cooperationMultiplier,
+        }
+      }
+    );
+
+    // Apply to governance quality (policies work better with cooperation)
+    gov.decisionQuality = Math.min(1.0,
+      gov.decisionQuality * (1 + cooperationBoost * 0.005) // Small monthly boost
+    );
+
+    // End cascade if duration exceeded or trust falls
+    if (cascade.cascadeMonths >= cascade.cascadeDuration ||
+        avgTrust < cascade.cascadeThreshold * 0.9) {
+      cascade.cascadeActive = false;
+      cascade.cascadeStrength = 0;
+
+      console.log(`\n🤝✅ SOCIAL TRUST CASCADE ENDED (Month ${state.currentMonth})`);
+      console.log(`  Final institutional trust: ${(cascade.institutionalTrust * 100).toFixed(0)}%`);
+      console.log(`  Final interpersonal trust: ${(cascade.interpersonalTrust * 100).toFixed(0)}%`);
+      console.log(`  Duration: ${(cascade.cascadeMonths / 12).toFixed(1)} years`);
+    }
   }
 }
 
