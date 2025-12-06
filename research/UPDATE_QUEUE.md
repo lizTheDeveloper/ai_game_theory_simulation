@@ -1,6 +1,6 @@
 # Research Update Queue
-**Generated:** 12/5/2025, 8:30:10 PM
-**Files Scanned:** 512
+**Generated:** 12/6/2025, 8:30:03 AM
+**Files Scanned:** 514
 
 ---
 
@@ -12,7 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 174 (34.0%)
+**Count:** 174 (33.9%)
 
 ### `AUTONOMOUS_RESEARCHER_SESSION_20251203_2030.md`
 - **Oldest source:** 1981 (44 years old)
@@ -888,7 +888,7 @@
 
 ## 📋 MEDIUM (Review Within Quarter)
 
-**Count:** 22 (4.3%)
+**Count:** 23 (4.5%)
 
 - `LAYER2_COMPREHENSIVE_STATUS_20251030.md` - Oldest: 2020 (5 years)
 - `LAYER2_DEBATE_SUMMARY_20251030.md` - Oldest: 2020 (5 years)
@@ -910,6 +910,7 @@
 - `malthusian-overshoot-causation-attribution_20251018.md` - Oldest: 2020 (5 years)
 - `mortality_stabilizers_failure_conditions_20251106.md` - Oldest: 2020 (5 years)
 - `planetary-boundary-recovery-mechanisms_20251017.md` - Oldest: 2020 (5 years)
+- `social_tipping_points_decarbonization_20251206.md` - Oldest: 2020 (5 years)
 - `structured_clone_performance_20251107.md` - Oldest: 2021 (4 years)
 - `threshold_uncertainty_verification_20251031.md` - Oldest: 2020 (5 years)
 
@@ -917,7 +918,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 316 (61.7%)
+**Count:** 317 (61.7%)
 
 All sources <3 years old. No action required.
 
@@ -927,26 +928,26 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 512 |
+| Total files | 514 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 174 (34.0%) |
-| MEDIUM | 22 (4.3%) |
-| LOW | 316 (61.7%) |
-| Average age | 7.8 years |
+| HIGH | 174 (33.9%) |
+| MEDIUM | 23 (4.5%) |
+| LOW | 317 (61.7%) |
+| Average age | 7.7 years |
 | Oldest source | 1955 (70 years ago) |
 
 ### Research Currency
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 316 | 61.7% |
-| Warning (3-5yr) | 22 | 4.3% |
-| Critical (>5yr) | 174 | 34.0% |
+| Current (<3yr) | 317 | 61.7% |
+| Warning (3-5yr) | 23 | 4.5% |
+| Critical (>5yr) | 174 | 33.9% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-- **Current:** 34.0% critical (>5yr)
+- **Current:** 33.9% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
