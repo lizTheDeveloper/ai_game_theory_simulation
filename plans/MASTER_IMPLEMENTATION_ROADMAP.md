@@ -27,6 +27,27 @@
   - `plans/completed/l1_physical_constraints_validation_20251201.md` (Session 28)
   - `plans/completed/cleanup_concentration_regression_tests_20251201.md` (Session 32)
   - `plans/completed/m4_abrupt_sea_level_rise_20251205.md` (Session 54)
+  - `plans/completed/m6_social_tipping_points_20251206.md` (Session 55)
+  - `plans/completed/m7_climate_hysteresis_20251205.md` (Session 55)
+- **Recent Work (Dec 6 - Session 55):**
+  - ✅ **ROADMAP ARCHIVAL** - M-6 and M-7 cleanup
+    - HIGH-7 (Conditional Climate Stability Floor) verified complete from Dec 4
+    - M-6 (Social Tipping Points) archived to `plans/completed/m6_social_tipping_points_20251206.md`
+      - Commit: 6a686d5a (Session 52, Dec 6)
+      - Implementation: Social trust cascades (governance → trust → cooperation feedback)
+      - Research: UN World Social Report 2024, HEC Paris 2025, Tàbara et al. 2024
+      - Monte Carlo: 70% utopia rate (up from ~60% baseline), 0% extinction
+    - M-7 (Climate Hysteresis) archived to `plans/completed/m7_climate_hysteresis_20251205.md`
+      - Commit: 6931d422 (Session 53, Dec 5)
+      - Implementation: Bidirectional state transitions with hysteresis gaps
+      - Research: Garbe et al. 2020, Drüke et al. 2024, Robinson et al. 2012
+      - Systems: AMOC (irreversible), Greenland (0.7°C gap), Amazon (irreversible)
+    - M-5 (Compound Climate Events) in progress (orchestrator workflow active)
+    - Progress Summary updated with Session 55 milestone
+  - 🎯 **Token Usage:** ~8k (archival + roadmap gardening)
+  - 🎯 **System Status:** Production-ready, all tests passing
+  - 🎯 **MEDIUM Priority:** 2/3 complete (M-6, M-7), 1 active (M-5)
+  - 📊 **Next:** Continue M-5 implementation (orchestrator coordination)
 - **Recent Work (Dec 5 - Session 54):**
   - ✅ **M-4 COMPLETE** - Abrupt Sea Level Rise (Marine Ice Sheet Instability)
     - Implementation: AbruptSeaLevelRisePhase.ts (411 lines + 280 tests)
@@ -716,9 +737,9 @@
 
 **Recently Completed:**
 
-**M-6: Social Tipping Points** ✅ **COMPLETE** (Session 55 - Dec 6, 2025)
+**M-6: Social Tipping Points** ✅ **COMPLETE** (Session 52 - Dec 6, 2025)
 - **Problem:** Only negative climate tipping points; missing positive social tipping points
-- **Research:** Lenton et al. 2022, Tàbara et al. 2024 ESD, Eker et al. 2024 ESD
+- **Research:** UN World Social Report 2024, HEC Paris 2025, Tàbara et al. 2024, Eker et al. 2024
 - **Implementation:** Social trust cascades (governance → trust → cooperation feedback loop)
   - Triggers: 65% trust + 70% governance quality
   - Growth rate: +1%/month during cascade (vs ±0.5% baseline)
@@ -726,23 +747,27 @@
   - Integration with democratic spiral (cross-system reinforcement)
 - **Monte Carlo Validation:** N=10, 70% utopia rate (up from ~60% baseline), 0% extinction
 - **Commit:** 6a686d5a - "feat(M-6): Implement social trust cascades for positive tipping points"
-- **Archive:** To be created in `plans/completed/m6_social_tipping_points_20251206.md`
+- **Archive:** `plans/completed/m6_social_tipping_points_20251206.md` (Session 55)
 
-**M-7: Climate Hysteresis** ✅ **COMPLETE** (Session 52 - Dec 5, 2025)
+**M-7: Climate Hysteresis** ✅ **COMPLETE** (Session 53 - Dec 5, 2025)
 - **Problem:** Climate state reversible; missing hysteresis after tipping point crossings
-- **Research:** Garbe et al. 2020 Nature, Drüke et al. 2024 ESD
+- **Research:** Garbe et al. 2020, Drüke et al. 2024, Robinson et al. 2012, Nobre et al. 2016
 - **Implementation:** Bidirectional state transitions with hysteresis gaps
-  - West Antarctic Ice Sheet: Cross at +2.0°C, recover below -1.0°C (3.0°C gap)
-  - AMOC: Potentially irreversible on human timescales
-  - Permafrost: Partial recovery with 10-30 year lag
-- **Location:** ClimateSystemPhase (updateTippingElementStates method)
-- **Archive:** To be created in `plans/completed/m7_climate_hysteresis_20251205.md`
+  - AMOC: Irreversible (no recovery pathway)
+  - Greenland Ice Sheet: 0.7°C hysteresis gap (1.5°C collapse, 0.8°C recovery)
+  - Amazon: Irreversible (precipitation feedback breaks)
+  - Permafrost: Irreversible (carbon release permanent)
+  - Deep Ocean: Irreversible (<1000 years)
+- **Location:** ClimateHysteresisPhase.ts (382 lines, phase order 34.1)
+- **Archive:** `plans/completed/m7_climate_hysteresis_20251205.md` (Session 55)
 
 **Archives:**
 - M-1 (dead code cleanup) → `plans/completed/validation_sprint_nov26_29_20251129.md`
 - M-2 (assertion migration audit) → `plans/completed/m2_assertion_migration_audit_20251130.md`
 - M-3 (parameter injection infrastructure) → `plans/completed/m3_parameter_injection_infrastructure_20251130.md`
 - M-4 (abrupt sea level rise) → `plans/completed/m4_abrupt_sea_level_rise_20251205.md`
+- M-6 (social tipping points) → `plans/completed/m6_social_tipping_points_20251206.md`
+- M-7 (climate hysteresis) → `plans/completed/m7_climate_hysteresis_20251205.md`
 
 **M-3: Parameter Sweep Execution - INFRASTRUCTURE COMPLETE** ✅ (Nov 30, 2025 - Session 23)
 - **Status:** 🟢 INFRASTRUCTURE COMPLETE - Execution deferred (can run anytime)
