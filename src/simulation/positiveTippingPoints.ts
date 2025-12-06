@@ -816,10 +816,10 @@ function updateSocialNormCascades(state: GameState, rng: RNGFunction): void {
     }
   }
 
-  // Update climate concern level
+  // Update climate concern level (clamped to [0, 1])
   const concernDelta = spreadingRate + techBoost + impactBoost;
   norms.climateConcernLevel = assertInRange(
-    norms.climateConcernLevel + concernDelta,
+    Math.min(1.0, norms.climateConcernLevel + concernDelta),
     0, 1,
     { location: 'updateSocialNormCascades', valueName: 'climateConcernLevel', month: state.currentMonth }
   );
