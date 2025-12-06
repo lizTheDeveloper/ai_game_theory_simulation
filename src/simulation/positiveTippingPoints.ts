@@ -109,11 +109,17 @@ export function initializePositiveTippingPoints(): PositiveTippingPointsState {
     // M-6: Social tipping cascades (Otto et al. 2020)
     socialCascades: {
       renewableNorms: {
-        cascadeType: 'renewable-norms',
+        cascadeType: 'renewable-energy-norms',
         adoptionLevel: 0.35,
         adoptionRate: 0.005,
         cascadeActive: false,
         cascadeStrength: 0,
+        trustLevel: 50,
+        policySupport: 0.20,
+        mediaVisibility: 0.40,
+        socialProofStrength: 0.30,
+        technologyAcceleration: 1.0,
+        emissionsReduction: 0,
       },
       policyClimateAction: {
         cascadeType: 'policy-climate-action',
@@ -121,6 +127,12 @@ export function initializePositiveTippingPoints(): PositiveTippingPointsState {
         adoptionRate: 0.01,
         cascadeActive: false,
         cascadeStrength: 0,
+        trustLevel: 50,
+        policySupport: 0.20,
+        mediaVisibility: 0.30,
+        socialProofStrength: 0.20,
+        technologyAcceleration: 1.0,
+        emissionsReduction: 0,
       },
       behavioralConservation: {
         cascadeType: 'behavioral-conservation',
@@ -128,6 +140,12 @@ export function initializePositiveTippingPoints(): PositiveTippingPointsState {
         adoptionRate: 0.002,
         cascadeActive: false,
         cascadeStrength: 0,
+        trustLevel: 50,
+        policySupport: 0.10,
+        mediaVisibility: 0.25,
+        socialProofStrength: 0.25,
+        technologyAcceleration: 1.0,
+        emissionsReduction: 0,
       },
       consumptionShift: {
         cascadeType: 'consumption-shift',
@@ -135,6 +153,12 @@ export function initializePositiveTippingPoints(): PositiveTippingPointsState {
         adoptionRate: 0.001,
         cascadeActive: false,
         cascadeStrength: 0,
+        trustLevel: 50,
+        policySupport: 0.10,
+        mediaVisibility: 0.20,
+        socialProofStrength: 0.15,
+        technologyAcceleration: 1.0,
+        emissionsReduction: 0,
       },
     },
 
