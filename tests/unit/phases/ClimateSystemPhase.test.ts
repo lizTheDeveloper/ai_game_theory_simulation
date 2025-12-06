@@ -694,7 +694,7 @@ describe('ClimateSystemPhase', () => {
             climate_change: {
               id: 'climate_change',
               name: 'Climate Change',
-              currentValue: 1.2, // Below 1.5C Paris target
+              currentValue: 1.8, // Below 2.0C Paris limit, low cascade count
               safeThreshold: 1.0,
               riskZone: 1.5,
               status: 'safe',
@@ -725,21 +725,21 @@ describe('ClimateSystemPhase', () => {
         tippingPointSystem: {
           elements: [element],
           triggers: [],
-          triggeredCount: 1,
+          triggeredCount: 1, // < 3 cascades
           completedCount: 1,
           totalProgress: 1.0,
-          cascadeMultiplier: 1.6, // Maximum cascade
+          cascadeMultiplier: 1.0,
         },
       });
 
       const context = createTestContext();
       phase.execute(state, rng, context);
 
-      // Should not go below 5% when Paris targets met (<1.5C)
+      // Should not go below 5% when Paris on track (<2C) and NOT tail risk (<3 cascades)
       assert.ok(state.environmentalAccumulation.climateStability >= 0.05);
     });
 
-    it('should allow collapse below 5% when Paris Agreement targets exceeded', () => {
+    it('should allow collapse below 5% when extreme warming exceeds 3C', () => {
       const element = createTippingElement({
         progress: 1.0,
         impactClimateStability: -1.0, // Extreme impact
@@ -752,7 +752,7 @@ describe('ClimateSystemPhase', () => {
             climate_change: {
               id: 'climate_change',
               name: 'Climate Change',
-              currentValue: 2.5, // Well above 1.5C Paris target (failure scenario)
+              currentValue: 3.5, // Above 3.0C tail risk threshold
               safeThreshold: 1.0,
               riskZone: 1.5,
               status: 'exceeded',
@@ -783,18 +783,77 @@ describe('ClimateSystemPhase', () => {
         tippingPointSystem: {
           elements: [element],
           triggers: [],
-          triggeredCount: 1,
+          triggeredCount: 1, // Doesn't matter, temp > 3C triggers tail risk
           completedCount: 1,
           totalProgress: 1.0,
-          cascadeMultiplier: 1.6, // Maximum cascade
+          cascadeMultiplier: 1.6,
         },
       });
 
       const context = createTestContext();
       phase.execute(state, rng, context);
 
-      // In Paris failure scenarios (>1.5C), no floor applies - can collapse below 5%
+      // In tail risk scenarios (> 3C OR 3+ cascades), no floor applies - can collapse below 5%
       // Research: Wunderling et al. (2024) - "many tipping interactions are destabilizing"
+      assert.ok(state.environmentalAccumulation.climateStability < 0.05);
+    });
+
+    it('should allow collapse below 5% when 3+ tipping cascades occur', () => {
+      const elements = [
+        createTippingElement({ id: 'e1', progress: 1.0, impactClimateStability: -0.3, cascades: true }),
+        createTippingElement({ id: 'e2', progress: 1.0, impactClimateStability: -0.3, cascades: true }),
+        createTippingElement({ id: 'e3', progress: 1.0, impactClimateStability: -0.3, cascades: true }),
+      ];
+
+      const state = createTestState({
+        planetaryBoundariesSystem: {
+          boundaries: {
+            climate_change: {
+              id: 'climate_change',
+              name: 'Climate Change',
+              currentValue: 2.5, // Below 3C but still Paris failure
+              safeThreshold: 1.0,
+              riskZone: 1.5,
+              status: 'exceeded',
+            } as PlanetaryBoundary,
+            biosphere_integrity: {
+              id: 'biosphere_integrity',
+              name: 'Biosphere Integrity',
+              currentValue: 0.8,
+              safeThreshold: 1.0,
+              riskZone: 1.2,
+              status: 'safe',
+            } as PlanetaryBoundary,
+          },
+        },
+        environmentalAccumulation: {
+          climateStability: 0.1, // Already low
+          resourceReserves: 0.65,
+          pollutionLevel: 0.40,
+          biodiversityIndex: 0.65,
+          pollutionPreventionFactor: 1.0,
+          monsoonDisruptionRisk: 0,
+          ozoneDepletionRisk: 0,
+          resourceCrisisActive: false,
+          pollutionCrisisActive: false,
+          climateCrisisActive: false,
+          ecosystemCrisisActive: false,
+        },
+        tippingPointSystem: {
+          elements,
+          triggers: [],
+          triggeredCount: 3, // 3+ cascades = tail risk
+          completedCount: 3,
+          totalProgress: 1.0,
+          cascadeMultiplier: 1.35, // 3 cascades
+        },
+      });
+
+      const context = createTestContext();
+      phase.execute(state, rng, context);
+
+      // 3+ cascades trigger tail risk even at < 3C warming
+      // Research: Wunderling et al. (2024) - destabilizing cascade interactions
       assert.ok(state.environmentalAccumulation.climateStability < 0.05);
     });
 
