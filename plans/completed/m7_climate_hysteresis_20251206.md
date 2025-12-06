@@ -1,9 +1,13 @@
 # M-7: Climate Hysteresis - Implementation Archive
 
-**Status:** COMPLETE (Dec 5, 2025)
-**Session:** Autonomous worker (integrated Dec 5)
+**Status:** COMPLETE (Dec 6, 2025 - Session 57)
+**Session:** Autonomous worker (skeleton Dec 5), orchestrator-1 (integration Dec 6)
 **Priority:** MEDIUM
-**Commit:** 5001963c (merged branch auto/researcher-20251205_123001)
+**Commits:**
+- 5001963c (merged branch auto/researcher-20251205_123001 - initial skeleton)
+- 8399b78b (Dec 6 Session 57 - state machine integration)
+- f5d41eff (Dec 6 Session 57 - M-6 cross-system feedback)
+- c89e6519 (Dec 6 Session 57 - political will connection)
 
 ## Problem Statement
 
@@ -33,11 +37,15 @@ Added `TippingElementState` enum to track hysteresis state:
 
 ```typescript
 export enum TippingElementState {
-  NOT_TRIGGERED = 'not_triggered',  // Normal conditions
-  TRIGGERED = 'triggered',          // Past trigger threshold
-  LOCKED = 'locked'                 // Hysteresis: irreversible even if temp drops
+  NOT_TRIGGERED = 'not_triggered',      // Normal conditions
+  PROGRESSING = 'progressing',          // Degradation in progress
+  FULLY_TIPPED = 'fully_tipped',        // Complete degradation
+  RECOVERING = 'recovering',            // Recovery pathway active
+  RECOVERED = 'recovered'               // Returned to safe state
 }
 ```
+
+**Note:** Initial Dec 5 implementation had 3-state model (NOT_TRIGGERED → TRIGGERED → LOCKED). Session 57 (Dec 6) expanded to 5-state model with recovery dynamics per Drüke et al. 2024.
 
 **`src/simulation/tippingPoints.ts` (initialization):**
 
@@ -88,21 +96,29 @@ if (element.state === TippingElementState.LOCKED) {
 
 ### Key Algorithm
 
-**Hysteresis state machine:**
+**Hysteresis state machine (Session 57 final implementation):**
 
-1. **NOT_TRIGGERED → TRIGGERED:**
+1. **NOT_TRIGGERED → PROGRESSING:**
    - Condition: Temperature anomaly crosses element threshold
    - Effect: Begin degradation, start progress counter
 
-2. **TRIGGERED → LOCKED:**
-   - Condition: Progress > 50% (system substantially committed)
-   - Effect: Irreversible state, continues degrading even if temp drops
-   - Research: Drüke et al. (2024) - hysteresis after 2°C warming
+2. **PROGRESSING → FULLY_TIPPED:**
+   - Condition: Progress ≥ 1.0 (system fully degraded)
+   - Effect: Maximum impact reached, recovery pathway opens if temp drops
 
-3. **LOCKED (terminal state):**
-   - No recovery pathway (models irreversibility)
-   - Continues contributing to climate degradation
-   - Represents committed warming/sea level rise
+3. **FULLY_TIPPED → RECOVERING:**
+   - Condition: Temperature drops below recoveryTempC threshold
+   - Effect: Begin recovery dynamics (asymmetric, slower than degradation)
+   - Research: Drüke et al. (2024) - 50% recovery after 200 years
+
+4. **RECOVERING → RECOVERED:**
+   - Condition: Progress reaches minimumAsymptoticValue (50% recovery threshold)
+   - Effect: Element stabilized but not fully returned to baseline
+   - Research: Vegetation-albedo feedback prevents full recovery (Drüke 2024)
+
+5. **Hysteresis gap:**
+   - Recovery threshold < Trigger threshold (e.g., AMOC: 0.125 Sv vs 0.525 Sv)
+   - Recovery rate slower than degradation (asymmetric timescales)
 
 **Interacting systems:**
 - Tipping point system (state tracking)
@@ -128,16 +144,20 @@ if (element.state === TippingElementState.LOCKED) {
 
 **Architecture review:**
 - Session 54: Grade A- sustained (0 CRITICAL/HIGH blockers)
-- Test coverage: 82.54% (all 462+ tests passing)
-- Clean state machine implementation
+- Session 57: Grade B+ (HIGH-1, HIGH-2 resolved)
+  - HIGH-1: State machine transitions integrated into ClimateSystemPhase.ts
+  - HIGH-2: Test module resolution fixed (vitest environment)
+- Test coverage: 82.43% (all tests passing)
+- Clean state machine implementation with full recovery dynamics
 
 ## Impact
 
 **Gameplay:**
-- Tipping points become irreversible after 50% progress
-- Creates urgency: early intervention is critical
-- Late-game recovery impossible if major tipping points locked
-- Models "point of no return" dynamics
+- Tipping points can recover but asymmetrically (slower, incomplete)
+- Creates urgency: early intervention prevents full tipping
+- Late-game recovery possible but only partial (50% asymptotic threshold)
+- Models realistic hysteresis: degradation fast, recovery slow
+- Cross-system integration: Social tipping points (M-6) can accelerate climate recovery
 
 **Research realism:**
 - Aligns with Drüke et al. (2024) hysteresis findings
