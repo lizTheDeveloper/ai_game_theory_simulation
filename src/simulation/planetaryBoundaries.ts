@@ -352,6 +352,7 @@ export function initializePlanetaryBoundariesSystem(rng: RNGFunction): Planetary
     boundariesImproving,                  // 2/9
     tippingPointRisk: initialRisk,
     coreBoundariesBreached: true,         // Both climate + biosphere breached
+    compoundClimateAmplifier: 1.0,        // No amplification yet
     cascadeMultiplier: 1.0,               // No cascade yet
     cascadeActive: false,
     cascadeStartMonth: null,

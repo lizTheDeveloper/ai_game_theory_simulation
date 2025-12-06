@@ -52,7 +52,7 @@ export class PositiveTippingPointsPhase implements SimulationPhase {
     setDeterministicRng(rng);
 
     // Track initial state for event logging
-    const initialActiveCascades = state.positiveTippingPoints.activeCascades;
+    const initialActiveCascades = state.positiveTippingPoints.activeTechCascades;
     const initialTriggeredCount = state.positiveTippingPoints.triggeredCascades.length;
 
     // Update positive tipping point dynamics
@@ -144,7 +144,7 @@ export class PositiveTippingPointsPhase implements SimulationPhase {
         agent: 'environmental',
         effects: {
           cumulativeEmissionsReduction: ptp.cumulativeEmissionsReduction,
-          activeCascades: ptp.activeCascades,
+          activeCascades: ptp.activeTechCascades,
         }
       });
     }

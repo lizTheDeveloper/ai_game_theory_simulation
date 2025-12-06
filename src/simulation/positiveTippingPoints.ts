@@ -133,6 +133,18 @@ export function initializePositiveTippingPoints(): PositiveTippingPointsState {
       learningRateMax: 0.30,           // 30% cost reduction per doubling
       visibilityImpact: 0.3,           // 30% boost from high visibility
       earlyAdopterInfluence: 0.2,      // 20% adoption boost from social proof
+
+      // M-6: Social norm tipping parameters (Otto et al. 2020)
+      normTippingThreshold: 0.25,      // 25% critical mass (Otto et al. 2020)
+      normCascadeMultiplier: 2.0,      // 2.0x influence spreading acceleration
+      normCascadeDuration: 120,        // 10 years average
+
+      // Political lock-in (Grin et al. 2010, Geels 2014)
+      politicalLockInThreshold: 0.45,  // 45% policy strength for irreversibility
+      policyRatchetRate: 0.015,        // 1.5%/month momentum increase
+
+      // Backlash risk (Mildenberger & Leiserowitz 2017)
+      backlashThreshold: 0.30,         // 30% risk triggers reversal pressure
     },
   };
 }
@@ -233,7 +245,7 @@ export function updatePositiveTippingPoints(
 
   // Phase 6: Update active cascade count
   // FIX (Nov 7, 2025): Sort for deterministic iteration (Issue #11)
-  ptp.activeCascades = Object.entries(ptp.adoptionTracking)
+  ptp.activeTechCascades = Object.entries(ptp.adoptionTracking)
     .sort((a, b) => a[0].localeCompare(b[0]))
     .map(e => e[1])
     .filter(tech => tech.cascadeActive).length;
@@ -569,7 +581,7 @@ function calculateEnvironmentalImpact(state: GameState): void {
   }
 
   // Calculate adoption acceleration vs business-as-usual
-  const activeCascadeBoost = ptp.activeCascades * 0.5; // Each cascade = 50% acceleration
+  const activeCascadeBoost = ptp.activeTechCascades * 0.5; // Each cascade = 50% acceleration
   ptp.adoptionAcceleration = 1.0 + activeCascadeBoost;
 }
 
@@ -1092,7 +1104,7 @@ export function logPositiveTippingPointDiagnostics(state: GameState): void {
   });
 
   console.log(`\n  🌊 Summary:`);
-  console.log(`     Active cascades: ${ptp.activeCascades}`);
+  console.log(`     Active cascades: ${ptp.activeTechCascades}`);
   console.log(`     Adoption acceleration: ${ptp.adoptionAcceleration.toFixed(2)}x baseline`);
   console.log(`     Cumulative emissions reduction: ${ptp.cumulativeEmissionsReduction.toFixed(2)} Gt CO2`);
   console.log(`     Cumulative cost savings: $${ptp.cumulativeCostSavings.toFixed(1)}B`);

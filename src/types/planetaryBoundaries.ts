@@ -132,6 +132,7 @@ export interface PlanetaryBoundariesSystem {
   cascadeActive: boolean;           // Has irreversible cascade begun?
   cascadeStartMonth: number | null; // When cascade triggered
   cascadeSeverity: number;          // [0, 1] How bad is the cascade
+  cascadeMultiplier: number;        // [1.0, 2.0] Amplification from cascade severity
 
   // === HISTORICAL TRACKING ===
   boundariesBreachedHistory: number[]; // Track over time
