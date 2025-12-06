@@ -138,3 +138,19 @@ export type {
   ScreenType,
   ScenarioOption,
 } from './ScenarioSetup';
+
+// Action Panel (V4 - Player Advocacy Actions)
+export { ActionPanel } from './ActionPanel';
+export type {
+  ActionPanelProps,
+  PlayerResources,
+  ActiveCooldowns,
+} from './ActionPanel';
+
+// Scenario Picker (V4 - In-Game Scenario Selection)
+export { ScenarioPicker } from './ScenarioPicker';
+export type {
+  ScenarioPickerProps,
+  ScenarioDisplay,
+  OutcomeDistribution,
+} from './ScenarioPicker';

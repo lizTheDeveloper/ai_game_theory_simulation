@@ -1,0 +1,441 @@
+/**
+ * ActionPanel Styles
+ *
+ * Far-future Elysium-inspired aesthetic:
+ * - Pure black (#000) background
+ * - Cyan (#00F0FF) primary accent
+ * - White at varying opacities for hierarchy
+ * - Subtle glows and thin borders
+ * - Clean, generous spacing
+ */
+
+.panel {
+  background: rgba(0, 0, 0, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+}
+
+.panelCollapsed {
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.panelCollapsed:hover {
+  border-color: rgba(0, 240, 255, 0.4);
+  background: rgba(0, 240, 255, 0.05);
+}
+
+.collapseIcon {
+  font-size: 18px;
+  color: #00F0FF;
+}
+
+.collapseLabel {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  opacity: 0.6;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 15px;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: #00F0FF;
+  margin: 0;
+  text-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+}
+
+.collapseBtn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.6);
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s ease;
+}
+
+.collapseBtn:hover {
+  border-color: rgba(0, 240, 255, 0.4);
+  color: #00F0FF;
+}
+
+/* Resources Section */
+.resourcesSection {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sectionTitle {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  opacity: 0.5;
+  margin: 0 0 5px 0;
+  font-weight: 400;
+}
+
+.resourceItem {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.resourceHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.resourceName {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.resourceValue {
+  font-size: 14px;
+  font-weight: 300;
+  font-variant-numeric: tabular-nums;
+}
+
+.resourceBar {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.resourceBarFill {
+  height: 100%;
+  background: linear-gradient(90deg, #00F0FF, #0080FF);
+  border-radius: 2px;
+  transition: width 0.5s ease;
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+}
+
+.resourceBarFill.resourcePolitical {
+  background: linear-gradient(90deg, #FFB000, #FF8C00);
+  box-shadow: 0 0 10px rgba(255, 176, 0, 0.4);
+}
+
+.resourceBarFill.resourceFunding {
+  background: linear-gradient(90deg, #00FF88, #00CC66);
+  box-shadow: 0 0 10px rgba(0, 255, 136, 0.4);
+}
+
+/* Influence Section */
+.influenceSection {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 15px;
+}
+
+.influenceTotal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.influenceLabel {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.influenceValue {
+  font-size: 14px;
+  font-weight: 300;
+  color: #00F0FF;
+  font-variant-numeric: tabular-nums;
+}
+
+.influenceBar {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.influenceBarFill {
+  height: 100%;
+  background: linear-gradient(90deg, #00F0FF, #FF0040);
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+.influenceRemaining {
+  font-size: 11px;
+  opacity: 0.5;
+  text-align: right;
+}
+
+/* Domain Filter */
+.domainFilter {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.domainBtn {
+  padding: 6px 12px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 4px;
+}
+
+.domainBtn:hover {
+  background: rgba(0, 240, 255, 0.1);
+  border-color: rgba(0, 240, 255, 0.3);
+  color: #00F0FF;
+}
+
+.domainBtn.active {
+  background: rgba(0, 240, 255, 0.2);
+  border-color: #00F0FF;
+  color: #00F0FF;
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+}
+
+/* Actions List */
+.actionsList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}
+
+.actionCard {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 15px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.actionCard:hover:not(.disabled) {
+  border-color: rgba(0, 240, 255, 0.4);
+  background: rgba(0, 240, 255, 0.03);
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);
+}
+
+.actionCard.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.actionCard.expanded {
+  border-color: rgba(0, 240, 255, 0.5);
+  background: rgba(0, 240, 255, 0.05);
+}
+
+.actionMain {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.actionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.actionDomain {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 3px 8px;
+  border-radius: 3px;
+}
+
+.cooldownBadge {
+  font-size: 10px;
+  background: rgba(255, 176, 0, 0.2);
+  color: #FFB000;
+  padding: 3px 8px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+
+.actionName {
+  font-size: 14px;
+  font-weight: 400;
+  margin: 0;
+  color: #fff;
+  line-height: 1.3;
+}
+
+.actionEffect {
+  font-size: 12px;
+  color: #00F0FF;
+  opacity: 0.9;
+}
+
+.actionCosts {
+  display: flex;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.cost {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Expanded Details */
+.actionDetails {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.actionDescription {
+  font-size: 12px;
+  opacity: 0.7;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.actionMeta {
+  display: flex;
+  gap: 15px;
+  font-size: 11px;
+  opacity: 0.5;
+}
+
+.actionSources {
+  font-size: 11px;
+}
+
+.sourcesLabel {
+  opacity: 0.5;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.sourcesList {
+  margin: 0;
+  padding-left: 15px;
+  opacity: 0.6;
+}
+
+.sourceItem {
+  margin-bottom: 4px;
+  line-height: 1.4;
+}
+
+/* Queue Button */
+.queueBtn {
+  width: 100%;
+  margin-top: 12px;
+  padding: 10px 16px;
+  background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), rgba(0, 128, 255, 0.2));
+  border: 1px solid rgba(0, 240, 255, 0.4);
+  color: #00F0FF;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 4px;
+}
+
+.queueBtn:hover:not(.disabled) {
+  background: linear-gradient(135deg, rgba(0, 240, 255, 0.3), rgba(0, 128, 255, 0.3));
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.queueBtn.disabled {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.3);
+  cursor: not-allowed;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+/* Empty State */
+.emptyState {
+  padding: 30px;
+  text-align: center;
+  font-size: 12px;
+  opacity: 0.5;
+}
+
+/* Scrollbar styling */
+.panel::-webkit-scrollbar,
+.actionsList::-webkit-scrollbar {
+  width: 6px;
+}
+
+.panel::-webkit-scrollbar-track,
+.actionsList::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.panel::-webkit-scrollbar-thumb,
+.actionsList::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.panel::-webkit-scrollbar-thumb:hover,
+.actionsList::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .panel {
+    padding: 15px;
+    gap: 15px;
+  }
+
+  .actionCard {
+    padding: 12px;
+  }
+}
