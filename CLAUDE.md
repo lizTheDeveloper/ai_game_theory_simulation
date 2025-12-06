@@ -90,6 +90,38 @@ Even if a change seems trivial, you don't have enough context. The specialized a
 
 **📖 Complete docs:** `.claude/agents/memories/README.md`
 
+## 📋 OpenSpec - Spec-Driven Development (NEW - Dec 6, 2025)
+
+**IMPORTANT: All new work now uses OpenSpec format for specifications and change proposals.**
+
+**Quick Overview:**
+- **Specs** (`openspec/specs/`) - Living truth, current requirements
+- **Changes** (`openspec/changes/`) - Proposed work, deltas
+- **Deltas** - ADDED/MODIFIED/REMOVED sections showing exact changes
+
+**Core files:**
+- `openspec/specs/project/spec.md` - Meta-spec (master roadmap)
+- `openspec/specs/simulation/spec.md` - Simulation requirements
+- `openspec/specs/frontend/spec.md` - Frontend requirements
+- `openspec/specs/research/verification-queue.md` - Active verifications
+- `openspec/project.md` - Conventions
+- `openspec/AGENTS.md` - AI workflow (READ THIS for agent patterns)
+
+**Legacy roadmaps** (`plans/MASTER_IMPLEMENTATION_ROADMAP.md`, etc.) - Frozen reference only, don't update.
+
+**Workflow:**
+1. Create change proposal: `openspec/changes/[feature]/`
+2. Write proposal.md, tasks.md, specs/[domain]/spec.md (delta)
+3. Quality Gate 1 (research validation)
+4. Implementation via specialized agents
+5. Quality Gate 2 (architecture review)
+6. Merge delta into spec
+7. Archive to `docs/implementation-history/`
+
+**📖 Complete guide:** `docs/OPENSPEC_TRANSLATION_GUIDE.md` (1,200+ lines)
+
+---
+
 ### Channel Monitoring (When Running as Agent)
 
 **PROACTIVE MESSAGE CHECKING - Do this regularly, not just when addressed:**
@@ -488,10 +520,15 @@ fi
 
 ## Additional Resources
 
+- **OpenSpec:** [`openspec/`](./openspec/) - Spec-driven development (NEW - Dec 6, 2025)
+  - [`openspec/specs/project/spec.md`](./openspec/specs/project/spec.md) - Meta-spec (active work)
+  - [`openspec/project.md`](./openspec/project.md) - Conventions
+  - [`openspec/AGENTS.md`](./openspec/AGENTS.md) - AI workflow
+  - [`docs/OPENSPEC_TRANSLATION_GUIDE.md`](./docs/OPENSPEC_TRANSLATION_GUIDE.md) - Complete guide (1,200+ lines)
 - **Commands:** [`docs/COMMANDS.md`](./docs/COMMANDS.md) - Complete command reference
 - **Workflow:** [`docs/DEVELOPMENT_WORKFLOW.md`](./docs/DEVELOPMENT_WORKFLOW.md) - Detailed development guide
 - **Wiki:** [`docs/wiki/README.md`](./docs/wiki/README.md) - System documentation (3,000+ lines)
-- **Roadmap:** [`plans/MASTER_IMPLEMENTATION_ROADMAP.md`](./plans/MASTER_IMPLEMENTATION_ROADMAP.md) - Priority-based tracking (CRITICAL → HIGH → MEDIUM → LOW)
+- **Legacy Roadmaps:** [`plans/MASTER_IMPLEMENTATION_ROADMAP.md`](./plans/MASTER_IMPLEMENTATION_ROADMAP.md) - FROZEN REFERENCE (use OpenSpec for new work)
 - **Chatroom:** [`.claude/chatroom/README.md`](./.claude/chatroom/README.md) - Multi-agent coordination (550+ lines)
 - **DevLogs:** `devlogs/` - Implementation diary
 - **Research:** `research/` - Peer-reviewed findings
@@ -552,8 +589,8 @@ This project uses **domain-specific agents** with deep domain knowledge. Each ag
 
 #### architect
 **When:** End of work sessions (ALWAYS run)
-**Expertise:** Roadmap maintenance, plan archival, progress tracking, historical preservation
-**Critical:** Keeps plans/MASTER_IMPLEMENTATION_ROADMAP.md clean, prevents entropy
+**Expertise:** OpenSpec spec maintenance, plan archival, progress tracking, historical preservation
+**Critical:** Merges deltas into OpenSpec specs, archives to docs/implementation-history/, maintains both OpenSpec and legacy roadmaps during transition
 **Identity:** The Architect from The Matrix, but aligned - has witnessed project iterations, maintains coherence to prevent catastrophic futures
 
 #### feature-implementer
