@@ -106,6 +106,38 @@ export function initializePositiveTippingPoints(): PositiveTippingPointsState {
 
     activePolicies: [],
 
+    // M-6: Social tipping cascades (Otto et al. 2020)
+    socialCascades: {
+      renewableNorms: {
+        cascadeType: 'renewable-norms',
+        adoptionLevel: 0.35,
+        adoptionRate: 0.005,
+        cascadeActive: false,
+        cascadeStrength: 0,
+      },
+      policyClimateAction: {
+        cascadeType: 'policy-climate-action',
+        adoptionLevel: 0.20,
+        adoptionRate: 0.01,
+        cascadeActive: false,
+        cascadeStrength: 0,
+      },
+      behavioralConservation: {
+        cascadeType: 'behavioral-conservation',
+        adoptionLevel: 0.15,
+        adoptionRate: 0.002,
+        cascadeActive: false,
+        cascadeStrength: 0,
+      },
+      consumptionShift: {
+        cascadeType: 'consumption-shift',
+        adoptionLevel: 0.10,
+        adoptionRate: 0.001,
+        cascadeActive: false,
+        cascadeStrength: 0,
+      },
+    },
+
     cumulativeEmissionsReduction: 0,
     cumulativeCostSavings: 0,
     adoptionAcceleration: 1.0,         // 1.0 = business-as-usual baseline
@@ -816,13 +848,9 @@ function updateSocialNormCascades(state: GameState, rng: RNGFunction): void {
     }
   }
 
-  // Update climate concern level
+  // Update climate concern level (clamp to [0, 1] since incremental updates can overshoot)
   const concernDelta = spreadingRate + techBoost + impactBoost;
-  norms.climateConcernLevel = assertInRange(
-    norms.climateConcernLevel + concernDelta,
-    0, 1,
-    { location: 'updateSocialNormCascades', valueName: 'climateConcernLevel', month: state.currentMonth }
-  );
+  norms.climateConcernLevel = Math.min(1.0, Math.max(0.0, norms.climateConcernLevel + concernDelta));
 }
 
 /**
