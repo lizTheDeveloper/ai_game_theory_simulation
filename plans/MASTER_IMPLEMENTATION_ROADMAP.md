@@ -701,7 +701,7 @@
 - **Next Steps (MEDIUM-NEW "Parameter Sweep Execution"):** Parameter injection → N=200 sweep → Sobol indices → 90% CI report
 - **Recommendation:** Execute AFTER VM deployment (parallel workers benefit)### 🟡 MEDIUM Priority Items
 
-**Status:** 3 active MEDIUM items (M-5, M-6, M-7 - climate system features)
+**Status:** 1 active MEDIUM item (M-5 - in progress via orchestrator)
 
 **Active Items:**
 
@@ -711,26 +711,32 @@
 - **Impact:** Accelerated collapse when 3+ tipping points cross simultaneously
 - **Location:** ClimateSystemPhase + PlanetaryBoundariesPhase
 - **Complexity:** 5 systems (climate, ice sheets, AMOC, rainforests, permafrost)
-- **Assignee:** simulation-maintainer (Roy)
-- **Status:** ACTIVE (token conservation disabled Dec 4)
+- **Assignee:** simulation-maintainer (Roy) via orchestrator
+- **Status:** IN PROGRESS (Session 55 - Dec 6, 2025 - orchestrator workflow active)
 
-**M-6: Social Tipping Points** (Session 51 research gap)
+**Recently Completed:**
+
+**M-6: Social Tipping Points** ✅ **COMPLETE** (Session 55 - Dec 6, 2025)
 - **Problem:** Only negative climate tipping points; missing positive social tipping points
-- **Research:** Lenton et al. 2022 (social tipping interventions for decarbonization)
-- **Impact:** Rapid decarbonization cascades (e.g., EV adoption S-curves)
-- **Location:** SocialStabilitySystemPhase or new SocialTippingPhase
-- **Complexity:** 4 systems (social, economy, technology, climate mitigation)
-- **Assignee:** simulation-maintainer (Roy)
-- **Status:** ACTIVE (token conservation disabled Dec 4)
+- **Research:** Lenton et al. 2022, Tàbara et al. 2024 ESD, Eker et al. 2024 ESD
+- **Implementation:** Social trust cascades (governance → trust → cooperation feedback loop)
+  - Triggers: 65% trust + 70% governance quality
+  - Growth rate: +1%/month during cascade (vs ±0.5% baseline)
+  - Policy effectiveness: 30% boost when cascade active
+  - Integration with democratic spiral (cross-system reinforcement)
+- **Monte Carlo Validation:** N=10, 70% utopia rate (up from ~60% baseline), 0% extinction
+- **Commit:** 6a686d5a - "feat(M-6): Implement social trust cascades for positive tipping points"
+- **Archive:** To be created in `plans/completed/m6_social_tipping_points_20251206.md`
 
-**M-7: Climate Hysteresis** (Session 51 research gap)
+**M-7: Climate Hysteresis** ✅ **COMPLETE** (Session 52 - Dec 5, 2025)
 - **Problem:** Climate state reversible; missing hysteresis after tipping point crossings
-- **Research:** Drüke et al. 2024 (Earth System hysteresis after 2°C)
-- **Impact:** Prevents recovery even if CO2 returns to safe levels (irreversibility)
-- **Location:** ClimateSystemPhase (tipping point logic)
-- **Complexity:** 3 systems (climate, tipping points, planetary boundaries)
-- **Assignee:** simulation-maintainer (Roy)
-- **Status:** ACTIVE (token conservation disabled Dec 4)
+- **Research:** Garbe et al. 2020 Nature, Drüke et al. 2024 ESD
+- **Implementation:** Bidirectional state transitions with hysteresis gaps
+  - West Antarctic Ice Sheet: Cross at +2.0°C, recover below -1.0°C (3.0°C gap)
+  - AMOC: Potentially irreversible on human timescales
+  - Permafrost: Partial recovery with 10-30 year lag
+- **Location:** ClimateSystemPhase (updateTippingElementStates method)
+- **Archive:** To be created in `plans/completed/m7_climate_hysteresis_20251205.md`
 
 **Archives:**
 - M-1 (dead code cleanup) → `plans/completed/validation_sprint_nov26_29_20251129.md`
