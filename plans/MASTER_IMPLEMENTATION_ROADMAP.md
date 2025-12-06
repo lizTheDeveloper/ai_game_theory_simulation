@@ -1,7 +1,7 @@
 # Master Implementation Roadmap
 ## AI Alignment Game Theory Simulation - Project Hub
 
-**Date:** December 3, 2025 (SESSION 51 COMPLETE)
+**Date:** December 6, 2025 (SESSION 58 COMPLETE)
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
@@ -11,7 +11,7 @@
 - **MEDIUM/LOW:** Deferred until token budget restored
 - **All agents:** Extreme efficiency - grep first, skip docs, exit early
 
-**Current Status:** 🟢 **MAINTENANCE MODE** (Dec 5, 2025 - Session 54)
+**Current Status:** 🟢 **MAINTENANCE MODE** (Dec 6, 2025 - Session 58)
 - **Research Quality:** A- (68.8% sources from 2024-2025) - sustained
 - **Architecture Health:** A- (0 CRITICAL, 0 HIGH blockers) - sustained
 - **System Performance:** Monte Carlo deterministic, all tests passing (82.34% coverage)
@@ -27,6 +27,23 @@
   - `plans/completed/l1_physical_constraints_validation_20251201.md` (Session 28)
   - `plans/completed/cleanup_concentration_regression_tests_20251201.md` (Session 32)
   - `plans/completed/m4_abrupt_sea_level_rise_20251205.md` (Session 54)
+- **Recent Work (Dec 6 - Session 58):**
+  - 🔧 **ARCHITECTURE REVIEW** - Integration validation (Grade B+)
+    - Report: `reviews/architecture_integration_review_session58_20251206.md`
+    - Scope: M-4 implementation + Sessions 54-57 commits (M-5, M-6, M-7)
+    - Grade: B+ (0 CRITICAL, 1 HIGH resolved, 3 MEDIUM identified)
+    - HIGH Issue Fixed: Phase order collision (AbruptSeaLevelRisePhase 34.1 → 34.2)
+    - MEDIUM Issues Identified:
+      - M-1: Dual ice sheet tracking (marineIceSheetState vs tippingPoints.iceSheets) - documented as intentional
+      - M-2: Sea level displacement not propagated to RefugeeCrisisPhase (functional gap)
+      - M-3: foodSecurity/gdpPerCapita TODOs in AbruptSeaLevelRisePhase (integration deferred)
+    - Performance: A (O(1) patterns, minimal allocation, assertion overhead <1ms)
+    - State Propagation: B (correct reads, incomplete downstream propagation)
+    - Quality Gate 2: PASSED
+    - Roadmap Impact: Add M-2, M-3 as MEDIUM priority items
+  - 🎯 **Token Usage:** ~7k (architecture review + roadmap gardening)
+  - 🎯 **System Status:** Production-ready, all tests passing
+  - 📊 **Next:** Continue 4h monitoring intervals (token conservation mode)
 - **Recent Work (Dec 5 - Session 54):**
   - ✅ **M-4 COMPLETE** - Abrupt Sea Level Rise (Marine Ice Sheet Instability)
     - Implementation: AbruptSeaLevelRisePhase.ts (411 lines + 280 tests)
@@ -708,7 +725,7 @@
 - **Next Steps (MEDIUM-NEW "Parameter Sweep Execution"):** Parameter injection → N=200 sweep → Sobol indices → 90% CI report
 - **Recommendation:** Execute AFTER VM deployment (parallel workers benefit)### 🟡 MEDIUM Priority Items
 
-**Status:** 3 active MEDIUM items (M-5, M-6, M-7 - climate system features)
+**Status:** 5 active MEDIUM items (M-5/M-6/M-7 climate features, M-8/M-9 sea level integration gaps from Session 58 architecture review)
 
 **Active Items:**
 
@@ -738,6 +755,36 @@
 - **Complexity:** 3 systems (climate, tipping points, planetary boundaries)
 - **Assignee:** simulation-maintainer (Roy)
 - **Status:** ACTIVE (token conservation disabled Dec 4)
+
+**M-8: Sea Level Displacement → Refugee System Integration** (Session 58 architecture review)
+- **Problem:** AbruptSeaLevelRisePhase tracks coastalPopulationDisplaced but doesn't propagate to RefugeeCrisisPhase
+- **Current Flow:** Sea level displacement stored in marineIceSheetState (unused downstream)
+- **Missing Flow:** RefugeeCrisisPhase should read coastalPopulationDisplaced and trigger refugee crises
+- **Impact:** Functional gap - sea level displacement tracked but doesn't affect social strain, quality of life, or refugee systems
+- **Location:** RefugeeCrisisPhase.ts (add integration with marineIceSheetState)
+- **Complexity:** 2 systems (sea level, refugee crisis)
+- **Effort:** 1-2 hours
+- **Assignee:** simulation-maintainer (Roy)
+- **Status:** DEFERRED (token conservation mode, architecture review M-2 finding)
+- **Priority:** Should fix within 1-2 sprints per architecture review
+
+**M-9: Sea Level Rise → Food Security & Economic Integration** (Session 58 architecture review)
+- **Problem:** AbruptSeaLevelRisePhase has TODOs for missing integrations
+  ```typescript
+  // TODO: Integrate with food security system when coastal agriculture loss is modeled
+  // TODO: Integrate with economic system when infrastructure damage modeling is complete
+  ```
+- **Current Tracking:** agriculturalLandLost and coastalInfrastructureDamage tracked but not propagated
+- **Missing Integrations:**
+  - Agricultural land loss → Food security system impacts
+  - Infrastructure damage → Economic system (GDP reduction)
+- **Impact:** Limits simulation realism for sea level rise scenarios - metrics tracked but don't affect outcomes
+- **Location:** Multiple systems (food security, economic, AbruptSeaLevelRisePhase)
+- **Complexity:** 3 systems (sea level, food security, economy)
+- **Effort:** 2-3 hours (medium implementation)
+- **Assignee:** simulation-maintainer (Roy)
+- **Status:** DEFERRED (token conservation mode, architecture review M-3 finding)
+- **Priority:** Can defer until after M-8 implementation
 
 **Archives:**
 - M-1 (dead code cleanup) → `plans/completed/validation_sprint_nov26_29_20251129.md`
