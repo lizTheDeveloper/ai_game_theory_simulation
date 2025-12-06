@@ -164,7 +164,7 @@ export interface PositiveTippingPointsState {
 
   // Cascade events
   triggeredCascades: PositiveTippingEvent[];
-  activeCascades: number;           // Count of currently active cascades
+  activeTechCascades: number;       // Count of currently active technology cascades
 
   // Cross-system synergies
   synergies: TechnologySynergy[];

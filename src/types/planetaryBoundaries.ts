@@ -126,7 +126,7 @@ export interface PlanetaryBoundariesSystem {
   // === TIPPING POINT RISK ===
   tippingPointRisk: number;         // [0, 1] Overall cascade risk
   coreBoundariesBreached: boolean;  // Both climate + biosphere breached?
-  cascadeMultiplier: number;        // [1.0, 3.0] Amplification factor
+  compoundClimateAmplifier: number; // [1.0, 3.0] Amplification factor from compound tipping events
 
   // === CASCADE EVENT ===
   cascadeActive: boolean;           // Has irreversible cascade begun?

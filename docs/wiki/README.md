@@ -2467,9 +2467,9 @@ This section documents **critical parameter uncertainty findings** identified du
 - **M-4: Abrupt Sea Level Rise** - Ice cliff instability, WAIS/Greenland coupling not modeled
 - ✅ **M-5: Compound Extreme Events** - COMPLETE (Dec 5, 2025) - Cascade multipliers 1.5-3.0× based on Communications Earth & Environment (2024)
 - **M-6: Social Tipping Points** - Positive cascades for rapid transitions (Lenton et al. 2022)
-- **M-7: Climate System Hysteresis** - Bifurcation memory, path dependence in recovery
-- **Impact:** Medium priority gaps - model captures first-order climate dynamics, M-5 compound cascades now implemented
-- **Status:** M-5 complete, M-4/M-6/M-7 remain for future work
+- ✅ **M-7: Climate System Hysteresis** - COMPLETE (Dec 6, 2025) - 5-state machine with bidirectional tipping, recovery requires cooling below trigger threshold (Drüke et al. 2024)
+- **Impact:** Medium priority gaps - model captures first-order climate dynamics, M-5 and M-7 now implemented
+- **Status:** M-5 and M-7 complete, M-4/M-6 remain for future work
 
 ### Critical Uncertainties (Nov 21 Skeptic Critique)
 
@@ -4800,6 +4800,26 @@ All domain bounds are validated against peer-reviewed sources (2024-2025):
 - **Research:** Communications Earth & Environment (2024) DOI: 10.1038/s43247-024-01799-5
 - **Implementation:** ClimateSystemPhase.ts lines 384-397
 - **Note:** Only 3 of 6 tipping elements have `cascades: true` (AMOC, Amazon, Permafrost); others (Arctic sea ice, WAIS, Greenland) affect global temperature but don't trigger cascade amplification
+
+**Climate Hysteresis State Machine (M-7, Dec 2025):**
+- **States:** 5-state machine tracks bidirectional tipping dynamics
+  - `NOT_TRIGGERED`: Below trigger threshold (stable)
+  - `PROGRESSING`: Above trigger threshold, transitioning to fully tipped
+  - `FULLY_TIPPED`: Fully transitioned, requires cooling to recover
+  - `RECOVERING`: Temperature below recovery threshold, progress decreasing
+  - `RECOVERED`: Back to pre-tipped state (can re-trigger)
+- **Hysteresis mechanism:** Recovery requires cooling BELOW trigger threshold
+  - Example: AMOC triggers at 4.0°C, recovers below 2.5°C (1.5°C hysteresis gap)
+  - Prevents immediate reversal when temperature fluctuates near threshold
+- **Recovery timescales:** 2× longer than collapse (configurable per element)
+  - Collapse: Progress increases via sigmoid over `transitionMaxMonths`
+  - Recovery: Progress decreases linearly at half the collapse rate
+- **Edge cases:**
+  - Elements without `recoveryTempC`: Effectively irreversible (e.g., permafrost)
+  - Re-triggering: Recovered elements can tip again if temperature exceeds trigger threshold
+- **Research basis:** Drüke et al. (2024) - bidirectional tipping with path dependence
+- **Implementation:** ClimateSystemPhase.ts lines 322-503 (updateTippingTransitions method)
+- **File:** `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ClimateSystemPhase.ts`
 
 #### AI Capabilities
 
