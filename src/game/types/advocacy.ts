@@ -40,6 +40,18 @@ export type CoalitionActionId = string;
 export type CrisisResponseId = string;
 
 /**
+ * Resource costs for an action
+ */
+export interface ActionCosts {
+  /** Reputation cost */
+  reputation?: number;
+  /** Political capital cost */
+  politicalCapital?: number;
+  /** Funding cost in billions */
+  funding?: number;
+}
+
+/**
  * Advocacy action definition
  */
 export interface AdvocacyAction {
@@ -75,6 +87,12 @@ export interface AdvocacyAction {
 
   /** Influence domain for tracking */
   domain: InfluenceDomain;
+
+  /** Resource costs to execute action */
+  costs: ActionCosts;
+
+  /** Research sources for this action (for transparency) */
+  researchSources: string[];
 }
 
 /**
