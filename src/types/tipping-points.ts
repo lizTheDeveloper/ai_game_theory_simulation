@@ -161,6 +161,44 @@ export interface TippingPointSystem {
     monthTriggered: number;
     tempAtTrigger: number;
   }>;
+
+  /**
+   * Recent Tipping Events for Compound Cascade Detection (M-5, Dec 6, 2025)
+   *
+   * Tracks tipping events within last 10 years (120 months) to detect compound cascade effects.
+   * When 3+ tipping points cross simultaneously, acceleration factors apply to climate degradation.
+   *
+   * Research: Wunderling et al. (2024) ESD - "9 out of 14 interactions are destabilizing"
+   *           Armstrong McKay et al. (2022) Science - "combined effect tends to lower thresholds"
+   * Expected impact: Accelerated climate degradation when multiple tipping points cross simultaneously
+   *
+   * 10-year window justification: Fast tipping elements (AMOC, Amazon) operate on decadal timescales
+   */
+  recentTippingEvents?: Array<{
+    /** Tipping element ID */
+    elementId: string;
+    /** Month when element transitioned to FULLY_TIPPED */
+    month: number;
+    /** Element name for logging */
+    elementName: string;
+  }>;
+
+  /**
+   * Compound Cascade Multiplier (M-5, Dec 6, 2025)
+   *
+   * Additional climate degradation acceleration from simultaneous tipping events.
+   * Based on research-backed (but speculative) cascade amplification.
+   *
+   * Conservative multipliers (research critique recommendations):
+   * - 0-1 tippings: 1.0× (no cascade)
+   * - 2 tippings: 1.1× (moderate acceleration)
+   * - 3 tippings: 1.3× (strong acceleration)
+   * - 4+ tippings: 1.5× (severe acceleration)
+   *
+   * Research: Limited quantitative data - multipliers are lower bound estimates
+   * Validation: Monte Carlo required to verify effects not too strong
+   */
+  compoundCascadeMultiplier?: number;
 }
 
 /**

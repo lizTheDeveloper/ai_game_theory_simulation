@@ -460,6 +460,22 @@ export class ClimateSystemPhase implements SimulationPhase {
     } else if (element.recoveryTempC === undefined) {
       console.log(`     ⚠️ IRREVERSIBLE on human timescales`);
     }
+
+    // M-5 (Dec 6, 2025): Track tipping event for compound cascade detection
+    // Initialize array if not exists
+    if (!state.tippingPointSystem.recentTippingEvents) {
+      state.tippingPointSystem.recentTippingEvents = [];
+    }
+
+    // Add this tipping event to recent history
+    state.tippingPointSystem.recentTippingEvents.push({
+      elementId: element.id,
+      month: state.currentMonth,
+      elementName: element.name
+    });
+
+    // Update compound cascade multiplier
+    this.updateCompoundCascadeMultiplier(state);
   }
 
   /**
@@ -539,6 +555,88 @@ export class ClimateSystemPhase implements SimulationPhase {
     }
   }
 
+  /**
+   * Update Compound Cascade Multiplier (M-5, Dec 6, 2025)
+   *
+   * Calculates acceleration factor based on simultaneous tipping events within 10-year window.
+   * Research: Wunderling et al. (2024) ESD - "9/14 interactions destabilizing"
+   *           Armstrong McKay et al. (2022) Science - "combined effect lowers thresholds"
+   *
+   * Conservative multipliers (research critique recommendations):
+   * - 0-1 tippings: 1.0× (no cascade)
+   * - 2 tippings: 1.1× (moderate acceleration)
+   * - 3 tippings: 1.3× (strong acceleration)
+   * - 4+ tippings: 1.5× (severe acceleration)
+   *
+   * UNCERTAINTY: Multipliers are speculative lower-bound estimates. Limited quantitative
+   * research on simultaneous tipping acceleration. Requires Monte Carlo validation.
+   */
+  private updateCompoundCascadeMultiplier(state: GameState): void {
+    const system = state.tippingPointSystem;
+
+    // Initialize if not exists
+    if (!system.recentTippingEvents) {
+      system.recentTippingEvents = [];
+    }
+
+    // 10-year window (120 months) - captures fast tipping element interactions
+    const WINDOW_MONTHS = 120;
+
+    // Remove events older than 10 years
+    system.recentTippingEvents = system.recentTippingEvents.filter(
+      event => state.currentMonth - event.month <= WINDOW_MONTHS
+    );
+
+    // Count simultaneous tippings (within window)
+    const simultaneousTippings = system.recentTippingEvents.length;
+
+    // Calculate compound cascade multiplier based on threshold counts
+    let compoundMultiplier = 1.0;
+
+    if (simultaneousTippings >= 2) {
+      compoundMultiplier = 1.1; // Moderate acceleration (pairwise interactions)
+    }
+
+    if (simultaneousTippings >= 3) {
+      compoundMultiplier = 1.3; // Strong acceleration (network effects emerge)
+    }
+
+    if (simultaneousTippings >= 4) {
+      compoundMultiplier = 1.5; // Severe acceleration (system-wide cascade)
+    }
+
+    // Store multiplier (validate range)
+    system.compoundCascadeMultiplier = assertInRange(
+      compoundMultiplier,
+      1.0, 2.0,
+      {
+        location: 'ClimateSystemPhase.updateCompoundCascadeMultiplier',
+        valueName: 'compoundCascadeMultiplier',
+        month: state.currentMonth
+      }
+    );
+
+    // Log compound cascade events
+    if (simultaneousTippings >= 2) {
+      console.log(`\n  🌀 COMPOUND CASCADE DETECTED (M-5)`);
+      console.log(`     Simultaneous tippings (10-year window): ${simultaneousTippings}`);
+      console.log(`     Acceleration multiplier: ${compoundMultiplier.toFixed(2)}×`);
+      console.log(`     Recent tipping events:`);
+      for (const event of system.recentTippingEvents) {
+        const age = state.currentMonth - event.month;
+        console.log(`       - ${event.elementName} (${Math.floor(age / 12)} years ${age % 12} months ago)`);
+      }
+
+      if (simultaneousTippings >= 3) {
+        console.log(`     ⚠️ STRONG NETWORK CASCADE: Multiple tipping elements interacting`);
+      }
+
+      if (simultaneousTippings >= 4) {
+        console.log(`     🚨 SEVERE CASCADE RISK: System-wide tipping cascade active`);
+      }
+    }
+  }
+
   private calculateTippingCascades(state: GameState): void {
     const system = state.tippingPointSystem;
 
@@ -594,6 +692,12 @@ export class ClimateSystemPhase implements SimulationPhase {
       totalFoodSecurityImpact += element.impactFoodSecurity * scaledProgress;
       totalFreshwaterImpact += element.impactFreshwater * scaledProgress;
     }
+
+    // M-5 (Dec 6, 2025): Apply compound cascade multiplier to climate degradation
+    // When multiple tipping points cross simultaneously (within 10-year window),
+    // acceleration effects compound beyond individual element interactions.
+    const compoundMultiplier = system.compoundCascadeMultiplier ?? 1.0;
+    totalClimateStabilityImpact *= compoundMultiplier;
 
     /**
      * Cap total degradation at 95% (per-step)
