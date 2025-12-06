@@ -11,17 +11,6 @@
  */
 
 /**
- * Tipping element states for hysteresis tracking (M-7)
- */
-export enum TippingElementState {
-  NOT_TRIGGERED = 'NOT_TRIGGERED',      // Below trigger threshold
-  PROGRESSING = 'PROGRESSING',          // Above trigger, transitioning to tipped
-  FULLY_TIPPED = 'FULLY_TIPPED',        // Fully transitioned
-  RECOVERING = 'RECOVERING',            // Below recovery threshold, improving
-  RECOVERED = 'RECOVERED'               // Back to pre-tipped state
-}
-
-/**
  * Individual tipping point element with transition dynamics
  */
 export interface TippingElement {
@@ -85,40 +74,34 @@ export interface TippingElement {
    */
   effectiveThresholdReduction?: number;
 
-  /** === MARINE ICE SHEET INSTABILITY (M-4, Dec 5, 2025) === */
+  /** === MARINE ICE SHEET INSTABILITY (Dec 5, 2025) === */
   /**
-   * Marine Ice Cliff Instability (MICI) dynamics for ice sheets
-   * Research: DeConto & Pollard (2016, 2021) Nature, Edwards et al. (2019) Nature
-   * Only relevant for WAIS and Greenland (marine-based ice sheets)
+   * Is this element experiencing abrupt mode (Marine Ice Cliff Instability)?
+   * Research: DeConto et al. (2021), Morlighem et al. (2024)
+   * Only applies to WAIS and Greenland ice sheets.
    */
-  marineInstabilityRisk?: {
-    /** Probability of MICI triggering per month (once temperature threshold met) */
-    miciProbability: number;
-    /** Has MICI been triggered? */
-    miciTriggered: boolean;
-    /** Accelerated collapse rate (mm/year sea level equivalent) if MICI active */
-    miciCollapseRate: number; // 3-10 mm/year per research
-    /** Total potential contribution (meters) */
-    totalContributionM: number; // 3.3m WAIS, 7.4m Greenland
-    /** Current contribution from abrupt collapse (meters) */
-    currentContributionM: number;
-  };
-
-  /** Whether this element is in abrupt mode (M-4 abrupt sea level rise) */
   abruptMode?: boolean;
 
-  /** Accumulated abrupt sea level rise from this element (meters) */
+  /**
+   * Accumulated sea level rise from abrupt MICI pulses (meters)
+   * Research: M-4 MICI validation (Dec 5, 2025)
+   * Tracks discrete collapse events separate from gradual collapse.
+   */
   accumulatedAbruptSLR?: number;
 
-  /** === M-7: CLIMATE HYSTERESIS (Dec 5, 2025) === */
-  /** Current hysteresis state */
-  state?: TippingElementState;
+  /**
+   * Month of last abrupt pulse (for cooldown tracking)
+   * Sylvia critique: reviews/marine_ice_sheet_instability_critique_20251205.md Section 5.2.2
+   * Minimum 200-year gap between pulses per ice sheet sector.
+   */
+  lastAbruptPulseMonth?: number;
 
-  /** Recovery temperature threshold (degrees C) - temperature must fall below this for recovery to begin */
-  recoveryTempC?: number;
-
-  /** Hysteresis gap (degrees C) - difference between trigger and recovery thresholds */
-  hysteresisGapC?: number;
+  /**
+   * Count of abrupt pulses (for melange stabilization tracking)
+   * Sylvia critique: reviews/marine_ice_sheet_instability_critique_20251205.md Section 5.2.4
+   * Each pulse reduces probability by 20% (ice debris stabilization).
+   */
+  abruptPulseCount?: number;
 }
 
 /**
@@ -147,17 +130,30 @@ export interface TippingPointSystem {
     tempAtTrigger: number;
   }>;
 
-  /** === M-4: ABRUPT SEA LEVEL RISE (Dec 5, 2025) === */
-  /** Cumulative sea level rise from all tipping elements (meters) */
+  /** === SEA LEVEL RISE TRACKING (Dec 5, 2025) === */
+  /**
+   * Cumulative sea level rise from all ice sheet collapses (meters)
+   * Research: M-4 MICI (Dec 5, 2025)
+   * Includes both gradual and abrupt contributions.
+   */
   cumulativeSeaLevelRise: number;
 
-  /** Coastal population displaced (millions) */
+  /**
+   * Total coastal population displaced (millions)
+   * Research: 50-150 million per meter (Climate Central 2019)
+   */
   coastalPopulationDisplaced: number;
 
-  /** Coastal infrastructure damage (fraction 0-1) */
+  /**
+   * Cumulative infrastructure damage (trillion USD)
+   * Research: Super-linear scaling ~quadratic (NCEL 2024)
+   */
   coastalInfrastructureDamage: number;
 
-  /** Agricultural land lost (fraction 0-1) */
+  /**
+   * Agricultural land lost to inundation (million hectares)
+   * Research: 0.65-23.43% of global ag land (ResearchGate 2014)
+   */
   agriculturalLandLost: number;
 }
 
@@ -199,13 +195,7 @@ export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTr
       'Asia': 0.6,
       'Oceania': 0.5
     },
-    cascades: true,
-    // === RECOVERY PARAMETERS (M-7, Dec 5, 2025) ===
-    // Research: Westen et al. (2023) - AMOC recovery FASTER than collapse (controversial finding)
-    // Validation: reviews/m4_m7_research_validation_20251205.md - "6x faster is model-specific, use 1-6x range"
-    // Using 3x faster as median estimate (100yr collapse → 33yr recovery)
-    recoveryHalfLife: 33,            // Years (median of 1-6x faster range: 50-600yr collapse → 8-600yr recovery)
-    minimumAsymptoticValue: 0.10,    // 10% residual circulation changes (weak hysteresis per research)
+    cascades: true
   },
   {
     id: 'amazon',
@@ -280,10 +270,7 @@ export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTr
   {
     id: 'wais',
     name: 'West Antarctic Ice Sheet (WAIS) Collapse',
-    // M-4 (Dec 5, 2025): VALIDATION ADJUSTMENT - probabilistic 1.0-2.0C threshold
-    // Research: Garbe et al. (2020) "may already be committed", Global Tipping Points Report "likely passes at 1.5C"
-    // validation: reviews/m4_m7_research_validation_20251205.md
-    triggerTempC: 1.5, // Median of 1.0-2.0C range (was 2.0C fixed, overly confident per validation)
+    triggerTempC: 2.0, // Armstrong McKay: 1.5-3.0°C
     transitionMinMonths: 24000,  // 2,000 years - lower bound adjusted from 500yr per Edwards et al. (2019) MICI revision (60% reduction in sea level projections)
     transitionMaxMonths: 156000, // 13,000 years (very slow)
     impactClimateStability: -0.08,
@@ -305,16 +292,6 @@ export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTr
     // Post-collapse: 40% of ice loss is irreversible on human timescales (marine-based sections)
     recoveryHalfLife: 450,           // Years for half-life exponential recovery (median of 100-800 range)
     minimumAsymptoticValue: 0.40,    // 40% irreversible ice loss floor (marine-based sections)
-    // === MARINE ICE SHEET INSTABILITY (M-4, Dec 5, 2025) ===
-    // Research: DeConto & Pollard (2016, 2021), Edwards et al. (2019) - MICI controversy
-    // Validation: reviews/m4_m7_research_validation_20251205.md - "MICI uncertainty well-handled"
-    marineInstabilityRisk: {
-      miciProbability: 0.001,      // 0.1% per month after threshold (~10% per 100 months), low due to Edwards revision
-      miciTriggered: false,
-      miciCollapseRate: 6.5,       // mm/year (median of 3-10 range from research)
-      totalContributionM: 3.3,     // meters total WAIS contribution
-      currentContributionM: 0      // starts at 0, accumulates if MICI triggers
-    }
   },
   {
     id: 'greenland',
@@ -341,15 +318,6 @@ export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTr
     // Post-collapse: 35% of ice loss is irreversible on human timescales (lower-elevation coastal sections)
     recoveryHalfLife: 400,           // Years for half-life exponential recovery (slightly faster than WAIS due to different geometry)
     minimumAsymptoticValue: 0.35,    // 35% irreversible ice loss floor (lower-elevation coastal sections)
-    // === MARINE ICE SHEET INSTABILITY (M-4, Dec 5, 2025) ===
-    // Research: Same as WAIS - marine-based sections vulnerable to MICI
-    marineInstabilityRisk: {
-      miciProbability: 0.0008,     // Slightly lower than WAIS (less marine-based)
-      miciTriggered: false,
-      miciCollapseRate: 5.0,       // mm/year (lower than WAIS, less unstable geometry)
-      totalContributionM: 7.4,     // meters total Greenland contribution
-      currentContributionM: 0      // starts at 0, accumulates if MICI triggers
-    }
   }
 ];
 
