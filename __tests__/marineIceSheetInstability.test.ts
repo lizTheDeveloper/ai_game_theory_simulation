@@ -9,9 +9,9 @@
  * - Determinism (same seed → same results)
  */
 
-import { describe, it, expect, beforeEach } from '@jest/globals';
+import { describe, it, expect, beforeEach } from 'vitest';
 import type { GameState } from '@/types/game';
-import { initializeGame } from '@/simulation/initialization';
+import { createInitialGameState } from '@/simulation/initialization';
 import {
   checkMICIConditions,
   triggerMICIAbruptMode,
@@ -21,15 +21,15 @@ import {
   updateCoastalImpacts,
   updateMICI
 } from '@/simulation/marineIceSheetInstability';
-import { createSeededRNG } from '@/simulation/utils/rng';
+import { createDeterministicRNG } from '@/simulation/utils/rng';
 
 describe('Marine Ice Sheet Instability', () => {
   let state: GameState;
   let rng: () => number;
 
   beforeEach(() => {
-    state = initializeGame();
-    rng = createSeededRNG(12345);
+    state = createInitialGameState();
+    rng = createDeterministicRNG(12345);
   });
 
   describe('MICI Trigger Conditions', () => {
@@ -38,7 +38,7 @@ describe('Marine Ice Sheet Instability', () => {
       const wais = state.tippingPointSystem.elements.find(e => e.id === 'wais')!;
       wais.triggered = false;
 
-      state.globalMetrics.temperature = 2.0; // Above threshold
+      state.temperature = 2.0; // Above threshold
 
       expect(checkMICIConditions(state, 'wais')).toBe(false);
     });
@@ -48,7 +48,7 @@ describe('Marine Ice Sheet Instability', () => {
       wais.triggered = true;
       wais.monthsSinceTrigger = 200;
 
-      state.globalMetrics.temperature = 1.0; // Below 1.25°C threshold
+      state.temperature = 1.0; // Below 1.25°C threshold
 
       expect(checkMICIConditions(state, 'wais')).toBe(false);
     });
@@ -58,7 +58,7 @@ describe('Marine Ice Sheet Instability', () => {
       wais.triggered = true;
       wais.monthsSinceTrigger = 60; // Only 5 years, need 10
 
-      state.globalMetrics.temperature = 2.0;
+      state.temperature = 2.0;
 
       expect(checkMICIConditions(state, 'wais')).toBe(false);
     });
@@ -68,7 +68,7 @@ describe('Marine Ice Sheet Instability', () => {
       wais.triggered = true;
       wais.monthsSinceTrigger = 150; // 12.5 years
 
-      state.globalMetrics.temperature = 1.5; // Above 1.25°C
+      state.temperature = 1.5; // Above 1.25°C
 
       expect(checkMICIConditions(state, 'wais')).toBe(true);
     });
@@ -79,7 +79,7 @@ describe('Marine Ice Sheet Instability', () => {
       wais.monthsSinceTrigger = 150;
       wais.abruptMode = true;
 
-      state.globalMetrics.temperature = 1.5;
+      state.temperature = 1.5;
 
       expect(checkMICIConditions(state, 'wais')).toBe(false);
     });
@@ -121,7 +121,7 @@ describe('Marine Ice Sheet Instability', () => {
       wais.abruptMode = true;
       wais.accumulatedAbruptSLR = 0;
 
-      state.globalMetrics.temperature = 2.0; // No extreme warming
+      state.temperature = 2.0; // No extreme warming
 
       // Run 1000 trials, should trigger ~4 times (0.05 / 120 months * 1000 ≈ 0.4 expected)
       let triggerCount = 0;
@@ -313,7 +313,7 @@ describe('Marine Ice Sheet Instability', () => {
       greenland.triggered = true;
       greenland.monthsSinceTrigger = 150;
 
-      state.globalMetrics.temperature = 2.0; // Above both thresholds
+      state.temperature = 2.0; // Above both thresholds
 
       updateMICI(state, rng);
 
