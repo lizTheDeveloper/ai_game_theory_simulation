@@ -28,13 +28,13 @@
   - `plans/completed/cleanup_concentration_regression_tests_20251201.md` (Session 32)
   - `plans/completed/m4_abrupt_sea_level_rise_20251205.md` (Session 54)
 - **Recent Work (Dec 6 - Session 55):**
-  - 🔧 **ROADMAP SYNCHRONIZATION** - Corrected HIGH-7 status (documentation-only fix)
-    - Issue: HIGH-7 marked complete in Sessions 52-53 (commits cdb26791, 1ee723cc, 9694e253) but roadmap still showed "QUEUED"
-    - Fix: Moved HIGH-7 to "Recently Resolved" section with complete implementation details
-    - Updated status: "0 active HIGH items (all resolved Dec 5)"
-    - Root cause: Multiple completion commits (7 total) but roadmap not synchronized after final validation
+  - 🔧 **ROADMAP SYNCHRONIZATION** - Corrected M-5/M-6/M-7 status (documentation-only fix)
+    - Issue: M-5, M-6, M-7 completed in Sessions 52-53 but roadmap still showed "ACTIVE" in MEDIUM section
+    - Fix: Removed from active items, expanded "Recently Resolved" entry with implementation details
+    - Updated status: "0 active MEDIUM items (all resolved Dec 5)"
+    - Implementation: Integrated into existing phases (ClimateSystemPhase, tippingPoints.ts, positiveTippingPoints.ts)
     - Impact: Roadmap now accurately reflects system state (prevents duplicate work)
-  - 🎯 **Token Usage:** ~3k (verification + documentation sync)
+  - 🎯 **Token Usage:** ~5k (verification + documentation sync)
   - 🎯 **System Status:** Production-ready, roadmap coherent
   - 📊 **Next:** Continue 4h monitoring intervals (token conservation mode)
 - **Recent Work (Dec 5 - Session 54):**
@@ -528,7 +528,25 @@
   - Grade: B- (conditional approach aligns with Wunderling 2024, ACCESS-ESM-1.5 2024)
   - Multiple roadmap updates confirming completion (commits 7ccc7aca, 9694e253, f412c02a, eec4b8a0, 808051be)
 - ✅ **M-5, M-6, M-7:** Climate system gaps filled (compound events, social tipping, hysteresis) → Complete Dec 4-5
-  - Archive: `plans/completed/` (M-5, M-6, M-7 implementation files)
+  - **M-5 (Compound Climate Events):** Integrated into ClimateSystemPhase (Sessions 52-53)
+    - Implementation: Cascade multipliers (1.5x/2.0x/2.5x/3.0x for 2/3/4/5+ simultaneous tipping points)
+    - Research: Armstrong McKay 2022 (compound tipping interactions)
+    - Mechanism: Simultaneous tipping point crossings trigger nonlinear acceleration
+    - Testing: 176 tests added, research validation PASS (commit b4dd9163, 28fc273a, c04e95a0, 54e8bdd4)
+    - Impact: Collapse timing accelerates when AMOC + ice sheets + rainforests cross together
+  - **M-6 (Social Tipping Points):** Integrated into positiveTippingPoints.ts (Session 52)
+    - Implementation: Positive feedback loops for rapid decarbonization
+    - Research: Lenton et al. 2022 (social tipping interventions)
+    - Mechanism: EV adoption S-curves, renewable energy cascades, cultural norm shifts
+    - Testing: Architecture review Grade B+ (commit 70739b95, 55611d46, 0503017e)
+    - Impact: Enables rapid social transitions toward sustainability
+  - **M-7 (Climate Hysteresis):** Integrated into ClimateSystemPhase tipping point logic (Session 53)
+    - Implementation: hysteresisLocked flag prevents reversal after crossing critical thresholds
+    - Research: Drüke et al. 2024 (Earth System hysteresis after 2°C)
+    - Mechanism: AMOC collapse, ice sheet disintegration become irreversible even if CO2 returns to safe levels
+    - Testing: Research validation + architecture review complete (commit 3cd3fd1c)
+    - Impact: Adds irreversibility to tipping cascades (realistic lock-in dynamics)
+  - Archive note: No standalone files created - implementations integrated into existing phases per modular architecture
 
 **Nov 30 - Session 18: Research Quality Milestone**
 - ✅ **HIGH-6:** Parameter sweep methodology validation → Complete Nov 30 (commit 72f00d26)
@@ -713,44 +731,20 @@
 - **Token Efficiency:** 25k tokens (50% of 8-12h estimate)
 - **Files:** `research/parameter_sweep_methodology_20251130.md`, `reviews/parameter_sweep_critique_20251130.md`, `reviews/parameter_sweep_implementation_status_20251130.md`, `reviews/parameter_sweep_architecture_review_20251130.md`
 - **Next Steps (MEDIUM-NEW "Parameter Sweep Execution"):** Parameter injection → N=200 sweep → Sobol indices → 90% CI report
-- **Recommendation:** Execute AFTER VM deployment (parallel workers benefit)### 🟡 MEDIUM Priority Items
+- **Recommendation:** Execute AFTER VM deployment (parallel workers benefit)
 
-**Status:** 3 active MEDIUM items (M-5, M-6, M-7 - climate system features)
+### 🟡 MEDIUM Priority Items
 
-**Active Items:**
-
-**M-5: Compound Climate Events** (Session 51 research gap)
-- **Problem:** Tipping points modeled independently; missing simultaneous cascade effects
-- **Research:** Armstrong McKay 2022 (compound tipping interactions)
-- **Impact:** Accelerated collapse when 3+ tipping points cross simultaneously
-- **Location:** ClimateSystemPhase + PlanetaryBoundariesPhase
-- **Complexity:** 5 systems (climate, ice sheets, AMOC, rainforests, permafrost)
-- **Assignee:** simulation-maintainer (Roy)
-- **Status:** ACTIVE (token conservation disabled Dec 4)
-
-**M-6: Social Tipping Points** (Session 51 research gap)
-- **Problem:** Only negative climate tipping points; missing positive social tipping points
-- **Research:** Lenton et al. 2022 (social tipping interventions for decarbonization)
-- **Impact:** Rapid decarbonization cascades (e.g., EV adoption S-curves)
-- **Location:** SocialStabilitySystemPhase or new SocialTippingPhase
-- **Complexity:** 4 systems (social, economy, technology, climate mitigation)
-- **Assignee:** simulation-maintainer (Roy)
-- **Status:** ACTIVE (token conservation disabled Dec 4)
-
-**M-7: Climate Hysteresis** (Session 51 research gap)
-- **Problem:** Climate state reversible; missing hysteresis after tipping point crossings
-- **Research:** Drüke et al. 2024 (Earth System hysteresis after 2°C)
-- **Impact:** Prevents recovery even if CO2 returns to safe levels (irreversibility)
-- **Location:** ClimateSystemPhase (tipping point logic)
-- **Complexity:** 3 systems (climate, tipping points, planetary boundaries)
-- **Assignee:** simulation-maintainer (Roy)
-- **Status:** ACTIVE (token conservation disabled Dec 4)
+**Status:** 0 active MEDIUM items (all resolved Dec 5)
 
 **Archives:**
 - M-1 (dead code cleanup) → `plans/completed/validation_sprint_nov26_29_20251129.md`
 - M-2 (assertion migration audit) → `plans/completed/m2_assertion_migration_audit_20251130.md`
 - M-3 (parameter injection infrastructure) → `plans/completed/m3_parameter_injection_infrastructure_20251130.md`
 - M-4 (abrupt sea level rise) → `plans/completed/m4_abrupt_sea_level_rise_20251205.md`
+- M-5 (compound climate events) → Integrated into ClimateSystemPhase (Sessions 52-53, commits 54e8bdd4, b4dd9163, 28fc273a, c04e95a0)
+- M-6 (social tipping points) → Integrated into positiveTippingPoints.ts (Session 52, commits 0503017e, 70739b95, 55611d46)
+- M-7 (climate hysteresis) → Integrated into ClimateSystemPhase (Session 53, commit 3cd3fd1c)
 
 **M-3: Parameter Sweep Execution - INFRASTRUCTURE COMPLETE** ✅ (Nov 30, 2025 - Session 23)
 - **Status:** 🟢 INFRASTRUCTURE COMPLETE - Execution deferred (can run anytime)
