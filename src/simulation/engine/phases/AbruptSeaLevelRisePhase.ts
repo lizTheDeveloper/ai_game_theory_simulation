@@ -1,73 +1,334 @@
 /**
- * Abrupt Sea Level Rise Phase (M-4, Dec 5, 2025)
+ * Abrupt Sea Level Rise Phase (M-4, Marine Ice Sheet Instability)
  *
- * Marine Ice Sheet Instability (MICI) modeling for West Antarctic Ice Sheet (WAIS)
- * and Greenland Ice Sheet (GIS) collapse driven by subsurface ocean warming.
+ * Models low-probability, high-impact marine ice sheet instability (MICI) events
+ * that can cause abrupt sea level rise in tail scenarios.
  *
- * Research: research/marine_ice_sheet_instability_20251205.md
- * Critique: reviews/marine_ice_sheet_instability_critique_20251205.md
- * Quality Gate 1: CONDITIONAL PASS
+ * Research:
+ * - DeConto & Pollard (2016, Nature 531:591-597): Foundational MICI mechanism
+ * - Edwards et al. (2019, Nature 566:58-64): Probabilistic framework
+ * - Science Advances (2024): "WAIS may not be vulnerable to MICI during 21st century"
+ *   - CRITICAL: 2024 revision significantly reduces 21st century risk
+ *   - MICI is now tail risk (1-5%), not central projection (71%)
+ *   - 22nd-23rd century risk remains substantial if warming sustained
  *
- * Key Findings:
- * - Subsurface ocean warming (2-3°C) triggers WAIS collapse
- * - GIS collapse threshold: +1.0°C (adjusted from 0.8°C)
- * - Abrupt pulses: 0.5m magnitude, 2%/decade probability (adjusted from 5%)
- * - GIS recovery possible (Bochow 2023) - NOT permanently irreversible
- * - 10-20 year cooldown between abrupt pulses
+ * Implementation:
+ * - Conservative probabilities post-2024 revision (5-10x lower than Edwards 2019)
+ * - True irreversibility: Once triggered, collapse continues regardless of temperature
+ * - Time-dependent modifier: Risk increases post-2100
+ * - Cascade impacts: Population displacement, infrastructure damage, agricultural loss
  *
- * Parameters Adjusted from Research (per Sylvia validation):
- * - GIS_TIPPING_MIN: 0.8C → 1.0C (more conservative)
- * - ABRUPT_PULSE_PROB_BASE: 0.05 → 0.02 (reduce compounding to 17% by 2100)
- * - ABRUPT_PULSE_MAGNITUDE: 1.5m → 0.5m (no Holocene precedent for 1.5m)
- * - DISPLACED_PER_METER: 93.5M → 50M (exposure ≠ migration)
- * - DAMAGE_QUADRATIC: 3.0 → 2.0 (unverified in literature)
- *
- * Order: 34.1 (After ClimateSystemPhase 34.0, before mortality resolution 35.0)
+ * Order: 34.5 (AFTER ClimateSystemPhase 34.0, BEFORE BayesianMortalityResolutionPhase 35.0)
  */
 
-import type { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction, GameEvent } from '@/types/game';
+import type { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import {
   assertFinite,
   assertInRange,
   assertStateProperty,
   assertProbability,
 } from '@/simulation/utils/assertions';
-
-// WAIS threshold (subsurface ocean warming proxy from global temperature)
-const WAIS_TIPPING_THRESHOLD = 2.5; // °C above pre-industrial (conservative)
-
-// GIS threshold (ADJUSTED from research: 0.8°C → 1.0°C per critique)
-const GIS_TIPPING_MIN = 1.0;  // °C above pre-industrial
-const GIS_TIPPING_MAX = 1.5;  // °C above pre-industrial
-
-// GIS recovery parameters (Bochow 2023)
-const GIS_RECOVERY_THRESHOLD = 1.5;    // Must cool below this for recovery eligibility
-const GIS_RECOVERY_MIN_MONTHS = 600;   // 50 years sustained cooling required
-
-// Abrupt pulse parameters (ADJUSTED from research)
-const ABRUPT_PULSE_PROB_BASE = 0.02;   // 2%/decade (was 5% in research)
-const ABRUPT_PULSE_MAGNITUDE = 0.5;    // meters (was 1.5m in research)
-const ABRUPT_PULSE_COOLDOWN_MIN = 120; // 10 years minimum between pulses
-const ABRUPT_PULSE_COOLDOWN_MAX = 240; // 20 years maximum between pulses
-
-// Gradual sea level rise (baseline)
-const BASELINE_RISE_RATE = 0.0034;     // 3.4mm/year = 0.0034m/year
-const RISE_ACCELERATION = 0.0001;      // 0.1mm/year² acceleration
-
-// Impact coefficients (ADJUSTED from research)
-const DISPLACED_PER_METER = 50.0;      // Million people per meter (was 93.5M)
-const DAMAGE_LINEAR = 500.0;           // Billion USD per meter (one-time capital)
-const DAMAGE_QUADRATIC = 2.0;          // Quadratic coefficient (was 3.0)
-const AGRICULTURAL_LOSS_PER_METER = 8750; // km² per meter (50% of 17,500)
+import { addMortalityRisk } from '@/simulation/bayesianMortality';
+import { getGDPProxy } from '@/simulation/utils/recoveryCalculations';
 
 export class AbruptSeaLevelRisePhase implements SimulationPhase {
   readonly id = 'abrupt_sea_level_rise';
-  readonly name = 'Abrupt Sea Level Rise (MICI)';
-  readonly order = 34.2;
+  readonly name = 'Abrupt Sea Level Rise';
+  readonly order = 34.5;
 
   readonly dependencies = [
-    'climate_system',         // For temperature anomaly
+    'climate_system',  // For temperature data (order 34.0)
   ] as const;
+
+  /**
+   * Conservative probability function (post-2024 revision)
+   * Research: Science Advances (2024) - MICI unlikely in 21st century
+   *
+   * Returns annual probability of MICI trigger based on temperature and time
+   */
+  private calculateTriggerProbability(tempC: number, currentYear: number): number {
+    // Base probability by temperature (per year)
+    let baseProbability: number;
+    if (tempC < 1.5) {
+      baseProbability = 0.0001;  // Background
+    } else if (tempC < 2.0) {
+      baseProbability = 0.001;   // Emerging
+    } else if (tempC < 2.5) {
+      baseProbability = 0.005;   // Low risk
+    } else if (tempC < 3.0) {
+      baseProbability = 0.01;    // Moderate risk
+    } else if (tempC < 4.0) {
+      baseProbability = 0.03;    // Significant risk
+    } else {
+      baseProbability = 0.05;    // High tail risk
+    }
+
+    // Time modifier (risk increases post-2100)
+    // Research: 2024 revision says "unlikely in 21st century", not "won't happen in 22nd+"
+    let timeModifier: number;
+    if (currentYear < 2100) {
+      timeModifier = 0.5;  // Lower for 21st century
+    } else if (currentYear < 2150) {
+      timeModifier = 1.0;  // Baseline for early 22nd
+    } else if (currentYear < 2200) {
+      timeModifier = 2.0;  // Increased for mid 22nd
+    } else {
+      timeModifier = 3.0;  // High for late 22nd+
+    }
+
+    const annualProbability = assertFinite(
+      baseProbability * timeModifier,
+      {
+        location: 'AbruptSeaLevelRisePhase.calculateTriggerProbability',
+        valueName: 'annualProbability',
+        additionalInfo: { tempC, currentYear, baseProbability, timeModifier }
+      }
+    );
+
+    return assertProbability(
+      annualProbability,
+      {
+        location: 'AbruptSeaLevelRisePhase.calculateTriggerProbability',
+        valueName: 'annualProbability'
+      }
+    );
+  }
+
+  /**
+   * Calculate sea level rise magnitude based on phase of collapse
+   * Research: DeConto & Pollard (2016), Edwards et al. (2019)
+   *
+   * - Initial decade: 0.1-0.2m (10-20cm)
+   * - Sustained contribution: 0.3-0.5m cumulative by 2100 (if triggered early)
+   * - Long-term potential: 3-8m by 2300
+   *
+   * FIX (CRITICAL): Use pre-rolled magnitudes to ensure monotonicity
+   * - Previously: Called rng() each month, re-rolling magnitudes → sea level DECREASED
+   * - Now: Use stored magnitudes from trigger time → monotonic increase guaranteed
+   */
+  private calculateSeaLevelRise(
+    monthsSinceOnset: number,
+    rolledMagnitudes: { onset: number; acceleration: number; plateau: number }
+  ): number {
+    const yearsSinceOnset = monthsSinceOnset / 12;
+
+    // Initial onset phase (0-10 years): 0.1-0.2m total
+    if (yearsSinceOnset < 10) {
+      // Linear rise in first decade
+      const decadeProgress = yearsSinceOnset / 10;
+      return assertFinite(
+        rolledMagnitudes.onset * decadeProgress,
+        {
+          location: 'AbruptSeaLevelRisePhase.calculateSeaLevelRise',
+          valueName: 'onsetRise',
+          additionalInfo: { yearsSinceOnset, decadeProgress, onsetMagnitude: rolledMagnitudes.onset }
+        }
+      );
+    }
+
+    // Acceleration phase (10-100 years): Additional 0.2-0.3m
+    if (yearsSinceOnset < 100) {
+      const onsetContribution = rolledMagnitudes.onset;
+      const accelerationProgress = (yearsSinceOnset - 10) / 90;
+      const accelerationContribution = assertFinite(
+        rolledMagnitudes.acceleration * accelerationProgress,
+        {
+          location: 'AbruptSeaLevelRisePhase.calculateSeaLevelRise',
+          valueName: 'accelerationRise',
+          additionalInfo: { yearsSinceOnset, accelerationProgress, accelerationMagnitude: rolledMagnitudes.acceleration }
+        }
+      );
+      return onsetContribution + accelerationContribution;
+    }
+
+    // Plateau phase (100-300 years): Approach long-term potential 3-8m
+    const onsetContribution = rolledMagnitudes.onset;
+    const accelerationContribution = rolledMagnitudes.acceleration;
+    const plateauProgress = Math.min(1.0, (yearsSinceOnset - 100) / 200);
+    const plateauContribution = assertFinite(
+      (rolledMagnitudes.plateau - onsetContribution - accelerationContribution) * plateauProgress,
+      {
+        location: 'AbruptSeaLevelRisePhase.calculateSeaLevelRise',
+        valueName: 'plateauRise',
+        additionalInfo: { yearsSinceOnset, plateauProgress, longTermPotential: rolledMagnitudes.plateau }
+      }
+    );
+
+    return assertInRange(
+      onsetContribution + accelerationContribution + plateauContribution,
+      0, 10,  // Cap at 10m (extreme upper bound)
+      {
+        location: 'AbruptSeaLevelRisePhase.calculateSeaLevelRise',
+        valueName: 'totalRise',
+        additionalInfo: { yearsSinceOnset }
+      }
+    );
+  }
+
+  /**
+   * Update collapse phase based on time since onset
+   */
+  private updateCollapsePhase(monthsSinceOnset: number): 'onset' | 'acceleration' | 'plateau' {
+    const yearsSinceOnset = monthsSinceOnset / 12;
+    if (yearsSinceOnset < 10) {
+      return 'onset';
+    } else if (yearsSinceOnset < 100) {
+      return 'acceleration';
+    } else {
+      return 'plateau';
+    }
+  }
+
+  /**
+   * Apply cascading impacts from sea level rise
+   *
+   * Research:
+   * - Population displacement: 100-200M people per meter (World Bank, UNEP)
+   * - Infrastructure damage: 3-7% coastal GDP per meter
+   * - Agricultural loss: 10-25% coastal farmland per meter
+   */
+  private applyCascadingImpacts(
+    state: GameState,
+    deltaSeaLevelRise: number,
+    context: PhaseContext
+  ): void {
+    if (deltaSeaLevelRise <= 0.001) return;  // Skip trivial changes
+
+    const mici = state.marineIceSheetInstability;
+
+    // Population displacement
+    // Research: 100-200M people per meter of rise
+    const currentPop = assertStateProperty(
+      state.humanPopulationSystem,
+      'population',
+      {
+        location: 'AbruptSeaLevelRisePhase.applyCascadingImpacts',
+        month: state.currentMonth,
+        expectedSource: 'humanPopulationSystem.population (required for displacement calculations)'
+      }
+    );
+
+    const displacementPerMeter = 150e6;  // 150M people (mid-range estimate)
+    const displacedPopulation = assertFinite(
+      displacementPerMeter * deltaSeaLevelRise,
+      {
+        location: 'AbruptSeaLevelRisePhase.applyCascadingImpacts',
+        valueName: 'displacedPopulation',
+        additionalInfo: { deltaSeaLevelRise, currentPop }
+      }
+    );
+
+    // Update cumulative displacement (in millions)
+    mici.totalDisplacement += displacedPopulation / 1e6;
+
+    // Mortality risk from displacement (infrastructure loss, disease, conflict)
+    // Conservative estimate: 0.5% mortality from displacement stress
+    // FIX (CRITICAL): Cap at 100% to prevent overflow when population collapses
+    const displacementMortalityRate = 0.005;
+    const rawMortalityRisk = (displacedPopulation / currentPop) * displacementMortalityRate;
+    const displacementMortalityRisk = assertProbability(
+      Math.min(1.0, rawMortalityRisk),  // Cap at 100%
+      {
+        location: 'AbruptSeaLevelRisePhase.applyCascadingImpacts',
+        valueName: 'displacementMortalityRisk',
+        additionalInfo: { displacedPopulation, currentPop, rawMortalityRisk }
+      }
+    );
+
+    if (displacementMortalityRisk > 0.0001) {
+      addMortalityRisk(state.humanPopulationSystem, {
+        type: 'disaster',
+        baseRisk: displacementMortalityRisk,
+        proximate: 'disasters',
+        root: 'climate',
+        confidence: 'HIGH',
+        scope: 'GLOBAL',
+        month: state.currentMonth,
+        description: `Sea level rise displacement: ${(displacedPopulation / 1e6).toFixed(1)}M people displaced`
+      });
+
+      console.log(
+        `🌊 Sea level rise: +${deltaSeaLevelRise.toFixed(3)}m displaces ${(displacedPopulation / 1e6).toFixed(1)}M people ` +
+        `(mortality risk ${(displacementMortalityRisk * 100).toFixed(3)}%)`
+      );
+    }
+
+    // Infrastructure damage
+    // Research: 3-7% coastal GDP per meter (World Economic Forum, Nature)
+    const gdp = getGDPProxy(state);
+    const coastalGDPFraction = 0.15;  // ~15% of GDP is coastal (conservative)
+    const damagePerMeter = 0.05;  // 5% (mid-range of 3-7%)
+    const deltaInfrastructureDamage = assertFinite(
+      coastalGDPFraction * damagePerMeter * deltaSeaLevelRise,  // As fraction of coastal GDP
+      {
+        location: 'AbruptSeaLevelRisePhase.applyCascadingImpacts',
+        valueName: 'deltaInfrastructureDamage',
+        additionalInfo: { gdp, deltaSeaLevelRise }
+      }
+    );
+
+    // Update cumulative infrastructure damage
+    mici.infrastructureDamage += deltaInfrastructureDamage;
+
+    // Economic impact feeds into quality of life degradation
+    // (handled by other systems that read GDP)
+    if (deltaInfrastructureDamage > 0.001) {
+      const damageUSD = gdp * coastalGDPFraction * deltaInfrastructureDamage;
+      console.log(
+        `🌊 Infrastructure damage: $${(damageUSD / 1e12).toFixed(2)}T ` +
+        `(${(deltaInfrastructureDamage * 100).toFixed(2)}% of coastal GDP, ` +
+        `${(mici.infrastructureDamage * 100).toFixed(1)}% cumulative)`
+      );
+    }
+
+    // Agricultural loss
+    // Research: 10-25% coastal farmland per meter (FAO, World Bank)
+    const foodSecurity = assertStateProperty(
+      state.qualityOfLifeSystems.survivalFundamentals,
+      'foodSecurity',
+      {
+        location: 'AbruptSeaLevelRisePhase.applyCascadingImpacts',
+        month: state.currentMonth
+      }
+    );
+
+    const coastalFarmlandFraction = 0.10;  // ~10% of farmland is coastal
+    const farmlandLossPerMeter = 0.175;  // 17.5% (mid-range of 10-25%)
+    const deltaAgriculturalLoss = assertFinite(
+      coastalFarmlandFraction * farmlandLossPerMeter * deltaSeaLevelRise,
+      {
+        location: 'AbruptSeaLevelRisePhase.applyCascadingImpacts',
+        valueName: 'deltaAgriculturalLoss',
+        additionalInfo: { deltaSeaLevelRise }
+      }
+    );
+
+    // Update cumulative agricultural loss
+    // FIX (HIGH): Cap at 100% - can't lose more than all coastal farmland
+    mici.agriculturalLoss = Math.min(
+      100,  // 100% = all coastal farmland lost
+      mici.agriculturalLoss + deltaAgriculturalLoss
+    );
+
+    const newFoodSecurity = assertInRange(
+      Math.max(0.01, foodSecurity - deltaAgriculturalLoss),
+      0, 1,
+      {
+        location: 'AbruptSeaLevelRisePhase.applyCascadingImpacts',
+        valueName: 'foodSecurity (after agricultural loss)',
+        month: state.currentMonth
+      }
+    );
+
+    state.qualityOfLifeSystems.survivalFundamentals.foodSecurity = newFoodSecurity;
+
+    if (deltaAgriculturalLoss > 0.001) {
+      console.log(
+        `🌊 Agricultural loss: -${(deltaAgriculturalLoss * 100).toFixed(2)}% food security ` +
+        `(coastal farmland inundation, ${(mici.agriculturalLoss * 100).toFixed(1)}% cumulative)`
+      );
+    }
+  }
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     // Validate RNG for deterministic simulation
@@ -78,312 +339,145 @@ export class AbruptSeaLevelRisePhase implements SimulationPhase {
       );
     }
 
-    const events: GameEvent[] = [];
+    const mici = state.marineIceSheetInstability;
 
-    // Initialize state if needed
-    if (!state.marineIceSheetState) {
-      state.marineIceSheetState = {
-        waisTriggered: false,
-        waisStartMonth: null,
-        gisTriggered: false,
-        gisStartMonth: null,
-        gisRecoveryEligible: false,
-        lastAbruptPulseMonth: null,
-        abruptPulseCount: 0,
-        cumulativeSeaLevelRise: 0,
-        lastMonthSeaLevel: 0,
-        coastalPopulationDisplaced: 0,
-        coastalInfrastructureDamage: 0,
-        agriculturalLandLost: 0,
-      };
-    }
-
-    const mici = state.marineIceSheetState;
-
-    // Get current temperature anomaly (from resource economy CO2 system)
-    const tempAnomaly = assertStateProperty(
+    // Get current temperature
+    const tempC = assertStateProperty(
       state.resourceEconomy.co2,
       'temperatureAnomaly',
       {
         location: 'AbruptSeaLevelRisePhase.execute',
         month: state.currentMonth,
+        expectedSource: 'resourceEconomy.co2.temperatureAnomaly (degrees C above pre-industrial)'
       }
     );
 
-    assertFinite(tempAnomaly, {
-      location: 'AbruptSeaLevelRisePhase.execute',
-      valueName: 'tempAnomaly',
-      month: state.currentMonth,
-    });
+    const currentYear = 2025 + Math.floor(state.currentMonth / 12);
 
-    // Check WAIS triggering (subsurface ocean warming threshold)
-    if (!mici.waisTriggered && tempAnomaly >= WAIS_TIPPING_THRESHOLD) {
-      mici.waisTriggered = true;
-      mici.waisStartMonth = state.currentMonth;
-      console.log(`\n🌊❌ WAIS TIPPING POINT CROSSED`);
-      console.log(`  Temperature: +${tempAnomaly.toFixed(2)}°C (threshold: +${WAIS_TIPPING_THRESHOLD}°C)`);
-      console.log(`  Month: ${state.currentMonth}`);
-      console.log(`  Status: Irreversible collapse initiated`);
-
-      events.push({
-        id: String(state.eventIdCounter++),
-        timestamp: state.currentMonth,
-        agent: 'environment',
-        type: 'environmental',
-        severity: 'critical',
-        title: '🌊 West Antarctic Ice Sheet Collapse',
-        description: `Subsurface ocean warming (+${tempAnomaly.toFixed(2)}°C) has triggered irreversible WAIS collapse. Expect multi-meter sea level rise over coming decades.`,
-        effects: {
-          environmental: 'WAIS collapse initiated',
-          longTermThreat: 'Multi-meter sea level commitment',
-        },
-      });
-    }
-
-    // Check GIS triggering
-    if (!mici.gisTriggered && tempAnomaly >= GIS_TIPPING_MIN) {
-      const triggerProb = assertProbability(
-        Math.min((tempAnomaly - GIS_TIPPING_MIN) / (GIS_TIPPING_MAX - GIS_TIPPING_MIN), 1.0),
+    // Check for trigger if not already triggered
+    if (!mici.triggered) {
+      const annualProbability = this.calculateTriggerProbability(tempC, currentYear);
+      const monthlyProbability = assertProbability(
+        annualProbability / 12,
         {
           location: 'AbruptSeaLevelRisePhase.execute',
-          valueName: 'gisTriggerProb',
-          month: state.currentMonth,
+          valueName: 'monthlyProbability'
         }
       );
 
-      if (rng() < triggerProb) {
-        mici.gisTriggered = true;
-        mici.gisStartMonth = state.currentMonth;
-        mici.gisRecoveryEligible = false;
-        console.log(`\n🌊❌ GREENLAND ICE SHEET TIPPING POINT CROSSED`);
-        console.log(`  Temperature: +${tempAnomaly.toFixed(2)}°C (threshold: +${GIS_TIPPING_MIN}-${GIS_TIPPING_MAX}°C)`);
-        console.log(`  Trigger probability: ${(triggerProb * 100).toFixed(1)}%`);
-        console.log(`  Month: ${state.currentMonth}`);
-        console.log(`  Status: Collapse initiated (recovery possible if cooling within 50 years)`);
+      const roll = rng();
+      if (roll < monthlyProbability) {
+        // MICI TRIGGERED
+        mici.triggered = true;
+        mici.triggerMonth = state.currentMonth;
+        mici.cumulativeSeaLevelRise = 0;
+        mici.seaLevelRiseRate = 0;
+        mici.totalDisplacement = 0;
+        mici.infrastructureDamage = 0;
+        mici.agriculturalLoss = 0;
 
-        events.push({
-          id: String(state.eventIdCounter++),
-          timestamp: state.currentMonth,
-          agent: 'environment',
-          type: 'environmental',
-          severity: 'critical',
-          title: '🌊 Greenland Ice Sheet Collapse',
-          description: `Atmospheric warming (+${tempAnomaly.toFixed(2)}°C) has triggered GIS collapse. Recovery possible if temperature drops below +${GIS_RECOVERY_THRESHOLD}°C within 50 years.`,
-          effects: {
-            environmental: 'GIS collapse initiated',
-            longTermThreat: 'Multi-meter sea level rise (potentially reversible)',
-          },
-        });
+        // FIX (CRITICAL): Roll magnitudes ONCE at trigger time for monotonic progression
+        // Research: DeConto & Pollard (2016), Edwards et al. (2019)
+        const onsetMagnitude = 0.1 + rng() * 0.1;  // 0.1-0.2m
+        const accelerationMagnitude = 0.2 + rng() * 0.1;  // 0.2-0.3m
+        const plateauMagnitude = 3.0 + rng() * 5.0;  // 3-8m
+
+        mici.rolledMagnitudes = {
+          onset: assertInRange(onsetMagnitude, 0.1, 0.2, {
+            location: 'AbruptSeaLevelRisePhase.execute (trigger)',
+            valueName: 'onsetMagnitude'
+          }),
+          acceleration: assertInRange(accelerationMagnitude, 0.2, 0.3, {
+            location: 'AbruptSeaLevelRisePhase.execute (trigger)',
+            valueName: 'accelerationMagnitude'
+          }),
+          plateau: assertInRange(plateauMagnitude, 3.0, 8.0, {
+            location: 'AbruptSeaLevelRisePhase.execute (trigger)',
+            valueName: 'plateauMagnitude'
+          })
+        };
+
+        console.warn(`\n🚨 MARINE ICE SHEET INSTABILITY TRIGGERED`);
+        console.log(`  🧊 Temperature: ${tempC.toFixed(2)}°C above pre-industrial`);
+        console.log(`  🧊 Year: ${currentYear}`);
+        console.log(`  🧊 Month: ${state.currentMonth}`);
+        console.log(`  🧊 Annual probability: ${(annualProbability * 100).toFixed(3)}%`);
+        console.log(`  🧊 This collapse is IRREVERSIBLE regardless of future temperature changes`);
+        console.log(`  🧊 Expected contribution: ${mici.rolledMagnitudes.onset.toFixed(2)}m onset, ` +
+                    `${mici.rolledMagnitudes.acceleration.toFixed(2)}m acceleration, ` +
+                    `${mici.rolledMagnitudes.plateau.toFixed(1)}m long-term`);
       }
     }
 
-    // Check GIS recovery eligibility (Bochow 2023)
-    if (mici.gisTriggered && !mici.gisRecoveryEligible && mici.gisStartMonth !== null) {
-      const monthsSinceGIS = state.currentMonth - mici.gisStartMonth;
+    // If triggered, update collapse progression
+    if (mici.triggered && typeof mici.triggerMonth === 'number') {
+      const monthsSinceOnset = state.currentMonth - mici.triggerMonth;
 
-      // If cooling below threshold within recovery window, mark eligible
-      if (tempAnomaly < GIS_RECOVERY_THRESHOLD && monthsSinceGIS <= GIS_RECOVERY_MIN_MONTHS) {
-        mici.gisRecoveryEligible = true;
-        console.log(`\n🌊✅ GIS RECOVERY ELIGIBLE`);
-        console.log(`  Temperature dropped to +${tempAnomaly.toFixed(2)}°C (below +${GIS_RECOVERY_THRESHOLD}°C)`);
-        console.log(`  Recovery window: ${(monthsSinceGIS / 12).toFixed(1)} years into 50-year window`);
-
-        events.push({
-          id: String(state.eventIdCounter++),
-          timestamp: state.currentMonth,
-          agent: 'environment',
-          type: 'environmental',
-          severity: 'positive',
-          title: '🌊 Greenland Ice Sheet Recovery Possible',
-          description: `Rapid cooling has made GIS recovery eligible. Sustained low temperatures may reverse collapse.`,
-          effects: {
-            environmental: 'GIS recovery pathway opened',
-          },
-        });
-      }
-    }
-
-    // Calculate gradual sea level rise (baseline)
-    const yearsFromStart = state.currentMonth / 12;
-    const gradualRiseRate = assertFinite(
-      BASELINE_RISE_RATE + (RISE_ACCELERATION * yearsFromStart),
-      {
-        location: 'AbruptSeaLevelRisePhase.execute',
-        valueName: 'gradualRiseRate',
-        month: state.currentMonth,
-      }
-    );
-
-    let deltaSeaLevel = gradualRiseRate / 12; // Convert annual rate to monthly
-
-    // Check for abrupt pulse events (if either ice sheet triggered)
-    if ((mici.waisTriggered || mici.gisTriggered) &&
-        (mici.lastAbruptPulseMonth === null ||
-         state.currentMonth - mici.lastAbruptPulseMonth >= ABRUPT_PULSE_COOLDOWN_MIN)) {
-
-      // Calculate probability (2%/decade = 0.02/120 months ≈ 0.000167/month)
-      const monthlyPulseProb = assertProbability(
-        ABRUPT_PULSE_PROB_BASE / 120,
-        {
-          location: 'AbruptSeaLevelRisePhase.execute',
-          valueName: 'monthlyPulseProb',
-          month: state.currentMonth,
-        }
-      );
-
-      if (rng() < monthlyPulseProb) {
-        // Abrupt pulse event!
-        deltaSeaLevel += ABRUPT_PULSE_MAGNITUDE;
-        mici.lastAbruptPulseMonth = state.currentMonth;
-        mici.abruptPulseCount++;
-
-        const cooldownMonths = assertFinite(
-          ABRUPT_PULSE_COOLDOWN_MIN + rng() * (ABRUPT_PULSE_COOLDOWN_MAX - ABRUPT_PULSE_COOLDOWN_MIN),
-          {
-            location: 'AbruptSeaLevelRisePhase.execute',
-            valueName: 'cooldownMonths',
-            month: state.currentMonth,
-          }
+      // Ensure rolled magnitudes exist (should have been set at trigger time)
+      if (!mici.rolledMagnitudes) {
+        throw new Error(
+          `❌ CRITICAL: rolledMagnitudes missing for triggered MICI (month ${state.currentMonth}). ` +
+          `This indicates a state initialization bug.`
         );
-
-        console.log(`\n🌊💥 ABRUPT SEA LEVEL PULSE EVENT`);
-        console.log(`  Magnitude: ${ABRUPT_PULSE_MAGNITUDE}m`);
-        console.log(`  Source: ${mici.waisTriggered ? 'WAIS' : 'GIS'} marine ice cliff collapse`);
-        console.log(`  Pulse count: ${mici.abruptPulseCount}`);
-        console.log(`  Cooldown: ${(cooldownMonths / 12).toFixed(1)} years`);
-        console.log(`  New cumulative rise: ${(mici.cumulativeSeaLevelRise + deltaSeaLevel).toFixed(2)}m`);
-
-        events.push({
-          id: String(state.eventIdCounter++),
-          timestamp: state.currentMonth,
-          agent: 'environment',
-          type: 'environmental',
-          severity: 'critical',
-          title: '🌊 Abrupt Sea Level Rise Event',
-          description: `Marine ice cliff instability has caused ${ABRUPT_PULSE_MAGNITUDE}m abrupt sea level rise. Total rise: ${(mici.cumulativeSeaLevelRise + deltaSeaLevel).toFixed(2)}m.`,
-          effects: {
-            environmental: `+${ABRUPT_PULSE_MAGNITUDE}m sea level pulse`,
-            population: 'Coastal displacement accelerating',
-            economic: 'Infrastructure damage surge',
-          },
-        });
       }
-    }
 
-    // Update cumulative sea level
-    mici.cumulativeSeaLevelRise = assertFinite(
-      mici.cumulativeSeaLevelRise + deltaSeaLevel,
-      {
-        location: 'AbruptSeaLevelRisePhase.execute',
-        valueName: 'cumulativeSeaLevelRise',
-        month: state.currentMonth,
-      }
-    );
-
-    // Calculate impacts
-    const totalRise = mici.cumulativeSeaLevelRise;
-
-    // Population displacement (linear - 50M per meter, adjusted from 93.5M)
-    const newDisplaced = assertFinite(
-      DISPLACED_PER_METER * deltaSeaLevel,
-      {
-        location: 'AbruptSeaLevelRisePhase.execute',
-        valueName: 'newDisplaced',
-        month: state.currentMonth,
-      }
-    );
-
-    mici.coastalPopulationDisplaced = assertFinite(
-      mici.coastalPopulationDisplaced + newDisplaced,
-      {
-        location: 'AbruptSeaLevelRisePhase.execute',
-        valueName: 'coastalPopulationDisplaced',
-        month: state.currentMonth,
-      }
-    );
-
-    // Infrastructure damage (linear + quadratic, adjusted coefficient to 2.0)
-    const newDamage = assertFinite(
-      (DAMAGE_LINEAR * deltaSeaLevel) + (DAMAGE_QUADRATIC * totalRise * totalRise),
-      {
-        location: 'AbruptSeaLevelRisePhase.execute',
-        valueName: 'newDamage',
-        month: state.currentMonth,
-      }
-    );
-
-    mici.coastalInfrastructureDamage = assertFinite(
-      mici.coastalInfrastructureDamage + newDamage / 1000, // Convert billions to trillions
-      {
-        location: 'AbruptSeaLevelRisePhase.execute',
-        valueName: 'coastalInfrastructureDamage',
-        month: state.currentMonth,
-      }
-    );
-
-    // Agricultural land loss (linear)
-    const newLandLost = assertFinite(
-      AGRICULTURAL_LOSS_PER_METER * deltaSeaLevel,
-      {
-        location: 'AbruptSeaLevelRisePhase.execute',
-        valueName: 'newLandLost',
-        month: state.currentMonth,
-      }
-    );
-
-    mici.agriculturalLandLost = assertFinite(
-      mici.agriculturalLandLost + newLandLost,
-      {
-        location: 'AbruptSeaLevelRisePhase.execute',
-        valueName: 'agriculturalLandLost',
-        month: state.currentMonth,
-      }
-    );
-
-    // Apply impacts to global systems
-    if (deltaSeaLevel > 0.001) {
-      // Food security impact (cumulative)
-      const foodSecurityImpact = assertFinite(
-        1.0 - (mici.agriculturalLandLost / 1000000) * 0.01, // 1% per million km²
+      // Calculate total sea level rise from MICI using pre-rolled magnitudes
+      const newSeaLevelRise = this.calculateSeaLevelRise(monthsSinceOnset, mici.rolledMagnitudes);
+      const deltaSeaLevelRise = assertFinite(
+        newSeaLevelRise - mici.cumulativeSeaLevelRise,
         {
           location: 'AbruptSeaLevelRisePhase.execute',
-          valueName: 'foodSecurityImpact',
+          valueName: 'deltaSeaLevelRise',
           month: state.currentMonth,
+          additionalInfo: {
+            newSeaLevelRise,
+            oldSeaLevelRise: mici.cumulativeSeaLevelRise,
+            monthsSinceOnset
+          }
         }
       );
 
-      // Apply to global food security (if system exists)
-      // NOTE: foodSecurity is tracked in state.safetyNets system, not globalMetrics
-      // This impact should be applied through the food security phase
-      // TODO: Integrate with food security system when coastal agriculture loss is modeled
+      const oldSeaLevelRise = mici.cumulativeSeaLevelRise;
+      mici.cumulativeSeaLevelRise = assertInRange(
+        newSeaLevelRise,
+        0, 10,  // Cap at 10m
+        {
+          location: 'AbruptSeaLevelRisePhase.execute',
+          valueName: 'cumulativeSeaLevelRise',
+          month: state.currentMonth
+        }
+      );
 
-      // GDP impact (uncertainty shock from abrupt events)
-      // NOTE: gdpPerCapita is tracked in state.society system, not globalMetrics
-      // This impact should be applied through economic damage calculations
-      // TODO: Integrate with economic system when infrastructure damage modeling is complete
+      // Update rate (m/year)
+      mici.seaLevelRiseRate = assertFinite(
+        (deltaSeaLevelRise * 12),  // Convert monthly to annual
+        {
+          location: 'AbruptSeaLevelRisePhase.execute',
+          valueName: 'seaLevelRiseRate',
+          month: state.currentMonth
+        }
+      );
 
-      // Log monthly summary (if significant change)
-      if (deltaSeaLevel > 0.01) {
-        console.log(`\n🌊 Sea Level Rise Update (Month ${state.currentMonth})`);
-        console.log(`  Delta: +${(deltaSeaLevel * 1000).toFixed(1)}mm`);
-        console.log(`  Cumulative: ${totalRise.toFixed(3)}m`);
-        console.log(`  Displaced: ${newDisplaced.toFixed(2)}M people (total: ${mici.coastalPopulationDisplaced.toFixed(1)}M)`);
-        console.log(`  Damage: $${newDamage.toFixed(1)}B (total: $${(mici.coastalInfrastructureDamage * 1000).toFixed(0)}B)`);
-        console.log(`  Land lost: ${newLandLost.toFixed(0)}km² (total: ${mici.agriculturalLandLost.toFixed(0)}km²)`);
+      // Apply cascading impacts
+      this.applyCascadingImpacts(state, deltaSeaLevelRise, context);
+
+      // Periodic status logging
+      if (state.currentMonth % 120 === 0 && monthsSinceOnset > 0) {  // Every 10 years
+        const yearsSince = monthsSinceOnset / 12;
+        const collapsePhase = this.updateCollapsePhase(monthsSinceOnset);
+        console.log(
+          `\n🌊 MICI Status Report (${yearsSince.toFixed(0)} years since onset):`
+        );
+        console.log(`  Phase: ${collapsePhase}`);
+        console.log(`  Cumulative sea level rise: ${mici.cumulativeSeaLevelRise.toFixed(2)}m`);
+        console.log(`  Current rate: ${mici.seaLevelRiseRate.toFixed(3)}m/year`);
+        console.log(`  Total displacement: ${mici.totalDisplacement.toFixed(1)}M people`);
+        console.log(`  Infrastructure damage: ${(mici.infrastructureDamage * 100).toFixed(1)}% of coastal GDP`);
+        console.log(`  Agricultural loss: ${(mici.agriculturalLoss * 100).toFixed(1)}% of coastal farmland`);
+        console.log(`  Collapse continues regardless of temperature changes (irreversible)`);
       }
     }
 
-    // Store for next month's delta calculation
-    mici.lastMonthSeaLevel = mici.cumulativeSeaLevelRise;
-
-    return {
-      events,
-      metadata: {
-        stateChanged: deltaSeaLevel > 0,
-        message: `✅ Abrupt Sea Level Rise: +${(deltaSeaLevel * 1000).toFixed(1)}mm (Total: ${totalRise.toFixed(3)}m)`,
-      },
-    };
+    return { events: [] };
   }
 }
-
-export const AbruptSeaLevelRise = new AbruptSeaLevelRisePhase();

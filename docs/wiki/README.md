@@ -2465,15 +2465,20 @@ This section documents **critical parameter uncertainty findings** identified du
 
 ### Active Issues (Session 51 - Dec 3, 2025)
 
-**HIGH-7: Conditional Climate Stability Floor**
-- **Issue:** ClimateSystemPhase implements 5% stability floor claimed to be from "self-limiting feedbacks"
-- **Research Finding:** 2024-2025 literature CONTRADICTS this assumption
+**HIGH-7: Conditional Climate Stability Floor** ✅ COMPLETE (Dec 5, 2025)
+- **Issue:** ClimateSystemPhase implemented unconditional 5% stability floor, creating optimistic bias in tail scenarios
+- **Research Finding:** 2024-2025 literature CONTRADICTS unconditional floor assumption
   - Wunderling et al. (2024, ESD): "Many tipping interactions are **destabilizing**" (83% of reviewed papers)
   - State of Climate 2025 (BioScience): Planet "on the brink", warming "possibly accelerating"
   - Planck feedback is real but continuous (NOT a "floor" after cascade onset)
-- **Status:** Flagged for architectural review (documented as "implementation choice for tractability", not research-backed)
-- **Impact:** Optimistic bias in tail scenarios (prevents complete climate system collapse in model)
-- **Source:** `research/climate_stability_mechanisms_2024_2025_update.md` (last_verified: 2025-11-27)
+- **Solution Implemented:** Conditional floor based on policy success (Option C)
+  - **Paris success** (<1.5°C): Apply 5% floor (human intervention preserves stability)
+  - **Low cascade risk** (<3 tipped elements OR <2°C): Apply 5% floor
+  - **Tail risk** (≥3 cascades AND ≥2°C): Remove floor, allow full collapse (research-accurate)
+- **Implementation:** `ClimateSystemPhase.ts` lines 532-587
+- **Research Grade:** B- (conditional approach aligns with Wunderling 2024 + ACCESS-ESM-1.5 2024)
+- **Impact:** Simulation now faithfully represents research consensus on cascade risks without optimistic bias
+- **Sources:** `research/climate_stability_mechanisms_2024_2025_update.md`, `reviews/high7_implementation_summary_20251205.md`
 
 **Missing Climate Cascade Systems (M-4 to M-7):**
 - **M-4: Abrupt Sea Level Rise** - Ice cliff instability, WAIS/Greenland coupling not modeled

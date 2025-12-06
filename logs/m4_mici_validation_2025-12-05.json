@@ -1,0 +1,405 @@
+{
+  "timestamp": "2025-12-05T07:02:31.732Z",
+  "scenarios": [
+    {
+      "name": "Cool Scenario",
+      "description": "0.5°C warming (well below Paris target)",
+      "initialTempC": 0.5,
+      "durationMonths": 1200,
+      "expectedTriggerRate": {
+        "min": 0,
+        "max": 1
+      }
+    },
+    {
+      "name": "Moderate Scenario",
+      "description": "2.0°C warming (Paris limit breached, spanning into 22nd century)",
+      "initialTempC": 2,
+      "durationMonths": 1200,
+      "expectedTriggerRate": {
+        "min": 5,
+        "max": 15
+      }
+    },
+    {
+      "name": "Hot Scenario",
+      "description": "3.5°C warming (high emissions, deep into 22nd century)",
+      "initialTempC": 3.5,
+      "durationMonths": 1800,
+      "expectedTriggerRate": {
+        "min": 30,
+        "max": 70
+      }
+    }
+  ],
+  "results": [
+    {
+      "scenario": "Cool Scenario",
+      "triggerRate": 0,
+      "triggerCount": 0,
+      "meanSeaLevelRise": 0,
+      "stdSeaLevelRise": 0,
+      "meanDisplacement": 0,
+      "meanInfrastructureDamage": 0,
+      "meanAgriculturalLoss": 0,
+      "runs": [
+        {
+          "seed": 1000,
+          "triggered": false,
+          "triggerMonth": null,
+          "finalSeaLevelRise": 0,
+          "totalDisplacement": 0,
+          "infrastructureDamage": 0,
+          "agriculturalLoss": 0
+        },
+        {
+          "seed": 13345,
+          "triggered": false,
+          "triggerMonth": null,
+          "finalSeaLevelRise": 0,
+          "totalDisplacement": 0,
+          "infrastructureDamage": 0,
+          "agriculturalLoss": 0
+        },
+        {
+          "seed": 25690,
+          "triggered": false,
+          "triggerMonth": null,
+          "finalSeaLevelRise": 0,
+          "totalDisplacement": 0,
+          "infrastructureDamage": 0,
+          "agriculturalLoss": 0
+        },
+        {
+          "seed": 38035,
+          "triggered": false,
+          "triggerMonth": null,
+          "finalSeaLevelRise": 0,
+          "totalDisplacement": 0,
+          "infrastructureDamage": 0,
+          "agriculturalLoss": 0
+        },
+        {
+          "seed": 50380,
+          "triggered": false,
+          "triggerMonth": null,
+          "finalSeaLevelRise": 0,
+          "totalDisplacement": 0,
+          "infrastructureDamage": 0,
+          "agriculturalLoss": 0
+        },
+        {
+          "seed": 62725,
+          "triggered": false,
+          "triggerMonth": null,
+          "finalSeaLevelRise": 0,
+          "totalDisplacement": 0,
+          "infrastructureDamage": 0,
+          "agriculturalLoss": 0
+        },
+        {
+          "seed": 75070,
+          "triggered": false,
+          "triggerMonth": null,
+          "finalSeaLevelRise": 0,
+          "totalDisplacement": 0,
+          "infrastructureDamage": 0,
+          "agriculturalLoss": 0
+        },
+        {
+          "seed": 87415,
+          "triggered": false,
+          "triggerMonth": null,
+          "finalSeaLevelRise": 0,
+          "totalDisplacement": 0,
+          "infrastructureDamage": 0,
+          "agriculturalLoss": 0
+        },
+        {
+          "seed": 99760,
+          "triggered": false,
+          "triggerMonth": null,
+          "finalSeaLevelRise": 0,
+          "totalDisplacement": 0,
+          "infrastructureDamage": 0,
+          "agriculturalLoss": 0
+        },
+        {
+          "seed": 112105,
+          "triggered": false,
+          "triggerMonth": null,
+          "finalSeaLevelRise": 0,
+          "totalDisplacement": 0,
+          "infrastructureDamage": 0,
+          "agriculturalLoss": 0
+        }
+      ]
+    },
+    {
+      "scenario": "Moderate Scenario",
+      "triggerRate": 30,
+      "triggerCount": 3,
+      "meanSeaLevelRise": 0.07793553875806533,
+      "stdSeaLevelRise": 0.15018037112202584,
+      "meanDisplacement": 5.03721793552812,
+      "meanInfrastructureDamage": 0.0002518608967764059,
+      "meanAgriculturalLoss": 0.0005876754258116141,
+      "runs": [
+        {
+          "seed": 1000,
+          "triggered": true,
+          "triggerMonth": 54,
+          "finalSeaLevelRise": 0.44219900461375306,
+          "totalDisplacement": 24.101851851851837,
+          "infrastructureDamage": 0.001205092592592593,
+          "agriculturalLoss": 0.0028118827160493816
+        },
+        {
+          "seed": 13345,
+          "triggered": false,
+          "triggerMonth": null,
+          "finalSeaLevelRise": 0,
+          "totalDisplacement": 0,
+          "infrastructureDamage": 0,
+          "agriculturalLoss": 0
+        },
+        {
+          "seed": 25690,
+          "triggered": true,
+          "triggerMonth": 486,
+          "finalSeaLevelRise": 0.2987775535201697,
+          "totalDisplacement": 20.513503086419757,
+          "infrastructureDamage": 0.0010256751543209859,
+          "agriculturalLoss": 0.0023932420267489727
+        },
+        {
+          "seed": 38035,
+          "triggered": false,
+          "triggerMonth": null,
+          "finalSeaLevelRise": 0,
+          "totalDisplacement": 0,
+          "infrastructureDamage": 0,
+          "agriculturalLoss": 0
+        },
+        {
+          "seed": 50380,
+          "triggered": true,
+          "triggerMonth": 1162,
+          "finalSeaLevelRise": 0.03837882944673068,
+          "totalDisplacement": 5.756824417009603,
+          "infrastructureDamage": 0.00028784122085048015,
+          "agriculturalLoss": 0.0006716295153177868
+        },
+        {
+          "seed": 62725,
+          "triggered": false,
+          "triggerMonth": null,
+          "finalSeaLevelRise": 0,
+          "totalDisplacement": 0,
+          "infrastructureDamage": 0,
+          "agriculturalLoss": 0
+        },
+        {
+          "seed": 75070,
+          "triggered": false,
+          "triggerMonth": null,
+          "finalSeaLevelRise": 0,
+          "totalDisplacement": 0,
+          "infrastructureDamage": 0,
+          "agriculturalLoss": 0
+        },
+        {
+          "seed": 87415,
+          "triggered": false,
+          "triggerMonth": null,
+          "finalSeaLevelRise": 0,
+          "totalDisplacement": 0,
+          "infrastructureDamage": 0,
+          "agriculturalLoss": 0
+        },
+        {
+          "seed": 99760,
+          "triggered": false,
+          "triggerMonth": null,
+          "finalSeaLevelRise": 0,
+          "totalDisplacement": 0,
+          "infrastructureDamage": 0,
+          "agriculturalLoss": 0
+        },
+        {
+          "seed": 112105,
+          "triggered": false,
+          "triggerMonth": null,
+          "finalSeaLevelRise": 0,
+          "totalDisplacement": 0,
+          "infrastructureDamage": 0,
+          "agriculturalLoss": 0
+        }
+      ]
+    },
+    {
+      "scenario": "Hot Scenario",
+      "triggerRate": 100,
+      "triggerCount": 10,
+      "meanSeaLevelRise": 1.1171750263314153,
+      "stdSeaLevelRise": 0.5670101326290858,
+      "meanDisplacement": 131.47648103137848,
+      "meanInfrastructureDamage": 0.006573824051568941,
+      "meanAgriculturalLoss": 0.015338922786994159,
+      "runs": [
+        {
+          "seed": 1000,
+          "triggered": true,
+          "triggerMonth": 54,
+          "finalSeaLevelRise": 1.4778462496784974,
+          "totalDisplacement": 177.18304599086912,
+          "infrastructureDamage": 0.00885915229954355,
+          "agriculturalLoss": 0.02067135536560139
+        },
+        {
+          "seed": 13345,
+          "triggered": true,
+          "triggerMonth": 282,
+          "finalSeaLevelRise": 1.3347015994727367,
+          "totalDisplacement": 160.0811401266718,
+          "infrastructureDamage": 0.008004057006333604,
+          "agriculturalLoss": 0.018676133014778416
+        },
+        {
+          "seed": 25690,
+          "triggered": true,
+          "triggerMonth": 204,
+          "finalSeaLevelRise": 1.3275709635416664,
+          "totalDisplacement": 162.6857345518252,
+          "infrastructureDamage": 0.008134286727591247,
+          "agriculturalLoss": 0.01898000236437974
+        },
+        {
+          "seed": 38035,
+          "triggered": true,
+          "triggerMonth": 1212,
+          "finalSeaLevelRise": 0.23968535268378804,
+          "totalDisplacement": 21.07851080246915,
+          "infrastructureDamage": 0.0010539255401234545,
+          "agriculturalLoss": 0.002459159593621399
+        },
+        {
+          "seed": 50380,
+          "triggered": true,
+          "triggerMonth": 18,
+          "finalSeaLevelRise": 1.0543848492155348,
+          "totalDisplacement": 122.1715519708071,
+          "infrastructureDamage": 0.006108577598540426,
+          "agriculturalLoss": 0.01425334772992753
+        },
+        {
+          "seed": 62725,
+          "triggered": true,
+          "triggerMonth": 820,
+          "finalSeaLevelRise": 0.36421202782858303,
+          "totalDisplacement": 19.171746399176957,
+          "infrastructureDamage": 0.0009585873199588477,
+          "agriculturalLoss": 0.0022367037465706443
+        },
+        {
+          "seed": 75070,
+          "triggered": true,
+          "triggerMonth": 172,
+          "finalSeaLevelRise": 1.3541468637474283,
+          "totalDisplacement": 147.93472246334878,
+          "infrastructureDamage": 0.007396736123167474,
+          "agriculturalLoss": 0.01725905095405733
+        },
+        {
+          "seed": 87415,
+          "triggered": true,
+          "triggerMonth": 93,
+          "finalSeaLevelRise": 1.900439142875514,
+          "totalDisplacement": 247.9203596000521,
+          "infrastructureDamage": 0.012396017980002663,
+          "agriculturalLoss": 0.028924041953339124
+        },
+        {
+          "seed": 99760,
+          "triggered": true,
+          "triggerMonth": 914,
+          "finalSeaLevelRise": 0.3607706940157751,
+          "totalDisplacement": 26.36394032921808,
+          "infrastructureDamage": 0.0013181970164609044,
+          "agriculturalLoss": 0.0030757930384087825
+        },
+        {
+          "seed": 112105,
+          "triggered": true,
+          "triggerMonth": 106,
+          "finalSeaLevelRise": 1.7579925202546303,
+          "totalDisplacement": 230.1740580793466,
+          "infrastructureDamage": 0.011508702903967247,
+          "agriculturalLoss": 0.02685364010925724
+        }
+      ]
+    }
+  ],
+  "determinismResults": [
+    {
+      "scenario": "Cool Scenario",
+      "cv": 0,
+      "verdict": "PASS",
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "scenario": "Moderate Scenario",
+      "cv": 0,
+      "verdict": "PASS",
+      "values": [
+        0.4031255584609815,
+        0.4031255584609815,
+        0.4031255584609815,
+        0.4031255584609815,
+        0.4031255584609815
+      ]
+    },
+    {
+      "scenario": "Hot Scenario",
+      "cv": 1.2883431300140604e-14,
+      "verdict": "PASS",
+      "values": [
+        1.723489649241255,
+        1.723489649241255,
+        1.723489649241255,
+        1.723489649241255,
+        1.723489649241255
+      ]
+    }
+  ],
+  "monotonicityResults": [
+    {
+      "scenario": "Cool Scenario",
+      "pass": true,
+      "violations": 0
+    },
+    {
+      "scenario": "Moderate Scenario",
+      "pass": true,
+      "violations": 0
+    },
+    {
+      "scenario": "Hot Scenario",
+      "pass": true,
+      "violations": 0
+    }
+  ],
+  "verdict": "FAIL",
+  "issues": [
+    "Moderate Scenario trigger rate 30.0% outside expected range 5-15%",
+    "Hot Scenario trigger rate 100.0% outside expected range 30-70%",
+    "Moderate Scenario: Displacement calculation off (ratio = 0.43, expected ~1.0)",
+    "Hot Scenario: Displacement calculation off (ratio = 0.78, expected ~1.0)"
+  ]
+}
