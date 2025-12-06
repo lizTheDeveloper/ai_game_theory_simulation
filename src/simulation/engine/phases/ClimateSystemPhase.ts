@@ -27,7 +27,7 @@
  */
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction, GameEvent } from '@/types/game';
-import { TIPPING_INTERACTIONS, TippingElementState, TippingElement } from '@/types/tipping-points';
+import { TIPPING_INTERACTIONS } from '@/types/tipping-points';
 import { addMortalityRisk } from '@/simulation/bayesianMortality';
 import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 import {
@@ -39,7 +39,6 @@ import {
   capWithBifurcationAwareness,
 } from '@/simulation/utils/assertions';
 import { updateGeoengineering } from '../../geoengineering';
-import { updateMICI } from '../../marineIceSheetInstability';
 
 /**
  * Climate impact event with delayed effects (from ClimateImpactCascade)
@@ -148,10 +147,11 @@ export class ClimateSystemPhase implements SimulationPhase {
     // Research: Wunderling et al. (2024), Armstrong McKay et al. (2022)
     this.calculateThresholdLowering(state);
 
-    // Step 1 & 2: Update tipping element states with bidirectional hysteresis (M-7, Dec 5, 2025)
-    // Research: Garbe et al. (2020) Nature, Drüke et al. (2024) ESD
-    // Replaces unidirectional trigger logic with state machine supporting recovery
-    this.updateTippingElementStates(state, currentTempC, rng);
+    // Step 1: Check for new triggers
+    const newlyTriggered = this.detectTippingThresholds(state, currentTempC);
+
+    // Step 2: Progress active elements
+    this.updateTippingTransitions(state, rng);
 
     // Step 3: Calculate cascade amplification
     this.calculateTippingCascades(state);
@@ -180,17 +180,12 @@ export class ClimateSystemPhase implements SimulationPhase {
       }
     );
 
-    if (system.triggeredCount > 0) {
+    if (newlyTriggered.length > 0 || system.triggeredCount > 0) {
       console.log(`  Triggered Elements: ${system.triggeredCount}/${system.elements.length}`);
       console.log(`  Completed Transitions: ${system.completedCount}/${system.elements.length}`);
       console.log(`  Total Progress: ${(system.totalProgress * 100).toFixed(1)}%`);
       console.log(`  Cascade Multiplier: ${system.cascadeMultiplier.toFixed(2)}x`);
     }
-
-    // === MARINE ICE SHEET INSTABILITY (Dec 5, 2025) ===
-    // M-4: Check for abrupt sea level rise pulses from ice sheet collapse
-    // Research: DeConto et al. (2021), Morlighem et al. (2024)
-    updateMICI(state, rng);
   }
 
   /**
@@ -271,374 +266,151 @@ export class ClimateSystemPhase implements SimulationPhase {
     }
   }
 
-  /**
-   * Bidirectional hysteresis state machine for tipping elements (M-7, Dec 5, 2025)
-   *
-   * Research: Garbe et al. (2020) Nature, Drüke et al. (2024) ESD
-   *
-   * Key insight: Recovery threshold << crossing threshold (hysteresis gap 0-3°C)
-   * Example (WAIS): Cross at +2.0°C, recover below -1.0°C = 3.0°C gap
-   *
-   * State transitions:
-   * - NOT_TRIGGERED → PROGRESSING: temp >= effectiveThreshold
-   * - PROGRESSING → FULLY_TIPPED: progress >= 1.0
-   * - FULLY_TIPPED → RECOVERING: temp < recoveryTempC (hysteresis!)
-   * - RECOVERING → RECOVERED: progress <= minimumAsymptoticValue
-   * - RECOVERING → PROGRESSING: temp rises above threshold during recovery
-   * - RECOVERED → PROGRESSING: temp rises above threshold again
-   */
-  private updateTippingElementStates(state: GameState, currentTempC: number, rng: RNGFunction): void {
+  private detectTippingThresholds(state: GameState, currentTempC: number): string[] {
+    const system = state.tippingPointSystem;
+    const newlyTriggered: string[] = [];
+
+    for (const element of system.elements) {
+      if (element.triggered) continue;
+
+      // Calculate effective threshold with reduction from triggered elements (Nov 23, 2025)
+      // Research: Wunderling et al. (2024), Armstrong McKay et al. (2022)
+      const thresholdReduction = element.effectiveThresholdReduction || 0;
+      const effectiveThreshold = assertFinite(
+        element.triggerTempC - thresholdReduction,
+        {
+          location: 'ClimateSystemPhase.detectTippingThresholds',
+          valueName: 'effectiveThreshold',
+          month: state.currentMonth,
+          additionalInfo: {
+            elementId: element.id,
+            baseThreshold: element.triggerTempC,
+            thresholdReduction
+          }
+        }
+      );
+
+      if (currentTempC >= effectiveThreshold) {
+        element.triggered = true;
+        element.monthsSinceTrigger = 0;
+
+        system.triggers.push({
+          elementId: element.id,
+          monthTriggered: state.currentMonth,
+          tempAtTrigger: currentTempC
+        });
+
+        newlyTriggered.push(element.name);
+
+        // Log with cascade context if threshold was lowered
+        if (thresholdReduction > 0) {
+          console.warn(`  🚨 CASCADE TIPPING POINT: ${element.name}`);
+          console.log(`     Original threshold: ${element.triggerTempC}°C`);
+          console.log(`     Effective threshold: ${effectiveThreshold.toFixed(2)}°C (lowered by ${thresholdReduction.toFixed(2)}°C)`);
+          console.log(`     Current: ${currentTempC.toFixed(2)}°C`);
+        } else {
+          console.warn(`  ⚠️ TIPPING POINT TRIGGERED: ${element.name}`);
+          console.log(`     Threshold: ${element.triggerTempC}°C | Current: ${currentTempC.toFixed(2)}°C`);
+        }
+        console.log(`     Transition timescale: ${element.transitionMinMonths}-${element.transitionMaxMonths} months`);
+      }
+    }
+
+    return newlyTriggered;
+  }
+
+  private updateTippingTransitions(state: GameState, rng: RNGFunction): void {
     const system = state.tippingPointSystem;
 
     for (const element of system.elements) {
-      // Calculate effective threshold with cascade reduction (Nov 23, 2025)
-      const effectiveThreshold = this.getEffectiveThreshold(element, state);
+      if (!element.triggered) continue;
 
-      // Get recovery threshold (undefined = irreversible, same as trigger = no hysteresis)
-      const recoveryThreshold = element.recoveryTempC ?? -Infinity; // If undefined, never recovers
+      element.monthsSinceTrigger++;
 
-      // Initialize state if not set (backward compatibility)
-      if (!element.state) {
-        element.state = element.triggered ? TippingElementState.PROGRESSING : TippingElementState.NOT_TRIGGERED;
+      // Sample random transition time within range (only on first update)
+      if (element.monthsSinceTrigger === 1) {
+        const transitionTime = element.transitionMinMonths +
+          rng() * (element.transitionMaxMonths - element.transitionMinMonths);
+        (element as any)._sampledTransitionTime = transitionTime;
       }
 
-      switch (element.state) {
-        case TippingElementState.NOT_TRIGGERED:
-          if (currentTempC >= effectiveThreshold) {
-            this.transitionToProgressing(element, state, currentTempC, effectiveThreshold);
-          }
-          break;
+      const transitionTime = (element as any)._sampledTransitionTime || element.transitionMaxMonths;
 
-        case TippingElementState.PROGRESSING:
-          this.updateProgressingElement(element, state, rng);
-          if (element.progress >= 1.0) {
-            this.transitionToFullyTipped(element, state);
-          }
-          break;
+      // Sigmoid curve parameters
+      const k = 4 / transitionTime;
+      const t = element.monthsSinceTrigger;
+      const t_mid = transitionTime / 2;
 
-        case TippingElementState.FULLY_TIPPED:
-          // Check if temperature dropped below RECOVERY threshold (hysteresis!)
-          if (currentTempC < recoveryThreshold) {
-            this.transitionToRecovering(element, state, currentTempC, recoveryThreshold);
-          }
-          break;
+      const newProgress = assertFinite(
+        1 / (1 + Math.exp(-k * (t - t_mid))),
+        {
+          location: 'ClimateSystemPhase.updateTippingTransitions',
+          valueName: 'newProgress',
+          month: state.currentMonth,
+          additionalInfo: { elementId: element.id, t, k, t_mid }
+        }
+      );
 
-        case TippingElementState.RECOVERING:
-          // Check if temp rises again before recovery complete (re-triggering)
-          if (currentTempC >= effectiveThreshold) {
-            this.transitionToProgressing(element, state, currentTempC, effectiveThreshold);
-          } else {
-            this.updateRecoveringElement(element, state, rng);
-            const floor = element.minimumAsymptoticValue ?? 0.0;
-            if (element.progress <= floor) {
-              this.transitionToRecovered(element, state);
+      element.progress = assertInRange(
+        Math.min(1.0, Math.max(0.0, newProgress)),
+        0, 1,
+        {
+          location: 'ClimateSystemPhase.updateTippingTransitions',
+          valueName: `element[${element.id}].progress`,
+          month: state.currentMonth
+        }
+      );
+
+      // === MARINE ICE SHEET INSTABILITY (M-4, Dec 5, 2025) ===
+      // Check for MICI trigger on WAIS and Greenland ice sheets
+      // Research: DeConto & Pollard (2016, 2021), Edwards et al. (2019)
+      // Validation: reviews/m4_m7_research_validation_20251205.md
+      if (element.marineInstabilityRisk && !element.marineInstabilityRisk.miciTriggered) {
+        const roll = rng();
+        if (roll < element.marineInstabilityRisk.miciProbability) {
+          element.marineInstabilityRisk.miciTriggered = true;
+          console.warn(`  ☢️ MARINE ICE SHEET INSTABILITY: ${element.name}`);
+          console.log(`     Abrupt collapse rate: ${element.marineInstabilityRisk.miciCollapseRate} mm/year`);
+          console.log(`     Total contribution potential: ${element.marineInstabilityRisk.totalContributionM}m`);
+        }
+      }
+
+      // Accumulate MICI sea level contribution if active
+      if (element.marineInstabilityRisk?.miciTriggered) {
+        // Convert mm/year to m/month
+        const contributionThisMonth = assertFinite(
+          (element.marineInstabilityRisk.miciCollapseRate / 1000) / 12,
+          {
+            location: 'ClimateSystemPhase.updateTippingTransitions (MICI)',
+            valueName: 'contributionThisMonth',
+            month: state.currentMonth,
+            additionalInfo: {
+              elementId: element.id,
+              collapseRate: element.marineInstabilityRisk.miciCollapseRate
             }
           }
-          break;
+        );
 
-        case TippingElementState.RECOVERED:
-          // Can re-trigger if temperature crosses threshold again
-          if (currentTempC >= effectiveThreshold) {
-            this.transitionToProgressing(element, state, currentTempC, effectiveThreshold);
+        element.marineInstabilityRisk.currentContributionM = assertInRange(
+          Math.min(
+            element.marineInstabilityRisk.currentContributionM + contributionThisMonth,
+            element.marineInstabilityRisk.totalContributionM
+          ),
+          0,
+          element.marineInstabilityRisk.totalContributionM,
+          {
+            location: 'ClimateSystemPhase.updateTippingTransitions (MICI)',
+            valueName: `element[${element.id}].marineInstabilityRisk.currentContributionM`,
+            month: state.currentMonth
           }
-          break;
-      }
-    }
-  }
+        );
 
-  /**
-   * Calculate effective threshold with cascade reductions (Nov 23, 2025)
-   * Research: Wunderling et al. (2024), Armstrong McKay et al. (2022)
-   */
-  private getEffectiveThreshold(element: TippingElement, state: GameState): number {
-    const thresholdReduction = element.effectiveThresholdReduction || 0;
-    return assertFinite(
-      element.triggerTempC - thresholdReduction,
-      {
-        location: 'ClimateSystemPhase.getEffectiveThreshold',
-        valueName: 'effectiveThreshold',
-        month: state.currentMonth,
-        additionalInfo: {
-          elementId: element.id,
-          baseThreshold: element.triggerTempC,
-          thresholdReduction
+        // Log significant milestones (every 0.5m)
+        const milestoneM = Math.floor(element.marineInstabilityRisk.currentContributionM * 2) / 2;
+        const prevMilestoneM = Math.floor((element.marineInstabilityRisk.currentContributionM - contributionThisMonth) * 2) / 2;
+        if (milestoneM > prevMilestoneM && milestoneM > 0) {
+          console.log(`  🌊 ABRUPT SEA LEVEL RISE: ${element.name} contributed ${milestoneM.toFixed(1)}m (${(milestoneM / element.marineInstabilityRisk.totalContributionM * 100).toFixed(0)}%)`);
         }
-      }
-    );
-  }
-
-  /**
-   * Transition to PROGRESSING state (element begins tipping)
-   */
-  private transitionToProgressing(
-    element: TippingElement,
-    state: GameState,
-    currentTempC: number,
-    effectiveThreshold: number
-  ): void {
-    const previousState = element.state;
-    element.state = TippingElementState.PROGRESSING;
-    element.triggered = true;  // Keep for backward compatibility
-    element.monthsSinceTrigger = 0;
-
-    // Record trigger event
-    state.tippingPointSystem.triggers.push({
-      elementId: element.id,
-      monthTriggered: state.currentMonth,
-      tempAtTrigger: currentTempC
-    });
-
-    // Log with hysteresis context
-    const thresholdReduction = element.effectiveThresholdReduction || 0;
-    const gap = element.hysteresisGapC ?? 0;
-
-    if (previousState === TippingElementState.RECOVERING) {
-      console.warn(`  🔄 RE-TRIGGERING DURING RECOVERY: ${element.name}`);
-      console.log(`     Temperature rose to ${currentTempC.toFixed(2)}°C before recovery complete`);
-      console.log(`     Progress was: ${(element.progress * 100).toFixed(1)}%`);
-    } else if (thresholdReduction > 0) {
-      console.warn(`  🚨 CASCADE TIPPING POINT: ${element.name}`);
-      console.log(`     Original threshold: ${element.triggerTempC}°C`);
-      console.log(`     Effective threshold: ${effectiveThreshold.toFixed(2)}°C (lowered by ${thresholdReduction.toFixed(2)}°C)`);
-      console.log(`     Current: ${currentTempC.toFixed(2)}°C`);
-    } else {
-      console.warn(`  🚨 TIPPING POINT: ${element.name}`);
-      console.log(`     Trigger: ${element.triggerTempC}°C | Current: ${currentTempC.toFixed(2)}°C`);
-    }
-
-    if (gap > 0) {
-      console.log(`     🌡️ Hysteresis gap: ${gap.toFixed(1)}°C (recovers below ${element.recoveryTempC}°C)`);
-    }
-    console.log(`     Transition timescale: ${element.transitionMinMonths}-${element.transitionMaxMonths} months`);
-  }
-
-  /**
-   * Update PROGRESSING element (sigmoid curve toward fully tipped)
-   */
-  private updateProgressingElement(element: TippingElement, state: GameState, rng: RNGFunction): void {
-    element.monthsSinceTrigger++;
-
-    // Sample random transition time within range (only on first update)
-    if (element.monthsSinceTrigger === 1) {
-      const transitionTime = element.transitionMinMonths +
-        rng() * (element.transitionMaxMonths - element.transitionMinMonths);
-      (element as any)._sampledTransitionTime = transitionTime;
-    }
-
-    const transitionTime = (element as any)._sampledTransitionTime || element.transitionMaxMonths;
-
-    // Sigmoid curve parameters
-    const k = 4 / transitionTime;
-    const t = element.monthsSinceTrigger;
-    const t_mid = transitionTime / 2;
-
-    const newProgress = assertFinite(
-      1 / (1 + Math.exp(-k * (t - t_mid))),
-      {
-        location: 'ClimateSystemPhase.updateProgressingElement',
-        valueName: 'newProgress',
-        month: state.currentMonth,
-        additionalInfo: { elementId: element.id, t, k, t_mid }
-      }
-    );
-
-    element.progress = assertInRange(
-      Math.min(1.0, Math.max(0.0, newProgress)),
-      0, 1,
-      {
-        location: 'ClimateSystemPhase.updateProgressingElement',
-        valueName: `element[${element.id}].progress`,
-        month: state.currentMonth
-      }
-    );
-  }
-
-  /**
-   * Transition to FULLY_TIPPED state (progress reached 1.0)
-   */
-  private transitionToFullyTipped(element: TippingElement, state: GameState): void {
-    element.state = TippingElementState.FULLY_TIPPED;
-    console.log(`  ⚠️ FULLY TRANSITIONED: ${element.name} (progress = 100%)`);
-
-    const gap = element.hysteresisGapC ?? 0;
-    if (gap > 0) {
-      console.log(`     Recovery requires temp below ${element.recoveryTempC}°C (${gap.toFixed(1)}°C drop)`);
-    } else if (element.recoveryTempC === undefined) {
-      console.log(`     ⚠️ IRREVERSIBLE on human timescales`);
-    }
-
-    // M-5 (Dec 6, 2025): Track tipping event for compound cascade detection
-    // Initialize array if not exists
-    if (!state.tippingPointSystem.recentTippingEvents) {
-      state.tippingPointSystem.recentTippingEvents = [];
-    }
-
-    // Add this tipping event to recent history
-    state.tippingPointSystem.recentTippingEvents.push({
-      elementId: element.id,
-      month: state.currentMonth,
-      elementName: element.name
-    });
-
-    // Update compound cascade multiplier
-    this.updateCompoundCascadeMultiplier(state);
-  }
-
-  /**
-   * Transition to RECOVERING state (temp dropped below recovery threshold)
-   */
-  private transitionToRecovering(
-    element: TippingElement,
-    state: GameState,
-    currentTempC: number,
-    recoveryThreshold: number
-  ): void {
-    element.state = TippingElementState.RECOVERING;
-    element.monthsSinceTrigger = 0;  // Reset counter for recovery phase
-
-    console.log(`  🌱 RECOVERY BEGINS: ${element.name}`);
-    console.log(`     Temp dropped to ${currentTempC.toFixed(2)}°C (below recovery threshold ${recoveryThreshold.toFixed(2)}°C)`);
-    console.log(`     Progress will decrease from ${(element.progress * 100).toFixed(1)}% toward floor: ${((element.minimumAsymptoticValue ?? 0) * 100).toFixed(1)}%`);
-
-    const halfLife = element.recoveryHalfLife ?? 400;
-    console.log(`     Recovery half-life: ${halfLife} years`);
-  }
-
-  /**
-   * Update RECOVERING element (exponential decay toward floor)
-   * Research: Drüke et al. (2024) - recovery timescales 100-1000 years
-   */
-  private updateRecoveringElement(element: TippingElement, state: GameState, rng: RNGFunction): void {
-    element.monthsSinceTrigger++;
-
-    const halfLife = element.recoveryHalfLife ?? 400;  // Default 400 years
-    const floor = element.minimumAsymptoticValue ?? 0.0;
-
-    // Exponential decay toward floor: progress(t) = floor + (progress_0 - floor) * exp(-λt)
-    // λ = ln(2) / halfLife (in years)
-    const lambda = Math.log(2) / halfLife;
-    const t_years = element.monthsSinceTrigger / 12;
-
-    const newProgress = assertFinite(
-      floor + (element.progress - floor) * Math.exp(-lambda * t_years),
-      {
-        location: 'ClimateSystemPhase.updateRecoveringElement',
-        valueName: 'newProgress',
-        month: state.currentMonth,
-        additionalInfo: {
-          elementId: element.id,
-          halfLife,
-          floor,
-          t_years,
-          currentProgress: element.progress
-        }
-      }
-    );
-
-    element.progress = assertInRange(
-      Math.max(floor, newProgress),  // Never go below floor
-      0, 1,
-      {
-        location: 'ClimateSystemPhase.updateRecoveringElement',
-        valueName: `element[${element.id}].progress`,
-        month: state.currentMonth
-      }
-    );
-  }
-
-  /**
-   * Transition to RECOVERED state (progress reached floor)
-   */
-  private transitionToRecovered(element: TippingElement, state: GameState): void {
-    element.state = TippingElementState.RECOVERED;
-    const floor = element.minimumAsymptoticValue ?? 0.0;
-
-    console.log(`  ✅ RECOVERY COMPLETE: ${element.name}`);
-    console.log(`     Progress: ${(element.progress * 100).toFixed(1)}% (floor: ${(floor * 100).toFixed(1)}%)`);
-
-    if (floor > 0) {
-      console.log(`     ⚠️ Irreversible component: ${(floor * 100).toFixed(1)}% remains`);
-    }
-  }
-
-  /**
-   * Update Compound Cascade Multiplier (M-5, Dec 6, 2025)
-   *
-   * Calculates acceleration factor based on simultaneous tipping events within 10-year window.
-   * Research: Wunderling et al. (2024) ESD - "9/14 interactions destabilizing"
-   *           Armstrong McKay et al. (2022) Science - "combined effect lowers thresholds"
-   *
-   * Conservative multipliers (research critique recommendations):
-   * - 0-1 tippings: 1.0× (no cascade)
-   * - 2 tippings: 1.1× (moderate acceleration)
-   * - 3 tippings: 1.3× (strong acceleration)
-   * - 4+ tippings: 1.5× (severe acceleration)
-   *
-   * UNCERTAINTY: Multipliers are speculative lower-bound estimates. Limited quantitative
-   * research on simultaneous tipping acceleration. Requires Monte Carlo validation.
-   */
-  private updateCompoundCascadeMultiplier(state: GameState): void {
-    const system = state.tippingPointSystem;
-
-    // Initialize if not exists
-    if (!system.recentTippingEvents) {
-      system.recentTippingEvents = [];
-    }
-
-    // 10-year window (120 months) - captures fast tipping element interactions
-    const WINDOW_MONTHS = 120;
-
-    // Remove events older than 10 years
-    system.recentTippingEvents = system.recentTippingEvents.filter(
-      event => state.currentMonth - event.month <= WINDOW_MONTHS
-    );
-
-    // Count simultaneous tippings (within window)
-    const simultaneousTippings = system.recentTippingEvents.length;
-
-    // Calculate compound cascade multiplier based on threshold counts
-    let compoundMultiplier = 1.0;
-
-    if (simultaneousTippings >= 2) {
-      compoundMultiplier = 1.1; // Moderate acceleration (pairwise interactions)
-    }
-
-    if (simultaneousTippings >= 3) {
-      compoundMultiplier = 1.3; // Strong acceleration (network effects emerge)
-    }
-
-    if (simultaneousTippings >= 4) {
-      compoundMultiplier = 1.5; // Severe acceleration (system-wide cascade)
-    }
-
-    // Store multiplier (validate range)
-    system.compoundCascadeMultiplier = assertInRange(
-      compoundMultiplier,
-      1.0, 2.0,
-      {
-        location: 'ClimateSystemPhase.updateCompoundCascadeMultiplier',
-        valueName: 'compoundCascadeMultiplier',
-        month: state.currentMonth
-      }
-    );
-
-    // Log compound cascade events
-    if (simultaneousTippings >= 2) {
-      console.log(`\n  🌀 COMPOUND CASCADE DETECTED (M-5)`);
-      console.log(`     Simultaneous tippings (10-year window): ${simultaneousTippings}`);
-      console.log(`     Acceleration multiplier: ${compoundMultiplier.toFixed(2)}×`);
-      console.log(`     Recent tipping events:`);
-      for (const event of system.recentTippingEvents) {
-        const age = state.currentMonth - event.month;
-        console.log(`       - ${event.elementName} (${Math.floor(age / 12)} years ${age % 12} months ago)`);
-      }
-
-      if (simultaneousTippings >= 3) {
-        console.log(`     ⚠️ STRONG NETWORK CASCADE: Multiple tipping elements interacting`);
-      }
-
-      if (simultaneousTippings >= 4) {
-        console.log(`     🚨 SEVERE CASCADE RISK: System-wide tipping cascade active`);
       }
     }
   }
@@ -652,31 +424,41 @@ export class ClimateSystemPhase implements SimulationPhase {
 
     const cascadeCount = activeCascadingElements.length;
 
+    // === M-5: COMPOUND CLIMATE EVENTS (Dec 5, 2025) ===
+    // Research: Wunderling et al. (2024) ESD - 49% amplification from compound tipping
+    // Armstrong McKay et al. (2022) Science - network effects across 16 tipping elements
+    // Validation: reviews/m4_m7_research_validation_20251205.md - "widen uncertainty, add sensitivity analysis"
     let cascadeMultiplier: number;
     if (cascadeCount === 0 || cascadeCount === 1) {
-      cascadeMultiplier = 1.0;
+      cascadeMultiplier = 1.0; // No cascade effect
     } else if (cascadeCount === 2) {
-      // Two elements: moderate amplification
-      cascadeMultiplier = 1.5;
+      // 2 tipping points: modest amplification (10-20%)
+      cascadeMultiplier = 1.15;
     } else if (cascadeCount === 3) {
-      // THREE+ ELEMENTS: Critical compound threshold
-      // Research: Communications Earth & Environment (2024)
-      // "Alter expected tipped element count by more than factor of 2"
-      cascadeMultiplier = 2.0;  // Factor of 2x from research
-    } else if (cascadeCount === 4) {
-      cascadeMultiplier = 2.5;
+      // 3 tipping points: COMPOUND CASCADE EFFECT
+      // Research: 49% amplification baseline (Wunderling et al. 2024)
+      // Validation adjustment: uncertainty range 25-75% (0.5x to 1.5x the 49% baseline)
+      cascadeMultiplier = 1.49;
+      console.warn(`  🚨 COMPOUND CLIMATE EVENT: ${cascadeCount} cascading tipping points active`);
+      console.log(`     Amplification factor: ${cascadeMultiplier.toFixed(2)}x (49% above baseline)`);
     } else {
-      // 5+ elements: Full cascade ("Hothouse Earth" scenario)
-      cascadeMultiplier = 3.0;
+      // 4+ elements: runaway cascade (further amplification)
+      cascadeMultiplier = 1.75; // 75% amplification for extreme cases
+      console.warn(`  💥 RUNAWAY CASCADE: ${cascadeCount} cascading tipping points active`);
+      console.log(`     Amplification factor: ${cascadeMultiplier.toFixed(2)}x (EXTREME COMPOUND EVENT)`);
     }
 
     system.cascadeMultiplier = assertInRange(
       cascadeMultiplier,
-      1.0, 3.0,
+      1.0, 2.0,
       {
         location: 'ClimateSystemPhase.calculateTippingCascades',
         valueName: 'system.cascadeMultiplier',
-        month: state.currentMonth
+        month: state.currentMonth,
+        additionalInfo: {
+          cascadeCount,
+          activeElements: activeCascadingElements.map(e => e.id)
+        }
       }
     );
   }
@@ -705,12 +487,6 @@ export class ClimateSystemPhase implements SimulationPhase {
       totalFoodSecurityImpact += element.impactFoodSecurity * scaledProgress;
       totalFreshwaterImpact += element.impactFreshwater * scaledProgress;
     }
-
-    // M-5 (Dec 6, 2025): Apply compound cascade multiplier to climate degradation
-    // When multiple tipping points cross simultaneously (within 10-year window),
-    // acceleration effects compound beyond individual element interactions.
-    const compoundMultiplier = system.compoundCascadeMultiplier ?? 1.0;
-    totalClimateStabilityImpact *= compoundMultiplier;
 
     /**
      * Cap total degradation at 95% (per-step)

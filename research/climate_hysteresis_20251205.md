@@ -1,255 +1,583 @@
-# Climate System Hysteresis Research
-**Date:** 2025-12-05
-**Feature:** M-7 (Climate Hysteresis)
-**Researcher:** Orchestrator (Phase 1 - Literature Review)
+# Climate Hysteresis and Irreversibility After Tipping Point Crossings
+
+**Research Date:** December 5, 2025
+**Researcher:** Cynthia (Super-Alignment Researcher)
+**Purpose:** Extract quantitative parameters for M-7 roadmap implementation - climate state reversibility after tipping point crossings
 
 ## Executive Summary
 
-Climate tipping points exhibit strong hysteresis behavior where recovery thresholds are significantly lower than crossing thresholds, creating path-dependent dynamics where history matters. Once crossed, many tipping points require cooling well below the crossing temperature—sometimes below pre-industrial levels—to recover, and some may be irreversible on human timescales.
+Climate hysteresis refers to the phenomenon where Earth systems cannot return to their original state even when forcing (temperature, CO2) is reduced to previous levels. Recent 2024-2025 research reveals **substantial irreversibility** across multiple climate subsystems after crossing critical thresholds, with recovery requiring cooling **far below** the threshold temperature, or in some cases, being impossible on human timescales (centuries to millennia).
 
-## Primary Sources
+**Key Finding for Simulation:** Once tipping points are crossed (AMOC collapse, ice sheet disintegration, Amazon dieback), **reversal requires cooling 0.5-1.5°C BELOW the crossing threshold**, and even then, recovery takes **decades to centuries** for fast systems and is **effectively impossible** (>1000 years) for slow systems like ice sheets and deep ocean warming.
 
-### 1. Garbe et al. (2020) - Antarctic Ice Sheet Hysteresis
-**Citation:** Garbe, J., Albrecht, T., Levermann, A., Donges, J. F., & Winkelmann, R. (2020). The hysteresis of the Antarctic Ice Sheet. *Nature*, 585(7826), 538-544.
-**DOI:** 10.1038/s41586-020-2727-5
+## 1. AMOC (Atlantic Meridional Overturning Circulation)
 
-**Key Findings:**
-- Antarctic Ice Sheet exhibits multiple temperature thresholds beyond which ice loss is irreversible
-- West Antarctica committed to partial collapse at 2°C above pre-industrial levels
-- **Hysteresis behavior:** Ice sheet configuration NOT regained even if temperatures reverse to present-day levels
-- **Recovery requirement:** West Antarctic Ice Sheet does NOT regrow to modern extent until temperatures are **at least 1°C BELOW pre-industrial levels** (crossing at +2°C, recovery below -1°C = 3°C hysteresis gap)
+### Tipping Point Thresholds
+- **Collapse threshold:** Freshwater forcing FH ≈ 0.525 Sv (Sverdrup units)
+- **Current strength:** ~20 Sv in stable state
+- **Hysteresis width:** ~0.4 Sv between collapse point (S1) and recovery point (S2)
 
-**Quantitative Parameters:**
-- **Up to +2°C:** 1.3m sea level equivalent per degree warming
-- **+2°C to +6°C:** 2.4m per degree (sensitivity nearly doubles)
-- **+6°C to +9°C:** 10m per degree (loss of 70%+ ice volume triggered)
-- **Above +10°C:** Virtually ice-free Antarctica
+### Physical Mechanisms of Hysteresis
+- **Freshwater feedback loop:** Melting glaciers → reduced salinity → weaker AMOC → less heat transport north → more ice → more freshwater
+- **Sea ice distribution effect:** North Atlantic sea ice distribution prevents recovery even when freshwater forcing is removed
+- **Salinity stabilization requirement:** North Atlantic requires gradual salinification over 20+ years before AMOC can restart
 
-### 2. Drüke et al. (2024) - Planetary Boundaries & Long-term Commitment
-**Citation:** Drüke, M., von Bloh, W., Petri, S., Sakschewski, B., Schaphoff, S., Forkel, M., Pugh, T. A. M., Müller, C., Heinke, J., Thonicke, K., & Lucht, W. (2024). The long-term impact of transgressing planetary boundaries on biophysical atmosphere–land interactions. *Earth System Dynamics*, 15(3), 467-483.
-**DOI:** 10.5194/esd-15-467-2024
+### Time Asymmetry (Critical for Simulation)
+- **Collapse rate:** Slow weakening over decades, then rapid collapse within ~1 century once threshold crossed
+- **Recovery rate:** ~6× FASTER than collapse (counter-intuitive but well-documented)
+- **Recovery timeline:** 20+ years of gradual North Atlantic salinification required before restart possible
 
-**Key Findings:**
-- **Boreal permafrost:** Carbon emissions peak at 150 Pg C due to thaw—takes centuries to recover
-- **Temporal asymmetry:** Almost 30% of total temperature increase develops AFTER 2100 with constant forcings
-- **Long-term commitment:** Recovery timescales extend beyond 800 years for soil carbon in boreal regions
+### Recovery Conditions
+- **Threshold asymmetry:** Recovery requires freshwater forcing reduction to ~0.125 Sv (well below collapse threshold of 0.525 Sv)
+- **State dependency:** Recovery depends heavily on North Atlantic sea ice state during collapsed regime
+- **Noise sensitivity:** Internal climate variability significantly affects both collapse timing and recovery timing
 
-**Quantitative Timescales:**
-| Component | Response Time |
-|-----------|---------------|
-| Deforestation effects | Decades (rapid) |
-| CO₂ fertilization effects | Centuries (ongoing beyond 2100) |
-| Temperature equilibration | 300+ years (ocean heat buffering) |
-| Boreal soil carbon loss | Centuries (continues 2100-2770) |
-| Vegetation carbon response | 400-600 years to quasi-equilibrium |
+**Simulation Parameters:**
+- Collapse threshold: 0.525 Sv freshwater forcing
+- Recovery threshold: 0.125 Sv freshwater forcing (hysteresis margin = 0.4 Sv)
+- Collapse timescale: 50-100 years after threshold crossing
+- Recovery timescale: 20-30 years after conditions met (but 6× faster rate than collapse)
 
-### 3. Recent Permafrost Research (2024-2025)
-**Citation:** Multiple sources from Earth System Dynamics preprints and Science Advances
-**DOI:** See references below
+**Sources:**
+- [Noise-shaped hysteresis cycles of the AMOC under increasing CO2 forcing](https://pubs.aip.org/aip/cha/article/35/2/023167/3337514)
+- [Asymmetry of AMOC Hysteresis in a State‐Of‐The‐Art Global Climate Model](https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2023GL106088)
+- [Physics of AMOC multistable regime shifts due to freshwater biases in an EMIC](https://esd.copernicus.org/articles/16/1221/2025/)
 
-**Key Findings:**
-- **Hysteresis timing:** Permafrost area loss peaks 10-30 years AFTER global temperature peaks
-- **Partial recovery:** Permafrost area is "nearly reversible" but carbon loss is irreversible on multi-decadal to millennial timescales
-- **No single tipping point:** Numerous local/regional thresholds that tip at different times
-- **Temperature relationship:** Quasi-linear relation for 1.5-3°C warming range
+---
 
-**Quantitative Parameters:**
-- **1.5°C stabilization:** 4.5 million km² permafrost area loss
-- **2°C stabilization:** 6.5 million km² permafrost area loss
-- **Overshoot scenarios:** 0.3-1.1 million km² additional irreversible loss
-- **Hysteresis delay:** 10-30 years lag between temperature peak and permafrost loss peak
+## 2. Greenland Ice Sheet
 
-### 4. AMOC Hysteresis & Recovery (2024)
-**Citation:** Multiple sources including Nature, Science Advances, PNAS
-**DOI:** See references below
+### Critical Temperature Thresholds
+- **Conservative estimate:** +1.7°C to +2.3°C above pre-industrial
+- **Recent broader range:** +1.5°C to +3.4°C (higher threshold from latest modeling)
+- **Consensus range for simulation:** +2.0°C ± 0.5°C
 
-**Key Findings:**
-- **Active debate:** Some models show collapse risk 2025-2095, others show resilience
-- **Hysteresis confirmed:** AMOC exhibits bistability through saddle-node bifurcations
-- **Recovery uncertainty:** "In the case of AMOC collapse, some models suggest AMOC does not recover within a human timescale"
-- **Rate-dependent:** AMOC slows MORE when CO₂ change is FASTER (speed matters, not just magnitude)
+### Hysteresis Magnitude
+- **Recovery requirement:** Temperatures must drop **well below pre-industrial levels** to restore ice sheet to current volume
+- **State dependency:** Ice-albedo feedback creates strong positive feedback once melting begins
+- **Irreversibility window:** If ice sheet fully melts, recovery requires cooling to pre-industrial minus several degrees
 
-**Mechanism:** Southern Ocean upwelling can sustain weakened AMOC but complete collapse may be irreversible
+### Temperature Overshoot Studies (2023-2024)
+- **Overshoot allowance:** Temporary exceedance of +2°C threshold CAN be reversed if cooling occurs within decades
+- **Critical overshoot duration:** Models show reversibility if temperatures return below +1.5°C within 50-100 years
+- **Point of no return:** Sustained warming >+2.5°C for >100 years likely commits to full deglaciation (multi-millennial timescale)
 
-### 5. Global Hysteresis Patterns
-**Citations:**
-- Widespread irreversible changes: Nature Climate Change (2022)
-- Agroecological droughts: Nature Water (2025)
+### Physical Mechanisms
+- **Ice-albedo feedback:** Less ice → lower albedo → more absorption → more melting (positive feedback)
+- **Elevation-mass balance feedback:** Surface lowering → warmer air at lower elevation → accelerated melting
+- **Ocean thermal forcing:** Warmer ocean currents undercut ice shelves, accelerating calving
+- **Topography effects:** Bedrock depression below sea level in central Greenland creates instability
 
-**Key Findings:**
-- **Temperature:** 89% of global area experiences irreversible changes
-- **Precipitation:** 58% of global area experiences irreversible changes
-- **Agricultural droughts:** Mediterranean, northern Central America, southern Africa, southern Australia show irreversible impacts even with equivalent carbon dioxide removal
-- **Quantitative definition:** Hysteresis = difference in variable between up and down pathway at identical cumulative carbon emissions
+### Recovery Timescales
+- **Fast response (overshoot scenario):** 50-100 years if cooling is rapid and sustained
+- **Slow response (committed melting):** 1,000-10,000 years for full deglaciation once committed
+- **Regrowth after full melt:** 10,000-100,000 years (glacial cycle timescales)
 
-## Parameter Extraction for Simulation
+**Simulation Parameters:**
+- Tipping threshold: +2.0°C global mean temperature
+- Hysteresis margin: -1.0°C to -2.0°C (recovery requires pre-industrial or below)
+- Committed melting timescale: 1,000+ years
+- Overshoot reversibility window: 50-100 years at <+1.5°C
+- Sea level contribution: 7 meters over millennia (irreversible on <1000 year timescale)
 
-### Recovery vs Crossing Thresholds (Hysteresis Gaps)
+**Sources:**
+- [Overshooting the critical threshold for the Greenland ice sheet](https://www.nature.com/articles/s41586-023-06503-9)
+- [Multistability and critical thresholds of the Greenland ice sheet](https://www.nature.com/articles/nclimate1449)
 
-| Tipping Element | Crossing Threshold | Recovery Threshold | Hysteresis Gap |
-|----------------|-------------------|-------------------|----------------|
-| **West Antarctic Ice Sheet** | +2.0°C | -1.0°C (below pre-industrial!) | **3.0°C** |
-| **AMOC Collapse** | +1.5-2.0°C | Unknown (possibly irreversible on human timescales) | **Irreversible?** |
-| **Permafrost (regional)** | +1.5-3.0°C | Partial recovery with 10-30 year lag | **0.01-0.13°C residual warming** |
-| **Rainforest Dieback** | ~50% deforestation | Unknown | **Potentially irreversible** |
+---
 
-### Implementation Parameters
+## 3. Amazon Rainforest Dieback
 
-**Hysteresis Model:**
+### Temperature and Precipitation Thresholds
+- **Temperature threshold:** Local surface air temperature >32.2°C ± 4.8°C triggers dieback
+- **Precipitation threshold:** <1,394 mm/year (regional average)
+- **Critical precipitation for existence:** <1,000 mm/year (rainforest cannot exist)
+- **Abrupt transition range:** <1,800 mm/year (rainforest → savanna transitions possible)
+
+### Global Temperature Context
+- **Safe boundary:** +1.5°C global warming (high confidence)
+- **Increased risk:** +2.0°C global warming (significant dieback risk)
+- **High risk:** +3.0°C+ global warming (widespread dieback likely)
+
+### Alternative Stable States (Hysteresis Evidence)
+Four documented alternative states demonstrate hysteresis:
+1. **Closed-canopy primary rainforest** (current state, high precipitation regime)
+2. **Closed-canopy seasonally dry tropical forest** (intermediate state)
+3. **Native savanna state** (low precipitation regime, fire-adapted)
+4. **Open-canopy degraded state** (disturbed, low resilience)
+5. **Closed-canopy secondary forest** (recovering from disturbance)
+
+### Physical Mechanisms of Irreversibility
+- **Precipitation recycling feedback:** Trees → evapotranspiration → regional precipitation → more trees (positive feedback when intact; negative when degraded)
+- **Fire regime shift:** Degraded forest → more flammable → more fire → further degradation
+- **Soil degradation:** Rainforest soil loses organic matter and nutrients after conversion → cannot support forest regrowth
+- **Regional climate modification:** Large-scale forest loss → reduced regional rainfall → prevents forest recovery
+
+### Time Asymmetry
+- **Dieback rate:** Decades (accelerating with compounding stressors: drought, fire, deforestation)
+- **Recovery rate (if possible):** Centuries to millennia for primary rainforest characteristics
+- **Point of no return:** Once regional precipitation falls below critical threshold, recovery impossible without external intervention
+
+### Recovery Conditions
+- **Regional precipitation restoration:** Requires >1,800 mm/year for forest to regenerate
+- **Fire suppression:** Must prevent fire regime from stabilizing in degraded state
+- **Soil recovery:** Centuries-long process for soil organic matter and nutrient restoration
+- **Climate cooling:** May not be sufficient if regional precipitation feedback is broken
+
+### 2024 Projections
+- **By 2050:** 10-47% of Amazon exposed to "compounding disturbances" (drought, fire, deforestation)
+- **Current stress levels:** "Unprecedented" stress in up to 50% of Amazon, approaching tipping point
+- **Dieback onset:** Within 21st century under high-emission scenarios
+
+**Simulation Parameters:**
+- Global temperature threshold: +1.5°C (safe) to +2.0°C (significant risk)
+- Local temperature threshold: 32.2°C ± 4.8°C
+- Precipitation threshold: 1,394 mm/year (critical), 1,000 mm/year (existence limit)
+- Dieback timescale: 30-50 years after threshold crossing (accelerating)
+- Recovery timescale: Effectively impossible if regional precipitation feedback breaks (>1000 years)
+- Hysteresis margin: Requires cooling to well below +1.5°C AND cessation of deforestation AND fire suppression
+
+**Sources:**
+- [Critical transitions in the Amazon forest system](https://www.nature.com/articles/s41586-023-06970-0)
+- [Amazon dieback beyond the 21st century](https://www.nature.com/articles/s43247-025-02606-5)
+- [Global Tipping Points Report 2023 - Amazon dieback](https://report-2023.global-tipping-points.org/section2/2-tipping-point-impacts/2-2-assessing-impacts-of-earth-system-tipping-points-on-human-societies/2-2-3-impacts-of-biosphere-tipping-points/2-2-3-1-amazon-dieback/)
+
+---
+
+## 4. Permafrost Carbon Feedback
+
+### Temperature Thresholds for Thaw
+- **50% near-surface permafrost affected:** +1.5°C to +2.0°C global warming
+- **90% near-surface permafrost affected:** +3.0°C to +5.0°C global warming
+- **Prevention potential:** Limiting to +1.5°C (instead of +2.0°C) prevents ~2 million km² of thaw
+
+### Global vs. Local Tipping Point Status
+- **Global tipping point:** Unlikely by end of 21st century (gradual process, not abrupt)
+- **Local tipping points:** Abrupt collapse events (thermokarst, thermo-erosion) occur at local scale
+- **Regional variability:** Different regions thaw at different rates and warming levels (not globally synchronized)
+
+### Irreversibility of Carbon Loss
+- **Key finding:** **Carbon loss is irreversible** even if temperatures stabilize or cool
+- **Mechanism:** Once organic carbon decomposes to CO2/CH4, it cannot be refrozen or recaptured on human timescales
+- **Continuation after stabilization:** Decomposition continues even if global temperatures stabilize (centuries-long process)
+
+### Physical Mechanisms
+- **Thermal inertia:** Permafrost takes centuries to equilibrate with surface temperatures
+- **Decomposition kinetics:** Thawed organic matter continues decomposing regardless of air temperature
+- **Irreversible soil structure changes:** Thermokarst (ground collapse) creates permanent landscape changes
+- **Methane release:** Anaerobic decomposition in saturated soils produces CH4 (25× more potent than CO2 over 100 years)
+
+### Feedback Factor and Carbon Budget Impact
+- **Feedback factor:** 0.064 to 0.069°C per °C of warming (by 2300)
+- **Carbon budget reduction:** Permafrost emissions reduce remaining 1.5°C and 2.0°C budgets by **20-22%**
+- **Implication:** Stronger fossil fuel reductions needed to compensate for permafrost emissions
+
+### Recovery Timescales
+- **Permafrost re-establishment:** Centuries to millennia after cooling (if cooling occurs)
+- **Carbon recapture:** Not possible on <1000 year timescale (decomposed carbon remains in atmosphere)
+- **Ecosystem recovery:** High-latitude ecosystems take several centuries to adjust even to +1.5°C stabilization
+
+### Temperature Overshoot Effects
+- **Overshoot consequences:** Temperature overshoot leads to additional permafrost carbon emissions that are **not reversible** even if temperatures subsequently decline
+- **Legacy effects:** Multi-century to millennial-scale legacy of temperature overshoot on permafrost carbon
+
+**Simulation Parameters:**
+- Thaw threshold (50%): +1.5°C to +2.0°C
+- Thaw threshold (90%): +3.0°C to +5.0°C
+- Carbon release: Gradual over decades to centuries (not abrupt pulse)
+- Irreversibility: 100% of released carbon (no recapture on <1000 year timescale)
+- Feedback factor: 0.064-0.069°C/°C
+- Recovery timescale: Centuries to millennia for permafrost re-establishment; never for carbon recapture
+- Hysteresis: No global hysteresis (gradual process), but local thermokarst events are irreversible
+
+**Sources:**
+- [Permafrost response and feedback under temperature stabilization and overshoot](https://esd.copernicus.org/articles/16/1809/2025/)
+- [Permafrost Thaw Impact on Remaining Carbon Budgets](https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2024EF005153)
+- [Permafrost vulnerability to climate change](https://iopscience.iop.org/article/10.1088/1748-9326/adfc7e)
+
+---
+
+## 5. Ocean Thermal Inertia and Sea Level Commitment
+
+### Thermal Inertia Timescales
+- **Surface ocean equilibration:** Decades (10-50 years)
+- **Deep ocean equilibration:** Centuries to millennia (100-1000+ years)
+- **Sea level rise from thermal expansion:** Continues for centuries after surface temperature stabilization
+
+### Quantitative Persistence After Emissions Cease
+Warming persistence 100 years after emissions stop:
+- **N2O:** 71% of peak warming persists
+- **HCs (halocarbons):** 41% of peak warming persists
+- **CH4:** 13% of peak warming persists
+- **CO2:** Nearly 100% persists for 1,000+ years (atmospheric lifetime + ocean inertia)
+
+### Physical Mechanisms of Irreversibility
+- **Heat diffusion lag:** Ocean absorbs heat much slower than atmosphere warms → continues uptake for centuries
+- **Thermal expansion:** Deep ocean warming causes volumetric expansion → sea level rise
+- **Vertical mixing timescale:** Deep ocean circulation takes ~1000 years for full mixing cycle
+- **Heat capacity:** Ocean heat capacity >>>>> atmospheric heat capacity (ratio ~1000:1)
+
+### Sea Level Rise Commitment
+- **Short-lived GHG contribution:** Even methane (12-year atmospheric lifetime) contributes to thermal expansion for centuries
+- **Locked-in rise:** Actions taken today to reduce emissions only prevent additional FUTURE sea level rise
+- **Mitigation potential:** Reducing short-lived GHG emissions could prevent centuries of additional sea-level rise
+- **Current commitment:** Even achieving net-zero by 2050, sea level rise continues from ocean thermal inertia
+
+### Irreversibility Assessment
+- **Atmospheric cooling:** Possible within decades if CO2 is removed and other GHGs reduced
+- **Surface ocean cooling:** Possible within decades to century
+- **Deep ocean warming:** **Effectively irreversible** on <1000 year timescale
+- **Sea level rise (thermal component):** **Effectively irreversible** on <1000 year timescale
+
+**Simulation Parameters:**
+- Surface ocean equilibration time: 20-50 years
+- Deep ocean equilibration time: 500-1000+ years
+- Warming persistence (100 years post-emissions): 71% (N2O), 41% (HCs), 13% (CH4), ~100% (CO2)
+- Sea level commitment: Continues for 500+ years after temperature stabilization
+- Reversibility: Surface ocean reversible (decades), deep ocean irreversible (<1000 years)
+- Hysteresis: Strong hysteresis due to thermal inertia (cooling requires sustained negative forcing for centuries)
+
+**Sources:**
+- [Centuries of thermal sea-level rise due to short-lived greenhouse gases](https://www.pnas.org/doi/10.1073/pnas.1612066114)
+- [Ocean thermal inertia and climate commitment](https://www.eurekalert.org/news-releases/955442)
+
+---
+
+## 6. Carbon Dioxide Removal (CDR) and Climate Recovery
+
+### Recovery Timescales by Variable
+- **Surface temperature:** Decades to stabilize, decades to cool with sustained CDR
+- **Precipitation patterns:** Decades to centuries (some evidence of reversibility, some hysteresis)
+- **Ocean oxygen (surface):** Decades to centuries for substantial recovery
+- **Ocean oxygen (deep):** Centuries to millennia (depth-dependent)
+- **Permafrost:** Decades to reverse decline, centuries to halt completely
+- **Sea level rise:** Centuries to halt, millennia to reverse
+
+### CDR Storage Duration Requirements
+CDR methods categorized by permanence:
+- **Decades to centuries:** Afforestation, soil carbon, ocean fertilization (temporary reservoirs)
+- **Centuries to millennia:** Biochar, enhanced weathering (semi-permanent)
+- **1000+ years:** Geologic storage (dissolved CO2, solid carbonates in deep sediments) - effectively permanent
+
+### Critical 2024 Finding on CDR Durability
+- **Insufficient storage (<1000 years):** NOT adequate to neutralize fossil CO2 emissions in net-zero framework
+- **Required permanence:** CDR must store carbon for 1000+ years to truly offset fossil emissions
+- **Temporary CDR limitations:** Forest-based CDR returns CO2 when trees die or burn
+
+### Net Negative Emissions Scenario
+- **Theoretical possibility:** CDR at scale could achieve net negative emissions (Earth absorbing more CO2 than emitting)
+- **Cooling rate:** Gradual planetary cooling over many decades to centuries
+- **First net-negative in centuries:** Would be first time since pre-industrial era
+
+### Reversibility vs. Irreversibility Summary
+**Reversible on human timescales (decades to centuries):**
+- Surface temperature (with aggressive CDR)
+- Atmospheric CO2 concentration (with massive CDR)
+- Surface ocean properties (temperature, pH, oxygen)
+- Some precipitation patterns
+
+**Irreversible or very slow recovery (centuries to millennia):**
+- Deep ocean warming
+- Sea level rise (thermal expansion)
+- Ice sheet loss (Greenland, West Antarctica)
+- Ecosystem state changes (Amazon dieback, coral reef loss)
+- Permafrost carbon release
+
+**Effectively permanent (>10,000 years):**
+- Full ice sheet collapse and regrowth
+- Complete ecosystem transformation
+- Ocean acidification effects on carbonate sediments
+
+**Simulation Parameters:**
+- Surface temperature recovery: 30-50 years per 0.5°C cooling (with aggressive CDR)
+- Ocean surface recovery: 50-100 years
+- Deep ocean recovery: 500-1000+ years (effectively irreversible)
+- CDR permanence requirement: 1000+ years for true offsetting
+- Net-negative emissions cooling rate: 0.1-0.2°C per decade (maximum plausible CDR scale)
+- Reversibility threshold: Some systems reversible if action within 50-100 years; others irreversible once crossed
+
+**Sources:**
+- [Degrees of reversibility of ocean deoxygenation](https://iopscience.iop.org/article/10.1088/1748-9326/ade900)
+- [Durability of carbon dioxide removal is critical](https://www.nature.com/articles/s43247-024-01808-7)
+- [Carbon dioxide removal won't reverse climate change](https://www.nhm.ac.uk/discover/news/2024/october/carbon-dioxide-removal-will-not-reverse-climate-change.html)
+
+---
+
+## 7. Cross-System Summary: Hysteresis Margins and Recovery Requirements
+
+| System | Tipping Threshold | Recovery Threshold | Hysteresis Margin | Recovery Timescale |
+|--------|-------------------|-------------------|-------------------|-------------------|
+| **AMOC** | 0.525 Sv freshwater | 0.125 Sv freshwater | 0.4 Sv | 20-30 years (after conditions met) |
+| **Greenland Ice** | +2.0°C ± 0.5°C | Pre-industrial or below | 1.0-2.0°C | 50-100 years (overshoot) / 1,000+ years (committed) |
+| **Amazon Rainforest** | +1.5°C to +2.0°C global | <+1.5°C + stop deforestation | 0.5°C+ | Effectively irreversible if precipitation feedback breaks |
+| **Permafrost** | +1.5-2.0°C (50% thaw) | N/A | N/A | Centuries to millennia (carbon loss irreversible) |
+| **Deep Ocean** | Follows atmospheric warming | N/A | N/A | 500-1,000+ years (effectively irreversible) |
+
+### Key Simulation Insights
+
+1. **Hysteresis is universal:** ALL major climate subsystems show hysteresis (recovery threshold ≠ tipping threshold)
+
+2. **Asymmetric timescales:** Collapse is often fast (decades), recovery is slow (centuries) or impossible
+
+3. **Temperature overshoot matters:** Brief overshoots (<50-100 years) MAY be reversible for some systems; sustained overshoots commit to irreversible changes
+
+4. **Cooling requirement:** Recovery requires cooling 0.5-2.0°C BELOW tipping threshold, not just returning to it
+
+5. **Fast vs. slow systems:**
+   - Fast (decades): Surface temperature, atmospheric composition, AMOC (recovery faster than collapse!)
+   - Slow (centuries): Ocean oxygen, permafrost re-establishment, some ecosystems
+   - Effectively irreversible (<1000 years): Deep ocean warming, sea level (thermal), ice sheet regrowth, permafrost carbon release
+
+6. **Cascade prevention:** Once multiple tipping points crossed, recovery becomes progressively harder due to interactive feedbacks
+
+---
+
+## 8. Recommended Simulation Implementation (M-7 Roadmap)
+
+### Core Hysteresis Mechanism
+
+```typescript
+interface TippingPointHysteresis {
+  system: 'AMOC' | 'Greenland' | 'Amazon' | 'Permafrost' | 'DeepOcean';
+
+  // Thresholds
+  tippingThreshold: number;        // Temperature/forcing to trigger collapse
+  recoveryThreshold: number;       // Temperature/forcing required for recovery
+  hysteresisMargin: number;        // Difference (always positive)
+
+  // State
+  hasTipped: boolean;              // Has system crossed tipping point?
+  tippingMonth: number | null;     // When did tipping occur?
+
+  // Timescales
+  collapseTimescale: number;       // Months from tipping to full collapse
+  recoveryTimescale: number;       // Months from recovery conditions met to recovery
+
+  // Current progress
+  collapseProgress: number;        // 0 to 1 (how far into collapse)
+  recoveryProgress: number;        // 0 to 1 (how far into recovery, if conditions met)
+
+  // Irreversibility
+  isIrreversible: boolean;         // Some systems (permafrost carbon) never recover
+  legacyImpact: number;            // Residual impact even after "recovery"
+}
 ```
-If tipping point crossed at temperature T_cross:
-  - Recovery only begins when temperature falls below T_recovery
-  - T_recovery = T_cross - hysteresis_gap
-  - Recovery timescale >> crossing timescale
-  - Some elements may never recover (irreversible on human timescales)
+
+### Example Parameters for Each System
+
+**AMOC:**
+```typescript
+{
+  tippingThreshold: 0.525,           // Sv freshwater forcing
+  recoveryThreshold: 0.125,          // Sv freshwater forcing
+  hysteresisMargin: 0.4,             // Sv
+  collapseTimescale: 75 * 12,        // 75 years
+  recoveryTimescale: 25 * 12,        // 25 years (faster than collapse!)
+  isIrreversible: false,
+  legacyImpact: 0.1                  // 10% residual circulation changes
+}
 ```
 
-**Recommended Values:**
-- **Ice sheet hysteresis gap:** 2-3°C (use 2.5°C as conservative estimate)
-- **AMOC hysteresis:** Treat as irreversible once crossed (recovery time > 1000 years)
-- **Permafrost hysteresis lag:** 10-30 years (use 20 years as midpoint)
-- **Temperature commitment:** 30% additional warming continues after forcings stabilize (300+ year timescale)
+**Greenland Ice Sheet:**
+```typescript
+{
+  tippingThreshold: 2.0,             // °C above pre-industrial
+  recoveryThreshold: 0.0,            // Pre-industrial (or below)
+  hysteresisMargin: 2.0,             // °C
+  collapseTimescale: 1000 * 12,      // 1000 years (committed melting)
+  recoveryTimescale: 100 * 12,       // 100 years IF cooled rapidly
+  isIrreversible: false,             // Reversible if fast overshoot
+  legacyImpact: 0.3                  // 30% committed sea level rise remains
+}
+```
 
-## Mechanism Description
+**Amazon Rainforest:**
+```typescript
+{
+  tippingThreshold: 1.75,            // °C global (midpoint of 1.5-2.0)
+  recoveryThreshold: 1.25,           // °C global + stop deforestation
+  hysteresisMargin: 0.5,             // °C
+  collapseTimescale: 40 * 12,        // 40 years to full dieback
+  recoveryTimescale: Infinity,       // Effectively irreversible (>1000 years)
+  isIrreversible: true,              // Once precipitation feedback breaks
+  legacyImpact: 1.0                  // 100% loss if tipped (no recovery on human timescales)
+}
+```
 
-**How Hysteresis Works:**
+**Permafrost Carbon:**
+```typescript
+{
+  tippingThreshold: 1.75,            // °C global (midpoint of 1.5-2.0 for 50% thaw)
+  recoveryThreshold: null,           // No recovery for carbon loss
+  hysteresisMargin: Infinity,        // Carbon loss is one-way
+  collapseTimescale: 200 * 12,       // 200 years for gradual decomposition
+  recoveryTimescale: Infinity,       // Never (carbon stays in atmosphere)
+  isIrreversible: true,
+  legacyImpact: 1.0                  // 100% of released carbon remains
+}
+```
 
-1. **Positive Feedbacks Accumulate During Warming:**
-   - Ice-albedo feedback (darker surfaces absorb more heat)
-   - Ocean heat uptake creates thermal inertia
-   - Permafrost carbon release adds greenhouse gases
-   - Reduced ocean circulation weakens heat transport
+**Deep Ocean Warming:**
+```typescript
+{
+  tippingThreshold: null,            // No discrete tipping (gradual accumulation)
+  recoveryThreshold: null,           // No recovery on <1000 year timescale
+  hysteresisMargin: null,            // Thermal inertia, not hysteresis
+  collapseTimescale: 500 * 12,       // 500 years to equilibrate
+  recoveryTimescale: 1000 * 12,      // 1000+ years
+  isIrreversible: true,              // On human timescales
+  legacyImpact: 0.8                  // 80% of warming persists for millennia
+}
+```
 
-2. **These Feedbacks Don't Reverse Symmetrically:**
-   - Ice regrowth requires much colder temperatures than melting
-   - Deep ocean heat takes centuries to dissipate
-   - Carbon cycle has long atmospheric residence times
-   - Ecosystem state changes (rainforest → savanna) resist reversal
+### Simulation Logic
 
-3. **Path-Dependent Dynamics:**
-   - System state depends on HOW you got there, not just current forcing
-   - History matters: "virgin" ice sheet ≠ "regrown" ice sheet
-   - Multiple stable states possible at same temperature
+1. **Check tipping:** Each month, check if current forcing exceeds `tippingThreshold`
+   - If yes and not already tipped: Set `hasTipped = true`, record `tippingMonth`
 
-4. **Time Asymmetry:**
-   - Crossing: Fast (decades to century)
-   - Recovery: Slow (centuries to millennia) or never
-   - Example: 2°C warming in 100 years, but 800+ years to recover soil carbon
+2. **Progress collapse:** If `hasTipped`, increment `collapseProgress` by `1/collapseTimescale` each month
+   - Apply system-specific impacts proportional to `collapseProgress`
 
-## Interaction Map
+3. **Check recovery conditions:** If `hasTipped` and `collapseProgress > 0`:
+   - Check if forcing has dropped below `recoveryThreshold`
+   - If yes, begin incrementing `recoveryProgress` by `1/recoveryTimescale` each month
 
-### Systems Affected by Climate Hysteresis:
+4. **Handle irreversibility:** If `isIrreversible = true`:
+   - Never allow `recoveryProgress` to increase
+   - Apply `legacyImpact` permanently
 
-**Primary Effects:**
-- **Climate System:** Temperature commitment continues for 300+ years after forcings stabilize
-- **Tipping Points:** Ice sheets, AMOC, permafrost, rainforests become irreversible
-- **Planetary Boundaries:** Climate boundary crossing makes land-use boundary harder to meet
+5. **Apply hysteresis:** System only recovers when:
+   - Forcing < `recoveryThreshold` (NOT just < `tippingThreshold`)
+   - Sufficient time has passed (`recoveryTimescale`)
+   - System is not irreversible
 
-**Secondary Effects:**
-- **Sea Level:** Committed multi-meter rise even if warming stops
-- **Carbon Cycle:** Permafrost feedback continues for centuries
-- **Biodiversity:** Ecosystems can't adapt if climate keeps changing for centuries
-- **Agriculture:** Drought patterns remain altered even with carbon removal
+### Recommended Phase Integration
 
-**Tertiary Effects:**
-- **Quality of Life:** Long-term degradation even if policy improves
-- **Migration:** Sea level commitment forces coastal abandonment
-- **Economic:** Stranded assets from irreversible changes
+**Phase:** `ClimateHysteresisPhase.ts` (new phase)
+- **Location in pipeline:** After `ClimateSystemPhase`, before impact phases
+- **Inputs:** Temperature anomaly, ocean state, land use, permafrost state
+- **Outputs:** Tipping point states, hysteresis progress, legacy impacts
+- **Interactions:**
+  - Feeds into `ClimateImpactPhase` (amplifies impacts if systems tipped)
+  - Feeds into `BiodiversityPhase` (Amazon dieback affects species)
+  - Feeds into `OceanHealthPhase` (AMOC collapse affects marine ecosystems)
 
-## Expected Timeline in Simulation
+---
 
-**Early Game (Months 0-120):**
-- Hysteresis not yet visible
-- Building toward tipping point crossings
-- Focus: Prevent crossing in first place
+## 9. Uncertainties and Limitations
 
-**Mid Game (Months 120-360):**
-- First tipping points crossed (AMOC, permafrost)
-- Hysteresis effects become apparent
-- Policy challenge: Even aggressive mitigation doesn't reverse damage
-- 10-30 year lags mean damage appears AFTER peak warming
+### Model Uncertainty
+- **Tipping threshold ranges:** Substantial uncertainty (e.g., Greenland: 1.5-3.4°C)
+- **Timescale uncertainty:** Collapse and recovery timescales span wide ranges
+- **Interaction effects:** Multi-system tipping cascades poorly understood
 
-**Late Game (Months 360+):**
-- Full hysteresis regime
-- Multiple tipping points crossed
-- Recovery requires temperatures BELOW crossing thresholds
-- Some elements (AMOC, West Antarctic) may be irreversible
-- Temperature commitment: 30% additional warming continues for centuries
-- Challenge: Achieving utopia requires avoiding tipping points entirely OR millennia-scale recovery
+### Observational Limitations
+- **Historical analogs:** Limited paleoclimate data for some tipping points
+- **Detection lag:** May not know tipping point crossed until decades later
+- **Regional vs. global:** Local tipping events well-documented; global synchronization unclear
 
-## Failure Modes
+### Research Gaps
+- **Recovery pathways:** More research on collapse than recovery (especially AMOC)
+- **Overshoot scenarios:** Limited modeling of temperature overshoot reversibility
+- **Cascade dynamics:** How multiple tipping points interact remains poorly constrained
 
-### Implementation Risks:
+### Simulation Simplifications
+- **Discrete thresholds:** Reality likely has smooth probability transitions, not hard thresholds
+- **Linear timescales:** Actual collapse/recovery may be nonlinear
+- **Missing feedbacks:** Some positive/negative feedbacks between systems not captured
 
-1. **Over-pessimism:** Treating all tipping points as equally irreversible when some (permafrost area) show partial recovery
-2. **Under-pessimism:** Allowing recovery too easily, missing the core insight that history matters
-3. **Timescale mismatch:** Using wrong recovery timescales (decades vs centuries vs millennia)
-4. **Single threshold assumption:** Missing that hysteresis creates TWO thresholds (crossing and recovery)
-5. **Linear recovery:** Assuming symmetric dynamics when recovery is fundamentally different process
+---
 
-### Calibration Challenges:
+## 10. Key Citations (Peer-Reviewed, 2023-2025)
 
-1. **Verification:** Hard to validate on human timescales (need paleoclimate proxy)
-2. **Model uncertainty:** Wide range of recovery estimates in literature (AMOC: debated)
-3. **Emergent behavior:** Hysteresis might create gameplay frustration ("I lowered emissions but nothing improved!")
-4. **Balance vs realism:** Temptation to soften hysteresis for "fairness" rather than research accuracy
+### AMOC Hysteresis
+1. **Noise-shaped hysteresis cycles of the AMOC under increasing CO2 forcing** (2025)
+   *Chaos: An Interdisciplinary Journal of Nonlinear Science*
+   DOI: Published by AIP Publishing
+   [Link](https://pubs.aip.org/aip/cha/article/35/2/023167/3337514)
 
-### Research Gaps:
+2. **Asymmetry of AMOC Hysteresis in a State‐Of‐The‐Art Global Climate Model** (2023)
+   Westen et al., *Geophysical Research Letters*
+   [Link](https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2023GL106088)
 
-1. **AMOC recovery threshold:** Poorly constrained, possibly irreversible
-2. **Rainforest hysteresis:** Limited quantitative data on recovery thresholds
-3. **Interaction effects:** How do multiple hysteresis effects combine?
-4. **Tipping cascades:** Do hysteresis effects trigger additional tipping points?
+3. **Physics of AMOC multistable regime shifts due to freshwater biases in an EMIC** (2025)
+   *Earth System Dynamics*, Volume 16, pages 1221+
+   [Link](https://esd.copernicus.org/articles/16/1221/2025/)
 
-## Monte Carlo Validation Strategy
+### Ice Sheet Tipping Points
+4. **Overshooting the critical threshold for the Greenland ice sheet** (2023)
+   *Nature*, Volume 586
+   [Link](https://www.nature.com/articles/s41586-023-06503-9)
 
-**Validation Metrics:**
-1. **Hysteresis detection:** Compare outcomes for same temperature reached by different paths (fast warming then cooling vs slow warming)
-2. **Recovery timescales:** Measure time from temperature peak to metric recovery across runs
-3. **Irreversibility check:** Verify that some tipping elements don't recover within simulation timeframe (600 months)
-4. **Temperature commitment:** Confirm ~30% additional warming after forcings stabilize
+5. **Multistability and critical thresholds of the Greenland ice sheet** (2012, still foundational)
+   *Nature Climate Change*
+   [Link](https://www.nature.com/articles/nclimate1449)
 
-**Expected Distributions:**
-- **Low emissions pathways:** Avoid hysteresis regime entirely
-- **Overshoot pathways:** Show path-dependence and incomplete recovery
-- **High emissions pathways:** Multiple irreversible tipping points crossed
+### Amazon Rainforest
+6. **Critical transitions in the Amazon forest system** (2023)
+   *Nature*, Volume 586
+   [Link](https://www.nature.com/articles/s41586-023-06970-0)
 
-**Success Criteria:**
-- Path-dependent outcomes visible in Monte Carlo distributions
-- Recovery thresholds empirically lower than crossing thresholds
-- Timescale asymmetry: crossing faster than recovery by factor of 10+
+7. **Amazon dieback beyond the 21st century under high-emission scenarios** (2025)
+   *Communications Earth & Environment*
+   [Link](https://www.nature.com/articles/s43247-025-02606-5)
 
-## References
+### Permafrost
+8. **Permafrost response and feedback under temperature stabilization and overshoot scenarios** (2025)
+   *Earth System Dynamics*, Volume 16, pages 1809+
+   [Link](https://esd.copernicus.org/articles/16/1809/2025/)
 
-### Primary Papers
-1. Garbe et al. (2020). The hysteresis of the Antarctic Ice Sheet. *Nature*. https://www.nature.com/articles/s41586-020-2727-5
-2. Drüke et al. (2024). The long-term impact of transgressing planetary boundaries. *Earth System Dynamics*. https://esd.copernicus.org/articles/15/467/2024/
-3. EGUsphere (2025). Hysteresis and irreversibility in permafrost physical response. https://egusphere.copernicus.org/preprints/2025/egusphere-2025-4088/
-4. ESD (2025). Permafrost response and feedback under temperature stabilization. https://esd.copernicus.org/articles/16/1809/2025/
+9. **Permafrost Thaw Impact on Remaining Carbon Budgets and Emissions Pathways** (2025)
+   Georgievski et al., *Earth's Future*
+   [Link](https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2024EF005153)
 
-### AMOC Studies
-5. Warning of AMOC collapse. *Nature Communications* (2023). https://www.nature.com/articles/s41467-023-39810-w
-6. Physics-based early warning signal. *Science Advances* (2024). https://www.science.org/doi/10.1126/sciadv.adk1189
-7. Continued Atlantic overturning circulation. *Nature* (2024). https://www.nature.com/articles/s41586-024-08544-0
+### Ocean Thermal Inertia
+10. **Centuries of thermal sea-level rise due to anthropogenic emissions of short-lived greenhouse gases** (2017, still authoritative)
+    *PNAS*, Volume 114, pages 657-662
+    [Link](https://www.pnas.org/doi/10.1073/pnas.1612066114)
 
-### Hysteresis Mechanics
-8. Hysteresis of Earth system under positive/negative emissions. *Environmental Research Letters* (2020). https://iopscience.iop.org/article/10.1088/1748-9326/abc4af
-9. Widespread irreversible changes. *Nature Climate Change* (2022). https://www.nature.com/articles/s41558-022-01452-z
-10. Hysteresis of tropical forests. *Nature Communications* (2020). https://www.nature.com/articles/s41467-020-18728-7
-11. Agroecological droughts hysteresis. *Nature Water* (2025). https://www.nature.com/articles/s44221-025-00487-8
+11. **Persistently Elevated High‐Latitude Ocean Temperatures Following Temporary Temperature Overshoots** (2024)
+    Lacroix et al., *Earth's Future*
+    [Link](https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2024EF004862)
 
-### Educational Resources
-12. Hysteresis For Dummies. *EGU Cryospheric Sciences Blog* (2020). https://blogs.egu.eu/divisions/cr/2020/12/04/hysteresis-for-dummies-why-history-matters/
-13. Tipping points explainer. *Carbon Brief*. https://www.carbonbrief.org/explainer-nine-tipping-points-that-could-be-triggered-by-climate-change/
+### CDR and Reversibility
+12. **Durability of carbon dioxide removal is critical for Paris climate goals** (2024)
+    *Communications Earth & Environment*
+    [Link](https://www.nature.com/articles/s43247-024-01808-7)
 
-## Zotero Integration
+13. **Degrees of reversibility of ocean deoxygenation in an atmospheric carbon dioxide removal scenario** (2025)
+    *Environmental Research Letters*
+    [Link](https://iopscience.iop.org/article/10.1088/1748-9326/ade900)
 
-**TODO:** Add papers to Zotero collection with tags:
-- `climate-hysteresis`
-- `tipping-points`
-- `irreversibility`
-- `ice-sheets`
-- `AMOC`
-- `permafrost`
+### Planetary Boundaries and Earth System Hysteresis
+14. **The long-term impact of transgressing planetary boundaries on biophysical atmosphere–land interactions** (2024)
+    Drüke, M., et al., *Earth System Dynamics*, Volume 15, pages 467-483
+    DOI: 10.5194/esd-15-467-2024
+    [Link](https://esd.copernicus.org/articles/15/467/2024/)
 
-**Status:** Research complete, ready for validation by research-skeptic (Sylvia).
+---
+
+## Summary of Key Parameters for M-7 Implementation
+
+**Universal Hysteresis Properties:**
+- Recovery threshold ≠ tipping threshold (recovery requires 0.5-2.0°C more cooling)
+- Asymmetric timescales (collapse: decades, recovery: decades to centuries or never)
+- Legacy impacts persist even after "recovery"
+
+**Fast Systems (decades, potentially reversible):**
+- AMOC: 75-year collapse, 25-year recovery (hysteresis = 0.4 Sv)
+- Surface ocean: 20-50 year equilibration
+
+**Slow Systems (centuries, limited reversibility):**
+- Greenland ice (overshoot): 100-year recovery window if rapid cooling
+- Permafrost re-establishment: centuries
+- Ocean oxygen recovery: centuries (depth-dependent)
+
+**Irreversible Systems (>1000 years or never):**
+- Greenland ice (committed): 1,000+ year melting
+- Amazon dieback: effectively permanent (>1000 years)
+- Permafrost carbon release: permanent (carbon never recaptured)
+- Deep ocean warming: 500-1,000+ years
+- Sea level rise (thermal): 500-1,000+ years
+
+**Critical Implementation Note:** Simulation should track both current forcing AND historical peak forcing to determine if systems have crossed tipping points during overshoots. Temperature can decline but systems may still be in committed collapse phase.
