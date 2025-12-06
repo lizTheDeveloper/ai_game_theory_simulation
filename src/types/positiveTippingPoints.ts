@@ -144,6 +144,26 @@ export interface PositiveTippingPointsState {
   cumulativeCostSavings: number;          // $B saved vs fossil baseline
   adoptionAcceleration: number;           // Multiplier vs business-as-usual (1.0 = BAU)
 
+  // Social norm cascades (M-6: Broader social tipping dynamics)
+  // Research: Otto et al. 2020, social norm tipping at 25-30% critical mass
+  socialNorms: {
+    climateConcernLevel: number;          // [0, 1] Public support for climate action
+    normTippingCrossed: boolean;          // True when crossed 25-30% critical mass
+    normCascadeActive: boolean;           // True when in rapid norm shift phase
+    normCascadeTriggeredMonth?: number;   // When norm cascade began
+    normInfluenceRate: number;            // Monthly rate of norm spreading (0.005-0.02)
+  };
+
+  // Political will tipping (M-6: Policy lock-in dynamics)
+  // Research: Otto et al. 2020, policy ratcheting and lock-in
+  politicalWill: {
+    aggregatePolicyStrength: number;      // [0, 1] Combined climate policy stringency
+    lockInThresholdCrossed: boolean;      // True when policies become hard to reverse
+    politicalMomentum: number;            // [0, 1] Rate of policy strengthening
+    backlashRisk: number;                 // [0, 1] Risk of policy reversal
+    coalitionStrength: number;            // [0, 1] Political coalition supporting action
+  };
+
   // Research parameters (OECD 2025, Nature Sustainability 2023)
   parameters: {
     // Cascade thresholds (market share to trigger exponential growth)
@@ -163,5 +183,15 @@ export interface PositiveTippingPointsState {
     // Social contagion
     visibilityImpact: number;       // 0.3 (30% boost from high visibility)
     earlyAdopterInfluence: number;  // 0.2 (20% adoption boost from social proof)
+
+    // M-6: Social norm tipping parameters (Otto et al. 2020)
+    normTippingThreshold: number;   // 0.25-0.30 (25-30% critical mass)
+    normCascadeMultiplier: number;  // 2.0x (influence spreading acceleration)
+    normCascadeDuration: number;    // 60-180 months (5-15 years)
+
+    // M-6: Political will tipping parameters (Otto et al. 2020)
+    politicalLockInThreshold: number;   // 0.40-0.50 (40-50% policy strength)
+    policyRatchetRate: number;          // 0.015 (1.5%/month momentum increase)
+    backlashThreshold: number;          // 0.30 (30% risk triggers reversal pressure)
   };
 }
