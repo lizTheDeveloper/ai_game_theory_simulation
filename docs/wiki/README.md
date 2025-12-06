@@ -29,6 +29,18 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Dec 6: M-7 Climate Hysteresis State Machine Implementation** (Session 56)
+- 🌍 **Implementation Complete:** 5-state machine for bidirectional climate tipping
+  - States: NOT_TRIGGERED → PROGRESSING → FULLY_TIPPED → RECOVERING → RECOVERED
+  - Hysteresis mechanism: Recovery requires cooling BELOW trigger threshold (e.g., AMOC triggers at 4.0°C, recovers below 2.5°C)
+  - Recovery timescale: 2× longer than collapse (configurable per element)
+  - Edge cases: Elements without recoveryTempC are irreversible (e.g., permafrost)
+- 📊 **Research Basis:** Drüke et al. (2024) - bidirectional tipping with path dependence
+- ✅ **Quality Gates:** All tests pass, Monte Carlo validation clean (N=10), architecture review approved
+- 📄 **Research:** `research/climate_hysteresis_20251205.md` (31KB)
+- 📄 **Implementation:** `src/simulation/engine/phases/ClimateSystemPhase.ts` (lines 322-503)
+- **Status:** M-7 complete, M-5 and M-7 both implemented, M-4/M-6 remain
+
 **Dec 3: Session 51 Research Validation + Roadmap Gardening** (commits abd6795a, 051abdf2, 07a7e33f)
 - **Research Validation:** Grade A- (68.8% sources from 2024-2025)
   - 677 research files validated (up from 508 in Session 49)
@@ -45,9 +57,9 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
     - Status: Flagged for architectural review
   - **M-4 to M-7:** Missing climate cascade systems identified
     - M-4: Abrupt sea level rise (ice cliff instability, WAIS/Greenland coupling)
-    - M-5: Compound extreme events (Zscheischler et al. 2020)
+    - ✅ M-5: Compound extreme events (COMPLETE Dec 5, 2025 - Zscheischler et al. 2020)
     - M-6: Social tipping points (Lenton et al. 2022 - positive cascades)
-    - M-7: Climate system hysteresis (bifurcation memory, path dependence)
+    - ✅ M-7: Climate system hysteresis (COMPLETE Dec 6, 2025 - Drüke et al. 2024)
 - **Roadmap Gardening:** Milestone cleanup + archival of completed Session 34-51 work
   - Archived 16 consecutive maintenance sessions
   - Token usage: ~8k (validation cycle + roadmap gardening)
