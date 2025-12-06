@@ -11,6 +11,17 @@
  */
 
 /**
+ * Tipping element states for hysteresis tracking (M-7)
+ */
+export enum TippingElementState {
+  NOT_TRIGGERED = 'NOT_TRIGGERED',      // Below trigger threshold
+  PROGRESSING = 'PROGRESSING',          // Above trigger, transitioning to tipped
+  FULLY_TIPPED = 'FULLY_TIPPED',        // Fully transitioned
+  RECOVERING = 'RECOVERING',            // Below recovery threshold, improving
+  RECOVERED = 'RECOVERED'               // Back to pre-tipped state
+}
+
+/**
  * Individual tipping point element with transition dynamics
  */
 export interface TippingElement {
@@ -92,6 +103,22 @@ export interface TippingElement {
     /** Current contribution from abrupt collapse (meters) */
     currentContributionM: number;
   };
+
+  /** Whether this element is in abrupt mode (M-4 abrupt sea level rise) */
+  abruptMode?: boolean;
+
+  /** Accumulated abrupt sea level rise from this element (meters) */
+  accumulatedAbruptSLR?: number;
+
+  /** === M-7: CLIMATE HYSTERESIS (Dec 5, 2025) === */
+  /** Current hysteresis state */
+  state?: TippingElementState;
+
+  /** Recovery temperature threshold (degrees C) - temperature must fall below this for recovery to begin */
+  recoveryTempC?: number;
+
+  /** Hysteresis gap (degrees C) - difference between trigger and recovery thresholds */
+  hysteresisGapC?: number;
 }
 
 /**
@@ -119,6 +146,19 @@ export interface TippingPointSystem {
     monthTriggered: number;
     tempAtTrigger: number;
   }>;
+
+  /** === M-4: ABRUPT SEA LEVEL RISE (Dec 5, 2025) === */
+  /** Cumulative sea level rise from all tipping elements (meters) */
+  cumulativeSeaLevelRise: number;
+
+  /** Coastal population displaced (millions) */
+  coastalPopulationDisplaced: number;
+
+  /** Coastal infrastructure damage (fraction 0-1) */
+  coastalInfrastructureDamage: number;
+
+  /** Agricultural land lost (fraction 0-1) */
+  agriculturalLandLost: number;
 }
 
 /**
