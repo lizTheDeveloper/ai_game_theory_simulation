@@ -11,9 +11,9 @@
 - **MEDIUM/LOW:** Deferred until token budget restored
 - **All agents:** Extreme efficiency - grep first, skip docs, exit early
 
-**Current Status:** 🟢 **MAINTENANCE MODE** (Dec 6, 2025 - Session 58)
-- **Research Quality:** A- (68.8% sources from 2024-2025) - sustained
-- **Architecture Health:** A- (0 CRITICAL, 0 HIGH blockers) - sustained
+**Current Status:** 🟡 **ACTIVE ISSUES IDENTIFIED** (Dec 6, 2025 - Session 58)
+- **Research Quality:** A- (68.8% sources from 2024-2025) - sustained, 2 CRITICAL updates needed
+- **Architecture Health:** B+ (2 CRITICAL, 3 HIGH parameter issues identified from research validation)
 - **System Performance:** Monte Carlo deterministic, all tests passing (82.34% coverage)
 - **System Trajectory:** ✅ **STABLE** - Technology bifurcation operational, outcome diversity restored
 - **Infrastructure:** ✅ **READY** - Multi-worker queue + agent monitors complete, VM deployment in progress
@@ -28,22 +28,30 @@
   - `plans/completed/cleanup_concentration_regression_tests_20251201.md` (Session 32)
   - `plans/completed/m4_abrupt_sea_level_rise_20251205.md` (Session 54)
 - **Recent Work (Dec 6 - Session 58):**
-  - 🔧 **ARCHITECTURE REVIEW** - Integration validation (Grade B+)
-    - Report: `reviews/architecture_integration_review_session58_20251206.md`
-    - Scope: M-4 implementation + Sessions 54-57 commits (M-5, M-6, M-7)
-    - Grade: B+ (0 CRITICAL, 1 HIGH resolved, 3 MEDIUM identified)
-    - HIGH Issue Fixed: Phase order collision (AbruptSeaLevelRisePhase 34.1 → 34.2)
-    - MEDIUM Issues Identified:
-      - M-1: Dual ice sheet tracking (marineIceSheetState vs tippingPoints.iceSheets) - documented as intentional
-      - M-2: Sea level displacement not propagated to RefugeeCrisisPhase (functional gap)
-      - M-3: foodSecurity/gdpPerCapita TODOs in AbruptSeaLevelRisePhase (integration deferred)
-    - Performance: A (O(1) patterns, minimal allocation, assertion overhead <1ms)
-    - State Propagation: B (correct reads, incomplete downstream propagation)
-    - Quality Gate 2: PASSED
-    - Roadmap Impact: Add M-2, M-3 as MEDIUM priority items
-  - 🎯 **Token Usage:** ~7k (architecture review + roadmap gardening)
-  - 🎯 **System Status:** Production-ready, all tests passing
-  - 📊 **Next:** Continue 4h monitoring intervals (token conservation mode)
+  - ✅ **FALLBACK WORKFLOWS COMPLETE** - Architecture + Research Validation
+    - **Architecture Review:** Grade B+ (0 CRITICAL, 1 HIGH resolved, 3 MEDIUM identified)
+      - Report: `reviews/architecture_integration_review_session58_20251206.md`
+      - Scope: M-4 implementation + Sessions 54-57 commits (M-5, M-6, M-7)
+      - HIGH Issue Fixed: Phase order collision (AbruptSeaLevelRisePhase 34.1 → 34.2)
+      - MEDIUM Issues: Dual ice sheet tracking, sea level displacement propagation, TODO integrations
+      - Roadmap Impact: Added M-8, M-9 (sea level integration gaps)
+    - **Research Validation:** Grade A- sustained, 2 CRITICAL + 1 HIGH updates identified
+      - Report: `research/RESEARCH_VALIDATION_AUDIT_20251206.md` (558 lines, 515 files examined)
+      - CRITICAL-4: Nuclear winter renewable energy (59% reduction, ALLFED 2024)
+      - CRITICAL-5: AI inference efficiency (200x/year → 1.4x/year, 2024-2025 data)
+      - HIGH update: Carlsmith 2022 methodology acknowledgment
+      - Already updated (Nov 24-29): Ocean acidification, climate stability, baseline mortality
+      - Roadmap Impact: Added CRITICAL-4, CRITICAL-5
+    - **M-4 Critique:** CONDITIONAL PASS with SIGNIFICANT concerns
+      - Report: `reviews/m4_abrupt_sea_level_rise_critique_20251206.md`
+      - HIGH-8: GIS threshold discrepancy (1.0°C implementation vs 1.7-2.3°C Bochow 2023)
+      - HIGH-9: Cooldown mechanism lacks citation (10-20 years unsupported)
+      - MODERATE: Recovery timescale, WAIS threshold, displacement estimates
+      - MICI uncertainty: 2024-2025 research undermines original hypothesis
+      - Roadmap Impact: Added HIGH-8, HIGH-9
+  - 🎯 **Token Usage:** ~15k (architecture + research validation + M-4 critique + roadmap updates)
+  - 🎯 **System Status:** Production-ready, 2 CRITICAL + 3 HIGH issues queued (deferred per token conservation)
+  - 📊 **Next:** CRITICAL parameter updates OR continue 4h monitoring intervals
 - **Recent Work (Dec 5 - Session 54):**
   - ✅ **M-4 COMPLETE** - Abrupt Sea Level Rise (Marine Ice Sheet Instability)
     - Implementation: AbruptSeaLevelRisePhase.ts (411 lines + 280 tests)
@@ -514,13 +522,33 @@
 
 ### 🚨 CRITICAL Priority Items
 
-**Status:** 0 active CRITICAL items (all resolved Nov 30)
+**Status:** 2 active CRITICAL items (Dec 6, 2025 - Session 58 research validation)
+
+**CRITICAL-4: Nuclear Winter Renewable Energy Impact (2024 Research Update)** (Dec 6, 2025 - Session 58)
+- **Problem:** 2024 ALLFED study shows 59% reduction in wind/solar generation (first year post-nuclear winter)
+- **Current:** Model may underestimate grid stress during nuclear winter scenarios
+- **Source:** Research validation audit (research/RESEARCH_VALIDATION_AUDIT_20251206.md)
+- **Impact:** Nuclear winter scenarios may be more severe than modeled
+- **Location:** Nuclear winter phase + energy systems
+- **Effort:** 1-2 hours (parameter update + Monte Carlo validation)
+- **Assignee:** simulation-maintainer (Roy)
+- **Status:** QUEUED (token conservation mode - deferred)
+
+**CRITICAL-5: AI Inference Efficiency Parameter (2024-2025 Data)** (Dec 6, 2025 - Session 58)
+- **Problem:** Current 200x/year parameter based on 2022-2023 data superseded
+- **Finding:** 2024-2025 shows 280x cost reduction driven by 40% annual hardware efficiency (1.4x/year), not 200x algorithmic gains
+- **Impact:** Model overestimates energy efficiency gains from AI inference
+- **Source:** Research validation audit (research/RESEARCH_VALIDATION_AUDIT_20251206.md)
+- **Location:** AI capability progression + energy consumption
+- **Effort:** 1-2 hours (parameter update + Monte Carlo validation)
+- **Assignee:** simulation-maintainer (Roy)
+- **Status:** QUEUED (token conservation mode - deferred)
 
 **Archive:** Previous CRITICAL items from Nov 26-29 validation sprint archived to `plans/completed/validation_sprint_nov26_29_20251129.md`
 
 ### 🟠 HIGH Priority Items
 
-**Status:** 1 active HIGH item (Session 51 research debate finding)
+**Status:** 3 active HIGH items (1 from Session 51, 2 from Session 58 M-4 critique)
 
 **HIGH-7: Conditional Climate Stability Floor** (Dec 3, 2025 - Session 51)
 - **Problem:** 5% stability floor creates optimistic bias in tail scenarios
@@ -537,6 +565,27 @@
 - **Estimated Effort:** 2-3h (parameter conditional logic + Monte Carlo validation)
 - **Blocked By:** None
 - **Status:** QUEUED (token conservation mode - deferred until CRITICAL work arises)
+
+**HIGH-8: M-4 GIS Threshold Parameter Discrepancy** (Dec 6, 2025 - Session 58)
+- **Problem:** Implementation uses 1.0-1.5°C for GIS triggering, but cites Bochow 2023 which states 1.7-2.3°C
+- **Impact:** Model triggers GIS collapse too early (too pessimistic)
+- **Source:** M-4 critique (reviews/m4_abrupt_sea_level_rise_critique_20251206.md)
+- **Location:** `src/simulation/engine/phases/AbruptSeaLevelRisePhase.ts`
+- **Solution:** Either update threshold to match citation OR find supporting research for 1.0-1.5°C range
+- **Effort:** 1-2 hours (parameter correction + citation verification + Monte Carlo validation)
+- **Assignee:** simulation-maintainer (Roy)
+- **Status:** QUEUED (token conservation mode - deferred)
+
+**HIGH-9: M-4 Cooldown Mechanism Lacks Citation** (Dec 6, 2025 - Session 58)
+- **Problem:** 10-20 year cooldown mechanism has NO LITERATURE SUPPORT found
+- **Finding:** May be parameter cross-contamination from permafrost research (10-30 years)
+- **Impact:** Ice sheet instability recovery timing may be incorrect
+- **Source:** M-4 critique (reviews/m4_abrupt_sea_level_rise_critique_20251206.md)
+- **Location:** `src/simulation/engine/phases/AbruptSeaLevelRisePhase.ts`
+- **Solution:** Find supporting research OR remove cooldown mechanism
+- **Effort:** 2-3 hours (literature search + parameter decision + Monte Carlo validation)
+- **Assignee:** super-alignment-researcher (Cynthia) + simulation-maintainer (Roy)
+- **Status:** QUEUED (token conservation mode - deferred)
 
 ## ✅ Recently Resolved (Nov 26-30, 2025)
 
