@@ -776,7 +776,13 @@ function updateSocialNormCascades(state: GameState, rng: RNGFunction): void {
   );
 
   // Input 2: Climate impacts amplify concern (disasters increase salience)
-  const surfaceTempDelta = state.climateState.surfaceTemperature - state.climateState.baselineTemperature;
+  // Convert climateStability (0-1) to temperature delta equivalent
+  // climateStability 1.0 → 0°C, 0.75 → ~1.2°C, 0.5 → ~2.5°C, 0.0 → ~5°C
+  const climateStability = assertFinite(
+    state.environmentalAccumulation.climateStability,
+    { location: 'updateSocialNormCascades', valueName: 'climateStability', month: state.currentMonth }
+  );
+  const surfaceTempDelta = (1 - climateStability) * 5; // Rough temperature delta in °C
   const impactBoost = assertFinite(
     Math.max(0, surfaceTempDelta * 0.02), // 2% concern boost per °C warming
     { location: 'updateSocialNormCascades', valueName: 'impactBoost', month: state.currentMonth }
@@ -858,16 +864,16 @@ function updatePoliticalWillTipping(state: GameState, rng: RNGFunction): void {
     { location: 'updatePoliticalWillTipping', valueName: 'backlashReduction', month: state.currentMonth }
   );
 
-  // Update political momentum
+  // Update political momentum (clamp to cap before assertion)
   will.politicalMomentum = assertInRange(
-    will.politicalMomentum + normBoost + cascadeBoost,
+    Math.min(0.05, Math.max(0, will.politicalMomentum + normBoost + cascadeBoost)),
     0, 0.05, // Cap at 5%/month max momentum
     { location: 'updatePoliticalWillTipping', valueName: 'politicalMomentum', month: state.currentMonth }
   );
 
-  // Update backlash risk
+  // Update backlash risk (clamp to prevent floating point precision errors)
   will.backlashRisk = assertInRange(
-    will.backlashRisk - backlashReduction,
+    Math.max(0, will.backlashRisk - backlashReduction),
     0, 1,
     { location: 'updatePoliticalWillTipping', valueName: 'backlashRisk', month: state.currentMonth }
   );
@@ -883,10 +889,10 @@ function updatePoliticalWillTipping(state: GameState, rng: RNGFunction): void {
     will.backlashRisk -= 0.10; // Spending political capital reduces risk temporarily
   }
 
-  // Update aggregate policy strength (momentum drives policy)
+  // Update aggregate policy strength (momentum drives policy, clamp to [0, 1])
   const policyDelta = will.politicalMomentum * (1.0 - will.backlashRisk);
   will.aggregatePolicyStrength = assertInRange(
-    will.aggregatePolicyStrength + policyDelta,
+    Math.min(1, Math.max(0, will.aggregatePolicyStrength + policyDelta)),
     0, 1,
     { location: 'updatePoliticalWillTipping', valueName: 'aggregatePolicyStrength', month: state.currentMonth }
   );
