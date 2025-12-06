@@ -29,18 +29,6 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
-**Dec 6: M-7 Climate Hysteresis State Machine Implementation** (Session 56)
-- 🌍 **Implementation Complete:** 5-state machine for bidirectional climate tipping
-  - States: NOT_TRIGGERED → PROGRESSING → FULLY_TIPPED → RECOVERING → RECOVERED
-  - Hysteresis mechanism: Recovery requires cooling BELOW trigger threshold (e.g., AMOC triggers at 4.0°C, recovers below 2.5°C)
-  - Recovery timescale: 2× longer than collapse (configurable per element)
-  - Edge cases: Elements without recoveryTempC are irreversible (e.g., permafrost)
-- 📊 **Research Basis:** Drüke et al. (2024) - bidirectional tipping with path dependence
-- ✅ **Quality Gates:** All tests pass, Monte Carlo validation clean (N=10), architecture review approved
-- 📄 **Research:** `research/climate_hysteresis_20251205.md` (31KB)
-- 📄 **Implementation:** `src/simulation/engine/phases/ClimateSystemPhase.ts` (lines 322-503)
-- **Status:** M-7 complete, M-5 and M-7 both implemented, M-4/M-6 remain
-
 **Dec 3: Session 51 Research Validation + Roadmap Gardening** (commits abd6795a, 051abdf2, 07a7e33f)
 - **Research Validation:** Grade A- (68.8% sources from 2024-2025)
   - 677 research files validated (up from 508 in Session 49)
@@ -57,9 +45,9 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
     - Status: Flagged for architectural review
   - **M-4 to M-7:** Missing climate cascade systems identified
     - M-4: Abrupt sea level rise (ice cliff instability, WAIS/Greenland coupling)
-    - ✅ M-5: Compound extreme events (COMPLETE Dec 5, 2025 - Zscheischler et al. 2020)
+    - M-5: Compound extreme events (Zscheischler et al. 2020)
     - M-6: Social tipping points (Lenton et al. 2022 - positive cascades)
-    - ✅ M-7: Climate system hysteresis (COMPLETE Dec 6, 2025 - Drüke et al. 2024)
+    - M-7: Climate system hysteresis (bifurcation memory, path dependence)
 - **Roadmap Gardening:** Milestone cleanup + archival of completed Session 34-51 work
   - Archived 16 consecutive maintenance sessions
   - Token usage: ~8k (validation cycle + roadmap gardening)
@@ -2380,7 +2368,7 @@ The comprehensive post-Week 4 assessment revealed a critical distinction: **Plan
   - 7 assertions added to climate tipping point calculations
   - Aggregate metrics: totalElementProgress (assertFinite), totalProgress (assertInRange [0,1])
   - Sigmoid transitions: newProgress (assertFinite), element.progress (assertInRange [0,1])
-  - Cascade multiplier: assertInRange [1.0, 3.0] (research-backed limits, updated Dec 2025)
+  - Cascade multiplier: assertInRange [1.0, 2.0] (research-backed limits)
   - Climate stability: before/after state mutations (assertInRange [0,1])
   - 100% mutation coverage (Math.exp edge cases now protected)
   - Priority 2: Climate Systems - Phase 1/4 complete
@@ -2465,28 +2453,23 @@ This section documents **critical parameter uncertainty findings** identified du
 
 ### Active Issues (Session 51 - Dec 3, 2025)
 
-**HIGH-7: Conditional Climate Stability Floor** ✅ COMPLETE (Dec 5, 2025)
-- **Issue:** ClimateSystemPhase implemented unconditional 5% stability floor, creating optimistic bias in tail scenarios
-- **Research Finding:** 2024-2025 literature CONTRADICTS unconditional floor assumption
+**HIGH-7: Conditional Climate Stability Floor**
+- **Issue:** ClimateSystemPhase implements 5% stability floor claimed to be from "self-limiting feedbacks"
+- **Research Finding:** 2024-2025 literature CONTRADICTS this assumption
   - Wunderling et al. (2024, ESD): "Many tipping interactions are **destabilizing**" (83% of reviewed papers)
   - State of Climate 2025 (BioScience): Planet "on the brink", warming "possibly accelerating"
   - Planck feedback is real but continuous (NOT a "floor" after cascade onset)
-- **Solution Implemented:** Conditional floor based on policy success (Option C)
-  - **Paris success** (<1.5°C): Apply 5% floor (human intervention preserves stability)
-  - **Low cascade risk** (<3 tipped elements OR <2°C): Apply 5% floor
-  - **Tail risk** (≥3 cascades AND ≥2°C): Remove floor, allow full collapse (research-accurate)
-- **Implementation:** `ClimateSystemPhase.ts` lines 532-587
-- **Research Grade:** B- (conditional approach aligns with Wunderling 2024 + ACCESS-ESM-1.5 2024)
-- **Impact:** Simulation now faithfully represents research consensus on cascade risks without optimistic bias
-- **Sources:** `research/climate_stability_mechanisms_2024_2025_update.md`, `reviews/high7_implementation_summary_20251205.md`
+- **Status:** Flagged for architectural review (documented as "implementation choice for tractability", not research-backed)
+- **Impact:** Optimistic bias in tail scenarios (prevents complete climate system collapse in model)
+- **Source:** `research/climate_stability_mechanisms_2024_2025_update.md` (last_verified: 2025-11-27)
 
 **Missing Climate Cascade Systems (M-4 to M-7):**
 - **M-4: Abrupt Sea Level Rise** - Ice cliff instability, WAIS/Greenland coupling not modeled
 - ✅ **M-5: Compound Extreme Events** - COMPLETE (Dec 5, 2025) - Cascade multipliers 1.5-3.0× based on Communications Earth & Environment (2024)
 - **M-6: Social Tipping Points** - Positive cascades for rapid transitions (Lenton et al. 2022)
-- ✅ **M-7: Climate System Hysteresis** - COMPLETE (Dec 6, 2025) - 5-state machine with bidirectional tipping, recovery requires cooling below trigger threshold (Drüke et al. 2024)
-- **Impact:** Medium priority gaps - model captures first-order climate dynamics, M-5 and M-7 now implemented
-- **Status:** M-5 and M-7 complete, M-4/M-6 remain for future work
+- **M-7: Climate System Hysteresis** - Bifurcation memory, path dependence in recovery
+- **Impact:** Medium priority gaps - model captures first-order climate dynamics, M-5 compound cascades now implemented
+- **Status:** M-5 complete, M-4/M-6/M-7 remain for future work
 
 ### Critical Uncertainties (Nov 21 Skeptic Critique)
 
@@ -4817,26 +4800,6 @@ All domain bounds are validated against peer-reviewed sources (2024-2025):
 - **Research:** Communications Earth & Environment (2024) DOI: 10.1038/s43247-024-01799-5
 - **Implementation:** ClimateSystemPhase.ts lines 384-397
 - **Note:** Only 3 of 6 tipping elements have `cascades: true` (AMOC, Amazon, Permafrost); others (Arctic sea ice, WAIS, Greenland) affect global temperature but don't trigger cascade amplification
-
-**Climate Hysteresis State Machine (M-7, Dec 2025):**
-- **States:** 5-state machine tracks bidirectional tipping dynamics
-  - `NOT_TRIGGERED`: Below trigger threshold (stable)
-  - `PROGRESSING`: Above trigger threshold, transitioning to fully tipped
-  - `FULLY_TIPPED`: Fully transitioned, requires cooling to recover
-  - `RECOVERING`: Temperature below recovery threshold, progress decreasing
-  - `RECOVERED`: Back to pre-tipped state (can re-trigger)
-- **Hysteresis mechanism:** Recovery requires cooling BELOW trigger threshold
-  - Example: AMOC triggers at 4.0°C, recovers below 2.5°C (1.5°C hysteresis gap)
-  - Prevents immediate reversal when temperature fluctuates near threshold
-- **Recovery timescales:** 2× longer than collapse (configurable per element)
-  - Collapse: Progress increases via sigmoid over `transitionMaxMonths`
-  - Recovery: Progress decreases linearly at half the collapse rate
-- **Edge cases:**
-  - Elements without `recoveryTempC`: Effectively irreversible (e.g., permafrost)
-  - Re-triggering: Recovered elements can tip again if temperature exceeds trigger threshold
-- **Research basis:** Drüke et al. (2024) - bidirectional tipping with path dependence
-- **Implementation:** ClimateSystemPhase.ts lines 322-503 (updateTippingTransitions method)
-- **File:** `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/engine/phases/ClimateSystemPhase.ts`
 
 #### AI Capabilities
 

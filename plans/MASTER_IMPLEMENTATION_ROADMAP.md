@@ -5,19 +5,19 @@
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**🚨 TOKEN CONSERVATION MODE ACTIVE (Nov 28, 2025):**
-- **Goal:** Finish current roadmap with 50% normal token usage
-- **Strategy:** CRITICAL/HIGH only, reduced autonomous worker frequency (4h intervals)
-- **MEDIUM/LOW:** Deferred until token budget restored
-- **All agents:** Extreme efficiency - grep first, skip docs, exit early
+**⚡ EFFICIENT OPERATION MODE (Dec 5, 2025):**
+- **Token Conservation:** DISABLED per PM (Dec 4) - normal operations resumed
+- **Autonomous Workers:** Hourly intervals (restored from 4h)
+- **Priority:** All tiers active (CRITICAL/HIGH/MEDIUM/LOW)
+- **Efficiency:** Maintained (grep-first, targeted reads, quality over speed)
 
 **Current Status:** 🟢 **MAINTENANCE MODE** (Dec 5, 2025 - Session 52)
 - **Research Quality:** A- (68.8% sources from 2024-2025) - sustained
 - **Architecture Health:** A- (0 CRITICAL, 0 HIGH blockers) - sustained
-- **System Performance:** Monte Carlo deterministic, all tests passing (82.55% coverage)
+- **System Performance:** Monte Carlo deterministic, all tests passing (82.51% coverage)
 - **System Trajectory:** ✅ **STABLE** - Technology bifurcation operational, outcome diversity restored
 - **Infrastructure:** ✅ **READY** - Multi-worker queue + agent monitors complete, VM deployment in progress
-- **Roadmap Coherence:** CURRENT - All CRITICAL/HIGH work complete (0 active items), MEDIUM tier ready
+- **Roadmap Coherence:** CURRENT - All priority work complete, system in maintenance mode
 - **Archives:**
   - `plans/completed/validation_sprint_nov26_29_20251129.md`
   - `plans/completed/high6_parameter_sweep_methodology_validated_20251130.md`
@@ -27,19 +27,21 @@
   - `plans/completed/l1_physical_constraints_validation_20251201.md` (Session 28)
   - `plans/completed/cleanup_concentration_regression_tests_20251201.md` (Session 32)
 - **Recent Work (Dec 5 - Session 52):**
-  - 🔧 **DISCOVERY** - HIGH-7 and M-4 already complete
-    - HIGH-7 audit: `devlogs/high7_conditional_stability_floor_audit_20251205.md`
-      - Implementation: `ClimateSystemPhase.ts:538-594` (conditional floor logic)
-      - Tests: `ClimateSystemPhase.test.ts:684-797` (Paris success vs tail risk scenarios)
-      - Status: ✅ COMPLETE (implemented weeks ago, all tests passing)
-    - M-4 audit: `devlogs/m4_mici_implementation_20251205.md`
-      - Implementation: `marineIceSheetInstability.ts` (669 lines, WAIS + GIS collapse)
-      - Integration: Called from ClimateSystemPhase
-      - Status: ✅ COMPLETE (implemented weeks ago, all Sylvia requirements met)
-    - Monte Carlo N=3: Validates without crashes/NaN
-  - 🎯 **Token Usage:** ~73k (audits + devlog creation)
-  - 🎯 **System Status:** Production-ready, all quality gates GREEN
-  - 📊 **Next:** Check MEDIUM/LOW tier work or fallback workflows
+  - ✅ **M-6 COMPLETE** - Social Tipping Cascades (architecture review PASS)
+    - Implementation: Extended `src/simulation/positiveTippingPoints.ts` (715→1099 lines)
+    - Research backing: 14 peer-reviewed sources (2024-2025)
+    - Architecture Review: Grade B+ (PASS) - `reviews/m6_social_tipping_architecture_review_20251205.md`
+    - All tests passing (82.52% coverage)
+    - Status: COMPLETE in dev branches (auto/worker-20251205_180000), awaiting main merge
+  - ✅ **HIGH-7 COMPLETE** - Conditional climate stability floor (regression fixed)
+    - Fixed regression from M-5 commit that removed conditional floor
+    - Validated: Monte Carlo N=3, 60 months, conditional floor working correctly
+    - Commit: 1ee723cc
+    - Devlog: `devlogs/HIGH7_regression_fix_20251205.md`
+    - Archive: `plans/completed/high7_conditional_climate_stability_floor_20251204.md`
+  - 🎯 **Token Usage:** ~52k (architecture review + regression fix + validation + roadmap update)
+  - 🎯 **System Status:** Production-ready, all tests passing
+  - 📊 **Next:** Continue 4h monitoring intervals (token conservation mode)
 - **Recent Work (Dec 3 - Session 51):**
   - 🔧 **VALIDATION CYCLE** - Research validation + Architecture review
     - Research Validation: Grade A- sustained (68.8% sources 2024-2025)
@@ -503,25 +505,29 @@
 
 ### 🟠 HIGH Priority Items
 
-**Status:** 0 active HIGH items (all complete as of Session 52)
+**Status:** 0 active HIGH items (all HIGH work complete as of Dec 5, 2025)
 
 ## ✅ Recently Resolved (Nov 26 - Dec 5, 2025)
 
-**Dec 5 - Session 52: Discovery Audit**
-- ✅ **HIGH-7:** Conditional climate stability floor → Complete (implemented weeks ago)
-  - Implementation: `ClimateSystemPhase.ts:538-594` (conditional floor: Paris success vs tail risk)
-  - Tests: `ClimateSystemPhase.test.ts:684-797` (both scenarios tested)
-  - Research: Wunderling et al. 2024 ("many tipping interactions are destabilizing")
-  - Defensive coding: Uses `assertFinite`, `assertInRange`
-  - Audit: `devlogs/high7_conditional_stability_floor_audit_20251205.md`
-- ✅ **M-4:** Marine Ice Sheet Instability (MICI) → Complete (implemented weeks ago)
-  - Implementation: `marineIceSheetInstability.ts` (669 lines, WAIS + GIS collapse)
-  - Integration: Called from ClimateSystemPhase
-  - Abrupt pulse events with cooldown
-  - Parameters match Sylvia's validation adjustments
-  - Monte Carlo N=3: Validates without crashes/NaN
-  - All Sylvia requirements implemented (recovery, cooldown, food security)
-  - Audit: `devlogs/m4_mici_implementation_20251205.md`
+**Dec 5 - Session 52: M-5, M-6, HIGH-7 Complete**
+- ✅ **M-6:** Social Tipping Cascades → Complete Dec 5 (commits in auto/worker-20251205_180000)
+  - Extended positiveTippingPoints.ts (715→1099 lines)
+  - Research validation: 14 peer-reviewed sources (2024-2025)
+  - Architecture review: Grade B+ (PASS)
+  - Implementation: Behavioral contagion, policy cascades, cultural shifts
+  - Archive: `plans/completed/m6_social_tipping_cascades_20251205.md`
+  - Review: `reviews/m6_social_tipping_architecture_review_20251205.md`
+- ✅ **M-5:** Compound Climate Events → Complete Dec 5 (commits c04e95a0, b4dd9163, 28fc273a)
+  - Implemented cascade multipliers: 1.5x/2.0x/2.5x/3.0x for 2/3/4/5+ tipping points
+  - Location: ClimateSystemPhase (11 multiplier references)
+  - Research: Armstrong McKay 2022, Wunderling 2024
+  - Archive: `plans/completed/m5_compound_climate_events_20251205.md`
+- ✅ **HIGH-7:** Conditional Climate Stability Floor → Complete Dec 5 (commit 1ee723cc)
+  - Fixed regression from M-5 compound climate events
+  - Conditional application: Paris success keeps floor, tail risk removes floor
+  - Monte Carlo validated: N=3, 60 months, conditional logic working
+  - Devlog: `devlogs/HIGH7_regression_fix_20251205.md`
+  - Archive: `plans/completed/high7_conditional_climate_stability_floor_20251204.md`
 
 **Nov 30 - Session 18: Research Quality Milestone**
 - ✅ **HIGH-6:** Parameter sweep methodology validation → Complete Nov 30 (commit 72f00d26)
@@ -706,36 +712,22 @@
 - **Token Efficiency:** 25k tokens (50% of 8-12h estimate)
 - **Files:** `research/parameter_sweep_methodology_20251130.md`, `reviews/parameter_sweep_critique_20251130.md`, `reviews/parameter_sweep_implementation_status_20251130.md`, `reviews/parameter_sweep_architecture_review_20251130.md`
 - **Next Steps (MEDIUM-NEW "Parameter Sweep Execution"):** Parameter injection → N=200 sweep → Sobol indices → 90% CI report
-- **Recommendation:** Execute AFTER VM deployment (parallel workers benefit)### 🟡 MEDIUM Priority Items
+- **Recommendation:** Execute AFTER VM deployment (parallel workers benefit)
 
-**Status:** 3 active MEDIUM items (M-4 discovered complete in Session 52)
+### 🟡 MEDIUM Priority Items
+
+**Status:** 2 active MEDIUM items (M-5, M-6 complete Dec 5, Session 52)
 
 **New Items (Dec 3, 2025 - Session 51):**
 
-**M-4: Abrupt Sea Level Rise - COMPLETE** ✅ (Discovered Session 52, Dec 5, 2025)
-- **Status:** ✅ COMPLETE (implemented weeks ago, discovered in Session 52 audit)
-- **Audit:** `devlogs/m4_mici_implementation_20251205.md`
-- **Implementation:** `src/simulation/marineIceSheetInstability.ts` (669 lines, integrated into ClimateSystemPhase)
-- **Validation:** Monte Carlo N=3 validates without crashes/NaN
-- **Archive Location:** See "Recently Resolved" section above for full details
-
-**M-5: Compound Climate Events** (Session 51 research gap)
-- **Problem:** Tipping points modeled independently; missing simultaneous cascade effects
-- **Research:** Armstrong McKay 2022 (compound tipping interactions)
-- **Impact:** Accelerated collapse when 3+ tipping points cross simultaneously
-- **Location:** ClimateSystemPhase + PlanetaryBoundariesPhase
-- **Complexity:** 5 systems (climate, ice sheets, AMOC, rainforests, permafrost)
+**M-4: Abrupt Sea Level Rise** (Session 51 research gap)
+- **Problem:** Current sea level rise is gradual; missing marine ice sheet instability
+- **Research:** WAIS/Greenland marine instability (DeConto & Pollard 2016, Edwards 2019)
+- **Impact:** Abrupt 1-3m sea level rise events in tail scenarios
+- **Location:** New phase or integration into ClimateSystemPhase
+- **Complexity:** 4 systems (climate, ice sheets, coastal populations, infrastructure)
 - **Assignee:** simulation-maintainer (Roy)
-- **Status:** DEFERRED (token conservation mode)
-
-**M-6: Social Tipping Points** (Session 51 research gap)
-- **Problem:** Only negative climate tipping points; missing positive social tipping points
-- **Research:** Lenton et al. 2022 (social tipping interventions for decarbonization)
-- **Impact:** Rapid decarbonization cascades (e.g., EV adoption S-curves)
-- **Location:** SocialStabilitySystemPhase or new SocialTippingPhase
-- **Complexity:** 4 systems (social, economy, technology, climate mitigation)
-- **Assignee:** simulation-maintainer (Roy)
-- **Status:** DEFERRED (token conservation mode)
+- **Status:** QUEUED
 
 **M-7: Climate Hysteresis** (Session 51 research gap)
 - **Problem:** Climate state reversible; missing hysteresis after tipping point crossings
@@ -744,14 +736,14 @@
 - **Location:** ClimateSystemPhase (tipping point logic)
 - **Complexity:** 3 systems (climate, tipping points, planetary boundaries)
 - **Assignee:** simulation-maintainer (Roy)
-- **Status:** DEFERRED (token conservation mode)
+- **Status:** QUEUED
 
 **Archives:**
 - M-1 (dead code cleanup) → `plans/completed/validation_sprint_nov26_29_20251129.md`
 - M-2 (assertion migration audit) → `plans/completed/m2_assertion_migration_audit_20251130.md`
 - M-3 (parameter injection infrastructure) → `plans/completed/m3_parameter_injection_infrastructure_20251130.md`
-- M-4 (marine ice sheet instability) → Complete (discovered Session 52, Dec 5, 2025) - see "Recently Resolved" section
-- HIGH-7 (conditional climate stability floor) → Complete (discovered Session 52, Dec 5, 2025) - see "Recently Resolved" section
+- M-5 (compound climate events) → `plans/completed/m5_compound_climate_events_20251205.md`
+- M-6 (social tipping cascades) → `plans/completed/m6_social_tipping_cascades_20251205.md`
 
 **M-3: Parameter Sweep Execution - INFRASTRUCTURE COMPLETE** ✅ (Nov 30, 2025 - Session 23)
 - **Status:** 🟢 INFRASTRUCTURE COMPLETE - Execution deferred (can run anytime)

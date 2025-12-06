@@ -156,7 +156,7 @@ Co-Authored-By: Claude <noreply@anthropic.com>" 2>&1 || echo "Nothing to commit"
     # Pull latest changes
     log_info "Pulling latest from main..."
     PULL_START=$(date +%s)
-    if ! git pull origin main 2>&1; then
+    if ! git fetch origin && git reset --hard origin/main origin main 2>&1; then
         log_error "Pull failed - likely merge conflict"
         log_info "Invoking Claude to resolve merge conflicts..."
 

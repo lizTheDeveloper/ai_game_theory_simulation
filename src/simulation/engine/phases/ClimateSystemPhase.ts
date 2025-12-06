@@ -39,6 +39,7 @@ import {
   capWithBifurcationAwareness,
 } from '@/simulation/utils/assertions';
 import { updateGeoengineering } from '../../geoengineering';
+import { updateMICI } from '../../marineIceSheetInstability';
 
 /**
  * Climate impact event with delayed effects (from ClimateImpactCascade)
@@ -186,6 +187,11 @@ export class ClimateSystemPhase implements SimulationPhase {
       console.log(`  Total Progress: ${(system.totalProgress * 100).toFixed(1)}%`);
       console.log(`  Cascade Multiplier: ${system.cascadeMultiplier.toFixed(2)}x`);
     }
+
+    // === MARINE ICE SHEET INSTABILITY (Dec 5, 2025) ===
+    // M-4: Check for abrupt sea level rise pulses from ice sheet collapse
+    // Research: DeConto et al. (2021), Morlighem et al. (2024)
+    updateMICI(state, rng);
   }
 
   /**
@@ -360,58 +366,6 @@ export class ClimateSystemPhase implements SimulationPhase {
           month: state.currentMonth
         }
       );
-
-      // === MARINE ICE SHEET INSTABILITY (M-4, Dec 5, 2025) ===
-      // Check for MICI trigger on WAIS and Greenland ice sheets
-      // Research: DeConto & Pollard (2016, 2021), Edwards et al. (2019)
-      // Validation: reviews/m4_m7_research_validation_20251205.md
-      if (element.marineInstabilityRisk && !element.marineInstabilityRisk.miciTriggered) {
-        const roll = rng();
-        if (roll < element.marineInstabilityRisk.miciProbability) {
-          element.marineInstabilityRisk.miciTriggered = true;
-          console.warn(`  ☢️ MARINE ICE SHEET INSTABILITY: ${element.name}`);
-          console.log(`     Abrupt collapse rate: ${element.marineInstabilityRisk.miciCollapseRate} mm/year`);
-          console.log(`     Total contribution potential: ${element.marineInstabilityRisk.totalContributionM}m`);
-        }
-      }
-
-      // Accumulate MICI sea level contribution if active
-      if (element.marineInstabilityRisk?.miciTriggered) {
-        // Convert mm/year to m/month
-        const contributionThisMonth = assertFinite(
-          (element.marineInstabilityRisk.miciCollapseRate / 1000) / 12,
-          {
-            location: 'ClimateSystemPhase.updateTippingTransitions (MICI)',
-            valueName: 'contributionThisMonth',
-            month: state.currentMonth,
-            additionalInfo: {
-              elementId: element.id,
-              collapseRate: element.marineInstabilityRisk.miciCollapseRate
-            }
-          }
-        );
-
-        element.marineInstabilityRisk.currentContributionM = assertInRange(
-          Math.min(
-            element.marineInstabilityRisk.currentContributionM + contributionThisMonth,
-            element.marineInstabilityRisk.totalContributionM
-          ),
-          0,
-          element.marineInstabilityRisk.totalContributionM,
-          {
-            location: 'ClimateSystemPhase.updateTippingTransitions (MICI)',
-            valueName: `element[${element.id}].marineInstabilityRisk.currentContributionM`,
-            month: state.currentMonth
-          }
-        );
-
-        // Log significant milestones (every 0.5m)
-        const milestoneM = Math.floor(element.marineInstabilityRisk.currentContributionM * 2) / 2;
-        const prevMilestoneM = Math.floor((element.marineInstabilityRisk.currentContributionM - contributionThisMonth) * 2) / 2;
-        if (milestoneM > prevMilestoneM && milestoneM > 0) {
-          console.log(`  🌊 ABRUPT SEA LEVEL RISE: ${element.name} contributed ${milestoneM.toFixed(1)}m (${(milestoneM / element.marineInstabilityRisk.totalContributionM * 100).toFixed(0)}%)`);
-        }
-      }
     }
   }
 
@@ -424,41 +378,31 @@ export class ClimateSystemPhase implements SimulationPhase {
 
     const cascadeCount = activeCascadingElements.length;
 
-    // === M-5: COMPOUND CLIMATE EVENTS (Dec 5, 2025) ===
-    // Research: Wunderling et al. (2024) ESD - 49% amplification from compound tipping
-    // Armstrong McKay et al. (2022) Science - network effects across 16 tipping elements
-    // Validation: reviews/m4_m7_research_validation_20251205.md - "widen uncertainty, add sensitivity analysis"
     let cascadeMultiplier: number;
     if (cascadeCount === 0 || cascadeCount === 1) {
-      cascadeMultiplier = 1.0; // No cascade effect
+      cascadeMultiplier = 1.0;
     } else if (cascadeCount === 2) {
-      // 2 tipping points: modest amplification (10-20%)
-      cascadeMultiplier = 1.15;
+      // Two elements: moderate amplification
+      cascadeMultiplier = 1.5;
     } else if (cascadeCount === 3) {
-      // 3 tipping points: COMPOUND CASCADE EFFECT
-      // Research: 49% amplification baseline (Wunderling et al. 2024)
-      // Validation adjustment: uncertainty range 25-75% (0.5x to 1.5x the 49% baseline)
-      cascadeMultiplier = 1.49;
-      console.warn(`  🚨 COMPOUND CLIMATE EVENT: ${cascadeCount} cascading tipping points active`);
-      console.log(`     Amplification factor: ${cascadeMultiplier.toFixed(2)}x (49% above baseline)`);
+      // THREE+ ELEMENTS: Critical compound threshold
+      // Research: Communications Earth & Environment (2024)
+      // "Alter expected tipped element count by more than factor of 2"
+      cascadeMultiplier = 2.0;  // Factor of 2x from research
+    } else if (cascadeCount === 4) {
+      cascadeMultiplier = 2.5;
     } else {
-      // 4+ elements: runaway cascade (further amplification)
-      cascadeMultiplier = 1.75; // 75% amplification for extreme cases
-      console.warn(`  💥 RUNAWAY CASCADE: ${cascadeCount} cascading tipping points active`);
-      console.log(`     Amplification factor: ${cascadeMultiplier.toFixed(2)}x (EXTREME COMPOUND EVENT)`);
+      // 5+ elements: Full cascade ("Hothouse Earth" scenario)
+      cascadeMultiplier = 3.0;
     }
 
     system.cascadeMultiplier = assertInRange(
       cascadeMultiplier,
-      1.0, 2.0,
+      1.0, 3.0,
       {
         location: 'ClimateSystemPhase.calculateTippingCascades',
         valueName: 'system.cascadeMultiplier',
-        month: state.currentMonth,
-        additionalInfo: {
-          cascadeCount,
-          activeElements: activeCascadingElements.map(e => e.id)
-        }
+        month: state.currentMonth
       }
     );
   }
@@ -598,9 +542,56 @@ export class ClimateSystemPhase implements SimulationPhase {
     // Research: Scheffer et al. (2014) - regime shifts create self-reinforcing dynamics
     const regimeMultiplier = state.bifurcationState?.currentRegime === 'ecological-collapse' ? 1.5 : 1.0;
 
-    // Apply tipping point degradation (floor is applied later in Environmental Feedback step)
+    // HIGH-7 (Dec 3, 2025): Conditional climate stability floor
+    // Research: Wunderling et al. (2024) "Climate tipping point interactions and cascades"
+    // - "Many tipping interactions are destabilizing" (83% of papers, not self-limiting)
+    // - Cascades cannot be ruled out at 1.5-2C warming
+    // - 83% of papers show destabilizing interactions (no support for stability floor)
+    //
+    // Option C: Conditional Floor (Policy Stabilization vs Natural Collapse)
+    // Apply 5% floor ONLY in stabilization scenarios (Paris success, few tipping cascades)
+    // Remove floor in tail risk scenarios (Paris failure + cascade risk) to match research
+    //
+    // Stabilization scenarios (floor applies):
+    // - Paris Agreement success (warming < 1.5°C)
+    // - Low cascade risk (< 3 triggered tipping elements OR warming < 2.0°C)
+    //
+    // Tail risk scenarios (no floor, natural collapse):
+    // - Paris failure (warming >= 2.0°C) AND cascade risk (>= 3 tipping elements)
+    //
+    // Research Grade: B- (conditional approach aligns with Wunderling 2024, ACCESS-ESM-1.5 2024)
+    // @see research/climate_stability_mechanisms_2024_2025_update.md
+    // @see research/research_validation_session_51_20251203.md (lines 54-58)
+    // @see reviews/climate_stability_floor_debate_20251203.md
+    // @see plans/proposed_climate_stability_floor_conditional_20251203.md
+    // @see Wunderling et al. (2024) DOI: 10.5194/esd-15-41-2024
+    // @see Zhang et al. (2024) ACCESS-ESM-1.5 DOI: 10.5194/esd-15-1353-2024
+    const currentTemperature = assertFinite(
+      state.planetaryBoundariesSystem?.boundaries?.climate_change?.currentValue ?? 0,
+      {
+        location: 'ClimateSystemPhase.conditionalStabilityFloor',
+        valueName: 'currentTemperature',
+        month: state.currentMonth
+      }
+    );
+    const parisSuccess = currentTemperature < 1.5;  // Paris Agreement 1.5C target
+    const cascadeRisk = system.triggeredCount >= 3 && currentTemperature >= 2.0;  // Tail risk: many cascades + high warming
+
+    // Floor only applies in stabilization scenarios (policy intervention successful)
+    // In tail risk scenarios, allow natural collapse per Wunderling et al. (2024)
+    const stabilityFloor = (parisSuccess || !cascadeRisk) ? 0.05 : 0.0;
+
+    // Log when floor is removed in tail risk scenarios
+    if (stabilityFloor === 0.0 && system.triggeredCount > 0) {
+      console.warn(
+        `⚠️ Tail risk scenario: Climate stability floor removed ` +
+        `(${system.triggeredCount} tipping elements, ${currentTemperature.toFixed(2)}°C warming)`
+      );
+      console.log(`   Research: Wunderling et al. (2024) - "many tipping interactions are destabilizing"`);
+    }
+
     state.environmentalAccumulation.climateStability = assertInRange(
-      oldStability * (1 - totalClimateStabilityImpact * 0.01 * regimeMultiplier),
+      Math.max(stabilityFloor, oldStability * (1 - totalClimateStabilityImpact * 0.01 * regimeMultiplier)),
       0, 1,
       {
         location: 'ClimateSystemPhase.applyTippingImpacts',
@@ -683,34 +674,24 @@ export class ClimateSystemPhase implements SimulationPhase {
     // FIX: Only overwrite if calculated value is valid (>= 0.1). Otherwise, keep existing value.
     // Rationale: Climate stability should NEVER be exactly zero at initialization.
     // If planetary boundaries produce 0.000, that's a configuration bug, not reality.
-    //
-    // HIGH-7 (Dec 5, 2025): Apply conditional stability floor HERE (not in tipping point impacts)
-    // This runs AFTER tipping point degradation, so floor is final safeguard
     const calculatedStability = climateState.climateStability;
     const currentStability = state.environmentalAccumulation.climateStability;
 
-    // Get temperature for floor conditions
+    // HIGH-7: Calculate conditional stability floor (same logic as applyTippingImpacts)
     const currentTemperature = assertFinite(
       state.planetaryBoundariesSystem?.boundaries?.climate_change?.currentValue ?? 0,
       {
-        location: 'ClimateSystemPhase.environmentalFeedback.conditionalFloor',
+        location: 'ClimateSystemPhase.executeEnvironmentalFeedback.conditionalFloor',
         valueName: 'currentTemperature',
         month: state.currentMonth
       }
     );
-
-    // Paris Agreement trajectory: < 2°C warming
-    const parisOnTrack = currentTemperature < 2.0;
-
-    // Tail risk: Either many cascades (3+) OR extreme warming (> 3°C)
-    const triggeredCount = state.tippingPointSystem?.triggeredCount ?? 0;
-    const tailRisk = triggeredCount >= 3 || currentTemperature > 3.0;
-
-    // Floor applies ONLY when Paris on track AND NOT in tail risk
-    const stabilityFloor = (parisOnTrack && !tailRisk) ? 0.05 : 0.0;
+    const parisSuccess = currentTemperature < 1.5;  // Paris Agreement 1.5C target
+    const cascadeRisk = state.tippingPointSystem.triggeredCount >= 3 && currentTemperature >= 2.0;  // Tail risk
+    const stabilityFloor = (parisSuccess || !cascadeRisk) ? 0.05 : 0.0;
 
     if (calculatedStability >= 0.1) {
-      // Calculated value is reasonable, use it (with floor)
+      // Calculated value is reasonable, use it (with conditional floor)
       state.environmentalAccumulation.climateStability = Math.max(stabilityFloor, calculatedStability);
     } else if (currentStability >= 0.1) {
       // DEFENSIVE: If planetary boundaries produce nonsense (<0.1) but current value is reasonable,
@@ -724,20 +705,11 @@ export class ClimateSystemPhase implements SimulationPhase {
           `(climate_change.currentValue = ${climateBoundaryValue.toFixed(2)})`
         );
       }
-      // Keep current value, apply floor
+      // Keep current value, apply conditional floor
       state.environmentalAccumulation.climateStability = Math.max(stabilityFloor, currentStability);
     } else {
-      // Both calculated and current are near-zero - check if floor applies
+      // Both calculated and current are near-zero - apply conditional floor (may be 0.0 in tail risk)
       state.environmentalAccumulation.climateStability = Math.max(stabilityFloor, calculatedStability);
-
-      // Log when floor is removed in tail risk scenarios
-      if (stabilityFloor === 0.0 && triggeredCount > 0) {
-        console.warn(
-          `⚠️ Tail risk scenario: Climate stability floor removed ` +
-          `(${triggeredCount} tipping elements, ${currentTemperature.toFixed(2)}°C warming)`
-        );
-        console.log(`   Research: Wunderling et al. (2024) - "many tipping interactions are destabilizing"`);
-      }
     }
 
     const events: GameEvent[] = [];
