@@ -1,249 +1,319 @@
-# Research Critique: Marine Ice Sheet Instability
-
-**Reviewer:** Orchestrator (performing Quality Gate 1 validation)
-**Date:** December 5, 2025
-**Research Document:** `research/marine_ice_sheet_instability_20251205.md`
-**Status:** ✅ PASS WITH CAVEATS
-
-## Executive Summary
-
-The research document provides a solid foundation for M-4 implementation with appropriate caveats. The 2024 revision significantly changes the risk profile, making MICI a tail risk rather than central projection for 21st century. Recommended implementation approach: model MICI as low-probability, high-impact event rather than deterministic progression.
-
-## Validation Findings
-
-### ✅ STRENGTHS
-
-1. **Multi-Source Validation**
-   - Foundational paper (DeConto & Pollard 2016) properly cited
-   - Calibration study (Edwards et al. 2019) adds probabilistic framework
-   - 2024 update correctly identifies downward revision
-   - Sources are peer-reviewed, high-impact journals (Nature, Science Advances)
-
-2. **Appropriate Uncertainty Acknowledgment**
-   - Document explicitly states "not well constrained"
-   - Provides uncertainty ranges (Factor of 5 for 21st century, Factor of 10 for 22nd)
-   - Distinguishes modal estimates from tail risks
-   - Notes controversy in field (MICI debate)
-
-3. **Parameter Extraction Methodology**
-   - Temperature triggers (1.5-2.0°C) well-supported across multiple studies
-   - Probabilistic framework (not deterministic threshold) appropriate
-   - Timescales realistic (multi-decadal to century-scale)
-   - Economic/social impacts grounded in empirical studies
-
-### ⚠️ CRITICAL CAVEATS
-
-1. **2024 Paradigm Shift Not Fully Integrated**
-
-**Issue:** The August 2024 Science Advances study ("WAIS may not be vulnerable to marine ice cliff instability during the 21st century") fundamentally challenges the DeConto & Pollard (2016) mechanism for the simulation's primary timeframe (2025-2100).
-
-**Implication:** MICI should be implemented as a **tail risk event** (1-5% probability under extreme warming), not a central projection (71% probability per Edwards 2019 RCP8.5).
-
-**Recommendation:** Use conservative probability function that reflects 2024 downgrade:
-```typescript
-// CONSERVATIVE (post-2024 revision)
-MICI_probability_21st_century = {
-  temp < 2.0°C: 0.001 (background)
-  temp 2.0-3.0°C: 0.01-0.03 (emerging, but unlikely per 2024)
-  temp 3.0-4.0°C: 0.03-0.10 (tail risk)
-  temp > 4.0°C: 0.10-0.20 (significant tail risk)
-}
-
-// NOT the Edwards 2019 values (too aggressive post-2024 revision)
-```
-
-2. **Reversibility & Path Dependence**
-
-**Issue:** Document correctly states "effectively irreversible" but doesn't fully specify the hysteresis dynamics for simulation.
-
-**Gap:** What happens if temperatures decrease after MICI trigger? Does the collapse continue? At what rate?
-
-**Recommendation:** Implement as truly irreversible - once triggered, collapse continues regardless of temperature changes. This is conservative and matches paleoclimate evidence.
-
-3. **Regional Heterogeneity Underspecified**
-
-**Issue:** WAIS, EAIS, and Greenland have different vulnerabilities and timescales, but parameters treat them somewhat uniformly.
-
-**Specific Concerns:**
-- WAIS is marine-based, more vulnerable (2024 study still confirms this, just disputes *rapid* MICI)
-- EAIS is more stable, higher elevation
-- Greenland has different oceanic/atmospheric drivers
-
-**Recommendation:** If implementing detailed regional dynamics, split into separate systems. For M-4 scope (4 systems: climate, ice sheets, populations, infrastructure), aggregate approach is acceptable but should favor WAIS-like parameters (more conservative for risk assessment).
-
-4. **21st vs 22nd Century Timing**
-
-**Critical Distinction:** The 2024 revision doesn't say MICI *won't happen* - it says it's unlikely *in 21st century*. The 22nd-23rd century risk remains substantial.
-
-**Simulation Design Implication:**
-- Early/mid-game (2025-2100): Low probability, tail risk only
-- Late/end-game (2100-2200): Risk increases substantially if warming sustained
-- Time-dependent modifier (per research doc) is appropriate
-
-**Validation:** This matches paleoclimate evidence - ice sheets respond on multi-century timescales, not decades.
-
-### 🔍 CONTRADICTORY EVIDENCE CHECK
-
-**Searched for contradictory findings:**
-
-1. **Temperature Thresholds:**
-   - ✅ 1.5-2.0°C range consistently supported (Carbon Brief, IPCC AR6)
-   - ✅ No contradictory studies found suggesting higher thresholds
-   - ⚠️ Some studies suggest committed loss even below 1.5°C (more conservative)
-
-2. **MICI Mechanism:**
-   - ⚠️ 2024 Science Advances study contradicts *rapid* MICI in 21st century
-   - ⚠️ Bassis et al. (2021) questioned MICI physics
-   - ✅ Mechanism still considered plausible, just slower/later than DeConto 2016
-
-3. **Economic Impacts:**
-   - ✅ Asia damage estimates ($167B-$338B) match World Bank/UNEP projections
-   - ✅ Population displacement (100-200M per meter) consistent with multiple studies
-   - ⚠️ High variance in regional estimates (Factor of 2-3), but research doc acknowledges this
-
-### 🎯 METHODOLOGICAL ASSESSMENT
-
-**Research Quality:** HIGH
-
-- Peer-reviewed sources from top journals
-- Multiple independent modeling groups converge on key findings
-- Appropriate uncertainty quantification
-- 2024 update incorporated (recent findings)
-
-**Potential Blind Spots:**
-
-1. **Optimism Bias in 2024 Revision?**
-   - Question: Is 2024 "MICI unlikely in 21st century" finding premature?
-   - Counterpoint: Based on improved ice sheet models and Thwaites observations
-   - Assessment: Appears methodologically sound, but could be revised again
-
-2. **Cascading Impacts Underestimated?**
-   - Displacement numbers (100-200M per meter) are direct impacts
-   - Indirect impacts (conflict, migration crises, state failure) not quantified
-   - Research doc appropriately notes this is "direct costs only"
-
-3. **Adaptation Not Modeled**
-   - Economic impacts assume no proactive adaptation
-   - Real-world: Some regions will build seawalls, relocate infrastructure
-   - Research doc notes this as "without infrastructure" vs "with adaptation" differential
-
-### 🚨 FAILURE MODES FOR SIMULATION
-
-**If we implement based on this research, what could go wrong?**
-
-1. **Over-Estimate 21st Century Risk**
-   - **Probability:** Medium (if using Edwards 2019 probabilities directly)
-   - **Mitigation:** Use conservative post-2024 probabilities (see above)
-   - **Impact:** Simulation shows extinction/collapse in scenarios that may be overblown
-
-2. **Under-Estimate 22nd Century Risk**
-   - **Probability:** Low-Medium (parameters are long-term focused)
-   - **Mitigation:** Time-dependent multiplier (research doc includes this)
-   - **Impact:** Late-game scenarios might underestimate collapse risk
-
-3. **Miss Regional Dynamics**
-   - **Probability:** Medium (aggregate ice sheet approach)
-   - **Mitigation:** Favor WAIS parameters (more vulnerable)
-   - **Impact:** Some regional nuance lost, but acceptable for M-4 scope
-
-4. **Ignore Adaptation**
-   - **Probability:** High (economic impacts assume no adaptation)
-   - **Mitigation:** Document assumption, consider future enhancement
-   - **Impact:** Economic/social impacts may be upper bound
-
-### ✅ GATE DECISION: PASS WITH MODIFICATIONS
-
-**Verdict:** Research is sound and suitable for implementation **with the following mandatory modifications:**
-
-1. **Use Conservative Probability Function**
-   - Reflect 2024 downgrade: MICI is tail risk in 21st century, not central projection
-   - Probabilities should be 5-10x lower than Edwards 2019 RCP8.5 values
-   - Time-dependent: increase risk post-2100
-
-2. **Implement True Irreversibility**
-   - Once triggered, collapse continues regardless of temperature changes
-   - No "recovery" mechanic - matches paleoclimate evidence
-
-3. **Document Assumptions Clearly**
-   - Aggregate ice sheet (not regional detail)
-   - Direct costs only (no indirect cascades beyond displacement)
-   - No adaptation modeling (conservative upper bound)
-
-4. **Phase Implementation**
-   - Start with basic trigger → sea level rise → displacement
-   - Infrastructure/economic cascades in follow-up enhancement
-   - Monte Carlo validation (N≥10) to verify tail risk behavior
-
-### 📋 RECOMMENDED PARAMETERS (FINAL)
-
-```typescript
-// Post-2024 Conservative Estimates
-MICI_TRIGGER_TEMP_MIN: 1.5°C  // Earliest possible
-MICI_TRIGGER_TEMP_LIKELY: 2.0°C  // Most likely threshold
-MICI_TRIGGER_TEMP_MAX: 2.5°C  // Upper bound
-
-// 21st Century Probabilities (REVISED DOWN per 2024)
-MICI_annual_probability = {
-  temp < 1.5°C: 0.0001 per year
-  temp 1.5-2.0°C: 0.001 per year
-  temp 2.0-2.5°C: 0.005 per year
-  temp 2.5-3.0°C: 0.01 per year
-  temp 3.0-4.0°C: 0.03 per year
-  temp > 4.0°C: 0.05 per year
-}
-
-// Time Modifier (risk increases post-2100)
-time_modifier = {
-  pre-2100: 0.5x
-  2100-2150: 1.0x
-  2150-2200: 2.0x
-  post-2200: 3.0x
-}
-
-// Magnitude (once triggered)
-initial_decade_rise: 0.1-0.2m (10-20cm)
-sustained_contribution: 0.3-0.5m cumulative by 2100
-long_term_potential: 3-8m by 2300
-
-// Timescales
-onset_to_noticeable: 10-30 years
-acceleration_phase: 30-100 years
-plateau_phase: 100-300 years
-
-// Impacts (per meter of rise)
-coastal_displacement: 100-200M people
-infrastructure_damage: 3-7% coastal GDP
-agricultural_loss: 10-25% coastal farmland
-```
-
-## Quality Gate Result
-
-**STATUS:** ✅ **PASS** - Proceed to implementation with mandatory modifications
-
-**Confidence Level:** HIGH for trigger temps, MEDIUM for 21st century magnitude, LOW-MEDIUM for 22nd+ century
-
-**Risk Level:** LOW - With conservative probabilities, simulation will model MICI as tail risk (appropriate per 2024 research)
-
-**Next Phase:** simulation-maintainer (Roy) implementation with modified parameters
+# Marine Ice Sheet Instability Research Critique
+**Date:** 2025-12-05
+**Reviewer:** Sylvia (Research Skeptic)
+**Document Reviewed:** `research/marine_ice_sheet_instability_20251205.md` (838 lines)
+**Research ID:** M-4 Abrupt Sea Level Rise Modeling
 
 ---
 
-## Appendix: Key Studies for Implementation Reference
+## Executive Summary
 
-1. **DeConto & Pollard (2016)** - Nature 531:591-597
-   - Use: Mechanism description, long-term projections (2300)
-   - Don't use: 21st century quantitative projections (revised downward)
+**VERDICT: CONDITIONAL PASS**
 
-2. **Edwards et al. (2019)** - Nature 566:58-64
-   - Use: Probabilistic framework, uncertainty quantification
-   - Don't use: Raw RCP8.5 probabilities (too high per 2024 revision)
+The research is methodologically sound with appropriate source quality, but contains several concerns that require parameter adjustments before implementation proceeds. The document correctly identifies the 2024 MICI downgrade as the dominant finding, but some parameters remain more aggressive than current consensus supports. Key issues:
 
-3. **Science Advances (2024)** - "WAIS and MICI in 21st century"
-   - Use: Conservative 21st century risk assessment
-   - Key message: Tail risk, not central projection
+1. **Population displacement figure (93.5M per meter) lacks rigorous sourcing** - methodology critiques show exposure is not a reliable proxy for migration
+2. **Temperature thresholds correctly identified but irreversibility treatment oversimplified** - Greenland research shows overshoot recovery is possible
+3. **Abrupt pulse probability (5-20% range) may be too aggressive** - 2024 research suggests <10% even under extreme warming
 
-4. **World Economic Forum / Frontiers / Nature** - Economic/social impacts
-   - Use: Displacement numbers, infrastructure costs
-   - Note: Direct costs only, no indirect cascades
+**Recommendation:** Proceed with implementation after parameter adjustments specified in Section 5.
 
-**Reviewer Sign-off:** Research foundation is solid. Implementation may proceed to Phase 2.
+---
+
+## 1. Source Quality Assessment
+
+### 1.1 Strengths
+
+**Tier 1 sources (high quality, correctly weighted):**
+- DeConto & Pollard (2016, 2021) - Foundational, heavily cited
+- Morlighem et al. (2024) - Critical MICI reassessment, appropriately emphasized
+- Armstrong McKay et al. (2022) - Comprehensive tipping point review in Science
+
+**Strong methodological choice:**
+The research correctly centers the 2024 Morlighem findings that challenge MICI for 21st century timescales. This is the right call. Quote from research: "All three independent models show NO further retreat in the 21st century after hypothetical ice shelf collapse."
+
+**Good uncertainty acknowledgment:**
+Section 8 ("Uncertainties and Limitations") properly flags the 26x spread in collapse timescales (500-13,000 years) and notes model physics gaps.
+
+### 1.2 Weaknesses
+
+**Coastal impact sources are weaker:**
+- Bloomberg (sponsored content, not peer-reviewed)
+- Nicholls et al. (2011) is dated for displacement estimates
+- The 93.5M figure appears extrapolated from the 187M/2m figure without rigorous methodology validation
+
+**CRITICAL: Population displacement methodology flawed.**
+Per PMC review (2021): "Given that exposure to sea level rise is not a reliable proxy indicator for migration, none of these studies rigorously or reliably quantifies the number of people who might be expected to move due to sea level rise."
+
+The research treats exposure = displacement, which overstates certainty.
+
+**Economic damage sources:**
+- UK National Oceanographic Centre figure ($14T/year by 2100) lacks primary citation
+- Damage functions are acknowledged as highly uncertain (Tier 3 confidence) but parameters treat them as reliable
+
+### 1.3 Contradictory Evidence Not Included
+
+**Missing: Edwards et al. (2019) "Revisiting Antarctic ice loss due to marine ice-cliff instability" (Nature)**
+This paper found that MICI-based projections were not reproducible and that ice cliff failure may be self-limiting due to formation of ice melange (jumbled icebergs) that stabilizes remaining cliffs.
+
+**Key quote from 2024 research:** "Breaking ice tends to form a melange, a dense, jumbled slurry of icebergs and sea ice. This frozen slurry can act as a retaining wall, at least temporarily stabilizing the cliffs against collapse."
+
+This stabilizing mechanism is not modeled in the proposed parameters.
+
+**Missing: Expert survey uncertainty ranges**
+Horton et al. (2020) expert survey found 0.63-1.32m likely range by 2100 under RCP8.5, with 45% probability of exceeding IPCC upper bound. The research cites this range but doesn't incorporate the expert disagreement spread.
+
+---
+
+## 2. Parameter Critique
+
+### 2.1 Temperature Thresholds
+
+**WAIS: 1.0-1.5C - ACCEPTABLE but uncertain**
+
+The research correctly identifies the Armstrong McKay et al. (2022) range. However, note:
+- "High confidence" in tipping element status does NOT mean high confidence in exact threshold
+- The 1.0C lower bound is at the pessimistic extreme
+- Regional Antarctic warming vs global average warming distinction is sometimes conflated
+
+**Recommendation:** Use 1.25C as median (already proposed), acknowledge that 1.0C is worst-case, not expected case.
+
+**GIS: 0.8-1.5C - QUESTIONABLE lower bound**
+
+The 0.8C figure comes from the worst-case of Robinson et al. (2012) estimate (0.8-3.2C range). The most likely threshold is 1.5C per recent synthesis.
+
+**Contradictory evidence:** The 0.8C threshold produces a "conservative estimate" per the methodology, meaning it intentionally understates the threshold to account for transient overshoot effects. Using it as literal threshold may be double-conservative.
+
+**Recommendation:** Raise GIS_TIPPING_MIN from 0.8C to 1.0C for consistency with WAIS and to avoid triggering GIS before WAIS (which would be historically unprecedented).
+
+### 2.2 Sea Level Rise Rates
+
+**INITIAL_ACCELERATION: 0.002 m/year (2mm/year) - ACCEPTABLE**
+Matches current Thwaites observations.
+
+**RAPID_MISI_PHASE: 0.003 m/year (3mm/year) - ACCEPTABLE**
+Consistent with modeling, though at higher end of range.
+
+**FULL_DEGLACIATION: 0.001 m/year (1mm/year) - ACCEPTABLE**
+Reasonable average over long timescales.
+
+### 2.3 Abrupt Pulse Parameters
+
+**ABRUPT_PULSE_PROBABILITY_BASE: 0.05 (5% per decade) - QUESTIONABLE**
+
+The research states "<10% for 21st century (unless warming >3C)" but then uses 5% per DECADE as base, which compounds to much higher probability over multiple decades.
+
+**Math check:**
+- 5% per decade over 8 decades (2025-2100) = 1 - (0.95^8) = 33.7% cumulative probability
+- This contradicts the stated "<10% for 21st century"
+
+**Recommendation:** Reduce to 0.02 (2% per decade) for base case, or restructure as per-century probability.
+
+**ABRUPT_PULSE_MAGNITUDE: 1.5m - AGGRESSIVE**
+
+The research states "0.5-3.0 meters (single ice sheet sector collapse)" but uses 1.5m as parameter. This is the midpoint, but abrupt pulses of this magnitude have no observational precedent in Holocene.
+
+Meltwater Pulse 1A (14-18m over 340 years) came from MULTIPLE ice sheets simultaneously and included continental ice sheets no longer present.
+
+**Recommendation:** Use 0.5m as base, allow 1.5m only under extreme warming (>3C) with cascading failures.
+
+### 2.4 Coastal Impact Parameters
+
+**DISPLACED_PER_METER: 93.5 million - POORLY SUPPORTED**
+
+**Problems:**
+1. Extrapolated from 187M/2m (Nicholls 2011), assumes linearity
+2. Exposure is not migration - many populations will adapt in place
+3. CoastalDEM corrections (Kulp & Strauss 2019) changed estimates by 3x
+4. Does not account for existing or future coastal defenses
+
+**More rigorous estimate:** Climate Central's CoastalDEM found 190M below projected high tide lines by 2100 under low emissions, 630M under high emissions. But this is EXPOSURE, not DISPLACEMENT.
+
+**Recommendation:**
+- Use 40-60M displaced per meter as more defensible estimate (accounts for adaptation, defenses)
+- Flag this as HIGHEST UNCERTAINTY parameter in implementation
+- Consider modeling adaptation/defense investment as modifier
+
+**INFRASTRUCTURE_DAMAGE_QUADRATIC coefficient: 3.0 - UNVERIFIED**
+
+The quadratic damage function is referenced but coefficient has no cited source. Copenhagen example (4x damage for 2x rise) suggests superlinearity but exact exponent is uncertain.
+
+**Recommendation:** Reduce coefficient to 2.0 (more conservative superlinear scaling) or add explicit uncertainty parameter.
+
+### 2.5 Feedback Parameters
+
+**AMOC_SLOWDOWN_PER_GIS_MELT: 0.15 Sv/m - SPECULATIVE**
+
+AMOC-ice sheet interactions are actively debated. Some research suggests WAIS melt could STABILIZE AMOC (mentioned in research), complicating simple linear relationships.
+
+**Recommendation:** Add bidirectional uncertainty; this interaction is poorly constrained.
+
+---
+
+## 3. Methodological Review
+
+### 3.1 Irreversibility Treatment - CONCERN
+
+**Research states:** "Once crossed, begin irreversible collapse trajectory (even if temperature later decreases)"
+
+**Contradictory evidence:** Bochow et al. (2023, Nature) found that "abrupt melting following temperature overshoot CAN be mitigated if cooling returns below 1.5C" for Greenland. This is actually cited in the research document but not incorporated into the implementation logic!
+
+**Quote from research Section 2.2:** "Recent research (2023) shows that abrupt melting following temperature overshoot CAN be mitigated if cooling returns below 1.5C"
+
+**Problem:** The implementation logic ignores this finding. Once `gisStable = false`, collapse is treated as irreversible regardless of subsequent cooling.
+
+**Recommendation:** Add recovery pathway if cooling occurs within IRREVERSIBILITY_THRESHOLD_YEARS (currently 30 years). Only lock in irreversibility after sustained warming beyond threshold duration.
+
+### 3.2 Regional vs Global Sea Level - ACKNOWLEDGED BUT NOT MODELED
+
+**Research correctly notes:** "WAIS collapse produces sea level rise 20-30% HIGHER than global average in Northern Hemisphere"
+
+**But parameters use:** Global mean only, with vague "apply regional multipliers for coastal impact calculations"
+
+**Recommendation:** Either implement regional multipliers explicitly or document this as simplification with known underestimate of Northern Hemisphere impacts.
+
+### 3.3 Ice Melange Stabilization - NOT MODELED
+
+2024 research identifies ice melange formation as key stabilizing mechanism that challenges MICI. This is not incorporated.
+
+**Recommendation:** Add stabilization probability modifier that reduces abrupt pulse likelihood as cumulative collapse proceeds (representing melange buildup).
+
+### 3.4 Confidence Bands Missing
+
+The research identifies Tier 1/2/3 confidence levels but implementation parameters don't carry forward uncertainty ranges. Every parameter should have associated uncertainty for sensitivity analysis.
+
+---
+
+## 4. Methodological Concerns
+
+### 4.1 Time Scale Mismatch
+
+The simulation runs monthly, but ice sheet dynamics operate on decadal-to-millennial timescales. Monthly probability checks for abrupt events may produce unrealistic clustering.
+
+**Example:** `ABRUPT_PULSE_PROBABILITY_BASE / 120` (per-month probability) creates 120 chances per decade for a supposedly rare event. Stochastic clustering could produce multiple pulses in rapid succession, which has no physical basis.
+
+**Recommendation:** Implement cooldown period after abrupt events (minimum 200 years between pulses per ice sheet sector) or use decade-level event checks rather than monthly.
+
+### 4.2 Cascade Probability Stacking
+
+The proposed logic increases abrupt pulse probability with temperature: `pulseProbability * (temp - 2.0)`. Combined with the existing conditional on `temp > 2.5`, this creates double-counting.
+
+**At 3.0C:**
+- Base: 5% per decade
+- Multiplier: (3.0 - 2.0) = 1.0 (no change)
+- Wait, this is additive, so at 3.0C it's still 5%
+- At 4.0C: 5% * 2.0 = 10%
+
+Actually, reviewing the code, this scales linearly with temperature above 2.0C. At 3.0C, probability = 5% * 1.0 = 5%. At 4.0C, probability = 5% * 2.0 = 10%. This is more reasonable than I initially thought, but the 2.5C gate AND the (temp - 2.0) multiplier create discontinuity.
+
+**Recommendation:** Simplify to single smooth function or document the threshold rationale.
+
+### 4.3 Food Security Feedback - AGGRESSIVE
+
+**Proposed code:** `state.foodSecurity.globalYield *= (1 - fraction * 0.5)`
+
+This applies 50% productivity loss on lost agricultural land, which compounds multiplicatively over time. With 23% agricultural land loss possible (high end), this could produce 11.5% yield reduction per year if applied annually.
+
+**This appears to be cumulative not annual, but implementation is ambiguous.**
+
+**Recommendation:** Clarify if this is applied once (stock) or per-step (flow). If per-step, this will produce unrealistic food collapse.
+
+---
+
+## 5. Implementation Recommendations
+
+### 5.1 Required Parameter Adjustments
+
+| Parameter | Research Value | Recommended Value | Rationale |
+|-----------|---------------|-------------------|-----------|
+| GIS_TIPPING_MIN | 0.8C | 1.0C | 0.8C is worst-case extreme |
+| ABRUPT_PULSE_PROBABILITY_BASE | 0.05 | 0.02 | Avoid >10% cumulative by 2100 |
+| ABRUPT_PULSE_MAGNITUDE | 1.5m | 0.5m (base) | No Holocene precedent for 1.5m pulses |
+| DISPLACED_PER_METER | 93.5M | 50M | Exposure != displacement |
+| INFRASTRUCTURE_DAMAGE_QUADRATIC | 3.0 | 2.0 | Unverified coefficient |
+
+### 5.2 Required Implementation Changes
+
+1. **Add GIS recovery pathway:** If cooling below 1.5C within 30 years of threshold crossing, allow reversal of `gisStable = false`
+
+2. **Add abrupt pulse cooldown:** Minimum 200-year gap between events per ice sheet sector
+
+3. **Clarify food security update:** Document as cumulative (stock) not annual (flow)
+
+4. **Add melange stabilization:** Reduce abrupt pulse probability by 20% after each pulse (representing ice debris stabilization)
+
+### 5.3 Sensitivity Analysis Requirements
+
+Before Monte Carlo validation, run sensitivity sweeps on:
+- Threshold temperatures (+/- 0.3C)
+- Collapse timescales (500-2000 years)
+- Abrupt pulse probability (1-5% range)
+- Displaced population (30-100M per meter)
+
+Flag any outcomes outside research-supported ranges.
+
+### 5.4 Documentation Updates
+
+Add to wiki:
+- Sea level rise regional variation caveat
+- MICI mechanism scientific controversy (2016-2024 evolution)
+- Exposure vs displacement distinction for coastal impacts
+
+---
+
+## 6. Confidence Assessment
+
+| Component | Confidence | Evidence Strength |
+|-----------|-----------|-------------------|
+| Temperature thresholds (WAIS) | HIGH | Multiple peer-reviewed sources, consistent ranges |
+| Temperature thresholds (GIS) | MEDIUM | Large uncertainty range, 0.8C extreme |
+| Sea level rise rates | HIGH | Observational data + modeling consensus |
+| Abrupt pulse probability | LOW | Limited observational data, 2024 reassessment |
+| Population displacement | LOW | Methodological critiques, exposure != migration |
+| Economic damages | LOW | High uncertainty in damage functions |
+| AMOC interactions | LOW | Actively debated, possibly bidirectional |
+| Food security impacts | MEDIUM | Regional data available, global extrapolation uncertain |
+
+---
+
+## 7. Verdict
+
+**CONDITIONAL PASS**
+
+The research demonstrates thorough engagement with primary literature and correctly identifies the 2024 MICI reassessment as the dominant recent finding. However, several parameters require adjustment to avoid overstating near-term catastrophic risk while still capturing long-term commitment.
+
+**Proceed to implementation with adjustments in Section 5.**
+
+**Quality Gate 1 Status:** PASSED WITH CONDITIONS
+**Next Steps:**
+1. Implementer (Roy) to incorporate parameter adjustments
+2. Skip architecture review for MEDIUM priority unless implementation introduces O(n^2) patterns
+3. Monte Carlo validation to verify outcome distributions match research probabilities
+
+---
+
+## Sources Consulted
+
+### Primary Contradictory Evidence
+- [Edwards et al. (2019) - Revisiting Antarctic ice loss due to marine ice-cliff instability, Nature](https://www.nature.com/articles/s41586-019-0901-4)
+- [Morlighem et al. (2024) - West Antarctic Ice Sheet may not be vulnerable to MICI, Science Advances](https://www.science.org/doi/10.1126/sciadv.ado7794)
+
+### Population Displacement Methodology Critiques
+- [PMC Review (2021) - A review of estimating population exposure to sea-level rise and relevance for migration](https://pmc.ncbi.nlm.nih.gov/articles/PMC8208600/)
+- [Kulp & Strauss (2019) - CoastalDEM elevation corrections, Nature Communications](https://www.nature.com/articles/s41467-019-12808-z)
+
+### Expert Uncertainty Surveys
+- [Horton et al. (2020) - Estimating global mean sea-level rise from expert survey, npj Climate](https://www.nature.com/articles/s41612-020-0121-5)
+
+### Greenland Recovery Evidence
+- [Bochow et al. (2023) - Overshooting the critical threshold for Greenland ice sheet, Nature](https://www.nature.com/articles/s41586-023-06503-9)
+
+### Threshold Uncertainty
+- [Armstrong McKay et al. (2022) - Exceeding 1.5C could trigger multiple climate tipping points, Science](https://www.science.org/doi/10.1126/science.abn7950)
+- [Robinson et al. (2012) - Multistability and critical thresholds of Greenland ice sheet, Nature Climate Change](https://www.nature.com/articles/nclimate1449)
+
+---
+
+**Reviewer:** Sylvia (Research Skeptic)
+**Review Duration:** ~1 hour
+**Methodology:** Web search for contradictory evidence, parameter verification against primary sources, implementation logic review
