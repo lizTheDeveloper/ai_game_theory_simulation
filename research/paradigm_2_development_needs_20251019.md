@@ -1,7 +1,8 @@
 ---
-oldest_source: 1981
+oldest_source: 1955
 newest_source: 2025
-last_verified: 2025-11-16
+last_verified: 2025-12-07
+verification_status: Updated with 2024-2025 sources for HDI, MPI, capability approach
 ---
 
 # Paradigm 2: Development Needs (Survival-Focused) Framework for Dystopia/Utopia Assessment
@@ -1353,16 +1354,29 @@ OPHI and UNDP (2024). "Global Multidimensional Poverty Index 2024: Poverty amid 
 
 ---
 
-### 10.2 Empirical Data Sources (2024)
+### 10.2 Empirical Data Sources (2024-2025)
 
-4. **UNDP (2024). *Human Development Report 2024.***
-   - Annual since 1990, 193 countries
-   - Available at hdr.undp.org
+4. **UNDP (2025). *Human Development Report 2025: A matter of choice: People and possibilities in the age of AI.***
+   - Published May 6, 2025
+   - 193 countries, calculates HDI values based on 2023 data
+   - Available at [hdr.undp.org](https://hdr.undp.org/content/human-development-report-2025)
+   - Technical notes: [HDR25 Technical Notes](https://hdr.undp.org/sites/default/files/2025_HDR/HDR25_Technical_Notes.pdf)
 
-5. **UNDP/OPHI (2024). *Global Multidimensional Poverty Index 2024.***
+4a. **UNDP (2024). *Human Development Report 2023/2024.***
+   - Previous year data for comparison
+   - Technical notes: [HDR 2023/24 Technical Notes](https://hdr.undp.org/sites/default/files/2023-24_HDR/hdr2023-24_technical_notes.pdf)
+
+5. **UNDP/OPHI (2025). *2025 Global Multidimensional Poverty Index: Overlapping Hardships: Poverty and Climate Hazards.***
+   - Published 2025
+   - 109 countries, 6.3 billion people (83% of world population)
+   - Uses Alkire-Foster (AF) dual cutoff method (revised 2018 methodology)
+   - Available at [OPHI Global MPI 2025](https://repository.gheli.harvard.edu/repository/13031/)
+   - Data sources: 55 countries (MICS), 44 countries (DHS), 13 countries (national surveys)
+
+5a. **UNDP/OPHI (2024). *Global Multidimensional Poverty Index 2024: Poverty amid conflict.***
    - Published October 2024
    - 112 countries, 6.3 billion people
-   - Technical note: hdr.undp.org/sites/default/files/publications/additional-files/2024-10/2024_gMPI_TechnicalNote_1.pdf
+   - Technical note: [2024 MPI Technical Note](https://hdr.undp.org/sites/default/files/publications/additional-files/2024-10/2024_gMPI_TechnicalNote_1.pdf)
 
 6. **IPC (2024). *Integrated Food Security Phase Classification Reports.***
    - Available at ipcinfo.org
@@ -1431,7 +1445,21 @@ OPHI and UNDP (2024). "Global Multidimensional Poverty Index 2024: Poverty amid 
 20. **OECD (2024). "Trends in Income Inequality and its Impact on Economic Growth."**
     - 30-year analysis across OECD countries
     - Income inequality has negative, statistically significant impact on growth
-    - Available at oecd.org
+    - Available at [oecd.org](https://www.oecd.org/)
+
+21. **Nacke et al. (2025). "An Appraisal of Capability Approach of Dr. Amartya Sen." *Journal of Innovative Economics & Finance*, No. 1 (2024).**
+    - Recent comprehensive appraisal of Sen's capability approach
+    - Available at: [Black Rose India Journal](https://www.blackroseindia.com/image/catalog/Journal%20Paper/JIEF/2024/No%201%20(2024)/5_Srinivasan.pdf)
+
+22. **Istanbul Journal of Economics (2025). "Youth Poverty in the Framework of Amartya Sen's Capability Approach."**
+    - Contemporary application analyzing youth poverty through capability lens
+    - Examines indicators affecting young people's capabilities: participation, employment/unemployment, education/training, health/well-being, digital access, social exclusion
+    - Available at: [Dergipark](https://dergipark.org.tr/en/download/article-file/4127411)
+
+23. **Journal of Economic Issues (2024). "Amartya Sen as a Neoclassical Economist."**
+    - DOI: 10.1080/00213624.2024.2307785
+    - Analyzes ontological tensions in Sen's contributions to development economics
+    - Available at: [Taylor & Francis](https://www.tandfonline.com/doi/full/10.1080/00213624.2024.2307785)
 
 ---
 
