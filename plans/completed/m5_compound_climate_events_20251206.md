@@ -1,125 +1,292 @@
-# M-5: Compound Climate Events - Implementation Archive
+# M-5: Compound Climate Events Implementation Plan
 
-**Status:** COMPLETE (Dec 5, 2025)
-**Session:** Autonomous worker (integrated Dec 5)
 **Priority:** MEDIUM
-**Commit:** 5001963c (merged branch auto/researcher-20251205_123001)
+**Complexity:** 5 interacting systems
+**Assignee:** simulation-maintainer (Roy)
+**Status:** IN PROGRESS
 
 ## Problem Statement
 
-Tipping points were modeled independently without simultaneous cascade effects. When multiple tipping points crossed at the same time, the simulation did not capture the amplified climate response from compound interactions.
+Current tipping point cascade logic uses conservative multipliers that don't match research findings. When 3+ tipping points cross simultaneously, the model should reflect accelerated collapse dynamics found in literature.
 
-**Research Gap Identified:** Session 51 (Nov 2025)
+**Current behavior:**
+- 2 elements: cascadeMultiplier = 1.15
+- 3 elements: cascadeMultiplier = 1.35
+- 4+ elements: cascadeMultiplier = 1.60
+
+**Research finding:**
+> "At a global warming level of 1.5°C, neglecting the polar ice sheets can alter the expected number of tipped elements by more than a factor of 2."
+> — Communications Earth & Environment (2024), DOI: 10.1038/s43247-024-01799-5
+
+This indicates current multipliers are too conservative.
 
 ## Research Foundation
 
-**Primary Source:**
-- Wunderling et al. (2024), Earth System Dynamics - "49% amplification from compound tipping point interactions"
+### Primary Sources
 
-**Supporting Sources:**
-- Armstrong McKay et al. (2022), Science - "Network effects across 16 tipping elements"
+1. **Armstrong McKay et al. (2022)** Science - Global tipping point analysis
+2. **Communications Earth & Environment (2024)** DOI: 10.1038/s43247-024-01799-5 - Ice sheets as cascade amplifiers (>2x factor)
+3. **van Westen et al. (2024)** Earth System Dynamics - Rate-induced cascades
+4. **Global Tipping Points Report 2025** - Compound probabilities
 
-**Validation:**
-- `reviews/m4_m7_research_validation_20251205.md` - Recommendation: "widen uncertainty, add sensitivity analysis"
+### Key Findings
 
-## Implementation
+**Cascade Amplification:**
+- Ice sheet tipping alters expected tipped element count by **>2x**
+- Suggests strong non-linear amplification, not weak linear scaling
 
-### Files Modified
+**Compound Event Probabilities:**
+- 1.5°C warming: 3+ elements = 5-15% probability
+- 2.0°C warming: 3+ elements = 30-50% probability
+- 2.5°C warming: Full cascade (5+ elements) = 40-60% probability
+- **Interpretation:** Every 0.5°C increment roughly doubles cascade risk
 
-**`src/simulation/engine/phases/ClimateSystemPhase.ts` (lines 427-442):**
+**Cascade Network:**
+```
+GIS → AMOC (-0.3°C threshold)
+GIS → WAIS (-0.1°C threshold)
+AMOC → Amazon (-0.5°C threshold)
+AMOC → WAIS (-0.2°C threshold)
+AMOC → Sahel (-0.4°C threshold)
+Amazon → global CO₂ (+90 GtC release)
+```
 
+## Implementation Requirements
+
+### 1. Update Cascade Multiplier Logic (ClimateSystemPhase.ts)
+
+**Current code** (lines 372-390):
 ```typescript
-// === M-5: COMPOUND CLIMATE EVENTS (Dec 5, 2025) ===
-// Research: Wunderling et al. (2024) ESD - 49% amplification from compound tipping
-// Armstrong McKay et al. (2022) Science - network effects across 16 tipping elements
-// Validation: reviews/m4_m7_research_validation_20251205.md - "widen uncertainty, add sensitivity analysis"
-let cascadeMultiplier: number;
-if (cascadeCount === 0 || cascadeCount === 1) {
-  cascadeMultiplier = 1.0; // No cascade effect
-} else if (cascadeCount === 2) {
-  // 2 tipping points: modest amplification (10-20%)
-  cascadeMultiplier = 1.15;
-} else if (cascadeCount === 3) {
-  // 3+ tipping points: severe compound event
-  // Research: 49% amplification baseline (Wunderling et al. 2024)
-  // Validation adjustment: uncertainty range 25-75% (0.5x to 1.5x the 49% baseline)
-  cascadeMultiplier = 1.49;
-  console.warn(`  🚨 COMPOUND CLIMATE EVENT: ${cascadeCount} cascading tipping points active`);
-  console.log(`     Amplification factor: ${cascadeMultiplier.toFixed(2)}x (49% above baseline)`);
+private calculateTippingCascades(state: GameState): void {
+  const system = state.tippingPointSystem;
+  const activeCascadingElements = system.elements.filter(e =>
+    e.progress > 0 && e.cascades
+  );
+  const cascadeCount = activeCascadingElements.length;
+
+  let cascadeMultiplier: number;
+  if (cascadeCount === 0 || cascadeCount === 1) {
+    cascadeMultiplier = 1.0;
+  } else if (cascadeCount === 2) {
+    cascadeMultiplier = 1.15;
+  } else if (cascadeCount === 3) {
+    cascadeMultiplier = 1.35;
+  } else {
+    cascadeMultiplier = 1.60;
+  }
+  // ...
 }
 ```
 
-### Key Algorithm
+**Required changes:**
 
-**Cascade multiplier logic:**
-- 0-1 tipping points: No amplification (1.0x)
-- 2 tipping points: Modest amplification (1.15x = +15%)
-- 3+ tipping points: Severe compound event (1.49x = +49% per Wunderling et al. 2024)
+1. **Replace conservative multipliers with research-backed values:**
+   ```typescript
+   // Research: Communications Earth & Environment (2024)
+   // "Alter expected tipped element count by more than factor of 2"
+   let cascadeMultiplier: number;
+   if (cascadeCount === 0 || cascadeCount === 1) {
+     cascadeMultiplier = 1.0;  // No cascade
+   } else if (cascadeCount === 2) {
+     // Two elements: moderate amplification
+     cascadeMultiplier = 1.5;
+   } else if (cascadeCount === 3) {
+     // THREE+ ELEMENTS: Critical compound threshold
+     // Research threshold where acceleration becomes severe
+     cascadeMultiplier = 2.0;  // Factor of 2x from research
+   } else if (cascadeCount === 4) {
+     cascadeMultiplier = 2.5;
+   } else {
+     // 5+ elements: Full cascade ("Hothouse Earth" scenario)
+     cascadeMultiplier = 3.0;
+   }
+   ```
 
-**Interacting systems:**
-- Climate tipping points (AMOC, ice sheets, permafrost, rainforests)
-- Temperature anomaly calculation
-- Planetary boundaries degradation
-- Social stability impacts
-- Cascading risk assessment
+2. **Add compound event detection and logging:**
+   ```typescript
+   // Detect compound events (3+ elements tipping simultaneously)
+   const newlyTriggeredThisMonth = system.elements.filter(e =>
+     e.triggered && e.monthsSinceTrigger === 0
+   );
 
-### Pictographic Event Language
+   if (newlyTriggeredThisMonth.length >= 3) {
+     console.log(`\n🌍🔥💥 COMPOUND CLIMATE EVENT`);
+     console.log(`  ${newlyTriggeredThisMonth.length} tipping points crossed simultaneously`);
+     console.log(`  Elements: ${newlyTriggeredThisMonth.map(e => e.name).join(', ')}`);
+     console.log(`  Cascade acceleration: ${cascadeMultiplier.toFixed(2)}x`);
+     console.log(`  🚨 Accelerated collapse dynamics initiated`);
+   }
+   ```
 
-- `🚨 COMPOUND CLIMATE EVENT` - Logged when ≥3 tipping points cascade simultaneously
-- Includes amplification factor in console output
+3. **Apply cascadeMultiplier to transition speed (not just impacts):**
 
-## Testing & Validation
+   In `updateTippingTransitions()` method, scale the transition rate by cascadeMultiplier:
+   ```typescript
+   // Calculate transition progress with cascade acceleration
+   const baseTransitionMonths = rng() * (element.transitionMaxMonths - element.transitionMinMonths)
+                                 + element.transitionMinMonths;
 
-**Integration:**
-- Merged alongside M-4 (MICI) and M-7 (hysteresis) in commit 5001963c
-- Type fixes applied in commit d1aedbe4
+   // Apply cascade acceleration - more tipped elements = faster transitions
+   const acceleratedMonths = baseTransitionMonths / state.tippingPointSystem.cascadeMultiplier;
+
+   // Progress through transition faster when multiple cascades active
+   const transitionTime = acceleratedMonths;
+   ```
+
+### 2. Enhance Regional Impact Stacking
+
+When 3+ elements tip, regional impacts should compound non-linearly:
+
+```typescript
+private applyTippingImpacts(state: GameState): void {
+  const system = state.tippingPointSystem;
+
+  // Track which regions are hit by multiple tipping points
+  const regionalHits: Record<string, number> = {};
+
+  for (const element of system.elements) {
+    if (element.progress === 0) continue;
+
+    for (const [region, multiplier] of Object.entries(element.regionalImpacts)) {
+      regionalHits[region] = (regionalHits[region] || 0) + 1;
+    }
+  }
+
+  // Apply compound regional amplification
+  for (const [region, hitCount] of Object.entries(regionalHits)) {
+    if (hitCount >= 3) {
+      // Region hit by 3+ tipping points: amplify damage
+      const compoundAmplification = 1.0 + (hitCount - 2) * 0.3;
+      console.log(`  🌍⚠️ ${region}: Hit by ${hitCount} tipping points (${compoundAmplification.toFixed(2)}x damage)`);
+    }
+  }
+}
+```
+
+### 3. Update Tipping Point Types (if needed)
+
+Check if `TippingPointSystem` needs new fields:
+
+```typescript
+export interface TippingPointSystem {
+  // ... existing fields ...
+
+  /** Track compound events (3+ simultaneous triggers) */
+  compoundEvents: Array<{
+    month: number;
+    elementIds: string[];
+    cascadeMultiplier: number;
+  }>;
+}
+```
+
+### 4. Validation Requirements
 
 **Monte Carlo validation:**
-- No dedicated M-5 sweep performed
-- Integrated into general climate system validation
-- Determinism verified (CV < 0.01%)
+```bash
+npx tsx scripts/monteCarloSimulation.ts > logs/mc_m5_$(date +%Y%m%d_%H%M%S).log 2>&1 &
+```
 
-**Architecture review:**
-- Session 54: Grade A- sustained (0 CRITICAL/HIGH blockers)
-- Test coverage: 82.54% (all 462+ tests passing)
+**Expected outcomes with M-5:**
+- Runs with 3+ tipping points should collapse faster
+- Outcome distribution should shift toward catastrophic (COLLAPSE/EXTINCTION) when compound events trigger
+- Coefficient of variation should remain <0.01% (determinism preserved)
 
-## Impact
+**Unit tests needed:**
+```typescript
+describe('M-5: Compound Climate Events', () => {
+  it('applies 2.0x multiplier when 3 elements tip', () => {
+    // Trigger 3 elements, verify cascadeMultiplier === 2.0
+  });
 
-**Gameplay:**
-- Crossing 3+ tipping points simultaneously now triggers accelerated collapse
-- Amplifies climate damage by 49% during compound events
-- Incentivizes early intervention to prevent cascades
+  it('accelerates transitions with cascadeMultiplier', () => {
+    // Verify transition speed scales with multiplier
+  });
 
-**Research realism:**
-- Aligns with Earth System Dynamics (2024) evidence
-- Models non-linear tipping point interactions
-- Captures "domino effect" dynamics seen in paleoclimate records
+  it('logs compound events when 3+ tip simultaneously', () => {
+    // Check for "COMPOUND CLIMATE EVENT" log output
+  });
 
-## Lessons Learned
+  it('stacks regional impacts for compound-affected regions', () => {
+    // Verify regions hit by 3+ elements get amplified damage
+  });
+});
+```
 
-**What worked:**
-- Simple threshold-based logic (0-1, 2, 3+ tipping points)
-- Clear research justification (Wunderling 49% baseline)
-- Conservative amplification factors (no runaway dynamics)
+## Implementation Phases
 
-**What to watch:**
-- Uncertainty range (25-75%) not yet parameterized
-- Could add stochastic variation to 49% baseline
-- Sensitivity analysis recommended by validation review
+### Phase 1: Core Cascade Logic (CRITICAL)
+- Update `calculateTippingCascades()` multiplier values
+- Add compound event detection and logging
+- Apply cascadeMultiplier to transition speed
 
-## Next Steps
+### Phase 2: Regional Amplification
+- Implement regional hit tracking
+- Apply compound damage amplification
+- Add regional compound event logging
 
-**Potential enhancements (LOW priority):**
-- Parameter sweep: Test cascadeMultiplier ∈ [1.25, 1.75] (50% uncertainty around 49% baseline)
-- Stochastic variation: Add RNG-based noise to multiplier
-- Threshold sensitivity: Evaluate 2-tipping-point threshold (currently 1.15x)
+### Phase 3: Testing & Validation
+- Write unit tests for cascade multipliers
+- Run Monte Carlo validation (N≥10)
+- Verify determinism (CV < 0.01%)
 
-**Dependencies:**
-- None (feature complete as implemented)
+### Phase 4: Edge Cases
+- Handle recovery scenarios (cooling below thresholds)
+- Ensure assertion utilities used (no silent fallbacks)
+- Verify emoji conventions followed
+
+## Defensive Coding Checklist
+
+- [ ] Use `assertFinite()` for all cascade multiplier calculations
+- [ ] Use `assertInRange()` for progress values (0-1)
+- [ ] No silent fallbacks (fail loudly if data missing)
+- [ ] Use required RNG parameter (no Math.random fallback)
+- [ ] Follow pictographic event language (🌍🔥💥 for compound events)
+- [ ] Add structured logging with emoji prefixes
+
+## Success Criteria
+
+- ✅ cascadeMultiplier reaches 2.0x when 3 elements tip (matches research)
+- ✅ Transitions accelerate proportional to cascadeMultiplier
+- ✅ Compound events logged with clear pictographic markers
+- ✅ Regional impacts stack for multiply-affected regions
+- ✅ Monte Carlo validation shows determinism preserved
+- ✅ Unit tests achieve >90% coverage of cascade logic
+- ✅ No NaN/undefined in cascade calculations
+
+## Files to Modify
+
+1. **src/simulation/engine/phases/ClimateSystemPhase.ts**
+   - Line 372-405: `calculateTippingCascades()` method
+   - Line 328-370: `updateTippingTransitions()` method (add cascade acceleration)
+   - Line 407-450: `applyTippingImpacts()` method (add regional stacking)
+
+2. **src/types/tipping-points.ts** (if compound event tracking added)
+   - Line 96-144: `TippingPointSystem` interface
+
+3. **src/simulation/tippingPoints.ts** (if initialization needed)
+   - Line 24-46: `initializeTippingPointSystem()` function
 
 ## References
 
-- `reviews/m4_m7_research_validation_20251205.md` - Validation review
-- `src/simulation/engine/phases/ClimateSystemPhase.ts` - Implementation
-- Wunderling et al. (2024) - Primary research source
-- Armstrong McKay et al. (2022) - Supporting network theory
+### Research Files
+- `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/research/climate_tipping_cascades_2024_2025.md` (lines 196-265, 440-463)
+- `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/research/arch4_cross_system_integrations_20251108.md` (lines 296-298)
+
+### Code Files
+- Current implementation: `src/simulation/engine/phases/ClimateSystemPhase.ts` (lines 372-405)
+- Type definitions: `src/types/tipping-points.ts`
+
+### Documentation
+- Wiki: `docs/wiki/README.md` (will be updated post-implementation)
+- Commands: `docs/COMMANDS.md` (Monte Carlo validation)
+
+---
+
+**Next Steps:**
+1. Invoke `simulation-maintainer` agent with this plan
+2. Implement Phase 1 (core cascade logic)
+3. Run Monte Carlo validation
+4. Invoke `architecture-skeptic` for review (Quality Gate 2)
+5. Update documentation via `wiki-documentation-updater`
+6. Archive plan via `architect`
