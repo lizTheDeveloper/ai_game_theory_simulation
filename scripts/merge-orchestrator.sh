@@ -281,6 +281,13 @@ for BRANCH in $BRANCHES; do
     if git merge "origin/$BRANCH" --no-edit 2>&1 | tee -a "$LOG_FILE"; then
       log "✅ Merge successful (no conflicts)"
 
+      # Detect OpenSpec changes
+      OPENSPEC_CHANGES=$(git diff --name-only origin/main...HEAD | grep "^openspec/" || true)
+      if [ -n "$OPENSPEC_CHANGES" ]; then
+        log "📋 OpenSpec changes detected:"
+        echo "$OPENSPEC_CHANGES" | sed 's/^/    /' | tee -a "$LOG_FILE"
+      fi
+
       # Run quality gates
       log "🚦 Running quality gates..."
 
