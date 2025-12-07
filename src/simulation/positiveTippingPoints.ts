@@ -103,7 +103,7 @@ export function initializePositiveTippingPoints(): PositiveTippingPointsState {
     },
 
     triggeredCascades: [],
-    activeCascades: 0,
+    activeTechCascades: 0,
     synergies: [],
 
     activePolicies: [],
@@ -120,6 +120,23 @@ export function initializePositiveTippingPoints(): PositiveTippingPointsState {
     cumulativeEmissionsReduction: 0,
     cumulativeCostSavings: 0,
     adoptionAcceleration: 1.0,         // 1.0 = business-as-usual baseline
+
+    // Social norm cascades (M-6: Otto et al. 2020)
+    socialNorms: {
+      climateConcernLevel: 0.15,         // Initial baseline public concern
+      normTippingCrossed: false,
+      normCascadeActive: false,
+      normInfluenceRate: 0.005,          // Base rate of norm spreading
+    },
+
+    // Political will tipping (M-6: Otto et al. 2020)
+    politicalWill: {
+      aggregatePolicyStrength: 0.10,     // Initial weak policy baseline
+      lockInThresholdCrossed: false,
+      politicalMomentum: 0.0,
+      backlashRisk: 0.05,                // Low initial backlash risk
+      coalitionStrength: 0.20,           // Weak initial coalition
+    },
 
     // Research parameters (OECD 2025, Nature Sustainability 2023)
     parameters: {

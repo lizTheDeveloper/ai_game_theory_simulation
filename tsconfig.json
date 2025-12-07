@@ -39,6 +39,8 @@
     "packages/government-agents/tests",
     "scripts/**/*",
     "tests/**/*",
+    "__tests__/**/*",
+    "**/__tests__/**/*",
     "src/app/api/**/*",
     "src/data/loaders/**/*",
     "src/mcp-servers/**/*"
