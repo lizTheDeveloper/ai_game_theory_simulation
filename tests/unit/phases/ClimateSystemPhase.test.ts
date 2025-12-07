@@ -528,7 +528,7 @@ describe('ClimateSystemPhase', () => {
       assert.strictEqual(state.tippingPointSystem.cascadeMultiplier, 1.0);
     });
 
-    it('should have 1.15x multiplier with 2 cascading elements', () => {
+    it('should have 1.5x multiplier with 2 cascading elements', () => {
       const state = createTestState({
         tippingPointSystem: {
           elements: [
@@ -546,10 +546,10 @@ describe('ClimateSystemPhase', () => {
       const context = createTestContext();
       phase.execute(state, rng, context);
 
-      assert.strictEqual(state.tippingPointSystem.cascadeMultiplier, 1.15);
+      assert.strictEqual(state.tippingPointSystem.cascadeMultiplier, 1.5);
     });
 
-    it('should have 1.35x multiplier with 3 cascading elements', () => {
+    it('should have 2.0x multiplier with 3 cascading elements (research-backed)', () => {
       const state = createTestState({
         tippingPointSystem: {
           elements: [
@@ -568,10 +568,12 @@ describe('ClimateSystemPhase', () => {
       const context = createTestContext();
       phase.execute(state, rng, context);
 
-      assert.strictEqual(state.tippingPointSystem.cascadeMultiplier, 1.35);
+      // Research: Communications Earth & Environment (2024)
+      // "Alter expected tipped element count by more than factor of 2"
+      assert.strictEqual(state.tippingPointSystem.cascadeMultiplier, 2.0);
     });
 
-    it('should have 1.60x multiplier with 4+ cascading elements', () => {
+    it('should have 2.5x multiplier with 4 cascading elements', () => {
       const state = createTestState({
         tippingPointSystem: {
           elements: [
@@ -591,7 +593,31 @@ describe('ClimateSystemPhase', () => {
       const context = createTestContext();
       phase.execute(state, rng, context);
 
-      assert.strictEqual(state.tippingPointSystem.cascadeMultiplier, 1.60);
+      assert.strictEqual(state.tippingPointSystem.cascadeMultiplier, 2.5);
+    });
+
+    it('should have 3.0x multiplier with 5+ cascading elements (Hothouse Earth)', () => {
+      const state = createTestState({
+        tippingPointSystem: {
+          elements: [
+            createTippingElement({ id: 'e1', cascades: true, progress: 0.5 }),
+            createTippingElement({ id: 'e2', cascades: true, progress: 0.4 }),
+            createTippingElement({ id: 'e3', cascades: true, progress: 0.3 }),
+            createTippingElement({ id: 'e4', cascades: true, progress: 0.2 }),
+            createTippingElement({ id: 'e5', cascades: true, progress: 0.1 }),
+          ],
+          triggers: [],
+          triggeredCount: 5,
+          completedCount: 0,
+          totalProgress: 0.30,
+          cascadeMultiplier: 1.0,
+        },
+      });
+
+      const context = createTestContext();
+      phase.execute(state, rng, context);
+
+      assert.strictEqual(state.tippingPointSystem.cascadeMultiplier, 3.0);
     });
 
     it('should only count elements with progress > 0', () => {

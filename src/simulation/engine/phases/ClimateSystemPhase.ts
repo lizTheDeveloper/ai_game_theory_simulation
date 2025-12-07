@@ -575,11 +575,15 @@ export class ClimateSystemPhase implements SimulationPhase {
       }
     );
     const parisSuccess = currentTemperature < 1.5;  // Paris Agreement 1.5C target
-    const cascadeRisk = system.triggeredCount >= 3 && currentTemperature >= 2.0;  // Tail risk: many cascades + high warming
+
+    // Tail risk scenarios where floor should be removed:
+    // - 3+ tipping cascades (Wunderling et al. 2024: destabilizing interactions)
+    // - Extreme warming > 3C (beyond adaptation capacity)
+    const isTailRiskScenario = system.triggeredCount >= 3 || currentTemperature > 3.0;
 
     // Floor only applies in stabilization scenarios (policy intervention successful)
     // In tail risk scenarios, allow natural collapse per Wunderling et al. (2024)
-    const stabilityFloor = (parisSuccess || !cascadeRisk) ? 0.05 : 0.0;
+    const stabilityFloor = (parisSuccess || !isTailRiskScenario) ? 0.05 : 0.0;
 
     // Log when floor is removed in tail risk scenarios
     if (stabilityFloor === 0.0 && system.triggeredCount > 0) {
@@ -687,8 +691,8 @@ export class ClimateSystemPhase implements SimulationPhase {
       }
     );
     const parisSuccess = currentTemperature < 1.5;  // Paris Agreement 1.5C target
-    const cascadeRisk = state.tippingPointSystem.triggeredCount >= 3 && currentTemperature >= 2.0;  // Tail risk
-    const stabilityFloor = (parisSuccess || !cascadeRisk) ? 0.05 : 0.0;
+    const isTailRiskScenario = state.tippingPointSystem.triggeredCount >= 3 || currentTemperature > 3.0;
+    const stabilityFloor = (parisSuccess || !isTailRiskScenario) ? 0.05 : 0.0;
 
     if (calculatedStability >= 0.1) {
       // Calculated value is reasonable, use it (with conditional floor)
