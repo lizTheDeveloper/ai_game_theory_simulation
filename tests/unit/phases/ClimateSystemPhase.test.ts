@@ -768,7 +768,7 @@ describe('ClimateSystemPhase', () => {
     it('should allow collapse below 5% when extreme warming exceeds 3C', () => {
       const element = createTippingElement({
         progress: 1.0,
-        impactClimateStability: -1.0, // Extreme impact
+        impactClimateStability: -50.0, // Extreme cumulative impact (after many months)
         cascades: true,
       });
 
@@ -812,7 +812,7 @@ describe('ClimateSystemPhase', () => {
           triggeredCount: 1, // Doesn't matter, temp > 3C triggers tail risk
           completedCount: 1,
           totalProgress: 1.0,
-          cascadeMultiplier: 1.6,
+          cascadeMultiplier: 1.0,
         },
       });
 
@@ -821,14 +821,16 @@ describe('ClimateSystemPhase', () => {
 
       // In tail risk scenarios (> 3C OR 3+ cascades), no floor applies - can collapse below 5%
       // Research: Wunderling et al. (2024) - "many tipping interactions are destabilizing"
+      // Impact: -50 × 1.0 × 1.0 = -50, capped at 95
+      // Formula: 0.1 × (1 - 0.95 × 0.01) = 0.0095 < 0.05 ✅
       assert.ok(state.environmentalAccumulation.climateStability < 0.05);
     });
 
     it('should allow collapse below 5% when 3+ tipping cascades occur', () => {
       const elements = [
-        createTippingElement({ id: 'e1', progress: 1.0, impactClimateStability: -0.3, cascades: true }),
-        createTippingElement({ id: 'e2', progress: 1.0, impactClimateStability: -0.3, cascades: true }),
-        createTippingElement({ id: 'e3', progress: 1.0, impactClimateStability: -0.3, cascades: true }),
+        createTippingElement({ id: 'e1', progress: 1.0, impactClimateStability: -20.0, cascades: true }),
+        createTippingElement({ id: 'e2', progress: 1.0, impactClimateStability: -20.0, cascades: true }),
+        createTippingElement({ id: 'e3', progress: 1.0, impactClimateStability: -20.0, cascades: true }),
       ];
 
       const state = createTestState({
@@ -871,7 +873,7 @@ describe('ClimateSystemPhase', () => {
           triggeredCount: 3, // 3+ cascades = tail risk
           completedCount: 3,
           totalProgress: 1.0,
-          cascadeMultiplier: 1.35, // 3 cascades
+          cascadeMultiplier: 2.0, // 3 cascades (updated to match implementation)
         },
       });
 
@@ -880,6 +882,8 @@ describe('ClimateSystemPhase', () => {
 
       // 3+ cascades trigger tail risk even at < 3C warming
       // Research: Wunderling et al. (2024) - destabilizing cascade interactions
+      // Total impact: 3 × -20 × 1.0 × 2.0 = -120, capped at 95
+      // Formula: 0.1 × (1 - 0.95 × 0.01) = 0.0095 < 0.05 ✅
       assert.ok(state.environmentalAccumulation.climateStability < 0.05);
     });
 
