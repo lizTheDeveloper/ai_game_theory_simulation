@@ -128,37 +128,55 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 ---
 
 #### Carbon Capture Deployment Parameters
-**Status:** ⚠️ READY FOR VALIDATION
+**Status:** ⚠️ CONDITIONAL APPROVE - Revise Parameters
 **Change:** (pending - needs change folder created)
 **Commit:** c52826e
 **Context:** Comprehensive DAC research (625 lines, 12 sources, A+ quality)
 **Research File:** `research/carbon_capture_deployment_timelines_2025.md`
-**Verification File:** `research/verification_c52826e_20251121.md`
+**Verification File:** `research/verification_c52826e_20251207.md`
 
-**Sources to Verify:**
-- Tan et al. (2024) *Nature Communications* - gigatonne requirements, energy/water nexus
-- Climeworks (2024) - Mammoth plant operational data (36,000 tonnes/yr)
-- IEA (2024) - CCUS project milestones, 5-10 year activation delay
-- Frontiers in Climate (2024-2025) - technical analysis, energy requirements
-- Canary Media (2024) - Gen 3 technology cost reduction claims
+**Verification Complete (Dec 7, 2025):**
+- **Initial Grade:** A+ (original research)
+- **Verification Grade:** A (super-alignment-researcher)
+- **Final Grade:** B+ (research-skeptic - significant concerns)
+- **Reviewers:** Cynthia (researcher), Sylvia (skeptic)
 
-**Key Claims:**
-- Current capacity: 0.00005 Gt/yr (Mammoth: 36kt/yr operational May 2024)
-- Timeline: 20-40 years breakthrough → gigatonne impact
-- Energy: 4-10 TWh per 1 Gt/yr (must couple with clean energy)
-- Water: 15 km³/yr for 4 Gt/yr (3.8% global industrial use)
-- Cost: $600-1,000/tonne (current) → $100-300/tonne (2040s)
+**CRITICAL Finding - Energy Calculation Error:**
+- ❌ **Original claim:** 4-10 TWh per Gt/yr
+- ✅ **Corrected:** 3,000-11,000 TWh per Gt/yr (1000x error)
+- **Impact:** 1 Gt/yr = 10-38% of global electricity (not 0.05-0.1%)
+- **Impact:** 4 Gt/yr = 40-150% of global electricity (physically infeasible)
 
-**Current Implementation:**
-- ClimateDeploymentDelayPhase.ts:67-73 - DAC parameters
+**Verified Accurate:**
+- ✅ Mammoth: 36,000 tonnes/yr operational May 2024
+- ✅ Stratos: 500,000 tonnes/yr expected late 2025
+- ✅ Gen 3 tech: 50% energy/cost reduction
+- ✅ Timeline: 20-40 years to gigatonne scale
+- ✅ All 12 sources real, peer-reviewed, accurately cited
 
-**Parameter Validation:**
-- ✅ Activation delay (7 years) - compatible with 5-10 range
-- ✅ T_50 (30 years) - compatible with 20-40 year timeline
-- ⚠️ Energy requirements - NOT MODELED (enhancement opportunity)
-- ⚠️ Water constraints - NOT MODELED (regional deployment factor)
+**Critical Concerns (Sylvia):**
+1. ❌ **Energy Death Spiral:** IPCC targets (4-6 Gt) require 40-150% of global electricity - physically impossible
+2. ❌ **Timeline Optimism:** Requires 1.5 plants/week for 26 years (5x faster than nuclear peak)
+3. ❌ **Cost Floor Delusion:** $100/tonne unrealistic (MIT: electricity alone $67-135/tonne); realistic floor $250-450/tonne
+4. ⚠️ **Water Scarcity:** Zero-sum competition with agriculture in water-stressed regions
+5. ⚠️ **Opportunity Cost:** DAC removes 1 Mt per $1B, reforestation removes 20-50 Mt
+6. ⚠️ **Moral Hazard:** DAC expectations enable continued fossil fuel use (mitigation deterrence)
+7. ⚠️ **Stranded Infrastructure:** Risk of obsolescence before scale-up
 
-**Next Steps:** Two-layer verification → Parameter validation → Enhancement implementation (energy/water constraints) → Monte Carlo N≥10
+**Required Revisions Before Simulation:**
+1. ❌ Energy calculation corrected (3,000-11,000 TWh/Gt, not 4-10)
+2. ❌ Adjust Monte Carlo base case: 0.5-1 Gt by 2050 (not 1-2 Gt)
+3. ⚠️ Add mitigation deterrence modeling (5% emissions reduction delay per Gt DAC)
+4. ⚠️ Include opportunity cost vs nature-based solutions (30x cost-effectiveness gap)
+5. ⚠️ Widen cost floor uncertainty to $250-500/tonne
+6. ⚠️ Add stranded asset scenarios (25% stagnation, 15% obsolescence probability)
+7. ⚠️ Energy constraint cap: max 15% clean energy, 10% total electricity to DAC
+
+**Minor Corrections:**
+- Tan et al. DOI: 10.1038/s41467-024-50594-5 (not 50637-2)
+- Global DAC: 0.059 Mt/yr (59 kt/yr), not 0.05 Mt/yr
+
+**Next Steps:** Parameter revisions (energy, cost floor, opportunity cost, mitigation deterrence) → Implementation with constraints → Monte Carlo validation
 
 ---
 
