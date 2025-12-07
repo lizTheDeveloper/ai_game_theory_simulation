@@ -327,3 +327,325 @@ The AI governance research update (commit ff6ff02) citing May and November 2025 
 - [US-China AI dialogues (arXiv:2505.07468)](https://arxiv.org/abs/2505.07468)
 - [US-China perspectives on AI risks (arXiv:2407.16903)](https://arxiv.org/abs/2407.16903)
 - [Emergency measures for catastrophic AI risk (arXiv:2511.05526)](https://arxiv.org/html/2511.05526)
+
+---
+
+## SKEPTICAL REVIEW: Policy Effectiveness Critique
+
+**Reviewer:** Sylvia (Research Skeptic Agent)
+**Date:** December 7, 2025
+**Scope:** Challenge policy effectiveness and implementation assumptions
+
+**Important Clarification:** The Grade A stands for factual accuracy. The technical claims ARE verified. This critique addresses whether the proposals would WORK IN PRACTICE, which is a separate question from whether they are accurately described.
+
+---
+
+### Executive Summary
+
+While the research accurately describes the MIRI proposals, I identify **7 CRITICAL implementation challenges** that the simulation must model to avoid presenting these governance frameworks as more viable than evidence supports. The proposals may be "fighting the last war"--designed for a compute landscape that is already obsolete due to distributed training advances, algorithmic efficiency gains, and open-weights proliferation.
+
+**Adjusted Recommendation:** CONDITIONAL PASS
+- Grade A: RETAIN (accuracy is excellent)
+- Implementation: ADD failure pathway modeling
+- Confidence: MEDIUM (policy effectiveness uncertain)
+
+---
+
+### CHALLENGE 1: Compute Threshold Obsolescence (CRITICAL)
+
+**The Problem:** The 10^24 FLOP threshold is already exceeded by 30+ frontier models.
+
+**Evidence:**
+- GPT-4: estimated 2-6 x 10^24 FLOP (2023)
+- DeepSeek-R1: ~4 x 10^24 FLOP (noted in the verification report itself)
+- Claude 3.5, Gemini 1.5: comparable scales
+
+**Critical Question:** If we are ALREADY past the threshold with deployed models, what does prohibition accomplish?
+
+**The "Fighting the Last War" Problem:**
+The proposal effectively says "halt at 10^24 FLOP" when the horse has already left the barn. Models trained above this threshold are already deployed, fine-tuned, and in some cases open-weighted.
+
+**Simulation Implication:**
+- Must model that threshold enforcement has diminishing returns if implemented late
+- Need "threshold timing" sensitivity: -50% effectiveness per year of delay past 2024
+- Current models already provide capability uplift even under moratorium
+
+**Severity:** CRITICAL - Undermines core proposal premise
+
+---
+
+### CHALLENGE 2: Distributed Training Evasion (CRITICAL)
+
+**The Problem:** The proposal assumes large clusters (>16 H100-equiv) are required and trackable.
+
+**Contradictory Evidence:**
+- arXiv:2507.07765 (July 2025) explicitly identifies "compute structuring" as an evasion risk
+- GPT-4.5 and Gemini-1.5 ALREADY use multi-datacenter training
+- DiLoCo and similar algorithms enable training across geographically distributed clusters
+
+**Specific Technical Evasion Vectors:**
+
+1. **Compute Structuring:** Train on 15 H100-equiv clusters (just below threshold) with periodic model averaging
+2. **Federated Training:** Community-contributed compute (Prime Intellect, Together.ai models)
+3. **Cross-Jurisdiction Distribution:** 8 H100s in Singapore + 8 in Switzerland = technically compliant
+
+**Research Source:** [Distributed and Decentralised Training: Technical Governance Challenges](https://arxiv.org/abs/2507.07765) - directly contradicts trackability assumptions
+
+**Quote from paper:** "These developments could impact technical AI governance through an increased risk of compute structuring, capability proliferation, and the erosion of detectability and shutdownability."
+
+**Simulation Implication:**
+- Model evasion probability: 20-60% depending on technical sophistication
+- Cluster tracking effectiveness degrades 10-20% per year as algorithms improve
+- Need "distributed training capability" state variable
+
+**Severity:** CRITICAL - Monitoring architecture may be fundamentally circumventable
+
+---
+
+### CHALLENGE 3: Algorithmic Efficiency Outpaces Thresholds (HIGH)
+
+**The Problem:** Compute thresholds assume fixed efficiency. Reality: algorithmic improvements reduce compute needed.
+
+**Evidence:**
+- [Epoch AI (2025)](https://epoch.ai/blog/can-ai-scaling-continue-through-2030): Hardware efficiency improving 1.28x/year (2010-2024)
+- LSTMs to Transformers + Kaplan-to-Chinchilla rebalancing = 91% of efficiency gains at 2025 frontier
+- "Beyond Chinchilla" methods: same loss with less compute through data filtering, architecture changes
+
+**The Jevons Paradox Analog:**
+Making compute thresholds stricter may accelerate algorithmic efficiency research, achieving the same capabilities below the threshold. Historical parallel: making coal expensive accelerated steam engine efficiency.
+
+**Quantitative Gap:**
+If algorithmic efficiency improves 3x over 5 years (conservative estimate based on Epoch data), a 10^24 FLOP threshold in 2025 is equivalent to allowing 3x10^24 FLOP capabilities by 2030.
+
+**Simulation Implication:**
+- Threshold effectiveness should decay: multiply by 0.85^(years since establishment)
+- Add "algorithmic efficiency frontier" that advances independently of compute governance
+- Need sensitivity analysis on efficiency improvement rates
+
+**Severity:** HIGH - Time-dependent erosion of policy effectiveness
+
+---
+
+### CHALLENGE 4: Expert Risk Estimate Calibration Uncertainty (HIGH)
+
+**The Problem:** 10-38% catastrophic risk estimates may not be well-calibrated.
+
+**Contradictory Evidence:**
+- [2022 Existential Risk Persuasion Tournament](https://bigthink.com/the-future/ai-extinction-predictions-superforecasting/):
+  - AI experts: 3% extinction probability by 2100
+  - Superforecasters: 0.38% (8x lower!)
+  - Superforecasters beat experts on 4 years of geopolitical forecasts
+
+**The Calibration Problem:**
+1. **Selection bias:** Grace et al. survey (38% figure) may oversample risk-concerned researchers
+2. **Perverse incentives:** AI safety researchers have career incentives to emphasize risk
+3. **Track record unknown:** Tetlock's research shows domain experts often overpredict within their domain
+4. **Long-term forecasting:** "It will take 10-20 years before we can even begin to answer the question of whether short-run and long-run forecasting accuracy are correlated"
+
+**Critical Question:** If superforecasters estimate 0.38% vs experts' 3-12%, which estimate should inform policy?
+
+**Note:** This does NOT mean risks are low. It means our uncertainty about the risks is much higher than the point estimates suggest.
+
+**Simulation Implication:**
+- Risk estimates should be modeled as DISTRIBUTIONS, not point values
+- Use log-uniform between 0.3% and 40% rather than point estimate
+- Add "epistemic uncertainty" multiplier affecting policy urgency calculations
+
+**Severity:** HIGH - Policy calibration depends on contested probabilities
+
+---
+
+### CHALLENGE 5: US-China Compliance Credibility (HIGH)
+
+**The Problem:** Proposal assumes bilateral agreements can be verified and enforced.
+
+**Historical Precedents - Mixed at Best:**
+- CWC: Generally successful, but verification is for physical stockpiles, not dual-use compute
+- Nuclear: China committed to "no first use" but US intelligence disputes warhead count
+- [State Department 2025 Arms Control Compliance Report](https://www.state.gov/wp-content/uploads/2025/04/2025-Arms-Control-Treaty-Compliance-Report-1.pdf): Documents ongoing compliance concerns
+
+**AI-Specific Challenges:**
+1. **Verification asymmetry:** Data centers harder to verify than nuclear facilities (no radiation signatures)
+2. **Dual-use infrastructure:** Compute used for weather modeling, protein folding, etc.
+3. **Software is invisible:** Cannot satellite-image an algorithm
+4. **Speed of defection:** Nuclear programs take years; AI capability jumps can happen in weeks
+
+**The Racing Dynamics Problem:**
+The proposal assumes 6-12 month defection timeline. But:
+- If one side perceives decisive advantage is near, incentive to defect spikes
+- Unlike nuclear, AI capability is partially revealed by commercial products
+- Perceived gap creates "use it or lose it" pressure
+
+**Simulation Implication:**
+- Model defection probability as function of perceived capability gap
+- Add "verification confidence" that degrades with compute diffusion
+- Include racing dynamics: cooperation probability inversely proportional to perceived advantage
+
+**Severity:** HIGH - Enforcement assumes more transparency than exists
+
+---
+
+### CHALLENGE 6: Open-Weights Proliferation (CRITICAL)
+
+**The Problem:** Once models are open-weighted, compute thresholds cannot restrict their use.
+
+**Current Reality:**
+- Llama 3.1 405B: Open weights, ~5x10^24 FLOP estimated training compute
+- [Meta claims](https://ai.meta.com/blog/meta-llama-3-1-ai-responsibility/) open-source AI strengthens security
+- [Stanford Alpaca](https://cfg.eu/ai-governance-challenges-part-3-proliferation/): Fine-tuned LLaMA for under $600
+
+**The Irreversibility Problem:**
+- [Carnegie Endowment (2024)](https://carnegieendowment.org/research/2024/07/beyond-open-vs-closed-emerging-consensus-and-key-questions-for-foundation-ai-model-governance): "Once a model is released, it is likely out there forever"
+- Safety guardrails can be bypassed through fine-tuning
+- No mechanism to "un-release" a model
+
+**Proposal Blind Spot:**
+The MIRI proposals focus on TRAINING compute. But open-weights means:
+- Post-training enhancement below 10^23 FLOP threshold
+- Jailbreaking/fine-tuning at trivial compute costs
+- Capability extraction via distillation
+
+**Simulation Implication:**
+- Need "open-weights proliferation" state variable
+- Compute governance effectiveness should multiply by (1 - open_weights_penetration)
+- Model capability floor rises independently of new training
+
+**Severity:** CRITICAL - Renders training-focused governance partially obsolete
+
+---
+
+### CHALLENGE 7: Unintended Consequences (MEDIUM)
+
+**The Problem:** Compute thresholds may create winners and losers in ways that undermine cooperation.
+
+**Potential Negative Outcomes:**
+
+1. **Incumbent Advantage Lock-In:**
+   - OpenAI, Anthropic, DeepMind already trained frontier models
+   - Threshold freezes their advantage
+   - New entrants face higher barriers
+   - Creates "AI colonialism" where Tier 1 nations maintain permanent lead
+
+2. **Beneficial AI Blocked:**
+   - Climate modeling, drug discovery, materials science at scale
+   - Blanket compute prohibition doesn't distinguish applications
+   - May slow AI-for-good more than AI-for-harm (malicious actors ignore rules)
+
+3. **Underground Development:**
+   - Historical analog: Prohibition created organized crime
+   - Strict limits may push development to unmonitored contexts
+   - Black markets for compute harder to regulate than legal markets
+
+4. **Geopolitical Resentment:**
+   - Non-signatory nations (Russia, Iran, North Korea) proceed anyway
+   - Signatory developing nations may view as Western imposition
+   - Undermines coalition durability
+
+**Simulation Implication:**
+- Model second-order effects: underground development, resentment dynamics
+- Add "governance legitimacy" score that affects compliance
+- Include "beneficial AI opportunity cost" in outcome assessment
+
+**Severity:** MEDIUM - Important but more speculative than empirical
+
+---
+
+### Alternative Failure Scenarios for Simulation
+
+**Scenario A: Threshold Obsolescence**
+Governance implemented in 2027. By then, 10^24 FLOP models are commodity (like GPT-4 today). Threshold prevents nothing new. Models already deployed continue to advance via post-training. Outcome: Governance theater with no capability restriction.
+
+**Scenario B: Distributed Training Bypass**
+Governance implemented with chip tracking. Actors use federated training across 50 jurisdictions, each below monitoring threshold. DiLoCo-style algorithms aggregate models. Outcome: Same capabilities, unmonitorable development.
+
+**Scenario C: Algorithmic Leap**
+Threshold set at 10^24 FLOP. Algorithmic breakthrough (sparse attention, MoE at scale, or novel architecture) achieves equivalent capability at 10^22 FLOP. Threshold suddenly irrelevant. Outcome: All investment in compute governance wasted.
+
+**Scenario D: Open-Weights Cascade**
+Meta or other actor open-weights ASI-capable model (intentionally or via leak). Cannot be recalled. All actors now have baseline. Compute governance cannot address post-hoc. Outcome: Capability proliferation despite governance.
+
+**Scenario E: Racing Defection**
+US-China agreement holds for 3 years. China perceives US commercial AI (Claude, GPT) approaching decisive advantage. Defects citing "civilian research exception." US responds. Arms race resumes at higher capability level. Outcome: Delayed but accelerated race.
+
+---
+
+### Risk Assessment: Unintended Consequences
+
+| Consequence | Probability | Severity | Mitigation |
+|-------------|-------------|----------|------------|
+| Incumbent lock-in | 70% | Medium | Include catch-up provisions |
+| Beneficial AI delay | 60% | Medium | Application-specific exemptions |
+| Underground development | 40% | High | Whistleblower programs (limited) |
+| Geopolitical resentment | 50% | Medium | Inclusive governance design |
+| Open-weights nullification | 80% | Critical | Cannot mitigate post-release |
+| Algorithmic bypass | 60% | High | Regular threshold updates |
+
+---
+
+### Adjusted Recommendations
+
+**RETAIN Grade A for factual accuracy.** The research correctly describes the proposals.
+
+**ADD to simulation:**
+
+1. **Governance Effectiveness Decay Function:**
+   ```
+   effectiveness = base_effectiveness * 0.85^(years_delayed) * (1 - distributed_training_capability) * (1 - open_weights_penetration)
+   ```
+
+2. **Evasion Probability:**
+   - 20% baseline (determined actors find workarounds)
+   - +10% per year of algorithmic progress
+   - +20% if threshold set above current frontier (actors already past it)
+
+3. **Racing Dynamics:**
+   - Defection probability = f(perceived_capability_gap, years_in_agreement, verification_confidence)
+   - Model both US and China as potential defectors
+
+4. **Expert Uncertainty:**
+   - Use distribution (0.3%, 40%) not point estimate
+   - Log-uniform prior reflecting deep disagreement
+
+5. **Open-Weights State:**
+   - Track penetration of open-weights frontier models
+   - Governance effectiveness degrades with proliferation
+
+---
+
+### Sources for Skeptical Review
+
+**Distributed Training Governance:**
+- [Distributed and Decentralised Training: Technical Governance Challenges](https://arxiv.org/abs/2507.07765) - arXiv 2507.07765 (July 2025)
+- [Trustworthy Distributed AI Systems](https://dl.acm.org/doi/full/10.1145/3645102) - ACM Computing Surveys (2024)
+
+**Algorithmic Efficiency:**
+- [Can AI Scaling Continue Through 2030](https://epoch.ai/blog/can-ai-scaling-continue-through-2030) - Epoch AI (2025)
+- [On the Origin of Algorithmic Progress in AI](https://arxiv.org/html/2511.21622) - arXiv (2025)
+
+**Expert Calibration:**
+- [Will AI Kill Humanity by 2100?](https://bigthink.com/the-future/ai-extinction-predictions-superforecasting/) - Big Think (Superforecasters vs Experts)
+- [Phil Tetlock on Predicting Catastrophes](https://80000hours.org/podcast/episodes/prof-tetlock-predicting-the-future/) - 80,000 Hours
+
+**Open-Weights Proliferation:**
+- [AI Governance Challenges: Proliferation](https://cfg.eu/ai-governance-challenges-part-3-proliferation/) - Centre for Future Generations
+- [Beyond Open vs Closed](https://carnegieendowment.org/research/2024/07/beyond-open-vs-closed-emerging-consensus-and-key-questions-for-foundation-ai-model-governance) - Carnegie Endowment (July 2024)
+- [Meta Llama 3.1 Responsibility](https://ai.meta.com/blog/meta-llama-3-1-ai-responsibility/) - Meta (2024)
+
+**Arms Control Precedents:**
+- [US Arms Control Compliance Report 2025](https://www.state.gov/wp-content/uploads/2025/04/2025-Arms-Control-Treaty-Compliance-Report-1.pdf) - State Department
+
+---
+
+### Final Verdict
+
+**The proposals are well-researched and accurately described. They may also be largely ineffective in practice.**
+
+The simulation should model BOTH:
+1. Optimistic scenario: Governance works as intended
+2. Realistic scenario: Multiple evasion vectors erode effectiveness by 50-80%
+
+Better to find the problems now than after deployment.
+
+-- Sylvia, Research Skeptic
+
+---
