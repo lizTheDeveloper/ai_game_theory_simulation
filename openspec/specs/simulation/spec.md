@@ -72,6 +72,42 @@ The simulation SHALL fail loudly on NaN/Infinity/undefined values in calculation
 - AND it MUST NOT read from `state.globalMetrics.gdp` (doesn't exist)
 - AND GDP MUST be calculated dynamically from population + gdpPerCapita + modifiers
 
+### Requirement: Probabilistic Tipping Thresholds
+The simulation SHALL model tipping point thresholds as probability distributions reflecting scientific uncertainty.
+
+#### Scenario: Threshold Sampling at Initialization
+- WHEN a new simulation is initialized
+- THEN each tipping element with defined uncertainty distribution MUST sample a threshold value
+- AND sampled values MUST be stored in `state.sampledTippingThresholds`
+- AND sampling MUST use the RNG function (deterministic, no Math.random)
+- AND sampled values MUST remain constant throughout the run
+
+#### Scenario: Threshold Activation
+- WHEN evaluating tipping point activation
+- THEN the system MUST use sampled threshold (if available)
+- AND fall back to baseline threshold only if distribution not defined
+- AND threshold comparison MUST be deterministic (no re-sampling)
+
+#### Scenario: Distribution Types
+- WHEN defining tipping element uncertainty
+- THEN distribution type MUST be one of: normal, log-normal, uniform, triangular, beta
+- AND distribution parameters MUST be research-backed (2+ peer-reviewed sources)
+- AND central estimate SHOULD match Armstrong McKay et al. 2022 best estimates
+- AND uncertainty ranges SHOULD match IPCC AR6 WG1 consensus
+
+#### Scenario: Monte Carlo Variance
+- WHEN running Monte Carlo simulations with different seeds
+- THEN tipping activation timing MUST vary realistically (not identical)
+- AND variance MUST be within research-backed uncertainty ranges
+- AND identical seeds MUST produce identical sampled thresholds (CV < 0.01%)
+
+#### Scenario: Distribution Sampling Utilities
+- WHEN sampling from probability distributions
+- THEN utilities MUST be available for: normal, log-normal, uniform, triangular, beta
+- AND all sampling functions MUST accept (parameters..., rng) with RNG as REQUIRED parameter
+- AND all sampling functions MUST validate inputs with assertions (no silent fallbacks)
+- AND all outputs MUST be validated with assertFinite
+
 ### Requirement: Planetary Boundaries Modeling
 The simulation SHALL model 9 planetary boundaries per Richardson et al. (2023).
 
@@ -97,6 +133,13 @@ The simulation SHALL model 9 planetary boundaries per Richardson et al. (2023).
 - THEN cascade multiplier MUST increase
 - AND feedback loops MUST be modeled (tipping interactions)
 - AND threshold lowering MUST occur per Wunderling et al. (2024)
+
+#### Scenario: Tipping Element Thresholds
+- WHEN defining tipping element thresholds
+- THEN central estimate MUST match literature consensus (Armstrong McKay et al. 2022)
+- AND uncertainty distribution SHOULD be defined (type + parameters)
+- AND distribution parameters MUST be justified by peer-reviewed sources
+- AND fallback to deterministic threshold IS ALLOWED for backward compatibility
 
 ### Requirement: Multi-Paradigm DUI
 The simulation SHALL track 4 simultaneous paradigm perspectives on well-being.
@@ -223,11 +266,20 @@ The simulation SHALL model environmental, social, and technological debt.
 ### MEDIUM Priority
 
 #### M-5: Threshold Uncertainty Modeling
-**Status:** Proposed
+**Status:** COMPLETED (December 7, 2025)
 **Context:** Distribution sampling library for tipping point thresholds
-**Impact:** Move from deterministic thresholds to probability distributions
-**Research:** Climate tipping points have uncertainty ranges (e.g., AMOC: 1.4-8.0°C)
-**Next Steps:** Design library → Implement → Validate with Monte Carlo
+**Impact:** Moved from deterministic thresholds to probability distributions
+**Research:** Armstrong McKay et al. 2022 + 2024-2025 climate tipping literature
+**Delivered:**
+- Beta distribution for AMOC (epistemic uncertainty: 1.4-8.0°C)
+- Triangular distributions for GrIS, WAIS, Amazon, Boreal
+- Coral reefs marked as crossed (Oct 2025 validation)
+- 18/18 unit tests passing
+- Monte Carlo validated (N=10, CV < 0.01%)
+- Quality Gate 1: PASSED (research-skeptic)
+- Quality Gate 2: PASSED (architecture-skeptic, fixes applied)
+- Wiki documented (261 lines)
+**Archive:** `docs/implementation-history/threshold-uncertainty/`
 
 #### M-6: Enhanced Radiation Modeling
 **Status:** Proposed
