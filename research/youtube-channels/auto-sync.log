@@ -6789,3 +6789,52 @@ Channels synced: 3
 
 Completed: Fri Dec  5 02:00:49 PST 2025
 ========================================
+========================================
+YouTube Auto-Sync System
+Started: Sat Dec  6 02:07:24 PST 2025
+========================================
+
+─────────────────────────────────────
+📺 Processing: AI Species
+   URL: https://www.youtube.com/@AISpecies
+─────────────────────────────────────
+   Folder: -aispecies
+   🔄 Running sync...
+=== AI Species Sync ===
+Started: Sat Dec  6 02:07:24 PST 2025
+📋 Fetching channel metadata...
+   ✓ Sync completed
+
+─────────────────────────────────────
+📺 Processing: Robert Miles AI
+   URL: https://www.youtube.com/c/robertmilesai
+─────────────────────────────────────
+   Folder: crobertmilesai
+   🔄 Running sync...
+=== Robert Miles AI Sync ===
+Started: Sat Dec  6 02:07:24 PST 2025
+📋 Fetching channel metadata...
+   ✓ Sync completed
+
+─────────────────────────────────────
+📺 Processing: AI Explained
+   URL: https://www.youtube.com/@aiexplained-official
+─────────────────────────────────────
+   Folder: -aiexplained-official
+   🔄 Running sync...
+=== AI Explained Sync ===
+Started: Sat Dec  6 02:07:24 PST 2025
+📋 Fetching channel metadata...
+   ✓ Sync completed
+
+========================================
+Summary
+========================================
+Channels in list: 3
+New channels setup: 0
+Channels synced: 3
+
+📊 Total transcripts: 254
+
+Completed: Sat Dec  6 02:07:24 PST 2025
+========================================
