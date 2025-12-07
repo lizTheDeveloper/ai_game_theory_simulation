@@ -14,7 +14,7 @@
 
 import { TippingPointSystem, TIPPING_ELEMENTS } from '../types/tipping-points';
 import { assertFinite } from './utils/assertions';
-import { sampleThresholdDistribution } from './utils/distributionSampling';
+import { sampleThresholdDistribution } from './utils/distributions';
 
 /**
  * Initialize the tipping point system state

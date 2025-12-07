@@ -52,37 +52,59 @@ export function sampleTriangular(
     throw new Error('❌ CRITICAL: RNG required for deterministic distribution sampling');
   }
 
-  // Validate distribution parameters
-  if (!(min <= mode && mode <= max)) {
-    throw new Error(
-      `❌ Invalid triangular distribution: min (${min}) <= mode (${mode}) <= max (${max}) required`
-    );
-  }
-
-  if (min === max) {
-    // Degenerate case: no uncertainty
-    return min;
-  }
-
-  const u = rng();
-
-  // Triangular CDF inversion method
-  const fc = (mode - min) / (max - min);
-
-  let value: number;
-  if (u < fc) {
-    // Left side of triangle
-    value = min + Math.sqrt(u * (max - min) * (mode - min));
-  } else {
-    // Right side of triangle
-    value = max - Math.sqrt((1 - u) * (max - min) * (max - mode));
-  }
-
-  // Validate output
-  return assertInRange(value, min, max, {
+  // Validate parameters
+  assertFinite(min, {
     location: 'sampleTriangular',
-    valueName: 'sampledValue',
-    additionalInfo: { min, mode, max, u }
+    valueName: 'min',
+    additionalInfo: { mode, max }
+  });
+
+  assertFinite(mode, {
+    location: 'sampleTriangular',
+    valueName: 'mode',
+    additionalInfo: { min, max }
+  });
+
+  assertFinite(max, {
+    location: 'sampleTriangular',
+    valueName: 'max',
+    additionalInfo: { min, mode }
+  });
+
+  if (min >= mode) {
+    throw new Error([
+      '❌ Invalid parameters in sampleTriangular',
+      `   min = ${min}, mode = ${mode}`,
+      '   min must be < mode',
+    ].join('\n'));
+  }
+
+  if (mode >= max) {
+    throw new Error([
+      '❌ Invalid parameters in sampleTriangular',
+      `   mode = ${mode}, max = ${max}`,
+      '   mode must be < max',
+    ].join('\n'));
+  }
+
+  // Inverse CDF method
+  const u = rng();
+  const range = max - min;
+  const modeCDF = (mode - min) / range; // CDF value at mode
+
+  let result: number;
+
+  if (u < modeCDF) {
+    // Left side of triangle: [min, mode]
+    result = min + Math.sqrt(u * range * (mode - min));
+  } else {
+    // Right side of triangle: [mode, max]
+    result = max - Math.sqrt((1 - u) * range * (max - mode));
+  }
+
+  return assertInRange(result, min, max, {
+    location: 'sampleTriangular',
+    valueName: 'result',
   });
 }
 
@@ -156,16 +178,25 @@ export function sampleNormal(
   std: number,
   rng: () => number
 ): number {
-  // Validate RNG
-  if (!rng || typeof rng !== 'function') {
-    throw new Error('❌ CRITICAL: RNG required for deterministic distribution sampling');
-  }
+  // Validate parameters
+  assertFinite(mean, {
+    location: 'sampleNormal',
+    valueName: 'mean',
+    additionalInfo: { std }
+  });
 
-  // Validate std (must be positive)
+  assertFinite(std, {
+    location: 'sampleNormal',
+    valueName: 'stdDev',
+    additionalInfo: { mean }
+  });
+
   if (std <= 0) {
-    throw new Error(
-      `❌ Invalid normal distribution: std (${std}) must be > 0`
-    );
+    throw new Error([
+      '❌ Invalid stdDev in sampleNormal',
+      `   stdDev = ${std}`,
+      '   stdDev must be > 0',
+    ].join('\n'));
   }
 
   // Box-Muller transform for normal distribution
@@ -212,33 +243,35 @@ export function sampleLogNormal(
   stdLog: number,
   rng: () => number
 ): number {
-  // Validate RNG
-  if (!rng || typeof rng !== 'function') {
-    throw new Error('❌ CRITICAL: RNG required for deterministic distribution sampling');
-  }
+  // Validate parameters
+  assertFinite(meanLog, {
+    location: 'sampleLogNormal',
+    valueName: 'mu',
+    additionalInfo: { stdLog }
+  });
 
-  // Validate stdLog
+  assertFinite(stdLog, {
+    location: 'sampleLogNormal',
+    valueName: 'sigma',
+    additionalInfo: { meanLog }
+  });
+
   if (stdLog <= 0) {
-    throw new Error(
-      `❌ Invalid log-normal distribution: stdLog (${stdLog}) must be > 0`
-    );
+    throw new Error([
+      '❌ Invalid sigma in sampleLogNormal',
+      `   sigma = ${stdLog}`,
+      '   sigma must be > 0',
+    ].join('\n'));
   }
 
   // Sample from normal, then exponentiate
   const normalSample = sampleNormal(meanLog, stdLog, rng);
-  const value = Math.exp(normalSample);
+  const result = Math.exp(normalSample);
 
-  // Validate output (log-normal always positive)
-  if (value <= 0 || !isFinite(value)) {
-    throw new Error(
-      `❌ Log-normal sampling produced invalid value: ${value} (meanLog=${meanLog}, stdLog=${stdLog}, normalSample=${normalSample})`
-    );
-  }
-
-  return assertFinite(value, {
+  return assertFinite(result, {
     location: 'sampleLogNormal',
-    valueName: 'sampledValue',
-    additionalInfo: { meanLog, stdLog, normalSample }
+    valueName: 'result',
+    additionalInfo: { mu: meanLog, sigma: stdLog, normalSample }
   });
 }
 
@@ -330,4 +363,234 @@ export function confidenceIntervalToNormal(
   const std = (max - min) / (2 * 1.645);
 
   return { mean, std };
+}
+
+/**
+ * Sample from Beta distribution Beta(α, β)
+ *
+ * Beta distribution models probabilities and proportions on [0, 1].
+ * - α, β = 1: Uniform [0,1]
+ * - α = β > 1: Symmetric, bell-shaped
+ * - α < β: Left-skewed (mode near 0)
+ * - α > β: Right-skewed (mode near 1)
+ *
+ * Uses gamma ratio method: Beta(α, β) = Gamma(α) / (Gamma(α) + Gamma(β))
+ *
+ * @param alpha Shape parameter α, must be > 0
+ * @param beta Shape parameter β, must be > 0
+ * @param rng Deterministic RNG function (REQUIRED)
+ * @returns Sample from Beta(α, β) in [0, 1]
+ *
+ * @throws Error if alpha ≤ 0, beta ≤ 0, or parameters are NaN/Infinity
+ *
+ * @example
+ * const rng = seedrandom('test-seed');
+ * const sample = sampleBeta(2, 5, rng); // Left-skewed, mode near 0.2
+ */
+export function sampleBeta(
+  alpha: number,
+  beta: number,
+  rng: () => number
+): number {
+  // Validate RNG
+  if (!rng || typeof rng !== 'function') {
+    throw new Error('❌ CRITICAL: RNG required for deterministic distribution sampling');
+  }
+
+  // Validate parameters
+  assertFinite(alpha, {
+    location: 'sampleBeta',
+    valueName: 'alpha',
+    additionalInfo: { beta }
+  });
+
+  assertFinite(beta, {
+    location: 'sampleBeta',
+    valueName: 'beta',
+    additionalInfo: { alpha }
+  });
+
+  if (alpha <= 0) {
+    throw new Error([
+      '❌ Invalid alpha in sampleBeta',
+      `   alpha = ${alpha}`,
+      '   alpha must be > 0',
+    ].join('\n'));
+  }
+
+  if (beta <= 0) {
+    throw new Error([
+      '❌ Invalid beta in sampleBeta',
+      `   beta = ${beta}`,
+      '   beta must be > 0',
+    ].join('\n'));
+  }
+
+  // Sample two gamma variates and take ratio
+  const gammaAlpha = sampleGamma(alpha, 1, rng);
+  const gammaBeta = sampleGamma(beta, 1, rng);
+
+  const result = gammaAlpha / (gammaAlpha + gammaBeta);
+
+  return assertInRange(result, 0, 1, {
+    location: 'sampleBeta',
+    valueName: 'result',
+  });
+}
+
+/**
+ * Sample from Gamma distribution Gamma(k, θ)
+ *
+ * Internal helper for Beta distribution.
+ * Uses Marsaglia & Tsang (2000) method for k ≥ 1.
+ *
+ * @param shape Shape parameter k (α in some notations), must be > 0
+ * @param scale Scale parameter θ, must be > 0
+ * @param rng Deterministic RNG function (REQUIRED)
+ * @returns Sample from Gamma(k, θ)
+ */
+function sampleGamma(
+  shape: number,
+  scale: number,
+  rng: () => number
+): number {
+  // For shape < 1, use transformation Gamma(k) = Gamma(k+1) * U^(1/k)
+  if (shape < 1) {
+    const gammaShapePlus1 = sampleGamma(shape + 1, scale, rng);
+    const u = rng();
+    return gammaShapePlus1 * Math.pow(u, 1 / shape);
+  }
+
+  // Marsaglia & Tsang (2000) method for shape ≥ 1
+  const d = shape - 1 / 3;
+  const c = 1 / Math.sqrt(9 * d);
+
+  // Rejection sampling loop
+  let maxIterations = 1000;
+  while (maxIterations-- > 0) {
+    // Sample Z ~ N(0,1)
+    const z = sampleNormal(0, 1, rng);
+    const v = Math.pow(1 + c * z, 3);
+
+    if (v <= 0) continue;
+
+    const u = rng();
+    const z2 = z * z;
+
+    // Accept/reject conditions from Marsaglia & Tsang
+    if (u < 1 - 0.0331 * z2 * z2) {
+      return d * v * scale;
+    }
+
+    if (Math.log(u) < 0.5 * z2 + d * (1 - v + Math.log(v))) {
+      return d * v * scale;
+    }
+  }
+
+  // Fallback - should rarely happen with good RNG
+  throw new Error('sampleGamma: Failed to converge after 1000 iterations');
+}
+
+/**
+ * Sample from threshold distribution (dispatcher)
+ *
+ * Type-safe dispatcher for threshold uncertainty modeling.
+ * Accepts distribution specification object and routes to appropriate sampler.
+ *
+ * @param distribution Distribution specification with type and params
+ * @param rng Deterministic RNG function (REQUIRED)
+ * @returns Sampled threshold value
+ *
+ * @example
+ * const dist = {
+ *   type: 'triangular' as const,
+ *   params: { min: 0.8, mode: 1.5, max: 3.4 }
+ * };
+ * const threshold = sampleThresholdDistribution(dist, rng);
+ */
+export function sampleThresholdDistribution(
+  distribution: {
+    type: 'triangular' | 'uniform' | 'normal' | 'log-normal';
+    params: {
+      min?: number;
+      mode?: number;
+      max?: number;
+      mean?: number;
+      std?: number;
+      meanLog?: number;
+      stdLog?: number;
+    };
+  },
+  rng: () => number
+): number {
+  // Validate RNG
+  if (!rng || typeof rng !== 'function') {
+    throw new Error('❌ CRITICAL: RNG required for deterministic distribution sampling');
+  }
+
+  switch (distribution.type) {
+    case 'triangular': {
+      const { min, mode, max } = distribution.params;
+      if (min === undefined || mode === undefined || max === undefined) {
+        throw new Error(`❌ Triangular distribution missing parameters: min=${min} mode=${mode} max=${max}`);
+      }
+      return sampleTriangular(min, mode, max, rng);
+    }
+
+    case 'uniform': {
+      const { min, max } = distribution.params;
+      if (min === undefined || max === undefined) {
+        throw new Error(`❌ Uniform distribution missing parameters: min=${min} max=${max}`);
+      }
+      return sampleUniform(min, max, rng);
+    }
+
+    case 'normal': {
+      const { mean, std } = distribution.params;
+      if (mean === undefined || std === undefined) {
+        throw new Error(`❌ Normal distribution missing parameters: mean=${mean} std=${std}`);
+      }
+      return sampleNormal(mean, std, rng);
+    }
+
+    case 'log-normal': {
+      const { meanLog, stdLog } = distribution.params;
+      if (meanLog === undefined || stdLog === undefined) {
+        throw new Error(`❌ Log-normal distribution missing parameters: meanLog=${meanLog} stdLog=${stdLog}`);
+      }
+      return sampleLogNormal(meanLog, stdLog, rng);
+    }
+
+    default:
+      throw new Error(`❌ Unknown distribution type: ${(distribution as any).type}`);
+  }
+}
+
+/**
+ * Helper: Convert distribution parameters to descriptive stats
+ *
+ * Useful for logging and debugging threshold configurations.
+ *
+ * @example
+ * const stats = getDistributionStats('normal', { mean: 1.5, std: 0.3 });
+ * console.log(stats); // "Normal(μ=1.50, σ=0.30)"
+ */
+export function getDistributionStats(
+  type: 'normal' | 'beta' | 'lognormal' | 'triangular' | 'uniform',
+  params: Record<string, number>
+): string {
+  switch (type) {
+    case 'normal':
+      return `Normal(μ=${params.mean?.toFixed(2)}, σ=${(params.stdDev ?? params.std)?.toFixed(2)})`;
+    case 'beta':
+      return `Beta(α=${params.alpha?.toFixed(2)}, β=${params.beta?.toFixed(2)})`;
+    case 'lognormal':
+      return `LogNormal(μ=${(params.mu ?? params.meanLog)?.toFixed(2)}, σ=${(params.sigma ?? params.stdLog)?.toFixed(2)})`;
+    case 'triangular':
+      return `Triangular(min=${params.min?.toFixed(2)}, mode=${params.mode?.toFixed(2)}, max=${params.max?.toFixed(2)})`;
+    case 'uniform':
+      return `Uniform(min=${params.min?.toFixed(2)}, max=${params.max?.toFixed(2)})`;
+    default:
+      return 'Unknown distribution';
+  }
 }
