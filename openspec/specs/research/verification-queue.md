@@ -20,56 +20,69 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 ### HIGH Priority
 
 #### Threshold Lowering for Tipping Cascades
-**Status:** ⚠️ READY FOR VALIDATION
+**Status:** ❌ FAILED - Grade D (CRITICAL Issues Found)
 **Change:** (pending - needs change folder created)
 **Commit:** cf49657
 **Context:** Implements threshold lowering mechanism from mechanism audit gap
-**Verification File:** `research/verification_cf49657_20251123.md`
+**Verification File:** `research/verification_cf49657_20251207.md`
 
-**Sources to Verify:**
-- Armstrong McKay et al. (2022) Science - "Network of 16 tipping elements with causal interactions"
-- Wunderling et al. (2024) ESD - "combined effect tending to lower thresholds" with magnitude estimates
-- Van Westen et al. (2024) JGR - Greenland freshwater → AMOC destabilization
+**Verification Complete (Dec 7, 2025):**
+- **Initial Grade:** C (super-alignment-researcher)
+- **Final Grade:** D (research-skeptic downgrade)
+- **Reviewers:** Cynthia (researcher), Sylvia (skeptic)
 
-**Key Claims:**
-- TIPPING_INTERACTIONS matrix with 9 interactions
-- Threshold reduction magnitudes (0.10-0.30°C per interaction)
-- 0.5°C cap per element ("conservative estimate from Wunderling 2024")
-- sqrt(progress) scaling function (front-loading assumption)
+**CRITICAL Issues Found:**
+1. ❌ **AMOC → Amazon Sign Error:** Implementation claims AMOC collapse destabilizes Amazon, but 2023-2025 literature shows AMOC collapse **stabilizes** Amazon by increasing rainfall
+2. ❌ **sqrt(progress) Scaling Backwards:** Front-loads effects when physics suggests acceleration over time (rate-induced tipping cascades)
+3. ❌ **Missing Stabilizing Feedbacks:** Only destabilizing interactions modeled, creating catastrophization bias
+4. ⚠️ **Quantitative Magnitudes Not Validated:** 0.10-0.30°C values are engineering estimates, not empirically derived
+5. ⚠️ **0.5°C Cap Misattributed:** Not found in Wunderling et al. (2024)
 
-**Implementation:**
-- calculateThresholdLowering() in ClimateSystemPhase.ts
-- TIPPING_INTERACTIONS constant in src/types/tipping-points.ts
-- effectiveThresholdReduction field on TippingElement interface
+**Blocking Issues (Must Fix Before Production):**
+- Fix or remove AMOC → Amazon interaction (directional error)
+- Add AMOC → Greenland stabilizing feedback (missing from model)
+- Replace sqrt(progress) with linear or sigmoid scaling
+- Document all magnitudes as "engineering estimates" not "research-backed"
 
-**Next Steps:** Two-layer verification → Parameter adjustments if needed → Monte Carlo N≥10
+**Next Steps:** Block implementation → Parameter revision → Re-verification required
 
 ---
 
 #### AI Governance 2025 Proposals
-**Status:** ⚠️ READY FOR VALIDATION
+**Status:** ✅ VERIFIED - Grade A (with implementation caveats)
 **Change:** (pending - needs change folder created)
 **Commit:** ff6ff02
 **Context:** Global moratorium + US-China bilateral frameworks from arXiv 2025
-**Verification File:** `research/verification_ff6ff02_20251120.md`
+**Verification File:** `research/verification_ff6ff02_20251207.md`
 
-**Sources to Verify:**
-- arXiv:2505.04592 (May 2025) - "AI Governance to Avoid Extinction" (global moratorium)
-- arXiv:2511.10783 (Nov 2025) - "International Agreement to Prevent ASI" (US-China bilateral)
+**Verification Complete (Dec 7, 2025):**
+- **Factual Accuracy Grade:** A (all claims verified)
+- **Policy Effectiveness:** CONDITIONAL (7 implementation challenges identified)
+- **Reviewers:** Cynthia (researcher), Sylvia (skeptic)
 
-**Key Claims:**
-- Catastrophic risk estimates: 10-25% (Amodei), 20% (Bengio), 38% (AI conference survey)
-- Compute thresholds: 10²⁴ FLOP hard prohibition, 10²³ FLOP post-training
-- Chip cluster definitions: >16 H100-equivalents (~$500k), 990 TFLOP/s FP16 per H100
-- Consolidation timeline: Day 1 (>10k H100s), Day 10 (>1k), Day 100 (>100), Year 2 (all)
-- Verification mechanisms: On-chip monitoring, satellite surveillance, whistleblowers
+**✅ All Claims Verified:**
+- Expert risk estimates: 10-25% (Amodei - Axios), 20% (Bengio - interview), 38% (Grace et al. 2024 survey N=2,778)
+- Compute thresholds: 10²⁴ FLOP verified (below GPT-4 at 2.2×10²⁵)
+- H100 specs: 990 TFLOP/s FP16 (conservative), ~$25-30k/unit
+- Staged consolidation timeline verified
+- Verification mechanisms documented
 
-**Integration Questions:**
-- Should simulation model global moratorium scenario as distinct from bilateral?
-- Add compute threshold enforcement mechanics to government phase?
-- Model chip cluster tracking and consolidation timeline?
+**⚠️ Implementation Challenges (Sylvia's Critique):**
+1. **CRITICAL:** Threshold obsolescence (30+ models already exceed 10²⁴ FLOP)
+2. **CRITICAL:** Distributed training evasion (DiLoCo multi-datacenter bypass)
+3. **CRITICAL:** Open-weights proliferation (Llama 3.1 405B irreversibly released)
+4. **HIGH:** Algorithmic efficiency (1.28x/year hardware + post-Chinchilla methods)
+5. **HIGH:** Expert calibration gap (Superforecasters: 0.38% vs experts: 3-12% extinction)
+6. **HIGH:** US-China compliance verification harder than nuclear
+7. **MEDIUM:** Unintended consequences (incumbent lock-in, beneficial AI blocked)
 
-**Next Steps:** Two-layer verification → Design decision → Implementation
+**Simulation Implications:**
+- Implement as **proposed governance scenarios** (not validated interventions)
+- Model effectiveness decay: `base * 0.85^years * (1 - distributed) * (1 - open_weights)`
+- Include 5 failure pathways: obsolescence, distributed bypass, algorithmic leap, open-weights, defection
+- Use risk distributions (log-uniform 0.3%-40%) not point estimates
+
+**Next Steps:** Implementation approved with failure pathway modeling → Add to government phase mechanics
 
 ---
 

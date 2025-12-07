@@ -830,8 +830,10 @@ export function aggregateGlobalPopulation(state: GameState): void {
 
   // Convert from millions to billions for global population storage
   // Regional: millions (1677), Global: billions (8.137)
-  // CALIBRATION (Nov 28, 2025): Lowered floor from 1M (0.001B) to 10M (0.01B)
-  const totalPopulationBillions = assertInRange(totalPopulation / 1000, 0.01, 100, {
+  // EXTINCTION-AWARE (Dec 7, 2025): Allow near-extinction scenarios
+  // Minimum: 0.00001B (10,000 people) = extinction threshold
+  // This allows Monte Carlo to model full extinction pathways without crashing
+  const totalPopulationBillions = assertInRange(totalPopulation / 1000, 0.00001, 100, {
     location: 'aggregateGlobalPopulation (billions conversion)',
     valueName: 'totalPopulationBillions',
     month: state.currentMonth
