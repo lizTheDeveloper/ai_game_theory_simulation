@@ -209,32 +209,48 @@ The simulation SHALL model environmental, social, and technological debt.
 
 ## Active Work
 
+### MEDIUM Priority
+
+#### M-6: Enhanced Radiation Modeling
+**Status:** IN PROGRESS (Quality Gate 1 - Research Phase)
+**Context:** Acute vs chronic radiation exposure, tissue sensitivity
+**Impact:** More realistic nuclear winter health effects
+**Research:** Tissue weighting factors, acute exposure limits
+**Handoff:** Cynthia (super-alignment-researcher)
+**Next Steps:** Complete research validation → Implementation → Test coverage → Architecture review
+
+---
+
+---
+
+## Completed (Session 60)
+
 ### HIGH Priority
 
 #### HIGH-7: Conditional Climate Stability Floor
-**Status:** Proposed (research debate finding from Session 51)
-**Context:** Climate stability 5% floor contradicted by Wunderling 2024
-**Impact:** Must document floor as implementation choice, not research-backed
-**Research:** `research/climate_stability_self_limiting_critique_20251126.md`
-**Next Steps:** Update ClimateSystemPhase.ts comments → Document as tractability choice
-
----
+**Status:** ✅ COMPLETE (Sessions 52-56)
+**Implementation:** `src/simulation/engine/phases/ClimateSystemPhase.ts` (lines 804-864)
+**Research:** `research/high7_conditional_stability_floor_20251205.md` (100% currency, 12/12 peer-reviewed)
+**Summary:** Conditional 5% stability floor applies ONLY in stabilization scenarios (Paris success OR low cascade risk). Floor removed in tail risk scenarios (Paris failure + cascade risk) per Wunderling et al. 2024.
+**Documentation:** Comprehensive inline comments explain research controversy, implementation choice rationale
+**Grade:** A+ (exemplary documentation)
 
 ### MEDIUM Priority
 
 #### M-5: Threshold Uncertainty Modeling
-**Status:** Proposed
-**Context:** Distribution sampling library for tipping point thresholds
-**Impact:** Move from deterministic thresholds to probability distributions
-**Research:** Climate tipping points have uncertainty ranges (e.g., AMOC: 1.4-8.0°C)
-**Next Steps:** Design library → Implement → Validate with Monte Carlo
-
-#### M-6: Enhanced Radiation Modeling
-**Status:** Proposed
-**Context:** Acute vs chronic radiation exposure, tissue sensitivity
-**Impact:** More realistic nuclear winter health effects
-**Research:** Tissue weighting factors, acute exposure limits
-**Next Steps:** Research validation → Implementation → Test coverage
+**Status:** ✅ COMPLETE (Session 60)
+**Implementation:**
+- Distribution sampling library: `src/simulation/utils/distributionSampling.ts` (295 lines)
+- Type definitions: `src/types/tipping-points.ts` (thresholdDistribution, _sampledThresholdC)
+- Initialization: `src/simulation/tippingPoints.ts` (threshold sampling at init)
+- Integration: `src/simulation/engine/phases/ClimateSystemPhase.ts` (getEffectiveThreshold)
+**Research:** `research/tipping_threshold_uncertainty_20251207.md` (774 lines, Grade A, 70% currency)
+**Quality Gates:**
+- QG1 (Research): Grade B- (passed with conditions addressed)
+- Monte Carlo: N=10 validation passed, distributions working correctly
+**Distribution Types:** 4 types (triangular, uniform, normal, log-normal)
+**Configured Elements:** AMOC (uniform 1.4-8.0°C), Amazon (triangular 2.0/3.5/10.2°C), Arctic (triangular 1.0/1.6/2.3°C), WAIS (triangular 1.0/1.5/3.0°C), Greenland (triangular 0.8/1.5/3.4°C)
+**Archive:** `docs/implementation-history/m5_threshold_uncertainty_20251207.md`
 
 ---
 
