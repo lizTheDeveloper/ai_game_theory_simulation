@@ -225,21 +225,23 @@ The simulation SHALL model environmental, social, and technological debt.
 ### MEDIUM Priority
 
 #### M-7: Fix Population Assertions for Near-Extinction Scenarios
-**Status:** Proposed
+**Status:** ✅ COMPLETE (Dec 7, 2025)
 **Context:** Monte Carlo validation blocked by overly restrictive population assertions
-**Impact:** Cannot complete N=10 validation for extreme scenarios (near-extinction)
-**Research:** Toba bottleneck (10K-30K survivors), nuclear winter scenarios
-**Next Steps:** Audit all population aggregation functions, lower minimums to 0.00001B
-**Files:** `src/simulation/populationDynamics.ts` (aggregateAllRegionalData, others)
-**Triggered By:** HIGH-7 Monte Carlo validation (Run 3/10 crashed at 9.9M population)
-**Priority:** MEDIUM (affects Monte Carlo validation, not production runs)
+**Fix:** Lowered minimum from 0.01B (10M) → 0.00001B (10K) in aggregateAllRegionalData
+**Research:** Toba bottleneck (~74 kya, 10K-30K survivors) - allows realistic near-extinction scenarios
+**Validation:** Created validateNearExtinction.ts script - all 4 test cases pass (10K, 100K, 1M, 10M)
+**Files:** `src/simulation/populationDynamics.ts:687`, `scripts/validateNearExtinction.ts`
+**Impact:** Monte Carlo validation now unblocked for tail-risk scenarios
 
 #### M-5: Threshold Uncertainty Modeling
-**Status:** Proposed
+**Status:** ✅ COMPLETE (Dec 7, 2025)
 **Context:** Distribution sampling library for tipping point thresholds
-**Impact:** Move from deterministic thresholds to probability distributions
-**Research:** Climate tipping points have uncertainty ranges (e.g., AMOC: 1.4-8.0°C)
-**Next Steps:** Design library → Implement → Validate with Monte Carlo
+**Implementation:** Three distribution libraries (triangular, uniform, normal, log-normal, beta, gamma)
+**Research:** 775-line research doc with peer-reviewed threshold ranges (AMOC: 1.4-8.0°C, Greenland: 0.8-3.4°C, etc.)
+**Validation:** Monte Carlo N=3 deterministic (seed=42, all thresholds identical across runs), 28/28 tests passing
+**Quality Gates:** QG1 Grade B- (research-skeptic), QG2 Grade B+ (architecture-skeptic)
+**Files:** `src/simulation/utils/distributionSampling.ts`, `src/simulation/thresholds/distributions.ts`, `tests/thresholds/distributions.test.ts`
+**Known Issues:** H-1 (three redundant libraries, consolidation recommended but not blocking)
 
 #### M-6: Enhanced Radiation Modeling
 **Status:** Proposed
