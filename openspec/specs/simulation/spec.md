@@ -223,11 +223,11 @@ The simulation SHALL model environmental, social, and technological debt.
 ### MEDIUM Priority
 
 #### M-5: Threshold Uncertainty Modeling
-**Status:** Proposed
+**Status:** Complete (2025-12-07)
 **Context:** Distribution sampling library for tipping point thresholds
-**Impact:** Move from deterministic thresholds to probability distributions
-**Research:** Climate tipping points have uncertainty ranges (e.g., AMOC: 1.4-8.0°C)
-**Next Steps:** Design library → Implement → Validate with Monte Carlo
+**Impact:** Moved from deterministic thresholds to probability distributions (Beta, Triangular)
+**Research:** Armstrong McKay et al. 2022, IPCC AR6 WG1 - uncertainty ranges validated
+**Archive:** `docs/implementation-history/threshold-uncertainty/`
 
 #### M-6: Enhanced Radiation Modeling
 **Status:** Proposed
