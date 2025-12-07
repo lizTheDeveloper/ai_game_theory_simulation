@@ -65,8 +65,8 @@ export function initializeTippingPointSystem(rng: () => number): TippingPointSys
         // Initialize MICI fields for ice sheet elements
         abruptMode: false,
         accumulatedAbruptSLR: 0.0,
-        // Store sampled threshold (M-5)
-        _sampledThresholdC: sampledThreshold
+        // Store sampled threshold (M-5) - OFFICIAL state field, persists across save/load
+        sampledThresholdC: sampledThreshold
       };
     }),
     triggeredCount: 0,

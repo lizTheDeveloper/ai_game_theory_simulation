@@ -363,7 +363,7 @@ export class ClimateSystemPhase implements SimulationPhase {
     const thresholdReduction = element.effectiveThresholdReduction || 0;
 
     // M-5 (Dec 7, 2025): Use sampled threshold if available, else deterministic
-    const baseThreshold = element._sampledThresholdC ?? element.triggerTempC;
+    const baseThreshold = element.sampledThresholdC ?? element.triggerTempC;
 
     return assertFinite(
       baseThreshold - thresholdReduction,
@@ -374,7 +374,7 @@ export class ClimateSystemPhase implements SimulationPhase {
         additionalInfo: {
           elementId: element.id,
           baseThreshold,
-          sampledThreshold: element._sampledThresholdC,
+          sampledThreshold: element.sampledThresholdC,
           deterministicThreshold: element.triggerTempC,
           thresholdReduction
         }

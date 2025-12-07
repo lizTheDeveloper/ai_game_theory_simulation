@@ -328,10 +328,14 @@ export function sampleBeta(
  * Used internally by sampleBeta for gamma ratio method.
  * Not exported (beta is the only use case in M-5).
  *
+ * Performance: Rejection sampling with iteration guard to prevent pathological hangs.
+ * Typical acceptance rate >90% for reasonable parameters (alpha >= 1, beta >= 1).
+ *
  * @param shape Shape parameter (alpha, must be > 0)
  * @param scale Scale parameter (must be > 0)
  * @param rng Deterministic RNG function
  * @returns Sampled value from Gamma(shape, scale)
+ * @throws Error if sampling exceeds max iterations (suggests pathological parameters)
  */
 function sampleGamma(shape: number, scale: number, rng: () => number): number {
   if (shape < 1) {
@@ -345,8 +349,12 @@ function sampleGamma(shape: number, scale: number, rng: () => number): number {
   const d = shape - 1 / 3;
   const c = 1 / Math.sqrt(9 * d);
 
-  // Rejection sampling loop
-  while (true) {
+  // Rejection sampling loop with iteration guard (Architecture Review HIGH-1)
+  // Typical acceptance rate >90%, max iterations prevents pathological hangs
+  const MAX_ITERATIONS = 1000;
+  let iterations = 0;
+
+  while (iterations < MAX_ITERATIONS) {
     let x: number;
     let v: number;
 
@@ -368,7 +376,15 @@ function sampleGamma(shape: number, scale: number, rng: () => number): number {
     if (Math.log(u) < 0.5 * x * x + d * (1 - v + Math.log(v))) {
       return d * v * scale;
     }
+
+    iterations++;
   }
+
+  // If we get here, parameters are pathological (should never happen with Beta(2,5) etc)
+  throw new Error(
+    `❌ Gamma sampling failed after ${MAX_ITERATIONS} iterations for shape=${shape}, scale=${scale}. ` +
+    `This suggests pathological parameters. Please verify distribution configuration.`
+  );
 }
 
 /**

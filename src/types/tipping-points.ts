@@ -202,8 +202,9 @@ export interface TippingElement {
    * If undefined, falls back to deterministic triggerTempC.
    *
    * Determinism: Same RNG seed produces same sampled value across runs (Monte Carlo reproducibility)
+   * Persistence: OFFICIAL state field (not transient) - MUST be saved/loaded for reproducibility
    */
-  _sampledThresholdC?: number;
+  sampledThresholdC?: number;
 
   /** === INTERNAL IMPLEMENTATION FIELDS === */
   /**
