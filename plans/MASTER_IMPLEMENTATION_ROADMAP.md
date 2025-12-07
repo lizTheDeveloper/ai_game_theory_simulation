@@ -27,6 +27,9 @@
   - `plans/completed/l1_physical_constraints_validation_20251201.md` (Session 28)
   - `plans/completed/cleanup_concentration_regression_tests_20251201.md` (Session 32)
   - `plans/completed/m4_abrupt_sea_level_rise_20251205.md` (Session 54)
+  - `plans/completed/m5_compound_climate_events_20251206.md` (Session 56)
+  - `plans/completed/m6_social_tipping_points_20251206.md` (Session 55)
+  - `plans/completed/m7_climate_hysteresis_20251205.md` (Session 55)
   - `plans/completed/CRITICAL_game_ui_state_integration_IMPLEMENTED_20251207.md` (Session 56)
 - **Recent Work (Dec 7 - Session 56):**
   - ✅ **CRITICAL COMPLETE** - Game UI State Integration
