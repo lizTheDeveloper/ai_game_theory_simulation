@@ -143,9 +143,10 @@ The project SHALL preserve implementation histories and research context.
 **Test Coverage:** 82.47% (462+ tests passing)
 **System State:** Production-ready, all quality gates GREEN
 
-**Token Conservation:** ACTIVE (target 50% normal usage)
-- Strategy: CRITICAL/HIGH only, 4h worker intervals
-- MEDIUM/LOW: Deferred until token budget restored
+**Token Conservation:** DISABLED (Dec 4, 2025 - Per PM request)
+- Normal operation restored: Work thoroughly, document properly, explore as needed
+- Autonomous workers: Running hourly, full productivity mode
+- Quality over speed: Proper implementation, not rushed patches
 
 ---
 
