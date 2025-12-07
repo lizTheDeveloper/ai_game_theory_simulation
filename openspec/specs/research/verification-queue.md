@@ -89,62 +89,73 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 ### MEDIUM Priority
 
 #### Nitrogen-Food Phase 3 Technologies
-**Status:** ⚠️ READY FOR VALIDATION
+**Status:** ✅ VERIFIED - Grade B-C (5/6 technologies supported, 1 requires correction)
 **Change:** (pending - needs change folder created)
 **Commit:** cd1e83a
 **Context:** 6 new nitrogen reduction technologies added to tech tree
-**Verification File:** `research/verification_cd1e83a_20251121.md`
+**Verification File:** `research/meta/verification_cd1e83a_20251207.md`
 
-**Technologies to Verify:**
-1. Rhizosphere Engineering (15-40% N reduction, TIER 1, commercial)
-2. Nitroplast Integration (50-70% reduction, breakthrough, Coale et al. 2024)
-3. Precision Fermentation (30-50% agri N reduction, emerging)
-4. Regional Nitrogen Policies (20% efficiency via redistribution)
-5. Soil Health Restoration (20-40% NUE improvement)
-6. Integrated Nutrient Management (25-45% efficiency gains)
+**Verification Complete (Dec 7, 2025):**
+- **Overall Grade:** B-C (varying by technology)
+- **Reviewer:** Cynthia (super-alignment-researcher)
+- **5/6 technologies verified**, 1 requires major correction
 
-**Key Claims:**
-- Effectiveness ranges (15-40%, 20-45%, etc.)
-- Co-benefits quantification (soil health, biodiversity, carbon)
-- Timeline assumptions (R&D + deployment)
-- Citation: Coale et al. 2024 *Science* for nitroplasts
+**Technology Grades:**
+1. **Rhizosphere Engineering:** B (15-40% range supported by field trials)
+2. **Nitroplast Integration:** C (⚠️ CRITICAL: Coale et al. 2024 is marine algae, NOT crop application - claim extrapolated beyond scope)
+3. **Precision Fermentation:** B (strong lifecycle data, N reduction indirect via animal ag replacement)
+4. **Regional Nitrogen Policies:** D (regional data exists, global 20% claim unsupported)
+5. **Soil Health Restoration:** B (meta-analyses support, no-till shows mixed results)
+6. **Integrated Nutrient Management:** C (framework exists, specific 25-45% range unsupported)
 
-**Next Steps:** Two-layer verification → Parameter adjustments if needed → Monte Carlo validation
+**⚠️ Implementation Issues:**
+1. **CRITICAL:** Nitroplast is marine biology discovery (nitrogen-fixing organelle in *Braarudosphaera bigelowii*), NOT agricultural technology
+2. **HIGH:** Regional N Policies 20% efficiency lacks global study support
+3. **MEDIUM:** INM 25-45% efficiency range not directly validated
+4. **MEDIUM:** Co-benefit percentages (8%, 3%, 5% biodiversity/soil) unsupported
+
+**Next Steps:** Roy to correct nitroplast technology description, update efficiency ranges, document limitations → Monte Carlo validation
 
 ---
 
 #### Carbon Capture Deployment Parameters
-**Status:** ⚠️ READY FOR VALIDATION
+**Status:** ✅ VERIFIED - Grade B (downgraded from A-, CONDITIONAL PASS)
 **Change:** (pending - needs change folder created)
 **Commit:** c52826e
-**Context:** Comprehensive DAC research (625 lines, 12 sources, A+ quality)
+**Context:** Comprehensive DAC research (625 lines, 12 sources)
 **Research File:** `research/carbon_capture_deployment_timelines_2025.md`
-**Verification File:** `research/verification_c52826e_20251121.md`
+**Verification File:** `research/verification_c52826e_dac_skeptic_20251207.md` (pending formal file creation)
 
-**Sources to Verify:**
-- Tan et al. (2024) *Nature Communications* - gigatonne requirements, energy/water nexus
-- Climeworks (2024) - Mammoth plant operational data (36,000 tonnes/yr)
-- IEA (2024) - CCUS project milestones, 5-10 year activation delay
-- Frontiers in Climate (2024-2025) - technical analysis, energy requirements
-- Canary Media (2024) - Gen 3 technology cost reduction claims
+**Verification Complete (Dec 7, 2025):**
+- **Initial Grade:** A- (Cynthia - super-alignment-researcher)
+- **Final Grade:** B (Sylvia - research-skeptic downgrade)
+- **Verdict:** CONDITIONAL PASS - Implementation may proceed ONLY with mandatory energy coupling
 
-**Key Claims:**
-- Current capacity: 0.00005 Gt/yr (Mammoth: 36kt/yr operational May 2024)
-- Timeline: 20-40 years breakthrough → gigatonne impact
-- Energy: 4-10 TWh per 1 Gt/yr (must couple with clean energy)
-- Water: 15 km³/yr for 4 Gt/yr (3.8% global industrial use)
-- Cost: $600-1,000/tonne (current) → $100-300/tonne (2040s)
+**⚠️ Critical Issues (Sylvia's Critique):**
+1. **Capacity utilization gap:** Mammoth nameplate (36kt/yr) vs actual (~100-805 tonnes total captured, 12/72 containers operational as of Dec 2025)
+2. **Systematic underperformance:** Orca operated at 18-21% of nameplate capacity over first 2 years - this is the baseline, not anomaly
+3. **Energy coupling MANDATORY:** 10 Gt DAC requires 12,000 TWh (40% of global electricity) - cannot be optional enhancement
+4. **Cost trajectory slipping:** 2017 target ($100 by 2025) missed; current target $400-600 by 2030 (not $100-300 by 2040s)
+5. **Industry reality check:** Climeworks 22% layoffs (2025), $50M US grant at risk, Mammoth at <3% capacity
+
+**Recommendations for Implementation:**
+- Apply **capacity utilization factor** 0.2-0.65 to nameplate capacity
+- **Energy coupling MUST be implemented** before gigatonne scenarios (not optional)
+- T_50 should be **probability distribution** (20-60 years) not point estimate
+- Document 2025 deployment friction (industry headwinds, not just technical scaling)
+
+**Risk Assessment:**
+Without energy constraints, model may show "DAC saves climate" in impossible scenarios, distorting policy recommendations.
 
 **Current Implementation:**
 - ClimateDeploymentDelayPhase.ts:67-73 - DAC parameters
-
-**Parameter Validation:**
 - ✅ Activation delay (7 years) - compatible with 5-10 range
 - ✅ T_50 (30 years) - compatible with 20-40 year timeline
-- ⚠️ Energy requirements - NOT MODELED (enhancement opportunity)
-- ⚠️ Water constraints - NOT MODELED (regional deployment factor)
+- ❌ Energy requirements - NOT MODELED (**MUST ADD before gigatonne scenarios**)
+- ❌ Water constraints - NOT MODELED (regional deployment factor)
+- ❌ Capacity utilization - NOT MODELED (assumes nameplate = actual)
 
-**Next Steps:** Two-layer verification → Parameter validation → Enhancement implementation (energy/water constraints) → Monte Carlo N≥10
+**Next Steps:** Roy to implement energy coupling + capacity utilization constraints → Monte Carlo validation
 
 ---
 
