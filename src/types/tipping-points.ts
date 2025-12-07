@@ -150,6 +150,57 @@ export interface TippingElement {
    */
   accumulatedAbruptSLR?: number;
 
+  /** === THRESHOLD UNCERTAINTY (M-5, Dec 7, 2025) === */
+  /**
+   * Uncertainty distribution for tipping threshold
+   * Research: Armstrong McKay et al. (2022) - Thresholds have factor 2-10x uncertainty ranges
+   *
+   * If defined, threshold will be sampled from this distribution at initialization.
+   * If undefined, uses deterministic triggerTempC value (backward compatibility).
+   *
+   * Distribution types:
+   * - triangular: Min/mode/max from expert elicitation (most common in literature)
+   * - uniform: Epistemic uncertainty with no central tendency (e.g., AMOC controversy)
+   * - normal: Symmetric uncertainty (if literature reports confidence intervals)
+   * - log-normal: Skewed distributions (rare for tipping thresholds)
+   *
+   * Example (Greenland Ice Sheet):
+   * {
+   *   type: 'triangular',
+   *   params: { min: 0.8, mode: 1.5, max: 3.4 },
+   *   source: 'Armstrong McKay et al. 2022 + Garbe et al. 2023'
+   * }
+   */
+  thresholdDistribution?: {
+    type: 'triangular' | 'uniform' | 'normal' | 'log-normal';
+    params: {
+      // Triangular
+      min?: number;
+      mode?: number;
+      max?: number;
+      // Uniform (reuses min/max)
+      // Normal
+      mean?: number;
+      std?: number;
+      // Log-normal
+      meanLog?: number;
+      stdLog?: number;
+    };
+    source: string;  // Research citation
+    confidence?: 'Very Low' | 'Low' | 'Medium' | 'High';  // Optional confidence level
+  };
+
+  /**
+   * Sampled threshold value for this simulation run (°C)
+   * M-5 (Dec 7, 2025): Sampled at initialization from thresholdDistribution
+   *
+   * If thresholdDistribution is defined, this value is sampled once and used instead of triggerTempC.
+   * If undefined, falls back to deterministic triggerTempC.
+   *
+   * Determinism: Same RNG seed produces same sampled value across runs (Monte Carlo reproducibility)
+   */
+  _sampledThresholdC?: number;
+
   /** === INTERNAL IMPLEMENTATION FIELDS === */
   /**
    * Sampled transition time for this specific element (months)
@@ -256,7 +307,17 @@ export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTr
     // Conservative estimate: 1.0°C gap (not "never recovers" per Baker et al. 2024 resilience findings)
     // Recovery timescale: 1000+ years (longer than human timescale but not infinite)
     recoveryTempC: 3.0,      // 1.0°C below trigger (conservative)
-    hysteresisGapC: 1.0
+    hysteresisGapC: 1.0,
+    // === THRESHOLD UNCERTAINTY (M-5, Dec 7, 2025) ===
+    // Research: Armstrong McKay et al. (2022) Science + 2024-2025 AMOC controversy
+    // Scientific disagreement: Early warning signals (2025-2095) vs resilience findings ("very unlikely" 21st century)
+    // Uniform distribution represents epistemic uncertainty with no central tendency
+    thresholdDistribution: {
+      type: 'uniform',
+      params: { min: 1.4, max: 8.0 },  // °C above pre-industrial
+      source: 'Armstrong McKay et al. 2022',
+      confidence: 'Very Low'  // Fundamental scientific disagreement (2024-2025)
+    }
   },
   {
     id: 'amazon',
@@ -286,7 +347,17 @@ export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTr
     // Research: Limited quantitative data on Amazon recovery thresholds
     // Conservative estimate: 1.0°C gap (less extreme than ice sheets)
     recoveryTempC: 1.3,      // 1.0°C below trigger
-    hysteresisGapC: 1.0
+    hysteresisGapC: 1.0,
+    // === THRESHOLD UNCERTAINTY (M-5, Dec 7, 2025) ===
+    // Research: Armstrong McKay et al. (2022) + Ciemer et al. (2024) Nature
+    // Wide model disagreement (factor 5.1x range: 2.0-10.2°C)
+    // Triangular distribution with updated max from Ciemer et al. (2024)
+    thresholdDistribution: {
+      type: 'triangular',
+      params: { min: 2.0, mode: 3.5, max: 10.2 },  // °C above pre-industrial
+      source: 'Armstrong McKay et al. 2022 + Ciemer et al. 2024',
+      confidence: 'Low'  // Wide model disagreement, complex dynamics
+    }
   },
   {
     id: 'arctic_ice',
@@ -311,7 +382,16 @@ export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTr
     // Research: Armstrong McKay (2022) - Arctic ice is NOT a true tipping point with irreversible threshold
     // It's a "seasonal event" that's reversible. NO hysteresis.
     recoveryTempC: 1.5,      // Same as trigger = NO hysteresis gap
-    hysteresisGapC: 0.0
+    hysteresisGapC: 0.0,
+    // === THRESHOLD UNCERTAINTY (M-5, Dec 7, 2025) ===
+    // Research: Armstrong McKay et al. (2022) Science
+    // Medium confidence, narrow range (factor 2.3x)
+    thresholdDistribution: {
+      type: 'triangular',
+      params: { min: 1.0, mode: 1.6, max: 2.3 },  // °C above pre-industrial
+      source: 'Armstrong McKay et al. 2022',
+      confidence: 'Medium'  // Medium confidence, clear central tendency
+    }
   },
   {
     id: 'permafrost',
@@ -343,6 +423,12 @@ export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTr
     // Irreversibility captured via minimumAsymptoticValue (carbon stays in atmosphere)
     recoveryTempC: 1.8,      // Same as trigger = NO hysteresis gap for area
     hysteresisGapC: 0.0
+    // === THRESHOLD UNCERTAINTY (M-5, Dec 7, 2025) ===
+    // Research: Nitzbon et al. (2024) Nature Climate Change - NO GLOBAL TIPPING POINT
+    // Permafrost exhibits quasilinear response (no sharp threshold), local/regional heterogeneity
+    // Should be modeled as continuous warming function, NOT threshold-based
+    // For backward compatibility, keeping deterministic triggerTempC but NOT adding distribution
+    // NOTE: Future refactor should remove from tipping points system entirely
   },
   {
     id: 'wais',
@@ -373,7 +459,17 @@ export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTr
     // Research: Garbe et al. (2020) Nature - WAIS does NOT regrow to modern extent until temps "at least 1°C lower than pre-industrial"
     // Cross at +2.0°C, recover below -1.0°C = 3.0°C hysteresis gap (LARGEST in simulation)
     recoveryTempC: -1.0,     // 1°C below pre-industrial (3°C below trigger!)
-    hysteresisGapC: 3.0
+    hysteresisGapC: 3.0,
+    // === THRESHOLD UNCERTAINTY (M-5, Dec 7, 2025) ===
+    // Research: Armstrong McKay et al. (2022) Science + 2024-2025 WAIS research
+    // Tightest uncertainty range among major elements (factor 3.0x, HIGH confidence)
+    // 2024 research validates baseline, threshold for irreversible retreat (not rapid collapse)
+    thresholdDistribution: {
+      type: 'triangular',
+      params: { min: 1.0, mode: 1.5, max: 3.0 },  // °C above pre-industrial
+      source: 'Armstrong McKay et al. 2022, validated by 2024-2025 WAIS research',
+      confidence: 'High'  // Narrow range, consistent across studies
+    }
   },
   {
     id: 'greenland',
@@ -404,7 +500,17 @@ export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTr
     // Research: Garbe et al. (2020) Nature - Similar hysteresis to WAIS but slightly smaller gap
     // Cross at +1.6°C, recover below -0.9°C = 2.5°C hysteresis gap
     recoveryTempC: -0.9,     // 0.9°C below pre-industrial (2.5°C below trigger)
-    hysteresisGapC: 2.5
+    hysteresisGapC: 2.5,
+    // === THRESHOLD UNCERTAINTY (M-5, Dec 7, 2025) ===
+    // Research: Armstrong McKay et al. (2022) + Garbe et al. (2023) Nature + 2024 updates
+    // Wide consensus range (factor 4.25x) but clear central tendency
+    // Central estimate 1.5°C most commonly cited
+    thresholdDistribution: {
+      type: 'triangular',
+      params: { min: 0.8, mode: 1.5, max: 3.4 },  // °C above pre-industrial
+      source: 'Armstrong McKay et al. 2022 + 2024 updates',
+      confidence: 'Medium'  // Wide range but central tendency clear
+    }
   }
 ];
 
