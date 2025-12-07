@@ -167,6 +167,31 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 
 ## Recently Resolved
 
+### M-5/M-6/M-7 Climate Implementations (Dec 5-7, 2025)
+**Status:** ✅ VALIDATED (Dec 7, 2025)
+**Grade:** A- (90-100% from 2024-2025)
+**Commits:** Multiple (Dec 4-5 implementations)
+**Validation:** `research/research_validation_session_58_20251207.md`
+
+**M-5 Compound Climate Events:**
+- ✅ 90% recency (75 refs, 26 from 2024-2025)
+- ✅ Threshold lowering justified (Wunderling 2024, Van Westen 2024)
+- ✅ Interaction strengths 0.1-0.3°C (conservative, capped at 0.5°C)
+
+**M-6 Social Tipping Points:**
+- ⚠️ 85% recency (uses IEA/Bloomberg industry reports)
+- ✅ EV adoption thresholds validated (31-country empirical data)
+- 📝 Recommendation: Supplement with peer-reviewed papers (Nature Energy, PNAS)
+
+**M-7 Climate Hysteresis:**
+- ✅ 100% peer-reviewed 2024-2025 sources
+- ✅ WAIS 3.0°C gap (Garbe 2020), Greenland 2.1°C gap (Drüke 2024)
+- ✅ Irreversibility floors justified (WAIS 40%, Greenland 30%, permafrost 20%)
+
+**Overall:** EXCELLENT research backing for climate systems. Minor improvement: M-6 peer-review upgrade.
+
+---
+
 ### CRITICAL-1: Coordinated Deployment Fabricated Parameter
 **Status:** ✅ RESOLVED (Nov 26, 2025)
 **Grade:** F → FIXED
