@@ -104,6 +104,8 @@ Even if a change seems trivial, you don't have enough context. The specialized a
 - `openspec/specs/simulation/spec.md` - Simulation requirements
 - `openspec/specs/frontend/spec.md` - Frontend requirements
 - `openspec/specs/research/verification-queue.md` - Active verifications
+- `openspec/specs/quality-gates/spec.md` - QG1/QG2 requirements (NEW - Dec 7, 2025)
+- `openspec/specs/bugs/critical-queue.md` - Bug tracking (NEW - Dec 7, 2025)
 - `openspec/project.md` - Conventions
 - `openspec/AGENTS.md` - AI workflow (READ THIS for agent patterns)
 
@@ -522,6 +524,8 @@ fi
 
 - **OpenSpec:** [`openspec/`](./openspec/) - Spec-driven development (NEW - Dec 6, 2025)
   - [`openspec/specs/project/spec.md`](./openspec/specs/project/spec.md) - Meta-spec (active work)
+  - [`openspec/specs/quality-gates/spec.md`](./openspec/specs/quality-gates/spec.md) - QG1/QG2 (NEW - Dec 7, 2025)
+  - [`openspec/specs/bugs/critical-queue.md`](./openspec/specs/bugs/critical-queue.md) - Bug tracking (NEW - Dec 7, 2025)
   - [`openspec/project.md`](./openspec/project.md) - Conventions
   - [`openspec/AGENTS.md`](./openspec/AGENTS.md) - AI workflow
   - [`docs/OPENSPEC_TRANSLATION_GUIDE.md`](./docs/OPENSPEC_TRANSLATION_GUIDE.md) - Complete guide (1,200+ lines)
