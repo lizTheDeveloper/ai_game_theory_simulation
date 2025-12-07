@@ -54,29 +54,39 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 ---
 
 #### AI Governance 2025 Proposals
-**Status:** ⚠️ READY FOR VALIDATION
+**Status:** ✅ VERIFIED (Partial) - Grade B- (Technical parameters verified, risk estimates unverified)
 **Change:** (pending - needs change folder created)
 **Commit:** ff6ff02
 **Context:** Global moratorium + US-China bilateral frameworks from arXiv 2025
-**Verification File:** `research/verification_ff6ff02_20251120.md`
+**Verification File:** `research/verification_ff6ff02_ai_governance_2025_VALIDATED_20251207.md`
 
-**Sources to Verify:**
-- arXiv:2505.04592 (May 2025) - "AI Governance to Avoid Extinction" (global moratorium)
-- arXiv:2511.10783 (Nov 2025) - "International Agreement to Prevent ASI" (US-China bilateral)
+**Sources Verified:**
+- ✅ arXiv:2505.04592 (May 2025) - Barnett & Scher, MIRI - Global moratorium framework CONFIRMED
+- ✅ arXiv:2511.10783 (Nov 2025) - Scher et al. - US-China bilateral agreement with technical specs CONFIRMED
 
-**Key Claims:**
-- Catastrophic risk estimates: 10-25% (Amodei), 20% (Bengio), 38% (AI conference survey)
-- Compute thresholds: 10²⁴ FLOP hard prohibition, 10²³ FLOP post-training
-- Chip cluster definitions: >16 H100-equivalents (~$500k), 990 TFLOP/s FP16 per H100
-- Consolidation timeline: Day 1 (>10k H100s), Day 10 (>1k), Day 100 (>100), Year 2 (all)
-- Verification mechanisms: On-chip monitoring, satellite surveillance, whistleblowers
+**Technical Parameters: ✅ ALL VERIFIED (100%)**
+- ✅ Compute thresholds: 10²⁴ FLOP hard prohibition, 10²³ FLOP post-training, 10²² FLOP monitored
+- ✅ Chip cluster definitions: >16 H100-equivalents (~$500k), 990 TFLOP/s FP16 per H100
+- ✅ Consolidation timeline: Day 1 (>10k H100s), Day 10 (>1k), Day 100 (>100), Year 2 (all)
+- ✅ Verification mechanisms: On-chip monitoring, satellite surveillance, whistleblowers, supply chain tracking, power monitoring, physical access, training checkpoints
 
-**Integration Questions:**
-- Should simulation model global moratorium scenario as distinct from bilateral?
-- Add compute threshold enforcement mechanics to government phase?
-- Model chip cluster tracking and consolidation timeline?
+**Risk Estimates: ❌ UNVERIFIED (0%)**
+- ❌ Catastrophic risk estimates (10-25% Amodei, 20% Bengio, 38% survey) NOT FOUND in cited arXiv papers
+- ⚠️ Papers confirm "high catastrophic risk" qualitatively but don't provide specific probabilities
+- ⚠️ Values likely from separate interviews/surveys - need additional sourcing OR removal
 
-**Next Steps:** Two-layer verification → Design decision → Implementation
+**Recommendation:** CONDITIONAL PASS
+- ✅ **Implement:** All technical parameters (FLOP thresholds, chip tracking, consolidation, verification)
+- ❌ **Remove:** Specific risk probability estimates until sources found
+- ✅ **Use:** Qualitative risk framing ("high catastrophic risk concern among experts")
+- ✅ **Model:** Bilateral vs global moratorium scenarios, verification mechanism effectiveness
+
+**Integration Answers:**
+1. **Global vs bilateral:** Model as SPECTRUM (unilateral → bilateral → coalition → global). Bilateral has most concrete parameters.
+2. **Compute threshold enforcement:** YES - well-specified, implementation-ready
+3. **Chip cluster tracking:** YES - exceptionally detailed 4-phase consolidation over 2 years
+
+**Next Steps:** Implement technical parameters (N≥10 Monte Carlo). Defer/remove risk probabilities OR conduct 2-4hr literature search for sources.
 
 ---
 
