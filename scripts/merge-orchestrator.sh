@@ -264,6 +264,7 @@ for BRANCH in $BRANCHES; do
 
   # Create merge branch name
   MERGE_BRANCH="merge/${BRANCH}_${TIMESTAMP}"
+  SAFE_BRANCH=$(echo "$BRANCH" | sed "s|[+ /]|_|g")
 
   log "📝 Creating merge branch: $MERGE_BRANCH"
 
