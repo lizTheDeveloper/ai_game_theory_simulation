@@ -212,15 +212,27 @@ The simulation SHALL model environmental, social, and technological debt.
 ### HIGH Priority
 
 #### HIGH-7: Conditional Climate Stability Floor
-**Status:** Proposed (research debate finding from Session 51)
-**Context:** Climate stability 5% floor contradicted by Wunderling 2024
-**Impact:** Must document floor as implementation choice, not research-backed
-**Research:** `research/climate_stability_self_limiting_critique_20251126.md`
-**Next Steps:** Update ClimateSystemPhase.ts comments → Document as tractability choice
+**Status:** COMPLETE (Dec 5, 2025, retroactive validation Dec 7)
+**Implementation:** `src/simulation/engine/phases/ClimateSystemPhase.ts:827-883`
+**Research:** Wunderling et al. (2024), ACCESS-ESM-1.5 (2024), Boers et al. (2025)
+**Quality Gates:** QG1 Grade B (Sylvia), QG2 Grade B (architecture-skeptic)
+**Summary:** Conditional floor (5% in stabilization scenarios, 0% in tail risk) replaces unconditional floor. Aligns with 2024-2025 research showing destabilizing tipping cascades.
+**Known Issues:** Monte Carlo validation partial (N=10 blocked by population assertion edge case, not a feature bug)
+**History:** `docs/implementation-history/high7_conditional_climate_stability_floor_20251207.md`
 
 ---
 
 ### MEDIUM Priority
+
+#### M-7: Fix Population Assertions for Near-Extinction Scenarios
+**Status:** Proposed
+**Context:** Monte Carlo validation blocked by overly restrictive population assertions
+**Impact:** Cannot complete N=10 validation for extreme scenarios (near-extinction)
+**Research:** Toba bottleneck (10K-30K survivors), nuclear winter scenarios
+**Next Steps:** Audit all population aggregation functions, lower minimums to 0.00001B
+**Files:** `src/simulation/populationDynamics.ts` (aggregateAllRegionalData, others)
+**Triggered By:** HIGH-7 Monte Carlo validation (Run 3/10 crashed at 9.9M population)
+**Priority:** MEDIUM (affects Monte Carlo validation, not production runs)
 
 #### M-5: Threshold Uncertainty Modeling
 **Status:** Proposed
