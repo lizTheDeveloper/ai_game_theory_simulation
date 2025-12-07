@@ -18,16 +18,37 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 ## 🚀 Project Status
 
-**🟢 STABLE** (December 3, 2025)
+**🟢 STABLE** (December 7, 2025)
 
 **SYSTEM HEALTH:**
 - **Research Quality:** A- (68.8% sources 2024-2025, peer-reviewed foundation, zero critical gaps) ✅ EXCELLENT
 - **Research Currency:** ✅ EXCELLENT (all simulation-critical files updated within 14 days, autonomous system working effectively)
 - **Implementation Fidelity:** A- (assertion coverage 97.2%, 24 integration tests for CoordinatedDeploymentPhase) ✅ EXCELLENT
-- **Architecture Health:** A- (0 CRITICAL/HIGH, 1 new HIGH, 3 MEDIUM non-urgent, test coverage 82.34%) ✅ EXCELLENT
-- **System Trajectory:** 🟢 MAINTENANCE MODE (16 consecutive stable sessions 34-51, autonomous monitoring active)
+- **Architecture Health:** A- (0 CRITICAL/HIGH, 0 HIGH issues, test coverage 82.34%) ✅ EXCELLENT
+- **System Trajectory:** 🟢 MAINTENANCE MODE (20 consecutive stable sessions 34-60, autonomous monitoring active)
+
+**PROJECT ORGANIZATION:**
+- **Roadmap System:** Migrated to OpenSpec format (Dec 6, 2025)
+  - Legacy roadmaps archived to `plans/archive/legacy-roadmaps/`
+  - Specifications: `openspec/specs/{project,simulation,frontend,research}/spec.md`
+  - Change proposals: `openspec/changes/[feature-name]/` (13 active proposals)
+  - Agent coordination: `openspec/AGENTS.md`, `openspec/project.md`
 
 **Recent Major Achievements:**
+
+**Dec 7: Session 60 - OpenSpec Migration Complete** (commit 2df021ea)
+- **OpenSpec Migration:** COMPLETE (origin/main merged, 15 proposals migrated)
+  - 13 change proposal directories in `openspec/changes/` (simulation, testing, infrastructure, documentation)
+  - Archive created: `plans/archive/` with legacy roadmaps (396KB preserved)
+  - New structure: spec-driven development with explicit ADDED/MODIFIED/REMOVED deltas
+- **Missing Climate Systems:** 95% complete (M-5, M-6, M-7 complete; M-4 at 85%)
+  - M-5: Compound Climate Events - COMPLETE (archived Dec 6)
+  - M-6: Social Tipping Points - COMPLETE (archived Dec 6)
+  - M-7: Climate System Hysteresis - COMPLETE (archived Dec 6)
+  - M-4: Abrupt Sea Level Rise (MICI) - 85% complete (calibration pending)
+- **Maintenance Milestone:** 20 consecutive sessions (34-60) in maintenance mode
+- **Token Conservation:** DISABLED Dec 4 (full productivity mode restored)
+- 📄 **Review:** `reviews/architecture_integration_review_session60_20251207.md`
 
 **Dec 3: Session 51 Research Validation + Roadmap Gardening** (commits abd6795a, 051abdf2, 07a7e33f)
 - **Research Validation:** Grade A- (68.8% sources from 2024-2025)
@@ -2464,12 +2485,11 @@ This section documents **critical parameter uncertainty findings** identified du
 - **Source:** `research/climate_stability_mechanisms_2024_2025_update.md` (last_verified: 2025-11-27)
 
 **Missing Climate Cascade Systems (M-4 to M-7):**
-- **M-4: Abrupt Sea Level Rise** - Ice cliff instability, WAIS/Greenland coupling not modeled
-- ✅ **M-5: Compound Extreme Events** - COMPLETE (Dec 5, 2025) - Cascade multipliers 1.5-3.0× based on Communications Earth & Environment (2024)
-- **M-6: Social Tipping Points** - Positive cascades for rapid transitions (Lenton et al. 2022)
-- **M-7: Climate System Hysteresis** - Bifurcation memory, path dependence in recovery
-- **Impact:** Medium priority gaps - model captures first-order climate dynamics, M-5 compound cascades now implemented
-- **Status:** M-5 complete, M-4/M-6/M-7 remain for future work
+- ✅ **M-4: Abrupt Sea Level Rise (MICI)** - 85% COMPLETE (Dec 7, 2025) - Ice cliff instability modeled (0.5m pulses), calibration pending
+- ✅ **M-5: Compound Extreme Events** - COMPLETE (Dec 5, 2025) - Cascade multipliers 1.1-1.5× based on Communications Earth & Environment (2024)
+- ✅ **M-6: Social Tipping Points** - COMPLETE (Dec 6, 2025) - Positive cascades for rapid transitions (Lenton et al. 2022)
+- ✅ **M-7: Climate System Hysteresis** - COMPLETE (Dec 6, 2025) - Bifurcation memory, path dependence in recovery
+- **Status:** 95% complete (3 systems archived to `plans/completed/`, M-4 at 85%)
 
 ### Critical Uncertainties (Nov 21 Skeptic Critique)
 
