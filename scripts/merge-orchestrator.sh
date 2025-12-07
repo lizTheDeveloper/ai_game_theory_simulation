@@ -283,9 +283,54 @@ for BRANCH in $BRANCHES; do
 
       # Detect OpenSpec changes
       OPENSPEC_CHANGES=$(git diff --name-only origin/main...HEAD | grep "^openspec/" || true)
+      HAS_OPENSPEC=false
       if [ -n "$OPENSPEC_CHANGES" ]; then
+        HAS_OPENSPEC=true
         log "📋 OpenSpec changes detected:"
         echo "$OPENSPEC_CHANGES" | sed 's/^/    /' | tee -a "$LOG_FILE"
+      fi
+
+      # Agent reviews (architecture-skeptic + research-skeptic) for OpenSpec changes
+      if [ "$ENABLE_AGENT_REVIEWS" = "true" ] && [ "$HAS_OPENSPEC" = "true" ]; then
+        log "🤖 Running agent reviews (architecture-skeptic + research-skeptic)..."
+        if command -v claude > /dev/null 2>&1; then
+          REVIEW_TASK="$LOG_DIR/review_${SAFE_BRANCH}_${TIMESTAMP}.md"
+          cat > "$REVIEW_TASK" <<'EOREVIEW'
+# Agent Review Task - OpenSpec Changes
+
+Review the OpenSpec change proposals in this branch:
+
+1. **Architecture-skeptic:** Review implementation quality
+   - Check for state propagation issues
+   - Look for performance bottlenecks
+   - Validate error handling patterns
+   - Ensure OpenSpec deltas match implementation
+
+2. **Research-skeptic (Sylvia):** Validate research backing
+   - Check peer-reviewed sources (2024-2025)
+   - Validate parameter justification
+   - Look for contradictory evidence
+   - Ensure OpenSpec specs reference actual papers
+
+3. Document findings in logs/merge_orchestrator/
+4. If CRITICAL issues found, create GitHub issue and BLOCK merge
+5. If HIGH issues found, note in merge commit message
+6. If MEDIUM/LOW issues, create GitHub issues but allow merge
+
+**Timeout:** 20 minutes
+EOREVIEW
+          log "🤖 Launching agent reviews..."
+          claude "$(cat "$REVIEW_TASK")" >> "$LOG_FILE" 2>&1 || {
+            log "⚠️  Agent review failed - proceeding with quality gates"
+          }
+          log "✅ Agent reviews complete"
+        else
+          log "⚠️  Claude CLI not available - skipping agent reviews"
+        fi
+      elif [ "$ENABLE_AGENT_REVIEWS" = "true" ]; then
+        log "ℹ️  No OpenSpec changes - skipping agent reviews"
+      else
+        log "ℹ️  Agent reviews disabled ($AGENT_REVIEWS_SKIPPED_REASON)"
       fi
 
       # Run quality gates
