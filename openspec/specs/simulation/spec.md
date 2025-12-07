@@ -225,14 +225,15 @@ The simulation SHALL model environmental, social, and technological debt.
 ### MEDIUM Priority
 
 #### M-7: Fix Population Assertions for Near-Extinction Scenarios
-**Status:** Proposed
+**Status:** COMPLETE (Dec 7, 2025)
+**Implementation:** `src/simulation/populationDynamics.ts:686` (aggregateAllRegionalData)
 **Context:** Monte Carlo validation blocked by overly restrictive population assertions
-**Impact:** Cannot complete N=10 validation for extreme scenarios (near-extinction)
+**Impact:** Unblocked N=10 validation for extreme scenarios (near-extinction)
 **Research:** Toba bottleneck (10K-30K survivors), nuclear winter scenarios
-**Next Steps:** Audit all population aggregation functions, lower minimums to 0.00001B
-**Files:** `src/simulation/populationDynamics.ts` (aggregateAllRegionalData, others)
+**Solution:** Lowered minimum threshold from 0.01B (10M) to 0.00001B (10K people) in aggregateAllRegionalData() to match aggregateGlobalPopulation() pattern
+**Files:** `src/simulation/populationDynamics.ts` (aggregateAllRegionalData)
 **Triggered By:** HIGH-7 Monte Carlo validation (Run 3/10 crashed at 9.9M population)
-**Priority:** MEDIUM (affects Monte Carlo validation, not production runs)
+**Commit:** 993de150
 
 #### M-5: Threshold Uncertainty Modeling
 **Status:** Proposed
