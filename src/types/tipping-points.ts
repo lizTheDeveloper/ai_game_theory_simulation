@@ -149,6 +149,14 @@ export interface TippingElement {
    * Tracks discrete collapse events separate from gradual collapse.
    */
   accumulatedAbruptSLR?: number;
+
+  /** === INTERNAL IMPLEMENTATION FIELDS === */
+  /**
+   * Sampled transition time for this specific element (months)
+   * Internal field: Sampled once at trigger from uniform distribution [transitionMinMonths, transitionMaxMonths]
+   * Used for deterministic sigmoid curve progression
+   */
+  _sampledTransitionTime?: number;
 }
 
 /**
