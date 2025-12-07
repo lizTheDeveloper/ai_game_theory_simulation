@@ -243,9 +243,138 @@ export function sampleLogNormal(
 }
 
 /**
+ * Sample from Beta distribution scaled to [min, max] range
+ *
+ * Use case: Bounded distributions with flexible shape (M-5, AMOC uncertainty)
+ *
+ * Research: Beta(2,5) for AMOC uncertainty (Quality Gate 1, Dec 7, 2025)
+ * - Skews toward lower thresholds (mode ~2.4°C) while preserving wide uncertainty
+ * - Avoids physically implausible uniform assumption (endpoints equally likely)
+ * - Paleoclimate evidence suggests AMOC sensitivity to moderate warming
+ *
+ * @param alpha Shape parameter (must be > 0)
+ * @param beta Shape parameter (must be > 0)
+ * @param min Lower bound of physical range
+ * @param max Upper bound of physical range (must be > min)
+ * @param rng Deterministic RNG function (REQUIRED)
+ * @returns Sampled value in [min, max]
+ *
+ * @example
+ * // AMOC collapse threshold (Beta(2,5) scaled to [1.4, 8.0]°C)
+ * const threshold = sampleBeta(2, 5, 1.4, 8.0, rng);
+ * // Mode ~2.4°C, skewed toward lower end
+ */
+export function sampleBeta(
+  alpha: number,
+  beta: number,
+  min: number,
+  max: number,
+  rng: () => number
+): number {
+  // Validate RNG
+  if (!rng || typeof rng !== 'function') {
+    throw new Error('❌ CRITICAL: RNG required for deterministic distribution sampling');
+  }
+
+  // Validate shape parameters
+  if (alpha <= 0) {
+    throw new Error(
+      `❌ Invalid beta distribution: alpha (${alpha}) must be > 0`
+    );
+  }
+  if (beta <= 0) {
+    throw new Error(
+      `❌ Invalid beta distribution: beta (${beta}) must be > 0`
+    );
+  }
+
+  // Validate range
+  if (min >= max) {
+    throw new Error(
+      `❌ Invalid beta distribution: min (${min}) must be < max (${max})`
+    );
+  }
+
+  // Special case: Beta(1,1) is uniform
+  if (alpha === 1 && beta === 1) {
+    return sampleUniform(min, max, rng);
+  }
+
+  // Use gamma ratio method: Beta(a,b) = Gamma(a) / (Gamma(a) + Gamma(b))
+  const gammaAlpha = sampleGamma(alpha, 1, rng);
+  const gammaBeta = sampleGamma(beta, 1, rng);
+
+  // Beta sample in [0, 1]
+  const betaSample = gammaAlpha / (gammaAlpha + gammaBeta);
+
+  // Ensure in [0, 1] (numerical stability)
+  const clampedBeta = Math.max(0, Math.min(1, betaSample));
+
+  // Scale to [min, max]
+  const value = min + clampedBeta * (max - min);
+
+  return assertInRange(value, min, max, {
+    location: 'sampleBeta',
+    valueName: 'sampledValue',
+    additionalInfo: { alpha, beta, min, max, betaSample: clampedBeta }
+  });
+}
+
+/**
+ * Sample from Gamma distribution (internal helper)
+ *
+ * Research: Marsaglia & Tsang (2000) - Efficient rejection sampling algorithm
+ *
+ * Used internally by sampleBeta for gamma ratio method.
+ * Not exported (beta is the only use case in M-5).
+ *
+ * @param shape Shape parameter (alpha, must be > 0)
+ * @param scale Scale parameter (must be > 0)
+ * @param rng Deterministic RNG function
+ * @returns Sampled value from Gamma(shape, scale)
+ */
+function sampleGamma(shape: number, scale: number, rng: () => number): number {
+  if (shape < 1) {
+    // For shape < 1, use Ahrens-Dieter acceptance-rejection method
+    // Gamma(a) = Gamma(1+a) * U^(1/a) where U ~ Uniform(0,1)
+    const u = rng();
+    return sampleGamma(1 + shape, scale, rng) * Math.pow(u, 1 / shape);
+  }
+
+  // Marsaglia & Tsang's Method (2000) for shape >= 1
+  const d = shape - 1 / 3;
+  const c = 1 / Math.sqrt(9 * d);
+
+  // Rejection sampling loop
+  while (true) {
+    let x: number;
+    let v: number;
+
+    // Sample from normal until we get v > 0
+    do {
+      x = sampleNormal(0, 1, rng);
+      v = 1 + c * x;
+    } while (v <= 0);
+
+    v = v * v * v;
+    const u = rng();
+
+    // Quick acceptance test
+    if (u < 1 - 0.0331 * x * x * x * x) {
+      return d * v * scale;
+    }
+
+    // Slower acceptance test
+    if (Math.log(u) < 0.5 * x * x + d * (1 - v + Math.log(v))) {
+      return d * v * scale;
+    }
+  }
+}
+
+/**
  * Distribution type discriminator
  */
-export type DistributionType = 'triangular' | 'uniform' | 'normal' | 'log-normal';
+export type DistributionType = 'triangular' | 'uniform' | 'normal' | 'log-normal' | 'beta';
 
 /**
  * Distribution parameters (union type for type safety)
@@ -254,7 +383,8 @@ export type DistributionParams =
   | { type: 'triangular'; min: number; mode: number; max: number }
   | { type: 'uniform'; min: number; max: number }
   | { type: 'normal'; mean: number; std: number }
-  | { type: 'log-normal'; meanLog: number; stdLog: number };
+  | { type: 'log-normal'; meanLog: number; stdLog: number }
+  | { type: 'beta'; alpha: number; beta: number; min: number; max: number };
 
 /**
  * Sample from a distribution specified by parameters object
@@ -292,6 +422,9 @@ export function sampleDistribution(
 
     case 'log-normal':
       return sampleLogNormal(params.meanLog, params.stdLog, rng);
+
+    case 'beta':
+      return sampleBeta(params.alpha, params.beta, params.min, params.max, rng);
 
     default:
       // TypeScript exhaustiveness check

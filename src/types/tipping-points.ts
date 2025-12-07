@@ -172,7 +172,7 @@ export interface TippingElement {
    * }
    */
   thresholdDistribution?: {
-    type: 'triangular' | 'uniform' | 'normal' | 'log-normal';
+    type: 'triangular' | 'uniform' | 'normal' | 'log-normal' | 'beta';
     params: {
       // Triangular
       min?: number;
@@ -185,6 +185,10 @@ export interface TippingElement {
       // Log-normal
       meanLog?: number;
       stdLog?: number;
+      // Beta
+      alpha?: number;
+      beta?: number;
+      // Beta also uses min/max for range scaling
     };
     source: string;  // Research citation
     confidence?: 'Very Low' | 'Low' | 'Medium' | 'High';  // Optional confidence level
@@ -311,10 +315,11 @@ export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTr
     // === THRESHOLD UNCERTAINTY (M-5, Dec 7, 2025) ===
     // Research: Armstrong McKay et al. (2022) Science + 2024-2025 AMOC controversy
     // Scientific disagreement: Early warning signals (2025-2095) vs resilience findings ("very unlikely" 21st century)
-    // Uniform distribution represents epistemic uncertainty with no central tendency
+    // Beta(2,5) distribution skews toward lower thresholds (mode ~2.4°C) while preserving wide uncertainty
+    // Quality Gate 1 revision: Changed from uniform to beta (uniform implies endpoints equally likely - physically implausible)
     thresholdDistribution: {
-      type: 'uniform',
-      params: { min: 1.4, max: 8.0 },  // °C above pre-industrial
+      type: 'beta',
+      params: { alpha: 2, beta: 5, min: 1.4, max: 8.0 },  // °C above pre-industrial
       source: 'Armstrong McKay et al. 2022',
       confidence: 'Very Low'  // Fundamental scientific disagreement (2024-2025)
     }
@@ -350,13 +355,14 @@ export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTr
     hysteresisGapC: 1.0,
     // === THRESHOLD UNCERTAINTY (M-5, Dec 7, 2025) ===
     // Research: Armstrong McKay et al. (2022) + Ciemer et al. (2024) Nature
-    // Wide model disagreement (factor 5.1x range: 2.0-10.2°C)
-    // Triangular distribution with updated max from Ciemer et al. (2024)
+    // Wide model disagreement (factor 3.0x range: 2.0-6.0°C)
+    // Quality Gate 1 revision: Capped at 6.0°C (Armstrong McKay consensus) - Ciemer 10.2°C rejected as single-study outlier
+    // Rationale: 10.2°C max creates unrealistic Monte Carlo scenarios (Amazon survives extreme warming while other systems collapse)
     thresholdDistribution: {
       type: 'triangular',
-      params: { min: 2.0, mode: 3.5, max: 10.2 },  // °C above pre-industrial
-      source: 'Armstrong McKay et al. 2022 + Ciemer et al. 2024',
-      confidence: 'Low'  // Wide model disagreement, complex dynamics
+      params: { min: 2.0, mode: 3.5, max: 6.0 },  // °C above pre-industrial
+      source: 'Armstrong McKay et al. 2022',
+      confidence: 'Medium'  // Consensus range (Ciemer 2024 max 10.2°C rejected as outlier)
     }
   },
   {

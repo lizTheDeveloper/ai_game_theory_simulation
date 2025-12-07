@@ -13,6 +13,7 @@
  */
 
 import { assertFinite, assertInRange } from './assertions';
+import { sampleBeta as sampleBetaDist } from './distributions';
 
 /**
  * 🎲 Sample from triangular distribution
@@ -237,7 +238,7 @@ export function sampleLogNormal(
  */
 export function sampleThresholdDistribution(
   distribution: {
-    type: 'triangular' | 'uniform' | 'normal' | 'log-normal';
+    type: 'triangular' | 'uniform' | 'normal' | 'log-normal' | 'beta';
     params: {
       min?: number;
       mode?: number;
@@ -246,6 +247,8 @@ export function sampleThresholdDistribution(
       std?: number;
       meanLog?: number;
       stdLog?: number;
+      alpha?: number;
+      beta?: number;
     };
   },
   rng: () => number
@@ -286,6 +289,14 @@ export function sampleThresholdDistribution(
         throw new Error(`❌ Log-normal distribution missing parameters: meanLog=${meanLog} stdLog=${stdLog}`);
       }
       return sampleLogNormal(meanLog, stdLog, rng);
+    }
+
+    case 'beta': {
+      const { alpha, beta, min, max } = distribution.params;
+      if (alpha === undefined || beta === undefined || min === undefined || max === undefined) {
+        throw new Error(`❌ Beta distribution missing parameters: alpha=${alpha} beta=${beta} min=${min} max=${max}`);
+      }
+      return sampleBetaDist(alpha, beta, min, max, rng);
     }
 
     default:
