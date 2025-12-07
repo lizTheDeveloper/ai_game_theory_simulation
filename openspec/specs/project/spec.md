@@ -158,7 +158,7 @@ None (system in maintenance mode)
 - HIGH-7: Conditional climate stability floor (research debate finding)
 
 ### MEDIUM Priority
-- M-5: Threshold uncertainty modeling (distribution sampling library)
+- M-5: Threshold uncertainty modeling (distribution sampling library) - **COMPLETED Dec 7, 2025**
 - M-6: Enhanced radiation modeling (acute vs chronic, tissue sensitivity)
 
 ### LOW Priority

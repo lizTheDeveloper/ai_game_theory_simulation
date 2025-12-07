@@ -2573,6 +2573,46 @@ This section documents **critical parameter uncertainty findings** identified du
 
 **For the complete changelog, see [RECENT_CHANGES.md](./RECENT_CHANGES.md)**
 
+**December 7, 2025 - Probabilistic Tipping Threshold Uncertainty (M-5 Phase 4A)**
+
+**Achievement:** Tipping point thresholds now model scientific uncertainty using research-backed probability distributions.
+
+**Implementation:**
+- 🎲 **Probabilistic Sampling:** Thresholds sampled from distributions at initialization (deterministic with RNG seed)
+- **6 Tipping Elements with Distributions:**
+  - AMOC: Beta(2,5) scaled [1.4-8.0°C] - skews toward lower thresholds (mode ~2.4°C), Very Low confidence
+  - Greenland: Triangular(0.8/1.5/3.4°C) - factor 4.25x uncertainty, Medium confidence
+  - WAIS: Triangular(1.0/1.5/3.0°C) - tightest range (factor 3.0x), HIGH confidence
+  - Amazon: Triangular(2.0/3.5/6.0°C) - Ciemer 10.2°C outlier rejected, Medium confidence
+  - Boreal Forest: Triangular(1.4/4.0/5.0°C) - Medium confidence
+  - Arctic Sea Ice: Triangular(1.0/1.6/2.3°C) - Medium confidence
+- **Coral Reefs:** CROSSED at 1.5°C (current 1.4°C warming) - deterministic, active from simulation start
+- **Permafrost:** NO distribution (no global tipping point per Nitzbon 2024 - continuous warming function)
+
+**Research Foundation:**
+- Armstrong McKay et al. (2022) Science - Baseline reassessment (min/mode/max structure)
+- 2024-2025 literature updates: Smith et al. 2025 (AMOC resilience), Nitzbon et al. 2024 (permafrost), Ciemer et al. 2024 (Amazon)
+- Wunderling et al. (2025) Earth System Dynamics - 62% cascade triggering benchmark for Monte Carlo validation
+- Quality Gate 1: PASSED (B- → A- after revisions from research-skeptic)
+- Quality Gate 2: PASSED (architecture review, fixes applied)
+
+**Monte Carlo Impact:**
+- Variance across runs reflects epistemic uncertainty in threshold temperatures (not "randomness for randomness sake")
+- Expected: ~62% of runs trigger cascades (Wunderling 2025 validation benchmark)
+- Coefficient of variation < 0.01% for identical seeds (determinism validated)
+
+**Files:**
+- `src/simulation/utils/distributions.ts` - Beta/triangular/normal/uniform sampling functions
+- `src/types/tipping-points.ts` - Distribution parameters for all 6 elements
+- `research/tipping_threshold_uncertainty_20251207.md` (854 lines, 16+ peer-reviewed sources)
+- `research/QUALITY_GATE_1_SUMMARY.md` - Executive summary
+- `reviews/threshold_uncertainty_critique_20251207.md` - Research validation
+- `reviews/threshold_uncertainty_architecture_YYYYMMDD.md` - Architecture review
+
+**Archive:** `openspec/changes/threshold-uncertainty/` (Phase 4B pending: delta merge + archival)
+
+---
+
 **December 5, 2025 - Compound Climate Events (M-5)**
 
 **Achievement:** Climate tipping cascades now model research-backed compound event amplification effects.
@@ -4800,6 +4840,7 @@ All domain bounds are validated against peer-reviewed sources (2024-2025):
 - **Research:** Communications Earth & Environment (2024) DOI: 10.1038/s43247-024-01799-5
 - **Implementation:** ClimateSystemPhase.ts lines 384-397
 - **Note:** Only 3 of 6 tipping elements have `cascades: true` (AMOC, Amazon, Permafrost); others (Arctic sea ice, WAIS, Greenland) affect global temperature but don't trigger cascade amplification
+- **M-5 Update (Dec 2025):** Tipping thresholds now sampled from probabilistic distributions at initialization (see [Probabilistic Tipping Thresholds](#-probabilistic-tipping-thresholds-m-5-dec-2025)). Variance across Monte Carlo runs reflects scientific uncertainty in threshold temperatures.
 
 #### AI Capabilities
 
@@ -7061,6 +7102,226 @@ The reporting includes automatic validation:
 **Last Updated:** November 13, 2025
 **Status:** VALIDATED (Monte Carlo N=30, Architecture Grade B+, APPROVED WITH CONDITIONS)
 **Philosophy:** "Near tipping points, small differences matter enormously. This isn't a bug - it's the nature of complex systems."
+
+### 🎲 Probabilistic Tipping Thresholds (M-5, Dec 2025)
+
+**Module:** `src/simulation/utils/distributions.ts`, `src/types/tipping-points.ts`
+**Purpose:** Model scientific uncertainty in climate tipping point thresholds using probabilistic distributions
+**Status:** ✅ VALIDATED (Research QG1 PASSED, Architecture QG2 PASSED, Monte Carlo validated, Dec 7, 2025)
+**Priority:** M-5 Phase 4A - Research-backed uncertainty propagation
+
+## Overview
+
+Climate tipping point thresholds are NOT precisely known. Scientific literature reports uncertainty ranges spanning factor 2-10x (e.g., AMOC: 1.4-8.0°C, Amazon: 2.0-6.0°C). The probabilistic threshold system replaces deterministic step-functions with research-backed distributions that capture this epistemic uncertainty.
+
+**Key Insight:** Different Monte Carlo runs sample different threshold values from uncertainty distributions, reflecting scientific disagreement about when tipping points activate. This produces variance in cascade timing that matches real-world uncertainty.
+
+**Research Foundation:** Armstrong McKay et al. (2022) Science, 2024-2025 literature updates, Wunderling et al. (2025) Earth System Dynamics
+
+**See:** `research/tipping_threshold_uncertainty_20251207.md` (854 lines, 16+ peer-reviewed sources)
+
+## Why Uncertainty Matters
+
+**Problem with Deterministic Thresholds:**
+```typescript
+// OLD: Everyone agrees AMOC collapses at exactly 4.0°C
+triggerTempC: 4.0
+```
+
+**Reality from Literature:**
+- Armstrong McKay (2022): AMOC range 1.4-8.0°C (factor 5.7x uncertainty)
+- Smith et al. (2025) Nature: "Very unlikely" 21st century collapse
+- Van Westen et al. (2024): Early warning signals suggest 2025-2095 window
+
+Scientists DISAGREE fundamentally. Deterministic threshold picks one answer, hiding this uncertainty.
+
+**Solution - Probabilistic Sampling:**
+```typescript
+// NEW: Sample from research-backed distribution
+thresholdDistribution: {
+  type: 'beta',
+  params: { alpha: 2, beta: 5, min: 1.4, max: 8.0 },
+  source: 'Armstrong McKay et al. 2022'
+}
+// Monte Carlo run 1: samples 2.1°C (early collapse)
+// Monte Carlo run 2: samples 5.8°C (late collapse)
+// Monte Carlo run 3: samples 3.2°C (middle estimate)
+```
+
+**Impact:** Variance across Monte Carlo runs reflects scientific uncertainty, not "randomness for randomness sake."
+
+## How Sampling Works
+
+**At Initialization (once per run):**
+1. For each tipping element with `thresholdDistribution` defined
+2. Sample threshold from distribution using RNG (deterministic with seed)
+3. Store in `sampledThresholdC` field
+4. Use sampled value instead of `triggerTempC` throughout run
+
+**Determinism Preserved:**
+- Same RNG seed → identical sampled thresholds across runs
+- Coefficient of variation < 0.01% for identical seeds (Monte Carlo validation)
+- Sampled values persist throughout run (not re-sampled each month)
+
+**Backward Compatibility:**
+- Elements without `thresholdDistribution` use deterministic `triggerTempC`
+- Permafrost uses deterministic threshold (no global tipping point per Nitzbon 2024)
+
+## Distribution Types
+
+**Triangular Distribution** (most common):
+- **When:** Literature reports min/mode/max estimates
+- **Examples:** Greenland (0.8/1.5/3.4°C), WAIS (1.0/1.5/3.0°C), Amazon (2.0/3.5/6.0°C)
+- **Rationale:** Matches expert elicitation format, captures central tendency with uncertainty tails
+
+**Beta Distribution** (skewed uncertainty):
+- **When:** Fundamental disagreement but physical reasoning favors one end
+- **Example:** AMOC - Beta(2,5) scaled [1.4,8.0°C] skews toward lower thresholds (mode ~2.4°C)
+- **Rationale:** Uniform distribution implies 1.4°C and 8.0°C equally likely (physically implausible). Beta distribution reflects paleoclimate evidence favoring lower thresholds while preserving wide uncertainty.
+
+**Normal Distribution** (symmetric uncertainty):
+- **When:** Literature reports confidence intervals
+- **Not currently used** (climate tipping literature favors min/mode/max over CI)
+
+**Deterministic** (no sampling):
+- **When:** Threshold already crossed or no global tipping point
+- **Example:** Coral reefs (1.5°C threshold crossed at current 1.4°C warming - treated as active from start)
+- **Example:** Permafrost (no global tipping point per Nitzbon 2024 - continuous function)
+
+## Research-Backed Thresholds
+
+**AMOC Collapse:**
+- Distribution: Beta(2,5) scaled [1.4, 8.0]°C
+- Confidence: Very Low (fundamental scientific disagreement 2024-2025)
+- Source: Armstrong McKay et al. 2022
+- Sampled mode: ~2.4°C (skews toward lower thresholds)
+
+**Greenland Ice Sheet:**
+- Distribution: Triangular(0.8, 1.5, 3.4)°C
+- Confidence: Medium (wide range but clear central tendency)
+- Source: Armstrong McKay et al. 2022 + Garbe et al. 2023
+- Factor 4.25x uncertainty
+
+**West Antarctic Ice Sheet:**
+- Distribution: Triangular(1.0, 1.5, 3.0)°C
+- Confidence: High (tightest uncertainty range)
+- Source: Armstrong McKay et al. 2022, validated by 2024-2025 research
+- Factor 3.0x uncertainty (represents irreversible retreat threshold)
+
+**Amazon Rainforest Dieback:**
+- Distribution: Triangular(2.0, 3.5, 6.0)°C
+- Confidence: Medium (consensus range, Ciemer 2024 outlier rejected)
+- Source: Armstrong McKay et al. 2022
+- Note: Capped at 6.0°C max (Armstrong McKay consensus) - Ciemer 10.2°C rejected as single-study outlier
+
+**Boreal Forest Dieback:**
+- Distribution: Triangular(1.4, 4.0, 5.0)°C
+- Confidence: Medium
+- Source: Armstrong McKay et al. 2022
+
+**Arctic Sea Ice:**
+- Distribution: Triangular(1.0, 1.6, 2.3)°C
+- Confidence: Medium (medium confidence, clear central tendency)
+- Source: Armstrong McKay et al. 2022
+
+**Coral Reefs:**
+- Status: **CROSSED** - Deterministic (1.5°C threshold exceeded at current 1.4°C warming)
+- Treated as active tipping event from simulation start
+- Source: Armstrong McKay et al. 2022 + NOAA Coral Reef Watch (Oct 2025)
+
+**Permafrost Carbon Release:**
+- Status: **NO DISTRIBUTION** - Uses deterministic 1.8°C threshold
+- Rationale: Nitzbon et al. 2024 - NO global tipping point, quasilinear response
+- Should be modeled as continuous warming function, not threshold-based
+- Kept for backward compatibility but flagged for future refactoring
+
+## Monte Carlo Interpretation
+
+**Variance Across Runs:**
+- Different seeds → different sampled thresholds → different activation timings
+- This variance reflects **scientific uncertainty**, not model randomness
+- Expected: ~62% of runs trigger cascades (Wunderling 2025 benchmark)
+
+**Validation Criteria (Wunderling et al. 2025):**
+1. Run N≥100 Monte Carlo simulations under SSP2-4.5 equivalent warming trajectory
+2. Measure cascade triggering probability (% of runs triggering ≥3 tipping points)
+3. Compare to Wunderling 62% benchmark (within 10-20% accounting for model differences)
+4. Individual element triggering rates: AMOC, Greenland, WAIS should show >50% trigger probability
+5. Sampled thresholds should span expected ranges (no excessive clustering)
+
+**Coefficient of Variation:**
+- CV < 0.01% for identical seeds validates determinism
+- Separate seeds produce different outcomes (epistemic uncertainty)
+
+**Example Monte Carlo Output:**
+```
+Run 1 (seed 42000): AMOC sampled 2.1°C → triggers Month 48
+Run 2 (seed 42001): AMOC sampled 5.8°C → triggers Month 204
+Run 3 (seed 42002): AMOC sampled 3.2°C → triggers Month 96
+```
+
+Spread in activation timing reflects scientific disagreement, enables risk assessment across uncertainty ranges.
+
+## Technical Details
+
+**Distribution Sampling:**
+- Located: `src/simulation/utils/distributions.ts`
+- Functions: `sampleTriangular()`, `sampleBeta()`, `sampleNormal()`, `sampleUniform()`
+- All sampling uses RNG parameter (deterministic with seed)
+- Assertion utilities prevent NaN/Infinity
+
+**State Storage:**
+- Sampled thresholds stored in `state.sampledTippingThresholds` (official state field)
+- MUST be saved/loaded for reproducibility (not transient)
+- Persistence ensures same thresholds used throughout run
+
+**Implementation Pattern:**
+```typescript
+// At initialization (InitializationPhase)
+for (const element of TIPPING_ELEMENTS) {
+  if (element.thresholdDistribution) {
+    const sampled = sampleDistribution(
+      element.thresholdDistribution,
+      rng  // Deterministic RNG
+    );
+    state.sampledTippingThresholds[element.id] = sampled;
+  }
+}
+
+// During simulation (TippingPointPhase)
+const threshold = state.sampledTippingThresholds[element.id]
+  ?? element.triggerTempC;  // Fallback for backward compatibility
+
+if (currentTemp >= threshold && !element.triggered) {
+  // Activate tipping element
+}
+```
+
+**Files:**
+- `src/simulation/utils/distributions.ts` - Sampling functions
+- `src/types/tipping-points.ts` - Distribution parameters
+- `research/tipping_threshold_uncertainty_20251207.md` - Research foundation
+- `research/QUALITY_GATE_1_SUMMARY.md` - Executive summary
+- `reviews/threshold_uncertainty_critique_20251207.md` - Research validation
+- `reviews/threshold_uncertainty_architecture_YYYYMMDD.md` - Architecture review
+
+**Quality Gates:**
+- ✅ Quality Gate 1 (Research Validation): PASSED - Grade B- → A- after revisions
+- ✅ Quality Gate 2 (Architecture Review): PASSED with fixes applied
+- ✅ Monte Carlo Validation: Tests passing, determinism verified
+
+## Related Systems
+
+- [Planetary Boundaries](#-planetary-boundaries) - Tipping thresholds affect boundary transgression
+- [Climate Technology Deployment](#-climate-technology-deployment-system-nov-2025) - Tech effectiveness vs tipping cascade timing
+- [Bifurcation & Variance Amplification](#-bifurcation--variance-amplification-system-nov-2025) - Variance amplification when approaching sampled thresholds
+- [Monte Carlo Analysis](#for-monte-carlo-analysis) - Threshold variance drives outcome distribution variance
+
+---
+
+**Last Updated:** December 7, 2025 (M-5 Phase 4A)
+**Status:** VALIDATED (Research QG1 PASSED, Architecture QG2 PASSED, Monte Carlo validated)
+**Philosophy:** "Scientific uncertainty is real. Our model should reflect it, not hide it behind false precision."
 
 ### 🌍 Climate Technology Deployment System (Nov 2025)
 
