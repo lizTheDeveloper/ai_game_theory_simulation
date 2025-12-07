@@ -210,19 +210,19 @@ function updateDemocraticSpiral(spiral: UpwardSpiral, state: GameState, month: n
       gov.consensusBuildingEfficiency * 0.1
     );
 
-    // M-6: Amplify with social trust cascade (if active)
-    // Research: Trust cascades strengthen democratic institutions
-    const trustCascade = state.positiveTippingPoints.socialTrustCascade;
-    if (trustCascade.cascadeActive) {
-      const trustBoost = trustCascade.cascadeStrength * 0.15; // Up to 15% boost
-      baseStrength = assertFinite(baseStrength * (1 + trustBoost), {
+    // M-6: Amplify with policy climate action cascade (if active)
+    // Research: Social cascades strengthen democratic institutions
+    const policyAction = state.positiveTippingPoints.socialCascades.policyClimateAction;
+    if (policyAction.cascadeActive) {
+      const cascadeBoost = policyAction.cascadeStrength * 0.15; // Up to 15% boost
+      baseStrength = assertFinite(baseStrength * (1 + cascadeBoost), {
         location: 'updateDemocraticSpiral',
-        valueName: 'strengthWithTrustBoost',
+        valueName: 'strengthWithCascadeBoost',
         month,
         additionalInfo: {
           baseStrength,
-          trustCascadeStrength: trustCascade.cascadeStrength,
-          trustBoost,
+          cascadeStrength: policyAction.cascadeStrength,
+          cascadeBoost,
         }
       });
     }
