@@ -159,6 +159,7 @@ function ScenarioSelector({
  */
 function DashboardWithState() {
   const {
+    gameState,
     isInitialized,
     isLoading,
     currentMonth,
@@ -219,6 +220,7 @@ function DashboardWithState() {
 
       <main className={styles.main}>
         <GameDashboard
+          gameState={gameState ?? undefined}
           isGameOver={isGameOver}
           aggregateMetrics={aggregateMetrics}
           onAdvanceMonth={advanceMonth}
