@@ -9,10 +9,11 @@
  * - Impact calculations (population, damage, agriculture)
  */
 
-import { describe, it, expect } from 'vitest';
-import { AbruptSeaLevelRisePhase } from '../AbruptSeaLevelRisePhase';
+import { describe, it, expect } from '@jest/globals';
+import { AbruptSeaLevelRisePhase } from '@/simulation/engine/phases/AbruptSeaLevelRisePhase';
 import { createTestState } from '@/simulation/initialization';
-import type { GameState, PhaseContext } from '@/types/game';
+import type { GameState } from '@/types/game';
+import type { PhaseContext } from '@/simulation/engine/PhaseOrchestrator';
 
 describe('AbruptSeaLevelRisePhase', () => {
   const phase = new AbruptSeaLevelRisePhase();
