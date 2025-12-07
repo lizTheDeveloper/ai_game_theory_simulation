@@ -430,10 +430,10 @@ export class ClimateSystemPhase implements SimulationPhase {
     if (element.monthsSinceTrigger === 1) {
       const transitionTime = element.transitionMinMonths +
         rng() * (element.transitionMaxMonths - element.transitionMinMonths);
-      (element as any)._sampledTransitionTime = transitionTime;
+      element._sampledTransitionTime = transitionTime;
     }
 
-    const transitionTime = (element as any)._sampledTransitionTime || element.transitionMaxMonths;
+    const transitionTime = element._sampledTransitionTime || element.transitionMaxMonths;
 
     // Sigmoid curve parameters
     const k = 4 / transitionTime;
