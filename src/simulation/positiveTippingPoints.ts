@@ -103,7 +103,7 @@ export function initializePositiveTippingPoints(): PositiveTippingPointsState {
     },
 
     triggeredCascades: [],
-    activeCascades: 0,
+    activeTechCascades: 0,
     synergies: [],
 
     activePolicies: [],

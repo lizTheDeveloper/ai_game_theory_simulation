@@ -75,6 +75,16 @@ export interface AdvocacyAction {
 
   /** Influence domain for tracking */
   domain: InfluenceDomain;
+
+  /** Resource costs for taking this action */
+  costs?: {
+    reputation?: number;
+    politicalCapital?: number;
+    funding?: number;
+  };
+
+  /** Research sources backing this action's parameters */
+  researchSources?: string[];
 }
 
 /**
