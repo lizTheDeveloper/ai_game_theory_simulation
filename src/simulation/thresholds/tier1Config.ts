@@ -17,7 +17,7 @@ import {
   sampleBeta,
   sampleLogNormal,
   sampleTriangular
-} from './distributions';
+} from '../utils/distributions';
 
 /**
  * Tier 1 Threshold Distribution Definitions
