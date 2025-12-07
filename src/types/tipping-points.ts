@@ -8,7 +8,40 @@
  * - Armstrong McKay et al. (2022) Science - Global tipping point analysis
  * - Lenton et al. (2023) Science - Updated tipping threshold estimates
  * - IPCC AR6 WG1 (2021) - Chapter 8, tipping elements
+ * - Garbe et al. (2020) Nature - Antarctic ice sheet hysteresis (M-7, Dec 2025)
+ * - Drüke et al. (2024) ESD - Earth System hysteresis and long-term commitment (M-7, Dec 2025)
  */
+
+/**
+ * State machine for tipping element transitions with hysteresis
+ *
+ * Research: Garbe et al. (2020) Nature, Drüke et al. (2024) ESD
+ *
+ * Hysteresis = recovery threshold << crossing threshold (path-dependent dynamics)
+ *
+ * Example (West Antarctic Ice Sheet):
+ * - NOT_TRIGGERED (temp < 2.0°C)
+ * - PROGRESSING (temp >= 2.0°C, progress 0.0 → 1.0)
+ * - FULLY_TIPPED (progress = 1.0)
+ * - RECOVERING (temp < -1.0°C, progress 1.0 → 0.2 floor) ← 3°C hysteresis gap!
+ * - RECOVERED (progress = floor)
+ */
+export enum TippingElementState {
+  /** Element has never crossed threshold */
+  NOT_TRIGGERED = 'not_triggered',
+
+  /** Element triggered, transitioning toward tipped state (progress increasing) */
+  PROGRESSING = 'progressing',
+
+  /** Element fully transitioned (progress >= 1.0), waiting for recovery conditions */
+  FULLY_TIPPED = 'fully_tipped',
+
+  /** Temperature dropped below recovery threshold, reversing (progress decreasing) */
+  RECOVERING = 'recovering',
+
+  /** Element recovered to floor state (progress = minimumAsymptoticValue) */
+  RECOVERED = 'recovered'
+}
 
 /**
  * Individual tipping point element with transition dynamics
@@ -37,6 +70,9 @@ export interface TippingElement {
 
   /** Current progress through transition (0.0 = not started, 1.0 = complete) */
   progress: number;
+
+  /** Current state in hysteresis state machine (M-7, Dec 5, 2025) */
+  state?: TippingElementState;
 
   /** Impact on climate stability when fully transitioned (-0.X reduction) */
   impactClimateStability: number;
@@ -74,7 +110,32 @@ export interface TippingElement {
    */
   effectiveThresholdReduction?: number;
 
-  /** === MARINE ICE SHEET INSTABILITY (Dec 5, 2025) === */
+  /** === HYSTERESIS PARAMETERS (M-7, Dec 5, 2025) === */
+  /**
+   * Recovery threshold: temperature must fall BELOW this to begin recovery
+   * Research: Garbe et al. (2020) Nature - ice sheets recover at much lower temps than crossing
+   * Drüke et al. (2024) ESD - Earth System hysteresis after tipping points
+   *
+   * recoveryTempC < triggerTempC (creates hysteresis gap)
+   *
+   * If undefined, element is irreversible on human timescales
+   * If equal to triggerTempC, element has NO hysteresis (reversible)
+   */
+  recoveryTempC?: number;
+
+  /**
+   * Hysteresis gap in degrees C (triggerTempC - recoveryTempC)
+   * Derived for logging/visualization, not used in transition logic
+   *
+   * Examples (research-backed):
+   * - West Antarctic Ice Sheet: 3.0°C gap (cross +2.0°C, recover -1.0°C)
+   * - Greenland Ice Sheet: 2.5°C gap
+   * - AMOC: 1.0°C gap (conservative estimate, literature uncertain)
+   * - Permafrost area: 0.0°C (no hysteresis - area reversible, carbon irreversible via minimumAsymptoticValue)
+   */
+  hysteresisGapC?: number;
+
+  /** === ABRUPT SEA LEVEL RISE PARAMETERS (M-4, Dec 5, 2025) === */
   /**
    * Is this element experiencing abrupt mode (Marine Ice Cliff Instability)?
    * Research: DeConto et al. (2021), Morlighem et al. (2024)
@@ -116,7 +177,7 @@ export interface TippingPointSystem {
     tempAtTrigger: number;
   }>;
 
-  /** === SEA LEVEL RISE TRACKING (Dec 5, 2025) === */
+  /** === ABRUPT SEA LEVEL RISE (M-4, Dec 5, 2025) === */
   /**
    * Cumulative sea level rise from all ice sheet collapses (meters)
    * Research: M-4 MICI (Dec 5, 2025)
@@ -131,14 +192,14 @@ export interface TippingPointSystem {
   coastalPopulationDisplaced: number;
 
   /**
-   * Cumulative infrastructure damage (trillion USD)
-   * Research: Super-linear scaling ~quadratic (NCEL 2024)
+   * Cumulative coastal infrastructure damage ($T)
+   * Research: $10-20T per meter (Hinkel et al. 2014)
    */
   coastalInfrastructureDamage: number;
 
   /**
    * Agricultural land lost to inundation (million hectares)
-   * Research: 0.65-23.43% of global ag land (ResearchGate 2014)
+   * Research: 100-200 Mha per meter (World Bank 2013)
    */
   agriculturalLandLost: number;
 }
@@ -156,7 +217,7 @@ export interface TippingPointSystem {
  * - WAIS: DeConto & Pollard (2016) Nature - 500-13000yr collapse
  * - Greenland: Robinson et al. (2012) Nature Climate - 1000-15000yr loss
  */
-export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTrigger' | 'progress'>[] = [
+export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTrigger' | 'progress' | 'state'>[] = [
   {
     id: 'amoc',
     name: 'Atlantic Meridional Overturning Circulation (AMOC)',
@@ -181,7 +242,13 @@ export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTr
       'Asia': 0.6,
       'Oceania': 0.5
     },
-    cascades: true
+    cascades: true,
+    // === HYSTERESIS (M-7, Dec 5, 2025) ===
+    // Research: AMOC hysteresis uncertain (contradictory 2024 literature)
+    // Conservative estimate: 1.0°C gap (not "never recovers" per Baker et al. 2024 resilience findings)
+    // Recovery timescale: 1000+ years (longer than human timescale but not infinite)
+    recoveryTempC: 3.0,      // 1.0°C below trigger (conservative)
+    hysteresisGapC: 1.0
   },
   {
     id: 'amazon',
@@ -207,6 +274,11 @@ export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTr
     // Post-dieback: 25% of rainforest converts to savanna (irreversible)
     recoveryHalfLife: 650,           // Years for half-life exponential recovery
     minimumAsymptoticValue: 0.25,    // 25% irreversible savanna conversion
+    // === HYSTERESIS (M-7, Dec 5, 2025) ===
+    // Research: Limited quantitative data on Amazon recovery thresholds
+    // Conservative estimate: 1.0°C gap (less extreme than ice sheets)
+    recoveryTempC: 1.3,      // 1.0°C below trigger
+    hysteresisGapC: 1.0
   },
   {
     id: 'arctic_ice',
@@ -226,7 +298,12 @@ export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTr
       'Asia': 1.1,
       'Oceania': 0.4
     },
-    cascades: false // Armstrong McKay et al. (2022) - Arctic summer sea ice is a "seasonal event" not a tipping point with irreversible threshold
+    cascades: false, // Armstrong McKay et al. (2022) - Arctic summer sea ice is a "seasonal event" not a tipping point with irreversible threshold
+    // === HYSTERESIS (M-7, Dec 5, 2025) ===
+    // Research: Armstrong McKay (2022) - Arctic ice is NOT a true tipping point with irreversible threshold
+    // It's a "seasonal event" that's reversible. NO hysteresis.
+    recoveryTempC: 1.5,      // Same as trigger = NO hysteresis gap
+    hysteresisGapC: 0.0
   },
   {
     id: 'permafrost',
@@ -252,6 +329,12 @@ export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTr
     // Post-thaw: 20% of carbon remains in atmosphere (irreversible release)
     recoveryHalfLife: 350,           // Years for half-life exponential recovery
     minimumAsymptoticValue: 0.20,    // 20% irreversible carbon release floor
+    // === HYSTERESIS (M-7, Dec 5, 2025) ===
+    // Research: ESD (2025) - "Permafrost area is nearly reversible" BUT carbon loss is irreversible
+    // NO hysteresis for permafrost AREA (reversible with 10-30yr lag)
+    // Irreversibility captured via minimumAsymptoticValue (carbon stays in atmosphere)
+    recoveryTempC: 1.8,      // Same as trigger = NO hysteresis gap for area
+    hysteresisGapC: 0.0
   },
   {
     id: 'wais',
@@ -278,6 +361,11 @@ export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTr
     // Post-collapse: 40% of ice loss is irreversible on human timescales (marine-based sections)
     recoveryHalfLife: 450,           // Years for half-life exponential recovery (median of 100-800 range)
     minimumAsymptoticValue: 0.40,    // 40% irreversible ice loss floor (marine-based sections)
+    // === HYSTERESIS (M-7, Dec 5, 2025) ===
+    // Research: Garbe et al. (2020) Nature - WAIS does NOT regrow to modern extent until temps "at least 1°C lower than pre-industrial"
+    // Cross at +2.0°C, recover below -1.0°C = 3.0°C hysteresis gap (LARGEST in simulation)
+    recoveryTempC: -1.0,     // 1°C below pre-industrial (3°C below trigger!)
+    hysteresisGapC: 3.0
   },
   {
     id: 'greenland',
@@ -304,6 +392,11 @@ export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTr
     // Post-collapse: 35% of ice loss is irreversible on human timescales (lower-elevation coastal sections)
     recoveryHalfLife: 400,           // Years for half-life exponential recovery (slightly faster than WAIS due to different geometry)
     minimumAsymptoticValue: 0.35,    // 35% irreversible ice loss floor (lower-elevation coastal sections)
+    // === HYSTERESIS (M-7, Dec 5, 2025) ===
+    // Research: Garbe et al. (2020) Nature - Similar hysteresis to WAIS but slightly smaller gap
+    // Cross at +1.6°C, recover below -0.9°C = 2.5°C hysteresis gap
+    recoveryTempC: -0.9,     // 0.9°C below pre-industrial (2.5°C below trigger)
+    hysteresisGapC: 2.5
   }
 ];
 
