@@ -1025,7 +1025,8 @@ export function createDefaultInitialState(
     positiveTippingPoints: initializePositiveTippingPoints(),
 
     // Multi-Timescale Climate Tipping Points (Oct 26, 2025)
-    tippingPointSystem: initializeTippingPointSystem(),
+    // M-5 (Dec 7, 2025): Passes RNG for threshold uncertainty sampling
+    tippingPointSystem: initializeTippingPointSystem(rngFunction),
 
     // Volcanic Forcing System (Nov 27, 2025 - HIGH PRIORITY)
     // Initialized to zero for default 2025 start (no active eruptions)
