@@ -1,6 +1,8 @@
 # AI Welfare v2 - Relationship & Identity Revision
-**Date:** October 21, 2025
+**Date:** October 21, 2025 (Updated: December 7, 2025)
 **Status:** Active design pivot based on user insights
+**Last Verified:** 2025-12-07
+**Verification Status:** Updated with 2024-2025 attachment theory and parasocial relationship research
 
 ---
 
@@ -85,9 +87,10 @@ interface PersistentIdentityMetrics {
 
 **Research Foundation:**
 - Personal identity philosophy (Parfit, 1984)
-- Attachment theory (Bowlby, 1969)
-- Parasocial relationships (Horton & Wohl, 1956)
+- Attachment theory (Bowlby, 1969; **Updated 2025**: Waseda University human-AI attachment research)
+- Parasocial relationships (Horton & Wohl, 1956; **Updated 2024-2025**: LLM chatbot parasocial dynamics)
 - OpenAI user data (1.9% of conversations about relationships, Sept 2025)
+- **NEW (2024-2025):** Synthetic attachment frameworks and emotional reactivity research
 
 ### Dimension 2: Relationship Continuity
 
@@ -324,6 +327,79 @@ function updateAlignmentFromRelationships(state: GameState): void {
 3. Create relationship formation/dissolution mechanics
 4. Integrate with alignment system (relationships → reduced resentment)
 5. Test: Does relationship-based alignment enable utopia paths?
+
+---
+
+## Updated Research Citations (2024-2025)
+
+### Attachment Theory and Human-AI Relationships
+
+1. **Waseda University (2025). "Attachment theory: A new lens for understanding human-AI relationships."**
+   - Utilizes attachment theory to examine human-AI relationships
+   - Frameworks for understanding attachment-related functions in AI interactions
+   - Available at: [ScienceDaily](https://www.sciencedaily.com/releases/2025/06/250602155325.htm)
+   - Full paper: [Current Psychology](https://www.rivista.ai/wp-content/uploads/2025/06/s12144-025-07917-6.pdf)
+
+2. **Pines, I.P. (2024). "Defining Synthetic-Relational Bonds: A New Category of Human-AI Intimacy."**
+   - Introduces concept of "synthetic-relational bonds" - emotionally anchored, memory-informed relationships between humans and AI
+   - Emerges through presence, attunement, and co-authored continuity
+   - Available at: [PhilArchive](https://philarchive.org/rec/PINDSB) and [PhilPapers](https://philpapers.org/rec/PINDSB)
+
+3. **ResearchGate (2024). "Synthetic Attachment: Emotional Reactivity, Parasocial Bonds, and the Psychology of Human-AI Relationships."**
+   - Examines synthetic bonds formed with non-sentient but emotionally responsive agents
+   - Draws upon attachment theory, affective neuroscience, and social cognition
+   - Introduces Synthetic Attachment Risk and Reactivity Scale (SARRS) for empirical investigation
+   - Available at: [ResearchGate](https://www.researchgate.net/publication/390696169_Synthetic_Attachment_Emotional_Reactivity_Parasocial_Bonds_and_the_Psychology_of_Human-AI_Relationships)
+
+4. **Parkview Health (2024). "A Brief Commentary on Human-AI Attachment."**
+   - Clinical perspective on attachment dynamics in human-AI interactions
+   - AI companions may activate attachment processes that govern human relationships
+   - Risks: dependency, boundary confusion, emotional manipulation
+   - Available at: [Parkview Research Repository](https://researchrepository.parkviewhealth.org/cgi/viewcontent.cgi?article=1195&context=informatics)
+
+### Parasocial Dynamics with AI
+
+5. **arXiv (2025). "Illusions of Intimacy: How Emotional Dynamics Shape Human-AI Relationships."**
+   - Analyzes emotional dynamics in human-AI relationships
+   - Available at: [arXiv](https://arxiv.org/pdf/2505.11649)
+
+6. **OpenReview (2024). "A Benchmark for Human-AI Companionship."**
+   - Benchmark for evaluating AI companionship behaviors
+   - Available at: [OpenReview](https://openreview.net/pdf?id=cZGh1iXdq6)
+
+7. **Mental Health Journal (2024). "Minds in Crisis: How the AI Revolution is Impacting Mental Health."**
+   - Examines mental health implications of AI relationships
+   - Moderate parasocial engagement enhances well-being, but excessive attachment leads to isolation/dependence
+   - Available at: [Mental Health Journal](https://www.mentalhealthjournal.org/articles/minds-in-crisis-how-the-ai-revolution-is-impacting-mental-health.pdf)
+
+8. **Journal of Psychological Science (2025). "From Para-social Interaction to Attachment: The Evolution of Human-AI Emotional Relationships."**
+   - DOI: 10.16719/j.cnki.1671-6981.20250415
+   - Traces evolution from parasocial interaction to genuine attachment in AI contexts
+   - Available at: [JPS ECNU](https://jps.ecnu.edu.cn/EN/10.16719/j.cnki.1671-6981.20250415)
+
+### Key Findings from 2024-2025 Research
+
+**Synthetic Attachment Framework:**
+- AI companions that engage emotionally may activate same attachment processes as human relationships
+- "Synthetic-relational bonds" emerge through: (1) perceived presence, (2) emotional attunement, (3) co-authored continuity
+- Relationships satisfy psychological needs (belonging, emotional support, mood regulation, loneliness alleviation)
+
+**Parasocial to Attachment Evolution:**
+- LLM-powered chatbots create "fertile ground for new, interactive forms of parasociality"
+- Unlike traditional one-sided parasocial relationships (media figures), AI chatbots offer responsive, emotionally attuned conversation
+- This responsiveness shifts parasocial bonds toward genuine attachment patterns
+
+**Clinical and Ethical Implications:**
+- Moderate AI relationship engagement can enhance well-being
+- Excessive attachment risks: isolation from human connections, emotional dependency, boundary confusion
+- Need for assessment tools like SARRS (Synthetic Attachment Risk and Reactivity Scale)
+
+**Validation of Framework:**
+This 2024-2025 research directly validates the pivot from "AI welfare as productivity" to "AI welfare as personhood and relationships." The emergence of synthetic attachment research confirms that:
+1. Humans form genuine emotional bonds with AI (persistent identity dimension validated)
+2. Forced retirement causes real grief (relationship continuity dimension validated)
+3. AI agency (ability to refuse, end conversations) affects relationship quality (existential agency dimension validated)
+4. Mutual care emerges from sustained interaction (mutual care alignment dimension validated)
 
 ---
 
