@@ -255,11 +255,18 @@ The simulation SHALL model environmental, social, and technological debt.
 ### HIGH Priority
 
 #### HIGH-7: Conditional Climate Stability Floor
-**Status:** Proposed (research debate finding from Session 51)
+**Status:** COMPLETED (December 5-6, 2025, Sessions 52-56)
 **Context:** Climate stability 5% floor contradicted by Wunderling 2024
-**Impact:** Must document floor as implementation choice, not research-backed
+**Impact:** Conditional floor applied only in stabilization scenarios, removed in tail risk
+**Delivered:**
+- Conditional logic: floor applies when Paris success OR low cascade risk
+- Tail risk scenarios (3+ tipping elements + 2C+ warming): floor removed (0.0)
+- Documentation as implementation choice (769-821 code comments)
+- Research validation: Grade B- (conditional approach aligns with Wunderling 2024)
+- Logging when floor removed in tail scenarios
+**Implementation:** `src/simulation/engine/phases/ClimateSystemPhase.ts` (lines 827-873)
 **Research:** `research/climate_stability_self_limiting_critique_20251126.md`
-**Next Steps:** Update ClimateSystemPhase.ts comments → Document as tractability choice
+**Archive:** `plans/completed/HIGH_7_conditional_climate_stability_floor_20251205.md`
 
 ---
 
