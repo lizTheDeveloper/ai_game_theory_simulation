@@ -20,29 +20,36 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 ### HIGH Priority
 
 #### Threshold Lowering for Tipping Cascades
-**Status:** ⚠️ READY FOR VALIDATION
+**Status:** ❌ FAILED - Grade D (BLOCKS IMPLEMENTATION)
 **Change:** (pending - needs change folder created)
 **Commit:** cf49657
 **Context:** Implements threshold lowering mechanism from mechanism audit gap
-**Verification File:** `research/verification_cf49657_20251123.md`
+**Verification File:** `research/verification_cf49657_threshold_lowering_VALIDATED_20251207.md`
 
-**Sources to Verify:**
-- Armstrong McKay et al. (2022) Science - "Network of 16 tipping elements with causal interactions"
-- Wunderling et al. (2024) ESD - "combined effect tending to lower thresholds" with magnitude estimates
-- Van Westen et al. (2024) JGR - Greenland freshwater → AMOC destabilization
+**CRITICAL FINDING:** Specific magnitude estimates (0.10-0.30°C, 0.5°C cap) claimed to be from Wunderling et al. (2024) are **NOT SUPPORTED** by the cited paper. Wunderling 2024 provides qualitative confirmation of threshold lowering but **NO quantitative magnitude estimates**.
 
-**Key Claims:**
-- TIPPING_INTERACTIONS matrix with 9 interactions
-- Threshold reduction magnitudes (0.10-0.30°C per interaction)
-- 0.5°C cap per element ("conservative estimate from Wunderling 2024")
-- sqrt(progress) scaling function (front-loading assumption)
+**Sources Verified:**
+- ✅ Armstrong McKay et al. (2022) Science - Network of 16 tipping elements CONFIRMED
+- ❌ Wunderling et al. (2024) ESD - Qualitative concept supported, **specific ranges (0.2-0.4°C, 0.1-0.2°C) NOT FOUND**
+- ⚠️ Van Westen et al. (2024) - Greenland→AMOC mechanism confirmed, magnitude unverified (also: paper is Science Advances 2024, not JGR 2024)
+
+**Key Issues:**
+- ❌ All 9 threshold reduction values (0.10-0.30°C) lack research sources - **FABRICATED PARAMETERS**
+- ❌ 0.5°C cap falsely attributed to Wunderling 2024 - **NOT IN PAPER**
+- ❌ "Conservative estimates" claim cannot be verified without source ranges
+- ⚠️ sqrt(progress) scaling function has no research justification
 
 **Implementation:**
 - calculateThresholdLowering() in ClimateSystemPhase.ts
 - TIPPING_INTERACTIONS constant in src/types/tipping-points.ts
 - effectiveThresholdReduction field on TippingElement interface
 
-**Next Steps:** Two-layer verification → Parameter adjustments if needed → Monte Carlo N≥10
+**Required Action:** Choose one:
+1. **Option 1 (RECOMMENDED):** Revert commit until proper sources found
+2. **Option 2:** Downgrade to speculative feature with ±75-100% uncertainty bounds, mark as "MODELING ASSUMPTION"
+3. **Option 3:** Conduct 2-4 week literature review to find quantitative sources
+
+**Next Steps:** BLOCKED until parameter sourcing resolved. Do NOT run Monte Carlo validation.
 
 ---
 
