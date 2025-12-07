@@ -133,14 +133,14 @@ export function ActionPanel({
     }
 
     // Check resources
-    if ((action.costs.reputation ?? 0) > resources.reputation) {
-      return { canExecute: false, reason: `Need ${action.costs.reputation} reputation` };
+    if ((action.costs?.reputation ?? 0) > resources.reputation) {
+      return { canExecute: false, reason: `Need ${action.costs?.reputation} reputation` };
     }
-    if ((action.costs.politicalCapital ?? 0) > resources.politicalCapital) {
-      return { canExecute: false, reason: `Need ${action.costs.politicalCapital} political capital` };
+    if ((action.costs?.politicalCapital ?? 0) > resources.politicalCapital) {
+      return { canExecute: false, reason: `Need ${action.costs?.politicalCapital} political capital` };
     }
-    if ((action.costs.funding ?? 0) > resources.funding) {
-      return { canExecute: false, reason: `Need ${action.costs.funding} funding` };
+    if ((action.costs?.funding ?? 0) > resources.funding) {
+      return { canExecute: false, reason: `Need ${action.costs?.funding} funding` };
     }
 
     // Check influence bounds
@@ -306,14 +306,14 @@ export function ActionPanel({
                   {formatEffectRange(action.baseEffect)} effect over {action.duration} months
                 </div>
                 <div className={styles.actionCosts}>
-                  {action.costs.reputation && action.costs.reputation > 0 && (
-                    <span className={styles.cost}>R:{action.costs.reputation}</span>
+                  {action.costs?.reputation && action.costs?.reputation > 0 && (
+                    <span className={styles.cost}>R:{action.costs?.reputation}</span>
                   )}
-                  {action.costs.politicalCapital && action.costs.politicalCapital > 0 && (
-                    <span className={styles.cost}>PC:{action.costs.politicalCapital}</span>
+                  {action.costs?.politicalCapital && action.costs?.politicalCapital > 0 && (
+                    <span className={styles.cost}>PC:{action.costs?.politicalCapital}</span>
                   )}
-                  {action.costs.funding && action.costs.funding > 0 && (
-                    <span className={styles.cost}>${action.costs.funding}B</span>
+                  {action.costs?.funding && action.costs?.funding > 0 && (
+                    <span className={styles.cost}>${action.costs?.funding}B</span>
                   )}
                 </div>
               </div>
@@ -326,11 +326,11 @@ export function ActionPanel({
                     <span>Cooldown: {action.cooldown} months</span>
                     <span>Max cumulative: {(action.maxCumulativeEffect * 100).toFixed(0)}%</span>
                   </div>
-                  {action.researchSources.length > 0 && (
+                  {action.researchSources && action.researchSources.length > 0 && (
                     <div className={styles.actionSources}>
                       <span className={styles.sourcesLabel}>Sources:</span>
                       <ul className={styles.sourcesList}>
-                        {action.researchSources.slice(0, 2).map((source, i) => (
+                        {action.researchSources?.slice(0, 2).map((source, i) => (
                           <li key={i} className={styles.sourceItem}>{source}</li>
                         ))}
                       </ul>
