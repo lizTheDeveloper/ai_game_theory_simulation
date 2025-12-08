@@ -11,6 +11,9 @@ set -eo pipefail  # Removed -u to allow unset variables with defaults
 # Set HOME for Claude CLI (required for cron)
 export HOME=${HOME:-/root}
 
+# Add ~/.local/bin to PATH for Claude CLI (cron has minimal PATH)
+export PATH="$HOME/.local/bin:$PATH"
+
 # Configuration
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
