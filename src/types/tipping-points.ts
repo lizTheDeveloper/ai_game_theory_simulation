@@ -515,23 +515,33 @@ export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTr
 ];
 
 /**
- * Tipping Element Interaction Matrix (Nov 23, 2025)
+ * Tipping Element Interaction Matrix (Updated Dec 8, 2025)
  *
- * Research-backed threshold lowering effects when one tipping element tips another.
+ * Research-backed threshold effects when one tipping element tips another.
+ * Includes both destabilizing (positive reduction) and stabilizing (negative reduction) interactions.
  *
  * Sources:
  * - Armstrong McKay et al. (2022) Science - Network of 16 tipping elements with causal interactions
  * - Wunderling et al. (2024) Earth System Dynamics - "combined effect tending to lower temperature thresholds"
+ * - Högner et al. (2025) Environmental Research Letters - AMOC → Amazon stabilization (empirical)
+ * - Global Tipping Points Report (2023) - AMOC → Greenland stabilization
+ * - Sinet et al. (2024) Earth System Dynamics - AMOC stability amid tipping ice sheets
  * - Climate tipping points research file: research/climate_tipping_points_2024_2025_20251116.md
+ * - Remediation: research/tipping_threshold_lowering_remediation_20251208.md
  *
  * Format: source_id -> target_id -> threshold_reduction_C
  *
- * Magnitude Justification (Wunderling et al. 2024):
- * - Direct interactions (e.g., ice sheet -> AMOC): 0.2-0.4 C reduction
- * - Indirect interactions (e.g., Arctic ice -> Amazon): 0.1-0.2 C reduction
- * - Weak interactions: 0.05-0.1 C reduction
+ * Magnitude Justification:
+ * - DESTABILIZING interactions (positive values):
+ *   - Direct interactions (e.g., ice sheet -> AMOC): 0.2-0.4°C reduction
+ *   - Indirect interactions (e.g., Arctic ice -> Amazon): 0.1-0.2°C reduction
+ *   - Weak interactions: 0.05-0.1°C reduction
+ * - STABILIZING interactions (negative values):
+ *   - AMOC → Amazon: -0.15°C (empirical from Högner et al. 2025)
+ *   - AMOC → Greenland: -0.20°C (conservative engineering estimate)
  *
- * Conservative estimates used (lower end of ranges) to avoid over-catastrophizing.
+ * Note: Most magnitude values are conservative engineering estimates, not empirically validated.
+ * Conservative estimates used to avoid over-catastrophizing while maintaining physical plausibility.
  */
 export interface TippingInteraction {
   /** Source element that tips first */
@@ -599,12 +609,23 @@ export const TIPPING_INTERACTIONS: TippingInteraction[] = [
   },
 
   // === AMOC -> TROPICAL SYSTEMS ===
-  // AMOC collapse shifts tropical rainfall patterns
+  // AMOC collapse stabilizes Southern Amazon (CORRECTED from destabilizing, Dec 8 2025)
+  // Research: Högner et al. (2025) ERL - observational data shows +4.8% rainfall per 1 Sv AMOC weakening
+  // 17% offset of dry season precipitation decline since 1982
   {
     sourceId: 'amoc',
     targetId: 'amazon',
-    thresholdReduction: 0.25, // AMOC collapse disrupts Amazon rainfall
-    mechanism: 'Monsoon disruption: AMOC collapse shifts ITCZ southward, reducing Amazon rainfall'
+    thresholdReduction: -0.15, // NEGATIVE = raises threshold (stabilizing)
+    mechanism: 'ITCZ shift: AMOC weakening increases Southern Amazon dry season rainfall (+4.8% per 1 Sv)'
+  },
+  // AMOC collapse stabilizes Greenland Ice Sheet (ADDED, Dec 8 2025)
+  // Research: Global Tipping Points Report 2023, Sinet et al. (2024) ESD
+  // AMOC collapse reduces northward heat transport → North Atlantic cooling → reduced Greenland melt
+  {
+    sourceId: 'amoc',
+    targetId: 'greenland',
+    thresholdReduction: -0.20, // NEGATIVE = raises threshold (stabilizing)
+    mechanism: 'Heat transport reduction: AMOC collapse cools North Atlantic, reducing Greenland surface warming'
   },
 
   // === AMAZON -> GLOBAL CLIMATE ===
