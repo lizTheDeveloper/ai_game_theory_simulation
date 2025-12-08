@@ -216,7 +216,7 @@ The simulation SHALL model environmental, social, and technological debt.
 **Context:** Three redundant distribution libraries (1,077 total lines) implementing identical algorithms
 **Files:** `src/simulation/utils/distributionSampling.ts`, `src/simulation/utils/distributions.ts`, `src/simulation/thresholds/distributions.ts`
 **Impact:** Maintenance burden, parameter naming inconsistency, bug propagation risk
-**Plan:** `openspec/changes/h1-distribution-consolidation/proposal.md` (created Dec 8)
+**Plan:** `plans/H-1_consolidate_distribution_libraries.md` (created Dec 8)
 **Priority Rationale:** Architecture review identified as HIGH (carried over from M-5 review)
 **Next Steps:** Implementation → consolidate to single canonical library
 
