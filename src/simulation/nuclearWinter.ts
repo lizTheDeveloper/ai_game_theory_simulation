@@ -107,8 +107,13 @@ export function initializeNuclearWinterState(): NuclearWinterState {
 export function triggerNuclearWinter(
   state: GameState,
   warScale: number,
-  targetCountries: string[]
+  targetCountries: string[],
+  rng: () => number
 ): void {
+  // Fail loudly if RNG missing (REQUIRED for deterministic simulation)
+  if (!rng || typeof rng !== 'function') {
+    throw new Error('❌ CRITICAL: RNG required for deterministic simulation in triggerNuclearWinter');
+  }
   const winter = state.nuclearWinterState;
   
   // Already in nuclear winter? Add to existing soot
@@ -172,7 +177,7 @@ export function triggerNuclearWinter(
   );
   
   // Add radiation zones for hit countries (ENHANCED - M-6)
-  addRadiationZonesEnhanced(state, winter, targetCountries, state.currentMonth);
+  addRadiationZonesEnhanced(state, winter, targetCountries, state.currentMonth, rng);
 
   console.log(`\n☢️  NUCLEAR WINTER TRIGGERED (Month ${state.currentMonth})`);
   console.log(`   Soot injected: ${winter.sootInStratosphere.toFixed(0)} Tg`);
@@ -559,8 +564,13 @@ function addRadiationZonesEnhanced(
   state: GameState,
   winter: NuclearWinterState,
   countries: string[],
-  currentMonth: number
+  currentMonth: number,
+  rng: () => number
 ): void {
+  // Fail loudly if RNG missing (REQUIRED for deterministic simulation)
+  if (!rng || typeof rng !== 'function') {
+    throw new Error('❌ CRITICAL: RNG required for deterministic simulation in addRadiationZonesEnhanced');
+  }
   countries.forEach(country => {
     // Check if country already has radiation zone (multiple hits)
     const existing = winter.radiationZones.find(z => z.country === country);
@@ -586,7 +596,7 @@ function addRadiationZonesEnhanced(
 
     // Calculate effective LD50 (medical care + combined injury prevalence)
     // Research: 65% of nuclear casualties have combined injuries (NIAID PMC8771911)
-    const hasCombinedInjury = Math.random() < 0.65;  // 65% prevalence
+    const hasCombinedInjury = rng() < 0.65;  // 65% prevalence (deterministic)
     const effectiveLD50 = calculateEffectiveLD50(medicalCare, hasCombinedInjury);
 
     // Estimate initial dose rate at t=1h (typical range: 1-10 Gy/hour for fallout zone)
