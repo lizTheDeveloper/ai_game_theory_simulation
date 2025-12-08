@@ -32,6 +32,7 @@
 import { GameState } from '../types/game';
 import { NuclearWinterState, RadiationZone } from '../types/nuclearWinter';
 import { addMortalityRisk } from './bayesianMortality';
+import { getTechDeployment } from './techTree/engine';
 import {
   assertFinite,
   assertTemperatureDelta,
@@ -506,7 +507,7 @@ function calculateResilientFoodMultiplier(state: GameState): number {
 
   // HIGH PERFORMANCE FIX (Nov 20, 2025): Use O(1) lookup instead of O(n) find()
   // HIGH TYPE SAFETY FIX (Nov 20, 2025): Use getTechDeployment with proper assertions
-  const { getTechDeployment } = require('./techTree/engine');
+  // (getTechDeployment imported at top of file)
 
   // Tech ID -> mortality reduction mapping
   const techMitigations = [
