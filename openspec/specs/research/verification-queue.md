@@ -49,6 +49,27 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 
 ---
 
+#### Nuclear Winter Implementation
+**Status:** ✅ CRITICAL FIXES APPLIED (Dec 8, 2025)
+**Change:** (pending - needs change folder created)
+**Commit:** 65c749dd, c1d22eb0
+**Context:** Session 60 architecture integration review found 2 CRITICAL regressions
+**Verification File:** `reviews/integration_review_20251208_session60.md`
+
+**CRITICAL Issues Found → FIXED (Dec 8, 2025):**
+1. ✅ **CRITICAL-1: Math.random() in nuclearWinter.ts:236** - Non-deterministic RNG call (cherry-picked fix from commit 5053aa32)
+2. ✅ **CRITICAL-2: Defensive fallback in nuclearWinter.ts:984** - `?? 0` silent fallback replaced with fail-loudly assertion
+
+**Fixes Applied:**
+- `src/simulation/engine/phases/nuclearWinter.ts` line 236: `Math.random()` → `rng()`
+- `src/simulation/engine/phases/nuclearWinter.ts` line 984: `?? 0` → `assertStateProperty(state.climate, 'temperatureDelta', ...)`
+
+**Regression Prevention:** Both issues were previously identified/fixed but reverted. Demonstrates need for automated regression detection in CI/CD pipeline.
+
+**Next Steps:** Monte Carlo validation (N≥10) to verify determinism restored → Add regression tests → Move to "Recently Resolved"
+
+---
+
 #### AI Governance 2025 Proposals
 **Status:** ✅ VERIFIED - Grade A (with implementation caveats)
 **Change:** (pending - needs change folder created)
