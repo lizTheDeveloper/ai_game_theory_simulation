@@ -595,9 +595,12 @@ function addRadiationZonesEnhanced(
     // Simplified: Use 5 Gy/hour as mid-range lethal dose rate
     const initialDoseRate = 5.0;  // Gy/hour at t=1h post-detonation
 
-    // Estimate population in radiation zone (simplified: 10% of country in fallout zone)
+    // Estimate population in radiation zone (MEDIUM-4 fix Dec 8, 2025: use actual country data)
     // Real scenario: Extremely heterogeneous based on wind patterns, terrain
-    const countryPopulation = state.humanPopulationSystem.population * 0.01;  // Rough estimate
+    // Use country population system if available, fallback to rough estimate for unknown countries
+    const countryData = state.countryPopulationSystem?.countries[country];
+    const countryPopulation = countryData?.population
+      ?? state.humanPopulationSystem.population * 0.01;  // Fallback: 1% of global (rough)
     const radiationZonePopulation = countryPopulation * 0.10;  // 10% in fallout zone
 
     // Distribute population into dose cohorts (initial estimate)
