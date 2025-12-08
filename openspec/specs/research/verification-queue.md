@@ -155,32 +155,35 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 ---
 
 #### AI Infrastructure Resources 2025 Update
-**Status:** ⚠️ READY FOR VALIDATION
+**Status:** ✅ VERIFIED - Grade C+/B- (Oct 2025) - MAGNITUDE ERRORS FOUND
 **Change:** (pending - needs change folder created)
 **Commit:** dbf1438
 **Context:** 2025 peer-reviewed sources for AI data center resource consumption
-**Research File:** `research/ai-infrastructure-resources_20251019.md` (updated)
-**Verification File:** `research/verification_dbf1438_20251123.md`
+**Research File:** `research/ai-infrastructure-resources_20251019.md` (updated Nov 23, 2025)
+**Verification Files:**
+- `research/ai_infrastructure_resources_verification_20251031.md` (Oct 31, 2025)
+- `research/aiInfrastructureResources_verification_20251028.md` (Oct 28, 2025)
 
-**Sources to Verify:**
-- Cornell/Nature Sustainability 2025: 2030 water (731-1,125M m³/yr), carbon (24-44M tonnes CO₂/yr)
-- MIT/Lawrence Berkeley Lab 2025: 7-8× energy multiplier, 183 TWh U.S. data centers (2024)
-- IEA 2025: Global water 560B→1,200B liters (2024→2030)
+**Verification Complete (Oct 2025):**
+- **Grade:** C+/B- (70-75% verified, downgraded from claimed B+)
+- **Reviewer:** Cynthia (super-alignment-researcher)
+- **Status:** Largely accurate with CRITICAL magnitude errors
 
-**Key Claims:**
-- 2030 water projections: 731-1,125M cubic meters/year
-- 2030 carbon projections: 24-44 million metric tons CO₂/year
-- AI training clusters 7-8× energy multiplier
-- Geographic optimization: Midwest "windbelt" optimal, Arizona 7.4% state power
-- Mitigation potential: 73% carbon reduction, 86% water reduction
+**CRITICAL Issues Found:**
+1. **GPT-4 inference water:** Claimed 519ml per 100-word email, actual 3L per 120-200 words (6× error)
+2. **Nordic water reduction:** Claimed 50-80% lower, actual 95-99% lower (20× error)
+3. **Temporal staleness:** Microsoft 6.4M m³ is 2022 data (3 years old)
+4. **PUE conflation:** Industry average (~1.58) vs hyperscaler (1.09-1.22)
 
-**Proposed Parameters:**
-- trainingWaterL: 700K-10M L per training run
-- inferenceWaterL: 2-5M L/month at scale
-- aiTrainingMultiplier: 7.5 (MIT: 7-8×)
-- Geographic modifiers: desert 2.5×, nordic 0.3×, windbelt 0.7× carbon
+**Corrected Parameters (Based on Verification):**
+- ✅ GPT-3 training: 700K L (verified)
+- ⚠️ GPT-4 inference: 3L per email (not 519ml)
+- ⚠️ Nordic reduction: 95-99% (not 50-80%)
+- ✅ AI training multiplier: 7-8× (verified from MIT 2025)
 
-**Next Steps:** Two-layer verification → Parameter update decision → Monte Carlo if implemented
+**Implementation Status:** Parameters used in simulation should reflect CORRECTED values, not original claims
+
+**Next Steps:** Review simulation implementation to ensure corrected parameters are used → Monte Carlo validation
 
 ---
 
