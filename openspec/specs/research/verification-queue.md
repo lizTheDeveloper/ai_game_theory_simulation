@@ -89,92 +89,119 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 ### MEDIUM Priority
 
 #### Nitrogen-Food Phase 3 Technologies
-**Status:** ⚠️ READY FOR VALIDATION
+**Status:** ⚠️ CONDITIONAL APPROVE - Grade B- (Parameter Adjustments Required)
 **Change:** (pending - needs change folder created)
 **Commit:** cd1e83a
 **Context:** 6 new nitrogen reduction technologies added to tech tree
-**Verification File:** `research/verification_cd1e83a_20251121.md`
+**Verification File:** `research/verification_cd1e83a_nitrogen_tech_20251208.md`
+**Skeptic Review:** `reviews/nitrogen_tech_skeptic_review_20251208.md`
 
-**Technologies to Verify:**
-1. Rhizosphere Engineering (15-40% N reduction, TIER 1, commercial)
-2. Nitroplast Integration (50-70% reduction, breakthrough, Coale et al. 2024)
-3. Precision Fermentation (30-50% agri N reduction, emerging)
-4. Regional Nitrogen Policies (20% efficiency via redistribution)
-5. Soil Health Restoration (20-40% NUE improvement)
-6. Integrated Nutrient Management (25-45% efficiency gains)
+**Verification Complete (Dec 8, 2025):**
+- **Initial Grade:** B+ (super-alignment-researcher)
+- **Final Grade:** B- (research-skeptic downgrade)
+- **Reviewers:** Cynthia (researcher), Sylvia (skeptic)
 
-**Key Claims:**
-- Effectiveness ranges (15-40%, 20-45%, etc.)
-- Co-benefits quantification (soil health, biodiversity, carbon)
-- Timeline assumptions (R&D + deployment)
-- Citation: Coale et al. 2024 *Science* for nitroplasts
+**Technologies Verified:**
+1. ✅ Rhizosphere Engineering - **Adjust upper bound 40% → 20%**
+2. ⚠️ Nitroplast Integration - **Timeline 2030s → 2044+, add failure mode**
+3. ⚠️ Precision Fermentation - **Add energy dependency modeling**
+4. ⚠️ Regional Nitrogen Policies - **Reduce effectiveness 20% → 10%**
+5. ✅ Soil Health Restoration - Validated (30% NUE)
+6. ✅ Integrated Nutrient Management - Validated (35% efficiency)
 
-**Next Steps:** Two-layer verification → Parameter adjustments if needed → Monte Carlo validation
+**CRITICAL Issues Found:**
+1. ❌ **Nitroplast Timeline:** Claim 2030s, evidence requires 2044+ (20 years minimum, decades of failed attempts)
+2. ❌ **Mycorrhizal Inoculant Crisis:** Commercial products 84% non-viable, 9% colonization vs 39% field soil
+
+**Required Parameter Adjustments:**
+- Nitroplast: minMonth: 240 (20yr), successProbability: 0.15, add failure pathway
+- Rhizosphere: max effectiveness 0.20 (not 0.40)
+- All techs: add reboundEffects multiplier 0.6
+- Regional policies: 10% effectiveness (not 20%), extend timeline
+
+**Next Steps:** Parameter revision → Re-verification → Monte Carlo validation
 
 ---
 
 #### Carbon Capture Deployment Parameters
-**Status:** ⚠️ READY FOR VALIDATION
+**Status:** ⚠️ CONDITIONAL APPROVE - Grade B- (Parameter Adjustments Required)
 **Change:** (pending - needs change folder created)
 **Commit:** c52826e
 **Context:** Comprehensive DAC research (625 lines, 12 sources, A+ quality)
 **Research File:** `research/carbon_capture_deployment_timelines_2025.md`
-**Verification File:** `research/verification_c52826e_20251121.md`
+**Verification File:** `research/verification_c52826e_DAC_20251208.md`
+**Skeptic Review:** `reviews/DAC_verification_skeptic_review_20251208.md`
 
-**Sources to Verify:**
-- Tan et al. (2024) *Nature Communications* - gigatonne requirements, energy/water nexus
-- Climeworks (2024) - Mammoth plant operational data (36,000 tonnes/yr)
-- IEA (2024) - CCUS project milestones, 5-10 year activation delay
-- Frontiers in Climate (2024-2025) - technical analysis, energy requirements
-- Canary Media (2024) - Gen 3 technology cost reduction claims
+**Verification Complete (Dec 8, 2025):**
+- **Initial Grade:** B+ (super-alignment-researcher)
+- **Final Grade:** B- (research-skeptic downgrade)
+- **Reviewers:** Cynthia (researcher), Sylvia (skeptic)
 
-**Key Claims:**
-- Current capacity: 0.00005 Gt/yr (Mammoth: 36kt/yr operational May 2024)
-- Timeline: 20-40 years breakthrough → gigatonne impact
-- Energy: 4-10 TWh per 1 Gt/yr (must couple with clean energy)
-- Water: 15 km³/yr for 4 Gt/yr (3.8% global industrial use)
-- Cost: $600-1,000/tonne (current) → $100-300/tonne (2040s)
+**Parameters Verified:**
+- ✅ activationDelay (7 years) - IEA 2024 validated, but add uncertainty (7-15yr range)
+- ✅ T_50 (30 years) - Research-backed, but add uncertainty (30-50yr range)
+- ❌ tau (20 years) - **Citation error:** Biogeosciences 2025 doesn't exist in research
+- ❌ E_max (1.0 Gt/yr) - **4x too conservative** vs 4.2 Gt/yr climate requirement
 
-**Current Implementation:**
-- ClimateDeploymentDelayPhase.ts:67-73 - DAC parameters
+**CRITICAL Issues Found:**
+1. ❌ **Cost Floor Disputed:** Claim $100/tonne, ETH Zurich 2024 says $230-540/tonne realistic
+2. ❌ **Moral Hazard Not Modeled:** 48% of CDR experts say CDR expectations reduce mitigation
+3. ❌ **Scaling Rate Optimistic:** Requires 50% faster CAGR than solar PV peak (unprecedented)
+4. ❌ **Missing Energy/Water Coupling:** Allows fossil-powered DAC (negative climate impact)
 
-**Parameter Validation:**
-- ✅ Activation delay (7 years) - compatible with 5-10 range
-- ✅ T_50 (30 years) - compatible with 20-40 year timeline
-- ⚠️ Energy requirements - NOT MODELED (enhancement opportunity)
-- ⚠️ Water constraints - NOT MODELED (regional deployment factor)
+**Required Parameter Adjustments:**
+- Cost floor: $200-250/tonne (not $100)
+- Add moral hazard feedback: DAC deployment reduces mitigation pressure
+- T_50 uncertainty: 30-50 years (not point estimate)
+- Add rebound coefficient: ~0.2
+- Add energy coupling: requires clean energy or increases emissions
+- Add water constraints: regional deployment limits
+
+**Next Steps:** Parameter revision → Re-verification → Monte Carlo validation
 
 **Next Steps:** Two-layer verification → Parameter validation → Enhancement implementation (energy/water constraints) → Monte Carlo N≥10
 
 ---
 
 #### AI Infrastructure Resources 2025 Update
-**Status:** ⚠️ READY FOR VALIDATION
+**Status:** ✅ CONDITIONAL APPROVE - Grade B+ (Rebound Effects Required)
 **Change:** (pending - needs change folder created)
 **Commit:** dbf1438
 **Context:** 2025 peer-reviewed sources for AI data center resource consumption
-**Research File:** `research/ai-infrastructure-resources_20251019.md` (updated)
-**Verification File:** `research/verification_dbf1438_20251123.md`
+**Research File:** `research/ai-infrastructure-resources_20251019.md` (updated Nov 23, 2025)
+**Verification File:** `research/verification_dbf1438_AI_infrastructure_20251208.md`
+**Skeptic Review:** `reviews/ai_infrastructure_skeptic_review_20251208.md`
 
-**Sources to Verify:**
-- Cornell/Nature Sustainability 2025: 2030 water (731-1,125M m³/yr), carbon (24-44M tonnes CO₂/yr)
-- MIT/Lawrence Berkeley Lab 2025: 7-8× energy multiplier, 183 TWh U.S. data centers (2024)
-- IEA 2025: Global water 560B→1,200B liters (2024→2030)
+**Verification Complete (Dec 8, 2025):**
+- **Initial Grade:** A- (super-alignment-researcher)
+- **Final Grade:** B+ (research-skeptic downgrade)
+- **Reviewers:** Cynthia (researcher), Sylvia (skeptic)
 
-**Key Claims:**
-- 2030 water projections: 731-1,125M cubic meters/year
-- 2030 carbon projections: 24-44 million metric tons CO₂/year
-- AI training clusters 7-8× energy multiplier
-- Geographic optimization: Midwest "windbelt" optimal, Arizona 7.4% state power
-- Mitigation potential: 73% carbon reduction, 86% water reduction
+**Sources Verified:**
+- ✅ Cornell/Nature Sustainability 2025 - All claims EXACT MATCH (Nov 10, 2025 publication)
+- ✅ MIT 2025 - 7-8× multiplier confirmed (Jan 17, 2025)
+- ✅ IEA 2025 - Water projections confirmed
+- ⚠️ Minor misattribution: 183 TWh from IEA/Pew, not MIT
 
-**Proposed Parameters:**
-- trainingWaterL: 700K-10M L per training run
-- inferenceWaterL: 2-5M L/month at scale
-- aiTrainingMultiplier: 7.5 (MIT: 7-8×)
-- Geographic modifiers: desert 2.5×, nordic 0.3×, windbelt 0.7× carbon
+**Parameters Validated:**
+- ✅ trainingWaterL: 700K-10M L per run
+- ✅ inferenceWaterL: 2-5M L/month
+- ✅ aiTrainingMultiplier: 7.5 (7-8× range)
+- ✅ Geographic modifiers: desert 2.5×, nordic 0.3×, windbelt 0.7×
 
-**Next Steps:** Two-layer verification → Parameter update decision → Monte Carlo if implemented
+**CRITICAL Issues Found:**
+1. ❌ **Jevons Paradox Unmodeled:** ACM FAccT 2025 - efficiency gains enable expansion, not reduction
+2. ⚠️ **Liquid Cooling Disruption:** NVIDIA 300x water efficiency, Microsoft zero-water datacenters (2026-2027)
+3. ⚠️ **Grid Constraints Bind First:** Morgan Stanley warns 45GW shortage by 2028, 7-year connection delays
+
+**Required Adjustments:**
+- Add rebound factor: effectiveMitigation = potentialMitigation * (1 - reboundFactor)
+- Add technology adoption scenarios (slow/medium/fast liquid cooling)
+- Add uncertainty ranges to 2030 projections
+- Document constant-demand assumption explicitly
+- Consider grid capacity as binding constraint
+
+**Next Steps:** Parameter enhancement → Re-verification → Monte Carlo validation
 
 ---
 
