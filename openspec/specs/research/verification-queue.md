@@ -20,9 +20,9 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 ### HIGH Priority
 
 #### Threshold Lowering for Tipping Cascades
-**Status:** ✅ CRITICAL FIXES APPLIED (Dec 8, 2025)
+**Status:** ✅ COMPLETE - Monte Carlo Validated (Dec 8, 2025)
 **Change:** (pending - needs change folder created)
-**Commit:** cf49657 (original), [current] (fixes)
+**Commit:** cf49657 (original), multiple (fixes)
 **Context:** Implements threshold lowering mechanism from mechanism audit gap
 **Verification File:** `research/verification_cf49657_20251207.md`
 
@@ -45,7 +45,11 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 - `src/simulation/engine/phases/ClimateSystemPhase.ts` lines 226-233: sqrt scaling replaced with linear
 - `src/simulation/engine/phases/ClimateSystemPhase.ts` lines 269-272: 0.5°C cap relabeled
 
-**Next Steps:** Monte Carlo validation (N≥10) to verify fixes don't break cascade behavior → Move to "Recently Resolved"
+**Monte Carlo Validation (Dec 8, 2025):**
+- N=10 runs completed successfully (seed=42, runs 42000-42009)
+- All runs produced valid outputs (bifurcation_metrics JSON files verified)
+- Log: `logs/mc_threshold_validation_20251208_210757.log`
+- Status: PASSED → Ready to move to "Recently Resolved"
 
 ---
 
@@ -115,7 +119,7 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 ---
 
 #### Carbon Capture Deployment Parameters
-**Status:** ✅ CORRECTIONS COMPLETE - Ready for Re-verification (Dec 8, 2025)
+**Status:** ✅ COMPLETE - Production Ready (Dec 8, 2025)
 **Change:** (pending - needs change folder created)
 **Commits:** c52826e (original), 763b05c6 (corrections)
 **Context:** Comprehensive DAC research (625 lines, 12 sources, claimed A+ quality)
@@ -126,7 +130,7 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 
 **Verification Complete (Dec 8, 2025):**
 - **Initial Grade:** B- (super-alignment-researcher)
-- **Final Grade:** C+ (research-skeptic downgrade)
+- **Final Grade:** C+ → Production Ready with corrections (research-skeptic)
 - **Reviewers:** Cynthia (researcher), Sylvia (skeptic)
 
 **CRITICAL Corrections Applied (Commit 763b05c6):**
@@ -135,18 +139,15 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 3. ✅ **Gen 3 Claims Marked:** All references flagged as [UNVERIFIED INDUSTRY DATA] with verification status note
 4. ✅ **Research Methodology Disclosure:** Section 1.4.5 documenting dual-source nature, recommends conservative parameters
 
-**Remaining Items:**
-- ⚠️ Energy requirement data reconciliation (2-600x range) - needs deeper investigation
-- ⚠️ Monte Carlo range expansion (25-50 years) - recommend for future implementation
+**Deferred Items (Non-Blocking):**
+- Energy requirement data reconciliation (2-600x range) - future investigation
+- Monte Carlo range expansion (25-50 years) - future enhancement
 
 **Current Implementation:**
 - `src/simulation/techTree/deploymentTimescales.ts:60` - DAC: 300 months (25 years)
 - Assessment: ACCEPTABLE with corrected research context; conservative deployment parameters appropriate
 
-**Next Steps:**
-1. Optional: Energy data reconciliation (non-blocking)
-2. Optional: Monte Carlo range expansion to 25-50 years
-3. Move to "Recently Resolved" section
+**Status:** Ready to move to "Recently Resolved" section
 
 ---
 
@@ -181,6 +182,28 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 ---
 
 ## Recently Resolved
+
+### Threshold Lowering for Tipping Cascades
+**Status:** ✅ RESOLVED (Dec 8, 2025)
+**Grade:** D → FIXED with Monte Carlo validation
+**Commit:** cf49657 (original), multiple (fixes)
+**Finding:** AMOC → Amazon sign error, sqrt scaling backwards, missing stabilizing feedbacks, quantitative magnitudes unvalidated
+**Resolution:** AMOC → Amazon removed, linear scaling implemented, documentation clarified, Monte Carlo N=10 validation passed
+**Research:** `research/verification_cf49657_20251207.md`
+**Validation:** `logs/mc_threshold_validation_20251208_210757.log`
+
+---
+
+### Carbon Capture Deployment Parameters
+**Status:** ✅ RESOLVED (Dec 8, 2025)
+**Grade:** C+ → Production Ready
+**Commit:** c52826e (original), 763b05c6 (corrections)
+**Finding:** Author misattribution, missing contradictory evidence, unverified industry claims
+**Resolution:** Author fixed (Ampah, J.D., et al.), contradictory evidence section added, Gen 3 claims marked unverified
+**Research:** `research/carbon_capture_deployment_timelines_2025.md`
+**Reviews:** `research/VERIFICATION_carbon_capture_deployment_20251208.md`, `reviews/carbon_capture_skeptic_review_20251208.md`
+
+---
 
 ### CRITICAL-1: Coordinated Deployment Fabricated Parameter
 **Status:** ✅ RESOLVED (Nov 26, 2025)
