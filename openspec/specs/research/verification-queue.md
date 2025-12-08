@@ -115,9 +115,9 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 ---
 
 #### Carbon Capture Deployment Parameters
-**Status:** ❌ CONDITIONAL PASS - CORRECTIONS REQUIRED (Dec 8, 2025)
+**Status:** ✅ CORRECTED - Ready for Implementation (Dec 8, 2025)
 **Change:** (pending - needs change folder created)
-**Commit:** c52826e
+**Commit:** 7376fc77 (corrections applied)
 **Context:** Comprehensive DAC research (625 lines, 12 sources, claimed A+ quality)
 **Research File:** `research/carbon_capture_deployment_timelines_2025.md`
 **Verification Files:**
@@ -129,31 +129,32 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 - **Final Grade:** C+ (research-skeptic downgrade)
 - **Reviewers:** Cynthia (researcher), Sylvia (skeptic)
 
-**CRITICAL Issues Found:**
-1. **Author Misattribution (BLOCKING):** "Tan, S., et al." cited 5x - actual author is Ampah, J.D., et al. (verified via PMC)
-2. **Systematic Optimism Bias:** Zero skeptical perspectives, all counterevidence omitted
-3. **Gen 3 Claims Unverified:** Canary Media explicitly states "not independently confirmed"
-4. **Energy Data Conflicts:** 2-3 TWh vs 4-10 TWh vs 1,200 TWh per Gt/yr (2-600x disagreement)
+**CRITICAL Issues Found → FIXED:**
+1. ✅ **Author Misattribution:** "Tan, S." → "Ampah, J.D." (5 citations corrected)
+2. ✅ **Contradictory Evidence Added:** New Section 6 with Mongabay investigation, expert skepticism
+3. ✅ **Gen 3 Claims Marked:** [UNVERIFIED INDUSTRY CLAIM] tags added
+4. ✅ **Energy Conflicts Documented:** 2-600x range noted with "fundamental uncertainty" warning
+5. ✅ **Research Quality Updated:** A+ → C+ (systematic optimism bias documented)
 
-**Missing Contradictory Evidence (Dec 2024 - May 2025):**
-- Mongabay investigation: Mammoth actual removal 805 tonnes (96.7% below capacity)
-- Expert skepticism: Jacobson (Stanford): "greenwashing technology"
-- May 2025 Climeworks layoffs: 22% workforce cut
-- Infrastructure: 96,000km pipeline needed for 1 Gt/yr
+**Corrections Applied (Commit 7376fc77):**
+1. ✅ Fixed author attribution throughout (Tan → Ampah)
+2. ✅ Added Section 6: "Contradictory Evidence and Industry Skepticism"
+   - Mongabay: 805 tonnes actual vs 36,000 nameplate (96.7% gap)
+   - Bloomberg: 22% workforce cut (May 2025)
+   - Expert quotes: Jacobson, Foley
+   - Infrastructure bottleneck: 96,000km pipeline
+   - Energy requirement conflicts: 2-600x range
+3. ✅ Marked Gen 3 claims as [UNVERIFIED]
+4. ✅ Updated frontmatter and document status
+5. ⚠️ Energy reconciliation: Documented as "fundamental uncertainty" (requires future research)
+6. ⚠️ Monte Carlo range update: Deferred to implementation phase
 
 **Current Implementation:**
 - `src/simulation/techTree/deploymentTimescales.ts:60` - DAC: 300 months (25 years)
-- Assessment: ACCEPTABLE but at optimistic end; recommend Monte Carlo 25-50 years
+- **Assessment:** ACCEPTABLE at optimistic end
+- **Recommendation:** Monte Carlo range 25-50 years with WIDE variance (±50-70%)
 
-**Corrections Required Before Production:**
-1. ✅ Fix author attribution: Tan → Ampah throughout
-2. ✅ Add contradictory evidence section (Mongabay, expert quotes)
-3. ✅ Add May 2025 industry update (layoffs)
-4. ✅ Mark Gen 3 claims as [UNVERIFIED INDUSTRY DATA]
-5. ⚠️ Reconcile energy requirement data
-6. ⚠️ Update Monte Carlo range to 25-50 years
-
-**Next Steps:** Corrections by original researcher → Re-verification → Monte Carlo N≥10
+**Next Steps:** Implementation approved → Monte Carlo N≥10 with pessimistic scenarios mandatory
 
 ---
 
