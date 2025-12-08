@@ -38,7 +38,12 @@ export function initializeTippingPointSystem(rng: () => number): TippingPointSys
       // If no distribution, use deterministic triggerTempC (backward compatibility)
       let sampledThreshold: number | undefined;
 
-      if (element.thresholdDistribution) {
+      // 🚨 HIGH-2 FIX (Dec 8, 2025): Permafrost guard
+      // Research: Nitzbon et al. (2024) - permafrost exhibits quasilinear response, NOT threshold-based
+      // If someone adds thresholdDistribution to permafrost, warn and skip sampling
+      if (element.id === 'permafrost' && element.thresholdDistribution) {
+        console.warn('⚠️ PERMAFROST has quasilinear response (Nitzbon 2024) - threshold distribution invalid. Skipping sampling.');
+      } else if (element.thresholdDistribution) {
         sampledThreshold = sampleThresholdDistribution(
           element.thresholdDistribution,
           rng
