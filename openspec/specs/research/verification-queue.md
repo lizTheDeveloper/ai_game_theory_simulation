@@ -114,11 +114,15 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 
 ---
 
-#### Carbon Capture Deployment Parameters
-**Status:** ✅ CORRECTIONS APPLIED (Dec 8, 2025) - READY FOR IMPLEMENTATION
-**Change:** (pending - needs change folder created)
-**Commit:** c52826e
-**Context:** Comprehensive DAC research (625 lines, 12 sources, claimed A+ quality)
+---
+
+## Recently Resolved
+
+### Carbon Capture Deployment Parameters
+**Status:** ✅ RESOLVED (Dec 8, 2025)
+**Grade:** A+ (claimed) → C+ (corrected)
+**Commit:** 58ff8c81
+**Context:** Comprehensive DAC research (625 lines, 12 sources) - critical corrections applied
 **Research File:** `research/carbon_capture_deployment_timelines_2025.md`
 **Verification Files:**
 - `research/VERIFICATION_carbon_capture_deployment_20251208.md` (initial)
@@ -130,23 +134,21 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 - **Reviewers:** Cynthia (researcher), Sylvia (skeptic)
 
 **CRITICAL Issues Found → FIXED:**
-1. ✅ **Author Misattribution:** "Tan, S." → "Ampah, J.D." (5 instances corrected, PMC11283554 added)
-2. ✅ **Systematic Optimism Bias:** Added Section 6.5 "Contradictory Evidence and Skeptical Perspectives"
-3. ✅ **Gen 3 Claims Unverified:** Marked all Gen 3 claims as [UNVERIFIED INDUSTRY DATA]
-4. ✅ **May 2025 Industry Update:** Added Climeworks 22% layoffs context
-5. ✅ **Actual vs Nameplate Capacity:** Added Mongabay 805 tonnes vs 36,000 capacity gap
-6. ✅ **Expert Skepticism:** Added Jacobson, Foley quotes
-7. ✅ **Research Quality Metadata:** Updated to C+ with correction notes
+1. ✅ **Author Misattribution:** "Tan, S." → "Ampah, J.D." (5 instances, PMC11283554)
+2. ✅ **Systematic Optimism Bias:** Added Section 6.5 contradictory evidence
+3. ✅ **Gen 3 Claims Unverified:** Marked [UNVERIFIED INDUSTRY DATA]
+4. ✅ **May 2025 Industry Update:** Climeworks 22% layoffs added
+5. ✅ **Actual vs Nameplate Capacity:** Mongabay 805t vs 36,000t gap
+6. ✅ **Expert Skepticism:** Jacobson, Foley quotes added
+7. ✅ **Research Quality:** Metadata updated to C+ with correction notes
 
-**Remaining Work:**
-- ⚠️ Energy data reconciliation (2-600x disagreement) - flagged for future research
-- ⚠️ Monte Carlo range update to 25-50 years - recommended in contradictory evidence section
+**Implementation Status:**
+- Current: `deploymentTimescales.ts:60` - DAC: 300 months (25 years)
+- Assessment: ACCEPTABLE but optimistic
+- Recommendation: Monte Carlo 25-50 year range (per contradictory evidence)
+- Energy data: 2-600x disagreement flagged for future research
 
-**Current Implementation:**
-- `src/simulation/techTree/deploymentTimescales.ts:60` - DAC: 300 months (25 years)
-- Assessment: ACCEPTABLE but optimistic; contradictory evidence section recommends Monte Carlo 25-50 year range
-
-**Next Steps:** Implementation approved with caveats → Monte Carlo validation recommended → Consider moving to "Recently Resolved"
+**Resolution:** Implementation approved with caveats documented. Research skepticism properly integrated.
 
 ---
 
@@ -177,10 +179,6 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 - Geographic modifiers: desert 2.5×, nordic 0.3×, windbelt 0.7× carbon
 
 **Next Steps:** Two-layer verification → Parameter update decision → Monte Carlo if implemented
-
----
-
-## Recently Resolved
 
 ### CRITICAL-1: Coordinated Deployment Fabricated Parameter
 **Status:** ✅ RESOLVED (Nov 26, 2025)
