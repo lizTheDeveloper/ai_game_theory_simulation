@@ -40,6 +40,15 @@ import {
   assertMortalityRate
 } from './utils/assertions';
 import { RootCause } from '../types/population';
+import {
+  calculateCurrentDoseRate,
+  calculateEffectiveLD50,
+  calculateMortalityProbability,
+  initializeFalloutComposition,
+  distributePopulationIntoCohorts,
+  determineMedicalCareLevel,
+  calculateLifetimeExcessCancerRisk
+} from './radiationModeling';
 
 /**
  * Initialize nuclear winter state (inactive by default)
@@ -162,9 +171,9 @@ export function triggerNuclearWinter(
     winter.cachedResilientFoodMultiplier
   );
   
-  // Add radiation zones for hit countries
-  addRadiationZones(winter, targetCountries, state.currentMonth);
-  
+  // Add radiation zones for hit countries (ENHANCED - M-6)
+  addRadiationZonesEnhanced(state, winter, targetCountries, state.currentMonth);
+
   console.log(`\n☢️  NUCLEAR WINTER TRIGGERED (Month ${state.currentMonth})`);
   console.log(`   Soot injected: ${winter.sootInStratosphere.toFixed(0)} Tg`);
   console.log(`   Sunlight blocked: ${(winter.sunlightBlocked * 100).toFixed(0)}% (solar capacity reduced)`);
@@ -533,9 +542,21 @@ function calculateResilientFoodMultiplier(state: GameState): number {
 }
 
 /**
- * Add radiation zones for countries hit by nuclear weapons
+ * Add radiation zones for countries hit by nuclear weapons (ENHANCED - M-6)
+ *
+ * Now includes:
+ * - Time-varying dose rates (7-10 decay rule)
+ * - Radionuclide-specific tracking (I-131, Cs-137, Sr-90)
+ * - Medical care level determination
+ * - Population dose cohorts
+ *
+ * @param state - Game state (needed for medical care determination)
+ * @param winter - Nuclear winter state
+ * @param countries - Countries hit by nuclear weapons
+ * @param currentMonth - Current simulation month
  */
-function addRadiationZones(
+function addRadiationZonesEnhanced(
+  state: GameState,
   winter: NuclearWinterState,
   countries: string[],
   currentMonth: number
@@ -544,20 +565,112 @@ function addRadiationZones(
     // Check if country already has radiation zone (multiple hits)
     const existing = winter.radiationZones.find(z => z.country === country);
     if (existing) {
-      // Increase intensity (multiple strikes)
+      // Multiple strikes: increase initial dose rate
+      if (existing.initialDoseRate) {
+        existing.initialDoseRate = Math.min(100, existing.initialDoseRate * 1.5);
+      }
+      // Legacy fields for backward compatibility
       existing.intensity = Math.min(1.0, existing.intensity + 0.3);
       existing.currentLevel = existing.intensity;
       return;
     }
-    
-    // Add new radiation zone
+
+    // Estimate nuclear yield (simplified: typical warhead 0.1-1 MT)
+    const estimatedYieldMT = 0.5;  // Conservative mid-range estimate
+
+    // Initialize fallout composition (radionuclide-specific)
+    const falloutComp = initializeFalloutComposition(estimatedYieldMT);
+
+    // Determine medical care level from game state
+    const medicalCare = determineMedicalCareLevel(state);
+
+    // Calculate effective LD50 (medical care + combined injury prevalence)
+    // Research: 65% of nuclear casualties have combined injuries (NIAID PMC8771911)
+    const hasCombinedInjury = Math.random() < 0.65;  // 65% prevalence
+    const effectiveLD50 = calculateEffectiveLD50(medicalCare, hasCombinedInjury);
+
+    // Estimate initial dose rate at t=1h (typical range: 1-10 Gy/hour for fallout zone)
+    // This varies WILDLY based on distance from ground zero, wind, etc.
+    // Simplified: Use 5 Gy/hour as mid-range lethal dose rate
+    const initialDoseRate = 5.0;  // Gy/hour at t=1h post-detonation
+
+    // Estimate population in radiation zone (simplified: 10% of country in fallout zone)
+    // Real scenario: Extremely heterogeneous based on wind patterns, terrain
+    const countryPopulation = state.humanPopulationSystem.population * 0.01;  // Rough estimate
+    const radiationZonePopulation = countryPopulation * 0.10;  // 10% in fallout zone
+
+    // Distribute population into dose cohorts (initial estimate)
+    const populationCohorts = distributePopulationIntoCohorts(
+      radiationZonePopulation,
+      initialDoseRate,
+      1  // t=1h post-detonation
+    );
+
+    // Add new enhanced radiation zone
     winter.radiationZones.push({
       country,
       hitMonth: currentMonth,
-      intensity: 0.8,  // High radiation (0.8/1.0)
-      decayRate: 0.05,  // 5% per month (half-life ~14 months)
+
+      // LEGACY FIELDS (kept for backward compatibility)
+      intensity: 0.8,
+      decayRate: 0.05,
       currentLevel: 0.8,
-      monthlyDeathRate: 0.01  // 1% additional monthly mortality
+      monthlyDeathRate: 0.01,
+
+      // NEW FIELDS (M-6 Enhanced Radiation Modeling)
+      initialDoseRate,
+      falloutComposition: falloutComp,
+      organDoses: {
+        // Initialize organ doses (will accumulate over time)
+        boneMarrow: 0,
+        colon: 0,
+        lung: 0,
+        stomach: 0,
+        thyroid: 0,
+        gonads: 0,
+        remainderOrgans: 0
+      },
+      populationCohorts,
+      medicalCareLevel: medicalCare,
+      effectiveLD50,
+      cumulativeDose: 0,  // Will accumulate over time
+      lifetimeExcessCancerRisk: 0  // Will increase with cumulative dose
+    });
+
+    console.log(`   ☢️  Radiation zone created: ${country}`);
+    console.log(`      Initial dose rate: ${initialDoseRate.toFixed(1)} Gy/hr`);
+    console.log(`      Medical care: ${medicalCare}`);
+    console.log(`      Effective LD50/60: ${effectiveLD50.toFixed(1)} Gy`);
+    console.log(`      Population at risk: ${(radiationZonePopulation * 1000).toFixed(0)}M`);
+  });
+}
+
+/**
+ * Add radiation zones (wrapper for backward compatibility)
+ */
+function addRadiationZones(
+  winter: NuclearWinterState,
+  countries: string[],
+  currentMonth: number
+): void {
+  // DEPRECATED: This function signature doesn't have GameState
+  // For now, create zones with legacy behavior
+  // TODO: Refactor callers to use addRadiationZonesEnhanced with GameState
+  countries.forEach(country => {
+    const existing = winter.radiationZones.find(z => z.country === country);
+    if (existing) {
+      existing.intensity = Math.min(1.0, existing.intensity + 0.3);
+      existing.currentLevel = existing.intensity;
+      return;
+    }
+
+    winter.radiationZones.push({
+      country,
+      hitMonth: currentMonth,
+      intensity: 0.8,
+      decayRate: 0.05,
+      currentLevel: 0.8,
+      monthlyDeathRate: 0.01
     });
   });
 }
@@ -825,56 +938,151 @@ export function updateNuclearWinter(state: GameState): void {
 }
 
 /**
- * Update radiation zones (decay and mortality)
+ * Update radiation zones (ENHANCED - M-6: dose accumulation and mortality)
+ *
+ * Now includes:
+ * - Time-varying dose rate decay (7-10 rule)
+ * - Dose-response mortality (LD50/60 sigmoid curves)
+ * - Organ dose accumulation (ICRP 103 tissue weighting)
+ * - Chronic cancer risk (BEIR VII with LNT controversy)
+ * - Radionuclide decay (I-131, Cs-137, Sr-90)
  */
 function updateRadiationZones(state: GameState, winter: NuclearWinterState): void {
   if (winter.radiationZones.length === 0) return;
-  
-  let totalRadiationDeaths = 0;
-  
+
+  let totalAcuteRadiationDeaths = 0;
+  let totalChronicCancerDeaths = 0;
+
   winter.radiationZones.forEach(zone => {
-    // Decay radiation over time
-    zone.currentLevel = zone.currentLevel * (1 - zone.decayRate);
-    
-    // Apply radiation mortality (scales with radiation level)
-    const radiationMortality = zone.monthlyDeathRate * zone.currentLevel;
-    
-    // Apply to country if we have country tracking
-    if (state.countryPopulationSystem) {
-      const country = state.countryPopulationSystem.countries[zone.country];
-      if (country && country.population > 0.1) {  // Only if country has >100K people
-        const countryDeaths = (country.population / 1000) * radiationMortality;  // Convert to billions
-        totalRadiationDeaths += countryDeaths;
-        
-        // Log significant radiation deaths annually
-        const monthsSinceHit = state.currentMonth - zone.hitMonth;
-        if (monthsSinceHit % 12 === 0 && countryDeaths > 0.001) {
-          console.log(`   ☢️  Radiation deaths in ${zone.country}: ${(countryDeaths * 1000).toFixed(1)}M (level: ${(zone.currentLevel * 100).toFixed(0)}%)`);
+    // Calculate hours since detonation
+    const monthsSinceHit = state.currentMonth - zone.hitMonth;
+    const hoursSinceDetonation = monthsSinceHit * 730;  // ~30 days/month × 24 hours/day
+
+    // ENHANCED MODELING (if zone has new fields)
+    if (zone.initialDoseRate && zone.effectiveLD50 && zone.populationCohorts) {
+      // Calculate current dose rate using 7-10 decay rule
+      const currentDoseRate = calculateCurrentDoseRate(
+        zone.initialDoseRate,
+        hoursSinceDetonation
+      );
+
+      // Monthly dose accumulation (integrate over ~730 hours)
+      // Simplified: average dose rate × time
+      const monthlyDose = currentDoseRate * 730;  // Gy
+
+      // Update cumulative dose
+      zone.cumulativeDose = (zone.cumulativeDose ?? 0) + monthlyDose;
+
+      // Calculate chronic cancer risk from cumulative dose
+      // WARNING: BEIR VII LNT model - contested for low doses
+      // Research: Doss (2018), Ozasa et al. (2012) challenge linear assumption
+      zone.lifetimeExcessCancerRisk = calculateLifetimeExcessCancerRisk(
+        zone.cumulativeDose,
+        true  // Chronic exposure (applies DREF)
+      );
+
+      // Calculate acute mortality using dose-response curves
+      // Apply to each dose cohort separately
+      const cohorts = zone.populationCohorts;
+
+      // Sublethal cohort: <0.7 Gy, low mortality (~0%)
+      const sublethalMortality = 0;
+
+      // Moderate cohort: 0.7-2.0 Gy, 5-20% mortality (use 10% average)
+      const moderateMortality = calculateMortalityProbability(
+        1.35,  // Midpoint of 0.7-2.0 Gy
+        zone.effectiveLD50
+      );
+
+      // Severe cohort: 2.0-5.5 Gy, 50-95% mortality (use sigmoid)
+      const severeMortality = calculateMortalityProbability(
+        3.75,  // Midpoint of 2.0-5.5 Gy
+        zone.effectiveLD50
+      );
+
+      // Lethal cohort: >5.5 Gy, >95% mortality
+      const lethalMortality = calculateMortalityProbability(
+        7.0,  // Representative lethal dose
+        zone.effectiveLD50
+      );
+
+      // Calculate total acute deaths this month
+      const acuteDeaths =
+        cohorts.sublethal * sublethalMortality * 0.01 +  // Convert monthly rate
+        cohorts.moderate * moderateMortality * 0.01 +
+        cohorts.severe * severeMortality * 0.01 +
+        cohorts.lethal * lethalMortality * 0.01;
+
+      totalAcuteRadiationDeaths += acuteDeaths;
+
+      // Calculate chronic cancer deaths (appears years later, but model as slow accumulation)
+      // BEIR VII: 5% mortality increase per Sv (with DREF=2 for chronic)
+      // Cancer latency: 2-10 years leukemia, 5-20 years solid tumors
+      // Simplified: Start after 24 months (2 years), ramp up gradually
+      if (monthsSinceHit >= 24) {
+        const totalPopulation = cohorts.sublethal + cohorts.moderate + cohorts.severe + cohorts.lethal;
+        const chronicDeathRate = zone.lifetimeExcessCancerRisk * 0.01;  // Monthly rate
+        const chronicDeaths = totalPopulation * chronicDeathRate;
+        totalChronicCancerDeaths += chronicDeaths;
+      }
+
+      // Update legacy fields for backward compatibility
+      zone.currentLevel = Math.max(0, currentDoseRate / zone.initialDoseRate);
+      zone.monthlyDeathRate = (acuteDeaths > 0.001) ? 0.01 : 0;
+
+      // Log significant events (annual)
+      if (monthsSinceHit % 12 === 0 && (acuteDeaths > 0.001 || totalChronicCancerDeaths > 0.001)) {
+        console.log(`   ☢️  Radiation effects in ${zone.country} (Year ${monthsSinceHit / 12}):`);
+        console.log(`      Dose rate: ${currentDoseRate.toFixed(4)} Gy/hr (${(zone.currentLevel * 100).toFixed(1)}% of initial)`);
+        console.log(`      Cumulative dose: ${zone.cumulativeDose.toFixed(2)} Sv`);
+        console.log(`      Acute deaths: ${(acuteDeaths * 1000).toFixed(1)}M`);
+        if (monthsSinceHit >= 24) {
+          console.log(`      Chronic cancer deaths: ${(totalChronicCancerDeaths * 1000).toFixed(1)}M`);
+          console.log(`      Lifetime excess cancer risk: ${(zone.lifetimeExcessCancerRisk * 100).toFixed(1)}%`);
+        }
+      }
+    } else {
+      // LEGACY MODELING (zones created before enhancement)
+      // Use old decay method for backward compatibility
+      zone.currentLevel = zone.currentLevel * (1 - zone.decayRate);
+
+      // Apply legacy radiation mortality
+      const radiationMortality = zone.monthlyDeathRate * zone.currentLevel;
+
+      // Apply to country if we have country tracking
+      if (state.countryPopulationSystem) {
+        const country = state.countryPopulationSystem.countries[zone.country];
+        if (country && country.population > 0.1) {
+          const countryDeaths = (country.population / 1000) * radiationMortality;
+          totalAcuteRadiationDeaths += countryDeaths;
+
+          if (monthsSinceHit % 12 === 0 && countryDeaths > 0.001) {
+            console.log(`   ☢️  Radiation deaths in ${zone.country}: ${(countryDeaths * 1000).toFixed(1)}M (level: ${(zone.currentLevel * 100).toFixed(0)}%)`);
+          }
         }
       }
     }
   });
-  
-  if (totalRadiationDeaths > 0) {
+
+  // Add mortality risks to population system
+  if (totalAcuteRadiationDeaths > 0) {
     // Calculate average mortality rate across exposed zones
-    // NaN AUDIT (Nov 16, 2025): Protect division - if population collapsed to 0, fail loudly
     const nuclearNationsPopulation = state.humanPopulationSystem.population * 0.30;
 
-    // If nuclear-affected population collapsed to zero, can't calculate mortality rate
-    // This indicates extinction - fail loudly rather than fallback to 1
+    // NaN AUDIT (Nov 16, 2025): Protect division - if population collapsed to 0, fail loudly
     if (nuclearNationsPopulation <= 0) {
       throw new Error(
         `❌ EXTINCTION: Nuclear nations population collapsed to 0 during nuclear winter (Month ${state.currentMonth}). ` +
-        `Total radiation deaths: ${totalRadiationDeaths}. Cannot calculate mortality rate with zero denominator.`
+        `Total radiation deaths: ${totalAcuteRadiationDeaths}. Cannot calculate mortality rate with zero denominator.`
       );
     }
 
-    const averageRadiationMortality = assertFinite(totalRadiationDeaths / nuclearNationsPopulation, {
-      location: 'updateNuclearWinter (radiation)',
-      valueName: 'averageRadiationMortality',
+    const averageAcuteMortality = assertFinite(totalAcuteRadiationDeaths / nuclearNationsPopulation, {
+      location: 'updateRadiationZones',
+      valueName: 'averageAcuteMortality',
       month: state.currentMonth,
       additionalInfo: {
-        totalDeaths: totalRadiationDeaths,
+        totalDeaths: totalAcuteRadiationDeaths,
         nuclearNationsPopulation,
         zones: winter.radiationZones.length
       }
@@ -882,23 +1090,59 @@ function updateRadiationZones(state: GameState, winter: NuclearWinterState): voi
 
     addMortalityRisk(state.humanPopulationSystem, {
       type: 'war',
-      baseRisk: averageRadiationMortality,
+      baseRisk: averageAcuteMortality,
       scope: 'REGIONAL',
       exposedFraction: 0.30,
       proximate: 'war',
       root: RootCause.conflict,
-        month: state.currentMonth,
-      description: 'Radiation poisoning (nuclear zones)',
-      confidence: 'HIGH'  // Hiroshima/Nagasaki/Chernobyl data
+      month: state.currentMonth,
+      description: 'Acute radiation syndrome (ARS) - nuclear fallout zones',
+      confidence: 'HIGH'  // CDC 2024, REMM, PMC3863169
     });
-    winter.totalRadiationDeaths += totalRadiationDeaths;
+    winter.totalRadiationDeaths += totalAcuteRadiationDeaths;
   }
-  
-  // Remove zones with negligible radiation (<1%)
-  // PERFORMANCE: In-place splice instead of filter() to avoid O(n) allocations per month
-  // Backward iteration prevents index shifting issues when removing elements
+
+  if (totalChronicCancerDeaths > 0) {
+    const nuclearNationsPopulation = state.humanPopulationSystem.population * 0.30;
+
+    if (nuclearNationsPopulation <= 0) {
+      throw new Error(
+        `❌ EXTINCTION: Nuclear nations population collapsed to 0 during nuclear winter (Month ${state.currentMonth}). ` +
+        `Total chronic cancer deaths: ${totalChronicCancerDeaths}. Cannot calculate mortality rate with zero denominator.`
+      );
+    }
+
+    const averageChronicMortality = assertFinite(totalChronicCancerDeaths / nuclearNationsPopulation, {
+      location: 'updateRadiationZones',
+      valueName: 'averageChronicMortality',
+      month: state.currentMonth,
+      additionalInfo: {
+        totalDeaths: totalChronicCancerDeaths,
+        nuclearNationsPopulation,
+        zones: winter.radiationZones.length,
+        warning: 'BEIR VII LNT model - contested for low doses (<100 mSv)'
+      }
+    });
+
+    addMortalityRisk(state.humanPopulationSystem, {
+      type: 'disease',  // Cancer classified as disease mortality
+      baseRisk: averageChronicMortality,
+      scope: 'REGIONAL',
+      exposedFraction: 0.30,
+      proximate: 'disease',
+      root: RootCause.conflict,  // Root cause: nuclear war
+      month: state.currentMonth,
+      description: 'Radiation-induced cancer (chronic exposure, BEIR VII model)',
+      confidence: 'MEDIUM'  // LNT model contested, low-dose uncertainty
+    });
+    winter.totalRadiationDeaths += totalChronicCancerDeaths;
+  }
+
+  // Remove zones with negligible radiation (<1% of initial dose rate)
+  // PERFORMANCE: In-place splice, backward iteration
   for (let i = winter.radiationZones.length - 1; i >= 0; i--) {
     if (winter.radiationZones[i].currentLevel <= 0.01) {
+      console.log(`   ✅ Radiation zone ${winter.radiationZones[i].country} cleared (dose rate <1% of initial)`);
       winter.radiationZones.splice(i, 1);
     }
   }

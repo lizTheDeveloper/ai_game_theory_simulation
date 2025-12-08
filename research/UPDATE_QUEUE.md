@@ -1,10 +1,6 @@
 # Research Update Queue
-<<<<<<< Updated upstream
-**Generated:** 12/8/2025, 9:30:04 AM
-=======
-**Generated:** 12/8/2025, 1:30:04 AM
->>>>>>> Stashed changes
-**Files Scanned:** 539
+**Generated:** 12/8/2025, 10:30:04 AM
+**Files Scanned:** 540
 
 ---
 
@@ -912,7 +908,7 @@
 
 ## 📋 MEDIUM (Review Within Quarter)
 
-**Count:** 24 (4.5%)
+**Count:** 24 (4.4%)
 
 - `LAYER2_COMPREHENSIVE_STATUS_20251030.md` - Oldest: 2020 (5 years)
 - `LAYER2_DEBATE_SUMMARY_20251030.md` - Oldest: 2020 (5 years)
@@ -943,7 +939,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 337 (62.5%)
+**Count:** 338 (62.6%)
 
 All sources <3 years old. No action required.
 
@@ -953,11 +949,11 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 539 |
+| Total files | 540 |
 | CRITICAL | 0 (0.0%) |
 | HIGH | 178 (33.0%) |
-| MEDIUM | 24 (4.5%) |
-| LOW | 337 (62.5%) |
+| MEDIUM | 24 (4.4%) |
+| LOW | 338 (62.6%) |
 | Average age | 7.5 years |
 | Oldest source | 1955 (70 years ago) |
 
@@ -965,8 +961,8 @@ All sources <3 years old. No action required.
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 337 | 62.5% |
-| Warning (3-5yr) | 24 | 4.5% |
+| Current (<3yr) | 338 | 62.6% |
+| Warning (3-5yr) | 24 | 4.4% |
 | Critical (>5yr) | 178 | 33.0% |
 
 ### Targets
