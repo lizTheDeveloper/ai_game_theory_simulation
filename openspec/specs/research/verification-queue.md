@@ -115,9 +115,9 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 ---
 
 #### Carbon Capture Deployment Parameters
-**Status:** ✅ CORRECTED - Grade C+ (Dec 8, 2025)
+**Status:** ✅ CORRECTED - Grade C+ (Dec 8, 2025) - Moving to Recently Resolved
 **Change:** (pending - needs change folder created)
-**Commit:** c52826e (original), [current] (corrections)
+**Commit:** c52826e (original), 084a9308 (corrections)
 **Context:** Comprehensive DAC research (625 lines, 12 sources, claimed A+ quality)
 **Research File:** `research/carbon_capture_deployment_timelines_2025.md`
 **Verification Files:**
@@ -129,13 +129,13 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 - **Final Grade:** C+ (research-skeptic downgrade)
 - **Reviewers:** Cynthia (researcher), Sylvia (skeptic)
 
-**CRITICAL Corrections Applied (Dec 8, 2025):**
+**CRITICAL Corrections Applied (Dec 8, 2025, Commit 084a9308):**
 1. ✅ **Fixed author attribution:** Tan, S. → Ampah, J.D. (5 instances + PMC11283554 reference)
 2. ✅ **Added contradictory evidence section:** Mongabay investigation (805t actual vs 36,000t nameplate), May 2025 Climeworks layoffs (22% cut), expert skepticism (Jacobson, Foley)
 3. ✅ **Marked Gen 3 claims as [UNVERIFIED INDUSTRY DATA]:** "not independently confirmed" per Canary Media
 4. ✅ **Updated metadata:** Research quality downgraded A+ → C+, verification status updated
 
-**Remaining Known Issues:**
+**Remaining Known Issues (Documented):**
 5. ⚠️ Energy requirement data conflicts (2-600x range) - unreconciled, documented in notes
 6. ⚠️ Monte Carlo parameter update (25→25-50 years) - deferred to implementation phase
 
@@ -143,9 +143,7 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 - `src/simulation/techTree/deploymentTimescales.ts:60` - DAC: 300 months (25 years)
 - Assessment: ACCEPTABLE at optimistic end; recommend Monte Carlo 25-50 years when implemented
 
-**Next Steps:**
-- Move to "Recently Resolved" after brief review period
-- Implementation updates (Monte Carlo ranges) tracked separately in simulation roadmap
+**Resolution:** Corrections complete, research integrity maintained. Will move to "Recently Resolved" in next session.
 
 ---
 
