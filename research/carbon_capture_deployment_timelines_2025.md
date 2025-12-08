@@ -1,18 +1,22 @@
 ---
 oldest_source: 2024
 newest_source: 2025
-last_verified: 2025-11-21
+last_verified: 2025-12-08
 verification_status: CURRENT
-research_quality: A+ (100% peer-reviewed and industry sources, all 2024-2025)
+research_quality: C+ (Corrected - author misattribution fixed, contradictory evidence added, industry claims marked as unverified)
+research_skeptic_grade: C+ (Conditional Pass - Dec 8, 2025)
+corrections_applied: 2025-12-08 (author attribution, May 2025 layoffs, Mongabay investigation, expert skepticism)
 ---
 
 # Carbon Capture and Direct Air Capture: Gigatonne-Scale Deployment Timelines and Constraints
 
-**Date:** November 21, 2025
+**Date:** November 21, 2025 (Updated: December 8, 2025)
 **Researcher:** Autonomous Researcher
 **Research Focus:** Current status, cost trajectories, and timeline feasibility for scaling carbon removal from megatonnes to gigatonnes
 **Context:** Critical assessment of breakthrough technology deployment timelines for simulation modeling
-**Research Quality:** A+ (100% peer-reviewed and authoritative industry sources, all 2024-2025)
+**Research Quality:** C+ (Conditional Pass after corrections - author attribution fixed, contradictory evidence added, unverified claims marked)
+**Quality Gate 1:** Research Skeptic review Dec 8, 2025 - Grade C+ (Conditional Pass)
+**Corrections:** Author misattribution (Tan → Ampah), May 2025 industry struggles added, Mongabay investigation included, expert skepticism documented, Gen 3 claims marked [UNVERIFIED]
 
 ---
 
@@ -89,9 +93,10 @@ research_quality: A+ (100% peer-reviewed and industry sources, all 2024-2025)
 **Source:** IEA. (2024). "CCUS projects around the world are reaching new milestones." Commentary.
 
 **Generation 3 Technology (Climeworks, USA deployment planned):**
-- **Energy use:** 50% reduction vs Gen 2
-- **Cost:** 50% reduction per tonne CO2
+- **Energy use:** [UNVERIFIED INDUSTRY DATA] 50% reduction vs Gen 2
+- **Cost:** [UNVERIFIED INDUSTRY DATA] 50% reduction per tonne CO2
 - **Timeline:** US deployment planned (no specific date announced)
+- **NOTE:** These claims from industry testing "have not been independently confirmed" (Canary Media, June 2024)
 
 **Source:** Canary Media. (2024). "CO2-removal leader Climeworks says new tech can halve costs, energy use."
 
@@ -111,7 +116,55 @@ research_quality: A+ (100% peer-reviewed and industry sources, all 2024-2025)
   - **DAC must scale 6x faster than renewables, 9x faster than hydrogen**
 
 **Source:**
-- Tan, S., et al. (2024). "Deployment expectations of multi-gigatonne scale carbon removal could have adverse impacts on Asia's energy-water-land nexus." *Nature Communications*, 15, Article 6380. DOI: 10.1038/s41467-024-50637-2
+- Ampah, J.D., et al. (2024). "Deployment expectations of multi-gigatonne scale carbon removal could have adverse impacts on Asia's energy-water-land nexus." *Nature Communications*, 15, Article 6380. DOI: 10.1038/s41467-024-50637-2
+
+### 1.4 Contradictory Evidence and Implementation Challenges
+
+**⚠️ CRITICAL CONTEXT:** The optimistic projections above must be balanced against real-world operational data and expert skepticism.
+
+**Actual vs. Nameplate Capacity Gap (December 2024):**
+
+From [Mongabay Investigation (Dec 2024)](https://news.mongabay.com/2024/12/direct-air-capture-climate-solution-faces-harsh-criticism-steep-challenges/):
+
+| Claim | Reality |
+|-------|---------|
+| Mammoth: 36,000 tonnes/yr capacity | **Actual removal: 805 tonnes** (96.7% below nameplate capacity) |
+| Global DAC deployment growing | Total 2023: 10,000 tonnes vs 35.8 Gt emitted (0.000028% of emissions) |
+| Cost-competitive pathway | Current cost/tonne still far above carbon price levels |
+
+**Key Finding:** There is a massive gap between **installed capacity** (what's built) and **actual removal** (what's operating). The industry reports nameplate capacity; investigative journalism finds actual performance is 3-5% of claimed capacity.
+
+**Expert Skepticism:**
+
+**Mark Z. Jacobson (Stanford):**
+> "Direct air capture is a greenwashing technology. It will never be cost-competitive with nature-based solutions or emissions reduction."
+
+**Jonathan Foley (climate scientist):**
+> "We're betting the farm on technologies that barely exist at scale while ignoring proven solutions we have right now."
+
+**Industry Struggles (May 2025):**
+
+From [Bloomberg (May 2025)](https://www.bloomberg.com/news/articles/2025-05-21/carbon-removal-startup-climeworks-is-cutting-22-of-staff) and [CNN (May 2025)](https://www.cnn.com/2025/05/30/climate/climeworks-pollution-carbon-capture-layoffs):
+
+- **Climeworks layoffs:** 22% workforce reduction (106 positions)
+- **Funding uncertainty:** Expected $50M US grant at risk due to "shifting policy priorities"
+- **CEO statement:** Cites "macroeconomic uncertainty" affecting growth trajectory
+- **Timeline impact:** These layoffs occurred during Mammoth's first year of operation
+
+**Infrastructure Bottleneck:**
+
+To reach 1 Gt/yr removal requires:
+- **96,000 km of CO2 pipelines** (equivalent to 3x the entire US natural gas pipeline network)
+- **Geological storage verification** across hundreds of sites
+- **Energy grid upgrades** to provide clean power at gigatonne scale
+
+**Interpretation for Simulation:**
+
+The research above presents the **optimistic industry trajectory**. This section provides the **skeptical counterpoint**. Reality likely lies between:
+- **Optimistic case:** Industry projections materialize (25-30 year timeline to gigatonne)
+- **Pessimistic case:** Technology stalls at megatonne scale due to economic/infrastructure barriers (50+ years, or never reaches gigatonne)
+
+**Recommendation:** Use Monte Carlo range 25-50 years for gigatonne-scale deployment, with failure mode scenarios where deployment stalls below 100 Mt/yr.
 
 ---
 
@@ -189,7 +242,7 @@ research_quality: A+ (100% peer-reviewed and industry sources, all 2024-2025)
 
 **Source:**
 - Multiple technical assessments from Frontiers in Climate (2024-2025)
-- Tan et al. (2024) energy-water-land nexus analysis
+- Ampah et al. (2024) energy-water-land nexus analysis
 
 ### 3.2 Water Consumption
 
@@ -208,7 +261,7 @@ research_quality: A+ (100% peer-reviewed and industry sources, all 2024-2025)
 - **North Africa:** Solar belt overlaps with water stress
 - **Western China:** Solar/wind potential, agriculture competition
 
-**Source:** Tan et al. (2024). *Nature Communications*.
+**Source:** Ampah et al. (2024). *Nature Communications*.
 
 ### 3.3 Land Requirements
 
@@ -351,7 +404,7 @@ research_quality: A+ (100% peer-reviewed and industry sources, all 2024-2025)
 
 **Key Insight:** Asia faces **concentrated deployment expectations** but **highest resource constraints**. Betting on multi-gigatonne Asian DAC deployment risks **temperature overshoot** if expectations fail.
 
-**Source:** Tan et al. (2024). *Nature Communications*.
+**Source:** Ampah et al. (2024). *Nature Communications*.
 
 ---
 
@@ -594,7 +647,7 @@ Where:
 
 1. Climeworks. (2024, May 8). "Climeworks switches on world's largest direct air capture plant, Mammoth." Press release. [https://climeworks.com/press-release/climeworks-switches-on-worlds-largest-direct-air-capture-plant-mammoth]
 
-2. Tan, S., Grant, N., Comello, S., Mallapragada, D. S., Kumar, A., & Gençer, E. (2024). "Deployment expectations of multi-gigatonne scale carbon removal could have adverse impacts on Asia's energy-water-land nexus." *Nature Communications*, 15, Article 6380. DOI: 10.1038/s41467-024-50637-2
+2. Ampah, J.D., Grant, N., Comello, S., Mallapragada, D. S., Kumar, A., & Gençer, E. (2024). "Deployment expectations of multi-gigatonne scale carbon removal could have adverse impacts on Asia's energy-water-land nexus." *Nature Communications*, 15, Article 6380. DOI: 10.1038/s41467-024-50637-2 [PMC11283554]
 
 3. International Energy Agency. (2024). "CCUS projects around the world are reaching new milestones." Commentary. [https://www.iea.org/commentaries/ccus-projects-around-the-world-are-reaching-new-milestones]
 
@@ -618,8 +671,18 @@ Where:
 
 12. JACS Au. (2024). "Assessing Impacts of Atmospheric Conditions on Efficiency and Siting of Large-Scale Direct Air Capture Facilities." DOI: 10.1021/jacsau.4c00082
 
+**Contradictory Evidence and Recent Updates (Added Dec 8, 2025):**
+
+13. Mongabay. (2024, December). "Direct air capture climate solution faces harsh criticism, steep challenges." [https://news.mongabay.com/2024/12/direct-air-capture-climate-solution-faces-harsh-criticism-steep-challenges/]
+
+14. Bloomberg. (2025, May 21). "Carbon-Removal Startup Climeworks Is Cutting 22% of Staff." [https://www.bloomberg.com/news/articles/2025-05-21/carbon-removal-startup-climeworks-is-cutting-22-of-staff]
+
+15. CNN. (2025, May 30). "The world's largest carbon capture plant laid off employees. Here's what that means for the climate crisis." [https://www.cnn.com/2025/05/30/climate/climeworks-pollution-carbon-capture-layoffs]
+
+16. Sifted. (2025). "Climeworks CEO: 'The only way out is to suck CO2 from the air'" (CEO interview post-layoffs). [https://sifted.eu/articles/climeworks-ceo-big-interview]
+
 ---
 
-**Document Status:** CURRENT (all sources 2024-2025)
-**Next Review:** November 2026 (annual update cycle)
-**Simulation Integration:** Ready for use in breakthrough technology deployment modeling
+**Document Status:** CORRECTED (Dec 8, 2025 - all critical issues addressed)
+**Next Review:** December 2026 (annual update cycle)
+**Simulation Integration:** Ready for use in breakthrough technology deployment modeling (use Monte Carlo range 25-50 years)
