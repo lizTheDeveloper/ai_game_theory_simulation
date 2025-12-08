@@ -89,92 +89,132 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 ### MEDIUM Priority
 
 #### Nitrogen-Food Phase 3 Technologies
-**Status:** ⚠️ READY FOR VALIDATION
+**Status:** ❌ CONDITIONAL BLOCK - Grade C+
 **Change:** (pending - needs change folder created)
 **Commit:** cd1e83a
 **Context:** 6 new nitrogen reduction technologies added to tech tree
-**Verification File:** `research/verification_cd1e83a_20251121.md`
+**Verification File:** `research/nitrogen_tech_verification_20251208.md`
+**Critique File:** `reviews/nitrogen_tech_verification_critique_20251208.md`
 
-**Technologies to Verify:**
-1. Rhizosphere Engineering (15-40% N reduction, TIER 1, commercial)
-2. Nitroplast Integration (50-70% reduction, breakthrough, Coale et al. 2024)
-3. Precision Fermentation (30-50% agri N reduction, emerging)
-4. Regional Nitrogen Policies (20% efficiency via redistribution)
-5. Soil Health Restoration (20-40% NUE improvement)
-6. Integrated Nutrient Management (25-45% efficiency gains)
+**Verification Complete (Dec 8, 2025):**
+- **Research Grade:** B- (super-alignment-researcher)
+- **Final Grade:** C+ (research-skeptic downgrade)
+- **Reviewers:** Cynthia (researcher), Sylvia (skeptic)
 
-**Key Claims:**
-- Effectiveness ranges (15-40%, 20-45%, etc.)
-- Co-benefits quantification (soil health, biodiversity, carbon)
-- Timeline assumptions (R&D + deployment)
-- Citation: Coale et al. 2024 *Science* for nitroplasts
+**CRITICAL Issues Found:**
+1. ❌ **Nitroplast Integration (Grade D):** Coale et al. 2024 is MARINE ALGAE research with ZERO crop application. Claims of 50-70% reduction by 2030s are science fiction. **REMOVE or move to TIER 4 speculative (2060s+)**
+2. ❌ **Regional Nitrogen Policies (Grade D):** No global 20% efficiency claim found. EU study shows 20% fertilizer reduction → only 10-16% surplus reduction. **REMOVE or substantially reframe**
+3. ⚠️ **Integrated Nutrient Management (Grade C):** Claims 25-45% but research shows 12-21%. **Correct to 15-25%**
+4. ⚠️ **Soil Health Restoration (Grade C+):** Conflates cover crops (+22% NUE) with no-till (-1% to -9% NUE). **Split into separate technologies**
 
-**Next Steps:** Two-layer verification → Parameter adjustments if needed → Monte Carlo validation
+**Technologies Approved (with adjustments):**
+- ✅ Rhizosphere Engineering (Grade B+): 15-40% range supported, narrow to 15-25% (40% is hydroponic lettuce, not field crops)
+- ✅ Precision Fermentation (Grade B-): Environmental benefits excellent, 30-50% nitrogen reduction is reasonable inference from dietary shift
+
+**Blocking Issues:**
+- Remove Nitroplast Integration (marine biology ≠ crop application)
+- Remove or reframe Regional Policies (no global evidence)
+- Correct INM effectiveness (25-45% → 15-25%)
+- Split Soil Health into Cover Crops (positive) + Conservation Tillage (separate)
+
+**Next Steps:** Block implementation → Parameter revision → Re-verification required
 
 ---
 
 #### Carbon Capture Deployment Parameters
-**Status:** ⚠️ READY FOR VALIDATION
+**Status:** ✅ VERIFIED - Grade B+ (with critical corrections required)
 **Change:** (pending - needs change folder created)
 **Commit:** c52826e
-**Context:** Comprehensive DAC research (625 lines, 12 sources, A+ quality)
+**Context:** Comprehensive DAC research (625 lines, 12 sources, claimed A+ quality)
 **Research File:** `research/carbon_capture_deployment_timelines_2025.md`
-**Verification File:** `research/verification_c52826e_20251121.md`
+**Verification File:** `research/VERIFICATION_carbon_capture_deployment_20251208.md`
+**Critique File:** `reviews/DAC_verification_critical_review_20251208.md`
 
-**Sources to Verify:**
-- Tan et al. (2024) *Nature Communications* - gigatonne requirements, energy/water nexus
-- Climeworks (2024) - Mammoth plant operational data (36,000 tonnes/yr)
-- IEA (2024) - CCUS project milestones, 5-10 year activation delay
-- Frontiers in Climate (2024-2025) - technical analysis, energy requirements
-- Canary Media (2024) - Gen 3 technology cost reduction claims
+**Verification Complete (Dec 8, 2025):**
+- **Initial Grade:** A- (super-alignment-researcher, downgraded from claimed A+)
+- **Final Grade:** B+ (research-skeptic downgrade)
+- **Reviewers:** Cynthia (researcher), Sylvia (skeptic)
 
-**Key Claims:**
-- Current capacity: 0.00005 Gt/yr (Mammoth: 36kt/yr operational May 2024)
-- Timeline: 20-40 years breakthrough → gigatonne impact
-- Energy: 4-10 TWh per 1 Gt/yr (must couple with clean energy)
-- Water: 15 km³/yr for 4 Gt/yr (3.8% global industrial use)
-- Cost: $600-1,000/tonne (current) → $100-300/tonne (2040s)
+**CRITICAL Errors Found:**
+1. ❌ **1000x Energy Calculation Error:** Summary claims "4-10 TWh per 1 Gt/yr" but correct value is **1,400-4,200 TWh per 1 Gt/yr** (body has correct data, summary has error). At 10 Gt/yr, DAC would require >40% of global electricity.
+2. ❌ **Attribution Error:** Paper is by **Ampah et al. (2024)** *Nature Communications*, NOT "Tan et al."
+3. ⚠️ **Overly Optimistic Cost Floor:** $100/tonne challenged by multiple 2024 sources as "thermodynamically unrealistic" → Use $200-300/tonne floor
+4. ⚠️ **Missing Uncertainty Framing:** MIT (Nov 2024): "Likelihood of deploying DAC at gigatonne scale is **highly uncertain**" - not reflected in research
 
-**Current Implementation:**
-- ClimateDeploymentDelayPhase.ts:67-73 - DAC parameters
+**Verified Claims:**
+- ✅ Mammoth operational: 36,000 tonnes/year (May 2024)
+- ✅ Global DAC capacity: ~0.00005 Gt/yr
+- ✅ Water consumption: 15 km³/year for 4 Gt/yr
+- ✅ Current costs: $600-1,000/tonne
+- ✅ Timeline range: 20-40 years to gigatonne scale (but uncertain)
 
-**Parameter Validation:**
-- ✅ Activation delay (7 years) - compatible with 5-10 range
-- ✅ T_50 (30 years) - compatible with 20-40 year timeline
-- ⚠️ Energy requirements - NOT MODELED (enhancement opportunity)
-- ⚠️ Water constraints - NOT MODELED (regional deployment factor)
+**Implementation Parameters:**
+- ✅ `activationDelay: 7 years` - Reasonable (though IEA source unclear)
+- ✅ `T_50: 30 years` - Well-justified (middle of 20-40 year range)
+- ⚠️ **Add uncertainty:** T_50 should use Monte Carlo variance: triangular(25, 40, 60)
+- ⚠️ **Add grid constraint:** <100 gCO2/kWh for net-negative capture
+- ⚠️ **Energy coupling:** Must model 1,400-4,200 TWh requirement
 
-**Next Steps:** Two-layer verification → Parameter validation → Enhancement implementation (energy/water constraints) → Monte Carlo N≥10
+**Required Corrections:**
+1. Fix attribution (Tan → Ampah)
+2. Fix energy summary (1,400-4,200 TWh, not 4-10 TWh)
+3. Add uncertainty framing ("highly uncertain" per MIT)
+4. Revise cost floor to $200-300/tonne
+5. Add T_50 variance for Monte Carlo runs
+6. Add grid carbon intensity constraint
+
+**Next Steps:** Apply corrections → Add uncertainty modeling → Proceed with implementation
 
 ---
 
 #### AI Infrastructure Resources 2025 Update
-**Status:** ⚠️ READY FOR VALIDATION
+**Status:** ✅ VERIFIED - Grade B- (with attribution corrections required)
 **Change:** (pending - needs change folder created)
 **Commit:** dbf1438
 **Context:** 2025 peer-reviewed sources for AI data center resource consumption
 **Research File:** `research/ai-infrastructure-resources_20251019.md` (updated)
-**Verification File:** `research/verification_dbf1438_20251123.md`
+**Verification File:** `research/VERIFICATION_ai-infrastructure-resources_20251208.md`
+**Critique File:** `reviews/ai_infrastructure_resources_critique_20251208.md`
 
-**Sources to Verify:**
-- Cornell/Nature Sustainability 2025: 2030 water (731-1,125M m³/yr), carbon (24-44M tonnes CO₂/yr)
-- MIT/Lawrence Berkeley Lab 2025: 7-8× energy multiplier, 183 TWh U.S. data centers (2024)
-- IEA 2025: Global water 560B→1,200B liters (2024→2030)
+**Verification Complete (Dec 8, 2025):**
+- **Initial Grade:** B+ (super-alignment-researcher, downgraded from claimed A+)
+- **Final Grade:** B- (research-skeptic downgrade)
+- **Reviewers:** Cynthia (researcher), Sylvia (skeptic)
 
-**Key Claims:**
-- 2030 water projections: 731-1,125M cubic meters/year
-- 2030 carbon projections: 24-44 million metric tons CO₂/year
-- AI training clusters 7-8× energy multiplier
-- Geographic optimization: Midwest "windbelt" optimal, Arizona 7.4% state power
-- Mitigation potential: 73% carbon reduction, 86% water reduction
+**Attribution Errors Found:**
+1. ❌ **MIT/Berkeley Lab Conflation:** File attributes "183 TWh" to "MIT/Lawrence Berkeley Lab" but it's actually from **IEA 2025**. Berkeley Lab's 2023 figure was 176 TWh (different year, different number).
+2. ❌ **Arizona 7.4% Misattribution:** Appears under "Cornell/Nature Sustainability (2025)" section but actually from Arizona utility reports (separate source).
+3. ⚠️ **Geographic Multipliers:** Desert 2.5×, Nordic 0.3×, Windbelt 0.7× are **model parameters**, not direct measurements from research.
+4. ⚠️ **Windbelt Math Error:** 73% carbon reduction = 0.27× multiplier, NOT 0.7×
 
-**Proposed Parameters:**
-- trainingWaterL: 700K-10M L per training run
-- inferenceWaterL: 2-5M L/month at scale
-- aiTrainingMultiplier: 7.5 (MIT: 7-8×)
-- Geographic modifiers: desert 2.5×, nordic 0.3×, windbelt 0.7× carbon
+**Verified Claims:**
+- ✅ Cornell/Nature Sustainability (2025): Water 731-1,125M m³/yr, carbon 24-44M tonnes (2030)
+- ✅ MIT (2024-2025): 7-8× energy multiplier for **training** (not inference)
+- ✅ IEA (2025): 560B→1,200B liters water (2024→2030), 183 TWh U.S. data centers
+- ✅ Mitigation: 73% carbon, 86% water (Cornell paper)
+- ✅ Windbelt optimization (TX, MT, NE, SD optimal locations)
 
-**Next Steps:** Two-layer verification → Parameter update decision → Monte Carlo if implemented
+**Implementation Issues:**
+1. ⚠️ **7-8× multiplier is training only:** Inference is ~2-3×, not 7-8×. Generic application will overestimate ongoing costs.
+2. ⚠️ **Missing efficiency improvements:** Historical data shows energy grew 6× slower than traffic due to efficiency gains. 2030 projections may be high.
+3. ⚠️ **Geographic multipliers need sensitivity analysis:** They're informed estimates, not validated measurements.
+
+**Required Corrections:**
+1. Fix MIT/IEA attribution (183 TWh → IEA, not Berkeley Lab)
+2. Move Arizona 7.4% to separate section (not Cornell)
+3. Split energy multiplier: training 7.5× / inference 2.5×
+4. Fix Windbelt multiplier (0.7× → 0.27×)
+5. Flag geographic multipliers as "model parameters, not measurements"
+6. Add efficiency improvement factor (0.5-0.8× on 2030 projections)
+7. Use projection ranges, not point estimates
+
+**Approved Parameters (with corrections):**
+- ✅ trainingWaterL: 700K-10M L per training run (UC Riverside measured)
+- ✅ inferenceWaterL: base + scaling × log2(capability + 1) (efficiency gains)
+- ⚠️ aiTrainingMultiplier: 7.5 (training) / 2.5 (inference) - split required
+- ⚠️ Geographic: desert 2.5×, nordic 0.3×, windbelt 0.27× (not 0.7×) - flag as estimates
+
+**Next Steps:** Apply attribution corrections → Split training/inference multipliers → Add uncertainty modeling → Proceed with implementation
 
 ---
 
