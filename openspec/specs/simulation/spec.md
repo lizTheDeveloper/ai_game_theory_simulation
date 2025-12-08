@@ -209,53 +209,180 @@ The simulation SHALL model environmental, social, and technological debt.
 
 ## Active Work
 
-### HIGH Priority
+### HIGH Priority (From Dec 8 Reviews)
 
-#### HIGH-7: Conditional Climate Stability Floor
-**Status:** COMPLETE (Dec 5, 2025, retroactive validation Dec 7)
-**Implementation:** `src/simulation/engine/phases/ClimateSystemPhase.ts:827-883`
-**Research:** Wunderling et al. (2024), ACCESS-ESM-1.5 (2024), Boers et al. (2025)
-**Quality Gates:** QG1 Grade B (Sylvia), QG2 Grade B (architecture-skeptic)
-**Summary:** Conditional floor (5% in stabilization scenarios, 0% in tail risk) replaces unconditional floor. Aligns with 2024-2025 research showing destabilizing tipping cascades.
-**Known Issues:** Monte Carlo validation partial (N=10 blocked by population assertion edge case, not a feature bug)
-**History:** `docs/implementation-history/high7_conditional_climate_stability_floor_20251207.md`
+#### HIGH-8: Supply Chain Cascade Multiplier
+**Status:** Proposed (from research debate)
+**Source:** Sylvia (research-skeptic) Dec 8 audit
+**Context:** McKinsey 2024 - avg company has 38K tier-3 suppliers, 0.2% visibility. Texas freeze 2021: 3-day grid failure → $195B cascade.
+**Scope:** Add cascade multiplier where system failures degrade adjacent systems (grid → water → food)
+**Research:** Scheffer 2023 (civilizational collapse), McKinsey 2024, COVID empirical data
+**Complexity:** 3 systems (infrastructure, water, food)
+**Effort:** 2-3 days
+**Priority Rationale:** Critical gap - current model handles individual failures, not cascade propagation
+
+#### HIGH-9: Stochastic Rebound Effects
+**Status:** Proposed (from research debate)
+**Source:** Sylvia (research-skeptic) Dec 8 audit - asymmetric research standards
+**Context:** Fixed 0.7 multiplier (30% rebound) should be distribution [0.3, 0.9] per Sorrell 2024
+**Scope:** Replace hardcoded rebound multiplier with sampled distribution
+**Research:** Sorrell 2024 (rebound effects range 30-60%)
+**Complexity:** 2 systems (technology effects, M-5 distribution sampling)
+**Effort:** 1 day
+**Priority Rationale:** Jevons paradox is stochastic - deterministic modeling underestimates variance
+
+#### HIGH-10: Dynamic require() in Hot Path
+**Status:** Proposed (from architecture review)
+**Source:** Architecture-skeptic Dec 8 review (HIGH-1)
+**File:** `src/simulation/nuclearWinter.ts:509` (`calculateResilientFoodMultiplier()`)
+**Issue:** `const { getTechDeployment } = require('./techTree/engine');` breaks ESM, tree-shaking
+**Fix:** Convert to static import at top of file
+**Complexity:** 1 system (nuclear winter)
+**Effort:** 5 minutes
+**Priority Rationale:** Breaks build tooling, invisible runtime dependency
+
+#### HIGH-11: Legacy Radiation Modeling Dual Paths
+**Status:** Proposed (from architecture review)
+**Source:** Architecture-skeptic Dec 8 review (HIGH-2)
+**File:** `src/simulation/nuclearWinter.ts:1044-1064` (`updateRadiationZones()`)
+**Issue:** M-6 enhanced modeling coexists with legacy exponential decay - zones created at different times use different mortality calculations
+**Options:**
+  1. Migrate all zones to enhanced format during initialization
+  2. Mark legacy zones for deprecation with warnings
+  3. Document migration timeline
+**Complexity:** 2 systems (radiation modeling, nuclear winter)
+**Effort:** Medium (data migration or compatibility layer)
+**Priority Rationale:** Inconsistent calculations create analytical confusion
+
+#### HIGH-12: Orphaned Phase Files Cleanup
+**Status:** Proposed (from architecture review)
+**Source:** Architecture-skeptic Dec 8 review (HIGH-3)
+**Files:**
+  - `src/simulation/engine/phases/NuclearWinterPhase.ts`
+  - `src/simulation/engine/phases/RadiationSystemPhase.ts`
+**Context:** Consolidated into `NuclearCrisisPhase.ts` (Batch 4, Nov 9) but not deleted. Still exported from index.ts but not registered in engine.
+**Fix:** Delete files or add clear deprecation comments
+**Complexity:** 1 system (phase orchestrator)
+**Effort:** 10 minutes
+**Priority Rationale:** Dead code confuses future developers
 
 ---
 
 ### MEDIUM Priority
 
+#### MEDIUM-4: Placeholder Audit Campaign
+**Status:** Proposed (from research debate)
+**Source:** Sylvia (research-skeptic) Dec 8 audit
+**Context:** Grep reveals 50+ TODOs, PLACEHOLDERs, hardcoded values. 3 FICTIONAL markers with explicit "NO RESEARCH BASIS" warnings.
+**Most Concerning:**
+  - `cooperativeOwnership.ts:86` - FICTIONAL PLACEHOLDER affecting economic outcomes
+  - `freshwaterDepletion.ts:76` - Hardcoded population = 8.0 (should be dynamic)
+  - `phosphorusDepletion.ts:51` - Same hardcoded 8.0 value (not synced to simulation)
+  - `techTree/effectsEngine.ts:1674` - 50% energy multiplier PLACEHOLDER
+**Scope:** Systematic replacement with research-backed values
+**Complexity:** 15+ systems (cooperative ownership, freshwater, phosphorus, tech effects, etc.)
+**Effort:** 1-2 weeks
+**Priority Rationale:** Claiming A- research quality incompatible with FICTIONAL placeholders in production code
+
+#### MEDIUM-5: Tail Scenario Research Campaign
+**Status:** Proposed (from research debate)
+**Source:** Sylvia (research-skeptic) Dec 8 audit - asymmetric research standards
+**Context:** Best-case scenarios research-backed (2024-2025 papers), worst-case scenarios engineering estimates/round numbers
+**Pattern Observed:**
+  - Climate stability: Planck feedback literature vs. 5% floor (no citation)
+  - AI alignment: Multi-paper synthesis vs. "engineering estimate"
+  - Tech deployment: Diffusion curves vs. hardcoded linear ramps
+  - Rebound effects: Sorrell 2024 vs. fixed 0.7 multiplier
+**Impact:** Monte Carlo distributions systematically underweight tail risks
+**Options:**
+  1. Elevate worst-case research (same rigor as best cases)
+  2. Widen uncertainty ranges
+  3. Document asymmetry (warning that positive outcomes higher-confidence)
+**Complexity:** Cross-cutting (climate, AI, tech deployment, all systems)
+**Effort:** 2-3 weeks
+**Priority Rationale:** Systemic bias toward overconfidence in managed transitions
+
+#### MEDIUM-6: Threshold Uncertainty Propagation
+**Status:** Proposed (from architecture review)
+**Source:** Architecture-skeptic Dec 8 review (MEDIUM-1)
+**Files:** `src/simulation/tippingPoints.ts:41-57`, `src/simulation/engine/phases/ClimateSystemPhase.ts:372`
+**Context:** M-5 works correctly but only elements with `thresholdDistribution` get sampled thresholds. Fallback to deterministic:
+  ```typescript
+  const baseThreshold = element._sampledThresholdC ?? element.triggerTempC;
+  ```
+**Issue:** Not all TIPPING_ELEMENTS in `/src/types/tipping-points.ts` have distributions defined
+**Scope:** Audit TIPPING_ELEMENTS and add research-backed distributions for all elements
+**Complexity:** 2 systems (tipping points, threshold uncertainty)
+**Effort:** Medium (research + type updates)
+**Priority Rationale:** Monte Carlo runs don't fully capture uncertainty for deterministic elements
+
+#### MEDIUM-7: Sunlight Blocking Integration Gap
+**Status:** Proposed (from architecture review)
+**Source:** Architecture-skeptic Dec 8 review (MEDIUM-2)
+**File:** `src/simulation/powerGeneration.ts:429-442`
+**Context:** Nuclear winter `sunlightBlocked` correctly reduces solar power. But integration is one-directional:
+  - Power grid disruption affects agriculture (refrigeration, irrigation) - NOT MODELED
+  - Nuclear winter affects wind patterns - NOT MODELED
+**Comment References:** "ARCH-4 Gap #1" - partially filled
+**Scope:** Document remaining ARCH-4 gaps, consider second-order effects
+**Complexity:** 3 systems (nuclear winter, power, agriculture)
+**Effort:** Medium-Large (research + implementation)
+**Priority Rationale:** Model may underestimate cascading infrastructure effects
+
+#### MEDIUM-8: ClimateSystemPhase Modularization
+**Status:** Proposed (from architecture review)
+**Source:** Architecture-skeptic Dec 8 review (MEDIUM-3)
+**File:** `src/simulation/engine/phases/ClimateSystemPhase.ts` (1,469 lines)
+**Context:** Consolidates 4 former phases (Geoengineering, TippingPoint, EnvironmentalFeedback, ClimateImpactCascade)
+**Complexity Areas:**
+  - Lines 288-567: Bidirectional hysteresis state machine (M-7)
+  - Lines 620-656: Compound event detection (M-5)
+  - Lines 658-897: Tipping impact with conditional floor (HIGH-7)
+  - Lines 1131-1389: Climate impact cascade with famine
+**Scope:** Extract hysteresis state machine and compound event detection into separate utility modules. Keep phase as orchestrator.
+**Complexity:** 1 system (climate)
+**Effort:** Medium (refactor without behavioral changes)
+**Priority Rationale:** Maintainability concern (not functionality issue)
+
+---
+
+### COMPLETED (Dec 7-8, 2025)
+
+#### HIGH-7: Conditional Climate Stability Floor
+**Status:** ✅ COMPLETE (Dec 5, 2025, retroactive validation Dec 7)
+**Implementation:** `src/simulation/engine/phases/ClimateSystemPhase.ts:827-883`
+**Research:** Wunderling et al. (2024), ACCESS-ESM-1.5 (2024), Boers et al. (2025)
+**Quality Gates:** QG1 Grade B (Sylvia), QG2 Grade B (architecture-skeptic)
+**Summary:** Conditional floor (5% in stabilization scenarios, 0% in tail risk) replaces unconditional floor
+**History:** `docs/implementation-history/high7_conditional_climate_stability_floor_20251207.md`
+
 #### M-7: Fix Population Assertions for Near-Extinction Scenarios
 **Status:** ✅ COMPLETE (Dec 7, 2025)
-**Context:** Monte Carlo validation blocked by overly restrictive population assertions
 **Fix:** Lowered minimum from 0.01B (10M) → 0.00001B (10K) in aggregateAllRegionalData
-**Research:** Toba bottleneck (~74 kya, 10K-30K survivors) - allows realistic near-extinction scenarios
-**Validation:** Created validateNearExtinction.ts script - all 4 test cases pass (10K, 100K, 1M, 10M)
+**Research:** Toba bottleneck (~74 kya, 10K-30K survivors)
+**Validation:** Created validateNearExtinction.ts script - all 4 test cases pass
 **Files:** `src/simulation/populationDynamics.ts:687`, `scripts/validateNearExtinction.ts`
-**Impact:** Monte Carlo validation now unblocked for tail-risk scenarios
 
 #### M-5: Threshold Uncertainty Modeling
 **Status:** ✅ COMPLETE (Dec 7, 2025)
-**Context:** Distribution sampling library for tipping point thresholds
 **Implementation:** Three distribution libraries (triangular, uniform, normal, log-normal, beta, gamma)
-**Research:** 775-line research doc with peer-reviewed threshold ranges (AMOC: 1.4-8.0°C, Greenland: 0.8-3.4°C, etc.)
-**Validation:** Monte Carlo N=3 deterministic (seed=42, all thresholds identical across runs), 28/28 tests passing
+**Research:** 775-line research doc with peer-reviewed threshold ranges
+**Validation:** Monte Carlo N=3 deterministic (seed=42), 28/28 tests passing
 **Quality Gates:** QG1 Grade B- (research-skeptic), QG2 Grade B+ (architecture-skeptic)
 **Files:** `src/simulation/utils/distributionSampling.ts`, `src/simulation/thresholds/distributions.ts`, `tests/thresholds/distributions.test.ts`
-**Known Issues:** H-1 (three redundant libraries, consolidation recommended but not blocking)
 
 #### M-6: Enhanced Radiation Modeling
 **Status:** ✅ COMPLETE (Dec 8, 2025)
-**Context:** Acute vs chronic radiation exposure, tissue sensitivity, dose-response curves
 **Impact:** Research-backed fallout modeling with LD50/60 sigmoids, ICRP 103 tissue weighting, 7-10 decay rule
 **Implementation:** `src/simulation/radiationModeling.ts` (571 lines), enhanced `RadiationZone` interface
-**Quality Gates:** QG1: Grade B (Sylvia), QG2: PASSED (no CRITICAL/HIGH issues)
-**Research:** CDC 2024, REMM, ICRP 103, PMC11604265, BEIR VII (LNT controversy documented)
-**Tests:** 30+ unit tests, deterministic, all passing
+**Quality Gates:** QG1 Grade B (Sylvia), QG2 PASSED (no CRITICAL/HIGH issues)
+**Research:** CDC 2024, REMM, ICRP 103, PMC11604265, BEIR VII
+**Tests:** 30+ unit tests, all passing
 **History:** `docs/implementation-history/M-6_enhanced_radiation_modeling_20251208.md`
 
 ---
 
-### LOW Priority
+### LOW Priority (Deferred)
 
 #### L-2: Enhanced Biodiversity Modeling
 **Status:** Proposed
