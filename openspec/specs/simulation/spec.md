@@ -222,16 +222,18 @@ The simulation SHALL model environmental, social, and technological debt.
 
 ---
 
-### MEDIUM Priority
+### COMPLETED MEDIUM Priority
 
-#### M-7: Fix Population Assertions for Near-Extinction Scenarios
-**Status:** ✅ COMPLETE (Dec 7, 2025)
-**Context:** Monte Carlo validation blocked by overly restrictive population assertions
-**Fix:** Lowered minimum from 0.01B (10M) → 0.00001B (10K) in aggregateAllRegionalData
-**Research:** Toba bottleneck (~74 kya, 10K-30K survivors) - allows realistic near-extinction scenarios
-**Validation:** Created validateNearExtinction.ts script - all 4 test cases pass (10K, 100K, 1M, 10M)
-**Files:** `src/simulation/populationDynamics.ts:687`, `scripts/validateNearExtinction.ts`
-**Impact:** Monte Carlo validation now unblocked for tail-risk scenarios
+#### M-4: Abrupt Sea Level Rise (Marine Ice Sheet Instability)
+**Status:** ✅ COMPLETE (Dec 5, 2025)
+**Context:** WAIS/GIS collapse triggers abrupt sea level rise (Hansen 2016 multi-meter SLR)
+**Impact:** 0.5-6m SLR over decades, 10M-500M coastal displacement
+**Implementation:** `src/simulation/marineIceSheetInstability.ts`, `AbruptSeaLevelRisePhase.ts`
+**Quality Gates:** QG1: Grade B (research-skeptic), QG2: Grade B+ (architecture-skeptic)
+**Research:** Hansen 2016, IPCC AR6 Ch.9 (abrupt SLR scenarios)
+**Validation:** Monte Carlo N=10 deterministic, realistic displacement patterns
+**Known Gaps:** M-8 (refugee integration), architecture review M-2 (dual ice sheet tracking)
+**History:** Session 54 completion, architecture review Dec 8, 2025
 
 #### M-5: Threshold Uncertainty Modeling
 **Status:** ✅ COMPLETE (Dec 7, 2025)
@@ -252,6 +254,47 @@ The simulation SHALL model environmental, social, and technological debt.
 **Research:** CDC 2024, REMM, ICRP 103, PMC11604265, BEIR VII (LNT controversy documented)
 **Tests:** 30+ unit tests, deterministic, all passing
 **History:** `docs/implementation-history/M-6_enhanced_radiation_modeling_20251208.md`
+
+#### M-7: Fix Population Assertions for Near-Extinction Scenarios
+**Status:** ✅ COMPLETE (Dec 7, 2025)
+**Context:** Monte Carlo validation blocked by overly restrictive population assertions
+**Fix:** Lowered minimum from 0.01B (10M) → 0.00001B (10K) in aggregateAllRegionalData
+**Research:** Toba bottleneck (~74 kya, 10K-30K survivors) - allows realistic near-extinction scenarios
+**Validation:** Created validateNearExtinction.ts script - all 4 test cases pass (10K, 100K, 1M, 10M)
+**Files:** `src/simulation/populationDynamics.ts:687`, `scripts/validateNearExtinction.ts`
+**Impact:** Monte Carlo validation now unblocked for tail-risk scenarios
+
+---
+
+### MEDIUM Priority
+
+#### M-8: Sea Level Displacement Integration with Refugee System
+**Status:** Proposed (Dec 8, 2025)
+**Context:** M-4 tracks coastal displacement but doesn't flow into RefugeeCrisisSystem
+**Impact:** Sea level rise displacement creates no refugee crises, social strain, or QoL impacts
+**Scope:** Add sea level rise as refugee trigger source in `refugeeCrises.ts`
+**Files:** `src/simulation/marineIceSheetInstability.ts`, `src/simulation/refugeeCrises.ts`
+**Effort:** Medium (1-2 hours)
+**Research:** `reviews/architecture_integration_review_20251208.md` (M-1 finding)
+**Priority Rationale:** Feature works but has reduced realism
+
+#### M-9: Economic Feedback Loops (GDP <-> Emissions <-> Climate)
+**Status:** Proposed (Dec 8, 2025)
+**Context:** GDP loss → emission reduction not explicitly modeled, rebound effects (Jevons) absent
+**Impact:** Climate-economy interaction incomplete
+**Scope:** Implement GDP-emission loop, Nordhaus DICE integration
+**Research:** Nordhaus DICE 2017+, Burke et al. 2015 Nature (23% GDP reduction per degree)
+**Effort:** High (complex system integration)
+**Priority Rationale:** Research debate consensus (HIGH severity, MEDIUM priority due to complexity)
+
+#### M-10: Social Tipping Points (Norm Cascades, Value Shifts)
+**Status:** Proposed (Dec 8, 2025)
+**Context:** Technology diffusion modeled (Rogers S-curves) but not social norm cascades
+**Impact:** Climate activism tipping points, consumer behavior shifts, policy feedback absent
+**Scope:** 25% critical mass thresholds, integration with positive tipping points module
+**Research:** Milkoreit 2023 PNAS, Otto 2020 Science, Centola 2018
+**Effort:** Medium
+**Priority Rationale:** Research debate consensus (MEDIUM severity)
 
 ---
 
