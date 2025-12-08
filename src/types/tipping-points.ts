@@ -515,23 +515,27 @@ export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTr
 ];
 
 /**
- * Tipping Element Interaction Matrix (Nov 23, 2025)
+ * Tipping Element Interaction Matrix (Dec 8, 2025 - CORRECTED)
  *
- * Research-backed threshold lowering effects when one tipping element tips another.
+ * Conceptually grounded in research, quantitative magnitudes are conservative engineering estimates.
  *
  * Sources:
- * - Armstrong McKay et al. (2022) Science - Network of 16 tipping elements with causal interactions
- * - Wunderling et al. (2024) Earth System Dynamics - "combined effect tending to lower temperature thresholds"
+ * - Armstrong McKay et al. (2022) Science - Network structure, interaction concept
+ * - Wunderling et al. (2024) Earth System Dynamics - Interaction mechanisms
+ * - Parsons et al. (2023) Nature Communications - AMOC-Amazon interaction (stabilizing, not destabilizing)
  * - Climate tipping points research file: research/climate_tipping_points_2024_2025_20251116.md
  *
+ * IMPORTANT: Threshold reduction magnitudes (0.10-0.30°C) are NOT directly derived from
+ * cited papers. Papers document interaction mechanisms and coupling strength reductions
+ * (11-90% in network models, Wunderling et al.), but do NOT provide per-interaction
+ * temperature reductions. Values used here are conservative engineering estimates
+ * pending empirical validation.
+ *
+ * CORRECTED (Dec 8, 2025):
+ * - REMOVED: AMOC -> Amazon destabilizing interaction (contradicted by 2023-2025 research)
+ * - RATIONALE: Parsons et al. (2023) Nature Comms shows AMOC collapse INCREASES Amazon rainfall
+ *
  * Format: source_id -> target_id -> threshold_reduction_C
- *
- * Magnitude Justification (Wunderling et al. 2024):
- * - Direct interactions (e.g., ice sheet -> AMOC): 0.2-0.4 C reduction
- * - Indirect interactions (e.g., Arctic ice -> Amazon): 0.1-0.2 C reduction
- * - Weak interactions: 0.05-0.1 C reduction
- *
- * Conservative estimates used (lower end of ranges) to avoid over-catastrophizing.
  */
 export interface TippingInteraction {
   /** Source element that tips first */
@@ -599,13 +603,12 @@ export const TIPPING_INTERACTIONS: TippingInteraction[] = [
   },
 
   // === AMOC -> TROPICAL SYSTEMS ===
-  // AMOC collapse shifts tropical rainfall patterns
-  {
-    sourceId: 'amoc',
-    targetId: 'amazon',
-    thresholdReduction: 0.25, // AMOC collapse disrupts Amazon rainfall
-    mechanism: 'Monsoon disruption: AMOC collapse shifts ITCZ southward, reducing Amazon rainfall'
-  },
+  // NOTE: AMOC -> Amazon interaction REMOVED (Dec 8, 2025)
+  // Research correction: Parsons et al. (2023) Nature Communications shows AMOC collapse
+  // INCREASES Amazon rainfall (stabilizing effect), contradicting previous assumption of
+  // destabilization. See research/amoc_amazon_interaction_correction_20251208.md
+  // Original mechanism was based on simplified ITCZ shift model; multi-model analysis
+  // (2023-2025) shows net precipitation increase over most of Amazon basin.
 
   // === AMAZON -> GLOBAL CLIMATE ===
   // Amazon dieback releases stored carbon

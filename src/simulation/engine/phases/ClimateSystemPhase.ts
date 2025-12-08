@@ -224,8 +224,12 @@ export class ClimateSystemPhase implements SimulationPhase {
       if (!sourceElement.triggered) continue;
 
       // Scale reduction by progress (0 = just triggered, 1 = fully transitioned)
-      // Use sqrt to front-load the effect - most reduction happens early in transition
-      const progressScalar = Math.sqrt(Math.max(0.1, sourceElement.progress));
+      // Linear scaling: interaction strength proportional to tipping progress
+      // Rationale: Most mechanisms (freshwater forcing, carbon feedbacks) are cumulative
+      // and rate-dependent, not front-loaded. sqrt(progress) contradicts physical dynamics.
+      // Research: Vanselow et al. (2024) ESD - rate-induced tipping cascades
+      // See: research/tipping_cascade_scaling_function_20251208.md
+      const progressScalar = Math.max(0.1, sourceElement.progress);
 
       // Find all interactions where this element is the source
       const interactions = TIPPING_INTERACTIONS.filter(i => i.sourceId === sourceElement.id);
@@ -267,7 +271,8 @@ export class ClimateSystemPhase implements SimulationPhase {
     }
 
     // Cap total threshold reduction at 0.5°C per element to prevent runaway cascades
-    // Research: Conservative estimate from Wunderling et al. (2024)
+    // NOTE: This cap is a simulation stability safeguard, NOT derived from Wunderling et al. (2024)
+    // Engineering choice to prevent over-catastrophizing in absence of empirical cascade limits
     const MAX_THRESHOLD_REDUCTION = 0.5;
     for (const element of system.elements) {
       if (element.effectiveThresholdReduction && element.effectiveThresholdReduction > MAX_THRESHOLD_REDUCTION) {
