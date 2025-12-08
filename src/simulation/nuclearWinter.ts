@@ -37,7 +37,8 @@ import {
   assertTemperatureDelta,
   assertProbability,
   assertInRange,
-  assertMortalityRate
+  assertMortalityRate,
+  assertDefined
 } from './utils/assertions';
 import { RootCause } from '../types/population';
 import {
@@ -876,8 +877,18 @@ export function updateNuclearWinter(state: GameState): void {
   // 5. Get resilient food technology multiplier (cached at war trigger)
   // HIGH #2 FIX (Nov 20, 2025): Use cached value instead of recalculating every month.
   // Technologies deployed AFTER war don't help (infrastructure collapsed), so we
-  // locked this in at trigger time. Fallback to 1.0 (no reduction) if cache missing.
-  const resilientFoodMultiplier = winter.cachedResilientFoodMultiplier ?? 1.0;
+  // locked this in at trigger time. Must exist (initialized at nuclear winter trigger).
+  // MEDIUM-3 FIX (Dec 8, 2025): Replace silent fallback with assertion for fail-loudly principle
+  const resilientFoodMultiplier = assertDefined(
+    winter.cachedResilientFoodMultiplier,
+    {
+      location: 'updateNuclearWinter',
+      valueName: 'cachedResilientFoodMultiplier',
+      month: state.currentMonth,
+      expectedSource: 'triggerNuclearWinter line ~165',
+      additionalInfo: { note: 'Initialized at nuclear winter trigger, should never be undefined during active winter' }
+    }
+  );
 
   // 6. Update starvation rate (with resilient food tech reduction)
   winter.monthlyStarvationRate = calculateStarvationRate(
