@@ -1,18 +1,25 @@
 /**
  * TIER 1.7.4: Nuclear Winter Types
- * 
+ *
  * Models the long-term catastrophic effects of nuclear war beyond immediate blast:
  * - Soot blocks sunlight for 1-3 years (stratospheric injection)
  * - Temperature drops 10-20°C globally
  * - Crops fail, leading to mass starvation
  * - Radiation poisoning in target zones
  * - Recovery takes 5-10 years
- * 
+ *
  * Research:
  * - Carl Sagan et al. (1983): "Nuclear Winter" paper
  * - Robock & Toon (2012): "Local Nuclear War, Global Suffering"
  * - Coupe et al. (2019): "Nuclear Winter Responses to Regional Nuclear War"
+ *
+ * TIER 1.7.5 Enhancement: Enhanced Radiation Modeling (M-6)
+ * - Dual-track radiation (acute ARS + chronic cancer)
+ * - Tissue-specific sensitivity (ICRP 103)
+ * - Dose-response curves (LNT model)
  */
+
+import { RadiationExposure } from './radiationExposure';
 
 /**
  * Radiation zone tracking per country
@@ -75,8 +82,13 @@ export interface NuclearWinterState {
   marineProductivityReduction: number; // [0,1] Phytoplankton die-off (0.3 = 30% reduction)
   oceanDependentPopulationAtRisk: number; // Billions at risk from fish stock collapse
 
-  // Radiation zones
+  // Radiation zones (LEGACY - use radiationExposures for enhanced modeling)
   radiationZones: RadiationZone[];
+
+  // Enhanced radiation tracking (M-6: TIER 1.7.5)
+  radiationExposures?: RadiationExposure[];  // Dual-track radiation (acute ARS + chronic cancer)
+  totalARSDeaths?: number;                   // Immediate ARS mortality
+  totalCancerDeaths?: number;                // Delayed cancer mortality
 
   // Duration tracking
   monthsSinceWar: number;       // Months elapsed since nuclear war
@@ -85,7 +97,7 @@ export interface NuclearWinterState {
 
   // Mortality tracking
   totalWinterDeaths: number;    // Cumulative deaths from nuclear winter (starvation)
-  totalRadiationDeaths: number; // Cumulative deaths from radiation poisoning
+  totalRadiationDeaths: number; // Cumulative deaths from radiation (= totalARSDeaths + totalCancerDeaths OR legacy zone deaths)
 
   // Performance cache (Nov 20, 2025 - Architecture Review HIGH #2)
   // Cached at war trigger, since deployed techs can't change during nuclear winter
