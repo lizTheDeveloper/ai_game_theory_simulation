@@ -20,9 +20,9 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 ### HIGH Priority
 
 #### Threshold Lowering for Tipping Cascades
-**Status:** ✅ RESOLVED - CRITICAL Issues Fixed (Dec 8, 2025)
-**Change:** (pending - needs change folder created)
-**Commit:** cf49657 (original), FIXES APPLIED (Dec 8, 2025)
+**Status:** ✅ RESOLVED - COMPLETE (Dec 8, 2025)
+**Change:** Archived to `docs/implementation-history/threshold-lowering-tipping-cascades_20251208.md`
+**Commit:** cf49657 (original), 26527297 (fixes)
 **Context:** Implements threshold lowering mechanism from mechanism audit gap
 **Verification File:** `research/verification_cf49657_20251207.md`
 
