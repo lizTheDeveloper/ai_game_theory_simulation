@@ -20,11 +20,12 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 ### HIGH Priority
 
 #### Threshold Lowering for Tipping Cascades
-**Status:** ❌ FAILED - Grade D (CRITICAL Issues Found)
+**Status:** 🚨 BLOCKING PRODUCTION - Grade D (CRITICAL Issues Found)
 **Change:** (pending - needs change folder created)
 **Commit:** cf49657
 **Context:** Implements threshold lowering mechanism from mechanism audit gap
 **Verification File:** `research/verification_cf49657_20251207.md`
+**Corrective Action Plan:** `research/threshold_lowering_corrective_action_20251208.md` ✅
 
 **Verification Complete (Dec 7, 2025):**
 - **Initial Grade:** C (super-alignment-researcher)
@@ -38,22 +39,23 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 4. ⚠️ **Quantitative Magnitudes Not Validated:** 0.10-0.30°C values are engineering estimates, not empirically derived
 5. ⚠️ **0.5°C Cap Misattributed:** Not found in Wunderling et al. (2024)
 
-**Blocking Issues (Must Fix Before Production):**
-- Fix or remove AMOC → Amazon interaction (directional error)
-- Add AMOC → Greenland stabilizing feedback (missing from model)
-- Replace sqrt(progress) with linear or sigmoid scaling
-- Document all magnitudes as "engineering estimates" not "research-backed"
+**Corrective Action Plan Created (Dec 8, 2025):**
+- **Phase 1 (CRITICAL):** Remove AMOC → Amazon, add AMOC → Greenland stabilizing feedback
+- **Phase 2 (HIGH):** Replace sqrt(progress) with linear scaling, update documentation
+- **Phase 3:** Re-verification (target Grade B+)
+- **Phase 4:** Monte Carlo validation N≥100
 
-**Next Steps:** Block implementation → Parameter revision → Re-verification required
+**Next Steps:** Simulation maintainer implements Phase 1 fixes → Re-verification required
 
 ---
 
 #### AI Governance 2025 Proposals
-**Status:** ✅ VERIFIED - Grade A (with implementation caveats)
+**Status:** ✅ READY FOR IMPLEMENTATION - Grade A (with implementation caveats)
 **Change:** (pending - needs change folder created)
 **Commit:** ff6ff02
 **Context:** Global moratorium + US-China bilateral frameworks from arXiv 2025
 **Verification File:** `research/verification_ff6ff02_20251207.md`
+**Implementation Guidance:** `research/ai_governance_implementation_guidance_20251208.md` ✅
 
 **Verification Complete (Dec 7, 2025):**
 - **Factual Accuracy Grade:** A (all claims verified)
@@ -76,40 +78,55 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 6. **HIGH:** US-China compliance verification harder than nuclear
 7. **MEDIUM:** Unintended consequences (incumbent lock-in, beneficial AI blocked)
 
+**Implementation Guidance Created (Dec 8, 2025):**
+- **Mathematical effectiveness model:** Base 60% × 7 failure pathway multipliers
+- **Phase 1:** Core governance mechanics (AIGovernancePhase.ts)
+- **Phase 2:** Failure pathway state variables (7 challenges modeled)
+- **Phase 3:** Monte Carlo sensitivity analysis (policy timing, evasion, compliance)
+
 **Simulation Implications:**
 - Implement as **proposed governance scenarios** (not validated interventions)
-- Model effectiveness decay: `base * 0.85^years * (1 - distributed) * (1 - open_weights)`
-- Include 5 failure pathways: obsolescence, distributed bypass, algorithmic leap, open-weights, defection
+- Model effectiveness decay: `base * 0.85^years * (1 - distributed) * (1 - open_weights) * compliance * legitimacy`
 - Use risk distributions (log-uniform 0.3%-40%) not point estimates
+- Test 3 scenarios: early adoption (2025), medium (2027), late (2030)
 
-**Next Steps:** Implementation approved with failure pathway modeling → Add to government phase mechanics
+**Next Steps:** Feature team implements AIGovernancePhase with failure pathways → Monte Carlo N≥20
 
 ---
 
 ### MEDIUM Priority
 
 #### Nitrogen-Food Phase 3 Technologies
-**Status:** ⚠️ READY FOR VALIDATION
+**Status:** ✅ PRODUCTION-READY - Grade B (Minor Enhancement Recommended)
 **Change:** (pending - needs change folder created)
 **Commit:** cd1e83a
 **Context:** 6 new nitrogen reduction technologies added to tech tree
-**Verification File:** `research/verification_cd1e83a_20251121.md`
+**Verification File:** `research/verification_cd1e83a_20251208.md` ✅
 
-**Technologies to Verify:**
-1. Rhizosphere Engineering (15-40% N reduction, TIER 1, commercial)
-2. Nitroplast Integration (50-70% reduction, breakthrough, Coale et al. 2024)
-3. Precision Fermentation (30-50% agri N reduction, emerging)
-4. Regional Nitrogen Policies (20% efficiency via redistribution)
-5. Soil Health Restoration (20-40% NUE improvement)
-6. Integrated Nutrient Management (25-45% efficiency gains)
+**Verification Complete (Dec 8, 2025):**
+- **Grade:** B (GOOD - Proceed with Minor Caveats)
+- **5/6 technologies:** Well-supported (Grade A/B+ research basis)
+- **1/6 technology:** Speculative (Nitroplasts: Grade C+ research, B implementation)
 
-**Key Claims:**
-- Effectiveness ranges (15-40%, 20-45%, etc.)
-- Co-benefits quantification (soil health, biodiversity, carbon)
-- Timeline assumptions (R&D + deployment)
-- Citation: Coale et al. 2024 *Science* for nitroplasts
+**Technologies Verified:**
+1. ✅ Rhizosphere Engineering (15-40% N, Grade A) - Commercial, 2025 wheat trials
+2. ⚠️ Nitroplast Integration (50-70% N, Grade C+→B) - Speculative cereal application
+3. ✅ Precision Fermentation (30-50% N, Grade A-) - Emerging, €120M EU investment
+4. ✅ Regional Nitrogen Policies (20% efficiency, Grade B+) - Zhang et al. 2024
+5. ✅ Soil Health Restoration (20-40% NUE, Grade B+) - Established practice
+6. ✅ Integrated Nutrient Management (25-45% efficiency, Grade B+) - 4R Stewardship
 
-**Next Steps:** Two-layer verification → Parameter adjustments if needed → Monte Carlo validation
+**Key Findings:**
+- ✅ Effectiveness ranges are conservative (lower bounds of research estimates)
+- ✅ Timelines are realistic (20 years for nitroplasts, medium-term for others)
+- ✅ Co-benefits well-documented (soil health, biodiversity, carbon)
+- ⚠️ Nitroplast uncertainty: Marine algae discovery (Coale 2024), cereal application aspirational
+
+**Optional Enhancement:**
+- Add uncertainty disclaimer to nitroplast description: "SPECULATIVE: Cereal application feasibility uncertain"
+- Consider probabilistic success modeling (40% success probability for nitroplasts)
+
+**Next Steps:** Optional enhancement → Monte Carlo validation N≥10 (different adoption scenarios)
 
 ---
 
