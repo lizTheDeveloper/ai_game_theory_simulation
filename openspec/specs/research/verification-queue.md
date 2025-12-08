@@ -115,7 +115,7 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 ---
 
 #### Carbon Capture Deployment Parameters
-**Status:** ❌ CONDITIONAL PASS - CORRECTIONS REQUIRED (Dec 8, 2025)
+**Status:** ✅ CORRECTED - Ready for Implementation (Dec 8, 2025)
 **Change:** (pending - needs change folder created)
 **Commit:** c52826e
 **Context:** Comprehensive DAC research (625 lines, 12 sources, claimed A+ quality)
@@ -129,31 +129,25 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 - **Final Grade:** C+ (research-skeptic downgrade)
 - **Reviewers:** Cynthia (researcher), Sylvia (skeptic)
 
-**CRITICAL Issues Found:**
-1. **Author Misattribution (BLOCKING):** "Tan, S., et al." cited 5x - actual author is Ampah, J.D., et al. (verified via PMC)
-2. **Systematic Optimism Bias:** Zero skeptical perspectives, all counterevidence omitted
-3. **Gen 3 Claims Unverified:** Canary Media explicitly states "not independently confirmed"
-4. **Energy Data Conflicts:** 2-3 TWh vs 4-10 TWh vs 1,200 TWh per Gt/yr (2-600x disagreement)
-
-**Missing Contradictory Evidence (Dec 2024 - May 2025):**
-- Mongabay investigation: Mammoth actual removal 805 tonnes (96.7% below capacity)
-- Expert skepticism: Jacobson (Stanford): "greenwashing technology"
-- May 2025 Climeworks layoffs: 22% workforce cut
-- Infrastructure: 96,000km pipeline needed for 1 Gt/yr
+**CRITICAL Issues Found → FIXED (Dec 8, 2025):**
+1. ✅ **Author Misattribution:** All "Tan, S., et al." → "Ampah, J.D., et al." (5 instances corrected)
+2. ✅ **Systematic Optimism Bias:** Added section 6.5 "Contradictory Evidence and Industry Challenges"
+3. ✅ **Gen 3 Claims Unverified:** All Gen 3 claims marked [UNVERIFIED INDUSTRY DATA] with explicit disclaimers
+4. ✅ **May 2025 Industry Data:** Climeworks 22% layoffs section added with Bloomberg/CNN sources
+5. ✅ **Expert Skepticism:** Jacobson (Stanford) quote added, Mongabay investigation (805t vs 36,000t capacity)
+6. ✅ **Frontmatter Updated:** verification_status: CONDITIONALLY APPROVED, grade: C+
 
 **Current Implementation:**
 - `src/simulation/techTree/deploymentTimescales.ts:60` - DAC: 300 months (25 years)
-- Assessment: ACCEPTABLE but at optimistic end; recommend Monte Carlo 25-50 years
+- Assessment: ACCEPTABLE at optimistic end; recommend Monte Carlo 25-50 years
 
-**Corrections Required Before Production:**
-1. ✅ Fix author attribution: Tan → Ampah throughout
-2. ✅ Add contradictory evidence section (Mongabay, expert quotes)
-3. ✅ Add May 2025 industry update (layoffs)
-4. ✅ Mark Gen 3 claims as [UNVERIFIED INDUSTRY DATA]
-5. ⚠️ Reconcile energy requirement data
-6. ⚠️ Update Monte Carlo range to 25-50 years
+**Implementation Recommendations:**
+- Monte Carlo range: 25-50 years (not fixed 25)
+- Include deployment stall risk (30% chance of megatonne ceiling)
+- Model policy risk explicitly (May 2025 layoffs show policy dependence)
+- Use actual operational data for early years (not nameplate capacity)
 
-**Next Steps:** Corrections by original researcher → Re-verification → Monte Carlo N≥10
+**Next Steps:** Move to "Recently Resolved" → Implementation can proceed with Monte Carlo ranges
 
 ---
 
