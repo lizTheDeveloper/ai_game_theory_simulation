@@ -211,18 +211,41 @@ The simulation SHALL model environmental, social, and technological debt.
 
 ### HIGH Priority
 
-#### HIGH-7: Conditional Climate Stability Floor
-**Status:** COMPLETE (Dec 5, 2025, retroactive validation Dec 7)
-**Implementation:** `src/simulation/engine/phases/ClimateSystemPhase.ts:827-883`
-**Research:** Wunderling et al. (2024), ACCESS-ESM-1.5 (2024), Boers et al. (2025)
-**Quality Gates:** QG1 Grade B (Sylvia), QG2 Grade B (architecture-skeptic)
-**Summary:** Conditional floor (5% in stabilization scenarios, 0% in tail risk) replaces unconditional floor. Aligns with 2024-2025 research showing destabilizing tipping cascades.
-**Known Issues:** Monte Carlo validation partial (N=10 blocked by population assertion edge case, not a feature bug)
-**History:** `docs/implementation-history/high7_conditional_climate_stability_floor_20251207.md`
+#### H-1: Distribution Library Consolidation
+**Status:** Proposed (Dec 8, 2025)
+**Context:** Three redundant distribution libraries (1,077 total lines) implementing identical algorithms
+**Files:** `src/simulation/utils/distributionSampling.ts`, `src/simulation/utils/distributions.ts`, `src/simulation/thresholds/distributions.ts`
+**Impact:** Maintenance burden, parameter naming inconsistency, bug propagation risk
+**Plan:** `openspec/changes/h1-distribution-consolidation/proposal.md` (created Dec 8)
+**Priority Rationale:** Architecture review identified as HIGH (carried over from M-5 review)
+**Next Steps:** Implementation → consolidate to single canonical library
 
 ---
 
 ### MEDIUM Priority
+
+#### M-6: Enhanced Radiation Modeling
+**Status:** Research Complete - Awaiting QG1 Validation
+**Context:** Acute vs chronic radiation exposure, tissue sensitivity, dose-rate dependency
+**Research:** `research/radiation_health_effects_20251208.md` (515 lines, ICRP standards + medical evidence)
+**Plan:** `openspec/changes/enhanced-radiation-modeling/tasks.md`
+**Progress:**
+- T1.1: ✅ Research complete (Dec 8) - ICRP tissue weighting, LD50 thresholds, Hiroshima LSS data
+- T1.2: ⏳ BLOCKED - Awaiting research-skeptic validation (Quality Gate 1)
+**Impact:** More realistic nuclear winter health effects (immediate casualties vs long-term cancer risk)
+**Next Steps:** QG1 validation → Implementation → Testing
+
+---
+
+### COMPLETED Work
+
+#### HIGH-7: Conditional Climate Stability Floor
+**Status:** ✅ COMPLETE (Dec 5, 2025, retroactive validation Dec 7)
+**Implementation:** `src/simulation/engine/phases/ClimateSystemPhase.ts:827-883`
+**Research:** Wunderling et al. (2024), ACCESS-ESM-1.5 (2024), Boers et al. (2025)
+**Quality Gates:** QG1 Grade B (Sylvia), QG2 Grade B (architecture-skeptic)
+**Summary:** Conditional floor (5% in stabilization scenarios, 0% in tail risk) replaces unconditional floor. Aligns with 2024-2025 research showing destabilizing tipping cascades.
+**History:** `docs/implementation-history/high7_conditional_climate_stability_floor_20251207.md`
 
 #### M-7: Fix Population Assertions for Near-Extinction Scenarios
 **Status:** ✅ COMPLETE (Dec 7, 2025)
@@ -231,10 +254,9 @@ The simulation SHALL model environmental, social, and technological debt.
 **Research:** Toba bottleneck (~74 kya, 10K-30K survivors) - allows realistic near-extinction scenarios
 **Validation:** Created validateNearExtinction.ts script - all 4 test cases pass (10K, 100K, 1M, 10M)
 **Files:** `src/simulation/populationDynamics.ts:687`, `scripts/validateNearExtinction.ts`
-**Impact:** Monte Carlo validation now unblocked for tail-risk scenarios
 
 #### M-5: Threshold Uncertainty Modeling
-**Status:** ✅ COMPLETE (Dec 7, 2025)
+**Status:** ✅ COMPLETE (Dec 7, 2025) - Awaiting Documentation + Archival
 **Context:** Distribution sampling library for tipping point thresholds
 **Implementation:** Three distribution libraries (triangular, uniform, normal, log-normal, beta, gamma)
 **Research:** 775-line research doc with peer-reviewed threshold ranges (AMOC: 1.4-8.0°C, Greenland: 0.8-3.4°C, etc.)
@@ -242,13 +264,7 @@ The simulation SHALL model environmental, social, and technological debt.
 **Quality Gates:** QG1 Grade B- (research-skeptic), QG2 Grade B+ (architecture-skeptic)
 **Files:** `src/simulation/utils/distributionSampling.ts`, `src/simulation/thresholds/distributions.ts`, `tests/thresholds/distributions.test.ts`
 **Known Issues:** H-1 (three redundant libraries, consolidation recommended but not blocking)
-
-#### M-6: Enhanced Radiation Modeling
-**Status:** Proposed
-**Context:** Acute vs chronic radiation exposure, tissue sensitivity
-**Impact:** More realistic nuclear winter health effects
-**Research:** Tissue weighting factors, acute exposure limits
-**Next Steps:** Research validation → Implementation → Test coverage
+**Next:** Wiki documentation + archival to implementation-history
 
 ---
 
