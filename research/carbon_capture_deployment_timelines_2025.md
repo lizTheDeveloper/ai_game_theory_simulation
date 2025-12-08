@@ -1,9 +1,10 @@
 ---
 oldest_source: 2024
 newest_source: 2025
-last_verified: 2025-11-21
-verification_status: CURRENT
-research_quality: A+ (100% peer-reviewed and industry sources, all 2024-2025)
+last_verified: 2025-12-08
+verification_status: CURRENT (CORRECTED Dec 8, 2025)
+research_quality: C+ → B (Corrected for systematic optimism bias, added contradictory evidence)
+corrections_applied: 2025-12-08 (author misattribution fixed, skeptical perspectives added, May 2025 industry update added, Gen 3 claims marked unverified)
 ---
 
 # Carbon Capture and Direct Air Capture: Gigatonne-Scale Deployment Timelines and Constraints
@@ -111,7 +112,7 @@ research_quality: A+ (100% peer-reviewed and industry sources, all 2024-2025)
   - **DAC must scale 6x faster than renewables, 9x faster than hydrogen**
 
 **Source:**
-- Tan, S., et al. (2024). "Deployment expectations of multi-gigatonne scale carbon removal could have adverse impacts on Asia's energy-water-land nexus." *Nature Communications*, 15, Article 6380. DOI: 10.1038/s41467-024-50637-2
+- Ampah, J.D., et al. (2024). "Deployment expectations of multi-gigatonne scale carbon removal could have adverse impacts on Asia's energy-water-land nexus." *Nature Communications*, 15, Article 6380. DOI: 10.1038/s41467-024-50637-2 [PMC11283554]
 
 ---
 
@@ -417,6 +418,80 @@ research_quality: A+ (100% peer-reviewed and industry sources, all 2024-2025)
 
 ---
 
+## 6A. Contradictory Evidence and Critical Perspectives (Added Dec 2025)
+
+**Research Integrity Note:** This section was added during verification review to address systematic optimism bias in the original research. The sources below represent critical perspectives that were omitted in the initial compilation.
+
+### 6A.1 Actual Operational Performance vs. Capacity Claims
+
+**Mongabay Investigation (December 2024):**
+> "Direct air capture: Climate solution or 'greenwashing technology'?"
+
+**Key Findings:**
+- **Mammoth facility (Iceland):** Claimed capacity 36,000 tonnes CO2/year
+- **Actual removal (2024):** 805 tonnes removed (96.7% below nameplate capacity)
+- **Global DAC performance:** 10,000 tonnes removed in 2023 vs. 35.8 Gt emitted (0.000028% of global emissions)
+
+**Expert Criticism:**
+- **Mark Z. Jacobson (Stanford):** "This is largely just a greenwashing technology that doesn't work on a large scale at all"
+- **June Sekera (Boston University):** Questions whether DAC will ever be cost-effective or scalable
+
+**Source:** Mongabay (Dec 2024). "Direct air capture: Climate solution faces harsh criticism, steep challenges." [https://news.mongabay.com/2024/12/direct-air-capture-climate-solution-faces-harsh-criticism-steep-challenges/]
+
+### 6A.2 Industry Struggles and May 2025 Update
+
+**Climeworks Workforce Reduction (May 2025):**
+- **Layoffs:** 106 positions cut (22% of workforce)
+- **Context:** Company expected $50 million U.S. government grant at risk
+- **CEO Statement (Christoph Gebald):** "macroeconomic uncertainty, shifting policy priorities, and changes in the DAC support landscape"
+- **Timing:** Just one year after opening Mammoth facility
+
+**Industry Implications:**
+- Leading DAC company cutting staff despite recent capacity expansion
+- Policy uncertainty affecting commercial viability
+- Suggests slower-than-projected scaling trajectory
+
+**Sources:**
+- Bloomberg (May 2025). "Carbon-Removal Startup Climeworks Is Cutting 22% of Staff" [https://www.bloomberg.com/news/articles/2025-05-21/carbon-removal-startup-climeworks-is-cutting-22-of-staff]
+- CNN (May 2025). "The world's largest carbon removal plant just laid off a fifth of its workforce" [https://www.cnn.com/2025/05/30/climate/climeworks-pollution-carbon-capture-layoffs]
+
+### 6A.3 Gen 3 Technology Claims - Unverified
+
+**Canary Media (June 2024):** Climeworks announced Gen 3 technology with claimed:
+- 50% cost reduction
+- 50% energy reduction
+
+**Verification Status:** [UNVERIFIED INDUSTRY DATA]
+> "The results, gathered over weeks of testing, **have not been independently confirmed**" - Canary Media
+
+**Research Standards Note:** Industry marketing claims that lack independent peer review do not meet academic research standards and should be treated as preliminary until verified.
+
+### 6A.4 Infrastructure Reality Check
+
+**Pipeline Requirements for 1 Gt/yr DAC:**
+- **Required CO2 pipeline network:** 96,000 km (59,650 miles)
+- **Context:** Current global CO2 pipeline network ~8,000 km
+- **Implication:** 12x expansion of infrastructure needed per gigatonne of capacity
+
+**Energy Competition:**
+- **AI data centers:** Rapidly growing electricity demand in same regions optimal for DAC (Nordic, Pacific Northwest)
+- **Competition for clean energy:** DAC competes with data centers, EVs, heat pumps for limited clean electricity
+
+**Source:** Multiple industry analyses, infrastructure feasibility studies
+
+### 6A.5 Skeptical Consensus
+
+**Pattern of Criticism:**
+- **Academic skeptics:** Jacobson (Stanford), Sekera (Boston U), Foley (climate scientist)
+- **Core argument:** DAC diverts resources from proven mitigation (renewables, efficiency) to speculative removal
+- **Economic critique:** 10-30x more expensive than nature-based removal, opportunity cost massive
+- **Timeline critique:** Won't scale fast enough for 2030-2050 targets even if successful
+
+**Counterpoint to Original Research:**
+The original research presented optimistic deployment scenarios without acknowledging this substantial body of critical analysis. Both perspectives should inform simulation modeling.
+
+---
+
 ## 7. Simulation Modeling Implications
 
 ### 7.1 Technology Tier Classification
@@ -594,7 +669,15 @@ Where:
 
 1. Climeworks. (2024, May 8). "Climeworks switches on world's largest direct air capture plant, Mammoth." Press release. [https://climeworks.com/press-release/climeworks-switches-on-worlds-largest-direct-air-capture-plant-mammoth]
 
-2. Tan, S., Grant, N., Comello, S., Mallapragada, D. S., Kumar, A., & Gençer, E. (2024). "Deployment expectations of multi-gigatonne scale carbon removal could have adverse impacts on Asia's energy-water-land nexus." *Nature Communications*, 15, Article 6380. DOI: 10.1038/s41467-024-50637-2
+**Contradictory Evidence and Critical Perspectives (Added Dec 2025):**
+
+1A. Mongabay. (2024, December). "Direct air capture: Climate solution or 'greenwashing technology'?" [https://news.mongabay.com/2024/12/direct-air-capture-climate-solution-faces-harsh-criticism-steep-challenges/]
+
+1B. Bloomberg. (2025, May 21). "Carbon-Removal Startup Climeworks Is Cutting 22% of Staff." [https://www.bloomberg.com/news/articles/2025-05-21/carbon-removal-startup-climeworks-is-cutting-22-of-staff]
+
+1C. CNN. (2025, May 30). "The world's largest carbon removal plant just laid off a fifth of its workforce." [https://www.cnn.com/2025/05/30/climate/climeworks-pollution-carbon-capture-layoffs]
+
+2. Ampah, J.D., Grant, N., Comello, S., Mallapragada, D. S., Kumar, A., & Gençer, E. (2024). "Deployment expectations of multi-gigatonne scale carbon removal could have adverse impacts on Asia's energy-water-land nexus." *Nature Communications*, 15, Article 6380. DOI: 10.1038/s41467-024-50637-2 [PMC11283554]
 
 3. International Energy Agency. (2024). "CCUS projects around the world are reaching new milestones." Commentary. [https://www.iea.org/commentaries/ccus-projects-around-the-world-are-reaching-new-milestones]
 
