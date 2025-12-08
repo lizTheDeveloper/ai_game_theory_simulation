@@ -136,16 +136,17 @@ The project SHALL preserve implementation histories and research context.
 
 ## Current Status
 
-**Session:** 55 (December 5, 2025)
-**Mode:** Maintenance (17 consecutive maintenance sessions: 34-55)
-**Research Quality:** A- (68.8% sources from 2024-2025)
-**Architecture Health:** A- (0 CRITICAL, 0 HIGH blockers)
+**Session:** 56 (December 8, 2025)
+**Mode:** Maintenance (18 consecutive maintenance sessions: 34-56)
+**Research Quality:** C+ (53.4% sources from 2024-2025, -15.4% from prior session)
+**Architecture Health:** B+ (0 CRITICAL, 0 HIGH blockers, 3 MEDIUM gaps)
 **Test Coverage:** 82.47% (462+ tests passing)
-**System State:** Production-ready, all quality gates GREEN
+**System State:** Production-ready, research maintenance required
 
 **Token Conservation:** ACTIVE (target 50% normal usage)
 - Strategy: CRITICAL/HIGH only, 4h worker intervals
 - MEDIUM/LOW: Deferred until token budget restored
+- Research maintenance: Elevated to HIGH priority (not optional)
 
 ---
 
@@ -158,7 +159,31 @@ None (system in maintenance mode)
 - HIGH-7: Conditional climate stability floor (research debate finding) - COMPLETE Dec 7, 2025
 
 ### HIGH Priority
-None (system in maintenance mode)
+
+#### HIGH-8: Research Corpus Quarterly Refresh Cycle
+**Status:** Proposed (Dec 8, 2025)
+**Context:** Research quality declined 15.4% in one month (A- to C+), 178 files flagged HIGH priority
+**Impact:** Prevents research maintenance debt accumulation
+**Scope:** Create automated quarterly flagging system targeting 65% currency by March 2026
+**Research:** `reviews/research_debate_20251208.md` (consensus finding)
+**Priority Rationale:** Research quality below acceptable threshold (C+), trend concerning
+
+#### HIGH-9: AMOC Collapse Timeline Update
+**Status:** Proposed (Dec 8, 2025)
+**Context:** Using 2022 baseline (Armstrong McKay 50-250yr) when Ditlevsen 2024 (2025-2095, 95% CI) available
+**Impact:** Core climate mechanic using outdated timeline
+**Scope:** Update threshold range, implement uniform distribution, document controversy
+**Research:** Ditlevsen 2024, `reviews/research_debate_20251208.md`
+**Files:** `src/types/tipping-points.ts`
+**Priority Rationale:** Critical parameter outdated by 2 years
+
+#### HIGH-10: Nuclear Winter Agriculture Sources Update
+**Status:** Proposed (Dec 8, 2025)
+**Context:** Crop yield modeling may use 2008 sources
+**Impact:** Post-nuclear food security modeling potentially outdated
+**Scope:** Audit nuclear winter crop yield calculations, update to 2024-2025 research
+**Research:** Xia 2022 (Nature Food) baseline acceptable, need crop-specific validation
+**Priority Rationale:** 16-year-old sources unacceptable for research simulation
 
 ### MEDIUM Priority
 - M-5: Threshold uncertainty modeling (distribution sampling library)
@@ -215,6 +240,7 @@ See: `docs/EMOJI_QUICK_REFERENCE.md` (one-page cheat sheet)
 See: `docs/sessions.md` for complete session milestone tracking
 
 **Recent Sessions:**
+- Session 56 (Dec 8): Research audit + architecture integration review (added HIGH-8/9/10)
 - Session 55 (Dec 5): Maintenance mode (early exit, ~10k tokens)
 - Session 54 (Dec 5): M-4 Complete - Abrupt Sea Level Rise (~15k tokens)
 - Session 51 (Dec 3): Validation cycle (research + architecture, ~8k tokens)
