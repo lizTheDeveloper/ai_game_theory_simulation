@@ -1,11 +1,6 @@
 # Research Update Queue
-<<<<<<< Updated upstream
-**Generated:** 12/8/2025, 12:30:03 AM
-**Files Scanned:** 541
-=======
-**Generated:** 11/28/2025, 10:30:04 PM
-**Files Scanned:** 485
->>>>>>> Stashed changes
+**Generated:** 12/8/2025, 1:30:04 AM
+**Files Scanned:** 539
 
 ---
 
@@ -17,16 +12,12 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-<<<<<<< Updated upstream
-**Count:** 178 (32.9%)
+**Count:** 178 (33.0%)
 
 ### `AUTONOMOUS_RESEARCHER_SESSION_20251203_2030.md`
 - **Oldest source:** 1981 (44 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/AUTONOMOUS_RESEARCHER_SESSION_20251203_2030.md`
-=======
-**Count:** 164 (33.8%)
->>>>>>> Stashed changes
 
 ### `CRISIS_MITIGATION_RESEARCH_CRITIQUE_20251029.md`
 - **Oldest source:** 2001 (24 years old)
@@ -917,11 +908,7 @@
 
 ## 📋 MEDIUM (Review Within Quarter)
 
-<<<<<<< Updated upstream
-**Count:** 24 (4.4%)
-=======
-**Count:** 21 (4.3%)
->>>>>>> Stashed changes
+**Count:** 24 (4.5%)
 
 - `LAYER2_COMPREHENSIVE_STATUS_20251030.md` - Oldest: 2020 (5 years)
 - `LAYER2_DEBATE_SUMMARY_20251030.md` - Oldest: 2020 (5 years)
@@ -952,11 +939,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-<<<<<<< Updated upstream
-**Count:** 339 (62.7%)
-=======
-**Count:** 300 (61.9%)
->>>>>>> Stashed changes
+**Count:** 337 (62.5%)
 
 All sources <3 years old. No action required.
 
@@ -966,56 +949,33 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-<<<<<<< Updated upstream
-| Total files | 541 |
+| Total files | 539 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 178 (32.9%) |
-| MEDIUM | 24 (4.4%) |
-| LOW | 339 (62.7%) |
-| Average age | 7.4 years |
-=======
-| Total files | 485 |
-| CRITICAL | 0 (0.0%) |
-| HIGH | 164 (33.8%) |
-| MEDIUM | 21 (4.3%) |
-| LOW | 300 (61.9%) |
-| Average age | 7.8 years |
->>>>>>> Stashed changes
+| HIGH | 178 (33.0%) |
+| MEDIUM | 24 (4.5%) |
+| LOW | 337 (62.5%) |
+| Average age | 7.5 years |
 | Oldest source | 1955 (70 years ago) |
 
 ### Research Currency
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-<<<<<<< Updated upstream
-| Current (<3yr) | 339 | 62.7% |
-| Warning (3-5yr) | 24 | 4.4% |
-| Critical (>5yr) | 178 | 32.9% |
-=======
-| Current (<3yr) | 300 | 61.9% |
-| Warning (3-5yr) | 21 | 4.3% |
-| Critical (>5yr) | 164 | 33.8% |
->>>>>>> Stashed changes
+| Current (<3yr) | 337 | 62.5% |
+| Warning (3-5yr) | 24 | 4.5% |
+| Critical (>5yr) | 178 | 33.0% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-<<<<<<< Updated upstream
-- **Current:** 32.9% critical (>5yr)
-=======
-- **Current:** 33.8% critical (>5yr)
->>>>>>> Stashed changes
+- **Current:** 33.0% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
-<<<<<<< Updated upstream
 1. Update 178 HIGH priority file(s) within 1 month
-=======
-1. Update 164 HIGH priority file(s) within 1 month
->>>>>>> Stashed changes
 2. Schedule research update sprint
 3. Coordinate with research team
 
