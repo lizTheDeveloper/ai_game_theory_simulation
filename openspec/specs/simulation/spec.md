@@ -222,6 +222,19 @@ The simulation SHALL model environmental, social, and technological debt.
 
 ---
 
+### HIGH Priority
+
+#### HIGH-8: Threshold Lowering for Tipping Cascades
+**Status:** ✅ COMPLETE (Dec 8, 2025)
+**Implementation:** `src/types/tipping-points.ts`, `src/simulation/engine/phases/ClimateSystemPhase.ts`
+**Research:** Högner et al. 2025 ERL, Klose et al. 2024 ESD, Global Tipping Points 2023
+**Quality Gates:** QG1 Grade D→B+ (remediation), QG2 Grade A- (architecture-skeptic)
+**Summary:** Fixed CRITICAL parameter errors: AMOC→Amazon sign error (destabilizing→stabilizing), added missing AMOC→Greenland stabilizing feedback, replaced sqrt(progress) temporal scaling with linear based on Klose et al. 2024.
+**Research Quality:** A- (6 peer-reviewed sources, 83% from 2024-2025)
+**History:** `research/tipping_threshold_lowering_remediation_20251208.md`
+
+---
+
 ### MEDIUM Priority
 
 #### M-7: Fix Population Assertions for Near-Extinction Scenarios
