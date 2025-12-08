@@ -160,9 +160,12 @@ None (system in maintenance mode)
 ### HIGH Priority
 None (system in maintenance mode)
 
+### COMPLETED MEDIUM Priority
+- M-5: Threshold uncertainty modeling (distribution sampling library) - COMPLETE Dec 7, 2025
+- M-6: Enhanced radiation modeling (acute vs chronic, tissue sensitivity) - COMPLETE Dec 8, 2025
+
 ### MEDIUM Priority
-- M-5: Threshold uncertainty modeling (distribution sampling library)
-- M-6: Enhanced radiation modeling (acute vs chronic, tissue sensitivity)
+(Empty - all items complete or deferred)
 
 ### LOW Priority
 - L-2: Enhanced biodiversity modeling (food web collapse)
