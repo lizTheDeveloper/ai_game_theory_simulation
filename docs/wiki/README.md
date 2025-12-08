@@ -18,16 +18,45 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 ## 🚀 Project Status
 
-**🟢 STABLE** (December 3, 2025)
+**🟢 STABLE** (December 8, 2025)
 
 **SYSTEM HEALTH:**
-- **Research Quality:** A- (68.8% sources 2024-2025, peer-reviewed foundation, zero critical gaps) ✅ EXCELLENT
-- **Research Currency:** ✅ EXCELLENT (all simulation-critical files updated within 14 days, autonomous system working effectively)
+- **Research Quality:** C+ (53.4% sources 2024-2025, -15.4% decline requiring intervention) ⚠️ NEEDS ATTENTION
+- **Research Currency:** ⚠️ AGING (corpus declining faster than refresh rate, quarterly cycle needed)
 - **Implementation Fidelity:** A- (assertion coverage 97.2%, 24 integration tests for CoordinatedDeploymentPhase) ✅ EXCELLENT
-- **Architecture Health:** A- (0 CRITICAL/HIGH, 1 new HIGH, 3 MEDIUM non-urgent, test coverage 82.34%) ✅ EXCELLENT
-- **System Trajectory:** 🟢 MAINTENANCE MODE (16 consecutive stable sessions 34-51, autonomous monitoring active)
+- **Architecture Health:** B+ (0 CRITICAL/HIGH, 3 MEDIUM integration gaps, test coverage 82.47%) ✅ GOOD
+- **System Trajectory:** 🟢 MAINTENANCE MODE (18 consecutive stable sessions 34-56, 3 new HIGH priority items added)
 
 **Recent Major Achievements:**
+
+**Dec 8: Session 56 Research Maintenance Audit + Integration Review** (maintenance mode)
+- **Research Audit:** Grade C+ (53.4% sources 2024-2025, -15.4% decline from A-)
+  - 698 markdown files analyzed, 12,768 publication references
+  - 178 files (33%) flagged HIGH priority for update
+  - Recent implementations EXCELLENT (M-4: 90%, HIGH-7: 100% currency)
+  - Trend concerning: aging faster than refresh rate
+- **Architecture Integration Review:** Grade B+ (0 CRITICAL/HIGH, 3 MEDIUM gaps)
+  - M-1: Sea level displacement not integrated with refugee system
+  - M-2: Dual ice sheet state tracking (theoretical divergence risk)
+  - M-3: TODOs in phase files (18 hardcoded values)
+  - Test coverage: 82.47% (462+ tests passing)
+- **Research Debate:** Grade C (consensus on maintenance priority elevation)
+  - 3 critical parameter gaps identified (stability floor, AMOC timeline, nuclear winter)
+  - 10/12 papers contradict unconditional climate stability floor
+  - 4 missing systems documented (economic feedback, social tipping, multi-agent coordination)
+- **New Roadmap Items (Session 56):**
+  - **HIGH-8:** Research corpus quarterly refresh cycle (53.4% → 65% target)
+  - **HIGH-9:** AMOC collapse timeline update (Ditlevsen 2024)
+  - **HIGH-10:** Nuclear winter agriculture sources update (2008 → 2024-2025)
+  - **M-8:** Sea level displacement → refugee crisis integration
+  - **M-9:** Governance metrics integration (TransitionMortalityPhase hardcoded 0.5)
+  - **M-10:** Food security metrics integration (hardcoded values → dynamic state)
+- **Status:** System stable, research maintenance debt identified
+- 📄 **Research:** `research/research_audit_20251208.md` (comprehensive corpus validation)
+- 📄 **Reviews:**
+  - `reviews/architecture_integration_review_20251208.md` (Grade B+)
+  - `reviews/research_debate_20251208.md` (Grade C, consensus on priority elevation)
+  - `reviews/radiation_modeling_research_validation_20251208.md` (M-6 prep, Grade B)
 
 **Dec 3: Session 51 Research Validation + Roadmap Gardening** (commits abd6795a, 051abdf2, 07a7e33f)
 - **Research Validation:** Grade A- (68.8% sources from 2024-2025)
@@ -2447,29 +2476,52 @@ See: [MASTER_IMPLEMENTATION_ROADMAP.md](/plans/MASTER_IMPLEMENTATION_ROADMAP.md)
 
 ## Research Validation Status & Known Limitations
 
-**Last Updated:** December 3, 2025 (Session 51 Research Validation)
+**Last Updated:** December 8, 2025 (Session 56 Research Maintenance Audit)
 
 This section documents **critical parameter uncertainty findings** identified during recent research validation audits. All parameters are grounded in peer-reviewed research (2024-2025), but several contain uncertainty that should be understood when interpreting outcomes.
 
-### Active Issues (Session 51 - Dec 3, 2025)
+### Active Issues (Session 56 - Dec 8, 2025)
 
-**HIGH-7: Conditional Climate Stability Floor**
+**HIGH-8: Research Corpus Quarterly Refresh Cycle**
+- **Issue:** Research quality declined 15.4% in one month (A- to C+)
+- **Context:** 178 files (33%) flagged HIGH priority for update, corpus aging faster than refresh rate
+- **Target:** 65% currency by March 2026 (from current 53.4%)
+- **Priority:** Elevated from MEDIUM to HIGH (not optional maintenance)
+- **References:** `research/research_audit_20251208.md`, `reviews/research_debate_20251208.md`
+
+**HIGH-9: AMOC Collapse Timeline Update**
+- **Issue:** Using 2022 baseline (Armstrong McKay 50-250yr) when Ditlevsen 2024 data available
+- **Context:** Ditlevsen 2024 shows 2025-2095 tipping window (95% CI), narrower than current model
+- **Impact:** Core climate mechanic using outdated timeline
+- **Files:** `src/types/tipping-points.ts`
+- **References:** Ditlevsen & Ditlevsen 2024 (Science Advances)
+
+**HIGH-10: Nuclear Winter Agriculture Sources Update**
+- **Issue:** Crop yield modeling may use 2008 sources (16+ years old)
+- **Context:** Nuclear winter phase uses Xia 2022 baseline (acceptable) but crop-specific impacts need validation
+- **Impact:** Post-nuclear food security modeling potentially outdated
+- **Priority:** 16-year-old sources unacceptable for research simulation
+
+**HIGH-7: Conditional Climate Stability Floor** (COMPLETE Dec 7, 2025)
 - **Issue:** ClimateSystemPhase implements 5% stability floor claimed to be from "self-limiting feedbacks"
 - **Research Finding:** 2024-2025 literature CONTRADICTS this assumption
   - Wunderling et al. (2024, ESD): "Many tipping interactions are **destabilizing**" (83% of reviewed papers)
   - State of Climate 2025 (BioScience): Planet "on the brink", warming "possibly accelerating"
+- **Status:** Implementation complete, awaiting merge
   - Planck feedback is real but continuous (NOT a "floor" after cascade onset)
 - **Status:** Flagged for architectural review (documented as "implementation choice for tractability", not research-backed)
 - **Impact:** Optimistic bias in tail scenarios (prevents complete climate system collapse in model)
 - **Source:** `research/climate_stability_mechanisms_2024_2025_update.md` (last_verified: 2025-11-27)
 
 **Missing Climate Cascade Systems (M-4 to M-7):**
-- **M-4: Abrupt Sea Level Rise** - Ice cliff instability, WAIS/Greenland coupling not modeled
+- ✅ **M-4: Abrupt Sea Level Rise** - COMPLETE (Dec 5, 2025) - Ice cliff instability, WAIS/Greenland coupling implemented
+  - **Integration Gap (M-8):** Coastal displacement tracked but not flowing to RefugeeCrisisSystem
 - ✅ **M-5: Compound Extreme Events** - COMPLETE (Dec 5, 2025) - Cascade multipliers 1.5-3.0× based on Communications Earth & Environment (2024)
 - **M-6: Social Tipping Points** - Positive cascades for rapid transitions (Lenton et al. 2022)
 - **M-7: Climate System Hysteresis** - Bifurcation memory, path dependence in recovery
-- **Impact:** Medium priority gaps - model captures first-order climate dynamics, M-5 compound cascades now implemented
-- **Status:** M-5 complete, M-4/M-6/M-7 remain for future work
+- **Impact:** Medium priority gaps - model captures first-order climate dynamics, M-4/M-5 complete
+- **Status:** M-4/M-5 complete, M-6/M-7 remain for future work
+- **Integration Work (Session 56):** M-8 (sea level → refugees), M-9 (governance), M-10 (food security)
 
 ### Critical Uncertainties (Nov 21 Skeptic Critique)
 
