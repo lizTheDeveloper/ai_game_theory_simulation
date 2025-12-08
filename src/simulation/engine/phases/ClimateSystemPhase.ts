@@ -224,8 +224,13 @@ export class ClimateSystemPhase implements SimulationPhase {
       if (!sourceElement.triggered) continue;
 
       // Scale reduction by progress (0 = just triggered, 1 = fully transitioned)
-      // Use sqrt to front-load the effect - most reduction happens early in transition
-      const progressScalar = Math.sqrt(Math.max(0.1, sourceElement.progress));
+      // Linear scaling reflects rate-dependent accumulating effects:
+      // - Freshwater forcing accumulates over time
+      // - Carbon release accelerates as thaw deepens
+      // - Albedo feedback compounds with ice loss
+      // Research: Earth System Dynamics (2024) documents "rate-induced tipping cascades"
+      // where interaction strength accelerates, not diminishes.
+      const progressScalar = Math.max(0.1, sourceElement.progress);
 
       // Find all interactions where this element is the source
       const interactions = TIPPING_INTERACTIONS.filter(i => i.sourceId === sourceElement.id);
@@ -267,7 +272,8 @@ export class ClimateSystemPhase implements SimulationPhase {
     }
 
     // Cap total threshold reduction at 0.5°C per element to prevent runaway cascades
-    // Research: Conservative estimate from Wunderling et al. (2024)
+    // This is a simulation stability safeguard to prevent over-catastrophizing,
+    // not a research-backed parameter. Ensures cascades remain bounded.
     const MAX_THRESHOLD_REDUCTION = 0.5;
     for (const element of system.elements) {
       if (element.effectiveThresholdReduction && element.effectiveThresholdReduction > MAX_THRESHOLD_REDUCTION) {

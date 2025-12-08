@@ -244,11 +244,14 @@ The simulation SHALL model environmental, social, and technological debt.
 **Known Issues:** H-1 (three redundant libraries, consolidation recommended but not blocking)
 
 #### M-6: Enhanced Radiation Modeling
-**Status:** Proposed
-**Context:** Acute vs chronic radiation exposure, tissue sensitivity
-**Impact:** More realistic nuclear winter health effects
-**Research:** Tissue weighting factors, acute exposure limits
-**Next Steps:** Research validation → Implementation → Test coverage
+**Status:** ✅ COMPLETE (Dec 8, 2025)
+**Context:** Acute vs chronic radiation exposure, tissue sensitivity, dose-response curves
+**Impact:** Research-backed fallout modeling with LD50/60 sigmoids, ICRP 103 tissue weighting, 7-10 decay rule
+**Implementation:** `src/simulation/radiationModeling.ts` (571 lines), enhanced `RadiationZone` interface
+**Quality Gates:** QG1: Grade B (Sylvia), QG2: PASSED (no CRITICAL/HIGH issues)
+**Research:** CDC 2024, REMM, ICRP 103, PMC11604265, BEIR VII (LNT controversy documented)
+**Tests:** 30+ unit tests, deterministic, all passing
+**History:** `docs/implementation-history/M-6_enhanced_radiation_modeling_20251208.md`
 
 ---
 
