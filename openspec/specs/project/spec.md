@@ -136,35 +136,116 @@ The project SHALL preserve implementation histories and research context.
 
 ## Current Status
 
-**Session:** 55 (December 5, 2025)
-**Mode:** Maintenance (17 consecutive maintenance sessions: 34-55)
-**Research Quality:** A- (68.8% sources from 2024-2025)
-**Architecture Health:** A- (0 CRITICAL, 0 HIGH blockers)
+**Session:** 56 (December 8, 2025)
+**Mode:** Consolidation (all active roadmap items COMPLETE)
+**Research Quality:** B- (per research-skeptic Dec 8 audit - asymmetric research standards)
+**Architecture Health:** B+ (3 HIGH, 3 MEDIUM issues identified)
 **Test Coverage:** 82.47% (462+ tests passing)
-**System State:** Production-ready, all quality gates GREEN
+**System State:** Production-ready, consolidation phase
 
-**Token Conservation:** ACTIVE (target 50% normal usage)
-- Strategy: CRITICAL/HIGH only, 4h worker intervals
-- MEDIUM/LOW: Deferred until token budget restored
+**Token Conservation:** DISABLED (per PM request Dec 4, 2025)
+- Normal operation restored
+- Full productivity mode, hourly autonomous workers
+- Quality-over-speed approach
 
 ---
 
 ## Active Work
 
 ### CRITICAL Priority
-None (system in maintenance mode)
+None
 
-### COMPLETED HIGH Priority
-- HIGH-7: Conditional climate stability floor (research debate finding) - COMPLETE Dec 7, 2025
+### HIGH Priority (From Dec 8 Reviews)
 
-### HIGH Priority
-None (system in maintenance mode)
+#### HIGH-8: Supply Chain Cascade Multiplier
+**Source:** Research debate Dec 8 (Sylvia)
+**Context:** McKinsey 2024 - avg company has 38K tier-3 suppliers with 0.2% visibility. Texas freeze 2021: 3-day grid failure → $195B cascade damages. Collapse scenarios model individual failures, not cascade propagation.
+**Scope:** Add cascade multiplier where system failures degrade adjacent systems (grid → water → food)
+**Complexity:** 3 systems (infrastructure, water, food)
+**Effort:** 2-3 days
+**Priority Rationale:** Critical gap in civilizational collapse modeling (Scheffer 2023)
+
+#### HIGH-9: Stochastic Rebound Effects
+**Source:** Research debate Dec 8 (Sylvia)
+**Context:** Fixed 0.7 multiplier (30% rebound) should be distribution [0.3, 0.9] per Sorrell 2024
+**Scope:** Replace hardcoded rebound multiplier with sampled distribution
+**Complexity:** 2 systems (technology effects, M-5 distribution sampling)
+**Effort:** 1 day
+**Priority Rationale:** Jevons paradox is stochastic, not deterministic
+
+#### HIGH-10: Dynamic require() in Hot Path
+**Source:** Architecture review Dec 8 (HIGH-1)
+**Context:** `nuclearWinter.ts:509` uses dynamic `require()` breaking ESM compatibility
+**Scope:** Convert to static import
+**Complexity:** 1 system (nuclear winter)
+**Effort:** 5 minutes
+**Priority Rationale:** Breaks tree-shaking, runtime dependency issues
+
+#### HIGH-11: Legacy Radiation Modeling Dual Paths
+**Source:** Architecture review Dec 8 (HIGH-2)
+**Context:** M-6 enhanced modeling coexists with legacy decay in same function
+**Scope:** Migrate all zones to enhanced format OR deprecate legacy path
+**Complexity:** 2 systems (radiation modeling, nuclear winter)
+**Effort:** Medium (data migration or compatibility layer)
+**Priority Rationale:** Inconsistent mortality calculations for zones created at different times
+
+#### HIGH-12: Orphaned Phase Files Cleanup
+**Source:** Architecture review Dec 8 (HIGH-3)
+**Context:** `NuclearWinterPhase.ts`, `RadiationSystemPhase.ts` consolidated into `NuclearCrisisPhase.ts` (Nov 9) but not deleted
+**Scope:** Delete orphaned files or add clear deprecation comments
+**Complexity:** 1 system (phase orchestrator)
+**Effort:** 10 minutes
+**Priority Rationale:** Dead code confuses future developers
 
 ### MEDIUM Priority
-- M-5: Threshold uncertainty modeling (distribution sampling library)
-- M-6: Enhanced radiation modeling (acute vs chronic, tissue sensitivity)
 
-### LOW Priority
+#### MEDIUM-4: Placeholder Audit Campaign
+**Source:** Research debate Dec 8 (Sylvia)
+**Context:** 50+ TODOs, PLACEHOLDERs, hardcoded values. 3 FICTIONAL markers with NO RESEARCH BASIS.
+**Scope:** Systematic replacement with research-backed values
+**Complexity:** 15+ systems (cooperative ownership, freshwater, phosphorus, etc.)
+**Effort:** 1-2 weeks
+**Priority Rationale:** Claimed A- research quality incompatible with FICTIONAL placeholders
+
+#### MEDIUM-5: Tail Scenario Research Campaign
+**Source:** Research debate Dec 8 (Sylvia - asymmetric research standards)
+**Context:** Best-case scenarios research-backed, worst-case scenarios engineering estimates
+**Scope:** Apply same rigor to tail scenarios as best cases
+**Complexity:** Cross-cutting (climate, AI, tech deployment)
+**Effort:** 2-3 weeks
+**Priority Rationale:** Monte Carlo distributions systematically underweight tail risks
+
+#### MEDIUM-6: Threshold Uncertainty Propagation
+**Source:** Architecture review Dec 8 (MEDIUM-1)
+**Context:** Not all TIPPING_ELEMENTS have `thresholdDistribution` defined
+**Scope:** Audit `TIPPING_ELEMENTS` and add research-backed distributions
+**Complexity:** 2 systems (tipping points, threshold uncertainty)
+**Effort:** Medium (research + type updates)
+**Priority Rationale:** Monte Carlo runs don't fully capture uncertainty for all elements
+
+#### MEDIUM-7: Sunlight Blocking Integration Gap
+**Source:** Architecture review Dec 8 (MEDIUM-2)
+**Context:** Nuclear winter affects solar power but not wind patterns, power disruption → agriculture cascade incomplete
+**Scope:** Document remaining ARCH-4 gaps, consider second-order effects
+**Complexity:** 3 systems (nuclear winter, power, agriculture)
+**Effort:** Medium-Large
+**Priority Rationale:** Model may underestimate cascading infrastructure effects
+
+#### MEDIUM-8: ClimateSystemPhase Modularization
+**Source:** Architecture review Dec 8 (MEDIUM-3)
+**Context:** 1,469-line phase consolidating 4 former phases
+**Scope:** Extract hysteresis state machine and compound event detection into utilities
+**Complexity:** 1 system (climate)
+**Effort:** Medium (refactor without behavioral changes)
+**Priority Rationale:** Maintainability concern
+
+### COMPLETED (Dec 7-8, 2025)
+- M-5: Threshold uncertainty modeling - COMPLETE Dec 7
+- M-6: Enhanced radiation modeling - COMPLETE Dec 8
+- M-7: Fix population assertions for near-extinction - COMPLETE Dec 7
+- HIGH-7: Conditional climate stability floor - COMPLETE Dec 7
+
+### LOW Priority (Deferred)
 - L-2: Enhanced biodiversity modeling (food web collapse)
 - L-3: Quantum computing breakthrough cascades
 
