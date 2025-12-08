@@ -517,21 +517,29 @@ export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTr
 /**
  * Tipping Element Interaction Matrix (Nov 23, 2025)
  *
- * Research-backed threshold lowering effects when one tipping element tips another.
+ * Threshold lowering effects when one tipping element tips another.
  *
- * Sources:
+ * Sources (Mechanisms):
  * - Armstrong McKay et al. (2022) Science - Network of 16 tipping elements with causal interactions
- * - Wunderling et al. (2024) Earth System Dynamics - "combined effect tending to lower temperature thresholds"
+ * - Wunderling et al. (2024) Earth System Dynamics - Destabilizing interactions (9 of 14 documented)
  * - Climate tipping points research file: research/climate_tipping_points_2024_2025_20251116.md
  *
  * Format: source_id -> target_id -> threshold_reduction_C
  *
- * Magnitude Justification (Wunderling et al. 2024):
- * - Direct interactions (e.g., ice sheet -> AMOC): 0.2-0.4 C reduction
- * - Indirect interactions (e.g., Arctic ice -> Amazon): 0.1-0.2 C reduction
- * - Weak interactions: 0.05-0.1 C reduction
+ * ⚠️ IMPORTANT: Magnitude Estimates (NOT Empirically Validated)
+ * Quantitative values (0.10-0.30°C) are conservative engineering estimates
+ * pending empirical validation from network modeling studies.
  *
- * Conservative estimates used (lower end of ranges) to avoid over-catastrophizing.
+ * Rationale:
+ * - Direct interactions (e.g., ice sheet -> AMOC): 0.2-0.3°C reduction (estimated)
+ * - Indirect interactions (e.g., Arctic ice -> Amazon): 0.1-0.2°C reduction (estimated)
+ * - Weak interactions: 0.1°C reduction (estimated)
+ *
+ * Research gap: Cited papers provide coupling strength (11-90% in network models),
+ * not temperature threshold reductions. These estimates are conservative to avoid
+ * over-catastrophizing but require validation via climate network modeling.
+ *
+ * Verification: research/verification_cf49657_20251207.md (Grade C - mechanisms sound, magnitudes unvalidated)
  */
 export interface TippingInteraction {
   /** Source element that tips first */
@@ -573,7 +581,7 @@ export const TIPPING_INTERACTIONS: TippingInteraction[] = [
     mechanism: 'Albedo feedback: reduced ice cover increases regional warming'
   },
 
-  // === GREENLAND -> AMOC ===
+  // === GREENLAND <-> AMOC BIDIRECTIONAL ===
   // Greenland melt provides freshwater that destabilizes AMOC
   // Research: Van Westen et al. (2024) - freshwater hosing experiments
   {
@@ -582,6 +590,17 @@ export const TIPPING_INTERACTIONS: TippingInteraction[] = [
     thresholdReduction: 0.3, // Direct physical mechanism: freshwater reduces AMOC stability
     mechanism: 'Freshwater influx: Greenland melt reduces North Atlantic salinity, weakening AMOC'
   },
+  // AMOC collapse reduces heat transport to North Atlantic, potentially slowing Greenland melt
+  // Research: Global Tipping Points Report (2023) - stabilizing feedback documented
+  // ⚠️ NOTE: This is a STABILIZING interaction (reduces likelihood of Greenland tip)
+  // Implementation note: Negative interaction (stabilizing) not yet supported in cascade model
+  // TODO: Add stabilizing interaction support when cascade model extended
+  // {
+  //   sourceId: 'amoc',
+  //   targetId: 'greenland',
+  //   thresholdReduction: -0.15, // NEGATIVE = stabilizing (reduces heat → slows melt)
+  //   mechanism: 'Heat transport reduction: AMOC collapse cools North Atlantic, slowing Greenland melt'
+  // },
 
   // === PERMAFROST -> CLIMATE ELEMENTS ===
   // Permafrost thaw releases methane and CO2, amplifying warming
@@ -600,12 +619,21 @@ export const TIPPING_INTERACTIONS: TippingInteraction[] = [
 
   // === AMOC -> TROPICAL SYSTEMS ===
   // AMOC collapse shifts tropical rainfall patterns
-  {
-    sourceId: 'amoc',
-    targetId: 'amazon',
-    thresholdReduction: 0.25, // AMOC collapse disrupts Amazon rainfall
-    mechanism: 'Monsoon disruption: AMOC collapse shifts ITCZ southward, reducing Amazon rainfall'
-  },
+  // ⚠️ RESEARCH UNCERTAINTY: 2023-2025 studies show AMOC collapse may STABILIZE Amazon
+  // (increased rainfall over eastern Amazon). This interaction is REMOVED pending
+  // resolution of contradictory evidence.
+  // Sources:
+  // - Nature Communications (2023): "AMOC collapse may stabilise eastern Amazonian rainforests"
+  // - npj Climate (2025): "AMOC collapse shows increased precipitation over most of Amazon"
+  // Regional heterogeneity exists (northern vs southern Amazon), but net effect unclear.
+  // TODO: Add regional differentiation if/when sufficient data available.
+  //
+  // {
+  //   sourceId: 'amoc',
+  //   targetId: 'amazon',
+  //   thresholdReduction: 0.25, // REMOVED - sign uncertain
+  //   mechanism: 'Monsoon disruption: AMOC collapse shifts ITCZ southward, reducing Amazon rainfall'
+  // },
 
   // === AMAZON -> GLOBAL CLIMATE ===
   // Amazon dieback releases stored carbon

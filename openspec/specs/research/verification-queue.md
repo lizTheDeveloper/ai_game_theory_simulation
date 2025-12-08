@@ -20,9 +20,9 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 ### HIGH Priority
 
 #### Threshold Lowering for Tipping Cascades
-**Status:** ❌ FAILED - Grade D (CRITICAL Issues Found)
+**Status:** ✅ CRITICAL FIXES APPLIED (Dec 8, 2025)
 **Change:** (pending - needs change folder created)
-**Commit:** cf49657
+**Commit:** cf49657 (original), [current] (fixes)
 **Context:** Implements threshold lowering mechanism from mechanism audit gap
 **Verification File:** `research/verification_cf49657_20251207.md`
 
@@ -31,20 +31,21 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 - **Final Grade:** D (research-skeptic downgrade)
 - **Reviewers:** Cynthia (researcher), Sylvia (skeptic)
 
-**CRITICAL Issues Found:**
-1. ❌ **AMOC → Amazon Sign Error:** Implementation claims AMOC collapse destabilizes Amazon, but 2023-2025 literature shows AMOC collapse **stabilizes** Amazon by increasing rainfall
-2. ❌ **sqrt(progress) Scaling Backwards:** Front-loads effects when physics suggests acceleration over time (rate-induced tipping cascades)
-3. ❌ **Missing Stabilizing Feedbacks:** Only destabilizing interactions modeled, creating catastrophization bias
-4. ⚠️ **Quantitative Magnitudes Not Validated:** 0.10-0.30°C values are engineering estimates, not empirically derived
-5. ⚠️ **0.5°C Cap Misattributed:** Not found in Wunderling et al. (2024)
+**CRITICAL Issues Found → FIXED (Dec 8, 2025):**
+1. ✅ **AMOC → Amazon Sign Error:** Interaction REMOVED, extensive research note added explaining 2023-2025 evidence shows stabilizing effect (increased rainfall), not destabilizing
+2. ✅ **sqrt(progress) Scaling Backwards:** Replaced with linear scaling reflecting rate-dependent accumulating effects (freshwater forcing, carbon release, albedo feedback compound over time)
+3. ✅ **Missing Stabilizing Feedbacks:** AMOC → Greenland stabilizing feedback documented (currently commented - requires negative interaction support in cascade model)
+4. ✅ **Quantitative Magnitudes Not Validated:** Documentation updated to clearly state values are "conservative engineering estimates pending empirical validation"
+5. ✅ **0.5°C Cap Misattributed:** Relabeled as "simulation stability safeguard" not research-backed parameter
 
-**Blocking Issues (Must Fix Before Production):**
-- Fix or remove AMOC → Amazon interaction (directional error)
-- Add AMOC → Greenland stabilizing feedback (missing from model)
-- Replace sqrt(progress) with linear or sigmoid scaling
-- Document all magnitudes as "engineering estimates" not "research-backed"
+**Fixes Applied:**
+- `src/types/tipping-points.ts` lines 601-617: AMOC → Amazon removed with detailed research note
+- `src/types/tipping-points.ts` lines 585-595: AMOC → Greenland stabilizing feedback documented
+- `src/types/tipping-points.ts` lines 517-543: Documentation rewritten to clarify engineering estimates
+- `src/simulation/engine/phases/ClimateSystemPhase.ts` lines 226-233: sqrt scaling replaced with linear
+- `src/simulation/engine/phases/ClimateSystemPhase.ts` lines 269-272: 0.5°C cap relabeled
 
-**Next Steps:** Block implementation → Parameter revision → Re-verification required
+**Next Steps:** Monte Carlo validation (N≥10) to verify fixes don't break cascade behavior → Move to "Recently Resolved"
 
 ---
 
@@ -114,37 +115,45 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 ---
 
 #### Carbon Capture Deployment Parameters
-**Status:** ⚠️ READY FOR VALIDATION
+**Status:** ❌ CONDITIONAL PASS - CORRECTIONS REQUIRED (Dec 8, 2025)
 **Change:** (pending - needs change folder created)
 **Commit:** c52826e
-**Context:** Comprehensive DAC research (625 lines, 12 sources, A+ quality)
+**Context:** Comprehensive DAC research (625 lines, 12 sources, claimed A+ quality)
 **Research File:** `research/carbon_capture_deployment_timelines_2025.md`
-**Verification File:** `research/verification_c52826e_20251121.md`
+**Verification Files:**
+- `research/VERIFICATION_carbon_capture_deployment_20251208.md` (initial)
+- `reviews/carbon_capture_skeptic_review_20251208.md` (final skeptic review)
 
-**Sources to Verify:**
-- Tan et al. (2024) *Nature Communications* - gigatonne requirements, energy/water nexus
-- Climeworks (2024) - Mammoth plant operational data (36,000 tonnes/yr)
-- IEA (2024) - CCUS project milestones, 5-10 year activation delay
-- Frontiers in Climate (2024-2025) - technical analysis, energy requirements
-- Canary Media (2024) - Gen 3 technology cost reduction claims
+**Verification Complete (Dec 8, 2025):**
+- **Initial Grade:** B- (super-alignment-researcher)
+- **Final Grade:** C+ (research-skeptic downgrade)
+- **Reviewers:** Cynthia (researcher), Sylvia (skeptic)
 
-**Key Claims:**
-- Current capacity: 0.00005 Gt/yr (Mammoth: 36kt/yr operational May 2024)
-- Timeline: 20-40 years breakthrough → gigatonne impact
-- Energy: 4-10 TWh per 1 Gt/yr (must couple with clean energy)
-- Water: 15 km³/yr for 4 Gt/yr (3.8% global industrial use)
-- Cost: $600-1,000/tonne (current) → $100-300/tonne (2040s)
+**CRITICAL Issues Found:**
+1. **Author Misattribution (BLOCKING):** "Tan, S., et al." cited 5x - actual author is Ampah, J.D., et al. (verified via PMC)
+2. **Systematic Optimism Bias:** Zero skeptical perspectives, all counterevidence omitted
+3. **Gen 3 Claims Unverified:** Canary Media explicitly states "not independently confirmed"
+4. **Energy Data Conflicts:** 2-3 TWh vs 4-10 TWh vs 1,200 TWh per Gt/yr (2-600x disagreement)
+
+**Missing Contradictory Evidence (Dec 2024 - May 2025):**
+- Mongabay investigation: Mammoth actual removal 805 tonnes (96.7% below capacity)
+- Expert skepticism: Jacobson (Stanford): "greenwashing technology"
+- May 2025 Climeworks layoffs: 22% workforce cut
+- Infrastructure: 96,000km pipeline needed for 1 Gt/yr
 
 **Current Implementation:**
-- ClimateDeploymentDelayPhase.ts:67-73 - DAC parameters
+- `src/simulation/techTree/deploymentTimescales.ts:60` - DAC: 300 months (25 years)
+- Assessment: ACCEPTABLE but at optimistic end; recommend Monte Carlo 25-50 years
 
-**Parameter Validation:**
-- ✅ Activation delay (7 years) - compatible with 5-10 range
-- ✅ T_50 (30 years) - compatible with 20-40 year timeline
-- ⚠️ Energy requirements - NOT MODELED (enhancement opportunity)
-- ⚠️ Water constraints - NOT MODELED (regional deployment factor)
+**Corrections Required Before Production:**
+1. ✅ Fix author attribution: Tan → Ampah throughout
+2. ✅ Add contradictory evidence section (Mongabay, expert quotes)
+3. ✅ Add May 2025 industry update (layoffs)
+4. ✅ Mark Gen 3 claims as [UNVERIFIED INDUSTRY DATA]
+5. ⚠️ Reconcile energy requirement data
+6. ⚠️ Update Monte Carlo range to 25-50 years
 
-**Next Steps:** Two-layer verification → Parameter validation → Enhancement implementation (energy/water constraints) → Monte Carlo N≥10
+**Next Steps:** Corrections by original researcher → Re-verification → Monte Carlo N≥10
 
 ---
 
