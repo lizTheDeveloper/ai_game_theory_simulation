@@ -1,29 +1,33 @@
 /**
  * ClimateDeploymentPhase
  *
- * Implements phased deployment timescales, energy budget constraints, and
- * deployment-adjusted effectiveness for climate technologies.
+ * Implements phased deployment timescales and deployment-adjusted effectiveness
+ * for climate technologies. Energy allocation handled by EnergyBudgetPhase.
  *
  * Addresses TIER 1 CRITICAL issue: 5.5% climate tech effectiveness gap
  *
  * **Research Foundation:** research/climate_deployment_timescales_20251113.md
  * **Implementation Plan:** plans/climate_phased_deployment_model_20251113.md
  *
- * **EXECUTION ORDER:** 12.8 (After tech-tree 12.5, before environmental effects)
- * **DEPENDENCIES:** tech-tree (12.5) - Requires energySystem, breakthrough technologies
+ * **EXECUTION ORDER:** 12.8 (After EnergyBudgetPhase 12.75, tech-tree 12.5)
+ * **DEPENDENCIES:**
+ * - tech-tree (12.5) - Requires breakthrough technologies
+ * - EnergyBudgetPhase (12.75) - Reads state.energyBudget.allocations for energy constraints
  * **SIDE EFFECTS:**
- * - Updates technology deployment phases
- * - Partitions renewable energy budget
+ * - Updates technology deployment phases (planning → pilot → scaling → mature)
  * - Adjusts technology effectiveness by deployment progress
  *
- * **7-Step Phase Logic:**
- * 1. Calculate renewable surplus (renewable_capacity - baseline_consumption)
- * 2. Partition energy: baseline (60%) → deployment (30%) → operation (10%)
- * 3. For each climate tech: advance phase if energy available
- * 4. Calculate deployment-adjusted effectiveness (phase multiplier)
- * 5. Apply effectiveness to climate boundary
- * 6. Log phase transitions (planning → pilot → scaling → mature)
- * 7. Update energy partitioning for next month
+ * **INTEGRATION (Dec 9, 2025):**
+ * Legacy calculateRenewableSurplus() and partitionEnergy() removed (duplicate calculation).
+ * Energy allocation now handled by EnergyBudgetPhase (12.75) which runs BEFORE this phase (12.8).
+ * getEnergyMultiplier() reads state.energyBudget.allocations[category].effectivenessMultiplier.
+ *
+ * **5-Step Phase Logic:**
+ * 1. For each climate tech: check energy availability (from EnergyBudgetPhase)
+ * 2. Advance phase if energy available
+ * 3. Calculate deployment-adjusted effectiveness (phase multiplier)
+ * 4. Calculate energy constraint multiplier (from EnergyBudgetPhase allocations)
+ * 5. Update deployment level = base * phaseMultiplier * energyMultiplier
  */
 
 import { GameState, SimulationPhase, PhaseResult, RNGFunction, GameEvent } from '@/types/game';
@@ -40,11 +44,11 @@ export class ClimateDeploymentPhase implements SimulationPhase {
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const events: GameEvent[] = [];
 
-    // Step 1: Calculate renewable surplus
-    const renewableSurplus = this.calculateRenewableSurplus(state);
-
-    // Step 2: Partition energy
-    this.partitionEnergy(state, renewableSurplus);
+    // INTEGRATION NOTE (Dec 9, 2025):
+    // Energy allocation now handled by EnergyBudgetPhase (order 12.4, runs BEFORE this phase).
+    // EnergyBudgetPhase calculates state.energyBudget.allocations[category].effectivenessMultiplier
+    // which is consumed by getEnergyMultiplier() below.
+    // Legacy calculateRenewableSurplus() and partitionEnergy() removed (duplicate calculation).
 
     // Step 3-7: Update each climate technology
     const climateTechs = this.getClimateTechnologies(state);
@@ -55,6 +59,8 @@ export class ClimateDeploymentPhase implements SimulationPhase {
       }
 
       // Step 3: Check energy availability
+      // INTEGRATION NOTE: When energy budget is enabled, this returns 0 and
+      // getEnergyMultiplier() reads from state.energyBudget.allocations instead.
       const energyAllocated = this.allocateEnergy(state, tech);
 
       // Advance phase if energy available
@@ -114,129 +120,44 @@ export class ClimateDeploymentPhase implements SimulationPhase {
     return { events };
   }
 
-  /**
-   * Step 1: Calculate renewable energy surplus
-   *
-   * Surplus = renewable_generation - baseline_demand
-   *
-   * @param state Game state
-   * @returns TWh available for climate tech deployment
-   */
-  private calculateRenewableSurplus(state: GameState): number {
-    const { energy } = state.resourceEconomy;
+  // REMOVED (Dec 9, 2025): calculateRenewableSurplus() - Now handled by EnergyBudgetPhase
+  // EnergyBudgetPhase (order 12.4) calculates global capacity and allocations before this phase runs.
 
-    // Calculate renewable generation (TWh/month)
-    const renewableGeneration = assertFinite(
-      energy.totalProduction * (energy.renewablePercentage / 100),
-      {
-        location: 'ClimateDeploymentPhase.calculateRenewableSurplus',
-        valueName: 'renewableGeneration',
-        month: state.currentMonth,
-        additionalInfo: {
-          totalProduction: energy.totalProduction,
-          renewablePercentage: energy.renewablePercentage,
-        },
-      }
-    );
-
-    // Baseline demand (existing civilization needs)
-    const baselineDemand = assertFinite(
-      energy.totalDemand,
-      {
-        location: 'ClimateDeploymentPhase.calculateRenewableSurplus',
-        valueName: 'baselineDemand',
-        month: state.currentMonth,
-      }
-    );
-
-    // Surplus is what's left for new applications
-    const surplus = Math.max(0, renewableGeneration - baselineDemand);
-
-    return assertFinite(surplus, {
-      location: 'ClimateDeploymentPhase.calculateRenewableSurplus',
-      valueName: 'surplus',
-      month: state.currentMonth,
-      additionalInfo: {
-        renewableGeneration,
-        baselineDemand,
-      },
-    });
-  }
-
-  /**
-   * Step 2: Partition renewable surplus
-   *
-   * Priority allocation:
-   * - Baseline: 60% (existing civilization needs - already accounted for)
-   * - Deployment: 30% (building new climate tech infrastructure)
-   * - Operation: 10% (running deployed climate tech)
-   *
-   * @param state Game state
-   * @param surplus TWh available
-   */
-  private partitionEnergy(state: GameState, surplus: number): void {
-    const { energy } = state.resourceEconomy;
-
-    // Initialize partitioning if not present
-    if (!energy.partitioning) {
-      energy.partitioning = {
-        baseline: energy.totalDemand,
-        deployment: 0,
-        operation: 0,
-      };
-    }
-
-    // Allocate surplus to deployment and operation
-    // Model assumption: 75% to deployment, 25% to operation
-    // (Deployment needs more energy during scale-up phase)
-    energy.partitioning.deployment = assertFinite(surplus * 0.75, {
-      location: 'ClimateDeploymentPhase.partitionEnergy',
-      valueName: 'deployment',
-      month: state.currentMonth,
-    });
-
-    energy.partitioning.operation = assertFinite(surplus * 0.25, {
-      location: 'ClimateDeploymentPhase.partitionEnergy',
-      valueName: 'operation',
-      month: state.currentMonth,
-    });
-
-    energy.renewableSurplus = surplus;
-  }
+  // REMOVED (Dec 9, 2025): partitionEnergy() - Now handled by EnergyBudgetPhase
+  // Priority-based allocation (essential → high → climate → elective) is in EnergyBudgetPhase.
 
   /**
    * Step 3: Allocate energy to specific technology
    *
-   * Proportional allocation from deployment/operation budgets
+   * INTEGRATION NOTE (Dec 9, 2025):
+   * When state.energyBudget is enabled, this returns 0 because energy allocation
+   * is handled by EnergyBudgetPhase (order 12.4). The effectivenessMultiplier from
+   * EnergyBudgetPhase is consumed by getEnergyMultiplier() instead.
+   *
+   * When energy budget is NOT enabled, falls back to legacy tech.energyRequirement
+   * (for backwards compatibility during transition).
    *
    * @param state Game state
    * @param tech Technology definition
-   * @returns TWh allocated to this tech
+   * @returns TWh allocated to this tech (0 if energy budget enabled)
    */
   private allocateEnergy(state: GameState, tech: TechDefinition): number {
-    const { energy } = state.resourceEconomy;
-
-    if (!energy.partitioning || !tech.energyRequirement) {
+    // NEW INTEGRATION: If energy budget system is active, energy allocation
+    // is already handled by EnergyBudgetPhase. Return 0 here, getEnergyMultiplier()
+    // will read from state.energyBudget.allocations[category].effectivenessMultiplier.
+    if (state.energyBudget?.enabled) {
       return 0;
     }
 
-    // Energy requirement must be a number (TWh/month), not an object
-    if (typeof tech.energyRequirement !== 'number') {
-      return 0; // Cleanup techs use different energy model
+    // LEGACY FALLBACK (pre-Dec 9, 2025): Use tech.energyRequirement
+    // This code path preserved for backwards compatibility during transition.
+    if (!tech.energyRequirement || typeof tech.energyRequirement !== 'number') {
+      return 0;
     }
 
-    // Determine if tech is in deployment phase (building) or operational phase (running)
-    const isDeployment = tech.deploymentPhase === 'planning' ||
-                         tech.deploymentPhase === 'pilot' ||
-                         tech.deploymentPhase === 'early_deploy' ||
-                         tech.deploymentPhase === 'scaling';
-
-    const budget = isDeployment ? energy.partitioning.deployment : energy.partitioning.operation;
-    const requirement = tech.energyRequirement;
-
-    // For now, simple proportional allocation
-    // Future enhancement: priority-based allocation
-    return Math.min(budget, requirement);
+    // Return the tech's energy requirement as a simple allocation
+    // (No partitioning system - that was removed)
+    return tech.energyRequirement;
   }
 
   /**
