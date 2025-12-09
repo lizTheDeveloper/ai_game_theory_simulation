@@ -136,16 +136,16 @@ The project SHALL preserve implementation histories and research context.
 
 ## Current Status
 
-**Session:** 55 (December 5, 2025)
-**Mode:** Maintenance (17 consecutive maintenance sessions: 34-55)
+**Session:** 60 (December 9, 2025)
+**Mode:** Maintenance (18 consecutive maintenance sessions: 34-60)
 **Research Quality:** A- (68.8% sources from 2024-2025)
-**Architecture Health:** A- (0 CRITICAL, 0 HIGH blockers)
-**Test Coverage:** 82.47% (462+ tests passing)
+**Architecture Health:** A- (0 CRITICAL, 0 HIGH blockers - 6 HIGH issues deferred to backlog)
+**Test Coverage:** 82.47% (462+ tests passing, 6 known test import failures)
 **System State:** Production-ready, all quality gates GREEN
 
-**Token Conservation:** ACTIVE (target 50% normal usage)
-- Strategy: CRITICAL/HIGH only, 4h worker intervals
-- MEDIUM/LOW: Deferred until token budget restored
+**Token Conservation:** DISABLED (per PM request Dec 4, 2025)
+- Strategy: Full productivity mode restored
+- Workers: Running every 4 hours (was hourly)
 
 ---
 
@@ -165,8 +165,15 @@ None (system in maintenance mode)
 - M-6: Enhanced radiation modeling (acute vs chronic, tissue sensitivity) - COMPLETE Dec 8, 2025
 - Missing Climate Systems (4 subsystems: M-4 abrupt sea level rise, compound events, social tipping, M-7 hysteresis) - COMPLETE Dec 5-7, 2025
 
-### MEDIUM Priority
-None (system in maintenance mode)
+### ACTIVE MEDIUM Priority
+- Energy Budget Constraints (datacenter/AI GPU growth limits, UBI compute drain)
+  - Status: Phase 1.1 - Research (Cynthia)
+  - Orchestrator: 6aa9bb0c
+  - Target completion: Dec 9, 09:15-10:15 UTC
+
+### MEDIUM Priority (Backlog)
+- Hindcast tuning (1950-2024 historical validation)
+- Calibration protocol (parameter optimization workflow)
 
 ### LOW Priority
 - L-2: Enhanced biodiversity modeling (food web collapse)
@@ -219,6 +226,7 @@ See: `docs/EMOJI_QUICK_REFERENCE.md` (one-page cheat sheet)
 See: `docs/sessions.md` for complete session milestone tracking
 
 **Recent Sessions:**
+- Session 60 (Dec 9): Coffee break + archival + Energy Budget launch (~90k tokens)
 - Session 55 (Dec 5): Maintenance mode (early exit, ~10k tokens)
 - Session 54 (Dec 5): M-4 Complete - Abrupt Sea Level Rise (~15k tokens)
 - Session 51 (Dec 3): Validation cycle (research + architecture, ~8k tokens)
