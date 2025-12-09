@@ -160,9 +160,13 @@ None (system in maintenance mode)
 ### HIGH Priority
 None (system in maintenance mode)
 
+### COMPLETED MEDIUM Priority
+- M-5: Threshold uncertainty modeling (distribution sampling library) - COMPLETE Dec 7, 2025
+- M-6: Enhanced radiation modeling (acute vs chronic, tissue sensitivity) - COMPLETE Dec 8, 2025
+- Missing Climate Systems (4 subsystems: M-4 abrupt sea level rise, compound events, social tipping, M-7 hysteresis) - COMPLETE Dec 5-7, 2025
+
 ### MEDIUM Priority
-- M-5: Threshold uncertainty modeling (distribution sampling library)
-- M-6: Enhanced radiation modeling (acute vs chronic, tissue sensitivity)
+None (system in maintenance mode)
 
 ### LOW Priority
 - L-2: Enhanced biodiversity modeling (food web collapse)
