@@ -31,13 +31,9 @@ export class ExtinctionDebtPhase implements SimulationPhase {
   ];
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
-    // Initialize extinction debt state if not present
-    if (!state.extinctionDebt) {
-      state.extinctionDebt = {
-        committedExtinctions: [],
-        totalDebt: 0,
-      };
-    }
+    // NOTE: extinctionDebt is initialized in planetaryBoundaries.ts (queueExtinctionDebt)
+    // which runs at order 21.0 (before this phase at 38.0).
+    // No need for duplicate initialization here.
 
     // Skip if no committed extinctions
     if (state.extinctionDebt.committedExtinctions.length === 0) {
