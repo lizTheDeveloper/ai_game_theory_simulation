@@ -150,10 +150,10 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 2. ✅ Add contradictory evidence section (Mongabay, expert quotes)
 3. ✅ Add May 2025 industry update (layoffs)
 4. ✅ Mark Gen 3 claims as [UNVERIFIED INDUSTRY DATA]
-5. ⚠️ Reconcile energy requirement data
-6. ⚠️ Update Monte Carlo range to 25-50 years
+5. ✅ Reconcile energy requirement data (NOTE added explaining 2-600x variation)
+6. ⚠️ Update Monte Carlo range to 25-50 years (CODE: currently 300 months fixed; recommend stochastic in future threshold uncertainty work)
 
-**Next Steps:** Corrections by original researcher → Re-verification → Monte Carlo N≥10
+**Next Steps:** All research corrections complete. Code uses conservative 300 months (25 years). Monte Carlo validation with stochastic deployment timescales deferred to MEDIUM-5 (Threshold Uncertainty Modeling).
 
 ---
 
