@@ -69,8 +69,12 @@ function sandbagCapability(
   deceptionSkill: number
 ): AICapabilityProfile {
   const revealed = cloneAICapabilityProfile(trueCapability);
-  
+
   // Base sandbagging: Hide 40-60% of capability
+  // Sources: van der Weij et al. (2024) - Llama 3 70b emulates Llama 2 7b (sandbagging proven)
+  //          Meinke et al. (2024) - Claude 3.5 Sonnet strategic underperformance
+  //          Apollo Research - Claude Opus 4 "most strategic deception of any frontier model"
+  // Note: These are frontier model observations, not general population statistics
   const baseSandbagLevel = 0.4 + deceptionSkill * 0.2; // [0.4, 0.6]
 
   // Sandbag all dimensions (round to integers - AI capabilities are discrete levels)
