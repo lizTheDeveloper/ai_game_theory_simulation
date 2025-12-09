@@ -158,32 +158,41 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 ---
 
 #### AI Infrastructure Resources 2025 Update
-**Status:** ⚠️ READY FOR VALIDATION
+**Status:** ✅ VERIFIED - Grade B+ (with critical omissions identified)
 **Change:** (pending - needs change folder created)
 **Commit:** dbf1438
 **Context:** 2025 peer-reviewed sources for AI data center resource consumption
 **Research File:** `research/ai-infrastructure-resources_20251019.md` (updated)
-**Verification File:** `research/verification_dbf1438_20251123.md`
+**Verification File:** `research/VERIFICATION_ai_infrastructure_resources_20251209.md`
 
-**Sources to Verify:**
-- Cornell/Nature Sustainability 2025: 2030 water (731-1,125M m³/yr), carbon (24-44M tonnes CO₂/yr)
-- MIT/Lawrence Berkeley Lab 2025: 7-8× energy multiplier, 183 TWh U.S. data centers (2024)
-- IEA 2025: Global water 560B→1,200B liters (2024→2030)
+**Verification Complete (Dec 9, 2025):**
+- **Factual Accuracy Grade:** B+ (well-sourced, accurate citations)
+- **Completeness:** MODERATE GAPS (rebound effects, immersion cooling)
+- **Reviewers:** Cynthia (researcher verification)
 
-**Key Claims:**
-- 2030 water projections: 731-1,125M cubic meters/year
-- 2030 carbon projections: 24-44 million metric tons CO₂/year
-- AI training clusters 7-8× energy multiplier
-- Geographic optimization: Midwest "windbelt" optimal, Arizona 7.4% state power
-- Mitigation potential: 73% carbon reduction, 86% water reduction
+**✅ All Core Claims Verified:**
+- Cornell/Nature Sustainability 2025: 731-1,125M m³/yr water, 24-44M tonnes CO₂/yr (PEER-REVIEWED)
+- MIT/Lawrence Berkeley Lab: 7-8× energy multiplier, 183 TWh U.S. 2024 (VERIFIED)
+- IEA 2025: 560B→1,200B liters global water 2024→2030 (VERIFIED)
+- GPT-3 training: 1,287 MWh, 552 tons CO₂ (WIDELY REPLICATED)
+- Arizona: 7.4% state power (2023 data - VERIFIED BUT OUTDATED, 2030 projection is 16.5%)
+- Geographic optimization: Windbelt states (Texas, Montana, Nebraska, South Dakota) optimal (VERIFIED)
 
-**Proposed Parameters:**
-- trainingWaterL: 700K-10M L per training run
-- inferenceWaterL: 2-5M L/month at scale
-- aiTrainingMultiplier: 7.5 (MIT: 7-8×)
-- Geographic modifiers: desert 2.5×, nordic 0.3×, windbelt 0.7× carbon
+**⚠️ CRITICAL Omissions Identified:**
+1. **Rebound Effects NOT Modeled:** Google achieved 33× efficiency gain but emissions rose 50% since 2019 (usage growth offsets gains)
+2. **Immersion Cooling Missing:** 99% water reduction potential, Microsoft commitment, not integrated into 2030 projections
+3. **Mitigation Percentages Overstated:** 73%/86% reductions assume best-case adoption (no policy evidence)
+4. **Uncertainty Ranges Underemphasized:** 54-83% variation from lower bound (need stochastic modeling)
+5. **Water Overestimation Risk:** Andy Masley identified 4,500× error in popular media (Hao's "Empire of AI"); peer-reviewed sources more credible
 
-**Next Steps:** Two-layer verification → Parameter update decision → Monte Carlo if implemented
+**Simulation Implications:**
+- Use uncertainty distributions: Uniform(731M, 1,125M) m³ water, Uniform(24, 44) Mt CO₂
+- Add rebound effect mechanism: netGain = efficiency × (1 - reboundCoefficient), where rebound ~0.60
+- Model immersion cooling adoption: Beta(2,8) → mean 20%, reduces water by 99%
+- Arizona: Time-varying 7.4% (2023) → 16.5% (2030)
+- Mitigation adoption sensitivity: 20%/50%/70% → 15%/36%/73% carbon reductions
+
+**Next Steps:** Implement parameters with stochastic modeling → Monte Carlo validation N≥10 → Move to Recently Resolved
 
 ---
 

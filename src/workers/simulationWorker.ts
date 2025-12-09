@@ -1355,30 +1355,27 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
     month: state.currentMonth
   });
 
-  // Multi-Paradigm DUI - normalized to [0,1] from [0,100]
-  const westernLiberalValue = assertStateProperty(state, 'multiParadigmDUI.paradigmScores.western.value', {
+  // Multi-Paradigm DUI - keep as [0,100] for dashboard display
+  // Dashboard uses these directly (e.g., "65.0") and compares against thresholds like "< 20"
+  const westernLiberalIndex = assertStateProperty(state, 'multiParadigmDUI.paradigmScores.western.value', {
     location: 'captureSnapshot',
     month: state.currentMonth
   });
-  const westernLiberalIndex = westernLiberalValue / 100;
 
-  const developmentValue = assertStateProperty(state, 'multiParadigmDUI.paradigmScores.development.value', {
+  const developmentIndex = assertStateProperty(state, 'multiParadigmDUI.paradigmScores.development.value', {
     location: 'captureSnapshot',
     month: state.currentMonth
   });
-  const developmentIndex = developmentValue / 100;
 
-  const ecologicalValue = assertStateProperty(state, 'multiParadigmDUI.paradigmScores.ecological.value', {
+  const ecologicalIndex = assertStateProperty(state, 'multiParadigmDUI.paradigmScores.ecological.value', {
     location: 'captureSnapshot',
     month: state.currentMonth
   });
-  const ecologicalIndex = ecologicalValue / 100;
 
-  const indigenousValue = assertStateProperty(state, 'multiParadigmDUI.diagnosticLenses.indigenous.value', {
+  const indigenousIndex = assertStateProperty(state, 'multiParadigmDUI.diagnosticLenses.indigenous.value', {
     location: 'captureSnapshot',
     month: state.currentMonth
   });
-  const indigenousIndex = indigenousValue / 100;
 
   // Quality of Life Breakdown (17 dimensions across 6 tiers)
   // Extract from qualityOfLifeSystems for detailed drill-down
@@ -2060,16 +2057,17 @@ function calculateDelta(previous: StateSnapshot, current: GameState, forceFull =
   }
 
   // Multi-Paradigm DUI (Oct 27, 2025 - Bug Fix: paradigm scores weren't being sent after month 0)
-  if (Math.abs(previous.westernLiberalIndex - currentSnapshot.westernLiberalIndex) > 0.01) {
+  // Values are 0-100 scale, so threshold of 1.0 = 1% change
+  if (Math.abs(previous.westernLiberalIndex - currentSnapshot.westernLiberalIndex) > 1.0) {
     delta.westernLiberalIndex = currentSnapshot.westernLiberalIndex;
   }
-  if (Math.abs(previous.developmentIndex - currentSnapshot.developmentIndex) > 0.01) {
+  if (Math.abs(previous.developmentIndex - currentSnapshot.developmentIndex) > 1.0) {
     delta.developmentIndex = currentSnapshot.developmentIndex;
   }
-  if (Math.abs(previous.ecologicalIndex - currentSnapshot.ecologicalIndex) > 0.01) {
+  if (Math.abs(previous.ecologicalIndex - currentSnapshot.ecologicalIndex) > 1.0) {
     delta.ecologicalIndex = currentSnapshot.ecologicalIndex;
   }
-  if (Math.abs(previous.indigenousIndex - currentSnapshot.indigenousIndex) > 0.01) {
+  if (Math.abs(previous.indigenousIndex - currentSnapshot.indigenousIndex) > 1.0) {
     delta.indigenousIndex = currentSnapshot.indigenousIndex;
   }
 
