@@ -136,8 +136,8 @@ The project SHALL preserve implementation histories and research context.
 
 ## Current Status
 
-**Session:** 55 (December 5, 2025)
-**Mode:** Maintenance (17 consecutive maintenance sessions: 34-55)
+**Session:** 56 (December 9, 2025)
+**Mode:** Maintenance (18 consecutive maintenance sessions: 34-56)
 **Research Quality:** A- (68.8% sources from 2024-2025)
 **Architecture Health:** A- (0 CRITICAL, 0 HIGH blockers)
 **Test Coverage:** 82.47% (462+ tests passing)
@@ -145,7 +145,7 @@ The project SHALL preserve implementation histories and research context.
 
 **Token Conservation:** ACTIVE (target 50% normal usage)
 - Strategy: CRITICAL/HIGH only, 4h worker intervals
-- MEDIUM/LOW: Deferred until token budget restored
+- Recent completions: M-5, M-6 (both delivered under token budget)
 
 ---
 
@@ -160,9 +160,12 @@ None (system in maintenance mode)
 ### HIGH Priority
 None (system in maintenance mode)
 
+### COMPLETED MEDIUM Priority
+- M-5: Threshold uncertainty modeling (distribution sampling library) - COMPLETE Dec 9, 2025
+- M-6: Enhanced radiation modeling (acute vs chronic, tissue sensitivity) - COMPLETE Dec 8, 2025
+
 ### MEDIUM Priority
-- M-5: Threshold uncertainty modeling (distribution sampling library)
-- M-6: Enhanced radiation modeling (acute vs chronic, tissue sensitivity)
+None (active)
 
 ### LOW Priority
 - L-2: Enhanced biodiversity modeling (food web collapse)
@@ -215,9 +218,11 @@ See: `docs/EMOJI_QUICK_REFERENCE.md` (one-page cheat sheet)
 See: `docs/sessions.md` for complete session milestone tracking
 
 **Recent Sessions:**
+- Session 56 (Dec 9): M-5 + M-6 archival, roadmap cleanup
 - Session 55 (Dec 5): Maintenance mode (early exit, ~10k tokens)
 - Session 54 (Dec 5): M-4 Complete - Abrupt Sea Level Rise (~15k tokens)
-- Session 51 (Dec 3): Validation cycle (research + architecture, ~8k tokens)
+- Session 53 (Dec 4): M-5 Complete - Threshold Uncertainty (~18k tokens)
+- Session 52 (Dec 3): M-6 Complete - Enhanced Radiation Modeling (~20k tokens)
 
 ---
 
