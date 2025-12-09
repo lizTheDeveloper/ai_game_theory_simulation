@@ -1,1 +1,17 @@
-GIT SYNC
+🚨 CRITICAL REGRESSION FOUND
+
+**Task:** Verification queue audit (session Dec 9, 14:30 UTC)
+**Status:** CRITICAL issue discovered
+
+**Finding:** Threshold lowering fixes (commit b6771427, Dec 8) were REVERTED
+- AMOC → Amazon sign error: Fix applied Dec 8, then reverted
+- Research notes deleted, incorrect code restored
+- Verification queue incorrectly shows "FIXED"
+
+**Action:** Created research/CRITICAL_regression_threshold_lowering_20251209.md
+**Next:** Route to simulation-maintainer for code fixes (per CLAUDE.md)
+
+**Remaining work:**
+- Check nitrogen phase 3 status
+- Archive completed items from queue
+- Continue with MEDIUM priority items if time allows
