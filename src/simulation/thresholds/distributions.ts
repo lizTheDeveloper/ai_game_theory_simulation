@@ -448,3 +448,160 @@ export function getDistributionStats(
       return 'Unknown distribution';
   }
 }
+
+/**
+ * Distribution type discriminator
+ */
+export type DistributionType = 'triangular' | 'uniform' | 'normal' | 'log-normal';
+
+/**
+ * Distribution parameters (union type for type safety)
+ */
+export type DistributionParams =
+  | { type: 'triangular'; min: number; mode: number; max: number }
+  | { type: 'uniform'; min: number; max: number }
+  | { type: 'normal'; mean: number; std: number }
+  | { type: 'log-normal'; meanLog: number; stdLog: number };
+
+/**
+ * Sample from a distribution specified by parameters object
+ *
+ * Type-safe wrapper around individual sampling functions.
+ * Use this for configuration-driven sampling (e.g., from JSON config).
+ *
+ * @param params Distribution specification
+ * @param rng Deterministic RNG function (REQUIRED)
+ * @returns Sampled value
+ *
+ * @example
+ * // Configuration-driven sampling
+ * const config: DistributionParams = {
+ *   type: 'triangular',
+ *   min: 0.8,
+ *   mode: 1.5,
+ *   max: 3.4
+ * };
+ * const threshold = sampleDistribution(config, rng);
+ */
+export function sampleDistribution(
+  params: DistributionParams,
+  rng: RNGFunction
+): number {
+  switch (params.type) {
+    case 'triangular':
+      return sampleTriangular(params.min, params.mode, params.max, rng);
+
+    case 'uniform':
+      return sampleUniform(params.min, params.max, rng);
+
+    case 'normal':
+      return sampleNormal(params.mean, params.std, rng);
+
+    case 'log-normal':
+      return sampleLogNormal(params.meanLog, params.stdLog, rng);
+
+    default:
+      // TypeScript exhaustiveness check
+      const _exhaustive: never = params;
+      throw new Error(`❌ Unknown distribution type: ${(_exhaustive as any).type}`);
+  }
+}
+
+/**
+ * 🎲 Sample from threshold distribution (dispatcher)
+ *
+ * Selects appropriate sampling function based on distribution type.
+ *
+ * @param distribution - Distribution specification from TippingElement
+ * @param rng - REQUIRED RNG function (must be deterministic with seed)
+ * @returns Sampled threshold value (°C)
+ */
+export function sampleThresholdDistribution(
+  distribution: {
+    type: 'triangular' | 'uniform' | 'normal' | 'log-normal';
+    params: {
+      min?: number;
+      mode?: number;
+      max?: number;
+      mean?: number;
+      std?: number;
+      meanLog?: number;
+      stdLog?: number;
+    };
+  },
+  rng: RNGFunction
+): number {
+  // ❌ Fail loudly if RNG missing
+  if (!rng || typeof rng !== 'function') {
+    throw new Error('❌ CRITICAL: RNG required for deterministic distribution sampling');
+  }
+
+  switch (distribution.type) {
+    case 'triangular': {
+      const { min, mode, max } = distribution.params;
+      if (min === undefined || mode === undefined || max === undefined) {
+        throw new Error(`❌ Triangular distribution missing parameters: min=${min} mode=${mode} max=${max}`);
+      }
+      return sampleTriangular(min, mode, max, rng);
+    }
+
+    case 'uniform': {
+      const { min, max } = distribution.params;
+      if (min === undefined || max === undefined) {
+        throw new Error(`❌ Uniform distribution missing parameters: min=${min} max=${max}`);
+      }
+      return sampleUniform(min, max, rng);
+    }
+
+    case 'normal': {
+      const { mean, std } = distribution.params;
+      if (mean === undefined || std === undefined) {
+        throw new Error(`❌ Normal distribution missing parameters: mean=${mean} std=${std}`);
+      }
+      return sampleNormal(mean, std, rng);
+    }
+
+    case 'log-normal': {
+      const { meanLog, stdLog } = distribution.params;
+      if (meanLog === undefined || stdLog === undefined) {
+        throw new Error(`❌ Log-normal distribution missing parameters: meanLog=${meanLog} stdLog=${stdLog}`);
+      }
+      return sampleLogNormal(meanLog, stdLog, rng);
+    }
+
+    default:
+      throw new Error(`❌ Unknown distribution type: ${(distribution as any).type}`);
+  }
+}
+
+/**
+ * Helper: Convert 90% confidence interval to normal distribution parameters
+ *
+ * If literature reports "90% CI: [min, max]", this converts to mean/std for normal sampling.
+ * Note: 90% CI ≈ mean ± 1.645σ
+ *
+ * @param min 5th percentile (lower bound of 90% CI)
+ * @param max 95th percentile (upper bound of 90% CI)
+ * @returns { mean, std } for use with sampleNormal
+ *
+ * @example
+ * // Literature reports "90% CI: 1.4-8.0°C"
+ * const { mean, std } = confidenceIntervalToNormal(1.4, 8.0);
+ * const threshold = sampleNormal(mean, std, rng);
+ */
+export function confidenceIntervalToNormal(
+  min: number,
+  max: number
+): { mean: number; std: number } {
+  if (min >= max) {
+    throw new Error(
+      `❌ Invalid confidence interval: min (${min}) must be < max (${max})`
+    );
+  }
+
+  const mean = (min + max) / 2;
+  // 90% CI covers ±1.645 standard deviations
+  const std = (max - min) / (2 * 1.645);
+
+  return { mean, std };
+}
