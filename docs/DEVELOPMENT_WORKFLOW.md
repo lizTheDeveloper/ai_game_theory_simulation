@@ -7,6 +7,7 @@ Detailed workflow guidance for implementing features in the research simulation.
 - [Simple Task Workflow](#simple-task-workflow)
 - [Research Standards](#research-standards)
 - [Quality Gates](#quality-gates)
+- [Calibration Coordination Protocol](#calibration-coordination-protocol)
 - [Phase-Based Implementation](#phase-based-implementation)
 
 ## Multi-Agent Workflow (Default)
@@ -273,6 +274,103 @@ Two mandatory gates in the multi-agent workflow:
 **Outcome:**
 - **PASS:** Feature complete, ready to merge
 - **CRITICAL/HIGH issues:** Must address before proceeding
+
+## Calibration Coordination Protocol
+
+**Added:** December 9, 2025
+**Purpose:** Prevent calibration conflicts in multi-worker architecture
+
+### The Problem
+
+Session 21 (Nov 30, 2025) discovered **calibration divergence**:
+- Two workers independently calibrated ocean pH parameters
+- Competing calibrations: "70% reduction" vs "50% reduction"
+- Result: Merge conflicts, wasted research effort, uncertain research backing
+
+**Root cause:** Multi-worker git architecture enables parallel work, but lacks coordination mechanism for calibration.
+
+### The Solution: Ownership Registry
+
+**Registry:** `docs/CALIBRATION_OWNERSHIP.md`
+
+Tracks active calibrations to prevent conflicts. Before starting calibration work:
+
+### 5-Step Protocol
+
+#### 1. Check Registry (Before Starting)
+```bash
+# Read Active Calibrations table in docs/CALIBRATION_OWNERSHIP.md
+# If parameter status = ACTIVE → STOP (already being worked on)
+# If parameter status = STABLE → Proceed to step 2
+```
+
+#### 2. Claim Ownership (Mark ACTIVE)
+Update `docs/CALIBRATION_OWNERSHIP.md`:
+
+```markdown
+| Parameter | Status | Worker | Start Date | Research Branch | Notes |
+|-----------|--------|--------|------------|-----------------|-------|
+| ocean.pH.rate | ACTIVE | researcher-20251209 | 2025-12-09 | auto/calibrate-ph | Tuning to IPCC AR6 |
+```
+
+#### 3. Do Research & Calibration
+- Create research file: `research/{parameter}_calibration_{YYYYMMDD}.md`
+- Use template: `research/calibration_template.md`
+- Document: Motivation, research backing, validation, implementation
+- Include 2+ peer-reviewed sources (2024-2025 preferred)
+
+#### 4. Complete & Commit
+- Commit calibration changes to branch
+- Move to "Recently Completed" table in ownership registry
+- Mark status = STABLE
+
+#### 5. Archive After 30 Days
+- Move to "Historical Calibrations" section
+- Permanent record preserved in git history
+
+### When to Use Registry
+
+✅ **DO use registry when:**
+- Tuning simulation parameters based on new research
+- Adjusting mechanics to match empirical data
+- Running hindcast validation and adjusting for accuracy
+- Calibrating breakthrough tech effectiveness
+
+❌ **DON'T use registry for:**
+- Bug fixes (not calibration)
+- New feature development (different workflow)
+- Documentation updates
+- Test coverage improvements
+
+### Calibration Documentation Template
+
+**Location:** `research/calibration_template.md`
+
+**Required sections:**
+1. **Motivation** - Why is this calibration needed?
+2. **Research Backing** - 2+ peer-reviewed sources (2024-2025)
+3. **Current Value** - What exists now, with rationale
+4. **Proposed Value** - New value with calculation/justification
+5. **Validation** - Hindcast/Monte Carlo/physical constraints
+6. **Implementation** - Files modified, code changes, side effects
+7. **Uncertainty & Limitations** - Known uncertainties, sensitivity
+8. **Next Steps** - Future calibration needs
+
+### Example: Ocean pH Calibration
+
+**See:** `research/ocean_pH_calibration_20251209.md`
+
+Session 21 ocean pH conflict resolved via:
+- Chose "70% reduction" (IPCC AR6 SSP2-4.5 backing)
+- Rejected "50% reduction" (no documented research)
+- Documented rationale to prevent future conflicts
+
+### Benefits
+
+- **Zero calibration conflicts** - Workers don't duplicate effort
+- **Research integrity** - All calibrations have documented backing
+- **Traceability** - Ownership registry tracks who worked on what
+- **Knowledge preservation** - Rationale survives in git history
 
 ## Phase-Based Implementation
 
