@@ -14,7 +14,12 @@
 
 import { TippingPointSystem, TIPPING_ELEMENTS } from '../types/tipping-points';
 import { assertFinite } from './utils/assertions';
-import { sampleThresholdDistribution } from './utils/distributionSampling';
+import {
+  sampleTriangular,
+  sampleUniform,
+  sampleNormal,
+  sampleLogNormal,
+} from './thresholds/distributions';
 
 /**
  * Initialize the tipping point system state
@@ -39,10 +44,44 @@ export function initializeTippingPointSystem(rng: () => number): TippingPointSys
       let sampledThreshold: number | undefined;
 
       if (element.thresholdDistribution) {
-        sampledThreshold = sampleThresholdDistribution(
-          element.thresholdDistribution,
-          rng
-        );
+        // 🎲 Dispatcher for distribution sampling (inline from distributionSampling.ts)
+        const dist = element.thresholdDistribution;
+        switch (dist.type) {
+          case 'triangular': {
+            const { min, mode, max } = dist.params;
+            if (min === undefined || mode === undefined || max === undefined) {
+              throw new Error(`❌ Triangular distribution missing parameters for ${element.id}: min=${min} mode=${mode} max=${max}`);
+            }
+            sampledThreshold = sampleTriangular(min, mode, max, rng);
+            break;
+          }
+          case 'uniform': {
+            const { min, max } = dist.params;
+            if (min === undefined || max === undefined) {
+              throw new Error(`❌ Uniform distribution missing parameters for ${element.id}: min=${min} max=${max}`);
+            }
+            sampledThreshold = sampleUniform(min, max, rng);
+            break;
+          }
+          case 'normal': {
+            const { mean, std } = dist.params;
+            if (mean === undefined || std === undefined) {
+              throw new Error(`❌ Normal distribution missing parameters for ${element.id}: mean=${mean} std=${std}`);
+            }
+            sampledThreshold = sampleNormal(mean, std, rng);
+            break;
+          }
+          case 'log-normal': {
+            const { meanLog, stdLog } = dist.params;
+            if (meanLog === undefined || stdLog === undefined) {
+              throw new Error(`❌ Log-normal distribution missing parameters for ${element.id}: meanLog=${meanLog} stdLog=${stdLog}`);
+            }
+            sampledThreshold = sampleLogNormal(meanLog, stdLog, rng);
+            break;
+          }
+          default:
+            throw new Error(`❌ Unknown distribution type for ${element.id}: ${(dist as any).type}`);
+        }
 
         // Validate sampled threshold
         assertFinite(sampledThreshold, {
