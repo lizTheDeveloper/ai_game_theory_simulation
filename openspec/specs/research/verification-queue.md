@@ -89,6 +89,67 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 
 ### MEDIUM Priority
 
+#### Energy Budget Constraints
+**Status:** ✅ CONDITIONAL PASS (Dec 9, 2025)
+**Change:** openspec/changes/energy-budget-constraints/
+**Context:** Energy bottleneck prevents realistic deployment - DAC needs 34-51% global electricity
+**Research File:** `research/energy_budget_constraints_20251209.md`
+**Validation File:** `reviews/research_validation_energy_budget_20251209.md`
+
+**Validation Complete (Dec 9, 2025):**
+- **Self-Assessment Grade:** B+
+- **Final Grade:** B+ (CONDITIONAL PASS)
+- **Reviewer:** Sylvia (research-skeptic)
+
+**What Was Verified (Grade A-A):**
+- Global electricity capacity (29,000 TWh/year) - IEA, BP, Ember consensus
+- DAC energy requirements (validated but optimistic lower bound)
+- Green hydrogen energy (50-55 kWh/kg) - DOE well-validated
+- Growth projections (STEPS/APS/NZE scenarios) - 2024 actual matches NZE
+
+**Critical Issues Identified:**
+
+1. **AI Datacenter Baseline Discrepancy (Grade B):**
+   - Research: 730 TWh (2024)
+   - IEA Energy and AI (April 2025): 415 TWh
+   - **REQUIRED:** Reduce baseline to 415-460 TWh
+
+2. **DAC Energy Lower Bound Optimistic:**
+   - Research: 1,000 kWh/tCO2
+   - Actual deployments (Climeworks): ~2,000 kWh/tonne
+   - **REQUIRED:** Raise lower bound to 1,200 kWh/tCO2
+
+3. **Priority Framework Lacks Empirical Validation (Grade C+):**
+   - Percentages not from peer-reviewed research
+   - Sovacool 2022 conceptual only
+   - UK/EU rationing was weeks, not decades
+   - **REQUIRED:** Document as "modeling simplification"
+
+4. **Effectiveness Multiplier Arbitrary (Grade C):**
+   - Exponent 1.5 has no citation
+   - Most technologies scale linearly
+   - **REQUIRED:** Use tech-specific exponents (1.0-1.3)
+
+5. **Jevons Paradox Omitted:**
+   - Rebound effects ignored
+   - **RECOMMENDED:** Add rebound coefficient (0.3-0.6)
+
+**Mandatory Parameter Adjustments:**
+
+| Parameter | Research | Recommended |
+|-----------|----------|-------------|
+| AI datacenter 2024 | 730 TWh | 415-460 TWh |
+| DAC energy lower | 1,000 kWh/tCO2 | 1,200 kWh/tCO2 |
+| Effectiveness exponent | 1.5 (all) | 1.0-1.3 (tech-specific) |
+
+**Next Steps:**
+1. Implementation with adjusted parameters
+2. Monte Carlo validation (N>=10)
+3. Sensitivity analysis on priority framework and effectiveness exponents
+4. Architecture review (Quality Gate 2) - optional unless performance concerns
+
+---
+
 #### Nitrogen-Food Phase 3 Technologies
 **Status:** ✅ VERIFIED - Grade B+ (Dec 8, 2025)
 **Change:** (pending - needs change folder created)
