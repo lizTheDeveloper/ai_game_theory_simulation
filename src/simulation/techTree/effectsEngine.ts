@@ -190,38 +190,75 @@ function calculateNovelEntitiesRemediationEffectiveness(
   // 2. ENERGY CONSTRAINT MULTIPLIER (0.0-1.0 function of renewable surplus)
   // Research: Ling 2024 - $20-7,000 trillion/year at current emissions = 4-40% of global energy
   // Conservative estimate: 10,000 TWh/year for PFAS remediation at scale (~30% of global electricity)
+  //
+  // ARCHITECTURE FIX H-1c (Dec 9, 2025): Use EnergyBudgetPhase allocations instead of old renewable surplus
 
-  // Get tech definition for energy requirement
+  // Get tech definition for energy category mapping
   const tech = getTechById(techId);
-  const energyRequired = (tech?.energyRequirement && typeof tech.energyRequirement !== 'number' && tech.energyRequirement.kWhPerM3) ?
-    tech.energyRequirement.kWhPerM3 * 10_000_000 / 1_000_000_000 : // Convert to TWh/year (assuming 10M m³/year treated)
-    10_000; // Default: 10,000 TWh/year (conservative estimate for global-scale remediation)
 
-  // PERFORMANCE OPTIMIZATION (Nov 14, 2025): Use cached renewable capacity if provided
-  // This prevents recalculating in hot path (called once per deployed remediation tech)
-  const energySystem = gameState.resourceEconomy.energy;
-  const totalRenewableCapacity = cachedRenewableCapacity !== undefined ?
-    cachedRenewableCapacity :
-    (
-      assertStateProperty(energySystem.capacity, 'solar', {location: 'calculateNovelEntitiesRemediationEffectiveness:renewableCapacity', month: gameState.currentMonth}) +
-      assertStateProperty(energySystem.capacity, 'wind', {location: 'calculateNovelEntitiesRemediationEffectiveness:renewableCapacity', month: gameState.currentMonth}) +
-      assertStateProperty(energySystem.capacity, 'hydro', {location: 'calculateNovelEntitiesRemediationEffectiveness:renewableCapacity', month: gameState.currentMonth}) +
-      assertStateProperty(energySystem.capacity, 'fusion', {location: 'calculateNovelEntitiesRemediationEffectiveness:renewableCapacity', month: gameState.currentMonth})
-    );
+  let energyMultiplier: number;
 
-  const renewableCapacity = totalRenewableCapacity > 0 ? totalRenewableCapacity : 1000; // Default: 1,000 TWh total renewable capacity
-  const currentConsumption = assertStateProperty(energySystem, 'totalDemand', {
-    location: 'calculateNovelEntitiesRemediationEffectiveness:energyDemand',
-    month: gameState.currentMonth
-  });
-  const renewableSurplus = Math.max(0, renewableCapacity - currentConsumption);
+  // Check if energy budget system is enabled
+  if (!gameState.energyBudget?.enabled || !gameState.energyBudget.allocations) {
+    console.warn(`⚠️ EnergyBudgetPhase not enabled in calculateNovelEntitiesRemediationEffectiveness, using legacy calculation`);
 
-  const energyMultiplier = assertFinite(Math.min(1.0, renewableSurplus / energyRequired), {
-    location: 'calculateNovelEntitiesRemediationEffectiveness:energyMultiplier',
-    valueName: 'energyMultiplier',
-    month: gameState.currentMonth,
-    additionalInfo: { renewableSurplus, energyRequired, renewableCapacity }
-  });
+    // LEGACY FALLBACK: Calculate renewable surplus
+    const energyRequired = (tech?.energyRequirement && typeof tech.energyRequirement !== 'number' && tech.energyRequirement.kWhPerM3) ?
+      tech.energyRequirement.kWhPerM3 * 10_000_000 / 1_000_000_000 : // Convert to TWh/year (assuming 10M m³/year treated)
+      10_000; // Default: 10,000 TWh/year (conservative estimate for global-scale remediation)
+
+    // Use cached renewable capacity if provided
+    const energySystem = gameState.resourceEconomy.energy;
+    const totalRenewableCapacity = cachedRenewableCapacity !== undefined ?
+      cachedRenewableCapacity :
+      (
+        assertStateProperty(energySystem.capacity, 'solar', {location: 'calculateNovelEntitiesRemediationEffectiveness:renewableCapacity', month: gameState.currentMonth}) +
+        assertStateProperty(energySystem.capacity, 'wind', {location: 'calculateNovelEntitiesRemediationEffectiveness:renewableCapacity', month: gameState.currentMonth}) +
+        assertStateProperty(energySystem.capacity, 'hydro', {location: 'calculateNovelEntitiesRemediationEffectiveness:renewableCapacity', month: gameState.currentMonth}) +
+        assertStateProperty(energySystem.capacity, 'fusion', {location: 'calculateNovelEntitiesRemediationEffectiveness:renewableCapacity', month: gameState.currentMonth})
+      );
+
+    const renewableCapacity = totalRenewableCapacity > 0 ? totalRenewableCapacity : 1000;
+    const currentConsumption = assertStateProperty(energySystem, 'totalDemand', {
+      location: 'calculateNovelEntitiesRemediationEffectiveness:energyDemand',
+      month: gameState.currentMonth
+    });
+    const renewableSurplus = Math.max(0, renewableCapacity - currentConsumption);
+
+    energyMultiplier = assertFinite(Math.min(1.0, renewableSurplus / energyRequired), {
+      location: 'calculateNovelEntitiesRemediationEffectiveness:energyMultiplier',
+      valueName: 'energyMultiplier',
+      month: gameState.currentMonth,
+      additionalInfo: { renewableSurplus, energyRequired, renewableCapacity }
+    });
+  } else {
+    // NEW APPROACH: Use EnergyBudgetPhase allocations
+    const category = mapTechToEnergyCategoryForRemediation(techId);
+
+    if (!category) {
+      console.warn(`⚠️ Tech '${techId}' has no energy category mapping, assuming full energy availability`);
+      energyMultiplier = 1.0;
+    } else {
+      const allocation = gameState.energyBudget.allocations[category];
+      if (!allocation) {
+        console.warn(`⚠️ No energy allocation for category '${category}' (tech: ${techId}), using default 50%`);
+        energyMultiplier = 0.5;
+      } else {
+        energyMultiplier = assertFinite(allocation.effectivenessMultiplier, {
+          location: 'calculateNovelEntitiesRemediationEffectiveness:energyMultiplier',
+          valueName: 'energyMultiplier',
+          month: gameState.currentMonth,
+          additionalInfo: {
+            techId,
+            category,
+            demandTWh: allocation.demandTWh,
+            allocatedTWh: allocation.allocatedTWh,
+            effectivenessMultiplier: allocation.effectivenessMultiplier
+          }
+        });
+      }
+    }
+  }
 
   // 3. CONCENTRATION FACTOR (0.001-1.0 dilution penalty)
   // Research: Fennell 2024 - Technologies work at mg/L (wastewater), environment is pg/L to ng/L (10^6-10^9× dilution)
@@ -3324,5 +3361,23 @@ export function logTechEffects(
       console.log(`   P Recovery: ${(gameState.phosphorusSystem.recoveryRate * 100).toFixed(0)}%`);
     }
   }
+}
+
+/**
+ * Map technology ID to energy category (matches EnergyBudgetPhase mapping)
+ * ARCHITECTURE FIX H-1c (Dec 9, 2025): Shared mapping logic for energy budget integration
+ */
+function mapTechToEnergyCategoryForRemediation(techId: string): string | null {
+  // Novel entities cleanup technologies
+  if (techId.includes('pfas') || techId.includes('PFAS')) return 'pfas-cleanup';
+  if (techId.includes('microplastic') || techId.includes('plastic-cleanup')) return 'microplastic-cleanup';
+  if (techId.includes('novel-entities') || techId.includes('pollution-cleanup')) return 'pollution-cleanup';
+
+  // Climate technologies (some remediation techs have climate co-benefits)
+  if (techId.includes('dac') || techId.includes('air-capture')) return 'dac';
+  if (techId.includes('hydrogen')) return 'green-hydrogen';
+  if (techId.includes('mineralization') || techId.includes('weathering')) return 'carbon-mineralization';
+
+  return null; // Technology doesn't have energy requirements
 }
 
