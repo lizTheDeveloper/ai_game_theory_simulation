@@ -158,11 +158,14 @@ None (threshold lowering regression FIXED Dec 9, 2025 - commit 3f3118de, 7130c7e
 - HIGH-7: Conditional climate stability floor (research debate finding) - COMPLETE Dec 7, 2025
 - H-1: Energy budget system integration (all energy consumers now use EnergyBudgetPhase) - COMPLETE Dec 9, 2025
 - H-2: Duplicate energy calculation removal (ClimateDeploymentPhase cleanup) - COMPLETE Dec 9, 2025
+- H-3: Biosphere integrity dual-write conflict (ExtinctionDebtPhase overwriting PlanetaryBoundariesPhase) - FIXED Dec 9, 2025 (commit 2504101f)
+- Research citation updates (3 HIGH priority from Nov 29 audit) - COMPLETE Dec 9, 2025 (commit d2e3713d)
+  - Sleeper agent rate (7.5% → DERIVED ESTIMATE with Hubinger et al. 2024)
+  - Sandbagging level (0.4-0.6 → van der Weij/Meinke 2024 citations)
+  - Detection risk (50% → Gaming-sleeper-detection_20251017.md citation)
 
 ### HIGH Priority
-- Sleeper agent rate justification (7.5% → explicit source comment) - From Nov 29 research audit
-- Sandbagging level citation (0.4-0.6 → van der Weij/Meinke 2024) - From Nov 29 research audit
-- Detection risk calibration (50% baseline → confidence interval) - From Nov 29 research audit
+None (all items complete as of Dec 9, 2025)
 
 ### COMPLETED MEDIUM Priority
 - M-5: Threshold uncertainty modeling (distribution sampling library) - COMPLETE Dec 7, 2025
@@ -228,7 +231,7 @@ See: `docs/EMOJI_QUICK_REFERENCE.md` (one-page cheat sheet)
 See: `docs/sessions.md` for complete session milestone tracking
 
 **Recent Sessions:**
-- Session 62 (Dec 9): CRITICAL regression fix + H-1/H-2 architecture integration + research audit follow-up
+- Session 62 (Dec 9): Research citation updates (3 HIGH) + Architecture review + H-3 dual-write fix - ALL HIGH priority complete
 - Session 60 (Dec 9): Coffee break + archival + Energy Budget launch (~90k tokens)
 - Session 55 (Dec 5): Maintenance mode (early exit, ~10k tokens)
 - Session 54 (Dec 5): M-4 Complete - Abrupt Sea Level Rise (~15k tokens)
