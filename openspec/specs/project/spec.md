@@ -136,10 +136,10 @@ The project SHALL preserve implementation histories and research context.
 
 ## Current Status
 
-**Session:** 62 (December 9, 2025)
-**Mode:** Active work (3 CRITICAL research updates pending from Nov 29 audit)
+**Session:** 62 (December 9, 2025) - COMPLETE
+**Mode:** Maintenance (research citations complete, architecture cleanup in progress)
 **Research Quality:** A- (68.8% sources from 2024-2025)
-**Architecture Health:** B+ (0 CRITICAL, 2 HIGH addressed - all merged)
+**Architecture Health:** B+ (0 CRITICAL, 1 HIGH open - H-1 Energy Budget Underutilization)
 **Test Coverage:** 82.47% (462+ tests passing, 6 known test import failures)
 **System State:** Production-ready, all quality gates GREEN
 
@@ -154,24 +154,39 @@ The project SHALL preserve implementation histories and research context.
 ### CRITICAL Priority
 None (threshold lowering regression FIXED Dec 9, 2025 - commit 3f3118de, 7130c7e6)
 
-### COMPLETED HIGH Priority
-- HIGH-7: Conditional climate stability floor (research debate finding) - COMPLETE Dec 7, 2025
-- H-1: Energy budget system integration (all energy consumers now use EnergyBudgetPhase) - COMPLETE Dec 9, 2025
-- H-2: Duplicate energy calculation removal (ClimateDeploymentPhase cleanup) - COMPLETE Dec 9, 2025
+### COMPLETED HIGH Priority (Dec 9, 2025)
+- HIGH-7: Conditional climate stability floor (research debate finding) - COMPLETE Dec 7
+- Sleeper agent rate justification (7.5% → Hubinger et al. 2024 citation) - COMPLETE Dec 9 (bf078d21)
+- Sandbagging level citation (0.4-0.6 → van der Weij/Meinke 2024) - COMPLETE Dec 9 (bf078d21)
+- Detection risk calibration (50% baseline → research context) - COMPLETE Dec 9 (bf078d21)
+- H-2: Duplicate energy calculation removal (ClimateDeploymentPhase) - COMPLETE Dec 9 (ad27cd41)
 
-### HIGH Priority
-- Sleeper agent rate justification (7.5% → explicit source comment) - From Nov 29 research audit
-- Sandbagging level citation (0.4-0.6 → van der Weij/Meinke 2024) - From Nov 29 research audit
-- Detection risk calibration (50% baseline → confidence interval) - From Nov 29 research audit
+### HIGH Priority (Open)
+- H-1: Energy Budget Underutilization (from Dec 9 architecture review)
+  - Location: EnergyBudgetPhase, energyConstrainedCleanup.ts, novelEntities.ts
+  - Problem: Only ClimateDeploymentPhase uses new energy budget allocations
+  - Impact: Inconsistent energy modeling (two parallel constraint systems)
+  - Effort: MEDIUM (2-3 days)
+  - See: reviews/architecture_integration_review_20251209.md
 
 ### COMPLETED MEDIUM Priority
-- M-5: Threshold uncertainty modeling (distribution sampling library) - COMPLETE Dec 7, 2025
-- M-6: Enhanced radiation modeling (acute vs chronic, tissue sensitivity) - COMPLETE Dec 8, 2025
-- Missing Climate Systems (4 subsystems: M-4 abrupt sea level rise, compound events, social tipping, M-7 hysteresis) - COMPLETE Dec 5-7, 2025
-- Energy Budget Constraints (datacenter/AI GPU growth limits, UBI compute drain) - COMPLETE Dec 9, 2025
+- M-5: Threshold uncertainty modeling (distribution sampling library) - COMPLETE Dec 7
+- M-6: Enhanced radiation modeling (acute vs chronic, tissue sensitivity) - COMPLETE Dec 8
+- Missing Climate Systems (4 subsystems: M-4 abrupt sea level rise, compound events, social tipping, M-7 hysteresis) - COMPLETE Dec 5-7
+- Energy Budget Constraints (datacenter/AI GPU growth limits, UBI compute drain) - COMPLETE Dec 9
+- M-NEW-2: Duplicate extinctionDebt initialization removal - COMPLETE Dec 9 (4c1cb75d)
 
 ### ACTIVE MEDIUM Priority
-None (system in maintenance mode)
+- M-1/M-NEW-1: Phase order dependency not enforced (from Dec 9 architecture review)
+  - Location: EnergyBudgetPhase.ts line 116
+  - Problem: Declares 'tech-tree' dependency but not MeaningRenaissancePhase
+  - Impact: Future maintenance risk if phase ordering changes
+  - Effort: TRIVIAL (add comment or dependency)
+- M-3: Threshold uncertainty code reverted (from Dec 9 architecture review)
+  - Commit: 5eb4b5bd
+  - Problem: Code removed "for backward compatibility" suggests regression
+  - Impact: Reduced model fidelity (uncertainty not propagated)
+  - Effort: UNKNOWN (needs investigation)
 
 ### MEDIUM Priority (Backlog)
 - Hindcast tuning (1950-2024 historical validation)
