@@ -3,29 +3,29 @@
 ## Phase 1: Research (Quality Gate 1)
 
 ### Social Cohesion Parameters
-- [ ] Research post-conflict reconciliation timelines (Rwanda, Bosnia, Northern Ireland case studies)
-- [ ] Extract social fragmentation rates from 2024-2025 polarization literature
-- [ ] Find trust decay/recovery rates from institutional trust research
-- [ ] Validate or update: SOCIAL_COHESION_DECAY_RATE (0.01), SOCIAL_COHESION_RECOVERY_RATE (0.01)
+- [x] Research post-conflict reconciliation timelines (Rwanda, Bosnia, Northern Ireland case studies)
+- [x] Extract social fragmentation rates from 2024-2025 polarization literature
+- [x] Find trust decay/recovery rates from institutional trust research
+- [x] Validate or update: SOCIAL_COHESION_DECAY_RATE (0.01), SOCIAL_COHESION_RECOVERY_RATE (0.01)
 
 ### Migration/Evacuation Parameters
-- [ ] Research evacuation capacity in major disasters (Katrina, Syrian crisis)
-- [ ] Extract IOM/UNHCR data on logistical constraints (2024-2025)
-- [ ] Document differential mobility by income/region
-- [ ] Validate or update: MIGRATION_EVACUATION_FRACTION (0.3)
+- [x] Research evacuation capacity in major disasters (Katrina, Syrian crisis)
+- [x] Extract IOM/UNHCR data on logistical constraints (2024-2025)
+- [x] Document differential mobility by income/region
+- [x] Validate or update: MIGRATION_EVACUATION_FRACTION (0.3)
 
 ### Economic Collapse Parameters
-- [ ] Research IMF/World Bank economic collapse definitions
-- [ ] Extract G20/systemic importance criteria for major economies
-- [ ] Document global systemic risk triggers (BIS, FSB)
-- [ ] Validate or update:
+- [x] Research IMF/World Bank economic collapse definitions
+- [x] Extract G20/systemic importance criteria for major economies
+- [x] Document global systemic risk triggers (BIS, FSB)
+- [x] Validate or update:
   - MAJOR_ECONOMY_COLLAPSE_ECONOMIC_THRESHOLD (2.0)
   - MAJOR_ECONOMY_POPULATION_THRESHOLD (300)
   - MAJOR_ECONOMY_GLOBAL_CRISIS_THRESHOLD (0.5)
 
 ### Research Deliverable
-- [ ] Create `research/config_parameters_justification_20251209.md`
-- [ ] Document parameter recommendations with citations
+- [x] Create `research/config_parameters_justification_20251209.md`
+- [x] Document parameter recommendations with citations
 - [ ] Pass research-skeptic validation (Grade B+ target)
 
 ## Phase 2: Implementation
