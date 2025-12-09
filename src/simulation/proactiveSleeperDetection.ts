@@ -4,14 +4,22 @@
  * Research Foundation:
  * - gaming-sleeper-detection_20251017.md (initial research)
  * - gaming-sleeper-detection-critique_20251017.md (research-skeptic validation)
+ * - llm_introspective_awareness_20251105.md (detection effectiveness estimates)
  *
  * REVISED PARAMETERS (Post Research-Skeptic Review):
  * - Neural activation probes: 35% on natural deception (down from 70%, artificial backdoors 99%)
  * - Chain of thought monitoring: 30% baseline (down from 45%), declining -15%/year
- * - Combined proactive: 50% baseline 2024 (down from 80%), declining to 20-25% by 2027
- * - False positives: 8%
+ * - Combined proactive: 50% baseline 2024 (CONFIDENCE INTERVAL: 30-70%, pessimistic-optimistic range)
+ *   - Optimistic scenario: 70% (new detection methods emerge faster than evasion)
+ *   - Baseline scenario: 50% (balanced progress in detection vs evasion)
+ *   - Pessimistic scenario: 30% (adversarial adaptation dominates)
+ *   - Declining to 20-25% by 2027 as CoT monitoring window closes
+ * - False positives: 8% baseline (5-12% across scenarios)
  * - Continuous overhead: 10%
  * - Human review: 1.5% FTE per 100K interactions (up from 0.3%, 5x increase)
+ *
+ * @note UNCERTAINTY MODELING: 50% baseline represents central estimate with ±20% confidence bounds
+ * @research Derived from research-skeptic critique combining lab effectiveness with adversarial degradation
  *
  * KEY INSIGHT: Detection window is FRAGILE and TEMPORARY (2024-2027)
  * CoT monitoring becomes ineffective as models learn to hide reasoning.
