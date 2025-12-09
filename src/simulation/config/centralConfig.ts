@@ -655,6 +655,13 @@ export const RATES = {
   EVACUATION_MULTIPLIER_SUDDEN: 0.2,           // Earthquakes, nuclear detonations, infrastructure collapse (80% reduction)
 
   /**
+   * @deprecated Use MIGRATION_EVACUATION_FRACTION_MIDDLE_INCOME (0.3) or income-stratified values instead
+   * @note Kept for backward compatibility with existing phases (MortalityStabilizersPhase, HumanSurvivalSystemPhase)
+   * @todo Update phases to use income-stratified evacuation rates, then remove this
+   */
+  MIGRATION_EVACUATION_FRACTION: 0.3,
+
+  /**
    * Emergency response - workforce availability scale factor
    * @research GAO (2025), FEMA data - Workforce availability impact
    * @value 1.0 - Linear scaling with workforce availability
@@ -745,7 +752,13 @@ export const RATES = {
    */
   ECONOMIC_COLLAPSE_GDP_CONTRACTION_THRESHOLD: 0.40,  // 40% cumulative GDP loss from baseline (midpoint between Greece 26% and Venezuela 75%)
   ECONOMIC_COLLAPSE_HYPERINFLATION_THRESHOLD: 0.50,   // 50%/month inflation rate (hyperinflation definition)
-  // DEPRECATED: MAJOR_ECONOMY_COLLAPSE_ECONOMIC_THRESHOLD (2.0) - replaced with measurable GDP/inflation indicators above
+
+  /**
+   * @deprecated Use ECONOMIC_COLLAPSE_GDP_CONTRACTION_THRESHOLD instead
+   * @note Kept for backward compatibility with existing phases (MortalityStabilizersPhase, HumanSurvivalSystemPhase)
+   * @todo Update phases to use new GDP/inflation thresholds, then remove this
+   */
+  MAJOR_ECONOMY_COLLAPSE_ECONOMIC_THRESHOLD: 2.0,
 
   /**
    * Major economy definition (GDP-based, not population)
@@ -758,7 +771,13 @@ export const RATES = {
    * @uncertainty MEDIUM - interconnectedness matters more than size alone, but GDP is reasonable proxy
    */
   MAJOR_ECONOMY_GDP_THRESHOLD_TRILLION_USD: 1.5,  // $1.5T GDP = major economy (roughly top 20 global economies)
-  // DEPRECATED: MAJOR_ECONOMY_POPULATION_THRESHOLD (50M) - population ≠ systemic importance, use GDP threshold above
+
+  /**
+   * @deprecated Use MAJOR_ECONOMY_GDP_THRESHOLD_TRILLION_USD instead
+   * @note Kept for backward compatibility with existing phases (MortalityStabilizersPhase, HumanSurvivalSystemPhase)
+   * @todo Update phases to use GDP threshold, then remove this
+   */
+  MAJOR_ECONOMY_POPULATION_THRESHOLD: 50,
 
   /**
    * Major economy collapse - population fraction threshold
