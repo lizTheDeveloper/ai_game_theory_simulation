@@ -476,6 +476,17 @@ export const TIPPING_INTERACTIONS: TippingInteraction[] = [
     thresholdReduction: 0.3, // Direct physical mechanism: freshwater reduces AMOC stability
     mechanism: 'Freshwater influx: Greenland melt reduces North Atlantic salinity, weakening AMOC'
   },
+  // AMOC collapse reduces heat transport to North Atlantic, potentially slowing Greenland melt
+  // Research: Global Tipping Points Report (2023) - stabilizing feedback documented
+  // ⚠️ NOTE: This is a STABILIZING interaction (reduces likelihood of Greenland tip)
+  // Implementation note: Negative interaction (stabilizing) not yet supported in cascade model
+  // TODO: Add stabilizing interaction support when cascade model extended
+  // {
+  //   sourceId: 'amoc',
+  //   targetId: 'greenland',
+  //   thresholdReduction: -0.15, // NEGATIVE = stabilizing (reduces heat → slows melt)
+  //   mechanism: 'Heat transport reduction: AMOC collapse cools North Atlantic, slowing Greenland melt'
+  // },
 
   // === PERMAFROST -> CLIMATE ELEMENTS ===
   // Permafrost thaw releases methane and CO2, amplifying warming
@@ -493,13 +504,37 @@ export const TIPPING_INTERACTIONS: TippingInteraction[] = [
   },
 
   // === AMOC -> TROPICAL SYSTEMS ===
-  // AMOC collapse shifts tropical rainfall patterns
-  {
-    sourceId: 'amoc',
-    targetId: 'amazon',
-    thresholdReduction: 0.25, // AMOC collapse disrupts Amazon rainfall
-    mechanism: 'Monsoon disruption: AMOC collapse shifts ITCZ southward, reducing Amazon rainfall'
-  },
+  // ⚠️ RESEARCH CORRECTION (Dec 8-9, 2025): AMOC → Amazon interaction REMOVED
+  //
+  // Original implementation assumed AMOC collapse destabilizes Amazon (reduces rainfall).
+  // This is CONTRADICTED by 2023-2025 peer-reviewed research showing STABILIZING effect.
+  //
+  // Evidence (verification cf49657_20251207):
+  // - Parsons et al. (2023) Nature Communications: "AMOC collapse may stabilise eastern Amazonian rainforests"
+  // - Yuan et al. (2025) npj Climate: "AMOC collapse shows increased precipitation over most of Amazon"
+  // - Högner et al. (2025) ERL: +4.8% rainfall per 1 Sv AMOC weakening (observational data)
+  //
+  // Mechanism complexity: ITCZ southward shift brings MORE rain to southern Amazon, not less.
+  // Regional heterogeneity: Northern Amazon may dry while southern gets wetter.
+  // Net effect: Stabilizing (increased precipitation buffers against dieback).
+  //
+  // Implementation decision: REMOVE interaction (more conservative than adding stabilizing effect)
+  // until regional heterogeneity can be properly modeled.
+  //
+  // Research files:
+  // - research/verification_cf49657_20251207.md (Grade D → identified sign error)
+  // - research/amoc_amazon_interaction_correction_20251208.md (5 sources)
+  // - research/verification_cf49657_REMEDIATION_20251208.md (remediation report)
+  //
+  // Regression note: This fix was applied in commit 6671e0ed (Dec 8) but accidentally
+  // reverted in merge 23fd6987 (Dec 9) when removing threshold uncertainty sampling.
+  //
+  // {
+  //   sourceId: 'amoc',
+  //   targetId: 'amazon',
+  //   thresholdReduction: 0.25, // SCIENTIFICALLY INCORRECT - SIGN ERROR
+  //   mechanism: 'Monsoon disruption: AMOC collapse shifts ITCZ southward, reducing Amazon rainfall'
+  // },
 
   // === AMAZON -> GLOBAL CLIMATE ===
   // Amazon dieback releases stored carbon
