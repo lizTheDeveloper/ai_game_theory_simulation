@@ -323,102 +323,146 @@ export function getRegionalHistoricalBirthRate(regionName: string, year: number)
 /**
  * Get region-specific historical death rate (crude death rate per 1000)
  *
- * CRITICAL FIX (Nov 25, 2025): Regional mortality trajectories at heterogeneous rates
+ * CRITICAL FIX (Dec 9, 2025): Updated regional mortality data from UN WPP 2024
  *
  * Root cause of 2010-2020 hindcast overshoot: Global CDR scaling misses regional variation:
- * - Sub-Saharan Africa: 15.6→8.7/1000 (1990-2020) - steepest decline (demographic transition)
- * - Europe: 11.0→12.2/1000 (1990-2020) - RISING due to aging population
- * - East Asia: 7.0→7.6/1000 (1990-2020) - rising (aging beginning)
+ * - Sub-Saharan Africa: 15.5→8.7/1000 (1990-2020) - steepest decline (~47% demographic transition)
+ * - Europe: 10.5→11.0/1000 (1990-2020) - STABLE/RISING due to aging population
+ * - East Asia: 7.5→7.5/1000 (1990-2020) - stable initially, aging beginning
  * - South Asia: 10.5→7.0/1000 (1990-2020) - classic transition decline
  *
  * Without regional scaling, simulation uses global average (~9.3→7.6/1000) which:
- * - UNDERESTIMATES deaths in Sub-Saharan Africa (15.6 vs 9.3 in 1990 = 1.68× more deaths)
+ * - UNDERESTIMATES deaths in Sub-Saharan Africa (15.5 vs 9.3 in 1990 = 1.67× more deaths)
  * - OVERESTIMATES deaths in MENA (8.5 vs 9.3 in 1990 = 0.91× fewer deaths)
  * - Net effect: Population growth too fast → 500M overshoot by 2020
  *
- * Research: /research/regional_cdr_un_wpp_2024_20251125.md
+ * Research: /research/regional_death_rates_unwpp2024_20251209.md (Grade B)
+ * Validation: /reviews/hindcast_demographic_research_critique_20251209.md
  * - Primary source: UN World Population Prospects 2024 (28th edition, July 2024)
- * - Verification: Sub-Saharan Africa 1997: 15.6/1000 ✅, 2017: 8.7/1000 ✅
- * - Validation: Weighted average matches verified global CDR (±2.6%)
+ * - NOTE: Current values are midpoint estimates from trend data (Grade B research)
+ * - TODO: Extract exact values from UN WPP 2024 CSV downloads before final validation
+ * - Expected impact: Reduce 2020 overshoot from +10.3% to target 5-7%
  *
  * @param regionName - Region name (must match initializeRegionalPopulations)
  * @param year - Year (1990-2030)
  * @returns CDR per 1000 population for that region-year
  */
 export function getRegionalHistoricalDeathRate(regionName: string, year: number): number {
-  // Regional CDR data (UN WPP 2024, deaths per 1000 population)
-  // Anchored to verified global CDR; Sub-Saharan Africa trajectory verified ✅
+  /**
+   * Regional historical crude death rates (deaths per 1,000 population)
+   *
+   * Source: UN World Population Prospects 2024, World Bank, WHO
+   * Research: research/regional_death_rates_unwpp2024_20251209.md (Grade B)
+   * Validation: reviews/hindcast_demographic_research_critique_20251209.md
+   *
+   * NOTE: Current values are midpoint estimates from trend data.
+   * TODO: Extract exact values from UN WPP 2024 CSV downloads before final validation.
+   *
+   * @see https://population.un.org/wpp/downloads
+   */
   const REGIONAL_CDR: Record<string, Record<number, number>> = {
-    'East Asia': {
-      1990: 7.0,   // Aging beginning (China, Japan)
-      2000: 6.7,   // Slight decline (mortality improvements)
-      2010: 7.0,   // Rising (aging dominates)
-      2020: 7.6,   // Continued rise
-      2025: 8.0,   // Projected (rapid aging)
-    },
-    'South Asia': {
-      1990: 10.5,  // Pre-transition (high mortality)
-      2000: 8.7,   // Transition accelerating
-      2010: 7.5,   // Mid-transition
-      2020: 7.0,   // VERIFIED (World Bank: 7.12/1000) ✅
-      2025: 6.8,   // Projected (continued decline)
-    },
     'Sub-Saharan Africa': {
-      1990: 15.6,  // VERIFIED (NCBI: 15.6/1000 in 1997) ✅
-      2000: 13.5,  // HIV/AIDS peak impact
-      2010: 10.5,  // ART availability → decline
-      2020: 8.7,   // VERIFIED (NCBI: 8.7/1000 in 2017; World Bank: 8.82 in 2022) ✅
-      2025: 8.0,   // Projected (continued transition)
+      1990: 15.5,  // Range 15-16, ~47% decline to 2020
+      1995: 14.5,  // HIV/AIDS epidemic period
+      2000: 14.5,  // HIV/AIDS peak
+      2005: 12.5,  // ARVT rollout begins
+      2010: 10.5,  // Continued health improvements
+      2015: 9.5,   // Demographic transition acceleration
+      2020: 8.7,   // World Bank 2022: 8.82
+      2025: 8.2    // Projected continued decline
     },
     'Europe': {
-      1990: 11.0,  // Aging population (20%+ over 65)
-      2000: 11.5,  // Rising (aging effect)
-      2010: 11.8,  // Continued rise
-      2020: 12.2,  // Aging dominates mortality gains
-      2025: 12.5,  // Projected (oldest population globally)
+      1990: 10.5,  // Stable period
+      1995: 10.5,  // Aging beginning
+      2000: 10.5,  // Continued aging
+      2005: 10.5,  // Slight increase trend
+      2010: 10.5,  // Population aging
+      2015: 11.0,  // Aging acceleration
+      2020: 11.0,  // Pre-COVID baseline (NOT 2021 spike of 13)
+      2025: 11.5   // Projected aging effect
+    },
+    'East Asia': {
+      1990: 7.5,   // Post-demographic transition
+      1995: 7.5,   // Stable period
+      2000: 7.0,   // Continued stability
+      2005: 7.0,   // Low mortality plateau
+      2010: 7.0,   // Aging begins
+      2015: 7.5,   // Aging acceleration (Japan, China)
+      2020: 7.5,   // Aging effect visible
+      2025: 8.5    // Projected rapid aging
+    },
+    'South Asia': {
+      1990: 10.5,  // Mid-demographic transition
+      1995: 9.5,   // Health improvements
+      2000: 9.0,   // Continued decline
+      2005: 8.5,   // Economic growth period
+      2010: 8.0,   // Mortality decline acceleration
+      2015: 7.5,   // Sustained improvements
+      2020: 7.0,   // Approaching developed levels
+      2025: 6.5    // Projected continued improvement
     },
     'North America': {
-      1990: 8.6,   // Relatively young (baby boomers in 40s)
-      2000: 8.5,   // Stable
-      2010: 8.1,   // Slight decline (young boomers)
-      2020: 8.7,   // Rising (boomers aging into 65+)
-      2025: 9.0,   // Projected (continued aging)
+      1990: 8.5,   // Stable developed region
+      1995: 8.5,   // Slight decline
+      2000: 8.5,   // Stable period
+      2005: 8.0,   // Continued stability
+      2010: 8.0,   // Low plateau
+      2015: 8.5,   // Aging begins to show
+      2020: 8.5,   // Pre-COVID baseline
+      2025: 8.5    // Projected
     },
     'Latin America': {
-      1990: 7.2,   // Young population
-      2000: 6.4,   // Mortality improvements
-      2010: 6.0,   // Late-stage transition
-      2020: 6.3,   // Slight rise (aging beginning)
-      2025: 6.5,   // Projected
+      1990: 7.5,   // Post-transition in Southern Cone
+      1995: 7.0,   // Declining trend
+      2000: 6.5,   // Continued improvement
+      2005: 6.5,   // Stable period
+      2010: 6.0,   // Low mortality achieved
+      2015: 6.0,   // Sustained low rates
+      2020: 6.5,   // Pre-COVID baseline
+      2025: 6.5    // Projected
     },
     'Middle East & North Africa': {
-      1990: 8.5,   // Mixed (young Gulf + older North Africa)
-      2000: 6.7,   // Rapid transition
-      2010: 5.5,   // Very low (young populations)
-      2020: 5.2,   // Continued decline
-      2025: 5.1,   // Projected (floor)
+      1990: 8.5,   // Oil wealth → good health systems
+      1995: 7.5,   // Declining trend
+      2000: 7.0,   // Continued improvement
+      2005: 6.5,   // Low mortality achieved
+      2010: 6.5,   // Conflict effects in some areas
+      2015: 6.5,   // Syrian war impact (localized)
+      2020: 6.5,   // Mixed patterns
+      2025: 6.5    // Projected
     },
     'Southeast Asia': {
-      1990: 8.5,   // Similar to South Asia
-      2000: 7.2,   // Transition ahead of South Asia
-      2010: 6.5,   // Mid-transition
-      2020: 6.2,   // Continued decline
-      2025: 6.0,   // Projected
+      1990: 8.5,   // Mid-transition
+      1995: 8.0,   // Rapid development period
+      2000: 7.5,   // Health improvements
+      2005: 7.0,   // Continued progress
+      2010: 6.5,   // Economic growth effect
+      2015: 6.5,   // Sustained low rates
+      2020: 6.5,   // Pre-COVID baseline
+      2025: 6.5    // Projected
     },
     'Central Asia': {
-      1990: 7.8,   // Pre-Soviet collapse
-      2000: 7.0,   // Post-Soviet recovery
-      2010: 7.5,   // Healthcare rebuilding
-      2020: 7.0,   // Improvement
-      2025: 6.8,   // Projected
+      // NOTE: LOW-MEDIUM data quality (Soviet collapse effects)
+      // Small population (~1% global), acceptable uncertainty
+      1990: 8.0,   // Soviet health system legacy
+      1995: 9.5,   // Post-Soviet collapse → health crisis
+      2000: 9.5,   // Economic depression effect
+      2005: 9.0,   // Gradual recovery
+      2010: 8.5,   // Improving trend
+      2015: 8.0,   // Economic stabilization
+      2020: 8.0,   // Recovery to 1990 levels
+      2025: 8.0    // Projected
     },
     'Oceania': {
-      1990: 8.0,   // Australia/NZ high-income pattern
-      2000: 7.5,   // Slight decline
-      2010: 7.2,   // Stable
-      2020: 7.1,   // Aging beginning
-      2025: 7.2,   // Projected (slight rise)
-    },
+      1990: 7.5,   // Developed (AUS/NZ) dominates
+      1995: 7.5,   // Stable period
+      2000: 7.0,   // Slight decline
+      2005: 7.0,   // Stable
+      2010: 7.0,   // Aging begins
+      2015: 7.5,   // Aging effect
+      2020: 7.5,   // Pre-COVID baseline
+      2025: 7.5    // Projected
+    }
   };
 
   // Check if region exists
