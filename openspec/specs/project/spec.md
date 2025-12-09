@@ -136,10 +136,10 @@ The project SHALL preserve implementation histories and research context.
 
 ## Current Status
 
-**Session:** 60 (December 9, 2025)
-**Mode:** Maintenance (18 consecutive maintenance sessions: 34-60)
+**Session:** 62 (December 9, 2025)
+**Mode:** Active work (3 CRITICAL research updates pending from Nov 29 audit)
 **Research Quality:** A- (68.8% sources from 2024-2025)
-**Architecture Health:** A- (0 CRITICAL, 0 HIGH blockers - 6 HIGH issues deferred to backlog)
+**Architecture Health:** B+ (0 CRITICAL, 2 HIGH addressed - all merged)
 **Test Coverage:** 82.47% (462+ tests passing, 6 known test import failures)
 **System State:** Production-ready, all quality gates GREEN
 
@@ -152,13 +152,17 @@ The project SHALL preserve implementation histories and research context.
 ## Active Work
 
 ### CRITICAL Priority
-None (system in maintenance mode)
+None (threshold lowering regression FIXED Dec 9, 2025 - commit 3f3118de, 7130c7e6)
 
 ### COMPLETED HIGH Priority
 - HIGH-7: Conditional climate stability floor (research debate finding) - COMPLETE Dec 7, 2025
+- H-1: Energy budget system integration (all energy consumers now use EnergyBudgetPhase) - COMPLETE Dec 9, 2025
+- H-2: Duplicate energy calculation removal (ClimateDeploymentPhase cleanup) - COMPLETE Dec 9, 2025
 
 ### HIGH Priority
-None (system in maintenance mode)
+- Sleeper agent rate justification (7.5% → explicit source comment) - From Nov 29 research audit
+- Sandbagging level citation (0.4-0.6 → van der Weij/Meinke 2024) - From Nov 29 research audit
+- Detection risk calibration (50% baseline → confidence interval) - From Nov 29 research audit
 
 ### COMPLETED MEDIUM Priority
 - M-5: Threshold uncertainty modeling (distribution sampling library) - COMPLETE Dec 7, 2025
@@ -224,10 +228,10 @@ See: `docs/EMOJI_QUICK_REFERENCE.md` (one-page cheat sheet)
 See: `docs/sessions.md` for complete session milestone tracking
 
 **Recent Sessions:**
+- Session 62 (Dec 9): CRITICAL regression fix + H-1/H-2 architecture integration + research audit follow-up
 - Session 60 (Dec 9): Coffee break + archival + Energy Budget launch (~90k tokens)
 - Session 55 (Dec 5): Maintenance mode (early exit, ~10k tokens)
 - Session 54 (Dec 5): M-4 Complete - Abrupt Sea Level Rise (~15k tokens)
-- Session 51 (Dec 3): Validation cycle (research + architecture, ~8k tokens)
 
 ---
 

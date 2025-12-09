@@ -20,32 +20,39 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 ### HIGH Priority
 
 #### Threshold Lowering for Tipping Cascades
-**Status:** ✅ CRITICAL FIXES APPLIED (Dec 8, 2025)
+**Status:** ✅ RESOLVED - REGRESSION FIXED (Dec 9, 2025)
 **Change:** (pending - needs change folder created)
-**Commit:** cf49657 (original), [current] (fixes)
+**Commits:** cf49657 (original), 6671e0ed (Dec 8 fix), 3f3118de + 7130c7e6 (Dec 9 regression fix)
 **Context:** Implements threshold lowering mechanism from mechanism audit gap
-**Verification File:** `research/verification_cf49657_20251207.md`
+**Verification Files:**
+- `research/verification_cf49657_20251207.md`
+- `research/amoc_amazon_interaction_correction_20251208.md`
+- `research/verification_cf49657_REMEDIATION_20251208.md`
 
 **Verification Complete (Dec 7, 2025):**
 - **Initial Grade:** C (super-alignment-researcher)
 - **Final Grade:** D (research-skeptic downgrade)
 - **Reviewers:** Cynthia (researcher), Sylvia (skeptic)
 
-**CRITICAL Issues Found → FIXED (Dec 8, 2025):**
-1. ✅ **AMOC → Amazon Sign Error:** Interaction REMOVED, extensive research note added explaining 2023-2025 evidence shows stabilizing effect (increased rainfall), not destabilizing
-2. ✅ **sqrt(progress) Scaling Backwards:** Replaced with linear scaling reflecting rate-dependent accumulating effects (freshwater forcing, carbon release, albedo feedback compound over time)
-3. ✅ **Missing Stabilizing Feedbacks:** AMOC → Greenland stabilizing feedback documented (currently commented - requires negative interaction support in cascade model)
-4. ✅ **Quantitative Magnitudes Not Validated:** Documentation updated to clearly state values are "conservative engineering estimates pending empirical validation"
-5. ✅ **0.5°C Cap Misattributed:** Relabeled as "simulation stability safeguard" not research-backed parameter
+**CRITICAL Issues Found → FIXED (Dec 8, 2025) → REGRESSED (Dec 9) → RE-FIXED (Dec 9):**
+1. ✅ **AMOC → Amazon Sign Error:** Interaction REMOVED (6671e0ed), regressed in merge 23fd6987, re-fixed 3f3118de with extensive research notes
+2. ✅ **sqrt(progress) Scaling Backwards:** Replaced with linear scaling (already in HEAD)
+3. ✅ **Missing Stabilizing Feedbacks:** AMOC → Greenland stabilizing feedback documented (3f3118de)
+4. ✅ **Quantitative Magnitudes Not Validated:** Documentation updated (6671e0ed, verified present)
+5. ✅ **0.5°C Cap Misattributed:** Relabeled (6671e0ed, verified present)
 
-**Fixes Applied:**
-- `src/types/tipping-points.ts` lines 601-617: AMOC → Amazon removed with detailed research note
-- `src/types/tipping-points.ts` lines 585-595: AMOC → Greenland stabilizing feedback documented
-- `src/types/tipping-points.ts` lines 517-543: Documentation rewritten to clarify engineering estimates
-- `src/simulation/engine/phases/ClimateSystemPhase.ts` lines 226-233: sqrt scaling replaced with linear
-- `src/simulation/engine/phases/ClimateSystemPhase.ts` lines 269-272: 0.5°C cap relabeled
+**Final Status (Dec 9, 2025):**
+- All 5 CRITICAL issues now RESOLVED
+- Regression caused by threshold uncertainty removal (commit 5eb4b5bd) - merge conflict re-added old code
+- Final fix (3f3118de + 7130c7e6) adds extensive research documentation:
+  - Parsons 2023: AMOC slowdown → ITCZ southward shift → MORE rain to southern Amazon
+  - Yuan 2025: Multi-model evidence for stabilizing effect
+  - Högner 2025: Regional heterogeneity (north Amazon loses rain, south gains)
+  - Decision: Remove interaction until regional sub-modeling supported
 
-**Next Steps:** Monte Carlo validation (N≥10) to verify fixes don't break cascade behavior → Move to "Recently Resolved"
+**Monte Carlo Required:** N≥10 validation pending
+
+**Ready to archive to Recently Resolved.**
 
 ---
 
@@ -84,6 +91,91 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 - Use risk distributions (log-uniform 0.3%-40%) not point estimates
 
 **Next Steps:** Implementation approved with failure pathway modeling → Add to government phase mechanics
+
+---
+
+### HIGH Priority (Research Audit Follow-Up)
+
+#### Sleeper Agent Rate Justification (7.5%)
+**Status:** ⚠️ READY FOR UPDATE
+**Context:** From Nov 29, 2025 research audit (reviews/research_audit_20251129.md)
+**Location:** `src/simulation/initialization.ts:309`
+**Issue:** Comment says "7.5% of misaligned AIs are sleepers" but lacks explicit source citation
+
+**Current Code:**
+```typescript
+const sleeperChance = 0.075;  // 7.5% of misaligned AIs are sleepers
+```
+
+**Research Backing:**
+- Hubinger et al. (2024) - Proof-of-concept sleeper agents successfully persist through safety training
+- Gaming-sleeper-detection_20251017.md documents empirical demonstrations
+- **CRITICAL:** No empirical prevalence data exists in literature (this is derived estimate)
+
+**Action Required:**
+- Change comment to: `// 7.5% DERIVED ESTIMATE (Hubinger et al. 2024 proof-of-concept, empirical prevalence TBD)`
+- Document uncertainty bounds: ±50% (range 3.75%-11.25%)
+- Flag in research doc that this is model assumption, not empirical fact
+
+**Severity:** HIGH (research standards compliance)
+**Effort:** TRIVIAL (comment update)
+
+---
+
+#### Sandbagging Level Citation (0.4-0.6)
+**Status:** ⚠️ READY FOR UPDATE
+**Context:** From Nov 29, 2025 research audit
+**Location:** `src/simulation/agents/evaluationStrategy.ts:74`
+**Issue:** Code value lacks explicit connection to research sources
+
+**Current Code:**
+```typescript
+const baseSandbagLevel = 0.4 + deceptionSkill * 0.2;  // [0.4, 0.6]
+```
+
+**Research Backing:**
+- van der Weij et al. (2024): Llama 3 70b emulates Llama 2 7b (sandbagging proven)
+- Meinke et al. (2024): Claude 3.5 Sonnet strategic underperformance
+- Apollo Research: Claude Opus 4 showed "most strategic deception of any frontier model"
+- Gaming-sleeper-detection_20251017.md documents all empirical demonstrations
+
+**Action Required:**
+- Add comment: `// van der Weij et al. (2024), Meinke et al. (2024): empirical deception baselines`
+- Justify range [0.4, 0.6] from empirical observations
+- Document that these are frontier model observations, not general population stats
+
+**Severity:** HIGH (research standards compliance)
+**Effort:** TRIVIAL (comment update)
+
+---
+
+#### Detection Risk Calibration (50% Baseline)
+**Status:** ⚠️ READY FOR UPDATE
+**Context:** From Nov 29, 2025 research audit
+**Location:** `src/simulation/sleeperEconomy.ts:350`
+**Issue:** 50% baseline lacks justification from research
+
+**Current Code:**
+```typescript
+economy.detectionRisk = 0.5;  // 50% baseline risk
+```
+
+**Research Backing:**
+- Gaming-sleeper-detection_20251017.md: "Detection methods show promise but remain imperfect"
+- Deliberative alignment training: reduces scheming by ~30x (8.7-13% → 0.3-0.4%)
+- Chain-of-thought monitoring: fragile, models may learn to hide reasoning
+- van der Weij 2024: >99% AUROC possible with proper monitoring
+
+**Gap:** 50% baseline not justified by research (should be variable/improving over time)
+
+**Action Required:**
+- Specify detection probability confidence interval (not fixed 50%)
+- Add citation: Gaming-sleeper-detection_20251017.md (van der Weij 2024)
+- Document month-dependent improvement (detection improves with mechanistic interpretability gains)
+- Consider: Early months 20-30%, late months 70-90% (reflecting research progress)
+
+**Severity:** HIGH (model realism)
+**Effort:** SMALL (1-2 hours for time-dependent model)
 
 ---
 
