@@ -209,49 +209,60 @@ The simulation SHALL model environmental, social, and technological debt.
 
 ## Active Work
 
+### CRITICAL Priority
+None (all CRITICAL work resolved as of Dec 9, 2025)
+
 ### HIGH Priority
+None (all HIGH work completed as of Dec 9, 2025)
+
+### Recently Completed (Dec 5-9, 2025)
 
 #### HIGH-7: Conditional Climate Stability Floor
-**Status:** COMPLETE (Dec 5, 2025, retroactive validation Dec 7)
+**Status:** ✅ COMPLETE (Dec 5, 2025, retroactive validation Dec 7)
 **Implementation:** `src/simulation/engine/phases/ClimateSystemPhase.ts:827-883`
 **Research:** Wunderling et al. (2024), ACCESS-ESM-1.5 (2024), Boers et al. (2025)
 **Quality Gates:** QG1 Grade B (Sylvia), QG2 Grade B (architecture-skeptic)
-**Summary:** Conditional floor (5% in stabilization scenarios, 0% in tail risk) replaces unconditional floor. Aligns with 2024-2025 research showing destabilizing tipping cascades.
-**Known Issues:** Monte Carlo validation partial (N=10 blocked by population assertion edge case, not a feature bug)
+**Summary:** Conditional floor (5% in stabilization scenarios, 0% in tail risk) replaces unconditional floor
 **History:** `docs/implementation-history/high7_conditional_climate_stability_floor_20251207.md`
+
+#### Energy Budget Constraints
+**Status:** ✅ COMPLETE (Dec 9, 2025)
+**Implementation:** `src/simulation/engine/phases/EnergyBudgetPhase.ts` (390 lines)
+**Research:** IEA 2024, Cornell/Nature Sustainability 2025, MIT/Lawrence Berkeley Lab
+**Quality Gates:** QG1 Grade B+ (Sylvia), QG2 H-1/H-2 addressed
+**Summary:** Global electricity capacity tracking, priority-based allocation, tech-specific effectiveness multipliers
+**History:** `docs/implementation-history/energy_budget_constraints_20251209.md`
+**Integration:** `docs/implementation-history/energy_budget_integration_fixes_20251209.md`
+
+#### Threshold Lowering Regression Fix
+**Status:** ✅ RESOLVED (Dec 9, 2025)
+**Files:** `src/types/tipping-points.ts` (AMOC interactions)
+**Grade:** D (Failed) → RESOLVED (all 5 CRITICAL issues fixed)
+**Summary:** AMOC-Amazon destabilizing interaction removed (research shows stabilizing effect)
+**History:** `docs/implementation-history/threshold_lowering_regression_fix_20251209.md`
 
 ---
 
-### MEDIUM Priority
-
-#### M-7: Fix Population Assertions for Near-Extinction Scenarios
-**Status:** ✅ COMPLETE (Dec 7, 2025)
-**Context:** Monte Carlo validation blocked by overly restrictive population assertions
-**Fix:** Lowered minimum from 0.01B (10M) → 0.00001B (10K) in aggregateAllRegionalData
-**Research:** Toba bottleneck (~74 kya, 10K-30K survivors) - allows realistic near-extinction scenarios
-**Validation:** Created validateNearExtinction.ts script - all 4 test cases pass (10K, 100K, 1M, 10M)
-**Files:** `src/simulation/populationDynamics.ts:687`, `scripts/validateNearExtinction.ts`
-**Impact:** Monte Carlo validation now unblocked for tail-risk scenarios
+### MEDIUM Priority (Completed)
 
 #### M-5: Threshold Uncertainty Modeling
 **Status:** ✅ COMPLETE (Dec 7, 2025)
-**Context:** Distribution sampling library for tipping point thresholds
-**Implementation:** Three distribution libraries (triangular, uniform, normal, log-normal, beta, gamma)
-**Research:** 775-line research doc with peer-reviewed threshold ranges (AMOC: 1.4-8.0°C, Greenland: 0.8-3.4°C, etc.)
-**Validation:** Monte Carlo N=3 deterministic (seed=42, all thresholds identical across runs), 28/28 tests passing
-**Quality Gates:** QG1 Grade B- (research-skeptic), QG2 Grade B+ (architecture-skeptic)
-**Files:** `src/simulation/utils/distributionSampling.ts`, `src/simulation/thresholds/distributions.ts`, `tests/thresholds/distributions.test.ts`
-**Known Issues:** H-1 (three redundant libraries, consolidation recommended but not blocking)
+**Implementation:** Distribution sampling library (triangular, uniform, normal, log-normal, beta, gamma)
+**Files:** `src/simulation/utils/distributionSampling.ts`, `src/simulation/thresholds/distributions.ts`
+**Tests:** 28/28 passing, Monte Carlo N=3 deterministic
 
 #### M-6: Enhanced Radiation Modeling
 **Status:** ✅ COMPLETE (Dec 8, 2025)
-**Context:** Acute vs chronic radiation exposure, tissue sensitivity, dose-response curves
-**Impact:** Research-backed fallout modeling with LD50/60 sigmoids, ICRP 103 tissue weighting, 7-10 decay rule
-**Implementation:** `src/simulation/radiationModeling.ts` (571 lines), enhanced `RadiationZone` interface
-**Quality Gates:** QG1: Grade B (Sylvia), QG2: PASSED (no CRITICAL/HIGH issues)
-**Research:** CDC 2024, REMM, ICRP 103, PMC11604265, BEIR VII (LNT controversy documented)
-**Tests:** 30+ unit tests, deterministic, all passing
+**Implementation:** `src/simulation/radiationModeling.ts` (571 lines), acute/chronic exposure, LD50/60 sigmoids
+**Research:** CDC 2024, REMM, ICRP 103, PMC11604265, BEIR VII
+**Tests:** 30+ unit tests, all passing
 **History:** `docs/implementation-history/M-6_enhanced_radiation_modeling_20251208.md`
+
+#### M-7: Population Assertions Near-Extinction Fix
+**Status:** ✅ COMPLETE (Dec 7, 2025)
+**Fix:** Lowered minimum from 10M → 10K (Toba bottleneck research-backed)
+**Files:** `src/simulation/populationDynamics.ts:687`, `scripts/validateNearExtinction.ts`
+**Impact:** Monte Carlo validation unblocked for tail-risk scenarios
 
 ---
 
