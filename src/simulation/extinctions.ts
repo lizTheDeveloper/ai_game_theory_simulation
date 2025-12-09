@@ -538,7 +538,7 @@ function checkRapidExtinctionTrigger(state: GameState, random: () => number): Tr
           // Regional (e.g., India-Pakistan): ~100-200 warheads
           const { triggerNuclearWinter } = require('./nuclearWinter');
           const warScale = participants.length >= 2 ? 5000 : 100;  // Full-scale if major powers, regional otherwise
-          triggerNuclearWinter(state, warScale, participants);
+          triggerNuclearWinter(state, warScale, participants, random);  // DETERMINISTIC: Pass RNG
 
           return {
             triggered: true,
