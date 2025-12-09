@@ -675,7 +675,9 @@ export function updateRegionalPopulations(state: GameState): void {
     // Parallel to birth rate scaling (lines 393-419) - must account for regional CDR variation
     // Root cause: Global CDR misses dramatic regional differences (SSA: 15.6/1000 vs MENA: 8.5/1000 in 1990)
     // Without scaling: Population grows too fast in high-mortality regions → 500M overshoot by 2020
-    // Research: /research/regional_cdr_un_wpp_2024_20251125.md
+    // Research: /research/regional_death_rates_unwpp2024_20251209.md (Grade B)
+    // Validation: /reviews/hindcast_demographic_research_critique_20251209.md
+    // Updated: Dec 9, 2025 - Refined CDR estimates from UN WPP 2024 trend data
     // HIGH-7 FIX (Nov 27, 2025): Use historicalMode flag for hindcast calibration
     // CRITICAL-1 FIX (Nov 28, 2025): Unified historical mode detection via isHistoricalModeActive()
     if (isHistoricalModeActive(state)) {
