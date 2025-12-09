@@ -51,7 +51,12 @@ export class ExtinctionDebtPhase implements SimulationPhase {
     });
 
     let totalRealizedThisMonth = 0;
-    const remainingExtinctions = [];
+    const remainingExtinctions: Array<{
+      ecosystemType: 'grassland' | 'alpine' | 'tropical' | 'marine';
+      magnitude: number;
+      committedMonth: number;
+      realizationLagMonths: number;
+    }> = [];
 
     for (const extinction of state.extinctionDebt.committedExtinctions) {
       const monthsElapsed = currentMonth - extinction.committedMonth;
@@ -126,13 +131,13 @@ export class ExtinctionDebtPhase implements SimulationPhase {
       );
 
       // Update planetary boundary if it exists
-      if (state.planetaryBoundariesSystem?.boundaries?.biosphereIntegrity) {
+      if (state.planetaryBoundariesSystem?.boundaries?.biosphere_integrity) {
         const baselineSpecies = state.biosphereIntegrityIndex.totalSpeciesBaseline || 54000;
         const currentRatio = state.biosphereIntegrityIndex.currentSpeciesCount / baselineSpecies;
 
         // Update boundary value (lower species count = higher boundary value)
         // 100% species = 0.0 boundary, 0% species = 2.0 boundary
-        state.planetaryBoundariesSystem.boundaries.biosphereIntegrity.value =
+        state.planetaryBoundariesSystem.boundaries.biosphere_integrity.value =
           assertFinite(
             2.0 * (1.0 - currentRatio),
             {
@@ -149,17 +154,21 @@ export class ExtinctionDebtPhase implements SimulationPhase {
 
         console.log(
           `📊 Biosphere integrity updated: ${state.biosphereIntegrityIndex.currentSpeciesCount} / ${baselineSpecies} species ` +
-          `(${(currentRatio * 100).toFixed(1)}%), boundary value: ${state.planetaryBoundariesSystem.boundaries.biosphereIntegrity.value.toFixed(3)}`
+          `(${(currentRatio * 100).toFixed(1)}%), boundary value: ${state.planetaryBoundariesSystem.boundaries.biosphere_integrity.value.toFixed(3)}`
         );
       }
 
       return {
         events: [
           {
-            type: 'EXTINCTION_DEBT_REALIZED',
-            month: currentMonth,
-            message: `Extinction debt realized: ${speciesLost} species lost after multi-generational lag`,
+            id: `extinction-debt-realized-${currentMonth}`,
+            type: 'environmental',
+            title: 'Extinction Debt Realized',
+            timestamp: currentMonth,
+            description: `🌍💀 ${speciesLost} species lost after multi-generational lag`,
             severity: 'critical',
+            agent: 'environment',
+            effects: { speciesLost },
           },
         ],
       };
