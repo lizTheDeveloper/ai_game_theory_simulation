@@ -125,7 +125,7 @@ export interface StateDelta {
   extinctionProbability?: number;
   outcomeType?: string;
 
-  // Multi-Paradigm DUI (4 perspectives)
+  // Multi-Paradigm DUI (4 perspectives) - values are 0-100 scale
   westernLiberalIndex?: number;
   developmentIndex?: number;
   ecologicalIndex?: number;
