@@ -289,9 +289,13 @@ export const RATES = {
 
   /**
    * Social cohesion decay rate (per month, no maintenance)
-   * @research Meta-analysis of post-conflict societies (USIP 2024) - Social fragmentation 1% per month without active reconciliation programs
-   * @note [MODELING ASSUMPTION] Assumes absence of intervention. Mernyk et al. (2022) Political Behavior shows 0.6-0.7%/year baseline, 7.85%/year acute crisis
-   * @value 0.01 - 1% per month without investment
+   * @research Mernyk et al. (2022) Political Behavior: 2.4-2.7 pp/year trust decay from polarization (US sample)
+   * @research AAMC (2024): Healthcare trust collapse 7.85 pp/year during COVID-19 (acute crisis rate)
+   * @research PNAS (2025): "Meltdown of trust in weakly governed economies" - interconnected erosion mechanisms
+   * @research OECD (2024): Cross-national trust dynamics, 20 countries, 60,000 responses
+   * @value 0.01 - 1% per month (12%/year acute crisis baseline)
+   * @note WESTERN/DEMOCRATIC CONTEXT ONLY - trust mechanisms differ in collectivist (East Asia), tribal (Middle East/Africa), and authoritarian (China/Russia) societies
+   * @uncertainty HIGH - limited non-WEIRD population data, assumes existential crisis severity
    */
   SOCIAL_COHESION_DECAY_RATE: 0.01,
 
@@ -462,12 +466,28 @@ export const RATES = {
   ECOSYSTEM_RECOVERY_RATE: 0.002,
 
   /**
-   * Social cohesion recovery rate (per month, with investment)
-   * @research Rwanda post-genocide recovery (Vollhardt & Bilali 2015, USIP 2024) - 1% per month with active reconciliation programs
-   * @note [MODELING ASSUMPTION] Assumes active intervention (Gacaca courts, resource investment), not passive healing. Natural recovery ~0.1-0.3%/month
-   * @value 0.01 - 1% per month with active investment
+   * Social cohesion recovery rate (per month, baseline without massive intervention)
+   * @research Salih et al. (2025) Cogent Social Sciences: Post-conflict reconciliation literature review
+   * @research Mernyk et al. (2022) Political Behavior: +8-14% experimental trust recovery when polarization reduced
+   * @research Rwanda reconciliation: ~3%/year with government-mandated programs (qualitative estimate)
+   * @research OECD (2024): 33% of organizations experiencing trust recovery suffer second major loss
+   * @research UN World Social Report (2024): Political violence undermines restoration efforts globally
+   * @critique Sylvia: "Recovery vastly overestimated without massive resource investment. Rwanda cherry-picked; Bosnia failed after 30 years."
+   * @value 0.003 - 0.3% per month baseline natural recovery (3.6%/year)
+   * @note This is NATURAL recovery without massive intervention. For intensive reconciliation programs (Gacaca courts, resource investment), see SOCIAL_COHESION_RECOVERY_WITH_INVESTMENT
+   * @uncertainty VERY HIGH - success cases (Rwanda) ignore failures (Bosnia, Somalia, Iraq); non-linear dynamics with reversal probability
    */
-  SOCIAL_COHESION_RECOVERY_RATE: 0.01,
+  SOCIAL_COHESION_RECOVERY_RATE: 0.003,
+
+  /**
+   * Social cohesion recovery rate with massive resource investment (per month)
+   * @research Rwanda Gacaca courts: Government-mandated participation, 30 years to 94% trust
+   * @research Mernyk et al. (2022): Experimental polarization reduction → +8-14% trust increase
+   * @value 0.01 - 1% per month with intensive, well-resourced reconciliation programs
+   * @note Requires active investment in reconciliation infrastructure, not automatic
+   * @uncertainty HIGH - Rwanda is optimistic outlier; most reconciliation efforts fail or stall
+   */
+  SOCIAL_COHESION_RECOVERY_WITH_INVESTMENT: 0.01,
 
   /**
    * Population recovery rate after crisis (per year)
@@ -605,12 +625,34 @@ export const RATES = {
   MIGRATION_RETURN_CRISIS_PENALTY: 0.8,
 
   /**
-   * Migration - assumed evacuation fraction (of successful relocations)
-   * @research Hurricane Katrina (2005) 80% evacuated, Syrian crisis (2011-2023) 50% displaced, Heterogeneous range 5-90% by region/income. Median ~30% (IOM 2024)
-   * @note [MODELING ASSUMPTION] Median value across disaster types. Real-world range 5-90% depends on warning time, infrastructure, income
-   * @value 0.3 - Assume 30% of population can migrate if needed
+   * Migration/Evacuation capacity by income strata (Sylvia's mandatory revision)
+   *
+   * @research U.S. White House (2006) + Fussell et al. (2010): Hurricane Katrina 80-92% evacuation (advance warning, high-income areas)
+   * @research UNHCR (2025): Ukraine 13% external refugee rate (9-13% of population fled internationally)
+   * @research IOM/UNHCR (2024): Syria 31% refugee rate over 13 years (6.8M / 22M pre-war population)
+   * @research Nature (2025) systematic review (946 studies): "Mobility responses filtered through vulnerability pathways"
+   * @research 2024 Household Pulse Survey: People with disabilities disproportionately unable to evacuate
+   * @critique Sylvia: "Single parameter obscures critical income stratification. Top 30% income → 80% evacuation; Bottom 30% → <20%."
+   * @note Original MIGRATION_EVACUATION_FRACTION (0.3) now middle-income baseline
+   * @uncertainty HIGH - disaster type and infrastructure critically affect capacity
    */
-  MIGRATION_EVACUATION_FRACTION: 0.3,
+  MIGRATION_EVACUATION_FRACTION_HIGH_INCOME: 0.7,   // Top 30% income bracket (access to transport, remote work, resources)
+  MIGRATION_EVACUATION_FRACTION_MIDDLE_INCOME: 0.3, // Middle 40% income bracket (original parameter value)
+  MIGRATION_EVACUATION_FRACTION_LOW_INCOME: 0.1,    // Bottom 30% income bracket (lack transport, economic constraints, disabilities)
+
+  /**
+   * Disaster type multipliers for evacuation capacity
+   *
+   * @research Hurricane Katrina (2005): 80-92% with 48-hour warning, functioning infrastructure
+   * @research Haiti 2010 earthquake: <3% international evacuation (sudden onset, infrastructure collapse)
+   * @research Japan 2011 tsunami: World-class infrastructure still had thousands unable to evacuate in time
+   * @critique Sylvia: "Mixing 2-day evacuations with 13-year displacement is temporal scale confusion"
+   * @note Multiplies base evacuation fractions above
+   * @uncertainty HIGH - sudden disasters (earthquakes, nuclear EMP) vastly underestimated by linear models
+   */
+  EVACUATION_MULTIPLIER_ADVANCE_WARNING: 2.0,  // Hurricanes, predicted disasters (doubles capacity)
+  EVACUATION_MULTIPLIER_GRADUAL: 1.0,          // Climate migration, prolonged conflict (baseline)
+  EVACUATION_MULTIPLIER_SUDDEN: 0.2,           // Earthquakes, nuclear detonations, infrastructure collapse (80% reduction)
 
   /**
    * Emergency response - workforce availability scale factor
@@ -692,20 +734,31 @@ export const RATES = {
   AID_DONOR_AVAILABILITY_LOW: 0.2,
 
   /**
-   * Major economy collapse - economic stage threshold
-   * @research [MODELING ASSUMPTION] No IMF/World Bank definition exists. Using economic stage <2.0 (middle-income) as modeling heuristic
-   * @note Venezuela (2014-2021): 75% GDP contraction over 7 years. No formal academic definition of "collapsed economy"
-   * @value 2.0 - Below stage 2.0 (middle-income) = collapsed economy
+   * Economic collapse definition (Sylvia's mandatory operational definition)
+   *
+   * @research IMF (2025) World Economic Outlook: Venezuela 2014-2021 = 75% GDP contraction ("wartime economy")
+   * @research Greece 2009-2016: 26% GDP loss = severe crisis (not collapse)
+   * @research Zimbabwe: Hyperinflation without proportional GDP collapse
+   * @critique Sylvia: "Stage < 2.0 is meaningless without definition. Need measurable indicators."
+   * @note Economic collapse = 40% GDP contraction OR hyperinflation (>50%/month) OR state service cessation
+   * @uncertainty VERY HIGH - no formal IMF/World Bank threshold exists, using Venezuela (extreme outlier) vs Greece (typical) as bounds
    */
-  MAJOR_ECONOMY_COLLAPSE_ECONOMIC_THRESHOLD: 2.0,
+  ECONOMIC_COLLAPSE_GDP_CONTRACTION_THRESHOLD: 0.40,  // 40% cumulative GDP loss from baseline (midpoint between Greece 26% and Venezuela 75%)
+  ECONOMIC_COLLAPSE_HYPERINFLATION_THRESHOLD: 0.50,   // 50%/month inflation rate (hyperinflation definition)
+  // DEPRECATED: MAJOR_ECONOMY_COLLAPSE_ECONOMIC_THRESHOLD (2.0) - replaced with measurable GDP/inflation indicators above
 
   /**
-   * Major economy collapse - population threshold
-   * @research G20 membership criteria, World Bank (2024) - Major economy defined as 50M+ population
-   * @note 300M excluded Germany, UK, France, Japan. Only 4 countries >300M. Fixed Dec 2025 (Quality Gate 1)
-   * @value 50 - 50M+ baseline population = major economy
+   * Major economy definition (GDP-based, not population)
+   *
+   * @research G20 membership: Includes Germany (84M), UK (68M), France (68M) - all systemically important despite <100M population
+   * @research Financial Stability Board (2024): Systemic importance based on interconnectedness, not size
+   * @research World Economics (2025): G20 = 85% of global GDP, 75% of international trade
+   * @critique Sylvia: "300M population threshold excluded most major economies. Singapore (6M), Switzerland (9M) systemically critical despite small populations."
+   * @note Major economy = Top 20 by nominal GDP (roughly G20 equivalent)
+   * @uncertainty MEDIUM - interconnectedness matters more than size alone, but GDP is reasonable proxy
    */
-  MAJOR_ECONOMY_POPULATION_THRESHOLD: 50,
+  MAJOR_ECONOMY_GDP_THRESHOLD_TRILLION_USD: 1.5,  // $1.5T GDP = major economy (roughly top 20 global economies)
+  // DEPRECATED: MAJOR_ECONOMY_POPULATION_THRESHOLD (50M) - population ≠ systemic importance, use GDP threshold above
 
   /**
    * Major economy collapse - population fraction threshold
@@ -715,12 +768,29 @@ export const RATES = {
   MAJOR_ECONOMY_POPULATION_COLLAPSE_FRACTION: 0.5,
 
   /**
-   * Major economy collapse - global crisis threshold
-   * @research [MODELING ASSUMPTION] Heuristic: >50% major economies collapsed triggers global cascade. Not empirically grounded, based on systemic risk intuition
-   * @note No empirical research on threshold. IMF Financial Stability Reports (2024) discuss systemic risk qualitatively but no quantitative threshold
-   * @value 0.5 - >50% of major economies collapsed = global crisis (aid fails)
+   * Major economy collapse - global crisis threshold (contagion-based)
+   *
+   * @research Financial Stability Board (2024): 2008 Lehman Brothers collapse triggered global cascade
+   * @research 1997 Asian Financial Crisis: Thailand ($182B GDP) affected $2T+ economies via contagion
+   * @research IMF Global Financial Stability Report (2024): "Mounting vulnerabilities" - systemic interconnectedness
+   * @critique Sylvia: "Interconnectedness matters more than counting failures. Single G7 collapse can trigger global crisis."
+   * @note 50% threshold is heuristic, not empirical. Single systemically critical economy (G7) can cascade globally.
+   * @uncertainty VERY HIGH - no empirical threshold exists, historical crises were contagion-driven (not count-based)
+   * @value 0.5 - >50% of major economies collapsed = global crisis (conservative threshold)
    */
   MAJOR_ECONOMY_GLOBAL_CRISIS_THRESHOLD: 0.5,
+
+  /**
+   * Single G7 collapse - global crisis probability (contagion multiplier)
+   *
+   * @research 2008 Financial Crisis: Single US bank failure → global cascade
+   * @research 1929 Great Depression: US collapse → global contagion via trade/finance
+   * @critique Sylvia: "Contagion dynamics missing. Lehman alone triggered 2008 crisis."
+   * @note G7 economies (US, Japan, Germany, UK, France, Italy, Canada) are systemically critical
+   * @uncertainty VERY HIGH - no quantitative model exists, using historical precedent as heuristic
+   * @value 0.40 - 40% probability that single G7 collapse triggers global crisis via contagion
+   */
+  SINGLE_G7_COLLAPSE_GLOBAL_CRISIS_PROBABILITY: 0.40,
 
   /**
    * Heat adaptation - GDP per capita threshold for infrastructure
