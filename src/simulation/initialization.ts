@@ -1816,28 +1816,33 @@ export function createDefaultInitialState(
   if (parameterSweepConfig) {
     console.log(`\n=== M-3 Parameter Sweep Overrides ===`);
 
-    // Climate sensitivity
+    // Initialize simulationConfig if needed
+    state.simulationConfig = state.simulationConfig ?? {};
+
+    // Climate sensitivity - store in both simulationConfig and thresholds
     if (parameterSweepConfig.climateSensitivity !== undefined) {
+      state.simulationConfig.climateSensitivity = parameterSweepConfig.climateSensitivity;
       state.thresholds.climateSensitivity = parameterSweepConfig.climateSensitivity;
       console.log(`  climateSensitivity: ${parameterSweepConfig.climateSensitivity.toFixed(3)}`);
     }
 
     // Carbon sink saturation - store in simulationConfig for runtime use
     if (parameterSweepConfig.carbonSinkMultiplier !== undefined) {
-      state.simulationConfig = state.simulationConfig ?? {};
       state.simulationConfig.carbonSinkMultiplier = parameterSweepConfig.carbonSinkMultiplier;
       state.planetaryBoundariesSystem.landUse.carbonSinkLossMultiplier = parameterSweepConfig.carbonSinkMultiplier;
       console.log(`  carbonSinkLossMultiplier: ${parameterSweepConfig.carbonSinkMultiplier.toFixed(3)}`);
     }
 
-    // AI coordination stress
+    // AI coordination stress - store in simulationConfig and apply to transition management
     if (parameterSweepConfig.aiCoordinationStress !== undefined) {
+      state.simulationConfig.aiCoordinationStressMultiplier = parameterSweepConfig.aiCoordinationStress;
       state.transitionManagementSystem.aiCoordinationCapability = 1.0 - parameterSweepConfig.aiCoordinationStress;
       console.log(`  aiCoordinationCapability: ${(1.0 - parameterSweepConfig.aiCoordinationStress).toFixed(3)} (stress=${parameterSweepConfig.aiCoordinationStress.toFixed(3)})`);
     }
 
-    // Tech adoption steepness (apply to all positive tipping point technologies)
+    // Tech adoption steepness - store in simulationConfig and apply to adoption rates
     if (parameterSweepConfig.techAdoptionSteepness !== undefined) {
+      state.simulationConfig.techAdoptionSteepness = parameterSweepConfig.techAdoptionSteepness;
       const adoptionTech = state.positiveTippingPoints.adoptionTracking;
       adoptionTech.solarPV.adoptionRate *= parameterSweepConfig.techAdoptionSteepness;
       adoptionTech.electricVehicles.adoptionRate *= parameterSweepConfig.techAdoptionSteepness;
@@ -1847,8 +1852,9 @@ export function createDefaultInitialState(
       console.log(`  techAdoptionSteepness: ${parameterSweepConfig.techAdoptionSteepness.toFixed(3)} (multiplied all adoption rates)`);
     }
 
-    // Bifurcation threshold - override tech deployment threshold in bifurcation state
+    // Bifurcation threshold - store in simulationConfig and override tech deployment threshold
     if (parameterSweepConfig.bifurcationThreshold !== undefined) {
+      state.simulationConfig.bifurcationThreshold = parameterSweepConfig.bifurcationThreshold;
       state.bifurcationState.technologyBreakthroughThreshold.base = parameterSweepConfig.bifurcationThreshold;
       state.bifurcationState.technologyBreakthroughThreshold.location = parameterSweepConfig.bifurcationThreshold;
       console.log(`  bifurcationThreshold: ${parameterSweepConfig.bifurcationThreshold.toFixed(3)} (tech deployment threshold)`);
@@ -1856,14 +1862,12 @@ export function createDefaultInitialState(
 
     // Collapse regime multiplier - store in simulationConfig
     if (parameterSweepConfig.collapseRegimeMultiplier !== undefined) {
-      state.simulationConfig = state.simulationConfig ?? {};
       state.simulationConfig.collapseRegimeMultiplier = parameterSweepConfig.collapseRegimeMultiplier;
       console.log(`  collapseRegimeMultiplier: ${parameterSweepConfig.collapseRegimeMultiplier.toFixed(3)}`);
     }
 
     // Breakdown regime multiplier - store in simulationConfig
     if (parameterSweepConfig.breakdownRegimeMultiplier !== undefined) {
-      state.simulationConfig = state.simulationConfig ?? {};
       state.simulationConfig.breakdownRegimeMultiplier = parameterSweepConfig.breakdownRegimeMultiplier;
       console.log(`  breakdownRegimeMultiplier: ${parameterSweepConfig.breakdownRegimeMultiplier.toFixed(3)}`);
     }
