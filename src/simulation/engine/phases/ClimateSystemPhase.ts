@@ -362,14 +362,11 @@ export class ClimateSystemPhase implements SimulationPhase {
 
   /**
    * Calculate effective threshold with cascade reductions (Nov 23, 2025)
-   * M-5 (Dec 7, 2025): Uses sampled threshold if available (threshold uncertainty)
    * Research: Wunderling et al. (2024), Armstrong McKay et al. (2022)
    */
   private getEffectiveThreshold(element: TippingElement, state: GameState): number {
     const thresholdReduction = element.effectiveThresholdReduction || 0;
-
-    // M-5 (Dec 7, 2025): Use sampled threshold if available, else deterministic
-    const baseThreshold = element._sampledThresholdC ?? element.triggerTempC;
+    const baseThreshold = element.triggerTempC;
 
     return assertFinite(
       baseThreshold - thresholdReduction,
@@ -380,7 +377,6 @@ export class ClimateSystemPhase implements SimulationPhase {
         additionalInfo: {
           elementId: element.id,
           baseThreshold,
-          sampledThreshold: element._sampledThresholdC,
           deterministicThreshold: element.triggerTempC,
           thresholdReduction
         }
