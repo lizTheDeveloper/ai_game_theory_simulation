@@ -8,7 +8,15 @@
  */
 
 import { initializeTippingPointSystem } from '../src/simulation/tippingPoints';
-import { createSeededRng } from '../src/simulation/rng';
+
+// Simple LCG (Linear Congruential Generator) for deterministic RNG
+function createSeededRng(seed: number): () => number {
+  let state = seed;
+  return () => {
+    state = (state * 1664525 + 1013904223) % 4294967296;
+    return state / 4294967296;
+  };
+}
 
 console.log('🌡️🎲 Testing Threshold Uncertainty Sampling (M-5)\n');
 
@@ -26,8 +34,8 @@ for (let i = 0; i < system1.elements.length; i++) {
   const elem1 = system1.elements[i];
   const elem2 = system2.elements[i];
 
-  if (elem1._sampledThresholdC !== elem2._sampledThresholdC) {
-    console.log(`❌ FAIL: ${elem1.id} - run1=${elem1._sampledThresholdC}, run2=${elem2._sampledThresholdC}`);
+  if (elem1.sampledThresholdC !== elem2.sampledThresholdC) {
+    console.log(`❌ FAIL: ${elem1.id} - run1=${elem1.sampledThresholdC}, run2=${elem2.sampledThresholdC}`);
     deterministicPass = false;
   }
 }
@@ -48,9 +56,9 @@ for (let run = 0; run < runs; run++) {
   const system = initializeTippingPointSystem(rng);
 
   for (const elem of system.elements) {
-    if (elem._sampledThresholdC !== undefined) {
+    if (elem.sampledThresholdC !== undefined) {
       if (!thresholds[elem.id]) thresholds[elem.id] = [];
-      thresholds[elem.id].push(elem._sampledThresholdC);
+      thresholds[elem.id].push(elem.sampledThresholdC);
     }
   }
 }
@@ -74,9 +82,9 @@ const testSystem = initializeTippingPointSystem(testRng);
 
 let boundsPass = true;
 for (const elem of testSystem.elements) {
-  if (elem.thresholdDistribution && elem._sampledThresholdC !== undefined) {
+  if (elem.thresholdDistribution && elem.sampledThresholdC !== undefined) {
     const { params } = elem.thresholdDistribution;
-    const sampled = elem._sampledThresholdC;
+    const sampled = elem.sampledThresholdC;
 
     // Check bounds
     const min = params.min ?? -Infinity;

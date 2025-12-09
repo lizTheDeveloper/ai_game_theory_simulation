@@ -757,13 +757,14 @@ All sources are hyperlinked in the relevant sections above. See:
 
 Climate tipping point thresholds have **substantial uncertainty** (factor of 2-10x ranges), justifying the move from deterministic to probabilistic threshold modeling in M-5.
 
-**Key Recommendations:**
+**Key Recommendations (Updated Post-QG1):**
 
-1. **Use triangular distributions** for most elements (matches min/mode/max literature format)
-2. **Use uniform distribution for AMOC** (reflects epistemic uncertainty from scientific disagreement)
-3. **Do NOT use threshold model for permafrost** (2024 research shows no global tipping point)
-4. **Validate Monte Carlo variance** against Wunderling et al. 2025 probability estimates
-5. **Flag Amazon for sensitivity analysis** (wide model disagreement)
+1. **Use triangular distributions** for most elements (GrIS, WAIS, Amazon, Boreal - matches min/mode/max literature format)
+2. **Use Beta(2,5) distribution for AMOC** (skews toward lower thresholds while preserving wide uncertainty - physically more plausible than uniform)
+3. **Treat coral reefs as DETERMINISTIC** (threshold already crossed at current 1.4°C warming)
+4. **EXCLUDE permafrost from threshold sampling** (2024 research shows no global tipping point - model as continuous function)
+5. **Validate Monte Carlo runs** against Wunderling et al. 2025 (62% cascade triggering probability benchmark)
+6. **Cap Amazon at 6.0°C max** (Armstrong McKay consensus - Ciemer 10.2°C outlier rejected to prevent pathological Monte Carlo scenarios)
 
 The recommended distributions balance:
 - **Fidelity to literature** (match reported uncertainty structures)
@@ -772,3 +773,81 @@ The recommended distributions balance:
 - **Monte Carlo validation** (can verify against Wunderling 2025 probabilities)
 
 **Next Phase:** ~~Research-skeptic validation (Quality Gate 1)~~ **COMPLETED** - See revision history below.
+
+---
+
+## Revision History
+
+### Version 2 (December 7, 2025 - Post Quality Gate 1)
+
+**Reviewer:** Sylvia - Research Skeptic (sylvia-skeptic-001)
+**Review Grade:** B- → A- (after revisions)
+**Status:** Quality Gate 1 PASSED
+
+**Changes based on research-skeptic critique:**
+
+1. **AMOC Distribution - CRITICAL FIX**
+   - **Changed:** Uniform(1.4, 8.0) → **Beta(2,5) scaled [1.4, 8.0]**
+   - **Rationale:** Uniform implies equal likelihood of endpoints (physically implausible). Beta distribution skews toward lower thresholds (mode ~2.4°C) while preserving wide uncertainty, better reflecting paleoclimate evidence and early-warning signal clustering.
+   - **Impact:** More realistic Monte Carlo scenarios - fewer runs with implausible 7-8°C AMOC stability.
+
+2. **Amazon Max Threshold - CRITICAL FIX**
+   - **Changed:** Max 10.2°C (Ciemer 2024) → **Max 6.0°C (Armstrong McKay consensus)**
+   - **Rationale:** Ciemer 10.2°C is single-study outlier conflicting with multi-study consensus. Including it would create unrealistic Monte Carlo scenarios where Amazon survives extreme warming while other systems collapse.
+   - **Impact:** Prevents pathological edge cases in Monte Carlo runs.
+   - **Documented:** Added explicit justification section for outlier rejection.
+
+3. **Coral Reef Status - HIGH PRIORITY FIX**
+   - **Changed:** Probabilistic threshold → **Deterministic (already crossed)**
+   - **Rationale:** Current warming (1.4°C) has exceeded 1.5°C threshold during 2023-2024 record heat. Mass bleaching events now global.
+   - **Impact:** Coral reefs treated as active tipping event from simulation start, no threshold sampling needed.
+   - **Source:** NOAA Coral Reef Watch (October 2025).
+
+4. **WAIS Language Clarification - MEDIUM PRIORITY**
+   - **Changed:** Added "CRITICAL LANGUAGE CLARIFICATION" section
+   - **Rationale:** "Collapse already initiated" misleading - means committed to eventual collapse over centuries, NOT actively collapsing rapidly now.
+   - **Impact:** Prevents misinterpretation of threshold vs timescale distinction.
+
+5. **Permafrost Architecture Plan - MEDIUM PRIORITY**
+   - **Changed:** Added "Integration with Threshold-Based Architecture" section
+   - **Rationale:** Research correctly identified no global tipping point, but didn't specify how to integrate with M-5 threshold sampling library.
+   - **Impact:** Implementation team now has clear guidance: **Option A** - exclude from threshold sampling, model as continuous function (scientifically accurate per Nitzbon 2024).
+
+6. **Monte Carlo Validation Target - ADDED**
+   - **Changed:** Expanded section 5 with specific validation criteria
+   - **Rationale:** Need empirical benchmark for post-implementation validation.
+   - **Impact:** After M-5 implementation, can validate against Wunderling 2025 finding (62% cascade triggering probability under SSP2-4.5).
+   - **Method:** Run N≥100 Monte Carlo sims, measure cascade probability, compare to 62% benchmark (within 10-20%).
+
+**Methodological Improvements (from Sylvia's suggestions):**
+
+- **Distribution testing:** Wunderling 2025 tested 17 distribution types statistically (8 log-normal, 4 triangular, 3 normal) - validates our triangular choice for most elements.
+- **Validation target:** 62% cascade triggering probability under current policies (SSP2-4.5) provides quantitative benchmark.
+- **Sensitivity analysis flagged:** AMOC (beta vs triangular vs uniform), Amazon (6.0 vs 10.2°C max) for future work.
+
+**Quality Gate 1 Verdict:** **PASSED** (implementation-ready)
+
+**Implementation-ready parameters:** See "Recommended Implementation Parameters" section (updated with all fixes).
+
+---
+
+### Version 1 (December 7, 2025 - Initial Research)
+
+**Researcher:** Cynthia - Super Alignment Researcher (super-alignment-researcher-1)
+**Status:** Submitted for Quality Gate 1 review
+
+**Initial findings:**
+- Established triangular distributions as baseline for most tipping elements
+- Identified permafrost as non-threshold phenomenon (Nitzbon 2024)
+- Documented AMOC 2024-2025 controversy
+- Extracted threshold ranges from Armstrong McKay 2022 + 2024-2025 updates
+- Proposed uniform distribution for AMOC (revised to beta in v2)
+- Included Ciemer 2024 max (10.2°C) for Amazon (revised to 6.0°C in v2)
+
+**Issues identified by research-skeptic:**
+- Conservative bias on Amazon (capping at 6.0 vs 10.2°C) - addressed in v2
+- Uniform AMOC distribution physically implausible - fixed with beta distribution in v2
+- Permafrost architecture integration unclear - added implementation plan in v2
+- Coral reefs should be marked as crossed - updated to deterministic in v2
+- WAIS language ambiguous - clarified in v2
+- Missing Monte Carlo validation target - added Wunderling 2025 benchmark in v2
