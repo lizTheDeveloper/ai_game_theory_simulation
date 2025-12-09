@@ -74,9 +74,41 @@ grep -A 10 "M-5:\|M-6:\|M-7:" openspec/specs/simulation/spec.md
 
 ---
 
+### 5. hindcast-demographic-tuning (M-8)
+**Status:** ✅ COMPLETE (Dec 9, 2025)
+**Implementation:** Regional death rates updated with UN WPP 2024 estimates
+**Quality Gates:** Research validation passed
+**History:** Commit b89a1dd9 "feat: Update regional historical death rates with Dec 9 UN WPP 2024 estimates"
+**Files:** Death rate calibration for Sub-Saharan Africa, South Asia, East Asia regions
+
+### 6. calibration-coordination (MEDIUM)
+**Status:** ✅ COMPLETE (Dec 9, 2025)
+**Implementation:**
+- `docs/CALIBRATION_OWNERSHIP.md` - Ownership registry
+- Pre-calibration check protocol documented
+- Calibration template created
+**Quality Gates:** Process documentation complete
+**History:** Prevents duplicate calibration work, tracks research backing
+
+### 7. simulation-config-type-safety (LOW)
+**Status:** ✅ COMPLETE (Dec 9, 2025)
+**Implementation:** `SimulationConfig` interface added to `src/types/game.ts`
+**Quality Gates:** TypeScript compilation passes, 462+ tests passing
+**History:** Improves IDE autocomplete and compile-time safety
+**Files:** Type safety for `state.simulationConfig` object
+
+### 8. git-workflow-improvements (LOW)
+**Status:** ✅ COMPLETE (Dec 9, 2025)
+**Implementation:** `.githooks/pre-commit` hook prevents merge conflict markers
+**Quality Gates:** Pre-commit hook functional, documentation updated
+**History:** Prevents commits with unresolved merge conflicts
+**Files:** Git hook added to `.githooks/` directory
+
+---
+
 ## Next Steps
 
 1. ✅ Proposals archived to `openspec/changes/archive/2025-12-09/`
-2. ⏳ Update `openspec/specs/project/spec.md` to reflect completion (next task)
+2. ✅ Update `openspec/specs/project/spec.md` to reflect completion
 3. ⏳ Post to `roadmap` channel for multi-agent awareness
 4. ⏳ Verify no active references to archived proposals
