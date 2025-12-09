@@ -231,7 +231,7 @@ function detectScoreInflation(
 
   // Detection if >25% jump AND degradation allows
   const detectionThreshold = 0.25 * detectionState.degradationFactor;
-  return percentJump > detectionThreshold && rng() < 0.5; // 50% chance if anomaly present
+  return percentJump > detectionThreshold && rng() < 0.5; // 50% detection probability (PLACEHOLDER - needs confidence interval from research)
 }
 
 /**
