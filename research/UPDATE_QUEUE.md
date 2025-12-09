@@ -1,11 +1,6 @@
 # Research Update Queue
-<<<<<<< Updated upstream
-**Generated:** 12/9/2025, 7:30:06 AM
-**Files Scanned:** 546
-=======
-**Generated:** 12/8/2025, 3:30:04 PM
-**Files Scanned:** 543
->>>>>>> Stashed changes
+**Generated:** 12/7/2025, 8:30:04 AM
+**Files Scanned:** 534
 
 ---
 
@@ -17,21 +12,12 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-<<<<<<< Updated upstream
-**Count:** 179 (32.8%)
-=======
-**Count:** 179 (33.0%)
->>>>>>> Stashed changes
+**Count:** 178 (33.3%)
 
 ### `AUTONOMOUS_RESEARCHER_SESSION_20251203_2030.md`
 - **Oldest source:** 1981 (44 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/AUTONOMOUS_RESEARCHER_SESSION_20251203_2030.md`
-
-### `CITATION_CURRENCY_AUDIT_20251208.md`
-- **Oldest source:** 2009 (16 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/CITATION_CURRENCY_AUDIT_20251208.md`
 
 ### `CRISIS_MITIGATION_RESEARCH_CRITIQUE_20251029.md`
 - **Oldest source:** 2001 (24 years old)
@@ -437,11 +423,6 @@
 - **Oldest source:** 1995 (30 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/competitive_alignment_failure_modes_verification_20251101.md`
-
-### `config_parameters_justification_20251209.md`
-- **Oldest source:** 2019 (6 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/config_parameters_justification_20251209.md`
 
 ### `cooperative-ownership-validation-cynthia-20251101.md`
 - **Oldest source:** 2014 (11 years old)
@@ -927,7 +908,7 @@
 
 ## 📋 MEDIUM (Review Within Quarter)
 
-**Count:** 24 (4.4%)
+**Count:** 24 (4.5%)
 
 - `LAYER2_COMPREHENSIVE_STATUS_20251030.md` - Oldest: 2020 (5 years)
 - `LAYER2_DEBATE_SUMMARY_20251030.md` - Oldest: 2020 (5 years)
@@ -958,11 +939,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-<<<<<<< Updated upstream
-**Count:** 343 (62.8%)
-=======
-**Count:** 340 (62.6%)
->>>>>>> Stashed changes
+**Count:** 332 (62.2%)
 
 All sources <3 years old. No action required.
 
@@ -972,52 +949,33 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-<<<<<<< Updated upstream
-| Total files | 546 |
+| Total files | 534 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 179 (32.8%) |
-| MEDIUM | 24 (4.4%) |
-| LOW | 343 (62.8%) |
-| Average age | 7.4 years |
-=======
-| Total files | 543 |
-| CRITICAL | 0 (0.0%) |
-| HIGH | 179 (33.0%) |
-| MEDIUM | 24 (4.4%) |
-| LOW | 340 (62.6%) |
+| HIGH | 178 (33.3%) |
+| MEDIUM | 24 (4.5%) |
+| LOW | 332 (62.2%) |
 | Average age | 7.5 years |
->>>>>>> Stashed changes
 | Oldest source | 1955 (70 years ago) |
 
 ### Research Currency
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-<<<<<<< Updated upstream
-| Current (<3yr) | 343 | 62.8% |
-| Warning (3-5yr) | 24 | 4.4% |
-| Critical (>5yr) | 179 | 32.8% |
-=======
-| Current (<3yr) | 340 | 62.6% |
-| Warning (3-5yr) | 24 | 4.4% |
-| Critical (>5yr) | 179 | 33.0% |
->>>>>>> Stashed changes
+| Current (<3yr) | 332 | 62.2% |
+| Warning (3-5yr) | 24 | 4.5% |
+| Critical (>5yr) | 178 | 33.3% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-<<<<<<< Updated upstream
-- **Current:** 32.8% critical (>5yr)
-=======
-- **Current:** 33.0% critical (>5yr)
->>>>>>> Stashed changes
+- **Current:** 33.3% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
-1. Update 179 HIGH priority file(s) within 1 month
+1. Update 178 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 
