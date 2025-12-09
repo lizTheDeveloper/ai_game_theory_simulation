@@ -29,6 +29,79 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Dec 9: Session 63 - Research Audit Follow-up + CRITICAL Tipping Cascade Fix** (commits 582f74e5, f317c17c, c7114681)
+- **Research Audit Follow-up (HIGH Priority):** 3 parameter justification gaps from Nov 29 audit addressed
+  - **Sleeper agent rate (7.5%):** Added explicit uncertainty bounds (±50%, range 3.75%-11.25%), labeled as DERIVED ESTIMATE
+    - Citation: Hubinger et al. (2024) proof-of-concept (feasibility, not prevalence)
+    - Note: "empirical prevalence TBD" - no real-world data exists yet
+  - **Sandbagging baseline (0.4-0.6):** Added research citations for empirical frontier model observations
+    - Citation: van der Weij et al. (2024), Meinke et al. (2024)
+    - Range justified from observed deception baselines in GPT-4, Claude
+  - **Detection risk (50%):** Added uncertainty note "(confidence interval TBD)"
+    - Citation: van der Weij et al. (2024) noise injection detection (>99% AUROC possible)
+    - TODO: Month-dependent improvement curve as mechanistic interpretability advances
+- **CRITICAL Tipping Cascade Fix:** AMOC-Amazon interaction regression corrected
+  - **Problem:** Merge conflict reverted Dec 8 research fix removing AMOC → Amazon destabilizing interaction
+  - **Research:** 2023-2025 peer-reviewed evidence shows AMOC collapse STABILIZES Amazon (not destabilizes)
+    - Parsons et al. (2023) Nature Comms: "AMOC collapse may stabilise eastern Amazonian rainforests"
+    - Yuan et al. (2025) npj Climate: "increased precipitation over most of Amazon"
+    - Högner et al. (2025) ERL: +4.8% rainfall per 1 Sv AMOC weakening
+  - **Mechanism:** ITCZ southward shift brings MORE rain to southern Amazon
+  - **Fix:** Removed AMOC → Amazon interaction (lines 506-537 in tipping-points.ts)
+  - **Grade:** D (FAILED) → B (PASS) after correction
+  - 📄 **Research:** `research/REGRESSION_FIX_amoc_amazon_20251209.md`
+- **Energy Budget Integration (H-1, H-2):** Architecture review follow-up completed
+  - Fixed duplicate energy calculation in ClimateDeploymentPhase (now consumes allocations from EnergyBudgetPhase)
+  - Single source of truth: EnergyBudgetPhase (order 12.75) calculates, others consume
+  - 📄 **Docs:** `docs/implementation-history/energy_budget_integration_fixes_20251209.md`
+- **Research Quality:** Grade B+ (recent work A+, legacy corpus C due to time passage)
+  - Recent additions: Regional death rates (UN WPP 2024), radiation modeling (ICRP 103, BEIR VII)
+  - Corpus currency: 53.4% from 2024-2025 (down from 68.8% Nov 29 due to aging, not degradation)
+- 📄 **Reviews:**
+  - `reviews/research_audit_20251209.md` (Grade B+)
+  - `docs/implementation-history/research_audit_followup_20251209.md`
+  - `devlogs/session_63_summary_20251209.md`
+
+**Dec 8: Session 62 - Enhanced Radiation Modeling (M-6)** (commits multiple)
+- **Enhanced Radiation System:** Acute vs chronic exposure modeling with tissue-specific weighting
+  - **Dose-response curves:** LD50/60 sigmoid curves [3.0-8.0] Gy with medical care modifiers
+    - No medical care: LD50 = 3.0 Gy
+    - Basic supportive care: LD50 = 4.5 Gy
+    - Intensive care: LD50 = 7.5 Gy (ICU + blood/marrow transplant)
+  - **Tissue weighting:** ICRP 103 organ-specific sensitivities
+    - Thyroid: 1000x I-131 bioconcentration
+    - Bone marrow: 12x sensitivity (stem cells)
+    - Reproductive organs: 8x sensitivity
+  - **Decay modeling:** 7-10 decay rule (I-131, Cs-137 half-lives)
+  - **Combined injury synergy:** 65% prevalence, 20% LD50 reduction (burns + trauma + radiation)
+  - **Chronic cancer risk:** Accumulates over decades (BEIR VII linear no-threshold model)
+- **Research Foundation:**
+  - REMM (Radiation Emergency Medical Management): LD50/60 dose-response
+  - ICRP 103 (2007): Tissue weighting factors
+  - BEIR VII (2006): Cancer risk coefficients
+  - NIAID PMC8771911 (2022): Combined radiation injury synergy
+- **Module:** `src/simulation/radiationModeling.ts` (570 lines)
+- **Tests:** `src/simulation/__tests__/radiationModeling.test.ts`
+- 📄 **Implementation:** `docs/implementation-history/M-6_enhanced_radiation_modeling_20251208.md`
+
+**Dec 7: Session 60 - Threshold Uncertainty Modeling (M-5 Infrastructure)** (commit f38ab3cd)
+- **Distribution Sampling Library:** Probabilistic threshold sampling for climate tipping point uncertainty
+  - **5 Distribution Types:** Triangular, uniform, normal, log-normal, beta, gamma
+    - Triangular: min/mode/max format (most common in expert elicitation)
+    - Beta: bounded [0,1] with shape parameters (good for probabilities)
+    - Log-normal: right-skewed (climate sensitivity distributions)
+  - **Inverse transform sampling:** Efficient RNG-based sampling
+  - **Use cases:** Each simulation run samples different thresholds from research-backed distributions
+    - AMOC collapse: 3.0°C ± uncertainty
+    - Amazon dieback: 3.5°C ± uncertainty
+    - Greenland ice sheet: 1.5°C ± uncertainty
+- **Research Foundation:**
+  - Armstrong McKay et al. (2022) Science: Tipping thresholds have factor 2-10x uncertainty
+  - Epistemic uncertainty (we don't know exact threshold) vs aleatory (inherent randomness)
+- **Module:** `src/simulation/utils/distributionSampling.ts` (305 lines)
+- **Impact:** Increases outcome variance by 15-30% (different seeds = different physics, not just events)
+- 📄 **Implementation:** OpenSpec M-5 complete
+
 **Dec 3: Session 51 Research Validation + Roadmap Gardening** (commits abd6795a, 051abdf2, 07a7e33f)
 - **Research Validation:** Grade A- (68.8% sources from 2024-2025)
   - 677 research files validated (up from 508 in Session 49)
@@ -1021,19 +1094,19 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - 📄 **Report:** reviews/hindcasting_validation_results_20251123.md
 - ⚠️ **Implication:** Model is designed for near-future forecasting from 2025, NOT historical reconstruction. Forecasts should include this caveat.
 
-**Nov 23: Threshold Lowering for Tipping Cascades** (commit cf49657)
+**Nov 23: Threshold Lowering for Tipping Cascades** (commit cf49657, CORRECTED Dec 9, 2025)
 - 🌍 **HIGH Priority Gap Filled:** Implemented threshold lowering mechanism from mechanism audit
-- **TIPPING_INTERACTIONS Matrix:** 9 research-backed interactions between tipping elements
+- **TIPPING_INTERACTIONS Matrix:** 8 research-backed interactions between tipping elements (originally 9, AMOC → Amazon removed Dec 9)
 - **Cascade Mechanics:**
   - Arctic ice → Greenland/permafrost (0.15-0.20°C lowering)
   - Greenland → AMOC (0.30°C - freshwater hosing)
-  - AMOC → Amazon (0.25°C - monsoon disruption)
+  - ~~AMOC → Amazon (0.25°C - monsoon disruption)~~ **REMOVED Dec 9** - research shows STABILIZING effect (Parsons 2023, Yuan 2025)
   - Permafrost → global elements (0.10-0.15°C - carbon feedback)
-- **Scaling:** sqrt(progress) for front-loading; cap at 0.5°C per element
+- **Scaling:** Linear (changed from sqrt) per Dec 8 fix; cap at 0.5°C per element
 - **Research:** Armstrong McKay et al. (2022) Science, Wunderling et al. (2024) ESD
 - **Cascade Demonstration:** Arctic(1.5°C) → Greenland(1.55°C, lowered from 1.6°C) → AMOC (base threshold now 4.0°C per Nov 24 recalibration)
 - 📄 **Files:** ClimateSystemPhase.ts, src/types/tipping-points.ts
-- ⚠️ **Pending:** Research verification for threshold reduction magnitudes
+- ⚠️ **Correction (Dec 9):** AMOC → Amazon interaction removed after research verification found sign error (see Session 63)
 
 **Nov 25: WAIS-AMOC Coupling & RICE Alignment Framework** (commit a341469)
 - 🌍 **Research Update:** Two November 2025 peer-reviewed papers added
@@ -2627,6 +2700,34 @@ Phase 13+:   Cleanup/effects systems (consume allocations)
 **Implementation History:** `docs/implementation-history/energy_budget_integration_fixes_20251209.md`
 
 **Monte Carlo:** N=10, 120 months - PASSED (no NaN errors, proper constraint behavior)
+
+---
+
+**December 9, 2025 - AMOC-Amazon Tipping Cascade Correction (CRITICAL)**
+
+**Achievement:** Fixed critical regression where AMOC → Amazon destabilizing interaction was incorrectly restored during merge conflict resolution.
+
+**Problem:** Merge commit 23fd6987 (removing threshold uncertainty sampling) inadvertently reverted Dec 8 research fix (commit b6771427) that removed AMOC → Amazon interaction.
+
+**Research Evidence (2023-2025):**
+- Parsons et al. (2023) Nature Communications: "AMOC collapse may stabilise eastern Amazonian rainforests"
+- Yuan et al. (2025) npj Climate: "AMOC collapse shows increased precipitation over most of Amazon"
+- Högner et al. (2025) ERL: +4.8% rainfall per 1 Sv AMOC weakening (observational data)
+
+**Mechanism:** ITCZ southward shift brings MORE rain to southern Amazon (not less). Original assumption was based on simplified ITCZ model without regional heterogeneity.
+
+**Fix Applied (commit f317c17c):**
+- Removed AMOC → Amazon interaction from `TIPPING_INTERACTIONS` matrix (lines 506-537)
+- Added research documentation explaining sign error
+- Documented AMOC → Greenland stabilizing feedback (pending feature support for negative interactions)
+
+**Verification:** research/verification_cf49657_20251207.md - Grade D (FAILED) → B (PASS)
+
+**Impact:** Cascade model now correctly omits destabilizing AMOC → Amazon interaction. Tipping interactions reduced from 9 to 8.
+
+**Files:** `src/types/tipping-points.ts`, `src/simulation/engine/phases/ClimateSystemPhase.ts`
+
+**Research:** `research/REGRESSION_FIX_amoc_amazon_20251209.md`
 
 ---
 
