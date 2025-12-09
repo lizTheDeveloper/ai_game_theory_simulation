@@ -32,11 +32,19 @@ async function runValidation() {
   console.log('=== NUCLEAR WINTER → AGRICULTURE FEEDBACK VALIDATION ===\n');
 
   const seed = 42000;
-  const initialState = createDefaultInitialState('historical', undefined, undefined, undefined, undefined, seed);
+
+  // Create RNG from seed
+  let rngState = seed;
+  const rng = () => {
+    rngState = (rngState * 9301 + 49297) % 233280;
+    return rngState / 233280;
+  };
+
+  const initialState = createDefaultInitialState(rng, 'historical');
 
   // Trigger nuclear war immediately
   console.log('☢️  TRIGGERING NUCLEAR WAR (500 warheads, regional nuclear exchange)\n');
-  triggerNuclearWinter(initialState, 500, ['USA', 'Russia', 'China']);
+  triggerNuclearWinter(initialState, 500, ['USA', 'Russia', 'China'], rng);
 
   // Run simulation for 60 months
   console.log('Running 60-month simulation...\n');
