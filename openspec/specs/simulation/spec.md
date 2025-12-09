@@ -211,18 +211,45 @@ The simulation SHALL model environmental, social, and technological debt.
 
 ### HIGH Priority
 
+#### HIGH-2: Dashboard Missing Radiation Metrics
+**Status:** NEW (identified Dec 9, 2025)
+**Context:** Architecture review found M-6 radiation features not surfaced to dashboard
+**Impact:** StateDelta interface missing radiation-specific fields (radiationZones, falloutActivity, cancerRiskEstimate)
+**Severity:** HIGH (feature not visible to users)
+**Effort:** Small
+**Files:** `src/lib/simulationWorkerClient.ts` (StateDelta interface lines 17-283)
+**Recommendation:** Add radiationMetrics object with activeZones, populationExposed, avgDoseRate, projectedCancerCases
+**Review:** `reviews/architecture_integration_review_20251209.md`
+
+#### HIGH-1: Radiation Integration with Regional Systems
+**Status:** NEW (identified Dec 9, 2025)
+**Context:** M-6 radiation modeling uses simplified integration with regional systems
+**Impact:**
+  - Medical care level determination uses QoL health as proxy instead of healthcare system state
+  - Cohort distribution uses hardcoded fractions instead of regional population data
+**Severity:** HIGH (functional gap, reduces model fidelity)
+**Effort:** Medium
+**Files:** `src/simulation/radiationModeling.ts:473-486` (distributePopulationIntoCohorts)
+**Recommendation:**
+  - Connect medical care to `state.qualityOfLifeSystems.health` granularly
+  - Use regional population data for cohort distribution variance
+**Review:** `reviews/architecture_integration_review_20251209.md`
+
+---
+
+### COMPLETED HIGH Priority
+
 #### HIGH-7: Conditional Climate Stability Floor
-**Status:** COMPLETE (Dec 5, 2025, retroactive validation Dec 7)
+**Status:** ✅ COMPLETE (Dec 5, 2025, retroactive validation Dec 7)
 **Implementation:** `src/simulation/engine/phases/ClimateSystemPhase.ts:827-883`
 **Research:** Wunderling et al. (2024), ACCESS-ESM-1.5 (2024), Boers et al. (2025)
 **Quality Gates:** QG1 Grade B (Sylvia), QG2 Grade B (architecture-skeptic)
 **Summary:** Conditional floor (5% in stabilization scenarios, 0% in tail risk) replaces unconditional floor. Aligns with 2024-2025 research showing destabilizing tipping cascades.
-**Known Issues:** Monte Carlo validation partial (N=10 blocked by population assertion edge case, not a feature bug)
 **History:** `docs/implementation-history/high7_conditional_climate_stability_floor_20251207.md`
 
 ---
 
-### MEDIUM Priority
+### COMPLETED MEDIUM Priority
 
 #### M-7: Fix Population Assertions for Near-Extinction Scenarios
 **Status:** ✅ COMPLETE (Dec 7, 2025)
@@ -252,6 +279,30 @@ The simulation SHALL model environmental, social, and technological debt.
 **Research:** CDC 2024, REMM, ICRP 103, PMC11604265, BEIR VII (LNT controversy documented)
 **Tests:** 30+ unit tests, deterministic, all passing
 **History:** `docs/implementation-history/M-6_enhanced_radiation_modeling_20251208.md`
+
+---
+
+### MEDIUM Priority
+
+#### MEDIUM-3: Dual Population Fields
+**Status:** NEW (identified Dec 9, 2025)
+**Context:** Legacy `state.globalMetrics.population` exists but is never synced after initialization
+**Impact:** Causes confusion, led to Nov 2025 "god mode NaN" bug when scripts read from wrong location
+**Severity:** MEDIUM (documented footgun)
+**Effort:** Small
+**Files:** `src/simulation/initialization.ts:1564` (only write site)
+**Recommendation:** Either sync from `humanPopulationSystem.population` each step, or deprecate/remove
+**Source of Truth:** `state.humanPopulationSystem.population` (always use this)
+**Review:** `reviews/architecture_integration_review_20251209.md`
+
+#### MEDIUM-1: Silent Fallback Migration
+**Status:** DEFERRED (identified Dec 9, 2025)
+**Context:** 30+ instances of `?? defaultValue` patterns remain in simulation code
+**Impact:** Masks bugs, hinders debugging
+**Severity:** MEDIUM (documented but not crashing)
+**Effort:** Large (2-3 day migration effort)
+**Decision:** Defer until focused sprint - partial migration worse than either pure approach (per CLAUDE.md warning)
+**Review:** `reviews/architecture_integration_review_20251209.md`
 
 ---
 

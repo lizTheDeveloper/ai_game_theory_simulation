@@ -136,33 +136,45 @@ The project SHALL preserve implementation histories and research context.
 
 ## Current Status
 
-**Session:** 55 (December 5, 2025)
-**Mode:** Maintenance (17 consecutive maintenance sessions: 34-55)
-**Research Quality:** A- (68.8% sources from 2024-2025)
-**Architecture Health:** A- (0 CRITICAL, 0 HIGH blockers)
+**Session:** 61 (December 9, 2025)
+**Mode:** Maintenance (20+ consecutive maintenance sessions)
+**Research Quality:** B+ (62.9% sources from 2024-2025, 178 files need updates)
+**Architecture Health:** B+ (0 CRITICAL, 2 HIGH integration issues)
 **Test Coverage:** 82.47% (462+ tests passing)
-**System State:** Production-ready, all quality gates GREEN
+**System State:** Production-ready, integration gaps identified
 
-**Token Conservation:** ACTIVE (target 50% normal usage)
-- Strategy: CRITICAL/HIGH only, 4h worker intervals
-- MEDIUM/LOW: Deferred until token budget restored
+**Token Conservation:** DISABLED (Dec 4, 2025 per PM request)
+- Normal operation restored
+- Full productivity mode
 
 ---
 
 ## Active Work
 
 ### CRITICAL Priority
-None (system in maintenance mode)
-
-### COMPLETED HIGH Priority
-- HIGH-7: Conditional climate stability floor (research debate finding) - COMPLETE Dec 7, 2025
+None (system stable)
 
 ### HIGH Priority
-None (system in maintenance mode)
+- **HIGH-2**: Dashboard Missing Radiation Metrics (from architecture review Dec 9)
+  - **Impact:** M-6 radiation features invisible to dashboard
+  - **Effort:** Small (add radiationMetrics to StateDelta interface)
+  - **Status:** NEW (identified in architecture review)
+
+- **HIGH-1**: Radiation Integration with Regional Systems (from architecture review Dec 9)
+  - **Impact:** Medical care + cohort distribution use simplified models
+  - **Effort:** Medium (connect to healthcare system state, regional population)
+  - **Status:** NEW (identified in architecture review)
 
 ### MEDIUM Priority
-- M-5: Threshold uncertainty modeling (distribution sampling library)
-- M-6: Enhanced radiation modeling (acute vs chronic, tissue sensitivity)
+- **MEDIUM-3**: Dual Population Fields (from architecture review Dec 9)
+  - **Impact:** Legacy `globalMetrics.population` causes confusion, NaN risk
+  - **Effort:** Small (sync from `humanPopulationSystem.population` or remove)
+  - **Status:** NEW (footgun documented in Nov 2025 god mode NaN bug)
+
+- **MEDIUM-1**: Silent Fallback Migration (from architecture review Dec 9)
+  - **Impact:** 30+ `?? defaultValue` patterns remain in simulation code
+  - **Effort:** Large (2-3 day migration effort)
+  - **Status:** DEFERRED (partial migration worse than none, per CLAUDE.md)
 
 ### LOW Priority
 - L-2: Enhanced biodiversity modeling (food web collapse)
