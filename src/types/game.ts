@@ -489,6 +489,53 @@ export interface GameState {
     temperatureOffset: number;           // Degrees C cooling from SAI
   };
 
+  /**
+   * Energy Budget Constraints (TIER 2, Dec 9, 2025)
+   *
+   * Hard constraints on technology deployment based on global electricity capacity.
+   * Prevents unrealistic scenarios where DAC, hydrogen, and AI datacenters simultaneously
+   * claim the same limited electricity capacity without priority allocation.
+   *
+   * Key Parameters (2024-2025 baseline):
+   * - Global capacity: 29,000 TWh/year (11,500 TWh clean)
+   * - DAC at scale: 1,200-2,500 kWh/tCO2 → 10 GtCO2/year = 12,000-25,000 TWh/year
+   * - AI datacenters: 415-460 TWh/year baseline (2024), 21% CAGR
+   * - Priority tiers: Essential (40-50%) > High (30-40%) > Climate (10-20%) > Elective (5-10%)
+   *
+   * Research: research/energy_budget_constraints_20251209.md (Grade B+, 370 lines)
+   * Validation: reviews/research_validation_energy_budget_20251209.md (Quality Gate 1 PASSED)
+   * Expected impact: God mode deployment constrained by electricity availability
+   */
+  energyBudget?: {
+    // Global capacity tracking
+    globalCapacity: {
+      totalTWh: number;           // Total global electricity generation (TWh/year)
+      cleanTWh: number;           // Clean electricity (renewables + nuclear)
+      fossilTWh: number;          // Fossil fuel electricity
+      growthRate: number;         // Annual growth rate (2-6% depending on scenario)
+    };
+
+    // Technology allocations (per-technology tracking)
+    allocations: {
+      [techCategory: string]: {
+        demandTWh: number;        // How much electricity this tech requests
+        allocatedTWh: number;     // How much it actually gets (priority-based)
+        effectivenessMultiplier: number;  // (allocated / demand)^exponent
+        priorityTier: 1 | 2 | 3 | 4;      // Priority ordering (1=essential, 4=elective)
+      };
+    };
+
+    // Competition tracking (aggregate metrics)
+    conflicts: {
+      totalDemandTWh: number;     // Sum of all technology demands
+      surplusDeficitTWh: number;  // totalCapacity - totalDemand (negative = shortage)
+      competingTechs: string[];   // Which techs are energy-starved (allocated < demand)
+    };
+
+    // Configuration
+    enabled: boolean;             // Feature flag for testing
+  };
+
   upwardSpirals: import('../simulation/upwardSpirals').UpwardSpiralState; // Phase 2D: Upward spirals for Utopia detection
   meaningRenaissance: import('../simulation/meaningRenaissance').MeaningRenaissanceState; // Phase 2E: Meaning renaissance
 

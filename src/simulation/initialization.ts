@@ -1086,6 +1086,25 @@ export function createDefaultInitialState(
     informationWarfare: initializeInformationWarfare(),
     powerGenerationSystem: initializePowerGenerationSystem(),
 
+    // TIER 2: Energy Budget Constraints (Dec 9, 2025)
+    // Research: research/energy_budget_constraints_20251209.md (Grade B+)
+    // Validation: reviews/research_validation_energy_budget_20251209.md (QG1 PASSED)
+    energyBudget: {
+      globalCapacity: {
+        totalTWh: 29_000,           // IEA WEO 2024: 28,000-30,000 TWh/year global electricity
+        cleanTWh: 11_500,           // 40% clean share (renewables + nuclear)
+        fossilTWh: 17_500,          // 60% fossil fuels
+        growthRate: 0.03,           // 3% annual (IEA STEPS scenario: 2-3%)
+      },
+      allocations: {},              // Populated by EnergyBudgetPhase each step
+      conflicts: {
+        totalDemandTWh: 0,          // Sum of all tech demands (calculated by phase)
+        surplusDeficitTWh: 29_000,  // Initial surplus (no tech deployed yet)
+        competingTechs: [],         // No competition at initialization
+      },
+      enabled: true,                // Feature enabled by default
+    },
+
     // TIER 4.6: AI-Assisted Skills Enhancement (Research-validated, TRL 8-9)
     aiAssistedSkillsMetrics: initializeAIAssistedSkillsMetrics(), // Digital AI augmentation (GitHub Copilot, ChatGPT, AI tutors)
 
