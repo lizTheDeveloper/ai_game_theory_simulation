@@ -169,6 +169,7 @@ import { UnknownUnknownPhase } from './engine/phases/UnknownUnknownPhase';  // P
 // Batch 3 Consolidation: Climate & Environmental (17 → 7, Nov 9, 2025)
 import { ClimateSystemPhase } from './engine/phases/ClimateSystemPhase';  // Consolidated 4 climate phases
 import { AbruptSeaLevelRisePhase } from './engine/phases/AbruptSeaLevelRisePhase';  // M-4 (Dec 5, 2025): Marine ice sheet instability
+import { EnergyBudgetPhase } from './engine/phases/EnergyBudgetPhase';  // TIER 2 (Dec 9, 2025): Energy budget constraints for tech deployment
 import { ClimateDeploymentPhase } from './engine/phases/ClimateDeploymentPhase';  // TIER 1 CRITICAL (Nov 2025): Climate tech phased deployment + energy constraints
 import { ClimateDeploymentDelayPhase } from './engine/phases/ClimateDeploymentDelayPhase';  // TIER 1 CRITICAL (Nov 18, 2025): Three-delay model
 import { VolcanicForcingPhase } from './engine/phases/VolcanicForcingPhase';  // HIGH PRIORITY (Nov 27, 2025): Stratospheric aerosol forcing for hindcast validation
@@ -587,7 +588,8 @@ export class SimulationEngine {
     // === BATCH 3 CONSOLIDATED CLIMATE SYSTEM (Nov 9, 2025) ===
     this.orchestrator.registerPhase(new ClimateSystemPhase());  // Consolidated: GeoengineringPhase + TippingPointPhase + EnvironmentalFeedbackPhase + ClimateImpactCascadePhase
     this.orchestrator.registerPhase(new AbruptSeaLevelRisePhase());  // M-4 (Dec 5, 2025): Marine ice sheet instability (order 34.5)
-    this.orchestrator.registerPhase(new ClimateDeploymentPhase());  // TIER 1 CRITICAL (Nov 2025): Climate tech phased deployment + energy constraints (order 8.5)
+    this.orchestrator.registerPhase(new EnergyBudgetPhase());  // TIER 2 (Dec 9, 2025): Energy budget constraints for tech deployment (order 12.4, before ClimateDeployment 12.8)
+    this.orchestrator.registerPhase(new ClimateDeploymentPhase());  // TIER 1 CRITICAL (Nov 2025): Climate tech phased deployment + energy constraints (order 12.8)
     this.orchestrator.registerPhase(new ClimateDeploymentDelayPhase());  // TIER 1 CRITICAL (Nov 18, 2025): Three-delay model for realistic deployment timescales (order 16.0)
     this.orchestrator.registerPhase(new VolcanicForcingPhase());  // HIGH PRIORITY (Nov 27, 2025): Stratospheric aerosol forcing for hindcast validation (order 16.5)
     this.orchestrator.registerPhase(new PermafrostCarbonPhase());  // TIER 2 RD-1 (Nov 28, 2025): Permafrost carbon feedback loop (order 18.5)
