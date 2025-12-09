@@ -90,27 +90,40 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 ### MEDIUM Priority
 
 #### Nitrogen-Food Phase 3 Technologies
-**Status:** ⚠️ READY FOR VALIDATION
+**Status:** ✅ VERIFIED - Grade B- (with parameter revisions required)
 **Change:** (pending - needs change folder created)
 **Commit:** cd1e83a
 **Context:** 6 new nitrogen reduction technologies added to tech tree
-**Verification File:** `research/verification_cd1e83a_20251121.md`
+**Verification Files:**
+- `research/verification_cd1e83a_nitrogen_phase3_20251208.md` (initial)
+- `reviews/nitrogen_phase3_skeptic_review_20251209.md` (final skeptic review)
 
-**Technologies to Verify:**
-1. Rhizosphere Engineering (15-40% N reduction, TIER 1, commercial)
-2. Nitroplast Integration (50-70% reduction, breakthrough, Coale et al. 2024)
-3. Precision Fermentation (30-50% agri N reduction, emerging)
-4. Regional Nitrogen Policies (20% efficiency via redistribution)
-5. Soil Health Restoration (20-40% NUE improvement)
-6. Integrated Nutrient Management (25-45% efficiency gains)
+**Verification Complete (Dec 8-9, 2025):**
+- **Initial Grade:** B+ (super-alignment-researcher)
+- **Final Grade:** B- (research-skeptic downgrade)
+- **Reviewers:** Cynthia (researcher), Sylvia (skeptic)
 
-**Key Claims:**
-- Effectiveness ranges (15-40%, 20-45%, etc.)
-- Co-benefits quantification (soil health, biodiversity, carbon)
-- Timeline assumptions (R&D + deployment)
-- Citation: Coale et al. 2024 *Science* for nitroplasts
+**CRITICAL Issues Found:**
+1. **Mycorrhizal inoculants 80%+ failure rate** in commercial products (not lab trials)
+2. **Rebound effects / Jevons paradox NOT modeled** (efficiency ≠ absolute reduction)
+3. **Consumer acceptance barriers** for precision fermentation severely underestimated
+4. **No-till / soil health:** mixed evidence, context-dependent (not universal)
+5. **Nitroplast timeline optimistic:** 50+ years more realistic than 15-25 (oxygen sensitivity barrier)
 
-**Next Steps:** Two-layer verification → Parameter adjustments if needed → Monte Carlo validation
+**Required Parameter Revisions:**
+- Rhizosphere Engineering: 10-25% (from 15-40%) - commercial deployment reality
+- Nitroplast: 30-50 years minimum (from 15-25), add "may be infeasible" flag
+- Precision Fermentation: Add consumer acceptance dependency
+- Regional Policies: 10-15% net reduction (accounting for rebound effects)
+- Soil Health: 15-30% (from 20-40%)
+- INM: 15-35% (from 25-45%)
+
+**Simulation Implications:**
+- Add rebound effect modeling (efficiency gains ≠ absolute reductions)
+- Add deployment failure rates (not all techs succeed in field)
+- Add consumer behavior dynamics (precision fermentation adoption curve)
+
+**Next Steps:** Apply parameter revisions → Monte Carlo validation N≥10 → Move to Recently Resolved
 
 ---
 
@@ -197,6 +210,30 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 ---
 
 ## Recently Resolved
+
+### Threshold Uncertainty Modeling (M-5)
+**Status:** ✅ COMPLETE - Research Grade A-, Architecture Grade B+
+**Change:** (pending - needs change folder created)
+**Commit:** M-5 implementation (Dec 7, 2025)
+**Context:** Distribution-based tipping thresholds (triangular, uniform, lognormal)
+**Research File:** `research/tipping_threshold_uncertainty_20251207.md`
+**Architecture Review:** `reviews/architecture_review_m5_threshold_uncertainty_20251207.md`
+
+**Verification Complete (Dec 7, 2025):**
+- **Research Quality:** A- (well-sourced, Armstrong McKay et al. 2022 baseline)
+- **Architecture Quality:** B+ (proper RNG handling, good assertions, but 3 redundant distribution libraries)
+- **Reviewer:** Cynthia (researcher), Architecture Skeptic
+
+**Implementation Status:**
+- ✅ Deterministic RNG enforced (fails loudly if missing)
+- ✅ Assertion utilities throughout (`assertFinite()`, `assertInRange()`)
+- ✅ Backward compatible (falls back to deterministic if no distribution defined)
+- ✅ Research-backed distributions (truncated normal, uniform, lognormal)
+- ⚠️ HIGH: Three redundant distribution libraries (consolidation needed)
+
+**Next Steps:** Consolidate distribution libraries → Monte Carlo validation N≥10 → Archive
+
+---
 
 ### CRITICAL-1: Coordinated Deployment Fabricated Parameter
 **Status:** ✅ RESOLVED (Nov 26, 2025)
