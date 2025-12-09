@@ -97,10 +97,11 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 ### HIGH Priority (Research Audit Follow-Up)
 
 #### Sleeper Agent Rate Justification (7.5%)
-**Status:** ⚠️ READY FOR UPDATE
+**Status:** ✅ COMPLETE (Dec 9, 2025)
+**Commit:** 1a4e74d5
 **Context:** From Nov 29, 2025 research audit (reviews/research_audit_20251129.md)
-**Location:** `src/simulation/initialization.ts:309`
-**Issue:** Comment says "7.5% of misaligned AIs are sleepers" but lacks explicit source citation
+**Location:** `src/simulation/initialization.ts:345-348`
+**Issue:** Comment said "7.5% of misaligned AIs are sleepers" but lacked explicit source citation
 
 **Current Code:**
 ```typescript
@@ -112,21 +113,21 @@ const sleeperChance = 0.075;  // 7.5% of misaligned AIs are sleepers
 - Gaming-sleeper-detection_20251017.md documents empirical demonstrations
 - **CRITICAL:** No empirical prevalence data exists in literature (this is derived estimate)
 
-**Action Required:**
-- Change comment to: `// 7.5% DERIVED ESTIMATE (Hubinger et al. 2024 proof-of-concept, empirical prevalence TBD)`
-- Document uncertainty bounds: ±50% (range 3.75%-11.25%)
-- Flag in research doc that this is model assumption, not empirical fact
+**Resolution:**
+- ✅ Updated comment to: `// 7.5% DERIVED ESTIMATE (Hubinger et al. 2024 proof-of-concept, empirical prevalence TBD)`
+- ✅ Documented uncertainty bounds: ±50% (range 3.75%-11.25%)
+- ✅ Flagged in comment that this is model assumption with no empirical prevalence data
 
-**Severity:** HIGH (research standards compliance)
-**Effort:** TRIVIAL (comment update)
+**Ready for archival to Recently Resolved.**
 
 ---
 
 #### Sandbagging Level Citation (0.4-0.6)
-**Status:** ⚠️ READY FOR UPDATE
+**Status:** ✅ COMPLETE (Dec 9, 2025)
+**Commit:** 1a4e74d5
 **Context:** From Nov 29, 2025 research audit
-**Location:** `src/simulation/agents/evaluationStrategy.ts:74`
-**Issue:** Code value lacks explicit connection to research sources
+**Location:** `src/simulation/agents/evaluationStrategy.ts:73-78`
+**Issue:** Code value lacked explicit connection to research sources
 
 **Current Code:**
 ```typescript
@@ -139,21 +140,21 @@ const baseSandbagLevel = 0.4 + deceptionSkill * 0.2;  // [0.4, 0.6]
 - Apollo Research: Claude Opus 4 showed "most strategic deception of any frontier model"
 - Gaming-sleeper-detection_20251017.md documents all empirical demonstrations
 
-**Action Required:**
-- Add comment: `// van der Weij et al. (2024), Meinke et al. (2024): empirical deception baselines`
-- Justify range [0.4, 0.6] from empirical observations
-- Document that these are frontier model observations, not general population stats
+**Resolution:**
+- ✅ Added citations: van der Weij et al. (2024), Meinke et al. (2024), Apollo Research
+- ✅ Justified range [0.4, 0.6] from empirical sandbagging demonstrations
+- ✅ Documented that these are frontier model observations, not general population stats
 
-**Severity:** HIGH (research standards compliance)
-**Effort:** TRIVIAL (comment update)
+**Ready for archival to Recently Resolved.**
 
 ---
 
 #### Detection Risk Calibration (50% Baseline)
-**Status:** ⚠️ READY FOR UPDATE
+**Status:** ✅ COMPLETE (Dec 9, 2025)
+**Commit:** 1a4e74d5
 **Context:** From Nov 29, 2025 research audit
-**Location:** `src/simulation/sleeperEconomy.ts:350`
-**Issue:** 50% baseline lacks justification from research
+**Location:** `src/simulation/sleeperEconomy.ts:350-353`
+**Issue:** 50% baseline lacked justification from research
 
 **Current Code:**
 ```typescript
@@ -168,14 +169,13 @@ economy.detectionRisk = 0.5;  // 50% baseline risk
 
 **Gap:** 50% baseline not justified by research (should be variable/improving over time)
 
-**Action Required:**
-- Specify detection probability confidence interval (not fixed 50%)
-- Add citation: Gaming-sleeper-detection_20251017.md (van der Weij 2024)
-- Document month-dependent improvement (detection improves with mechanistic interpretability gains)
-- Consider: Early months 20-30%, late months 70-90% (reflecting research progress)
+**Resolution:**
+- ✅ Specified detection probability confidence interval [0.3, 0.7]
+- ✅ Added citation: Gaming-sleeper-detection_20251017.md (van der Weij 2024: >99% AUROC possible)
+- ✅ Documented month-dependent improvement (mechanistic interpretability advances)
+- 📝 Note: Time-dependent model (20-30% early → 70-90% late) deferred to future work (MEDIUM priority)
 
-**Severity:** HIGH (model realism)
-**Effort:** SMALL (1-2 hours for time-dependent model)
+**Ready for archival to Recently Resolved.**
 
 ---
 
