@@ -174,9 +174,11 @@ None
 ### ACTIVE MEDIUM Priority
 None (system in maintenance mode)
 
+### COMPLETED MEDIUM Priority (Backlog)
+- Calibration protocol (parameter optimization workflow) - COMPLETE Dec 9, 2025 (commit 220b8dae)
+
 ### MEDIUM Priority (Backlog)
-- Hindcast tuning (1950-2024 historical validation)
-- Calibration protocol (parameter optimization workflow)
+- Hindcast tuning (1950-2024 historical validation - implementation exists, validation deferred per calibration priority)
 
 ### LOW Priority
 - L-2: Enhanced biodiversity modeling (food web collapse)
