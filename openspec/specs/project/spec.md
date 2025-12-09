@@ -171,8 +171,10 @@ None (system in maintenance mode)
   - Orchestrator: 6aa9bb0c
   - Target completion: Dec 9, 09:15-10:15 UTC
 
+### COMPLETED MEDIUM Priority
+- M-8: Hindcast demographic tuning (regional death rate curves) - COMPLETE Dec 9, 2025
+
 ### MEDIUM Priority (Backlog)
-- Hindcast tuning (1950-2024 historical validation)
 - Calibration protocol (parameter optimization workflow)
 
 ### LOW Priority
