@@ -6,12 +6,22 @@
  */
 
 import { runSimulation } from '../../src/simulation/engine';
-import { initializeGameState } from '../../src/simulation/initialization';
+import { createDefaultInitialState } from '../../src/simulation/initialization';
+
+// Simple seeded RNG for deterministic testing
+function createSeededRNG(seed: number): () => number {
+  let value = seed;
+  return function seededRandom(): number {
+    value = (value * 9301 + 49297) % 233280;
+    return value / 233280;
+  };
+}
 
 console.log('=== Novel Entities Gated Model - Smoke Test ===\n');
 
 try {
-  const state = initializeGameState();
+  const rng = createSeededRNG(12345);
+  const state = createDefaultInitialState(rng);
 
   console.log(`Initial state:`);
   const boundary = state.planetaryBoundariesSystem?.boundaries?.novel_entities;

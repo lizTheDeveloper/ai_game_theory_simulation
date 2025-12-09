@@ -14,9 +14,29 @@
 
 import { describe, test } from 'node:test';
 import assert from 'node:assert';
-import { initializeGameState } from '@/simulation/initialization';
+import { createDefaultInitialState } from '@/simulation/initialization';
 import { stepSimulation } from '@/simulation/engine';
 import type { GameState } from '@/types/game';
+
+// Simple seeded RNG for deterministic testing
+function createSeededRNG(seed: number): () => number {
+  let value = seed;
+  return function seededRandom(): number {
+    value = (value * 9301 + 49297) % 233280;
+    return value / 233280;
+  };
+}
+
+// Convert string seed to numeric seed
+function hashStringSeed(seed: string): number {
+  let hash = 0;
+  for (let i = 0; i < seed.length; i++) {
+    const char = seed.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash; // Convert to 32bit integer
+  }
+  return Math.abs(hash);
+}
 
 describe('Tipping Point Threshold Uncertainty (M-5)', () => {
   test('sampled thresholds vary across runs with different seeds', () => {
@@ -26,9 +46,11 @@ describe('Tipping Point Threshold Uncertainty (M-5)', () => {
     const seed2 = 'uncertainty-test-seed-2';
 
     // Initialize with seed 1
-    const state1 = initializeGameState({ seed: seed1 });
+    const rng1 = createSeededRNG(hashStringSeed(seed1));
+    const state1 = createDefaultInitialState(rng1);
     // Initialize with seed 2
-    const state2 = initializeGameState({ seed: seed2 });
+    const rng2 = createSeededRNG(hashStringSeed(seed2));
+    const state2 = createDefaultInitialState(rng2);
 
     // Elements with distributions should have different sampled thresholds
     const elementsWithDistributions = state1.tippingPointSystem.elements
@@ -70,7 +92,8 @@ describe('Tipping Point Threshold Uncertainty (M-5)', () => {
     console.log('\n🔒 Testing threshold persistence within run...');
 
     const seed = 'persistence-test-seed';
-    const state = initializeGameState({ seed });
+    const rng = createSeededRNG(hashStringSeed(seed));
+    const state = createDefaultInitialState(rng);
 
     // Record initial sampled thresholds
     const initialThresholds = new Map<string, number>();
@@ -110,7 +133,8 @@ describe('Tipping Point Threshold Uncertainty (M-5)', () => {
     console.log('\n⬅️  Testing backward compatibility...');
 
     const seed = 'backward-compat-test';
-    const state = initializeGameState({ seed });
+    const rng = createSeededRNG(hashStringSeed(seed));
+    const state = createDefaultInitialState(rng);
 
     // Find elements WITHOUT distribution definitions
     const elementsWithoutDistributions = state.tippingPointSystem.elements
@@ -137,7 +161,8 @@ describe('Tipping Point Threshold Uncertainty (M-5)', () => {
     console.log('\n⚙️  Testing simulation with threshold uncertainty...');
 
     const seed = 'simulation-test-seed';
-    const state = initializeGameState({ seed });
+    const rng = createSeededRNG(hashStringSeed(seed));
+    const state = createDefaultInitialState(rng);
 
     // Run for 24 months
     let currentState = state;
@@ -177,7 +202,8 @@ describe('Tipping Point Threshold Uncertainty (M-5)', () => {
     console.log('\n📐 Testing sampled thresholds are within research ranges...');
 
     const seed = 'range-test-seed';
-    const state = initializeGameState({ seed });
+    const rng = createSeededRNG(hashStringSeed(seed));
+    const state = createDefaultInitialState(rng);
 
     // Research-backed plausible ranges (Armstrong McKay et al. 2022)
     const plausibleRanges: Record<string, { min: number; max: number }> = {
@@ -210,8 +236,10 @@ describe('Tipping Point Threshold Uncertainty (M-5)', () => {
     const seed = 'determinism-test-seed';
 
     // Initialize twice with same seed
-    const state1 = initializeGameState({ seed });
-    const state2 = initializeGameState({ seed });
+    const rng1 = createSeededRNG(hashStringSeed(seed));
+    const state1 = createDefaultInitialState(rng1);
+    const rng2 = createSeededRNG(hashStringSeed(seed));
+    const state2 = createDefaultInitialState(rng2);
 
     // All sampled thresholds should be identical
     for (const el1 of state1.tippingPointSystem.elements) {

@@ -9,7 +9,7 @@
  * - Economic integration (unemployment, productivity)
  */
 
-import { initializeGameState } from '../src/simulation/initialization';
+import { createDefaultInitialState } from '../src/simulation/initialization';
 import { updateAIAssistedSkills, calculateProductivityMultiplierFromAIAssistedSkills } from '../src/simulation/aiAssistedSkills';
 import { updateSocietyAggregates } from '../src/simulation/populationSegments';
 import { addAcuteCrisisDeaths } from '../src/simulation/populationDynamics';
@@ -17,11 +17,21 @@ import { getTrustInAIForPolicy, getTrustInAI } from '../src/simulation/socialCoh
 import { calculateUnemployment } from '../src/simulation/calculations';
 import { GameState } from '../src/types/game';
 
+// Simple seeded RNG for deterministic testing
+function createSeededRNG(seed: number): () => number {
+  let value = seed;
+  return function seededRandom(): number {
+    value = (value * 9301 + 49297) % 233280;
+    return value / 233280;
+  };
+}
+
 describe('P2.3: Heterogeneous Population Segments', () => {
   let state: GameState;
 
   beforeEach(() => {
-    state = initializeGameState();
+    const rng = createSeededRNG(42);
+    state = createDefaultInitialState(rng);
   });
 
   describe('Segment Initialization', () => {
