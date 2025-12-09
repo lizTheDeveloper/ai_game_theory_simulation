@@ -2023,6 +2023,96 @@ export function calculateNonMigratoryMortality(
  * @param state - Game state (mutated)
  * @param rng - Deterministic RNG function
  */
+/**
+ * Queue extinction debt with ecosystem-specific lag times
+ *
+ * Research:
+ * - Grassland: 50-200 years (Krauss et al. 2010)
+ * - Alpine: 300-400 years (Dullinger et al. 2012)
+ * - Tropical: 50-400 years (Tremblay et al. 2006)
+ * - Marine: 50-150 years (conservative estimate)
+ */
+function queueExtinctionDebt(
+  state: GameState,
+  speciesLost: number,
+  rng: () => number
+): void {
+  // Initialize extinction debt if not present
+  if (!state.extinctionDebt) {
+    state.extinctionDebt = {
+      committedExtinctions: [],
+      totalDebt: 0,
+    };
+  }
+
+  // Skip if no species lost
+  if (speciesLost <= 0) return;
+
+  const bii = state.biosphereIntegrityIndex;
+  if (!bii) return;
+
+  // Calculate magnitude as fraction of total species
+  const magnitude = speciesLost / bii.totalSpeciesBaseline;
+
+  // Determine ecosystem type based on climate velocity and habitat fragmentation
+  // High velocity + high fragmentation = grassland (fast turnover)
+  // Low velocity + high fragmentation = alpine (trapped species)
+  // High velocity + low fragmentation = tropical (trees, slow-moving)
+  // Marine gets its own category
+  let ecosystemType: 'grassland' | 'alpine' | 'tropical' | 'marine';
+  let minLagMonths: number;
+  let maxLagMonths: number;
+
+  const velocity = bii.avgClimateVelocity || 0;
+  const fragmentation = bii.nonMigratorySpecies.habitatFragmentation || 0;
+
+  // Simple heuristic based on conditions
+  if (velocity > 0.05 && fragmentation > 0.5) {
+    // Fast-changing, fragmented = grassland
+    ecosystemType = 'grassland';
+    minLagMonths = 600;  // 50 years
+    maxLagMonths = 2400; // 200 years
+  } else if (velocity < 0.02 && fragmentation > 0.5) {
+    // Slow-changing, fragmented = alpine (trapped)
+    ecosystemType = 'alpine';
+    minLagMonths = 3600; // 300 years
+    maxLagMonths = 4800; // 400 years
+  } else if (velocity > 0.05 && fragmentation < 0.5) {
+    // Fast-changing, connected = tropical
+    ecosystemType = 'tropical';
+    minLagMonths = 600;  // 50 years
+    maxLagMonths = 4800; // 400 years
+  } else {
+    // Default to marine (conservative)
+    ecosystemType = 'marine';
+    minLagMonths = 600;  // 50 years
+    maxLagMonths = 1800; // 150 years
+  }
+
+  // Sample lag time from uniform distribution within range
+  const lagMonths = Math.floor(minLagMonths + rng() * (maxLagMonths - minLagMonths));
+
+  // Add to queue
+  state.extinctionDebt.committedExtinctions.push({
+    ecosystemType,
+    magnitude,
+    committedMonth: state.currentMonth,
+    realizationLagMonths: lagMonths,
+  });
+
+  // Update total debt
+  state.extinctionDebt.totalDebt = state.extinctionDebt.committedExtinctions.reduce(
+    (sum, ext) => sum + ext.magnitude,
+    0
+  );
+
+  console.log(
+    `🌍💀 EXTINCTION DEBT COMMITTED: ${ecosystemType} ecosystem will lose ` +
+    `${(magnitude * 100).toFixed(2)}% biodiversity in ${Math.floor(lagMonths / 12)} years ` +
+    `(${speciesLost.toFixed(0)} species)`
+  );
+}
+
 export function updateBiosphereIntegrityIndex(
   state: GameState,
   rng: () => number
@@ -2093,18 +2183,12 @@ export function updateBiosphereIntegrityIndex(
     }
   });
 
-  // Update species count
-  const newSpeciesCount = assertFinite(Math.max(1000, bii.currentSpeciesCount - monthlyExtinctions), {
-    location: 'updateBiosphereIntegrityIndex:speciesCount',
-    valueName: 'currentSpeciesCount',
-    month: state.currentMonth,
-    additionalInfo: {
-      previousCount: bii.currentSpeciesCount,
-      monthlyExtinctions
-    }
-  });
+  // EXTINCTION DEBT: Queue extinctions instead of applying immediately
+  // This models 50-400 year lags observed in research (Dullinger 2012, Krauss 2010, Tremblay 2006)
+  queueExtinctionDebt(state, monthlyExtinctions, rng);
 
-  bii.currentSpeciesCount = newSpeciesCount;
+  // Species count is now updated by ExtinctionDebtPhase when debt is realized
+  // (no immediate change to bii.currentSpeciesCount)
 
   // === 4. UPDATE EXTINCTION RATE (E/MSY) ===
   // Calculate current extinction rate from species loss
