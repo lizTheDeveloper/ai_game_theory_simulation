@@ -100,6 +100,7 @@ import {
   WetBulbTemperaturePhase,  // Oct 17, 2025: Wet bulb temperature deadly heat events
   ExtremeWeatherEventsPhase,  // Oct 28, 2025: Storm intensity-frequency modeling (MDF framework)
   PlanetaryBoundariesPhase,
+  ExtinctionDebtPhase,  // Dec 9, 2025: Delayed biodiversity loss (50-400 year lags)
   IrreversibilityTrackingPhase,  // TIER 1 CRITICAL (Nov 16, 2025): Environmental & social tipping points with hysteresis
   LegacyNutrientStocksPhase,  // TIER 2 HIGH (Nov 15, 2025): Legacy nutrient stock decay
   NitrogenFoodCouplingPhase,  // TIER 2 HIGH (Nov 15, 2025): Nitrogen-food production coupling

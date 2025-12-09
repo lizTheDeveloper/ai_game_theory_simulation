@@ -650,3 +650,30 @@ export const BII_CONSTANTS = {
   CATASTROPHIC_EXTINCTION_RATE: 100.0,  // 1000× background
 } as const;
 
+/**
+ * Extinction Debt State (Dec 9, 2025)
+ *
+ * Tracks committed but not yet realized extinctions with realistic time lags.
+ * Research:
+ * - Dullinger et al. (2012): Alpine species 300-400 year lag
+ * - Krauss et al. (2010): Grassland species 50-200 year lag
+ * - Tremblay et al. (2006): Tropical trees 50-400 year lag
+ *
+ * Expected impact: Models multi-generational biodiversity collapse continuing
+ *                  decades to centuries after habitat pressure removed.
+ *
+ * @see reviews/extinction_debt_validation_20251209.md
+ */
+export interface ExtinctionDebtState {
+  // Queue of committed extinctions (not yet realized)
+  committedExtinctions: Array<{
+    ecosystemType: 'grassland' | 'alpine' | 'tropical' | 'marine';
+    magnitude: number;              // % biodiversity loss committed [0, 1]
+    committedMonth: number;         // When extinction was committed
+    realizationLagMonths: number;   // Delay before realization (600-4800 months)
+  }>;
+
+  // Total unrealized extinction debt
+  totalDebt: number;                // Sum of uncommitted magnitude [0, 1]
+}
+

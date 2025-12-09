@@ -102,6 +102,7 @@ export { RadiationSystemPhase } from './RadiationSystemPhase';
 export { WetBulbTemperaturePhase } from './WetBulbTemperaturePhase';  // Wet Bulb Temperature Events (Oct 17, 2025)
 export { ExtremeWeatherEventsPhase } from './ExtremeWeatherEventsPhase';  // Extreme Weather Events (Oct 28, 2025)
 export { PlanetaryBoundariesPhase } from './PlanetaryBoundariesPhase';
+export { ExtinctionDebtPhase } from './ExtinctionDebtPhase';  // Dec 9, 2025: Delayed biodiversity loss (50-400 year lags)
 export { IrreversibilityTrackingPhase } from './IrreversibilityTrackingPhase';  // TIER 1 CRITICAL (Nov 16, 2025): Environmental & social tipping points with hysteresis
 export { LegacyNutrientStocksPhase } from './LegacyNutrientStocksPhase';  // TIER 2 HIGH (Nov 15, 2025): Legacy nutrient stock decay
 export { NitrogenFoodCouplingPhase } from './NitrogenFoodCouplingPhase';  // TIER 2 HIGH (Nov 15, 2025): Nitrogen-food production coupling

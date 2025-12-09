@@ -1074,6 +1074,23 @@ export interface GameState {
    */
   biosphereIntegrityIndex?: import('../types/planetaryBoundaries').BiosphereIntegrityIndex;
 
+  /**
+   * Extinction Debt System (Dec 9, 2025)
+   *
+   * Models delayed biodiversity loss continuing 50-400 years after habitat degradation.
+   * Research: Dullinger et al. (2012) alpine species 300-400 year lags,
+   *           Krauss et al. (2010) grassland 50-200 year lags,
+   *           Tremblay et al. (2006) tropical trees 50-400 year lags
+   *
+   * Queue of committed extinctions realized gradually over realistic timescales.
+   * Expected impact: Prevents instant recovery when habitat restored, models
+   *                  multi-generational biodiversity collapse even after pressure removed.
+   *
+   * See: openspec/changes/extinction-debt-modeling/proposal.md,
+   *      reviews/extinction_debt_validation_20251209.md
+   */
+  extinctionDebt?: import('../types/planetaryBoundaries').ExtinctionDebtState;
+
   // Antimicrobial Resistance Crisis (TIER 1.8 - Oct 17, 2025)
   // Progressive loss of antibiotic effectiveness over time
   // Research: WHO (2024) 10M deaths/year by 2050, O'Neill Review (2016) $100T damage
