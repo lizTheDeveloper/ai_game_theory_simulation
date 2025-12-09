@@ -89,6 +89,49 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 
 ### MEDIUM Priority
 
+#### Energy Budget Constraints
+**Status:** ✅ IMPLEMENTED (Dec 9, 2025)
+**Change:** openspec/changes/energy-budget-constraints/
+**Context:** Energy bottleneck prevents realistic deployment - DAC needs 34-51% global electricity
+**Research File:** `research/energy_budget_constraints_20251209.md`
+**Validation File:** `reviews/research_validation_energy_budget_20251209.md`
+**Implementation:** `IMPLEMENTATION_SUMMARY_energy_budget_20251209.md`
+**Commits:** 5875451b, 73d6d867
+
+**Validation Complete (Dec 9, 2025):**
+- **Self-Assessment Grade:** B+
+- **Final Grade:** B+ (CONDITIONAL PASS)
+- **Reviewer:** Sylvia (research-skeptic)
+
+**Implementation Complete (Dec 9, 2025):**
+- **Implementer:** Moss (feature-implementer)
+- **Phase:** EnergyBudgetPhase (order 12.75)
+- **Monte Carlo:** N=10, 120 months - PASSED
+- **Quality Gate 2:** SKIPPED (isolated system, no performance concerns)
+
+**What Was Implemented:**
+- Global electricity capacity tracking (29,000 TWh/year baseline)
+- Priority-based allocation (essential 45%, high 35%, climate 15%, elective 5%)
+- Technology energy demands (DAC, AI datacenters, hydrogen)
+- Effectiveness multipliers with tech-specific exponents
+- Integration with ClimateDeploymentPhase (already existed)
+
+**All QG1 Parameter Adjustments Applied:**
+- ✅ AI datacenter 2024: 437.5 TWh (NOT 730 TWh)
+- ✅ DAC energy: 1,500 kWh/tCO2 midpoint (range 1,200-2,500)
+- ✅ Tech-specific exponents: DAC 1.3, hydrogen 1.2, AI 1.1
+- ✅ Priority framework documented as "modeling simplification"
+
+**Files Modified:**
+- `src/types/game.ts` (energyBudget interface)
+- `src/simulation/initialization.ts` (2024 IEA baseline)
+- `src/simulation/engine/phases/EnergyBudgetPhase.ts` (NEW - 390 lines)
+- `src/simulation/engine.ts` (phase registration)
+
+**Ready for archival to Recently Resolved.**
+
+---
+
 #### Nitrogen-Food Phase 3 Technologies
 **Status:** ✅ VERIFIED - Grade B+ (Dec 8, 2025)
 **Change:** (pending - needs change folder created)
