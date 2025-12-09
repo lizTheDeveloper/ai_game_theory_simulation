@@ -125,33 +125,16 @@ export class ExtinctionDebtPhase implements SimulationPhase {
         }
       );
 
-      // Update planetary boundary if it exists
-      if (state.planetaryBoundariesSystem?.boundaries?.biosphereIntegrity) {
-        const baselineSpecies = state.biosphereIntegrityIndex.totalSpeciesBaseline || 54000;
-        const currentRatio = state.biosphereIntegrityIndex.currentSpeciesCount / baselineSpecies;
+      // Log species count update
+      // NOTE: Planetary boundary value is calculated by PlanetaryBoundariesPhase (order 21.0)
+      // based on extinction rate dynamics. We only update species count here.
+      const baselineSpecies = state.biosphereIntegrityIndex.totalSpeciesBaseline || 54000;
+      const currentRatio = state.biosphereIntegrityIndex.currentSpeciesCount / baselineSpecies;
 
-        // Update boundary value (lower species count = higher boundary value)
-        // 100% species = 0.0 boundary, 0% species = 2.0 boundary
-        state.planetaryBoundariesSystem.boundaries.biosphereIntegrity.value =
-          assertFinite(
-            2.0 * (1.0 - currentRatio),
-            {
-              location: 'ExtinctionDebtPhase.execute',
-              valueName: 'biosphereIntegrity.value',
-              month: currentMonth,
-              additionalInfo: {
-                currentRatio,
-                currentSpecies: state.biosphereIntegrityIndex.currentSpeciesCount,
-                baselineSpecies,
-              },
-            }
-          );
-
-        console.log(
-          `📊 Biosphere integrity updated: ${state.biosphereIntegrityIndex.currentSpeciesCount} / ${baselineSpecies} species ` +
-          `(${(currentRatio * 100).toFixed(1)}%), boundary value: ${state.planetaryBoundariesSystem.boundaries.biosphereIntegrity.value.toFixed(3)}`
-        );
-      }
+      console.log(
+        `📊 Species count updated: ${state.biosphereIntegrityIndex.currentSpeciesCount} / ${baselineSpecies} species ` +
+        `(${(currentRatio * 100).toFixed(1)}% remaining)`
+      );
 
       return {
         events: [
