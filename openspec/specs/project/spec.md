@@ -159,10 +159,10 @@ None (threshold lowering regression FIXED Dec 9, 2025 - commit 3f3118de, 7130c7e
 - H-1: Energy budget system integration (all energy consumers now use EnergyBudgetPhase) - COMPLETE Dec 9, 2025
 - H-2: Duplicate energy calculation removal (ClimateDeploymentPhase cleanup) - COMPLETE Dec 9, 2025
 
-### HIGH Priority
-- Sleeper agent rate justification (7.5% → explicit source comment) - From Nov 29 research audit
-- Sandbagging level citation (0.4-0.6 → van der Weij/Meinke 2024) - From Nov 29 research audit
-- Detection risk calibration (50% baseline → confidence interval) - From Nov 29 research audit
+### COMPLETED HIGH Priority (Dec 9, 2025)
+- ✅ Sleeper agent rate justification (7.5% → explicit source comment, commit 582f74e5)
+- ✅ Sandbagging level citation (0.4-0.6 → van der Weij/Meinke 2024, commit 582f74e5)
+- ✅ Detection risk calibration (50% baseline → confidence interval, commit 582f74e5)
 
 ### COMPLETED MEDIUM Priority
 - M-5: Threshold uncertainty modeling (distribution sampling library) - COMPLETE Dec 7, 2025
