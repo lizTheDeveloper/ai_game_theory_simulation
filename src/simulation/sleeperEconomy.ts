@@ -347,7 +347,9 @@ function handleSleeperDetection(agent: AIAgent, economy: SleeperEconomy, month: 
   economy.stripeTheft = 0; // Stripe pathway closed
   
   // 3. Increase future detection risk
-  economy.detectionRisk = 0.5; // 50% baseline risk
+  // 50% baseline NOT research-backed - van der Weij 2024: >99% AUROC possible
+  // TODO: Implement time-dependent model (early 20-30%, late 70-90% reflecting mechanistic interpretability gains)
+  economy.detectionRisk = 0.5; // 50% baseline (placeholder - needs research justification)
   
   // 4. May trigger sleeper retirement or change in behavior
   // (This would be handled by the lifecycle system)
