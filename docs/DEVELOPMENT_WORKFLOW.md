@@ -9,6 +9,7 @@ Detailed workflow guidance for implementing features in the research simulation.
 - [Quality Gates](#quality-gates)
 - [Calibration Coordination Protocol](#calibration-coordination-protocol)
 - [Phase-Based Implementation](#phase-based-implementation)
+- [Git Workflow & Pre-commit Hooks](#git-workflow--pre-commit-hooks)
 
 ## Multi-Agent Workflow (Default)
 
@@ -486,6 +487,89 @@ git commit -m "feat: Add layoff mechanics"
 - **Documented:** Clear comments on inputs, outputs, side effects
 - **Testable:** Can run in isolation with mock state
 - **Performant:** Avoid O(n²) operations, minimize deep cloning
+
+## Git Workflow & Pre-commit Hooks
+
+**Added:** December 9, 2025
+**Purpose:** Prevent merge conflicts and maintain code quality
+
+### Pre-commit Hook: Merge Conflict Detection
+
+**Rationale:** Session 21 (Nov 30, 2025) discovered unresolved merge conflicts in `oceanAcidification.ts` that broke all tests. Git conflict markers (`<<<<<<<`, `=======`, `>>>>>>>`) were committed to the repository, causing 8 test files to fail with TransformError.
+
+**Solution:** `.githooks/pre-commit` automatically detects and blocks commits containing merge conflict markers.
+
+**Installation:**
+
+```bash
+# Configure git to use .githooks/ directory
+git config core.hooksPath .githooks
+```
+
+**How it works:**
+
+1. Before each commit, hook scans all staged files
+2. If conflict markers detected:
+   - Lists affected files
+   - Shows line numbers with markers
+   - Blocks commit with clear error message
+3. If no markers found: commit proceeds normally
+
+**Override when needed:**
+
+For intentional conflict markers (documentation examples, test fixtures):
+
+```bash
+# Bypass hook for specific commit
+git commit --no-verify -m "docs: Add merge conflict example"
+```
+
+**Hook output example:**
+
+```
+🔍 Checking for merge conflict markers...
+
+❌ ERROR: Merge conflict markers detected in staged files:
+
+  - src/simulation/oceanAcidification.ts
+    Lines with markers:
+      42:<<<<<<< HEAD
+      55:=======
+      68:>>>>>>> feature-branch
+
+⚠️  Please resolve all merge conflicts before committing.
+
+If conflict markers are intentional (documentation, test fixtures),
+you can bypass this check with: git commit --no-verify
+```
+
+### When to Use `--no-verify`
+
+✅ **DO bypass hook for:**
+- Documentation examples showing merge conflict resolution
+- Test fixtures that intentionally contain conflict markers
+- Emergency hotfixes when hook has false positives
+
+❌ **DON'T bypass hook for:**
+- Actual unresolved merge conflicts
+- "I'll fix it later" situations
+- Laziness or convenience
+
+**Rule of thumb:** If you're tempted to use `--no-verify`, ask yourself: "Will this break the build?" If yes, resolve the conflict properly.
+
+### Benefits
+
+- **Zero merge conflict commits** - Hook catches conflicts before they enter git history
+- **Faster CI/CD** - Tests don't fail due to unresolved conflicts
+- **Better code review** - Reviewers see clean code, not conflict markers
+- **Clearer git history** - No "fix merge conflicts" commits cluttering history
+
+### Future Enhancements
+
+**Optional CI check:**
+- Add GitHub Actions workflow to detect conflict markers
+- Defense-in-depth: catches issues if local hook bypassed
+- Proposal: `openspec/changes/git-workflow-improvements/`
 
 ## Multi-Paradigm DUI Integration
 
