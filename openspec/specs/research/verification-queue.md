@@ -90,27 +90,40 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 ### MEDIUM Priority
 
 #### Nitrogen-Food Phase 3 Technologies
-**Status:** ⚠️ READY FOR VALIDATION
+**Status:** ⚠️ CONDITIONAL PASS - PARAMETER REVISIONS REQUIRED (Dec 9, 2025)
 **Change:** (pending - needs change folder created)
 **Commit:** cd1e83a
 **Context:** 6 new nitrogen reduction technologies added to tech tree
-**Verification File:** `research/verification_cd1e83a_20251121.md`
+**Verification Files:**
+- `research/verification_cd1e83a_nitrogen_phase3_20251208.md` (Cynthia: B+)
+- `reviews/nitrogen_phase3_skeptic_review_20251209.md` (Sylvia: B-)
 
-**Technologies to Verify:**
-1. Rhizosphere Engineering (15-40% N reduction, TIER 1, commercial)
-2. Nitroplast Integration (50-70% reduction, breakthrough, Coale et al. 2024)
-3. Precision Fermentation (30-50% agri N reduction, emerging)
-4. Regional Nitrogen Policies (20% efficiency via redistribution)
-5. Soil Health Restoration (20-40% NUE improvement)
-6. Integrated Nutrient Management (25-45% efficiency gains)
+**Verification Complete (Dec 9, 2025):**
+- **Initial Grade:** B+ (Cynthia - Super-Alignment Researcher)
+- **Final Grade:** B- (Sylvia - Research Skeptic downgrade)
+- **Reviewers:** Cynthia (verification), Sylvia (skeptic critique)
 
-**Key Claims:**
-- Effectiveness ranges (15-40%, 20-45%, etc.)
-- Co-benefits quantification (soil health, biodiversity, carbon)
-- Timeline assumptions (R&D + deployment)
-- Citation: Coale et al. 2024 *Science* for nitroplasts
+**CRITICAL Issues Found:**
+1. **Rhizosphere Engineering:** 80%+ commercial inoculant failure rate (Koziol et al. 2025 *New Phytologist*)
+2. **Rebound Effects NOT Modeled:** Jevons paradox - efficiency ≠ absolute reduction (20-40% overestimation)
+3. **Consumer Acceptance Underestimated:** 68% find precision fermentation "unnatural"
+4. **No-Till Mixed Evidence:** Context-dependent, not universal benefits
+5. **Nitroplast Timeline Optimistic:** 50+ years realistic (oxygen sensitivity barrier)
 
-**Next Steps:** Two-layer verification → Parameter adjustments if needed → Monte Carlo validation
+**Required Parameter Revisions:**
+1. Rhizosphere: 15-40% → **10-25%** (commercial deployment reality)
+2. Nitroplast: 15-25 years → **30-50 years minimum**, add "may be infeasible" flag
+3. Precision Fermentation: 30-50% → **15-30%** (consumer resistance)
+4. Regional Policies: 20% gross → **10-15% net** (rebound effects)
+5. Soil Health: 20-40% → **15-30%** (context-dependent)
+6. Integrated Systems: 25-45% → **15-35%** (deployment complexity)
+
+**Additional Modeling Required:**
+- Deployment failure rates (mycorrhizal products: 80% fail)
+- Rebound effects mechanism (Jevons paradox)
+- Consumer behavior dynamics (precision ferm acceptance)
+
+**Next Steps:** Apply parameter revisions → Monte Carlo validation N≥10 → Move to Recently Resolved
 
 ---
 
@@ -158,7 +171,7 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 ---
 
 #### AI Infrastructure Resources 2025 Update
-**Status:** ✅ VERIFIED - Grade B+ (with critical omissions identified)
+**Status:** ⚠️ VERIFIED (B+) - IMPLEMENTATION PENDING
 **Change:** (pending - needs change folder created)
 **Commit:** dbf1438
 **Context:** 2025 peer-reviewed sources for AI data center resource consumption
@@ -169,6 +182,7 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 - **Factual Accuracy Grade:** B+ (well-sourced, accurate citations)
 - **Completeness:** MODERATE GAPS (rebound effects, immersion cooling)
 - **Reviewers:** Cynthia (researcher verification)
+- **Status:** Research validated, implementation deferred to next sprint
 
 **✅ All Core Claims Verified:**
 - Cornell/Nature Sustainability 2025: 731-1,125M m³/yr water, 24-44M tonnes CO₂/yr (PEER-REVIEWED)
@@ -178,21 +192,21 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 - Arizona: 7.4% state power (2023 data - VERIFIED BUT OUTDATED, 2030 projection is 16.5%)
 - Geographic optimization: Windbelt states (Texas, Montana, Nebraska, South Dakota) optimal (VERIFIED)
 
-**⚠️ CRITICAL Omissions Identified:**
+**⚠️ CRITICAL Omissions Identified (documented, not blocking):**
 1. **Rebound Effects NOT Modeled:** Google achieved 33× efficiency gain but emissions rose 50% since 2019 (usage growth offsets gains)
 2. **Immersion Cooling Missing:** 99% water reduction potential, Microsoft commitment, not integrated into 2030 projections
 3. **Mitigation Percentages Overstated:** 73%/86% reductions assume best-case adoption (no policy evidence)
 4. **Uncertainty Ranges Underemphasized:** 54-83% variation from lower bound (need stochastic modeling)
 5. **Water Overestimation Risk:** Andy Masley identified 4,500× error in popular media (Hao's "Empire of AI"); peer-reviewed sources more credible
 
-**Simulation Implications:**
+**Simulation Implications (for future implementation):**
 - Use uncertainty distributions: Uniform(731M, 1,125M) m³ water, Uniform(24, 44) Mt CO₂
 - Add rebound effect mechanism: netGain = efficiency × (1 - reboundCoefficient), where rebound ~0.60
 - Model immersion cooling adoption: Beta(2,8) → mean 20%, reduces water by 99%
 - Arizona: Time-varying 7.4% (2023) → 16.5% (2030)
 - Mitigation adoption sensitivity: 20%/50%/70% → 15%/36%/73% carbon reductions
 
-**Next Steps:** Implement parameters with stochastic modeling → Monte Carlo validation N≥10 → Move to Recently Resolved
+**Next Steps:** Implementation deferred (MEDIUM priority) → Await next sprint allocation
 
 ---
 
