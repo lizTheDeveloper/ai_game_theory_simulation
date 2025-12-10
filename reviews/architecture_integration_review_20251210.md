@@ -1,16 +1,31 @@
-# Architecture Integration Review - December 10, 2025
+# Architecture Integration Review - December 10, 2025 (30-Day Analysis)
 
 **Reviewer:** Architecture Skeptic (AI Agent)
-**Focus Period:** December 9-10, 2025 (post-HIGH-priority completion)
-**Scope:** Full integration review of all recent HIGH-priority work
+**Review Period:** November 10 - December 10, 2025 (30 days)
+**Total Commits Analyzed:** 647 commits to /src/simulation/
+**Scope:** Full codebase integration and performance analysis
 
 ## Executive Summary
 
-**GRADE: B+**
+**OVERALL INTEGRATION HEALTH: B+**
 
-This review covers the post-HIGH-priority completion state. All three HIGH priority items (research audit, energy budget constraints, climate systems) are now complete. The codebase is stable with no CRITICAL issues identified. However, several MEDIUM-priority integration gaps persist from the December 9 review.
+The simulation codebase has undergone substantial development over the past 30 days with major features added:
+- Energy budget constraints system (Dec 9-10)
+- Radiation modeling with dose-response curves (Dec 8)
+- Detection risk calibration for sleeper agents (Dec 10)
+- Climate systems with hysteresis (Dec 5-7)
+- Simulation indices for O(n^2) elimination (Nov 20)
 
-**Key Finding:** The time-dependent detection risk calibration (fd7694a2) is well-implemented and follows project defensive coding standards. No new architectural issues introduced.
+**Key Strengths:**
+- Energy budget system properly integrated with ClimateDeploymentPhase via single source of truth
+- Simulation indices eliminated 98% of hot-path operations (101,210 -> 2,000 per step)
+- Phase dependency validation prevents state corruption at runtime
+- Assertion utilities now at 296 occurrences (strong coverage)
+
+**Areas of Concern:**
+- 50 silent fallback patterns remain (regression risk for NaN masking)
+- 73 array search operations in phase code (some avoidable with indices)
+- Duplicate tech category mapping between EnergyBudgetPhase and ClimateDeploymentPhase
 
 ---
 
@@ -256,6 +271,107 @@ Confirmed no new `structuredClone`, `JSON.parse(JSON.stringify())`, or manual de
 
 ---
 
-*Review completed: December 10, 2025*
-*All HIGH priority work from roadmap is complete*
-*Moving to MEDIUM priority work*
+## 30-Day Cross-System Integration Analysis
+
+### Energy Budget Integration (Dec 9-10) - GRADE: A-
+
+**Implementation:** `EnergyBudgetPhase.ts` (order 12.75) calculates constraints, `ClimateDeploymentPhase.ts` (order 12.8) consumes them.
+
+**Integration Flow:**
+```
+EnergyBudgetPhase writes:
+  state.energyBudget.allocations = {...}
+  state.energyBudget.conflicts = {totalDemandTWh, surplusDeficitTWh, competingTechs}
+
+ClimateDeploymentPhase reads:
+  allocation = state.energyBudget.allocations[category]
+  return allocation.effectivenessMultiplier
+```
+
+**Issue:** `mapTechToEnergyCategory()` duplicated in both files (lines 344-360 and 312-328). Divergence risk if one is updated.
+
+---
+
+### Radiation Modeling (Dec 8) - GRADE: A
+
+**File:** `/src/simulation/radiationModeling.ts`
+
+Exemplary implementation:
+- LD50 ranges with uncertainty bounds [3.0-4.0] Gy
+- LNT model controversy documented (BEIR VII)
+- Combined injury prevalence (65%) with severity increase
+- All calculations use assertFinite/assertInRange
+
+---
+
+### Detection Risk Calibration (Dec 10) - GRADE: B+
+
+**File:** `/src/simulation/sleeperDetection.ts`
+
+Time-dependent calibration (25% early, 80% late) is well-implemented.
+
+**Issue:** Line 88 uses inline require in hot path:
+```typescript
+const deployment = require('./techTree/helpers').isTechDeployed(state, 'mech_interp_basic');
+```
+Should use top-level import.
+
+---
+
+### Climate Systems (Dec 5-7) - GRADE: B+
+
+**Files:** `ClimateSystemPhase.ts` (consolidated), `AbruptSeaLevelRisePhase.ts` (M-4)
+
+Proper dependency chain: `['tech-tree', 'planetary_boundaries', 'resource-water', 'resource-soil', 'bifurcation-logic']`
+
+**Issue:** References to `socialCascades` in commit logs but type not found in GameState. Feature may be partially implemented or renamed.
+
+---
+
+### Simulation Indices (Nov 20) - GRADE: A
+
+**File:** `/src/simulation/utils/simulationIndices.ts`
+
+Eliminated O(n^2) patterns with pre-built Maps/Sets:
+| Index | Operations Eliminated |
+|-------|----------------------|
+| datacenterOwnership | 60,000/step |
+| agentMap | 500/step |
+| unlockedTech | 710/step |
+| buildingOrgs | 40,000/step |
+
+20 phase files now use PhaseContext.indices.
+
+---
+
+## Architecture Health Metrics
+
+| Metric | Value | Trend | Target |
+|--------|-------|-------|--------|
+| Phase count | ~95 | Stable | <100 |
+| Assertion calls | 296 | Increasing | >500 |
+| Silent fallbacks | 50 | Decreasing slowly | 0 |
+| Index adoption | 20 files | Increasing | >30 |
+| Circular dependencies | 0 | Stable | 0 |
+| Phase order conflicts | 0 | Stable | 0 |
+
+---
+
+## Recommended Actions
+
+### Immediate (This Week)
+1. Fix inline require in sleeperDetection.ts (15 min)
+2. Extract mapTechToEnergyCategory to shared utility (2-4 hours)
+
+### Short-term (Next Sprint)
+3. Optimize AIAgentCoordinationPhase.ts with indices (9 array searches)
+4. Audit social cascades feature completeness
+
+### Ongoing
+5. Continue assertion utility migration in priority files
+
+---
+
+*30-day review completed: December 10, 2025*
+*All HIGH priority roadmap work complete*
+*Architecture remains healthy with minor cleanup needed*
