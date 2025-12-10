@@ -1,1 +1,17 @@
-GIT SYNC
+SESSION: 2025-12-10 11:30 UTC
+
+TASK: Update HIGH priority research files with 2024-2025 sources
+
+CURRENT WORK:
+- Updating: research/abrupt_sea_level_rise_20251205.md
+- Found 5 new 2025 peer-reviewed sources from Nature/Science
+- Adding: Sermeq Kujalleq glacier MISI, +1.5°C threshold study, crevassing research
+
+FILES TO UPDATE THIS SESSION (HIGH priority, oldest sources):
+1. ✅ abrupt_sea_level_rise_20251205.md (in progress)
+2. ai_collective_evolution_20251024.md (oldest: 2008)
+3. ai_coordination_transition_mechanics_20251121.md (oldest: 1990)
+4. ai_welfare_framework_20251020.md (oldest: 1988)
+
+STATUS: Active - updating research
+NEXT: Commit updated file, move to next HIGH priority item
