@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Pre-commit hook to prevent committing merge conflict markers
+# Added: December 10, 2025 (Session 21 ocean pH conflict motivated this)
+
+# Check for merge conflict markers in staged files
+if git diff --cached --name-only | xargs grep -l -E '^(<{7}|={7}|>{7})' 2>/dev/null; then
+  echo ""
+  echo "❌ ERROR: Merge conflict markers detected in staged files:"
+  echo ""
+  git diff --cached --name-only | xargs grep -l -E '^(<{7}|={7}|>{7})' 2>/dev/null | while read file; do
+    echo "  - $file"
+  done
+  echo ""
+  echo "Please resolve all merge conflicts before committing."
+  echo ""
+  echo "If you intentionally want to commit these markers (e.g., in documentation),"
+  echo "you can bypass this hook with: git commit --no-verify"
+  echo ""
+  exit 1
+fi
+
+# All checks passed
+exit 0
