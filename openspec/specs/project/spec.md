@@ -136,16 +136,18 @@ The project SHALL preserve implementation histories and research context.
 
 ## Current Status
 
-**Session:** 64 (December 10, 2025)
-**Mode:** Maintenance (all HIGH priority work COMPLETE)
-**Research Quality:** A- (68.8% sources from 2024-2025)
-**Architecture Health:** B+ (0 CRITICAL, 1 HIGH remaining, 1 MEDIUM new)
+**Session:** 65 (December 10, 2025)
+**Mode:** Fallback workflows (all HIGH priority work COMPLETE)
+**Research Quality:** C (53.4% sources from 2024-2025, stable, 178 files need archival)
+**Architecture Health:** B+ (0 CRITICAL, 0 HIGH, 1 MEDIUM new - M-1 dual energy systems)
 **Test Coverage:** 82.47% (462+ tests passing, 6 known test import failures)
 **System State:** Production-ready, all quality gates GREEN
 
 **Token Conservation:** DISABLED (per PM request Dec 4, 2025)
 - Strategy: Full productivity mode restored
 - Workers: Running every 4 hours (was hourly)
+
+**Active Research Issue:** #747 - AI capability doubling time parameter mismatch (8mo vs 3.6mo research-verified)
 
 ---
 
@@ -157,18 +159,20 @@ None (threshold lowering regression FIXED Dec 9, 2025 - commit 3f3118de, 7130c7e
 ### COMPLETED HIGH Priority (Session 64-65)
 - HIGH-7: Conditional climate stability floor (research debate finding) - COMPLETE Dec 7, 2025
 - H-2: Duplicate energy calculation removal (ClimateDeploymentPhase cleanup) - COMPLETE Dec 10, 2025 (commits ad27cd41, 1ca93fe6)
+  - VERIFIED: Architecture review confirmed removal of 7-step duplicate logic
+  - Single source of truth: EnergyBudgetPhase (order 12.75)
 - Sleeper agent rate justification (7.5% → Hubinger et al. 2024) - COMPLETE Dec 10, 2025 (commit 248bad46)
 - Sandbagging level citation (0.4-0.6 → van der Weij/Meinke 2024) - COMPLETE Dec 10, 2025 (commit 248bad46)
 - Detection risk calibration (50% baseline → time-dependent model) - COMPLETE Dec 10, 2025 (commit fd7694a2)
+  - VERIFIED: Time-dependent model implemented (25% early → 80% late, sleeperEconomy.ts:339-355)
 - H-1: Energy budget system underutilization - COMPLETE Dec 10, 2025 (Phase 1)
-  - Integrated AI infrastructure, power generation, and crypto mining with energy budget
-  - Quality Gate 2: Grade B- (M-2 blocker fixed)
+  - VERIFIED: ClimateDeploymentPhase consumes effectivenessMultiplier from state.energyBudget.allocations
+  - Quality Gate 2: Grade B+ (0 CRITICAL/HIGH issues)
   - Files: aiInfrastructureResources.ts, powerGeneration.ts, EnergyBudgetPhase.ts
   - Tests: energyBudgetIntegration.test.ts (6 tests passing)
-  - Tech debt tracked: H-2 one-step lag documentation, M-1 dedup tech mapping, M-3 assertion standardization
 
 ### HIGH Priority
-None - All HIGH priority work COMPLETE
+None - All HIGH priority work COMPLETE (verified Dec 10 architecture review)
 
 ### COMPLETED MEDIUM Priority
 - M-5: Threshold uncertainty modeling (distribution sampling library) - COMPLETE Dec 7, 2025
@@ -178,8 +182,19 @@ None - All HIGH priority work COMPLETE
 - M-1: Detection risk calibration - incomplete integration - COMPLETE Dec 10, 2025 (commit a3b3315b)
 
 ### MEDIUM Priority (Backlog)
+- **M-1: Dual energy constraint systems** (NEW - Dec 10, 2025)
+  - Location: powerGeneration.ts (calculateEnergyConstraints) + EnergyBudgetPhase.ts
+  - Issue: Two parallel energy constraint systems without cross-communication
+  - Impact: MEDIUM (both systems functional, minor integration gap)
+  - Related: L-1 (duplicate tech category mapping cleanup)
+  - See: reviews/architecture_integration_review_20251210.md
 - Hindcast tuning (1950-2024 historical validation)
 - Calibration protocol (parameter optimization workflow)
+
+### COMPLETED LOW Priority
+- **L-1: Duplicate tech category mapping cleanup** - COMPLETE Dec 10, 2025
+  - Removed mapTechToEnergyCategory from EnergyBudgetPhase.ts (commit c17a3e4f)
+  - Extracted to shared utility (commit 301f1aee)
 
 ### LOW Priority
 - L-2: Enhanced biodiversity modeling (food web collapse)
@@ -232,6 +247,7 @@ See: `docs/EMOJI_QUICK_REFERENCE.md` (one-page cheat sheet)
 See: `docs/sessions.md` for complete session milestone tracking
 
 **Recent Sessions:**
+- Session 65 (Dec 10): Autonomous worker - architecture integration review (Grade B+), research audit (Grade C), issue #747 created, L-1 completed
 - Session 64 (Dec 10): Research audit completion + H-2 duplicate energy fix + architecture integration review
 - Session 63 (Dec 10): Research source validation (sleeper agent rate, sandbagging, detection risk) + archival
 - Session 62 (Dec 9): CRITICAL regression fix + H-1/H-2 architecture integration + research audit follow-up
