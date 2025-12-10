@@ -255,9 +255,9 @@ economy.detectionRisk = 0.5;  // 50% baseline risk
 ---
 
 #### Carbon Capture Deployment Parameters
-**Status:** ✅ VERIFIED - Grade A (Full Verification - 100%)
+**Status:** ✅ RESOLVED (Dec 10, 2025)
 **Change:** (pending - needs change folder created)
-**Commit:** c52826e
+**Commit:** c52826e (verification), 832016ad (resolution), acac85e5 (energy reconciliation)
 **Context:** Comprehensive DAC research (625 lines, 12 sources, claimed A+ quality)
 **Research File:** `research/carbon_capture_deployment_timelines_2025.md`
 **Verification File:** `research/verification_c52826e_20251208.md`
@@ -274,28 +274,14 @@ economy.detectionRisk = 0.5;  // 50% baseline risk
 4. **E_max = 1.0 Gt CO2/yr** - Conservative mature deployment estimate
 5. **effectType = 'co2_removal'** - Correct classification
 
-**✅ All Research Claims VERIFIED:**
-- **Current capacity:** 0.00005 Gt/yr (Mammoth 36kt/yr, Climeworks May 8 2024 press release)
-- **Timeline:** 20-40 year lag to gigatonne scale (IEA 2024 projections)
-- **Energy:** 4-10 TWh per 1 Gt/yr (Frontiers in Climate 2024, Tan et al. 2024)
-- **Water:** 15 km³/yr for 4 Gt/yr (Tan et al. 2024 *Nature Commun*, DOI: 10.1038/s41467-024-50637-2)
-- **Cost:** $600-1,000/tonne → $100-300/tonne by 2040s (Climeworks, Canary Media 2024)
+**Energy Requirements Reconciliation (Dec 10):**
+- CRITICAL fix: DAC energy requirements reconciled with peer-reviewed sources
+- Commit: acac85e5 (fixes discrepancy between initial and corrected values)
+- Verified compatible with EnergyBudgetPhase constraints
 
-**Key Sources Verified:**
-- Tan, S., et al. (2024). *Nature Communications*, 15, Article 6380 [Energy-water-land nexus]
-- Climeworks (2024, May 8). Mammoth press release [Primary industry source]
-- IEA (2024). "CCUS projects around the world are reaching new milestones" [Authoritative]
-- Frontiers in Climate (2024-2025). Technical energy analysis [Peer-reviewed]
-- Canary Media (2024). Gen 3 technology cost reduction [Industry coverage]
+**Recommendation:** ✅ APPROVED - Ready for archival to Recently Resolved
 
-**Enhancement Opportunities (Optional - Not Blocking):**
-- ⚠️ Energy coupling - Model effectiveness reduction if clean energy unavailable
-- ⚠️ Water constraints - Regional deployment penalties in water-stressed solar belts
-- ⚠️ Cost dynamics - Accelerate deployment if carbon price > $200/tonne
-
-**Recommendation:** ✅ APPROVED - Proceed with Monte Carlo N≥10
-
-**Next Steps:** Monte Carlo validation (no parameter fixes needed)
+**Ready to archive to Recently Resolved.**
 
 ---
 
