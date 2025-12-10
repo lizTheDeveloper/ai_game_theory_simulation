@@ -1,6 +1,7 @@
 import { GameState, GameEvent, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { QuantumAdvantageLevel } from '@/types/quantum-computing';
 import { assertFinite, assertInRange } from '@/simulation/utils/assertions';
+import { getAggregateAICapability } from '@/simulation/utils/aiHelpers';
 
 /**
  * Quantum Computing Phase (L-3, Dec 10, 2025)
@@ -39,7 +40,7 @@ export function executeQuantumComputingPhase(
   // Initialize quantum system if not exists
   if (!state.quantumSystem) {
     console.log(`\n⚠️ WARNING: quantumSystem not initialized, skipping QuantumComputingPhase`);
-    return { events, monthlyReport: {} };
+    return { events };
   }
 
   if (!rng || typeof rng !== 'function') {
@@ -54,13 +55,14 @@ export function executeQuantumComputingPhase(
   const baseInvestment = 2.0; // $2B baseline (2024)
 
   // AI research capability multiplier (more capable AI → faster quantum progress)
-  const aiMultiplier = Math.min(3.0, 1.0 + (state.ai.capabilities.research / 10.0));
+  const aiResearchCapability = getAggregateAICapability(state.aiAgents, 'research');
+  const aiMultiplier = Math.min(3.0, 1.0 + (aiResearchCapability / 10.0));
 
   // Economic capacity multiplier (higher GDP per capita → more funding)
-  const economicMultiplier = state.economics.gdpPerCapita > 20000 ? 1.5 : 1.0;
+  const economicMultiplier = state.globalMetrics.gdpPerCapita > 20000 ? 1.5 : 1.0;
 
-  // Government prioritization (if quantum computing is prioritized)
-  const govMultiplier = state.government.priorities?.quantumComputing ? 1.5 : 1.0;
+  // Government prioritization (quantum computing investment)
+  const govMultiplier = 1.0; // Baseline (no government priority system yet)
 
   quantum.annualInvestment = baseInvestment * aiMultiplier * economicMultiplier * govMultiplier;
 
@@ -123,7 +125,7 @@ export function executeQuantumComputingPhase(
     console.log(`  → Quantum-AI enhancement will activate`);
 
     events.push({
-      id: state.eventIdCounter++,
+      id: `quantum-grovers-${state.currentMonth}`,
       type: 'breakthrough',
       month: state.currentMonth,
       title: 'Quantum Computing: Grover\'s Algorithm',
@@ -142,7 +144,7 @@ export function executeQuantumComputingPhase(
     console.log(`  → AI research capabilities enhanced`);
 
     events.push({
-      id: state.eventIdCounter++,
+      id: `quantum-ml-${state.currentMonth}`,
       type: 'breakthrough',
       month: state.currentMonth,
       title: 'Quantum Machine Learning Unlocked',
@@ -162,7 +164,7 @@ export function executeQuantumComputingPhase(
     console.log(`  → Physical sciences AI capabilities boosted`);
 
     events.push({
-      id: state.eventIdCounter++,
+      id: `quantum-chemistry-${state.currentMonth}`,
       type: 'breakthrough',
       month: state.currentMonth,
       title: 'Quantum Chemistry Simulation',
@@ -186,7 +188,7 @@ export function executeQuantumComputingPhase(
     console.log(`  → CryptographySecurityPhase will detect crisis`);
 
     events.push({
-      id: state.eventIdCounter++,
+      id: `quantum-shors-${state.currentMonth}`,
       type: 'crisis',
       month: state.currentMonth,
       title: '🚨 Shor\'s Algorithm: Crypto Breaking Capability',
@@ -207,7 +209,7 @@ export function executeQuantumComputingPhase(
     console.log(`  ✓ Scientific simulation accelerated`);
 
     events.push({
-      id: state.eventIdCounter++,
+      id: `quantum-general-advantage-${state.currentMonth}`,
       type: 'breakthrough',
       month: state.currentMonth,
       title: 'General Quantum Advantage Achieved',
@@ -219,13 +221,8 @@ export function executeQuantumComputingPhase(
   // --- 5. Progress tracking ---
   quantum.researchProgress = Math.min(1.0, quantum.logicalQubits / 10000); // 0-1 scale
 
-  // --- 6. Generate monthly report ---
+  // --- 6. Progress reporting ---
   const qubitChange = quantum.logicalQubits - initialLogicalQubits;
-  const monthlyReport: Record<string, number> = {
-    'Quantum: Logical Qubits': Math.floor(quantum.logicalQubits),
-    'Quantum: Investment ($B/yr)': quantum.annualInvestment,
-    'Quantum: Error Rate': quantum.errorRate,
-  };
 
   if (qubitChange > 1) {
     console.log(`\n🔬 Quantum Computing Progress:`);
@@ -235,5 +232,5 @@ export function executeQuantumComputingPhase(
     console.log(`  Advantage level: ${QuantumAdvantageLevel[quantum.quantumAdvantageLevel]}`);
   }
 
-  return { events, monthlyReport };
+  return { events };
 }
