@@ -600,6 +600,11 @@ export function getAIEfficiencyTrend(state: GameState): string {
  * - <20% of global power: No constraint (current trajectory)
  * - 20-30% of global power: Warning zone (soft constraint - rising friction)
  * - >30% of global power: Hard constraint (grid stability, political pushback)
+ *
+ * **CROSS-SYSTEM INTEGRATION (M-1 fix, Dec 10, 2025):**
+ * - This system tracks AI/crypto datacenter energy usage
+ * - EnergyBudgetPhase reads from this system to allocate remaining capacity
+ * - Prevents double-counting: AI tracked here, climate techs tracked there
  */
 function calculateEnergyConstraints(power: PowerGenerationSystem): void {
   // Calculate utilization rate (what % of global power is data centers using?)

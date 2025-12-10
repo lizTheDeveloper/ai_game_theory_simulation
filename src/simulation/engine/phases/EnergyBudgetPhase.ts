@@ -9,15 +9,27 @@
  * **Validation:** reviews/research_validation_energy_budget_20251209.md (QG1 PASSED)
  *
  * **EXECUTION ORDER:** 12.4 (Before ClimateDeploymentPhase 12.8, after tech-tree 12.5)
- * **DEPENDENCIES:** tech-tree (12.5) - Requires deployed technologies list
+ * **DEPENDENCIES:**
+ * - tech-tree (12.5) - Requires deployed technologies list
+ * - powerGenerationSystem (TIER 4.4) - Reads AI datacenter energy usage
+ *
+ * **CROSS-SYSTEM INTEGRATION (M-1 fix, Dec 10, 2025):**
+ * - Reads from state.powerGenerationSystem.energyConstraintActive
+ * - Subtracts AI datacenter usage from available capacity
+ * - Prevents double-counting of energy allocations across systems
+ * - PowerGenerationSystem tracks AI/crypto datacenter usage (TIER 4.4)
+ * - EnergyBudgetPhase allocates remaining capacity to climate/industrial techs
+ *
  * **SIDE EFFECTS:**
  * - Updates state.energyBudget.allocations for each tech category
  * - Updates state.energyBudget.conflicts (competition tracking)
  * - Sets effectivenessMultiplier for downstream phases
  *
- * **4-Step Phase Logic:**
+ * **5-Step Phase Logic:**
+ * 0. Grow global capacity annually
+ * 0.5. Read AI datacenter usage from PowerGenerationSystem (M-1 integration)
  * 1. Calculate energy demand from active technologies
- * 2. Check if total demand exceeds global capacity
+ * 2. Check if total demand exceeds available capacity (after AI subtraction)
  * 3. Allocate energy by priority tier (essential → high → climate → elective)
  * 4. Calculate effectiveness multiplier: (allocated / demand)^exponent
  *
@@ -25,12 +37,12 @@
  * - Tier 1 (Essential): 40-50% capacity - Healthcare, food systems, water
  * - Tier 2 (High Priority): 30-40% capacity - Industry, transport, education
  * - Tier 3 (Climate Tech): 10-20% surplus - DAC, hydrogen, carbon removal
- * - Tier 4 (Elective): 5-10% surplus - AI expansion, crypto, luxury compute
+ * - Tier 4 (Elective): 5-10% surplus - Advanced compute (AI tracked separately)
  *
  * **Key Parameters (corrected from QG1 review):**
  * - Global capacity: 29,000 TWh/year (2024 baseline)
  * - Clean electricity: 11,500 TWh/year (40% clean share)
- * - AI datacenter baseline: 415-460 TWh (NOT 730 TWh)
+ * - AI datacenter baseline: 415-460 TWh (tracked in PowerGenerationSystem)
  * - DAC range: 1,200-2,500 kWh/tCO2 (lower bound raised from 1,000)
  * - Effectiveness exponent: 1.2 (conservative, tech-specific 1.0-1.3)
  */
@@ -125,10 +137,18 @@ export class EnergyBudgetPhase implements SimulationPhase {
     // Step 0: Grow global capacity annually
     this.updateGlobalCapacity(state);
 
+    // Step 0.5: Read from PowerGenerationSystem for global context
+    // (Integration with TIER 4.4 energy constraints - M-1 fix)
+    const powerSystem = state.powerGenerationSystem;
+    const aiConstraintActive = powerSystem?.energyConstraintActive ?? false;
+    const aiConstraintSeverity = powerSystem?.constraintSeverity ?? 0;
+
     // Step 1: Calculate energy demand from active technologies
     const demands = this.calculateEnergyDemands(state);
 
     // Step 2: Check if demand exceeds capacity
+    // NOTE: AI datacenter demand is tracked separately in PowerGenerationSystem
+    // We allocate the remaining capacity to other technologies here
     const totalDemand = Object.values(demands).reduce((sum, d) => sum + d.demandTWh, 0);
     const totalCapacity = assertFinite(
       state.energyBudget.globalCapacity.totalTWh,
@@ -139,10 +159,31 @@ export class EnergyBudgetPhase implements SimulationPhase {
     }
     );
 
-    const surplus = totalCapacity - totalDemand;
+    // Reduce available capacity by AI datacenter usage (cross-system integration)
+    let availableCapacity = totalCapacity;
+    if (powerSystem) {
+      const aiDatacenterUsage = powerSystem.dataCenterPower * 12; // Convert monthly to annual
+      availableCapacity = assertFinite(
+        totalCapacity - aiDatacenterUsage,
+        {
+          location: 'EnergyBudgetPhase.execute',
+          valueName: 'availableCapacity',
+          month: state.currentMonth,
+          additionalInfo: { totalCapacity, aiDatacenterUsage }
+        }
+      );
+
+      // Log warning if AI constraints are limiting other tech deployment
+      if (aiConstraintActive && state.currentMonth % 12 === 0) {
+        console.log(`⚡ AI energy constraints active (severity: ${(aiConstraintSeverity * 100).toFixed(0)}%)`);
+        console.log(`  Available capacity for other techs: ${availableCapacity.toFixed(0)} TWh/year`);
+      }
+    }
+
+    const surplus = availableCapacity - totalDemand;
 
     // Step 3: Allocate energy by priority tier
-    const allocations = this.allocateEnergyByPriority(state, demands, totalCapacity);
+    const allocations = this.allocateEnergyByPriority(state, demands, availableCapacity);
 
     // Step 4: Calculate effectiveness multipliers
     for (const [techCategory, allocation] of Object.entries(allocations)) {
