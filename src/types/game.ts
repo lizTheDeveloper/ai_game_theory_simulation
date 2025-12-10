@@ -132,6 +132,18 @@ export type {
 } from './tipping-points';
 
 export type {
+  QuantumSystemState,
+  QuantumComputingState,
+  QuantumAlgorithmSupport,
+  CryptographySecurityState,
+  CryptoStatus,
+  PostQuantumTransitionState,
+  QuantumAIIntegrationState
+} from './quantum-computing';
+
+export { createInitialQuantumState } from './quantum-computing';
+
+export type {
   IrreversibilityState,
   IceSheetState,
   PermafrostState,
@@ -396,6 +408,30 @@ export interface GameState {
   extinctionState: ExtinctionState; // Active extinction scenario tracking
   ecosystem: EcosystemState; // Phase 5.4: Technology diffusion tracking
   computeInfrastructure: ComputeInfrastructure; // Phase 1: Compute resource system
+
+  /**
+   * Quantum Computing Breakthrough Cascades (L-3, Dec 10, 2025)
+   *
+   * Models quantum computing progression from NISQ → fault-tolerant quantum computing (FTQC)
+   * and resulting cryptographic/economic/social cascades.
+   *
+   * Key Dynamics:
+   * - Quantum capability: 28 logical qubits (2025) → 1,730-4,099 (Shor's threshold) → 10,000+ (general advantage)
+   * - Cryptographic crisis: RSA/ECC breaking → banking/commerce failure → social trust erosion
+   * - PQC transition: Proactive deployment (2024-2035) vs reactive crash program (crisis-driven)
+   * - Quantum-AI enhancement: Chemistry (+20x), physics (+10x), optimization (+5x), ML (+2x)
+   *
+   * Timeline (realistic): 2028-2030 for cryptographically-relevant quantum computer (CRQC)
+   * Economic impact: $500B-$1.5T (crypto crisis) vs $400-600B (quantum value creation)
+   * Recovery: 5-15 years for social trust, 10-20 years for full PQC transition
+   *
+   * Research: research/quantum_computing_cascades_20251210.md (31 sources, Grade B+)
+   * Validation: reviews/quantum_cascades_critique_20251210.md (PASSED Quality Gate 1)
+   *
+   * Expected impact: Late-game economic shocks, security crises, quantum-AI capability jumps
+   */
+  quantumSystem?: import('./quantum-computing').QuantumSystemState;
+
   endGameState?: import('../simulation/endGame').EndGameState; // Phase 3: End-game forcing system
   catastrophicScenarios: import('../simulation/catastrophicScenarios').CatastrophicScenario[]; // Phase 11: Hard steps modeling
   goldenAgeState: GoldenAgeState; // Phase: Golden Age detection (immediate prosperity tracking)
