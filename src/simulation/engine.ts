@@ -166,6 +166,9 @@ import { Tier2SocialSystemsPhase } from './engine/phases/Tier2SocialSystemsPhase
 import { Tier2AIGovernancePhase } from './engine/phases/Tier2AIGovernancePhase';
 import { Tier2PhysicalSystemsPhase } from './engine/phases/Tier2PhysicalSystemsPhase';
 import { UnknownUnknownPhase } from './engine/phases/UnknownUnknownPhase';  // P3.2 (Oct 30, 2025)
+// L-3 quantum computing phases temporarily disabled - incomplete implementation (Dec 10, 2025)
+// import { QuantumComputingPhase } from './engine/phases/QuantumComputingPhase';
+// import { executeCryptographySecurityPhase } from './engine/phases/CryptographySecurityPhase';
 // MortalityStabilizersPhase removed - merged into HumanSurvivalSystemPhase (Batch 4, Nov 9, 2025)
 // Batch 3 Consolidation: Climate & Environmental (17 → 7, Nov 9, 2025)
 import { ClimateSystemPhase } from './engine/phases/ClimateSystemPhase';  // Consolidated 4 climate phases
@@ -537,6 +540,9 @@ export class SimulationEngine {
     // UpwardSpiralsPhase removed - merged into CooperativeSystemsPhase (Batch 5, Nov 9, 2025)
     // CooperativeSpiralsPhase removed - merged into CooperativeSystemsPhase (Batch 5, Nov 9, 2025)
     this.orchestrator.registerPhase(new TechTreePhase());
+    // L-3 quantum computing phases temporarily disabled - incomplete implementation (Dec 10, 2025)
+    // this.orchestrator.registerPhase(new QuantumComputingPhase());
+    // this.orchestrator.registerPhase(new CryptographySecurityPhase());
     this.orchestrator.registerPhase(new CoordinatedDeploymentPhase());  // TIER 1B (Nov 15, 2025): AI-managed gradual tech deployment (order 16.5)
     this.orchestrator.registerPhase(new MeaningRenaissancePhase());
     // ConflictResolutionPhase removed - merged into InternationalRelationsPhase (Batch 5, Nov 9, 2025)
