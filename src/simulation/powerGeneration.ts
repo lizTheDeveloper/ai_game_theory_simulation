@@ -4,6 +4,8 @@
  * Simulates global electricity generation, data center power consumption,
  * AI efficiency improvements, cryptocurrency mining, and climate impact.
  *
+ * **Called from:** ResourceEconomyPhase (order 17.0)
+ *
  * Key Dynamics:
  * - AI inference efficiency: 200x per year (exponential with diminishing returns)
  * - Query volume: Linear growth with saturation
@@ -11,6 +13,30 @@
  * - Crypto: Separate growth (15% per year, policy-dependent)
  * - Grid mix: Slow renewable transition (2% per year)
  * - Climate feedback: Warming increases cooling demand
+ *
+ * **ARCHITECTURE NOTE: Dual Energy Systems (Intentional Design)**
+ *
+ * This system (PowerGenerationSystem) and EnergyBudgetPhase model DIFFERENT
+ * aspects of energy constraints:
+ *
+ * 1. **PowerGenerationSystem (order 17.0, this file):**
+ *    - Models AI/crypto datacenter utilization constraints
+ *    - Used by: AI research, crypto mining, advanced compute
+ *    - Question: "How much datacenter capacity is available for growth?"
+ *    - Output: constraintSeverity, energyConstraintActive flag
+ *    - Consumers: updateCryptoPower() (line 209), AI research phase
+ *
+ * 2. **EnergyBudgetPhase (order 12.75):**
+ *    - Models technology deployment effectiveness
+ *    - Used by: ClimateDeploymentPhase (DAC, hydrogen, carbon removal)
+ *    - Question: "Given limited energy, how effective is deployed tech?"
+ *    - Output: effectivenessMultiplier per category
+ *
+ * **Why keep both?** Separation of concerns - climate tech effectiveness (12.75)
+ * runs before climate deployment (12.8), while datacenter constraints (17.0)
+ * run later in the phase sequence. They model different phenomena.
+ *
+ * See: reviews/architecture_integration_review_30day_20251210.md (H-1 analysis)
  */
 
 import { GameState } from '../types/game';

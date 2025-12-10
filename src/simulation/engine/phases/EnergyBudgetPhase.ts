@@ -33,6 +33,28 @@
  * - AI datacenter baseline: 415-460 TWh (NOT 730 TWh)
  * - DAC range: 1,200-2,500 kWh/tCO2 (lower bound raised from 1,000)
  * - Effectiveness exponent: 1.2 (conservative, tech-specific 1.0-1.3)
+ *
+ * **ARCHITECTURE NOTE: Dual Energy Systems (Intentional Design)**
+ *
+ * This phase (EnergyBudgetPhase) and PowerGenerationSystem (in ResourceEconomyPhase)
+ * model DIFFERENT aspects of energy constraints:
+ *
+ * 1. **EnergyBudgetPhase (order 12.75):**
+ *    - Models technology deployment effectiveness
+ *    - Used by: ClimateDeploymentPhase (DAC, hydrogen, carbon removal)
+ *    - Question: "Given limited energy, how effective is deployed tech?"
+ *    - Output: effectivenessMultiplier per category
+ *
+ * 2. **PowerGenerationSystem (order 17.0):**
+ *    - Models AI/crypto datacenter utilization constraints
+ *    - Used by: AI research, crypto mining, advanced compute
+ *    - Question: "How much datacenter capacity is available for growth?"
+ *    - Output: constraintSeverity, energyConstraintActive flag
+ *
+ * **Why keep both?** Separation of concerns - climate tech effectiveness vs compute capacity.
+ * They could theoretically be merged, but current design is intentional and functional.
+ *
+ * See: reviews/architecture_integration_review_30day_20251210.md (H-1 analysis)
  */
 
 import { GameState, SimulationPhase, PhaseResult, RNGFunction } from '@/types/game';
