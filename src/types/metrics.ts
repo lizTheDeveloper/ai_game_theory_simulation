@@ -82,4 +82,11 @@ export interface GlobalMetrics {
   // Tracks level of international cooperation on global challenges
   // Used by ocean acidification system to model food aid/trade redistribution
   coordinationLevel: number;             // [0,1] International cooperation level
+
+  // === ECONOMIC & SOCIAL TRUST (L-3 Quantum Cascades, Dec 10, 2025) ===
+  // Research: research/quantum_computing_cascades_20251210.md (38 sources, Grade B+)
+  // GDP per capita and digital infrastructure trust for quantum computing cascades
+  gdpPerCapita: number;                  // [$] GDP per capita (use getGDPProxy for total GDP)
+  digitalInfrastructureTrust: number;    // [0,1] Confidence in digital security infrastructure
+  cryptoBreakTrustLoss: number;          // [0,1] Cumulative trust loss from cryptographic failures
 }

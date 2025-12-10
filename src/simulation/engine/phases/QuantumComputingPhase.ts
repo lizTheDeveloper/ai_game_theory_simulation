@@ -57,7 +57,7 @@ export function executeQuantumComputingPhase(
   const aiMultiplier = Math.min(3.0, 1.0 + (state.ai.capabilities.research / 10.0));
 
   // Economic capacity multiplier (higher GDP per capita → more funding)
-  const economicMultiplier = state.economics.gdpPerCapita > 20000 ? 1.5 : 1.0;
+  const economicMultiplier = state.globalMetrics.gdpPerCapita > 20000 ? 1.5 : 1.0;
 
   // Government prioritization (if quantum computing is prioritized)
   const govMultiplier = state.government.priorities?.quantumComputing ? 1.5 : 1.0;
@@ -221,11 +221,6 @@ export function executeQuantumComputingPhase(
 
   // --- 6. Generate monthly report ---
   const qubitChange = quantum.logicalQubits - initialLogicalQubits;
-  const monthlyReport: Record<string, number> = {
-    'Quantum: Logical Qubits': Math.floor(quantum.logicalQubits),
-    'Quantum: Investment ($B/yr)': quantum.annualInvestment,
-    'Quantum: Error Rate': quantum.errorRate,
-  };
 
   if (qubitChange > 1) {
     console.log(`\n🔬 Quantum Computing Progress:`);
@@ -235,5 +230,5 @@ export function executeQuantumComputingPhase(
     console.log(`  Advantage level: ${QuantumAdvantageLevel[quantum.quantumAdvantageLevel]}`);
   }
 
-  return { events, monthlyReport };
+  return { events };
 }
