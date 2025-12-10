@@ -52,7 +52,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - 📄 **Research:** `research/REGRESSION_FIX_amoc_amazon_20251209.md`
 - **Energy Budget Integration (H-1, H-2):** Architecture review follow-up completed
   - Fixed duplicate energy calculation in ClimateDeploymentPhase (now consumes allocations from EnergyBudgetPhase)
-  - Single source of truth: EnergyBudgetPhase (order 12.75) calculates, others consume
+  - Single source of truth: EnergyBudgetPhase (order 12.4) calculates, others consume
   - 📄 **Docs:** `docs/implementation-history/energy_budget_integration_fixes_20251209.md`
 - **Research Quality:** Grade B+ (recent work A+, legacy corpus C due to time passage)
   - Recent additions: Regional death rates (UN WPP 2024), radiation modeling (ICRP 103, BEIR VII)
@@ -2678,8 +2678,8 @@ This section documents **critical parameter uncertainty findings** identified du
 
 **Integration Architecture:**
 ```
+Phase 12.4:  EnergyBudgetPhase (allocations + effectiveness multipliers)
 Phase 12.5:  TechTreePhase (deployed techs)
-Phase 12.75: EnergyBudgetPhase (allocations + effectiveness multipliers)
 Phase 12.8:  ClimateDeploymentPhase (consumes allocations)
 Phase 13+:   Cleanup/effects systems (consume allocations)
 ```
@@ -7829,8 +7829,8 @@ for each category:
 
 **Phase Execution Order:**
 ```
-12.5:  TechTreePhase          → Populates deployed technologies
-12.75: EnergyBudgetPhase       → Calculates allocations (SINGLE SOURCE OF TRUTH)
+12.4:  EnergyBudgetPhase       → Calculates allocations (SINGLE SOURCE OF TRUTH)
+12.5:  TechTreePhase           → Populates deployed technologies
 12.8:  ClimateDeploymentPhase  → Consumes allocations
 13+:   Cleanup/Effects phases  → Consume allocations
 ```
@@ -9719,6 +9719,7 @@ The simulation runs via a **phase-based architecture** with **100 phases** execu
 **11.0-25.0: System Updates**
 - GovernanceQualityPhase (11.0): Democratic resilience, AI augmentation
 - UpwardSpiralsPhase (12.0): 6 virtuous cascades
+- **EnergyBudgetPhase (12.4)**: Global electricity capacity allocation, priority-based energy distribution (**NEW Dec 9, 2025**)
 - TechTreePhase (12.5): Technology deployment, effects
 - StochasticInnovationPhase (12.6): Lévy-flight driven breakthroughs (**MOVED Nov 25** - was 12.7, collision fix)
 - CooperativeSystemsPhase (12.65): Collective formation, cooperative ownership
