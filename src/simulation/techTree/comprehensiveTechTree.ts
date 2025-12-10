@@ -850,30 +850,8 @@ const ALL_TECH: TechDefinition[] = [
     },
     citations: ['Paerl et al. 2024 - Lake Erie internal loading', 'research/nitrogen_food_coupling_20251115.md'],
   },
-  {
-    id: 'nitroplast_integration',
-    name: 'Nitroplast Integration',
-    description: 'Synthetic nitrogen-fixing organelles in cereal crops - 40-80% fertilizer elimination',
-    category: 'agriculture',
-    status: 'future',  // TIER 2, but 2045+ is far future
-    prerequisites: ['rhizosphere_engineering', 'p_efficient_cultivars'],
-    minResearchCapabilities: [
-      { domain: 'biotech', subdomain: 'geneEditing', threshold: 0.9 }
-    ],
-    minEconomicStage: 3.5,
-    minMonth: 120,  // TIER 2, 2045+ (10 years out)
-    researchMonthsRequired: 60,
-    researchCost: 5000,
-    deploymentCost: 300000,
-    deploymentMonthsRequired: 120,
-    deploymentLevel: 0,
-    effects: {
-      nitrogenElimination: 0.60,  // 60% fertilizer elimination (40-80% range)
-      foodSecurityBonus: 0.10,
-      biodiversityBonus: 0.05,
-    },
-    citations: ['research/nitrogen_food_coupling_20251115.md - Nitroplast section'],
-  },
+  // ❌ REMOVED DUPLICATE: nitroplast_integration (was line 854-876, minMonth: 120 WRONG)
+  // Use definition at line 629 (TIER 2 HIGH, Nov 16, 2025, correct minMonth: 180)
   {
     id: 'algae_nutrient_capture',
     name: 'Algae-Based Nutrient Capture',
@@ -2039,35 +2017,8 @@ const ALL_TECH: TechDefinition[] = [
   },
 
   // Agriculture: Advanced Nitrogen Technologies (TIER 2 - Nov 15, 2025)
-  {
-    id: 'nitroplast_integration',
-    name: 'Nitroplast Integration',
-    description: 'Nitrogen-fixing organelle engineered into crops (2024 discovery) - 40-80% fertilizer elimination, 2045+ deployment',
-    category: 'agriculture',
-    status: 'unlockable',
-    prerequisites: [],
-    minResearchCapabilities: [
-      { domain: 'biotech', subdomain: 'geneEditing', threshold: 2.5 }  // Advanced genetic engineering
-    ],
-    minAICapability: 3.0,  // Requires advanced AI for organelle engineering
-    minEconomicStage: 3.5,
-    minMonth: 240,  // 2045 earliest deployment (20 years from 2025)
-    researchMonthsRequired: 120,  // 10 years research (highly uncertain)
-    researchCost: 15000,  // $15B research (cutting-edge biotechnology)
-    deploymentCost: 120000,  // $120B deployment (seed distribution, regulatory approval)
-    deploymentMonthsRequired: 180,  // 15 years deployment (2045-2060)
-    deploymentLevel: 0,
-    effects: {
-      nitrogenFertilizerReduction: 0.60,  // 40-80% reduction (use median 60%)
-      cropYieldStability: 0.20,  // Self-sufficient nitrogen fixation
-      environmentalBonus: 0.25,  // Massive pollution reduction
-      energySavings: 0.10,  // Haber-Bosch energy no longer needed
-    },
-    citations: [
-      'research/nitrogen_food_coupling_20251115.md - NSF 2024, 2025 AAAS Newcomb Cleveland Prize',
-      'WEF Top 10 Emerging Technologies 2025',
-    ],
-  },
+  // ❌ REMOVED DUPLICATE: nitroplast_integration (was line 2043-2070)
+  // Use definition at line 629 (TIER 2 HIGH, Nov 16, 2025, correct minMonth: 180)
   {
     id: 'alternative_protein_insects_algae',
     name: 'Alternative Protein (Insects/Algae)',
@@ -2512,28 +2463,8 @@ const ALL_TECH: TechDefinition[] = [
       greenhouseGasReduction: 0.20,
     },
   },
-  {
-    id: 'nitroplast_integration',
-    name: 'Nitroplast Integration',
-    description: 'N-fixing organelles in crops - 40-80% fertilizer elimination (BREAKTHROUGH)',
-    category: 'agriculture',
-    status: 'future',  // Requires breakthrough research success
-    prerequisites: [],
-    minAICapability: 3.5,
-    minEconomicStage: 4.0,
-    minMonth: 240,  // Not available until 2045 (20 years)
-    researchMonthsRequired: 120,  // 10 years research
-    researchCost: 50000,  // Massive research investment
-    deploymentCost: 200000,
-    deploymentMonthsRequired: 180,  // 15 years deployment
-    deploymentLevel: 0,
-    effects: {
-      nitrogenReduction: 0.60,  // 40-80% range, using 60% mid-point
-      cropYieldPenalty: -0.10,  // -10% yield (energy cost of N fixation)
-      climateResilience: 0.20,  // Less fertilizer vulnerability
-      transformativeTech: 1.0,  // Breakthrough technology flag
-    },
-  },
+  // ❌ REMOVED DUPLICATE: nitroplast_integration (was line 2516-2536)
+  // Use definition at line 629 (TIER 2 HIGH, Nov 16, 2025, correct minMonth: 180)
   {
     id: 'phytoremediation_networks',
     name: 'Phytoremediation Networks',
