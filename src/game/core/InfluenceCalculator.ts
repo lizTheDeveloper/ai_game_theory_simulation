@@ -40,6 +40,8 @@ const ACTION_CATALOG: Map<AdvocacyActionId, AdvocacyAction> = new Map([
     prerequisites: [],
     maxCumulativeEffect: 0.08,
     domain: 'ai_policy',
+    costs: { reputation: 10, politicalCapital: 5 },
+    researchSources: ['AI safety public opinion research'],
   }],
   ['promote_climate_action', {
     id: 'promote_climate_action',
@@ -53,6 +55,8 @@ const ACTION_CATALOG: Map<AdvocacyActionId, AdvocacyAction> = new Map([
     prerequisites: [],
     maxCumulativeEffect: 0.08,
     domain: 'climate_action',
+    costs: { reputation: 10, politicalCapital: 5 },
+    researchSources: ['Climate action public support research'],
   }],
   ['build_international_coalition', {
     id: 'build_international_coalition',
@@ -66,6 +70,8 @@ const ACTION_CATALOG: Map<AdvocacyActionId, AdvocacyAction> = new Map([
     prerequisites: [],
     maxCumulativeEffect: 0.10,
     domain: 'international_cooperation',
+    costs: { reputation: 15, politicalCapital: 20, funding: 1.0 },
+    researchSources: ['International cooperation frameworks'],
   }],
   ['fund_alignment_research', {
     id: 'fund_alignment_research',
@@ -79,6 +85,8 @@ const ACTION_CATALOG: Map<AdvocacyActionId, AdvocacyAction> = new Map([
     prerequisites: [],
     maxCumulativeEffect: 0.10,
     domain: 'research_direction',
+    costs: { politicalCapital: 15, funding: 0.5 },
+    researchSources: ['Research funding allocation studies'],
   }],
   ['strengthen_social_cohesion', {
     id: 'strengthen_social_cohesion',
@@ -92,6 +100,8 @@ const ACTION_CATALOG: Map<AdvocacyActionId, AdvocacyAction> = new Map([
     prerequisites: [],
     maxCumulativeEffect: 0.08,
     domain: 'social_cohesion',
+    costs: { reputation: 5, funding: 0.2 },
+    researchSources: ['Social cohesion research'],
   }],
 ]);
 

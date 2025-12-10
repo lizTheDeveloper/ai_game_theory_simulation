@@ -108,7 +108,7 @@ export function ActionPanel({
 
   // Get available actions based on game state
   const allActions = useMemo((): AdvocacyAction[] => {
-    return Object.values(ADVOCACY_ACTIONS);
+    return ADVOCACY_ACTIONS;
   }, []);
 
   // Filter by domain
@@ -158,7 +158,7 @@ export function ActionPanel({
 
   // Handle action click
   const handleActionClick = useCallback((actionId: string) => {
-    const action = ADVOCACY_ACTIONS[actionId as keyof typeof ADVOCACY_ACTIONS];
+    const action = ADVOCACY_ACTIONS.find(a => a.id === actionId);
     if (!action) return;
 
     const { canExecute } = canExecuteAction(action);
