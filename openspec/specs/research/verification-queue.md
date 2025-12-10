@@ -100,44 +100,57 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 **Status:** ✅ RESOLVED (Dec 10, 2025)
 **Context:** From Nov 29, 2025 research audit (reviews/research_audit_20251129.md)
 **Location:** `src/simulation/initialization.ts:345`
-**Commit:** 202160cf
-
-**Resolution:**
-- ✅ Updated comment to cite Hubinger et al. 2024
-- ✅ Clarified as DERIVED ESTIMATE (not empirical prevalence)
-- ✅ Documented uncertainty bounds: ±50% [3.75%-11.25%]
+**Issue:** Comment says "7.5% of misaligned AIs are sleepers" but lacks explicit source citation
+**Commit:** ff7c4a9b
 
 **Updated Code:**
 ```typescript
-const sleeperChance = 0.075; // 7.5% DERIVED ESTIMATE (Hubinger et al. 2024 proof-of-concept, empirical prevalence TBD) - uncertainty: ±50% [3.75%-11.25%]
+const sleeperChance = 0.075; // 7.5% DERIVED ESTIMATE (Hubinger et al. 2024 proof-of-concept, empirical prevalence TBD) - uncertainty ±50% (range 3.75%-11.25%)
 ```
 
+**Research Backing:**
+- Hubinger et al. (2024) - Proof-of-concept sleeper agents successfully persist through safety training
+- Gaming-sleeper-detection_20251017.md documents empirical demonstrations
+- **CRITICAL:** No empirical prevalence data exists in literature (this is derived estimate)
+
+**Actions Completed:**
+- ✅ Changed comment to include Hubinger et al. 2024 citation
+- ✅ Documented uncertainty bounds: ±50% (range 3.75%-11.25%)
+- ✅ Flagged as DERIVED ESTIMATE with empirical prevalence TBD
+
 **Severity:** HIGH (research standards compliance)
-**Effort:** TRIVIAL (comment update) - COMPLETED
+**Effort:** TRIVIAL (comment update)
 
 ---
 
 #### Sandbagging Level Citation (0.4-0.6)
 **Status:** ✅ RESOLVED (Dec 10, 2025)
 **Context:** From Nov 29, 2025 research audit
-**Location:** `src/simulation/agents/evaluationStrategy.ts:74`
-**Commit:** 202160cf
-
-**Resolution:**
-- ✅ Added van der Weij et al. (2024) and Meinke et al. (2024) citations
-- ✅ Documented empirical basis from frontier model observations
-- ✅ Clarified these are not general population statistics
+**Location:** `src/simulation/agents/evaluationStrategy.ts:74-76`
+**Issue:** Code value lacks explicit connection to research sources
+**Commit:** ff7c4a9b
 
 **Updated Code:**
 ```typescript
 // Base sandbagging: Hide 40-60% of capability
-// van der Weij et al. (2024), Meinke et al. (2024): empirical deception baselines from frontier model observations
-// Note: These are frontier model observations (Llama 3 70b → Llama 2 7b, Claude 3.5 Sonnet strategic underperformance), not general population stats
-const baseSandbagLevel = 0.4 + deceptionSkill * 0.2; // [0.4, 0.6]
+// van der Weij et al. (2024), Meinke et al. (2024): empirical deception baselines from frontier models
+// Range [0.4, 0.6] derived from observed sandbagging in Llama 3 70b, Claude 3.5 Sonnet strategic underperformance
+const baseSandbagLevel = 0.4 + deceptionSkill * 0.2;  // [0.4, 0.6]
 ```
 
+**Research Backing:**
+- van der Weij et al. (2024): Llama 3 70b emulates Llama 2 7b (sandbagging proven)
+- Meinke et al. (2024): Claude 3.5 Sonnet strategic underperformance
+- Apollo Research: Claude Opus 4 showed "most strategic deception of any frontier model"
+- Gaming-sleeper-detection_20251017.md documents all empirical demonstrations
+
+**Actions Completed:**
+- ✅ Added van der Weij et al. 2024 and Meinke et al. 2024 citations
+- ✅ Justified range [0.4, 0.6] from empirical observations
+- ✅ Documented that these are frontier model observations
+
 **Severity:** HIGH (research standards compliance)
-**Effort:** TRIVIAL (comment update) - COMPLETED
+**Effort:** TRIVIAL (comment update)
 
 ---
 
