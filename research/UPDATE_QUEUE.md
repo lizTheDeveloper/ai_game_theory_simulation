@@ -19,6 +19,11 @@
 - **Status:** Not used in simulation
 - **Path:** `research/AUTONOMOUS_RESEARCHER_SESSION_20251203_2030.md`
 
+### `CITATION_CURRENCY_AUDIT_20251208.md`
+- **Oldest source:** 2009 (16 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/CITATION_CURRENCY_AUDIT_20251208.md`
+
 ### `CRISIS_MITIGATION_RESEARCH_CRITIQUE_20251029.md`
 - **Oldest source:** 2001 (24 years old)
 - **Status:** Not used in simulation
