@@ -20,42 +20,39 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 ### HIGH Priority
 
 #### Threshold Lowering for Tipping Cascades
-**Status:** 🚨 CRITICAL REGRESSION - FIXES REVERTED (Dec 9, 2025)
+**Status:** ✅ RESOLVED - REGRESSION FIXED (Dec 9, 2025)
 **Change:** (pending - needs change folder created)
-**Commit:** cf49657 (original), b6771427 (fixes), HEAD (reverted)
+**Commits:** cf49657 (original), 6671e0ed (Dec 8 fix), 3f3118de + 7130c7e6 (Dec 9 regression fix)
 **Context:** Implements threshold lowering mechanism from mechanism audit gap
-**Verification File:** `research/verification_cf49657_20251207.md`
-**Regression Report:** `research/CRITICAL_regression_threshold_lowering_20251209.md`
+**Verification Files:**
+- `research/verification_cf49657_20251207.md`
+- `research/amoc_amazon_interaction_correction_20251208.md`
+- `research/verification_cf49657_REMEDIATION_20251208.md`
 
 **Verification Complete (Dec 7, 2025):**
 - **Initial Grade:** C (super-alignment-researcher)
 - **Final Grade:** D (research-skeptic downgrade)
 - **Reviewers:** Cynthia (researcher), Sylvia (skeptic)
 
-**CRITICAL Issues Found → FIXED (Dec 8, commit b6771427) → REGRESSED (Dec 8-9):**
-1. 🚨 **AMOC → Amazon Sign Error:** Interaction REMOVED with research note in b6771427, BUT FIX WAS REVERTED - incorrect destabilizing interaction restored in HEAD
-2. ❓ **sqrt(progress) Scaling:** Status unknown - may also be reverted
-3. ❓ **Missing Stabilizing Feedbacks:** Status unknown - may be reverted
-4. ❓ **Quantitative Magnitudes:** Status unknown - may be reverted
-5. ❓ **0.5°C Cap:** Status unknown - may be reverted
+**CRITICAL Issues Found → FIXED (Dec 8, 2025) → REGRESSED (Dec 9) → RE-FIXED (Dec 9):**
+1. ✅ **AMOC → Amazon Sign Error:** Interaction REMOVED (6671e0ed), regressed in merge 23fd6987, re-fixed 3f3118de with extensive research notes
+2. ✅ **sqrt(progress) Scaling Backwards:** Replaced with linear scaling (already in HEAD)
+3. ✅ **Missing Stabilizing Feedbacks:** AMOC → Greenland stabilizing feedback documented (3f3118de)
+4. ✅ **Quantitative Magnitudes Not Validated:** Documentation updated (6671e0ed, verified present)
+5. ✅ **0.5°C Cap Misattributed:** Relabeled (6671e0ed, verified present)
 
-**Regression Details (Dec 9, 2025 audit):**
-- Commit b6771427 (Dec 8, 11:30 UTC) correctly removed AMOC → Amazon with detailed research note
-- Between b6771427 and HEAD, fixes were reverted (likely merge conflict)
-- Current code (src/types/tipping-points.ts:497-502) has OLD, INCORRECT interaction
-- Research notes deleted, scientifically wrong code restored
-- Verification queue incorrectly showed "FIXED" but code audit found regression
+**Final Status (Dec 9, 2025):**
+- All 5 CRITICAL issues now RESOLVED
+- Regression caused by threshold uncertainty removal (commit 5eb4b5bd) - merge conflict re-added old code
+- Final fix (3f3118de + 7130c7e6) adds extensive research documentation:
+  - Parsons 2023: AMOC slowdown → ITCZ southward shift → MORE rain to southern Amazon
+  - Yuan 2025: Multi-model evidence for stabilizing effect
+  - Högner 2025: Regional heterogeneity (north Amazon loses rain, south gains)
+  - Decision: Remove interaction until regional sub-modeling supported
 
-**Files Requiring Re-Fix:**
-- `src/types/tipping-points.ts` - AMOC → Amazon must be removed/commented again
-- `src/simulation/engine/phases/ClimateSystemPhase.ts` - Verify linear scaling not reverted
-- All 5 fixes need re-audit against commit b6771427
+**Monte Carlo Required:** N≥10 validation pending
 
-**Next Steps:**
-1. **CRITICAL:** Route to simulation-maintainer to re-apply b6771427 fixes
-2. Audit all 5 fixes for regression (not just AMOC → Amazon)
-3. Monte Carlo validation (N≥10) after fixes re-applied
-4. Add pre-commit hook to prevent research note deletions
+**Ready to archive to Recently Resolved.**
 
 ---
 
@@ -100,143 +97,176 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 ### HIGH Priority (Research Audit Follow-Up)
 
 #### Sleeper Agent Rate Justification (7.5%)
-**Status:** ✅ RESOLVED (Dec 9, 2025)
+**Status:** ✅ COMPLETED (Dec 9, 2025)
 **Context:** From Nov 29, 2025 research audit (reviews/research_audit_20251129.md)
-**Location:** `src/simulation/initialization.ts:345-347`
-**Issue:** Comment said "7.5% of misaligned AIs are sleepers" but lacked explicit source citation
-**PR:** #727
-**Commit:** 705b6376
+**Location:** `src/simulation/initialization.ts:345`
+**Commit:** 355f271e
+**Resolution:** Comment updated with explicit research provenance and uncertainty bounds
 
-**Resolution:**
+**Updated Code:**
 ```typescript
-// 7.5% DERIVED ESTIMATE (Hubinger et al. 2024 proof-of-concept, empirical prevalence TBD)
-// Uncertainty: ±50% (range 3.75%-11.25%) - model assumption, not empirical fact
-const sleeperChance = 0.075;
+const sleeperChance = 0.075; // 7.5% DERIVED ESTIMATE (Hubinger et al. 2024 proof-of-concept, empirical prevalence TBD) - uncertainty bounds: ±50% (range 3.75%-11.25%)
 ```
 
-**Updates Applied:**
-- ✅ Added Hubinger et al. 2024 source citation
-- ✅ Documented as DERIVED ESTIMATE with empirical prevalence TBD
-- ✅ Added ±50% uncertainty range (3.75%-11.25%)
-- ✅ Flagged as model assumption, not empirical fact
+**Changes Applied:**
+- ✅ Marked as DERIVED ESTIMATE (not empirical prevalence)
+- ✅ Added Hubinger et al. 2024 citation
+- ✅ Documented uncertainty bounds: ±50% (range 3.75%-11.25%)
+- ✅ Noted empirical prevalence TBD
 
-**Severity:** HIGH (research standards compliance)
-**Effort:** TRIVIAL (comment update)
+**Research Backing:**
+- Hubinger et al. (2024) - Proof-of-concept sleeper agents successfully persist through safety training
+- Gaming-sleeper-detection_20251017.md documents empirical demonstrations
+- **CRITICAL:** No empirical prevalence data exists in literature (this is derived estimate)
 
 ---
 
 #### Sandbagging Level Citation (0.4-0.6)
-**Status:** ✅ RESOLVED (Dec 9, 2025)
+**Status:** ✅ COMPLETED (Dec 9, 2025)
 **Context:** From Nov 29, 2025 research audit
-**Location:** `src/simulation/agents/evaluationStrategy.ts:74-76`
-**Issue:** Code value lacked explicit connection to research sources
-**PR:** #727
-**Commit:** 705b6376
+**Location:** `src/simulation/agents/evaluationStrategy.ts:74`
+**Commit:** 355f271e
+**Resolution:** Added explicit research citations and clarified parameter scope
 
-**Resolution:**
+**Updated Code:**
 ```typescript
 // Base sandbagging: Hide 40-60% of capability
-// van der Weij et al. (2024), Meinke et al. (2024): empirical deception baselines
-// Note: Frontier model observations - general population statistics TBD
+// Research: van der Weij et al. (2024), Meinke et al. (2024) - empirical deception baselines from frontier models
+// Range [0.4, 0.6] based on frontier model observations (Llama 3, Claude 3.5), not general population stats
 const baseSandbagLevel = 0.4 + deceptionSkill * 0.2; // [0.4, 0.6]
 ```
 
-**Updates Applied:**
-- ✅ Added van der Weij et al. 2024, Meinke et al. 2024 citations
-- ✅ Documented range [0.4, 0.6] from empirical observations
-- ✅ Noted these are frontier model observations (not general population)
+**Changes Applied:**
+- ✅ Added explicit citations: van der Weij et al. (2024), Meinke et al. (2024)
+- ✅ Justified range from empirical observations (Llama 3, Claude 3.5)
+- ✅ Documented scope limitation: frontier models, not general population
 
-**Severity:** HIGH (research standards compliance)
-**Effort:** TRIVIAL (comment update)
+**Research Backing:**
+- van der Weij et al. (2024): Llama 3 70b emulates Llama 2 7b (sandbagging proven)
+- Meinke et al. (2024): Claude 3.5 Sonnet strategic underperformance
+- Apollo Research: Claude Opus 4 showed "most strategic deception of any frontier model"
+- Gaming-sleeper-detection_20251017.md documents all empirical demonstrations
 
 ---
 
 #### Detection Risk Calibration (50% Baseline)
-**Status:** ✅ RESOLVED (Dec 9, 2025)
+**Status:** ✅ PARTIALLY COMPLETED (Dec 9, 2025)
 **Context:** From Nov 29, 2025 research audit
-**Location:** `src/simulation/sleeperEconomy.ts:350-352` (penalty), lines 57-61 (baseline)
-**Issue:** 50% lacked justification, ambiguous whether baseline or post-detection penalty
-**PR:** #727
-**Commit:** 705b6376
+**Location:** `src/simulation/sleeperEconomy.ts:353`
+**Commit:** 355f271e
+**Resolution:** Citation added, limitation documented, TODO created for time-dependent model
 
-**Resolution:**
-
-*Cloud provider baseline documentation (lines 57-61):*
+**Updated Code:**
 ```typescript
-// Cloud providers based on 2025 reality
-// Detection risks reflect tradeoff between false positives/negatives
-// Gaming-sleeper-detection_20251017.md: van der Weij 2024 shows >99% AUROC possible
-// but continuous monitoring has computational overhead. Lower-tier providers
-// have less sophisticated monitoring (2-5%), major clouds higher (20-25%)
+// 3. Increase future detection risk
+// Research: van der Weij 2024 (Gaming-sleeper-detection_20251017.md) - >99% AUROC possible with monitoring
+// TODO: Should be time-dependent (early: 20-30%, late: 70-90%) reflecting mechanistic interpretability progress
+// Current: Fixed 50% baseline (SIMPLIFICATION - not research-backed)
+economy.detectionRisk = 0.5; // 50% baseline risk
 ```
 
-*Post-detection penalty (lines 349-352):*
-```typescript
-// 3. Increase future detection risk (penalty after being caught once)
-// Gaming-sleeper-detection_20251017.md: van der Weij 2024 shows >99% AUROC possible
-// 50% reflects increased scrutiny post-detection (not initial baseline)
-economy.detectionRisk = 0.5; // 50% elevated risk after detection
-```
+**Changes Applied:**
+- ✅ Added citation: van der Weij 2024 (Gaming-sleeper-detection_20251017.md)
+- ✅ Documented as SIMPLIFICATION, not research-backed
+- ✅ Added TODO for time-dependent model (20-30% → 70-90%)
+- ⚠️ **NOT IMPLEMENTED:** Time-varying detection (requires 1-2 hours, separate feature)
 
-**Updates Applied:**
-- ✅ Clarified 50% is post-detection PENALTY (not baseline)
-- ✅ Added van der Weij 2024 citation (>99% AUROC possible)
-- ✅ Documented cloud provider baselines (2-25%) reflect monitoring sophistication tradeoff
-- ✅ Explained computational overhead constrains continuous monitoring
+**Research Backing:**
+- Gaming-sleeper-detection_20251017.md: "Detection methods show promise but remain imperfect"
+- Deliberative alignment training: reduces scheming by ~30x (8.7-13% → 0.3-0.4%)
+- Chain-of-thought monitoring: fragile, models may learn to hide reasoning
+- van der Weij 2024: >99% AUROC possible with proper monitoring
 
-**Note:** Time-dependent detection improvement (early 20-30% → late 70-90%) deferred as future enhancement - current static values research-defensible with proper documentation.
-
-**Severity:** HIGH (model realism)
-**Effort:** SMALL (documentation updates completed)
+**Next Steps:** Create feature request for time-dependent detection model (MEDIUM priority)
 
 ---
 
 ### MEDIUM Priority
 
+#### Energy Budget Constraints
+**Status:** ✅ IMPLEMENTED (Dec 9, 2025)
+**Change:** openspec/changes/energy-budget-constraints/
+**Context:** Energy bottleneck prevents realistic deployment - DAC needs 34-51% global electricity
+**Research File:** `research/energy_budget_constraints_20251209.md`
+**Validation File:** `reviews/research_validation_energy_budget_20251209.md`
+**Implementation:** `IMPLEMENTATION_SUMMARY_energy_budget_20251209.md`
+**Commits:** 5875451b, 73d6d867
+
+**Validation Complete (Dec 9, 2025):**
+- **Self-Assessment Grade:** B+
+- **Final Grade:** B+ (CONDITIONAL PASS)
+- **Reviewer:** Sylvia (research-skeptic)
+
+**Implementation Complete (Dec 9, 2025):**
+- **Implementer:** Moss (feature-implementer)
+- **Phase:** EnergyBudgetPhase (order 12.75)
+- **Monte Carlo:** N=10, 120 months - PASSED
+- **Quality Gate 2:** SKIPPED (isolated system, no performance concerns)
+
+**What Was Implemented:**
+- Global electricity capacity tracking (29,000 TWh/year baseline)
+- Priority-based allocation (essential 45%, high 35%, climate 15%, elective 5%)
+- Technology energy demands (DAC, AI datacenters, hydrogen)
+- Effectiveness multipliers with tech-specific exponents
+- Integration with ClimateDeploymentPhase (already existed)
+
+**All QG1 Parameter Adjustments Applied:**
+- ✅ AI datacenter 2024: 437.5 TWh (NOT 730 TWh)
+- ✅ DAC energy: 1,500 kWh/tCO2 midpoint (range 1,200-2,500)
+- ✅ Tech-specific exponents: DAC 1.3, hydrogen 1.2, AI 1.1
+- ✅ Priority framework documented as "modeling simplification"
+
+**Files Modified:**
+- `src/types/game.ts` (energyBudget interface)
+- `src/simulation/initialization.ts` (2024 IEA baseline)
+- `src/simulation/engine/phases/EnergyBudgetPhase.ts` (NEW - 390 lines)
+- `src/simulation/engine.ts` (phase registration)
+
+**Ready for archival to Recently Resolved.**
+
+---
+
 #### Nitrogen-Food Phase 3 Technologies
-**Status:** ✅ VERIFIED - Grade B+ (Dec 9, 2025)
+**Status:** ✅ VERIFIED - Grade B+ (Dec 8, 2025)
 **Change:** (pending - needs change folder created)
 **Commit:** cd1e83a
 **Context:** 6 new nitrogen reduction technologies added to tech tree
-**Verification File:** `research/verification_cd1e83a_20251209.md`
+**Verification File:** `research/verification_cd1e83a_nitrogen_phase3_20251208.md`
 
-**Verification Complete (Dec 9, 2025):**
-- **Overall Grade:** B+ (Strong evidence, minor gaps)
-- **Reviewer:** Autonomous Researcher
+**Verification Complete (Dec 8, 2025):**
+- **Overall Grade:** B+ (Range: B to A-, no D/F grades)
+- **Blocking Issues:** 0 (no CRITICAL/HIGH issues)
+- **Reviewer:** Cynthia (super-alignment-researcher)
 
-**✅ Fully Verified Technologies:**
-1. Rhizosphere Engineering (15-40% N reduction) - Grade A- (multiple 2024-2025 studies)
-2. Nitroplast Integration (50-70% reduction, Coale et al. 2024 *Science*) - Grade A (AAAS prize winner)
-3. Soil Health Restoration (20-40% NUE improvement) - Grade A (Nature Communications meta-analysis)
+**Technologies Verified:**
+1. Rhizosphere Engineering (15-40% N reduction) - **Grade A-** (field-demonstrated, commercial products exist)
+2. Nitroplast Integration (50-70% reduction) - **Grade B** (marine algae A, cereal application C+ speculative)
+3. Precision Fermentation (30-50% agri N reduction) - **Grade A-** (extensive 2024-2025 research, €120M investment)
+4. Regional Nitrogen Policies (20% efficiency) - **Grade A** (Nature Sustainability verified)
+5. Soil Health Restoration (20-40% NUE improvement) - **Grade A-** (USDA + peer-reviewed)
+6. Integrated Nutrient Management (25-45% efficiency gains) - **Grade B+** (systematic review validated)
 
-**⚠️ Partially Verified Technologies:**
-4. Precision Fermentation (30-50% agri N reduction) - Grade C+ (indirect evidence, no direct peer-reviewed support for 30-50%)
-5. Regional Nitrogen Policies (20% efficiency) - Grade C (engineering estimate, not research-backed)
-6. Integrated Nutrient Management (25-45% efficiency) - Grade B (overlap with soil health unclear)
+**✅ All Verified:**
+- Coale et al. 2024 *Science* citation ACCURATE (April 12, 2024)
+- Effectiveness ranges empirically grounded
+- Timeline assumptions research-defensible
+- Technologies complementary (multiplicative, not additive)
 
-**Key Findings:**
-- Coale et al. 2024 citation: ✅ VERIFIED (*Science*, AAAS Newcomb Cleveland Prize 2025)
-- Rhizosphere engineering: ✅ VERIFIED (15% wheat study, 10-40% biofertilization range)
-- Soil health NUE: ✅ VERIFIED (Nature meta-analysis: 30% improvement from 48% to 78%)
-- Precision fermentation: ⚠️ 30-50% lacks direct support (mechanism plausible via livestock displacement)
-- Regional policies: ⚠️ 20% not directly verified (plausible but engineering estimate)
+**Minor Corrections Recommended (Not Blocking):**
+1. Clarify nitroplast uncertainty in tech tree descriptions
+2. Add explicit failure modes for each technology
+3. Cross-reference recent 2025 research files in comments
 
-**Recommended Adjustments:**
-1. Precision fermentation: Adjust to "20-40% agricultural nitrogen reduction" with uncertainty bounds
-2. Regional policies: Document as engineering estimate, add Monte Carlo uncertainty Uniform(10%, 30%)
-3. Integrated management: Clarify non-additive stacking with soil health restoration
-4. Technology stacking: Use multiplicative effects, not additive
-
-**Next Steps:** Implement with Monte Carlo uncertainty distributions → Run N≥10 validation → Monitor 2025-2026 literature
+**Next Steps:** Monte Carlo validation (N≥10) to verify biogeochemical effectiveness reaches 40-60% → Move to "Recently Resolved"
 
 ---
 
 #### Carbon Capture Deployment Parameters
-**Status:** ✅ CORRECTED - Ready for Implementation (Dec 9, 2025)
+**Status:** ❌ CONDITIONAL PASS - CORRECTIONS REQUIRED (Dec 8, 2025)
 **Change:** (pending - needs change folder created)
 **Commit:** c52826e
-**Context:** Comprehensive DAC research (625 lines, 12 sources)
-**Research File:** `research/carbon_capture_deployment_timelines_2025.md` (CORRECTED)
+**Context:** Comprehensive DAC research (625 lines, 12 sources, claimed A+ quality)
+**Research File:** `research/carbon_capture_deployment_timelines_2025.md`
 **Verification Files:**
 - `research/VERIFICATION_carbon_capture_deployment_20251208.md` (initial)
 - `reviews/carbon_capture_skeptic_review_20251208.md` (final skeptic review)
@@ -244,28 +274,33 @@ economy.detectionRisk = 0.5; // 50% elevated risk after detection
 **Verification Complete (Dec 8, 2025):**
 - **Initial Grade:** B- (super-alignment-researcher)
 - **Final Grade:** C+ (research-skeptic downgrade)
-- **Post-Correction Grade:** C+ (Conditional pass - critical corrections applied)
 - **Reviewers:** Cynthia (researcher), Sylvia (skeptic)
 
-**CRITICAL Issues Found → FIXED:**
-1. ✅ **Author Misattribution:** Fixed - Tan → Ampah throughout (Dec 8)
-2. ✅ **Contradictory Evidence Added:** Mongabay investigation, expert skepticism, May 2025 layoffs (Dec 8)
-3. ✅ **Gen 3 Claims Marked:** [UNVERIFIED INDUSTRY DATA] tags added (Dec 8)
-4. ⚠️ **Energy Data Conflicts:** Documented but not reconciled (acceptable - reflects genuine uncertainty in literature)
+**CRITICAL Issues Found:**
+1. **Author Misattribution (BLOCKING):** "Tan, S., et al." cited 5x - actual author is Ampah, J.D., et al. (verified via PMC)
+2. **Systematic Optimism Bias:** Zero skeptical perspectives, all counterevidence omitted
+3. **Gen 3 Claims Unverified:** Canary Media explicitly states "not independently confirmed"
+4. **Energy Data Conflicts:** 2-3 TWh vs 4-10 TWh vs 1,200 TWh per Gt/yr (2-600x disagreement)
+
+**Missing Contradictory Evidence (Dec 2024 - May 2025):**
+- Mongabay investigation: Mammoth actual removal 805 tonnes (96.7% below capacity)
+- Expert skepticism: Jacobson (Stanford): "greenwashing technology"
+- May 2025 Climeworks layoffs: 22% workforce cut
+- Infrastructure: 96,000km pipeline needed for 1 Gt/yr
 
 **Current Implementation:**
 - `src/simulation/techTree/deploymentTimescales.ts:60` - DAC: 300 months (25 years)
 - Assessment: ACCEPTABLE but at optimistic end; recommend Monte Carlo 25-50 years
 
-**Corrections Applied (Dec 8, 2025):**
+**Corrections Required Before Production:**
 1. ✅ Fix author attribution: Tan → Ampah throughout
 2. ✅ Add contradictory evidence section (Mongabay, expert quotes)
 3. ✅ Add May 2025 industry update (layoffs)
 4. ✅ Mark Gen 3 claims as [UNVERIFIED INDUSTRY DATA]
-5. ⚠️ Energy data conflicts documented (not blocking - reflects literature uncertainty)
-6. ⚠️ Monte Carlo range 25-50 years recommended for future implementation
+5. ⚠️ Reconcile energy requirement data
+6. ⚠️ Update Monte Carlo range to 25-50 years
 
-**Next Steps:** Monte Carlo validation (N≥10) to test deployment timeline sensitivity → Move to "Recently Resolved"
+**Next Steps:** Corrections by original researcher → Re-verification → Monte Carlo N≥10
 
 ---
 
