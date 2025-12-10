@@ -107,13 +107,17 @@ const WUE_FLOOR = 0.3;
 /**
  * Calculate AI resource consumption for current month
  * FIX #3A (Oct 19, 2025): Corrected water model - separate training/inference, logarithmic scaling
+ * PHASE 1 (Dec 10, 2025): Integrated with unified energy budget system
  *
  * @param state Current game state
- * @returns Water consumption (million liters/month) and energy consumption (MW)
+ * @returns Water consumption (million liters/month), energy consumption (MW), and constraint status
  */
 export function calculateAIResourceConsumption(state: GameState): {
   waterConsumption: number;
   energyConsumption: number;
+  energyDemand: number;
+  energyAllocated: number;
+  constrainedByEnergy: boolean;
   wue: number;
 } {
   // Calculate total AI capability across all agents
@@ -138,19 +142,68 @@ export function calculateAIResourceConsumption(state: GameState): {
 
   const inferenceWater = (WATER_INFERENCE_BASE + logarithmicTerm) * demandElasticity;
 
-  const totalWater = trainingWater + inferenceWater;
+  // Energy consumption - calculate unconstrained demand first
+  const energyDemandMW = ENERGY_BASE_CONSUMPTION + (totalCapability * ENERGY_PER_CAPABILITY_POINT);
 
-  // Energy consumption (scales with capability)
-  const totalEnergy = ENERGY_BASE_CONSUMPTION + (totalCapability * ENERGY_PER_CAPABILITY_POINT);
+  // PHASE 1: Query energy budget for actual allocation
+  const energyMultiplier = getEnergyMultiplier(state, 'ai-datacenter');
+  const energyAllocatedMW = assertFinite(
+    energyDemandMW * energyMultiplier,
+    {
+      location: 'calculateAIResourceConsumption',
+      valueName: 'energyAllocatedMW',
+      month: state.currentMonth,
+      additionalInfo: { energyDemandMW, energyMultiplier }
+    }
+  );
+
+  const constrainedByEnergy = energyMultiplier < 0.99;
+
+  // Water scales with ALLOCATED energy (not demand)
+  // Research: Cooling systems scale with actual datacenter operation
+  const totalWater = (trainingWater + inferenceWater) * energyMultiplier;
 
   // Improve WUE over time (efficiency gains from better cooling technology)
   globalWUE = Math.max(WUE_FLOOR, globalWUE * (1 - WUE_IMPROVEMENT_RATE_MONTHLY));
 
   return {
     waterConsumption: totalWater,
-    energyConsumption: totalEnergy,
+    energyConsumption: energyAllocatedMW,
+    energyDemand: energyDemandMW,
+    energyAllocated: energyAllocatedMW,
+    constrainedByEnergy,
     wue: globalWUE
   };
+}
+
+/**
+ * Get energy multiplier from unified energy budget
+ * PHASE 1 (Dec 10, 2025): Query EnergyBudgetPhase allocations
+ *
+ * @param state Current game state
+ * @param category Energy category (e.g. 'ai-datacenter')
+ * @returns Effectiveness multiplier [0, 1] where 1.0 = unconstrained
+ */
+function getEnergyMultiplier(state: GameState, category: string): number {
+  // Feature flag check
+  if (!state.energyBudget?.enabled) {
+    return 1.0; // Energy budget disabled = no constraints
+  }
+
+  const allocation = state.energyBudget.allocations[category];
+  if (!allocation) {
+    return 1.0; // Category not tracked = no constraint
+  }
+
+  return assertFinite(
+    allocation.effectivenessMultiplier,
+    {
+      location: 'getEnergyMultiplier',
+      valueName: 'effectivenessMultiplier',
+      month: state.currentMonth,
+      additionalInfo: { category, allocated: allocation.allocatedTWh, demand: allocation.demandTWh }
+    }
+  );
 }
 
 /**
