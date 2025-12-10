@@ -29,6 +29,54 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 **Recent Major Achievements:**
 
+**Dec 10: Session 66 - Quantum Computing Integration + Architecture/Research Audits** (commits 0a93a9f8, adc0a72e, 77ea78ef)
+- **Quantum Computing Integration (L-3 COMPLETE):** Fault-tolerant quantum computing breakthrough cascades
+  - **QuantumComputingPhase (order 6.5):** Models logical qubit scaling, quantum advantage thresholds, AI capability enhancements
+    - Thresholds: 100 qubits (basic advantage) → 1,000 (Shor's practical) → 10,000 (general advantage)
+    - Quantum-AI multipliers: 5-20x speedups for optimization/simulation tasks
+    - Research-backed timeline: 2028-2035 consensus (IBM Starling 2029, Quantinuum 2030)
+  - **CryptographySecurityPhase (order 6.6):** Models RSA/ECC breaking, post-quantum transition
+    - RSA-2048 breaking threshold: 1,730-4,099 logical qubits (~20M physical qubits), 8-48 hour execution
+    - Cryptographic cascade: $7.1B PQC transition cost, 10-100x economic damage from crypto failures
+    - Detection-to-breaking window: <48 hours (step function at threshold)
+  - **Research Foundation:** 38 sources (90.6% from 2024-2025), Grade B+
+    - IBM Quantum roadmap (2025), Google Willow chip (2025), NIST PQC standards (Aug 2024)
+    - Chevignard (2024) Shor's thresholds, McKinsey (2024) $400-600B value creation
+    - 📄 **Research:** `research/quantum_computing_cascades_20251210.md` (39KB, 38 citations)
+  - **Implementation:** `src/simulation/engine/phases/QuantumComputingPhase.ts`, `src/simulation/engine/phases/CryptographySecurityPhase.ts`
+  - **State:** `GameState.quantumSystem` initialized in `initialization.ts` with research-backed values
+  - **Type Fixes:** Fixed event structures, state access paths (getGDPProxy), removed non-existent imports
+- **Architecture Integration Review:** Grade B (2 CRITICAL issues resolved, M-1 dual energy still open)
+  - **C-1 RESOLVED:** Quantum phases now registered with PhaseOrchestrator (orders 6.5, 6.6)
+  - **C-2 RESOLVED:** quantumSystem state now initialized via createInitialQuantumState()
+  - **M-1 Dual Energy Systems:** Still open but LOW impact (systems reach similar conclusions)
+  - **Previous issues:** H-1 energy budget, H-2 duplicate energy, L-1 duplicate method all VERIFIED COMPLETE
+  - 📄 **Reviews:**
+    - `reviews/architecture_integration_review_20251210_evening.md` (Grade B, quantum integration)
+    - `reviews/architecture_integration_review_20251210_session66.md` (Grade A-, prior issues verified)
+- **Research Source Validation Audit:** Grade A- (76.9% currency, bimodal: A+ recent + C+ legacy)
+  - **Recent work (Nov-Dec 2025):** 90-100% from 2024-2025 sources ✅ EXCELLENT
+  - **Quantum computing research:** 90.6% currency (31 sources, A+ grade)
+  - **Legacy corpus:** 53.4% from 2024-2025 (natural aging, not degradation)
+  - **4 files need updates:** verification_hindcast_food_security (2001 sources), catastrophe-recovery (2008), competitive_alignment (2018), crisis mitigation (2006)
+  - **Validated parameters:** AI doubling (8mo), wet bulb limit (30.5°C), Shor's threshold (1,730-4,099 qubits), PQC cost ($200-300B)
+  - 📄 **Audits:**
+    - `research/source_validation_audit_20251210.md` (20KB, comprehensive audit)
+    - `research/AUDIT_SUMMARY_20251210.md` (summary)
+    - `research/FILES_NEEDING_UPDATES_20251210.md` (replacement roadmap)
+    - `research/INDEX_20251210.md` (677 files cataloged)
+- **M-1 Dual Energy Systems Integration (COMPLETE):** Consolidated constraint checking
+  - **Problem:** powerGeneration.ts and EnergyBudgetPhase had parallel energy constraint systems without cross-communication
+  - **Fix:** energyBudget.ts now queries both constraint systems, takes minimum of both limits
+  - **Grade:** B+ (pragmatic consolidation via coordinator, preserves modularity)
+  - 📄 **Implementation:** `docs/implementation-history/M-1_dual_energy_systems_integration_20251210.md`
+- **Biodiversity Test Coverage (47 tests):** Comprehensive unit tests for BiodiversityPhase and GeometricVarianceCalculation
+  - Coverage: Decline mechanics, habitat degradation, pollution impacts, geometric mean edge cases
+  - Validates: WWF Living Planet geometric decline pattern, assertFinite guards
+- 📄 **DevLogs:**
+  - `devlogs/session_66_summary_20251210.md` (autonomous worker summary)
+  - `devlogs/session_66_fallback_workflows_20251210.md` (fallback workflow maintenance)
+
 **Dec 9: Session 63 - Research Audit Follow-up + CRITICAL Tipping Cascade Fix** (commits 582f74e5, f317c17c, c7114681)
 - **Research Audit Follow-up (HIGH Priority):** 3 parameter justification gaps from Nov 29 audit addressed
   - **Sleeper agent rate (7.5%):** Added explicit uncertainty bounds (±50%, range 3.75%-11.25%), labeled as DERIVED ESTIMATE
@@ -4709,6 +4757,7 @@ The fundamental building blocks of the simulation:
 | [☢️ Nuclear Command Control](./systems/) | ✅ | Circuit breakers (human-in-loop, kill switches, time delays) |
 | [📜 Historical Initialization](./systems/) | ✅ | Hindcast validation (1990-2024), NASA GISS/NOAA/UN WPP sources, parameter lockdown (Nov 24, 2025) |
 | [🎮 Game Layer](./systems/game-layer.md) | ✅ | Player influence system with strict 15% bounds, research-validated scenarios, save/load, advocacy actions (Nov 24, 2025) |
+| [⚛️ Quantum Computing](./systems/quantum-computing.md) | ✅ | Fault-tolerant quantum breakthrough cascades: logical qubit scaling (100 → 1,000 → 10,000), cryptographic failure (RSA/ECC breaking), post-quantum transition ($7.1B cost), quantum-AI enhancement (5-20x speedups), 2028-2035 timeline (Dec 10, 2025) |
 
 ### Game Mechanics
 

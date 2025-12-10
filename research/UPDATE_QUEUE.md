@@ -1,6 +1,6 @@
 # Research Update Queue
-**Generated:** 12/10/2025, 3:30:04 PM
-**Files Scanned:** 567
+**Generated:** 12/10/2025, 4:30:03 PM
+**Files Scanned:** 571
 
 ---
 
@@ -12,7 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 179 (31.6%)
+**Count:** 181 (31.7%)
 
 ### `AUTONOMOUS_RESEARCHER_SESSION_20251203_2030.md`
 - **Oldest source:** 1981 (44 years old)
@@ -28,6 +28,11 @@
 - **Oldest source:** 2009 (16 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/FALLBACK2_SOURCE_VALIDATION_SESSION23_20251130.md`
+
+### `FILES_NEEDING_UPDATES_20251210.md`
+- **Oldest source:** 2013 (12 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/FILES_NEEDING_UPDATES_20251210.md`
 
 ### `GOD_MODE_ANALYSIS_model_mechanisms_20251110.md`
 - **Oldest source:** 2000 (25 years old)
@@ -764,6 +769,11 @@
 - **Status:** Not used in simulation
 - **Path:** `research/source_validation_audit_20251128_afternoon.md`
 
+### `source_validation_audit_20251210.md`
+- **Oldest source:** 2013 (12 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/source_validation_audit_20251210.md`
+
 ### `spanish_flu_1918_historical_validation_20251101.md`
 - **Oldest source:** 2002 (23 years old)
 - **Status:** Not used in simulation
@@ -946,7 +956,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 362 (63.8%)
+**Count:** 364 (63.7%)
 
 All sources <3 years old. No action required.
 
@@ -956,11 +966,11 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 567 |
+| Total files | 571 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 179 (31.6%) |
+| HIGH | 181 (31.7%) |
 | MEDIUM | 26 (4.6%) |
-| LOW | 362 (63.8%) |
+| LOW | 364 (63.7%) |
 | Average age | 7.2 years |
 | Oldest source | 1955 (70 years ago) |
 
@@ -968,21 +978,21 @@ All sources <3 years old. No action required.
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 362 | 63.8% |
+| Current (<3yr) | 364 | 63.7% |
 | Warning (3-5yr) | 26 | 4.6% |
-| Critical (>5yr) | 179 | 31.6% |
+| Critical (>5yr) | 181 | 31.7% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-- **Current:** 31.6% critical (>5yr)
+- **Current:** 31.7% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
-1. Update 179 HIGH priority file(s) within 1 month
+1. Update 181 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 
