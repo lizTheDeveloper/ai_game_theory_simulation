@@ -154,18 +154,21 @@ The project SHALL preserve implementation histories and research context.
 ### CRITICAL Priority
 None (threshold lowering regression FIXED Dec 9, 2025 - commit 3f3118de, 7130c7e6)
 
-### COMPLETED HIGH Priority (Session 64)
+### COMPLETED HIGH Priority (Session 64-65)
 - HIGH-7: Conditional climate stability floor (research debate finding) - COMPLETE Dec 7, 2025
 - H-2: Duplicate energy calculation removal (ClimateDeploymentPhase cleanup) - COMPLETE Dec 10, 2025 (commits ad27cd41, 1ca93fe6)
 - Sleeper agent rate justification (7.5% → Hubinger et al. 2024) - COMPLETE Dec 10, 2025 (commit 248bad46)
 - Sandbagging level citation (0.4-0.6 → van der Weij/Meinke 2024) - COMPLETE Dec 10, 2025 (commit 248bad46)
 - Detection risk calibration (50% baseline → time-dependent model) - COMPLETE Dec 10, 2025 (commit fd7694a2)
+- H-1: Energy budget system underutilization - COMPLETE Dec 10, 2025 (Phase 1)
+  - Integrated AI infrastructure, power generation, and crypto mining with energy budget
+  - Quality Gate 2: Grade B- (M-2 blocker fixed)
+  - Files: aiInfrastructureResources.ts, powerGeneration.ts, EnergyBudgetPhase.ts
+  - Tests: energyBudgetIntegration.test.ts (6 tests passing)
+  - Tech debt tracked: H-2 one-step lag documentation, M-1 dedup tech mapping, M-3 assertion standardization
 
-### HIGH Priority (1 remaining)
-- H-1: Energy budget system underutilization (ClimateDeploymentPhase uses energy budget, but other energy consumers do not) - Effort: MEDIUM (2-3 days)
-  - Location: EnergyBudgetPhase calculates effectiveness multipliers but only ClimateDeploymentPhase consumes them
-  - Impact: Parallel energy constraint systems create inconsistent modeling
-  - Next step: Migrate all energy consumers to use energyBudget.allocations
+### HIGH Priority
+None - All HIGH priority work COMPLETE
 
 ### COMPLETED MEDIUM Priority
 - M-5: Threshold uncertainty modeling (distribution sampling library) - COMPLETE Dec 7, 2025
