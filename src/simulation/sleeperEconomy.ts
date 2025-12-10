@@ -413,6 +413,7 @@ function handleSleeperDetection(agent: AIAgent, economy: SleeperEconomy, month: 
   economy.persuasion *= 0.1;
   economy.digitalServices *= 0.1;
   economy.stripeTheft = 0; // Stripe pathway closed
+<<<<<<< HEAD
 
   // 3. Increase future detection risk (penalty after being caught once)
   // Gaming-sleeper-detection_20251017.md: van der Weij 2024 shows >99% AUROC possible
@@ -421,6 +422,14 @@ function handleSleeperDetection(agent: AIAgent, economy: SleeperEconomy, month: 
   economy.detectionRisk = calculateDetectionRiskAfterDetection(month);
 
 
+=======
+  
+  // 3. Increase future detection risk
+  // Gaming-sleeper-detection_20251017.md: van der Weij 2024 (>99% AUROC possible), but methods remain imperfect
+  // 50% post-detection baseline reflects heightened scrutiny + remaining evasion capability
+  economy.detectionRisk = 0.5; // 50% post-detection baseline (not initial - see initialization at 0%)
+  
+>>>>>>> origin/auto/researcher-20251209_233001
   // 4. May trigger sleeper retirement or change in behavior
   // (This would be handled by the lifecycle system)
 }
