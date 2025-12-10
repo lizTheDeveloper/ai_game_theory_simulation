@@ -1,9 +1,16 @@
+---
+oldest_source: 2013
+newest_source: 2025
+last_verified: 2025-12-10
+---
+
 # Biodiversity Collapse Research Support (HIGH-8)
 
-**Date:** 2025-11-27
+**Date:** 2025-11-27 (Updated: 2025-12-10)
 **Researcher:** Autonomous Researcher
 **Purpose:** Research support for HIGH-8 roadmap item - Biodiversity decline rate calibration (-95% error in hindcast)
 **Related:** `reviews/climate_hindcast_validation_phase10_20251127.md`
+**Latest Update:** Added IPBES Transformative Change Assessment (April 2025)
 
 ---
 
@@ -181,6 +188,47 @@ Let me recalculate:
 
 **Source:**
 - [Nature Scientific Data (2025): Consistent global dataset on biodiversity intactness footprint](https://www.nature.com/articles/s41597-025-05901-0)
+
+---
+
+## Research Findings: IPBES 2025 Transformative Change Assessment
+
+### 1. Extinction Rates and Species at Risk
+
+**IPBES (2025) - Full Report Released April 2025:**
+
+**Key Findings:**
+- **~1 million species** at risk of extinction within decades (out of ~8 million total species)
+- **Extinction rates:** 10-100× higher than natural background rates
+- **Threatened species:** ~25% of assessed species groups
+- **Closing window:** Opportunity to halt and reverse biodiversity loss still exists, but narrowing
+
+**Comparison to Simulation:**
+- IPBES: Extinction rates 10-100× background (estimated ~0.01-0.1% per year from background ~0.0001%/year)
+- Simulation (Phase 10): Implied extinction rate ~11.8% per year (99% decline over 34 years)
+- **Error magnitude:** Simulation is 100-1000× TOO AGGRESSIVE vs IPBES upper bound
+
+**Critical Quote:**
+> "There is a closing window of opportunity to halt and reverse biodiversity loss and to prevent triggering the potentially irreversible decline and the projected collapse of key ecosystem functions."
+
+**Implication:** Even IPBES "worst-case" scenarios are FAR less severe than simulation's baseline behavior.
+
+**Sources:**
+- [IPBES Transformative Change Assessment (2025)](https://www.ipbes.net/transformative-change)
+- [IPBES Global Assessment (2019)](https://www.ipbes.net/global-assessment)
+- [UNEP Press Release](https://www.unep.org/news-and-stories/press-release/natures-dangerous-decline-unprecedented-species-extinction-rates)
+
+### 2. Drivers of Biodiversity Loss (IPBES Five Direct Drivers)
+
+**IPBES Framework (2019, reaffirmed 2025):**
+
+1. **Land/sea use change** - Primary driver (habitat loss)
+2. **Direct exploitation** - Overfishing, hunting, logging
+3. **Climate change** - Increasing importance
+4. **Pollution** - Nutrients, plastics, chemicals
+5. **Invasive alien species** - Accelerating impact
+
+**For Simulation:** Current model likely overweights climate change, underweights land use change (agricultural intensification is mitigating factor, not just pressure).
 
 ---
 
@@ -415,7 +463,11 @@ if (config.isHistoricalBaseline) {
 
 ### Primary Sources (2024-2025)
 
-1. **WWF (2024).** Living Planet Report 2024. [https://livingplanet.panda.org/](https://livingplanet.panda.org/)
+1. **IPBES (2025).** Transformative Change Assessment - Full Report. Released April 2025. Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services. Key finding: 1 million species at risk of extinction within decades; extinction rates 10-100× higher than natural background rates; approximately 25% of assessed species groups threatened. [https://www.ipbes.net/transformative-change](https://www.ipbes.net/transformative-change)
+
+2. **IPBES (2019).** Global Assessment Report on Biodiversity and Ecosystem Services. Most comprehensive assessment by 145 expert authors from 50 countries reviewing 15,000+ scientific sources. Foundational data: ~1 million species threatened, rates "unprecedented in human history." [https://www.ipbes.net/global-assessment](https://www.ipbes.net/global-assessment)
+
+3. **WWF (2024).** Living Planet Report 2024. [https://livingplanet.panda.org/](https://livingplanet.panda.org/)
 
 2. **Ritchie, H., & Roser, M. (2024).** The 2024 Living Planet Index reports a 73% average decline in wildlife populations. *Our World in Data*. [https://ourworldindata.org/2024-living-planet-index](https://ourworldindata.org/2024-living-planet-index)
 
