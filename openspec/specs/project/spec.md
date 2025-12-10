@@ -183,14 +183,13 @@ None - All HIGH priority work COMPLETE (verified Dec 10 architecture review)
 - Missing Climate Systems (4 subsystems: M-4 abrupt sea level rise, compound events, social tipping, M-7 hysteresis) - COMPLETE Dec 5-7, 2025
 - Energy Budget Constraints (datacenter/AI GPU growth limits, UBI compute drain) - COMPLETE Dec 9, 2025
 - M-1: Detection risk calibration - incomplete integration - COMPLETE Dec 10, 2025 (commit a3b3315b)
+- **M-1: Dual energy constraint systems** - COMPLETE Dec 10, 2025 (commit cd3a235a)
+  - Solution: Cross-link integration in EnergyBudgetPhase
+  - EnergyBudgetPhase now reads powerGeneration constraints before allocation
+  - Reduces capacity proportionally when datacenter constraint active
+  - Review: reviews/M1_energy_integration_fix_20251210.md
 
 ### MEDIUM Priority (Backlog)
-- **M-1: Dual energy constraint systems** (NEW - Dec 10, 2025)
-  - Location: powerGeneration.ts (calculateEnergyConstraints) + EnergyBudgetPhase.ts
-  - Issue: Two parallel energy constraint systems without cross-communication
-  - Impact: MEDIUM (both systems functional, minor integration gap)
-  - Related: L-1 (duplicate tech category mapping cleanup)
-  - See: reviews/architecture_integration_review_20251210.md
 - Hindcast tuning (1950-2024 historical validation)
 - Calibration protocol (parameter optimization workflow)
 
