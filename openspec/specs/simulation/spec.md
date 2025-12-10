@@ -265,14 +265,21 @@ The simulation SHALL model environmental, social, and technological debt.
 **Next Steps:** Research validation → Implementation
 
 #### L-3: Quantum Computing Breakthrough Cascades
-**Status:** Research COMPLETE (Dec 10, 2025), awaiting Quality Gate 1
+**Status:** DEFERRED (Dec 10, 2025) - GitHub Issue #770
 **Context:** Quantum advantage triggers cryptography crisis → economic disruption
 **Impact:** Model step-change in computational capabilities
-**Research:** 625-line research doc, 31 sources (Nature Physics 2024, NIST PQC 2024, NSA CNSA 2.0)
-**Grade:** A+ (research quality)
-**Type Definitions:** Created in `src/types/quantum.ts`
-**Next Steps:** Quality Gate 1 validation (Cynthia + Sylvia review) → Implementation if approved
-**File:** `research/quantum_computing_cascades_20251210.md`
+**Research:** COMPLETE - 683 lines, 31 sources (Nature Physics 2024, NIST PQC 2024, NSA CNSA 2.0)
+**Quality Gate 1:** ✅ PASSED - Orchestrator Grade A, Sylvia Grade B+
+**Deferral Reason:** Requires GameState schema extensions (quantumSystem, cryptoSecurity fields)
+**Implementation Estimate:** 6-8 hours (with proper schema foundation)
+**Artifacts:**
+- Research: `research/quantum_computing_cascades_20251210.md`
+- QG1 Reviews: `reviews/quantum_cascades_qg1_orchestrator_assessment_20251210.md`, `reviews/quantum_cascades_sylvia_validation_20251210.md`
+- Implementation Design: `devlogs/quantum_cascades_implementation_20251210.md`
+- Status Document: `reviews/quantum_cascades_implementation_status_20251210.md`
+- Archival: `docs/implementation-history/l3_quantum_cascades_deferral_20251210.md`
+- GitHub Issue: #770
+**Next Steps:** Future focused session to design GameState schema → Implementation → QG2
 
 ---
 
