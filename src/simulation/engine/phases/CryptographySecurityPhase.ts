@@ -202,8 +202,13 @@ export function executeCryptographySecurityPhase(
       state.economics.gdpPerCapita *= 0.98; // 2% immediate loss
 
       events.push({
+<<<<<<< Updated upstream
         id: state.eventIdCounter++,
         type: 'disaster',
+=======
+        id: `crypto-breach-${state.currentMonth}`,
+        type: 'crisis',
+>>>>>>> Stashed changes
         month: state.currentMonth,
         title: '💥 Major Cryptographic Breach',
         description: `Major security breach due to broken cryptography. $${breachDamage.toFixed(1)}T in economic damage. Digital infrastructure trust further eroded.`,
