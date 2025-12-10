@@ -90,32 +90,32 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 ### MEDIUM Priority
 
 #### Nitrogen-Food Phase 3 Technologies
-**Status:** ✅ VERIFIED - READY FOR IMPLEMENTATION (Dec 8, 2025)
+**Status:** ⚠️ READY FOR VALIDATION
 **Change:** (pending - needs change folder created)
-**Commit:** cd1e83a → 98d2f9eb (verification complete)
+**Commit:** cd1e83a
 **Context:** 6 new nitrogen reduction technologies added to tech tree
-**Verification Files:**
-- `research/nitrogen_food_phase3_verification_20251208.md` (Cynthia - Grade B+)
-- `reviews/nitrogen_food_phase3_critique_20251208.md` (Sylvia - Grade B+ CONFIRMED)
+**Verification File:** `research/verification_cd1e83a_20251121.md`
 
-**Verification Complete (Dec 8, 2025):**
-- **Grade:** B+ (VERIFIED with parameter adjustments)
-- **Reviewers:** Cynthia (researcher), Sylvia (skeptic)
+**Technologies to Verify:**
+1. Rhizosphere Engineering (15-40% N reduction, TIER 1, commercial)
+2. Nitroplast Integration (50-70% reduction, breakthrough, Coale et al. 2024)
+3. Precision Fermentation (30-50% agri N reduction, emerging)
+4. Regional Nitrogen Policies (20% efficiency via redistribution)
+5. Soil Health Restoration (20-40% NUE improvement)
+6. Integrated Nutrient Management (25-45% efficiency gains)
 
-**Key Adjustments Applied:**
-1. ✅ **Nitroplast Split:** Separated into 2 pathways (indirect 5-10yr @ 5-10%, direct 20-40+yr @ 50-70%)
-2. ✅ **Rhizosphere Conservative:** Adjusted to 20% (field-verified, avoiding optimistic high-end)
-3. ✅ **Precision Fermentation:** 40% retained (model-based derivation validated)
-4. ✅ **INM Double-Counting:** Protection added (0.25 + interaction check)
-5. ✅ **Regional Policies:** 20% efficiency validated
-6. ✅ **Soil Health:** 20-40% NUE improvement confirmed
+**Key Claims:**
+- Effectiveness ranges (15-40%, 20-45%, etc.)
+- Co-benefits quantification (soil health, biodiversity, carbon)
+- Timeline assumptions (R&D + deployment)
+- Citation: Coale et al. 2024 *Science* for nitroplasts
 
-**Next Steps:** Implementation approved → Monte Carlo validation (N≥10) → Move to "Recently Resolved"
+**Next Steps:** Two-layer verification → Parameter adjustments if needed → Monte Carlo validation
 
 ---
 
 #### Carbon Capture Deployment Parameters
-**Status:** ✅ CORRECTED - READY FOR IMPLEMENTATION (Dec 8, 2025)
+**Status:** ✅ CORRECTED - Ready for Implementation (Dec 8, 2025)
 **Change:** (pending - needs change folder created)
 **Commit:** c52826e
 **Context:** Comprehensive DAC research (625 lines, 12 sources, claimed A+ quality)
@@ -127,78 +127,57 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 **Verification Complete (Dec 8, 2025):**
 - **Initial Grade:** B- (super-alignment-researcher)
 - **Final Grade:** C+ (research-skeptic downgrade)
-- **Post-Correction Grade:** B (acceptable for production)
-- **Reviewers:** Cynthia (researcher), Sylvia (skeptic), Autonomous Researcher (corrections)
+- **Reviewers:** Cynthia (researcher), Sylvia (skeptic)
 
-**CRITICAL Issues Found → FIXED:**
-1. ✅ **Author Misattribution:** All "Tan, S., et al." replaced with "Ampah, J.D., et al." (PMC11283554 verified)
-2. ✅ **Systematic Optimism Bias:** Added "Critical Counterevidence and Skeptical Perspectives" section (60+ lines)
-3. ✅ **Gen 3 Claims:** Marked as [UNVERIFIED INDUSTRY DATA] with Canary Media disclaimer
-4. ✅ **May 2025 Industry Update:** Added Climeworks 22% layoffs, policy risk documentation
-5. ✅ **Expert Skepticism:** Added Jacobson (Stanford), Foley quotes
-6. ✅ **Actual Performance Data:** Added Mongabay investigation (805 tonnes vs 36,000 nameplate)
-7. ✅ **Infrastructure Requirements:** Added 96,000km pipeline requirement, energy competition with AI
-
-**Corrections Applied (Dec 8, 2025):**
-- Frontmatter updated: research_quality A+ → B, last_verified → 2025-12-08
-- New section added: "Critical Counterevidence and Skeptical Perspectives"
-- 4 new references added (Mongabay, Bloomberg, CNN, Sifted)
-- Simulation implications updated: "wide uncertainty bands (25-50 years)"
+**CRITICAL Issues Found → FIXED (Dec 8, 2025):**
+1. ✅ **Author Misattribution:** All "Tan, S., et al." → "Ampah, J.D., et al." (5 instances corrected)
+2. ✅ **Systematic Optimism Bias:** Added section 6.5 "Contradictory Evidence and Industry Challenges"
+3. ✅ **Gen 3 Claims Unverified:** All Gen 3 claims marked [UNVERIFIED INDUSTRY DATA] with explicit disclaimers
+4. ✅ **May 2025 Industry Data:** Climeworks 22% layoffs section added with Bloomberg/CNN sources
+5. ✅ **Expert Skepticism:** Jacobson (Stanford) quote added, Mongabay investigation (805t vs 36,000t capacity)
+6. ✅ **Frontmatter Updated:** verification_status: CONDITIONALLY APPROVED, grade: C+
 
 **Current Implementation:**
 - `src/simulation/techTree/deploymentTimescales.ts:60` - DAC: 300 months (25 years)
-- Assessment: ACCEPTABLE at optimistic end; recommend Monte Carlo 25-50 years for future update
+- Assessment: ACCEPTABLE at optimistic end; recommend Monte Carlo 25-50 years
 
-**Next Steps:** Monte Carlo validation N≥10 to verify deployment parameters → Move to "Recently Resolved"
+**Implementation Recommendations:**
+- Monte Carlo range: 25-50 years (not fixed 25)
+- Include deployment stall risk (30% chance of megatonne ceiling)
+- Model policy risk explicitly (May 2025 layoffs show policy dependence)
+- Use actual operational data for early years (not nameplate capacity)
+
+**Next Steps:** Move to "Recently Resolved" → Implementation can proceed with Monte Carlo ranges
 
 ---
 
 #### AI Infrastructure Resources 2025 Update
-**Status:** ✅ VERIFIED - READY FOR IMPLEMENTATION (Dec 8, 2025)
+**Status:** ⚠️ READY FOR VALIDATION
 **Change:** (pending - needs change folder created)
 **Commit:** dbf1438
 **Context:** 2025 peer-reviewed sources for AI data center resource consumption
 **Research File:** `research/ai-infrastructure-resources_20251019.md` (updated)
-**Verification Files:**
-- `research/meta/verification_dbf1438_20251123.md` (protocol)
-- `research/ai_infrastructure_verification_20251208.md` (complete verification)
+**Verification File:** `research/verification_dbf1438_20251123.md`
 
-**Verification Complete (Dec 8, 2025):**
-- **Grade:** A- (HIGH QUALITY)
-- **Verifier:** Autonomous Researcher
-- **Status:** All major claims VERIFIED
+**Sources to Verify:**
+- Cornell/Nature Sustainability 2025: 2030 water (731-1,125M m³/yr), carbon (24-44M tonnes CO₂/yr)
+- MIT/Lawrence Berkeley Lab 2025: 7-8× energy multiplier, 183 TWh U.S. data centers (2024)
+- IEA 2025: Global water 560B→1,200B liters (2024→2030)
 
-**Citations Verified:**
-1. ✅ **Cornell/Nature Sustainability (2025):** DOI 10.1038/s41893-025-01681-y confirmed
-   - Authors: Tianqi Xiao, Fengqi You (Cornell PEESE lab) ✅
-   - 2030 water: 731-1,125M m³/yr ✅ EXACT MATCH
-   - 2030 carbon: 24-44M tonnes CO₂/yr ✅ EXACT MATCH
-   - Mitigation: 73% carbon, 86% water reduction ✅ EXACT MATCH
-   - Geographic: Midwest "windbelt" optimal ✅ EXACT MATCH
+**Key Claims:**
+- 2030 water projections: 731-1,125M cubic meters/year
+- 2030 carbon projections: 24-44 million metric tons CO₂/year
+- AI training clusters 7-8× energy multiplier
+- Geographic optimization: Midwest "windbelt" optimal, Arizona 7.4% state power
+- Mitigation potential: 73% carbon reduction, 86% water reduction
 
-2. ✅ **MIT/Berkeley Lab (2025):** MIT News article verified
-   - Authors: Noman Bashir, Elsa A. Olivetti ✅
-   - 7-8× energy multiplier ✅ DIRECT QUOTE
-   - North America: 2,688 MW (2022) → 5,341 MW (2023) ✅ EXACT MATCH
-   - Global: 460 TWh (2022) → 1,050 TWh (2026) ✅ EXACT MATCH
-   - GPT-3 training: 1,287 MWh, 552 tonnes CO₂ ✅ EXACT MATCH
+**Proposed Parameters:**
+- trainingWaterL: 700K-10M L per training run
+- inferenceWaterL: 2-5M L/month at scale
+- aiTrainingMultiplier: 7.5 (MIT: 7-8×)
+- Geographic modifiers: desert 2.5×, nordic 0.3×, windbelt 0.7× carbon
 
-3. ✅ **IEA/Pew Research (2025):** Pew article verified (IEA secondary source)
-   - U.S. 2024: 183 TWh = 4% national electricity ✅ EXACT MATCH
-   - 2028 projection: 12% national electricity ✅ EXACT MATCH
-   - Water: 560B-1,200B liters range ✅ CONFIRMED
-
-**Parameter Justification:**
-- `trainingWaterL: 700K-10M L` - ✅ JUSTIFIED (GPT-3: 700K L, UC Riverside)
-- `aiTrainingMultiplier: 7.5` - ✅ JUSTIFIED (MIT: "7 or 8 times")
-- `inferenceWaterL: 2-5M L/month` - ✅ JUSTIFIED (resolves 50M L/month 100-1000× error)
-- Geographic multipliers (2.5×, 0.3×, 0.7×) - ⚠️ NEEDS QUANTIFICATION (qualitative findings only)
-
-**Minor Issues:**
-- IEA data via Pew (secondary source) - acceptable but direct IEA report preferred
-- Geographic multipliers need quantification OR document as engineering estimates
-
-**Next Steps:** Ready for implementation → Document geographic multipliers as estimates if used → Monte Carlo validation
+**Next Steps:** Two-layer verification → Parameter update decision → Monte Carlo if implemented
 
 ---
 
