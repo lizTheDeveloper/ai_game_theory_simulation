@@ -131,7 +131,9 @@ export function initializePlanetaryBoundariesSystem(rng: RNGFunction): Planetary
   // 2. BIOSPHERE INTEGRITY (Core Boundary) - Current ~10× safe boundary
   // UPDATED (Oct 30, 2025): BLOCKER-2 fix v3 - IPBES (2019) + Richardson et al. (2023)
   // Current extinction rate: ~100-1000 E/MSY (IPBES 2019 range, 10× uncertainty)
-  // Research:
+  // @research: IPBES (2019) Global Assessment Report on Biodiversity and Ecosystem Services
+  // @research: Richardson et al. (2023) Science - Earth beyond six of nine planetary boundaries
+  // Sources:
   //   - IPBES (2019): Current rate 100-1000× background (100-1000 E/MSY)
   //   - Richardson et al. (2023): Biosphere boundary transgressed
   //   - Safe threshold: 10 E/MSY (IPBES planetary boundary)
@@ -696,6 +698,8 @@ export function updatePlanetaryBoundaries(state: GameState): void {
       month: state.currentMonth
     });
 
+    // @research: Richardson et al. (2023) Science - Climate boundary at 1.0°C above pre-industrial
+    // @research: IPCC AR6 WG1 (2021) - High-risk threshold at 1.5°C (Paris Agreement target)
     // Direct mapping: boundary = 1.0°C, high-risk = 1.5°C
     // currentValue = tempAnomaly / 1.0 (boundary threshold)
     // 1.21°C warming = 1.21× boundary (current 2025 estimate)
@@ -742,7 +746,8 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     });
 
     // Invasive species amplify extinction rate
-    // Research: IPBES (2019) - Invasive species responsible for ~40% of modern extinctions
+    // @research: IPBES (2019) Global Assessment - Invasive species responsible for ~40% of modern extinctions
+    // Source: Chapter 2.2.5.1 - Direct drivers of biodiversity change
     // Multiplier: 1.0 (no invasives) to 1.5 (catastrophic invasives at 1.0 impact)
     const invasiveImpact = assertProbability(system.invasiveSpeciesImpact, {
       location: 'updatePlanetaryBoundaries:biosphere',

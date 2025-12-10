@@ -6,18 +6,18 @@
  * even when no crises are active.
  *
  * Research basis:
- * - UN World Population Prospects 2024: Global CDR (crude death rate)
+ * @research: UN World Population Prospects 2024 (28th edition) - Global CDR (crude death rate)
  *   - 1990: 9.3 per 1000 (0.78% monthly) [CORRECTED from 9.8]
  *   - 2000: 8.5 per 1000 (0.71% monthly) [CORRECTED from 9.0]
  *   - 2010: 7.8 per 1000 (0.65% monthly) [CORRECTED from 8.3]
  *   - 2019: 7.5 per 1000 (0.63% monthly) [VERIFIED ✅]
  *   - 2025: ~7.5 per 1000 (0.63% monthly) [adjusted from 7.2]
  *
- * - Chetty et al. 2016 (JAMA): Association Between Income and Life Expectancy
+ * @research: Chetty et al. 2016 (JAMA) - Association Between Income and Life Expectancy
  *   - Top 1% vs bottom 1% life expectancy gap = 14.6 years → ~0.6× mortality ratio
- * - Kahn & Fazio 2022 (JAMA Network Open): Wealth and Mortality
+ * @research: Kahn & Fazio 2022 (JAMA Network Open) - Wealth and Mortality
  *   - Wealth quintile mortality hazard ratio = 1.76×
- * - Pappas et al. 1993 (NEJM): Socioeconomic Status and Mortality
+ * @research: Pappas et al. 1993 (NEJM) - Socioeconomic Status and Mortality
  *   - Education gradient mortality differential = 2.67×
  * - NOTE: U.S.-based research. Global applicability uncertain pending cross-country validation.
  *
@@ -51,11 +51,13 @@ import { isHistoricalModeActive } from '@/simulation/utils/historicalMode';
  * Get historical baseline death rate (crude death rate per 1000)
  *
  * Returns the global average annual death rate for a given year.
- * Data from UN World Population Prospects 2024.
+ *
+ * @research: UN World Population Prospects 2024 (28th edition, July 2024) - Global CDR historical data
+ * Source: research/unwpp2024_cdr_verification_20251124.md
+ * Verification: World Bank API (SP.DYN.CDRT.IN indicator, 1960-2023 verified within 0.4-7.5%)
  *
  * CDR values verified against UN World Population Prospects 2024 (28th edition, July 2024)
  * via World Bank API (SP.DYN.CDRT.IN indicator, 1960-2023 verified within 0.4-7.5%)
- * Source: research/unwpp2024_cdr_verification_20251124.md
  *
  * 1990 correction critical for hindcast: Previous value (9.8) overestimated deaths by ~3M/year
  * affecting population growth validation (5.3B→6.1B expected, was producing 5.3B→2.7B)

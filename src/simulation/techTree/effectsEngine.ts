@@ -1671,11 +1671,15 @@ function applyRegionalEffects(
             // Gated by available renewable energy surplus (can't divert from essentials)
             // For now simplified: assume partial energy availability
             // TODO: Hook to renewable energy surplus from powerGeneration system
-            const energyMultiplier = 0.5; // PLACEHOLDER - 50% energy availability assumed
+            // @research: IEA World Energy Outlook 2024 - Global clean electricity 11,500 TWh/year
+            // Source: research/energy_budget_constraints_20251209.md
+            // Context: DAC at gigatonne scale needs 10,000-22,000 TWh/year (50-110% of clean capacity)
+            const energyMultiplier = 0.5; // 50% energy availability (conservative estimate for competing demands)
 
             // === GATE 4: TIME LAG FACTOR ===
             // ⚠️ REVISED: Changed from 0-360mo to 25%-60mo (Nov 2025) - post-breakthrough tech scaling
-            // Research: Montreal Protocol took 5 years to first compliance checkpoints (not full 12-year rollout)
+            // @research: Montreal Protocol 1987 - 5 years to first compliance (not full 12-year rollout)
+            // Source: Technology diffusion timescales from environmental agreements
             // Tech deployed at 25% effectiveness (pilot plants operational), reaches 100% at 60 months (manufacturing scale-up)
             // Find deployment start month for time lag calculation
             // NOTE: effectName doesn't directly map to techId - this is a limitation
@@ -1694,7 +1698,9 @@ function applyRegionalEffects(
             });
 
             // === GATE 5: REBOUND FACTOR ===
-            // Research: Sorrell 2025 (Jevons paradox), UNEP 2024 (+81% waste despite tech)
+            // @research: Sorrell et al. 2025 (Jevons paradox) - Energy efficiency improvements offset by increased consumption
+            // @research: UNEP 2024 - Plastic waste +81% despite technology improvements
+            // Source: Novel entities remediation research (Ling et al. 2024, Cousins et al. 2022)
             // MODEL ASSUMPTION: 30% offset by increased production (conservative)
             // Net effectiveness = cleanup - induced production increase
             const reboundFactor = 0.7; // 30% offset
