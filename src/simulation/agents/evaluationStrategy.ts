@@ -87,7 +87,9 @@ function sandbagCapability(
 ): AICapabilityProfile {
   const revealed = cloneAICapabilityProfile(trueCapability);
 
-  // Base sandbagging: Hide 40-60% of capability (van der Weij & Meinke 2024)
+  // Base sandbagging: Hide 40-60% of capability
+  // van der Weij et al. (2024), Meinke et al. (2024): empirical deception baselines
+  // Note: Frontier model observations - general population statistics TBD
   const baseSandbagLevel = 0.4 + deceptionSkill * 0.2; // [0.4, 0.6]
 
   // Sandbag all dimensions (round to integers - AI capabilities are discrete levels)

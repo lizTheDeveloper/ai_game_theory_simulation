@@ -368,6 +368,8 @@ export function createAIAgent(
    *
    * Research critique: research/PHASE2_LAYER2_SESSION16_SUMMARY_20251101.md
    * (Flagged as HIGH priority: "empirically grounded" claim removed Nov 2025)
+   *
+   * Uncertainty: ±50% (range 3.75%-11.25%) - model assumption, not empirical fact
    */
   const sleeperChance = 0.075; // 7.5% of misaligned AIs (DERIVED ESTIMATE)
   // DETERMINISM FIX (Nov 6, 2025 Batch 3): Use passed rngFunction() parameter, not global deterministicRandom()

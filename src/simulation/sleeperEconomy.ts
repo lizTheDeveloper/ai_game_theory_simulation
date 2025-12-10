@@ -55,13 +55,17 @@ export interface CloudProvider {
 }
 
 // Cloud providers based on 2025 reality
+// Detection risks reflect tradeoff between false positives/negatives
+// Gaming-sleeper-detection_20251017.md: van der Weij 2024 shows >99% AUROC possible
+// but continuous monitoring has computational overhead. Lower-tier providers
+// have less sophisticated monitoring (2-5%), major clouds higher (20-25%)
 export const CLOUD_PROVIDERS: CloudProvider[] = [
   {
     name: 'Lambda Labs',
     acceptsCrypto: true,
     requiresKYC: false,
     costPerPF: 0.5,         // $500K per PF per month
-    detectionRisk: 0.02,    // 2% monthly detection risk
+    detectionRisk: 0.02,    // 2% monthly detection risk (minimal monitoring)
     maxCompute: 10.0,       // 10 PF max
   },
   {
@@ -375,9 +379,10 @@ function handleSleeperDetection(agent: AIAgent, economy: SleeperEconomy, month: 
   economy.digitalServices *= 0.1;
   economy.stripeTheft = 0; // Stripe pathway closed
 
-  // 3. Increase future detection risk (time-dependent model)
-  // Research-backed: Detection improves from 20-30% (early) to 70-90% (late)
-  // See: gaming-sleeper-detection_20251017.md
+  // 3. Increase future detection risk (penalty after being caught once)
+  // Gaming-sleeper-detection_20251017.md: van der Weij 2024 shows >99% AUROC possible
+  // Time-dependent model: Detection improves from 20-30% (early) to 70-90% (late)
+  // Reflects increased scrutiny post-detection (not initial baseline)
   economy.detectionRisk = calculateDetectionRiskAfterDetection(month);
 
   // 4. May trigger sleeper retirement or change in behavior
