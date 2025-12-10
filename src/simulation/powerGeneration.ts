@@ -58,11 +58,45 @@ export function updatePowerGeneration(state: GameState, rng: () => number): void
   updateTraditionalCloudPower(power, year);
 
   // 8. Calculate total data center power
-  power.dataCenterPower =
-    power.aiInferencePower +
-    power.aiTrainingPower +
-    power.cryptoPower +
-    power.traditionalCloudPower;
+  // PHASE 1 (Dec 10, 2025): Read from energy budget if enabled
+  if (state.energyBudget?.enabled) {
+    // Read allocated energy from budget
+    const aiDatacenterAlloc = state.energyBudget.allocations['ai-datacenter'];
+    const advancedComputeAlloc = state.energyBudget.allocations['advanced-compute'];
+
+    // Convert TWh/year to TWh/month (energy budget is annual)
+    // 1 TWh/year = 1/12 TWh/month
+    const twhYearToTwhMonth = 1 / 12;
+
+    if (aiDatacenterAlloc) {
+      // Override with allocated amount (constrained by energy budget)
+      power.aiInferencePower = assertFinite(
+        aiDatacenterAlloc.allocatedTWh * twhYearToTwhMonth,
+        {
+          location: 'updatePowerGeneration (energy budget integration)',
+          valueName: 'aiInferencePower',
+          month: state.currentMonth,
+          additionalInfo: { allocatedTWh: aiDatacenterAlloc.allocatedTWh }
+        }
+      );
+    }
+
+    // Training power stays separate (episodic, not part of baseline allocation)
+    // Advanced compute allocation could be added here in Phase 2
+
+    power.dataCenterPower =
+      power.aiInferencePower +
+      power.aiTrainingPower +
+      power.cryptoPower +
+      power.traditionalCloudPower;
+  } else {
+    // Legacy calculation (pre-energy-budget)
+    power.dataCenterPower =
+      power.aiInferencePower +
+      power.aiTrainingPower +
+      power.cryptoPower +
+      power.traditionalCloudPower;
+  }
 
   // 9. Apply climate feedback (warming increases cooling demand)
   applyClimateFeedback(power, env);
@@ -138,9 +172,13 @@ function updateQueryVolume(power: PowerGenerationSystem, year: number): void {
 
 /**
  * Calculate AI inference power (efficiency vs demand)
+ * PHASE 1 (Dec 10, 2025): Reads from energy budget when enabled
  *
  * Key insight: Efficiency improving faster than demand growing
  * Result: AI inference power DECLINES over time (user's "100x reduction")
+ *
+ * NOTE: When energy budget is enabled, this becomes a DERIVED value
+ * (read from allocations) rather than an independent calculation.
  */
 function updateAIInferencePower(power: PowerGenerationSystem): void {
   // Power = Query Volume / Efficiency
