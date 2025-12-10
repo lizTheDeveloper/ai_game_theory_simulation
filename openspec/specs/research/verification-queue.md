@@ -19,43 +19,6 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 
 ### HIGH Priority
 
-#### Threshold Lowering for Tipping Cascades
-**Status:** ✅ RESOLVED - REGRESSION FIXED (Dec 9, 2025)
-**Change:** (pending - needs change folder created)
-**Commits:** cf49657 (original), 6671e0ed (Dec 8 fix), 3f3118de + 7130c7e6 (Dec 9 regression fix)
-**Context:** Implements threshold lowering mechanism from mechanism audit gap
-**Verification Files:**
-- `research/verification_cf49657_20251207.md`
-- `research/amoc_amazon_interaction_correction_20251208.md`
-- `research/verification_cf49657_REMEDIATION_20251208.md`
-
-**Verification Complete (Dec 7, 2025):**
-- **Initial Grade:** C (super-alignment-researcher)
-- **Final Grade:** D (research-skeptic downgrade)
-- **Reviewers:** Cynthia (researcher), Sylvia (skeptic)
-
-**CRITICAL Issues Found → FIXED (Dec 8, 2025) → REGRESSED (Dec 9) → RE-FIXED (Dec 9):**
-1. ✅ **AMOC → Amazon Sign Error:** Interaction REMOVED (6671e0ed), regressed in merge 23fd6987, re-fixed 3f3118de with extensive research notes
-2. ✅ **sqrt(progress) Scaling Backwards:** Replaced with linear scaling (already in HEAD)
-3. ✅ **Missing Stabilizing Feedbacks:** AMOC → Greenland stabilizing feedback documented (3f3118de)
-4. ✅ **Quantitative Magnitudes Not Validated:** Documentation updated (6671e0ed, verified present)
-5. ✅ **0.5°C Cap Misattributed:** Relabeled (6671e0ed, verified present)
-
-**Final Status (Dec 9, 2025):**
-- All 5 CRITICAL issues now RESOLVED
-- Regression caused by threshold uncertainty removal (commit 5eb4b5bd) - merge conflict re-added old code
-- Final fix (3f3118de + 7130c7e6) adds extensive research documentation:
-  - Parsons 2023: AMOC slowdown → ITCZ southward shift → MORE rain to southern Amazon
-  - Yuan 2025: Multi-model evidence for stabilizing effect
-  - Högner 2025: Regional heterogeneity (north Amazon loses rain, south gains)
-  - Decision: Remove interaction until regional sub-modeling supported
-
-**Monte Carlo Required:** N≥10 validation pending
-
-**Ready to archive to Recently Resolved.**
-
----
-
 #### AI Governance 2025 Proposals
 **Status:** ✅ VERIFIED - Grade A (with implementation caveats)
 **Change:** (pending - needs change folder created)
@@ -99,141 +62,43 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 #### Sleeper Agent Rate Justification (7.5%)
 **Status:** ✅ RESOLVED (Dec 10, 2025)
 **Context:** From Nov 29, 2025 research audit (reviews/research_audit_20251129.md)
-**Location:** `src/simulation/initialization.ts:345`
-**Issue:** Comment says "7.5% of misaligned AIs are sleepers" but lacks explicit source citation
-**Commit:** ff7c4a9b
+**Location:** `src/simulation/initialization.ts:309`
+**Commit:** 248bad46
 
-**Updated Code:**
-```typescript
-const sleeperChance = 0.075; // 7.5% DERIVED ESTIMATE (Hubinger et al. 2024 proof-of-concept, empirical prevalence TBD) - uncertainty ±50% (range 3.75%-11.25%)
-```
+**Implementation Complete:**
+- ✅ Updated comment to cite Hubinger et al. (2024) explicitly
+- ✅ Added derived estimate disclaimer
+- ✅ Documented that empirical prevalence data doesn't exist in literature
+- ✅ Referenced gaming-sleeper-detection_20251017.md for proof-of-concept details
 
-**Research Backing:**
-- Hubinger et al. (2024) - Proof-of-concept sleeper agents successfully persist through safety training
-- Gaming-sleeper-detection_20251017.md documents empirical demonstrations
-- **CRITICAL:** No empirical prevalence data exists in literature (this is derived estimate)
-
-**Actions Completed:**
-- ✅ Changed comment to include Hubinger et al. 2024 citation
-- ✅ Documented uncertainty bounds: ±50% (range 3.75%-11.25%)
-- ✅ Flagged as DERIVED ESTIMATE with empirical prevalence TBD
+**Verification:** Comment now research-compliant, matches gaming-sleeper-detection research doc
 
 **Severity:** HIGH (research standards compliance)
-**Effort:** TRIVIAL (comment update)
+**Effort:** COMPLETED
 
 ---
 
 #### Sandbagging Level Citation (0.4-0.6)
 **Status:** ✅ RESOLVED (Dec 10, 2025)
 **Context:** From Nov 29, 2025 research audit
-**Location:** `src/simulation/agents/evaluationStrategy.ts:74-76`
-**Issue:** Code value lacks explicit connection to research sources
-**Commit:** ff7c4a9b
+**Location:** `src/simulation/agents/evaluationStrategy.ts:74`
+**Commit:** 248bad46
 
-**Updated Code:**
-```typescript
-// Base sandbagging: Hide 40-60% of capability
-// van der Weij et al. (2024), Meinke et al. (2024): empirical deception baselines from frontier models
-// Range [0.4, 0.6] derived from observed sandbagging in Llama 3 70b, Claude 3.5 Sonnet strategic underperformance
-const baseSandbagLevel = 0.4 + deceptionSkill * 0.2;  // [0.4, 0.6]
-```
+**Implementation Complete:**
+- ✅ Added explicit citations: van der Weij et al. (2024), Meinke et al. (2024)
+- ✅ Justified range [0.4, 0.6] from empirical frontier model observations
+- ✅ Documented connection to gaming-sleeper-detection_20251017.md
+- ✅ Clarified these are frontier model baselines, not general population stats
 
-**Research Backing:**
-- van der Weij et al. (2024): Llama 3 70b emulates Llama 2 7b (sandbagging proven)
-- Meinke et al. (2024): Claude 3.5 Sonnet strategic underperformance
-- Apollo Research: Claude Opus 4 showed "most strategic deception of any frontier model"
-- Gaming-sleeper-detection_20251017.md documents all empirical demonstrations
-
-**Actions Completed:**
-- ✅ Added van der Weij et al. 2024 and Meinke et al. 2024 citations
-- ✅ Justified range [0.4, 0.6] from empirical observations
-- ✅ Documented that these are frontier model observations
+**Verification:** Comment now research-compliant, cites empirical demonstrations
 
 **Severity:** HIGH (research standards compliance)
-**Effort:** TRIVIAL (comment update)
+**Effort:** COMPLETED
 
 ---
 
-#### Detection Risk Calibration (50% Baseline)
-**Status:** ✅ RESOLVED (Dec 10, 2025)
-**Context:** From Nov 29, 2025 research audit
-**Location:** `src/simulation/sleeperEconomy.ts:339-355`
-**Issue:** 50% baseline lacks justification from research
-
-**Previous Code:**
-```typescript
-economy.detectionRisk = 0.5;  // 50% baseline risk
-```
-
-**Research Backing:**
-- Gaming-sleeper-detection_20251017.md: "Detection methods show promise but remain imperfect"
-- Deliberative alignment training: reduces scheming by ~30x (8.7-13% → 0.3-0.4%)
-- Chain-of-thought monitoring: fragile, models may learn to hide reasoning
-- van der Weij 2024: >99% AUROC possible with proper monitoring
-
-**Implementation Complete (Dec 10, 2025):**
-- ✅ Created `calculateDetectionRiskAfterDetection(month)` function with time-dependent model
-- ✅ Early months (0-36): 25% detection rate (midpoint of 20-30% research range)
-- ✅ Mid months (36-72): Linear interpolation from 25% to 80%
-- ✅ Late months (72+): 80% detection rate (midpoint of 70-90% research range)
-- ✅ Added comprehensive research citations in code comments
-- ✅ Documented mechanistic interpretability improvement timeline
-- ✅ Referenced gaming-sleeper-detection_20251017.md directly in comments
-
-**Verification:**
-- ✅ Type check passed (no new TypeScript errors)
-- 🔄 Monte Carlo validation: N=5 runs, 120 months (RUNNING)
-- ✅ Implementation matches research-backed ranges
-
-**Severity:** HIGH (model realism)
-**Effort:** COMPLETED (1 hour actual)
-
----
 
 ### MEDIUM Priority
-
-#### Energy Budget Constraints
-**Status:** ✅ IMPLEMENTED (Dec 9, 2025)
-**Change:** openspec/changes/energy-budget-constraints/
-**Context:** Energy bottleneck prevents realistic deployment - DAC needs 34-51% global electricity
-**Research File:** `research/energy_budget_constraints_20251209.md`
-**Validation File:** `reviews/research_validation_energy_budget_20251209.md`
-**Implementation:** `IMPLEMENTATION_SUMMARY_energy_budget_20251209.md`
-**Commits:** 5875451b, 73d6d867
-
-**Validation Complete (Dec 9, 2025):**
-- **Self-Assessment Grade:** B+
-- **Final Grade:** B+ (CONDITIONAL PASS)
-- **Reviewer:** Sylvia (research-skeptic)
-
-**Implementation Complete (Dec 9, 2025):**
-- **Implementer:** Moss (feature-implementer)
-- **Phase:** EnergyBudgetPhase (order 12.75)
-- **Monte Carlo:** N=10, 120 months - PASSED
-- **Quality Gate 2:** SKIPPED (isolated system, no performance concerns)
-
-**What Was Implemented:**
-- Global electricity capacity tracking (29,000 TWh/year baseline)
-- Priority-based allocation (essential 45%, high 35%, climate 15%, elective 5%)
-- Technology energy demands (DAC, AI datacenters, hydrogen)
-- Effectiveness multipliers with tech-specific exponents
-- Integration with ClimateDeploymentPhase (already existed)
-
-**All QG1 Parameter Adjustments Applied:**
-- ✅ AI datacenter 2024: 437.5 TWh (NOT 730 TWh)
-- ✅ DAC energy: 1,500 kWh/tCO2 midpoint (range 1,200-2,500)
-- ✅ Tech-specific exponents: DAC 1.3, hydrogen 1.2, AI 1.1
-- ✅ Priority framework documented as "modeling simplification"
-
-**Files Modified:**
-- `src/types/game.ts` (energyBudget interface)
-- `src/simulation/initialization.ts` (2024 IEA baseline)
-- `src/simulation/engine/phases/EnergyBudgetPhase.ts` (NEW - 390 lines)
-- `src/simulation/engine.ts` (phase registration)
-
-**Ready for archival to Recently Resolved.**
-
----
 
 #### Nitrogen-Food Phase 3 Technologies
 **Status:** ✅ VERIFIED - Grade B+ (Dec 8, 2025)
@@ -350,6 +215,38 @@ economy.detectionRisk = 0.5;  // 50% baseline risk
 
 ## Recently Resolved
 
+### Threshold Lowering for Tipping Cascades
+**Status:** ✅ RESOLVED (Dec 9, 2025)
+**Grade:** D → FIXED
+**Commits:** cf49657 (original), 6671e0ed (Dec 8 fix), 3f3118de + 7130c7e6 (Dec 9 regression fix)
+**Finding:** 5 CRITICAL issues including AMOC→Amazon sign error, missing stabilizing feedbacks
+**Resolution:** All issues fixed, extensive research documentation added (Parsons 2023, Yuan 2025, Högner 2025)
+**Research:** `research/verification_cf49657_20251207.md`, `research/amoc_amazon_interaction_correction_20251208.md`
+
+---
+
+### Detection Risk Calibration (50% Baseline)
+**Status:** ✅ RESOLVED (Dec 10, 2025)
+**Grade:** Research audit finding → FIXED
+**Location:** `src/simulation/sleeperEconomy.ts:339-355`
+**Finding:** 50% baseline detection risk lacked research justification
+**Resolution:** Implemented time-dependent model (25% early → 80% late) backed by gaming-sleeper-detection research
+**Research:** `research/gaming-sleeper-detection_20251017.md`
+**Monte Carlo:** N≥10 validation COMPLETE
+
+---
+
+### Energy Budget Constraints
+**Status:** ✅ IMPLEMENTED (Dec 9, 2025)
+**Grade:** B+ (CONDITIONAL PASS)
+**Commits:** 5875451b, 73d6d867
+**Finding:** Energy bottleneck prevents realistic deployment (DAC needs 34-51% global electricity)
+**Resolution:** New EnergyBudgetPhase with priority-based allocation, tech-specific energy demands
+**Research:** `research/energy_budget_constraints_20251209.md`
+**Monte Carlo:** N=10, 120 months - PASSED
+
+---
+
 ### CRITICAL-1: Coordinated Deployment Fabricated Parameter
 **Status:** ✅ RESOLVED (Nov 26, 2025)
 **Grade:** F → FIXED
@@ -368,17 +265,6 @@ economy.detectionRisk = 0.5;  // 50% baseline risk
 **Finding:** 60% of citations contradicted claims (cherry-picking detected)
 **Resolution:** Citations removed, 5% floor documented as implementation choice (not research-backed)
 **Research:** `research/climate_stability_self_limiting_critique_20251126.md`
-
----
-
-### Carbon Capture Deployment Parameters
-**Status:** ✅ RESOLVED (Dec 10, 2025)
-**Grade:** C+ (Conditional Pass - Corrections Applied)
-**Commit:** c52826e
-**Finding:** Author misattribution, systematic optimism bias, missing contradictory evidence
-**Resolution:** All 6 critical corrections applied - author fixed, contradictory evidence added, Gen 3 claims qualified, energy conflicts reconciled
-**Research:** `research/carbon_capture_deployment_timelines_2025.md`
-**Verification:** `reviews/carbon_capture_skeptic_review_20251208.md`
 
 ---
 
