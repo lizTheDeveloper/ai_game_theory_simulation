@@ -237,7 +237,7 @@ export class AbruptSeaLevelRisePhase implements SimulationPhase {
 
     if (displacementMortalityRisk > 0.0001) {
       addMortalityRisk(state.humanPopulationSystem, {
-        type: 'disaster',
+        type: 'crisis',
         baseRisk: displacementMortalityRisk,
         proximate: 'disasters',
         root: 'climate',
