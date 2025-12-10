@@ -20,32 +20,42 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 ### HIGH Priority
 
 #### Threshold Lowering for Tipping Cascades
-**Status:** ✅ CRITICAL FIXES APPLIED (Dec 8, 2025)
+**Status:** 🚨 CRITICAL REGRESSION - FIXES REVERTED (Dec 9, 2025)
 **Change:** (pending - needs change folder created)
-**Commit:** cf49657 (original), [current] (fixes)
+**Commit:** cf49657 (original), b6771427 (fixes), HEAD (reverted)
 **Context:** Implements threshold lowering mechanism from mechanism audit gap
 **Verification File:** `research/verification_cf49657_20251207.md`
+**Regression Report:** `research/CRITICAL_regression_threshold_lowering_20251209.md`
 
 **Verification Complete (Dec 7, 2025):**
 - **Initial Grade:** C (super-alignment-researcher)
 - **Final Grade:** D (research-skeptic downgrade)
 - **Reviewers:** Cynthia (researcher), Sylvia (skeptic)
 
-**CRITICAL Issues Found → FIXED (Dec 8, 2025):**
-1. ✅ **AMOC → Amazon Sign Error:** Interaction REMOVED, extensive research note added explaining 2023-2025 evidence shows stabilizing effect (increased rainfall), not destabilizing
-2. ✅ **sqrt(progress) Scaling Backwards:** Replaced with linear scaling reflecting rate-dependent accumulating effects (freshwater forcing, carbon release, albedo feedback compound over time)
-3. ✅ **Missing Stabilizing Feedbacks:** AMOC → Greenland stabilizing feedback documented (currently commented - requires negative interaction support in cascade model)
-4. ✅ **Quantitative Magnitudes Not Validated:** Documentation updated to clearly state values are "conservative engineering estimates pending empirical validation"
-5. ✅ **0.5°C Cap Misattributed:** Relabeled as "simulation stability safeguard" not research-backed parameter
+**CRITICAL Issues Found → FIXED (Dec 8, commit b6771427) → REGRESSED (Dec 8-9):**
+1. 🚨 **AMOC → Amazon Sign Error:** Interaction REMOVED with research note in b6771427, BUT FIX WAS REVERTED - incorrect destabilizing interaction restored in HEAD
+2. ❓ **sqrt(progress) Scaling:** Status unknown - may also be reverted
+3. ❓ **Missing Stabilizing Feedbacks:** Status unknown - may be reverted
+4. ❓ **Quantitative Magnitudes:** Status unknown - may be reverted
+5. ❓ **0.5°C Cap:** Status unknown - may be reverted
 
-**Fixes Applied:**
-- `src/types/tipping-points.ts` lines 601-617: AMOC → Amazon removed with detailed research note
-- `src/types/tipping-points.ts` lines 585-595: AMOC → Greenland stabilizing feedback documented
-- `src/types/tipping-points.ts` lines 517-543: Documentation rewritten to clarify engineering estimates
-- `src/simulation/engine/phases/ClimateSystemPhase.ts` lines 226-233: sqrt scaling replaced with linear
-- `src/simulation/engine/phases/ClimateSystemPhase.ts` lines 269-272: 0.5°C cap relabeled
+**Regression Details (Dec 9, 2025 audit):**
+- Commit b6771427 (Dec 8, 11:30 UTC) correctly removed AMOC → Amazon with detailed research note
+- Between b6771427 and HEAD, fixes were reverted (likely merge conflict)
+- Current code (src/types/tipping-points.ts:497-502) has OLD, INCORRECT interaction
+- Research notes deleted, scientifically wrong code restored
+- Verification queue incorrectly showed "FIXED" but code audit found regression
 
-**Next Steps:** Monte Carlo validation (N≥10) to verify fixes don't break cascade behavior → Move to "Recently Resolved"
+**Files Requiring Re-Fix:**
+- `src/types/tipping-points.ts` - AMOC → Amazon must be removed/commented again
+- `src/simulation/engine/phases/ClimateSystemPhase.ts` - Verify linear scaling not reverted
+- All 5 fixes need re-audit against commit b6771427
+
+**Next Steps:**
+1. **CRITICAL:** Route to simulation-maintainer to re-apply b6771427 fixes
+2. Audit all 5 fixes for regression (not just AMOC → Amazon)
+3. Monte Carlo validation (N≥10) after fixes re-applied
+4. Add pre-commit hook to prevent research note deletions
 
 ---
 
