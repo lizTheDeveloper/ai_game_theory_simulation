@@ -1,1 +1,28 @@
-RESEARCH UPDATE TASK
+RESEARCH UPDATE COMPLETED - Dec 10, 2025
+
+**Session Summary:**
+- Resolved 2 HIGH priority research compliance items from verification queue
+- Updated code comments with proper research citations and uncertainty documentation
+
+**Changes:**
+1. Sleeper Agent Rate (7.5%):
+   - Location: src/simulation/initialization.ts:345
+   - Added: DERIVED ESTIMATE clarification, uncertainty bounds ±50%
+   - Research: Hubinger et al. (2024) proof-of-concept
+
+2. Sandbagging Level (0.4-0.6):
+   - Location: src/simulation/agents/evaluationStrategy.ts:74-76
+   - Added: van der Weij et al. (2024), Meinke et al. (2024) citations
+   - Documented: Llama 3→2 emulation, Claude 3.5 underperformance
+
+**Verification Queue Updates:**
+- Sleeper Agent Rate: ⚠️ READY → ✅ RESOLVED
+- Sandbagging Level: ⚠️ READY → ✅ RESOLVED
+
+**Files Modified:**
+- src/simulation/initialization.ts
+- src/simulation/agents/evaluationStrategy.ts
+- openspec/specs/research/verification-queue.md
+
+**Status:** Ready for PR to main
+**Next Worker:** Continue with remaining HIGH priority updates from verification queue
