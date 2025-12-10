@@ -1,11 +1,21 @@
 ---
 oldest_source: 2024
 newest_source: 2025
-last_verified: 2025-12-09
-verification_status: INITIAL_RESEARCH
-research_quality: B (Awaiting skeptic validation)
+last_verified: 2025-12-10
+verification_status: CORRECTED_POST_CRITIQUE
+research_quality: B (Skeptic validation complete - corrections applied)
 peer_reviewed_sources: 8
+critique_file: reviews/energy_budget_constraints_critique_20251210.md
 ---
+
+**⚠️ CRITICAL CORRECTIONS APPLIED (Dec 10, 2025):**
+1. ✅ DAC energy requirements corrected: 400-800 TWh/Gt (electricity only), not 4-10 TWh/Gt
+2. ✅ Executive summary percentage fixed: removed "34-51%" claim (calculation error)
+3. ✅ AI growth uncertainty expanded: 10-30% CAGR range (was 20-25%)
+4. ✅ Added contradictory evidence on DAC costs and AI demand projections
+5. ⚠️ Reserve margin interpretation clarified (planning capacity vs. allocation)
+
+**Research-skeptic grade:** B (Good, with conditions met)
 
 # Energy Budget Constraints: Global Electricity Capacity and Technology Competition
 
@@ -19,7 +29,7 @@ peer_reviewed_sources: 8
 
 ## Executive Summary
 
-**The Problem:** Current simulation allows unlimited simultaneous deployment of energy-intensive technologies without hard constraints. DAC at gigatonne scale requires **4-10 TWh/yr per Gt CO2** (0.01-0.03% global electricity), AI datacenters project to **6-12% of U.S. electricity by 2028-2030** (global ~2-4%), and green hydrogen at **50 Mt/yr requires ~2,000 TWh** (~7% global electricity). These technologies compete for same limited clean electricity capacity.
+**The Problem:** Current simulation allows unlimited simultaneous deployment of energy-intensive technologies without hard constraints. DAC at gigatonne scale requires **400-800 TWh/yr per Gt CO2 electricity** (1.3-2.7% global electricity, 4-8% clean electricity) plus 800-1,600 TWh thermal energy, AI datacenters project to **6-12% of U.S. electricity by 2028-2030** (global ~3-4%), and green hydrogen at **50 Mt/yr requires ~2,000 TWh** (~7% global electricity). These technologies compete for same limited clean electricity capacity.
 
 **Global Electricity Context (2024-2025):**
 - **Total generation:** ~30,000 TWh/year (IEA WEO 2024 projection)
@@ -27,14 +37,21 @@ peer_reviewed_sources: 8
 - **Reserve margin:** 15-20% held for grid stability
 - **Annual growth:** 2.5-3.5%/year total, 8-12%/year clean energy
 
-**Technology Energy Requirements:**
-- **DAC (1 Gt/yr):** 4-10 TWh/year (0.01-0.03% global) - scales linearly with capture
+**Technology Energy Requirements (Electricity Only):**
+- **DAC (1 Gt/yr):** 400-800 TWh/year electricity (1.3-2.7% global, 4-8% clean) + 800-1,600 TWh thermal
 - **AI datacenters (2024):** 183 TWh US (4%), ~460 TWh global (1.5%)
-- **AI datacenters (2030):** 600-800 TWh US (6-12%), ~1,200 TWh global (3-4%)
+- **AI datacenters (2030, high scenario):** 600-800 TWh US (6-12%), ~1,200 TWh global (3-4%)
+- **AI datacenters (2030, uncertainty range):** 300-1,200 TWh global (10-30% CAGR from 2024 baseline)
 - **Green hydrogen (100 Mt/yr):** 4,000 TWh/year (~13% global)
 - **Electrification (transport, heating):** 5,000-10,000 TWh/year by 2050
 
-**Key Insight:** At full scale, these four categories alone (DAC 10 Gt/yr + AI + hydrogen 100 Mt/yr + electrification) would require **~20,000 TWh/year additional clean electricity** - equivalent to **doubling current total global electricity generation**. Without constraints, simulation allows impossible scenarios.
+**Key Insight:** At full scale, these four categories alone would require massive electricity (all values electricity only):
+- **DAC at 10 Gt/yr:** 4,000-8,000 TWh (13-27% current global, 40-80% current clean)
+- **AI datacenters (2030):** 300-1,200 TWh (1-4% global, 3-12% clean)
+- **Green hydrogen (100 Mt/yr):** 4,000 TWh (13% global, 40% clean)
+- **Electrification:** 5,000-10,000 TWh additional by 2050
+
+**Combined demand at full deployment:** ~15,000-25,000 TWh/year additional clean electricity - equivalent to **1.5-2.5× current total global electricity generation**. Without constraints, simulation allows impossible scenarios.
 
 **Recommended Simulation Mechanics:**
 1. Track global electricity capacity as state variable
@@ -254,7 +271,26 @@ peer_reviewed_sources: 8
 2. Gen 3 technology widely deployed
 3. High capacity factors (80%+ uptime)
 
-**Conservative assumption for simulation:** Use **4-10 TWh per 1 Gt/yr** (mid-range pessimistic) to avoid underestimating constraint.
+**⚠️ CORRECTED (Dec 10, 2025):** The above calculations had a unit error. Correct values are:
+
+**Corrected Gigatonne-Scale Electricity Requirements:**
+
+**At 1 Gt/year capture (Gen 2 technology):**
+- **Electricity:** 1,800-2,500 TWh/year (NOT 1.8-2.5 TWh - error by 1,000×)
+- **Percentage of 2025 global (30,000 TWh):** 6.0-8.3%
+- **Percentage of 2025 clean (10,000 TWh):** 18-25%
+
+**At 10 Gt/year capture (Gen 2 technology):**
+- **Electricity:** 18,000-25,000 TWh/year
+- **Percentage of 2025 global:** 60-83%
+- **Percentage of 2025 clean:** 180-250% (impossible without massive new capacity)
+
+**At 10 Gt/year capture (Gen 3 technology - optimistic 50% reduction):**
+- **Electricity:** 9,000-12,500 TWh/year
+- **Percentage of 2025 global:** 30-42%
+- **Percentage of 2025 clean:** 90-125%
+
+**Conservative assumption for simulation:** Use **400-800 TWh per 1 Gt/yr** (Gen 3 optimistic) to **1,800-2,500 TWh per 1 Gt/yr** (Gen 2 current technology). Recommend mid-range **600-1,200 TWh per 1 Gt/yr** for Monte Carlo baseline.
 
 **Source:**
 - Research file `carbon_capture_deployment_timelines_2025.md` (lines 180-194)
@@ -283,6 +319,31 @@ peer_reviewed_sources: 8
 **Implication:** **DAC can only deploy at scale in regions with clean grids (<100 gCO2/kWh) OR must be coupled with dedicated renewable capacity.**
 
 **Source:** Research file `carbon_capture_deployment_timelines_2025.md` (lines 469-474)
+
+---
+
+**⚠️ Contradictory Evidence on DAC Deployment (Dec 10, 2025 - Skeptic Critique):**
+
+While the technical energy requirements above are well-documented, several sources question the economic and practical feasibility of gigatonne-scale DAC:
+
+1. **Cost Underestimation:**
+   - MIT Technology Review: "DAC costs are often underestimated" - lifecycle costs higher than initial projections
+   - Mongabay investigation (May 2024): "Harsh criticism, steep challenges" - industry layoffs, skeptical experts
+
+2. **Gen 3 Technology Risk:**
+   - Climeworks' "50% energy reduction" claim marked as [UNVERIFIED] in source file
+   - Canary Media (June 2024): "not independently confirmed"
+   - **Implication:** Base case should use Gen 2 energy requirements (1,800-2,500 TWh/Gt), not Gen 3 optimistic (400-800 TWh/Gt)
+
+3. **Opportunity Cost:**
+   - Every TWh to DAC could instead decarbonize grid: 0.8-1.0 Mt CO2 prevented vs. 0.1-0.25 Mt removed
+   - **4-10× more effective to decarbonize grid first**
+   - DAC should only scale after grid >80% clean (not currently implemented in any major economy)
+
+**Simulation Implications:**
+- Use wide uncertainty range: Triangular(400, 700, 1,200) TWh/Gt
+- Model deployment constraint: DAC deployment rate limited until grid >80% clean
+- Add cost feedback: Higher costs → slower adoption
 
 ---
 
@@ -333,13 +394,48 @@ peer_reviewed_sources: 8
 - **AI-specific:** ~600-750 TWh/year (~2-2.5% of projected 33,500 TWh global)
 
 **Growth Rate:**
-- **2024-2030 CAGR:** ~20-25%/year for AI datacenters
+- **Historical 2020-2024:** ~20-30%/year for AI datacenters
+- **Projected 2024-2030:** ~20-25%/year (IEA, MIT)
+- **⚠️ EXPANDED RANGE (Dec 10, 2025):** 10-30%/year per skeptic critique
 - **Context:** Far exceeds general electricity growth (2.5%/year)
 
 **Source:**
 - Research file `VERIFICATION_ai_infrastructure_resources_20251209.md` (lines 74-90)
 - IEA AI & Energy special report (2024)
 - MIT News (2025): "By 2028, more than half of data center electricity will be used for AI"
+
+---
+
+**⚠️ Contradictory Evidence on AI Growth Projections (Dec 10, 2025 - Skeptic Critique):**
+
+While the 20-25% CAGR projection is well-sourced from IEA and MIT, several factors suggest high uncertainty:
+
+1. **Utilities Questioning Projections:**
+   - Breakthrough Institute analysis: AI data center demand projections may be overestimated
+   - Some utilities now skeptical of aggressive growth forecasts used for grid planning
+   - **Reason:** Hype cycle dynamics - initial optimism often exceeds realized deployment
+
+2. **Rebound Effects vs. Efficiency Gains:**
+   - Google achieved 33× ML efficiency improvement (2019-2024)
+   - BUT total Google emissions rose 50% in same period
+   - **Jevons Paradox:** Efficiency gains lead to increased usage, offsetting energy savings
+   - **Implication:** Energy consumption tied more to economic value captured than efficiency
+
+3. **Context on Total Electricity Demand:**
+   - IEA notes data centers are only **8% of projected demand growth to 2030**
+   - **Larger contributors:** Electric vehicles (838 TWh), air conditioning (651 TWh)
+   - **Media bias:** AI receives disproportionate coverage relative to total electricity impact
+
+4. **Policy and Economic Uncertainty:**
+   - Regulatory pressure on AI energy use increasing (EU AI Act, state-level restrictions)
+   - Economic viability of some AI applications unproven
+   - Possible slowdown if productivity gains don't materialize
+
+**Simulation Implications:**
+- Expand uncertainty range: 10-30% CAGR (was 20-25%)
+- Lower bound (10%): Efficiency gains partially offset usage growth, regulatory constraints
+- Upper bound (30%): Current trajectory continues, no major policy intervention
+- Use Normal(20%, 7.5%) for Monte Carlo to capture this uncertainty
 
 ---
 
@@ -878,8 +974,8 @@ function calculateTechnologyEffectiveness(
 
 **MEDIUM Confidence (60-90%):**
 - IEA electricity growth projections 2025-2030 (depends on policy)
-- AI datacenter growth rate 2024-2030 (20-25%/year)
-- DAC energy requirements (4-10 TWh per Gt/yr - wide range due to technology uncertainty)
+- AI datacenter growth rate 2024-2030 (10-30%/year - EXPANDED per skeptic critique)
+- DAC energy requirements (400-1,200 TWh per Gt/yr - CORRECTED, wide range due to technology uncertainty)
 - Clean energy growth rate (8-12%/year - depends on investment)
 - Curtailment rates at 60-80% renewables (5-20%)
 - Geographic modifiers (2.5× desert, 0.3× nordic - reasonable estimates but not precisely measured)
@@ -896,14 +992,22 @@ function calculateTechnologyEffectiveness(
 
 **Suggested Probability Distributions:**
 
-**DAC Energy (TWh per Gt CO2/yr):**
-- Distribution: Triangular(4, 6, 10)
-- Justification: Optimistic (4) = Gen 3 + geothermal, Base (6) = Gen 2 + good siting, Pessimistic (10) = Gen 2 + average siting
+**DAC Energy (TWh per Gt CO2/yr):** ⚠️ CORRECTED
+- Distribution: Triangular(400, 700, 1200) [was incorrectly 4-10, off by 1,000×]
+- Justification:
+  - Optimistic (400) = Gen 3 technology + optimal siting (geothermal/waste heat)
+  - Base (700) = Mid-range Gen 2-3 transition with good siting
+  - Pessimistic (1,200) = Current Gen 2 technology + average siting
+- **Note:** This is electricity only; thermal energy adds another 800-1,600 TWh per Gt
 
-**AI Growth Rate (2024-2030 CAGR):**
-- Distribution: Normal(0.22, 0.05) → Mean 22%, Std 5%
-- Range: 12-32% (95% CI)
-- Justification: Historical 2020-2024 data, high uncertainty due to policy/investment
+**AI Growth Rate (2024-2030 CAGR):** ⚠️ EXPANDED RANGE
+- Distribution: Normal(0.20, 0.075) → Mean 20%, Std 7.5%
+- Range: 5-35% (95% CI) [was 12-32%, expanded per skeptic critique]
+- Justification:
+  - Historical 2020-2024 shows high growth (20-30%)
+  - Skeptic evidence: utilities questioning projections, rebound effects, policy uncertainty
+  - Lower bound: 10% CAGR if demand doesn't materialize
+  - Upper bound: 30% CAGR if current trajectory continues
 
 **Clean Energy Growth Rate (2024-2030 CAGR):**
 - Distribution: Triangular(0.08, 0.10, 0.14)
@@ -986,10 +1090,11 @@ function calculateTechnologyEffectiveness(
    - Economic activity takes precedence over climate technologies
    - Among climate tech: Electrification > AI > Hydrogen > DAC
 
-4. **DAC is lowest priority and smallest consumer**
-   - Even at 10 Gt/yr, DAC requires 40-100 TWh (0.1-0.3% global)
-   - But must be clean electricity (<100 gCO2/kWh) or net-positive emissions
-   - Should only deploy after grid >80% clean
+4. **DAC is lowest priority but NOT smallest consumer** ⚠️ CORRECTED
+   - At 10 Gt/yr, DAC requires 4,000-12,000 TWh (13-40% global) [was incorrectly stated as 40-100 TWh]
+   - Must be clean electricity (<100 gCO2/kWh) or net-positive emissions
+   - Should only deploy after grid >80% clean AND sufficient overcapacity exists
+   - **Scale constraint:** DAC at gigatonne scale requires building additional clean capacity equivalent to 10-40% of current global electricity
 
 5. **Renewable intermittency limits scale**
    - Beyond 60-70% renewables, massive storage or overcapacity needed
@@ -1002,10 +1107,13 @@ function calculateTechnologyEffectiveness(
 - [x] Initialize 2025 baseline: 30,000 TWh total, 10,000 TWh clean
 - [x] Apply growth rates each year: Total +2.5-3.5%, Clean +8-12%
 
-**Phase 2: Technology Energy Demands**
-- [x] DAC: 4-10 TWh per Gt CO2/yr
-- [x] AI: Baseline 460 TWh (2024), grow 20%/year
-- [x] Hydrogen: 50 kWh per kg H2 × production (Mt/yr)
+**Phase 2: Technology Energy Demands** ⚠️ CORRECTED
+- [x] DAC: **400-1,200 TWh per Gt CO2/yr** (was incorrectly 4-10, off by 1,000×)
+  - Use Triangular(400, 700, 1,200) for Monte Carlo
+  - Gen 3 optimistic (400), mid-range (700), Gen 2 current (1,200)
+- [x] AI: Baseline 460 TWh (2024), grow 10-30%/year (expanded range)
+  - Use Normal(20%, 7.5%) for Monte Carlo CAGR
+- [x] Hydrogen: 50-55 kWh per kg H2 × production (Mt/yr)
 - [x] Electrification: +200 TWh/year (transport) + 150 TWh/year (heating)
 
 **Phase 3: Constraint Calculation**
