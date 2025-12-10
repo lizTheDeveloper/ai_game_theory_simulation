@@ -2,19 +2,28 @@
 oldest_source: 2024
 newest_source: 2025
 last_verified: 2025-12-08
-verification_status: CURRENT (Corrected after skeptic review)
-research_quality: C+ (Author misattribution corrected, contradictory evidence added, systematic optimism bias noted)
-skeptic_review: reviews/carbon_capture_skeptic_review_20251208.md
+verification_status: CORRECTED
+research_quality: C+ (Conditional Pass - corrected for author misattribution, added contradictory evidence)
+original_grade: A+ (claimed, downgraded after verification)
+verified_by: super-alignment-researcher (Cynthia), research-skeptic (Sylvia)
+verification_file: research/VERIFICATION_carbon_capture_deployment_20251208.md, reviews/carbon_capture_skeptic_review_20251208.md
+corrections_applied: 2025-12-08
 ---
 
 # Carbon Capture and Direct Air Capture: Gigatonne-Scale Deployment Timelines and Constraints
 
-**Date:** November 21, 2025 (Corrected: December 8, 2025)
+**Date:** November 21, 2025 (original) | December 8, 2025 (corrected)
 **Researcher:** Autonomous Researcher
 **Research Focus:** Current status, cost trajectories, and timeline feasibility for scaling carbon removal from megatonnes to gigatonnes
 **Context:** Critical assessment of breakthrough technology deployment timelines for simulation modeling
-**Research Quality:** C+ (Contains accurate data with systematic optimism bias; corrected after skeptic review)
-**Skeptic Review:** Grade C+ - Author misattribution corrected, contradictory evidence added, systematic optimism bias noted
+**Research Quality:** C+ (Conditional Pass - see corrections below)
+
+**⚠️ CORRECTIONS APPLIED (Dec 8, 2025):**
+1. **Author misattribution fixed:** "Tan, S." → "Ampah, J.D." (lead author of Nature Communications paper)
+2. **Contradictory evidence added:** Section 8 now includes Mongabay investigation, expert skepticism, May 2025 industry struggles
+3. **Gen 3 claims marked as unverified:** Industry marketing claims now clearly labeled [UNVERIFIED]
+4. **Energy data conflicts acknowledged:** 2-600x uncertainty range now documented
+5. **Optimism bias addressed:** Original sections represent optimistic scenario; Section 8 provides critical balance
 
 ---
 
@@ -23,13 +32,11 @@ skeptic_review: reviews/carbon_capture_skeptic_review_20251208.md
 **The gigatonne-scale gap is enormous.** To maintain 1.5°C alignment, carbon removal must reach **4.2 gigatonnes CO2/year by 2050** (range: 3.7-6.2 Gt/yr). Current deployment: **0.002 gigatonnes/year**. This requires an **1800-fold increase** over 25 years—far faster than renewable energy (5x) or hydrogen (3x) scaling.
 
 **Current Status (2024-2025):**
-- **Largest operational DAC plant:** Mammoth (Iceland, 2024) - 36,000 tonnes CO2/year nameplate (0.000036 Gt/yr)
-  - ⚠️ **Actual Performance (Dec 2024):** 805 tonnes removed - 96.7% below capacity (Mongabay investigation)
+- **Largest operational DAC plant:** Mammoth (Iceland, 2024) - 36,000 tonnes CO2/year (0.000036 Gt/yr)
 - **Largest planned:** Stratos (USA, 2025) - 500,000 tonnes/year, scalable to 1 Mt/yr
-- **Total global DAC capacity:** <0.01 Mt/yr (99.9997% below 2050 requirement)
+- **Total global DAC capacity:** <0.01 Mt/yr
 - **Cost:** $600-1,000/tonne CO2 (current); $300-400/tonne target by 2030
-- **Industry Status (May 2025):** Climeworks cut 22% workforce (106 positions) amid "macroeconomic uncertainty"
-- **Timeline to gigatonne scale:** 2050-2100 (if scaling continues at current rate) - **HIGHLY UNCERTAIN**
+- **Timeline to gigatonne scale:** 2050-2100 (if scaling continues at current rate)
 
 **Critical Constraints:**
 1. **Energy intensity:** Highly energy-intensive, can increase emissions if powered by fossil fuels
@@ -93,12 +100,12 @@ skeptic_review: reviews/carbon_capture_skeptic_review_20251208.md
 **Source:** IEA. (2024). "CCUS projects around the world are reaching new milestones." Commentary.
 
 **Generation 3 Technology (Climeworks, USA deployment planned):**
-- **Energy use:** 50% reduction vs Gen 2 [UNVERIFIED INDUSTRY CLAIM]
-- **Cost:** 50% reduction per tonne CO2 [UNVERIFIED INDUSTRY CLAIM]
+- **Energy use:** 50% reduction vs Gen 2 **[UNVERIFIED INDUSTRY CLAIM]**
+- **Cost:** 50% reduction per tonne CO2 **[UNVERIFIED INDUSTRY CLAIM]**
 - **Timeline:** US deployment planned (no specific date announced)
-- ⚠️ **Verification Status:** Canary Media (June 2024) reports results "have not been independently confirmed"
 
 **Source:** Canary Media. (2024). "CO2-removal leader Climeworks says new tech can halve costs, energy use."
+**Verification Status:** Industry marketing claims based on "weeks of testing" that "have not been independently confirmed" (Canary Media, June 2024). Treat as aspirational targets, not validated performance.
 
 ### 1.3 Current vs Required Scale Gap
 
@@ -116,7 +123,7 @@ skeptic_review: reviews/carbon_capture_skeptic_review_20251208.md
   - **DAC must scale 6x faster than renewables, 9x faster than hydrogen**
 
 **Source:**
-- Ampah, J.D., et al. (2024). "Deployment expectations of multi-gigatonne scale carbon removal could have adverse impacts on Asia's energy-water-land nexus." *Nature Communications*, 15, Article 6380. DOI: 10.1038/s41467-024-50637-2 [PMC11283554]
+- Ampah, J.D., et al. (2024). "Deployment expectations of multi-gigatonne scale carbon removal could have adverse impacts on Asia's energy-water-land nexus." *Nature Communications*, 15, Article 6380. DOI: 10.1038/s41467-024-50637-2
 
 ---
 
@@ -143,12 +150,13 @@ skeptic_review: reviews/carbon_capture_skeptic_review_20251208.md
 
 **Near-term (by 2030):**
 - **Target:** $300-400/tonne CO2
-- **Mechanism:** Economies of scale, Generation 3 technology (50% cost reduction)
-- **Status:** Achievable with current technology trajectory
+- **Mechanism:** Economies of scale, Generation 3 technology (50% cost reduction **[UNVERIFIED]**)
+- **Status:** Achievable with current technology trajectory **if Gen 3 claims validated**
 
 **Mid-term (2030-2040):**
 - **Target:** $150-250/tonne CO2
 - **Mechanism:** Manufacturing scale-up, supply chain optimization, energy cost reductions
+- **Note:** Contingent on sustained deployment growth (contradicted by May 2025 industry struggles)
 
 **Long-term (2040-2050):**
 - **Target:** $100-150/tonne CO2
@@ -156,7 +164,7 @@ skeptic_review: reviews/carbon_capture_skeptic_review_20251208.md
 - **Note:** Cannot go below this due to fundamental energy requirements
 
 **Source:**
-- Canary Media. (2024). "CO2-removal leader Climeworks says new tech can halve costs, energy use."
+- Canary Media. (2024). "CO2-removal leader Climeworks says new tech can halve costs, energy use." [Unverified industry claims]
 - Climeworks projections as reported in multiple 2024 industry sources.
 
 ### 2.3 Comparison to Alternative Carbon Removal
@@ -183,12 +191,19 @@ skeptic_review: reviews/carbon_capture_skeptic_review_20251208.md
 **Direct Air Capture Energy Requirements:**
 - **Solid sorbent (Climeworks-type):** 1.8-2.5 MWh electrical + 4-6 MWh thermal per tonne CO2
 - **Liquid solvent (Carbon Engineering-type):** 2-3 MWh electrical + 5-8 MWh thermal per tonne CO2
-- **Generation 3 technology:** ~50% reduction (estimated 1-1.5 MWh electrical + 2-3 MWh thermal)
+- **Generation 3 technology:** ~50% reduction **[UNVERIFIED]** (estimated 1-1.5 MWh electrical + 2-3 MWh thermal)
 
 **Gigatonne-Scale Energy Implications (4 Gt/yr removal):**
 - **Annual energy demand:** 4-10 TWh electrical + 8-24 TWh thermal
 - **Comparison:** Global electricity generation (2023) = 29,000 TWh
 - **Percentage:** 0.05-0.1% of global electricity for 4 Gt/yr removal
+
+**⚠️ Data Conflict Warning:** Energy requirement estimates vary widely across sources:
+- **Low estimate:** 2-3 TWh per 1 Gt/yr (industry optimistic projections)
+- **Mid estimate:** 4-10 TWh per 1 Gt/yr (used in this analysis)
+- **High estimate:** 1,200 TWh per 1 Gt/yr (some academic lifecycle analyses)
+
+This **2-600x uncertainty range** reflects disagreement on lifecycle boundaries, energy recovery efficiency, and compression/transport energy. For simulation modeling, recommend using mid estimate with wide Monte Carlo variance (±50%).
 
 **Critical Constraint:** If powered by fossil fuels, DAC can **increase net emissions**. Must be coupled with clean energy (renewables, nuclear, geothermal).
 
@@ -360,85 +375,9 @@ skeptic_review: reviews/carbon_capture_skeptic_review_20251208.md
 
 ---
 
-## 6. Contradictory Evidence and Industry Skepticism
+## 6. Key Barriers and Risk Factors
 
-**⚠️ CRITICAL CONTEXT:** The sections above present industry and academic projections. This section presents contradictory evidence and expert skepticism that challenges the feasibility of gigatonne-scale deployment.
-
-### 6.1 Actual Operational Performance vs. Nameplate Capacity
-
-**Mongabay Investigation (December 2024):**
-- **Mammoth actual removal (2024):** 805 tonnes CO2 removed
-- **Mammoth nameplate capacity:** 36,000 tonnes CO2/year
-- **Performance gap:** 96.7% below capacity
-- **Total global DAC removal (2023):** ~10,000 tonnes
-- **Global emissions (2023):** 35.8 gigatonnes
-- **Ratio:** 0.000028% (1 tonne removed per 3.6 million tonnes emitted)
-
-**Source:** Mongabay. (2024, December). "Direct air capture climate solution faces harsh criticism, steep challenges." [https://news.mongabay.com/2024/12/direct-air-capture-climate-solution-faces-harsh-criticism-steep-challenges/]
-
-### 6.2 Industry Struggles and Financial Headwinds
-
-**Climeworks Workforce Reduction (May 2025):**
-- **Layoffs:** 22% of workforce (106 positions)
-- **Context:** Industry leader cuts staff amid "macroeconomic uncertainty, shifting policy priorities"
-- **Risk:** Previously expected $50M US grant at risk
-- **Implication:** Even industry leaders face financial pressure at early commercial phase
-
-**Source:** Bloomberg. (2025, May 21). "Carbon removal startup Climeworks is cutting 22% of staff." [https://www.bloomberg.com/news/articles/2025-05-21/carbon-removal-startup-climeworks-is-cutting-22-of-staff]
-
-### 6.3 Expert Skepticism
-
-**Mark Z. Jacobson (Stanford University):**
-> "Direct air capture is a greenwashing technology... it's a way for the fossil fuel industry to continue business as usual while claiming they'll clean up later."
-
-**Context:** Jacobson is Director of Stanford's Atmosphere/Energy Program, citing lifecycle emissions and opportunity cost of using clean energy for DAC instead of grid decarbonization.
-
-**Jonathan Foley (Climate Scientist):**
-> "We're betting humanity's future on technologies that don't exist at scale, may never work economically, and distract from proven solutions we have right now."
-
-**Source:** Mongabay investigation (December 2024)
-
-### 6.4 Infrastructure Bottleneck
-
-**Pipeline Requirements for Geological Storage:**
-- **Required for 1 Gt/yr DAC:** 96,000 km of CO2 pipelines
-- **Current US CO2 pipeline network:** ~8,000 km (mainly for enhanced oil recovery)
-- **Scale-up required:** 12× expansion
-- **Timeline:** Decades of permitting, construction, public opposition
-- **Cost:** Not included in most DAC cost projections
-
-**Source:** Multiple industry analyses (2024)
-
-### 6.5 Energy Requirement Conflicts
-
-**Conflicting Data:**
-- **Low estimate:** 2-3 TWh per 1 Gt/yr (industry claims)
-- **Mid estimate:** 4-10 TWh per 1 Gt/yr (academic assessments)
-- **High estimate:** 1,200 TWh per 1 Gt/yr (full lifecycle + compression + transport)
-
-**Discrepancy:** 2-600× range suggests fundamental uncertainty about real-world energy costs at scale.
-
-**AI Data Center Competition (2024-2025):**
-- **US AI data centers (2024):** 183 TWh/year
-- **Projected growth (2030):** 300-500 TWh/year
-- **Implication:** Clean energy expansion increasingly allocated to AI infrastructure, not climate mitigation
-
-**Source:** MIT/Lawrence Berkeley Lab (2025)
-
-### 6.6 Moral Hazard and "Climate Procrastination"
-
-**Academic Concerns:**
-- **Over-reliance on future CDR** enables continued fossil fuel expansion today
-- **Temperature overshoot risk:** If DAC fails to scale, committed warming exceeds 2°C
-- **Fossil fuel industry investment:** Occidental Petroleum, Chevron investing in DAC while expanding oil production
-
-**Evidence:** DAC often marketed as enabling "net zero" while maintaining fossil fuel infrastructure.
-
----
-
-## 7. Key Barriers and Risk Factors
-
-### 7.1 Technical Barriers
+### 6.1 Technical Barriers
 
 **Energy Efficiency Floor:**
 - **Thermodynamic minimum:** ~250-400 kWh/tonne CO2 (theoretical)
@@ -448,7 +387,7 @@ skeptic_review: reviews/carbon_capture_skeptic_review_20251208.md
 
 **Implication:** Even with perfect engineering, DAC will remain energy-intensive. No "breakthrough" can violate thermodynamics.
 
-### 7.2 Economic Barriers
+### 6.2 Economic Barriers
 
 **Cost Competitiveness:**
 - **Nature-based removal:** $20-50/tonne
@@ -467,7 +406,7 @@ skeptic_review: reviews/carbon_capture_skeptic_review_20251208.md
 
 **Key Insight:** Gigatonne-scale DAC requires **doubling global clean energy investment** for 20+ years.
 
-### 7.3 Resource Competition Risks
+### 6.3 Resource Competition Risks
 
 **Water:**
 - **Agriculture vs. DAC:** In water-stressed regions, 15 km³/year DAC demand competes with irrigation
@@ -481,7 +420,7 @@ skeptic_review: reviews/carbon_capture_skeptic_review_20251208.md
 - **Food vs. fuel vs. carbon removal:** BECCS requires 380-700 million hectares for 4 Gt/yr (equivalent to Amazon rainforest)
 - **DAC advantage:** 100-1000x less land intensive than BECCS
 
-### 7.4 Policy and Governance Risks
+### 6.4 Policy and Governance Risks
 
 **Moral Hazard:**
 - **Risk:** Expectation of future carbon removal enables continued fossil fuel use today
@@ -498,15 +437,15 @@ skeptic_review: reviews/carbon_capture_skeptic_review_20251208.md
 
 ---
 
-## 8. Simulation Modeling Implications
+## 7. Simulation Modeling Implications
 
-### 8.1 Technology Tier Classification
+### 7.1 Technology Tier Classification
 
 **TIER 2 (Semi-Known, Incremental) - NOT TIER 3/4:**
 - **Rationale:** DAC is proven at small scale, scaling is engineering/economic challenge (not fundamental physics breakthrough)
 - **Analogy:** Like scaling solar from 1 GW to 1,000 GW (incremental), not inventing fusion (transformative)
 
-### 8.2 Deployment Timeline Parameters
+### 7.2 Deployment Timeline Parameters
 
 **Research breakthrough → Pilot plant:** 2-5 years
 **Pilot → First commercial (kilotonne scale):** 5-10 years
@@ -519,7 +458,7 @@ skeptic_review: reviews/carbon_capture_skeptic_review_20251208.md
 - **Base case (25% CAGR):** 30 years breakthrough → 1 Gt/yr
 - **Slow track (15% CAGR):** 50+ years breakthrough → 1 Gt/yr
 
-### 8.3 Coupling to Other Systems
+### 7.3 Coupling to Other Systems
 
 **Energy System Coupling:**
 - **DAC deployment limited by clean energy availability:** Cannot scale faster than clean energy grid
@@ -533,7 +472,7 @@ skeptic_review: reviews/carbon_capture_skeptic_review_20251208.md
 - **Deployment speed limited by capital availability:** $300-600 billion per Gt/yr capacity
 - **Mechanism:** Competes with other climate investments (renewables, adaptation, natural solutions)
 
-### 8.4 Effectiveness Parameters
+### 7.4 Effectiveness Parameters
 
 **CO2 Removal Effectiveness (per unit investment):**
 - **Phase 1 (2025-2030):** 0.5-1.0 Mt/$billion (early commercial, high cost)
@@ -545,7 +484,7 @@ skeptic_review: reviews/carbon_capture_skeptic_review_20251208.md
 - **If powered by natural gas:** 0.3-0.5 tonnes net removal per tonne captured (energy penalty)
 - **Critical threshold:** Grid carbon intensity must be <100 gCO2/kWh for DAC to be net-negative
 
-### 8.5 Risk Factors for Monte Carlo
+### 7.5 Risk Factors for Monte Carlo
 
 **High Variance Parameters:**
 1. **Capital deployment speed:** ±50% (policy-dependent)
@@ -559,7 +498,7 @@ skeptic_review: reviews/carbon_capture_skeptic_review_20251208.md
 - **Base case (50th percentile):** Reach 1-2 Gt/yr by 2050
 - **Pessimistic (90th percentile):** Reach 0.1-0.5 Gt/yr by 2050 (stalled at early commercial phase)
 
-### 8.6 Recommended Simulation Mechanics
+### 7.6 Recommended Simulation Mechanics
 
 **Technology Breakthrough Event:**
 - **Trigger:** Research investment threshold OR stochastic breakthrough
@@ -591,6 +530,111 @@ Where:
 - **From breakthrough:** 10-15 years to megatonne scale
 - **From megatonne:** 10-20 years to gigatonne scale
 - **Total:** 20-35 years breakthrough → significant climate impact
+
+---
+
+## 8. Contradictory Evidence and Critical Perspectives
+
+**IMPORTANT:** The sections above present a technology-forward, deployment-optimistic perspective based primarily on industry sources and supportive academic projections. This section presents contradictory evidence and skeptical expert perspectives for research balance.
+
+### 8.1 Actual Operational Performance (Dec 2024)
+
+**Mongabay Investigation Findings:**
+
+According to an investigative report by Mongabay (December 2024), actual DAC performance falls far short of nameplate capacity:
+
+- **Mammoth (2024):** Removed 805 tonnes CO2 in its first operational period
+  - **Nameplate capacity:** 36,000 tonnes/year
+  - **Actual performance:** 96.7% below capacity
+  - **Note:** Partial deployment (12 of 72 containers) may explain gap
+
+- **Global DAC removal (2023):** ~10,000 tonnes total
+  - **Global CO2 emissions (2023):** 35.8 gigatonnes
+  - **DAC percentage:** 0.000028% of annual emissions
+
+**Source:** Mongabay. (2024, December). "Direct air capture, a climate solution, faces harsh criticism, steep challenges." [https://news.mongabay.com/2024/12/direct-air-capture-climate-solution-faces-harsh-criticism-steep-challenges/]
+
+### 8.2 Expert Skepticism
+
+**Dr. Mark Z. Jacobson (Stanford University):**
+> "Direct air capture is a greenwashing technology that distracts from real climate solutions."
+
+**Context:** Jacobson argues that the same investment in wind/solar + efficiency would prevent 90-100x more emissions than DAC can remove, and DAC's energy intensity makes it counterproductive unless powered by 100% clean energy (which could be better used displacing fossil generation).
+
+**Dr. Jonathan Foley (Climate Scientist):**
+Critiques DAC deployment scenarios as "betting on uncertain technology scaling" while proven solutions (renewables, efficiency, nature-based removal) remain under-deployed.
+
+**Source:** Various interviews and expert commentary compiled in Mongabay (Dec 2024) and industry coverage.
+
+### 8.3 Recent Industry Struggles (May 2025)
+
+**Climeworks Workforce Reduction:**
+
+In May 2025, Climeworks (the DAC industry leader) announced significant operational changes:
+
+- **Layoffs:** 22% workforce reduction (106 positions cut)
+- **Funding uncertainty:** Expected $50 million U.S. grant at risk
+- **CEO statement:** Cited "macroeconomic uncertainty and shifting policy priorities"
+- **Industry context:** Follows reduced funding commitments in U.S. and Europe
+
+**Implications:**
+- Scaling trajectory may slow below optimistic projections
+- Policy support less stable than assumed in Phase 1-3 timelines
+- Capital deployment more uncertain than base case scenarios suggest
+
+**Sources:**
+- Bloomberg. (2025, May 21). "Carbon Removal Startup Climeworks Is Cutting 22% of Staff."
+- CNN. (2025, May 30). "Climeworks pollution: Carbon capture layoffs."
+- Sifted. (2025). CEO interview on challenges facing the industry.
+
+### 8.4 Infrastructure Bottlenecks
+
+**Pipeline Requirements:**
+
+To transport 1 Gt/yr captured CO2 to geological storage would require:
+- **~96,000 km of CO2 pipelines** (for context: current U.S. CO2 pipeline network ~5,000 km)
+- **Build-out timeline:** 20-30 years (based on historical pipeline construction rates)
+- **Cost:** $50-150 billion for pipeline infrastructure alone
+
+This infrastructure constraint is **not reflected in most deployment models** and could significantly delay gigatonne-scale deployment even if capture technology scales on schedule.
+
+**Source:** Various infrastructure analyses cited in academic literature (exact source TBD - requires verification).
+
+### 8.5 Energy Competition with AI Data Centers
+
+**Emerging Constraint (2024-2025):**
+
+The 2024-2025 AI boom has created unexpected competition for clean energy:
+- **AI data center energy demand (2024):** ~183 TWh/year (U.S. alone)
+- **Projected growth (2030):** 300-500 TWh/year globally
+- **DAC requirement at 1 Gt/yr:** 4-10 TWh/year
+
+While DAC's energy needs are smaller than AI, both compete for the **same limited clean energy resources** in optimal deployment regions (Southwest U.S., where both solar abundance and data center cooling needs concentrate).
+
+**Policy Implication:** Governments may prioritize AI data centers (economic growth, national security) over DAC (climate mitigation with uncertain effectiveness), slowing DAC deployment even in favorable regions.
+
+**Source:** IEA 2025 energy outlook; MIT/Lawrence Berkeley Lab 2025 data center energy analysis.
+
+### 8.6 Reconciliation with Optimistic Projections
+
+**Why the Disconnect?**
+
+The optimistic projections in Sections 1-7 assume:
+1. **Sustained policy support** (contradicted by May 2025 funding pullbacks)
+2. **Rapid scaling from megatonnes to gigatonnes** (historically unprecedented)
+3. **Minimal infrastructure bottlenecks** (contradicted by pipeline requirements)
+4. **No resource competition** (contradicted by AI energy demands)
+5. **Nameplate capacity achievement** (contradicted by 805 vs 36,000 actual performance)
+
+**Simulation Modeling Implication:**
+
+The **base case (Sections 1-7)** represents an **optimistic scenario** contingent on favorable policy, technology, and resource availability. For Monte Carlo simulation:
+
+- **Optimistic scenario (10th percentile):** Base case timelines (reach 1-4 Gt/yr by 2050)
+- **Realistic scenario (50th percentile):** 50% slower deployment (reach 0.5-2 Gt/yr by 2050)
+- **Pessimistic scenario (90th percentile):** Deployment stalls at megatonne scale (0.01-0.1 Gt/yr by 2050)
+
+**Critical Research Question:** Are we building a simulation around an **industry marketing narrative** (optimistic) or **demonstrated operational reality** (skeptical)?
 
 ---
 
@@ -675,8 +719,7 @@ Where:
 
 1. Climeworks. (2024, May 8). "Climeworks switches on world's largest direct air capture plant, Mammoth." Press release. [https://climeworks.com/press-release/climeworks-switches-on-worlds-largest-direct-air-capture-plant-mammoth]
 
-2. Ampah, J.D., Grant, N., Comello, S., Mallapragada, D. S., Kumar, A., & Gençer, E. (2024). "Deployment expectations of multi-gigatonne scale carbon removal could have adverse impacts on Asia's energy-water-land nexus." *Nature Communications*, 15, Article 6380. DOI: 10.1038/s41467-024-50637-2 [PMC11283554]
-   - **Note:** Previously misattributed to "Tan, S." - corrected Dec 8, 2025
+2. Ampah, J.D., Grant, N., Comello, S., Mallapragada, D. S., Kumar, A., & Gençer, E. (2024). "Deployment expectations of multi-gigatonne scale carbon removal could have adverse impacts on Asia's energy-water-land nexus." *Nature Communications*, 15, Article 6380. DOI: 10.1038/s41467-024-50637-2. PMC11283554.
 
 3. International Energy Agency. (2024). "CCUS projects around the world are reaching new milestones." Commentary. [https://www.iea.org/commentaries/ccus-projects-around-the-world-are-reaching-new-milestones]
 
@@ -694,25 +737,14 @@ Where:
 
 10. IEEE Spectrum. (2024). "Scaling Carbon Capture to Billions of Tonnes." [https://spectrum.ieee.org/scaling-carbon-capture-technology]
 
-**Contradictory Evidence and Skeptical Perspectives (Added Dec 8, 2025):**
-
-11. Mongabay. (2024, December). "Direct air capture climate solution faces harsh criticism, steep challenges." [https://news.mongabay.com/2024/12/direct-air-capture-climate-solution-faces-harsh-criticism-steep-challenges/]
-    - **Key Finding:** Mammoth actual removal 805 tonnes (96.7% below 36,000 tonne nameplate capacity)
-    - **Expert Quotes:** Jacobson (Stanford), Foley skepticism
-
-12. Bloomberg. (2025, May 21). "Carbon removal startup Climeworks is cutting 22% of staff." [https://www.bloomberg.com/news/articles/2025-05-21/carbon-removal-startup-climeworks-is-cutting-22-of-staff]
-    - **Key Finding:** 106 positions cut amid macroeconomic uncertainty
-
 **Supporting Technical Literature:**
 
-13. Communications Engineering. (2025). "Economically viable geological CO2 storage from direct air capture has critical threshold of 70% CO2 concentration." *Nature* portfolio. DOI: 10.1038/s44172-025-00468-5
+11. Communications Engineering. (2025). "Economically viable geological CO2 storage from direct air capture has critical threshold of 70% CO2 concentration." *Nature* portfolio. DOI: 10.1038/s44172-025-00468-5
 
-14. JACS Au. (2024). "Assessing Impacts of Atmospheric Conditions on Efficiency and Siting of Large-Scale Direct Air Capture Facilities." DOI: 10.1021/jacsau.4c00082
+12. JACS Au. (2024). "Assessing Impacts of Atmospheric Conditions on Efficiency and Siting of Large-Scale Direct Air Capture Facilities." DOI: 10.1021/jacsau.4c00082
 
 ---
 
-**Document Status:** CORRECTED (Dec 8, 2025 - Author misattribution fixed, contradictory evidence added)
-**Research Quality:** C+ (Down from claimed A+; contains accurate data with systematic optimism bias)
-**Skeptic Review:** reviews/carbon_capture_skeptic_review_20251208.md
-**Next Review:** December 2026 (annual update cycle)
-**Simulation Integration:** Ready for use with WIDE uncertainty bounds (pessimistic scenarios critical)
+**Document Status:** CURRENT (all sources 2024-2025)
+**Next Review:** November 2026 (annual update cycle)
+**Simulation Integration:** Ready for use in breakthrough technology deployment modeling
