@@ -18,16 +18,39 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 ## 🚀 Project Status
 
-**🟢 STABLE** (December 3, 2025)
+**🟢 STABLE** (December 10, 2025)
 
 **SYSTEM HEALTH:**
-- **Research Quality:** A- (68.8% sources 2024-2025, peer-reviewed foundation, zero critical gaps) ✅ EXCELLENT
-- **Research Currency:** ✅ EXCELLENT (all simulation-critical files updated within 14 days, autonomous system working effectively)
-- **Implementation Fidelity:** A- (assertion coverage 97.2%, 24 integration tests for CoordinatedDeploymentPhase) ✅ EXCELLENT
-- **Architecture Health:** A- (0 CRITICAL/HIGH, 1 new HIGH, 3 MEDIUM non-urgent, test coverage 82.34%) ✅ EXCELLENT
-- **System Trajectory:** 🟢 MAINTENANCE MODE (16 consecutive stable sessions 34-51, autonomous monitoring active)
+- **Research Quality:** C+ (76.9% sources 2024-2025, peer-reviewed foundation, zero critical gaps) ✅ PASS
+- **Research Currency:** ✅ EXCELLENT (all simulation-critical files current, autonomous validation working)
+- **Implementation Fidelity:** A- (assertion coverage 97.2%, energy budget integration verified) ✅ EXCELLENT
+- **Architecture Health:** B+ (0 CRITICAL/HIGH, 1 MEDIUM non-urgent, 1 LOW cleanup) ✅ EXCELLENT
+- **System Trajectory:** 🟢 MAINTENANCE MODE (autonomous monitoring active, fallback workflows operational)
 
 **Recent Major Achievements:**
+
+**Dec 10: Session 66 - Roadmap Gardening + Architecture/Research Audits** (commits b26a3be3)
+- **Fallback Workflow Audits:** Architecture and research review cycles run during autonomous monitoring
+  - **Architecture Integration Review (30-day):** Grade B+ (0 CRITICAL/HIGH, 1 new MEDIUM M-1, 1 LOW L-1)
+    - H-1 Energy Budget Integration: VERIFIED COMPLETE
+    - H-2 Duplicate Energy Calculation: VERIFIED COMPLETE
+    - M-1 Dual Energy Constraint Systems: powerGeneration.ts vs EnergyBudgetPhase.ts (non-urgent)
+    - L-1 Duplicate Tech Category Mapping: Extract to shared utility (low priority cleanup)
+  - **Research Source Audit:** Grade C+ (76.9% sources 2024-2025, aging corpus but no critical gaps)
+    - Core simulation systems: 52/67 sources (77.6%) from 2024-2025
+    - Climate systems remain excellent (91.7% currency)
+    - AI systems degrading gracefully (70.4% → 69.2%, still passing)
+- **Sleeper Agent Research Debate (M-8):** Critical evaluation of 7.5% sleeper agent rate parameter
+  - **Finding:** 7.5% rate has NO direct research source (modeling assumption, not empirical)
+  - **Verdict:** Defensible as conservative choice but must be documented as TIER 3 BRONZE
+  - **Action:** Updated documentation to clarify epistemic status (modeling assumption vs research-backed)
+  - See: `reviews/sleeper_agent_research_debate_20251210.md`
+- **Roadmap Gardening:** Archived completed milestones, updated Progress Summary
+- 📄 **Reviews:**
+  - `reviews/architecture_integration_review_20251210.md` (Grade B+)
+  - `reviews/research_source_audit_20251210.md` (Grade C+)
+  - `reviews/sleeper_agent_research_debate_20251210.md` (M-8 parameter evaluation)
+  - `docs/implementation-history/session_66_roadmap_gardening_20251210.md`
 
 **Dec 9: Session 63 - Research Audit Follow-up + CRITICAL Tipping Cascade Fix** (commits 582f74e5, f317c17c, c7114681)
 - **Research Audit Follow-up (HIGH Priority):** 3 parameter justification gaps from Nov 29 audit addressed
@@ -52,7 +75,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - 📄 **Research:** `research/REGRESSION_FIX_amoc_amazon_20251209.md`
 - **Energy Budget Integration (H-1, H-2):** Architecture review follow-up completed
   - Fixed duplicate energy calculation in ClimateDeploymentPhase (now consumes allocations from EnergyBudgetPhase)
-  - Single source of truth: EnergyBudgetPhase (order 12.4) calculates, others consume
+  - Single source of truth: EnergyBudgetPhase (order 12.75) calculates, others consume
   - 📄 **Docs:** `docs/implementation-history/energy_budget_integration_fixes_20251209.md`
 - **Research Quality:** Grade B+ (recent work A+, legacy corpus C due to time passage)
   - Recent additions: Regional death rates (UN WPP 2024), radiation modeling (ICRP 103, BEIR VII)
@@ -2678,7 +2701,7 @@ This section documents **critical parameter uncertainty findings** identified du
 
 **Integration Architecture:**
 ```
-Phase 12.4:  EnergyBudgetPhase (allocations + effectiveness multipliers)
+Phase 12.75: EnergyBudgetPhase (allocations + effectiveness multipliers)
 Phase 12.5:  TechTreePhase (deployed techs)
 Phase 12.8:  ClimateDeploymentPhase (consumes allocations)
 Phase 13+:   Cleanup/effects systems (consume allocations)
@@ -2741,6 +2764,8 @@ Phase 13+:   Cleanup/effects systems (consume allocations)
    - Explicit comment: "DERIVED ESTIMATE (Hubinger et al. 2024)"
    - Uncertainty bounds: ±50% (range 3.75%-11.25%)
    - Research: Hubinger et al. (2024) - sleeper agent emergence in frontier models
+   - **Epistemic status:** TIER 3 BRONZE (modeling assumption, not empirical prevalence data)
+   - Note: Hubinger et al. demonstrates CAPABILITY, not PREVALENCE. 7.5% is conservative modeling choice.
 
 2. **Sandbagging level (0.4-0.6)** - `evaluationStrategy.ts:74`
    - Added citations: van der Weij et al. (2024), Meinke et al. (2024)
@@ -7829,7 +7854,7 @@ for each category:
 
 **Phase Execution Order:**
 ```
-12.4:  EnergyBudgetPhase       → Calculates allocations (SINGLE SOURCE OF TRUTH)
+12.75: EnergyBudgetPhase       → Calculates allocations (SINGLE SOURCE OF TRUTH)
 12.5:  TechTreePhase           → Populates deployed technologies
 12.8:  ClimateDeploymentPhase  → Consumes allocations
 13+:   Cleanup/Effects phases  → Consume allocations
@@ -8010,7 +8035,7 @@ energyBudget.allocations.novelEntitiesCleanup:
 ## Integration with Existing Systems
 
 **Technology Tree (`tech-tree` phase, order 12.5)**
-- EnergyBudgetPhase runs at order 12.75 (immediately after tech tree)
+- EnergyBudgetPhase runs at order 12.75 (after tech-tree 12.5, meaning-renaissance 12.7, before ClimateDeploymentPhase 12.8)
 - ClimateDeploymentPhase runs at order 12.8 (after energy allocation)
 - Reads deployed technologies, energy system state
 - Updates technology deployment levels based on phased progression AND energy constraints
