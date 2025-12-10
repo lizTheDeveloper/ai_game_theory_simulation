@@ -288,14 +288,21 @@ economy.detectionRisk = 0.5;  // 50% baseline risk
 - Frontiers in Climate (2024-2025). Technical energy analysis [Peer-reviewed]
 - Canary Media (2024). Gen 3 technology cost reduction [Industry coverage]
 
+**Corrections Applied (Dec 8, 2025):**
+1. ✅ Fix author attribution: Tan → Ampah throughout (5 instances corrected)
+2. ✅ Add contradictory evidence section (Mongabay, expert quotes) - New section 6.5 added
+3. ✅ Add May 2025 industry update (layoffs) - Bloomberg source added
+4. ✅ Mark Gen 3 claims as [UNVERIFIED INDUSTRY DATA] - Verification notes added
+5. ⏸️ Reconcile energy requirement data - Deferred (requires deeper analysis)
+6. ✅ Update Monte Carlo range to 25-50 years - Recommendation added to executive summary
+
 **Enhancement Opportunities (Optional - Not Blocking):**
 - ⚠️ Energy coupling - Model effectiveness reduction if clean energy unavailable
 - ⚠️ Water constraints - Regional deployment penalties in water-stressed solar belts
 - ⚠️ Cost dynamics - Accelerate deployment if carbon price > $200/tonne
 
-**Recommendation:** ✅ APPROVED - Proceed with Monte Carlo N≥10
-
-**Next Steps:** Monte Carlo validation (no parameter fixes needed)
+**Status:** CORRECTIONS COMPLETE - Ready for Monte Carlo validation N≥10 with 25-50 year range
+**Grade After Corrections:** C+ (acceptable for simulation with skeptical framing)
 
 ---
 
