@@ -90,45 +90,35 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 ### MEDIUM Priority
 
 #### Nitrogen-Food Phase 3 Technologies
-**Status:** ✅ VERIFIED - Grade B+ (APPROVED with minor corrections)
+**Status:** ⚠️ READY FOR VALIDATION
 **Change:** (pending - needs change folder created)
 **Commit:** cd1e83a
 **Context:** 6 new nitrogen reduction technologies added to tech tree
-**Verification File:** `research/verification_cd1e83a_nitrogen_phase3_20251208.md`
+**Verification File:** `research/verification_cd1e83a_20251121.md`
 
-**Verification Complete (Dec 8, 2025):**
-- **Grade:** B+ (Range: B to A-, all technologies verified)
-- **Reviewers:** Cynthia (super-alignment-researcher)
-- **Blocking Issues:** 0
+**Technologies to Verify:**
+1. Rhizosphere Engineering (15-40% N reduction, TIER 1, commercial)
+2. Nitroplast Integration (50-70% reduction, breakthrough, Coale et al. 2024)
+3. Precision Fermentation (30-50% agri N reduction, emerging)
+4. Regional Nitrogen Policies (20% efficiency via redistribution)
+5. Soil Health Restoration (20-40% NUE improvement)
+6. Integrated Nutrient Management (25-45% efficiency gains)
 
-**✅ All 6 Technologies Verified:**
-1. Rhizosphere Engineering - Grade A- (15-40% N reduction, field-demonstrated)
-2. Nitroplast Integration - Grade B (50-70% reduction, Coale et al. 2024 *Science* ACCURATE, cereal application speculative)
-3. Precision Fermentation - Grade A- (30-50% agri N reduction, commercial products exist)
-4. Regional Nitrogen Policies - Grade A (20% efficiency, Nature Sustainability 2024)
-5. Soil Health Restoration - Grade A- (20-40% NUE, USDA + peer-reviewed)
-6. Integrated Nutrient Management - Grade B+ (25-45% efficiency, systematic review)
+**Key Claims:**
+- Effectiveness ranges (15-40%, 20-45%, etc.)
+- Co-benefits quantification (soil health, biodiversity, carbon)
+- Timeline assumptions (R&D + deployment)
+- Citation: Coale et al. 2024 *Science* for nitroplasts
 
-**Key Findings:**
-- Coale et al. 2024 *Science* citation for nitroplasts: ✅ ACCURATE (April 12, 2024)
-- Effectiveness ranges: ✅ EMPIRICALLY GROUNDED (2024-2025 sources)
-- Timeline assumptions: ✅ RESEARCH-DEFENSIBLE
-- Technologies complementary (multiplicative, not additive): ✅ CONFIRMED
-
-**Optional Improvements (not blocking):**
-1. Clarify nitroplast uncertainty (marine algae proven, cereal application aspirational)
-2. Add explicit failure modes for each technology
-3. Cross-reference recent 2025 research files
-
-**Next Steps:** Monte Carlo validation (N≥10) → Move to "Recently Resolved"
+**Next Steps:** Two-layer verification → Parameter adjustments if needed → Monte Carlo validation
 
 ---
 
 #### Carbon Capture Deployment Parameters
 **Status:** ✅ CORRECTED - Ready for Implementation (Dec 8, 2025)
 **Change:** (pending - needs change folder created)
-**Commit:** c52826e (original), edfb85b1, 7376fc77 (corrections applied)
-**Context:** Comprehensive DAC research (625 lines, 12 sources, corrected from A+ to B-)
+**Commit:** c52826e (original), 99e99472 (corrected)
+**Context:** Comprehensive DAC research (625 lines, 12 sources, claimed A+ quality)
 **Research File:** `research/carbon_capture_deployment_timelines_2025.md`
 **Verification Files:**
 - `research/VERIFICATION_carbon_capture_deployment_20251208.md` (initial)
@@ -136,107 +126,66 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 
 **Verification Complete (Dec 8, 2025):**
 - **Initial Grade:** B- (super-alignment-researcher)
-- **Final Grade:** B- (after corrections applied)
-- **Reviewers:** Cynthia (researcher), Sylvia (skeptic), Autonomous Researcher (corrections)
+- **Final Grade:** C+ (research-skeptic downgrade)
+- **Reviewers:** Cynthia (researcher), Sylvia (skeptic)
 
-<<<<<<< HEAD
-**CRITICAL Issues Found → FIXED (Dec 8, 2025):**
-1. ✅ **Author Misattribution (BLOCKING):** "Tan, S., et al." → "Ampah, J.D., et al." throughout (verified via PMC11283554)
-2. ✅ **DOI Corrected:** 10.1038/s41467-024-50637-2 → 10.1038/s41467-024-50594-5
-3. ✅ **Systematic Optimism Bias:** Section 1.4 added with contradictory evidence
-4. ✅ **Gen 3 Claims Unverified:** Marked [UNVERIFIED INDUSTRY DATA] throughout, Canary Media disclaimer added
-5. ✅ **Energy Data Conflicts:** Documented as uncertainty range in research file (2-600x discrepancy, requires Monte Carlo)
+**CRITICAL Issues Found:**
+1. **Author Misattribution (BLOCKING):** "Tan, S., et al." cited 5x - actual author is Ampah, J.D., et al. (verified via PMC)
+2. **Systematic Optimism Bias:** Zero skeptical perspectives, all counterevidence omitted
+3. **Gen 3 Claims Unverified:** Canary Media explicitly states "not independently confirmed"
+4. **Energy Data Conflicts:** 2-3 TWh vs 4-10 TWh vs 1,200 TWh per Gt/yr (2-600x disagreement)
 
-**Contradictory Evidence ADDED (Section 1.4 & Section 9):**
-- ✅ Mongabay investigation: Mammoth 805 tonnes actual vs 36,000 capacity (96.7% gap)
-- ✅ Expert skepticism: Jacobson (Stanford), Foley (Project Drawdown) quotes
-- ✅ May 2025 Climeworks layoffs: 22% workforce reduction (106 positions)
-- ✅ Infrastructure bottleneck: 96,000km pipeline requirement for 1 Gt/yr
-- ✅ AI energy competition context
+**Missing Contradictory Evidence (Dec 2024 - May 2025):**
+- Mongabay investigation: Mammoth actual removal 805 tonnes (96.7% below capacity)
+- Expert skepticism: Jacobson (Stanford): "greenwashing technology"
+- May 2025 Climeworks layoffs: 22% workforce cut
+- Infrastructure: 96,000km pipeline needed for 1 Gt/yr
 
 **Current Implementation:**
 - `src/simulation/techTree/deploymentTimescales.ts:60` - DAC: 300 months (25 years)
-- Assessment: ACCEPTABLE for base case; recommend Monte Carlo 25-50 years to capture uncertainty
+- Assessment: ACCEPTABLE but at optimistic end; recommend Monte Carlo 25-50 years
 
-**Corrections Applied (Commit edfb85b1):**
-1. ✅ Author attribution fixed: Tan → Ampah (all 5+ instances)
-2. ✅ Contradictory evidence sections added (Section 1.4, Section 9)
-3. ✅ May 2025 industry update added (Climeworks layoffs, funding challenges)
-4. ✅ Gen 3 claims marked [UNVERIFIED] throughout
-5. ✅ New references added (Mongabay, Bloomberg, CNN, Sifted)
-6. ✅ Frontmatter updated (verification_status, research_quality, correction tracking)
+**Corrections Applied (Dec 8, 2025):**
+1. ✅ Fixed author attribution: Tan → Ampah throughout (5 instances + references)
+2. ✅ Added Section 8: Contradictory Evidence (Mongabay, Jacobson, Foley, May 2025 layoffs, pipeline bottlenecks, AI competition)
+3. ✅ Added May 2025 industry update (Climeworks 22% layoffs, funding uncertainty)
+4. ✅ Marked Gen 3 claims as [UNVERIFIED INDUSTRY DATA] (3 instances)
+5. ✅ Reconciled energy requirement data (added explicit ±50% Monte Carlo variance warning)
+6. ✅ Updated frontmatter: A+ → C+ (Conditional Pass)
 
-**Remaining Tasks:**
-1. ⚠️ Monte Carlo validation (N≥10) with deployment range 25-50 years (300-600 months)
-2. ⚠️ Energy requirement reconciliation (document 2-1200 GJ/tonne range as uncertainty)
+**Research-Skeptic Verdict:** CONDITIONAL PASS → Production-ready after corrections applied
 
-**Next Steps:** Monte Carlo parameter sweep → Move to "Recently Resolved"
-=======
-**CRITICAL Issues Found → FIXED:**
-1. ✅ **Author Misattribution:** "Tan, S." → "Ampah, J.D." (5 citations corrected)
-2. ✅ **Contradictory Evidence Added:** New Section 6 with Mongabay investigation, expert skepticism
-3. ✅ **Gen 3 Claims Marked:** [UNVERIFIED INDUSTRY CLAIM] tags added
-4. ✅ **Energy Conflicts Documented:** 2-600x range noted with "fundamental uncertainty" warning
-5. ✅ **Research Quality Updated:** A+ → C+ (systematic optimism bias documented)
-
-**Corrections Applied (Commit 7376fc77):**
-1. ✅ Fixed author attribution throughout (Tan → Ampah)
-2. ✅ Added Section 6: "Contradictory Evidence and Industry Skepticism"
-   - Mongabay: 805 tonnes actual vs 36,000 nameplate (96.7% gap)
-   - Bloomberg: 22% workforce cut (May 2025)
-   - Expert quotes: Jacobson, Foley
-   - Infrastructure bottleneck: 96,000km pipeline
-   - Energy requirement conflicts: 2-600x range
-3. ✅ Marked Gen 3 claims as [UNVERIFIED]
-4. ✅ Updated frontmatter and document status
-5. ⚠️ Energy reconciliation: Documented as "fundamental uncertainty" (requires future research)
-6. ⚠️ Monte Carlo range update: Deferred to implementation phase
-
-**Current Implementation:**
-- `src/simulation/techTree/deploymentTimescales.ts:60` - DAC: 300 months (25 years)
-- **Assessment:** ACCEPTABLE at optimistic end
-- **Recommendation:** Monte Carlo range 25-50 years with WIDE variance (±50-70%)
-
-**Next Steps:** Implementation approved → Monte Carlo N≥10 with pessimistic scenarios mandatory
->>>>>>> origin/auto/researcher-20251208_223001
+**Next Steps:** Monte Carlo validation (N≥10) with 25-50 year deployment range → Move to "Recently Resolved"
 
 ---
 
 #### AI Infrastructure Resources 2025 Update
-**Status:** ✅ VERIFIED - Grade B+ (APPROVED for implementation)
+**Status:** ⚠️ READY FOR VALIDATION
 **Change:** (pending - needs change folder created)
 **Commit:** dbf1438
 **Context:** 2025 peer-reviewed sources for AI data center resource consumption
 **Research File:** `research/ai-infrastructure-resources_20251019.md` (updated)
 **Verification File:** `research/verification_dbf1438_20251123.md`
 
-**Verification Complete (Dec 8, 2025):**
-- **Grade:** B+ (high-quality peer-reviewed sources, all claims verified)
-- **Reviewers:** Cynthia (super-alignment-researcher)
-- **Blocking Issues:** 0
+**Sources to Verify:**
+- Cornell/Nature Sustainability 2025: 2030 water (731-1,125M m³/yr), carbon (24-44M tonnes CO₂/yr)
+- MIT/Lawrence Berkeley Lab 2025: 7-8× energy multiplier, 183 TWh U.S. data centers (2024)
+- IEA 2025: Global water 560B→1,200B liters (2024→2030)
 
-**✅ All Sources Verified:**
-- Nature Sustainability 2025 (Xiao & You, Cornell): ✅ EXISTS (DOI: 10.1038/s41893-025-01681-y)
-- Water 731-1,125M m³/yr by 2030: ✅ ACCURATE
-- Carbon 24-44M tonnes CO₂/yr by 2030: ✅ ACCURATE
-- MIT 7-8× energy multiplier: ✅ VERIFIED
-- IEA water 560B→1.2T liters: ✅ VERIFIED
-- Arizona 7.4% state power: ✅ VERIFIED (actual: 7.43%)
-- Mitigation 73% carbon, 86% water: ✅ VERIFIED
+**Key Claims:**
+- 2030 water projections: 731-1,125M cubic meters/year
+- 2030 carbon projections: 24-44 million metric tons CO₂/year
+- AI training clusters 7-8× energy multiplier
+- Geographic optimization: Midwest "windbelt" optimal, Arizona 7.4% state power
+- Mitigation potential: 73% carbon reduction, 86% water reduction
 
-**Minor Discrepancies (not blocking):**
-- Berkeley Lab 176 TWh (2023) vs file's 183 TWh (2024) - minor temporal difference
-- GPT-3 CO2 552 vs 502 tonnes - due to grid carbon intensity assumptions
+**Proposed Parameters:**
+- trainingWaterL: 700K-10M L per training run
+- inferenceWaterL: 2-5M L/month at scale
+- aiTrainingMultiplier: 7.5 (MIT: 7-8×)
+- Geographic modifiers: desert 2.5×, nordic 0.3×, windbelt 0.7× carbon
 
-**No fabrications, no author misattributions detected.**
-
-**Approved Parameters (research-backed):**
-- trainingWaterL: 700K-10M L per training run ✅
-- inferenceWaterL: 2-5M L/month at scale ✅
-- aiTrainingMultiplier: 7.5 (MIT: 7-8×) ✅
-- Geographic modifiers: desert 2.5×, nordic 0.3×, windbelt 0.7× carbon ✅
-
-**Next Steps:** Implementation approved → Monte Carlo N≥10 after implementation → Move to "Recently Resolved"
+**Next Steps:** Two-layer verification → Parameter update decision → Monte Carlo if implemented
 
 ---
 
