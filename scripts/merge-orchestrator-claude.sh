@@ -1,6 +1,7 @@
 #!/bin/bash
 # Merge Orchestrator - Claude Code Agent
 # Actually fixes TypeScript errors instead of just failing
+export PATH="$HOME/.local/bin:$PATH"
 
 set -e
 cd ~/ai_game_theory_simulation
