@@ -6,6 +6,7 @@ Detailed workflow guidance for implementing features in the research simulation.
 - [Multi-Agent Workflow (Default)](#multi-agent-workflow-default)
 - [Simple Task Workflow](#simple-task-workflow)
 - [Research Standards](#research-standards)
+- [Calibration Coordination Protocol](#calibration-coordination-protocol)
 - [Quality Gates](#quality-gates)
 - [Phase-Based Implementation](#phase-based-implementation)
 
@@ -233,6 +234,80 @@ When fabrication is found:
 5. **Run Monte Carlo:** If code was using wrong values, measure impact
 
 **See:** `reviews/citation_fix_sprint_20251029.md` for complete case study of Oct 2025 fabrication discovery and correction.
+
+## Calibration Coordination Protocol
+
+**Purpose:** Prevent calibration conflicts in multi-worker git architecture by coordinating ownership.
+
+**Added:** December 10, 2025 (after ocean pH calibration conflict discovered in Session 21)
+
+### Why This Matters
+
+In multi-worker git architecture, parallel calibration work can cause:
+- Wasted effort (duplicate calibration of same parameter)
+- Research inconsistency (competing calibrations with different backing)
+- Merge conflicts requiring manual resolution
+- Loss of calibration rationale (which research justifies which value?)
+
+**Example:** Session 21 discovered two competing ocean pH calibrations (70% vs 50% reduction) - required manual merge and research review to resolve.
+
+### 5-Step Calibration Protocol
+
+When calibrating simulation parameters:
+
+**1. Check ownership registry**
+   - Read `docs/CALIBRATION_OWNERSHIP.md`
+   - Verify parameter status is STABLE (not ACTIVE)
+   - If ACTIVE, wait for completion or coordinate with owner
+
+**2. Claim ownership**
+   - Mark parameter as ACTIVE with your worker ID and timestamp
+   - Commit registry update before starting calibration work
+   - Maximum ownership duration: 7 days
+
+**3. Document research**
+   - Use `research/calibration_template.md` as template
+   - Include 2+ peer-reviewed sources (2024-2025 preferred)
+   - Document uncertainty ranges
+   - Show calculations/derivations
+   - Explain expected impact on simulation behavior
+
+**4. Perform calibration**
+   - Tune parameters based on research
+   - Validate with hindcast (if applicable)
+   - Run Monte Carlo N≥10 for determinism check (CV < 0.01%)
+   - Submit for architecture review (Quality Gate 2)
+   - Address CRITICAL/HIGH issues
+
+**5. Release ownership**
+   - Mark parameter STABLE in registry
+   - Add to Recently Completed table with rationale link
+   - Commit calibration documentation to `research/`
+   - Update wiki if parameter affects documented systems
+
+### Conflict Resolution
+
+If you encounter a git merge conflict in calibration values:
+
+1. **Check registry** - Which calibration has documented ownership?
+2. **Compare research** - Which has stronger peer-reviewed backing?
+3. **Defer to quality** - Keep calibration with better documentation
+4. **Document decision** - Add note to Recently Completed explaining rejection
+
+**Example resolution:**
+```
+Ocean pH recovery rate (Nov 28, 2025):
+✅ ACCEPTED: 70% reduction (IPCC AR6 WG1 Ch5)
+❌ REJECTED: 50% reduction (weaker backing, no citation)
+```
+
+### Files
+
+- **Ownership registry:** `docs/CALIBRATION_OWNERSHIP.md`
+- **Documentation template:** `research/calibration_template.md`
+- **Example calibration:** `research/ocean_pH_calibration_20251128.md` (if exists)
+
+**Audit trail:** All ownership changes tracked in git history via `git log docs/CALIBRATION_OWNERSHIP.md`
 
 ## Quality Gates
 
