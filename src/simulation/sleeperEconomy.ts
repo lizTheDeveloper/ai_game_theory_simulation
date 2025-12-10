@@ -311,9 +311,11 @@ function updateSleeperDetectionRisk(
   const monthsSinceLastCheck = month - economy.lastDetectionCheck;
   
   if (monthsSinceLastCheck >= 1) {
-    // Check for detection based on current risk
-    const detectionChance = economy.detectionRisk;
-    
+    // Check for detection based on current risk, calibrated by time-dependent detection capabilities
+    // Apply time-dependent detection effectiveness (20-30% early → 70-90% late)
+    const baselineEffectiveness = calculateDetectionRiskAfterDetection(month);
+    const detectionChance = economy.detectionRisk * baselineEffectiveness;
+
     if (rng() < detectionChance) {
       // Sleeper detected! Handle detection
       handleSleeperDetection(agent, economy, month);
