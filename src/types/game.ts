@@ -134,10 +134,15 @@ export type {
 export type {
   QuantumSystemState,
   QuantumComputingState,
-  AlgorithmSupport,
-  CryptographyState,
-  PQCTransitionState
+  QuantumAlgorithmSupport,
+  CryptographySecurityState,
+  CryptoStatus,
+  PostQuantumTransitionState,
+  QuantumAIIntegrationState
 } from './quantum-computing';
+
+export { createInitialQuantumState } from './quantum-computing';
+
 
 export type {
   IrreversibilityState,
