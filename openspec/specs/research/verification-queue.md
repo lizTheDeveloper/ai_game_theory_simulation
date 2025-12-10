@@ -240,17 +240,17 @@ economy.detectionRisk = 0.5;  // 50% baseline risk
 5. **Soil Health Restoration (20-40% NUE improvement)** - Gu 2023 shows 10-80% range, but "soil health" term vague
 6. **Integrated Nutrient Management (25-45% efficiency)** - Gu 2023 11-measure package supports range
 
-**CRITICAL Issue Found:**
-- ❌ **Nitroplast Timeline Error:** Tech tree shows `minMonth: 60` (5 years) but research consensus is 2040s-2050s deployment (15-25 years minimum)
-- **Required Fix:** Change `minMonth: 60` → `minMonth: 180` to match research timeline
+**✅ CRITICAL Issue RESOLVED (Nov 16, 2025):**
+- ✅ **Nitroplast Timeline Fixed:** Tech tree correctly shows `minMonth: 180` (15 years) matching research consensus (commit 3152522c)
+- ✅ **Research Citations Added:** Tech tree includes Coale et al. 2024 citation and AAAS Newcomb Cleveland Prize 2025
 
 **Recommended Actions:**
-1. Fix nitroplast timeline (CRITICAL - blocks Monte Carlo)
-2. Add research citations to tech tree comments
-3. Clarify vague terms ("Soil Health" → "Precision Agriculture NUE" or add explicit sources)
-4. Proceed with Monte Carlo validation after timeline fix
+1. ~~Fix nitroplast timeline~~ ✅ DONE (Nov 16, 2025)
+2. ✅ Research citations added to tech tree comments
+3. Clarify vague terms ("Soil Health" → "Precision Agriculture NUE" or add explicit sources) - PENDING
+4. ✅ Ready for Monte Carlo validation N≥10
 
-**Next Steps:** Timeline fix required before implementation → Monte Carlo N≥10
+**Next Steps:** Monte Carlo N≥10 validation ready to proceed
 
 ---
 
