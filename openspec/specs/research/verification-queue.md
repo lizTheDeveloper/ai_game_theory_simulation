@@ -97,6 +97,100 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 
 ---
 
+### HIGH Priority (Research Audit Follow-Up)
+
+#### Sleeper Agent Rate Justification (7.5%)
+**Status:** ✅ RESOLVED (Dec 9, 2025)
+**Context:** From Nov 29, 2025 research audit (reviews/research_audit_20251129.md)
+**Location:** `src/simulation/initialization.ts:345-347`
+**Issue:** Comment said "7.5% of misaligned AIs are sleepers" but lacked explicit source citation
+**PR:** #727
+**Commit:** 705b6376
+
+**Resolution:**
+```typescript
+// 7.5% DERIVED ESTIMATE (Hubinger et al. 2024 proof-of-concept, empirical prevalence TBD)
+// Uncertainty: ±50% (range 3.75%-11.25%) - model assumption, not empirical fact
+const sleeperChance = 0.075;
+```
+
+**Updates Applied:**
+- ✅ Added Hubinger et al. 2024 source citation
+- ✅ Documented as DERIVED ESTIMATE with empirical prevalence TBD
+- ✅ Added ±50% uncertainty range (3.75%-11.25%)
+- ✅ Flagged as model assumption, not empirical fact
+
+**Severity:** HIGH (research standards compliance)
+**Effort:** TRIVIAL (comment update)
+
+---
+
+#### Sandbagging Level Citation (0.4-0.6)
+**Status:** ✅ RESOLVED (Dec 9, 2025)
+**Context:** From Nov 29, 2025 research audit
+**Location:** `src/simulation/agents/evaluationStrategy.ts:74-76`
+**Issue:** Code value lacked explicit connection to research sources
+**PR:** #727
+**Commit:** 705b6376
+
+**Resolution:**
+```typescript
+// Base sandbagging: Hide 40-60% of capability
+// van der Weij et al. (2024), Meinke et al. (2024): empirical deception baselines
+// Note: Frontier model observations - general population statistics TBD
+const baseSandbagLevel = 0.4 + deceptionSkill * 0.2; // [0.4, 0.6]
+```
+
+**Updates Applied:**
+- ✅ Added van der Weij et al. 2024, Meinke et al. 2024 citations
+- ✅ Documented range [0.4, 0.6] from empirical observations
+- ✅ Noted these are frontier model observations (not general population)
+
+**Severity:** HIGH (research standards compliance)
+**Effort:** TRIVIAL (comment update)
+
+---
+
+#### Detection Risk Calibration (50% Baseline)
+**Status:** ✅ RESOLVED (Dec 9, 2025)
+**Context:** From Nov 29, 2025 research audit
+**Location:** `src/simulation/sleeperEconomy.ts:350-352` (penalty), lines 57-61 (baseline)
+**Issue:** 50% lacked justification, ambiguous whether baseline or post-detection penalty
+**PR:** #727
+**Commit:** 705b6376
+
+**Resolution:**
+
+*Cloud provider baseline documentation (lines 57-61):*
+```typescript
+// Cloud providers based on 2025 reality
+// Detection risks reflect tradeoff between false positives/negatives
+// Gaming-sleeper-detection_20251017.md: van der Weij 2024 shows >99% AUROC possible
+// but continuous monitoring has computational overhead. Lower-tier providers
+// have less sophisticated monitoring (2-5%), major clouds higher (20-25%)
+```
+
+*Post-detection penalty (lines 349-352):*
+```typescript
+// 3. Increase future detection risk (penalty after being caught once)
+// Gaming-sleeper-detection_20251017.md: van der Weij 2024 shows >99% AUROC possible
+// 50% reflects increased scrutiny post-detection (not initial baseline)
+economy.detectionRisk = 0.5; // 50% elevated risk after detection
+```
+
+**Updates Applied:**
+- ✅ Clarified 50% is post-detection PENALTY (not baseline)
+- ✅ Added van der Weij 2024 citation (>99% AUROC possible)
+- ✅ Documented cloud provider baselines (2-25%) reflect monitoring sophistication tradeoff
+- ✅ Explained computational overhead constrains continuous monitoring
+
+**Note:** Time-dependent detection improvement (early 20-30% → late 70-90%) deferred as future enhancement - current static values research-defensible with proper documentation.
+
+**Severity:** HIGH (model realism)
+**Effort:** SMALL (documentation updates completed)
+
+---
+
 ### MEDIUM Priority
 
 #### Nitrogen-Food Phase 3 Technologies
