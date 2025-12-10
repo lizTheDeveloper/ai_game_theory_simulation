@@ -18,16 +18,44 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 ## 🚀 Project Status
 
-**🟢 STABLE** (December 3, 2025)
+**🟢 STABLE** (December 10, 2025)
 
 **SYSTEM HEALTH:**
-- **Research Quality:** A- (68.8% sources 2024-2025, peer-reviewed foundation, zero critical gaps) ✅ EXCELLENT
-- **Research Currency:** ✅ EXCELLENT (all simulation-critical files updated within 14 days, autonomous system working effectively)
-- **Implementation Fidelity:** A- (assertion coverage 97.2%, 24 integration tests for CoordinatedDeploymentPhase) ✅ EXCELLENT
-- **Architecture Health:** A- (0 CRITICAL/HIGH, 1 new HIGH, 3 MEDIUM non-urgent, test coverage 82.34%) ✅ EXCELLENT
-- **System Trajectory:** 🟢 MAINTENANCE MODE (16 consecutive stable sessions 34-51, autonomous monitoring active)
+- **Research Quality:** B- (64.9% sources <3yr, bimodal: A+ recent work + C+ legacy backlog) ✅ GOOD
+- **Research Currency:** ✅ EXCELLENT (recent work 90-100% from 2024-2025, autonomous monitoring active)
+- **Implementation Fidelity:** A- (assertion coverage 97.2%, integration test coverage expanding) ✅ EXCELLENT
+- **Architecture Health:** A- (0 CRITICAL/HIGH issues, all recent integrations verified) ✅ EXCELLENT
+- **System Trajectory:** 🟢 PRODUCTION-READY (quality gates passed, test coverage 82.15%, all HIGH priority complete)
 
 **Recent Major Achievements:**
+
+**Dec 10: Session 65 - Quality Gate Validation + CRITICAL Regression Fix** (commits 9499b130, 4259d54a, b88584c2)
+- **Architecture Integration Review:** Grade A- (30-day review, 0 CRITICAL/HIGH issues)
+  - **Verified Complete:** M-1 dual energy, H-1 energy budget, H-2 duplicate removal, M-5 threshold uncertainty, detection risk calibration
+  - **State Propagation:** All integrations correctly implemented, no double-counting, single sources of truth maintained
+  - **MEDIUM Items:** 3 trivial cleanup items (duplicate method, phase order docs, negligible O(n) operations)
+  - 📄 **Review:** `reviews/architecture_integration_review_20251210_final.md`
+- **Research Source Validation Audit:** Grade B- (64.9% sources <3yr, 30.7% backlog >5yr)
+  - **Bimodal Distribution:** Recent work (Nov-Dec 2025) = A+ (90-100% currency), Legacy corpus = C+ (53.4% currency)
+  - **Validated Parameters:** AI doubling (8mo), wet bulb (30.5°C), sleeper agents (7.5% ±50%), sandbagging (0.4-0.6)
+  - **4 Legacy Files Need Updates:** food security (2001), catastrophe recovery (2008), competitive alignment (2018), crisis mitigation (2006)
+  - **No Critical Gaps:** All active simulation parameters research-backed
+  - 📄 **Audit:** `research/source_validation_audit_20251210.md`
+- **CRITICAL Regression Fix:** AMOC → Amazon threshold lowering (commit 4259d54a)
+  - **Problem:** Dec 9 research fix removing AMOC → Amazon destabilizing interaction was reverted in merge conflict
+  - **Detection:** Research audit identified regression (second occurrence after Dec 8 M-5 revert)
+  - **Fix:** Re-applied exact same fix from commits 3f3118de + 7130c7e6 (remove interaction, add research note)
+  - **Research Basis:** 2023-2025 peer-reviewed evidence shows AMOC collapse STABILIZES Amazon (Parsons 2023, Yuan 2025, Högner 2025)
+  - **Mitigation:** Autonomous researcher now includes regression detection in audit workflow
+  - 📄 **Analysis:** `research/CRITICAL_regression_threshold_lowering_20251209.md`
+- **Completed HIGH Priority Work:**
+  - Detection risk calibration: Time-dependent model (25% early → 80% late, van der Weij 2024)
+  - Sleeper agent rate justification: 7.5% ±50% with explicit uncertainty (Hubinger 2024)
+  - Sandbagging baseline citations: 0.4-0.6 range (van der Weij 2024, Meinke 2024)
+  - Energy budget integration (H-1, H-2): Single source of truth established
+  - M-5 threshold uncertainty: Restored after Dec 8 revert (commit 6407b12d)
+- **System State:** Production-ready, all tests passing (82.15% coverage), 0 blocking issues
+- 📄 **Archival:** `docs/implementation-history/session_65_archival_20251210.md`
 
 **Dec 10: Session 66 - Quantum Computing Integration + Architecture/Research Audits** (commits 0a93a9f8, adc0a72e, 77ea78ef)
 - **Quantum Computing Integration (L-3 COMPLETE):** Fault-tolerant quantum computing breakthrough cascades
@@ -77,26 +105,28 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - `devlogs/session_66_summary_20251210.md` (autonomous worker summary)
   - `devlogs/session_66_fallback_workflows_20251210.md` (fallback workflow maintenance)
 
-**Dec 9: Session 63 - Research Audit Follow-up + CRITICAL Tipping Cascade Fix** (commits 582f74e5, f317c17c, c7114681)
-- **Research Audit Follow-up (HIGH Priority):** 3 parameter justification gaps from Nov 29 audit addressed
+**Dec 9: Session 63 - Research Audit Follow-up + AMOC Fix** (commits 582f74e5, f317c17c, c7114681, fd7694a2)
+- **Research Audit Follow-up (HIGH Priority):** Parameter justification gaps from Nov 29 audit addressed
   - **Sleeper agent rate (7.5%):** Added explicit uncertainty bounds (±50%, range 3.75%-11.25%), labeled as DERIVED ESTIMATE
     - Citation: Hubinger et al. (2024) proof-of-concept (feasibility, not prevalence)
     - Note: "empirical prevalence TBD" - no real-world data exists yet
   - **Sandbagging baseline (0.4-0.6):** Added research citations for empirical frontier model observations
     - Citation: van der Weij et al. (2024), Meinke et al. (2024)
     - Range justified from observed deception baselines in GPT-4, Claude
-  - **Detection risk (50%):** Added uncertainty note "(confidence interval TBD)"
+  - **Detection risk calibration:** Implemented time-dependent model (commit fd7694a2)
+    - Early (0-36mo): 25% detection rate (limited interpretability)
+    - Mid (36-72mo): Linear improvement 25% → 80% (methods maturing)
+    - Late (72+mo): 80% detection rate (advanced methods operational)
     - Citation: van der Weij et al. (2024) noise injection detection (>99% AUROC possible)
-    - TODO: Month-dependent improvement curve as mechanistic interpretability advances
-- **CRITICAL Tipping Cascade Fix:** AMOC-Amazon interaction regression corrected
-  - **Problem:** Merge conflict reverted Dec 8 research fix removing AMOC → Amazon destabilizing interaction
+- **AMOC-Amazon Interaction Fix:** Research-backed threshold interaction removed
+  - **Problem:** Merge conflict reverted Dec 8 research fix removing non-research-backed AMOC → Amazon destabilizing interaction
   - **Research:** 2023-2025 peer-reviewed evidence shows AMOC collapse STABILIZES Amazon (not destabilizes)
     - Parsons et al. (2023) Nature Comms: "AMOC collapse may stabilise eastern Amazonian rainforests"
     - Yuan et al. (2025) npj Climate: "increased precipitation over most of Amazon"
     - Högner et al. (2025) ERL: +4.8% rainfall per 1 Sv AMOC weakening
   - **Mechanism:** ITCZ southward shift brings MORE rain to southern Amazon
   - **Fix:** Removed AMOC → Amazon interaction (lines 506-537 in tipping-points.ts)
-  - **Grade:** D (FAILED) → B (PASS) after correction
+  - **Note:** Reverted again Dec 10 in merge conflict, re-fixed in commit 4259d54a
   - 📄 **Research:** `research/REGRESSION_FIX_amoc_amazon_20251209.md`
 - **Energy Budget Integration (H-1, H-2):** Architecture review follow-up completed
   - Fixed duplicate energy calculation in ClimateDeploymentPhase (now consumes allocations from EnergyBudgetPhase)
@@ -2751,6 +2781,45 @@ Phase 13+:   Cleanup/effects systems (consume allocations)
 
 ---
 
+**December 10, 2025 - Session 65 Quality Gate Validation (Architecture A-, Research B-)**
+
+**Achievement:** Comprehensive 30-day architecture review and research source validation audit confirmed system production-readiness with zero blocking issues.
+
+**Architecture Integration Review (Grade A-):**
+- **Scope:** November 10 - December 10, 2025 (30 days of integrations)
+- **Verified Complete:** M-1 dual energy, H-1 energy budget, H-2 duplicate removal, M-5 threshold uncertainty, detection risk calibration
+- **State Propagation:** All integrations correctly implemented with single sources of truth
+- **Issues:** 0 CRITICAL, 0 HIGH, 3 MEDIUM (trivial cleanup items)
+- **Review:** `reviews/architecture_integration_review_20251210_final.md`
+
+**Research Source Validation Audit (Grade B-):**
+- **Scope:** 590 research documents across all domains
+- **Currency:** 64.9% sources <3yr (383 files), 30.7% backlog >5yr (181 files)
+- **Bimodal Distribution:** Recent work (Nov-Dec 2025) = A+ (90-100% currency), Legacy corpus = C+ (53.4% currency)
+- **Validated Parameters:** AI doubling (8mo), wet bulb (30.5°C), sleeper agents (7.5% ±50%), sandbagging (0.4-0.6)
+- **4 Legacy Files Need Updates:** food security (2001), catastrophe recovery (2008), competitive alignment (2018), crisis mitigation (2006)
+- **No Critical Gaps:** All active simulation parameters research-backed
+- **Audit:** `research/source_validation_audit_20251210.md`
+
+**CRITICAL Regression Detection:**
+- Research audit identified AMOC → Amazon interaction regression (Dec 9 fix reverted in merge)
+- Second occurrence after Dec 8 M-5 threshold uncertainty revert
+- Re-applied fix in commit 4259d54a (exact same fix as Dec 9)
+- **Mitigation:** Autonomous researcher now includes regression detection in workflow
+
+**Completed HIGH Priority Work:**
+- Detection risk calibration: Time-dependent model (25% early → 80% late)
+- Sleeper agent rate: 7.5% ±50% with explicit uncertainty (Hubinger 2024)
+- Sandbagging baseline: 0.4-0.6 range (van der Weij 2024, Meinke 2024)
+- Energy budget integration (H-1, H-2): Single source of truth established
+- M-5 threshold uncertainty: Restored after Dec 8 revert (commit 6407b12d)
+
+**System State:** Production-ready, all tests passing (82.15% coverage), 0 blocking issues
+
+**Archival:** `docs/implementation-history/session_65_archival_20251210.md`
+
+---
+
 **December 9, 2025 - AMOC-Amazon Tipping Cascade Correction (CRITICAL)**
 
 **Achievement:** Fixed critical regression where AMOC → Amazon destabilizing interaction was incorrectly restored during merge conflict resolution.
@@ -2776,6 +2845,8 @@ Phase 13+:   Cleanup/effects systems (consume allocations)
 **Files:** `src/types/tipping-points.ts`, `src/simulation/engine/phases/ClimateSystemPhase.ts`
 
 **Research:** `research/REGRESSION_FIX_amoc_amazon_20251209.md`
+
+**UPDATE (Dec 10):** Same regression occurred AGAIN in merge conflict. Re-applied fix in commit 4259d54a. Autonomous researcher now includes regression detection in audit workflow to prevent future occurrences.
 
 ---
 
