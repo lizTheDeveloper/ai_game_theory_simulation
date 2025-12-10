@@ -172,6 +172,53 @@ economy.detectionRisk = 0.5;  // 50% baseline risk
 
 ---
 
+### LOW Priority
+
+#### Quantum Computing Breakthrough Cascades (L-3)
+**Status:** ✅ RESEARCH COMPLETE - Grade B- (Dec 10, 2025)
+**Change:** (pending - implementation not started)
+**Context:** Modeling quantum cryptographic breaks, AI-quantum synergies, economic/trust cascades
+**Research File:** `research/quantum_computing_cascades_20251210.md`
+**Verification File:** `research/VERIFICATION_quantum_cascades_20251210.md`
+
+**Verification Complete (Dec 10, 2025):**
+- **Grade:** B- (CONDITIONAL PASS)
+- **Reviewer:** Sylvia (research-skeptic)
+
+**Strengths:**
+- ✅ Solid quantum computing timeline research (Gidney 2019/2025, Chevignard 2024, IonQ/IBM roadmaps)
+- ✅ Accurate cryptographic threshold parameters (1,730-4,099 logical qubits for RSA-2048)
+- ✅ Well-justified PQC transition timelines (10-20 years, NIST guidance)
+- ✅ Physical-to-logical qubit ratios appropriately conservative (4:1 to 1000:1)
+
+**CRITICAL Corrections Required:**
+1. ❌ **$7.1B PQC cost attribution:** Attributed to NIST IR 8547 (incorrect) - actually from White House OMB/ONCD July 2024 report
+2. ❌ **QuEra error rate attribution:** 0.000015% achievement is Oxford scientists (Live Science), not QuEra
+
+**HIGH Priority Issues:**
+1. ⚠️ **Timeline skepticism omitted:** Jensen Huang (NVIDIA CEO): "15-30 years" not mentioned; cherry-picks industry roadmaps
+2. ⚠️ **Chevignard tradeoffs underemphasized:** 1,730 qubits requires "tens of trillions of operations" per run
+3. ⚠️ **QEC bottlenecks understated:** Real-time decoding (1μs target), talent shortage (1,800-2,200 specialists globally)
+4. ⚠️ **IonQ/AstraZeneca date error:** June 2025, not 2024
+
+**MEDIUM Issues (Weak Evidence Base):**
+- Social trust degradation (-50% to -80%): NO empirical basis, extrapolated from Equifax breach
+- Trust recovery (5-15 years): Invalid comparison at infrastructure scale
+- Cascade propagation (10%/day exponential): Appears arbitrary
+- Breakthrough probability (5-15% annual): Not systematically derived
+- Detection-to-breaking window (<48 hours): Assumes immediate disclosure (covert capability could persist months)
+
+**Assessment:**
+- Quantum mechanics/crypto thresholds: STRONG (Grade A-)
+- Economic impacts: ADEQUATE (Grade B-)
+- Social trust cascades: WEAK (Grade C+, speculative)
+
+**Implementation Status:** PENDING corrections + implementation phase
+**Monte Carlo Required:** N≥10 validation after implementation
+**Next Steps:** Apply HIGH priority corrections → implement as exploratory modeling (not predictive)
+
+---
+
 ### MEDIUM Priority
 
 #### Energy Budget Constraints
