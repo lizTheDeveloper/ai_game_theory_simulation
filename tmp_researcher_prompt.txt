@@ -1,0 +1,43 @@
+Research requirements for Enhanced Biodiversity Modeling feature:
+
+**Research needed (2024-2025 peer-reviewed sources):**
+
+1. Food web collapse mechanics:
+   - Trophic cascade dynamics
+   - Energy transfer efficiency between trophic levels
+   - Network effects in ecosystem collapse
+   - Mass extinction timescales
+
+2. Keystone species modeling:
+   - Extinction threshold parameters
+   - Species loss cascade propagation rates
+   - Network centrality measures for ecosystems
+   - Recovery timescales after keystone loss
+
+3. Parameter values needed:
+   - Trophic efficiency (% energy transfer per level)
+   - Keystone species extinction thresholds
+   - Cascade propagation rates (how fast extinctions spread)
+   - Ecosystem resilience metrics
+   - Recovery timescales (if possible)
+
+4. Mechanism descriptions:
+   - How species loss triggers cascades (mathematical models)
+   - Trophic interaction modeling approaches
+   - Network effects in food webs
+   - Links to planetary boundaries (biosphere integrity)
+
+5. Integration with existing systems:
+   - Environmental debt accumulation
+   - Quality of Life impacts (food security)
+   - Climate change interactions
+   - Pollution effects on food webs
+
+**Output format:**
+Save as research/biodiversity_food_webs_YYYYMMDD.md with citations, parameter extraction, mechanism descriptions, and integration notes.
+
+**Quality requirements:**
+- 2+ peer-reviewed sources per major parameter
+- Extract specific numeric values where available
+- Explain mechanisms, not just effects
+- Map interactions with existing simulation systems
