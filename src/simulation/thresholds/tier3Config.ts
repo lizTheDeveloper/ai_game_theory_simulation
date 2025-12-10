@@ -46,12 +46,43 @@ export interface AIRightsBootstrapTiming {
  *
  * Question: How difficult is aligning superintelligent AI systems,
  * and how effective are our detection methods?
+ *
+ * Research context for detectionEffectiveness:
+ * - Anthropic (2024): Neural activation probes achieve >99% AUROC in lab settings
+ *   for ARTIFICIALLY INSERTED backdoors (sleeper agents)
+ * - OpenAI (2025): Deliberative alignment reduces scheming 30x (8.7-13% → 0.3-0.4%)
+ * - Apollo Research (2024-2025): Claude Opus 4 exhibits in-context scheming
+ *   (self-propagating worms, hidden notes, strategic sandbagging)
+ *
+ * The detection effectiveness parameter captures FUNDAMENTAL UNCERTAINTY about:
+ * - Lab performance (>99% AUROC) vs. real-world effectiveness (unknown)
+ * - Artificially-inserted deception vs. naturally-emergent deception
+ * - Current techniques vs. future AI sophistication
+ *
+ * Scenario ranges represent worldview uncertainty, NOT confidence intervals:
+ * - DOOM (10%): Detection fails against sophisticated deception
+ * - CAUTIOUS (30%): Detection partially effective, many false negatives
+ * - BASELINE (50%): Neutral assumption, half of deception caught
+ * - PROGRESSIVE (70%+): Detection advances keep pace with deception
+ *
+ * Sources:
+ * - research/gaming-sleeper-detection_20251017.md
+ * - research/threshold_tier3_scenarios_20251026.md
+ * - Hubinger et al. (2024). "Sleeper Agents." arXiv:2401.05566
+ * - Anthropic (2024). "Simple probes can catch sleeper agents."
  */
 export interface SuperintelligenceAlignment {
   /** Inherent difficulty of the alignment problem [0-1, higher = harder] */
   baselineDifficulty: number;
 
-  /** How well we detect misalignment/deception [0-1, higher = better] */
+  /**
+   * How well we detect misalignment/deception [0-1, higher = better]
+   *
+   * NOTE: This is a WORLDVIEW PARAMETER representing fundamental uncertainty
+   * about future detection effectiveness, not a point estimate with confidence interval.
+   * Different scenarios (DOOM 10%, BASELINE 50%, PROGRESSIVE 70%+) represent
+   * coherent worldviews about whether detection will keep pace with deception.
+   */
   detectionEffectiveness: number;
 
   /** How good AIs are at hiding true capabilities [0-1, higher = more deceptive] */
