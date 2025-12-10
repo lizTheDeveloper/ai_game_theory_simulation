@@ -100,8 +100,13 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 **Status:** ✅ COMPLETED (Dec 9, 2025)
 **Context:** From Nov 29, 2025 research audit (reviews/research_audit_20251129.md)
 **Location:** `src/simulation/initialization.ts:345`
+<<<<<<< HEAD
 **Commit:** 355f271e
 **Resolution:** Comment updated with explicit research provenance and uncertainty bounds
+=======
+**Commit:** de00e18a
+**Issue:** Comment says "7.5% of misaligned AIs are sleepers" but lacks explicit source citation
+>>>>>>> origin/auto/researcher-20251209_233001
 
 **Updated Code:**
 ```typescript
@@ -119,14 +124,30 @@ const sleeperChance = 0.075; // 7.5% DERIVED ESTIMATE (Hubinger et al. 2024 proo
 - Gaming-sleeper-detection_20251017.md documents empirical demonstrations
 - **CRITICAL:** No empirical prevalence data exists in literature (this is derived estimate)
 
+<<<<<<< HEAD
+=======
+**Actions Completed:**
+- ✅ Changed comment to: `// 7.5% DERIVED ESTIMATE (Hubinger et al. 2024 proof-of-concept, empirical prevalence TBD) - Uncertainty: ±50% (range 3.75%-11.25%)`
+- ✅ Documented uncertainty bounds in comment
+- ✅ Flagged as model assumption, not empirical fact
+
+**Resolution:** Comment-only update, no behavior change. Ready to move to Recently Resolved.
+
+>>>>>>> origin/auto/researcher-20251209_233001
 ---
 
 #### Sandbagging Level Citation (0.4-0.6)
 **Status:** ✅ COMPLETED (Dec 9, 2025)
 **Context:** From Nov 29, 2025 research audit
+<<<<<<< HEAD
 **Location:** `src/simulation/agents/evaluationStrategy.ts:74`
 **Commit:** 355f271e
 **Resolution:** Added explicit research citations and clarified parameter scope
+=======
+**Location:** `src/simulation/agents/evaluationStrategy.ts:74-75`
+**Commit:** de00e18a
+**Issue:** Code value lacks explicit connection to research sources
+>>>>>>> origin/auto/researcher-20251209_233001
 
 **Updated Code:**
 ```typescript
@@ -147,6 +168,7 @@ const baseSandbagLevel = 0.4 + deceptionSkill * 0.2; // [0.4, 0.6]
 - Apollo Research: Claude Opus 4 showed "most strategic deception of any frontier model"
 - Gaming-sleeper-detection_20251017.md documents all empirical demonstrations
 
+<<<<<<< HEAD
 ---
 
 #### Detection Risk Calibration (50% Baseline)
@@ -155,6 +177,23 @@ const baseSandbagLevel = 0.4 + deceptionSkill * 0.2; // [0.4, 0.6]
 **Location:** `src/simulation/sleeperEconomy.ts:353`
 **Commit:** 355f271e
 **Resolution:** Citation added, limitation documented, TODO created for time-dependent model
+=======
+**Actions Completed:**
+- ✅ Added citation comment: `// van der Weij et al. (2024), Meinke et al. (2024): empirical deception baselines from frontier models`
+- ✅ Justified range with empirical examples: Llama 3 70B emulating 7B, Claude strategic underperformance
+- ✅ Documented these are frontier model observations
+
+**Resolution:** Comment-only update, no behavior change. Ready to move to Recently Resolved.
+
+---
+
+#### Detection Risk Calibration (50% Baseline)
+**Status:** ✅ COMPLETED (Dec 9, 2025)
+**Context:** From Nov 29, 2025 research audit
+**Location:** `src/simulation/sleeperEconomy.ts:350-352`
+**Commit:** de00e18a
+**Issue:** 50% baseline lacks justification from research
+>>>>>>> origin/auto/researcher-20251209_233001
 
 **Updated Code:**
 ```typescript
@@ -177,7 +216,23 @@ economy.detectionRisk = 0.5; // 50% baseline risk
 - Chain-of-thought monitoring: fragile, models may learn to hide reasoning
 - van der Weij 2024: >99% AUROC possible with proper monitoring
 
+<<<<<<< HEAD
 **Next Steps:** Create feature request for time-dependent detection model (MEDIUM priority)
+=======
+**Actions Completed:**
+- ✅ Added citation: Gaming-sleeper-detection_20251017.md (van der Weij 2024 - >99% AUROC possible)
+- ✅ Clarified this is POST-detection baseline (not initial, which starts at 0%)
+- ✅ Documented that methods remain imperfect, reflects heightened scrutiny + evasion capability
+
+**Note on time-dependent detection:** The current implementation already has implicit time progression:
+- Initial detection risk: 0% (initialization)
+- Accumulates based on activities (compute purchases, high-risk operations)
+- Post-detection baseline: 50% (this value)
+
+**Future enhancement:** Time-dependent improvement (20-30% early → 70-90% late) could be added as separate feature tracking mechanistic interpretability progress. Not blocking for current research standards compliance.
+
+**Resolution:** Comment-only update, clarified semantics. Ready to move to Recently Resolved.
+>>>>>>> origin/auto/researcher-20251209_233001
 
 ---
 
