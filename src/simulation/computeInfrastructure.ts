@@ -704,11 +704,11 @@ export function applyComputeGrowth(state: GameState, rng: () => number): void {
   // Research: Sevilla & Roldán (2024) - Training compute growth: 4.1× per year (90% CI: 3.7× to 4.6×)
   // Math: 4.1× per year = ln(4.1)/ln(2) = 2.04 doublings/year → 12/2.04 = 5.88 month doubling
   //
-  // IMPORTANT: RATES.AI_CAPABILITY_DOUBLING_TIME (3.6 months) is the COMBINED rate (compute × algorithmic)
-  // Here we apply them SEPARATELY because infra tracks hardwareEfficiency and algorithmsEfficiency as separate multipliers
-  // - Hardware (compute): 4.1× per year
-  // - Algorithmic: 2.5× per year (applied separately below)
-  // - Combined: 4.1 × 2.5 = 10.25× per year (matches 3.6-month doubling)
+  // UPDATE (Dec 10, 2025): RATES.AI_CAPABILITY_DOUBLING_TIME (5.9 months) measures COMPUTE-only scaling
+  // This module tracks hardwareEfficiency and algorithmsEfficiency as SEPARATE multipliers:
+  // - Hardware (compute): 4.1× per year (5.9 month doubling) - from Sevilla & Roldán (2024)
+  // - Algorithmic: ~6× per year (applied separately below) - efficiency improvements
+  // - Combined effect: 4.1 × 6 ≈ 25×/year total capability growth when both factors active
   //
   // FIX (Oct 30, 2025 v4): Moore's Law is a TECHNOLOGICAL TREND, not workforce-dependent
   // The frontier efficiency continues advancing regardless of population
