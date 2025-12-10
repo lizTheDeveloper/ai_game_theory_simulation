@@ -131,17 +131,7 @@ export type {
   TippingPointSystem
 } from './tipping-points';
 
-export type {
-  QuantumSystemState,
-  QuantumComputingState,
-  QuantumAlgorithmSupport,
-  CryptographySecurityState,
-  CryptoStatus,
-  PostQuantumTransitionState,
-  QuantumAIIntegrationState
-} from './quantum-computing';
-
-export { createInitialQuantumState } from './quantum-computing';
+// Quantum computing types removed - feature deferred (Issue #770)
 
 export type {
   IrreversibilityState,
@@ -430,7 +420,7 @@ export interface GameState {
    *
    * Expected impact: Late-game economic shocks, security crises, quantum-AI capability jumps
    */
-  quantumSystem?: import('./quantum-computing').QuantumSystemState;
+  // quantumSystem removed - feature deferred to future release (Issue #770)
 
   endGameState?: import('../simulation/endGame').EndGameState; // Phase 3: End-game forcing system
   catastrophicScenarios: import('../simulation/catastrophicScenarios').CatastrophicScenario[]; // Phase 11: Hard steps modeling
