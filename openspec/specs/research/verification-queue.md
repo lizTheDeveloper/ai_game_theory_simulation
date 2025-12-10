@@ -150,12 +150,12 @@ const baseSandbagLevel = 0.4 + deceptionSkill * 0.2;  // [0.4, 0.6]
 ---
 
 #### Detection Risk Calibration (50% Baseline)
-**Status:** ⚠️ READY FOR UPDATE
+**Status:** ✅ RESOLVED (Dec 10, 2025)
 **Context:** From Nov 29, 2025 research audit
-**Location:** `src/simulation/sleeperEconomy.ts:350`
+**Location:** `src/simulation/sleeperEconomy.ts:339-355`
 **Issue:** 50% baseline lacks justification from research
 
-**Current Code:**
+**Previous Code:**
 ```typescript
 economy.detectionRisk = 0.5;  // 50% baseline risk
 ```
@@ -166,16 +166,22 @@ economy.detectionRisk = 0.5;  // 50% baseline risk
 - Chain-of-thought monitoring: fragile, models may learn to hide reasoning
 - van der Weij 2024: >99% AUROC possible with proper monitoring
 
-**Gap:** 50% baseline not justified by research (should be variable/improving over time)
+**Implementation Complete (Dec 10, 2025):**
+- ✅ Created `calculateDetectionRiskAfterDetection(month)` function with time-dependent model
+- ✅ Early months (0-36): 25% detection rate (midpoint of 20-30% research range)
+- ✅ Mid months (36-72): Linear interpolation from 25% to 80%
+- ✅ Late months (72+): 80% detection rate (midpoint of 70-90% research range)
+- ✅ Added comprehensive research citations in code comments
+- ✅ Documented mechanistic interpretability improvement timeline
+- ✅ Referenced gaming-sleeper-detection_20251017.md directly in comments
 
-**Action Required:**
-- Specify detection probability confidence interval (not fixed 50%)
-- Add citation: Gaming-sleeper-detection_20251017.md (van der Weij 2024)
-- Document month-dependent improvement (detection improves with mechanistic interpretability gains)
-- Consider: Early months 20-30%, late months 70-90% (reflecting research progress)
+**Verification:**
+- ✅ Type check passed (no new TypeScript errors)
+- 🔄 Monte Carlo validation: N=5 runs, 120 months (RUNNING)
+- ✅ Implementation matches research-backed ranges
 
 **Severity:** HIGH (model realism)
-**Effort:** SMALL (1-2 hours for time-dependent model)
+**Effort:** COMPLETED (1 hour actual)
 
 ---
 
