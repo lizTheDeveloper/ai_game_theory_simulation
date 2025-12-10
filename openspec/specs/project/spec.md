@@ -191,6 +191,13 @@ None - All HIGH priority work COMPLETE (verified Dec 10 architecture review)
   - Impact: MEDIUM (both systems functional, minor integration gap)
   - Related: L-1 (duplicate tech category mapping cleanup)
   - See: reviews/architecture_integration_review_20251210.md
+- **M-8: Sleeper agent rate documentation** (NEW - Dec 10, 2025)
+  - Location: src/simulation/initialization.ts:342-347
+  - Issue: 7.5% sleeper agent rate has no research source, should be documented as TIER 3 BRONZE
+  - Impact: MEDIUM (epistemic debt, not simulation-breaking)
+  - Effort: 30 minutes
+  - Context: Research debate finding (reviews/sleeper_agent_research_debate_20251210.md)
+  - See: Tier classification system, gaming-sleeper-detection research
 - Hindcast tuning (1950-2024 historical validation)
 - Calibration protocol (parameter optimization workflow)
 
