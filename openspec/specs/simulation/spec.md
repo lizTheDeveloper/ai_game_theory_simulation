@@ -72,6 +72,62 @@ The simulation SHALL fail loudly on NaN/Infinity/undefined values in calculation
 - AND it MUST NOT read from `state.globalMetrics.gdp` (doesn't exist)
 - AND GDP MUST be calculated dynamically from population + gdpPerCapita + modifiers
 
+### Requirement: Unified Energy Budget
+The simulation SHALL enforce priority-based energy allocation across all energy consumers.
+
+**Purpose:** Prevent duplicate energy tracking and enforce scarcity constraints when electricity demand exceeds global capacity.
+
+**Energy Priority Tiers:**
+1. **TIER 1 (Essential):** Baseline electricity for civilization (lighting, heating, hospitals, communication)
+2. **TIER 2 (High Priority):** Industrial electrification, transport electrification
+3. **TIER 3 (Climate):** DAC, green hydrogen, SAI, carbon mineralization
+4. **TIER 4 (Elective):** AI datacenters, advanced compute, crypto mining
+
+#### Scenario: Energy Budget Allocation
+- WHEN EnergyBudgetPhase (order 12.75) executes
+- THEN it MUST calculate global electricity capacity (TWh/year)
+- AND it MUST register all energy consumer demands
+- AND it MUST allocate energy by priority tier (lower tier number = higher priority)
+- AND it MUST calculate effectiveness multipliers (`allocated / demand`)
+- AND effectiveness multiplier MUST be stored in `energyBudget.allocations[category]`
+
+#### Scenario: Energy Consumer Integration (Phase 1 COMPLETE - Dec 10, 2025)
+- WHEN AI infrastructure calculates energy consumption
+- THEN it MUST query `energyBudget.allocations['ai-datacenter']`
+- AND it MUST track both `energyDemand` (unconstrained) and `energyAllocated` (constrained)
+- AND water consumption MUST scale with allocated energy (not demand)
+
+- WHEN power generation calculates datacenter power
+- THEN it MUST read from `energyBudget.allocations['ai-datacenter']`
+- AND it MUST convert TWh/year (budget) → TWh/month (power generation) via `× (1/12)`
+- AND it MUST NOT duplicate energy tracking
+
+**Energy Category Mapping:**
+
+| Consumer | Energy Category | Priority Tier | TWh/year (baseline) |
+|----------|----------------|---------------|---------------------|
+| AI Datacenter | `ai-datacenter` | 4 (Elective) | 437.5 (mid-point of 415-460) |
+| Advanced Compute | `advanced-compute` | 4 (Elective) | 200 |
+| DAC | `dac` | 3 (Climate) | 15,000 (at gigatonne scale) |
+| Green Hydrogen | `green-hydrogen` | 3 (Climate) | 5,250 |
+| SAI | `sai` | 3 (Climate) | 100 |
+
+**Unit Conversions:**
+- MW ↔ TWh/year: `MW × 0.00876 = TWh/year` (1 MW continuous for 1 year)
+- TWh/year ↔ TWh/month: `TWh_year × (1/12) = TWh_month`
+
+**Feature Flag:** `energyBudget.enabled` (default: true). When disabled, falls back to legacy unconstrained calculations.
+
+**Implementation Status:**
+- [✅] Phase 1 (Dec 10, 2025): AI infrastructure + power generation integration
+- [ ] Phase 2: ComputeAllocationPhase + tech effects integration
+- [ ] Phase 3: Stochastic innovation + government actions integration
+
+**Related Documents:**
+- Implementation: `docs/implementation-history/2025-12/energy-budget-phase1.md`
+- Proposal: `openspec/changes/energy-budget-integration/proposal.md`
+- Research: `research/energy_budget_constraints_20251209.md` (Grade B+)
+
 ### Requirement: Planetary Boundaries Modeling
 The simulation SHALL model 9 planetary boundaries per Richardson et al. (2023).
 
