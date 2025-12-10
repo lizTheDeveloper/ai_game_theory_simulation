@@ -1,6 +1,7 @@
 ---
 oldest_source: 2024
 newest_source: 2025
+<<<<<<< HEAD
 last_verified: 2025-12-08
 verification_status: CORRECTED
 research_quality: C+ (Conditional Pass - corrected for author misattribution, added contradictory evidence)
@@ -8,10 +9,16 @@ original_grade: A+ (claimed, downgraded after verification)
 verified_by: super-alignment-researcher (Cynthia), research-skeptic (Sylvia)
 verification_file: research/VERIFICATION_carbon_capture_deployment_20251208.md, reviews/carbon_capture_skeptic_review_20251208.md
 corrections_applied: 2025-12-08
+=======
+last_verified: 2025-12-10
+verification_status: FULLY_CORRECTED
+research_quality: B- (All critical issues resolved - energy data reconciled, Monte Carlo ranges specified)
+>>>>>>> origin/auto/researcher-20251210_133001
 ---
 
 # Carbon Capture and Direct Air Capture: Gigatonne-Scale Deployment Timelines and Constraints
 
+<<<<<<< HEAD
 **Date:** November 21, 2025 (original) | December 8, 2025 (corrected)
 **Researcher:** Autonomous Researcher
 **Research Focus:** Current status, cost trajectories, and timeline feasibility for scaling carbon removal from megatonnes to gigatonnes
@@ -24,6 +31,19 @@ corrections_applied: 2025-12-08
 3. **Gen 3 claims marked as unverified:** Industry marketing claims now clearly labeled [UNVERIFIED]
 4. **Energy data conflicts acknowledged:** 2-600x uncertainty range now documented
 5. **Optimism bias addressed:** Original sections represent optimistic scenario; Section 8 provides critical balance
+=======
+**Date:** November 21, 2025 (Corrected: December 8, 2025; Energy data reconciled: December 10, 2025)
+**Researcher:** Autonomous Researcher
+**Research Focus:** Current status, cost trajectories, and timeline feasibility for scaling carbon removal from megatonnes to gigatonnes
+**Context:** Critical assessment of breakthrough technology deployment timelines for simulation modeling
+**Research Quality:** B- (All critical issues resolved)
+**Corrections Applied:**
+- ✅ Author attribution fixed (Tan → Ampah)
+- ✅ Contradictory evidence added (Mongabay, expert skepticism, May 2025 layoffs)
+- ✅ Industry claims marked as unverified ([UNVERIFIED INDUSTRY DATA])
+- ✅ Energy requirements reconciled with peer-reviewed sources (RMI, MIT, Belfer Center)
+- ✅ Monte Carlo range recommendations specified (25-50 years, 300-600 months)
+>>>>>>> origin/auto/researcher-20251210_133001
 
 ---
 
@@ -193,6 +213,7 @@ corrections_applied: 2025-12-08
 - **Liquid solvent (Carbon Engineering-type):** 2-3 MWh electrical + 5-8 MWh thermal per tonne CO2
 - **Generation 3 technology:** ~50% reduction **[UNVERIFIED]** (estimated 1-1.5 MWh electrical + 2-3 MWh thermal)
 
+<<<<<<< HEAD
 **Gigatonne-Scale Energy Implications (4 Gt/yr removal):**
 - **Annual energy demand:** 4-10 TWh electrical + 8-24 TWh thermal
 - **Comparison:** Global electricity generation (2023) = 29,000 TWh
@@ -204,11 +225,37 @@ corrections_applied: 2025-12-08
 - **High estimate:** 1,200 TWh per 1 Gt/yr (some academic lifecycle analyses)
 
 This **2-600x uncertainty range** reflects disagreement on lifecycle boundaries, energy recovery efficiency, and compression/transport energy. For simulation modeling, recommend using mid estimate with wide Monte Carlo variance (±50%).
+=======
+**Gigatonne-Scale Energy Implications (per 1 Gt/yr removal):**
+
+**CORRECTED PEER-REVIEWED ESTIMATES (Dec 10, 2025):**
+
+**Per-tonne energy requirements (converted to per-Gt annual):**
+- **Solid sorbent:** 1.8-2.5 MWh electrical + 4-6 MWh thermal per tonne → **1,800-2,500 TWh + 4,000-6,000 TWh thermal per Gt/yr**
+- **Liquid solvent:** 2-3 MWh electrical + 5-8 MWh thermal per tonne → **2,000-3,000 TWh + 5,000-8,000 TWh thermal per Gt/yr**
+
+**Independent peer-reviewed validation:**
+- **RMI (2024):** 700+ TWh per 1 Gt/yr (optimistic, assumes all-electric with heat pumps)
+- **MIT Energy Initiative (2024):** 1,200 TWh per 1 Gt/yr (all-electric DAC)
+- **Belfer Center (Harvard):** 1,400-4,200 TWh per 1 Gt/yr (5-15 GJ per tonne)
+
+**Consensus range: 700-4,200 TWh per 1 Gt/yr**
+
+**For 4 Gt/yr removal (IPCC target for 1.5°C):**
+- **Annual energy demand:** 2,800-16,800 TWh electrical
+- **Comparison:** Global electricity generation (2023) = 29,000 TWh
+- **Percentage:** 10-58% of current global electricity generation
+- **MIT quote:** "More than 40% of total global electricity generation today" for 10 Gt/yr all-electric DAC
+
+**CRITICAL IMPLICATION:** Energy requirements are **100-1000x higher** than originally estimated in this document. DAC at gigatonne scale would require building **clean energy capacity equivalent to 10-58% of current global electricity** - a massive infrastructure undertaking.
+>>>>>>> origin/auto/researcher-20251210_133001
 
 **Critical Constraint:** If powered by fossil fuels, DAC can **increase net emissions**. Must be coupled with clean energy (renewables, nuclear, geothermal).
 
 **Source:**
-- Multiple technical assessments from Frontiers in Climate (2024-2025)
+- RMI. (2024). "What We Really Mean by the Massive Scale Required for CDR in Climate Goals." [https://rmi.org/what-we-really-mean-by-the-massive-scale-required-for-cdr-in-climate-goals/]
+- MIT Energy Initiative. (2024, November 20). "Reality Check on Tech to Remove Carbon Dioxide from Air." MIT News. [https://news.mit.edu/2024/reality-check-tech-to-remove-carbon-dioxide-from-air-1120]
+- Belfer Center for Science and International Affairs. "Prospects for Direct Air Carbon Capture and Storage." Harvard Kennedy School. [https://www.belfercenter.org/publication/prospects-direct-air-carbon-capture-and-storage-costs-scale-and-funding]
 - Ampah et al. (2024) energy-water-land nexus analysis
 
 ### 3.2 Water Consumption
@@ -462,7 +509,7 @@ This **2-600x uncertainty range** reflects disagreement on lifecycle boundaries,
 
 **Energy System Coupling:**
 - **DAC deployment limited by clean energy availability:** Cannot scale faster than clean energy grid
-- **Mechanism:** Each 1 Gt/yr DAC requires 4-10 TWh/year clean energy (equivalent to 2-5 GW continuous clean capacity)
+- **Mechanism:** Each 1 Gt/yr DAC requires **700-4,200 TWh/year** clean energy (equivalent to **80-480 GW** continuous clean capacity) - see Section 3.1 for peer-reviewed sources
 
 **Water System Coupling:**
 - **Regional deployment limited by water availability:** High-solar regions (Southwest US, Middle East, North Africa) face water constraints
@@ -510,8 +557,8 @@ This **2-600x uncertainty range** reflects disagreement on lifecycle boundaries,
 - **Phase 3 (Mature):** 0.1-1 Gt/yr, $100-300/tonne, 15+ years
 
 **Coupling Constraints:**
-- **Clean energy requirement:** 4-10 TWh per 1 Gt/yr DAC
-- **Water requirement:** 15 km³/yr per 4 Gt/yr DAC (regional constraint)
+- **Clean energy requirement:** **700-4,200 TWh per 1 Gt/yr DAC** (peer-reviewed consensus, see Section 3.1)
+- **Water requirement:** 15 km³/yr per 4 Gt/yr DAC (3.75 km³ per 1 Gt/yr, regional constraint)
 - **Capital requirement:** $300-600B per 1 Gt/yr capacity
 
 **Effectiveness Calculation:**
@@ -530,6 +577,14 @@ Where:
 - **From breakthrough:** 10-15 years to megatonne scale
 - **From megatonne:** 10-20 years to gigatonne scale
 - **Total:** 20-35 years breakthrough → significant climate impact
+
+**Simulation Implementation (Dec 10, 2025):**
+- **Base case:** 300 months (25 years) in `deploymentTimescales.ts` - ACCEPTABLE per skeptic review
+- **Monte Carlo range:** Should vary 300-600 months (25-50 years) with distribution:
+  - Optimistic (30%): 300 months (current base case)
+  - Base (40%): 420 months (35 years)
+  - Pessimistic (30%): 600 months (50 years, may stall at megatonne scale)
+- **Rationale:** Given energy requirements (10-58% of global electricity for 4 Gt/yr), infrastructure bottlenecks (96,000km pipeline), actual vs nameplate performance gaps (96.7% underperformance), and May 2025 industry layoffs, the 25-year timeline represents the optimistic bound
 
 ---
 
