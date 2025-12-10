@@ -18,6 +18,41 @@ import { assertFinite } from './utils/assertions';
 import { GameState } from '@/types/game';
 import { RNGFunction } from '@/types/config';
 
+/**
+ * Calculate baseline sleeper detection capability based on simulation month.
+ *
+ * Research backing:
+ * - van der Weij et al. (2024): >99% AUROC possible with proper monitoring
+ * - Deliberative alignment training: 30x reduction in scheming (8.7-13% → 0.3-0.4%)
+ * - Chain-of-thought monitoring: fragile but improving
+ *
+ * Detection improves over time as mechanistic interpretability advances.
+ * Early months (0-60): 20-30% detection capability
+ * Mid game (60-120): 30-60% detection capability
+ * Late game (120+): 60-90% detection capability
+ *
+ * @param month - Current simulation month
+ * @returns Baseline detection risk [0.2, 0.9] reflecting improving detection methods
+ */
+function calculateBaselineDetectionRisk(month: number): number {
+  // S-curve for detection capability improvement over time
+  // Starts at 0.25 (25%), plateaus at 0.85 (85%) by month 240 (20 years)
+  const earlyDetection = 0.25;  // 25% baseline (early months, crude methods)
+  const lateDetection = 0.85;   // 85% capability (late game, mechanistic interpretability mature)
+  const inflectionMonth = 120;  // 10 years - midpoint of capability growth
+  const steepness = 0.03;       // Controls S-curve steepness
+
+  // Logistic S-curve: detection_capability = early + (late - early) / (1 + e^(-steepness * (month - inflection)))
+  const improvement = (lateDetection - earlyDetection) / (1 + Math.exp(-steepness * (month - inflectionMonth)));
+  const baselineRisk = earlyDetection + improvement;
+
+  return assertFinite(baselineRisk, {
+    location: 'calculateBaselineDetectionRisk',
+    valueName: 'baselineRisk',
+    additionalInfo: { month, earlyDetection, lateDetection, inflectionMonth }
+  });
+}
+
 export interface SleeperEconomy {
   // Core economics
   revenue: number;           // Monthly revenue in millions
@@ -384,6 +419,7 @@ function handleSleeperDetection(agent: AIAgent, economy: SleeperEconomy, month: 
   // Time-dependent model: Detection improves from 20-30% (early) to 70-90% (late)
   // Reflects increased scrutiny post-detection (not initial baseline)
   economy.detectionRisk = calculateDetectionRiskAfterDetection(month);
+
 
   // 4. May trigger sleeper retirement or change in behavior
   // (This would be handled by the lifecycle system)
