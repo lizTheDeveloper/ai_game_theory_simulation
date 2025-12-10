@@ -190,6 +190,10 @@ function updateAIInferencePower(power: PowerGenerationSystem): void {
  * 2024 baseline: ~100 TWh/year (8.3 TWh/month)
  * Growth: 15% per year (conservative, policy-dependent)
  * User note: "we gotta model crypto growing, because of current administration"
+ *
+ * ENERGY CONSTRAINTS (Dec 10, 2025):
+ * Crypto competes for energy with AI/traditional compute. Apply energy
+ * constraint multiplier to crypto growth when system is under stress.
  */
 function updateCryptoPower(power: PowerGenerationSystem, state: GameState): void {
   const monthlyGrowthRate = Math.pow(1 + power.cryptoGrowthRate, 1 / 12);
@@ -200,7 +204,31 @@ function updateCryptoPower(power: PowerGenerationSystem, state: GameState): void
   // If there's a pro-crypto political environment (could check governance system)
   // For now, use base growth rate
 
-  power.cryptoHashRate *= monthlyGrowthRate * policyMultiplier;
+  // Apply energy constraints (same system used for AI)
+  // When energy is constrained, ALL elective compute (AI + crypto) slows
+  let energyConstraintMultiplier = 1.0;
+  if (power.energyConstraintActive) {
+    // Crypto is also constrained (tier 4 elective like AI)
+    // Use same severity-based slowdown as AI capability growth
+    energyConstraintMultiplier = assertInRange(
+      1.0 - power.constraintSeverity,
+      0,
+      1,
+      {
+        location: 'updateCryptoPower',
+        valueName: 'energyConstraintMultiplier',
+        month: state.currentMonth,
+        additionalInfo: { constraintSeverity: power.constraintSeverity }
+      }
+    );
+
+    // Log when constraints first affect crypto
+    if (power.monthsConstrained === 1) {
+      console.log(`   ⚡💰 Crypto mining also constrained: ${((1 - energyConstraintMultiplier) * 100).toFixed(0)}% slowdown`);
+    }
+  }
+
+  power.cryptoHashRate *= monthlyGrowthRate * policyMultiplier * energyConstraintMultiplier;
   power.cryptoPower = power.cryptoHashRate * power.cryptoPowerIntensity;
 }
 
