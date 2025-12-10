@@ -134,11 +134,14 @@ export type {
 export type {
   QuantumSystemState,
   QuantumComputingState,
-  AlgorithmSupport,
-  CryptographyState,
-  PQCTransitionState
+  QuantumAlgorithmSupport,
+  CryptographySecurityState,
+  CryptoStatus,
+  PostQuantumTransitionState,
+  QuantumAIIntegrationState
 } from './quantum-computing';
 
+export { createInitialQuantumState } from './quantum-computing';
 
 export type {
   IrreversibilityState,
@@ -405,13 +408,6 @@ export interface GameState {
   extinctionState: ExtinctionState; // Active extinction scenario tracking
   ecosystem: EcosystemState; // Phase 5.4: Technology diffusion tracking
   computeInfrastructure: ComputeInfrastructure; // Phase 1: Compute resource system
-  endGameState?: import('../simulation/endGame').EndGameState; // Phase 3: End-game forcing system
-  catastrophicScenarios: import('../simulation/catastrophicScenarios').CatastrophicScenario[]; // Phase 11: Hard steps modeling
-  goldenAgeState: GoldenAgeState; // Phase: Golden Age detection (immediate prosperity tracking)
-  environmentalAccumulation: EnvironmentalAccumulation; // Phase 2: Environmental debt tracking
-  socialAccumulation: SocialAccumulation; // Phase 3: Social cohesion & meaning crisis tracking
-  technologicalRisk: TechnologicalRisk; // Phase 4: AI capability risk tracking
-  informationEcology: import('../simulation/informationEcology').InformationEcologyState; // Phase: Information ecology & epistemic degradation
 
   /**
    * Quantum Computing Breakthrough Cascades (L-3, Dec 10, 2025)
@@ -435,6 +431,14 @@ export interface GameState {
    * Expected impact: Late-game economic shocks, security crises, quantum-AI capability jumps
    */
   quantumSystem?: import('./quantum-computing').QuantumSystemState;
+
+  endGameState?: import('../simulation/endGame').EndGameState; // Phase 3: End-game forcing system
+  catastrophicScenarios: import('../simulation/catastrophicScenarios').CatastrophicScenario[]; // Phase 11: Hard steps modeling
+  goldenAgeState: GoldenAgeState; // Phase: Golden Age detection (immediate prosperity tracking)
+  environmentalAccumulation: EnvironmentalAccumulation; // Phase 2: Environmental debt tracking
+  socialAccumulation: SocialAccumulation; // Phase 3: Social cohesion & meaning crisis tracking
+  technologicalRisk: TechnologicalRisk; // Phase 4: AI capability risk tracking
+  informationEcology: import('../simulation/informationEcology').InformationEcologyState; // Phase: Information ecology & epistemic degradation
 
   /**
    * Tipping Point Impacts (ClimateSystemPhase Integration)
