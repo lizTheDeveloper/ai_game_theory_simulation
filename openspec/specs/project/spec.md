@@ -136,10 +136,10 @@ The project SHALL preserve implementation histories and research context.
 
 ## Current Status
 
-**Session:** 62 (December 9, 2025)
-**Mode:** Active work (3 CRITICAL research updates pending from Nov 29 audit)
+**Session:** 64 (December 10, 2025)
+**Mode:** Maintenance (all HIGH priority work COMPLETE)
 **Research Quality:** A- (68.8% sources from 2024-2025)
-**Architecture Health:** B+ (0 CRITICAL, 2 HIGH addressed - all merged)
+**Architecture Health:** B+ (0 CRITICAL, 1 HIGH remaining, 1 MEDIUM new)
 **Test Coverage:** 82.47% (462+ tests passing, 6 known test import failures)
 **System State:** Production-ready, all quality gates GREEN
 
@@ -154,16 +154,18 @@ The project SHALL preserve implementation histories and research context.
 ### CRITICAL Priority
 None (threshold lowering regression FIXED Dec 9, 2025 - commit 3f3118de, 7130c7e6)
 
-### COMPLETED HIGH Priority
+### COMPLETED HIGH Priority (Session 64)
 - HIGH-7: Conditional climate stability floor (research debate finding) - COMPLETE Dec 7, 2025
-- H-1: Energy budget system integration (all energy consumers now use EnergyBudgetPhase) - COMPLETE Dec 9, 2025
-- H-2: Duplicate energy calculation removal (ClimateDeploymentPhase cleanup) - COMPLETE Dec 9, 2025
+- H-2: Duplicate energy calculation removal (ClimateDeploymentPhase cleanup) - COMPLETE Dec 10, 2025 (commits ad27cd41, 1ca93fe6)
 - Sleeper agent rate justification (7.5% → Hubinger et al. 2024) - COMPLETE Dec 10, 2025 (commit 248bad46)
 - Sandbagging level citation (0.4-0.6 → van der Weij/Meinke 2024) - COMPLETE Dec 10, 2025 (commit 248bad46)
 - Detection risk calibration (50% baseline → time-dependent model) - COMPLETE Dec 10, 2025 (commit fd7694a2)
 
-### HIGH Priority
-None (all research audit items complete - system entering MEDIUM priority work)
+### HIGH Priority (1 remaining)
+- H-1: Energy budget system underutilization (ClimateDeploymentPhase uses energy budget, but other energy consumers do not) - Effort: MEDIUM (2-3 days)
+  - Location: EnergyBudgetPhase calculates effectiveness multipliers but only ClimateDeploymentPhase consumes them
+  - Impact: Parallel energy constraint systems create inconsistent modeling
+  - Next step: Migrate all energy consumers to use energyBudget.allocations
 
 ### COMPLETED MEDIUM Priority
 - M-5: Threshold uncertainty modeling (distribution sampling library) - COMPLETE Dec 7, 2025
@@ -172,7 +174,11 @@ None (all research audit items complete - system entering MEDIUM priority work)
 - Energy Budget Constraints (datacenter/AI GPU growth limits, UBI compute drain) - COMPLETE Dec 9, 2025
 
 ### ACTIVE MEDIUM Priority
-None (system in maintenance mode)
+- M-1: Detection risk calibration - incomplete integration (from Architecture Review Dec 10)
+  - Problem: Time-dependent detection risk only applies AFTER first detection (handleSleeperDetection), not during initial detection (updateSleeperDetectionRisk)
+  - Location: src/simulation/sleeperEconomy.ts lines 315, 381
+  - Impact: Initial detection uses raw accumulated risk (not time-calibrated)
+  - Effort: SMALL (apply calculateDetectionRiskAfterDetection as multiplier on initial checks)
 
 ### MEDIUM Priority (Backlog)
 - Hindcast tuning (1950-2024 historical validation)
@@ -229,10 +235,10 @@ See: `docs/EMOJI_QUICK_REFERENCE.md` (one-page cheat sheet)
 See: `docs/sessions.md` for complete session milestone tracking
 
 **Recent Sessions:**
+- Session 64 (Dec 10): Research audit completion + H-2 duplicate energy fix + architecture integration review
+- Session 63 (Dec 10): Research source validation (sleeper agent rate, sandbagging, detection risk) + archival
 - Session 62 (Dec 9): CRITICAL regression fix + H-1/H-2 architecture integration + research audit follow-up
 - Session 60 (Dec 9): Coffee break + archival + Energy Budget launch (~90k tokens)
-- Session 55 (Dec 5): Maintenance mode (early exit, ~10k tokens)
-- Session 54 (Dec 5): M-4 Complete - Abrupt Sea Level Rise (~15k tokens)
 
 ---
 
