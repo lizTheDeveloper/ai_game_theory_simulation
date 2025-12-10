@@ -137,12 +137,12 @@ export class ExtinctionDebtPhase implements SimulationPhase {
 
         // Update boundary value (lower species count = higher boundary value)
         // 100% species = 0.0 boundary, 0% species = 2.0 boundary
-        state.planetaryBoundariesSystem.boundaries.biosphere_integrity.value =
+        state.planetaryBoundariesSystem.boundaries.biosphere_integrity.currentValue =
           assertFinite(
             2.0 * (1.0 - currentRatio),
             {
               location: 'ExtinctionDebtPhase.execute',
-              valueName: 'biosphereIntegrity.value',
+              valueName: 'biosphereIntegrity.currentValue',
               month: currentMonth,
               additionalInfo: {
                 currentRatio,
@@ -154,7 +154,7 @@ export class ExtinctionDebtPhase implements SimulationPhase {
 
         console.log(
           `📊 Biosphere integrity updated: ${state.biosphereIntegrityIndex.currentSpeciesCount} / ${baselineSpecies} species ` +
-          `(${(currentRatio * 100).toFixed(1)}%), boundary value: ${state.planetaryBoundariesSystem.boundaries.biosphere_integrity.value.toFixed(3)}`
+          `(${(currentRatio * 100).toFixed(1)}%), boundary value: ${state.planetaryBoundariesSystem.boundaries.biosphere_integrity.currentValue.toFixed(3)}`
         );
       }
 
