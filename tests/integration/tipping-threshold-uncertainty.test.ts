@@ -15,7 +15,7 @@
 import { describe, test } from 'node:test';
 import assert from 'node:assert';
 import { createDefaultInitialState } from '@/simulation/initialization';
-import { stepSimulation } from '@/simulation/engine';
+import { PhaseOrchestrator } from '@/simulation/engine/PhaseOrchestrator';
 import type { GameState } from '@/types/game';
 
 // Simple seeded RNG for deterministic testing
@@ -107,11 +107,12 @@ describe('Tipping Point Threshold Uncertainty (M-5)', () => {
     assert.ok(initialThresholds.size > 0, 'Should have sampled thresholds');
 
     // Run simulation for 12 months
+    const orchestrator = new PhaseOrchestrator();
     let currentState = state;
     for (let month = 1; month <= 12; month++) {
-      const result = stepSimulation(currentState);
-      assert.ok(result.success, `Month ${month} should execute successfully`);
-      currentState = result.newState;
+      orchestrator.executeAll(currentState, rng);
+      // PhaseOrchestrator.executeAll mutates state in place
+      currentState.currentMonth++;
     }
 
     // Verify thresholds haven't changed
@@ -165,21 +166,20 @@ describe('Tipping Point Threshold Uncertainty (M-5)', () => {
     const state = createDefaultInitialState(rng);
 
     // Run for 24 months
+    const orchestrator = new PhaseOrchestrator();
     let currentState = state;
     for (let month = 1; month <= 24; month++) {
-      const result = stepSimulation(currentState);
+      const events = orchestrator.executeAll(currentState, rng);
 
+      // Check no error events
+      const errorEvents = events.filter(e => e.message?.includes('❌'));
       assert.ok(
-        result.success,
-        `Month ${month} should execute successfully (message: ${result.message})`
+        errorEvents.length === 0,
+        `Month ${month} should not have error events: ${errorEvents.map(e => e.message).join(', ')}`
       );
 
-      assert.ok(
-        !result.message.includes('❌'),
-        `Month ${month} should not have error message: ${result.message}`
-      );
-
-      currentState = result.newState;
+      // PhaseOrchestrator.executeAll mutates state in place
+      currentState.currentMonth++;
     }
 
     console.log(`  ✅ Simulation executed 24 months without errors`);
