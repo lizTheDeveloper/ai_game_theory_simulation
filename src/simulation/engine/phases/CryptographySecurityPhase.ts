@@ -40,7 +40,7 @@ export function executeCryptographySecurityPhase(
 
   // Initialize quantum system check
   if (!state.quantumSystem) {
-    return { events, monthlyReport: {} };
+    return { events };
   }
 
   if (!rng || typeof rng !== 'function') {
@@ -86,7 +86,7 @@ export function executeCryptographySecurityPhase(
     console.log(`  → Post-quantum cryptography deployment urgent`);
 
     events.push({
-      id: state.eventIdCounter++,
+      id: `crypto-crisis-${state.currentMonth}`,
       type: 'crisis',
       month: state.currentMonth,
       title: '🚨 Cryptographic Crisis: RSA/ECC Broken',
