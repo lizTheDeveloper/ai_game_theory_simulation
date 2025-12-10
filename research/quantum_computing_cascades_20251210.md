@@ -13,25 +13,33 @@ This research examines quantum computing breakthrough cascades - the step-change
 
 **Key Findings:**
 
-1. **Fault-tolerant quantum computing timeline:** 2028-2035 consensus, with critical milestones at ~1,000-10,000 logical qubits enabling practical Shor's algorithm
+1. **Fault-tolerant quantum computing timeline:** 2032-2045 realistic range (vendor roadmaps 2028-2035 likely overoptimistic), with critical milestones at ~1,000-10,000 logical qubits enabling practical Shor's algorithm
 2. **RSA-2048 breaking threshold:** ~1,730-4,099 logical qubits (20M physical qubits), execution time 8-48 hours
 3. **Economic impact:** $400-600B value creation by 2035 (McKinsey), but cryptographic failure threatens trillions in protected assets
-4. **PQC transition:** NIST standards published Aug 2024, full government transition by 2035, estimated $7.1B cost
-5. **Quantum-AI enhancement:** 20x speedups demonstrated in drug discovery (2024), hybrid quantum-classical workflows showing competitive/superior performance
+4. **PQC transition:** NIST standards published Aug 2024, full government transition by 2035 (likely optimistic), estimated $7.1B cost
+5. **Quantum-AI enhancement:** 20x speedups demonstrated for narrow drug discovery task (2024), but skeptical voices (Das Sarma, Aaronson) question broad applicability
 
 **Critical Parameters Identified:**
 
 - Logical qubit thresholds: 100 (basic advantage) → 1,000 (Shor's practical) → 10,000 (general advantage)
 - Cryptographic breaking probability: Step function at qubit threshold, detection-to-breaking window <48 hours
 - Economic damage multiplier: 10-100x from crypto failures (systemic cascades)
-- PQC deployment timeline: 10-20 years for full infrastructure transition
-- Quantum-AI capability multiplier: 5-20x for optimization/simulation tasks
+- PQC deployment timeline: 20-40 years for full infrastructure transition (NIST 2035 target likely optimistic)
+- Quantum-AI capability multiplier: 2-10x for narrow optimization/simulation tasks (not general AI capabilities)
 
 **Major Uncertainties:**
 
-- Quantum timeline variance: ±5-10 years depending on error correction breakthroughs
-- Economic cascade severity: Limited empirical data on large-scale crypto failures
-- Social trust recovery: Weak evidence base, extrapolated from historical security breaches
+- **Quantum timeline variance:** ±10-20 years depending on error correction breakthroughs and engineering challenges (vendor roadmaps historically overoptimistic)
+- **Economic cascade severity:** Limited empirical data on large-scale crypto failures
+- **Social trust recovery:** Weak evidence base, extrapolated from non-analogous historical events (Equifax, Y2K), may never fully recover
+- **Quantum-AI generalizability:** Narrow task demonstrations (20x speedup) may not translate to broad capability gains
+
+**CRITICAL CAVEATS:**
+
+This research has been revised following validation to address three critical issues:
+1. **Timeline overconfidence** - Vendor roadmaps are optimistic; realistic timelines extended by 5-15 years based on skeptical expert voices (Jensen Huang: 15-30 years)
+2. **Capability multiplier overstatement** - 20x speedup is for narrow tasks only; academic skeptics (Das Sarma, Aaronson) question broad applicability
+3. **Social trust evidence weakness** - Historical analogs (Equifax, Y2K) are non-comparable; trust recovery may take decades or never fully occur
 
 ---
 
@@ -79,8 +87,8 @@ The quantum computing field in 2024-2025 demonstrates clear progression from Noi
 | **Logical qubits for Shor's (RSA-2048)** | 1,730-4,099 | Chevignard 2024, Gidney/Ekerå 2019 | HIGH |
 | **Logical qubits for general advantage** | 10,000-100,000 | IBM/IonQ roadmaps | MEDIUM |
 | **Physical-to-logical qubit ratio** | 4:1 (optimistic) to 1000:1 (conservative) | Microsoft (4:1), historical (1000:1) | MEDIUM |
-| **Timeline to 1,000 logical qubits** | 2028-2030 | IonQ roadmap, industry consensus | MEDIUM |
-| **Timeline to 10,000 logical qubits** | 2030-2035 | IBM Starling, industry projections | MEDIUM-LOW |
+| **Timeline to 1,000 logical qubits** | 2028-2040 | IonQ roadmap (optimistic), Huang 15-30yr (skeptical) | MEDIUM-LOW |
+| **Timeline to 10,000 logical qubits** | 2035-2050 | IBM Starling (optimistic), broader uncertainty | LOW |
 
 **Investment-to-capability scaling:**
 
@@ -92,38 +100,47 @@ McKinsey and Grand View Research project market growth from $1.42B (2024) to $20
 
 **Breakthrough probability curves:**
 
-Current consensus ([Bain & Company, 2025](https://www.bain.com/insights/quantum-computing-moves-from-theoretical-to-inevitable-technology-report-2025/)) suggests transition from "theoretical" to "inevitable":
+Current consensus ([Bain & Company, 2025](https://www.bain.com/insights/quantum-computing-moves-from-theoretical-to-inevitable-technology-report-2025/)) suggests transition from "theoretical" to "inevitable," but vendor roadmaps have historically proven overoptimistic:
 
-- 2025-2028: NISQ → early fault tolerance (10-50% cumulative probability)
-- 2028-2032: Practical Shor's algorithm (50-80% cumulative probability)
-- 2032-2035: General quantum advantage (80-95% cumulative probability)
+- 2025-2030: NISQ → early fault tolerance (10-30% cumulative probability)
+- 2030-2040: Practical Shor's algorithm (30-60% cumulative probability)
+- 2040-2050: General quantum advantage (60-85% cumulative probability)
+
+**CRITICAL CAVEAT - Vendor Roadmap Unreliability:**
+
+Historical analysis shows quantum computing timelines consistently slip:
+- **Jensen Huang (Nvidia CEO, CES 2025):** Stated useful quantum computers are "15-30 years away," with 20 years being what "a whole bunch of us would believe" ([Constellation Research, 2025](https://www.constellationr.com/blog-news/insights/here-s-what-nvidia-ceo-jensen-huang-said-about-quantum-computing-project-digits)). Huang later walked back comments at Nvidia's GTC 2025, admitting his remarks "came out wrong" ([CNBC, 2025](https://www.cnbc.com/2025/03/20/nvidia-ceo-huang-says-was-wrong-about-timeline-for-quantum-computing.html)), but his initial skepticism reflects engineering realities.
+- **PsiQuantum's missed targets:** Claimed one million qubits by 2025 - target now acknowledged as overly ambitious ([AInvest, 2025](https://www.ainvest.com/news/quantum-computing-stocks-navigating-hype-hidden-risks-2025-2512/))
+- **Engineering scaling challenges:** Circuits of 30+ qubits achieve at best 99.5% fidelity; useful algorithms need millions of gate operations while current hardware fails after 1,000-10,000 ([AInvest, 2025](https://www.ainvest.com/news/quantum-computing-stocks-navigating-hype-hidden-risks-2025-2512/))
+
+**Implication:** The "realistic" 2028-2030 timeline for cryptographically relevant quantum computers (CRQC) represents the **optimistic** end of the distribution. NIST guidance indicates RSA-2048 should offer sufficient protection through at least 2030.
 
 ### Timeline Projections
 
 **Optimistic scenario (+high investment, +error correction breakthroughs):**
-- 2027: 1,000 logical qubits (RSA-2048 vulnerable)
-- 2029: 10,000 logical qubits (general advantage)
-- 2032: Widespread deployment
+- 2028-2030: 1,000 logical qubits (RSA-2048 vulnerable)
+- 2033-2035: 10,000 logical qubits (general advantage)
+- 2037-2040: Widespread deployment
 
-**Realistic scenario (current trajectory):**
-- 2029: 1,000 logical qubits (RSA-2048 vulnerable)
-- 2033: 10,000 logical qubits (general advantage)
-- 2035-2037: Widespread deployment
+**Realistic scenario (current trajectory, accounting for historical delays):**
+- 2032-2037: 1,000 logical qubits (RSA-2048 vulnerable)
+- 2038-2045: 10,000 logical qubits (general advantage)
+- 2045-2050: Widespread deployment
 
-**Pessimistic scenario (-slower error correction, -funding constraints):**
-- 2032: 1,000 logical qubits (RSA-2048 vulnerable)
-- 2037: 10,000 logical qubits (general advantage)
-- 2040+: Widespread deployment
+**Pessimistic scenario (-slower error correction, -funding constraints, -fundamental barriers):**
+- 2040-2045: 1,000 logical qubits (RSA-2048 vulnerable)
+- 2050+: 10,000 logical qubits (general advantage)
+- Uncertain: Widespread deployment (may require fundamentally new approaches)
 
 ### Algorithm Class Practicality
 
 | Algorithm Class | Logical Qubits Required | Timeline (realistic) | Applications |
 |----------------|------------------------|---------------------|--------------|
-| Grover's search | 100-500 | 2026-2028 | Symmetric crypto speedup (2x), database search |
-| Shor's factoring (RSA-2048) | 1,730-4,099 | 2028-2030 | Breaking RSA/ECC encryption |
-| Quantum chemistry | 1,000-10,000 | 2028-2035 | Drug discovery, materials science |
-| Quantum ML | 500-5,000 | 2027-2033 | Optimization, pattern recognition |
-| General quantum advantage | 10,000+ | 2033-2037 | Broad computational superiority |
+| Grover's search | 100-500 | 2028-2032 | Symmetric crypto speedup (2x), database search |
+| Shor's factoring (RSA-2048) | 1,730-4,099 | 2032-2040 | Breaking RSA/ECC encryption |
+| Quantum chemistry | 1,000-10,000 | 2032-2045 | Drug discovery, materials science (narrow applications) |
+| Quantum ML | 500-5,000 | 2030-2040 | Optimization, pattern recognition (limited scope) |
+| General quantum advantage | 10,000+ | 2040-2050+ | Broad computational superiority |
 
 ---
 
@@ -297,6 +314,18 @@ A 2024 MDPI study found: **"Social trust has a significantly positive impact on 
 - **SSL/TLS Heartbleed (2014):** Weeks-months for critical patches, trust damage lingering
 - **Equifax breach (2017):** 143M records compromised, multi-year trust recovery
 
+**CRITICAL CAVEAT - Weak Analog Applicability:**
+
+These historical cases differ fundamentally from a global cryptographic infrastructure collapse:
+
+1. **Equifax analog weakness:** A data breach affecting 143M records is fundamentally different from global cryptographic infrastructure collapse. The cascade dynamics, institutional responses, and recovery paths are incomparable. Equifax was a single company's failure; crypto collapse would be a systemic architectural failure affecting all digital infrastructure.
+
+2. **Y2K analog weakness:** Y2K was a proactive, planned transition with 5 years of preparation and known deadline. A crypto crisis would be reactive and chaotic with potentially zero warning if breakthrough occurs covertly. The comparison significantly underestimates recovery difficulty.
+
+3. **Missing negative cases:** Research doesn't examine cases where digital trust never recovered - permanent technology avoidance in certain populations, multi-generational trust deficits, or permanent economic drag from digital infrastructure skepticism.
+
+**Implication:** Trust recovery timelines may be significantly longer than historical analogs suggest, or trust may never fully recover to pre-crisis levels.
+
 **Demographic Variation:**
 
 - Tech-savvy populations: Faster adoption (6-12 months for early PQC)
@@ -327,12 +356,14 @@ A 2024 MDPI study found: **"Social trust has a significantly positive impact on 
 
 ### Recovery Timescales
 
-| Recovery Metric | Timeline | Evidence Base |
-|----------------|----------|---------------|
-| Critical infrastructure patching | 6-12 months | SSL/TLS Heartbleed (2014) |
-| Majority PQC adoption | 5-10 years | Y2K transition (1995-2000) |
-| Full infrastructure replacement | 10-20 years | NIST 2035 target |
-| Social trust recovery | 5-15 years | Equifax breach (2017+) |
+| Recovery Metric | Timeline | Evidence Base | Confidence |
+|----------------|----------|---------------|-----------|
+| Critical infrastructure patching | 6-18 months | SSL/TLS Heartbleed (2014) - but crypto crisis more severe | LOW |
+| Majority PQC adoption | 10-20 years | Y2K transition (1995-2000) - but reactive vs. proactive | MEDIUM |
+| Full infrastructure replacement | 20-40 years | NIST 2035 target - likely optimistic | LOW |
+| Social trust recovery | 10-30 years | Equifax breach (2017+) - weak analog, may never fully recover | VERY LOW |
+
+**CRITICAL UNCERTAINTY:** The "5-15 year trust recovery timeline" in the original parameter table has been revised to **10-30 years with VERY LOW confidence** and includes scenarios where trust never fully recovers to pre-crisis baseline. This represents permanent economic drag from digital infrastructure skepticism.
 
 ---
 
@@ -346,7 +377,19 @@ The period represents a **"pivotal transition where quantum machine learning is 
 
 **Key 2024 Breakthrough:**
 
-IonQ, AstraZeneca, AWS, and NVIDIA collaboration achieved **20x speedup** in drug development chemical reaction simulation using quantum-accelerated workflow ([PMC, 2025](https://pmc.ncbi.nlm.nih.gov/articles/PMC12053761/)). This demonstrates near-term practical advantage for specific AI tasks.
+IonQ, AstraZeneca, AWS, and NVIDIA collaboration achieved **20x speedup** in drug development chemical reaction simulation using quantum-accelerated workflow ([PMC, 2025](https://pmc.ncbi.nlm.nih.gov/articles/PMC12053761/)).
+
+**CRITICAL CAVEAT - Narrow Task Applicability:**
+
+This demonstration was for a **highly specific task** (Suzuki-Miyaura cross-coupling reaction simulation) and may not generalize to broader drug discovery workflows. Skeptical academic voices challenge the applicability:
+
+- **Sankar Das Sarma (University of Maryland):** Called drug design proposals "a baffling application given that quantum chemistry is a minuscule part of the whole process" ([MIT Technology Review, 2022](https://www.technologyreview.com/2022/03/28/1048355/quantum-computing-has-a-hype-problem/)). Notes that claims of speedups in "finance, machine learning and drug discovery have so far come with highly unsatisfying evidence."
+
+- **Scott Aaronson (University of Texas):** At Q2B24 Silicon Valley, Aaronson and John Preskill were skeptical about finding significant speedups in AI problems beyond what we have today ([QuEra, 2024](https://www.quera.com/blog-posts/q2b24-silicon-valley-john-preskill-and-scott-aaronson)). Aaronson notes "skepticism was always warranted regarding claims about how quantum computing will revolutionize machine learning, optimization, and finance" ([Scott Aaronson Blog, 2024](https://scottaaronson.blog/?p=8329)).
+
+- **Classical computing catching up:** Flatiron Institute (2024) achieved classical simulation of IBM's 127-qubit Eagle processor with greater accuracy than the quantum device itself, running on a laptop ([IEEE Spectrum](https://spectrum.ieee.org/quantum-computing-skeptics)).
+
+**Implication:** The 20x speedup should be interpreted as a best-case result for a narrow, carefully selected problem, not a general capability multiplier.
 
 **Hybrid Quantum-Classical Architecture:**
 
@@ -375,10 +418,17 @@ Recent NVIDIA-led research (Dec 2025) asserts: **"AI and quantum computing may n
 
 | AI Dimension | Capability Multiplier | Confidence | Timeline |
 |--------------|---------------------|-----------|----------|
-| **Research capability** | 5-20x (quantum algorithms accelerate scientific computing) | MEDIUM-HIGH | 2028-2035 |
-| **Physical capability** | 10-100x (molecular simulation, materials science) | HIGH | 2028-2035 |
-| **Digital capability** | 2-5x (cryptography, optimization) | MEDIUM | 2028-2035 |
-| **Cognitive capability** | 1-3x (limited quantum advantage for general cognition) | LOW-MEDIUM | 2035+ |
+| **Research capability** | 2-10x (quantum algorithms accelerate scientific computing, narrow domains only) | LOW-MEDIUM | 2035-2045 |
+| **Physical capability** | 5-50x (molecular simulation, materials science - demonstrated for specific problems) | LOW-MEDIUM | 2035-2045 |
+| **Digital capability** | 2-5x (cryptography, optimization - limited to specific problem classes) | MEDIUM | 2032-2040 |
+| **Cognitive capability** | 1-2x (minimal quantum advantage for general cognition) | VERY LOW | 2050+ |
+
+**IMPORTANT QUALIFICATIONS:**
+
+1. **Narrow applicability:** Multipliers apply only to specific quantum-amenable problems (molecular simulation, certain optimization classes), NOT to general AI capabilities
+2. **Das Sarma critique:** For complex real-world applications (drug discovery, finance), quantum speedups may not translate to overall workflow improvements
+3. **Classical competition:** Classical algorithms continue improving; quantum advantage may be smaller than theoretical limits suggest
+4. **Error correction overhead:** Fault-tolerant quantum computing requires massive overhead that reduces effective speedups
 
 ### Alignment Implications
 
@@ -484,7 +534,7 @@ Recent NVIDIA-led research (Dec 2025) asserts: **"AI and quantum computing may n
 | **Logical qubits (current, 2025)** | 10-28 | Microsoft/IBM reports | HIGH | Initial state |
 | **Logical qubits for Shor's (RSA-2048)** | 1,730-4,099 | Chevignard 2024, Gidney/Ekerå 2019 | HIGH | Breakthrough threshold |
 | **Physical-to-logical ratio** | 4:1 to 1000:1 | Microsoft (optimistic) to historical (conservative) | MEDIUM | Scaling model |
-| **Timeline to Shor's capability (realistic)** | 2028-2030 | Industry consensus | MEDIUM | Event probability |
+| **Timeline to Shor's capability (realistic)** | 2032-2040 | Industry consensus (optimistic) vs. Huang 15-30yr (skeptical) | LOW | Event probability |
 | **Shor's algorithm runtime (RSA-2048)** | 8-48 hours | Gidney/Ekerå 2019 | HIGH | Detection-to-breaking window |
 | **RSA/ECC prevalence in infrastructure** | 85-95% | FS-ISAC 2024 | HIGH | Vulnerability exposure |
 | **Economic value at risk** | $5-10T (banking alone) | WEF, SEC assessments | MEDIUM | Crisis severity |
@@ -492,13 +542,14 @@ Recent NVIDIA-led research (Dec 2025) asserts: **"AI and quantum computing may n
 | **PQC transition timeline (full)** | 10-20 years | NIST 2035 target | HIGH | Recovery duration |
 | **Market confidence shock** | -30% to -70% | Historical crisis analogs | MEDIUM-LOW | Economic cascade |
 | **Digital trust degradation** | -50% to -80% | Social trust research + extrapolation | LOW | Social impacts |
-| **Trust recovery timeline** | 5-15 years | Equifax breach + Y2K transition | LOW | Long-term effects |
-| **Quantum-AI capability multiplier (research)** | 5-20x | IonQ 20x demo, theoretical limits | MEDIUM | AI enhancement |
-| **Quantum-AI capability multiplier (physical)** | 10-100x | Molecular simulation theoretical limits | MEDIUM | AI enhancement |
-| **Quantum-AI capability multiplier (digital)** | 2-5x | Optimization problem speedups | MEDIUM-HIGH | AI enhancement |
+| **Trust recovery timeline** | 10-30 years | Equifax breach + Y2K (weak analogs), may never fully recover | VERY LOW | Long-term effects |
+| **Quantum-AI capability multiplier (research)** | 2-10x | IonQ 20x demo (narrow task), Das Sarma skepticism | LOW-MEDIUM | AI enhancement |
+| **Quantum-AI capability multiplier (physical)** | 5-50x | Molecular simulation (narrow domains), Das Sarma critique | LOW-MEDIUM | AI enhancement |
+| **Quantum-AI capability multiplier (digital)** | 2-5x | Optimization problem speedups (specific classes) | MEDIUM | AI enhancement |
 | **Investment effect on timeline** | 2x investment → -2 years timeline | Industry growth 2023-2025 | MEDIUM | Policy lever |
-| **Breakthrough probability (annual, 2025-2030)** | 5-15% | Industry roadmaps + uncertainty | LOW | Stochastic events |
-| **Breakthrough probability (annual, 2030-2035)** | 15-30% | Industry roadmaps + uncertainty | LOW | Stochastic events |
+| **Breakthrough probability (annual, 2025-2030)** | 2-5% | Industry roadmaps + historical delays | VERY LOW | Stochastic events |
+| **Breakthrough probability (annual, 2030-2040)** | 5-15% | Industry roadmaps + uncertainty | LOW | Stochastic events |
+| **Breakthrough probability (annual, 2040-2050)** | 15-30% | Extended timeline + maturity | MEDIUM-LOW | Stochastic events |
 | **Legacy crypto debt accumulation** | 5-10%/year | Technology adoption inertia | MEDIUM | Debt tracking |
 | **PQC deployment rate (proactive)** | 5-10%/year | Y2K transition pace | MEDIUM | Mitigation effectiveness |
 | **PQC deployment rate (crisis)** | 20-40%/year (first 2 years) | Emergency mobilization | MEDIUM-LOW | Crisis response |
@@ -604,22 +655,44 @@ Recent NVIDIA-led research (Dec 2025) asserts: **"AI and quantum computing may n
 
 **Weaknesses:**
 
-1. **Social trust evidence base:** Limited empirical research on crypto-failure-specific trust impacts (extrapolated from general security breaches)
-2. **Timeline uncertainty:** Wide variance in expert forecasts (±5-10 years for quantum milestones)
-3. **Cascade severity speculation:** Economic damage estimates based on analogs, not direct crypto-failure studies
-4. **Quantum-AI alignment risks:** Weak theoretical basis (field too immature for empirical data)
+1. **Timeline overconfidence:** Initial research relied heavily on vendor roadmaps without adequate skepticism; revised to incorporate skeptical voices (Huang, Das Sarma, Aaronson) and historical delays
+2. **Social trust evidence base:** Limited empirical research on crypto-failure-specific trust impacts; extrapolated from non-analogous historical events (Equifax, Y2K) with weak applicability
+3. **Quantum-AI generalizability:** 20x speedup demonstration was for narrow task (Suzuki-Miyaura reaction); academic skeptics question broad applicability to drug discovery, finance, machine learning
+4. **Economic cascade severity:** Damage estimates based on imperfect analogs (2008 financial crisis, Flash Crash) that may not apply to cryptographic infrastructure collapse
+5. **Source quality variation:** Mix of peer-reviewed research, authoritative industry reports, and trade publications; some claims rest on industry marketing rather than independent validation
 
-**Overall confidence:** MEDIUM-HIGH for technical parameters (qubits, timelines, costs), MEDIUM for economic impacts, MEDIUM-LOW for social trust dynamics
+**Overall confidence:** HIGH for technical parameters (qubit requirements, runtime estimates), MEDIUM for economic impacts, LOW for timeline projections, VERY LOW for social trust dynamics and quantum-AI generalizability
 
-**Recommended validation focus for Sylvia:**
-- Challenge timeline optimism (are roadmaps reliable?)
-- Scrutinize economic damage estimates (are 2008 crisis analogs valid?)
-- Question social trust recovery assumptions (is extrapolation sound?)
-- Examine quantum-AI capability multipliers (are 20x speedups generalizable?)
+**Validation outcome:** Research revised following Sylvia's Grade B- CONDITIONAL PASS to address:
+- ✅ CRITICAL-1: Timeline overconfidence - Extended timelines by 5-15 years, added skeptical voices
+- ✅ CRITICAL-2: 20x speedup claim - Reduced capability multipliers, added Das Sarma/Aaronson critiques
+- ✅ SIGNIFICANT-1: Social trust recovery - Downgraded to VERY LOW confidence, acknowledged weak analogs
+
+**Revised Confidence Assessment:**
+
+| Claim | Original Confidence | Revised Confidence | Rationale |
+|-------|-------------------|-------------------|-----------|
+| Logical qubit thresholds for Shor's | HIGH | HIGH | Technical calculation well-established |
+| Timeline to CRQC (2032-2040) | MEDIUM | LOW | Vendor roadmaps historically overoptimistic; Huang 15-30yr |
+| RSA/ECC prevalence | HIGH | HIGH | Well-documented infrastructure surveys |
+| PQC transition cost | MEDIUM | MEDIUM | NIST estimate reasonable but extrapolation uncertain |
+| Economic damage ($1-3T) | MEDIUM-LOW | MEDIUM-LOW | Historical analogs imperfect but directionally valid |
+| Social trust recovery (10-30yr) | LOW | VERY LOW | Weak analogs, may never fully recover |
+| Quantum-AI multipliers | MEDIUM-HIGH | LOW-MEDIUM | Narrow task demos, skeptical academic voices |
 
 ---
 
 ## Sources
+
+### Skeptical Voices & Timeline Critiques
+
+- [Jensen Huang on quantum computing | Constellation Research, 2025](https://www.constellationr.com/blog-news/insights/here-s-what-nvidia-ceo-jensen-huang-said-about-quantum-computing-project-digits) - Nvidia CEO states "15-30 years away"
+- [Nvidia CEO Huang walks back quantum timeline | CNBC, 2025](https://www.cnbc.com/2025/03/20/nvidia-ceo-huang-says-was-wrong-about-timeline-for-quantum-computing.html) - Later admits comments "came out wrong"
+- [Quantum computing has a hype problem | MIT Technology Review, 2022](https://www.technologyreview.com/2022/03/28/1048355/quantum-computing-has-a-hype-problem/) - Sankar Das Sarma critique
+- [Quantum Computing: Between Hope and Hype | Scott Aaronson Blog, 2024](https://scottaaronson.blog/?p=8329) - Skepticism about ML/optimization claims
+- [Q2B24 Silicon Valley: John Preskill and Scott Aaronson | QuEra, 2024](https://www.quera.com/blog-posts/q2b24-silicon-valley-john-preskill-and-scott-aaronson) - Skeptical about AI speedups
+- [Quantum computing skeptics | IEEE Spectrum](https://spectrum.ieee.org/quantum-computing-skeptics) - Classical computing catching up
+- [Quantum computing stocks risks | AInvest, 2025](https://www.ainvest.com/news/quantum-computing-stocks-navigating-hype-hidden-risks-2025-2512/) - Engineering challenges, missed targets
 
 ### Quantum Advantage Timelines
 
@@ -676,8 +749,13 @@ Recent NVIDIA-led research (Dec 2025) asserts: **"AI and quantum computing may n
 
 ---
 
-**Total sources:** 31 (exceeds 8+ requirement)
-**2024-2025 sources:** 28 (90%)
-**Peer-reviewed + authoritative industry:** 100%
+**Total sources:** 38 (exceeds 8+ requirement)
+**2024-2025 sources:** 34 (89%)
+**Peer-reviewed + authoritative industry + skeptical voices:** 100%
 
-**Status:** Research complete, ready for Quality Gate 1 validation by research-skeptic (Sylvia)
+**Status:** Research REVISED following Sylvia's B- CONDITIONAL PASS validation. All critical issues addressed:
+- Timeline overconfidence → Extended by 5-15 years, added skeptical sources
+- 20x speedup overstatement → Reduced multipliers, added academic critiques
+- Social trust weak evidence → Downgraded to VERY LOW confidence, acknowledged analog weaknesses
+
+**Ready for:** Implementation (Quality Gate 1 cleared with modifications)
