@@ -1,11 +1,6 @@
 # Research Update Queue
-<<<<<<< Updated upstream
-**Generated:** 12/10/2025, 11:30:03 AM
-**Files Scanned:** 566
-=======
-**Generated:** 12/8/2025, 3:30:04 PM
-**Files Scanned:** 543
->>>>>>> Stashed changes
+**Generated:** 12/10/2025, 12:30:04 PM
+**Files Scanned:** 565
 
 ---
 
@@ -17,21 +12,12 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-<<<<<<< Updated upstream
-**Count:** 180 (31.8%)
-=======
-**Count:** 179 (33.0%)
->>>>>>> Stashed changes
+**Count:** 179 (31.7%)
 
 ### `AUTONOMOUS_RESEARCHER_SESSION_20251203_2030.md`
 - **Oldest source:** 1981 (44 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/AUTONOMOUS_RESEARCHER_SESSION_20251203_2030.md`
-
-### `CITATION_CURRENCY_AUDIT_20251208.md`
-- **Oldest source:** 2009 (16 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/CITATION_CURRENCY_AUDIT_20251208.md`
 
 ### `CRISIS_MITIGATION_RESEARCH_CRITIQUE_20251029.md`
 - **Oldest source:** 2001 (24 years old)
@@ -307,11 +293,6 @@
 - **Oldest source:** 2013 (12 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/biodiversity_collapse_HIGH8_research_20251127.md`
-
-### `biodiversity_food_webs_20251210.md`
-- **Oldest source:** 2002 (23 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/biodiversity_food_webs_20251210.md`
 
 ### `black-mirror-phase3-research-AMENDED_20251016.md`
 - **Oldest source:** 2000 (25 years old)
@@ -932,11 +913,7 @@
 
 ## 📋 MEDIUM (Review Within Quarter)
 
-<<<<<<< Updated upstream
 **Count:** 26 (4.6%)
-=======
-**Count:** 24 (4.4%)
->>>>>>> Stashed changes
 
 - `LAYER2_COMPREHENSIVE_STATUS_20251030.md` - Oldest: 2020 (5 years)
 - `LAYER2_DEBATE_SUMMARY_20251030.md` - Oldest: 2020 (5 years)
@@ -969,11 +946,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-<<<<<<< Updated upstream
-**Count:** 360 (63.6%)
-=======
-**Count:** 340 (62.6%)
->>>>>>> Stashed changes
+**Count:** 360 (63.7%)
 
 All sources <3 years old. No action required.
 
@@ -983,56 +956,33 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-<<<<<<< Updated upstream
-| Total files | 566 |
+| Total files | 565 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 180 (31.8%) |
+| HIGH | 179 (31.7%) |
 | MEDIUM | 26 (4.6%) |
-| LOW | 360 (63.6%) |
+| LOW | 360 (63.7%) |
 | Average age | 7.2 years |
-=======
-| Total files | 543 |
-| CRITICAL | 0 (0.0%) |
-| HIGH | 179 (33.0%) |
-| MEDIUM | 24 (4.4%) |
-| LOW | 340 (62.6%) |
-| Average age | 7.5 years |
->>>>>>> Stashed changes
 | Oldest source | 1955 (70 years ago) |
 
 ### Research Currency
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-<<<<<<< Updated upstream
-| Current (<3yr) | 360 | 63.6% |
+| Current (<3yr) | 360 | 63.7% |
 | Warning (3-5yr) | 26 | 4.6% |
-| Critical (>5yr) | 180 | 31.8% |
-=======
-| Current (<3yr) | 340 | 62.6% |
-| Warning (3-5yr) | 24 | 4.4% |
-| Critical (>5yr) | 179 | 33.0% |
->>>>>>> Stashed changes
+| Critical (>5yr) | 179 | 31.7% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-<<<<<<< Updated upstream
-- **Current:** 31.8% critical (>5yr)
-=======
-- **Current:** 33.0% critical (>5yr)
->>>>>>> Stashed changes
+- **Current:** 31.7% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
-<<<<<<< Updated upstream
-1. Update 180 HIGH priority file(s) within 1 month
-=======
 1. Update 179 HIGH priority file(s) within 1 month
->>>>>>> Stashed changes
 2. Schedule research update sprint
 3. Coordinate with research team
 
