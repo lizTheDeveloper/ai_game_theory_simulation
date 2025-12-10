@@ -130,7 +130,7 @@ export class EnergyBudgetPhase implements SimulationPhase {
 
     // Step 2: Check if demand exceeds capacity
     const totalDemand = Object.values(demands).reduce((sum, d) => sum + d.demandTWh, 0);
-    const totalCapacity = assertFinite(
+    let totalCapacity = assertFinite(
       state.energyBudget.globalCapacity.totalTWh,
       {
         location: 'EnergyBudgetPhase.execute',
@@ -138,6 +138,55 @@ export class EnergyBudgetPhase implements SimulationPhase {
         month: state.currentMonth,
     }
     );
+
+    // INTEGRATION FIX (M-1): Cross-link with PowerGenerationSystem datacenter constraint
+    // When datacenters are consuming too much power (20-30%+ of global electricity),
+    // reduce available capacity for allocation to reflect the political/grid reality.
+    // This prevents EnergyBudgetPhase from allocating power that PowerGenerationSystem
+    // has already determined is unavailable due to datacenter saturation.
+    //
+    // Research: powerGeneration.ts:604-656 (20% soft threshold, 30% hard threshold)
+    // Constraint severity: 0 (no constraint) → 1.0 (maximum constraint)
+    if (state.powerGenerationSystem?.energyConstraintActive) {
+      const constraintSeverity = assertStateProperty(
+        state.powerGenerationSystem,
+        'constraintSeverity',
+        {
+          location: 'EnergyBudgetPhase.execute',
+          month: state.currentMonth,
+        }
+      );
+
+      // Reduce available capacity proportionally to constraint severity
+      // Severity 0.0 → no reduction (100% available)
+      // Severity 0.5 → 50% reduction (soft constraint zone)
+      // Severity 1.0 → 100% reduction (hard constraint, no surplus available)
+      const datacenterReservedFraction = assertInRange(
+        constraintSeverity,
+        0,
+        1,
+        {
+          location: 'EnergyBudgetPhase.execute',
+          valueName: 'datacenterReservedFraction',
+          month: state.currentMonth,
+        }
+      );
+
+      const reducedCapacity = totalCapacity * (1.0 - datacenterReservedFraction * 0.5);
+
+      console.log(`⚡ Datacenter constraint active (severity ${(constraintSeverity * 100).toFixed(0)}%)`);
+      console.log(`  Capacity reduced: ${totalCapacity.toFixed(0)} → ${reducedCapacity.toFixed(0)} TWh`);
+
+      totalCapacity = assertFinite(
+        reducedCapacity,
+        {
+          location: 'EnergyBudgetPhase.execute',
+          valueName: 'reducedCapacity',
+          month: state.currentMonth,
+          additionalInfo: { originalCapacity: totalCapacity, constraintSeverity }
+        }
+      );
+    }
 
     const surplus = totalCapacity - totalDemand;
 
