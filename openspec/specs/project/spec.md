@@ -160,9 +160,10 @@ None (threshold lowering regression FIXED Dec 9, 2025 - commit 3f3118de, 7130c7e
 - H-2: Duplicate energy calculation removal (ClimateDeploymentPhase cleanup) - COMPLETE Dec 9, 2025
 - Sleeper agent rate justification (7.5% → Hubinger et al. 2024) - COMPLETE Dec 10, 2025 (commit 248bad46)
 - Sandbagging level citation (0.4-0.6 → van der Weij/Meinke 2024) - COMPLETE Dec 10, 2025 (commit 248bad46)
+- Detection risk calibration (50% baseline → time-dependent model) - COMPLETE Dec 10, 2025 (commit fd7694a2)
 
 ### HIGH Priority
-- Detection risk calibration (50% baseline → time-dependent model) - From Nov 29 research audit (READY FOR UPDATE)
+None (all research audit items complete - system entering MEDIUM priority work)
 
 ### COMPLETED MEDIUM Priority
 - M-5: Threshold uncertainty modeling (distribution sampling library) - COMPLETE Dec 7, 2025
