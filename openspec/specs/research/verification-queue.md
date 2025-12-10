@@ -367,6 +367,17 @@ economy.detectionRisk = 0.5;  // 50% baseline risk
 
 ---
 
+### Carbon Capture Deployment Parameters
+**Status:** ✅ RESOLVED (Dec 10, 2025)
+**Grade:** C+ (Conditional Pass - Corrections Applied)
+**Commit:** c52826e
+**Finding:** Author misattribution, systematic optimism bias, missing contradictory evidence
+**Resolution:** All 6 critical corrections applied - author fixed, contradictory evidence added, Gen 3 claims qualified, energy conflicts reconciled
+**Research:** `research/carbon_capture_deployment_timelines_2025.md`
+**Verification:** `reviews/carbon_capture_skeptic_review_20251208.md`
+
+---
+
 ## Workflow
 
 ### Adding to Queue
