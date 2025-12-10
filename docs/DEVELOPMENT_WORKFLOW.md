@@ -9,6 +9,7 @@ Detailed workflow guidance for implementing features in the research simulation.
 - [Calibration Coordination Protocol](#calibration-coordination-protocol)
 - [Quality Gates](#quality-gates)
 - [Phase-Based Implementation](#phase-based-implementation)
+- [Git Hooks](#git-hooks)
 
 ## Multi-Agent Workflow (Default)
 
@@ -670,4 +671,87 @@ Verification file archived to research/completed/
 - **Phase skip**: Orchestrator starts at validation (research file exists)
 - **Audit trail**: Clear paper trail of what needs verification
 - **Research integrity**: Systematic approach to citation verification
+
+---
+
+## Git Hooks
+
+**Purpose:** Prevent common git workflow issues through automated pre-commit checks.
+
+**Added:** December 10, 2025 (Session 21 ocean pH merge conflict motivated this)
+
+### Pre-commit Hook: Merge Conflict Markers
+
+Prevents committing files containing unresolved merge conflict markers (`<<<<<<<`, `=======`, `>>>>>>>`).
+
+**Location:** `.githooks/pre-commit`
+
+**How it works:**
+1. Scans all staged files for conflict marker patterns
+2. Blocks commit if markers are detected
+3. Lists affected files with clear error message
+4. Allows override with `--no-verify` flag when needed
+
+**When to override:**
+Use `git commit --no-verify` only when:
+- Intentionally documenting conflict markers in examples
+- Adding test fixtures that contain marker patterns
+- Documenting git workflow in markdown files
+
+**Example blocked commit:**
+```bash
+$ git commit -m "Fix ocean pH"
+
+❌ ERROR: Merge conflict markers detected in staged files:
+
+  - src/simulation/oceanAcidification.ts
+
+Please resolve all merge conflicts before committing.
+
+If you intentionally want to commit these markers (e.g., in documentation),
+you can bypass this hook with: git commit --no-verify
+```
+
+**Example override:**
+```bash
+$ git commit --no-verify -m "docs: Add git conflict example to workflow guide"
+# Commit succeeds, hook bypassed
+```
+
+### Hook Installation
+
+Git is already configured to use `.githooks/` directory:
+```bash
+$ git config core.hooksPath
+.githooks
+```
+
+All hooks in `.githooks/` are automatically active for all contributors.
+
+### Adding New Hooks
+
+To add additional pre-commit checks:
+1. Edit `.githooks/pre-commit` (bash script)
+2. Add new check before final `exit 0`
+3. Test with intentional violations
+4. Document in this section
+5. Commit hook changes
+
+**Example checks to consider:**
+- TypeScript compilation (`npx tsc --noEmit`)
+- Emoji registration (`docs/EMOJI_EVENT_MAP.txt` validation)
+- TODO comment patterns (require Jira ticket links)
+- Commit message format validation
+
+### CI/CD Defense-in-Depth
+
+While pre-commit hooks prevent local issues, GitHub Actions should duplicate critical checks:
+- Conflict marker detection (redundant safety)
+- TypeScript compilation
+- Test suite execution
+- Research citation validation
+
+This ensures hooks can't be bypassed by `--no-verify` in production branches.
+
+---
 
