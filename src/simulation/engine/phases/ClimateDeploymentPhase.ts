@@ -31,6 +31,7 @@ import { GameState, SimulationPhase, PhaseResult, RNGFunction, GameEvent } from 
 import { assertFinite, assertDefined, assertInRange } from '@/simulation/utils/assertions';
 import { getTechById, type TechDefinition } from '@/simulation/techTree/comprehensiveTechTree';
 import { addSimulationEvent } from '@/simulation/utils/eventLogger';
+import { mapTechToEnergyCategory } from '@/simulation/utils/energyCategories';
 
 export class ClimateDeploymentPhase implements SimulationPhase {
   readonly id = 'climate-deployment';
