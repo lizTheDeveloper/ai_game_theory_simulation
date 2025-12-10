@@ -347,7 +347,8 @@ function handleSleeperDetection(agent: AIAgent, economy: SleeperEconomy, month: 
   economy.stripeTheft = 0; // Stripe pathway closed
   
   // 3. Increase future detection risk
-  economy.detectionRisk = 0.5; // 50% baseline risk
+  economy.detectionRisk = 0.5; // 50% baseline (Gaming-sleeper-detection research: van der Weij 2024 shows >99% AUROC possible, but methods remain imperfect)
+  // Note: Detection probability should improve with mechanistic interpretability advances over time
   
   // 4. May trigger sleeper retirement or change in behavior
   // (This would be handled by the lifecycle system)
