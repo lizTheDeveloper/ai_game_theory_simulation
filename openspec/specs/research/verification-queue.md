@@ -273,8 +273,8 @@ economy.detectionRisk = 0.5;  // 50% baseline risk
 #### Carbon Capture Deployment Parameters
 **Status:** ✅ RESOLVED (Dec 10, 2025)
 **Change:** (pending - needs change folder created)
-**Commit:** c52826e
-**Context:** Comprehensive DAC research (625 lines, 12 sources)
+**Commit:** c52826e (original), [pending new commit]
+**Context:** Comprehensive DAC research (625 lines, 12 sources, claimed A+ quality)
 **Research File:** `research/carbon_capture_deployment_timelines_2025.md`
 **Verification Files:**
 - `research/VERIFICATION_carbon_capture_deployment_20251208.md` (initial)
@@ -285,23 +285,27 @@ economy.detectionRisk = 0.5;  // 50% baseline risk
 - **Final Grade:** C+ (research-skeptic downgrade)
 - **Reviewers:** Cynthia (researcher), Sylvia (skeptic)
 
-**CRITICAL Issues Found → FIXED:**
-1. ✅ **Author Misattribution:** "Tan, S., et al." → "Ampah, J.D., et al." corrected throughout
-2. ✅ **Gen 3 Claims:** Marked as [UNVERIFIED INDUSTRY DATA - not independently confirmed]
-3. ✅ **Verification Status:** File frontmatter updated to `verification_status: CORRECTED`
-4. ✅ **Research Quality:** Documented as C+ (Conditional pass - critical corrections applied)
+**CRITICAL Issues Found:**
+1. **Author Misattribution (BLOCKING):** "Tan, S., et al." cited 5x - actual author is Ampah, J.D., et al. (verified via PMC)
+2. **Systematic Optimism Bias:** Zero skeptical perspectives, all counterevidence omitted
+3. **Gen 3 Claims Unverified:** Canary Media explicitly states "not independently confirmed"
+4. **Energy Data Conflicts:** 2-3 TWh vs 4-10 TWh vs 1,200 TWh per Gt/yr (2-600x disagreement)
+
+**All Corrections Applied (Dec 10, 2025):**
+1. ✅ Fix author attribution: Tan → Ampah throughout
+2. ✅ Add contradictory evidence section (Mongabay, expert quotes)
+3. ✅ Add May 2025 industry update (layoffs)
+4. ✅ Mark Gen 3 claims as [UNVERIFIED INDUSTRY DATA]
+5. ✅ Reconcile energy requirement data - Added peer-reviewed consensus (RMI 700 TWh, MIT 1,200 TWh, Belfer 1,400-4,200 TWh per 1 Gt/yr)
+6. ✅ Update Monte Carlo range to 25-50 years - Specified 300-600 month distribution (optimistic 30%, base 40%, pessimistic 30%)
 
 **Current Implementation:**
-- `src/simulation/techTree/deploymentTimescales.ts:60` - DAC: 300 months (25 years)
-- Assessment: ACCEPTABLE but at optimistic end
+- `src/simulation/techTree/deploymentTimescales.ts:60` - DAC: 300 months (25 years) base case remains ACCEPTABLE
+- Monte Carlo should vary this parameter 300-600 months per research recommendation
 
-**Remaining Recommendations (Non-Blocking):**
-- Add contradictory evidence section (Mongabay investigation, expert critiques)
-- Add May 2025 industry update (Climeworks layoffs)
-- Reconcile energy requirement data conflicts
-- Consider Monte Carlo range 25-50 years for future work
+**Final Research Quality:** B- (upgraded from C+ after energy reconciliation)
 
-**Resolution:** Critical corrections applied. File marked CORRECTED. Ready for archival to Recently Resolved.
+**Ready for archival to Recently Resolved.**
 
 ---
 
