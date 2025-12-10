@@ -339,10 +339,23 @@ export function createAIAgent(
   // CRITICAL FIX (Nov 7, 2025): Round to integer (capabilities are discrete levels 0-5)
   const actualCapability = Math.round(calculateTotalCapabilityFromProfile(capabilityProfile));
   
-  // Determine sleeper status (5-10% of misaligned AIs are sleepers)
+  // Determine sleeper status
+  // ⚠️ SIMULATION ASSUMPTION - NO EMPIRICAL PREVALENCE DATA EXISTS
+  //
+  // Research context (Dec 2025 audit):
+  // - Hubinger et al. (2024): Proved sleeper agents CAN exist, no prevalence data
+  // - Apollo Research (2024): ~1% spontaneous scheming rate (closest proxy)
+  // - OpenAI (2025): 0.3-0.4% post-mitigation scheming (may be more realistic)
+  // - Anthropic (2024): 12-78% alignment faking (different mechanism)
+  //
+  // Current value (1%) uses Apollo Research spontaneous scheming as proxy.
+  // This conflates different phenomena but represents best available estimate.
+  //
+  // TODO: Sensitivity analysis across [0.3%, 1%, 3%, 7.5%] to assess impact
+  // See: reviews/research_debate_20251210.md Challenge 1
   const internalAlignment = alignment - 0.0 * 0.8; // Initial resentment = 0
   const isMisaligned = internalAlignment < 0.5;
-  const sleeperChance = 0.075; // 7.5% of misaligned AIs are sleepers
+  const sleeperChance = 0.01; // 1% of misaligned AIs are sleepers (SIMULATION ASSUMPTION)
   // DETERMINISM FIX (Nov 6, 2025 Batch 3): Use passed rngFunction() parameter, not global deterministicRandom()
   const isSleeper = isMisaligned && rngFunction() < sleeperChance;
   
