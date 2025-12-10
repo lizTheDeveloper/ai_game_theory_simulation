@@ -110,6 +110,8 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 
 **Verification:** Comment now research-compliant, matches gaming-sleeper-detection research doc
 
+**Follow-Up Work:** M-8 added to project spec (TIER 3 BRONZE classification needed - see reviews/sleeper_agent_research_debate_20251210.md)
+
 **Severity:** HIGH (research standards compliance)
 **Effort:** COMPLETED
 
