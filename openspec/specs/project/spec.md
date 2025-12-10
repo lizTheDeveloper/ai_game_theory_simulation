@@ -175,13 +175,7 @@ None - All HIGH priority work COMPLETE
 - M-6: Enhanced radiation modeling (acute vs chronic, tissue sensitivity) - COMPLETE Dec 8, 2025
 - Missing Climate Systems (4 subsystems: M-4 abrupt sea level rise, compound events, social tipping, M-7 hysteresis) - COMPLETE Dec 5-7, 2025
 - Energy Budget Constraints (datacenter/AI GPU growth limits, UBI compute drain) - COMPLETE Dec 9, 2025
-
-### ACTIVE MEDIUM Priority
-- M-1: Detection risk calibration - incomplete integration (from Architecture Review Dec 10)
-  - Problem: Time-dependent detection risk only applies AFTER first detection (handleSleeperDetection), not during initial detection (updateSleeperDetectionRisk)
-  - Location: src/simulation/sleeperEconomy.ts lines 315, 381
-  - Impact: Initial detection uses raw accumulated risk (not time-calibrated)
-  - Effort: SMALL (apply calculateDetectionRiskAfterDetection as multiplier on initial checks)
+- M-1: Detection risk calibration - incomplete integration - COMPLETE Dec 10, 2025 (commit a3b3315b)
 
 ### MEDIUM Priority (Backlog)
 - Hindcast tuning (1950-2024 historical validation)
