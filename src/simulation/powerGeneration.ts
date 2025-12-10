@@ -19,6 +19,7 @@ import { assertStateProperty, assertFinite, assertInRange, assertProbability } f
 
 /**
  * Update power generation system for one month
+ * H-1 (Dec 10, 2025): Integrated with energy budget constraints
  */
 export function updatePowerGeneration(state: GameState, rng: () => number): void {
   const power = state.powerGenerationSystem;
@@ -36,6 +37,20 @@ export function updatePowerGeneration(state: GameState, rng: () => number): void
     }
   );
 
+  // H-1: Read energy budget effectiveness multiplier (TIER 4 'ai-datacenter')
+  let energyMultiplier = 1.0;
+  if (state.energyBudget?.allocations?.['ai-datacenter']) {
+    energyMultiplier = assertFinite(
+      state.energyBudget.allocations['ai-datacenter'].effectivenessMultiplier,
+      {
+        location: 'updatePowerGeneration',
+        valueName: 'energyMultiplier',
+        month: state.currentMonth,
+        additionalInfo: { category: 'ai-datacenter' }
+      }
+    );
+  }
+
   // 1. Update AI inference efficiency (exponential growth with diminishing returns)
   updateAIEfficiency(power, year);
 
@@ -43,16 +58,19 @@ export function updatePowerGeneration(state: GameState, rng: () => number): void
   updateQueryVolume(power, year);
 
   // 3. Calculate AI inference power (efficiency vs demand)
-  updateAIInferencePower(power);
+  // H-1: Pass energy multiplier to constrain growth
+  updateAIInferencePower(power, energyMultiplier);
 
   // 4. Update cryptocurrency power consumption
-  updateCryptoPower(power, state);
+  // H-1: Pass energy multiplier to constrain growth
+  updateCryptoPower(power, state, energyMultiplier);
 
   // 5. Handle data center construction queue (4-year lag)
   updateDataCenterBuildout(power, state);
 
   // 6. Update AI training events (episodic spikes)
-  updateAITrainingPower(power, state, rng);
+  // H-1: Pass energy multiplier to constrain training
+  updateAITrainingPower(power, state, rng, energyMultiplier);
 
   // 7. Update traditional cloud power (residual growth)
   updateTraditionalCloudPower(power, year);
@@ -91,6 +109,14 @@ export function updatePowerGeneration(state: GameState, rng: () => number): void
 
   // 14. Calculate energy constraints (NEW - Oct 12, 2025)
   calculateEnergyConstraints(power);
+
+  // H-1: Log energy constraint impact (annually)
+  if (energyMultiplier < 0.9 && state.currentMonth % 12 === 0) {
+    console.log(`\n📊⚡ AI+crypto power constrained by grid capacity: ${(energyMultiplier * 100).toFixed(1)}%`);
+    console.log(`   AI inference: ${power.aiInferencePower.toFixed(2)} TWh/month`);
+    console.log(`   AI training: ${power.aiTrainingPower.toFixed(2)} TWh/month`);
+    console.log(`   Crypto: ${power.cryptoPower.toFixed(2)} TWh/month`);
+  }
 }
 
 /**
@@ -138,12 +164,16 @@ function updateQueryVolume(power: PowerGenerationSystem, year: number): void {
 
 /**
  * Calculate AI inference power (efficiency vs demand)
+ * H-1 (Dec 10, 2025): Constrained by energy budget
  *
  * Key insight: Efficiency improving faster than demand growing
  * Result: AI inference power DECLINES over time (user's "100x reduction")
+ *
+ * @param power Power generation system state
+ * @param energyMultiplier Effectiveness multiplier [0, 1] from EnergyBudgetPhase
  */
-function updateAIInferencePower(power: PowerGenerationSystem): void {
-  // Power = Query Volume / Efficiency
+function updateAIInferencePower(power: PowerGenerationSystem, energyMultiplier: number): void {
+  // Power = Query Volume / Efficiency (nominal demand)
   const powerPerQueryKWh = assertFinite(
     1 / power.inferenceEfficiency,
     {
@@ -171,27 +201,41 @@ function updateAIInferencePower(power: PowerGenerationSystem): void {
       additionalInfo: { queriesPerMonth, powerPerQueryKWh }
     }
   );
-  const powerTWh = assertFinite(
+  const nominalPowerTWh = assertFinite(
     powerKWh / 1e9,
     {
       location: 'updateAIInferencePower',
-      valueName: 'powerTWh',
+      valueName: 'nominalPowerTWh',
       month: -1,
       additionalInfo: { powerKWh }
     }
   ); // Convert kWh to TWh
 
-  power.aiInferencePower = powerTWh;
+  // H-1: Apply energy budget constraint
+  power.aiInferencePower = assertFinite(
+    nominalPowerTWh * energyMultiplier,
+    {
+      location: 'updateAIInferencePower',
+      valueName: 'constrainedPowerTWh',
+      month: -1,
+      additionalInfo: { nominalPowerTWh, energyMultiplier }
+    }
+  );
 }
 
 /**
  * Update cryptocurrency power consumption
+ * H-1 (Dec 10, 2025): Constrained by energy budget
  *
  * 2024 baseline: ~100 TWh/year (8.3 TWh/month)
  * Growth: 15% per year (conservative, policy-dependent)
  * User note: "we gotta model crypto growing, because of current administration"
+ *
+ * @param power Power generation system state
+ * @param state Game state
+ * @param energyMultiplier Effectiveness multiplier [0, 1] from EnergyBudgetPhase
  */
-function updateCryptoPower(power: PowerGenerationSystem, state: GameState): void {
+function updateCryptoPower(power: PowerGenerationSystem, state: GameState, energyMultiplier: number): void {
   const monthlyGrowthRate = Math.pow(1 + power.cryptoGrowthRate, 1 / 12);
 
   // Policy influence: Pro-crypto policies increase growth
@@ -201,7 +245,18 @@ function updateCryptoPower(power: PowerGenerationSystem, state: GameState): void
   // For now, use base growth rate
 
   power.cryptoHashRate *= monthlyGrowthRate * policyMultiplier;
-  power.cryptoPower = power.cryptoHashRate * power.cryptoPowerIntensity;
+  const nominalCryptoPower = power.cryptoHashRate * power.cryptoPowerIntensity;
+
+  // H-1: Apply energy budget constraint
+  power.cryptoPower = assertFinite(
+    nominalCryptoPower * energyMultiplier,
+    {
+      location: 'updateCryptoPower',
+      valueName: 'constrainedCryptoPower',
+      month: state.currentMonth,
+      additionalInfo: { nominalCryptoPower, energyMultiplier }
+    }
+  );
 }
 
 /**
@@ -256,14 +311,20 @@ function updateDataCenterBuildout(power: PowerGenerationSystem, state: GameState
 
 /**
  * Update AI training power (episodic spikes)
+ * H-1 (Dec 10, 2025): Constrained by energy budget
  *
  * Training happens in waves:
  * - GPT-4: ~50 GWh (0.05 TWh)
  * - Hypothetical 1T model: ~500 GWh (0.5 TWh)
  *
  * User note: "More parameters isn't more better" - uncertain scaling
+ *
+ * @param power Power generation system state
+ * @param state Game state
+ * @param rng Random number generator (deterministic)
+ * @param energyMultiplier Effectiveness multiplier [0, 1] from EnergyBudgetPhase
  */
-function updateAITrainingPower(power: PowerGenerationSystem, state: GameState, rng: () => number): void {
+function updateAITrainingPower(power: PowerGenerationSystem, state: GameState, rng: () => number, energyMultiplier: number): void {
   const currentMonth = state.currentMonth;
 
   // Update active training events
@@ -281,9 +342,14 @@ function updateAITrainingPower(power: PowerGenerationSystem, state: GameState, r
     return true;
   });
 
+  // H-1: Suppress new training if severely energy-constrained
+  // Decision: Training gets soft-blocked below 50% capacity
+  // Rationale: Research training needs sustained power, unreliable at low capacity
+  const canStartTraining = energyMultiplier > 0.5;
+
   // Randomly trigger new training events (simplified - could be more sophisticated)
   // Major training runs happen ~1-2 times per year
-  if (rng() < 0.08) { // 8% chance per month ≈ 1 per year
+  if (canStartTraining && rng() < 0.08) { // 8% chance per month ≈ 1 per year
     const modelSize = 100 * Math.pow(2, rng() * 4); // 100B to 1.6T parameters
     const trainingMonths = 3 + Math.floor(rng() * 3); // 3-6 months
 
@@ -302,9 +368,23 @@ function updateAITrainingPower(power: PowerGenerationSystem, state: GameState, r
     };
     power.activeTrainingEvents.push(newEvent);
     totalTrainingPower += trainingPower / trainingMonths;
+  } else if (!canStartTraining && rng() < 0.08) {
+    // Log suppressed training (only occasionally to avoid spam)
+    if (currentMonth % 12 === 0) {
+      console.log(`\n⚡🚫 AI training event suppressed due to energy constraints (${(energyMultiplier * 100).toFixed(0)}% capacity)`);
+    }
   }
 
-  power.aiTrainingPower = totalTrainingPower;
+  // H-1: Apply energy constraint to training power
+  power.aiTrainingPower = assertFinite(
+    totalTrainingPower * energyMultiplier,
+    {
+      location: 'updateAITrainingPower',
+      valueName: 'constrainedTrainingPower',
+      month: currentMonth,
+      additionalInfo: { totalTrainingPower, energyMultiplier }
+    }
+  );
 }
 
 /**

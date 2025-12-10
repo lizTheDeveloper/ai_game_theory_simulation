@@ -179,10 +179,38 @@ export class EnergyBudgetPhase implements SimulationPhase {
         .map(([tech, _]) => tech)
     };
 
-    // Log conflicts if any
+    // H-1: Enhanced logging for TIER 4 conflicts (AI + crypto competition)
     if (surplus < 0) {
-      console.log(`⚠️ Energy deficit: ${Math.abs(surplus).toFixed(0)} TWh`);
-      console.log(`  Competing techs: ${state.energyBudget.conflicts.competingTechs.join(', ')}`);
+      console.log(`\n⚠️ Energy deficit: ${Math.abs(surplus).toFixed(0)} TWh`);
+      console.log(`   Total demand: ${totalDemand.toFixed(0)} TWh`);
+      console.log(`   Total capacity: ${totalCapacity.toFixed(0)} TWh`);
+
+      // Show breakdown of competing techs
+      const competingTechs = state.energyBudget.conflicts.competingTechs;
+      if (competingTechs.length > 0) {
+        console.log(`   Competing categories:`);
+        for (const tech of competingTechs) {
+          const alloc = allocations[tech];
+          if (alloc) {
+            const shortfall = alloc.demandTWh - alloc.allocatedTWh;
+            console.log(`     - ${tech}: ${alloc.demandTWh.toFixed(0)} TWh requested, ${alloc.allocatedTWh.toFixed(0)} TWh allocated (shortfall: ${shortfall.toFixed(0)} TWh)`);
+          }
+        }
+      }
+    } else if (state.currentMonth % 12 === 0) {
+      // Annual summary when NOT constrained
+      console.log(`\n📈 Energy budget: ${surplus.toFixed(0)} TWh surplus (${totalDemand.toFixed(0)} / ${totalCapacity.toFixed(0)} TWh used)`);
+
+      // Show TIER 4 breakdown (AI + crypto)
+      if (allocations['ai-datacenter'] || allocations['crypto-mining']) {
+        console.log(`   TIER 4 (Elective) breakdown:`);
+        if (allocations['ai-datacenter']) {
+          console.log(`     - AI datacenters: ${allocations['ai-datacenter'].demandTWh.toFixed(0)} TWh (${(allocations['ai-datacenter'].effectivenessMultiplier * 100).toFixed(0)}% effective)`);
+        }
+        if (allocations['crypto-mining']) {
+          console.log(`     - Crypto mining: ${allocations['crypto-mining'].demandTWh.toFixed(0)} TWh (${(allocations['crypto-mining'].effectivenessMultiplier * 100).toFixed(0)}% effective)`);
+        }
+      }
     }
 
     return { events: [] };
@@ -233,6 +261,7 @@ export class EnergyBudgetPhase implements SimulationPhase {
 
   /**
    * Calculate energy demand from active technologies
+   * H-1 (Dec 10, 2025): Added AI datacenter and crypto demand calculation
    */
   private calculateEnergyDemands(state: GameState): Record<string, {
     demandTWh: number;
@@ -245,6 +274,47 @@ export class EnergyBudgetPhase implements SimulationPhase {
       demandTWh: TECH_ENERGY_REQUIREMENTS['baseline-essential'].tWhPerUnit,
       priorityTier: 1
     };
+
+    // H-1: Calculate AI datacenter demand from powerGenerationSystem
+    // AI inference + training + crypto are tracked in powerGeneration.ts
+    // Convert from TWh/month to TWh/year for budget comparison
+    if (state.powerGenerationSystem) {
+      const power = state.powerGenerationSystem;
+
+      // AI datacenter demand (inference + training)
+      const aiInferenceTWhYear = power.aiInferencePower * 12; // Convert month to year
+      const aiTrainingTWhYear = power.aiTrainingPower * 12;
+      const aiTotalDemand = assertFinite(
+        aiInferenceTWhYear + aiTrainingTWhYear,
+        {
+          location: 'EnergyBudgetPhase.calculateEnergyDemands',
+          valueName: 'aiTotalDemand',
+          month: state.currentMonth,
+          additionalInfo: { aiInferenceTWhYear, aiTrainingTWhYear }
+        }
+      );
+
+      // Only add demand if non-negligible (> 1 TWh/year)
+      if (aiTotalDemand > 1) {
+        demands['ai-datacenter'] = {
+          demandTWh: aiTotalDemand,
+          priorityTier: 4 // TIER 4 (Elective)
+        };
+      }
+
+      // Crypto mining demand
+      const cryptoTWhYear = power.cryptoPower * 12; // Convert month to year
+      if (cryptoTWhYear > 1) {
+        demands['crypto-mining'] = {
+          demandTWh: assertFinite(cryptoTWhYear, {
+            location: 'EnergyBudgetPhase.calculateEnergyDemands',
+            valueName: 'cryptoTWhYear',
+            month: state.currentMonth
+          }),
+          priorityTier: 4 // TIER 4 (Elective) - same priority as AI
+        };
+      }
+    }
 
     // Check deployed technologies from tech tree state
     const deployedTechs = state.techTreeState?.deployedTechMap || {};
