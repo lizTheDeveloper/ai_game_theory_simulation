@@ -160,12 +160,12 @@ None (threshold lowering regression FIXED Dec 9, 2025 - commit 3f3118de, 7130c7e
 - Sleeper agent rate justification (7.5% → Hubinger et al. 2024) - COMPLETE Dec 10, 2025 (commit 248bad46)
 - Sandbagging level citation (0.4-0.6 → van der Weij/Meinke 2024) - COMPLETE Dec 10, 2025 (commit 248bad46)
 - Detection risk calibration (50% baseline → time-dependent model) - COMPLETE Dec 10, 2025 (commit fd7694a2)
+- H-1: Energy budget system underutilization - PLANNING COMPLETE Dec 10, 2025 (implementation ready, awaiting simulation-maintainer)
+  - Orchestrator coordinated full workflow (research validated, tasks documented)
+  - Handoff complete to Roy (simulation-maintainer) for Phase 1 implementation
+  - Files: openspec/changes/energy-budget-integration/ + .claude/agents/HANDOFF_roy_energy_budget_integration.md
 
-### HIGH Priority (1 remaining)
-- H-1: Energy budget system underutilization (ClimateDeploymentPhase uses energy budget, but other energy consumers do not) - Effort: MEDIUM (2-3 days)
-  - Location: EnergyBudgetPhase calculates effectiveness multipliers but only ClimateDeploymentPhase consumes them
-  - Impact: Parallel energy constraint systems create inconsistent modeling
-  - Next step: Migrate all energy consumers to use energyBudget.allocations
+### HIGH Priority (0 remaining - all complete or in implementation)
 
 ### COMPLETED MEDIUM Priority
 - M-5: Threshold uncertainty modeling (distribution sampling library) - COMPLETE Dec 7, 2025
@@ -173,12 +173,12 @@ None (threshold lowering regression FIXED Dec 9, 2025 - commit 3f3118de, 7130c7e
 - Missing Climate Systems (4 subsystems: M-4 abrupt sea level rise, compound events, social tipping, M-7 hysteresis) - COMPLETE Dec 5-7, 2025
 - Energy Budget Constraints (datacenter/AI GPU growth limits, UBI compute drain) - COMPLETE Dec 9, 2025
 
-### ACTIVE MEDIUM Priority
-- M-1: Detection risk calibration - incomplete integration (from Architecture Review Dec 10)
-  - Problem: Time-dependent detection risk only applies AFTER first detection (handleSleeperDetection), not during initial detection (updateSleeperDetectionRisk)
-  - Location: src/simulation/sleeperEconomy.ts lines 315, 381
-  - Impact: Initial detection uses raw accumulated risk (not time-calibrated)
-  - Effort: SMALL (apply calculateDetectionRiskAfterDetection as multiplier on initial checks)
+### COMPLETED MEDIUM Priority (Session 65)
+- M-1: Detection risk calibration integration - COMPLETE Dec 10, 2025 (commits 6d7c03b7, 76e15c67)
+  - Applied time-dependent multiplier to initial detection check
+  - Added assertion utilities (assertFinite) for defensive coding
+  - Unit tests: 3/3 passing (sleeperDetectionRiskCalibration.test.ts)
+  - Implementation doc: docs/implementation-history/M-1_detection_risk_calibration_20251210.md
 
 ### MEDIUM Priority (Backlog)
 - Hindcast tuning (1950-2024 historical validation)
