@@ -138,12 +138,12 @@ export function executeCryptographySecurityPhase(
     const population = state.humanPopulationSystem?.population ?? 8.0; // Fallback to 8B if undefined
     const perCapitaDamage = (monthlyDamage * 1e12) / (population * 1e9); // Convert $T to $ and B to persons
 
-    state.economics.gdpPerCapita = Math.max(
+    state.globalMetrics.gdpPerCapita = Math.max(
       1000, // Floor: $1k per capita (survival minimum)
-      state.economics.gdpPerCapita - perCapitaDamage
+      state.globalMetrics.gdpPerCapita - perCapitaDamage
     );
 
-    assertInRange(state.economics.gdpPerCapita, 1000, 200000, {
+    assertInRange(state.globalMetrics.gdpPerCapita, 1000, 200000, {
       location: 'CryptographySecurityPhase',
       valueName: 'gdpPerCapita',
       month: state.currentMonth,
@@ -157,26 +157,26 @@ export function executeCryptographySecurityPhase(
     const monthlyTrustLoss = trustLossRate * crypto.crisisSeverity;
 
     // Apply to social systems trust
-    if (!state.socialSystems.digitalInfrastructureTrust) {
-      state.socialSystems.digitalInfrastructureTrust = 0.8; // Initialize if missing
+    if (!state.globalMetrics.digitalInfrastructureTrust) {
+      state.globalMetrics.digitalInfrastructureTrust = 0.8; // Initialize if missing
     }
 
-    state.socialSystems.digitalInfrastructureTrust = Math.max(
+    state.globalMetrics.digitalInfrastructureTrust = Math.max(
       0.2, // Floor: 20% (some baseline trust remains)
-      state.socialSystems.digitalInfrastructureTrust - monthlyTrustLoss
+      state.globalMetrics.digitalInfrastructureTrust - monthlyTrustLoss
     );
 
-    assertInRange(state.socialSystems.digitalInfrastructureTrust, 0.2, 1.0, {
+    assertInRange(state.globalMetrics.digitalInfrastructureTrust, 0.2, 1.0, {
       location: 'CryptographySecurityPhase',
       valueName: 'digitalInfrastructureTrust',
       month: state.currentMonth
     });
 
     // Track cumulative trust loss (for outcome metrics)
-    if (!state.socialSystems.cryptoBreakTrustLoss) {
-      state.socialSystems.cryptoBreakTrustLoss = 0;
+    if (!state.globalMetrics.cryptoBreakTrustLoss) {
+      state.globalMetrics.cryptoBreakTrustLoss = 0;
     }
-    state.socialSystems.cryptoBreakTrustLoss += monthlyTrustLoss;
+    state.globalMetrics.cryptoBreakTrustLoss += monthlyTrustLoss;
 
     // --- 5. Breach probability increases with crisis ---
     // Monthly probability of major security breach
@@ -199,11 +199,11 @@ export function executeCryptographySecurityPhase(
       console.log(`  → Immediate GDP per capita loss: 2%`);
 
       // Additional shock from breach
-      state.economics.gdpPerCapita *= 0.98; // 2% immediate loss
+      state.globalMetrics.gdpPerCapita *= 0.98; // 2% immediate loss
 
       events.push({
         id: state.eventIdCounter++,
-        type: 'disaster',
+        type: 'crisis',
         month: state.currentMonth,
         title: '💥 Major Cryptographic Breach',
         description: `Major security breach due to broken cryptography. $${breachDamage.toFixed(1)}T in economic damage. Digital infrastructure trust further eroded.`,
@@ -211,7 +211,7 @@ export function executeCryptographySecurityPhase(
       });
 
       // Additional trust loss from breach
-      state.socialSystems.digitalInfrastructureTrust *= 0.95; // 5% additional loss
+      state.globalMetrics.digitalInfrastructureTrust *= 0.95; // 5% additional loss
     }
 
     // --- 6. Progress reporting ---
@@ -221,7 +221,7 @@ export function executeCryptographySecurityPhase(
       console.log(`  Duration: ${crypto.monthsSinceCrisisStart} months`);
       console.log(`  Severity: ${(crypto.crisisSeverity * 100).toFixed(0)}%`);
       console.log(`  Economic damage: $${monthlyDamage.toFixed(2)}T/month`);
-      console.log(`  Digital trust: ${(state.socialSystems.digitalInfrastructureTrust * 100).toFixed(0)}%`);
+      console.log(`  Digital trust: ${(state.globalMetrics.digitalInfrastructureTrust * 100).toFixed(0)}%`);
       console.log(`  Breach probability: ${(crypto.breachProbability * 100).toFixed(0)}%/month`);
 
       if (state.quantumSystem.pqcTransition.deploymentProgress < 0.5) {
@@ -230,14 +230,5 @@ export function executeCryptographySecurityPhase(
     }
   }
 
-  // --- 7. Generate monthly report ---
-  const monthlyReport: Record<string, number> = {};
-
-  if (crypto.cryptographicCrisisActive) {
-    monthlyReport['Crypto Crisis: Severity (%)'] = crypto.crisisSeverity * 100;
-    monthlyReport['Crypto Crisis: Months Active'] = crypto.monthsSinceCrisisStart;
-    monthlyReport['Digital Trust (%)'] = (state.socialSystems.digitalInfrastructureTrust ?? 0.8) * 100;
-  }
-
-  return { events, monthlyReport };
+  return { events };
 }

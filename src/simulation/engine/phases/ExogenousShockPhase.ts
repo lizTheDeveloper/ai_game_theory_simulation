@@ -436,7 +436,7 @@ function applyAsteroidImpactShock(state: GameState, rng: RNGFunction): GameEvent
   // Add mortality risk to centralized system (instant, global)
   if (state.humanPopulationSystem) {
     addMortalityRisk(state.humanPopulationSystem, {
-      type: 'disaster',
+      type: 'crisis',
       baseRisk: mortalityRate,
       proximate: 'disasters',
       root: 'natural', // Exogenous natural disaster
