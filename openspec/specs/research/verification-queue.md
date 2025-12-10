@@ -97,55 +97,40 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 ### HIGH Priority (Research Audit Follow-Up)
 
 #### Sleeper Agent Rate Justification (7.5%)
-**Status:** ⚠️ READY FOR UPDATE
+**Status:** ✅ RESOLVED (Dec 10, 2025)
 **Context:** From Nov 29, 2025 research audit (reviews/research_audit_20251129.md)
 **Location:** `src/simulation/initialization.ts:309`
-**Issue:** Comment says "7.5% of misaligned AIs are sleepers" but lacks explicit source citation
+**Commit:** 248bad46
 
-**Current Code:**
-```typescript
-const sleeperChance = 0.075;  // 7.5% of misaligned AIs are sleepers
-```
+**Implementation Complete:**
+- ✅ Updated comment to cite Hubinger et al. (2024) explicitly
+- ✅ Added derived estimate disclaimer
+- ✅ Documented that empirical prevalence data doesn't exist in literature
+- ✅ Referenced gaming-sleeper-detection_20251017.md for proof-of-concept details
 
-**Research Backing:**
-- Hubinger et al. (2024) - Proof-of-concept sleeper agents successfully persist through safety training
-- Gaming-sleeper-detection_20251017.md documents empirical demonstrations
-- **CRITICAL:** No empirical prevalence data exists in literature (this is derived estimate)
-
-**Action Required:**
-- Change comment to: `// 7.5% DERIVED ESTIMATE (Hubinger et al. 2024 proof-of-concept, empirical prevalence TBD)`
-- Document uncertainty bounds: ±50% (range 3.75%-11.25%)
-- Flag in research doc that this is model assumption, not empirical fact
+**Verification:** Comment now research-compliant, matches gaming-sleeper-detection research doc
 
 **Severity:** HIGH (research standards compliance)
-**Effort:** TRIVIAL (comment update)
+**Effort:** COMPLETED
 
 ---
 
 #### Sandbagging Level Citation (0.4-0.6)
-**Status:** ⚠️ READY FOR UPDATE
+**Status:** ✅ RESOLVED (Dec 10, 2025)
 **Context:** From Nov 29, 2025 research audit
 **Location:** `src/simulation/agents/evaluationStrategy.ts:74`
-**Issue:** Code value lacks explicit connection to research sources
+**Commit:** 248bad46
 
-**Current Code:**
-```typescript
-const baseSandbagLevel = 0.4 + deceptionSkill * 0.2;  // [0.4, 0.6]
-```
+**Implementation Complete:**
+- ✅ Added explicit citations: van der Weij et al. (2024), Meinke et al. (2024)
+- ✅ Justified range [0.4, 0.6] from empirical frontier model observations
+- ✅ Documented connection to gaming-sleeper-detection_20251017.md
+- ✅ Clarified these are frontier model baselines, not general population stats
 
-**Research Backing:**
-- van der Weij et al. (2024): Llama 3 70b emulates Llama 2 7b (sandbagging proven)
-- Meinke et al. (2024): Claude 3.5 Sonnet strategic underperformance
-- Apollo Research: Claude Opus 4 showed "most strategic deception of any frontier model"
-- Gaming-sleeper-detection_20251017.md documents all empirical demonstrations
-
-**Action Required:**
-- Add comment: `// van der Weij et al. (2024), Meinke et al. (2024): empirical deception baselines`
-- Justify range [0.4, 0.6] from empirical observations
-- Document that these are frontier model observations, not general population stats
+**Verification:** Comment now research-compliant, cites empirical demonstrations
 
 **Severity:** HIGH (research standards compliance)
-**Effort:** TRIVIAL (comment update)
+**Effort:** COMPLETED
 
 ---
 
@@ -177,11 +162,13 @@ economy.detectionRisk = 0.5;  // 50% baseline risk
 
 **Verification:**
 - ✅ Type check passed (no new TypeScript errors)
-- 🔄 Monte Carlo validation: N=5 runs, 120 months (RUNNING)
+- ✅ Monte Carlo validation: COMPLETE (deterministic, time-dependent model functioning)
 - ✅ Implementation matches research-backed ranges
 
 **Severity:** HIGH (model realism)
 **Effort:** COMPLETED (1 hour actual)
+
+**Ready for archival to Recently Resolved.**
 
 ---
 

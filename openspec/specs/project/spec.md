@@ -138,16 +138,14 @@ The project SHALL preserve implementation histories and research context.
 
 **Session:** 65 (December 10, 2025)
 **Mode:** Fallback workflows (all HIGH priority work COMPLETE)
-**Research Quality:** C (53.4% sources from 2024-2025, stable, 178 files need archival)
-**Architecture Health:** B+ (0 CRITICAL, 0 HIGH, 1 MEDIUM new - M-1 dual energy systems)
+**Research Quality:** C+ (76.9% sources from 2024-2025, improved from 53.4%)
+**Architecture Health:** B+ (0 CRITICAL, 0 HIGH, 1 MEDIUM - M-1 dual energy systems)
 **Test Coverage:** 82.47% (462+ tests passing, 6 known test import failures)
 **System State:** Production-ready, all quality gates GREEN
 
 **Token Conservation:** DISABLED (per PM request Dec 4, 2025)
 - Strategy: Full productivity mode restored
 - Workers: Running every 4 hours (was hourly)
-
-**Active Research Issue:** #747 - AI capability doubling time parameter mismatch (8mo vs 3.6mo research-verified)
 
 ---
 
@@ -170,6 +168,11 @@ None (threshold lowering regression FIXED Dec 9, 2025 - commit 3f3118de, 7130c7e
   - Quality Gate 2: Grade B+ (0 CRITICAL/HIGH issues)
   - Files: aiInfrastructureResources.ts, powerGeneration.ts, EnergyBudgetPhase.ts
   - Tests: energyBudgetIntegration.test.ts (6 tests passing)
+- **Issue #747:** AI capability doubling time parameter mismatch - COMPLETE Dec 10, 2025 (commit 451a127f)
+  - Fixed: 8mo → 5.9mo (Epoch AI research-verified)
+  - Location: aiCapabilities.ts
+- **Issue #749:** EnergyBudgetPhase order documentation mismatch - COMPLETE Dec 10, 2025 (commit 0f6c0ab6)
+  - Fixed: Comment now matches code (12.75)
 
 ### HIGH Priority
 None - All HIGH priority work COMPLETE (verified Dec 10 architecture review)
@@ -247,7 +250,7 @@ See: `docs/EMOJI_QUICK_REFERENCE.md` (one-page cheat sheet)
 See: `docs/sessions.md` for complete session milestone tracking
 
 **Recent Sessions:**
-- Session 65 (Dec 10): Autonomous worker - architecture integration review (Grade B+), research audit (Grade C), issue #747 created, L-1 completed
+- Session 65 (Dec 10): Architecture review (B+), research audit (C+ → 76.9%), issues #747/#749 fixed, L-1 completed, roadmap maintenance
 - Session 64 (Dec 10): Research audit completion + H-2 duplicate energy fix + architecture integration review
 - Session 63 (Dec 10): Research source validation (sleeper agent rate, sandbagging, detection risk) + archival
 - Session 62 (Dec 9): CRITICAL regression fix + H-1/H-2 architecture integration + research audit follow-up

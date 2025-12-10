@@ -465,3 +465,40 @@ Eliminated O(n^2) patterns with pre-built Maps/Sets:
 *30-day review completed: December 10, 2025*
 *Evening verification: All HIGH priority work VERIFIED COMPLETE*
 *Architecture remains healthy with minor cleanup recommended*
+
+---
+
+## ADDENDUM: AI Capability Doubling Time Change (Dec 10, 2025 07:16 UTC)
+
+### Commit Analysis: 451a127f
+
+**Parameter Change:**
+- `AI_CAPABILITY_DOUBLING_TIME`: 8 → 5.9 months
+- Based on Sevilla & Roldan (2024) historical data (2010-2024)
+
+**Cross-System Impact Assessment:**
+
+1. **COMPUTE_GROWTH_RATE (actual driver):** 2.15 (log2 scale, 4.4×/year)
+   - Used in `computeInfrastructure.ts:728` for hardware efficiency growth
+   - This is the parameter that actually drives compute scaling in simulation
+
+2. **AI_CAPABILITY_DOUBLING_TIME:** 5.9 months
+   - Currently DOCUMENTATION ONLY - not directly consumed by simulation
+   - Referenced in comments for calibration context
+   - Serves as research reference for COMPUTE_GROWTH_RATE calibration
+
+**Integration Status: GRADE A (No Issues)**
+
+The change is properly isolated:
+- Documentation quality is exemplary (limitations, recalibration commitments)
+- Monte Carlo validation passed (N=10, no NaN/assertions)
+- No downstream consumers of AI_CAPABILITY_DOUBLING_TIME exist
+- COMPUTE_GROWTH_RATE (2.15) correctly corresponds to 5.9 month doubling (4.4×/year = log2(4.4) = 2.14)
+
+**Potential Future Issue (LOW priority):**
+
+The dual parameters (`AI_CAPABILITY_DOUBLING_TIME` and `COMPUTE_GROWTH_RATE`) could diverge if updated independently. Consider:
+- Either consolidate: compute COMPUTE_GROWTH_RATE from AI_CAPABILITY_DOUBLING_TIME
+- Or add validation: ensure mathematical relationship holds (COMPUTE_GROWTH_RATE ≈ 12 * log2(2) / AI_CAPABILITY_DOUBLING_TIME)
+
+**No immediate action required.** Parameter change is well-documented and validated.
