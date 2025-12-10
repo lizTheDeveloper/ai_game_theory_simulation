@@ -90,32 +90,50 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 ### MEDIUM Priority
 
 #### Nitrogen-Food Phase 3 Technologies
-**Status:** ⚠️ READY FOR VALIDATION
+**Status:** ✅ VERIFIED (Dec 8, 2025)
 **Change:** (pending - needs change folder created)
 **Commit:** cd1e83a
 **Context:** 6 new nitrogen reduction technologies added to tech tree
-**Verification File:** `research/verification_cd1e83a_20251121.md`
+**Verification Files:**
+- `research/verification_cd1e83a_nitrogen_phase3_20251208.md` (Cynthia)
+- `reviews/nitrogen_phase3_skeptic_review_20251208.md` (Sylvia)
 
-**Technologies to Verify:**
-1. Rhizosphere Engineering (15-40% N reduction, TIER 1, commercial)
-2. Nitroplast Integration (50-70% reduction, breakthrough, Coale et al. 2024)
-3. Precision Fermentation (30-50% agri N reduction, emerging)
-4. Regional Nitrogen Policies (20% efficiency via redistribution)
-5. Soil Health Restoration (20-40% NUE improvement)
-6. Integrated Nutrient Management (25-45% efficiency gains)
+**Verification Complete (Dec 8, 2025):**
+- **Initial Grade:** B+ (super-alignment-researcher)
+- **Final Grade:** B- (research-skeptic downgrade)
+- **Reviewers:** Cynthia (researcher), Sylvia (skeptic)
 
-**Key Claims:**
-- Effectiveness ranges (15-40%, 20-45%, etc.)
-- Co-benefits quantification (soil health, biodiversity, carbon)
-- Timeline assumptions (R&D + deployment)
-- Citation: Coale et al. 2024 *Science* for nitroplasts
+**Technologies Verified:**
+1. ✅ Rhizosphere Engineering - Field-demonstrated but effectiveness overstated (15-40% → 5-20%)
+2. ✅ Nitroplast Integration - Speculative for cereals (30-50+ year timeline, may be infeasible)
+3. ✅ Precision Fermentation - Consumer resistance limiting factor (30% → 10-20% adoption)
+4. ✅ Regional Nitrogen Policies - India NBS cautionary tale (20% → 10% effectiveness)
+5. ✅ Soil Health Restoration - Timeline optimistic (20-40% → 20% conservative)
+6. ✅ Integrated Nutrient Management - Dependent on component performance (25-45% → 25%)
 
-**Next Steps:** Two-layer verification → Parameter adjustments if needed → Monte Carlo validation
+**Key Findings:**
+- ✅ All technologies research-backed with 2024-2025 sources
+- ✅ Coale et al. 2024 *Science* citation ACCURATE (April 12, 2024)
+- ⚠️ Effectiveness ranges use best-case results from controlled trials
+- ⚠️ Field reality: ~10% efficacy for commercial mycorrhizal products vs claimed 15-40%
+- ⚠️ Rebound effects (Jevons paradox): 3 of 4 farms attempting N-reduction backfired
+
+**HIGH Priority Corrections Recommended:**
+1. Add rebound effect modifier (0.5-0.7x effectiveness for efficiency-gain tech)
+2. Reduce rhizosphere effectiveness to field-reality values (5-20%)
+3. Extend nitroplast timeline to 30-50+ years with failure scenario
+4. Reduce precision fermentation adoption to 10-20% by 2040
+5. Add policy failure scenarios (India NBS increased N2O emissions)
+
+**Verdict:** CONDITIONAL PASS - Technologies directionally correct but effectiveness overstated 2-3x
+**Aggregate Effectiveness:** 93.7% (optimistic) → 32% (conservative, after rebound) → Reality: 30-50% range
+
+**Next Steps:** Implementation approved with mandatory corrections → Parameter adjustments → Monte Carlo validation N≥10
 
 ---
 
 #### Carbon Capture Deployment Parameters
-**Status:** ✅ CORRECTED - Ready for Implementation (Dec 8, 2025)
+**Status:** ✅ CORRECTED (Dec 8, 2025)
 **Change:** (pending - needs change folder created)
 **Commit:** c52826e
 **Context:** Comprehensive DAC research (625 lines, 12 sources, claimed A+ quality)
@@ -127,27 +145,35 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 **Verification Complete (Dec 8, 2025):**
 - **Initial Grade:** B- (super-alignment-researcher)
 - **Final Grade:** C+ (research-skeptic downgrade)
+- **Correction Grade:** C+ (Conditional Pass)
 - **Reviewers:** Cynthia (researcher), Sylvia (skeptic)
 
-**CRITICAL Issues Found → FIXED (Dec 8, 2025):**
-1. ✅ **Author Misattribution:** All "Tan, S., et al." → "Ampah, J.D., et al." (5 instances corrected)
-2. ✅ **Systematic Optimism Bias:** Added section 6.5 "Contradictory Evidence and Industry Challenges"
-3. ✅ **Gen 3 Claims Unverified:** All Gen 3 claims marked [UNVERIFIED INDUSTRY DATA] with explicit disclaimers
-4. ✅ **May 2025 Industry Data:** Climeworks 22% layoffs section added with Bloomberg/CNN sources
-5. ✅ **Expert Skepticism:** Jacobson (Stanford) quote added, Mongabay investigation (805t vs 36,000t capacity)
-6. ✅ **Frontmatter Updated:** verification_status: CONDITIONALLY APPROVED, grade: C+
+**CRITICAL Issues Found → FIXED:**
+1. ✅ **Author Misattribution:** Fixed - All "Tan, S., et al." replaced with "Ampah, J.D., et al." + PMC11283554 added
+2. ✅ **Systematic Optimism Bias:** Fixed - New section 1.4 "Contradictory Evidence and Implementation Challenges" added
+3. ✅ **Gen 3 Claims Unverified:** Fixed - Claims marked [UNVERIFIED INDUSTRY DATA] with disclaimer
+4. ⚠️ **Energy Data Conflicts:** Documented - Noted as uncertainty range (2-600x variance), needs reconciliation in future update
+
+**Contradictory Evidence Added (Dec 8, 2025):**
+- ✅ Mongabay investigation: Mammoth actual removal 805 tonnes (96.7% below capacity)
+- ✅ Expert skepticism: Jacobson (Stanford) + Foley quotes added
+- ✅ May 2025 Climeworks layoffs: 22% workforce cut documented
+- ✅ Infrastructure bottleneck: 96,000km pipeline requirement noted
 
 **Current Implementation:**
 - `src/simulation/techTree/deploymentTimescales.ts:60` - DAC: 300 months (25 years)
-- Assessment: ACCEPTABLE at optimistic end; recommend Monte Carlo 25-50 years
+- Assessment: ACCEPTABLE but at optimistic end; Monte Carlo range 25-50 years recommended
+- **Recommendation in research file:** Use Monte Carlo range 25-50 years with failure mode scenarios
 
-**Implementation Recommendations:**
-- Monte Carlo range: 25-50 years (not fixed 25)
-- Include deployment stall risk (30% chance of megatonne ceiling)
-- Model policy risk explicitly (May 2025 layoffs show policy dependence)
-- Use actual operational data for early years (not nameplate capacity)
+**Corrections Applied (Dec 8, 2025):**
+1. ✅ Author attribution fixed: Tan → Ampah throughout (5 instances + references)
+2. ✅ Contradictory evidence section added (Mongabay, expert quotes, infrastructure)
+3. ✅ May 2025 industry update added (layoffs, funding uncertainty)
+4. ✅ Gen 3 claims marked [UNVERIFIED INDUSTRY DATA] with Canary Media disclaimer
+5. ✅ Frontmatter updated (research_quality C+, corrections_applied timestamp)
+6. ✅ References expanded (4 new sources: Mongabay, Bloomberg, CNN, Sifted)
 
-**Next Steps:** Move to "Recently Resolved" → Implementation can proceed with Monte Carlo ranges
+**Next Steps:** Move to "Recently Resolved" → Monte Carlo validation with 25-50 year range → Implementation review
 
 ---
 
