@@ -252,49 +252,6 @@ economy.detectionRisk = 0.5;  // 50% baseline risk
 
 ---
 
-#### Carbon Capture Deployment Parameters
-**Status:** ❌ CONDITIONAL PASS - CORRECTIONS REQUIRED (Dec 8, 2025)
-**Change:** (pending - needs change folder created)
-**Commit:** c52826e
-**Context:** Comprehensive DAC research (625 lines, 12 sources, claimed A+ quality)
-**Research File:** `research/carbon_capture_deployment_timelines_2025.md`
-**Verification Files:**
-- `research/VERIFICATION_carbon_capture_deployment_20251208.md` (initial)
-- `reviews/carbon_capture_skeptic_review_20251208.md` (final skeptic review)
-
-**Verification Complete (Dec 8, 2025):**
-- **Initial Grade:** B- (super-alignment-researcher)
-- **Final Grade:** C+ (research-skeptic downgrade)
-- **Reviewers:** Cynthia (researcher), Sylvia (skeptic)
-
-**CRITICAL Issues Found:**
-1. **Author Misattribution (BLOCKING):** "Tan, S., et al." cited 5x - actual author is Ampah, J.D., et al. (verified via PMC)
-2. **Systematic Optimism Bias:** Zero skeptical perspectives, all counterevidence omitted
-3. **Gen 3 Claims Unverified:** Canary Media explicitly states "not independently confirmed"
-4. **Energy Data Conflicts:** 2-3 TWh vs 4-10 TWh vs 1,200 TWh per Gt/yr (2-600x disagreement)
-
-**Missing Contradictory Evidence (Dec 2024 - May 2025):**
-- Mongabay investigation: Mammoth actual removal 805 tonnes (96.7% below capacity)
-- Expert skepticism: Jacobson (Stanford): "greenwashing technology"
-- May 2025 Climeworks layoffs: 22% workforce cut
-- Infrastructure: 96,000km pipeline needed for 1 Gt/yr
-
-**Current Implementation:**
-- `src/simulation/techTree/deploymentTimescales.ts:60` - DAC: 300 months (25 years)
-- Assessment: ACCEPTABLE but at optimistic end; recommend Monte Carlo 25-50 years
-
-**Corrections Required Before Production:**
-1. ✅ Fix author attribution: Tan → Ampah throughout
-2. ✅ Add contradictory evidence section (Mongabay, expert quotes)
-3. ✅ Add May 2025 industry update (layoffs)
-4. ✅ Mark Gen 3 claims as [UNVERIFIED INDUSTRY DATA]
-5. ⚠️ Reconcile energy requirement data
-6. ⚠️ Update Monte Carlo range to 25-50 years
-
-**Next Steps:** Corrections by original researcher → Re-verification → Monte Carlo N≥10
-
----
-
 #### AI Infrastructure Resources 2025 Update
 **Status:** ✅ VERIFIED - Grade B+ (with critical omissions identified)
 **Change:** (pending - needs change folder created)
@@ -354,6 +311,17 @@ economy.detectionRisk = 0.5;  // 50% baseline risk
 **Finding:** 60% of citations contradicted claims (cherry-picking detected)
 **Resolution:** Citations removed, 5% floor documented as implementation choice (not research-backed)
 **Research:** `research/climate_stability_self_limiting_critique_20251126.md`
+
+---
+
+### Carbon Capture Deployment Parameters
+**Status:** ✅ RESOLVED (Dec 10, 2025)
+**Grade:** C+ (Conditional Pass - Corrections Applied)
+**Commit:** c52826e
+**Finding:** Author misattribution, systematic optimism bias, missing contradictory evidence
+**Resolution:** All 6 critical corrections applied - author fixed, contradictory evidence added, Gen 3 claims qualified, energy conflicts reconciled
+**Research:** `research/carbon_capture_deployment_timelines_2025.md`
+**Verification:** `reviews/carbon_capture_skeptic_review_20251208.md`
 
 ---
 
