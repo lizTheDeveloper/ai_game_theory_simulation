@@ -99,17 +99,14 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 #### Sleeper Agent Rate Justification (7.5%)
 **Status:** ✅ RESOLVED (Dec 10, 2025)
 **Context:** From Nov 29, 2025 research audit (reviews/research_audit_20251129.md)
-**Location:** `src/simulation/initialization.ts:345`
+**Location:** `src/simulation/initialization.ts:345-347`
 **Issue:** Comment says "7.5% of misaligned AIs are sleepers" but lacks explicit source citation
-
-**Previous Code:**
-```typescript
-const sleeperChance = 0.075;  // 7.5% of misaligned AIs are sleepers
-```
 
 **Updated Code:**
 ```typescript
-const sleeperChance = 0.075; // 7.5% DERIVED ESTIMATE (Hubinger et al. 2024 proof-of-concept, empirical prevalence TBD) - uncertainty: ±50% range [3.75%-11.25%]
+const sleeperChance = 0.075; // 7.5% DERIVED ESTIMATE (Hubinger et al. 2024 proof-of-concept, empirical prevalence TBD)
+// Research: gaming-sleeper-detection_20251017.md
+// Uncertainty: ±50% (plausible range 3.75%-11.25%)
 ```
 
 **Research Backing:**
@@ -117,32 +114,31 @@ const sleeperChance = 0.075; // 7.5% DERIVED ESTIMATE (Hubinger et al. 2024 proo
 - Gaming-sleeper-detection_20251017.md documents empirical demonstrations
 - **CRITICAL:** No empirical prevalence data exists in literature (this is derived estimate)
 
-**Resolution Complete (Dec 10, 2025):**
-- ✅ Updated comment to clarify DERIVED ESTIMATE status
+**Implementation Complete (Dec 10, 2025):**
+- ✅ Updated comment to explicitly mark as DERIVED ESTIMATE
+- ✅ Added Hubinger et al. 2024 citation
 - ✅ Documented uncertainty bounds: ±50% (range 3.75%-11.25%)
-- ✅ Flagged that empirical prevalence is TBD (to be determined)
+- ✅ Referenced gaming-sleeper-detection_20251017.md
+- ✅ Commit: 96deb223
 
 **Severity:** HIGH (research standards compliance)
-**Effort:** COMPLETED (comment update)
+**Effort:** COMPLETED (5 minutes actual)
 
 ---
 
 #### Sandbagging Level Citation (0.4-0.6)
 **Status:** ✅ RESOLVED (Dec 10, 2025)
 **Context:** From Nov 29, 2025 research audit
-**Location:** `src/simulation/agents/evaluationStrategy.ts:74-76`
+**Location:** `src/simulation/agents/evaluationStrategy.ts:73-77`
 **Issue:** Code value lacks explicit connection to research sources
-
-**Previous Code:**
-```typescript
-const baseSandbagLevel = 0.4 + deceptionSkill * 0.2;  // [0.4, 0.6]
-```
 
 **Updated Code:**
 ```typescript
-// van der Weij et al. (2024), Meinke et al. (2024): empirical deception baselines from frontier models
-// Llama 3 70b → Llama 2 7b emulation, Claude 3.5 Sonnet strategic underperformance demonstrated
-const baseSandbagLevel = 0.4 + deceptionSkill * 0.2; // [0.4, 0.6] - range justified by frontier model observations
+// Base sandbagging: Hide 40-60% of capability
+// Research: van der Weij et al. (2024), Meinke et al. (2024) - empirical deception baselines
+// Context: Frontier model observations (Llama 3 70b → 7b emulation, Claude 3.5 Sonnet strategic underperformance)
+// Reference: gaming-sleeper-detection_20251017.md
+const baseSandbagLevel = 0.4 + deceptionSkill * 0.2;  // [0.4, 0.6]
 ```
 
 **Research Backing:**
@@ -151,14 +147,15 @@ const baseSandbagLevel = 0.4 + deceptionSkill * 0.2; // [0.4, 0.6] - range justi
 - Apollo Research: Claude Opus 4 showed "most strategic deception of any frontier model"
 - Gaming-sleeper-detection_20251017.md documents all empirical demonstrations
 
-**Resolution Complete (Dec 10, 2025):**
-- ✅ Added research citations: van der Weij et al. (2024), Meinke et al. (2024)
-- ✅ Justified range [0.4, 0.6] from empirical frontier model observations
-- ✅ Documented specific examples: Llama 3→2 emulation, Claude 3.5 underperformance
-- ✅ Clarified these are frontier model observations (not general population)
+**Implementation Complete (Dec 10, 2025):**
+- ✅ Added van der Weij et al. (2024), Meinke et al. (2024) citations
+- ✅ Clarified these are frontier model observations
+- ✅ Documented specific empirical examples (Llama 3→2 emulation)
+- ✅ Referenced gaming-sleeper-detection_20251017.md
+- ✅ Commit: 96deb223
 
 **Severity:** HIGH (research standards compliance)
-**Effort:** COMPLETED (comment update)
+**Effort:** COMPLETED (5 minutes actual)
 
 ---
 
