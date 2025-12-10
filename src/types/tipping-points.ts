@@ -572,12 +572,21 @@ export const TIPPING_INTERACTIONS: TippingInteraction[] = [
 
   // === AMOC -> TROPICAL SYSTEMS ===
   // AMOC collapse shifts tropical rainfall patterns
-  {
-    sourceId: 'amoc',
-    targetId: 'amazon',
-    thresholdReduction: 0.25, // AMOC collapse disrupts Amazon rainfall
-    mechanism: 'Monsoon disruption: AMOC collapse shifts ITCZ southward, reducing Amazon rainfall'
-  },
+  // ⚠️ RESEARCH UNCERTAINTY: 2023-2025 studies show AMOC collapse may STABILIZE Amazon
+  // (increased rainfall over eastern Amazon). This interaction is REMOVED pending
+  // resolution of contradictory evidence.
+  // Sources:
+  // - Nature Communications (2023): "AMOC collapse may stabilise eastern Amazonian rainforests"
+  // - npj Climate (2025): "AMOC collapse shows increased precipitation over most of Amazon"
+  // Regional heterogeneity exists (northern vs southern Amazon), but net effect unclear.
+  // TODO: Add regional differentiation if/when sufficient data available.
+  //
+  // {
+  //   sourceId: 'amoc',
+  //   targetId: 'amazon',
+  //   thresholdReduction: 0.25, // REMOVED - sign uncertain
+  //   mechanism: 'Monsoon disruption: AMOC collapse shifts ITCZ southward, reducing Amazon rainfall'
+  // },
 
   // === AMAZON -> GLOBAL CLIMATE ===
   // Amazon dieback releases stored carbon

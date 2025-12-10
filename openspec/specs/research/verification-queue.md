@@ -221,12 +221,12 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 ## Recently Resolved
 
 ### Threshold Lowering for Tipping Cascades
-**Status:** ✅ RESOLVED (Dec 9, 2025)
+**Status:** ✅ RESOLVED (Dec 10, 2025 - re-applied after regression)
 **Grade:** D → FIXED
-**Commits:** cf49657 (original), 6671e0ed (Dec 8 fix), 3f3118de + 7130c7e6 (Dec 9 regression fix)
+**Commits:** cf49657 (original), 6671e0ed (Dec 8 fix), 3f3118de + 7130c7e6 (Dec 9 regression fix), [HEAD] (Dec 10 re-application)
 **Finding:** 5 CRITICAL issues including AMOC→Amazon sign error, missing stabilizing feedbacks
-**Resolution:** All issues fixed, extensive research documentation added (Parsons 2023, Yuan 2025, Högner 2025)
-**Research:** `research/verification_cf49657_20251207.md`, `research/amoc_amazon_interaction_correction_20251208.md`
+**Resolution:** All issues fixed, extensive research documentation added (Parsons 2023, Yuan 2025, Högner 2025). REGRESSION DETECTED Dec 10 (fixes reverted in merge), RE-APPLIED same fixes.
+**Research:** `research/verification_cf49657_20251207.md`, `research/amoc_amazon_interaction_correction_20251208.md`, `research/CRITICAL_regression_threshold_lowering_20251209.md`
 
 ---
 
