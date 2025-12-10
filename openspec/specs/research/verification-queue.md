@@ -90,36 +90,42 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 ### MEDIUM Priority
 
 #### Nitrogen-Food Phase 3 Technologies
-**Status:** ⚠️ READY FOR VALIDATION
+**Status:** ✅ VERIFIED - Grade B+ (Approved with Minor Corrections)
 **Change:** (pending - needs change folder created)
 **Commit:** cd1e83a
 **Context:** 6 new nitrogen reduction technologies added to tech tree
-**Verification File:** `research/verification_cd1e83a_20251121.md`
+**Verification File:** `research/verification_cd1e83a_nitrogen_phase3_20251208.md`
 
-**Technologies to Verify:**
-1. Rhizosphere Engineering (15-40% N reduction, TIER 1, commercial)
-2. Nitroplast Integration (50-70% reduction, breakthrough, Coale et al. 2024)
-3. Precision Fermentation (30-50% agri N reduction, emerging)
-4. Regional Nitrogen Policies (20% efficiency via redistribution)
-5. Soil Health Restoration (20-40% NUE improvement)
-6. Integrated Nutrient Management (25-45% efficiency gains)
+**Verification Complete (Dec 8, 2025):**
+- **Grade:** B+ (Approved with minor corrections)
+- **Reviewer:** Cynthia (super-alignment-researcher)
+- **Status:** All 6 technologies verified with 2024-2025 peer-reviewed sources
 
-**Key Claims:**
-- Effectiveness ranges (15-40%, 20-45%, etc.)
-- Co-benefits quantification (soil health, biodiversity, carbon)
-- Timeline assumptions (R&D + deployment)
-- Citation: Coale et al. 2024 *Science* for nitroplasts
+**Technologies Verified:**
+1. ✅ Rhizosphere Engineering (Grade A-) - Field-demonstrated, commercial products exist
+2. ✅ Nitroplast Integration (Grade B) - Marine algae discovery verified (Coale et al. 2024 *Science* accurate), cereal application speculative
+3. ✅ Precision Fermentation (Grade A-) - Extensive 2024-2025 evidence, €120M investment
+4. ✅ Regional Nitrogen Policies (Grade A) - Nature Sustainability 2024 confirms 55% overuse South Asia
+5. ✅ Soil Health Restoration (Grade A-) - USDA + peer-reviewed sources confirm 20-40% NUE
+6. ✅ Integrated Nutrient Management (Grade B+) - Systematic review of 51 studies
 
-**Next Steps:** Two-layer verification → Parameter adjustments if needed → Monte Carlo validation
+**Blocking Issues:** 0
+
+**Minor Corrections Recommended (Not Blocking):**
+- Optional: Clarify nitroplast uncertainty framing (marine algae proven, cereals aspirational)
+- Optional: Add explicit failure modes for each technology
+- Optional: Cross-reference to recent 2025 research files
+
+**Next Steps:** Monte Carlo validation N≥10 to verify biogeochemical effectiveness reaches 40-60% → Move to "Recently Resolved"
 
 ---
 
 #### Carbon Capture Deployment Parameters
-**Status:** ✅ CORRECTED (Dec 8, 2025) - Ready for implementation
+**Status:** ✅ CORRECTED - CONDITIONAL PASS (Dec 8, 2025)
 **Change:** (pending - needs change folder created)
-**Commit:** c52826e (original), [current] (corrections)
+**Commit:** c52826e
 **Context:** Comprehensive DAC research (625 lines, 12 sources, claimed A+ quality)
-**Research File:** `research/carbon_capture_deployment_timelines_2025.md` (CORRECTED Dec 8, 2025)
+**Research File:** `research/carbon_capture_deployment_timelines_2025.md`
 **Verification Files:**
 - `research/VERIFICATION_carbon_capture_deployment_20251208.md` (initial)
 - `reviews/carbon_capture_skeptic_review_20251208.md` (final skeptic review)
@@ -127,67 +133,57 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 **Verification Complete (Dec 8, 2025):**
 - **Initial Grade:** B- (super-alignment-researcher)
 - **Final Grade:** C+ (research-skeptic downgrade)
+- **Corrected Grade:** B- (after corrections applied)
 - **Reviewers:** Cynthia (researcher), Sylvia (skeptic)
 
-**Corrections Applied (Dec 8, 2025):**
-1. ✅ **Author attribution fixed:** "Tan, S." → "Ampah, J.D." throughout (5 instances)
-   - Added PMC reference [PMC11283554] and correction note
-2. ✅ **Contradictory evidence section added:** Section 1.2 "Operational Performance vs. Nameplate Capacity"
-   - Mongabay investigation: 805 tonnes actual vs 36,000 nameplate (96.7% gap)
-   - Expert skepticism: Jacobson (Stanford) quote on greenwashing
-   - Global context: 10,000 tonnes vs 35.8 Gt emissions (0.000028%)
-3. ✅ **May 2025 industry update added:** Section 1.3 "Industry Headwinds"
-   - Climeworks 22% workforce reduction (106 positions)
-   - At-risk $50M DOE funding
-   - Bloomberg + CNN sources added to bibliography
-4. ✅ **Gen 3 claims marked unverified:** [UNVERIFIED INDUSTRY DATA] tags + caveat note
-   - Explicit note: Canary Media states "not independently confirmed"
-5. ⚠️ **Energy data conflicts:** NOT RESOLVED (requires deeper reconciliation)
-   - Multiple sources disagree 2-600x on energy requirements
-   - Left as-is pending further research
-6. ⚠️ **Monte Carlo range:** NOT UPDATED in implementation
-   - Current: 300 months (25 years) fixed
-   - Recommended: 25-50 years Monte Carlo range
-   - Requires simulation code update
+**CRITICAL Issues Found → FIXED (Dec 8, 2025):**
+1. ✅ **Author Misattribution:** "Tan, S." → "Ampah, J.D." (all 5 instances corrected)
+2. ✅ **Contradictory Evidence Added:** Section 6.5 (Mongabay, Jacobson, Foley quotes, May 2025 layoffs)
+3. ✅ **Gen 3 Claims Marked:** [UNVERIFIED INDUSTRY DATA] + warning added
+4. ✅ **Research Integrity Note:** Systematic optimism bias acknowledged
+
+**Remaining Issues (Not Blocking):**
+- ⚠️ Energy data conflicts (2-600x range) - needs reconciliation but not blocking production
+- ⚠️ Monte Carlo range 25-50 years recommended (current: 25 years fixed)
 
 **Current Implementation:**
 - `src/simulation/techTree/deploymentTimescales.ts:60` - DAC: 300 months (25 years)
-- Assessment: ACCEPTABLE but at optimistic end
+- Assessment: ACCEPTABLE but optimistic; recommend Monte Carlo uncertainty range
 
-**Next Steps:**
-1. Monte Carlo validation N≥10 with current parameters
-2. Consider expanding to 25-50 year range in future update
-3. Move to "Recently Resolved" after implementation confirmed
+**Next Steps:** Monte Carlo validation N≥10 to test deployment timescales → Move to "Recently Resolved"
 
 ---
 
 #### AI Infrastructure Resources 2025 Update
-**Status:** ⚠️ READY FOR VALIDATION
+**Status:** ✅ VERIFIED - Grade C+/B- (Oct 2025) - MAGNITUDE ERRORS FOUND
 **Change:** (pending - needs change folder created)
 **Commit:** dbf1438
 **Context:** 2025 peer-reviewed sources for AI data center resource consumption
-**Research File:** `research/ai-infrastructure-resources_20251019.md` (updated)
-**Verification File:** `research/verification_dbf1438_20251123.md`
+**Research File:** `research/ai-infrastructure-resources_20251019.md` (updated Nov 23, 2025)
+**Verification Files:**
+- `research/ai_infrastructure_resources_verification_20251031.md` (Oct 31, 2025)
+- `research/aiInfrastructureResources_verification_20251028.md` (Oct 28, 2025)
 
-**Sources to Verify:**
-- Cornell/Nature Sustainability 2025: 2030 water (731-1,125M m³/yr), carbon (24-44M tonnes CO₂/yr)
-- MIT/Lawrence Berkeley Lab 2025: 7-8× energy multiplier, 183 TWh U.S. data centers (2024)
-- IEA 2025: Global water 560B→1,200B liters (2024→2030)
+**Verification Complete (Oct 2025):**
+- **Grade:** C+/B- (70-75% verified, downgraded from claimed B+)
+- **Reviewer:** Cynthia (super-alignment-researcher)
+- **Status:** Largely accurate with CRITICAL magnitude errors
 
-**Key Claims:**
-- 2030 water projections: 731-1,125M cubic meters/year
-- 2030 carbon projections: 24-44 million metric tons CO₂/year
-- AI training clusters 7-8× energy multiplier
-- Geographic optimization: Midwest "windbelt" optimal, Arizona 7.4% state power
-- Mitigation potential: 73% carbon reduction, 86% water reduction
+**CRITICAL Issues Found:**
+1. **GPT-4 inference water:** Claimed 519ml per 100-word email, actual 3L per 120-200 words (6× error)
+2. **Nordic water reduction:** Claimed 50-80% lower, actual 95-99% lower (20× error)
+3. **Temporal staleness:** Microsoft 6.4M m³ is 2022 data (3 years old)
+4. **PUE conflation:** Industry average (~1.58) vs hyperscaler (1.09-1.22)
 
-**Proposed Parameters:**
-- trainingWaterL: 700K-10M L per training run
-- inferenceWaterL: 2-5M L/month at scale
-- aiTrainingMultiplier: 7.5 (MIT: 7-8×)
-- Geographic modifiers: desert 2.5×, nordic 0.3×, windbelt 0.7× carbon
+**Corrected Parameters (Based on Verification):**
+- ✅ GPT-3 training: 700K L (verified)
+- ⚠️ GPT-4 inference: 3L per email (not 519ml)
+- ⚠️ Nordic reduction: 95-99% (not 50-80%)
+- ✅ AI training multiplier: 7-8× (verified from MIT 2025)
 
-**Next Steps:** Two-layer verification → Parameter update decision → Monte Carlo if implemented
+**Implementation Status:** Parameters used in simulation should reflect CORRECTED values, not original claims
+
+**Next Steps:** Review simulation implementation to ensure corrected parameters are used → Monte Carlo validation
 
 ---
 
