@@ -279,8 +279,8 @@ export class ClimateDeploymentPhase implements SimulationPhase {
    */
   private getEnergyMultiplier(state: GameState, tech: TechDefinition): number {
     // Energy budget system is always enabled (enabled: true by default)
-    // Map tech ID to energy category
-    const category = this.mapTechToEnergyCategory(tech.id);
+    // Map tech ID to energy category (using shared utility)
+    const category = mapTechToEnergyCategory(tech.id);
 
     if (!category) {
       // Technology doesn't have energy requirements
@@ -307,26 +307,6 @@ export class ClimateDeploymentPhase implements SimulationPhase {
     });
   }
 
-  /**
-   * Map technology ID to energy category (matches EnergyBudgetPhase mapping)
-   */
-  private mapTechToEnergyCategory(techId: string): string | null {
-    // Climate technologies
-    if (techId.includes('dac') || techId.includes('air-capture') || techId.includes('direct_air_capture')) return 'dac';
-    if (techId.includes('hydrogen')) return 'green-hydrogen';
-    if (techId.includes('sai') || techId.includes('geoengineering')) return 'sai';
-    if (techId.includes('mineralization') || techId.includes('weathering')) return 'carbon-mineralization';
-
-    // AI/compute
-    if (techId.includes('ai-') || techId.includes('datacenter')) return 'ai-datacenter';
-    if (techId.includes('compute') || techId.includes('simulation')) return 'advanced-compute';
-
-    // Infrastructure
-    if (techId.includes('industrial') || techId.includes('manufacturing')) return 'industrial-electrification';
-    if (techId.includes('transport') || techId.includes('ev') || techId.includes('clean_energy_package')) return 'transport-electrification';
-
-    return null; // Technology doesn't have energy requirements
-  }
 
   /**
    * Get all climate-related technologies
