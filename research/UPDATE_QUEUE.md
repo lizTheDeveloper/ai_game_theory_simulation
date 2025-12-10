@@ -1,11 +1,6 @@
 # Research Update Queue
-<<<<<<< Updated upstream
-**Generated:** 12/10/2025, 7:30:03 AM
-**Files Scanned:** 565
-=======
-**Generated:** 12/8/2025, 3:30:04 PM
-**Files Scanned:** 543
->>>>>>> Stashed changes
+**Generated:** 12/10/2025, 8:30:04 AM
+**Files Scanned:** 567
 
 ---
 
@@ -17,21 +12,12 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-<<<<<<< Updated upstream
-**Count:** 178 (31.5%)
-=======
-**Count:** 179 (33.0%)
->>>>>>> Stashed changes
+**Count:** 179 (31.6%)
 
 ### `AUTONOMOUS_RESEARCHER_SESSION_20251203_2030.md`
 - **Oldest source:** 1981 (44 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/AUTONOMOUS_RESEARCHER_SESSION_20251203_2030.md`
-
-### `CITATION_CURRENCY_AUDIT_20251208.md`
-- **Oldest source:** 2009 (16 years old)
-- **Status:** Not used in simulation
-- **Path:** `research/CITATION_CURRENCY_AUDIT_20251208.md`
 
 ### `CRISIS_MITIGATION_RESEARCH_CRITIQUE_20251029.md`
 - **Oldest source:** 2001 (24 years old)
@@ -107,6 +93,11 @@
 - **Oldest source:** 1991 (34 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/PHASE2_LAYER2_SESSION6_SUMMARY_20251031.md`
+
+### `RESEARCH_GAP_PRIORITIES_20251210.md`
+- **Oldest source:** 1995 (30 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/RESEARCH_GAP_PRIORITIES_20251210.md`
 
 ### `RESEARCH_REQUESTS_validation_20251114.md`
 - **Oldest source:** 1984 (41 years old)
@@ -922,15 +913,12 @@
 
 ## 📋 MEDIUM (Review Within Quarter)
 
-<<<<<<< Updated upstream
-**Count:** 26 (4.6%)
-=======
-**Count:** 24 (4.4%)
->>>>>>> Stashed changes
+**Count:** 27 (4.8%)
 
 - `LAYER2_COMPREHENSIVE_STATUS_20251030.md` - Oldest: 2020 (5 years)
 - `LAYER2_DEBATE_SUMMARY_20251030.md` - Oldest: 2020 (5 years)
 - `PHASE1_LAYER2_COMPLETION_REPORT.md` - Oldest: 2020 (5 years)
+- `RESEARCH_GAPS_QUICK_REFERENCE_20251210.md` - Oldest: 2021 (4 years)
 - `RESEARCH_TRIAGE_FABRICATED_CITATIONS.md` - Oldest: 2020 (5 years)
 - `RESEARCH_VALIDATION_SESSION_56_20251206.md` - Oldest: 2020 (5 years)
 - `ai_capability_scaling_20251113.md` - Oldest: 2021 (4 years)
@@ -959,11 +947,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-<<<<<<< Updated upstream
-**Count:** 361 (63.9%)
-=======
-**Count:** 340 (62.6%)
->>>>>>> Stashed changes
+**Count:** 361 (63.7%)
 
 All sources <3 years old. No action required.
 
@@ -973,45 +957,26 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-<<<<<<< Updated upstream
-| Total files | 565 |
+| Total files | 567 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 178 (31.5%) |
-| MEDIUM | 26 (4.6%) |
-| LOW | 361 (63.9%) |
+| HIGH | 179 (31.6%) |
+| MEDIUM | 27 (4.8%) |
+| LOW | 361 (63.7%) |
 | Average age | 7.2 years |
-=======
-| Total files | 543 |
-| CRITICAL | 0 (0.0%) |
-| HIGH | 179 (33.0%) |
-| MEDIUM | 24 (4.4%) |
-| LOW | 340 (62.6%) |
-| Average age | 7.5 years |
->>>>>>> Stashed changes
 | Oldest source | 1955 (70 years ago) |
 
 ### Research Currency
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-<<<<<<< Updated upstream
-| Current (<3yr) | 361 | 63.9% |
-| Warning (3-5yr) | 26 | 4.6% |
-| Critical (>5yr) | 178 | 31.5% |
-=======
-| Current (<3yr) | 340 | 62.6% |
-| Warning (3-5yr) | 24 | 4.4% |
-| Critical (>5yr) | 179 | 33.0% |
->>>>>>> Stashed changes
+| Current (<3yr) | 361 | 63.7% |
+| Warning (3-5yr) | 27 | 4.8% |
+| Critical (>5yr) | 179 | 31.6% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-<<<<<<< Updated upstream
-- **Current:** 31.5% critical (>5yr)
-=======
-- **Current:** 33.0% critical (>5yr)
->>>>>>> Stashed changes
+- **Current:** 31.6% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
