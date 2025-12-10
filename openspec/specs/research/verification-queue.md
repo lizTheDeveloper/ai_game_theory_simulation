@@ -126,10 +126,15 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 - Timeline assumptions research-defensible
 - Technologies complementary (multiplicative, not additive)
 
+**✅ CRITICAL Issue RESOLVED (Nov 16, 2025):**
+- ✅ **Nitroplast Timeline Fixed:** Tech tree correctly shows `minMonth: 180` (15 years) matching research consensus (commit 3152522c)
+- ✅ **Research Citations Added:** Tech tree includes Coale et al. 2024 citation and AAAS Newcomb Cleveland Prize 2025
+
 **Minor Corrections Recommended (Not Blocking):**
 1. Clarify nitroplast uncertainty in tech tree descriptions
 2. Add explicit failure modes for each technology
 3. Cross-reference recent 2025 research files in comments
+4. Clarify vague terms ("Soil Health" → "Precision Agriculture NUE" or add explicit sources) - PENDING
 
 **Next Steps:** Monte Carlo validation (N≥10) to verify biogeochemical effectiveness reaches 40-60% → Move to "Recently Resolved"
 
