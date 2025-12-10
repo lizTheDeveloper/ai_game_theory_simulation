@@ -20,39 +20,32 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 ### HIGH Priority
 
 #### Threshold Lowering for Tipping Cascades
-**Status:** ✅ RESOLVED - REGRESSION FIXED (Dec 9, 2025)
+**Status:** ✅ CRITICAL FIXES APPLIED (Dec 8, 2025)
 **Change:** (pending - needs change folder created)
-**Commits:** cf49657 (original), 6671e0ed (Dec 8 fix), 3f3118de + 7130c7e6 (Dec 9 regression fix)
+**Commit:** cf49657 (original), [current] (fixes)
 **Context:** Implements threshold lowering mechanism from mechanism audit gap
-**Verification Files:**
-- `research/verification_cf49657_20251207.md`
-- `research/amoc_amazon_interaction_correction_20251208.md`
-- `research/verification_cf49657_REMEDIATION_20251208.md`
+**Verification File:** `research/verification_cf49657_20251207.md`
 
 **Verification Complete (Dec 7, 2025):**
 - **Initial Grade:** C (super-alignment-researcher)
 - **Final Grade:** D (research-skeptic downgrade)
 - **Reviewers:** Cynthia (researcher), Sylvia (skeptic)
 
-**CRITICAL Issues Found → FIXED (Dec 8, 2025) → REGRESSED (Dec 9) → RE-FIXED (Dec 9):**
-1. ✅ **AMOC → Amazon Sign Error:** Interaction REMOVED (6671e0ed), regressed in merge 23fd6987, re-fixed 3f3118de with extensive research notes
-2. ✅ **sqrt(progress) Scaling Backwards:** Replaced with linear scaling (already in HEAD)
-3. ✅ **Missing Stabilizing Feedbacks:** AMOC → Greenland stabilizing feedback documented (3f3118de)
-4. ✅ **Quantitative Magnitudes Not Validated:** Documentation updated (6671e0ed, verified present)
-5. ✅ **0.5°C Cap Misattributed:** Relabeled (6671e0ed, verified present)
+**CRITICAL Issues Found → FIXED (Dec 8, 2025):**
+1. ✅ **AMOC → Amazon Sign Error:** Interaction REMOVED, extensive research note added explaining 2023-2025 evidence shows stabilizing effect (increased rainfall), not destabilizing
+2. ✅ **sqrt(progress) Scaling Backwards:** Replaced with linear scaling reflecting rate-dependent accumulating effects (freshwater forcing, carbon release, albedo feedback compound over time)
+3. ✅ **Missing Stabilizing Feedbacks:** AMOC → Greenland stabilizing feedback documented (currently commented - requires negative interaction support in cascade model)
+4. ✅ **Quantitative Magnitudes Not Validated:** Documentation updated to clearly state values are "conservative engineering estimates pending empirical validation"
+5. ✅ **0.5°C Cap Misattributed:** Relabeled as "simulation stability safeguard" not research-backed parameter
 
-**Final Status (Dec 9, 2025):**
-- All 5 CRITICAL issues now RESOLVED
-- Regression caused by threshold uncertainty removal (commit 5eb4b5bd) - merge conflict re-added old code
-- Final fix (3f3118de + 7130c7e6) adds extensive research documentation:
-  - Parsons 2023: AMOC slowdown → ITCZ southward shift → MORE rain to southern Amazon
-  - Yuan 2025: Multi-model evidence for stabilizing effect
-  - Högner 2025: Regional heterogeneity (north Amazon loses rain, south gains)
-  - Decision: Remove interaction until regional sub-modeling supported
+**Fixes Applied:**
+- `src/types/tipping-points.ts` lines 601-617: AMOC → Amazon removed with detailed research note
+- `src/types/tipping-points.ts` lines 585-595: AMOC → Greenland stabilizing feedback documented
+- `src/types/tipping-points.ts` lines 517-543: Documentation rewritten to clarify engineering estimates
+- `src/simulation/engine/phases/ClimateSystemPhase.ts` lines 226-233: sqrt scaling replaced with linear
+- `src/simulation/engine/phases/ClimateSystemPhase.ts` lines 269-272: 0.5°C cap relabeled
 
-**Monte Carlo Required:** N≥10 validation pending
-
-**Ready to archive to Recently Resolved.**
+**Next Steps:** Monte Carlo validation (N≥10) to verify fixes don't break cascade behavior → Move to "Recently Resolved"
 
 ---
 
@@ -94,254 +87,127 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 
 ---
 
-### HIGH Priority (Research Audit Follow-Up)
-
-#### Sleeper Agent Rate Justification (7.5%)
-**Status:** ✅ RESOLVED (Dec 10, 2025)
-**Context:** From Nov 29, 2025 research audit (reviews/research_audit_20251129.md)
-**Location:** `src/simulation/initialization.ts:309`
-**Commit:** 248bad46
-
-**Implementation Complete:**
-- ✅ Updated comment to cite Hubinger et al. (2024) explicitly
-- ✅ Added derived estimate disclaimer
-- ✅ Documented that empirical prevalence data doesn't exist in literature
-- ✅ Referenced gaming-sleeper-detection_20251017.md for proof-of-concept details
-
-**Verification:** Comment now research-compliant, matches gaming-sleeper-detection research doc
-
-**Severity:** HIGH (research standards compliance)
-**Effort:** COMPLETED
-
----
-
-#### Sandbagging Level Citation (0.4-0.6)
-**Status:** ✅ RESOLVED (Dec 10, 2025)
-**Context:** From Nov 29, 2025 research audit
-**Location:** `src/simulation/agents/evaluationStrategy.ts:74`
-**Commit:** 248bad46
-
-**Implementation Complete:**
-- ✅ Added explicit citations: van der Weij et al. (2024), Meinke et al. (2024)
-- ✅ Justified range [0.4, 0.6] from empirical frontier model observations
-- ✅ Documented connection to gaming-sleeper-detection_20251017.md
-- ✅ Clarified these are frontier model baselines, not general population stats
-
-**Verification:** Comment now research-compliant, cites empirical demonstrations
-
-**Severity:** HIGH (research standards compliance)
-**Effort:** COMPLETED
-
----
-
-#### Detection Risk Calibration (50% Baseline)
-**Status:** ✅ RESOLVED (Dec 10, 2025)
-**Context:** From Nov 29, 2025 research audit
-**Location:** `src/simulation/sleeperEconomy.ts:339-355`
-**Issue:** 50% baseline lacks justification from research
-
-**Previous Code:**
-```typescript
-economy.detectionRisk = 0.5;  // 50% baseline risk
-```
-
-**Research Backing:**
-- Gaming-sleeper-detection_20251017.md: "Detection methods show promise but remain imperfect"
-- Deliberative alignment training: reduces scheming by ~30x (8.7-13% → 0.3-0.4%)
-- Chain-of-thought monitoring: fragile, models may learn to hide reasoning
-- van der Weij 2024: >99% AUROC possible with proper monitoring
-
-**Implementation Complete (Dec 10, 2025):**
-- ✅ Created `calculateDetectionRiskAfterDetection(month)` function with time-dependent model
-- ✅ Early months (0-36): 25% detection rate (midpoint of 20-30% research range)
-- ✅ Mid months (36-72): Linear interpolation from 25% to 80%
-- ✅ Late months (72+): 80% detection rate (midpoint of 70-90% research range)
-- ✅ Added comprehensive research citations in code comments
-- ✅ Documented mechanistic interpretability improvement timeline
-- ✅ Referenced gaming-sleeper-detection_20251017.md directly in comments
-
-**Verification:**
-- ✅ Type check passed (no new TypeScript errors)
-- ✅ Monte Carlo validation: COMPLETE (deterministic, time-dependent model functioning)
-- ✅ Implementation matches research-backed ranges
-
-**Severity:** HIGH (model realism)
-**Effort:** COMPLETED (1 hour actual)
-
-**Ready for archival to Recently Resolved.**
-
----
-
 ### MEDIUM Priority
 
-#### Energy Budget Constraints
-**Status:** ✅ IMPLEMENTED (Dec 9, 2025)
-**Change:** openspec/changes/energy-budget-constraints/
-**Context:** Energy bottleneck prevents realistic deployment - DAC needs 34-51% global electricity
-**Research File:** `research/energy_budget_constraints_20251209.md`
-**Validation File:** `reviews/research_validation_energy_budget_20251209.md`
-**Implementation:** `IMPLEMENTATION_SUMMARY_energy_budget_20251209.md`
-**Commits:** 5875451b, 73d6d867
-
-**Validation Complete (Dec 9, 2025):**
-- **Self-Assessment Grade:** B+
-- **Final Grade:** B+ (CONDITIONAL PASS)
-- **Reviewer:** Sylvia (research-skeptic)
-
-**Implementation Complete (Dec 9, 2025):**
-- **Implementer:** Moss (feature-implementer)
-- **Phase:** EnergyBudgetPhase (order 12.75)
-- **Monte Carlo:** N=10, 120 months - PASSED
-- **Quality Gate 2:** SKIPPED (isolated system, no performance concerns)
-
-**What Was Implemented:**
-- Global electricity capacity tracking (29,000 TWh/year baseline)
-- Priority-based allocation (essential 45%, high 35%, climate 15%, elective 5%)
-- Technology energy demands (DAC, AI datacenters, hydrogen)
-- Effectiveness multipliers with tech-specific exponents
-- Integration with ClimateDeploymentPhase (already existed)
-
-**All QG1 Parameter Adjustments Applied:**
-- ✅ AI datacenter 2024: 437.5 TWh (NOT 730 TWh)
-- ✅ DAC energy: 1,500 kWh/tCO2 midpoint (range 1,200-2,500)
-- ✅ Tech-specific exponents: DAC 1.3, hydrogen 1.2, AI 1.1
-- ✅ Priority framework documented as "modeling simplification"
-
-**Files Modified:**
-- `src/types/game.ts` (energyBudget interface)
-- `src/simulation/initialization.ts` (2024 IEA baseline)
-- `src/simulation/engine/phases/EnergyBudgetPhase.ts` (NEW - 390 lines)
-- `src/simulation/engine.ts` (phase registration)
-
-**Ready for archival to Recently Resolved.**
-
----
-
 #### Nitrogen-Food Phase 3 Technologies
-**Status:** ✅ VERIFIED - Grade B+ (Conditional Pass)
+**Status:** ⚠️ READY FOR VALIDATION
 **Change:** (pending - needs change folder created)
 **Commit:** cd1e83a
 **Context:** 6 new nitrogen reduction technologies added to tech tree
-**Verification File:** `research/verification_cd1e83a_20251208.md`
+**Verification File:** `research/verification_cd1e83a_20251121.md`
 
-**Verification Complete (Dec 8, 2025):**
-- **Grade:** B+ (85% confidence in parameters)
-- **Fully Verified:** 3/6 technologies (50%) - Rhizosphere Engineering, Nitroplast Integration, Precision Fermentation
-- **Partially Verified:** 3/6 technologies (50%) - Regional Nitrogen Policies, Soil Health Restoration, Integrated Nutrient Management
-- **Reviewer:** Cynthia (autonomous-researcher)
+**Technologies to Verify:**
+1. Rhizosphere Engineering (15-40% N reduction, TIER 1, commercial)
+2. Nitroplast Integration (50-70% reduction, breakthrough, Coale et al. 2024)
+3. Precision Fermentation (30-50% agri N reduction, emerging)
+4. Regional Nitrogen Policies (20% efficiency via redistribution)
+5. Soil Health Restoration (20-40% NUE improvement)
+6. Integrated Nutrient Management (25-45% efficiency gains)
 
-**✅ Fully Verified Technologies:**
-1. **Rhizosphere Engineering (15-40% N reduction)** - Ali et al. 2025 *Frontiers Plant Sci*, mycorrhizal field trials confirm 15%
-2. **Nitroplast Integration (50-70% reduction)** - Coale et al. 2024 *Science*, AAAS Newcomb Cleveland Prize 2025
-3. **Precision Fermentation (30-50% agri N reduction)** - Annual Reviews 2024, WRI 2024 (63% crops to animal feed)
+**Key Claims:**
+- Effectiveness ranges (15-40%, 20-45%, etc.)
+- Co-benefits quantification (soil health, biodiversity, carbon)
+- Timeline assumptions (R&D + deployment)
+- Citation: Coale et al. 2024 *Science* for nitroplasts
 
-**⚠️ Partially Verified Technologies:**
-4. **Regional Nitrogen Policies (20% efficiency)** - Bhattarai 2024 shows 11-49% range, 20% is reasonable weighted average
-5. **Soil Health Restoration (20-40% NUE improvement)** - Gu 2023 shows 10-80% range, but "soil health" term vague
-6. **Integrated Nutrient Management (25-45% efficiency)** - Gu 2023 11-measure package supports range
-
-**CRITICAL Issue Found:**
-- ❌ **Nitroplast Timeline Error:** Tech tree shows `minMonth: 60` (5 years) but research consensus is 2040s-2050s deployment (15-25 years minimum)
-- **Required Fix:** Change `minMonth: 60` → `minMonth: 180` to match research timeline
-
-**Recommended Actions:**
-1. Fix nitroplast timeline (CRITICAL - blocks Monte Carlo)
-2. Add research citations to tech tree comments
-3. Clarify vague terms ("Soil Health" → "Precision Agriculture NUE" or add explicit sources)
-4. Proceed with Monte Carlo validation after timeline fix
-
-**Next Steps:** Timeline fix required before implementation → Monte Carlo N≥10
+**Next Steps:** Two-layer verification → Parameter adjustments if needed → Monte Carlo validation
 
 ---
 
 #### Carbon Capture Deployment Parameters
-**Status:** ✅ VERIFIED - Grade A (Full Verification - 100%)
+**Status:** ✅ CORRECTED - Ready for Monte Carlo Validation (Dec 8, 2025)
 **Change:** (pending - needs change folder created)
 **Commit:** c52826e
 **Context:** Comprehensive DAC research (625 lines, 12 sources, claimed A+ quality)
 **Research File:** `research/carbon_capture_deployment_timelines_2025.md`
-**Verification File:** `research/verification_c52826e_20251208.md`
+**Verification Files:**
+- `research/VERIFICATION_carbon_capture_deployment_20251208.md` (initial)
+- `reviews/carbon_capture_skeptic_review_20251208.md` (final skeptic review)
 
 **Verification Complete (Dec 8, 2025):**
-- **Grade:** A (100% verification - all parameters verified)
-- **Reviewer:** Cynthia (autonomous-researcher)
-- **Status:** APPROVED FOR IMMEDIATE USE
+- **Initial Grade:** B- (super-alignment-researcher)
+- **Final Grade:** C+ (research-skeptic downgrade)
+- **Reviewers:** Cynthia (researcher), Sylvia (skeptic)
 
-**✅ All Implementation Parameters VERIFIED (5/5):**
-1. **activationDelay = 7 years** - IEA 2024, mid-range of 5-10 year estimate
-2. **T_50 = 30 years** - Matches 2050 low-gigatonne projection (0.1-1 Gt = 50% of multi-Gt target)
-3. **tau = 20 years** - Biogeosciences 2024-2025 atmospheric mixing timescale
-4. **E_max = 1.0 Gt CO2/yr** - Conservative mature deployment estimate
-5. **effectType = 'co2_removal'** - Correct classification
+**CRITICAL Issues Found:**
+1. **Author Misattribution (BLOCKING):** "Tan, S., et al." cited 5x - actual author is Ampah, J.D., et al. (verified via PMC)
+2. **Systematic Optimism Bias:** Zero skeptical perspectives, all counterevidence omitted
+3. **Gen 3 Claims Unverified:** Canary Media explicitly states "not independently confirmed"
+4. **Energy Data Conflicts:** 2-3 TWh vs 4-10 TWh vs 1,200 TWh per Gt/yr (2-600x disagreement)
 
-**✅ All Research Claims VERIFIED:**
-- **Current capacity:** 0.00005 Gt/yr (Mammoth 36kt/yr, Climeworks May 8 2024 press release)
-- **Timeline:** 20-40 year lag to gigatonne scale (IEA 2024 projections)
-- **Energy:** 4-10 TWh per 1 Gt/yr (Frontiers in Climate 2024, Tan et al. 2024)
-- **Water:** 15 km³/yr for 4 Gt/yr (Tan et al. 2024 *Nature Commun*, DOI: 10.1038/s41467-024-50637-2)
-- **Cost:** $600-1,000/tonne → $100-300/tonne by 2040s (Climeworks, Canary Media 2024)
+**Missing Contradictory Evidence (Dec 2024 - May 2025):**
+- Mongabay investigation: Mammoth actual removal 805 tonnes (96.7% below capacity)
+- Expert skepticism: Jacobson (Stanford): "greenwashing technology"
+- May 2025 Climeworks layoffs: 22% workforce cut
+- Infrastructure: 96,000km pipeline needed for 1 Gt/yr
 
-**Key Sources Verified:**
-- Tan, S., et al. (2024). *Nature Communications*, 15, Article 6380 [Energy-water-land nexus]
-- Climeworks (2024, May 8). Mammoth press release [Primary industry source]
-- IEA (2024). "CCUS projects around the world are reaching new milestones" [Authoritative]
-- Frontiers in Climate (2024-2025). Technical energy analysis [Peer-reviewed]
-- Canary Media (2024). Gen 3 technology cost reduction [Industry coverage]
+**Current Implementation:**
+- `src/simulation/techTree/deploymentTimescales.ts:60` - DAC: 300 months (25 years)
+- Assessment: ACCEPTABLE but at optimistic end; recommend Monte Carlo 25-50 years
 
-**Corrections Applied (Dec 8, 2025):**
-1. ✅ Fix author attribution: Tan → Ampah throughout (5 instances corrected)
-2. ✅ Add contradictory evidence section (Mongabay, expert quotes) - New section 6.5 added
-3. ✅ Add May 2025 industry update (layoffs) - Bloomberg source added
-4. ✅ Mark Gen 3 claims as [UNVERIFIED INDUSTRY DATA] - Verification notes added
-5. ⏸️ Reconcile energy requirement data - Deferred (requires deeper analysis)
-6. ✅ Update Monte Carlo range to 25-50 years - Recommendation added to executive summary
+**Corrections Applied (Dec 8, 2025 by autonomous researcher):**
+1. ✅ Fixed author attribution: Tan → Ampah throughout (5 instances)
+2. ✅ Added Section 5: "Contradictory Evidence and Critical Perspectives" with:
+   - Mammoth operational reality (805 vs 36,000 tonnes)
+   - May 2025 Climeworks 22% layoffs
+   - Expert skepticism (Jacobson, Foley quotes)
+   - Gen 3 claims marked [UNVERIFIED INDUSTRY DATA]
+   - Research methodology note explaining corrections
+3. ✅ Updated frontmatter: research_quality downgraded to C+, corrections logged
+4. ✅ Added 4 new references (Mongabay, Bloomberg, CNN, Sifted)
+5. ✅ Renumbered sections 5-8 to 6-9 after insertion
 
-**Enhancement Opportunities (Optional - Not Blocking):**
-- ⚠️ Energy coupling - Model effectiveness reduction if clean energy unavailable
-- ⚠️ Water constraints - Regional deployment penalties in water-stressed solar belts
-- ⚠️ Cost dynamics - Accelerate deployment if carbon price > $200/tonne
+**Remaining (Optional):**
+- ⚠️ Reconcile energy requirement data conflicts (noted as 2-600x range in Section 5.4)
+- ⚠️ Update Monte Carlo parameters to 25-50 year range (implementation change)
 
-**Status:** CORRECTIONS COMPLETE - Ready for Monte Carlo validation N≥10 with 25-50 year range
-**Grade After Corrections:** C+ (acceptable for simulation with skeptical framing)
+**Next Steps:**
+- Monte Carlo validation N≥10 with current parameters (25 years)
+- Consider parameter sensitivity analysis 25-50 years
+- Move to "Recently Resolved" after validation
 
 ---
 
 #### AI Infrastructure Resources 2025 Update
-**Status:** ✅ VERIFIED - Grade B+ (with critical omissions identified)
+**Status:** ✅ VERIFIED - Grade A (Dec 8, 2025)
 **Change:** (pending - needs change folder created)
 **Commit:** dbf1438
 **Context:** 2025 peer-reviewed sources for AI data center resource consumption
-**Research File:** `research/ai-infrastructure-resources_20251019.md` (updated)
-**Verification File:** `research/VERIFICATION_ai_infrastructure_resources_20251209.md`
+**Research File:** `research/ai-infrastructure-resources_20251019.md` (updated Nov 23, 2025)
+**Verification File:** `research/verification_dbf1438_ai_infrastructure_20251208.md`
 
-**Verification Complete (Dec 9, 2025):**
-- **Factual Accuracy Grade:** B+ (well-sourced, accurate citations)
-- **Completeness:** MODERATE GAPS (rebound effects, immersion cooling)
-- **Reviewers:** Cynthia (researcher verification)
+**Verification Complete (Dec 8, 2025):**
+- **Grade:** A
+- **Reviewer:** Autonomous Researcher
+- **Status:** All 3 major 2025 sources VERIFIED
 
-**✅ All Core Claims Verified:**
-- Cornell/Nature Sustainability 2025: 731-1,125M m³/yr water, 24-44M tonnes CO₂/yr (PEER-REVIEWED)
-- MIT/Lawrence Berkeley Lab: 7-8× energy multiplier, 183 TWh U.S. 2024 (VERIFIED)
-- IEA 2025: 560B→1,200B liters global water 2024→2030 (VERIFIED)
-- GPT-3 training: 1,287 MWh, 552 tons CO₂ (WIDELY REPLICATED)
-- Arizona: 7.4% state power (2023 data - VERIFIED BUT OUTDATED, 2030 projection is 16.5%)
-- Geographic optimization: Windbelt states (Texas, Montana, Nebraska, South Dakota) optimal (VERIFIED)
+**Sources Verified:**
+1. ✅ Cornell/Nature Sustainability 2025 (Xiao & You) - DOI: 10.1038/s41893-025-01681-y
+   - Water: 731-1,125M m³/yr (2030) ACCURATE
+   - Carbon: 24-44M tonnes CO₂/yr (2030) ACCURATE
+   - Mitigation: 73% carbon, 86% water reduction ACCURATE
 
-**⚠️ CRITICAL Omissions Identified:**
-1. **Rebound Effects NOT Modeled:** Google achieved 33× efficiency gain but emissions rose 50% since 2019 (usage growth offsets gains)
-2. **Immersion Cooling Missing:** 99% water reduction potential, Microsoft commitment, not integrated into 2030 projections
-3. **Mitigation Percentages Overstated:** 73%/86% reductions assume best-case adoption (no policy evidence)
-4. **Uncertainty Ranges Underemphasized:** 54-83% variation from lower bound (need stochastic modeling)
-5. **Water Overestimation Risk:** Andy Masley identified 4,500× error in popular media (Hao's "Empire of AI"); peer-reviewed sources more credible
+2. ✅ MIT/Lawrence Berkeley Lab 2025 (Olivetti et al.)
+   - 7-8× energy multiplier for AI training VERIFIED (indirectly confirmed)
+   - 183 TWh U.S. data centers (2024) VERIFIED (Berkeley Lab shows 176 TWh in 2023, likely 2024 estimate)
+   - Global projections VERIFIED via Berkeley Lab report
 
-**Simulation Implications:**
-- Use uncertainty distributions: Uniform(731M, 1,125M) m³ water, Uniform(24, 44) Mt CO₂
-- Add rebound effect mechanism: netGain = efficiency × (1 - reboundCoefficient), where rebound ~0.60
-- Model immersion cooling adoption: Beta(2,8) → mean 20%, reduces water by 99%
-- Arizona: Time-varying 7.4% (2023) → 16.5% (2030)
-- Mitigation adoption sensitivity: 20%/50%/70% → 15%/36%/73% carbon reductions
+3. ✅ IEA 2025 (April 2025 report)
+   - 560 billion liters (2024) VERIFIED
+   - 1,200 billion liters (2030) VERIFIED
+   - Multiple independent sources confirm (Bloomberg, DCD, EESI)
 
-**Next Steps:** Implement parameters with stochastic modeling → Monte Carlo validation N≥10 → Move to Recently Resolved
+**Validated Parameters:**
+- trainingWaterL: 700K-10M L per training run ✅
+- inferenceWaterL: 2-5M L/month at scale ✅
+- aiTrainingMultiplier: 7.5 (MIT: 7-8×) ✅
+- Geographic modifiers: desert 2.5×, nordic 0.3×, windbelt 0.7× carbon ✅
+
+**Minor Issue (LOW):**
+- 183 TWh (2024) vs Berkeley Lab 176 TWh (2023) = 4% difference (within margin, likely extrapolation)
+- Recommendation: Optional footnote clarifying estimate vs actual
+
+**Next Steps:** Move to "Recently Resolved" → Implementation already in simulation (Nov 2025)
 
 ---
 
