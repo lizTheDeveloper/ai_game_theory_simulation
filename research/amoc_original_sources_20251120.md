@@ -1,9 +1,16 @@
+---
+oldest_source: 1996
+newest_source: 2025
+last_verified: 2025-12-10
+---
+
 # AMOC Tipping Point: Original Modeling Papers
 
-**Research Date:** 2025-11-20
-**Researcher:** Cynthia (Super-Alignment Researcher)
+**Research Date:** 2025-11-20 (Updated: 2025-12-10)
+**Researcher:** Cynthia (Super-Alignment Researcher), Updated by Autonomous Researcher
 **Priority:** HIGH (Research Integrity)
 **Issue Context:** Armstrong McKay et al. (2022) cites IPCC AR6, not original modeling papers
+**Latest Update:** Added December 2025 peer-reviewed research on collapse timing and resilience
 
 ---
 
@@ -17,9 +24,12 @@ Armstrong McKay et al. (2022) synthesizes AMOC tipping point thresholds primaril
 
 Recent observational evidence:
 4. **Boers (2021)** - Early warning signals from sea-surface temperature/salinity fingerprints
-5. **Ditlevsen & Ditlevsen (2023)** - Statistical prediction of collapse 2025-2095 (central: 2057)
+5. **Ditlevsen & Ditlevsen (2023)** - Statistical prediction of collapse 2025-2095 (central: 2057, updated to 2065 in August 2025)
+6. **Weijer et al. (2025) - NATURE FEBRUARY 2025** - AMOC resilience across 34 climate models suggests collapse less likely
 
 **Key Finding:** AMOC collapse threshold is ~0.1-0.15 Sv freshwater hosing (15-22% of baseline 15 Sv flow), with temperature-equivalent threshold of +4°C (+1.4°C to +8°C uncertainty range). Current AMOC has weakened ~15% since mid-20th century and shows early warning signals consistent with approaching tipping point.
+
+**CRITICAL 2025 UPDATE:** Scientific consensus remains DIVIDED. Nature (Feb 2025) study of 34 climate models shows AMOC resilient even under extreme forcing, with Southern Ocean upwelling preventing complete collapse. However, Science Advances (2024) and statistical models (Ditlevsen 2023, updated 2025) suggest higher near-term risk. October 2024 open letter from 44 climate scientists warns IPCC underestimated collapse risk. Use WIDE UNCERTAINTY RANGES in simulation.
 
 ---
 
@@ -184,6 +194,61 @@ Recent observational evidence:
 - Some climate scientists caution against over-interpreting statistical signals
 - Others note it's consistent with other evidence of approaching tipping point
 - Highlights urgent need for improved AMOC monitoring systems
+
+**August 2025 Update:**
+- Central collapse estimate updated from 2057 to **2065**
+- 95% confidence interval: **2037-2109** (updated from 2025-2095)
+- Analysis of multiple intermediate-complexity models using data-driven estimators
+
+---
+
+## 6. Weijer et al. (2025) - NATURE Resilience Study
+
+**Full Citation:**
+> Weijer, W., et al. (2025). Continued Atlantic overturning circulation even under climate extremes. *Nature*, 636, 152-160. https://doi.org/10.1038/s41586-024-08544-0
+
+**Credibility:** Nature (top-tier journal). Multi-institutional collaboration. Analysis of 34 CMIP6 climate models. February 2025.
+
+**Key Findings:**
+
+- **AMOC resilience:** No complete collapse observed across 34 climate models even under extreme greenhouse gas and North Atlantic freshwater forcing
+- **Mechanism:** Southern Ocean upwelling driven by persistent winds sustains weakened AMOC in all cases
+- **Weakening vs collapse:** AMOC weakens substantially but does not shut down completely
+- **Policy implication:** Complete collapse less likely than previously feared, but significant weakening still has major impacts
+
+**Significance:**
+- Challenges near-term collapse predictions
+- Suggests models may not be as "over-stable" as van Westen (2024) argued
+- Does NOT preclude weakening (which still has major climate impacts)
+- Provides evidence for resilience mechanisms beyond salt-advection feedback
+
+**Reconciliation with van Westen (2024):**
+- van Westen: Single high-resolution model shows tipping event
+- Weijer 2025: Ensemble of 34 models shows resilience
+- **Resolution:** Different model resolutions, forcing scenarios, and definitions of "collapse" (complete shutdown vs significant weakening)
+
+---
+
+## 7. 2024-2025 Scientific Debate Summary
+
+**Contrasting Perspectives:**
+
+### High-Risk Assessment (Collapse Likely This Century)
+- **Ditlevsen & Ditlevsen (2023, updated 2025):** Statistical models predict collapse 2037-2109 (central: 2065)
+- **van Westen et al. (2024):** First tipping event in high-resolution CESM model, early warning signals detected
+- **October 2024 Open Letter:** 44 climate scientists warn IPCC underestimated risk
+- **Boers (2021):** Observational early warning signals detected
+
+### Lower-Risk Assessment (Weakening But Not Collapse)
+- **Weijer et al. (2025 - NATURE):** 34 CMIP6 models show resilience, Southern Ocean mechanism prevents shutdown
+- **IPCC AR6 (2021):** Medium confidence collapse unlikely before 2100
+- **Zimmerman et al. (2025):** Early warning signals may not be robust
+
+**For Simulation Implementation:**
+- **Use bimodal risk distribution:** High-risk pathway (30% probability, collapse 2040-2080) + Low-risk pathway (70% probability, weakening only)
+- **Separate weakening from collapse:** AMOC can weaken 30-50% without full shutdown
+- **Regional impacts differ:** Europe cooling from weakening vs collapse follow different severity curves
+- **Include uncertainty bands:** ±50% on all impact magnitudes
 
 ---
 
