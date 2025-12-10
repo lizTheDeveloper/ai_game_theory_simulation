@@ -125,9 +125,9 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 ---
 
 #### Carbon Capture Deployment Parameters
-**Status:** ✅ CORRECTIONS COMPLETE - Ready for Monte Carlo (Dec 8, 2025)
+**Status:** ✅ CORRECTED - Ready for Implementation (Dec 8, 2025)
 **Change:** (pending - needs change folder created)
-**Commit:** c52826e (original), edfb85b1 (corrections)
+**Commit:** c52826e (original), edfb85b1, 7376fc77 (corrections applied)
 **Context:** Comprehensive DAC research (625 lines, 12 sources, corrected from A+ to B-)
 **Research File:** `research/carbon_capture_deployment_timelines_2025.md`
 **Verification Files:**
@@ -139,6 +139,7 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 - **Final Grade:** B- (after corrections applied)
 - **Reviewers:** Cynthia (researcher), Sylvia (skeptic), Autonomous Researcher (corrections)
 
+<<<<<<< HEAD
 **CRITICAL Issues Found → FIXED (Dec 8, 2025):**
 1. ✅ **Author Misattribution (BLOCKING):** "Tan, S., et al." → "Ampah, J.D., et al." throughout (verified via PMC11283554)
 2. ✅ **DOI Corrected:** 10.1038/s41467-024-50637-2 → 10.1038/s41467-024-50594-5
@@ -170,6 +171,34 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 2. ⚠️ Energy requirement reconciliation (document 2-1200 GJ/tonne range as uncertainty)
 
 **Next Steps:** Monte Carlo parameter sweep → Move to "Recently Resolved"
+=======
+**CRITICAL Issues Found → FIXED:**
+1. ✅ **Author Misattribution:** "Tan, S." → "Ampah, J.D." (5 citations corrected)
+2. ✅ **Contradictory Evidence Added:** New Section 6 with Mongabay investigation, expert skepticism
+3. ✅ **Gen 3 Claims Marked:** [UNVERIFIED INDUSTRY CLAIM] tags added
+4. ✅ **Energy Conflicts Documented:** 2-600x range noted with "fundamental uncertainty" warning
+5. ✅ **Research Quality Updated:** A+ → C+ (systematic optimism bias documented)
+
+**Corrections Applied (Commit 7376fc77):**
+1. ✅ Fixed author attribution throughout (Tan → Ampah)
+2. ✅ Added Section 6: "Contradictory Evidence and Industry Skepticism"
+   - Mongabay: 805 tonnes actual vs 36,000 nameplate (96.7% gap)
+   - Bloomberg: 22% workforce cut (May 2025)
+   - Expert quotes: Jacobson, Foley
+   - Infrastructure bottleneck: 96,000km pipeline
+   - Energy requirement conflicts: 2-600x range
+3. ✅ Marked Gen 3 claims as [UNVERIFIED]
+4. ✅ Updated frontmatter and document status
+5. ⚠️ Energy reconciliation: Documented as "fundamental uncertainty" (requires future research)
+6. ⚠️ Monte Carlo range update: Deferred to implementation phase
+
+**Current Implementation:**
+- `src/simulation/techTree/deploymentTimescales.ts:60` - DAC: 300 months (25 years)
+- **Assessment:** ACCEPTABLE at optimistic end
+- **Recommendation:** Monte Carlo range 25-50 years with WIDE variance (±50-70%)
+
+**Next Steps:** Implementation approved → Monte Carlo N≥10 with pessimistic scenarios mandatory
+>>>>>>> origin/auto/researcher-20251208_223001
 
 ---
 
