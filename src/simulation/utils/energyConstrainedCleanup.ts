@@ -261,48 +261,120 @@ export function applyEnergyConstrainedCleanup(
   // 3. Calculate energy factor (energy availability constraint)
   // Research: EPA 2024 - 75 GJ/ton median, IEA 2024 - 600 EJ/year global energy
   // Cleanup competes with other energy uses
+  //
+  // ARCHITECTURE FIX H-1a (Dec 9, 2025): Use EnergyBudgetPhase allocations instead of old renewable surplus
 
-  // Access renewable energy surplus (total renewable capacity - demand)
-  const renewableCapacity = assertStateProperty(
-    state.resourceEconomy?.energy,
-    'renewableCapacity',
-    {
-      location: 'applyEnergyConstrainedCleanup',
-      month: state.currentMonth,
+  // Check if energy budget system is enabled
+  if (!state.energyBudget?.enabled || !state.energyBudget.allocations) {
+    console.warn(`⚠️ EnergyBudgetPhase not enabled in applyEnergyConstrainedCleanup, assuming full energy availability`);
+    // Fallback to old system if energy budget not available
+    const renewableCapacity = assertStateProperty(
+      state.resourceEconomy?.energy,
+      'renewableCapacity',
+      {
+        location: 'applyEnergyConstrainedCleanup',
+        month: state.currentMonth,
+      }
+    );
+
+    const energyDemand = assertStateProperty(
+      state.resourceEconomy?.energy,
+      'totalDemand',
+      {
+        location: 'applyEnergyConstrainedCleanup',
+        month: state.currentMonth,
+      }
+    );
+
+    const renewableSurplus = Math.max(0, renewableCapacity - energyDemand);
+
+    // Calculate energy factor using legacy approach
+    let requiredEnergy: number;
+    if (energyReqType === 'annual') {
+      const annualTWh = typeof energyReq === 'number' ? energyReq : 0;
+      requiredEnergy = annualTWh / 277.778;
+    } else {
+      const estimatedStock = boundaryCurrentValue * 1000;
+      const energyPerTon = typeof energyReq === 'number' ? energyReq : 75;
+      requiredEnergy = (estimatedStock * energyPerTon) / 1000;
     }
-  );
 
-  const energyDemand = assertStateProperty(
-    state.resourceEconomy?.energy,
-    'totalDemand',
-    {
-      location: 'applyEnergyConstrainedCleanup',
-      month: state.currentMonth,
+    const energyFactor = Math.min(1.0, renewableSurplus / Math.max(0.001, requiredEnergy));
+
+    // Continue to step 4 (skipping new energy budget logic)
+    const effectValue = tech.effects.novelEntitiesReduction ||
+                        (tech.effects as any).pfasReduction ||
+                        (tech.effects as any).microplasticReduction ||
+                        tech.effects.pollutionReduction;
+
+    if (!effectValue) {
+      throw new Error(`❌ Tech '${tech.id}' missing cleanup effect (novelEntitiesReduction/pfasReduction/microplasticReduction/pollutionReduction)`);
     }
-  );
+    if (tech.deploymentLevel === undefined) {
+      throw new Error(`❌ Tech '${tech.id}' missing deploymentLevel (required for cleanup tech with energy model)`);
+    }
 
-  const renewableSurplus = Math.max(0, renewableCapacity - energyDemand);
+    const baseEffectiveness = effectValue * tech.deploymentLevel;
+    const grossEffectiveness = baseEffectiveness * concentrationFactor * energyFactor;
 
-  // Calculate required energy based on type
-  let requiredEnergy: number;  // in EJ
+    // Apply rebound effect
+    let rebound = 0;
+    if (tech.reboundCoefficient !== undefined && !tech.avoidsRebound) {
+      const coefficient = tech.reboundUncertaintyRange
+        ? tech.reboundUncertaintyRange[0] + rng() * (tech.reboundUncertaintyRange[1] - tech.reboundUncertaintyRange[0])
+        : tech.reboundCoefficient;
 
-  if (energyReqType === 'annual') {
-    // Energy requirement is already annualized (TWh/year)
-    // Convert to EJ: 1 EJ = 277.778 TWh
-    const annualTWh = typeof energyReq === 'number' ? energyReq : 0;
-    requiredEnergy = annualTWh / 277.778;  // TWh to EJ
-  } else {
-    // Energy requirement is per-kg (GJ/ton default)
-    // Estimate energy required for cleanup (very rough - assumes boundary value correlates with stock)
-    // TODO: Better stock tracking (needs contamination mass estimates)
-    // For now: boundary value [0,2] × 1000 Mt (rough stock) × energy/ton
-    const estimatedStock = boundaryCurrentValue * 1000; // Mt (very rough)
-    const energyPerTon = typeof energyReq === 'number' ? energyReq : 75; // GJ/ton default
+      assertFinite(coefficient, {
+        location: 'applyEnergyConstrainedCleanup',
+        valueName: 'reboundCoefficient',
+        month: state.currentMonth,
+        additionalInfo: {
+          techId: tech.id,
+          uncertaintyRange: tech.reboundUncertaintyRange,
+        },
+      });
 
-    requiredEnergy = (estimatedStock * energyPerTon) / 1000; // Convert GJ to EJ
+      rebound = grossEffectiveness * coefficient;
+    }
+
+    const netEffectiveness = assertFinite(grossEffectiveness - rebound, {
+      location: 'applyEnergyConstrainedCleanup',
+      valueName: 'netEffectiveness',
+      month: state.currentMonth,
+      additionalInfo: {
+        techId: tech.id,
+        grossEffectiveness,
+        rebound,
+      },
+    });
+
+    return {
+      grossEffectiveness,
+      concentrationFactor,
+      energyFactor,
+      rebound,
+      netEffectiveness: Math.max(0, netEffectiveness),
+    };
   }
 
-  const energyFactor = Math.min(1.0, renewableSurplus / Math.max(0.001, requiredEnergy));
+  // NEW APPROACH: Use EnergyBudgetPhase allocations
+  // Map tech ID to energy category
+  const category = mapTechToEnergyCategory(tech.id);
+  let energyFactor: number;
+
+  if (!category) {
+    console.warn(`⚠️ Tech '${tech.id}' has no energy category mapping, assuming full energy availability`);
+    energyFactor = 1.0;
+  } else {
+    const allocation = state.energyBudget.allocations[category];
+    if (!allocation) {
+      console.warn(`⚠️ No energy allocation for category '${category}' (tech: ${tech.id}), using default 50%`);
+      energyFactor = 0.5;
+    } else {
+      energyFactor = allocation.effectivenessMultiplier;
+    }
+  }
+
 
   // 4. Base effectiveness (from tech definition)
   // Support multiple effect names for cleanup tech
@@ -364,4 +436,22 @@ export function applyEnergyConstrainedCleanup(
     rebound,
     netEffectiveness: Math.max(0, netEffectiveness), // Can't be negative
   };
+}
+
+/**
+ * Map technology ID to energy category (matches EnergyBudgetPhase mapping)
+ * ARCHITECTURE FIX H-1a (Dec 9, 2025): Shared mapping logic for energy budget integration
+ */
+function mapTechToEnergyCategory(techId: string): string | null {
+  // Novel entities cleanup technologies
+  if (techId.includes('pfas') || techId.includes('PFAS')) return 'pfas-cleanup';
+  if (techId.includes('microplastic') || techId.includes('plastic-cleanup')) return 'microplastic-cleanup';
+  if (techId.includes('novel-entities') || techId.includes('pollution-cleanup')) return 'pollution-cleanup';
+
+  // Climate technologies (fallback if cleanup tech has climate effects)
+  if (techId.includes('dac') || techId.includes('air-capture')) return 'dac';
+  if (techId.includes('hydrogen')) return 'green-hydrogen';
+  if (techId.includes('mineralization') || techId.includes('weathering')) return 'carbon-mineralization';
+
+  return null; // Technology doesn't have energy requirements
 }
