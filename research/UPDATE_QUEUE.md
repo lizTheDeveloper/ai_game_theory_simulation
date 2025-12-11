@@ -1,6 +1,6 @@
 # Research Update Queue
-**Generated:** 12/11/2025, 2:30:05 AM
-**Files Scanned:** 613
+**Generated:** 12/11/2025, 3:30:05 AM
+**Files Scanned:** 614
 
 ---
 
@@ -12,7 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 183 (29.9%)
+**Count:** 184 (30.0%)
 
 ### `AUTONOMOUS_RESEARCHER_SESSION_20251203_2030.md`
 - **Oldest source:** 1981 (44 years old)
@@ -98,6 +98,11 @@
 - **Oldest source:** 1991 (34 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/PHASE2_LAYER2_SESSION6_SUMMARY_20251031.md`
+
+### `RESEARCH_AUDIT_OUTDATED_SOURCES_20251211.md`
+- **Oldest source:** 2007 (18 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/RESEARCH_AUDIT_OUTDATED_SOURCES_20251211.md`
 
 ### `RESEARCH_REQUESTS_validation_20251114.md`
 - **Oldest source:** 1984 (41 years old)
@@ -967,7 +972,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 403 (65.7%)
+**Count:** 403 (65.6%)
 
 All sources <3 years old. No action required.
 
@@ -977,11 +982,11 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 613 |
+| Total files | 614 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 183 (29.9%) |
+| HIGH | 184 (30.0%) |
 | MEDIUM | 27 (4.4%) |
-| LOW | 403 (65.7%) |
+| LOW | 403 (65.6%) |
 | Average age | 6.8 years |
 | Oldest source | 1955 (70 years ago) |
 
@@ -989,21 +994,21 @@ All sources <3 years old. No action required.
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 403 | 65.7% |
+| Current (<3yr) | 403 | 65.6% |
 | Warning (3-5yr) | 27 | 4.4% |
-| Critical (>5yr) | 183 | 29.9% |
+| Critical (>5yr) | 184 | 30.0% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-- **Current:** 29.9% critical (>5yr)
+- **Current:** 30.0% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
-1. Update 183 HIGH priority file(s) within 1 month
+1. Update 184 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 
