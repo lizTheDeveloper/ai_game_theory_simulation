@@ -123,7 +123,7 @@ export function triggerNuclearWinter(
   targetCountries: string[],
   rng: () => number
 ): void {
-  // NaN AUDIT (Dec 10, 2025): Require RNG for deterministic simulation
+  // CRITICAL-3: Validate RNG parameter (fail-loudly, no Math.random fallback)
   if (!rng || typeof rng !== 'function') {
     throw new Error('❌ CRITICAL: RNG required for deterministic nuclear winter simulation');
   }
@@ -587,9 +587,9 @@ function addRadiationZonesEnhanced(
   currentMonth: number,
   rng: () => number
 ): void {
-  // NaN AUDIT (Dec 10, 2025): Require RNG for deterministic simulation
+  // CRITICAL-3: Validate RNG parameter (fail-loudly, no Math.random fallback)
   if (!rng || typeof rng !== 'function') {
-    throw new Error('❌ CRITICAL: RNG required for deterministic radiation zone simulation');
+    throw new Error('❌ CRITICAL: RNG required for deterministic radiation zone creation');
   }
   countries.forEach(country => {
     // Check if country already has radiation zone (multiple hits)
