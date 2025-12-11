@@ -51,7 +51,12 @@ export class ExtinctionDebtPhase implements SimulationPhase {
     });
 
     let totalRealizedThisMonth = 0;
-    const remainingExtinctions = [];
+    const remainingExtinctions: Array<{
+      ecosystemType: 'grassland' | 'alpine' | 'tropical' | 'marine';
+      magnitude: number;
+      committedMonth: number;
+      realizationLagMonths: number;
+    }> = [];
 
     for (const extinction of state.extinctionDebt.committedExtinctions) {
       const monthsElapsed = currentMonth - extinction.committedMonth;
@@ -139,10 +144,17 @@ export class ExtinctionDebtPhase implements SimulationPhase {
       return {
         events: [
           {
-            type: 'EXTINCTION_DEBT_REALIZED',
-            month: currentMonth,
-            message: `Extinction debt realized: ${speciesLost} species lost after multi-generational lag`,
+            id: `extinction_debt_${currentMonth}`,
+            timestamp: currentMonth,
+            type: 'environmental',
+            agent: 'system',
+            title: 'Extinction Debt Realized',
+            description: `Extinction debt realized: ${speciesLost} species lost after multi-generational lag`,
             severity: 'critical',
+            effects: {
+              speciesLost,
+              currentSpeciesCount: state.biosphereIntegrityIndex.currentSpeciesCount,
+            },
           },
         ],
       };
