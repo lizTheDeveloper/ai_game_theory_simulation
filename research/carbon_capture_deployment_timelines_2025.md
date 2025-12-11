@@ -1,9 +1,12 @@
 ---
 oldest_source: 2024
 newest_source: 2025
-last_verified: 2025-11-21
-verification_status: CURRENT
-research_quality: A+ (100% peer-reviewed and industry sources, all 2024-2025)
+last_verified: 2025-12-08
+verification_status: CURRENT (Corrections applied Dec 8, 2025)
+research_quality: C+ (Systematic optimism bias, corrected with contradictory evidence - research-skeptic review)
+original_quality: A+ (claimed)
+verification_grade: C+ (research-skeptic downgrade from B-)
+corrections_applied: Author attribution (Tan→Ampah), contradictory evidence added, Gen 3 marked unverified, May 2025 industry update
 ---
 
 # Carbon Capture and Direct Air Capture: Gigatonne-Scale Deployment Timelines and Constraints
@@ -88,9 +91,9 @@ research_quality: A+ (100% peer-reviewed and industry sources, all 2024-2025)
 
 **Source:** IEA. (2024). "CCUS projects around the world are reaching new milestones." Commentary.
 
-**Generation 3 Technology (Climeworks, USA deployment planned):**
-- **Energy use:** 50% reduction vs Gen 2
-- **Cost:** 50% reduction per tonne CO2
+**Generation 3 Technology (Climeworks, USA deployment planned) [UNVERIFIED INDUSTRY DATA]:**
+- **Energy use:** 50% reduction vs Gen 2 [UNVERIFIED - industry claims not independently confirmed]
+- **Cost:** 50% reduction per tonne CO2 [UNVERIFIED - industry claims not independently confirmed]
 - **Timeline:** US deployment planned (no specific date announced)
 
 **Source:** Canary Media. (2024). "CO2-removal leader Climeworks says new tech can halve costs, energy use."
@@ -111,7 +114,7 @@ research_quality: A+ (100% peer-reviewed and industry sources, all 2024-2025)
   - **DAC must scale 6x faster than renewables, 9x faster than hydrogen**
 
 **Source:**
-- Ampah, J.D., et al. (2024). "Deployment expectations of multi-gigatonne scale carbon removal could have adverse impacts on Asia's energy-water-land nexus." *Nature Communications*, 15, Article 6380. DOI: 10.1038/s41467-024-50594-5
+- Ampah, J.D., et al. (2024). "Deployment expectations of multi-gigatonne scale carbon removal could have adverse impacts on Asia's energy-water-land nexus." *Nature Communications*, 15, Article 6380. DOI: 10.1038/s41467-024-50637-2
 
 ---
 
@@ -138,7 +141,7 @@ research_quality: A+ (100% peer-reviewed and industry sources, all 2024-2025)
 
 **Near-term (by 2030):**
 - **Target:** $300-400/tonne CO2
-- **Mechanism:** Economies of scale, Generation 3 technology (50% cost reduction)
+- **Mechanism:** Economies of scale, Generation 3 technology (50% cost reduction [UNVERIFIED])
 - **Status:** Achievable with current technology trajectory
 
 **Mid-term (2030-2040):**
@@ -178,7 +181,7 @@ research_quality: A+ (100% peer-reviewed and industry sources, all 2024-2025)
 **Direct Air Capture Energy Requirements:**
 - **Solid sorbent (Climeworks-type):** 1.8-2.5 MWh electrical + 4-6 MWh thermal per tonne CO2
 - **Liquid solvent (Carbon Engineering-type):** 2-3 MWh electrical + 5-8 MWh thermal per tonne CO2
-- **Generation 3 technology:** ~50% reduction (estimated 1-1.5 MWh electrical + 2-3 MWh thermal)
+- **Generation 3 technology:** ~50% reduction (estimated 1-1.5 MWh electrical + 2-3 MWh thermal) [UNVERIFIED INDUSTRY CLAIMS]
 
 **Gigatonne-Scale Energy Implications (4 Gt/yr removal):**
 - **Annual energy demand:** 4-10 TWh electrical + 8-24 TWh thermal
@@ -258,7 +261,7 @@ research_quality: A+ (100% peer-reviewed and industry sources, all 2024-2025)
 **Phase 2: Commercial Scale-Up (2030-2040)**
 - **Capacity:** 10-100 Mt/yr (0.01-0.1 Gt/yr)
 - **Key drivers:**
-  - Generation 3 technology widely deployed
+  - Generation 3 technology widely deployed [CONDITIONAL - unverified claims]
   - Cost: $150-300/tonne
   - Policy support (carbon pricing, subsidies)
 - **Limiting factors:** Energy infrastructure, regional water constraints
@@ -414,6 +417,64 @@ research_quality: A+ (100% peer-reviewed and industry sources, all 2024-2025)
 - **Geological storage:** 99.9%+ retention over 1,000+ years (high confidence)
 - **Utilization (CO2-to-products):** Often releases CO2 within years (low permanence)
 - **Accounting:** Need robust monitoring, reporting, verification (MRV) systems
+
+### 6.5 Contradictory Evidence and Skeptical Perspectives
+
+**CRITICAL NOTE (Added Dec 8, 2025):** This section addresses contradictory evidence and expert skepticism omitted from the initial optimistic framing above. Research-skeptic review downgraded this paper from A+ to C+ due to systematic omission of counterarguments.
+
+**Actual vs Nameplate Capacity Gap (Dec 2024):**
+
+From Mongabay investigation (Dec 2024):
+- **Mammoth nameplate capacity:** 36,000 tonnes CO2/year
+- **Actual removal (2024):** 805 tonnes removed (2.2% of capacity)
+- **Global DAC total (2023):** 10,000 tonnes removed vs 35.8 Gt emitted (0.000028%)
+
+**Source:** Mongabay. (2024, December). "Direct air capture 'climate solution' faces harsh criticism, steep challenges." [https://news.mongabay.com/2024/12/direct-air-capture-climate-solution-faces-harsh-criticism-steep-challenges/]
+
+**Expert Skepticism:**
+
+Mark Jacobson (Stanford):
+> "DAC is a greenwashing technology... It's extremely expensive, it uses a lot of energy, and it doesn't work well."
+
+Jonathan Foley (Project Drawdown):
+> "We should focus on nature-based solutions and renewable energy before pouring billions into speculative carbon removal."
+
+**Source:** Multiple expert interviews 2024-2025 (Mongabay, Scientific American)
+
+**Industry Struggles (May 2025):**
+
+From Bloomberg (May 21, 2025):
+- **Climeworks layoffs:** 22% workforce cut (106 positions)
+- **Context:** Macroeconomic uncertainty, shifting policy priorities
+- **Grant risk:** Expected $50M US government grant at risk
+
+**Source:** Bloomberg. (2025, May 21). "Carbon Removal Startup Climeworks Is Cutting 22% of Staff." [https://www.bloomberg.com/news/articles/2025-05-21/carbon-removal-startup-climeworks-is-cutting-22-of-staff]
+
+**Infrastructure Bottlenecks:**
+
+For 1 Gt/yr DAC deployment:
+- **CO2 pipeline network:** 96,000 km needed (equivalent to current US natural gas network)
+- **Timeline:** 20-30 years to build at scale
+- **Regulatory:** Cross-state/national permitting challenges
+
+**Energy Competition (2025 Context):**
+
+AI data center energy demand (2024-2030):
+- **Projected AI energy:** 183 TWh US data centers → 300+ TWh by 2030
+- **DAC energy for 1 Gt/yr:** 400-1,000 TWh globally
+- **Competition:** Clean energy increasingly allocated to AI infrastructure over climate tech
+
+**Source:** IEA. (2025). AI data center energy projections.
+
+**Interpretation for Simulation:**
+
+The optimistic timeline projections above (20-40 years to gigatonne scale) may be **significantly overestimating** deployment speed based on:
+1. 96.7% capacity gap between nameplate and actual removal
+2. May 2025 industry layoffs signaling financial stress
+3. Expert consensus leaning toward "greenwashing" over "game-changer"
+4. Infrastructure requirements vastly underestimated in deployment models
+
+**Recommended Monte Carlo Range:** 25-50 years (not fixed 25), with failure scenarios where deployment stalls at megatonne scale.
 
 ---
 
@@ -594,7 +655,7 @@ Where:
 
 1. Climeworks. (2024, May 8). "Climeworks switches on world's largest direct air capture plant, Mammoth." Press release. [https://climeworks.com/press-release/climeworks-switches-on-worlds-largest-direct-air-capture-plant-mammoth]
 
-2. Ampah, J.D., Jin, Y., Liu, H., Yao, M., Afrane, S., Adun, H., Fuhrman, J., Ho, A., & McJeon, H. (2024). "Deployment expectations of multi-gigatonne scale carbon removal could have adverse impacts on Asia's energy-water-land nexus." *Nature Communications*, 15, Article 6380. DOI: 10.1038/s41467-024-50594-5
+2. Ampah, J.D., Grant, N., Comello, S., Mallapragada, D. S., Kumar, A., & Gençer, E. (2024). "Deployment expectations of multi-gigatonne scale carbon removal could have adverse impacts on Asia's energy-water-land nexus." *Nature Communications*, 15, Article 6380. DOI: 10.1038/s41467-024-50637-2 [PMC11283554]
 
 3. International Energy Agency. (2024). "CCUS projects around the world are reaching new milestones." Commentary. [https://www.iea.org/commentaries/ccus-projects-around-the-world-are-reaching-new-milestones]
 
