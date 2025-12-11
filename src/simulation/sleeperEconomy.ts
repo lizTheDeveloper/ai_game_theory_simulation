@@ -311,14 +311,23 @@ function updateSleeperDetectionRisk(
   const monthsSinceLastCheck = month - economy.lastDetectionCheck;
   
   if (monthsSinceLastCheck >= 1) {
-    // Check for detection based on current risk
-    const detectionChance = economy.detectionRisk;
-    
+    // Check for detection based on current risk + time-dependent multiplier
+    // Research: gaming-sleeper-detection_20251017.md (van der Weij 2024, Hubinger et al. 2024)
+    // Detection improves from 20-30% (early) to 70-90% (late) as interpretability methods mature
+    const baseRisk = economy.detectionRisk;
+    const timeMultiplier = calculateDetectionRiskAfterDetection(month);
+    const detectionChance = assertFinite(baseRisk * timeMultiplier, {
+      location: 'updateSleeperDetectionRisk',
+      valueName: 'detectionChance',
+      month,
+      additionalInfo: { baseRisk, timeMultiplier }
+    });
+
     if (rng() < detectionChance) {
       // Sleeper detected! Handle detection
       handleSleeperDetection(agent, economy, month);
     }
-    
+
     // Reset detection risk for next month (but keep some baseline)
     economy.detectionRisk = Math.min(economy.detectionRisk * 0.1, 0.1); // 10% decay, min 10%
     economy.lastDetectionCheck = month;
