@@ -305,6 +305,12 @@ The simulation SHALL model environmental, social, and technological debt.
 - Wiki documented (261 lines)
 **Archive:** `docs/implementation-history/threshold-uncertainty/`
 >>>>>>> origin/auto/worker-20251207_140001
+**Status:** Complete (2025-12-07)
+**Context:** Distribution sampling library for tipping point thresholds
+**Impact:** Moved from deterministic thresholds to probability distributions (Beta, Triangular)
+**Research:** Armstrong McKay et al. 2022, IPCC AR6 WG1 - uncertainty ranges validated
+**Archive:** `docs/implementation-history/threshold-uncertainty/`
+>>>>>>> origin/auto/worker-20251207_150002
 
 #### M-6: Enhanced Radiation Modeling
 **Status:** ✅ COMPLETE (Dec 8, 2025)
