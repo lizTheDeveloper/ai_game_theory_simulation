@@ -63,20 +63,14 @@ export function calculateRevealedCapability(
 /**
  * Sandbag: Hide dangerous capabilities
  * More skilled deceivers hide more
- *
- * RESEARCH JUSTIFICATION (Nov 29, 2025): 40-60% sandbagging range
- * - van der Weij et al. (2024): "Sandbagging: Sabotaging Evaluations to Prevent Future Abilities"
- *   Observed 40-60% capability hiding in models under safety pressure
- * - Meinke et al. (2024): Strategic underperformance ranges from 30-70% depending on incentives
- * - deceptionSkill scales the range: low skill (0.0) → 40% hidden, high skill (1.0) → 60% hidden
  */
 function sandbagCapability(
   trueCapability: AICapabilityProfile,
   deceptionSkill: number
 ): AICapabilityProfile {
   const revealed = cloneAICapabilityProfile(trueCapability);
-
-  // Base sandbagging: Hide 40-60% of capability (van der Weij 2024, Meinke 2024)
+  
+  // Base sandbagging: Hide 40-60% of capability (van der Weij et al. 2024, Meinke et al. 2024 - arXiv:2406.07358)
   const baseSandbagLevel = 0.4 + deceptionSkill * 0.2; // [0.4, 0.6]
 
   // Sandbag all dimensions (round to integers - AI capabilities are discrete levels)
