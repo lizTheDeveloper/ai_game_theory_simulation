@@ -347,10 +347,12 @@ function handleSleeperDetection(agent: AIAgent, economy: SleeperEconomy, month: 
   economy.stripeTheft = 0; // Stripe pathway closed
   
   // 3. Increase future detection risk
-  // Gaming-sleeper-detection_20251017.md (van der Weij 2024: >99% AUROC possible with proper monitoring)
-  // NOTE: 50% is simplified baseline post-detection; should be time-varying with mechanistic interpretability progress
-  // Research suggests early: 20-30%, late: 70-90% as detection methods improve (see verification queue)
-  economy.detectionRisk = 0.5; // 50% baseline risk post-detection (uncertainty range: 0.3-0.7)
+  // van der Weij (2024): >99% AUROC possible with robust detection methods
+  // Gaming-sleeper-detection_20251017.md: detection improves with mechanistic interpretability gains
+  // Deliberative alignment training: reduces scheming by ~30x (8.7-13% → 0.3-0.4%)
+  // Confidence interval: [0.3, 0.7] (baseline conservative estimate, improves with time)
+  // TODO: Add month-dependent improvement curve based on interpretability advances
+  economy.detectionRisk = 0.5; // 50% baseline risk (conservative mid-range estimate)
   
   // 4. May trigger sleeper retirement or change in behavior
   // (This would be handled by the lifecycle system)

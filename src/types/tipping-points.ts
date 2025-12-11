@@ -150,50 +150,7 @@ export interface TippingElement {
    */
   accumulatedAbruptSLR?: number;
 
-  /** === M-5: THRESHOLD UNCERTAINTY (Dec 7, 2025) === */
-  /**
-   * Probability distribution for threshold uncertainty
-   * Research: Armstrong McKay et al. (2022) - factor 2-10x threshold uncertainties
-   *
-   * If defined, threshold is sampled from this distribution at initialization.
-   * If undefined, uses deterministic triggerTempC (backward compatibility).
-   */
-  thresholdDistribution?: {
-    type: 'triangular' | 'uniform' | 'normal' | 'log-normal' | 'beta';
-    params: {
-      // Triangular
-      min?: number;
-      mode?: number;
-      max?: number;
-      // Uniform (reuses min/max)
-      // Normal
-      mean?: number;
-      std?: number;
-      // Log-normal
-      meanLog?: number;
-      stdLog?: number;
-      // Beta
-      alpha?: number;
-      beta?: number;
-      // Beta also uses min/max for range scaling
-    };
-    source: string;  // Research citation
-    confidence?: 'Very Low' | 'Low' | 'Medium' | 'High';  // Optional confidence level
-  };
-
   /** === INTERNAL IMPLEMENTATION FIELDS === */
-  /**
-   * Sampled threshold for this specific element (°C above pre-industrial)
-   * Internal field: Sampled once at initialization from thresholdDistribution
-   * M-5 (Dec 7, 2025): Sampled at initialization from thresholdDistribution
-   *
-   * If thresholdDistribution is defined, this value is sampled once and used instead of triggerTempC.
-   * If undefined, falls back to deterministic triggerTempC.
-   *
-   * Determinism: Same RNG seed produces same sampled value across runs (Monte Carlo reproducibility)
-   */
-  _sampledThresholdC?: number;
-
   /**
    * Sampled transition time for this specific element (months)
    * Internal field: Sampled once at trigger from uniform distribution [transitionMinMonths, transitionMaxMonths]
@@ -299,14 +256,7 @@ export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTr
     // Conservative estimate: 1.0°C gap (not "never recovers" per Baker et al. 2024 resilience findings)
     // Recovery timescale: 1000+ years (longer than human timescale but not infinite)
     recoveryTempC: 3.0,      // 1.0°C below trigger (conservative)
-    hysteresisGapC: 1.0,
-    // === M-5: THRESHOLD UNCERTAINTY (Dec 7, 2025) ===
-    thresholdDistribution: {
-      type: 'beta',
-      params: { alpha: 2, beta: 5, min: 1.4, max: 8.0 },  // °C above pre-industrial
-      source: 'Armstrong McKay et al. 2022',
-      confidence: 'Very Low'  // Fundamental scientific disagreement (2024-2025)
-    }
+    hysteresisGapC: 1.0
   },
   {
     id: 'amazon',
@@ -336,14 +286,7 @@ export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTr
     // Research: Limited quantitative data on Amazon recovery thresholds
     // Conservative estimate: 1.0°C gap (less extreme than ice sheets)
     recoveryTempC: 1.3,      // 1.0°C below trigger
-    hysteresisGapC: 1.0,
-    // === M-5: THRESHOLD UNCERTAINTY (Dec 7, 2025) ===
-    thresholdDistribution: {
-      type: 'triangular',
-      params: { min: 2.0, mode: 3.5, max: 6.0 },  // °C above pre-industrial
-      source: 'Armstrong McKay et al. 2022',
-      confidence: 'Medium'  // Consensus range (Ciemer 2024 max 10.2°C rejected as outlier)
-    }
+    hysteresisGapC: 1.0
   },
   {
     id: 'arctic_ice',
@@ -368,14 +311,7 @@ export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTr
     // Research: Armstrong McKay (2022) - Arctic ice is NOT a true tipping point with irreversible threshold
     // It's a "seasonal event" that's reversible. NO hysteresis.
     recoveryTempC: 1.5,      // Same as trigger = NO hysteresis gap
-    hysteresisGapC: 0.0,
-    // === M-5: THRESHOLD UNCERTAINTY (Dec 7, 2025) ===
-    thresholdDistribution: {
-      type: 'triangular',
-      params: { min: 1.0, mode: 1.6, max: 2.3 },  // °C above pre-industrial
-      source: 'Armstrong McKay et al. 2022',
-      confidence: 'Medium'  // Medium confidence, clear central tendency
-    }
+    hysteresisGapC: 0.0
   },
   {
     id: 'permafrost',
@@ -437,14 +373,7 @@ export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTr
     // Research: Garbe et al. (2020) Nature - WAIS does NOT regrow to modern extent until temps "at least 1°C lower than pre-industrial"
     // Cross at +2.0°C, recover below -1.0°C = 3.0°C hysteresis gap (LARGEST in simulation)
     recoveryTempC: -1.0,     // 1°C below pre-industrial (3°C below trigger!)
-    hysteresisGapC: 3.0,
-    // === M-5: THRESHOLD UNCERTAINTY (Dec 7, 2025) ===
-    thresholdDistribution: {
-      type: 'triangular',
-      params: { min: 1.0, mode: 1.5, max: 3.0 },  // °C above pre-industrial
-      source: 'Armstrong McKay et al. 2022, validated by 2024-2025 WAIS research',
-      confidence: 'High'  // Narrow range, consistent across studies
-    }
+    hysteresisGapC: 3.0
   },
   {
     id: 'greenland',
@@ -475,47 +404,28 @@ export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTr
     // Research: Garbe et al. (2020) Nature - Similar hysteresis to WAIS but slightly smaller gap
     // Cross at +1.6°C, recover below -0.9°C = 2.5°C hysteresis gap
     recoveryTempC: -0.9,     // 0.9°C below pre-industrial (2.5°C below trigger)
-    hysteresisGapC: 2.5,
-    // === M-5: THRESHOLD UNCERTAINTY (Dec 7, 2025) ===
-    thresholdDistribution: {
-      type: 'triangular',
-      params: { min: 0.8, mode: 1.5, max: 3.4 },  // °C above pre-industrial
-      source: 'Armstrong McKay et al. 2022 + 2024 updates',
-      confidence: 'Medium'  // Wide range but central tendency clear
-    }
+    hysteresisGapC: 2.5
   }
 ];
 
 /**
- * Tipping Element Interaction Matrix (Updated Dec 8, 2025)
+ * Tipping Element Interaction Matrix (Nov 23, 2025)
  *
- * Research-backed threshold effects when one tipping element tips another.
- * Includes both destabilizing (positive reduction) and stabilizing (negative reduction) interactions.
- * MECHANISMS are research-backed; MAGNITUDES are conservative engineering estimates unless noted.
+ * Research-backed threshold lowering effects when one tipping element tips another.
  *
  * Sources:
  * - Armstrong McKay et al. (2022) Science - Network of 16 tipping elements with causal interactions
  * - Wunderling et al. (2024) Earth System Dynamics - "combined effect tending to lower temperature thresholds"
- * - Högner et al. (2025) Environmental Research Letters - AMOC → Amazon stabilization (empirical)
- * - Global Tipping Points Report (2023) - AMOC → Greenland stabilization
- * - Sinet et al. (2024) Earth System Dynamics - AMOC stability amid tipping ice sheets
  * - Climate tipping points research file: research/climate_tipping_points_2024_2025_20251116.md
- * - Verification file: research/verification_cf49657_20251207.md
- * - Remediation: research/tipping_threshold_lowering_remediation_20251208.md
  *
  * Format: source_id -> target_id -> threshold_reduction_C
  *
- * Magnitude Justification:
- * - DESTABILIZING interactions (positive values):
- *   - Direct interactions (e.g., ice sheet -> AMOC): 0.2-0.4°C reduction
- *   - Indirect interactions (e.g., Arctic ice -> Amazon): 0.1-0.2°C reduction
- *   - Weak interactions: 0.05-0.1°C reduction
- * - STABILIZING interactions (negative values):
- *   - AMOC → Amazon: -0.15°C (empirical from Högner et al. 2025)
- *   - AMOC → Greenland: -0.20°C (conservative engineering estimate)
+ * Magnitude Justification (Wunderling et al. 2024):
+ * - Direct interactions (e.g., ice sheet -> AMOC): 0.2-0.4 C reduction
+ * - Indirect interactions (e.g., Arctic ice -> Amazon): 0.1-0.2 C reduction
+ * - Weak interactions: 0.05-0.1 C reduction
  *
- * Note: Most magnitude values are conservative engineering estimates, not empirically validated.
- * Conservative estimates used to avoid over-catastrophizing while maintaining physical plausibility.
+ * Conservative estimates used (lower end of ranges) to avoid over-catastrophizing.
  */
 export interface TippingInteraction {
   /** Source element that tips first */
@@ -566,6 +476,17 @@ export const TIPPING_INTERACTIONS: TippingInteraction[] = [
     thresholdReduction: 0.3, // Direct physical mechanism: freshwater reduces AMOC stability
     mechanism: 'Freshwater influx: Greenland melt reduces North Atlantic salinity, weakening AMOC'
   },
+  // AMOC collapse reduces heat transport to North Atlantic, potentially slowing Greenland melt
+  // Research: Global Tipping Points Report (2023) - stabilizing feedback documented
+  // ⚠️ NOTE: This is a STABILIZING interaction (reduces likelihood of Greenland tip)
+  // Implementation note: Negative interaction (stabilizing) not yet supported in cascade model
+  // TODO: Add stabilizing interaction support when cascade model extended
+  // {
+  //   sourceId: 'amoc',
+  //   targetId: 'greenland',
+  //   thresholdReduction: -0.15, // NEGATIVE = stabilizing (reduces heat → slows melt)
+  //   mechanism: 'Heat transport reduction: AMOC collapse cools North Atlantic, slowing Greenland melt'
+  // },
 
   // === PERMAFROST -> CLIMATE ELEMENTS ===
   // Permafrost thaw releases methane and CO2, amplifying warming
@@ -583,26 +504,37 @@ export const TIPPING_INTERACTIONS: TippingInteraction[] = [
   },
 
   // === AMOC -> TROPICAL SYSTEMS ===
-  // AMOC collapse stabilizes Southern Amazon (CORRECTED from destabilizing, Dec 8 2025)
-  // Research: Högner et al. (2025) ERL - observational data shows +4.8% rainfall per 1 Sv AMOC weakening
-  // 17% offset of dry season precipitation decline since 1982
-  {
-    sourceId: 'amoc',
-    targetId: 'amazon',
-    thresholdReduction: -0.15, // NEGATIVE = raises threshold (stabilizing)
-    mechanism: 'ITCZ shift: AMOC weakening increases Southern Amazon dry season rainfall (+4.8% per 1 Sv)'
-  },
-
-  // === AMOC -> ICE SHEETS ===
-  // AMOC collapse stabilizes Greenland Ice Sheet (ADDED, Dec 8 2025)
-  // Research: Global Tipping Points Report 2023, Sinet et al. (2024) ESD
-  // AMOC collapse reduces northward heat transport → North Atlantic cooling → reduced Greenland melt
-  {
-    sourceId: 'amoc',
-    targetId: 'greenland',
-    thresholdReduction: -0.20, // NEGATIVE = raises threshold (stabilizing)
-    mechanism: 'Heat transport reduction: AMOC collapse cools North Atlantic, reducing Greenland surface warming'
-  },
+  // ⚠️ RESEARCH CORRECTION (Dec 8-9, 2025): AMOC → Amazon interaction REMOVED
+  //
+  // Original implementation assumed AMOC collapse destabilizes Amazon (reduces rainfall).
+  // This is CONTRADICTED by 2023-2025 peer-reviewed research showing STABILIZING effect.
+  //
+  // Evidence (verification cf49657_20251207):
+  // - Parsons et al. (2023) Nature Communications: "AMOC collapse may stabilise eastern Amazonian rainforests"
+  // - Yuan et al. (2025) npj Climate: "AMOC collapse shows increased precipitation over most of Amazon"
+  // - Högner et al. (2025) ERL: +4.8% rainfall per 1 Sv AMOC weakening (observational data)
+  //
+  // Mechanism complexity: ITCZ southward shift brings MORE rain to southern Amazon, not less.
+  // Regional heterogeneity: Northern Amazon may dry while southern gets wetter.
+  // Net effect: Stabilizing (increased precipitation buffers against dieback).
+  //
+  // Implementation decision: REMOVE interaction (more conservative than adding stabilizing effect)
+  // until regional heterogeneity can be properly modeled.
+  //
+  // Research files:
+  // - research/verification_cf49657_20251207.md (Grade D → identified sign error)
+  // - research/amoc_amazon_interaction_correction_20251208.md (5 sources)
+  // - research/verification_cf49657_REMEDIATION_20251208.md (remediation report)
+  //
+  // Regression note: This fix was applied in commit 6671e0ed (Dec 8) but accidentally
+  // reverted in merge 23fd6987 (Dec 9) when removing threshold uncertainty sampling.
+  //
+  // {
+  //   sourceId: 'amoc',
+  //   targetId: 'amazon',
+  //   thresholdReduction: 0.25, // SCIENTIFICALLY INCORRECT - SIGN ERROR
+  //   mechanism: 'Monsoon disruption: AMOC collapse shifts ITCZ southward, reducing Amazon rainfall'
+  // },
 
   // === AMAZON -> GLOBAL CLIMATE ===
   // Amazon dieback releases stored carbon

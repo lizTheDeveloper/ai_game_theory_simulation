@@ -1,33 +1,30 @@
 /**
  * ClimateDeploymentPhase
  *
- * Implements phased deployment timescales and deployment-adjusted effectiveness
- * for climate technologies. Energy allocation handled by EnergyBudgetPhase.
+ * Implements phased deployment timescales, energy budget constraints, and
+ * deployment-adjusted effectiveness for climate technologies.
  *
  * Addresses TIER 1 CRITICAL issue: 5.5% climate tech effectiveness gap
  *
  * **Research Foundation:** research/climate_deployment_timescales_20251113.md
  * **Implementation Plan:** plans/climate_phased_deployment_model_20251113.md
+ * **ARCHITECTURE FIX H-2 (Dec 9, 2025):** Removed legacy energy allocation, now uses EnergyBudgetPhase
  *
- * **EXECUTION ORDER:** 12.8 (After EnergyBudgetPhase 12.75, tech-tree 12.5)
+ * **EXECUTION ORDER:** 12.8 (After EnergyBudgetPhase 12.75, before environmental effects)
  * **DEPENDENCIES:**
  * - tech-tree (12.5) - Requires breakthrough technologies
- * - EnergyBudgetPhase (12.75) - Reads state.energyBudget.allocations for energy constraints
+ * - energy-budget (12.75) - Consumes energy allocations
+ *
  * **SIDE EFFECTS:**
- * - Updates technology deployment phases (planning → pilot → scaling → mature)
- * - Adjusts technology effectiveness by deployment progress
+ * - Updates technology deployment phases (planning → pilot → scaling → mature → saturated)
+ * - Adjusts technology effectiveness by deployment progress and energy availability
  *
- * **INTEGRATION (Dec 9, 2025):**
- * Legacy calculateRenewableSurplus() and partitionEnergy() removed (duplicate calculation).
- * Energy allocation now handled by EnergyBudgetPhase (12.75) which runs BEFORE this phase (12.8).
- * getEnergyMultiplier() reads state.energyBudget.allocations[category].effectivenessMultiplier.
- *
- * **5-Step Phase Logic:**
- * 1. For each climate tech: check energy availability (from EnergyBudgetPhase)
- * 2. Advance phase if energy available
- * 3. Calculate deployment-adjusted effectiveness (phase multiplier)
- * 4. Calculate energy constraint multiplier (from EnergyBudgetPhase allocations)
- * 5. Update deployment level = base * phaseMultiplier * energyMultiplier
+ * **Phase Logic:**
+ * 1. For each climate tech: get energy multiplier from EnergyBudgetPhase allocations
+ * 2. Advance deployment phase based on energy availability (faster with more energy)
+ * 3. Calculate deployment-adjusted effectiveness (phase multiplier × energy multiplier)
+ * 4. Update deployment level in tech tree state
+ * 5. Log phase transitions
  */
 
 import { GameState, SimulationPhase, PhaseResult, RNGFunction, GameEvent } from '@/types/game';
@@ -44,13 +41,7 @@ export class ClimateDeploymentPhase implements SimulationPhase {
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const events: GameEvent[] = [];
 
-    // INTEGRATION NOTE (Dec 9, 2025):
-    // Energy allocation now handled by EnergyBudgetPhase (order 12.4, runs BEFORE this phase).
-    // EnergyBudgetPhase calculates state.energyBudget.allocations[category].effectivenessMultiplier
-    // which is consumed by getEnergyMultiplier() below.
-    // Legacy calculateRenewableSurplus() and partitionEnergy() removed (duplicate calculation).
-
-    // Step 3-7: Update each climate technology
+    // Get climate technologies
     const climateTechs = this.getClimateTechnologies(state);
 
     for (const tech of climateTechs) {
@@ -58,28 +49,26 @@ export class ClimateDeploymentPhase implements SimulationPhase {
         continue; // Skip if no deployment tracking
       }
 
-      // Step 3: Check energy availability
-      // INTEGRATION NOTE: When energy budget is enabled, this returns 0 and
-      // getEnergyMultiplier() reads from state.energyBudget.allocations instead.
-      const energyAllocated = this.allocateEnergy(state, tech);
+      // Get energy multiplier from EnergyBudgetPhase allocations
+      const energyMultiplier = this.getEnergyMultiplier(state, tech);
 
-      // Advance phase if energy available
-      if (energyAllocated > 0 && tech.deploymentTimeline) {
-        const phaseAdvanced = this.advancePhase(state, tech, energyAllocated);
+      // Advance phase based on energy availability
+      if (energyMultiplier > 0 && tech.deploymentTimeline) {
+        const phaseAdvanced = this.advancePhase(state, tech, energyMultiplier);
 
         if (phaseAdvanced) {
-          // Step 6: Log phase transition
+          // Log phase transition
           addSimulationEvent(state, {
             type: 'deployment',
             severity: 'info',
             agent: 'climate-deployment',
             title: `🌍⚡ ${tech.name}: ${tech.deploymentPhase} phase`,
-            description: `Phase progress: ${tech.phaseProgress?.toFixed(1)}%, energy allocated: ${energyAllocated.toFixed(1)} TWh`,
+            description: `Phase progress: ${tech.phaseProgress?.toFixed(1)}%, energy effectiveness: ${(energyMultiplier * 100).toFixed(0)}%`,
             effects: {
               techId: tech.id,
               phase: tech.deploymentPhase || 'unknown',
               progress: tech.phaseProgress || 0,
-              energyAllocated,
+              energyMultiplier,
             },
           });
           // Event is automatically added to state.eventLog, get the last one
@@ -88,9 +77,8 @@ export class ClimateDeploymentPhase implements SimulationPhase {
         }
       }
 
-      // Step 4: Calculate deployment-adjusted effectiveness
+      // Calculate deployment-adjusted effectiveness
       const phaseMultiplier = this.getPhaseMultiplier(tech);
-      const energyMultiplier = this.getEnergyMultiplier(state, tech, energyAllocated);
 
       // Apply multipliers to base deployment level
       const baseDeployment = this.getTechDeploymentLevel(state, tech.id);
@@ -111,54 +99,13 @@ export class ClimateDeploymentPhase implements SimulationPhase {
         }
       );
 
-      // Step 5: Update deployment level in tech tree state
+      // Update deployment level in tech tree state
       this.updateTechDeploymentLevel(state, tech.id, adjustedEffectiveness);
     }
-
-    // Step 7: Energy partitioning already updated for next month
 
     return { events };
   }
 
-  // REMOVED (Dec 9, 2025): calculateRenewableSurplus() - Now handled by EnergyBudgetPhase
-  // EnergyBudgetPhase (order 12.4) calculates global capacity and allocations before this phase runs.
-
-  // REMOVED (Dec 9, 2025): partitionEnergy() - Now handled by EnergyBudgetPhase
-  // Priority-based allocation (essential → high → climate → elective) is in EnergyBudgetPhase.
-
-  /**
-   * Step 3: Allocate energy to specific technology
-   *
-   * INTEGRATION NOTE (Dec 9, 2025):
-   * When state.energyBudget is enabled, this returns 0 because energy allocation
-   * is handled by EnergyBudgetPhase (order 12.4). The effectivenessMultiplier from
-   * EnergyBudgetPhase is consumed by getEnergyMultiplier() instead.
-   *
-   * When energy budget is NOT enabled, falls back to legacy tech.energyRequirement
-   * (for backwards compatibility during transition).
-   *
-   * @param state Game state
-   * @param tech Technology definition
-   * @returns TWh allocated to this tech (0 if energy budget enabled)
-   */
-  private allocateEnergy(state: GameState, tech: TechDefinition): number {
-    // NEW INTEGRATION: If energy budget system is active, energy allocation
-    // is already handled by EnergyBudgetPhase. Return 0 here, getEnergyMultiplier()
-    // will read from state.energyBudget.allocations[category].effectivenessMultiplier.
-    if (state.energyBudget?.enabled) {
-      return 0;
-    }
-
-    // LEGACY FALLBACK (pre-Dec 9, 2025): Use tech.energyRequirement
-    // This code path preserved for backwards compatibility during transition.
-    if (!tech.energyRequirement || typeof tech.energyRequirement !== 'number') {
-      return 0;
-    }
-
-    // Return the tech's energy requirement as a simple allocation
-    // (No partitioning system - that was removed)
-    return tech.energyRequirement;
-  }
 
   /**
    * Advance technology through deployment phases
@@ -167,20 +114,15 @@ export class ClimateDeploymentPhase implements SimulationPhase {
    *
    * @param state Game state
    * @param tech Technology definition
-   * @param energyAllocated TWh allocated this month
+   * @param energyMultiplier Energy effectiveness multiplier [0, 1] from EnergyBudgetPhase
    * @returns True if phase advanced
    */
   private advancePhase(
     state: GameState,
     tech: TechDefinition,
-    energyAllocated: number
+    energyMultiplier: number
   ): boolean {
-    if (!tech.deploymentPhase || !tech.deploymentTimeline || !tech.energyRequirement) {
-      return false;
-    }
-
-    // Energy requirement must be a number for this calculation
-    if (typeof tech.energyRequirement !== 'number') {
+    if (!tech.deploymentPhase || !tech.deploymentTimeline) {
       return false;
     }
 
@@ -189,11 +131,10 @@ export class ClimateDeploymentPhase implements SimulationPhase {
       tech.phaseProgress = 0;
     }
 
-    // Calculate progress increment
-    // Progress = (energy_allocated / energy_required) / phase_duration
+    // Calculate progress increment based on energy effectiveness
+    // Progress = energyMultiplier / phase_duration * 100
     const phaseDuration = tech.deploymentTimeline[tech.deploymentPhase] || 1;
-    const energyRatio = energyAllocated / tech.energyRequirement;
-    const progressIncrement = (energyRatio / phaseDuration) * 100; // Convert to percentage
+    const progressIncrement = (energyMultiplier / phaseDuration) * 100; // Convert to percentage
 
     tech.phaseProgress = assertInRange(
       tech.phaseProgress + progressIncrement,
@@ -318,55 +259,44 @@ export class ClimateDeploymentPhase implements SimulationPhase {
   }
 
   /**
-   * Calculate energy constraint multiplier
+   * Get energy effectiveness multiplier from EnergyBudgetPhase
    *
-   * UPDATED (Dec 9, 2025): Check EnergyBudgetPhase allocations first
-   *
-   * Linear scaling: energy_allocated / energy_required
-   * (Simplified model - future enhancement: threshold effects)
+   * ARCHITECTURE FIX H-2 (Dec 9, 2025): Remove legacy energy system, use EnergyBudgetPhase allocations only
    *
    * @param state Game state
    * @param tech Technology definition
-   * @param energyAllocated TWh allocated (legacy, from old energy system)
    * @returns Multiplier [0, 1]
    */
-  private getEnergyMultiplier(state: GameState, tech: TechDefinition, energyAllocated: number): number {
-    // Check if energy budget system is enabled (Dec 9, 2025)
-    if (state.energyBudget?.enabled) {
-      // Map tech ID to energy category
-      const category = this.mapTechToEnergyCategory(tech.id);
-      if (category && state.energyBudget.allocations[category]) {
-        const allocation = state.energyBudget.allocations[category];
-        return assertInRange(allocation.effectivenessMultiplier, 0, 1, {
-          location: 'ClimateDeploymentPhase.getEnergyMultiplier',
-          valueName: 'energyMultiplier',
-          month: state.currentMonth,
-          additionalInfo: {
-            techId: tech.id,
-            category,
-            effectivenessMultiplier: allocation.effectivenessMultiplier,
-            source: 'EnergyBudgetPhase'
-          },
-        });
-      }
+  private getEnergyMultiplier(state: GameState, tech: TechDefinition): number {
+    // Check if energy budget system is available
+    if (!state.energyBudget?.enabled || !state.energyBudget.allocations) {
+      console.warn(`⚠️ EnergyBudgetPhase not enabled for tech ${tech.id}, assuming full energy availability`);
+      return 1.0;
     }
 
-    // Fallback to legacy energy system (pre-Dec 9, 2025)
-    if (!tech.energyRequirement || typeof tech.energyRequirement !== 'number' || tech.energyRequirement === 0) {
-      return 1.0; // No energy constraint
+    // Map tech ID to energy category
+    const category = this.mapTechToEnergyCategory(tech.id);
+    if (!category) {
+      // Tech doesn't have energy requirements
+      return 1.0;
     }
 
-    const multiplier = Math.min(1.0, energyAllocated / tech.energyRequirement);
+    const allocation = state.energyBudget.allocations[category];
+    if (!allocation) {
+      console.warn(`⚠️ No energy allocation for category '${category}' (tech: ${tech.id})`);
+      return 0.5; // Default to 50% effectiveness when category missing
+    }
 
-    return assertInRange(multiplier, 0, 1, {
+    return assertInRange(allocation.effectivenessMultiplier, 0, 1, {
       location: 'ClimateDeploymentPhase.getEnergyMultiplier',
       valueName: 'energyMultiplier',
-      month: 0,
+      month: state.currentMonth,
       additionalInfo: {
         techId: tech.id,
-        energyAllocated,
-        energyRequired: tech.energyRequirement,
-        source: 'legacy'
+        category,
+        effectivenessMultiplier: allocation.effectivenessMultiplier,
+        demandTWh: allocation.demandTWh,
+        allocatedTWh: allocation.allocatedTWh,
       },
     });
   }

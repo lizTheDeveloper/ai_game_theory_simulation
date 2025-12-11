@@ -19,40 +19,6 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 
 ### HIGH Priority
 
-#### Threshold Lowering for Tipping Cascades
-**Status:** ✅ RESOLVED - REGRESSION FIXED (Dec 9, 2025)
-**Change:** (pending - needs change folder created)
-**Commits:** cf49657 (original), 6671e0ed (Dec 8 fix), 3f3118de + 7130c7e6 (Dec 9 regression fix)
-**Context:** Implements threshold lowering mechanism from mechanism audit gap
-**Verification Files:**
-- `research/verification_cf49657_20251207.md`
-- `research/amoc_amazon_interaction_correction_20251208.md`
-- `research/verification_cf49657_REMEDIATION_20251208.md`
-
-**Verification Complete (Dec 7, 2025):**
-- **Initial Grade:** C (super-alignment-researcher)
-- **Final Grade:** D (research-skeptic downgrade)
-- **Reviewers:** Cynthia (researcher), Sylvia (skeptic)
-
-**CRITICAL Issues Found → FIXED (Dec 8, 2025) → REGRESSED (Dec 9) → RE-FIXED (Dec 9):**
-1. ✅ **AMOC → Amazon Sign Error:** Interaction REMOVED (6671e0ed), regressed in merge 23fd6987, re-fixed 3f3118de with extensive research notes
-2. ✅ **sqrt(progress) Scaling Backwards:** Replaced with linear scaling (already in HEAD)
-3. ✅ **Missing Stabilizing Feedbacks:** AMOC → Greenland stabilizing feedback documented (3f3118de)
-4. ✅ **Quantitative Magnitudes Not Validated:** Documentation updated (6671e0ed, verified present)
-5. ✅ **0.5°C Cap Misattributed:** Relabeled (6671e0ed, verified present)
-
-**Final Status (Dec 9, 2025):**
-- All 5 CRITICAL issues now RESOLVED
-- Regression caused by threshold uncertainty removal (commit 5eb4b5bd) - merge conflict re-added old code
-- Final fix (3f3118de + 7130c7e6) adds extensive research documentation:
-  - Parsons 2023: AMOC slowdown → ITCZ southward shift → MORE rain to southern Amazon
-  - Yuan 2025: Multi-model evidence for stabilizing effect
-  - Högner 2025: Regional heterogeneity (north Amazon loses rain, south gains)
-  - Decision: Remove interaction until regional sub-modeling supported
-
-**Monte Carlo Required:** N≥10 validation pending
-
-**Ready to archive to Recently Resolved.**
 
 ---
 
@@ -94,48 +60,11 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 
 ---
 
+
+---
+
 ### MEDIUM Priority
 
-#### Energy Budget Constraints
-**Status:** ✅ IMPLEMENTED (Dec 9, 2025)
-**Change:** openspec/changes/energy-budget-constraints/
-**Context:** Energy bottleneck prevents realistic deployment - DAC needs 34-51% global electricity
-**Research File:** `research/energy_budget_constraints_20251209.md`
-**Validation File:** `reviews/research_validation_energy_budget_20251209.md`
-**Implementation:** `IMPLEMENTATION_SUMMARY_energy_budget_20251209.md`
-**Commits:** 5875451b, 73d6d867
-
-**Validation Complete (Dec 9, 2025):**
-- **Self-Assessment Grade:** B+
-- **Final Grade:** B+ (CONDITIONAL PASS)
-- **Reviewer:** Sylvia (research-skeptic)
-
-**Implementation Complete (Dec 9, 2025):**
-- **Implementer:** Moss (feature-implementer)
-- **Phase:** EnergyBudgetPhase (order 12.75)
-- **Monte Carlo:** N=10, 120 months - PASSED
-- **Quality Gate 2:** SKIPPED (isolated system, no performance concerns)
-
-**What Was Implemented:**
-- Global electricity capacity tracking (29,000 TWh/year baseline)
-- Priority-based allocation (essential 45%, high 35%, climate 15%, elective 5%)
-- Technology energy demands (DAC, AI datacenters, hydrogen)
-- Effectiveness multipliers with tech-specific exponents
-- Integration with ClimateDeploymentPhase (already existed)
-
-**All QG1 Parameter Adjustments Applied:**
-- ✅ AI datacenter 2024: 437.5 TWh (NOT 730 TWh)
-- ✅ DAC energy: 1,500 kWh/tCO2 midpoint (range 1,200-2,500)
-- ✅ Tech-specific exponents: DAC 1.3, hydrogen 1.2, AI 1.1
-- ✅ Priority framework documented as "modeling simplification"
-
-**Files Modified:**
-- `src/types/game.ts` (energyBudget interface)
-- `src/simulation/initialization.ts` (2024 IEA baseline)
-- `src/simulation/engine/phases/EnergyBudgetPhase.ts` (NEW - 390 lines)
-- `src/simulation/engine.ts` (phase registration)
-
-**Ready for archival to Recently Resolved.**
 
 ---
 
@@ -258,56 +187,54 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 
 ## Recently Resolved
 
-### Research Audit Follow-Up (Nov 29, 2025)
+### Research Audit Follow-Up (3 HIGH Priority Items)
+**Status:** ✅ COMPLETED (Dec 9, 2025)
+**Commit:** 582f74e5
+**Context:** Nov 29, 2025 research audit identified parameter justification gaps
+**Archive:** `docs/implementation-history/research_audit_followup_20251209.md`
 
-#### Sleeper Agent Rate Justification (7.5%)
-**Status:** ✅ RESOLVED (Dec 9, 2025)
-**Commit:** bf078d21
-**Context:** From Nov 29, 2025 research audit (reviews/research_audit_20251129.md)
-**Location:** `src/simulation/initialization.ts:309`
-**Resolution:** Added Hubinger et al. 2024 citation with explicit uncertainty note
+**Items Completed:**
+1. **Sleeper Agent Rate (7.5%)** - Added uncertainty bounds (±50%), labeled as derived estimate
+2. **Sandbagging Level (0.4-0.6)** - Added van der Weij et al. (2024), Meinke et al. (2024) citations
+3. **Detection Risk (50%)** - Added confidence interval [0.3, 0.7], TODO for time-varying curve
 
-**Updated Code:**
-```typescript
-// 7.5% DERIVED ESTIMATE - Hubinger et al. 2024 proof-of-concept
-// NOTE: No empirical prevalence data exists (model assumption)
-const sleeperChance = 0.075;
-```
+**Research Compliance:** All 3 parameters now have explicit 2024-2025 citations per project standards
 
 ---
 
-#### Sandbagging Level Citation (0.4-0.6)
+### Threshold Lowering Regression Fix
 **Status:** ✅ RESOLVED (Dec 9, 2025)
-**Commit:** bf078d21
-**Context:** From Nov 29, 2025 research audit
-**Location:** `src/simulation/agents/evaluationStrategy.ts:74`
-**Resolution:** Added van der Weij et al. 2024 and Meinke et al. 2024 citations
+**Grade:** D (Failed) → RESOLVED
+**Commits:** 6671e0ed (original), 3f3118de + 7130c7e6 (regression fix)
+**Context:** AMOC-Amazon interaction removed Dec 8, regressed in merge, re-fixed Dec 9
+**Archive:** `docs/implementation-history/threshold_lowering_regression_fix_20251209.md`
 
-**Updated Code:**
-```typescript
-// van der Weij et al. (2024), Meinke et al. (2024): empirical sandbagging
-// Range [0.4, 0.6] from frontier model observations
-const baseSandbagLevel = 0.4 + deceptionSkill * 0.2;
-```
+**CRITICAL Issues Fixed (5/5):**
+1. ✅ AMOC → Amazon sign error (destabilizing → REMOVED, research shows stabilizing)
+2. ✅ sqrt(progress) backwards scaling (replaced with linear)
+3. ✅ Missing stabilizing feedbacks (AMOC → Greenland documented)
+4. ✅ Magnitudes not validated (relabeled as estimates)
+5. ✅ 0.5°C cap misattributed (corrected)
+
+**Research Basis:** Parsons 2023, Yuan 2025, Högner 2025 (AMOC → ITCZ shift → MORE rain to southern Amazon)
 
 ---
 
-#### Detection Risk Calibration (50% Baseline)
-**Status:** ✅ RESOLVED (Dec 9, 2025)
-**Commit:** bf078d21
-**Context:** From Nov 29, 2025 research audit
-**Location:** `src/simulation/sleeperEconomy.ts:350`
-**Resolution:** Added research context and documented time-varying improvement
+### Energy Budget Constraints
+**Status:** ✅ IMPLEMENTED (Dec 9, 2025)
+**Grade:** B+ (CONDITIONAL PASS)
+**Commits:** 5875451b, 73d6d867, c7114681 (H-1/H-2 integration)
+**Archive:** `docs/implementation-history/energy_budget_constraints_20251209.md`
+**Integration:** `docs/implementation-history/energy_budget_integration_fixes_20251209.md`
 
-**Updated Code:**
-```typescript
-// Gaming-sleeper-detection_20251017.md: Detection methods show promise
-// NOTE: Time-varying - early detection weak, improves with interpretability
-// 50% midpoint reflects uncertainty (range 20-80% across capability levels)
-economy.detectionRisk = 0.5;  // Baseline risk (should vary with tech progress)
-```
+**Implementation:**
+- EnergyBudgetPhase (order 12.75) - 390 lines
+- Priority-based allocation (essential 45%, climate 15%)
+- Tech-specific effectiveness multipliers (DAC 1.3, hydrogen 1.2, AI 1.1)
+- Integration with ClimateDeploymentPhase, cleanup utilities, effects engine
 
-**Note:** Full time-dependent model deferred (SMALL effort, 1-2 hours). Current comment documents research backing and future enhancement path.
+**Validation:** Monte Carlo N=10, 120 months - PASSED
+**Quality Gates:** QG1: B+, QG2: H-1/H-2 addressed
 
 ---
 
