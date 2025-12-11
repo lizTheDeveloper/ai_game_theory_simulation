@@ -19,7 +19,7 @@ import {
   sampleUniform,
   sampleNormal,
   sampleLogNormal,
-} from './thresholds/distributions';
+} from './utils/distributions';
 
 /**
  * Initialize the tipping point system state
@@ -84,6 +84,10 @@ export function initializeTippingPointSystem(rng: () => number): TippingPointSys
         }
 
         // Validate sampled threshold
+        if (sampledThreshold === undefined) {
+          throw new Error(`❌ Failed to sample threshold for ${element.id}`);
+        }
+
         assertFinite(sampledThreshold, {
           location: 'initializeTippingPointSystem',
           valueName: `${element.id}_sampledThreshold`,

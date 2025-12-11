@@ -137,6 +137,8 @@ export function sampleResearchBackedThresholds(rng: () => number): ResearchBacke
   const trustRecoveryRateRaw = sampleBeta(
     TRUST_RECOVERY_RATE_PARAMS.alpha,
     TRUST_RECOVERY_RATE_PARAMS.beta,
+    TRUST_RECOVERY_RATE_PARAMS.bounds[0],
+    TRUST_RECOVERY_RATE_PARAMS.bounds[1],
     rng
   );
 
