@@ -1,12 +1,9 @@
 # Research Update Queue
-<<<<<<< HEAD
 **Generated:** 12/10/2025, 11:30:04 PM
 **Files Scanned:** 591
-=======
 <<<<<<< Updated upstream
 **Generated:** 12/7/2025, 8:30:04 AM
 **Files Scanned:** 534
-=======
 **Generated:** 11/28/2025, 10:30:04 PM
 **Files Scanned:** 485
 >>>>>>> Stashed changes
@@ -22,9 +19,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-<<<<<<< HEAD
 **Count:** 181 (30.6%)
-=======
 <<<<<<< Updated upstream
 **Count:** 178 (33.3%)
 >>>>>>> origin/auto/worker-20251207_090001
@@ -33,7 +28,6 @@
 - **Oldest source:** 1981 (44 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/AUTONOMOUS_RESEARCHER_SESSION_20251203_2030.md`
-=======
 **Count:** 164 (33.8%)
 >>>>>>> Stashed changes
 
@@ -946,12 +940,9 @@
 
 ## 📋 MEDIUM (Review Within Quarter)
 
-<<<<<<< HEAD
 **Count:** 26 (4.4%)
-=======
 <<<<<<< Updated upstream
 **Count:** 24 (4.5%)
-=======
 **Count:** 21 (4.3%)
 >>>>>>> Stashed changes
 >>>>>>> origin/auto/worker-20251207_090001
@@ -987,12 +978,9 @@
 
 ## ✅ LOW (Monitor Only)
 
-<<<<<<< HEAD
 **Count:** 384 (65.0%)
-=======
 <<<<<<< Updated upstream
 **Count:** 332 (62.2%)
-=======
 **Count:** 300 (61.9%)
 >>>>>>> Stashed changes
 >>>>>>> origin/auto/worker-20251207_090001
@@ -1005,14 +993,12 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-<<<<<<< HEAD
 | Total files | 591 |
 | CRITICAL | 0 (0.0%) |
 | HIGH | 181 (30.6%) |
 | MEDIUM | 26 (4.4%) |
 | LOW | 384 (65.0%) |
 | Average age | 6.9 years |
-=======
 <<<<<<< Updated upstream
 | Total files | 534 |
 | CRITICAL | 0 (0.0%) |
@@ -1020,7 +1006,6 @@ All sources <3 years old. No action required.
 | MEDIUM | 24 (4.5%) |
 | LOW | 332 (62.2%) |
 | Average age | 7.5 years |
-=======
 | Total files | 485 |
 | CRITICAL | 0 (0.0%) |
 | HIGH | 164 (33.8%) |
@@ -1035,16 +1020,13 @@ All sources <3 years old. No action required.
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-<<<<<<< HEAD
 | Current (<3yr) | 384 | 65.0% |
 | Warning (3-5yr) | 26 | 4.4% |
 | Critical (>5yr) | 181 | 30.6% |
-=======
 <<<<<<< Updated upstream
 | Current (<3yr) | 332 | 62.2% |
 | Warning (3-5yr) | 24 | 4.5% |
 | Critical (>5yr) | 178 | 33.3% |
-=======
 | Current (<3yr) | 300 | 61.9% |
 | Warning (3-5yr) | 21 | 4.3% |
 | Critical (>5yr) | 164 | 33.8% |
@@ -1054,12 +1036,9 @@ All sources <3 years old. No action required.
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-<<<<<<< HEAD
 - **Current:** 30.6% critical (>5yr)
-=======
 <<<<<<< Updated upstream
 - **Current:** 33.3% critical (>5yr)
-=======
 - **Current:** 33.8% critical (>5yr)
 >>>>>>> Stashed changes
 >>>>>>> origin/auto/worker-20251207_090001
@@ -1069,12 +1048,9 @@ All sources <3 years old. No action required.
 
 ## 🔄 Next Steps
 
-<<<<<<< HEAD
 1. Update 181 HIGH priority file(s) within 1 month
-=======
 <<<<<<< Updated upstream
 1. Update 178 HIGH priority file(s) within 1 month
-=======
 1. Update 164 HIGH priority file(s) within 1 month
 >>>>>>> Stashed changes
 >>>>>>> origin/auto/worker-20251207_090001

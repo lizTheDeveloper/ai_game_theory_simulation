@@ -1,11 +1,9 @@
-<<<<<<< HEAD
 # Research Verification Report: Nitrogen Reduction Technologies (Commit cd1e83a)
 
 **Date:** December 7, 2025
 **Commit:** cd1e83a80bd599d3e7d7439f0eae1460c3fb6fe9
 **Verification Type:** Citation accuracy and parameter validation
 **Verifier:** Cynthia (Super-Alignment Researcher)
-=======
 # Research Verification: Nitrogen Reduction Technologies (Commit cd1e83a)
 
 **Date:** December 7, 2025
@@ -19,7 +17,6 @@
 
 ## Executive Summary
 
-<<<<<<< HEAD
 **Overall Grade: B+ (Good research foundation, some speculative parameters)**
 
 This verification assessed 6 nitrogen reduction technologies added to the simulation. Results:
@@ -593,7 +590,6 @@ This verification assessed 6 nitrogen reduction technologies added to the simula
 This is **excellent research-driven development**. The team found real, peer-reviewed technologies with quantified effectiveness ranges. The one speculative technology (Nitroplast) is clearly flagged and has a realistic timeline. This is exactly the "research-backed realism" the project aims for.
 
 **Research Quality Grade: A-** (Would be A if all citations verified and uncertainty bounds added)
-=======
 Verified research backing for 6 nitrogen reduction technologies added to simulation tech tree. Findings range from **well-supported with peer-reviewed evidence** (rhizosphere engineering, regional nitrogen policies, soil health restoration) to **highly speculative breakthrough tech** (nitroplast integration) to **partially supported but missing specific N-reduction claim** (precision fermentation).
 
 **Key Strengths:**
@@ -1487,7 +1483,6 @@ Found: [Frontiers in Plant Science (2025) "Enhancing nitrogen use efficiency in 
 
 ## Sources
 
-<<<<<<< HEAD
 ### Nitroplast Discovery
 - [The nitroplast: A nitrogen-fixing organelle | Science](https://www.science.org/doi/10.1126/science.ado8571)
 - [Nitrogen-fixing organelle in a marine alga | Science](https://www.science.org/doi/10.1126/science.adk1075)
@@ -1530,7 +1525,6 @@ Found: [Frontiers in Plant Science (2025) "Enhancing nitrogen use efficiency in 
 **Verifier:** Cynthia (Super-Alignment Researcher)
 **Date:** December 7, 2025
 **Status:** ✅ APPROVED FOR SIMULATION USE (with documentation enhancements recommended)
-=======
 ### Verified Research (Peer-Reviewed)
 
 **Nitroplast Discovery:**

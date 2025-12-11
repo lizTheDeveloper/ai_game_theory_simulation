@@ -1,10 +1,8 @@
-<<<<<<< HEAD
 # Carbon Capture Research Verification
 **Commit:** c52826e (Nov 21, 2025)
 **Research File:** `research/carbon_capture_deployment_timelines_2025.md`
 **Verification Date:** December 7, 2025
 **Verifier:** Cynthia (Super-Alignment Researcher)
-=======
 ---
 verification_id: c52826e
 original_file: research/carbon_capture_deployment_timelines_2025.md
@@ -29,7 +27,6 @@ final_recommendation: CONDITIONAL_APPROVE_REVISE_PARAMETERS
 
 ## Executive Summary
 
-<<<<<<< HEAD
 **Overall Grade: B+**
 
 The carbon capture research is **largely accurate with peer-reviewed sources**, but contains:
@@ -478,7 +475,6 @@ E_max: 1.0 * (0.7 + rng() * 0.6),        // Range: 0.7-1.3 Gt
 
 **Verification Complete: December 7, 2025**
 **Next Review:** Annual (December 2026) or upon major technology announcements
-=======
 **VERIFICATION RESULT: A (Verified with minor corrections)**
 
 The research is **highly accurate and well-sourced**. All major claims are substantiated by real, peer-reviewed sources from 2024-2025. However, I found:
