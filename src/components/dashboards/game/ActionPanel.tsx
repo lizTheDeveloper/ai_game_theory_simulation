@@ -332,7 +332,9 @@ export function ActionPanel({
       {/* Empty state */}
       {filteredActions.length === 0 && (
         <div className={styles.emptyState}>
-          No actions available for this domain
+          {allActions.length === 0
+            ? 'Advocacy actions coming soon'
+            : 'No actions available for this domain'}
         </div>
       )}
     </div>

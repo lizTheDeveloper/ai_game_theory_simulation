@@ -276,7 +276,11 @@ export function sampleLogNormal(
 }
 
 /**
- * Sample from Beta distribution scaled to [min, max] range
+ * Sample from Beta distribution (function overloads)
+ *
+ * Two signatures:
+ * 1. sampleBeta(alpha, beta, min, max, rng) - Scaled to [min, max] range
+ * 2. sampleBeta(alpha, beta, rng) - Unscaled in [0, 1] range
  *
  * Use case: Bounded distributions with flexible shape (M-5, AMOC uncertainty)
  *
@@ -284,41 +288,81 @@ export function sampleLogNormal(
  * - Skews toward lower thresholds (mode ~2.4°C) while preserving wide uncertainty
  * - Avoids physically implausible uniform assumption (endpoints equally likely)
  * - Paleoclimate evidence suggests AMOC sensitivity to moderate warming
- *
- * @param alpha Shape parameter (must be > 0)
- * @param beta Shape parameter (must be > 0)
- * @param min Lower bound of physical range
- * @param max Upper bound of physical range (must be > min)
- * @param rng Deterministic RNG function (REQUIRED)
- * @returns Sampled value in [min, max]
- *
- * @example
- * // AMOC collapse threshold (Beta(2,5) scaled to [1.4, 8.0]°C)
- * const threshold = sampleBeta(2, 5, 1.4, 8.0, rng);
- * // Mode ~2.4°C, skewed toward lower end
  */
+
+// Overload 1: Scaled to [min, max]
 export function sampleBeta(
   alpha: number,
   beta: number,
   min: number,
   max: number,
   rng: () => number
+): number;
+
+// Overload 2: Unscaled [0, 1]
+export function sampleBeta(
+  alpha: number,
+  beta: number,
+  rng: () => number
+): number;
+
+// Implementation (handles both signatures)
+export function sampleBeta(
+  alpha: number,
+  beta: number,
+  minOrRng: number | (() => number),
+  maxOrUndefined?: number,
+  rngOrUndefined?: () => number
 ): number {
+  // Detect which overload was called
+  let min: number;
+  let max: number;
+  let rng: () => number;
+
+  if (typeof minOrRng === 'function') {
+    // Overload 2: sampleBeta(alpha, beta, rng)
+    min = 0;
+    max = 1;
+    rng = minOrRng;
+  } else {
+    // Overload 1: sampleBeta(alpha, beta, min, max, rng)
+    min = minOrRng;
+    max = maxOrUndefined!;
+    rng = rngOrUndefined!;
+  }
+
   // Validate RNG
   if (!rng || typeof rng !== 'function') {
     throw new Error('❌ CRITICAL: RNG required for deterministic distribution sampling');
   }
 
   // Validate shape parameters
+  assertFinite(alpha, {
+    location: 'sampleBeta',
+    valueName: 'alpha',
+    additionalInfo: { beta }
+  });
+
+  assertFinite(beta, {
+    location: 'sampleBeta',
+    valueName: 'beta',
+    additionalInfo: { alpha }
+  });
+
   if (alpha <= 0) {
-    throw new Error(
-      `❌ Invalid beta distribution: alpha (${alpha}) must be > 0`
-    );
+    throw new Error([
+      '❌ Invalid alpha in sampleBeta',
+      `   alpha = ${alpha}`,
+      '   alpha must be > 0',
+    ].join('\n'));
   }
+
   if (beta <= 0) {
-    throw new Error(
-      `❌ Invalid beta distribution: beta (${beta}) must be > 0`
-    );
+    throw new Error([
+      '❌ Invalid beta in sampleBeta',
+      `   beta = ${beta}`,
+      '   beta must be > 0',
+    ].join('\n'));
   }
 
   // Validate range
@@ -333,7 +377,7 @@ export function sampleBeta(
     return sampleUniform(min, max, rng);
   }
 
-  // Use gamma ratio method: Beta(a,b) = Gamma(a) / (Gamma(a) + Gamma(b))
+  // Sample two gamma variates and take ratio
   const gammaAlpha = sampleGamma(alpha, 1, rng);
   const gammaBeta = sampleGamma(beta, 1, rng);
 
@@ -515,132 +559,6 @@ export function confidenceIntervalToNormal(
 }
 
 /**
- * Sample from Beta distribution Beta(α, β)
- *
- * Beta distribution models probabilities and proportions on [0, 1].
- * - α, β = 1: Uniform [0,1]
- * - α = β > 1: Symmetric, bell-shaped
- * - α < β: Left-skewed (mode near 0)
- * - α > β: Right-skewed (mode near 1)
- *
- * Uses gamma ratio method: Beta(α, β) = Gamma(α) / (Gamma(α) + Gamma(β))
- *
- * @param alpha Shape parameter α, must be > 0
- * @param beta Shape parameter β, must be > 0
- * @param rng Deterministic RNG function (REQUIRED)
- * @returns Sample from Beta(α, β) in [0, 1]
- *
- * @throws Error if alpha ≤ 0, beta ≤ 0, or parameters are NaN/Infinity
- *
- * @example
- * const rng = seedrandom('test-seed');
- * const sample = sampleBeta(2, 5, rng); // Left-skewed, mode near 0.2
- */
-export function sampleBeta(
-  alpha: number,
-  beta: number,
-  rng: () => number
-): number {
-  // Validate RNG
-  if (!rng || typeof rng !== 'function') {
-    throw new Error('❌ CRITICAL: RNG required for deterministic distribution sampling');
-  }
-
-  // Validate parameters
-  assertFinite(alpha, {
-    location: 'sampleBeta',
-    valueName: 'alpha',
-    additionalInfo: { beta }
-  });
-
-  assertFinite(beta, {
-    location: 'sampleBeta',
-    valueName: 'beta',
-    additionalInfo: { alpha }
-  });
-
-  if (alpha <= 0) {
-    throw new Error([
-      '❌ Invalid alpha in sampleBeta',
-      `   alpha = ${alpha}`,
-      '   alpha must be > 0',
-    ].join('\n'));
-  }
-
-  if (beta <= 0) {
-    throw new Error([
-      '❌ Invalid beta in sampleBeta',
-      `   beta = ${beta}`,
-      '   beta must be > 0',
-    ].join('\n'));
-  }
-
-  // Sample two gamma variates and take ratio
-  const gammaAlpha = sampleGamma(alpha, 1, rng);
-  const gammaBeta = sampleGamma(beta, 1, rng);
-
-  const result = gammaAlpha / (gammaAlpha + gammaBeta);
-
-  return assertInRange(result, 0, 1, {
-    location: 'sampleBeta',
-    valueName: 'result',
-  });
-}
-
-/**
- * Sample from Gamma distribution Gamma(k, θ)
- *
- * Internal helper for Beta distribution.
- * Uses Marsaglia & Tsang (2000) method for k ≥ 1.
- *
- * @param shape Shape parameter k (α in some notations), must be > 0
- * @param scale Scale parameter θ, must be > 0
- * @param rng Deterministic RNG function (REQUIRED)
- * @returns Sample from Gamma(k, θ)
- */
-function sampleGamma(
-  shape: number,
-  scale: number,
-  rng: () => number
-): number {
-  // For shape < 1, use transformation Gamma(k) = Gamma(k+1) * U^(1/k)
-  if (shape < 1) {
-    const gammaShapePlus1 = sampleGamma(shape + 1, scale, rng);
-    const u = rng();
-    return gammaShapePlus1 * Math.pow(u, 1 / shape);
-  }
-
-  // Marsaglia & Tsang (2000) method for shape ≥ 1
-  const d = shape - 1 / 3;
-  const c = 1 / Math.sqrt(9 * d);
-
-  // Rejection sampling loop
-  let maxIterations = 1000;
-  while (maxIterations-- > 0) {
-    // Sample Z ~ N(0,1)
-    const z = sampleNormal(0, 1, rng);
-    const v = Math.pow(1 + c * z, 3);
-
-    if (v <= 0) continue;
-
-    const u = rng();
-    const z2 = z * z;
-
-    // Accept/reject conditions from Marsaglia & Tsang
-    if (u < 1 - 0.0331 * z2 * z2) {
-      return d * v * scale;
-    }
-
-    if (Math.log(u) < 0.5 * z2 + d * (1 - v + Math.log(v))) {
-      return d * v * scale;
-    }
-  }
-
-  // Fallback - should rarely happen with good RNG
-  throw new Error('sampleGamma: Failed to converge after 1000 iterations');
-}
-
-/**
  * Sample from threshold distribution (dispatcher)
  *
  * Type-safe dispatcher for threshold uncertainty modeling.
@@ -659,7 +577,7 @@ function sampleGamma(
  */
 export function sampleThresholdDistribution(
   distribution: {
-    type: 'triangular' | 'uniform' | 'normal' | 'log-normal';
+    type: 'triangular' | 'uniform' | 'normal' | 'log-normal' | 'beta';
     params: {
       min?: number;
       mode?: number;
@@ -668,6 +586,8 @@ export function sampleThresholdDistribution(
       std?: number;
       meanLog?: number;
       stdLog?: number;
+      alpha?: number;
+      beta?: number;
     };
   },
   rng: () => number
@@ -708,6 +628,20 @@ export function sampleThresholdDistribution(
         throw new Error(`❌ Log-normal distribution missing parameters: meanLog=${meanLog} stdLog=${stdLog}`);
       }
       return sampleLogNormal(meanLog, stdLog, rng);
+    }
+
+    case 'beta': {
+      const { alpha, beta, min, max } = distribution.params;
+      if (alpha === undefined || beta === undefined) {
+        throw new Error(`❌ Beta distribution missing parameters: alpha=${alpha} beta=${beta}`);
+      }
+      // Beta can be scaled or unscaled - if min/max provided, use scaled version
+      if (min !== undefined && max !== undefined) {
+        return sampleBeta(alpha, beta, min, max, rng);
+      } else {
+        // Unscaled [0, 1] version
+        return sampleBeta(alpha, beta, rng);
+      }
     }
 
     default:
