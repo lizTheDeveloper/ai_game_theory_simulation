@@ -224,11 +224,12 @@ export class ClimateSystemPhase implements SimulationPhase {
       if (!sourceElement.triggered) continue;
 
       // Scale reduction by progress (0 = just triggered, 1 = fully transitioned)
-      // Linear scaling per Klose et al. (2024) ESD - rate-induced tipping uses linear ramp forcing
-      // Physical mechanisms (freshwater flux, carbon release, albedo feedback) are cumulative/accelerating:
+      // Linear scaling reflects rate-dependent accumulating effects:
       // - Freshwater forcing accumulates over time
       // - Carbon release accelerates as thaw deepens
       // - Albedo feedback compounds with ice loss
+      // Research: Earth System Dynamics (2024) documents "rate-induced tipping cascades"
+      // where interaction strength accelerates, not diminishes.
       const progressScalar = Math.max(0.1, sourceElement.progress);
 
       // Find all interactions where this element is the source
@@ -271,7 +272,8 @@ export class ClimateSystemPhase implements SimulationPhase {
     }
 
     // Cap total threshold reduction at 0.5°C per element to prevent runaway cascades
-    // Note: Simulation stability cap (engineering choice), not empirically validated
+    // This is a simulation stability safeguard to prevent over-catastrophizing,
+    // not a research-backed parameter. Ensures cascades remain bounded.
     const MAX_THRESHOLD_REDUCTION = 0.5;
     for (const element of system.elements) {
       if (element.effectiveThresholdReduction && element.effectiveThresholdReduction > MAX_THRESHOLD_REDUCTION) {
@@ -361,13 +363,10 @@ export class ClimateSystemPhase implements SimulationPhase {
   /**
    * Calculate effective threshold with cascade reductions (Nov 23, 2025)
    * Research: Wunderling et al. (2024), Armstrong McKay et al. (2022)
-   *
-   * M-5 (Dec 7, 2025): Uses sampled threshold if available, falls back to deterministic triggerTempC
    */
   private getEffectiveThreshold(element: TippingElement, state: GameState): number {
     const thresholdReduction = element.effectiveThresholdReduction || 0;
-    // Use sampled threshold if available (M-5), otherwise deterministic baseline
-    const baseThreshold = element._sampledThresholdC ?? element.triggerTempC;
+    const baseThreshold = element.triggerTempC;
 
     return assertFinite(
       baseThreshold - thresholdReduction,
@@ -379,7 +378,6 @@ export class ClimateSystemPhase implements SimulationPhase {
           elementId: element.id,
           baseThreshold,
           deterministicThreshold: element.triggerTempC,
-          sampledThreshold: element._sampledThresholdC,
           thresholdReduction
         }
       }
