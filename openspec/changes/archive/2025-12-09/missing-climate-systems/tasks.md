@@ -12,56 +12,61 @@
 
 ## Phase 2: M-4 - Abrupt Sea Level Rise
 **Duration:** 4-5 hours
+**Status:** 85% complete (calibration pending)
 
-- [ ] Add `IceSheetInstability` interface to GameState
-- [ ] Create `AbruptSeaLevelRisePhase.ts`
+- [x] Add `IceSheetInstability` interface to GameState
+- [x] Create `AbruptSeaLevelRisePhase.ts`
   - Western Antarctic threshold and risk
   - Greenland threshold and risk
   - Sea level contribution calculations
-- [ ] Register phase in PhaseOrchestrator
-- [ ] Add assertion utilities to prevent NaN
-- [ ] Update emoji conventions for abrupt events
-- [ ] Write unit tests
+- [x] Register phase in PhaseOrchestrator
+- [x] Add assertion utilities to prevent NaN
+- [x] Update emoji conventions for abrupt events
+- [x] Write unit tests
+- [ ] Calibration: Validate threshold probabilities against empirical data
 
 ## Phase 3: M-5 - Compound Climate Events
 **Duration:** 4-5 hours
+**Status:** COMPLETE (Session 52-53, archived 20251206)
 
-- [ ] Add `CompoundEvent` interface to GameState
-- [ ] Create `CompoundEventsPhase.ts`
+- [x] Add `CompoundEvent` interface to GameState
+- [x] Create `CompoundEventsPhase.ts`
   - Primary tipping detection
   - Secondary cascade triggering
   - Amplification factor calculation
   - Timescale modeling
-- [ ] Define tipping point interaction network
-- [ ] Register phase in PhaseOrchestrator
-- [ ] Add assertions and emoji conventions
-- [ ] Write unit tests
+- [x] Define tipping point interaction network
+- [x] Register phase in PhaseOrchestrator
+- [x] Add assertions and emoji conventions
+- [x] Write unit tests
 
 ## Phase 4: M-6 - Social Tipping Points
 **Duration:** 5-6 hours
+**Status:** COMPLETE (Session 52-53, archived 20251206)
 
-- [ ] Add `SocialTipping` interface to GameState
-- [ ] Create `SocialTippingPhase.ts`
+- [x] Add `SocialTipping` interface to GameState
+- [x] Create `SocialTippingPhase.ts`
   - Renewable adoption threshold
   - Political will acceleration
   - Cultural shift feedbacks
   - S-curve technology adoption
-- [ ] Register phase in PhaseOrchestrator
-- [ ] Add assertions and emoji conventions
-- [ ] Write unit tests
+- [x] Register phase in PhaseOrchestrator
+- [x] Add assertions and emoji conventions
+- [x] Write unit tests
 
 ## Phase 5: M-7 - Climate Hysteresis
 **Duration:** 4-5 hours
+**Status:** COMPLETE (Session 52-53, archived 20251206)
 
-- [ ] Add `TippingHysteresis` interface to GameState
-- [ ] Create `ClimateHysteresisPhase.ts`
+- [x] Add `TippingHysteresis` interface to GameState
+- [x] Create `ClimateHysteresisPhase.ts`
   - Different collapse vs recovery thresholds
   - Century-scale recovery timescales
   - Irreversibility tracking
-- [ ] Modify existing tipping logic to check hysteresis
-- [ ] Register phase in PhaseOrchestrator
-- [ ] Add assertions and emoji conventions
-- [ ] Write unit tests
+- [x] Modify existing tipping logic to check hysteresis
+- [x] Register phase in PhaseOrchestrator
+- [x] Add assertions and emoji conventions
+- [x] Write unit tests
 
 ## Phase 6: Integration Testing
 **Duration:** 6-8 hours
