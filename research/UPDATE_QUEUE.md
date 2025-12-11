@@ -439,6 +439,11 @@
 - **Status:** Not used in simulation
 - **Path:** `research/competitive_alignment_failure_modes_verification_20251101.md`
 
+### `config_parameters_justification_20251209.md`
+- **Oldest source:** 2019 (6 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/config_parameters_justification_20251209.md`
+
 ### `cooperative-ownership-validation-cynthia-20251101.md`
 - **Oldest source:** 2014 (11 years old)
 - **Status:** Not used in simulation
