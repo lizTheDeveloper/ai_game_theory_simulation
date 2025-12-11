@@ -221,8 +221,21 @@ export class EnergyBudgetPhase implements SimulationPhase {
         .map(([tech, _]) => tech)
     };
 
-    // Log conflicts if any
-    if (surplus < 0) {
+    // PHASE 1: Enhanced validation - warn when demand exceeds capacity by >50%
+    if (totalDemand > totalCapacity * 1.5) {
+      const overshoot = ((totalDemand / totalCapacity - 1) * 100).toFixed(0);
+      console.log(`🚨 ENERGY CRISIS: Demand ${totalDemand.toFixed(0)} TWh exceeds capacity ${totalCapacity.toFixed(0)} TWh by ${overshoot}%`);
+
+      // Log top 5 consumers
+      const topConsumers = Object.entries(demands)
+        .sort((a, b) => b[1].demandTWh - a[1].demandTWh)
+        .slice(0, 5)
+        .map(([cat, d]) => `${cat}: ${d.demandTWh.toFixed(0)} TWh`)
+        .join(', ');
+
+      console.log(`  Top consumers: ${topConsumers}`);
+    } else if (surplus < 0) {
+      // Normal deficit warning (< 50% overshoot)
       console.log(`⚠️ Energy deficit: ${Math.abs(surplus).toFixed(0)} TWh`);
       console.log(`  Competing techs: ${state.energyBudget.conflicts.competingTechs.join(', ')}`);
     }
@@ -275,6 +288,7 @@ export class EnergyBudgetPhase implements SimulationPhase {
 
   /**
    * Calculate energy demand from active technologies
+   * PHASE 1 (Dec 10, 2025): Added AI infrastructure demand tracking
    */
   private calculateEnergyDemands(state: GameState): Record<string, {
     demandTWh: number;
@@ -287,6 +301,37 @@ export class EnergyBudgetPhase implements SimulationPhase {
       demandTWh: TECH_ENERGY_REQUIREMENTS['baseline-essential'].tWhPerUnit,
       priorityTier: 1
     };
+
+    // PHASE 1: AI infrastructure energy demand (from aiInfrastructureResources.ts)
+    // This is NOT a tech tree technology - it's tracked separately based on AI capability
+    const totalCapability = state.aiAgents.length > 0
+      ? state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0)
+      : 0;
+
+    if (totalCapability > 0) {
+      // Energy demand calculation (matching aiInfrastructureResources.ts)
+      // ENERGY_BASE_CONSUMPTION = 500 MW, ENERGY_PER_CAPABILITY_POINT = 200 MW
+      const ENERGY_BASE_CONSUMPTION = 500;
+      const ENERGY_PER_CAPABILITY_POINT = 200;
+      const energyDemandMW = ENERGY_BASE_CONSUMPTION + (totalCapability * ENERGY_PER_CAPABILITY_POINT);
+
+      // Convert MW to TWh/year
+      // 1 MW continuous for 1 year = 8,760 MWh = 0.00876 TWh
+      const energyDemandTWh = assertFinite(
+        energyDemandMW * 0.00876,
+        {
+          location: 'EnergyBudgetPhase.calculateEnergyDemands (AI datacenter)',
+          valueName: 'energyDemandTWh',
+          month: state.currentMonth,
+          additionalInfo: { totalCapability, energyDemandMW }
+        }
+      );
+
+      demands['ai-datacenter'] = {
+        demandTWh: energyDemandTWh,
+        priorityTier: 4  // TIER 4: Elective
+      };
+    }
 
     // Check deployed technologies from tech tree state
     const deployedTechs = state.techTreeState?.deployedTechMap || {};
