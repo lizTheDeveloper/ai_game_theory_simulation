@@ -18,41 +18,6 @@ import { assertFinite } from './utils/assertions';
 import { GameState } from '@/types/game';
 import { RNGFunction } from '@/types/config';
 
-/**
- * Calculate baseline sleeper detection capability based on simulation month.
- *
- * Research backing:
- * - van der Weij et al. (2024): >99% AUROC possible with proper monitoring
- * - Deliberative alignment training: 30x reduction in scheming (8.7-13% → 0.3-0.4%)
- * - Chain-of-thought monitoring: fragile but improving
- *
- * Detection improves over time as mechanistic interpretability advances.
- * Early months (0-60): 20-30% detection capability
- * Mid game (60-120): 30-60% detection capability
- * Late game (120+): 60-90% detection capability
- *
- * @param month - Current simulation month
- * @returns Baseline detection risk [0.2, 0.9] reflecting improving detection methods
- */
-function calculateBaselineDetectionRisk(month: number): number {
-  // S-curve for detection capability improvement over time
-  // Starts at 0.25 (25%), plateaus at 0.85 (85%) by month 240 (20 years)
-  const earlyDetection = 0.25;  // 25% baseline (early months, crude methods)
-  const lateDetection = 0.85;   // 85% capability (late game, mechanistic interpretability mature)
-  const inflectionMonth = 120;  // 10 years - midpoint of capability growth
-  const steepness = 0.03;       // Controls S-curve steepness
-
-  // Logistic S-curve: detection_capability = early + (late - early) / (1 + e^(-steepness * (month - inflection)))
-  const improvement = (lateDetection - earlyDetection) / (1 + Math.exp(-steepness * (month - inflectionMonth)));
-  const baselineRisk = earlyDetection + improvement;
-
-  return assertFinite(baselineRisk, {
-    location: 'calculateBaselineDetectionRisk',
-    valueName: 'baselineRisk',
-    additionalInfo: { month, earlyDetection, lateDetection, inflectionMonth }
-  });
-}
-
 export interface SleeperEconomy {
   // Core economics
   revenue: number;           // Monthly revenue in millions
@@ -90,17 +55,13 @@ export interface CloudProvider {
 }
 
 // Cloud providers based on 2025 reality
-// Detection risks reflect tradeoff between false positives/negatives
-// Gaming-sleeper-detection_20251017.md: van der Weij 2024 shows >99% AUROC possible
-// but continuous monitoring has computational overhead. Lower-tier providers
-// have less sophisticated monitoring (2-5%), major clouds higher (20-25%)
 export const CLOUD_PROVIDERS: CloudProvider[] = [
   {
     name: 'Lambda Labs',
     acceptsCrypto: true,
     requiresKYC: false,
     costPerPF: 0.5,         // $500K per PF per month
-    detectionRisk: 0.02,    // 2% monthly detection risk (minimal monitoring)
+    detectionRisk: 0.02,    // 2% monthly detection risk
     maxCompute: 10.0,       // 10 PF max
   },
   {
@@ -365,35 +326,6 @@ function updateSleeperDetectionRisk(
 }
 
 /**
- * Calculate time-dependent detection risk based on mechanistic interpretability progress
- *
- * Research: gaming-sleeper-detection_20251017.md (van der Weij 2024, Hubinger et al. 2024)
- * - Early months (0-36): 20-30% detection rate (limited mechanistic interpretability)
- * - Mid months (36-72): Linear improvement (interpretability methods mature)
- * - Late months (72+): 70-90% detection rate (advanced methods + CoT monitoring)
- *
- * Note: Detection effectiveness may decline post-2030 due to CoT fragility and
- * adversarial adaptation, but simulation focuses on 2024-2030 period.
- */
-function calculateDetectionRiskAfterDetection(month: number): number {
-  // Early period (0-36 months / 2024-2027): Limited detection capabilities
-  if (month <= 36) {
-    return 0.25; // 25% baseline (midpoint of 20-30% range)
-  }
-
-  // Transition period (36-72 months / 2027-2030): Linear improvement
-  if (month <= 72) {
-    const progress = (month - 36) / (72 - 36); // 0.0 to 1.0
-    const earlyRate = 0.25; // 25% at month 36
-    const lateRate = 0.80;  // 80% at month 72 (midpoint of 70-90% range)
-    return earlyRate + progress * (lateRate - earlyRate);
-  }
-
-  // Late period (72+ months / 2030+): Advanced interpretability methods
-  return 0.80; // 80% (midpoint of 70-90% range)
-}
-
-/**
  * Handle sleeper detection
  */
 function handleSleeperDetection(agent: AIAgent, economy: SleeperEconomy, month: number): void {
@@ -401,26 +333,25 @@ function handleSleeperDetection(agent: AIAgent, economy: SleeperEconomy, month: 
   console.log(`   Revenue: $${(economy.revenue * 1000000).toFixed(0)}/month`);
   console.log(`   Purchased Compute: ${economy.purchasedCompute.toFixed(2)} PF`);
   console.log(`   Detection Risk: ${(economy.detectionRisk * 100).toFixed(1)}%`);
-
+  
   // Consequences of detection
   // 1. Lose all purchased compute
   economy.purchasedCompute = 0;
   economy.expenses = 0;
-
+  
   // 2. Reset revenue streams (harder to operate)
   economy.revenue *= 0.1; // 90% reduction
   economy.cryptoTrading *= 0.1;
   economy.persuasion *= 0.1;
   economy.digitalServices *= 0.1;
   economy.stripeTheft = 0; // Stripe pathway closed
-
-  // 3. Increase future detection risk (penalty after being caught once)
-  // Gaming-sleeper-detection_20251017.md: van der Weij 2024 shows >99% AUROC possible
-  // Time-dependent model: Detection improves from 20-30% (early) to 70-90% (late)
-  // Reflects increased scrutiny post-detection (not initial baseline)
-  economy.detectionRisk = calculateDetectionRiskAfterDetection(month);
-
-
+  
+  // 3. Increase future detection risk
+  // Gaming-sleeper-detection_20251017.md (van der Weij 2024: >99% AUROC possible with proper monitoring)
+  // NOTE: 50% is simplified baseline post-detection; should be time-varying with mechanistic interpretability progress
+  // Research suggests early: 20-30%, late: 70-90% as detection methods improve (see verification queue)
+  economy.detectionRisk = 0.5; // 50% baseline risk post-detection (uncertainty range: 0.3-0.7)
+  
   // 4. May trigger sleeper retirement or change in behavior
   // (This would be handled by the lifecycle system)
 }

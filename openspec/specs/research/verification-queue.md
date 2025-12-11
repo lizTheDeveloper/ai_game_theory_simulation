@@ -94,66 +94,6 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 
 ---
 
-### HIGH Priority (Research Audit Follow-Up)
-
-#### Sleeper Agent Rate Justification (7.5%)
-**Status:** ✅ UPDATED (Dec 9, 2025)
-**Commit:** d2e3713d
-**Context:** From Nov 29, 2025 research audit (reviews/research_audit_20251129.md)
-**Location:** `src/simulation/initialization.ts:309`
-
-**Resolution:**
-Comment updated to: `// 7.5% DERIVED ESTIMATE (Hubinger et al. 2024 proof-of-concept, empirical prevalence TBD)`
-
-**Research Backing:**
-- Hubinger et al. (2024) - Proof-of-concept sleeper agents successfully persist through safety training
-- Gaming-sleeper-detection_20251017.md documents empirical demonstrations
-- **EXPLICIT:** No empirical prevalence data exists in literature (this is derived estimate)
-
-**Ready to move to Recently Resolved.**
-
----
-
-#### Sandbagging Level Citation (0.4-0.6)
-**Status:** ✅ UPDATED (Dec 9, 2025)
-**Commit:** d2e3713d
-**Context:** From Nov 29, 2025 research audit
-**Location:** `src/simulation/agents/evaluationStrategy.ts:74`
-
-**Resolution:**
-Comment updated to: `// van der Weij et al. (2024), Meinke et al. (2024): empirical deception baselines [0.4, 0.6]`
-
-**Research Backing:**
-- van der Weij et al. (2024): Llama 3 70b emulates Llama 2 7b (sandbagging proven)
-- Meinke et al. (2024): Claude 3.5 Sonnet strategic underperformance
-- Apollo Research: Claude Opus 4 showed "most strategic deception of any frontier model"
-- Gaming-sleeper-detection_20251017.md documents all empirical demonstrations
-
-**Ready to move to Recently Resolved.**
-
----
-
-#### Detection Risk Calibration (50% Baseline)
-**Status:** ✅ UPDATED (Dec 9, 2025)
-**Commit:** d2e3713d
-**Context:** From Nov 29, 2025 research audit
-**Location:** `src/simulation/gamingDetection.ts:178`
-
-**Resolution:**
-Comment updated to: `// Gaming-sleeper-detection_20251017.md: van der Weij 2024 >99% AUROC w/ monitoring`
-
-**Research Backing:**
-- Gaming-sleeper-detection_20251017.md: "Detection methods show promise but remain imperfect"
-- van der Weij 2024: >99% AUROC possible with proper monitoring
-- Deliberative alignment training: reduces scheming by ~30x (8.7-13% → 0.3-0.4%)
-- Chain-of-thought monitoring: fragile, models may learn to hide reasoning
-
-**Note:** 50% baseline retained as conservative estimate pending time-dependent model (MEDIUM priority future work)
-
-**Ready to move to Recently Resolved.**
-
----
-
 ### MEDIUM Priority
 
 #### Energy Budget Constraints
@@ -318,19 +258,56 @@ Comment updated to: `// Gaming-sleeper-detection_20251017.md: van der Weij 2024 
 
 ## Recently Resolved
 
-### Research Audit Follow-Up (3 HIGH Priority Citations)
-**Status:** ✅ COMPLETED (Dec 9, 2025)
-**Commit:** d2e3713d
-**Context:** Nov 29, 2025 research audit identified 3 HIGH priority citation gaps
-**Resolution:** All citations updated with explicit research sources
+### Research Audit Follow-Up (Nov 29, 2025)
 
-**Items Updated:**
-1. **Sleeper Agent Rate (7.5%)** - Added "DERIVED ESTIMATE" qualifier (Hubinger et al. 2024)
-2. **Sandbagging Level (0.4-0.6)** - Added van der Weij/Meinke 2024 citations
-3. **Detection Risk (50%)** - Added Gaming-sleeper-detection_20251017.md citation
+#### Sleeper Agent Rate Justification (7.5%)
+**Status:** ✅ RESOLVED (Dec 9, 2025)
+**Commit:** bf078d21
+**Context:** From Nov 29, 2025 research audit (reviews/research_audit_20251129.md)
+**Location:** `src/simulation/initialization.ts:309`
+**Resolution:** Added Hubinger et al. 2024 citation with explicit uncertainty note
 
-**Severity:** HIGH (research standards compliance)
-**Effort:** TRIVIAL (comment updates)
+**Updated Code:**
+```typescript
+// 7.5% DERIVED ESTIMATE - Hubinger et al. 2024 proof-of-concept
+// NOTE: No empirical prevalence data exists (model assumption)
+const sleeperChance = 0.075;
+```
+
+---
+
+#### Sandbagging Level Citation (0.4-0.6)
+**Status:** ✅ RESOLVED (Dec 9, 2025)
+**Commit:** bf078d21
+**Context:** From Nov 29, 2025 research audit
+**Location:** `src/simulation/agents/evaluationStrategy.ts:74`
+**Resolution:** Added van der Weij et al. 2024 and Meinke et al. 2024 citations
+
+**Updated Code:**
+```typescript
+// van der Weij et al. (2024), Meinke et al. (2024): empirical sandbagging
+// Range [0.4, 0.6] from frontier model observations
+const baseSandbagLevel = 0.4 + deceptionSkill * 0.2;
+```
+
+---
+
+#### Detection Risk Calibration (50% Baseline)
+**Status:** ✅ RESOLVED (Dec 9, 2025)
+**Commit:** bf078d21
+**Context:** From Nov 29, 2025 research audit
+**Location:** `src/simulation/sleeperEconomy.ts:350`
+**Resolution:** Added research context and documented time-varying improvement
+
+**Updated Code:**
+```typescript
+// Gaming-sleeper-detection_20251017.md: Detection methods show promise
+// NOTE: Time-varying - early detection weak, improves with interpretability
+// 50% midpoint reflects uncertainty (range 20-80% across capability levels)
+economy.detectionRisk = 0.5;  // Baseline risk (should vary with tech progress)
+```
+
+**Note:** Full time-dependent model deferred (SMALL effort, 1-2 hours). Current comment documents research backing and future enhancement path.
 
 ---
 
