@@ -88,11 +88,23 @@ export interface AdvocacyAction {
   /** Influence domain for tracking */
   domain: InfluenceDomain;
 
+<<<<<<< HEAD
   /** Resource costs to execute action */
   costs: ActionCosts;
 
   /** Research sources for this action (for transparency) */
   researchSources: string[];
+=======
+  /** Resource costs for taking this action */
+  costs?: {
+    reputation?: number;
+    politicalCapital?: number;
+    funding?: number;
+  };
+
+  /** Research sources backing this action's parameters */
+  researchSources?: string[];
+>>>>>>> origin/auto/worker-20251207_020001
 }
 
 /**
