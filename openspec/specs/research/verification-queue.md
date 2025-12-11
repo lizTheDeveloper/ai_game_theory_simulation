@@ -326,6 +326,37 @@ economy.detectionRisk = 0.5;  // 50% baseline risk
 
 ## Recently Resolved
 
+### Trust Restoration Re-Research
+**Status:** ✅ RESOLVED (Dec 11, 2025)
+**Grade:** B+ (9 peer-reviewed sources 2023-2025)
+**Priority:** MEDIUM
+**Context:** Citation misattribution fix - replaced Mayer 1995 (doesn't cover restoration) with current institutional trust research
+**Research File:** `research/institutional_trust_restoration_20251211.md`
+**Critique File:** `reviews/institutional_trust_restoration_critique_20251211.md`
+**Commit:** d0ec83c2
+
+**Verification Complete (Dec 11, 2025):**
+- **Factual Accuracy Grade:** B+ (well-sourced, comprehensive)
+- **Sources:** 9 peer-reviewed papers (2023-2025)
+- **Reviewers:** Cynthia (autonomous-researcher), Sylvia (research-skeptic)
+
+**✅ Key Findings:**
+1. **Trust Erosion Timelines:** 25-50%/month in rapid erosion scenarios (scandal, crisis)
+2. **Restoration Timelines:** 24-36+ months minimum for deep institutional trust
+3. **Mechanism Effectiveness:** Procedural fairness changes > distributive justice > information > symbolic acts
+4. **Sector Differences:** Corporate trust recovers faster (18-24mo) than government (24-36mo+)
+5. **Attention vs Deep Trust:** Quick attention recovery (2-6mo) ≠ deep trust restoration (24-36mo)
+
+**Implementation Requirements:**
+- Institutional type modifiers (corporate faster, government slower)
+- Multi-mechanism approach (procedural + distributive + transparency)
+- Distinguish attention recovery from deep trust
+- Time-dependent restoration curves (non-linear)
+
+**Recommendation:** ✅ APPROVED - Ready for implementation when social trust system developed
+
+---
+
 ### CRITICAL-1: Coordinated Deployment Fabricated Parameter
 **Status:** ✅ RESOLVED (Nov 26, 2025)
 **Grade:** F → FIXED
