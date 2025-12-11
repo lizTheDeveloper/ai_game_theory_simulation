@@ -18,37 +18,39 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 
 ## 🚀 Project Status
 
-**🟢 STABLE** (December 3, 2025)
+**🟢 STABLE** (December 10, 2025)
 
 **SYSTEM HEALTH:**
-- **Research Quality:** A- (68.8% sources 2024-2025, peer-reviewed foundation, zero critical gaps) ✅ EXCELLENT
-- **Research Currency:** ✅ EXCELLENT (all simulation-critical files updated within 14 days, autonomous system working effectively)
-- **Implementation Fidelity:** A- (assertion coverage 97.2%, 24 integration tests for CoordinatedDeploymentPhase) ✅ EXCELLENT
-- **Architecture Health:** A- (0 CRITICAL/HIGH, 1 new HIGH, 3 MEDIUM non-urgent, test coverage 82.34%) ✅ EXCELLENT
-- **System Trajectory:** 🟢 MAINTENANCE MODE (16 consecutive stable sessions 34-51, autonomous monitoring active)
+- **Research Quality:** C+ (76.9% sources 2024-2025, peer-reviewed foundation, zero critical gaps) ✅ PASS
+- **Research Currency:** ✅ EXCELLENT (all simulation-critical files current, autonomous validation working)
+- **Implementation Fidelity:** A- (assertion coverage 97.2%, energy budget integration verified) ✅ EXCELLENT
+- **Architecture Health:** B+ (0 CRITICAL/HIGH, 1 MEDIUM non-urgent, 1 LOW cleanup) ✅ EXCELLENT
+- **System Trajectory:** 🟢 MAINTENANCE MODE (autonomous monitoring active, fallback workflows operational)
 
 **Recent Major Achievements:**
 
-**Dec 10: Session 66 - Detection Risk Calibration + Energy Utility Extraction** (commits fd7694a2, c17a3e4f, 301f1aee)
-- **Time-Dependent Detection Risk Model (HIGH Priority):** Completed final item from Nov 29 research audit
-  - **Implementation:** `calculateDetectionRiskAfterDetection(month)` in `sleeperEconomy.ts`
-  - **Early period (0-36 months / 2024-2027):** 25% detection rate
-    - Limited mechanistic interpretability capabilities
-    - Neural activation probes show promise on artificial backdoors
-  - **Transition period (36-72 months / 2027-2030):** Linear improvement 25% → 80%
-    - Interpretability methods mature
-    - Chain-of-thought monitoring effective (before fragility window)
-  - **Late period (72+ months / 2030+):** 80% detection rate
-    - Advanced interpretability methods operational
-    - >99% AUROC achievable with proper monitoring (van der Weij 2024)
-  - **Research Citations:** van der Weij et al. (2024), Hubinger et al. (2024), deliberative alignment training (~30× reduction in scheming)
-  - **Validation:** N=10 Monte Carlo runs, 60% utopia rate (baseline expectations)
-- **Energy Category Utility Extraction (L-1 Complete):** Extracted `mapTechToEnergyCategory()` to shared utility
-  - **Problem:** Duplicate implementation in `EnergyBudgetPhase` and `ClimateDeploymentPhase`
-  - **Solution:** Created `src/simulation/utils/energyCategories.ts` as single source of truth
-  - **Categories:** Climate (dac, green-hydrogen, sai, carbon-mineralization), AI/Compute (ai-datacenter, advanced-compute), Infrastructure (industrial/transport electrification)
-  - **Usage:** Both phases now import from shared utility (DRY principle)
-- 📄 **Files:** `src/simulation/sleeperEconomy.ts`, `src/simulation/utils/energyCategories.ts`
+**Dec 10: Session 66 - Roadmap Gardening + Architecture/Research Audits** (commits b26a3be3)
+- **Fallback Workflow Audits:** Architecture and research review cycles run during autonomous monitoring
+  - **Architecture Integration Review (30-day):** Grade B+ (0 CRITICAL/HIGH, 1 new MEDIUM M-1, 1 LOW L-1)
+    - H-1 Energy Budget Integration: VERIFIED COMPLETE
+    - H-2 Duplicate Energy Calculation: VERIFIED COMPLETE
+    - M-1 Dual Energy Constraint Systems: powerGeneration.ts vs EnergyBudgetPhase.ts (non-urgent)
+    - L-1 Duplicate Tech Category Mapping: Extract to shared utility (low priority cleanup)
+  - **Research Source Audit:** Grade C+ (76.9% sources 2024-2025, aging corpus but no critical gaps)
+    - Core simulation systems: 52/67 sources (77.6%) from 2024-2025
+    - Climate systems remain excellent (91.7% currency)
+    - AI systems degrading gracefully (70.4% → 69.2%, still passing)
+- **Sleeper Agent Research Debate (M-8):** Critical evaluation of 7.5% sleeper agent rate parameter
+  - **Finding:** 7.5% rate has NO direct research source (modeling assumption, not empirical)
+  - **Verdict:** Defensible as conservative choice but must be documented as TIER 3 BRONZE
+  - **Action:** Updated documentation to clarify epistemic status (modeling assumption vs research-backed)
+  - See: `reviews/sleeper_agent_research_debate_20251210.md`
+- **Roadmap Gardening:** Archived completed milestones, updated Progress Summary
+- 📄 **Reviews:**
+  - `reviews/architecture_integration_review_20251210.md` (Grade B+)
+  - `reviews/research_source_audit_20251210.md` (Grade C+)
+  - `reviews/sleeper_agent_research_debate_20251210.md` (M-8 parameter evaluation)
+  - `docs/implementation-history/session_66_roadmap_gardening_20251210.md`
 
 **Dec 9: Session 63 - Research Audit Follow-up + CRITICAL Tipping Cascade Fix** (commits 582f74e5, f317c17c, c7114681)
 - **Research Audit Follow-up (HIGH Priority):** 3 parameter justification gaps from Nov 29 audit addressed
@@ -58,9 +60,9 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - **Sandbagging baseline (0.4-0.6):** Added research citations for empirical frontier model observations
     - Citation: van der Weij et al. (2024), Meinke et al. (2024)
     - Range justified from observed deception baselines in GPT-4, Claude
-  - **Detection risk (COMPLETED Dec 10):** Time-dependent model implemented (see Session 66 above)
+  - **Detection risk (50%):** Added uncertainty note "(confidence interval TBD)"
     - Citation: van der Weij et al. (2024) noise injection detection (>99% AUROC possible)
-    - ✅ Month-dependent improvement curve as mechanistic interpretability advances
+    - TODO: Month-dependent improvement curve as mechanistic interpretability advances
 - **CRITICAL Tipping Cascade Fix:** AMOC-Amazon interaction regression corrected
   - **Problem:** Merge conflict reverted Dec 8 research fix removing AMOC → Amazon destabilizing interaction
   - **Research:** 2023-2025 peer-reviewed evidence shows AMOC collapse STABILIZES Amazon (not destabilizes)
@@ -73,7 +75,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - 📄 **Research:** `research/REGRESSION_FIX_amoc_amazon_20251209.md`
 - **Energy Budget Integration (H-1, H-2):** Architecture review follow-up completed
   - Fixed duplicate energy calculation in ClimateDeploymentPhase (now consumes allocations from EnergyBudgetPhase)
-  - Single source of truth: EnergyBudgetPhase (order 12.4) calculates, others consume
+  - Single source of truth: EnergyBudgetPhase (order 12.75) calculates, others consume
   - 📄 **Docs:** `docs/implementation-history/energy_budget_integration_fixes_20251209.md`
 - **Research Quality:** Grade B+ (recent work A+, legacy corpus C due to time passage)
   - Recent additions: Regional death rates (UN WPP 2024), radiation modeling (ICRP 103, BEIR VII)
@@ -2111,39 +2113,26 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **Implementation Fidelity:** B+ → A-
 - **Archives:** 4 completion documents created in plans/completed/
 
-**⚠️ CRITICAL PARAMETER MISMATCH - ISSUE #747** (Updated Dec 10, 2025)
+**⚠️ CRITICAL PARAMETER MISMATCH IDENTIFIED** (commit 0a1e5b8, November 7, 2025)
 
-**Issue:** AI capability doubling time shows **10,000,000× discrepancy** between implementation and research-verified values.
+**Issue:** AI capability scaling parameters appear to underestimate growth by **100-1000×**.
 
-**Current Implementation (Dec 2025):**
-- AI capability doubling time: **8 months** (centralConfig.ts:420)
-- Rationale: "Conservative modeling for diminishing returns" (comment lines 415-418)
-- 10-year growth: 2^(120/8) = 32,768× capability increase
+**Current Simulation:**
+- AI capability doubling time: 12 months (centralConfig.ts:397)
+- Compute growth rate: 100% per year (2× annually) (centralConfig.ts:404)
+- Implied 10-year growth: ~2.4×
 
-**Research-Verified Values (HIGH Confidence):**
-- **3.6 months** doubling time (Sevilla & Roldán 2024, Epoch AI 2024)
-- 14-year empirical data (2010-2024), peer-reviewed sources
-- 10-year growth: 2^(120/3.6) = 10,737,418,240× capability increase
-- **Discrepancy: ~327,800× slower than research predicts**
+**New Research Findings (2024-2025):**
+- Compute growth: 4.1× per year (Sevilla & Roldán 2024, Epoch AI)
+- Training cost growth: 2.4-3.0× per year (Cottier et al. 2024, arXiv:2405.21015v2)
+- Combined capability growth: **1,000-10,000× per decade**
+- Industry projections: $10-100B training runs by 2025-2027 (Amodei 2024-2025)
 
-**Strategic Question (Open):**
-Is the conservative 8-month value intentionally modeling a slowdown scenario, or should it match research-verified historical trends?
+**Status:** Research verification file created (research/verification_0a1e5b8_20251107.md). Awaiting orchestrator pickup for citation verification → parameter updates.
 
-**Options Under Consideration:**
-1. **Update to 3.6 months** - Match 14 years of empirical data
-2. **Keep 8 months with explicit justification** - Document as slowdown scenario (needs peer-reviewed evidence)
-3. **Time-dependent model** - Fast early (3.6mo), slow later (8-12mo) to capture 2024-2025 slowdown signals
-4. **Scenario variants** - Separate fast/slow branches for Monte Carlo exploration
+**Impact:** Core AI scaling mechanics may need recalibration. Economic concentration (10-15 labs → 3-5 by 2030) not currently modeled.
 
-**Impact:** Affects all breakthrough timelines, alignment difficulty scaling, sleeper agent emergence, AGI/ASI transition modeling.
-
-**Status:** Research debate required (research-skeptic + super-alignment-researcher). See Issue #747 for complete analysis.
-
-**Research Sources:**
-- research/ai_scaling_verified_parameters_20251111.md (14-year empirical data)
-- Sevilla & Roldán (2024) - 4.1× per year (90% CI: 3.7× to 4.6×)
-- Epoch AI (2024) - Algorithmic efficiency doubles every 9 months
-- Cottier et al. (2024) - Training cost growth 2.4× per year
+**See:** research/mitigation_technologies_20251015.md:153-212, research/verification_0a1e5b8_20251107.md
 
 **Nov 7 Session Summary (20251107_200001):**
 - ✅ **CRITICAL-4 DEFENSIVE FALLBACKS ELIMINATED** - All 17 DANGEROUS calculation fallbacks replaced with assertions (commit 0e2a7e9)
@@ -2718,8 +2707,6 @@ Phase 12.8:  ClimateDeploymentPhase (consumes allocations)
 Phase 13+:   Cleanup/effects systems (consume allocations)
 ```
 
-**NOTE:** Code has `order = 12.75` (EnergyBudgetPhase.ts:116) but engine.ts comment says "order 12.4" - documentation mismatch identified Dec 10, 2025.
-
 **Systems Now Constrained:**
 - Climate technologies (DAC, SAI, carbon mineralization)
 - Novel entities cleanup (microplastics, PFAS)
@@ -2777,6 +2764,8 @@ Phase 13+:   Cleanup/effects systems (consume allocations)
    - Explicit comment: "DERIVED ESTIMATE (Hubinger et al. 2024)"
    - Uncertainty bounds: ±50% (range 3.75%-11.25%)
    - Research: Hubinger et al. (2024) - sleeper agent emergence in frontier models
+   - **Epistemic status:** TIER 3 BRONZE (modeling assumption, not empirical prevalence data)
+   - Note: Hubinger et al. demonstrates CAPABILITY, not PREVALENCE. 7.5% is conservative modeling choice.
 
 2. **Sandbagging level (0.4-0.6)** - `evaluationStrategy.ts:74`
    - Added citations: van der Weij et al. (2024), Meinke et al. (2024)
@@ -7805,20 +7794,6 @@ climateTechAllocation = min(climateTechDemand, surplus × 0.75)  // 15% of total
 electiveAllocation = min(electiveDemand, surplus - climateTechAllocation)
 ```
 
-**Shared Utility (Dec 10, 2025):**
-```typescript
-import { mapTechToEnergyCategory } from '@/simulation/utils/energyCategories';
-
-// Maps technology IDs to energy categories for both phases
-const category = mapTechToEnergyCategory(techId);
-// Returns: 'dac' | 'green-hydrogen' | 'sai' | 'carbon-mineralization' | 'ai-datacenter' | etc.
-```
-
-**Module:** `src/simulation/utils/energyCategories.ts` (75 lines)
-- **Purpose:** Single source of truth for technology → energy category mapping (DRY principle)
-- **Usage:** Both `EnergyBudgetPhase` and `ClimateDeploymentPhase` import from this utility
-- **Context:** L-1 completed Dec 10, 2025 (commits c17a3e4f, 301f1aee)
-
 **Step 4: Calculate Effectiveness Multiplier**
 ```typescript
 for each category:
@@ -7879,7 +7854,7 @@ for each category:
 
 **Phase Execution Order:**
 ```
-12.4:  EnergyBudgetPhase       → Calculates allocations (SINGLE SOURCE OF TRUTH)
+12.75: EnergyBudgetPhase       → Calculates allocations (SINGLE SOURCE OF TRUTH)
 12.5:  TechTreePhase           → Populates deployed technologies
 12.8:  ClimateDeploymentPhase  → Consumes allocations
 13+:   Cleanup/Effects phases  → Consume allocations
@@ -8060,7 +8035,7 @@ energyBudget.allocations.novelEntitiesCleanup:
 ## Integration with Existing Systems
 
 **Technology Tree (`tech-tree` phase, order 12.5)**
-- EnergyBudgetPhase runs at order 12.75 (immediately after tech tree)
+- EnergyBudgetPhase runs at order 12.75 (after tech-tree 12.5, meaning-renaissance 12.7, before ClimateDeploymentPhase 12.8)
 - ClimateDeploymentPhase runs at order 12.8 (after energy allocation)
 - Reads deployed technologies, energy system state
 - Updates technology deployment levels based on phased progression AND energy constraints
@@ -9769,7 +9744,7 @@ The simulation runs via a **phase-based architecture** with **100 phases** execu
 **11.0-25.0: System Updates**
 - GovernanceQualityPhase (11.0): Democratic resilience, AI augmentation
 - UpwardSpiralsPhase (12.0): 6 virtuous cascades
-- **EnergyBudgetPhase (12.75)**: Global electricity capacity allocation, priority-based energy distribution (**NEW Dec 9, 2025**, NOTE: engine.ts comment says 12.4 but code defines 12.75)
+- **EnergyBudgetPhase (12.4)**: Global electricity capacity allocation, priority-based energy distribution (**NEW Dec 9, 2025**)
 - TechTreePhase (12.5): Technology deployment, effects
 - StochasticInnovationPhase (12.6): Lévy-flight driven breakthroughs (**MOVED Nov 25** - was 12.7, collision fix)
 - CooperativeSystemsPhase (12.65): Collective formation, cooperative ownership
