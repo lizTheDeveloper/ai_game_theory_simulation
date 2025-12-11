@@ -4,7 +4,10 @@
 // Import types for use in GameState interface
 import type {
   AIAgent,
-  EcosystemState
+  EcosystemState,
+  AIScalingComponents,
+  AIInferenceCost,
+  AICapabilityProfile
 } from './ai-agents';
 import type { GovernmentAgent } from './government';
 import type { HumanSocietyAgent } from './society';
@@ -69,6 +72,8 @@ export type {
 export type {
   AIResearchCapabilities,
   AICapabilityProfile,
+  AIScalingComponents,
+  AIInferenceCost,
   BenchmarkResult,
   AIAgent,
   EcosystemState
@@ -316,6 +321,43 @@ export interface GameState {
   government: GovernmentAgent;
   society: HumanSocietyAgent;
   organizations: Organization[]; // Phase 2: Organizational layer
+
+  /**
+   * AI Capability Scaling System (Dec 2025)
+   *
+   * Three-axis model capturing 2025 scaling dynamics:
+   * 1. Pre-training: Sigmoid plateau (peak 2024, max 1.5x GPT-4 baseline)
+   * 2. Test-time compute: Economic gating limits deployment to 0.1% of tasks
+   * 3. Efficiency: Algorithmic improvements (1.5-2x per decade, conservative)
+   *
+   * Research: research/ai_scaling_laws_2025_REVISED_20251211.md
+   * Validation: reviews/ai_scaling_laws_2025_critique_20251211.md (QG1 PASSED)
+   * Expected impact: Logarithmic growth 2025-2035 (not exponential), 10-30x slower than old model
+   */
+  aiCapabilityScaling: {
+    // Pre-training axis (sigmoid plateau model)
+    preTrainingMultiplier: number;      // [0.5-1.5] Current pre-training effectiveness
+    preTrainingPlateau: number;         // 1.5 (max multiplier from GPT-4 baseline)
+    preTrainingInflectionYear: number;  // 2024 (when plateau begins)
+    preTrainingSteepness: number;       // 2.0 (rapid saturation)
+
+    // Test-time compute axis (limited deployment due to cost)
+    testTimeComputeBudget: number;      // [1-200] Per-inference allocation (1=o1-level, 200=o3-level)
+    testTimeDeploymentShare: number;    // 0.001 (0.1% of tasks can afford high-compute)
+    testTimeCostThreshold: number;      // $100 (tasks above this economically gated)
+
+    // Efficiency axis (algorithmic improvements)
+    efficiencyMultiplier: number;       // [1.0-2.0] Current algorithmic efficiency
+    efficiencyGrowthRate: number;       // 0.05-0.10 (5-10% annual growth, conservative)
+    efficiencyBaseYear: number;         // 2024 (reference point)
+
+    // Economic constraints
+    costPerInference: number;           // Current cost per task ($)
+    economicDeploymentGate: number;     // exp(-cost/threshold) viability multiplier
+
+    // Uncertainty tracking
+    uncertaintyMultiplier: number;      // ±50% near-term (2025-2027), ±200% long-term (2028+)
+  };
 
   // Government System (30 Countries) - Oct 19, 2025
   // Research-backed government modeling with coalition formation, policy response, elections

@@ -136,6 +136,7 @@ import {
   SocialInfluenceUpdatePhase,  // Phase X (Oct 21, 2025): Social influence accumulation
   AIAgentActionsPhase,
   AIAgentCoordinationPhase,  // Nov 24, 2025: AI-to-AI multi-agent coordination dynamics
+  AIScalingPhase,  // Dec 11, 2025: Three-axis AI capability scaling (SEPARATE phase per QG1 requirements)
   AISufferingPhase,  // Oct 24, 2025: AI suffering calculation & effects
   ResentmentRecoveryPhase,  // Oct 24, 2025: AI resentment recovery mechanisms
   // AI Collective Evolution System (Oct 24, 2025)
@@ -634,6 +635,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new SocialInfluenceUpdatePhase());
     this.orchestrator.registerPhase(new AIAgentActionsPhase());
     this.orchestrator.registerPhase(new AIAgentCoordinationPhase());  // Nov 24, 2025: AI-to-AI multi-agent coordination
+    this.orchestrator.registerPhase(AIScalingPhase);  // Dec 11, 2025: Three-axis AI capability scaling (SEPARATE phase per QG1)
     this.orchestrator.registerPhase(new AISufferingPhase());  // Oct 24, 2025: AI suffering calculation & effects
     this.orchestrator.registerPhase(ResentmentRecoveryPhase);  // Oct 24, 2025: AI resentment recovery mechanisms
     // AI Collective Evolution System (Oct 24, 2025)
