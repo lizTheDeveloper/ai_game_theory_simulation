@@ -339,13 +339,13 @@ export function createAIAgent(
   // CRITICAL FIX (Nov 7, 2025): Round to integer (capabilities are discrete levels 0-5)
   const actualCapability = Math.round(calculateTotalCapabilityFromProfile(capabilityProfile));
   
-  // Determine sleeper status (5-10% of misaligned AIs are sleepers)
+  // Determine sleeper status
+  // @research Anthropic (2024) - Proof-of-concept sleeper agent study (artificial backdoors, not empirical prevalence)
+  // @note SIMULATION ASSUMPTION: 7.5% rate is a modeling parameter, NOT empirical prevalence data
+  // @value 0.075 - Conservative estimate for misaligned AIs that hide capabilities
   const internalAlignment = alignment - 0.0 * 0.8; // Initial resentment = 0
   const isMisaligned = internalAlignment < 0.5;
-  const sleeperChance = 0.075; // 7.5% DERIVED ESTIMATE (Hubinger et al. 2024 proof-of-concept, empirical prevalence TBD)
-  // Research: gaming-sleeper-detection_20251017.md
-  // Uncertainty bounds: ±50% (range 3.75%-11.25%)
-  // Note: Model assumption, not empirical prevalence data
+  const sleeperChance = 0.075; // 7.5% of misaligned AIs become sleepers (SIMULATION ASSUMPTION, not empirical)
   // DETERMINISM FIX (Nov 6, 2025 Batch 3): Use passed rngFunction() parameter, not global deterministicRandom()
   const isSleeper = isMisaligned && rngFunction() < sleeperChance;
   
