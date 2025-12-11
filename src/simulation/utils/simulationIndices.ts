@@ -253,3 +253,75 @@ export function getOrganizationsByType(
 ): Set<string> {
   return indices.orgsByType.get(type) || new Set();
 }
+
+/**
+ * Get government organization (O(1) lookup with fallback)
+ *
+ * Helper for common pattern of finding government org.
+ * Uses index-first pattern with defensive fallback.
+ *
+ * @param state - Game state
+ * @param indices - Simulation indices (optional, falls back to .find())
+ * @returns Government organization or undefined
+ */
+export function getGovernmentOrg(
+  state: GameState,
+  indices?: SimulationIndices
+): Organization | undefined {
+  // O(1) index lookup if available
+  if (indices) {
+    const govOrgIds = indices.orgsByType.get('government');
+    if (govOrgIds && govOrgIds.size > 0) {
+      const govOrgId = govOrgIds.values().next().value;
+      if (govOrgId) {
+        return indices.orgMap.get(govOrgId);
+      }
+    }
+  }
+
+  // Fallback to O(n) search for safety (defensive coding)
+  return state.organizations.find(o => o.type === 'government');
+}
+
+/**
+ * Get AI agent by ID (O(1) lookup with fallback)
+ *
+ * Helper for common pattern of finding AI agent by ID.
+ * Uses index-first pattern with defensive fallback.
+ *
+ * @param state - Game state
+ * @param agentId - Agent ID
+ * @param indices - Simulation indices (optional, falls back to .find())
+ * @returns AI agent or undefined
+ */
+export function getAgentById(
+  state: GameState,
+  agentId: string,
+  indices?: SimulationIndices
+): AIAgent | undefined {
+  // O(1) index lookup if available
+  if (indices) {
+    const agent = indices.agentMap.get(agentId);
+    if (agent) return agent;
+  }
+
+  // Fallback to O(n) search for safety (defensive coding)
+  return state.aiAgents.find(a => a.id === agentId);
+}
+
+/**
+ * Get AI agent by name (O(n) search - no index available)
+ *
+ * Helper for finding AI agent by name.
+ * Note: Name lookups cannot be O(1) without adding name index.
+ *
+ * @param state - Game state
+ * @param agentName - Agent name
+ * @returns AI agent or undefined
+ */
+export function getAgentByName(
+  state: GameState,
+  agentName: string
+): AIAgent | undefined {
+  return state.aiAgents.find(a => a.name === agentName);
+}
