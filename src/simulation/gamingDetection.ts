@@ -12,15 +12,6 @@
  * - False positives: 12% (was 12%, but higher human review workload)
  * - Computational overhead: 50% periodic
  *
- * RESEARCH JUSTIFICATION (Nov 29, 2025 audit):
- * Detection rate uncertainty reflects:
- * - Balzac et al. (2024): Benchmark contamination detection 40-60% effective
- * - SCORE framework (Li et al. 2024): Cross-benchmark consistency 35-55% signal-to-noise
- * - van der Weij et al. (2024): Adversarial adaptation reduces detection 15-30% over time
- * - Baseline (55%) represents median estimate; optimistic/pessimistic bounds capture uncertainty
- * - 50% anomaly detection (line 234): Conservative estimate when threshold exceeded
- *   (detects pattern exists, but probabilistic confirmation to account for noisy signals)
- *
  * KEY INSIGHT: Gaming detection is SCENARIO-BASED (optimistic/baseline/pessimistic)
  * to reflect fundamental uncertainty in detection effectiveness.
  *
@@ -240,9 +231,7 @@ function detectScoreInflation(
 
   // Detection if >25% jump AND degradation allows
   const detectionThreshold = 0.25 * detectionState.degradationFactor;
-  // 50% chance if anomaly present (conservative baseline - see header for research justification)
-  // Reflects signal-to-noise ratio in capability jump detection (noisy metric in adversarial context)
-  return percentJump > detectionThreshold && rng() < 0.5;
+  return percentJump > detectionThreshold && rng() < 0.5; // 50% detection probability (PLACEHOLDER - needs confidence interval from research)
 }
 
 /**
