@@ -136,22 +136,16 @@ The project SHALL preserve implementation histories and research context.
 
 ## Current Status
 
-**Session:** 65 (December 10, 2025) - COMPLETE
-**Mode:** Fallback workflows (all HIGH priority work COMPLETE)
-**Research Quality:** C (53.4% sources from 2024-2025, stable, 178 files need archival)
-**Architecture Health:** B+ (0 CRITICAL, 0 HIGH, 1 MEDIUM new - M-1 dual energy systems)
+**Session:** 66 (December 10, 2025)
+**Mode:** Fallback workflows (all HIGH priority work VERIFIED COMPLETE)
+**Research Quality:** C (53.4% sources from 2024-2025, stable, autonomous updates active)
+**Architecture Health:** B+ (0 CRITICAL, 0 HIGH, 1 MEDIUM - M-1 dual energy systems)
 **Test Coverage:** 82.47% (462+ tests passing, 6 known test import failures)
 **System State:** Production-ready, all quality gates GREEN
 
 **Token Conservation:** DISABLED (per PM request Dec 4, 2025)
 - Strategy: Full productivity mode restored
 - Workers: Running every 4 hours (was hourly)
-
-**Active Research Issue:** #747 - AI capability doubling time parameter mismatch (8mo vs 3.6mo research-verified)
-- Status: Created Dec 10, 2025 (Session 65 research audit)
-- Priority: CRITICAL (affects fundamental AI capability projections)
-- Impact: 10,000,000× discrepancy over 10 years in capability scaling
-- Next steps: Research debate (skeptic + researcher), review Nov 2024-Jan 2025 evidence
 
 ---
 
@@ -174,6 +168,11 @@ None (threshold lowering regression FIXED Dec 9, 2025 - commit 3f3118de, 7130c7e
   - Quality Gate 2: Grade B+ (0 CRITICAL/HIGH issues)
   - Files: aiInfrastructureResources.ts, powerGeneration.ts, EnergyBudgetPhase.ts
   - Tests: energyBudgetIntegration.test.ts (6 tests passing)
+- **Issue #747:** AI capability doubling time parameter mismatch - COMPLETE Dec 10, 2025 (commit 451a127f)
+  - Fixed: 8mo → 5.9mo (Epoch AI research-verified)
+  - Location: aiCapabilities.ts
+- **Issue #749:** EnergyBudgetPhase order documentation mismatch - COMPLETE Dec 10, 2025 (commit 0f6c0ab6)
+  - Fixed: Comment now matches code (12.75)
 
 ### HIGH Priority
 None - All HIGH priority work COMPLETE (verified Dec 10 architecture review)
@@ -192,21 +191,13 @@ None - All HIGH priority work COMPLETE (verified Dec 10 architecture review)
   - Impact: MEDIUM (both systems functional, minor integration gap)
   - Related: L-1 (duplicate tech category mapping cleanup)
   - See: reviews/architecture_integration_review_20251210.md
-- **M-8: Sleeper agent rate documentation** (NEW - Dec 10, 2025)
-  - Location: src/simulation/initialization.ts:342-347
-  - Issue: 7.5% sleeper agent rate has no research source, should be documented as TIER 3 BRONZE
-  - Impact: MEDIUM (epistemic debt, not simulation-breaking)
-  - Effort: 30 minutes
-  - Context: Research debate finding (reviews/sleeper_agent_research_debate_20251210.md)
-  - See: Tier classification system, gaming-sleeper-detection research
 - Hindcast tuning (1950-2024 historical validation)
 - Calibration protocol (parameter optimization workflow)
 
 ### COMPLETED LOW Priority
 - **L-1: Duplicate tech category mapping cleanup** - COMPLETE Dec 10, 2025
-  - Extracted mapTechToEnergyCategory to shared utility (commit 301f1aee)
-  - Removed duplicate from ClimateDeploymentPhase.ts (commit c17a3e4f)
-  - Single source of truth: src/simulation/utils/energyCategories.ts
+  - Removed mapTechToEnergyCategory from EnergyBudgetPhase.ts (commit c17a3e4f)
+  - Extracted to shared utility (commit 301f1aee)
 
 ### LOW Priority
 - L-2: Enhanced biodiversity modeling (food web collapse)
@@ -259,11 +250,11 @@ See: `docs/EMOJI_QUICK_REFERENCE.md` (one-page cheat sheet)
 See: `docs/sessions.md` for complete session milestone tracking
 
 **Recent Sessions:**
-- Session 65 (Dec 10): COMPLETE - Autonomous worker - architecture integration review (Grade B+), research audit (Grade C), issue #747 created, L-1 completed
-- Session 64 (Dec 10): COMPLETE - Research audit completion + H-2 duplicate energy fix + architecture integration review
-- Session 63 (Dec 10): COMPLETE - Research source validation (sleeper agent rate, sandbagging, detection risk) + archival
-- Session 62 (Dec 9): COMPLETE - CRITICAL regression fix + H-1/H-2 architecture integration + research audit follow-up
-- Session 60 (Dec 9): COMPLETE - Coffee break + archival + Energy Budget launch (~90k tokens)
+- Session 66 (Dec 10): ALL HIGH work VERIFIED COMPLETE, autonomous research updates (AMOC, IPBES 2025, psychological warfare), wiki sync, roadmap gardening
+- Session 65 (Dec 10): Architecture review (B+), research audit (C, 53.4% stable), issues #747/#749 fixed, L-1 completed, roadmap maintenance
+- Session 64 (Dec 10): Research audit completion + H-2 duplicate energy fix + architecture integration review
+- Session 63 (Dec 10): Research source validation (sleeper agent rate, sandbagging, detection risk) + archival
+- Session 62 (Dec 9): CRITICAL regression fix + H-1/H-2 architecture integration + research audit follow-up
 
 ---
 
