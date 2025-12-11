@@ -126,7 +126,7 @@ export function triggerNuclearWinter(
 ): void {
   // CRITICAL-3: Validate RNG parameter (fail-loudly, no Math.random fallback)
   if (!rng || typeof rng !== 'function') {
-    throw new Error('❌ CRITICAL: RNG required for deterministic nuclear winter simulation');
+    throw new Error('❌ CRITICAL: RNG required for deterministic simulation in triggerNuclearWinter');
   }
   const winter = state.nuclearWinterState;
   
@@ -590,7 +590,7 @@ function addRadiationZonesEnhanced(
 ): void {
   // CRITICAL-3: Validate RNG parameter (fail-loudly, no Math.random fallback)
   if (!rng || typeof rng !== 'function') {
-    throw new Error('❌ CRITICAL: RNG required for deterministic radiation zone creation');
+    throw new Error('❌ CRITICAL: RNG required for deterministic simulation in addRadiationZonesEnhanced');
   }
   countries.forEach(country => {
     // Check if country already has radiation zone (multiple hits)
