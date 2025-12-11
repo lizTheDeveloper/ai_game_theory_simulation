@@ -35,8 +35,8 @@ export class ExtinctionDebtPhase implements SimulationPhase {
     // which runs at order 21.0 (before this phase at 38.0).
     // No need for duplicate initialization here.
 
-    // Skip if no committed extinctions
-    if (state.extinctionDebt.committedExtinctions.length === 0) {
+    // Skip if extinctionDebt not initialized or no committed extinctions
+    if (!state.extinctionDebt || state.extinctionDebt.committedExtinctions.length === 0) {
       return { events: [] };
     }
 
