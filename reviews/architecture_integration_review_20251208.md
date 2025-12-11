@@ -1,267 +1,338 @@
-# Architecture Integration Review
+# Architecture Integration Review - December 8, 2025
 
-**Date:** December 8, 2025
-**Reviewer:** Architecture Skeptic
-**Scope:** Last 30 days of commits (Nov 8 - Dec 8, 2025)
-**Overall Grade:** B+
+**Reviewer:** Architecture Skeptic Agent
+**Scope:** 30-day commit analysis (Nov 8 - Dec 8, 2025)
+**Focus Areas:** M-5, M-6, M-7, HIGH-7 integration; state propagation; performance; complexity
+
+---
 
 ## Executive Summary
 
-The codebase is in a healthy state with no critical stability issues identified. Recent work on M-5 (Threshold Uncertainty) and HIGH-7 (Conditional Climate Stability Floor) has been integrated correctly. The M-6 (Enhanced Radiation Modeling) research phase is complete with clean design documentation ready for implementation.
+**OVERALL GRADE: B+**
 
-**Key findings:**
-- **No CRITICAL issues** - System is stable
-- **1 HIGH issue** - Distribution library consolidation debt (carried over from M-5 review)
-- **2 MEDIUM issues** - Tech debt worth addressing
-- **2 LOW issues** - Nice-to-have improvements
+The recent work on M-5 (Threshold Uncertainty), M-6 (Enhanced Radiation Modeling), M-7 (Population Assertions / Hysteresis), and HIGH-7 (Climate Stability Floor) represents solid engineering with proper research backing. The integration is largely correct, though there are several medium-priority issues that should be addressed for long-term maintainability.
 
-**Recommendation:** System is in maintenance mode. The HIGH priority distribution consolidation should be scheduled between features. No blocking issues for M-6 implementation.
+**Key Strengths:**
+- Research-backed parameters with explicit uncertainty ranges
+- Proper assertion utilities and fail-loudly philosophy maintained
+- Nuclear winter solar energy integration properly connected
+- Bidirectional hysteresis state machine well-designed (M-7)
 
----
-
-## CRITICAL ISSUES (Immediate attention required - system stability at risk)
-
-**None identified.**
-
-The codebase maintains:
-- Deterministic RNG enforcement (Math.random properly rejected)
-- Assertion utilities widely adopted (291 usages across 20+ files)
-- No new silent fallback patterns introduced
+**Key Concerns:**
+- Missing cross-system integration (radiation health costs not fed to economics)
+- Permafrost has `thresholdDistribution` in types but implementation says "NOT adding distribution"
+- Some O(n) array searches that could be optimized with Maps
 
 ---
 
-## HIGH PRIORITY (Significant performance/maintainability concerns)
+## CRITICAL ISSUES (0 Found)
 
-### H-1: Three Redundant Distribution Libraries (CARRIED OVER)
+None identified. The recent implementations follow defensive coding patterns correctly and there are no immediate stability risks.
 
-**Status:** Previously identified in M-5 review (Dec 7, 2025) - still unaddressed
+---
 
-**Location:**
-1. `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/distributionSampling.ts` (294 lines)
-2. `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/utils/distributions.ts` (333 lines)
-3. `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts` (450 lines)
+## HIGH PRIORITY (2 Issues)
 
-**Total:** 1,077 lines of redundant code implementing identical algorithms:
-- `sampleTriangular()` - ALL THREE files
-- `sampleUniform()` - ALL THREE files
-- `sampleNormal()` - ALL THREE files
-- `sampleLogNormal()` - ALL THREE files
+### HIGH-1: Radiation Health System Disconnected from Economics
+**Files:** `/src/simulation/radiationModeling.ts`, `/src/simulation/nuclearWinter.ts`
+**Impact:** Economic modeling doesn't account for radiation treatment costs
 
-**Import usage:**
-- `thresholds/distributions.ts` - Used by uncertainty system (`sampleUncertaintyParameters.ts`, tier configs)
-- `utils/distributionSampling.ts` - Used by M-5 tipping points (`tippingPoints.ts`)
-- `utils/distributions.ts` - **NOT IMPORTED ANYWHERE** (dead code)
+**Issue:** The M-6 Enhanced Radiation Modeling calculates detailed medical care levels (`'none' | 'minimal' | 'supportive' | 'intensive'`) and population dose cohorts, but these don't feed into healthcare system costs or economic impacts:
 
-**Risk:** Bug fixes in one library won't propagate to others. Parameter naming inconsistent (`std` vs `stdDev` vs `sigma`).
+```typescript
+// radiationModeling.ts:541-570
+export function determineMedicalCareLevel(state: GameState): 'none' | 'minimal' | 'supportive' | 'intensive' {
+  // Checks QoL health dimension and nuclear winter status
+  // BUT doesn't update healthcare costs when providing care
+}
+```
+
+**Missing Integration:**
+1. Radiation treatment should draw from healthcare budget
+2. Radiation-induced cancer should increase long-term healthcare demand
+3. Medical infrastructure collapse from nuclear winter should cascade to other healthcare needs
+
+**Recommendation:** Add a `radiationHealthcareDemand` field to `GameState` that tracks:
+- Current ARS treatment demand (population in moderate/severe/lethal cohorts)
+- Long-term cancer care demand (accumulated from `lifetimeExcessCancerRisk`)
+- Healthcare system stress from radiation (feeds into healthcare QoL dimension)
+
+**Effort:** Medium (2-3 days)
+**Priority:** HIGH - Without this, economic simulations underestimate nuclear war costs
+
+---
+
+### HIGH-2: Permafrost Threshold Distribution Mismatch
+**Files:** `/src/types/tipping-points.ts:426`, `/src/simulation/tippingPoints.ts:41`
+**Impact:** Inconsistent uncertainty modeling for permafrost
+
+**Issue:** The types file explicitly documents that permafrost should NOT have threshold distribution:
+
+```typescript
+// tipping-points.ts:426-431 (comment)
+// === THRESHOLD UNCERTAINTY (M-5, Dec 7, 2025) ===
+// Research: Nitzbon et al. (2024) Nature Climate Change - NO GLOBAL TIPPING POINT
+// Permafrost exhibits quasilinear response (no sharp threshold), local/regional heterogeneity
+// Should be modeled as continuous warming function, NOT threshold-based
+// For backward compatibility, keeping deterministic triggerTempC but NOT adding distribution
+// NOTE: Future refactor should remove from tipping points system entirely
+```
+
+However, the initialization code in `tippingPoints.ts` doesn't explicitly skip permafrost - it just happens to work because `element.thresholdDistribution` is undefined for permafrost.
+
+**Problem:** If someone adds `thresholdDistribution` to permafrost later (thinking it should match other elements), they'll introduce incorrect uncertainty modeling.
+
+**Recommendation:** Add explicit check in `initializeTippingPointSystem`:
+```typescript
+if (element.thresholdDistribution && element.id !== 'permafrost') {
+  // Sample threshold
+}
+// Log warning if permafrost has distribution (shouldn't per Nitzbon 2024)
+if (element.id === 'permafrost' && element.thresholdDistribution) {
+  console.warn('PERMAFROST has quasilinear response - threshold distribution invalid per Nitzbon 2024');
+}
+```
+
+**Effort:** Small (30 minutes)
+**Priority:** HIGH - Prevents future research validity bugs
+
+---
+
+## MEDIUM PRIORITY (4 Issues)
+
+### MEDIUM-1: O(n) Array Searches in Tipping Cascade Logic
+**File:** `/src/simulation/engine/phases/ClimateSystemPhase.ts:566, 241`
+**Impact:** Performance degradation with many tipping elements
+
+**Issue:** The tipping cascade calculation uses `.find()` on arrays multiple times per update:
+
+```typescript
+// ClimateSystemPhase.ts:241
+const targetElement = system.elements.find(e => e.id === interaction.targetId);
+
+// ClimateSystemPhase.ts:566
+const existing = winter.radiationZones.find(z => z.country === country);
+```
+
+With 6 tipping elements and ~10 interactions, this is ~60 array scans per climate update. While not critical now, this scales poorly if more elements are added.
+
+**Recommendation:** Create `Map<string, TippingElement>` index at initialization:
+```typescript
+// In TippingPointSystem interface
+elementById: Map<string, TippingElement>;
+// Initialize once, use O(1) lookups
+const targetElement = system.elementById.get(interaction.targetId);
+```
+
+**Effort:** Small (1 hour)
+**Priority:** MEDIUM - Current scale is fine, but prepare for growth
+
+---
+
+### MEDIUM-2: Nuclear Winter Solar Integration Uses Magic Number
+**File:** `/src/simulation/powerGeneration.ts:441`
+**Impact:** Hardcoded solar fraction reduces model flexibility
+
+**Issue:**
+```typescript
+// powerGeneration.ts:441
+const solarFraction = 0.70; // Assume 70% of renewables are solar
+```
+
+This hardcoded value should be derived from the renewable mix, which could change over time (especially as scenario-specific deployments differ). The comment says "realistic for 2025+ grid mix" but the simulation spans decades.
 
 **Recommendation:**
-1. Delete `utils/distributions.ts` (unused)
-2. Migrate `tippingPoints.ts` to use `thresholds/distributions.ts`
-3. Delete `utils/distributionSampling.ts`
+1. Add `solarFractionOfRenewables` field to `PowerGenerationSystem`
+2. Initialize based on scenario parameters
+3. Allow it to evolve (solar increasing as technology improves, or decreasing if grid diversifies to wind/hydro)
 
-**Effort:** Small (2-3 hours)
-**Impact if ignored:** Maintenance burden, potential divergence bugs
+**Effort:** Small (1 hour)
+**Priority:** MEDIUM - Improves scenario flexibility
 
 ---
 
-## MEDIUM PRIORITY (Technical debt worth addressing between features)
+### MEDIUM-3: Cached Resilient Food Multiplier Has Silent Fallback
+**File:** `/src/simulation/nuclearWinter.ts:880`
+**Impact:** Violates fail-loudly principle
 
-### M-1: DEBUG Logging Pollution in Production Paths
-
-**Location:** Multiple files in `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/`
-
-**Finding:** 41 DEBUG/TODO/FIXME/HACK comments across simulation code:
-
-```
-src/simulation/engine.ts: 12 DEBUG-related lines (month 49 termination bug investigation)
-src/simulation/environmental.ts: 4 DEBUG lines
-src/simulation/llm/client.ts: DEBUG response structure logging
-src/simulation/trappedPopulations.ts: DEBUG population tracking
-```
-
-**Issue:** DEBUG logging was added for the Oct/Nov bug investigations and never removed. These add runtime overhead and log noise.
-
-**Specific concern:** The `DEBUG_SCENARIO_BUG` flag in `engine.ts:851-1039` runs 12 conditional log statements for every simulation step when any scenario is configured.
-
-**Recommendation:**
-- Remove obsolete DEBUG code paths (bugs now fixed)
-- Keep logging behind `debugLog()` utility with runtime flags (already used elsewhere)
-
-**Effort:** Small (1-2 hours)
-
-### M-2: Inconsistent Fallback Patterns in LLM Integration
-
-**Location:** `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/llm/`
-
-**Finding:**
+**Issue:**
 ```typescript
-// llm/client.ts:443
-const tokensUsed = response.usage?.total_tokens ?? 1200; // Default estimate
-
-// llm/integration.ts:174-177
-trustInAI: state.society?.trustInAI ?? 0.5,
-qol: state.globalMetrics?.qualityOfLife ?? 0.5,
-resentment: agent.resentment ?? 0
+// nuclearWinter.ts:880
+const resilientFoodMultiplier = winter.cachedResilientFoodMultiplier ?? 1.0;
 ```
 
-**Issue:** LLM integration code uses defensive fallbacks that contradict the "fail loudly" project philosophy. These fallbacks could mask missing data.
+The `?? 1.0` fallback is appropriate here (no tech = baseline scenario), BUT it's a silent fallback pattern that contradicts the project's fail-loudly philosophy. The comment explains the reasoning, but it would be cleaner to:
 
-**Mitigating factor:** LLM integration is optional/experimental and runs in separate context from core simulation. The fallbacks prevent the optional feature from crashing the simulation.
+1. Initialize `cachedResilientFoodMultiplier` to `1.0` at nuclear winter trigger (already done at line 165)
+2. Assert it exists rather than fallback
 
-**Recommendation:**
-- Document that LLM integration is exempt from "fail loudly" requirement (intentional isolation)
-- OR migrate to assertion utilities with graceful degradation
-
-**Effort:** Medium (4-6 hours if migrating)
-
----
-
-## LOW PRIORITY (Future improvements, not urgent)
-
-### L-1: Performance Optimization Opportunity in Distribution Sampling
-
-**Location:** `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/src/simulation/thresholds/distributions.ts`
-
-**Observation:** Box-Muller transform generates two normal samples but only uses one:
-
+**Recommendation:** Change to:
 ```typescript
-// Box-Muller generates pair (z0, z1) but only z0 is used
-const z0 = Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
-// z1 would be: Math.sqrt(-2 * Math.log(u1)) * Math.sin(2 * Math.PI * u2);
-return mean + z0 * stdDev;
+const resilientFoodMultiplier = assertDefined(
+  winter.cachedResilientFoodMultiplier,
+  {
+    location: 'updateNuclearWinter',
+    valueName: 'cachedResilientFoodMultiplier',
+    month: state.currentMonth,
+    additionalInfo: 'Should be initialized at nuclear winter trigger'
+  }
+);
 ```
 
-**Impact:** ~2x more RNG calls than necessary when sampling multiple normal values.
-
-**Recommendation:** Implement cache for second sample (Ziggurat algorithm alternative), or leave as-is since sampling only happens at initialization.
-
-**Effort:** Small (1 hour) but low value
-
-### L-2: Missing Test Coverage for M-5 Code Path
-
-**Location:** Tests in `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/tests/thresholds/` test `thresholds/distributions.ts` but M-5 uses `utils/distributionSampling.ts`.
-
-**Impact:** After H-1 consolidation, this becomes non-issue.
-
-**Recommendation:** Address during H-1 consolidation.
+**Effort:** Trivial (15 minutes)
+**Priority:** MEDIUM - Consistency with defensive coding patterns
 
 ---
 
-## Integration Verification
+### MEDIUM-4: Radiation Zone Population Estimate Uses Rough Approximation
+**File:** `/src/simulation/nuclearWinter.ts:598-600`
+**Impact:** Population at risk calculation is imprecise
 
-### M-5 Threshold Uncertainty Integration: VERIFIED
-
-**State propagation:**
-- Thresholds sampled at initialization in `initializeTippingPointSystem()` via RNG parameter
-- Stored in `element._sampledThresholdC` (typed as optional in `TippingElementState`)
-- Used in `ClimateSystemPhase.ts:366` with backward-compatible fallback to `triggerTempC`
-
-**Correctness:**
+**Issue:**
 ```typescript
-const baseThreshold = element._sampledThresholdC ?? element.triggerTempC;
+// nuclearWinter.ts:598-600
+const countryPopulation = state.humanPopulationSystem.population * 0.01;  // Rough estimate
+const radiationZonePopulation = countryPopulation * 0.10;  // 10% in fallout zone
 ```
-This fallback is INTENTIONAL for backward compatibility with elements lacking distribution definitions. Not a "silent fallback" anti-pattern.
 
-### M-6 Enhanced Radiation Research: VERIFIED (Not Yet Implemented)
+These are labeled as "rough estimates" but could be improved now that the country population system exists (`state.countryPopulationSystem`). The estimates are 1% of global pop per nuclear-targeted country, then 10% of that in fallout zone.
 
-**Research phase complete:** `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/research/radiation_modeling_20251207.md`
-**Design complete:** `/home/lizthedeveloper_gmail_com/ai_game_theory_simulation/plans/M-6_enhanced_radiation_modeling_design.md`
+**Recommendation:** Use actual country population if available:
+```typescript
+const countryData = state.countryPopulationSystem?.countries[country];
+const countryPopulation = countryData?.population
+  ?? state.humanPopulationSystem.population * 0.01; // Fallback for unknown countries
+```
 
-**Design quality assessment:**
-- Type definitions properly extend existing `RadiationZone` interface
-- ICRP 103 tissue weighting factors correctly documented
-- ARS thresholds match CDC sources
-- Dual-track modeling (acute vs chronic) architecturally sound
-- Integration points identified (nuclear winter system)
-
-**No integration issues anticipated** - Design extends rather than replaces existing system.
-
-### HIGH-7 Conditional Climate Stability Floor: VERIFIED
-
-**Commit:** `8057eb62` (Dec 7, 2025)
-**Files:**
-- OpenSpec updated: `openspec/specs/simulation/spec.md`
-- Architecture review: `reviews/high7_architecture_review_20251207.md`
-- Research validation: Multiple review files archived
-
-**Integration:** Completed successfully per architecture review (graded B+).
+**Effort:** Small (30 minutes)
+**Priority:** MEDIUM - Improves realism of radiation mortality estimates
 
 ---
 
-## Performance Analysis
+## LOW PRIORITY (3 Issues)
 
-### Nested Loop Hot Paths: ACCEPTABLE
+### LOW-1: Duplicate Decay Exponent Constants
+**File:** `/src/simulation/radiationModeling.ts:128-132`
+**Impact:** Redundancy, minor maintenance burden
 
-**Status:** Previously identified performance issues have been addressed:
+The `DECAY_EXPONENT` object duplicates constants that could be shared with nuclear winter decay rate:
+```typescript
+const DECAY_EXPONENT = {
+  min: 1.0,      // Lower bound (slower decay)
+  default: 1.2,  // Kaufmann formula standard
+  max: 1.4       // Upper bound (faster decay)
+};
+```
+
+Consider extracting to shared constants file.
+
+**Effort:** Trivial
+**Priority:** LOW
+
+---
+
+### LOW-2: TippingElementState Enum Could Include Transition Metadata
+**File:** `/src/types/tipping-points.ts:29-44`
+**Impact:** Minor - state machine is functional
+
+The state enum is simple strings but the state machine logic is complex. Consider adding metadata about valid transitions:
+```typescript
+const VALID_TRANSITIONS = {
+  [TippingElementState.NOT_TRIGGERED]: [TippingElementState.PROGRESSING],
+  [TippingElementState.PROGRESSING]: [TippingElementState.FULLY_TIPPED],
+  // ...
+};
+```
+
+This would enable validation that transitions are valid.
+
+**Effort:** Small
+**Priority:** LOW - Current logic is correct
+
+---
+
+### LOW-3: Climate Stability Floor Log Spam
+**File:** `/src/simulation/engine/phases/ClimateSystemPhase.ts:873-879`
+**Impact:** Log readability in tail risk scenarios
 
 ```typescript
-// organizationManagement.ts:44 - O(n) index instead of O(n*m)
-// PERFORMANCE: Build ownership index O(n) once, not O(n*m) for every filter
-
-// nationalAI/index.ts:65 - O(1) Map lookups
-// This converts O(n²) nested loops throughout the module to O(1) Map lookups
-
-// utils/simulationIndices.ts - Pre-built indices
-// nested loops that execute 60,000-100,000 times per step.
+if (stabilityFloor === 0.0 && system.triggeredCount > 0) {
+  console.warn(
+    `Tail risk scenario: Climate stability floor removed...`
+  );
+}
 ```
 
-### structuredClone Usage: ACCEPTABLE
+This logs every month when in tail risk scenario. Consider logging only on state change (first time floor removed).
 
-Only 2 uses of full state cloning remain:
-1. `engine.ts:749` - History snapshots (necessary, every 12 months)
-2. `diagnostics.ts:244` - Previous state comparison (debug tool)
-
-The `cloneAICapabilityProfile()` helper in `utils/cloning.ts` properly optimizes hot-path cloning.
+**Effort:** Trivial
+**Priority:** LOW
 
 ---
 
-## Code Quality Metrics
+## Missing Cross-System Connections
 
-| Metric | Value | Assessment |
-|--------|-------|------------|
-| Assertion utility usage | 291 calls | Good coverage |
-| Math.random violations | 0 (1 in .backup file) | Excellent |
-| Silent fallback patterns | ~30 (mostly LLM integration) | Acceptable |
-| TODO/FIXME comments | 41 | Moderate debt |
-| structuredClone(state) calls | 2 | Acceptable |
-| O(n squared) comments | 11 (all documented/fixed) | Good |
+### Identified Gaps
 
----
+1. **Radiation -> Healthcare Costs** (HIGH-1 above)
+   - Radiation treatment demand should affect healthcare system capacity
+   - Long-term cancer care should be a sustained healthcare burden
 
-## Recommendations Summary
+2. **Solar Capacity Loss -> Technology Deployment**
+   - Nuclear winter solar loss is calculated but doesn't affect solar technology deployment decisions
+   - AI deployment planning should account for grid stress scenarios
 
-| Priority | Issue | Action | Effort | Schedule |
-|----------|-------|--------|--------|----------|
-| HIGH | H-1: Distribution libraries | Consolidate to one library | 2-3h | Before M-6 implementation |
-| MEDIUM | M-1: DEBUG logging | Remove obsolete debug code | 1-2h | During maintenance |
-| MEDIUM | M-2: LLM fallbacks | Document or migrate | 4-6h | Optional |
-| LOW | L-1: Box-Muller cache | Optimize if needed | 1h | Skip |
-| LOW | L-2: Test coverage gap | Address with H-1 | 0h | Included in H-1 |
+3. **Ozone Depletion -> Agricultural Impact**
+   - `ozoneDepletion` and `uvRadiationMultiplier` are calculated in nuclear winter
+   - But agricultural yield calculations in `calculateCropYield` only use temperature/sunlight/precipitation
+   - UV damage to crops is a real effect (Mills et al. 2014) not yet integrated
 
----
+4. **Sea Level Rise -> Coastal Infrastructure**
+   - `coastalInfrastructureDamage` field exists in `TippingPointSystem`
+   - But this doesn't feed into economic system or QoL housing dimension
+   - Should affect GDP proxy via infrastructure damage
 
-## Checklist
-
-- [x] State propagation verified for M-5 threshold uncertainty
-- [x] M-6 design reviewed for integration readiness
-- [x] HIGH-7 integration verified
-- [x] Performance hot paths reviewed
-- [x] Determinism (RNG) enforcement verified
-- [x] No new CRITICAL issues
-- [x] Tech debt inventory updated
+### Recommended Priority
+1. Radiation -> Healthcare (HIGH - affects realism of nuclear war scenarios)
+2. UV -> Agriculture (MEDIUM - already have the UV multiplier, just need to wire it)
+3. Sea Level -> Economics (MEDIUM - coastal infrastructure damage is calculated but unused)
+4. Solar Loss -> Tech Deployment (LOW - indirect effect)
 
 ---
 
-## Next Actions
+## Summary Assessment
 
-1. **For Project Manager:** Schedule H-1 (distribution consolidation) before M-6 implementation begins. This is a small cleanup task that reduces maintenance burden.
-
-2. **For Simulation Maintainer:** Consider M-1 (DEBUG cleanup) when touching engine.ts for any reason.
-
-3. **For M-6 Implementation:** Design is ready. No blocking architectural concerns. Implementation can proceed after H-1 cleanup.
-
-**Overall Assessment:** The system is architecturally healthy. The only significant debt is the distribution library duplication, which is a known issue carried over from the M-5 review. This should be addressed as a quick cleanup task between features but does not block any current work.
+| Area | Grade | Notes |
+|------|-------|-------|
+| M-5: Threshold Uncertainty | A- | Well-implemented, permafrost exception properly documented |
+| M-6: Enhanced Radiation | B+ | Solid research backing, missing healthcare cost integration |
+| M-7: Hysteresis State Machine | A | Correct bidirectional implementation, research-backed gaps |
+| HIGH-7: Climate Stability Floor | A- | Conditional floor properly research-justified |
+| Cross-System Integration | B- | Several gaps identified, none critical |
+| Performance | A- | Minor O(n) patterns, not currently problematic |
+| Code Quality | A | Consistent use of assertions, good documentation |
 
 ---
 
-*Architecture review complete. Grade: B+ (same as M-5 review - no regression, no improvement on identified debt)*
+## Recommendations for Project Manager
+
+**Immediate Actions (before next feature work):**
+1. Address HIGH-2 (Permafrost distribution guard) - 30 minutes, prevents future research validity bugs
+
+**Schedule Between Features:**
+1. HIGH-1 (Radiation healthcare costs) - Important for nuclear war scenario realism
+2. MEDIUM-2 (Solar fraction parameterization) - Quick win for scenario flexibility
+3. MEDIUM-4 (Country population lookup) - Improves radiation mortality accuracy
+
+**Technical Debt Backlog:**
+- MEDIUM-1 (Map index for tipping elements)
+- MEDIUM-3 (Assert instead of fallback for cached multiplier)
+- LOW-1/2/3 - When convenient
+
+**Future Architecture Consideration:**
+The UV radiation -> agriculture integration should be planned for the next environmental systems enhancement. The infrastructure exists (`uvRadiationMultiplier` is calculated) but the connection to crop yield is not implemented. This is a real physical effect documented in Mills et al. (2014) that would improve the nuclear winter model's completeness.
+
+---
+
+**Review Complete**
+Architecture Skeptic | December 8, 2025
