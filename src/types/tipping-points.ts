@@ -573,7 +573,6 @@ export const TIPPING_INTERACTIONS: TippingInteraction[] = [
     mechanism: 'Carbon feedback: accelerated global warming from permafrost carbon release'
   },
 
-<<<<<<< HEAD
   // === AMOC -> TROPICAL SYSTEMS ===
   // AMOC collapse shifts tropical rainfall patterns
   // ⚠️ RESEARCH UNCERTAINTY: 2023-2025 studies show AMOC collapse may STABILIZE Amazon
@@ -591,7 +590,6 @@ export const TIPPING_INTERACTIONS: TippingInteraction[] = [
   //   thresholdReduction: 0.25, // REMOVED - sign uncertain
   //   mechanism: 'Monsoon disruption: AMOC collapse shifts ITCZ southward, reducing Amazon rainfall'
   // },
-=======
   // === AMOC -> ICE SHEETS ===
   // AMOC collapse reduces heat transport to North Atlantic
   // This counterintuitively SLOWS Greenland melt (stabilizing feedback)
@@ -606,7 +604,6 @@ export const TIPPING_INTERACTIONS: TippingInteraction[] = [
   // Sources: Nature Comms 2023, npj Climate 2025, JGR Atmospheres 2025
   // Mechanism was incorrectly stated as destabilizing (sign error)
   // See: research/verification_cf49657_20251207.md for full analysis
->>>>>>> origin/auto/worker-20251208_040001
 
   // === AMAZON -> GLOBAL CLIMATE ===
   // Amazon dieback releases stored carbon

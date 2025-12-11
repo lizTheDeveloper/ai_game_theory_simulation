@@ -565,7 +565,6 @@ function calculateResilientFoodMultiplier(state: GameState): number {
 }
 
 /**
-<<<<<<< HEAD
  * Add radiation zones for countries hit by nuclear weapons (ENHANCED - M-6)
  *
  * Now includes:
@@ -681,12 +680,10 @@ function addRadiationZonesEnhanced(
 
 /**
  * Add radiation zones (wrapper for backward compatibility)
-=======
  * Add radiation zones for countries hit by nuclear weapons
  *
  * M-6: TIER 1.7.5 - Enhanced radiation modeling
  * Creates both legacy radiation zones AND enhanced radiation exposures
->>>>>>> origin/auto/worker-20251208_030001
  */
 function addRadiationZones(
   winter: NuclearWinterState,
@@ -697,11 +694,8 @@ function addRadiationZones(
   // For now, create zones with legacy behavior
   // TODO: Refactor callers to use addRadiationZonesEnhanced with GameState
   countries.forEach(country => {
-<<<<<<< HEAD
-=======
     // === LEGACY RADIATION ZONES (backward compatibility) ===
     // Check if country already has radiation zone (multiple hits)
->>>>>>> origin/auto/worker-20251208_030001
     const existing = winter.radiationZones.find(z => z.country === country);
     if (existing) {
       existing.intensity = Math.min(1.0, existing.intensity + 0.3);
@@ -709,10 +703,7 @@ function addRadiationZones(
       return;
     }
 
-<<<<<<< HEAD
-=======
     // Add new radiation zone
->>>>>>> origin/auto/worker-20251208_030001
     winter.radiationZones.push({
       country,
       hitMonth: currentMonth,
