@@ -77,6 +77,7 @@ export interface PowerGenerationSystem {
   renewableTransitionRate: number;         // Annual % point increase (slow: ~2%)
   nuclearExpansionRate: number;            // Annual % point change
   fossilPhaseOutRate: number;              // Annual % point decrease
+  solarFractionOfRenewables: number;       // [0, 1] - % of renewables that are solar (vs wind/hydro/geo) - MEDIUM-2 fix Dec 8, 2025
 
   // === CLIMATE FEEDBACKS ===
   coolingDemandMultiplier: number;         // 1.0 + (tempAnomaly × 0.05)
@@ -197,6 +198,7 @@ export function initializePowerGenerationSystem(): PowerGenerationSystem {
     renewableTransitionRate: 0.02, // 2% per year (slow!)
     nuclearExpansionRate: 0.005,   // 0.5% per year (very slow)
     fossilPhaseOutRate: 0.025,     // 2.5% per year
+    solarFractionOfRenewables: 0.70, // 70% of renewables are solar (IEA 2024) - MEDIUM-2 fix Dec 8, 2025
 
     // Climate feedbacks
     coolingDemandMultiplier: 1.0,  // Neutral (will increase with warming)

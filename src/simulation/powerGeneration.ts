@@ -463,10 +463,11 @@ function updateGridMix(power: PowerGenerationSystem, state: GameState): void {
       month: state.currentMonth
     });
 
-    // Assume 70% of renewables are solar (realistic for 2025+ grid mix)
+    // Use solar fraction from power system (parameterized - MEDIUM-2 fix Dec 8, 2025)
     // Wind/hydro/geothermal unaffected by sunlight
     // Research: IEA (2024) - Solar dominates renewable capacity additions globally
-    const solarFraction = 0.70;
+    // Default 70%, but can evolve or vary by scenario
+    const solarFraction = power.solarFractionOfRenewables;
     sunlightReduction = power.renewablePercentage * solarFraction * sunlightBlocked;
 
     // Effective renewable output is reduced by solar capacity loss
