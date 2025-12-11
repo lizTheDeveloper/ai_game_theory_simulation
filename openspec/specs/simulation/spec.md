@@ -336,6 +336,34 @@ None (system in maintenance mode)
 **Research:** CDC 2024, REMM, ICRP 103, PMC11604265, BEIR VII (LNT controversy documented)
 **Tests:** 30+ unit tests, deterministic, all passing
 **History:** `docs/implementation-history/M-6_enhanced_radiation_modeling_20251208.md`
+**Implementation:** Unified distribution library (triangular, uniform, normal, log-normal, beta, gamma)
+**Research:** 775-line research doc with peer-reviewed threshold ranges (AMOC: 1.4-8.0°C, Greenland: 0.8-3.4°C, etc.)
+**Validation:** Monte Carlo N=3 deterministic (seed=42, all thresholds identical across runs), 28/28 tests passing
+**Quality Gates:** QG1 Grade B- (research-skeptic), QG2 Grade B+ (architecture-skeptic post-fixes)
+**Files:** `src/simulation/utils/distributions.ts` (canonical, 596 lines), `tests/thresholds/distributions.test.ts`
+**Architecture Fixes:** H-1 resolved (consolidated three redundant libraries into one, 484 lines eliminated)
+**Commits:** Initial implementation + consolidation 53cc7836
+**History:** `docs/implementation-history/m5_architecture_review_fixes_20251207.md` (partial, full history pending)
+
+#### M-6: Enhanced Radiation Modeling
+**Status:** ✅ COMPLETE (Dec 8, 2025)
+**Implementation:** Dual-track radiation modeling (acute ARS + chronic cancer)
+**Research:** ICRP 103 (2007/2022), BEIR VII (2006), CDC (2024)
+**Quality Gates:** QG1 Grade B- (research-skeptic), QG2 pending (architecture-skeptic)
+**Files:**
+- `src/types/radiationExposure.ts` - ICRP 103 tissue weights, ARS thresholds, cancer risk coefficients
+- `src/simulation/radiationDoseResponse.ts` - Dose-response functions (ARS mortality, latent cancer)
+- `src/simulation/nuclearWinter.ts` - Integration with dual-track mortality
+- `tests/radiationDoseResponse.test.ts` - 40+ unit tests
+**Key Mechanics:**
+- Acute Radiation Syndrome (ARS): Sigmoid mortality curve, 0% @ <0.7 Gy → 100% @ 10+ Gy
+- Chronic cancer risk: LNT model with DREF=2.0 for low dose rates
+- Tissue weighting: 15 ICRP 103 tissue types (sum = 1.0)
+- Latency distribution: Gaussian peak @ 15 years post-exposure
+**Validation:** Monte Carlo N=10 deterministic, 0 regressions, backward compatible with legacy zones
+**Commit:** 0936b154
+**History:** `docs/implementation-history/m6_enhanced_radiation_modeling_20251208.md`
+>>>>>>> origin/auto/worker-20251208_030001
 
 ---
 

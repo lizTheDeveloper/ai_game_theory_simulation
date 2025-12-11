@@ -223,6 +223,13 @@ None (system in maintenance mode)
 >>>>>>> origin/auto/worker-20251207_150002
 - M-6: Enhanced radiation modeling (acute vs chronic, tissue sensitivity)
 >>>>>>> origin/auto/worker-20251207_140001
+### COMPLETED MEDIUM Priority
+- M-5: Threshold uncertainty modeling (distribution sampling library) - COMPLETE Dec 7, 2025
+- M-6: Enhanced radiation modeling (acute vs chronic, tissue sensitivity) - COMPLETE Dec 8, 2025
+
+### MEDIUM Priority
+(Empty - all items complete or deferred)
+>>>>>>> origin/auto/worker-20251208_030001
 
 ### LOW Priority
 - L-2: Enhanced biodiversity modeling (food web collapse)

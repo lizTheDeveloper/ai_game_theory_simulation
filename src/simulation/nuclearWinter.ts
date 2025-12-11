@@ -31,6 +31,12 @@
 
 import { GameState } from '../types/game';
 import { NuclearWinterState, RadiationZone } from '../types/nuclearWinter';
+import { RadiationExposure } from '../types/radiationExposure';
+import {
+  calculateARSMortality,
+  calculateLatentCancerRisk,
+  distributeLatentCancerDeaths
+} from './radiationDoseResponse';
 import { addMortalityRisk } from './bayesianMortality';
 import {
   assertFinite,
@@ -83,8 +89,13 @@ export function initializeNuclearWinterState(): NuclearWinterState {
     marineProductivityReduction: 0,  // Normal ocean productivity initially
     oceanDependentPopulationAtRisk: 0,
 
-    // Radiation
+    // Radiation (legacy)
     radiationZones: [],
+
+    // Enhanced radiation tracking (M-6: TIER 1.7.5)
+    radiationExposures: [],
+    totalARSDeaths: 0,
+    totalCancerDeaths: 0,
 
     // Duration
     monthsSinceWar: 0,
@@ -554,6 +565,7 @@ function calculateResilientFoodMultiplier(state: GameState): number {
 }
 
 /**
+<<<<<<< HEAD
  * Add radiation zones for countries hit by nuclear weapons (ENHANCED - M-6)
  *
  * Now includes:
@@ -669,6 +681,12 @@ function addRadiationZonesEnhanced(
 
 /**
  * Add radiation zones (wrapper for backward compatibility)
+=======
+ * Add radiation zones for countries hit by nuclear weapons
+ *
+ * M-6: TIER 1.7.5 - Enhanced radiation modeling
+ * Creates both legacy radiation zones AND enhanced radiation exposures
+>>>>>>> origin/auto/worker-20251208_030001
  */
 function addRadiationZones(
   winter: NuclearWinterState,
@@ -679,6 +697,11 @@ function addRadiationZones(
   // For now, create zones with legacy behavior
   // TODO: Refactor callers to use addRadiationZonesEnhanced with GameState
   countries.forEach(country => {
+<<<<<<< HEAD
+=======
+    // === LEGACY RADIATION ZONES (backward compatibility) ===
+    // Check if country already has radiation zone (multiple hits)
+>>>>>>> origin/auto/worker-20251208_030001
     const existing = winter.radiationZones.find(z => z.country === country);
     if (existing) {
       existing.intensity = Math.min(1.0, existing.intensity + 0.3);
@@ -686,6 +709,10 @@ function addRadiationZones(
       return;
     }
 
+<<<<<<< HEAD
+=======
+    // Add new radiation zone
+>>>>>>> origin/auto/worker-20251208_030001
     winter.radiationZones.push({
       country,
       hitMonth: currentMonth,
@@ -693,6 +720,53 @@ function addRadiationZones(
       decayRate: 0.05,
       currentLevel: 0.8,
       monthlyDeathRate: 0.01
+    });
+
+    // === ENHANCED RADIATION EXPOSURE (M-6) ===
+    // Check if country already has enhanced exposure (multiple hits)
+    if (!winter.radiationExposures) {
+      winter.radiationExposures = [];
+    }
+
+    const existingExposure = winter.radiationExposures.find(e => e.country === country);
+    if (existingExposure) {
+      // Multiple strikes: increase acute dose
+      existingExposure.acuteExposure.initialDose = Math.min(
+        10.0,  // Cap at LD100
+        existingExposure.acuteExposure.initialDose + 2.0
+      );
+      existingExposure.acuteExposure.arsMortalityRate = calculateARSMortality(
+        existingExposure.acuteExposure.initialDose,
+        false  // No medical care post-nuclear war
+      );
+      return;
+    }
+
+    // Add new enhanced radiation exposure
+    // Research (M-6 design): Extended fallout zone (1-3 Gy acute, 0.1 Gy/month chronic)
+    const acuteDose = 2.0;  // Gy (Extended fallout zone - LD10 range)
+    winter.radiationExposures.push({
+      country,
+      hitMonth: currentMonth,
+
+      // Acute exposure from blast + prompt radiation
+      acuteExposure: {
+        initialDose: acuteDose,
+        doseRate: 50.0,  // Gy/hour (high dose rate - acute exposure)
+        timestamp: currentMonth,
+        arsMortalityRate: calculateARSMortality(acuteDose, false),  // No medical care
+        arsDeathsApplied: false,
+      },
+
+      // Chronic exposure from fallout
+      chronicExposure: {
+        cumulativeDose: 0,  // Accumulates over time
+        monthlyDoseRate: 0.1,  // Gy/month initial fallout (extended zone)
+        decayRate: 0.05,    // 5% per month (matches legacy decay rate)
+        currentIntensity: 0.8,  // High initial fallout (matches legacy intensity)
+        lifetimeCancerRisk: 0,  // Calculated as dose accumulates
+        monthlyCancerDeaths: 0,
+      },
     });
   });
 }
@@ -946,9 +1020,12 @@ export function updateNuclearWinter(state: GameState): void {
     }
   }
   
-  // 6. Update radiation zones
+  // 6. Update radiation zones (legacy)
   updateRadiationZones(state, winter);
-  
+
+  // 6b. Update enhanced radiation exposures (M-6: TIER 1.7.5)
+  updateRadiationExposures(state, winter);
+
   // 7. Check if nuclear winter is over (soot cleared, starvation negligible)
   if (winter.currentSoot < 0.5 && winter.monthlyStarvationRate < 0.001) {
     winter.active = false;
@@ -1166,6 +1243,169 @@ function updateRadiationZones(state: GameState, winter: NuclearWinterState): voi
     if (winter.radiationZones[i].currentLevel <= 0.01) {
       console.log(`   ✅ Radiation zone ${winter.radiationZones[i].country} cleared (dose rate <1% of initial)`);
       winter.radiationZones.splice(i, 1);
+    }
+  }
+}
+
+/**
+ * Update enhanced radiation exposures (dual-track modeling: acute ARS + chronic cancer)
+ *
+ * M-6: TIER 1.7.5 - Enhanced Radiation Modeling
+ *
+ * Research:
+ * - ICRP 103 (2007): Tissue weighting factors
+ * - BEIR VII (2006): Cancer risk coefficients
+ * - CDC (2024): ARS clinical thresholds
+ */
+function updateRadiationExposures(state: GameState, winter: NuclearWinterState): void {
+  if (!winter.radiationExposures || winter.radiationExposures.length === 0) return;
+
+  let totalARSDeaths = 0;
+  let totalCancerDeaths = 0;
+
+  winter.radiationExposures.forEach(exposure => {
+    const country = state.countryPopulationSystem?.countries[exposure.country];
+    if (!country || country.population <= 0.1) return;  // Skip if <100K people
+
+    // === 1. ACUTE EXPOSURE (ARS) - Apply once ===
+    if (!exposure.acuteExposure.arsDeathsApplied) {
+      const arsMortality = exposure.acuteExposure.arsMortalityRate;
+      const arsDeaths = (country.population / 1000) * arsMortality;  // Convert to billions
+      totalARSDeaths += arsDeaths;
+
+      // Mark as applied
+      exposure.acuteExposure.arsDeathsApplied = true;
+
+      console.log(`   ☢️ 💀 ARS deaths in ${exposure.country}: ${(arsDeaths * 1000).toFixed(1)}M (${(arsMortality * 100).toFixed(0)}% from ${exposure.acuteExposure.initialDose.toFixed(1)} Gy)`);
+    }
+
+    // === 2. CHRONIC EXPOSURE (Fallout) - Apply monthly ===
+    // Decay fallout intensity
+    exposure.chronicExposure.currentIntensity *= (1 - exposure.chronicExposure.decayRate);
+
+    // Accumulate dose
+    const monthlyDose = exposure.chronicExposure.monthlyDoseRate * exposure.chronicExposure.currentIntensity;
+    exposure.chronicExposure.cumulativeDose += monthlyDose;
+
+    // Calculate lifetime cancer risk (updates as cumulative dose increases)
+    const doseRateGyPerHour = exposure.chronicExposure.monthlyDoseRate / 720;  // Convert month to hours
+    exposure.chronicExposure.lifetimeCancerRisk = calculateLatentCancerRisk(
+      exposure.chronicExposure.cumulativeDose,
+      doseRateGyPerHour,
+      true  // Fatal cancers only
+    );
+
+    // Distribute cancer deaths over time (latency period)
+    const monthsSinceExposure = state.currentMonth - exposure.hitMonth;
+    const monthlyCancerMortality = distributeLatentCancerDeaths(
+      exposure.chronicExposure.lifetimeCancerRisk,
+      monthsSinceExposure
+    );
+
+    exposure.chronicExposure.monthlyCancerDeaths = monthlyCancerMortality;
+    const cancerDeaths = (country.population / 1000) * monthlyCancerMortality;  // Convert to billions
+    totalCancerDeaths += cancerDeaths;
+
+    // Log significant cancer deaths annually
+    if (monthsSinceExposure % 12 === 0 && cancerDeaths > 0.001) {
+      console.log(`   ☢️ 🦀 Radiation-induced cancer deaths in ${exposure.country}: ${(cancerDeaths * 1000).toFixed(1)}M (cumulative dose: ${exposure.chronicExposure.cumulativeDose.toFixed(2)} Gy)`);
+    }
+  });
+
+  // === 3. APPLY MORTALITY TO POPULATION ===
+  // ARS mortality (if any were triggered this month)
+  if (totalARSDeaths > 0) {
+    const nuclearNationsPopulation = state.humanPopulationSystem.population * 0.30;
+
+    // Fail loudly if population collapsed (same pattern as legacy code)
+    if (nuclearNationsPopulation <= 0) {
+      throw new Error(
+        `❌ EXTINCTION: Nuclear nations population collapsed to 0 during nuclear winter (Month ${state.currentMonth}). ` +
+        `Total ARS deaths: ${totalARSDeaths}. Cannot calculate mortality rate with zero denominator.`
+      );
+    }
+
+    const arsMortality = assertFinite(totalARSDeaths / nuclearNationsPopulation, {
+      location: 'updateRadiationExposures (ARS)',
+      valueName: 'arsMortality',
+      month: state.currentMonth,
+      additionalInfo: {
+        totalDeaths: totalARSDeaths,
+        nuclearNationsPopulation,
+        exposures: winter.radiationExposures.length
+      }
+    });
+
+    addMortalityRisk(state.humanPopulationSystem, {
+      type: 'war',
+      baseRisk: arsMortality,
+      scope: 'REGIONAL',
+      exposedFraction: 0.30,
+      proximate: 'war',
+      root: RootCause.conflict,
+      month: state.currentMonth,
+      description: 'Acute Radiation Syndrome (ARS)',
+      confidence: 'HIGH'  // CDC clinical data
+    });
+
+    if (winter.totalARSDeaths !== undefined) {
+      winter.totalARSDeaths += totalARSDeaths;
+    }
+  }
+
+  // Cancer mortality (ongoing)
+  if (totalCancerDeaths > 0) {
+    const nuclearNationsPopulation = state.humanPopulationSystem.population * 0.30;
+
+    // Fail loudly if population collapsed
+    if (nuclearNationsPopulation <= 0) {
+      throw new Error(
+        `❌ EXTINCTION: Nuclear nations population collapsed to 0 during nuclear winter (Month ${state.currentMonth}). ` +
+        `Total cancer deaths: ${totalCancerDeaths}. Cannot calculate mortality rate with zero denominator.`
+      );
+    }
+
+    const cancerMortality = assertFinite(totalCancerDeaths / nuclearNationsPopulation, {
+      location: 'updateRadiationExposures (cancer)',
+      valueName: 'cancerMortality',
+      month: state.currentMonth,
+      additionalInfo: {
+        totalDeaths: totalCancerDeaths,
+        nuclearNationsPopulation,
+        exposures: winter.radiationExposures.length
+      }
+    });
+
+    addMortalityRisk(state.humanPopulationSystem, {
+      type: 'war',
+      baseRisk: cancerMortality,
+      scope: 'REGIONAL',
+      exposedFraction: 0.30,
+      proximate: 'war',
+      root: RootCause.conflict,
+      month: state.currentMonth,
+      description: 'Radiation-induced cancer (latent)',
+      confidence: 'HIGH'  // Hiroshima/Nagasaki Life Span Study
+    });
+
+    if (winter.totalCancerDeaths !== undefined) {
+      winter.totalCancerDeaths += totalCancerDeaths;
+    }
+  }
+
+  // Update legacy totalRadiationDeaths for backward compatibility
+  if (winter.totalARSDeaths !== undefined && winter.totalCancerDeaths !== undefined) {
+    winter.totalRadiationDeaths = winter.totalARSDeaths + winter.totalCancerDeaths;
+  }
+
+  // === 4. CLEANUP ===
+  // Remove exposures with negligible fallout (<1%) AND all ARS applied
+  // PERFORMANCE: In-place splice, backward iteration (same pattern as legacy code)
+  for (let i = winter.radiationExposures.length - 1; i >= 0; i--) {
+    const exposure = winter.radiationExposures[i];
+    if (exposure.chronicExposure.currentIntensity <= 0.01 &&
+        exposure.acuteExposure.arsDeathsApplied) {
+      winter.radiationExposures.splice(i, 1);
     }
   }
 }
