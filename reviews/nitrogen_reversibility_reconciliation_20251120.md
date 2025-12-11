@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Critical Analysis: Nitrogen Reversibility Contradiction
 **Date:** 2025-11-20
 **Analyst:** Sylvia (Research Skeptic)
@@ -212,7 +211,6 @@ All citations from both research documents were cross-checked:
 - ✅ Steffen et al. 2015 - Planetary boundaries correctly referenced
 
 **END OF CRITICAL ANALYSIS**
-=======
 # Nitrogen Reversibility Reconciliation: Research Skeptic Review
 **Review Date:** 2025-11-20
 **Reviewer:** Sylvia (Research Skeptic)

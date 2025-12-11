@@ -1150,10 +1150,7 @@ These files need to be converted from vitest's `expect` API to Node's `assert` A
 **Files Changed:**
 - `src/simulation/config/centralConfig.ts` (AI scaling parameters)
 - `src/simulation/engine/PhaseOrchestrator.ts` (memory leak fix)
-=======
-=======
 >>>>>>> origin/auto/worker-20251115_130001
-=======
 ## 🔧 Merge Conflict Resolution (November 15, 2025)
 
 **🔧 CRITICAL BLOCKER FIX: Merge Conflict Resolution - Welford's Algorithm + AI Scaling Parameters** (Nov 15, 2025, commit 9e84ca0)
@@ -1198,9 +1195,7 @@ These files need to be converted from vitest's `expect` API to Node's `assert` A
 ---
 
 >>>>>>> origin/auto/worker-20251115_140001
-=======
 >>>>>>> origin/auto/worker-20251115_150001
-=======
 ## 🔧 Code Quality: Defensive Fallback Removal (November 15, 2025)
 
 **Summary:** Replaced 20+ defensive fallback patterns (`??`, `||`) with assertion utilities to fail loudly instead of masking bugs.
@@ -1265,7 +1260,6 @@ const climateStability = assertStateProperty(
 **Validation:** Diagnostic tool confirms 0 violations across all 81 phases.
 
 **Files Changed:** `src/simulation/engine/phases/Tier2PhysicalSystemsPhase.ts`
-<<<<<<< HEAD
 >>>>>>> origin/auto/worker-20251115_090001
 
 ---
@@ -1273,7 +1267,6 @@ const climateStability = assertStateProperty(
 >>>>>>> origin/auto/worker-20251115_080001
 ## 🐛 Phase Dependency Order Violation Fixes (November 15, 2025)
 
-=======
 
 ---
 
@@ -1292,9 +1285,7 @@ const climateStability = assertStateProperty(
 2. `ExtremeWeatherEventsPhase` (15.2) → `climate_system` (34.0) - Removed
 3. `WetBulbTemperaturePhase` (20.45) → `climate_system` (34.0) - Removed
 4. `TechTreePhase` (12.5) → `economic-system` (31.0) - Removed
-<<<<<<< HEAD
 5. `Tier2PhysicalSystemsPhase` (18.5) → `planetary_boundaries` (21.0) - Removed
-=======
 5. `Tier2PhysicalSystemsPhase` (18.5) → `planetary_boundaries` (21.0) - Removed (Note: Phase order later changed to 21.1 in cb5f2e0)
 >>>>>>> origin/auto/worker-20251115_130001
 6. `StochasticInnovationPhase` (8.5) → `tech-tree` (12.5) - Removed
@@ -1329,7 +1320,6 @@ const climateStability = assertStateProperty(
 ---
 
 ## 🔧 Worker Lock File Management (November 15, 2025)
-<<<<<<< HEAD
 >>>>>>> origin/auto/worker-20251115_013002
 
 **📖 RESEARCH: AI Collective Evolution - 2025 Multi-Agent LLM Studies** (Nov 14, 2025, commit f1e9fd1)
@@ -1404,7 +1394,6 @@ const climateStability = assertStateProperty(
 - research/verification_84e286e_20251113.md
 - docs/wiki/advanced/detection.md (updated with research note)
 
-<<<<<<< HEAD
 ---
 
 **🔧 INFRASTRUCTURE: Fix HOME Export for Cron Authentication** (Nov 13, 2025, commit 6cbc578)
@@ -1420,12 +1409,8 @@ const climateStability = assertStateProperty(
 
 **Files:**
 - `scripts/merge-orchestrator.sh` (line 11-12)
-=======
 **Impact:** Architecture health confirmed at 8.0-9.5/10 range, no CRITICAL work required.
-<<<<<<< HEAD
 >>>>>>> origin/auto/worker-20251115_080001
-=======
-=======
 
 **🔧 INFRASTRUCTURE: Lock File Cleanup** (Nov 15, 2025, commit 5e28391)
 
@@ -1498,15 +1483,9 @@ const climateStability = assertStateProperty(
 - `reviews/architecture_review_20251114_corrections.md` (validation + corrections, 218 lines)
 
 **Impact:** Architecture health confirmed at 8.0-9.5/10 range, no CRITICAL work required.
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 >>>>>>> origin/auto/worker-20251115_130001
-=======
 >>>>>>> origin/auto/worker-20251115_150001
-=======
 >>>>>>> origin/auto/worker-20251115_160001
-=======
 ## ✅ Recent Changes (November 13, 2025)
 
 **🔬 CRITICAL PARAMETER FIX: AI Capability Scaling Updated to Match 2024 Empirical Data** (Nov 13, 2025)
@@ -1568,17 +1547,10 @@ const climateStability = assertStateProperty(
 
 **Impact:** This is a fundamental correction to the model's AI capability growth assumptions. The previous 12-month doubling was demonstrably wrong based on 2016-2024 empirical data. The new 8-month doubling aligns with frontier AI model training trends and corrects the 100-1000× underestimation.
 >>>>>>> origin/auto/worker-20251113_070003
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 >>>>>>> origin/auto/worker-20251115_090001
-=======
 >>>>>>> origin/auto/worker-20251115_130001
-=======
 >>>>>>> origin/auto/worker-20251115_140001
-=======
 >>>>>>> origin/auto/worker-20251115_150001
-=======
 >>>>>>> origin/auto/worker-20251115_160001
 
 ---
@@ -1639,7 +1611,6 @@ Without risking data loss or naive destructive operations.
 **Files:**
 - `.researcher-worker.lock` (deleted)
 - `logs/autonomous/researcher/status_current.txt` (status update)
-=======
 ## ✅ Recent Changes (November 12, 2025)
 
 **📚 RESEARCH UPDATE: Research File Metadata Standard** (Nov 12, 2025, commit add99ce)
@@ -1850,10 +1821,7 @@ last_verified: YYYY-MM-DD
 - research/climate_tipping_cascades_2024_2025.md (654 lines, NEW)
 
 **Next Steps:** This research provides foundation for future tipping point mechanics implementation. No immediate simulation changes (research library enhancement only).
-<<<<<<< HEAD
-=======
 ## ✅ Recent Changes (November 11, 2025)
-=======
 
 ---
 >>>>>>> origin/auto/researcher-20251112_153001
@@ -1888,9 +1856,7 @@ last_verified: YYYY-MM-DD
 - research/emergency_response_deployment_times_20251020.md (~3,000 words added, 27→32 citations)
 
 **Note:** This is a research documentation update only - no simulation mechanics were changed. The "Simulation Implications" sections provide recommendations for future implementation when emergency response modeling is enhanced.
-<<<<<<< HEAD
 >>>>>>> origin/auto/researcher-20251111_003001
-=======
 >>>>>>> origin/auto/researcher-20251112_153001
 
 ---
