@@ -141,9 +141,54 @@ The simulation SHALL model 17-dimensional AI capabilities with sandbagging detec
 
 #### Scenario: Capability Progression
 - WHEN AI capabilities increase
-- THEN it MUST follow research-backed scaling laws
+- THEN it MUST follow three-axis scaling model (Dec 2025)
 - AND bottlenecks (compute, data, energy) MUST constrain growth
 - AND breakthrough technologies MAY cause discontinuous jumps
+
+### Requirement: Three-Axis AI Capability Scaling (Dec 2025)
+The simulation SHALL model AI capability growth via three independent axes with economic constraints.
+
+**Research:** `research/ai_scaling_laws_2025_REVISED_20251211.md` (QG1 PASSED, Grade B+)
+**Implementation:** `src/simulation/engine/phases/AIScalingPhase.ts`
+
+**Three Scaling Axes:**
+1. **Pre-training:** Sigmoid plateau model (peak 2024, max 1.5x GPT-4 baseline by 2027)
+2. **Test-time compute:** Logarithmic benefit scaling with economic deployment gate
+3. **Efficiency:** Algorithmic improvements (1.5x-2x per decade, conservative)
+
+#### Scenario: Pre-Training Plateau
+- WHEN modeling pre-training scaling post-2024
+- THEN it MUST use sigmoid function approaching 1.5x plateau
+- AND it MUST NOT assume continued exponential growth
+- AND inflection year MUST be 2024 (Orion/Gemini plateau observed)
+- AND steepness parameter MUST cause rapid saturation by 2026-2027
+
+#### Scenario: Economic Deployment Gate
+- WHEN calculating test-time compute effectiveness
+- THEN cost per inference MUST be modeled (dollar-5 baseline to dollar-1000+ for high-compute)
+- AND economic viability MUST use exponential dampening: exp(-cost/threshold)
+- AND only high-value tasks (>0.1% of workload) SHALL afford expensive test-time compute
+- AND effective capability MUST be weighted by deployment probability
+
+#### Scenario: Efficiency Multiplier
+- WHEN calculating algorithmic efficiency gains
+- THEN annual growth rate MUST be 5-10% (1.5x-2x per decade)
+- AND it MUST NOT use non-peer-reviewed efficiency claims (rejected 23x/2.5yr claim)
+- AND uncertainty MUST be ±100% (could range 1.0x to 3x per decade)
+
+#### Scenario: Uncertainty Quantification
+- WHEN projecting AI capabilities
+- THEN uncertainty bands MUST be explicit
+- AND near-term (2025-2027) MUST use ±50% multiplier
+- AND long-term (2028+) MUST use ±200% multiplier
+- AND projections MUST include {baseline, low, high} bounds
+
+#### Scenario: Composite Capability Calculation
+- WHEN calculating effective AI capability
+- THEN it MUST combine all three axes with interaction effects
+- AND axes MUST NOT be fully multiplicative (diminishing compounding)
+- AND test-time effectiveness MUST depend on pre-training quality threshold
+- AND efficiency gains MAY trade off with frontier capability
 
 ### Requirement: Breakthrough Technology Modeling
 The simulation SHALL model 71 breakthrough technologies across 5 tiers.
