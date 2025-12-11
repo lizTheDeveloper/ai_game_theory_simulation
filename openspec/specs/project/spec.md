@@ -136,10 +136,10 @@ The project SHALL preserve implementation histories and research context.
 
 ## Current Status
 
-**Session:** 65 (December 10, 2025)
-**Mode:** Production (all HIGH priority work Phase 1 COMPLETE)
+**Session:** 64 (December 10, 2025)
+**Mode:** Maintenance (all HIGH priority work COMPLETE)
 **Research Quality:** A- (68.8% sources from 2024-2025)
-**Architecture Health:** B+ (0 CRITICAL, 2 HIGH remaining Phase 2/3, 2 MEDIUM backlog)
+**Architecture Health:** B+ (0 CRITICAL, 1 HIGH remaining, 1 MEDIUM new)
 **Test Coverage:** 82.47% (462+ tests passing, 6 known test import failures)
 **System State:** Production-ready, all quality gates GREEN
 
@@ -154,41 +154,25 @@ The project SHALL preserve implementation histories and research context.
 ### CRITICAL Priority
 None (threshold lowering regression FIXED Dec 9, 2025 - commit 3f3118de, 7130c7e6)
 
-### COMPLETED HIGH Priority (Sessions 64-65)
+### COMPLETED HIGH Priority (Session 64)
 - HIGH-7: Conditional climate stability floor (research debate finding) - COMPLETE Dec 7, 2025
 - H-2: Duplicate energy calculation removal (ClimateDeploymentPhase cleanup) - COMPLETE Dec 10, 2025 (commits ad27cd41, 1ca93fe6)
 - Sleeper agent rate justification (7.5% → Hubinger et al. 2024) - COMPLETE Dec 10, 2025 (commit 248bad46)
 - Sandbagging level citation (0.4-0.6 → van der Weij/Meinke 2024) - COMPLETE Dec 10, 2025 (commit 248bad46)
 - Detection risk calibration (50% baseline → time-dependent model) - COMPLETE Dec 10, 2025 (commit fd7694a2)
-- H-1 Phase 1: Energy budget integration (AI infrastructure + power generation) - COMPLETE Dec 10, 2025
-  - Unified AI datacenter and power generation under `energyBudget.allocations['ai-datacenter']`
-  - Eliminated duplicate energy tracking (both systems claimed same energy)
-  - Feature flag support for backwards compatibility (`energyBudget.enabled`)
-  - Monte Carlo validated (N=10, deterministic, no NaN)
-  - Files: `docs/implementation-history/2025-12/energy-budget-phase1.md`, `openspec/changes/energy-budget-integration/PHASE1_COMPLETE.md`
-  - Modified files: aiInfrastructureResources.ts (+45), powerGeneration.ts (+25), EnergyBudgetPhase.ts (+50)
 
-### HIGH Priority (Phase 2 & 3 remaining)
-- H-1 Phase 2: Energy budget integration (ComputeAllocationPhase + tech effects) - Effort: MEDIUM (1 day)
-  - ComputeAllocationPhase must query `energyBudget.allocations['advanced-compute']`
-  - Tech effects (effectsEngine.ts) must check energy availability for energy-intensive techs
-  - Next step: Follow Phase 1 pattern (query allocations, apply effectiveness multiplier)
-- H-1 Phase 3: Energy budget integration (stochastic innovation + government actions) - Effort: SMALL (0.5 day)
-  - Energy-intensive breakthroughs check feasibility
-  - Infrastructure-heavy government actions query budget
+### HIGH Priority (1 remaining)
+- H-1: Energy budget system underutilization (ClimateDeploymentPhase uses energy budget, but other energy consumers do not) - Effort: MEDIUM (2-3 days)
+  - Location: EnergyBudgetPhase calculates effectiveness multipliers but only ClimateDeploymentPhase consumes them
+  - Impact: Parallel energy constraint systems create inconsistent modeling
+  - Next step: Migrate all energy consumers to use energyBudget.allocations
 
 ### COMPLETED MEDIUM Priority
 - M-5: Threshold uncertainty modeling (distribution sampling library) - COMPLETE Dec 7, 2025
 - M-6: Enhanced radiation modeling (acute vs chronic, tissue sensitivity) - COMPLETE Dec 8, 2025
 - Missing Climate Systems (4 subsystems: M-4 abrupt sea level rise, compound events, social tipping, M-7 hysteresis) - COMPLETE Dec 5-7, 2025
 - Energy Budget Constraints (datacenter/AI GPU growth limits, UBI compute drain) - COMPLETE Dec 9, 2025
-
-### COMPLETED MEDIUM Priority (Session 65)
-- M-1: Detection risk calibration integration - COMPLETE Dec 10, 2025 (commits 6d7c03b7, 76e15c67)
-  - Applied time-dependent multiplier to initial detection check
-  - Added assertion utilities (assertFinite) for defensive coding
-  - Unit tests: 3/3 passing (sleeperDetectionRiskCalibration.test.ts)
-  - Implementation doc: docs/implementation-history/M-1_detection_risk_calibration_20251210.md
+- M-1: Detection risk calibration - incomplete integration - COMPLETE Dec 10, 2025 (commit a3b3315b)
 
 ### MEDIUM Priority (Backlog)
 - Hindcast tuning (1950-2024 historical validation)
