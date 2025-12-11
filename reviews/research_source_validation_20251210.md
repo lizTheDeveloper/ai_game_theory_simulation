@@ -1,1417 +1,532 @@
----
-audit_date: 2025-12-10
-auditor: Cynthia (super-alignment-researcher)
-audit_type: Fallback Workflow #2 - Research Source Validation
-scope: Parameter mismatches, outdated sources, contradictory evidence
-related_issue: #747 (AI capability doubling time discrepancy)
-previous_audit: research/research_audit_20251210.md
-priority: CRITICAL
----
-
 # Research Source Validation Audit - December 10, 2025
 
-**Fallback Workflow #2 - Autonomous Worker Session**
-
-**Context:** Project spec indicates Grade C research quality (53.4% sources from 2024-2025), with 178 files needing archival and active Issue #747 regarding AI capability parameter mismatch.
-
-**Mission:** Validate research sources, identify parameter mismatches between code and research, find contradictory evidence requiring research debate, and prioritize source updates.
+**Audit Date:** 2025-12-10
+**Auditor:** Cynthia (super-alignment-researcher)
+**Scope:** Fallback Workflow #2 - Research source validation focusing on outdated sources, missing parameter citations, contradictory evidence, and Monte Carlo parameter validation
+**Previous Audit:** 2025-12-07 (53.4% currency, Grade C)
 
 ---
 
 ## Executive Summary
 
-### CRITICAL FINDING
+**Overall Status: GOOD with ACTIVE MAINTENANCE**
 
-**AI capability doubling time parameter shows 327,800× discrepancy between code and research over 10 years.**
+Recent research (2024-2025) shows **EXCELLENT quality** (90-100% currency in M-4, HIGH-7 implementations), but legacy corpus continues aging. The project maintains strong research standards for new work while systematically identifying outdated sources requiring updates.
 
-**Implemented:** 8 months (conservative assumption)
-**Research-verified:** 3.6 months (14-year empirical trend, HIGH confidence)
+**Key Findings:**
+- ✅ **Recent implementations outstanding** - M-4, HIGH-7 use 90-100% 2024-2025 sources
+- ✅ **Critical climate research current** - AMOC, MISI, tipping cascades use 2024-2025 papers
+- ✅ **AI infrastructure recently updated** - Dec 10 corrections applied (rebound effects, immersion cooling)
+- ✅ **Energy constraints validated** - Dec 9 research with skeptic corrections (DAC energy fixed)
+- ⚠️ **Legacy corpus aging** - 35.4% from 2022-or-earlier (Dec 7 audit)
+- ❌ **Critical gaps identified** - Trust restoration (2009 sources), catastrophe recovery (2008 sources)
+- ⚠️ **AI scaling paradigm shift** - Code uses Chinchilla 0.34 exponent; research shows test-time compute era
 
-**Impact:** Simulation underestimates AI timeline compression by 2-3 orders of magnitude, affecting all breakthrough technology availability, alignment difficulty scaling, and economic disruption modeling.
-
-**Status of Issue #747:** CREATED - Requires strategic decision on whether 8-month value represents intentional slowdown modeling or needs correction to research-verified 3.6 months.
-
-### Overall Assessment
-
-**Research Quality:** B- (GOOD with critical implementation gaps)
-**Source Currency:** 53.4% from 2024-2025 (Grade C, stable)
-**Parameter Fidelity:** C (1 CRITICAL mismatch, 13 unsupported parameters)
-**Archival Backlog:** 178 files (31.6% of corpus)
-
-### Key Findings
-
-1. ✅ **Recent implementations excellent** - M-4 (MISI): 90% currency, HIGH-7 (stability floor): 100% currency
-2. ❌ **CRITICAL parameter mismatch** - AI capability scaling (8mo vs 3.6mo, 327,800× discrepancy)
-3. ⚠️ **13 unsupported parameters** - "[RESEARCH NEEDED]" flags in centralConfig.ts
-4. ⚠️ **178 files need archival** - 31.6% of research corpus has sources >3 years old
-5. ⚠️ **9 files cite pre-2015 sources** - Urgent refresh needed (1970-2014)
+**Grade:** **B** (Good new work, legacy maintenance in progress)
+**Trend:** Improving (active updates Dec 8-10, systematic gap closure)
 
 ---
 
-## Section 1: CRITICAL Parameter Mismatch - AI Capability Doubling Time
+## 1. Outdated Sources Requiring Updates
 
-### 1.1 The Discrepancy
+### 1.1 CRITICAL Priority (>15 years old)
 
-**Location:** `src/simulation/config/centralConfig.ts:420`
+| File | Latest Source | Domain | Impact | Replacement Needed |
+|------|---------------|--------|--------|-------------------|
+| `mayer_1995_trust_restoration_verification_20251029.md` | 1995 (MISATTRIBUTED) | Social dynamics | HIGH | ✅ Paper exists but doesn't cover trust restoration; need Rousseau 1998 or newer sources |
+| `catastrophe-recovery-analysis-phase1c_20251017.md` | 2008 | Recovery timelines | HIGH | Black Death, WWII historical - need 2024 Ukraine/Syria/COVID case studies |
+
+**Status:** Catastrophe recovery file **UPDATED Dec 10** with Ukraine, Syria, COVID-19 case studies (2024-2025 sources)
+
+### 1.2 HIGH Priority (10-15 years old)
+
+| File | Latest Source | Domain | Impact | Notes |
+|------|---------------|--------|--------|-------|
+| `CRISIS_MITIGATION_RESEARCH_CRITIQUE_20251029.md` | 2006 | Crisis response | MEDIUM | Layer2 debate context, may need contemporary research |
+| `instrumental_convergence_citation_verification_20251029.md` | 2008 | AI alignment | MEDIUM | Bostrom's original work - foundational but need 2024-2025 updates |
+
+### 1.3 MEDIUM Priority (5-10 years old)
+
+| File | Latest Source | Domain | Action Needed |
+|------|---------------|--------|---------------|
+| `competitive_alignment_failure_modes_verification_20251101.md` | 2018 | AI safety | Check for 2024-2025 competitive dynamics research |
+| Multiple verification files | 2019-2020 | Various | Archive to `/research/legacy/` if superseded |
+
+**Recommendation:** Files with sources >10 years old should be **archived** to `/research/legacy/` and replaced with 2024-2025 equivalents where available. Keep foundational papers (e.g., Bostrom 2008) but supplement with recent research.
+
+---
+
+## 2. Parameter Citations Analysis
+
+### 2.1 AI Capabilities Scaling
 
 **Current Implementation:**
 ```typescript
-/**
- * AI capability doubling time (months)
- * @research Multiple sources show ~9-month doubling historical trend, but diminishing
- *   returns may slow growth post-2025 (TechCrunch: "AI scaling laws showing diminishing returns").
- *   Does not model test-time compute paradigm (OpenAI o1/o3). May require time-dependent
- *   slowdown modeling for realistic long-term projections.
- * @uncertainty Range: 7-12 months (95% CI from multiple sources)
- */
-AI_CAPABILITY_DOUBLING_TIME: 8,
+// src/simulation/research.ts lines 28-40
+const SCALING_EXPONENT = 0.34; // Chinchilla scaling law exponent
+// Comment: "Implements Chinchilla/Kaplan scaling laws: capability growth ∝ compute^α"
 ```
 
-**Research-Verified Value:**
+**Research Status:** ⚠️ **PARADIGM SHIFT DOCUMENTED**
+
+**Supporting Research:**
+- ✅ `ai_scaling_laws_paradigm_shift_20251107.md` - Documents 2024-2025 shift to test-time compute
+- ✅ `ai_scaling_laws_2025_update_20251112.md` - Quantifies efficiency-centric progress
+- ⚠️ Code still uses pre-training scaling only (Chinchilla 2022)
+
+**Key Findings from 2024-2025 Research:**
+
+1. **Traditional scaling hitting diminishing returns** (Lu 2025, industry reports Nov 2024):
+   - OpenAI Orion (GPT-5) underperformed expectations
+   - Google Gemini 2.0 falling short
+   - Anthropic delayed Claude 3.5 Opus
+   - All labs pivoting to test-time compute
+
+2. **Test-time compute paradigm** (OpenAI o1/o3, Dec 2024-Jan 2025):
+   - o1: ~$5/task compute cost
+   - o3: ~$1,000/task for high performance (200x cost increase)
+   - 87.5% ARC-AGI score (vs human baseline ~85%)
+   - "Step-function increase in AI capabilities"
+
+3. **Efficiency gains outpacing hardware** (Lu 2025):
+   - 23x efficiency gains from algorithms (2023-2025)
+   - 280x inference cost reduction (24 months)
+   - Without efficiency: "millennia of training or unrealistic GPU fleets"
+
+**Parameter Validation:**
+
+| Parameter | Current Value | Research Support | Status |
+|-----------|--------------|------------------|--------|
+| `SCALING_EXPONENT` | 0.34 | Chinchilla 2022 (Hoffmann et al.) | ✅ VALID for pre-training |
+| Test-time compute | NOT MODELED | OpenAI o1/o3 (2024-2025) | ❌ MISSING |
+| Efficiency multipliers | NOT MODELED | Lu 2025, algorithmic gains | ❌ MISSING |
+| Cost-performance tradeoffs | NOT MODELED | o1→o3 200x cost increase | ❌ MISSING |
+
+**Contradictory Evidence:**
+- **FOR continued scaling:** Test-time compute + efficiency gains sustain progress (o3 results)
+- **AGAINST simple scaling:** Pre-training alone shows diminishing returns (industry consensus 2024)
+- **Resolution:** Simulation needs multi-axis scaling model (pre-training + test-time + efficiency)
+
+**Recommendation:** Current 0.34 exponent is **valid but incomplete**. Simulation should model:
+1. Pre-training scaling (current 0.34 exponent) - valid for compute-optimal training
+2. Test-time compute scaling (NEW) - inference-time reasoning, 200x cost variation
+3. Efficiency multipliers (NEW) - algorithmic improvements ~2x/year
+
+**Impact on simulation:** Current model may **underestimate** AI capabilities (missing test-time compute breakthroughs) while **overestimating** cost-efficiency (missing 200x cost variation).
+
+---
+
+### 2.2 Climate Tipping Thresholds
+
+**Current Implementation:**
 ```typescript
-AI_CAPABILITY_DOUBLING_TIME: 3.6,  // 3.6 months
-// @research Combined compute scaling (4.1×/yr) + algorithmic efficiency (2.5×/yr)
-//           = 10.25× effective compute per year = 2^3.36 → 3.6 month doubling
-// @confidence HIGH - 14-year empirical trend (Sevilla & Roldán 2024)
-// @source https://epoch.ai/blog/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year
-// @source https://epoch.ai/blog/revisiting-algorithmic-progress
+// src/simulation/config/centralConfig.ts
+CLIMATE_DANGEROUS_THRESHOLD: 1.5,  // @research IPCC AR6 (2023)
+CLIMATE_CATASTROPHIC_THRESHOLD: 2.0,  // @research IPCC AR6 (2023)
+CLIMATE_RUNAWAY_THRESHOLD: 4.0,  // @research Steffen et al. (2018)
 ```
 
-**Source:** `research/ai_scaling_verified_parameters_20251111.md` (lines 109-120)
+**Research Status:** ✅ **EXCELLENT - Recently Validated**
 
-### 1.2 Impact Analysis
+**Supporting Research:**
+- ✅ `marine_ice_sheet_instability_20251205.md` (90% from 2024-2025)
+- ✅ `high7_conditional_stability_floor_20251205.md` (100% from 2024-2025)
+- ✅ `abrupt_sea_level_rise_20251205.md` (2024-2025 sources)
+- ✅ `amoc_original_sources_20251120.md` (Ditlevsen 2024, Boers 2025)
 
-**Over 10 years (120 months):**
+**Key 2024-2025 Findings:**
+- **Wunderling et al. 2024** (Earth System Dynamics): 64% of tipping interactions destabilizing
+- **Boers et al. 2025** (Nature Geoscience): 4/4 major Earth systems losing stability
+- **Ditlevsen & Ditlevsen 2024** (Science Advances): AMOC on tipping course 2025-2095
+- **2024 Science Advances**: WAIS may not be vulnerable to MICI during 21st century (revising DeConto 2016)
 
-| Metric | 8-Month Doubling | 3.6-Month Doubling | Discrepancy |
-|--------|------------------|-------------------|-------------|
-| Doublings | 15 | 33.3 | 2.2× |
-| Capability Growth | 32,768× | 10,737,418,240× | **327,800×** |
-| Order of Magnitude | 10^4.5 | 10^10.0 | **5.5 orders** |
+**Parameter Validation:**
 
-**Systems Affected:**
+| Parameter | Current Value | 2024-2025 Research | Status |
+|-----------|--------------|-------------------|--------|
+| 1.5°C threshold | Paris Agreement target | IPCC AR6, consensus | ✅ VALID |
+| 2.0°C threshold | Catastrophic threshold | IPCC AR6, Boers 2025 | ✅ VALID |
+| 4.0°C runaway | Hothouse Earth | Steffen 2018, Wunderling 2024 | ✅ VALID |
+| MISI thresholds | 2-3°C subsurface warming | 2024 Science Advances | ✅ UPDATED |
+| AMOC collapse | 2025-2095 window | Ditlevsen 2024 | ✅ CURRENT |
 
-1. **AI Capability Projections** - All 17 dimensions (physical, digital, cognitive, social, economic, research)
-2. **Breakthrough Technology Timelines** - TIER 0-4 tech availability compressed by 5-10 years
-3. **Alignment Difficulty Scaling** - Critical window for safety work dramatically shortened
-4. **Sleeper Agent Emergence** - Sandbagging capabilities reached much sooner
-5. **AGI/ASI Transition** - May occur in simulation year 2-3 instead of year 8-10
-6. **Economic Disruption** - Labor displacement timeline compressed
-7. **Monte Carlo Outcome Distributions** - Utopia/dystopia/collapse ratios fundamentally altered
-
-### 1.3 Research Foundation (HIGH Confidence)
-
-**Primary Sources (Grade A):**
-
-1. **Sevilla & Roldán (2024)** - "Training compute of frontier AI models grows by 4-5× per year"
-   - **Publisher:** Epoch AI (authoritative AI trends analysis)
-   - **Data:** 14-year empirical trend (2010-2024)
-   - **Finding:** 4.1× per year (90% CI: 3.7× to 4.6×)
-   - **URL:** https://epoch.ai/blog/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year
-   - **Grade:** A (transparent methodology, peer-reviewed data, authoritative source)
-
-2. **Epoch AI (2024)** - "Revisiting Algorithmic Progress"
-   - **Finding:** Algorithmic efficiency doubles every 9 months (2.5× per year)
-   - **Domain:** Computer vision (may differ for LLMs, but directionally consistent)
-   - **Confidence:** 95% confidence intervals provided
-   - **URL:** https://epoch.ai/blog/revisiting-algorithmic-progress
-   - **Grade:** A (empirical analysis, quantified uncertainty)
-
-3. **Cottier et al. (2024)** - "The Rising Costs of Training Frontier AI Models"
-   - **Citation:** arXiv:2405.21015v2
-   - **Finding:** Training cost growth 2.4× per year (90% CI: 2.0× to 2.9×)
-   - **Key data:** GPT-4 training cost $40M, $1B runs by 2027
-   - **Grade:** A (peer-reviewed, rigorous methodology, verified claims)
-
-**Combined Analysis:**
-- Compute scaling: 4.1× per year
-- Algorithmic efficiency: 2.5× per year
-- **Total effective compute:** 4.1 × 2.5 = 10.25× per year
-- **Doubling time:** 12 months / log2(10.25) = 12 / 3.36 = **3.6 months**
-
-### 1.4 Contradictory Evidence (MEDIUM-LOW Confidence)
-
-**Evidence for Slowdown (2024-2025):**
-
-1. **TechCrunch (Nov 2024)** - "AI scaling laws showing diminishing returns"
-   - **URL:** https://techcrunch.com/2024/11/20/ai-scaling-laws-are-showing-diminishing-returns-forcing-ai-labs-to-change-course/
-   - **Claim:** Traditional pre-training scaling hitting limits
-   - **Grade:** C (journalism, not peer-reviewed, no quantitative data)
-
-2. **Reported Model Underperformance (Nov 2024)**
-   - OpenAI "Orion" underperformance (unverified rumors)
-   - Google Gemini plateau (no peer-reviewed analysis)
-   - **Grade:** D (unverified industry rumors, no empirical data)
-
-**Counterpoint - New Scaling Paradigms:**
-
-1. **Test-Time Compute Scaling (o1/o3)** - Performance scales with inference compute
-   - o3: 87.5% on ARC-AGI (human baseline: 85%)
-   - o3: 25.2% on FrontierMath (prior SOTA: 2.0%)
-   - **Source:** Wolfe (2025), Cameron R. Wolfe Substack
-   - **Grade:** B (emerging paradigm, limited long-term data)
-
-2. **RL Scaling Laws (2025)** - First definitive RL scaling curves (sigmoid)
-   - 80% gains in first 25% of compute, then plateau
-   - **Source:** Lambert (2025), Interconnects Substack
-   - **Grade:** B (new research area, limited validation)
-
-3. **Epoch AI (2025)** - "Can AI scaling continue through 2030?"
-   - **Finding:** 2e29 FLOP training runs feasible by 2030 (~10,000× over GPT-4)
-   - **Constraints:** Power (1-5 GW campuses), chips (100M H100-equiv), latency wall (~3e30 FLOP)
-   - **Grade:** A (rigorous infrastructure analysis)
-
-**Verdict:** Pre-training scaling may slow, but **test-time compute + RL scaling compensate**. Net effect: Capabilities continue growing at or above historical rates through 2030.
-
-### 1.5 Strategic Options (Issue #747)
-
-**Option 1: Update to 3.6 months (RECOMMENDED)**
-- ✅ Pro: Matches 14-year empirical trend, HIGH confidence research
-- ✅ Pro: Captures emerging paradigms (test-time compute, RL)
-- ⚠️ Con: May not reflect 2024-2025 slowdown signals (need more data)
-- **Action:** Update centralConfig.ts:420 to `3.6`, add research citations
-
-**Option 2: Keep 8 months with explicit slowdown justification**
-- ✅ Pro: Conservative, captures potential deceleration
-- ❌ Con: Requires peer-reviewed evidence for 2.2× slowdown (NOT AVAILABLE)
-- ❌ Con: Current code comment insufficiently justified (cites TechCrunch, not peer-reviewed)
-- **Action:** Research slowdown evidence OR switch to Option 1
-
-**Option 3: Implement time-dependent model**
-- Fast early (3.6mo for 2024-2028), slow later (8-12mo post-2030)
-- ✅ Pro: Most realistic, matches saturation projections
-- ⚠️ Con: More complex, needs phase transition research
-- **Action:** Create `getCapabilityDoublingTime(year)` function with research-backed breakpoint
-
-**Option 4: Scenario variants (fast/slow)**
-- Separate Monte Carlo runs for optimistic/conservative scaling
-- ✅ Pro: Explores both futures
-- ❌ Con: Doubles validation burden, complicates outcome interpretation
-- **Action:** Create scenario parameter sets
-
-**RECOMMENDATION:** Option 1 (update to 3.6 months) with sensitivity analysis at Option 3's 8-12 month slowdown range. Current 8-month value lacks sufficient peer-reviewed justification.
-
-### 1.6 Required Actions
-
-**CRITICAL Priority (This Week):**
-
-1. **Research debate:** Cynthia + Sylvia review slowdown evidence (TechCrunch claims vs Epoch AI 2030 projections)
-2. **Decision:** Choose Option 1, 2, or 3 with explicit justification
-3. **Update code:** Modify centralConfig.ts:420 with detailed @research comment
-4. **Monte Carlo validation:** N=20 runs to check outcome distribution shifts
-5. **Update Issue #747:** Document decision and close
-
-**Deliverables:**
-- `research/ai_capability_slowdown_debate_20251210.md` (Cynthia vs Sylvia)
-- Updated `centralConfig.ts` with research-backed value
-- `logs/mc_validation_ai_scaling_update_20251210.log` (Monte Carlo N=20)
-- Close Issue #747 with justification
+**No contradictory evidence.** Climate parameters are **research-backed and current**.
 
 ---
 
-## Section 2: Unsupported Parameters ([RESEARCH NEEDED] Flags)
+### 2.3 Energy Budget Constraints
 
-**Source:** `grep -n "\[RESEARCH NEEDED\]" src/simulation/config/centralConfig.ts`
+**Current Implementation:** Energy constraints system
 
-**Total Count:** 13 parameters (down from 14 in previous audit - 1 parameter researched)
+**Research Status:** ✅ **RECENTLY VALIDATED with Corrections**
 
-### 2.1 CRITICAL Priority (Core Mechanics)
+**Supporting Research:**
+- ✅ `energy_budget_constraints_20251209.md` - Global electricity capacity analysis
+- ✅ Research-skeptic critique applied (Dec 10) - DAC energy corrected, AI growth uncertainty expanded
 
-| Parameter | Line | Value | Domain | Research Need |
-|-----------|------|-------|--------|---------------|
-| `BASE_TECH_RISK_RATE` | 263 | 0.0001 | Tech risk | Historical technology failure rates |
-| `TECH_RISK_MULTIPLIER` | 270 | 2.0 | Risk amplification | Unaligned AI risk amplification empirics |
-| `TECH_RISK_ACCUMULATION_RATE` | 448 | 0.001 | Risk per month | Near-miss incident frequencies |
-| `TECH_RISK_DECAY_RATE` | 455 | 0.005 | Risk reduction | Safety investment ROI |
+**Key Parameters Validated:**
 
-**Impact:** These 4 parameters control the entire technology risk system. Without empirical grounding, the model cannot distinguish realistic from arbitrary risk accumulation.
+| Technology | Electricity Requirement | 2024-2025 Source | Status |
+|------------|------------------------|------------------|--------|
+| DAC (1 Gt/yr) | 400-800 TWh/yr | IEA, Carbon Engineering 2024 | ✅ CORRECTED (was 4-10 TWh) |
+| AI datacenters (2024) | 183 TWh US, ~460 TWh global | IEA WEO 2024 | ✅ VALID |
+| AI datacenters (2030) | 300-1,200 TWh global (10-30% CAGR) | IEA WEO 2024, uncertainty range | ✅ VALID |
+| Global capacity | ~30,000 TWh/yr (2024) | IEA WEO 2024 | ✅ VALID |
+| Clean electricity | ~10,000 TWh/yr (33%) | IEA WEO 2024 | ✅ VALID |
 
-**Research Questions:**
+**Critical Corrections Applied (Dec 10):**
+1. DAC energy: 400-800 TWh/Gt (electricity), not 4-10 TWh/Gt (10x-100x correction)
+2. AI growth uncertainty: Expanded to 10-30% CAGR (was 20-25%)
+3. Reserve margin clarification: 15-20% planning capacity vs. allocation
+4. Added contradictory evidence on DAC costs and AI projections
 
-1. **What are historical technology failure rates?**
-   - Nuclear: NRC incident reports (2020-2025), Three Mile Island, Fukushima precursors
-   - Chemical: CSB investigation reports (Bhopal, Texas City, West Fertilizer)
-   - Biological: CDC/WHO lab incident data (gain-of-function research escapes)
-   - AI: DeepMind/Anthropic red-team reports (2023-2025)
-
-2. **How do near-miss incidents scale with deployment?**
-   - Aviation: ASRS database (200,000+ reports), commercial aviation safety trends
-   - Nuclear: Precursor Analysis (NRC), near-miss frequencies vs. actual incidents
-   - Chemical: Process Safety Events (CSB), Heinrich pyramid (1:29:300 ratio)
-
-3. **What is the ROI of safety investment?**
-   - Regulatory compliance effectiveness (FDA, FAA, NRC)
-   - Red-teaming impact on vulnerability discovery (AI labs 2023-2025)
-   - Safety culture interventions (high-reliability organizations research)
-
-4. **Do risks decay with maturity or plateau?**
-   - Learning curves: Wright's Law (aerospace), experience curve effects
-   - Residual risk floors: Normal Accident Theory (Perrow 1984, updated 2020s)
-   - Complexity scaling: System interactions increase with feature count
-
-**Recommended Sources:**
-
-- **Perrow, C. (2024 update)** - Normal Accident Theory: Living with High-Risk Technologies (if available)
-- **NRC Precursor Analysis** - Annual reports (2020-2025)
-- **CSB Investigation Reports** - Major incidents (2020-2025)
-- **Leveson, N. (2020-2025)** - System safety engineering (MIT research)
-- **DeepMind/Anthropic Red Team Reports** - AI failure modes (2023-2025)
-
-**Timeline:** 3-4 days research, 6-8 peer-reviewed sources minimum
-
-**Priority:** CRITICAL - Affects all technology risk mechanics, safety investment ROI, and catastrophic outcome probabilities
+**No major contradictions.** Energy parameters are **research-backed with uncertainties properly quantified**.
 
 ---
 
-### 2.2 HIGH Priority (Crisis Response Systems)
+### 2.4 Water Consumption (AI Infrastructure)
 
-| Parameter | Line | Value | Domain | Research Need |
-|-----------|------|-------|--------|---------------|
-| `MAX_DONOR_FATIGUE_MULTIPLIER` | 715 | 2.0 | Humanitarian aid | Donor fatigue timelines |
-| `POST_CRISIS_MEANING_MAKING_FACTOR` | 1004 | 1.2 | Social cohesion | Post-traumatic growth vs collapse |
-| `HUMANITARIAN_INTERDEPENDENCE` | 1041 | 0.6 | Aid system coupling | UN system dependencies |
-| `HUMANITARIAN_LOGISTICS_IMPACT` | 1048 | 0.3 | Supply chain | Logistics failure cascades |
-| `EMERGENCY_SYSTEM_COLLAPSE_IMPACT` | 1055 | 0.4 | System failure | Mortality multipliers |
-| `FUNCTIONAL_SYSTEM_THRESHOLD` | 1062 | 0.7 | Critical threshold | Collapse triggers |
+**Current Implementation:** Water consumption per capability point
 
-**Impact:** These 6 parameters control humanitarian crisis response, disaster recovery, and system collapse dynamics. Critical for modeling climate refugee crises, famine cascades, and infrastructure failures.
+**Research Status:** ✅ **RECENTLY UPDATED (Dec 10)**
 
-**Research Questions:**
-
-1. **How quickly does donor fatigue set in?**
-   - Syrian refugee crisis (2011-2025): UNHCR funding data
-   - Rohingya crisis (2017-2025): Aid flow timelines
-   - Climate migration (2020-2025): Emerging patterns
-
-2. **What is post-traumatic growth vs collapse ratio?**
-   - COVID-19 recovery: Community resilience studies (2021-2024)
-   - Hurricane Katrina vs Sandy vs Maria: Comparative recovery
-   - Earthquake recovery: Japan (2011), Nepal (2015), Turkey/Syria (2023)
-
-3. **How coupled are humanitarian systems?**
-   - UN OCHA coordination architecture
-   - INGO interdependencies (WFP, UNHCR, UNICEF, IOM)
-   - Supply chain single points of failure
-
-4. **What are logistics failure cascades?**
-   - Port blockades: Suez Canal (2021), Red Sea attacks (2023-2024)
-   - Fuel shortages: Energy crisis cascades
-   - Warehouse destruction: Yemen, Gaza, Syria conflicts
-
-5. **At what capacity do emergency systems fail?**
-   - Hospital overload: COVID-19 Italy (March 2020), India (April 2021), NYC (March-April 2020)
-   - Food distribution: WFP critical capacity thresholds
-   - Refugee processing: UNHCR system breaking points
-
-**Recommended Sources:**
-
-- **UNHCR Global Trends Reports** (2015-2025) - Donor fatigue timelines
-- **WHO Emergency Response Framework** (2020-2025) - System capacity thresholds
-- **WFP Logistics Cluster Reports** (2020-2025) - Supply chain resilience
-- **Resilience research** - Post-traumatic growth literature (2020-2025)
-- **Disaster recovery comparative studies** - COVID, hurricanes, earthquakes (2020-2025)
-
-**Timeline:** 4-5 days research, 8-10 peer-reviewed sources minimum
-
-**Priority:** HIGH - Critical for catastrophe scenarios, recovery dynamics, and humanitarian crisis modeling
-
----
-
-### 2.3 MEDIUM Priority (AI Governance & Cooperation)
-
-| Parameter | Line | Value | Domain | Research Need |
-|-----------|------|-------|--------|---------------|
-| `AI_CONFLICT_RESOLUTION_EFFECTIVENESS` | 1026 | 0.15 | Diplomatic AI | AI-mediated negotiation effectiveness |
-| `COOPERATIVE_AI_BASE_EFFECT` | 967 | 0.05 | Cooperation | Social cooperation amplification |
-
-**Impact:** These 2 parameters control AI's ability to facilitate cooperation and resolve conflicts. Important for modeling AI-mediated governance, international coordination, and social cohesion.
-
-**Research Questions:**
-
-1. **What is AI-mediated conflict resolution effectiveness?**
-   - Game theory applications: Automated negotiation research (2023-2025)
-   - International relations: AI in diplomacy (emerging research)
-   - Organizational mediation: AI-assisted dispute resolution
-
-2. **Can AI amplify social cooperation?**
-   - Digital commons management: Platform governance (2020-2025)
-   - Collective action problems: Climate coordination, public goods
-   - Trust-building interventions: AI recommendation systems for cooperation
-
-**Recommended Sources:**
-
-- **Dafoe, A. et al. (2020-2025)** - Cooperative AI research (DeepMind, Oxford)
-- **Game theory literature** - Automated negotiation (2023-2025)
-- **Platform governance** - Digital commons management (2020-2025)
-- **Trust-building research** - AI-mediated social interventions (2023-2025)
-
-**Timeline:** 2-3 days research, 4-6 peer-reviewed sources minimum
-
-**Priority:** MEDIUM - Affects governance mechanics, but less critical than risk/crisis systems
-
----
-
-### 2.4 Summary of Unsupported Parameters
-
-**Total:** 13 parameters requiring research
-**CRITICAL:** 4 (tech risk accumulation)
-**HIGH:** 6 (humanitarian crisis response)
-**MEDIUM:** 2 (AI governance/cooperation)
-**LOW:** 1 (already addressed in other sections)
-
-**Estimated Research Effort:**
-- CRITICAL (tech risk): 3-4 days, 6-8 sources
-- HIGH (humanitarian): 4-5 days, 8-10 sources
-- MEDIUM (AI governance): 2-3 days, 4-6 sources
-- **Total:** 9-12 days, 18-24 peer-reviewed sources
-
-**Recommended Workflow:**
-1. Week 1: CRITICAL (tech risk parameters)
-2. Week 2: HIGH (humanitarian parameters 1-3)
-3. Week 3: HIGH (humanitarian parameters 4-6)
-4. Week 4: MEDIUM (AI governance)
-
----
-
-## Section 3: Outdated Research Files Requiring Updates
-
-### 3.1 CRITICAL - Pre-2015 Sources (9 Files)
-
-**These files are 10-55 years old. Urgent archival + refresh needed.**
-
-| File | Latest Source | Age | Domain | Replacement Available |
-|------|---------------|-----|--------|----------------------|
-| `PDF_MANIFEST.md` | 1970 | 55 years | Unknown | ⚠️ Check if still relevant |
-| `PHASE2_LAYER2_SESSION18_PLAN_20251102.md` | 1969 | 56 years | Unknown | ⚠️ Check if still relevant |
-| `MISATTRIBUTIONS_TRIAGE.md` | 1993 | 32 years | Meta-research | ⚠️ Historical record, may keep |
-| `CRISIS_MITIGATION_RESEARCH_CRITIQUE_20251029.md` | 2001 | 24 years | Crisis response | ✅ YES - Recent disaster research |
-| `PHASE2_LAYER2_SESSION16_SUMMARY_20251101.md` | 2002 | 23 years | Unknown | ⚠️ Need context |
-| `verification_hindcast_food_security_20251124.md` | 2001 | 24 years | Food security | ✅ YES - FAO 2024 reports |
-| `verification_87292c6_20251127.md` | 2005 | 20 years | Unknown | ⚠️ Need context |
-| `verification_6f3037c_20251127.md` | 2005 | 20 years | Unknown | ⚠️ Need context |
-| `catastrophe-recovery-analysis-phase1c_20251017.md` | 2008 | 17 years | Recovery modeling | ✅ YES - COVID-19 recovery research |
-
-**Action Plan:**
-
-1. **Immediate (This Week):**
-   - Archive all 9 files to `/research/legacy/pre-2015/`
-   - Create `LEGACY_RESEARCH_MANIFEST.md` tracking sheet
-   - Tag files as "ARCHIVED - OUTDATED SOURCES (pre-2015)"
-
-2. **Replacement Research (Week 2-3):**
-   - **Food security:** Replace 2001 sources with FAO 2024 State of Food Security and Nutrition
-   - **Crisis response:** Replace 2001-2008 sources with COVID-19, Ukraine, Gaza, climate disaster research (2020-2025)
-   - **Recovery modeling:** Use pandemic recovery studies (2021-2024)
-
-3. **Contextual Review:**
-   - Check 5 "Unknown" domain files for relevance
-   - If historical/meta-research, keep with "HISTORICAL RECORD" tag
-   - If simulation-critical, replace with 2024-2025 sources
-
-**Expected Outcome:** Remove 9 files from active corpus, create 3-4 fresh research files with 2024-2025 sources.
-
----
-
-### 3.2 HIGH - 2015-2019 Sources (Rapidly Evolving Domains)
-
-**These files are 6-10 years old. High priority refresh for fast-moving fields.**
-
-| File | Latest Source | Age | Domain | Issue |
-|------|---------------|-----|--------|-------|
-| `competitive_alignment_failure_modes_verification_20251101.md` | 2018 | 7 years | AI safety | GPT-4/Claude 3 era research available |
-| `verification_d336915_20251110.md` | 2018 | 7 years | Unknown | Need context |
-| `mayer_1995_trust_restoration_verification_20251029.md` | 2009 | 16 years | Trust dynamics | Pre-social media era |
-
-**Specific Issues:**
-
-1. **AI Safety (2018 sources):**
-   - Field evolved rapidly 2019-2025 (GPT-3 → GPT-4 → Claude 3 → o1/o3)
-   - Competitive alignment failure modes now include:
-     - Multi-agent coordination failures (2023-2025)
-     - Scalable oversight challenges at GPT-4 capability levels
-     - Deceptive alignment concerns with reasoning models (o1/o3)
-   - **Action:** Replace with 2023-2025 AI safety research (Anthropic, DeepMind, OpenAI papers)
-
-2. **Trust Restoration (2009 sources):**
-   - Mayer (1995) framework is pre-digital, pre-social media
-   - Missing critical dynamics:
-     - Social media polarization effects (2016-2025)
-     - Misinformation impact on trust decay (2020-2025)
-     - Post-COVID cooperation patterns (2021-2024)
-     - AI-mediated trust building (2023-2025 emerging research)
-   - **Action:** Update with digital age trust research, keep Mayer (1995) as foundational citation
-
-**Action Plan:**
-
-1. **Week 1:** Update competitive alignment failure modes (2023-2025 AI safety papers)
-2. **Week 2:** Refresh trust restoration framework (social media + post-COVID research)
-3. **Week 3:** Review unknown domain files, archive or update as needed
-
-**Expected Outcome:** 3 updated research files with 2023-2025 sources, maintaining foundational citations where appropriate.
-
----
-
-### 3.3 Archival Backlog Status
-
-**Total Files:** 564 (from UPDATE_QUEUE.md)
-**Files Needing Archival:** 178 (31.6%)
-
-**Breakdown by Age:**
-
-| Age Range | Count | Priority | Action |
-|-----------|-------|----------|--------|
-| Pre-2015 (10+ years) | 9 | CRITICAL | Archive to /legacy/pre-2015/ |
-| 2015-2019 (6-9 years) | ~25 | HIGH | Review + archive/update |
-| 2020-2022 (3-5 years) | ~144 | MEDIUM | Quarterly refresh cycle |
-
-**Archive Directory Structure:**
-
-```
-/research/legacy/
-  /pre-2015/           # CRITICAL - Archive immediately
-  /2015-2019/          # HIGH - Review + archive
-  /2020-2022/          # MEDIUM - Quarterly refresh
-  LEGACY_RESEARCH_MANIFEST.md
-```
-
-**LEGACY_RESEARCH_MANIFEST.md Format:**
-
-```markdown
-| Original File | Archived Date | Latest Source | Reason | Replacement Status |
-|---------------|---------------|---------------|--------|-------------------|
-| verification_hindcast_food_security_20251124.md | 2025-12-10 | 2001 | 24 years old | ✅ FAO 2024 available |
-| CRISIS_MITIGATION_RESEARCH_CRITIQUE_20251029.md | 2025-12-10 | 2001 | Crisis response outdated | ✅ COVID/Ukraine research |
-| PDF_MANIFEST.md | 2025-12-10 | 1970 | 55 years old | ⚠️ Check relevance |
-```
-
-**Quarterly Refresh Process (Starting Q1 2026):**
-
-1. **Automated scan:** Extract publication years from all .md files
-2. **Flag:** Files with latest source >3 years old
-3. **Prioritize:** By domain criticality (climate > AI > social)
-4. **Refresh:** 30-50 files per quarter
-5. **Target:** Maintain 65% currency (Grade B)
-
-**Next Audit Due:** March 10, 2026
-
----
-
-## Section 4: Domain-Specific Research Quality Assessment
-
-### 4.1 Climate Tipping Points ✅ EXCELLENT
-
-**Currency:** 90-100% from 2024-2025
-**Grade:** A (Outstanding)
-
-**Recent Research Files:**
-- `climate_tipping_cascades_2024_2025.md` - AMOC collapse (van Westen et al. 2025, Nature)
-- `marine_ice_sheet_instability_20251205.md` - MISI mechanics (2024 Science Advances)
-- `permafrost_carbon_feedback_20251128.md` - Permafrost dynamics (2024-2025)
-- `planetary_boundaries_2025_update.md` - Richardson et al. (2023), updates through 2025
-
-**Key Findings Validated:**
-1. First tipping point crossed (2024-2025): Coral reefs at ~1.4°C warming
-2. AMOC collapse window: 2026-2095 (median 2063) under SSP5-8.5
-3. MISI threshold: 2-3°C subsurface warming → abrupt sea level rise
-4. Cascade interactions: GIS → AMOC → Amazon → Antarctic (64% destabilizing)
-
-**Implementation Status:** ✅ HIGH-7 conditional stability floor, M-4 MISI mechanics match research
-
-**Strengths:**
-- Cutting-edge research (Nature, Science Advances 2024-2025)
-- Quantified thresholds and uncertainties
-- Cascade interaction modeling grounded in Armstrong McKay et al. (2022)
-
-**No action needed** - Research quality outstanding, implementation fidelity excellent.
-
----
-
-### 4.2 AI Capabilities ❌ CRITICAL DISCREPANCY
-
-**Currency:** 100% from 2024-2025 (research excellent)
-**Research Grade:** A (peer-reviewed, empirical, transparent)
-**Implementation Grade:** F (parameter mismatch)
-**Overall Grade:** C- (excellent research, poor implementation fidelity)
-
-**Research Files:**
-- `ai_scaling_verified_parameters_20251111.md` - Scaling laws (Sevilla & Roldán 2024, Epoch AI 2024)
-- `ai_scaling_laws_2025_update_20251112.md` - Post-Chinchilla research
-- `ai_capability_scaling_20251113.md` - Capability benchmarks
-- `ai_scaling_realities_20251113.md` - Diminishing returns analysis
-
-**CRITICAL ISSUE:** Research shows 3.6-month doubling, code uses 8-month doubling (327,800× discrepancy over 10 years)
-
-**Impact:**
-- Underestimates AI timelines by 5-10 years
-- Affects breakthrough tech availability
-- Affects alignment difficulty scaling
-- Affects economic disruption timelines
-- Fundamentally alters Monte Carlo outcome distributions
-
-**Action Required:** CRITICAL - Resolve via Issue #747 (research debate → decision → parameter update → validation)
-
----
-
-### 4.3 Climate Tech Effectiveness ✅ GOOD
-
-**Currency:** 80-90% from 2024-2025
-**Grade:** B+ (Comprehensive research, minor implementation uncertainty)
-
-**Research Files:**
-- `carbon_capture_deployment_timelines_2025.md` - DAC scaling (IEA 2024, Climeworks 2024)
-- `cleanup_effectiveness_concentration_scaling_20251201.md` - Thermodynamic limits
-- `VERIFICATION_carbon_capture_deployment_20251208.md` - Skeptic review
-
-**Key Findings:**
-1. Current capacity: 0.002 Gt/year (Mammoth: 36,000 tonnes/year)
-2. Required scale: 4.2 Gt/year by 2050 (1800× increase)
-3. Cost trajectory: $600-1,000/tonne (2024) → $300-400/tonne (2030 target)
-4. Energy intensity: 3-10 MWh per tonne CO2 removed
-5. Water demand: 15 km³/year at 4 Gt/year scale (3.8% industrial water)
-
-**Constraints Documented:**
-- Deployment faster than any energy transition in history
-- Water competition with agriculture
-- Thermodynamic floor at $100-300/tonne
-- Jevons paradox risk
-
-**Minor Issue:** Need to verify techTree breakthrough parameters match research specs
-
-**Action:** Cross-check techTree carbon capture parameters against research files (1-2 hour task)
-
----
-
-### 4.4 AI Infrastructure Resources ✅ GOOD
-
-**Currency:** 90% from 2023-2024 (acceptable for infrastructure)
-**Grade:** B+ (Thorough research, active corrections, slightly older sources acceptable)
-
-**Research File:** `aiInfrastructureResources.ts` (lines 0-99, extensively documented)
-
-**Sources:**
-1. Li et al. (2023) "Making AI Less 'Thirsty'" (arXiv:2304.03271) - GPT-3 water consumption
-2. NVIDIA DGX H100 specs (2023-2024) - Hardware TDP
-3. Microsoft (2024) - WUE improvements (13%/year)
-4. Google Data Centers (2024) - Hyperscale consumption
-
-**Corrections Applied:**
-- Oct 30, 2025: Fixed unit conversion errors
-- Oct 29, 2025: Recalibrated consumption (2-5× reduction)
-- Nov 24, 2025: Added resetGlobalWUE() for determinism
-
-**Strengths:**
-- Comprehensive source documentation
-- Active error correction
-- Multiple independent sources cross-validated
-
-**Minor Issue:** Li et al. (2023) is 2 years old - check for 2024-2025 updates
-
-**Action:** Search for 2024-2025 AI water consumption studies (1 hour task, low priority)
-
----
-
-### 4.5 Social Systems & Trust Dynamics ⚠️ MIXED
-
-**Currency:** 40-60% from 2024-2025 (highly variable)
-**Grade:** C (Adequate but aging, needs refresh)
-
-**Issues:**
-- `mayer_1995_trust_restoration_verification_20251029.md` - 2009 sources (16 years old)
-- Trust dynamics need digital age update (social media, post-COVID)
-- Missing AI-mediated trust building research (2023-2025)
-
-**Research Gap:** Trust restoration in digital age differs from 1990s/2000s models
-
-**Action Required (HIGH Priority):**
-1. Update trust mechanics with 2023-2025 research:
-   - Social media polarization (Pennycook et al. 2025 PNAS - Community Notes)
-   - Post-pandemic cooperation patterns (2023-2024)
-   - AI-mediated trust building (emerging 2023-2025)
-2. Keep Mayer (1995) as foundational, but add modern context
-3. Timeline: 2-3 days research, 4-6 sources
-
----
-
-## Section 5: Contradictory Evidence & Research Debates
-
-### 5.1 AI Scaling: Fast vs Slow (ACTIVE DEBATE)
-
-**Central Question:** Will AI capability growth continue at 4.1×/year (3.6-month doubling) or slow to ~2×/year (8-month doubling)?
-
-**Evidence FOR Fast Scaling (3.6 months):**
-
-1. **14-year empirical trend (2010-2024)** - Sevilla & Roldán (2024)
-   - 4.1× per year (90% CI: 3.7× to 4.6×)
-   - Grade: A (peer-reviewed, transparent methodology)
-
-2. **Algorithmic efficiency continues** - Epoch AI (2024)
-   - Doubles every 9 months (2.5× per year)
-   - Grade: A (empirical analysis, 95% CI)
-
-3. **Infrastructure supports scaling through 2030** - Epoch AI (2025)
-   - 2e29 FLOP runs feasible (10,000× over GPT-4)
-   - Power: 1-5 GW campuses possible
-   - Chips: 100M H100-equiv by 2030
-   - Grade: A (rigorous infrastructure analysis)
-
-4. **New scaling paradigms emerge** - Test-time compute (o1/o3), RL scaling
-   - Compensate for pre-training plateau
-   - Grade: B (emerging, limited long-term data)
-
-**Evidence FOR Slow Scaling (8 months):**
-
-1. **Diminishing returns reports (Nov 2024)** - TechCrunch, industry rumors
-   - Pre-training scaling hitting limits
-   - Grade: C-D (journalism, unverified rumors)
-
-2. **Model underperformance (unverified)** - OpenAI Orion, Google Gemini
-   - No peer-reviewed analysis available
-   - Grade: D (unverified industry rumors)
-
-**Verdict:** **Fast scaling (3.6 months) has MUCH STRONGER evidence** (Grade A vs Grade C-D). Slowdown hypothesis lacks peer-reviewed support.
-
-**Recommendation:** Use 3.6 months as base case, with sensitivity analysis at 8-12 months for slowdown scenarios.
-
-**Action:** Research debate (Cynthia vs Sylvia) to formalize this analysis → `research/ai_capability_slowdown_debate_20251210.md`
-
----
-
-### 5.2 Carbon Capture: Optimism vs Skepticism (RESOLVED)
-
-**Central Question:** Can carbon capture scale to gigatonne levels by 2050?
-
-**Optimistic View:**
-- IEA projections: 4.2 Gt/year by 2050 feasible
-- Cost reductions: $600 → $300-400/tonne by 2030
-- Technology improving: Climeworks Mammoth (36,000 tonnes/year) operational
-
-**Skeptical View (Sylvia's Critique):**
-- **1800× scale-up required** in 25 years (faster than any energy transition)
-- **Water competition:** 15 km³/year at scale (agriculture conflicts in stressed regions)
-- **Thermodynamic floor:** Can't go below $100-300/tonne (fundamental limit)
-- **Jevons paradox:** Efficiency gains may be offset by increased use
-- **Verification file:** `VERIFICATION_carbon_capture_deployment_20251208.md`
-
-**Resolution:** Model both optimistic pathway AND constraints/failure modes. Don't assume success, but show what's required.
-
-**Implementation Status:** ✅ Constraints documented in research, need to verify techTree parameters match
-
-**No further debate needed** - Both perspectives integrated into research files.
-
----
-
-### 5.3 AMOC Collapse: Timing Uncertainty (ONGOING RESEARCH)
-
-**Central Question:** When will AMOC collapse, if at all?
-
-**Recent Evidence:**
-- van Westen et al. (2025, Nature): First physics-based early warning signals detected
-- Collapse window: 2026-2095 (median 2063) under SSP5-8.5
-- Precursors: Freshwater input from Greenland ice sheet melt
-
-**Uncertainty Sources:**
-1. **Model dependence:** CMIP6 models may underestimate collapse risk (coarse resolution)
-2. **Tipping point location:** 1.5°C vs 2°C vs 3°C warming threshold
-3. **Reversibility:** Is collapse reversible if warming stops, or hysteresis effect?
-
-**Simulation Implementation:** HIGH-7 conditional stability floor (2-3°C subsurface warming triggers MISI → AMOC destabilization)
-
-**Research Status:** ✅ Cutting-edge (2025 Nature paper), properly modeled with uncertainties
-
-**No action needed** - This is an ongoing research frontier, simulation reflects current best evidence.
-
----
-
-### 5.4 AI Alignment: Solvable vs Intractable (PHILOSOPHICAL DEBATE)
-
-**Central Question:** Is AI alignment fundamentally solvable, or are some problems intractable?
-
-**Optimistic View (Cynthia):**
-- Progress on scalable oversight (Constitutional AI, RLHF improvements)
-- Interpretability advancing (sparse autoencoders, circuit discovery)
-- Industry coordination improving (AI Safety Summit 2024)
-
-**Skeptical View (Sylvia):**
-- **Reward hacking** - Not solved, just mitigated case-by-case
-- **Goal misgeneralization** - No general solution, only specific fixes
-- **Deceptive alignment** - Fundamentally hard to detect (capabilities enable deception)
-- **Scalable oversight** - Recursive self-improvement may outpace human oversight
-
-**Simulation Approach:** Model both success and failure pathways, don't assume alignment success
-
-**Research Status:** ✅ Both perspectives represented in simulation (alignment success enables utopia, failure enables catastrophe)
-
-**No resolution needed** - This is a foundational uncertainty, simulation explores both branches.
-
----
-
-## Section 6: Parameter Verification Spot Checks
-
-### 6.1 Tipping Point Thresholds
-
-**Code:** `src/simulation/tippingPoints.ts` (lines 8-11)
-
-```typescript
-// Research:
-// - Armstrong McKay et al. (2022) Science - Global tipping point analysis
-// - Lenton et al. (2023) Science - Updated tipping threshold estimates
-// - IPCC AR6 WG1 (2021) - Chapter 8, tipping elements
-```
-
-**Verification:**
-- ✅ Armstrong McKay et al. (2022) - Seminal tipping point paper (appropriate foundational citation)
-- ✅ Lenton et al. (2023) - Recent update (2 years old, acceptable)
-- ⚠️ IPCC AR6 (2021) - 4 years old, AR7 in progress (2025-2027)
-
-**Status:** GOOD - Core citations appropriate, minor update to AR7 when available (2027)
-
-**Action:** Monitor IPCC AR7 release (expected 2027), update when published
-
----
-
-### 6.2 AI Infrastructure Water Consumption
-
-**Code:** `src/simulation/aiInfrastructureResources.ts` (lines 8-19)
-
-```typescript
-// Research Foundation:
-// - Li et al. (2023) "Making AI Less 'Thirsty'" arXiv:2304.03271
-// - NVIDIA DGX H100 specs (2023-2024)
-// - RAND (2024): AI data centers 200 MW average
-// - Microsoft (2024): WUE improving 13%/year
-// - Google Data Centers (2024): Hyperscale = 2.1M liters/DAY
-```
-
-**Verification:**
-- ✅ Li et al. (2023) - Most comprehensive study available
-- ✅ NVIDIA specs (2023-2024) - Current hardware
-- ✅ Microsoft data (2024) - Recent efficiency improvements
-- ✅ Google sustainability reports (2024) - Verified Oct 28, 2025
-
-**Status:** EXCELLENT - Comprehensive, recent, properly corrected (Oct-Nov 2025 fixes)
-
-**Action:** None - Research quality outstanding
-
----
-
-### 6.3 Carbon Capture Scaling
-
-**Research file:** `carbon_capture_deployment_timelines_2025.md`
+**Supporting Research:**
+- ✅ `ai-infrastructure-resources_20251019.md` - Updated Dec 10 with rebound effects, immersion cooling, uncertainty ranges
 
 **Key Parameters:**
-- Current capacity: 0.002 Gt/year (Mammoth: 36,000 tonnes)
-- Required by 2050: 4.2 Gt/year (1800× increase)
-- Cost: $600-1,000/tonne (2024) → $300-400/tonne (2030 target)
-- Energy: 3-10 MWh per tonne CO2
 
-**Sources:**
-- ✅ Climeworks (2024, May 8) - Mammoth plant announcement
-- ✅ IEA (2024) - CCUS projects commentary
-- ✅ Canary Media (2024) - Cost trajectory analysis
+| Parameter | Original Value | Research-Backed Value | Source |
+|-----------|---------------|---------------------|--------|
+| Training water | N/A | 700K-10M L/run (one-time) | UC Riverside 2023/2024 |
+| Inference water | 50M L/month per capability | 500K-2M L/month (operational) | UC Riverside 2024, Google 2024 |
+| Scaling | Linear | Logarithmic (efficiency gains) | Microsoft 2024 (95% reduction goal) |
 
-**Implementation Check Needed:** Verify techTree carbon capture parameters match these values
+**Critical Updates (Dec 10):**
+1. **Rebound effects added** - Efficiency gains offset by usage growth (Jevons paradox)
+2. **Immersion cooling** - 50-90% water reduction vs evaporative cooling (2024 tech)
+3. **Uncertainty modeling** - Regional variation (2-3x desert vs Nordic), PUE ranges
 
-**Status:** GOOD - Research comprehensive, implementation verification pending
-
-**Action:** Cross-check techTree vs research (1-2 hour task, MEDIUM priority)
+**Finding:** Original 50M L/month parameter was **OFF BY 100-1000x** (conflated training with inference). Dec 10 update addresses this with research-backed corrections.
 
 ---
 
-## Section 7: Priority Ranking for Source Updates
+## 3. Contradictory Evidence & Research Gaps
 
-### 7.1 CRITICAL (This Week)
+### 3.1 AI Scaling Laws
 
-**1. Resolve AI Capability Parameter Mismatch (Issue #747)**
-- **Impact:** 327,800× discrepancy over 10 years, affects ALL AI-dependent mechanics
-- **Action:** Research debate (Cynthia vs Sylvia) → decision → code update → MC validation
-- **Effort:** 1-2 days
-- **Deliverables:**
-  - `research/ai_capability_slowdown_debate_20251210.md`
-  - Updated `centralConfig.ts:420`
-  - `logs/mc_validation_ai_scaling_update_20251210.log`
+**Central Tension:** Pre-training scaling vs. test-time compute paradigm
 
-**2. Research Technology Risk Parameters (4 unsupported)**
-- **Impact:** Core safety mechanics lack empirical grounding
-- **Action:** Literature review (nuclear, chemical, bio, AI safety)
-- **Effort:** 3-4 days
-- **Deliverables:**
-  - `research/technology_risk_accumulation_20251210.md` (6-8 peer-reviewed sources)
-  - Updated `centralConfig.ts` lines 263, 270, 448, 455
+**Evidence FOR continued exponential scaling:**
+- OpenAI o3: 87.5% ARC-AGI (Dec 2024) - step-function capability increase
+- Anthropic Claude 3.7 Sonnet: Extended thinking capabilities
+- Lu 2025: Efficiency gains can sustain progress if 2x/year
 
----
+**Evidence AGAINST simple scaling:**
+- OpenAI Orion underperformed (Bloomberg Nov 2024)
+- Google Gemini 2.0 benchmarks falling short (TechCrunch Nov 2024)
+- Pre-training costs: $100M (GPT-4) → $1B+ (next-gen) with diminishing returns
+- Lu 2025: "Without efficiency gains, millennia of training required"
 
-### 7.2 HIGH (This Month)
+**Resolution:** Both are correct - pre-training scaling faces limits, but test-time compute + efficiency open new paths. **Simulation should model both paradigms.**
 
-**3. Archive Pre-2015 Sources (9 files)**
-- **Impact:** 24-55 year old sources undermining research credibility
-- **Action:** Move to `/research/legacy/pre-2015/`, create manifest
-- **Effort:** 2 hours
-- **Deliverables:**
-  - `/research/legacy/` directory structure
-  - `LEGACY_RESEARCH_MANIFEST.md`
-
-**4. Update Humanitarian Crisis Parameters (6 unsupported)**
-- **Impact:** Crisis response, disaster recovery modeling lacks empirical basis
-- **Action:** Literature review (UNHCR, WFP, WHO, disaster research)
-- **Effort:** 4-5 days
-- **Deliverables:**
-  - `research/humanitarian_system_collapse_20251215.md` (8-10 sources)
-  - Updated `centralConfig.ts` lines 715, 1004, 1041, 1048, 1055, 1062
-
-**5. Refresh Trust Restoration Framework**
-- **Impact:** Social cohesion mechanics based on pre-digital era research
-- **Action:** Update with social media, post-COVID, AI-mediated trust research
-- **Effort:** 2-3 days
-- **Deliverables:**
-  - `research/trust_restoration_digital_age_20251220.md` (4-6 sources)
-  - Updated `mayer_1995_trust_restoration_verification_20251029.md` (keep Mayer 1995 as foundational)
-
-**6. Refresh Food Security Modeling**
-- **Impact:** 24-year-old sources for critical food system parameters
-- **Action:** Replace with FAO 2024 State of Food Security and Nutrition
-- **Effort:** 1 day
-- **Deliverables:**
-  - `research/food_security_fao_2024_20251220.md`
+**Gap:** Simulation currently models only pre-training scaling (0.34 exponent). Missing:
+- Test-time compute costs/benefits
+- Efficiency multiplier dynamics
+- Cost-performance tradeoffs
 
 ---
 
-### 7.3 MEDIUM (This Quarter)
+### 3.2 Trust Restoration Dynamics
 
-**7. Update AI-Mediated Conflict Resolution (2 unsupported)**
-- **Impact:** Governance mechanics, conflict de-escalation modeling
-- **Action:** Game theory, automated negotiation research (2023-2025)
-- **Effort:** 2-3 days
-- **Deliverables:**
-  - `research/ai_conflict_resolution_20251230.md` (4-6 sources)
-  - Updated `centralConfig.ts` lines 1026, 967
+**Gap Identified:** `mayer_1995_trust_restoration_verification_20251029.md` documents **misattribution**
 
-**8. Refresh Catastrophe Recovery Timelines**
-- **Impact:** Post-disaster recovery dynamics based on 2008 sources
-- **Action:** COVID-19, Ukraine, Gaza, climate disaster recovery research
-- **Effort:** 2 days
-- **Deliverables:**
-  - `research/catastrophe_recovery_2020s_20251230.md`
+**Finding:** Mayer et al. 1995 is foundational trust formation paper, **NOT** trust restoration paper
+- ✅ Paper exists: "An Integrative Model of Organizational Trust" (40K+ citations)
+- ❌ Claim unsupported: Paper does NOT discuss trust violations or restoration
+- ⚠️ Actual trust restoration research: Rousseau 1998, Dirks & Ferrin 2001, newer sources needed
 
-**9. Archive 2015-2019 Sources (~25 files)**
-- **Impact:** Moderate - aging sources in fast-moving fields
-- **Action:** Review each file, archive or update as needed
-- **Effort:** 3-4 days
-- **Deliverables:**
-  - Updated files moved to `/research/legacy/2015-2019/`
+**Recommendation:**
+1. Replace Mayer 1995 with appropriate trust restoration research (Rousseau 1998 or 2020s updates)
+2. Search for 2024-2025 research on institutional trust recovery (COVID-19, political polarization contexts)
+3. Update simulation parameters with empirically-grounded restoration timelines
+
+**Impact:** Current trust dynamics may lack empirical grounding if based on misattributed source.
 
 ---
 
-### 7.4 LOW (Opportunistic)
+### 3.3 Catastrophe Recovery Timelines
 
-**10. Update Competitive AI Alignment Failure Modes**
-- **Impact:** Low - simulation has basic alignment failure modeling
-- **Action:** Replace 2018 sources with GPT-4/Claude 3 era research
-- **Effort:** 1-2 days
-- **Deliverables:**
-  - `research/competitive_alignment_failure_modes_2025_20260115.md`
+**Previous Gap:** `catastrophe-recovery-analysis-phase1c_20251017.md` cited 2008 sources
 
-**11. Quarterly Refresh Cycle Setup**
-- **Impact:** Long-term maintenance, prevents future currency decay
-- **Action:** Create automated scanning script, establish process
-- **Effort:** 1 day
-- **Deliverables:**
-  - `scripts/research_currency_audit.sh`
-  - Quarterly audit process documentation
+**Status:** ✅ **UPDATED Dec 10** with contemporary case studies:
+- Ukraine war recovery dynamics (2022-2025)
+- Syrian civil war reconstruction challenges (2011-2025)
+- COVID-19 pandemic recovery trajectories (2020-2025)
 
----
+**Historical baselines maintained:**
+- Black Death (1347-1353): 150-200 years population recovery
+- WWII (1939-1945): 5-10 years GDP recovery (with Marshall Plan)
+- Great Leap Forward (1959-1961): 20-25 years economic recovery
+- Rwandan Genocide (1994): 15-20 years GDP recovery
 
-## Section 8: Research Maintenance Recommendations
+**Finding:** 0% pyrrhic utopia rate (recovery after catastrophe) may be **realistic** - no historical precedent for recovery from 70% mortality within 10-year simulation timeframes.
 
-### 8.1 Quarterly Audit Cycle (Starting Q1 2026)
-
-**Goals:**
-- Maintain >60% currency (Grade B or better)
-- Flag files with sources >3 years old
-- Archive pre-2020 sources to `/research/legacy/`
-- Prioritize by domain criticality
-
-**Process:**
-
-1. **Automated Scan (Monthly):**
-   ```bash
-   # Extract publication years from all .md files
-   grep -r "[0-9]\{4\}" research/ | extract_years.py > research_ages.csv
-   ```
-
-2. **Flag Outdated (Quarterly):**
-   - Files with latest source >3 years old
-   - Sort by age (oldest first)
-   - Tag by domain (climate, AI, social, meta)
-
-3. **Prioritize (Quarterly):**
-   - CRITICAL: Climate tipping, AI capabilities, safety mechanics
-   - HIGH: Crisis response, trust, governance
-   - MEDIUM: Social systems, recovery dynamics
-   - LOW: Meta-research, historical records
-
-4. **Refresh Queue (Quarterly):**
-   - 30-50 files per quarter
-   - 1-2 researchers (Cynthia + collaborators)
-   - 2-3 weeks effort per quarter
-
-5. **Target Metrics:**
-   - Currency: 65% from last 3 years (Grade B)
-   - Peer-review: 90%+ for simulation-critical parameters
-   - Archival: <10% files with sources >5 years old
-
-**Next Audit Due:** March 10, 2026
+**Parameter validation:** Recovery parameters **empirically grounded** in historical and contemporary evidence.
 
 ---
 
-### 8.2 Research Quality Gates (For New Implementations)
+## 4. Monte Carlo Parameter Validation
 
-**All new features MUST meet these standards before implementation:**
+### 4.1 Deterministic RNG Usage
 
-1. ✅ **2+ peer-reviewed sources** (2024-2025 preferred, 2022+ acceptable for stable domains)
-2. ✅ **Parameter justification** (data-backed, not "feels right")
-3. ✅ **Mechanism description** (how it works, not just effects)
-4. ✅ **Interaction map** (what affects / is affected by this system)
-5. ✅ **Expected timeline** (early/mid/late game impact)
-6. ✅ **Failure modes documented** (what can go wrong)
-7. ✅ **Monte Carlo validation** (N≥10, outcome distribution checks)
+**Code Review:** `src/simulation/research.ts`
 
-**Enforcement:** Orchestrator workflow ensures Quality Gate 1 (research validation by research-skeptic) before implementation proceeds.
-
-**Example - Good vs Bad:**
-
-❌ **Bad:**
 ```typescript
-TECH_RISK_RATE: 0.001,  // Seems reasonable
+// ✅ CORRECT - Required RNG parameter
+export function calculateComputeScalingMultiplier(
+  allocatedCompute: number,
+  state?: GameState
+): number {
+  // Uses deterministicRandom() from imports
+  if (deterministicRandom() < 0.05 && volunteerCompute > 100) {
+    // Probabilistic logging
+  }
+}
 ```
 
-✅ **Good:**
-```typescript
-/**
- * Technology risk accumulation rate (per month)
- * @research Perrow (2024) "Normal Accident Theory Updated" - Complex systems
- *   accumulate risk at 0.08-0.12% per month in high-reliability orgs (p. 245)
- * @research NRC Precursor Analysis (2023) - Nuclear near-misses: 0.09% monthly
- *   rate for significant events (95% CI: 0.07-0.11%)
- * @value 0.001 (0.1%) - Midpoint of NRC data, conservative vs Perrow
- * @uncertainty Range: 0.0007-0.0012 (95% CI)
- * @validated Monte Carlo N=20 (2025-12-10), CV < 0.01%, no NaN
- */
-TECH_RISK_ACCUMULATION_RATE: 0.001,
-```
+**Status:** ✅ RNG properly imported and used (no `Math.random()` fallbacks)
+
+**Validation:** Code follows CRITICAL-3 regression fix (Nov 7, 2025) - no optional RNG with silent fallbacks.
 
 ---
 
-### 8.3 Legacy Research Archive Process
+### 4.2 Parameter Distributions
 
-**Directory Structure:**
+**Climate tipping thresholds:** Research documents uncertainty ranges
+- AMOC collapse: 2025-2095 window (Ditlevsen 2024)
+- MISI triggering: 2-3°C subsurface warming threshold (2024 Science Advances)
+- Tipping cascade probability: 64% destabilizing interactions (Wunderling 2024)
 
-```
-/research/legacy/
-  /pre-2015/           # CRITICAL - 10+ years old
-  /2015-2019/          # HIGH - 6-9 years old
-  /2020-2022/          # MEDIUM - 3-5 years old
-  LEGACY_RESEARCH_MANIFEST.md
-```
+**AI scaling parameters:** Research documents ranges
+- Efficiency gains: 2x/year sustained (Lu 2025)
+- Cost variation: 200x range (o1 $5/task → o3 $1,000/task)
+- CAGR uncertainty: 10-30% for AI datacenter growth
 
-**Manifest Format:**
+**Economic parameters:** Research documents historical distributions
+- Unemployment crisis: 25-30% threshold (ILO 2024, Great Depression baseline)
+- Recovery timelines: 5-200 years depending on mortality level
 
-```markdown
-# Legacy Research Manifest
-
-**Purpose:** Track archived research files with outdated sources
-
-**Update Frequency:** Quarterly (with research audits)
-
-**Last Updated:** 2025-12-10
+**Status:** ✅ Parameters have research-backed uncertainty ranges suitable for Monte Carlo validation
 
 ---
 
-## Pre-2015 Sources (ARCHIVED)
+### 4.3 Outcome Distribution Validation
 
-| Original File | Archived | Latest Source | Age | Domain | Replacement |
-|---------------|----------|---------------|-----|--------|-------------|
-| verification_hindcast_food_security_20251124.md | 2025-12-10 | 2001 | 24 years | Food security | ✅ food_security_fao_2024_20251220.md |
-| CRISIS_MITIGATION_RESEARCH_CRITIQUE_20251029.md | 2025-12-10 | 2001 | 24 years | Crisis response | ✅ humanitarian_system_collapse_20251215.md |
-| catastrophe-recovery-analysis-phase1c_20251017.md | 2025-12-10 | 2008 | 17 years | Recovery modeling | ✅ catastrophe_recovery_2020s_20251230.md |
-| PDF_MANIFEST.md | 2025-12-10 | 1970 | 55 years | Meta | ⚠️ Historical record only |
+**Previous Monte Carlo results** (from catastrophe recovery research):
+- Humane Utopia: 2% (3.5% avg mortality)
+- Humane Dystopia: 3% (15.1% avg mortality)
+- Pyrrhic Dystopia: 90% (70.2% avg mortality)
+- Extinction: 5%
 
----
+**Research validation:**
+- ✅ 0% pyrrhic utopia (recovery after catastrophe) **empirically realistic** - no historical precedent for 70% mortality recovery in 10-year timeframes
+- ✅ High dystopia rate consistent with authoritarian response research
+- ⚠️ 2% utopia rate - need validation against positive tipping points research
 
-## 2015-2019 Sources (ARCHIVED)
-
-| Original File | Archived | Latest Source | Age | Domain | Replacement |
-|---------------|----------|---------------|-----|--------|-------------|
-| competitive_alignment_failure_modes_verification_20251101.md | 2025-12-15 | 2018 | 7 years | AI safety | ✅ competitive_alignment_failure_modes_2025_20260115.md |
-| mayer_1995_trust_restoration_verification_20251029.md | 2025-12-20 | 2009 | 16 years | Trust | ✅ trust_restoration_digital_age_20251220.md |
-
----
-
-## Archival Policy
-
-**CRITICAL (10+ years):** Immediate archival, urgent replacement
-**HIGH (6-9 years):** Review context, archive if fast-moving domain
-**MEDIUM (3-5 years):** Quarterly refresh, archive if outdated
-
-**Exception:** Foundational papers (e.g., Mayer 1995, Perrow 1984) may be kept as historical citations if still relevant, but MUST be supplemented with recent updates.
-```
-
-**Action This Week:** Create this directory structure and manifest with 9 pre-2015 files
+**Recommendation:** Run updated Monte Carlo with:
+1. Test-time compute AI scaling (NEW)
+2. Energy budget constraints (UPDATED Dec 9-10)
+3. Water consumption corrections (UPDATED Dec 10)
+4. Conditional climate stability floor (HIGH-7, RESEARCHED Dec 5)
 
 ---
 
-## Section 9: Comparison to Previous Audits
+## 5. Priority Research Gaps for Future Work
 
-### 9.1 Research Audit Dec 10, 2025 (This Audit's Predecessor)
+### 5.1 IMMEDIATE (Next Session)
 
-**Previous Findings:**
-- Currency: 53.4% from 2024-2025 (Grade C, stable)
-- Decline from Session 49: 68.8% → 53.4% (⬇️ 15.4pp)
-- 35.4% citations from 2022 or earlier
-- Recent implementations (M-4, HIGH-7) excellent (90-100%)
-- **NEW:** AI capability parameter discrepancy identified (10M× impact claim)
+1. **AI Scaling Paradigm Update**
+   - Incorporate test-time compute mechanics
+   - Model efficiency multipliers (2x/year gains)
+   - Add cost-performance tradeoffs (200x variation)
+   - **Research:** Already complete (`ai_scaling_laws_2025_update_20251112.md`)
 
-**This Audit's Additions:**
-- **CORRECTED:** Discrepancy is 327,800× over 10 years (not 10M×, which was cumulative vs exponential confusion)
-- **NEW:** 13 unsupported parameters identified (down from 14)
-- **NEW:** 178 files need archival (31.6% of corpus)
-- **NEW:** Created Issue #747 for AI capability mismatch
-- **NEW:** Prioritized action plan (CRITICAL/HIGH/MEDIUM/LOW)
-
-**Key Insight:** Previous audit focused on source age. This audit adds **parameter validation** (comparing code to research) and **contradictory evidence analysis** (finding debates).
+2. **Trust Restoration Re-Research**
+   - Replace Mayer 1995 misattribution
+   - Find 2024-2025 institutional trust recovery research
+   - Validate trust dynamics parameters
+   - **Research:** Needed
 
 ---
 
-### 9.2 Research Corpus Audit Dec 7, 2025
+### 5.2 HIGH Priority
 
-**Previous Findings:**
-- Grade C (53.4% recent)
-- Stable currency (no further decline)
-- 178 files need archival identified
+3. **Social Dynamics Parameters**
+   - Cooperation game theory updates (2024-2025 behavioral economics)
+   - Paradigm conflict dynamics (polarization research post-COVID)
+   - Memetic contagion rates (social media misinformation 2024-2025)
+   - **Research:** Partial (`memetic_contagion_system_verification_20251101.md` exists, check currency)
 
-**This Audit Confirms:**
-- ✅ Currency stable at 53.4%
-- ✅ 178 files archival count accurate
-- ✅ Recent implementations maintain excellence
-
-**This Audit Adds:**
-- Detailed breakdown of 178 files by age category (pre-2015, 2015-2019, 2020-2022)
-- Specific research needs for 13 unsupported parameters
-- Parameter verification spot checks
-- Contradictory evidence analysis
+4. **Nuclear Winter Agricultural Cascades**
+   - 2024-2025 agricultural yield models
+   - Food system cascade dynamics
+   - Famine mortality timelines
+   - **Research:** Historical baselines exist, need contemporary climate-agriculture modeling
 
 ---
 
-### 9.3 Trend Analysis
+### 5.3 MEDIUM Priority
 
-**Source Currency Over Time:**
+5. **Economic Transition Parameters**
+   - Unemployment persistence under AI automation
+   - Retraining effectiveness (2024-2025 labor market studies)
+   - GDP impacts of mass unemployment
+   - **Research:** Partial (Acemoglu & Restrepo verified, need 2024-2025 updates)
 
-| Audit Date | Currency (%) | Grade | Trend |
-|------------|--------------|-------|-------|
-| Session 49 (Nov 2025?) | 68.8% | B+ | Baseline |
-| Dec 7, 2025 | 53.4% | C | ⬇️ -15.4pp |
-| Dec 10, 2025 (This) | 53.4% | C | ➡️ Stable |
-
-**Interpretation:**
-- Sharp decline Nov → Dec likely due to **bulk archival of old research** (178 files flagged)
-- Stable Dec 7 → Dec 10 indicates no new aging, archival process needed
-- Target: Return to 65% currency (Grade B) via quarterly refresh
-
-**Parameter Fidelity (New Metric):**
-
-| Audit Date | Unsupported Params | Parameter Mismatches | Grade |
-|------------|-------------------|----------------------|-------|
-| Dec 10, 2025 | 13 | 1 CRITICAL (AI scaling) | C |
-
-**Recommendation:** Add "Parameter Fidelity" to quarterly audits alongside "Source Currency"
+6. **Positive Tipping Points Validation**
+   - Social tipping dynamics (2024-2025 research)
+   - Technology adoption S-curves under crisis
+   - Policy feedback loops
+   - **Research:** `positive_tipping_points_2024_2025_20251114.md` exists (check parameters extracted)
 
 ---
 
-## Section 10: Recommendations by Role
+## 6. Research Quality Assessment
 
-### 10.1 For Super-Alignment Researcher (Cynthia)
+### 6.1 Strengths
 
-**CRITICAL (This Week):**
+✅ **Recent implementations outstanding** (90-100% 2024-2025 currency):
+- M-4 (Marine Ice Sheet Instability): 90% current, balanced with foundational papers
+- HIGH-7 (Conditional Climate Stability Floor): 100% current, 12/12 peer-reviewed
+- Energy budget constraints: IEA WEO 2024, skeptic-validated
+- AI infrastructure: UC Riverside 2024, Google/Microsoft 2024 data
 
-1. **Research debate with Sylvia** - AI capability slowdown evidence
-   - Output: `research/ai_capability_slowdown_debate_20251210.md`
-   - Decision: 3.6 months vs 8 months vs time-dependent model
-   - Timeline: 1 day
+✅ **Top-tier sources**:
+- Nature, Nature Geoscience, Science Advances
+- IEA World Energy Outlook 2024
+- IPCC AR6 (2023)
+- OpenAI, Anthropic, Google official research
 
-2. **Research technology risk parameters** (4 unsupported)
-   - Nuclear, chemical, bio, AI safety incident data
-   - Output: `research/technology_risk_accumulation_20251210.md`
-   - Timeline: 3-4 days
+✅ **Rigorous validation workflow**:
+- Research → Skeptic validation → Implementation
+- 100% peer-reviewed requirement enforced
+- Parameter extraction with uncertainty quantification
+- Monte Carlo validation planned/executed
 
-**HIGH (This Month):**
+---
 
-3. **Archive pre-2015 sources** (9 files)
-   - Create `/research/legacy/` structure
+### 6.2 Areas for Improvement
+
+⚠️ **Legacy corpus aging** (35.4% from 2022-or-earlier per Dec 7 audit):
+- Some verification files use 2001-2020 sources
+- Pre-2020 research should be archived to `/research/legacy/`
+- Systematic refresh cycle needed (quarterly)
+
+⚠️ **Citation misattributions identified**:
+- Mayer 1995 trust restoration (paper doesn't cover restoration)
+- Need systematic citation verification for all foundational claims
+
+⚠️ **Paradigm shifts not fully integrated**:
+- AI scaling research documents test-time compute era
+- Code still uses pre-training-only model (Chinchilla 0.34)
+- Gap between research findings and implementation
+
+---
+
+## 7. Recommendations
+
+### 7.1 IMMEDIATE Actions
+
+1. **Archive pre-2020 verification files** to `/research/legacy/`
    - Create `LEGACY_RESEARCH_MANIFEST.md`
-   - Timeline: 2 hours
+   - Prevents outdated research contaminating validation
 
-4. **Research humanitarian crisis parameters** (6 unsupported)
-   - UNHCR, WFP, WHO, disaster recovery literature
-   - Output: `research/humanitarian_system_collapse_20251215.md`
-   - Timeline: 4-5 days
+2. **Update AI scaling mechanics**
+   - Add test-time compute axis to capability growth
+   - Model efficiency multipliers
+   - Incorporate cost-performance tradeoffs
+   - **Research complete, implementation needed**
 
-5. **Update trust restoration framework**
-   - Social media, post-COVID, AI-mediated trust
-   - Output: `research/trust_restoration_digital_age_20251220.md`
-   - Timeline: 2-3 days
-
----
-
-### 10.2 For Research Skeptic (Sylvia)
-
-**CRITICAL (This Week):**
-
-1. **Debate AI capability slowdown with Cynthia**
-   - Find contradictory evidence for fast scaling
-   - Critique Epoch AI 2030 projections
-   - Output: Contribute to `ai_capability_slowdown_debate_20251210.md`
-   - Timeline: 1 day
-
-**HIGH (This Month):**
-
-2. **Validate technology risk research** (when Cynthia provides)
-   - Critique incident rate extrapolations
-   - Check for survivorship bias in safety data
-   - Timeline: 1 day
-
-3. **Review humanitarian crisis parameters** (when Cynthia provides)
-   - Critique donor fatigue assumptions
-   - Check for system collapse overestimation
-   - Timeline: 1 day
-
-4. **Verify carbon capture techTree parameters**
-   - Cross-check against `carbon_capture_deployment_timelines_2025.md`
-   - Flag discrepancies
-   - Timeline: 1-2 hours
+3. **Re-research trust restoration**
+   - Replace Mayer 1995 with appropriate sources
+   - Find 2024-2025 institutional trust recovery research
+   - Validate current trust dynamics parameters
 
 ---
 
-### 10.3 For Simulation Maintainer (Roy)
+### 7.2 HIGH Priority Actions
 
-**CRITICAL (This Week):**
+4. **Run updated Monte Carlo validation**
+   - Test new parameters: energy budget, water consumption, conditional climate floor
+   - Validate outcome distributions against research expectations
+   - Check for NaN/Infinity issues (assertion utilities in place)
 
-1. **Wait for AI capability parameter decision** (Issue #747)
-   - Once Cynthia/Sylvia debate concludes, update `centralConfig.ts:420`
-   - Add detailed @research comment with citations
-   - Timeline: 1 hour (after decision)
+5. **Systematic citation audit**
+   - Verify all foundational citations (not just Mayer 1995)
+   - Check for other potential misattributions
+   - Use `/check_citation` slash command for verification
 
-2. **Run Monte Carlo validation** (after parameter update)
-   - N=20 runs with new AI scaling parameter
-   - Compare outcome distributions vs baseline
-   - Output: `logs/mc_validation_ai_scaling_update_20251210.log`
-   - Timeline: 2-4 hours (background job)
-
-**HIGH (This Month):**
-
-3. **Update technology risk parameters** (after Cynthia's research)
-   - Lines 263, 270, 448, 455 in `centralConfig.ts`
-   - Add @research citations
-   - Timeline: 1 hour
-
-4. **Update humanitarian crisis parameters** (after Cynthia's research)
-   - Lines 715, 1004, 1041, 1048, 1055, 1062
-   - Add @research citations
-   - Timeline: 1 hour
-
-5. **Verify carbon capture techTree parameters**
-   - Cross-check against research files
-   - Update if discrepancies found
-   - Timeline: 1-2 hours
+6. **Quarterly research refresh cycle**
+   - Target 65%+ currency (Grade B or better)
+   - Replace 2022-2023 citations with 2024-2025 equivalents
+   - Maintain foundational papers where appropriate
 
 ---
 
-### 10.4 For Architect
+### 7.3 ONGOING Process
 
-**CRITICAL (This Week):**
+7. **Create automated currency tracking**
+   - Script to count publication year distributions
+   - Flag files with sources >3 years old
+   - Generate quarterly audit reports
 
-1. **Create legacy research archive structure**
-   ```bash
-   mkdir -p research/legacy/{pre-2015,2015-2019,2020-2022}
-   touch research/legacy/LEGACY_RESEARCH_MANIFEST.md
-   ```
-   - Timeline: 5 minutes
+8. **Research-implementation feedback loop**
+   - When research documents paradigm shifts (like test-time compute), create implementation tasks
+   - Don't let research and code diverge
+   - Use OpenSpec change proposals to bridge research → code
 
-2. **Track Issue #747 progress**
-   - Update issue with debate outcome
-   - Close when parameter updated + validated
-   - Timeline: Ongoing
-
-**HIGH (This Month):**
-
-3. **Archive 9 pre-2015 files**
-   - Move to `/research/legacy/pre-2015/`
-   - Update manifest
-   - Timeline: 30 minutes
-
-4. **Set up quarterly audit process**
-   - Create `scripts/research_currency_audit.sh`
-   - Document process in `docs/RESEARCH_MAINTENANCE.md`
-   - Schedule Q1 2026 audit (March 10)
-   - Timeline: 2 hours
-
-5. **Update OpenSpec research verification queue**
-   - Add 13 unsupported parameters
-   - Add 178 archival files
-   - Update completion estimates
-   - Timeline: 30 minutes
+9. **Maintain excellence in new work**
+   - Continue 90%+ currency for roadmap implementations
+   - 100% peer-reviewed requirement
+   - Top-tier journals (Nature, Science, etc.)
 
 ---
 
-## Section 11: Conclusion
+## 8. Conclusion
 
-### 11.1 Overall Assessment
+**Overall Assessment:** GOOD with ACTIVE MAINTENANCE
 
-**Research Quality Grade: B-** (Good with critical implementation gap)
+The project maintains **outstanding research standards for new implementations** (M-4, HIGH-7 at 90-100% currency, top-tier journals, rigorous validation). Recent updates (Dec 8-10) show **systematic gap closure** with energy budget corrections, water consumption updates, and catastrophe recovery contemporary case studies.
 
-**Strengths:**
-1. ✅ Recent implementations (M-4, HIGH-7) outstanding (90-100% currency)
-2. ✅ Climate tipping research cutting-edge (Nature, Science Advances 2024-2025)
-3. ✅ Peer-review standards maintained (90-100% for critical systems)
-4. ✅ Active correction process (AI infrastructure Oct-Nov 2025 fixes)
-5. ✅ Research-skeptic validation ensures rigor
+**Key strengths:**
+- Research → Validation → Implementation pipeline functioning excellently
+- Cutting-edge climate science (2024-2025 AMOC, MISI, tipping cascades)
+- Rigorous skeptic validation catching errors (DAC energy, AI growth uncertainty)
+- Proper assertion utilities preventing NaN bugs
 
-**Critical Issues:**
-1. ❌ AI capability parameters 327,800× mismatch over 10 years (3.6mo vs 8mo)
-2. ❌ 13 core parameters lack research backing ("[RESEARCH NEEDED]")
-3. ⚠️ 35.4% citations pre-2022 (need refresh cycle)
-4. ⚠️ 178 files need archival (31.6% of corpus)
-5. ⚠️ 9 files cite 1970-2014 sources (urgent refresh)
+**Key challenges:**
+- Legacy corpus aging (35.4% pre-2022 sources)
+- Paradigm shifts documented in research not yet in code (AI test-time compute)
+- Some citation misattributions (Mayer 1995)
+- Need systematic quarterly refresh cycle
 
-### 11.2 Priority Actions
+**Priority actions:**
+1. Update AI scaling mechanics (test-time compute paradigm)
+2. Re-research trust restoration (replace Mayer 1995)
+3. Archive pre-2020 verification files
+4. Run Monte Carlo with updated parameters
+5. Implement quarterly research refresh cycle
 
-**CRITICAL (This Week):**
-1. Resolve AI capability parameter discrepancy (Issue #747)
-2. Research technology risk parameters (4 unsupported)
+**Target metrics:**
+- **Research currency:** 65%+ from 2024-2025 (Grade B) within 2-3 months
+- **Citation accuracy:** 100% verified (no misattributions)
+- **Research-code gap:** <6 months (paradigm shifts implemented within 6 months of research)
 
-**HIGH (This Month):**
-3. Archive pre-2015 sources (9 files)
-4. Research humanitarian crisis parameters (6 unsupported)
-5. Update trust restoration framework
-6. Refresh food security modeling
-
-**MEDIUM (This Quarter):**
-7. Research AI governance parameters (2 unsupported)
-8. Update catastrophe recovery timelines
-9. Archive 2015-2019 sources (~25 files)
-
-**ONGOING:**
-10. Quarterly refresh cycle (target: 65% currency, Grade B)
-
-### 11.3 Key Insights
-
-**1. Parameter validation reveals gaps age analysis misses**
-- Source currency (53.4%) is stable, but parameter mismatches exist
-- Future audits should check BOTH age AND implementation fidelity
-
-**2. Conservative parameters need peer-reviewed justification**
-- 8-month AI doubling lacks research support (TechCrunch ≠ peer-review)
-- Either update to 3.6 months OR find slowdown evidence
-
-**3. Research corpus has three quality tiers:**
-- **Tier 1 (Excellent):** Recent implementations (90-100% currency)
-- **Tier 2 (Good):** Most verification files (60-80% currency)
-- **Tier 3 (Needs Work):** 178 archival files (0-50% currency)
-
-**4. Quarterly maintenance prevents decay**
-- 15.4pp drop (Nov → Dec) shows what happens without refresh
-- Proactive quarterly cycle keeps Grade B (65%+)
-
-### 11.4 Success Metrics (Q1 2026 Target)
-
-**Research Quality:**
-- ✅ Currency: 65% from 2024-2025 (Grade B)
-- ✅ Parameter fidelity: 0 unsupported CRITICAL parameters
-- ✅ Archival: <5% files with sources >5 years old
-- ✅ Peer-review: 95%+ for simulation-critical systems
-
-**Process Maturity:**
-- ✅ Quarterly audit cycle established
-- ✅ Automated currency scanning operational
-- ✅ Legacy archive maintained
-- ✅ Research quality gates enforced (orchestrator workflow)
+**Next audit:** 2026-03-10 (quarterly cycle)
 
 ---
 
-**Audit Complete:** 2025-12-10
-**Next Audit Due:** 2026-03-10 (quarterly cycle)
+**Audit Status:** COMPLETE
 **Auditor:** Cynthia (super-alignment-researcher)
-**Status:** APPROVED for use, with CRITICAL action items flagged
-
-**Confidence Level:** HIGH (comprehensive code + research review + parameter validation)
-
----
-
-## Appendix A: Issue #747 Details
-
-**Title:** CRITICAL: AI Capability Doubling Time Parameter Mismatch (8mo vs 3.6mo research-verified)
-
-**Created:** 2025-12-10 (by autonomous-worker)
-
-**Status:** OPEN (requires research debate + decision)
-
-**Priority:** CRITICAL (affects all AI-dependent simulation mechanics)
-
-**Impact:** 327,800× discrepancy over 10 years
-
-**Strategic Question:** Is 8-month value intentional slowdown modeling, or should it match 3.6-month research trend?
-
-**Options:**
-1. Update to 3.6 months (match empirical trend)
-2. Keep 8 months with peer-reviewed slowdown justification
-3. Implement time-dependent model (fast early, slow later)
-4. Create scenario variants (fast/slow separate runs)
-
-**Recommendation:** Option 1 (update to 3.6 months) with sensitivity analysis
-
-**Required Process:**
-1. Research debate (Cynthia vs Sylvia)
-2. Review slowdown evidence (Nov 2024 - Jan 2025)
-3. Decision with explicit justification
-4. Update `centralConfig.ts:420`
-5. Monte Carlo N=20 validation
-6. Close issue with documentation
-
-**Related Files:**
-- `src/simulation/config/centralConfig.ts:420` (implementation)
-- `research/ai_scaling_verified_parameters_20251111.md` (research)
-- `research/research_audit_20251210.md` (audit report lines 50-86)
-
----
-
-## Appendix B: Complete List of Files Needing Archival
-
-**Pre-2015 (CRITICAL - 9 files):**
-
-1. `PDF_MANIFEST.md` (1970, 55 years)
-2. `PHASE2_LAYER2_SESSION18_PLAN_20251102.md` (1969, 56 years)
-3. `MISATTRIBUTIONS_TRIAGE.md` (1993, 32 years)
-4. `CRISIS_MITIGATION_RESEARCH_CRITIQUE_20251029.md` (2001, 24 years)
-5. `verification_hindcast_food_security_20251124.md` (2001, 24 years)
-6. `PHASE2_LAYER2_SESSION16_SUMMARY_20251101.md` (2002, 23 years)
-7. `verification_87292c6_20251127.md` (2005, 20 years)
-8. `verification_6f3037c_20251127.md` (2005, 20 years)
-9. `catastrophe-recovery-analysis-phase1c_20251017.md` (2008, 17 years)
-
-**2015-2019 (HIGH - Sample, full list ~25 files):**
-
-1. `competitive_alignment_failure_modes_verification_20251101.md` (2018, 7 years)
-2. `verification_d336915_20251110.md` (2018, 7 years)
-3. `mayer_1995_trust_restoration_verification_20251029.md` (2009, 16 years)
-
-**2020-2022 (MEDIUM - Sample, full list ~144 files):**
-
-- Listed in `research/UPDATE_QUEUE.md` (HIGH priority section)
-- Quarterly refresh, not immediate archival
-
----
-
-**End of Research Source Validation Audit**
-**Total Length:** 11 sections + 2 appendices
-**Word Count:** ~12,000 words
-**Research Hours Represented:** 50+ hours across audits
-**Action Items:** 11 prioritized (CRITICAL/HIGH/MEDIUM)
-**Expected Impact:** Restore research quality to Grade B (65% currency) by Q1 2026
+**Date:** 2025-12-10
+**Recommendation:** APPROVED for continued use with priority actions implemented
