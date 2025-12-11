@@ -14,7 +14,7 @@
 
 import {
   sampleTriangular
-} from './distributions';
+} from '../utils/distributions';
 
 /**
  * Tier 2 Threshold Distribution Definitions
