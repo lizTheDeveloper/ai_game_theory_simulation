@@ -108,13 +108,13 @@ export function ActionPanel({
 
   // Get available actions based on game state
   const allActions = useMemo((): AdvocacyAction[] => {
-    return ADVOCACY_ACTIONS;
+    return Object.values(ADVOCACY_ACTIONS) as AdvocacyAction[];
   }, []);
 
   // Filter by domain
-  const filteredActions = useMemo(() => {
+  const filteredActions = useMemo((): AdvocacyAction[] => {
     if (selectedDomain === 'all') return allActions;
-    return allActions.filter(a => a.domain === selectedDomain);
+    return allActions.filter((a: AdvocacyAction) => a.domain === selectedDomain);
   }, [allActions, selectedDomain]);
 
   // Calculate remaining influence
@@ -132,16 +132,8 @@ export function ActionPanel({
       return { canExecute: false, reason: `Cooldown: ${remaining} months` };
     }
 
-    // Check resources
-    if ((action.costs.reputation ?? 0) > resources.reputation) {
-      return { canExecute: false, reason: `Need ${action.costs.reputation} reputation` };
-    }
-    if ((action.costs.politicalCapital ?? 0) > resources.politicalCapital) {
-      return { canExecute: false, reason: `Need ${action.costs.politicalCapital} political capital` };
-    }
-    if ((action.costs.funding ?? 0) > resources.funding) {
-      return { canExecute: false, reason: `Need ${action.costs.funding} funding` };
-    }
+    // Resource checking disabled - advocacy actions don't have costs field yet
+    // TODO: Implement resource costs when advocacy system is fully designed
 
     // Check influence bounds
     const domainInfluence = influenceByDomain[action.domain] || 0;
@@ -282,7 +274,7 @@ export function ActionPanel({
 
       {/* Actions List */}
       <div className={styles.actionsList}>
-        {filteredActions.map(action => {
+        {filteredActions.map((action: AdvocacyAction) => {
           const { canExecute, reason } = canExecuteAction(action);
           const isExpanded = expandedAction === action.id;
           const cooldownEnd = activeCooldowns[action.id];
@@ -305,17 +297,7 @@ export function ActionPanel({
                 <div className={styles.actionEffect}>
                   {formatEffectRange(action.baseEffect)} effect over {action.duration} months
                 </div>
-                <div className={styles.actionCosts}>
-                  {action.costs.reputation && action.costs.reputation > 0 && (
-                    <span className={styles.cost}>R:{action.costs.reputation}</span>
-                  )}
-                  {action.costs.politicalCapital && action.costs.politicalCapital > 0 && (
-                    <span className={styles.cost}>PC:{action.costs.politicalCapital}</span>
-                  )}
-                  {action.costs.funding && action.costs.funding > 0 && (
-                    <span className={styles.cost}>${action.costs.funding}B</span>
-                  )}
-                </div>
+                {/* Costs display removed - not yet implemented in advocacy system */}
               </div>
 
               {/* Expanded Details */}
@@ -326,16 +308,7 @@ export function ActionPanel({
                     <span>Cooldown: {action.cooldown} months</span>
                     <span>Max cumulative: {(action.maxCumulativeEffect * 100).toFixed(0)}%</span>
                   </div>
-                  {action.researchSources.length > 0 && (
-                    <div className={styles.actionSources}>
-                      <span className={styles.sourcesLabel}>Sources:</span>
-                      <ul className={styles.sourcesList}>
-                        {action.researchSources.slice(0, 2).map((source, i) => (
-                          <li key={i} className={styles.sourceItem}>{source}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
+                  {/* Research sources display removed - not yet implemented */}
                 </div>
               )}
 
