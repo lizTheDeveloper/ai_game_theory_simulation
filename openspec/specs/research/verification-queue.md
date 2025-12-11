@@ -156,42 +156,40 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 ### MEDIUM Priority
 
 #### Nitrogen-Food Phase 3 Technologies
-**Status:** ✅ VERIFIED - Grade B+ (Dec 8, 2025)
+**Status:** ✅ VERIFIED - Grade B- (with parameter revisions required)
 **Change:** (pending - needs change folder created)
 **Commit:** cd1e83a
 **Context:** 6 new nitrogen reduction technologies added to tech tree
-**Verification File:** `research/verification_cd1e83a_nitrogen_phase3_20251208.md`
+**Verification Files:**
+- `research/verification_cd1e83a_nitrogen_phase3_20251208.md` (initial)
+- `reviews/nitrogen_phase3_skeptic_review_20251209.md` (final skeptic review)
 
-**Verification Complete (Dec 8, 2025):**
-- **Overall Grade:** B+ (Range: B to A-, no D/F grades)
-- **Blocking Issues:** 0 (no CRITICAL/HIGH issues)
-- **Reviewer:** Cynthia (super-alignment-researcher)
+**Verification Complete (Dec 8-9, 2025):**
+- **Initial Grade:** B+ (super-alignment-researcher)
+- **Final Grade:** B- (research-skeptic downgrade)
+- **Reviewers:** Cynthia (researcher), Sylvia (skeptic)
 
-**Technologies Verified:**
-1. Rhizosphere Engineering (15-40% N reduction) - **Grade A-** (field-demonstrated, commercial products exist)
-2. Nitroplast Integration (50-70% reduction) - **Grade B** (marine algae A, cereal application C+ speculative)
-3. Precision Fermentation (30-50% agri N reduction) - **Grade A-** (extensive 2024-2025 research, €120M investment)
-4. Regional Nitrogen Policies (20% efficiency) - **Grade A** (Nature Sustainability verified)
-5. Soil Health Restoration (20-40% NUE improvement) - **Grade A-** (USDA + peer-reviewed)
-6. Integrated Nutrient Management (25-45% efficiency gains) - **Grade B+** (systematic review validated)
+**CRITICAL Issues Found:**
+1. **Mycorrhizal inoculants 80%+ failure rate** in commercial products (not lab trials)
+2. **Rebound effects / Jevons paradox NOT modeled** (efficiency ≠ absolute reduction)
+3. **Consumer acceptance barriers** for precision fermentation severely underestimated
+4. **No-till / soil health:** mixed evidence, context-dependent (not universal)
+5. **Nitroplast timeline optimistic:** 50+ years more realistic than 15-25 (oxygen sensitivity barrier)
 
-**✅ All Verified:**
-- Coale et al. 2024 *Science* citation ACCURATE (April 12, 2024)
-- Effectiveness ranges empirically grounded
-- Timeline assumptions research-defensible
-- Technologies complementary (multiplicative, not additive)
+**Required Parameter Revisions:**
+- Rhizosphere Engineering: 10-25% (from 15-40%) - commercial deployment reality
+- Nitroplast: 30-50 years minimum (from 15-25), add "may be infeasible" flag
+- Precision Fermentation: Add consumer acceptance dependency
+- Regional Policies: 10-15% net reduction (accounting for rebound effects)
+- Soil Health: 15-30% (from 20-40%)
+- INM: 15-35% (from 25-45%)
 
-**✅ CRITICAL Issue RESOLVED (Nov 16, 2025):**
-- ✅ **Nitroplast Timeline Fixed:** Tech tree correctly shows `minMonth: 180` (15 years) matching research consensus (commit 3152522c)
-- ✅ **Research Citations Added:** Tech tree includes Coale et al. 2024 citation and AAAS Newcomb Cleveland Prize 2025
+**Simulation Implications:**
+- Add rebound effect modeling (efficiency gains ≠ absolute reductions)
+- Add deployment failure rates (not all techs succeed in field)
+- Add consumer behavior dynamics (precision fermentation adoption curve)
 
-**Minor Corrections Recommended (Not Blocking):**
-1. Clarify nitroplast uncertainty in tech tree descriptions
-2. Add explicit failure modes for each technology
-3. Cross-reference recent 2025 research files in comments
-4. Clarify vague terms ("Soil Health" → "Precision Agriculture NUE" or add explicit sources) - PENDING
-
-**Next Steps:** Monte Carlo validation (N≥10) to verify biogeochemical effectiveness reaches 40-60% → Move to "Recently Resolved"
+**Next Steps:** Apply parameter revisions → Monte Carlo validation N≥10 → Move to Recently Resolved
 
 ---
 
@@ -281,41 +279,27 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 
 ## Recently Resolved
 
-### Threshold Lowering for Tipping Cascades
-**Status:** ✅ RESOLVED (Dec 10, 2025 - regression fixed via 4259d54a)
-**Grade:** D → FIXED
-**Commits:** cf49657 (original), 6671e0ed (Dec 8 fix), 3f3118de + 7130c7e6 (Dec 9 fixes), 4259d54a (Dec 10 re-application after merge regression)
-**Finding:** 5 CRITICAL issues including AMOC→Amazon sign error, missing stabilizing feedbacks
-**Resolution:** All issues fixed, extensive research documentation added (Parsons 2023, Yuan 2025, Högner 2025).
-**Regression History:**
-- Dec 8: M-5 threshold uncertainty reverted (daa45b9c merge)
-- Dec 9: Threshold lowering fixes applied (3f3118de, 7130c7e6)
-- Dec 10: Fixes reverted in merge (detected via research audit)
-- Dec 10: Re-applied via commit 4259d54a (FINAL)
-**Research:** `research/verification_cf49657_20251207.md`, `research/amoc_amazon_interaction_correction_20251208.md`, `research/CRITICAL_regression_threshold_lowering_20251209.md`
-**Audit Detection:** `reviews/RESEARCH_SOURCE_VALIDATION_AUDIT_20251210.md`
+### Threshold Uncertainty Modeling (M-5)
+**Status:** ✅ COMPLETE - Research Grade A-, Architecture Grade B+
+**Change:** (pending - needs change folder created)
+**Commit:** M-5 implementation (Dec 7, 2025)
+**Context:** Distribution-based tipping thresholds (triangular, uniform, lognormal)
+**Research File:** `research/tipping_threshold_uncertainty_20251207.md`
+**Architecture Review:** `reviews/architecture_review_m5_threshold_uncertainty_20251207.md`
 
----
+**Verification Complete (Dec 7, 2025):**
+- **Research Quality:** A- (well-sourced, Armstrong McKay et al. 2022 baseline)
+- **Architecture Quality:** B+ (proper RNG handling, good assertions, but 3 redundant distribution libraries)
+- **Reviewer:** Cynthia (researcher), Architecture Skeptic
 
-### Detection Risk Calibration (50% Baseline)
-**Status:** ✅ RESOLVED (Dec 10, 2025)
-**Grade:** Research audit finding → FIXED
-**Location:** `src/simulation/sleeperEconomy.ts:339-355`
-**Finding:** 50% baseline detection risk lacked research justification
-**Resolution:** Implemented time-dependent model (25% early → 80% late) backed by gaming-sleeper-detection research
-**Research:** `research/gaming-sleeper-detection_20251017.md`
-**Monte Carlo:** N≥10 validation COMPLETE
+**Implementation Status:**
+- ✅ Deterministic RNG enforced (fails loudly if missing)
+- ✅ Assertion utilities throughout (`assertFinite()`, `assertInRange()`)
+- ✅ Backward compatible (falls back to deterministic if no distribution defined)
+- ✅ Research-backed distributions (truncated normal, uniform, lognormal)
+- ⚠️ HIGH: Three redundant distribution libraries (consolidation needed)
 
----
-
-### Energy Budget Constraints
-**Status:** ✅ IMPLEMENTED (Dec 9, 2025)
-**Grade:** B+ (CONDITIONAL PASS)
-**Commits:** 5875451b, 73d6d867
-**Finding:** Energy bottleneck prevents realistic deployment (DAC needs 34-51% global electricity)
-**Resolution:** New EnergyBudgetPhase with priority-based allocation, tech-specific energy demands
-**Research:** `research/energy_budget_constraints_20251209.md`
-**Monte Carlo:** N=10, 120 months - PASSED
+**Next Steps:** Consolidate distribution libraries → Monte Carlo validation N≥10 → Archive
 
 ---
 
