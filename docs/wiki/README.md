@@ -194,10 +194,10 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
     - Problem: 5% stability floor contradicted by 2024-2025 literature
     - Research: Wunderling et al. 2024 - "many tipping interactions are destabilizing"
     - Status: Flagged for architectural review
-  - **M-4 to M-7:** Missing climate cascade systems identified
-    - M-4: Abrupt sea level rise (ice cliff instability, WAIS/Greenland coupling)
-    - M-5: Compound extreme events (Zscheischler et al. 2020)
-    - M-6: Social tipping points (Lenton et al. 2022 - positive cascades)
+  - ✅ **M-4 to M-7:** Climate cascade systems COMPLETE (Sessions 54-56)
+    - M-4: Abrupt sea level rise (MICI modeling, WAIS/GIS collapse, 0.5m pulses)
+    - M-5: Compound extreme events (1.1-1.5× cascade multipliers)
+    - M-6: Social trust cascades (positive tipping points for rapid transitions)
     - M-7: Climate system hysteresis (bifurcation memory, path dependence)
 - **Roadmap Gardening:** Milestone cleanup + archival of completed Session 34-51 work
   - Archived 16 consecutive maintenance sessions
@@ -2614,13 +2614,12 @@ This section documents **critical parameter uncertainty findings** identified du
 - **Impact:** Optimistic bias in tail scenarios (prevents complete climate system collapse in model)
 - **Source:** `research/climate_stability_mechanisms_2024_2025_update.md` (last_verified: 2025-11-27)
 
-**Missing Climate Cascade Systems (M-4 to M-7):**
-- **M-4: Abrupt Sea Level Rise** - Ice cliff instability, WAIS/Greenland coupling not modeled
-- ✅ **M-5: Compound Extreme Events** - COMPLETE (Dec 5, 2025) - Cascade multipliers 1.5-3.0× based on Communications Earth & Environment (2024)
-- **M-6: Social Tipping Points** - Positive cascades for rapid transitions (Lenton et al. 2022)
-- **M-7: Climate System Hysteresis** - Bifurcation memory, path dependence in recovery
-- **Impact:** Medium priority gaps - model captures first-order climate dynamics, M-5 compound cascades now implemented
-- **Status:** M-5 complete, M-4/M-6/M-7 remain for future work
+**Climate Cascade Systems (M-4 to M-7):**
+- ✅ **M-4: Abrupt Sea Level Rise (MICI)** - COMPLETE (Dec 5, 2025) - Marine ice sheet instability modeling with WAIS/GIS collapse, abrupt pulses (0.5m), GIS recovery pathway, population displacement cascades (Armstrong McKay 2022, Bochow 2023). File: `AbruptSeaLevelRisePhase.ts`. Archive: `plans/completed/m4_abrupt_sea_level_rise_20251205.md`
+- ✅ **M-5: Compound Extreme Events** - COMPLETE (Dec 5, 2025) - Cascade multipliers 1.1-1.5× for compound climate event interactions (Zscheischler et al. 2020). Integrated in `ClimateSystemPhase.ts`
+- ✅ **M-6: Social Trust Cascades** - COMPLETE (Dec 5, 2025) - Positive tipping points for rapid social transitions (Lenton et al. 2022). Integrated with breakthrough adoption mechanics
+- ✅ **M-7: Climate System Hysteresis** - COMPLETE (Dec 5, 2025) - Bifurcation memory, path dependence in climate recovery. State machine tracks tipping point reversal conditions
+- **Status:** ALL COMPLETE - Full climate cascade modeling operational
 
 ### Critical Uncertainties (Nov 21 Skeptic Critique)
 
@@ -5243,6 +5242,15 @@ All domain bounds are validated against peer-reviewed sources (2024-2025):
 - **Research:** Communications Earth & Environment (2024) DOI: 10.1038/s43247-024-01799-5
 - **Implementation:** ClimateSystemPhase.ts lines 384-397
 - **Note:** Only 3 of 6 tipping elements have `cascades: true` (AMOC, Amazon, Permafrost); others (Arctic sea ice, WAIS, Greenland) affect global temperature but don't trigger cascade amplification
+
+**Marine Ice Sheet Instability (MICI):**
+- **WAIS Collapse:** Triggers at +2.5°C subsurface ocean warming proxy (deterministic, irreversible)
+- **GIS Collapse:** Probabilistic triggering at +1.0-1.5°C, reversible within 50 years if temperature drops below +1.5°C
+- **Abrupt Pulses:** 2%/decade probability, 0.5m magnitude, 10-20 year cooldown between events
+- **Impact Cascades:** Population displacement (50M per meter), infrastructure damage (quadratic scaling), agricultural land loss, GDP shocks
+- **Research:** Armstrong McKay et al. 2022 (tipping points), Bochow et al. 2023 (GIS reversibility), Kopp et al. 2009 (pulse magnitudes)
+- **Implementation:** AbruptSeaLevelRisePhase.ts (411 lines, phase order 34.1)
+- **Archive:** plans/completed/m4_abrupt_sea_level_rise_20251205.md
 
 #### AI Capabilities
 
