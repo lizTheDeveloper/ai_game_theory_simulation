@@ -10,10 +10,11 @@
  * Expected impact: Enables testing of governance bottlenecks with realistic deployment timescales
  */
 
-import { GameState, SimulationPhase, PhaseResult } from '@/types/game';
+import { GameState, SimulationPhase, PhaseResult, PhaseContext } from '@/types/game';
 import type { RNGFunction } from '@/types/config';
 import { assertDefined } from '@/simulation/utils/assertions';
 import { getAllTech } from '@/simulation/techTree/comprehensiveTechTree';
+import { hasTech } from '@/simulation/utils/simulationIndices';
 
 export class TechDeploymentSchedulePhase implements SimulationPhase {
   readonly id = 'tech-deployment-schedule';
@@ -22,7 +23,7 @@ export class TechDeploymentSchedulePhase implements SimulationPhase {
 
   readonly dependencies = [] as const;
 
-  execute(state: GameState, rng: RNGFunction): PhaseResult {
+  execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     const month = state.currentMonth;
 
     // Skip if no deployment schedule
@@ -57,8 +58,8 @@ export class TechDeploymentSchedulePhase implements SimulationPhase {
         continue;
       }
 
-      // Unlock tech
-      if (!state.techTreeState.unlockedTech.includes(entry.techId)) {
+      // Unlock tech (O(1) check with indices, O(n) fallback)
+      if (!hasTech(entry.techId, context?.indices, state.techTreeState)) {
         state.techTreeState.unlockedTech.push(entry.techId);
         state.techTreeState.techUnlockedCount++;
       }

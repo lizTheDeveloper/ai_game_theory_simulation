@@ -16,6 +16,7 @@ import { getTechById, getAllTech } from '../techTree/comprehensiveTechTree';
 import { TechTreeState, TechDeploymentAction } from '../techTree/engine';
 import { getOptimalDeploymentRegions, getDeploymentPriority } from '../techTree/regionalDeployment';
 import { assertStateProperty } from '../utils/assertions';
+import { hasTech } from '../utils/simulationIndices';
 
 /**
  * National tech deployment priorities
@@ -102,7 +103,7 @@ export const DEPLOY_NATIONAL_TECHNOLOGY_ACTION: GameAction = {
   agentType: 'government',
   energyCost: 0,
   
-  canExecute: (state) => {
+  canExecute: (state, agentId, context) => {
     const techTreeState: TechTreeState = state.techTreeState;
     if (!techTreeState) return false;
 
@@ -112,8 +113,9 @@ export const DEPLOY_NATIONAL_TECHNOLOGY_ACTION: GameAction = {
     // FIX #15 (Oct 21, 2025): Check deployment level properly
     // Old: Checked if unlockedTech contains '${techId}_deployed' (WRONG - never exists)
     // New: Check actual deployment level in regionalDeployment
+    // H-1 (Dec 11, 2025): Use O(1) hasTech helper
     const unlockedTech = getAllTech().filter(t => {
-      if (!techTreeState.unlockedTech.includes(t.id)) return false;
+      if (!hasTech(t.id, context?.indices, techTreeState)) return false;
 
       // Check if tech is NOT fully deployed globally (< 95%)
       const globalDeployment = techTreeState.regionalDeployment['global'];
@@ -128,7 +130,7 @@ export const DEPLOY_NATIONAL_TECHNOLOGY_ACTION: GameAction = {
     return unlockedTech.length > 0;
   },
   
-  execute: (state, random, agentId?: string): ActionResult => {
+  execute: (state, random, agentId?: string, context?): ActionResult => {
     const techTreeState: TechTreeState = state.techTreeState;
 
     // DEBUG: Log action execution
@@ -150,7 +152,7 @@ export const DEPLOY_NATIONAL_TECHNOLOGY_ACTION: GameAction = {
     }
     
     // Select technology based on national priorities
-    const selectedTech = selectNationalTechToDeploy(priorities, techTreeState, state, random);
+    const selectedTech = selectNationalTechToDeploy(priorities, techTreeState, state, random, context);
     
     if (!selectedTech) {
       return {
@@ -243,11 +245,13 @@ function selectNationalTechToDeploy(
   priorities: typeof NATIONAL_TECH_PRIORITIES[string],
   techTreeState: TechTreeState,
   state: GameState,
-  random: () => number
+  random: () => number,
+  context?: any
 ): any {
-  const unlockedTech = getAllTech().filter(t => 
-    techTreeState.unlockedTech.includes(t.id) &&
-    !techTreeState.unlockedTech.includes(`${t.id}_deployed`)
+  // H-1 (Dec 11, 2025): Use O(1) hasTech helper
+  const unlockedTech = getAllTech().filter(t =>
+    hasTech(t.id, context?.indices, techTreeState) &&
+    !hasTech(`${t.id}_deployed`, context?.indices, techTreeState)
   );
   
   if (unlockedTech.length === 0) return null;

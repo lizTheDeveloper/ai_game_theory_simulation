@@ -219,7 +219,7 @@ export function updateTechTree(
   updateDeploymentProgress(gameState, techTreeState);
 
   // 3. Update research progress for locked tech
-  updateResearchProgress(gameState, techTreeState);
+  updateResearchProgress(gameState, techTreeState, unlockedTechSet);
   
   // 4. Calculate and apply tech effects
   const { applyAllTechEffects, logTechEffects } = require('./effectsEngine');
@@ -497,13 +497,16 @@ function applyDeploymentActions(
 /**
  * Update research progress for locked tech
  * Research investment accelerates unlock timeline
+ *
+ * PERFORMANCE (Nov 20, 2025 - HIGH-1): Use Set for O(1) lookups
  */
 function updateResearchProgress(
   gameState: GameState,
-  techTreeState: TechTreeState
+  techTreeState: TechTreeState,
+  unlockedTechSet: Set<string>
 ): void {
-  const lockedTech = getAllTech().filter(t => 
-    !techTreeState.unlockedTech.includes(t.id) && 
+  const lockedTech = getAllTech().filter(t =>
+    !unlockedTechSet.has(t.id) &&
     (t.status === 'unlockable' || t.status === 'future')
   );
   

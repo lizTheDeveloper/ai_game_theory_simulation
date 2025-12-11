@@ -27,6 +27,7 @@ import {
   assertProbability,
   assertInRange,
 } from '@/simulation/utils/assertions';
+import { hasTech } from '@/simulation/utils/simulationIndices';
 
 interface Breakthrough {
   id: string;
@@ -47,7 +48,7 @@ const BREAKTHROUGHS: Breakthrough[] = [
     effects: (state) => {
       // Unlock fusion technology immediately
       if (state.techTreeState) {
-        if (!state.techTreeState.unlockedTech.includes('fusionPower')) {
+        if (!hasTech('fusionPower', undefined, state.techTreeState)) {
           state.techTreeState.unlockedTech.push('fusionPower');
         }
         // Note: Progress/deployment is tracked in techTreeState.regionalDeployment, not static definitions

@@ -27,11 +27,12 @@
  * multipliers based on energy allocation vs demand. This phase consumes those multipliers.
  */
 
-import { GameState, SimulationPhase, PhaseResult, RNGFunction, GameEvent } from '@/types/game';
+import { GameState, SimulationPhase, PhaseResult, RNGFunction, GameEvent, PhaseContext } from '@/types/game';
 import { assertFinite, assertDefined, assertInRange } from '@/simulation/utils/assertions';
 import { getTechById, type TechDefinition } from '@/simulation/techTree/comprehensiveTechTree';
 import { addSimulationEvent } from '@/simulation/utils/eventLogger';
 import { mapTechToEnergyCategory } from '@/simulation/utils/energyCategories';
+import { hasTech } from '@/simulation/utils/simulationIndices';
 
 export class ClimateDeploymentPhase implements SimulationPhase {
   readonly id = 'climate-deployment';
@@ -39,14 +40,14 @@ export class ClimateDeploymentPhase implements SimulationPhase {
   readonly order = 12.8; // After tech-tree (12.5), stochastic-innovation (12.6), meaning-renaissance (12.7)
   readonly dependencies = ['tech-tree']; // Reads tech tree, energy system, updates deployment levels (fixed: technology-deployment → tech-tree)
 
-  execute(state: GameState, rng: RNGFunction): PhaseResult {
+  execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     const events: GameEvent[] = [];
 
     // Energy budget calculated by EnergyBudgetPhase (order 12.75)
     // This phase consumes those effectiveness multipliers
 
     // Update each climate technology
-    const climateTechs = this.getClimateTechnologies(state);
+    const climateTechs = this.getClimateTechnologies(state, context);
 
     for (const tech of climateTechs) {
       if (!tech.deploymentPhase) {
@@ -325,7 +326,7 @@ export class ClimateDeploymentPhase implements SimulationPhase {
    * @param state Game state
    * @returns Array of climate technology definitions
    */
-  private getClimateTechnologies(state: GameState): TechDefinition[] {
+  private getClimateTechnologies(state: GameState, context?: PhaseContext): TechDefinition[] {
     const techs: TechDefinition[] = [];
 
     // Climate tech IDs (only get unlocked ones)
@@ -343,8 +344,8 @@ export class ClimateDeploymentPhase implements SimulationPhase {
     ];
 
     for (const techId of climateTechIds) {
-      // Check if unlocked
-      if (state.techTreeState.unlockedTech.includes(techId)) {
+      // Check if unlocked (O(1) with indices, O(n) fallback)
+      if (hasTech(techId, context?.indices, state.techTreeState)) {
         const techDef = getTechById(techId);
         if (techDef) {
           techs.push(techDef);
