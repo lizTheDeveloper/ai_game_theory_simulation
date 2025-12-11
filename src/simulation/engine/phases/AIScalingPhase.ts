@@ -98,6 +98,20 @@ export const AIScalingPhase: SimulationPhase = {
       }
     );
 
+    // Validate threshold is positive before division
+    assertFinite(state.aiCapabilityScaling.testTimeCostThreshold, {
+      location: 'AIScalingPhase (test-time compute)',
+      valueName: 'testTimeCostThreshold',
+      month: state.currentMonth,
+      additionalInfo: { mustBePositive: true }
+    });
+
+    if (state.aiCapabilityScaling.testTimeCostThreshold <= 0) {
+      throw new Error(
+        `❌ CRITICAL: testTimeCostThreshold must be positive (got ${state.aiCapabilityScaling.testTimeCostThreshold})`
+      );
+    }
+
     const costRatio = state.aiCapabilityScaling.costPerInference /
                       state.aiCapabilityScaling.testTimeCostThreshold;
     state.aiCapabilityScaling.economicDeploymentGate = assertFinite(
