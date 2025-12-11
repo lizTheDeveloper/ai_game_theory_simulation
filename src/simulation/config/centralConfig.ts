@@ -398,26 +398,51 @@ export const RATES = {
 
   // === AI DEVELOPMENT RATES ===
   /**
-   * AI capability doubling time (months)
-   * How many months until AI capabilities double
+   * AI training compute doubling time (months) - PROXY FOR CAPABILITY GROWTH
+   * How many months until training compute (measured in FLOP) doubles
    *
-   * @research Cottier et al. (2024) "The rising costs of training frontier AI models" (arXiv:2405.21015v2)
-   *   - "Doubling time: 8 months (95% CI: 6-10 months)" [Section 3.2, excluding TPU estimates]
-   *   - Cost growth 2.9×/year suggests capability doubling every 8 months
-   * @research Sevilla & Roldán (2024) "Training Compute Growth 4-5×/year" (Epoch AI, May 28, 2024)
-   *   - "4.4×/year (90% CI: 1.5× to 11.8×)" for recent frontier models
-   *   - Implies ~7 month doubling for pure compute scaling
+   * CRITICAL LIMITATION: This parameter tracks TRAINING COMPUTE growth as a proxy for
+   * AI capability growth. This conflates two distinct phenomena:
+   * 1. Training compute scaling (what this parameter measures)
+   * 2. Algorithmic efficiency improvements (~6×/year, not modeled here)
+   * 3. Test-time compute scaling (o1/o3 paradigm, not modeled)
    *
-   * @value 8 - Conservative estimate from Cottier et al., aligns with Epoch AI 4.4×/year
-   * @previous 12 - Severely underestimated based on 2016-2024 empirical data
+   * Actual capability growth = compute growth × algorithmic efficiency × inference scaling.
+   * This model assumes capability ∝ compute (simplification for tractability).
    *
-   * @limitations Based on 2010-2024 historical data. Nov 2024 reports indicate diminishing
-   *   returns may slow growth post-2025 (TechCrunch: "AI scaling laws showing diminishing returns").
-   *   Does not model test-time compute paradigm (OpenAI o1/o3). May require time-dependent
-   *   slowdown modeling for realistic long-term projections.
-   * @uncertainty Range: 7-12 months (95% CI from multiple sources)
+   * @research Sevilla, J., & Roldán, E. (2024) "Training compute of frontier AI models
+   *   grows by 4-5x per year." Epoch AI. May 28, 2024.
+   *   https://epoch.ai/blog/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year
+   *   - Overall trend (2010-2024): 4.1×/year (90% CI: 3.7× to 4.6×)
+   *   - 14 years of empirical data from Epoch AI model database
+   *   - Doubling time calculation: log₂(4.1) = 2.036 doublings/year → 5.9 months
+   *   - Recent frontier models (Feb 2022-May 2024): 4.4×/year (90% CI: 1.5× to 11.8×)
+   *
+   * @research Cottier et al. (2024) "The rising costs of training frontier AI models"
+   *   (arXiv:2405.21015v2)
+   *   - COST growth: 2.9×/year (95% CI: 2.3× to 3.8×) - lower than compute due to efficiency
+   *   - Note: Cost ≠ compute; cost includes hardware prices, efficiency gains
+   *
+   * @value 5.9 - Matches Sevilla & Roldán (2024) historical data (2010-2024)
+   * @previous 8 - Underestimated historical trend, may be appropriate for post-2024 slowdown
+   * @previous 12 - Severely underestimated (pre-Nov 2025)
+   *
+   * @limitations
+   * - POST-2024 UNCERTAINTY: Late 2024 industry reports (Bloomberg, TechCrunch) suggest
+   *   slowdown (OpenAI Orion, Google Gemini plateaus), but NO peer-reviewed evidence yet.
+   * - Does NOT model test-time compute (OpenAI o1/o3 paradigm shift)
+   * - Assumes capability ∝ compute (ignores algorithmic efficiency as separate factor)
+   * - Benchmark saturation not modeled (ceiling effects on capability metrics)
+   *
+   * @recalibration COMMITMENT: Re-evaluate every 6 months as peer-reviewed evidence emerges.
+   *   Next review: June 2025 (check for Epoch AI updates, academic papers on 2024-2025 trends)
+   *
+   * @uncertainty Range: 5-12 months (historical 5.9mo vs possible post-2024 slowdown)
+   *
+   * @see research/ai_scaling_slowdown_evidence_20251210.md - Complete analysis
+   * @see reviews/ai_scaling_research_skeptic_review_20251210.md - Methodological critique
    */
-  AI_CAPABILITY_DOUBLING_TIME: 8,
+  AI_CAPABILITY_DOUBLING_TIME: 5.9,
 
   /**
    * Compute growth rate (per year)

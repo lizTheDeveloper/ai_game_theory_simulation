@@ -595,7 +595,7 @@ export class SimulationEngine {
     // === BATCH 3 CONSOLIDATED CLIMATE SYSTEM (Nov 9, 2025) ===
     this.orchestrator.registerPhase(new ClimateSystemPhase());  // Consolidated: GeoengineringPhase + TippingPointPhase + EnvironmentalFeedbackPhase + ClimateImpactCascadePhase
     this.orchestrator.registerPhase(new AbruptSeaLevelRisePhase());  // M-4 (Dec 5, 2025): Marine ice sheet instability (order 34.5)
-    this.orchestrator.registerPhase(new EnergyBudgetPhase());  // TIER 2 (Dec 9, 2025): Energy budget constraints for tech deployment (order 12.4, before ClimateDeployment 12.8)
+    this.orchestrator.registerPhase(new EnergyBudgetPhase());  // TIER 2 (Dec 9, 2025): Energy budget constraints for tech deployment (order 12.75, before ClimateDeployment 12.8)
     this.orchestrator.registerPhase(new ClimateDeploymentPhase());  // TIER 1 CRITICAL (Nov 2025): Climate tech phased deployment + energy constraints (order 12.8)
     this.orchestrator.registerPhase(new ClimateDeploymentDelayPhase());  // TIER 1 CRITICAL (Nov 18, 2025): Three-delay model for realistic deployment timescales (order 16.0)
     this.orchestrator.registerPhase(new VolcanicForcingPhase());  // HIGH PRIORITY (Nov 27, 2025): Stratospheric aerosol forcing for hindcast validation (order 16.5)
