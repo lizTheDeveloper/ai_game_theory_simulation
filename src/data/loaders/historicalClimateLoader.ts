@@ -26,10 +26,8 @@
  * @module data/loaders/historicalClimateLoader
  */
 
-// Conditional imports for server-side only (cache functions)
-// Data is hardcoded so these are only needed for optional file caching
-const fs = typeof window === 'undefined' ? require('fs') : null;
-const path = typeof window === 'undefined' ? require('path') : null;
+// No imports needed - data is hardcoded below
+// Cache functions removed to prevent webpack bundling issues
 
 /**
  * Annual climate data point
@@ -176,10 +174,6 @@ const HISTORICAL_CLIMATE_DATA: AnnualClimateData[] = [
   { year: 2024, co2Ppm: 426.00, temperatureAnomalyC: 1.28, emissionsMtCO2: 37000, seaLevelMm: 130, arcticIceMinKm2: 4.28, dataQuality: 'actual' },
 ];
 
-// Cache file paths (server-side only)
-const CACHE_DIR = path ? path.join(__dirname, '../../cache/historical') : '';
-const CACHE_FILE = path ? path.join(CACHE_DIR, 'climate_timeseries.json') : '';
-
 /**
  * Load historical climate data for a year range
  *
@@ -267,51 +261,6 @@ export function interpolateClimateForMonth(
       : prevData.arcticIceMinKm2,
     dataQuality: 'interpolated'
   };
-}
-
-/**
- * Save cache to file (server-side only, no-op in browser)
- */
-export function saveHistoricalClimateCache(): void {
-  // Skip in browser context
-  if (!fs) return;
-
-  const cache: HistoricalClimateCache = {
-    version: '1.0.0',
-    updateDate: new Date().toISOString(),
-    startYear: 1990,
-    endYear: 2024,
-    data: HISTORICAL_CLIMATE_DATA,
-    sources: {
-      co2: 'NOAA Mauna Loa Observatory (gml.noaa.gov/ccgg/trends/data.html)',
-      temperature: 'NASA GISS GISTEMP v4 (data.giss.nasa.gov/gistemp/)',
-      emissions: 'Global Carbon Budget 2024 (globalcarbonbudget.org)',
-      seaLevel: 'AVISO satellite altimetry (cds.climate.copernicus.eu)',
-      arcticIce: 'NSIDC Sea Ice Index (nsidc.org/data/seaice_index)'
-    }
-  };
-
-  // Ensure directory exists
-  if (!fs.existsSync(CACHE_DIR)) {
-    fs.mkdirSync(CACHE_DIR, { recursive: true });
-  }
-
-  fs.writeFileSync(CACHE_FILE, JSON.stringify(cache, null, 2));
-}
-
-/**
- * Load cache from file (server-side only, returns null in browser)
- */
-export function loadHistoricalClimateCache(): HistoricalClimateCache | null {
-  // Return null in browser context
-  if (!fs) return null;
-
-  if (!fs.existsSync(CACHE_FILE)) {
-    return null;
-  }
-
-  const content = fs.readFileSync(CACHE_FILE, 'utf-8');
-  return JSON.parse(content) as HistoricalClimateCache;
 }
 
 /**
