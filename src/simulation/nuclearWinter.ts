@@ -124,7 +124,7 @@ export function triggerNuclearWinter(
   targetCountries: string[],
   rng: () => number
 ): void {
-  // CRITICAL-3: Validate RNG parameter (fail-loudly, no Math.random fallback)
+  // Fail loudly if RNG missing (REQUIRED for deterministic simulation)
   if (!rng || typeof rng !== 'function') {
     throw new Error('❌ CRITICAL: RNG required for deterministic simulation in triggerNuclearWinter');
   }
@@ -588,7 +588,7 @@ function addRadiationZonesEnhanced(
   currentMonth: number,
   rng: () => number
 ): void {
-  // CRITICAL-3: Validate RNG parameter (fail-loudly, no Math.random fallback)
+  // Fail loudly if RNG missing (REQUIRED for deterministic simulation)
   if (!rng || typeof rng !== 'function') {
     throw new Error('❌ CRITICAL: RNG required for deterministic simulation in addRadiationZonesEnhanced');
   }
@@ -1074,7 +1074,11 @@ function updateRadiationZones(state: GameState, winter: NuclearWinterState): voi
       const monthlyDose = currentDoseRate * 730;  // Gy
 
       // Update cumulative dose
-      zone.cumulativeDose = (zone.cumulativeDose ?? 0) + monthlyDose;
+      // DEFENSIVE: cumulativeDose MUST be initialized when enhanced modeling is active
+      if (zone.cumulativeDose === undefined) {
+        throw new Error(`❌ CRITICAL: cumulativeDose undefined for ${zone.country} (enhanced zone should initialize at 0)`);
+      }
+      zone.cumulativeDose = zone.cumulativeDose + monthlyDose;
 
       // Calculate chronic cancer risk from cumulative dose
       // WARNING: BEIR VII LNT model - contested for low doses
