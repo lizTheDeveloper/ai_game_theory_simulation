@@ -27,6 +27,7 @@
 import type { GameState } from '@/types/game';
 import type { RegionalNitrogenManagement } from '@/types/planetaryBoundaries';
 import { assertFinite, assertInRange, assertProbability } from '@/simulation/utils/assertions';
+import { hasTech } from '@/simulation/utils/simulationIndices';
 
 /**
  * Regional overuse baselines from research
@@ -305,8 +306,8 @@ export function getNitrogenReductionDeployment(state: GameState): number[] {
   // Extract deployment levels from tech tree
   // Tech tree uses regional deployment, so we aggregate across all regions
   for (const { id, maxEffectiveness } of nitrogenTechIds) {
-    // Check if tech is unlocked
-    if (!state.techTreeState.unlockedTech.includes(id)) {
+    // Check if tech is unlocked (O(n) fallback - no indices in this context)
+    if (!hasTech(id, undefined, state.techTreeState)) {
       continue; // Skip locked tech
     }
 

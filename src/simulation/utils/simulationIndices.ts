@@ -325,3 +325,35 @@ export function getAgentByName(
 ): AIAgent | undefined {
   return state.aiAgents.find(a => a.name === agentName);
 }
+
+/**
+ * Check if technology is unlocked (O(1) lookup with fallback)
+ *
+ * Eliminates 710 operations per step from O(n) array.includes() calls.
+ * Uses index-first pattern with defensive fallback.
+ *
+ * Before: state.techTreeState.unlockedTech.includes(techId)
+ * After: hasTech(techId, indices, state.techTreeState)
+ *
+ * @param techId - Technology ID
+ * @param indices - Simulation indices (optional, falls back to .includes())
+ * @param techTreeState - Tech tree state (for fallback)
+ * @returns True if technology is unlocked
+ */
+export function hasTech(
+  techId: string,
+  indices?: SimulationIndices,
+  techTreeState?: GameState['techTreeState']
+): boolean {
+  // O(1) index lookup if available
+  if (indices) {
+    return indices.unlockedTech.has(techId);
+  }
+
+  // Fallback to O(n) search for safety (defensive coding)
+  if (techTreeState?.unlockedTech) {
+    return techTreeState.unlockedTech.includes(techId);
+  }
+
+  return false;
+}

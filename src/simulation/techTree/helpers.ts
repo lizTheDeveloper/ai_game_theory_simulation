@@ -7,6 +7,7 @@
 
 import { GameState } from '@/types/game';
 import { getTechById } from './comprehensiveTechTree';
+import { hasTech } from '../utils/simulationIndices';
 
 /**
  * Check if a technology is deployed
@@ -21,8 +22,8 @@ export function isTechDeployed(state: GameState, techId: string): number {
   // If techTreeState not initialized, return 0
   if (!techTreeState) return 0;
 
-  // Check if tech is unlocked
-  if (!techTreeState.unlockedTech.includes(techId)) return 0;
+  // Check if tech is unlocked (O(n) fallback - no indices in this context)
+  if (!hasTech(techId, undefined, techTreeState)) return 0;
 
   // Get global deployment level
   const globalDeployments = techTreeState.regionalDeployment['global'] || [];
@@ -42,7 +43,7 @@ export function isTechUnlocked(state: GameState, techId: string): boolean {
   const techTreeState = state.techTreeState;
   if (!techTreeState) return false;
 
-  return techTreeState.unlockedTech.includes(techId);
+  return hasTech(techId, undefined, techTreeState);
 }
 
 /**
