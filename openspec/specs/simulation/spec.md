@@ -301,12 +301,10 @@ The simulation SHALL model environmental, social, and technological debt.
 **Implementation:** `src/simulation/engine/phases/ClimateSystemPhase.ts` (lines 827-873)
 **Research:** `research/climate_stability_self_limiting_critique_20251126.md`
 **Archive:** `plans/completed/HIGH_7_conditional_climate_stability_floor_20251205.md`
->>>>>>> origin/auto/worker-20251207_140001
 None (system in maintenance mode)
 
 **Recently Completed:**
 - HIGH-7: Conditional Climate Stability Floor (Session 56) - See `docs/implementation-history/`
->>>>>>> origin/auto/worker-20251207_170001
 
 ---
 
@@ -342,7 +340,6 @@ None (system in maintenance mode)
 **Files:** `src/simulation/populationDynamics.ts` (aggregateAllRegionalData)
 **Triggered By:** HIGH-7 Monte Carlo validation (Run 3/10 crashed at 9.9M population)
 **Commit:** 993de150
->>>>>>> origin/auto/worker-20251207_190001
 
 #### M-5: Threshold Uncertainty Modeling
 **Status:** COMPLETED (December 7, 2025)
@@ -359,13 +356,11 @@ None (system in maintenance mode)
 - Quality Gate 2: PASSED (architecture-skeptic, fixes applied)
 - Wiki documented (261 lines)
 **Archive:** `docs/implementation-history/threshold-uncertainty/`
->>>>>>> origin/auto/worker-20251207_140001
 **Status:** Complete (2025-12-07)
 **Context:** Distribution sampling library for tipping point thresholds
 **Impact:** Moved from deterministic thresholds to probability distributions (Beta, Triangular)
 **Research:** Armstrong McKay et al. 2022, IPCC AR6 WG1 - uncertainty ranges validated
 **Archive:** `docs/implementation-history/threshold-uncertainty/`
->>>>>>> origin/auto/worker-20251207_150002
 
 #### M-6: Enhanced Radiation Modeling
 **Status:** ✅ COMPLETE (Dec 8, 2025)
@@ -403,7 +398,6 @@ None (system in maintenance mode)
 **Validation:** Monte Carlo N=10 deterministic, 0 regressions, backward compatible with legacy zones
 **Commit:** 0936b154
 **History:** `docs/implementation-history/m6_enhanced_radiation_modeling_20251208.md`
->>>>>>> origin/auto/worker-20251208_030001
 
 ---
 

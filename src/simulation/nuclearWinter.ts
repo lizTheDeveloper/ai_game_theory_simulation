@@ -116,7 +116,7 @@ export function initializeNuclearWinterState(): NuclearWinterState {
  * @param state - Game state
  * @param warScale - Number of warheads exchanged (determines soot)
  * @param targetCountries - Countries that were hit (for radiation zones)
- * @param rng - Random number generator (required for deterministic simulation)
+ * @param rng - Deterministic RNG function (REQUIRED for reproducibility)
  */
 export function triggerNuclearWinter(
   state: GameState,
@@ -124,9 +124,9 @@ export function triggerNuclearWinter(
   targetCountries: string[],
   rng: () => number
 ): void {
-  // CRITICAL: Validate RNG is provided (deterministic simulation requirement)
+  // CRITICAL: Validate RNG is provided (CRITICAL-3 regression fix pattern)
   if (!rng || typeof rng !== 'function') {
-    throw new Error('❌ CRITICAL: RNG required for deterministic simulation in triggerNuclearWinter');
+    throw new Error('❌ CRITICAL: RNG required for deterministic nuclear winter simulation');
   }
   const winter = state.nuclearWinterState;
   
@@ -579,7 +579,7 @@ function calculateResilientFoodMultiplier(state: GameState): number {
  * @param winter - Nuclear winter state
  * @param countries - Countries hit by nuclear weapons
  * @param currentMonth - Current simulation month
- * @param rng - Random number generator (required for deterministic simulation)
+ * @param rng - Deterministic RNG function (REQUIRED for reproducibility)
  */
 function addRadiationZonesEnhanced(
   state: GameState,
@@ -588,9 +588,9 @@ function addRadiationZonesEnhanced(
   currentMonth: number,
   rng: () => number
 ): void {
-  // CRITICAL: Validate RNG is provided (deterministic simulation requirement)
+  // CRITICAL: Validate RNG is provided (CRITICAL-3 regression fix pattern)
   if (!rng || typeof rng !== 'function') {
-    throw new Error('❌ CRITICAL: RNG required for deterministic simulation in addRadiationZonesEnhanced');
+    throw new Error('❌ CRITICAL: RNG required for deterministic radiation zone simulation');
   }
   countries.forEach(country => {
     // Check if country already has radiation zone (multiple hits)
@@ -619,7 +619,7 @@ function addRadiationZonesEnhanced(
 
     // Calculate effective LD50 (medical care + combined injury prevalence)
     // Research: 65% of nuclear casualties have combined injuries (NIAID PMC8771911)
-    const hasCombinedInjury = rng() < 0.65;  // 65% prevalence (deterministic with seed)
+    const hasCombinedInjury = rng() < 0.65;  // 65% prevalence (DETERMINISTIC)
     const effectiveLD50 = calculateEffectiveLD50(medicalCare, hasCombinedInjury);
 
     // Estimate initial dose rate at t=1h (typical range: 1-10 Gy/hour for fallout zone)
