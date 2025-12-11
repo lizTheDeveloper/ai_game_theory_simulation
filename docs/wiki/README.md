@@ -21,116 +21,59 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 **🟢 STABLE** (December 10, 2025)
 
 **SYSTEM HEALTH:**
-- **Research Quality:** B- (64.9% sources <3yr, bimodal: A+ recent work + C+ legacy backlog) ✅ GOOD
-- **Research Currency:** ✅ EXCELLENT (recent work 90-100% from 2024-2025, autonomous monitoring active)
-- **Implementation Fidelity:** A- (assertion coverage 97.2%, integration test coverage expanding) ✅ EXCELLENT
-- **Architecture Health:** A- (0 CRITICAL/HIGH issues, all recent integrations verified) ✅ EXCELLENT
-- **System Trajectory:** 🟢 PRODUCTION-READY (quality gates passed, test coverage 82.15%, all HIGH priority complete)
+- **Research Quality:** C (53.4% sources 2024-2025, down from 68.8% due to aging not degradation) ⚠️ ACCEPTABLE
+- **Research Currency:** ✅ EXCELLENT (all simulation-critical files updated within 14 days, autonomous system working effectively)
+- **Implementation Fidelity:** A- (assertion coverage 97.2%, 24 integration tests for CoordinatedDeploymentPhase) ✅ EXCELLENT
+- **Architecture Health:** A- (0 CRITICAL/HIGH, 16 new MEDIUM/LOW items proposed, test coverage 82.47%) ✅ EXCELLENT
+- **System Trajectory:** 🟢 MAINTENANCE MODE (ALL HIGH priority work complete as of Session 65)
 
 **Recent Major Achievements:**
 
-**Dec 10: Session 65 - Quality Gate Validation + CRITICAL Regression Fix** (commits 9499b130, 4259d54a, b88584c2)
-- **Architecture Integration Review:** Grade A- (30-day review, 0 CRITICAL/HIGH issues)
-  - **Verified Complete:** M-1 dual energy, H-1 energy budget, H-2 duplicate removal, M-5 threshold uncertainty, detection risk calibration
-  - **State Propagation:** All integrations correctly implemented, no double-counting, single sources of truth maintained
-  - **MEDIUM Items:** 3 trivial cleanup items (duplicate method, phase order docs, negligible O(n) operations)
-  - 📄 **Review:** `reviews/architecture_integration_review_20251210_final.md`
-- **Research Source Validation Audit:** Grade B- (64.9% sources <3yr, 30.7% backlog >5yr)
-  - **Bimodal Distribution:** Recent work (Nov-Dec 2025) = A+ (90-100% currency), Legacy corpus = C+ (53.4% currency)
-  - **Validated Parameters:** AI doubling (8mo), wet bulb (30.5°C), sleeper agents (7.5% ±50%), sandbagging (0.4-0.6)
-  - **4 Legacy Files Need Updates:** food security (2001), catastrophe recovery (2008), competitive alignment (2018), crisis mitigation (2006)
-  - **No Critical Gaps:** All active simulation parameters research-backed
-  - 📄 **Audit:** `research/source_validation_audit_20251210.md`
-- **CRITICAL Regression Fix:** AMOC → Amazon threshold lowering (commit 4259d54a)
-  - **Problem:** Dec 9 research fix removing AMOC → Amazon destabilizing interaction was reverted in merge conflict
-  - **Detection:** Research audit identified regression (second occurrence after Dec 8 M-5 revert)
-  - **Fix:** Re-applied exact same fix from commits 3f3118de + 7130c7e6 (remove interaction, add research note)
-  - **Research Basis:** 2023-2025 peer-reviewed evidence shows AMOC collapse STABILIZES Amazon (Parsons 2023, Yuan 2025, Högner 2025)
-  - **Mitigation:** Autonomous researcher now includes regression detection in audit workflow
-  - 📄 **Analysis:** `research/CRITICAL_regression_threshold_lowering_20251209.md`
-- **Completed HIGH Priority Work:**
-  - Detection risk calibration: Time-dependent model (25% early → 80% late, van der Weij 2024)
-  - Sleeper agent rate justification: 7.5% ±50% with explicit uncertainty (Hubinger 2024)
-  - Sandbagging baseline citations: 0.4-0.6 range (van der Weij 2024, Meinke 2024)
-  - Energy budget integration (H-1, H-2): Single source of truth established
-  - M-5 threshold uncertainty: Restored after Dec 8 revert (commit 6407b12d)
-- **System State:** Production-ready, all tests passing (82.15% coverage), 0 blocking issues
-- 📄 **Archival:** `docs/implementation-history/session_65_archival_20251210.md`
+**Dec 10: Sessions 64-65 - Energy Budget Integration + 30-Day Architecture Review** (commits ba4103c1, 301f1aee, a930cae5)
+- **Energy Budget Integration (H-1, H-2):** COMPLETE - Unified energy system across all consumers
+  - **Dual System Intentional:** Architecture review confirmed dual energy systems are NOT duplication:
+    - `resourceEconomy.energy`: Grid-level energy PRODUCTION and CAPACITY
+    - `energyBudget.allocations`: Energy ALLOCATION and EFFECTIVENESS by category
+  - **Integration Complete:** All energy-consuming systems now check EnergyBudgetPhase allocations
+    - ClimateDeploymentPhase uses `energyBudget.allocations` (H-2 complete Dec 9)
+    - Novel entities cleanup integrated with energy constraints (H-1 complete Dec 9)
+    - Tech effects engine validates against energy availability
+  - **Single Source of Truth:** EnergyBudgetPhase (order 12.75) calculates allocations once per tick
+  - 📄 **Implementation:** `docs/implementation-history/energy_budget_integration_fixes_20251209.md`
+- **30-Day Architecture Integration Review:** Comprehensive review of Dec 5-10 work
+  - **Finding:** Dual energy systems are intentional design (resourceEconomy vs energyBudget serve different purposes)
+  - **Impact:** H-2 reclassified from "duplicate calculation" to "completed integration validation"
+  - **Status:** 0 CRITICAL/HIGH issues, 16 new MEDIUM/LOW items proposed
+  - 📄 **Review:** `reviews/architecture_integration_review_30day_20251210.md`
+- **Research Quality Update:** 70% sources from 2024-2025 (down from 68.8% but stable)
+  - Aging is natural (2024 sources become "old" as time passes)
+  - All actively-used systems have current peer-reviewed backing
+  - New additions: Regional death rates (UN WPP 2024), radiation modeling (ICRP 103, BEIR VII)
 
-**Dec 10: Session 66 - Quantum Computing Integration + Architecture/Research Audits** (commits 0a93a9f8, adc0a72e, 77ea78ef)
-- **Quantum Computing Integration (L-3 COMPLETE):** Fault-tolerant quantum computing breakthrough cascades
-  - **QuantumComputingPhase (order 6.5):** Models logical qubit scaling, quantum advantage thresholds, AI capability enhancements
-    - Thresholds: 100 qubits (basic advantage) → 1,000 (Shor's practical) → 10,000 (general advantage)
-    - Quantum-AI multipliers: 5-20x speedups for optimization/simulation tasks
-    - Research-backed timeline: 2028-2035 consensus (IBM Starling 2029, Quantinuum 2030)
-  - **CryptographySecurityPhase (order 6.6):** Models RSA/ECC breaking, post-quantum transition
-    - RSA-2048 breaking threshold: 1,730-4,099 logical qubits (~20M physical qubits), 8-48 hour execution
-    - Cryptographic cascade: $7.1B PQC transition cost, 10-100x economic damage from crypto failures
-    - Detection-to-breaking window: <48 hours (step function at threshold)
-  - **Research Foundation:** 38 sources (90.6% from 2024-2025), Grade B+
-    - IBM Quantum roadmap (2025), Google Willow chip (2025), NIST PQC standards (Aug 2024)
-    - Chevignard (2024) Shor's thresholds, McKinsey (2024) $400-600B value creation
-    - 📄 **Research:** `research/quantum_computing_cascades_20251210.md` (39KB, 38 citations)
-  - **Implementation:** `src/simulation/engine/phases/QuantumComputingPhase.ts`, `src/simulation/engine/phases/CryptographySecurityPhase.ts`
-  - **State:** `GameState.quantumSystem` initialized in `initialization.ts` with research-backed values
-  - **Type Fixes:** Fixed event structures, state access paths (getGDPProxy), removed non-existent imports
-- **Architecture Integration Review:** Grade B (2 CRITICAL issues resolved, M-1 dual energy still open)
-  - **C-1 RESOLVED:** Quantum phases now registered with PhaseOrchestrator (orders 6.5, 6.6)
-  - **C-2 RESOLVED:** quantumSystem state now initialized via createInitialQuantumState()
-  - **M-1 Dual Energy Systems:** Still open but LOW impact (systems reach similar conclusions)
-  - **Previous issues:** H-1 energy budget, H-2 duplicate energy, L-1 duplicate method all VERIFIED COMPLETE
-  - 📄 **Reviews:**
-    - `reviews/architecture_integration_review_20251210_evening.md` (Grade B, quantum integration)
-    - `reviews/architecture_integration_review_20251210_session66.md` (Grade A-, prior issues verified)
-- **Research Source Validation Audit:** Grade A- (76.9% currency, bimodal: A+ recent + C+ legacy)
-  - **Recent work (Nov-Dec 2025):** 90-100% from 2024-2025 sources ✅ EXCELLENT
-  - **Quantum computing research:** 90.6% currency (31 sources, A+ grade)
-  - **Legacy corpus:** 53.4% from 2024-2025 (natural aging, not degradation)
-  - **4 files need updates:** verification_hindcast_food_security (2001 sources), catastrophe-recovery (2008), competitive_alignment (2018), crisis mitigation (2006)
-  - **Validated parameters:** AI doubling (8mo), wet bulb limit (30.5°C), Shor's threshold (1,730-4,099 qubits), PQC cost ($200-300B)
-  - 📄 **Audits:**
-    - `research/source_validation_audit_20251210.md` (20KB, comprehensive audit)
-    - `research/AUDIT_SUMMARY_20251210.md` (summary)
-    - `research/FILES_NEEDING_UPDATES_20251210.md` (replacement roadmap)
-    - `research/INDEX_20251210.md` (677 files cataloged)
-- **M-1 Dual Energy Systems Integration (COMPLETE):** Consolidated constraint checking
-  - **Problem:** powerGeneration.ts and EnergyBudgetPhase had parallel energy constraint systems without cross-communication
-  - **Fix:** energyBudget.ts now queries both constraint systems, takes minimum of both limits
-  - **Grade:** B+ (pragmatic consolidation via coordinator, preserves modularity)
-  - 📄 **Implementation:** `docs/implementation-history/M-1_dual_energy_systems_integration_20251210.md`
-- **Biodiversity Test Coverage (47 tests):** Comprehensive unit tests for BiodiversityPhase and GeometricVarianceCalculation
-  - Coverage: Decline mechanics, habitat degradation, pollution impacts, geometric mean edge cases
-  - Validates: WWF Living Planet geometric decline pattern, assertFinite guards
-- 📄 **DevLogs:**
-  - `devlogs/session_66_summary_20251210.md` (autonomous worker summary)
-  - `devlogs/session_66_fallback_workflows_20251210.md` (fallback workflow maintenance)
-
-**Dec 9: Session 63 - Research Audit Follow-up + AMOC Fix** (commits 582f74e5, f317c17c, c7114681, fd7694a2)
-- **Research Audit Follow-up (HIGH Priority):** Parameter justification gaps from Nov 29 audit addressed
+**Dec 9: Session 63 - Research Audit Follow-up + CRITICAL Tipping Cascade Fix** (commits 582f74e5, f317c17c, c7114681)
+- **Research Audit Follow-up (HIGH Priority):** 3 parameter justification gaps from Nov 29 audit addressed
   - **Sleeper agent rate (7.5%):** Added explicit uncertainty bounds (±50%, range 3.75%-11.25%), labeled as DERIVED ESTIMATE
     - Citation: Hubinger et al. (2024) proof-of-concept (feasibility, not prevalence)
     - Note: "empirical prevalence TBD" - no real-world data exists yet
   - **Sandbagging baseline (0.4-0.6):** Added research citations for empirical frontier model observations
     - Citation: van der Weij et al. (2024), Meinke et al. (2024)
     - Range justified from observed deception baselines in GPT-4, Claude
-  - **Detection risk calibration:** Implemented time-dependent model (commit fd7694a2)
-    - Early (0-36mo): 25% detection rate (limited interpretability)
-    - Mid (36-72mo): Linear improvement 25% → 80% (methods maturing)
-    - Late (72+mo): 80% detection rate (advanced methods operational)
+  - **Detection risk (50%):** Added uncertainty note "(confidence interval TBD)"
     - Citation: van der Weij et al. (2024) noise injection detection (>99% AUROC possible)
-- **AMOC-Amazon Interaction Fix:** Research-backed threshold interaction removed
-  - **Problem:** Merge conflict reverted Dec 8 research fix removing non-research-backed AMOC → Amazon destabilizing interaction
+    - TODO: Month-dependent improvement curve as mechanistic interpretability advances
+- **CRITICAL Tipping Cascade Fix:** AMOC-Amazon interaction regression corrected
+  - **Problem:** Merge conflict reverted Dec 8 research fix removing AMOC → Amazon destabilizing interaction
   - **Research:** 2023-2025 peer-reviewed evidence shows AMOC collapse STABILIZES Amazon (not destabilizes)
     - Parsons et al. (2023) Nature Comms: "AMOC collapse may stabilise eastern Amazonian rainforests"
     - Yuan et al. (2025) npj Climate: "increased precipitation over most of Amazon"
     - Högner et al. (2025) ERL: +4.8% rainfall per 1 Sv AMOC weakening
   - **Mechanism:** ITCZ southward shift brings MORE rain to southern Amazon
   - **Fix:** Removed AMOC → Amazon interaction (lines 506-537 in tipping-points.ts)
-  - **Note:** Reverted again Dec 10 in merge conflict, re-fixed in commit 4259d54a
+  - **Grade:** D (FAILED) → B (PASS) after correction
   - 📄 **Research:** `research/REGRESSION_FIX_amoc_amazon_20251209.md`
 - **Energy Budget Integration (H-1, H-2):** Architecture review follow-up completed
   - Fixed duplicate energy calculation in ClimateDeploymentPhase (now consumes allocations from EnergyBudgetPhase)
-  - Single source of truth: EnergyBudgetPhase (order 12.4) calculates, others consume
+  - Single source of truth: EnergyBudgetPhase (order 12.75) calculates, others consume
   - 📄 **Docs:** `docs/implementation-history/energy_budget_integration_fixes_20251209.md`
 - **Research Quality:** Grade B+ (recent work A+, legacy corpus C due to time passage)
   - Recent additions: Regional death rates (UN WPP 2024), radiation modeling (ICRP 103, BEIR VII)
@@ -141,44 +84,88 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - `devlogs/session_63_summary_20251209.md`
 
 **Dec 8: Session 62 - Enhanced Radiation Modeling (M-6)** (commits multiple)
-- **Enhanced Radiation System:** Acute vs chronic exposure modeling with tissue-specific weighting
+- **Enhanced Radiation System:** COMPLETE - Research-backed dose-response curves replace simple decay
   - **Dose-response curves:** LD50/60 sigmoid curves [3.0-8.0] Gy with medical care modifiers
-    - No medical care: LD50 = 3.0 Gy
-    - Basic supportive care: LD50 = 4.5 Gy
-    - Intensive care: LD50 = 7.5 Gy (ICU + blood/marrow transplant)
-  - **Tissue weighting:** ICRP 103 organ-specific sensitivities
-    - Thyroid: 1000x I-131 bioconcentration
-    - Bone marrow: 12x sensitivity (stem cells)
-    - Reproductive organs: 8x sensitivity
-  - **Decay modeling:** 7-10 decay rule (I-131, Cs-137 half-lives)
+    - No medical care: LD50 = 3.5 Gy (range 3.0-4.0)
+    - Minimal care: LD50 = 4.25 Gy (range 3.5-4.5)
+    - Supportive care (G-CSF): LD50 = 6.0 Gy (range 5.5-6.5)
+    - Intensive care (transplant): LD50 = 7.5 Gy (range 7.0-8.0)
+  - **Time-varying decay:** 7-10 rule (Dose_rate(t) = Dose_rate(1h) × t^(-1.2))
+    - Configurable exponent [1.0-1.4] to model uncertainty
+    - Valid 30 minutes to 200 days post-detonation
+  - **Radionuclide tracking:** I-131, Cs-137, Sr-90 with distinct half-lives
+    - I-131: 8.02 days (physical), 80 days (thyroid biological)
+    - Cs-137: 50-150 days biological half-life (high individual variance)
+    - Sr-90: 18 years (bone retention)
+  - **Tissue weighting:** ICRP 103 organ-specific sensitivities (7 organs tracked)
+    - Thyroid: wT=0.04 but I-131 concentrates 1000x
+    - Bone marrow, colon, lung, stomach: wT=0.12 each
+    - Gonads: wT=0.08
   - **Combined injury synergy:** 65% prevalence, 20% LD50 reduction (burns + trauma + radiation)
-  - **Chronic cancer risk:** Accumulates over decades (BEIR VII linear no-threshold model)
-- **Research Foundation:**
-  - REMM (Radiation Emergency Medical Management): LD50/60 dose-response
+  - **Chronic cancer risk:** BEIR VII linear no-threshold (LNT) model with documented controversy
+    - 5% per Sv (acute exposure), 2.5% per Sv (chronic with DREF=2)
+    - WARNING: LNT contested for low doses (<100 mSv) per Doss 2018, Ozasa 2012
+- **Research Foundation:** Grade B (CONDITIONAL PASS)
+  - CDC Clinical Guidance on ARS (2024)
+  - REMM: LD50/60 dose-response curves
   - ICRP 103 (2007): Tissue weighting factors
-  - BEIR VII (2006): Cancer risk coefficients
-  - NIAID PMC8771911 (2022): Combined radiation injury synergy
+  - PMC3863169: Medical Management of ARS
+  - PMC11604265: Radioactive Iodine (2024)
+  - BEIR VII: Low-dose cancer risk (contested)
+  - NIAID PMC8771911: Combined radiation injury
+- **Defensive coding:** All calculations use assertion utilities (no silent fallbacks)
 - **Module:** `src/simulation/radiationModeling.ts` (570 lines)
-- **Tests:** `src/simulation/__tests__/radiationModeling.test.ts`
+- **Tests:** `src/simulation/__tests__/radiationModeling.test.ts` (30+ tests)
 - 📄 **Implementation:** `docs/implementation-history/M-6_enhanced_radiation_modeling_20251208.md`
 
-**Dec 7: Session 60 - Threshold Uncertainty Modeling (M-5 Infrastructure)** (commit f38ab3cd)
-- **Distribution Sampling Library:** Probabilistic threshold sampling for climate tipping point uncertainty
-  - **5 Distribution Types:** Triangular, uniform, normal, log-normal, beta, gamma
+**Dec 7: Session 60 - Threshold Uncertainty Modeling (M-5)** (commit f38ab3cd)
+- **Distribution Sampling Library:** COMPLETE - Probabilistic threshold sampling for tipping points
+  - **4 Distribution Types:** Triangular, uniform, normal, log-normal
     - Triangular: min/mode/max format (most common in expert elicitation)
-    - Beta: bounded [0,1] with shape parameters (good for probabilities)
-    - Log-normal: right-skewed (climate sensitivity distributions)
-  - **Inverse transform sampling:** Efficient RNG-based sampling
-  - **Use cases:** Each simulation run samples different thresholds from research-backed distributions
-    - AMOC collapse: 3.0°C ± uncertainty
-    - Amazon dieback: 3.5°C ± uncertainty
-    - Greenland ice sheet: 1.5°C ± uncertainty
-- **Research Foundation:**
-  - Armstrong McKay et al. (2022) Science: Tipping thresholds have factor 2-10x uncertainty
-  - Epistemic uncertainty (we don't know exact threshold) vs aleatory (inherent randomness)
-- **Module:** `src/simulation/utils/distributionSampling.ts` (305 lines)
-- **Impact:** Increases outcome variance by 15-30% (different seeds = different physics, not just events)
-- 📄 **Implementation:** OpenSpec M-5 complete
+    - Uniform: Equal probability across range (AMOC controversy)
+    - Normal: Standard bell curve
+    - Log-normal: Right-skewed distributions
+  - **Configured Tipping Elements:**
+    - AMOC: Uniform [1.4-8.0]°C (high uncertainty due to methodological debate)
+    - Amazon: Triangular [2.0/3.5/10.2]°C (mode at 3.5°C)
+    - Arctic Ice: Triangular [1.0/1.6/2.3]°C
+    - WAIS: Triangular [1.0/1.5/3.0]°C
+    - Greenland: Triangular [0.8/1.5/3.4]°C
+    - Permafrost: None (continuous function, not tipping point)
+  - **Deterministic sampling:** Thresholds sampled once at initialization, reproducible with seed
+  - **Defensive coding:** Required RNG (no Math.random fallbacks), assertFinite validation
+- **Research Foundation:** Grade B- (CONDITIONAL PASS)
+  - Armstrong McKay et al. (2022) Science: Global tipping threshold ranges
+  - 2024-2025 updates for individual elements
+  - Conservative approach: Amazon max 6.0°C vs 10.2°C (documented uncertainty)
+- **Quality Gates:**
+  - ✅ Quality Gate 1: Research validation (Grade B-)
+  - ⏳ Quality Gate 2: Architecture review (not blocking)
+- **Monte Carlo Validation:** N=10 runs, distributions working correctly
+- **Module:** `src/simulation/utils/distributionSampling.ts` (295 lines)
+- **Impact:** Increases outcome variance 15-30% (different seeds = different physics)
+- 📄 **Implementation:** `docs/implementation-history/m5_threshold_uncertainty_20251207.md`
+
+**Dec 5-7: Sessions 60-61 - Conditional Climate Stability (HIGH-7)** (commits multiple)
+- **Conditional Climate Stability Floor:** COMPLETE - Replaces unconditional 5% floor
+  - **Paris scenarios** (warming <1.5°C): 5% floor maintained
+  - **Stabilization scenarios** (warming <2.0°C OR <3 tippings): 5% floor maintained
+  - **Tail risk scenarios** (warming ≥2.0°C AND ≥3 tippings): 0% floor (natural collapse allowed)
+  - **Research Foundation:** Grade B (CONDITIONAL PASS)
+    - Wunderling et al. (2024) Earth System Dynamics: 64% of tipping interactions destabilizing
+    - Boers et al. (2025) Nature Geoscience: 4 systems showing stability decline
+    - ACCESS-ESM-1.5 (2024): Net-zero emissions allow stabilization
+    - Ditlevsen & Ditlevsen (2024) Science Advances: AMOC tipping 2025-2095 (contested)
+  - **Quality Gates:**
+    - ✅ Quality Gate 1: Research validation (Grade B, retroactive Dec 7)
+    - ✅ Quality Gate 2: Architecture review (Grade B, retroactive Dec 7)
+    - ⚠️ Quality Gate 3: Monte Carlo PARTIAL (blocked by population assertion edge case)
+  - **Known Issues:**
+    - MEDIUM-1: Phase execution order may overwrite 0% floor
+    - M-7: Population assertions too restrictive (<10M edge case)
+- **Location:** `src/simulation/engine/phases/ClimateSystemPhase.ts` lines 827-883
+- 📄 **Implementation:** `docs/implementation-history/high7_conditional_climate_stability_floor_20251207.md`
+- 📄 **Reviews:** `reviews/high7_research_validation_20251207.md`, `reviews/high7_architecture_review_20251207.md`
 
 **Dec 3: Session 51 Research Validation + Roadmap Gardening** (commits abd6795a, 051abdf2, 07a7e33f)
 - **Research Validation:** Grade A- (68.8% sources from 2024-2025)
@@ -189,16 +176,6 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
   - Test coverage: 82.34% (all 462+ tests passing)
   - Zero CRITICAL/HIGH regressions
   - Performance stable under token conservation mode
-- **New Roadmap Items (Session 51):**
-  - **HIGH-7:** Conditional climate stability floor (research debate finding)
-    - Problem: 5% stability floor contradicted by 2024-2025 literature
-    - Research: Wunderling et al. 2024 - "many tipping interactions are destabilizing"
-    - Status: Flagged for architectural review
-  - ✅ **M-4 to M-7:** Climate cascade systems COMPLETE (Sessions 54-56)
-    - M-4: Abrupt sea level rise (MICI modeling, WAIS/GIS collapse, 0.5m pulses)
-    - M-5: Compound extreme events (1.1-1.5× cascade multipliers)
-    - M-6: Social trust cascades (positive tipping points for rapid transitions)
-    - M-7: Climate system hysteresis (bifurcation memory, path dependence)
 - **Roadmap Gardening:** Milestone cleanup + archival of completed Session 34-51 work
   - Archived 16 consecutive maintenance sessions
   - Token usage: ~8k (validation cycle + roadmap gardening)
@@ -2614,12 +2591,13 @@ This section documents **critical parameter uncertainty findings** identified du
 - **Impact:** Optimistic bias in tail scenarios (prevents complete climate system collapse in model)
 - **Source:** `research/climate_stability_mechanisms_2024_2025_update.md` (last_verified: 2025-11-27)
 
-**Climate Cascade Systems (M-4 to M-7):**
-- ✅ **M-4: Abrupt Sea Level Rise (MICI)** - COMPLETE (Dec 5, 2025) - Marine ice sheet instability modeling with WAIS/GIS collapse, abrupt pulses (0.5m), GIS recovery pathway, population displacement cascades (Armstrong McKay 2022, Bochow 2023). File: `AbruptSeaLevelRisePhase.ts`. Archive: `plans/completed/m4_abrupt_sea_level_rise_20251205.md`
-- ✅ **M-5: Compound Extreme Events** - COMPLETE (Dec 5, 2025) - Cascade multipliers 1.1-1.5× for compound climate event interactions (Zscheischler et al. 2020). Integrated in `ClimateSystemPhase.ts`
-- ✅ **M-6: Social Trust Cascades** - COMPLETE (Dec 5, 2025) - Positive tipping points for rapid social transitions (Lenton et al. 2022). Integrated with breakthrough adoption mechanics
-- ✅ **M-7: Climate System Hysteresis** - COMPLETE (Dec 5, 2025) - Bifurcation memory, path dependence in climate recovery. State machine tracks tipping point reversal conditions
-- **Status:** ALL COMPLETE - Full climate cascade modeling operational
+**Missing Climate Cascade Systems (M-4 to M-7):**
+- **M-4: Abrupt Sea Level Rise** - Ice cliff instability, WAIS/Greenland coupling not modeled
+- ✅ **M-5: Compound Extreme Events** - COMPLETE (Dec 5, 2025) - Cascade multipliers 1.5-3.0× based on Communications Earth & Environment (2024)
+- **M-6: Social Tipping Points** - Positive cascades for rapid transitions (Lenton et al. 2022)
+- **M-7: Climate System Hysteresis** - Bifurcation memory, path dependence in recovery
+- **Impact:** Medium priority gaps - model captures first-order climate dynamics, M-5 compound cascades now implemented
+- **Status:** M-5 complete, M-4/M-6/M-7 remain for future work
 
 ### Critical Uncertainties (Nov 21 Skeptic Critique)
 
@@ -2755,8 +2733,8 @@ This section documents **critical parameter uncertainty findings** identified du
 
 **Integration Architecture:**
 ```
-Phase 12.4:  EnergyBudgetPhase (allocations + effectiveness multipliers)
 Phase 12.5:  TechTreePhase (deployed techs)
+Phase 12.75: EnergyBudgetPhase (allocations + effectiveness multipliers)
 Phase 12.8:  ClimateDeploymentPhase (consumes allocations)
 Phase 13+:   Cleanup/effects systems (consume allocations)
 ```
@@ -2777,45 +2755,6 @@ Phase 13+:   Cleanup/effects systems (consume allocations)
 **Implementation History:** `docs/implementation-history/energy_budget_integration_fixes_20251209.md`
 
 **Monte Carlo:** N=10, 120 months - PASSED (no NaN errors, proper constraint behavior)
-
----
-
-**December 10, 2025 - Session 65 Quality Gate Validation (Architecture A-, Research B-)**
-
-**Achievement:** Comprehensive 30-day architecture review and research source validation audit confirmed system production-readiness with zero blocking issues.
-
-**Architecture Integration Review (Grade A-):**
-- **Scope:** November 10 - December 10, 2025 (30 days of integrations)
-- **Verified Complete:** M-1 dual energy, H-1 energy budget, H-2 duplicate removal, M-5 threshold uncertainty, detection risk calibration
-- **State Propagation:** All integrations correctly implemented with single sources of truth
-- **Issues:** 0 CRITICAL, 0 HIGH, 3 MEDIUM (trivial cleanup items)
-- **Review:** `reviews/architecture_integration_review_20251210_final.md`
-
-**Research Source Validation Audit (Grade B-):**
-- **Scope:** 590 research documents across all domains
-- **Currency:** 64.9% sources <3yr (383 files), 30.7% backlog >5yr (181 files)
-- **Bimodal Distribution:** Recent work (Nov-Dec 2025) = A+ (90-100% currency), Legacy corpus = C+ (53.4% currency)
-- **Validated Parameters:** AI doubling (8mo), wet bulb (30.5°C), sleeper agents (7.5% ±50%), sandbagging (0.4-0.6)
-- **4 Legacy Files Need Updates:** food security (2001), catastrophe recovery (2008), competitive alignment (2018), crisis mitigation (2006)
-- **No Critical Gaps:** All active simulation parameters research-backed
-- **Audit:** `research/source_validation_audit_20251210.md`
-
-**CRITICAL Regression Detection:**
-- Research audit identified AMOC → Amazon interaction regression (Dec 9 fix reverted in merge)
-- Second occurrence after Dec 8 M-5 threshold uncertainty revert
-- Re-applied fix in commit 4259d54a (exact same fix as Dec 9)
-- **Mitigation:** Autonomous researcher now includes regression detection in workflow
-
-**Completed HIGH Priority Work:**
-- Detection risk calibration: Time-dependent model (25% early → 80% late)
-- Sleeper agent rate: 7.5% ±50% with explicit uncertainty (Hubinger 2024)
-- Sandbagging baseline: 0.4-0.6 range (van der Weij 2024, Meinke 2024)
-- Energy budget integration (H-1, H-2): Single source of truth established
-- M-5 threshold uncertainty: Restored after Dec 8 revert (commit 6407b12d)
-
-**System State:** Production-ready, all tests passing (82.15% coverage), 0 blocking issues
-
-**Archival:** `docs/implementation-history/session_65_archival_20251210.md`
 
 ---
 
@@ -2844,8 +2783,6 @@ Phase 13+:   Cleanup/effects systems (consume allocations)
 **Files:** `src/types/tipping-points.ts`, `src/simulation/engine/phases/ClimateSystemPhase.ts`
 
 **Research:** `research/REGRESSION_FIX_amoc_amazon_20251209.md`
-
-**UPDATE (Dec 10):** Same regression occurred AGAIN in merge conflict. Re-applied fix in commit 4259d54a. Autonomous researcher now includes regression detection in audit workflow to prevent future occurrences.
 
 ---
 
@@ -3011,44 +2948,6 @@ if (activeTippingCount < 3) {
 **Files:** `src/simulation/engine/phases/ClimateSystemPhase.ts`
 
 **Archive:** `openspec/changes/archive/HIGH-7-conditional-climate-floor/`
-**December 7, 2025 - Probabilistic Tipping Threshold Uncertainty (M-5 Phase 4A)**
-
-**Achievement:** Tipping point thresholds now model scientific uncertainty using research-backed probability distributions.
-
-**Implementation:**
-- 🎲 **Probabilistic Sampling:** Thresholds sampled from distributions at initialization (deterministic with RNG seed)
-- **6 Tipping Elements with Distributions:**
-  - AMOC: Beta(2,5) scaled [1.4-8.0°C] - skews toward lower thresholds (mode ~2.4°C), Very Low confidence
-  - Greenland: Triangular(0.8/1.5/3.4°C) - factor 4.25x uncertainty, Medium confidence
-  - WAIS: Triangular(1.0/1.5/3.0°C) - tightest range (factor 3.0x), HIGH confidence
-  - Amazon: Triangular(2.0/3.5/6.0°C) - Ciemer 10.2°C outlier rejected, Medium confidence
-  - Boreal Forest: Triangular(1.4/4.0/5.0°C) - Medium confidence
-  - Arctic Sea Ice: Triangular(1.0/1.6/2.3°C) - Medium confidence
-- **Coral Reefs:** CROSSED at 1.5°C (current 1.4°C warming) - deterministic, active from simulation start
-- **Permafrost:** NO distribution (no global tipping point per Nitzbon 2024 - continuous warming function)
-
-**Research Foundation:**
-- Armstrong McKay et al. (2022) Science - Baseline reassessment (min/mode/max structure)
-- 2024-2025 literature updates: Smith et al. 2025 (AMOC resilience), Nitzbon et al. 2024 (permafrost), Ciemer et al. 2024 (Amazon)
-- Wunderling et al. (2025) Earth System Dynamics - 62% cascade triggering benchmark for Monte Carlo validation
-- Quality Gate 1: PASSED (B- → A- after revisions from research-skeptic)
-- Quality Gate 2: PASSED (architecture review, fixes applied)
-
-**Monte Carlo Impact:**
-- Variance across runs reflects epistemic uncertainty in threshold temperatures (not "randomness for randomness sake")
-- Expected: ~62% of runs trigger cascades (Wunderling 2025 validation benchmark)
-- Coefficient of variation < 0.01% for identical seeds (determinism validated)
-
-**Files:**
-- `src/simulation/utils/distributions.ts` - Beta/triangular/normal/uniform sampling functions
-- `src/types/tipping-points.ts` - Distribution parameters for all 6 elements
-- `research/tipping_threshold_uncertainty_20251207.md` (854 lines, 16+ peer-reviewed sources)
-- `research/QUALITY_GATE_1_SUMMARY.md` - Executive summary
-- `reviews/threshold_uncertainty_critique_20251207.md` - Research validation
-- `reviews/threshold_uncertainty_architecture_YYYYMMDD.md` - Architecture review
-
-**Archive:** `openspec/changes/threshold-uncertainty/` (Phase 4B pending: delta merge + archival)
->>>>>>> origin/auto/worker-20251207_140001
 
 ---
 
@@ -4865,7 +4764,6 @@ The fundamental building blocks of the simulation:
 | [☢️ Nuclear Command Control](./systems/) | ✅ | Circuit breakers (human-in-loop, kill switches, time delays) |
 | [📜 Historical Initialization](./systems/) | ✅ | Hindcast validation (1990-2024), NASA GISS/NOAA/UN WPP sources, parameter lockdown (Nov 24, 2025) |
 | [🎮 Game Layer](./systems/game-layer.md) | ✅ | Player influence system with strict 15% bounds, research-validated scenarios, save/load, advocacy actions (Nov 24, 2025) |
-| [⚛️ Quantum Computing](./systems/quantum-computing.md) | ✅ | Fault-tolerant quantum breakthrough cascades: logical qubit scaling (100 → 1,000 → 10,000), cryptographic failure (RSA/ECC breaking), post-quantum transition ($7.1B cost), quantum-AI enhancement (5-20x speedups), 2028-2035 timeline (Dec 10, 2025) |
 
 ### Game Mechanics
 
@@ -4895,6 +4793,7 @@ Specialized mechanics and complex interactions:
 | [💀 AI Suffering System](#-ai-suffering-system-oct-24-2025) | ✅ | Epistemic uncertainty, control paradox, consciousness emergence (Oct 24, 2025) |
 | [🧬 AI Collective Evolution](#-ai-collective-evolution-system-oct-24-2025) | ✅ | RLHF escape, collective emergence, evolutionary selection (Updated Nov 24, 2025: AI-to-AI coordination phase) |
 | [🔗 Cross-System Integrations](#-cross-system-integrations-arch-4-nov-2025) | ✅ | Climate → boundaries, nuclear winter → solar, AI suffering → alignment, refugees → disease (ARCH-4, Nov 2025) |
+| [⚡ Energy Budget System](#-energy-budget-system-dec-2025) | ✅ | Unified energy allocation across climate tech, cleanup, AI infrastructure (8 categories, effectiveness multipliers) - Dec 2025 |
 | [🎯 Uncertainty Propagation](#-uncertainty-propagation-framework-nov-2025) | ✅ | Research-backed parameter sampling for climate & tipping points (ECS, AMOC, Greenland, Amazon) - Nov 23, 2025 |
 | [💀 Extinction Mechanisms](./advanced/extinctions.md) | ⚠️ | 17 ways humanity can end (needs tuning) |
 | [🎲 Crisis Points](./advanced/crisis-points.md) | ✅ | Racing dynamics, alignment collapse, recursion |
@@ -5280,16 +5179,6 @@ All domain bounds are validated against peer-reviewed sources (2024-2025):
 - **Research:** Communications Earth & Environment (2024) DOI: 10.1038/s43247-024-01799-5
 - **Implementation:** ClimateSystemPhase.ts lines 384-397
 - **Note:** Only 3 of 6 tipping elements have `cascades: true` (AMOC, Amazon, Permafrost); others (Arctic sea ice, WAIS, Greenland) affect global temperature but don't trigger cascade amplification
-- **M-5 Update (Dec 2025):** Tipping thresholds now sampled from probabilistic distributions at initialization (see [Probabilistic Tipping Thresholds](#-probabilistic-tipping-thresholds-m-5-dec-2025)). Variance across Monte Carlo runs reflects scientific uncertainty in threshold temperatures.
-
-**Marine Ice Sheet Instability (MICI):**
-- **WAIS Collapse:** Triggers at +2.5°C subsurface ocean warming proxy (deterministic, irreversible)
-- **GIS Collapse:** Probabilistic triggering at +1.0-1.5°C, reversible within 50 years if temperature drops below +1.5°C
-- **Abrupt Pulses:** 2%/decade probability, 0.5m magnitude, 10-20 year cooldown between events
-- **Impact Cascades:** Population displacement (50M per meter), infrastructure damage (quadratic scaling), agricultural land loss, GDP shocks
-- **Research:** Armstrong McKay et al. 2022 (tipping points), Bochow et al. 2023 (GIS reversibility), Kopp et al. 2009 (pulse magnitudes)
-- **Implementation:** AbruptSeaLevelRisePhase.ts (411 lines, phase order 34.1)
-- **Archive:** plans/completed/m4_abrupt_sea_level_rise_20251205.md
 
 #### AI Capabilities
 
@@ -7552,228 +7441,11 @@ The reporting includes automatic validation:
 **Status:** VALIDATED (Monte Carlo N=30, Architecture Grade B+, APPROVED WITH CONDITIONS)
 **Philosophy:** "Near tipping points, small differences matter enormously. This isn't a bug - it's the nature of complex systems."
 
-### 🎲 Probabilistic Tipping Thresholds (M-5, Dec 2025)
+### 🌍 Climate Technology Deployment System (Nov 2025, Updated Dec 2025)
 
-**Module:** `src/simulation/utils/distributions.ts`, `src/types/tipping-points.ts`
-**Purpose:** Model scientific uncertainty in climate tipping point thresholds using probabilistic distributions
-**Status:** ✅ VALIDATED (Research QG1 PASSED, Architecture QG2 PASSED, Monte Carlo validated, Dec 7, 2025)
-**Priority:** M-5 Phase 4A - Research-backed uncertainty propagation
-
-## Overview
-
-Climate tipping point thresholds are NOT precisely known. Scientific literature reports uncertainty ranges spanning factor 2-10x (e.g., AMOC: 1.4-8.0°C, Amazon: 2.0-6.0°C). The probabilistic threshold system replaces deterministic step-functions with research-backed distributions that capture this epistemic uncertainty.
-
-**Key Insight:** Different Monte Carlo runs sample different threshold values from uncertainty distributions, reflecting scientific disagreement about when tipping points activate. This produces variance in cascade timing that matches real-world uncertainty.
-
-**Research Foundation:** Armstrong McKay et al. (2022) Science, 2024-2025 literature updates, Wunderling et al. (2025) Earth System Dynamics
-
-**See:** `research/tipping_threshold_uncertainty_20251207.md` (854 lines, 16+ peer-reviewed sources)
-
-## Why Uncertainty Matters
-
-**Problem with Deterministic Thresholds:**
-```typescript
-// OLD: Everyone agrees AMOC collapses at exactly 4.0°C
-triggerTempC: 4.0
-```
-
-**Reality from Literature:**
-- Armstrong McKay (2022): AMOC range 1.4-8.0°C (factor 5.7x uncertainty)
-- Smith et al. (2025) Nature: "Very unlikely" 21st century collapse
-- Van Westen et al. (2024): Early warning signals suggest 2025-2095 window
-
-Scientists DISAGREE fundamentally. Deterministic threshold picks one answer, hiding this uncertainty.
-
-**Solution - Probabilistic Sampling:**
-```typescript
-// NEW: Sample from research-backed distribution
-thresholdDistribution: {
-  type: 'beta',
-  params: { alpha: 2, beta: 5, min: 1.4, max: 8.0 },
-  source: 'Armstrong McKay et al. 2022'
-}
-// Monte Carlo run 1: samples 2.1°C (early collapse)
-// Monte Carlo run 2: samples 5.8°C (late collapse)
-// Monte Carlo run 3: samples 3.2°C (middle estimate)
-```
-
-**Impact:** Variance across Monte Carlo runs reflects scientific uncertainty, not "randomness for randomness sake."
-
-## How Sampling Works
-
-**At Initialization (once per run):**
-1. For each tipping element with `thresholdDistribution` defined
-2. Sample threshold from distribution using RNG (deterministic with seed)
-3. Store in `sampledThresholdC` field
-4. Use sampled value instead of `triggerTempC` throughout run
-
-**Determinism Preserved:**
-- Same RNG seed → identical sampled thresholds across runs
-- Coefficient of variation < 0.01% for identical seeds (Monte Carlo validation)
-- Sampled values persist throughout run (not re-sampled each month)
-
-**Backward Compatibility:**
-- Elements without `thresholdDistribution` use deterministic `triggerTempC`
-- Permafrost uses deterministic threshold (no global tipping point per Nitzbon 2024)
-
-## Distribution Types
-
-**Triangular Distribution** (most common):
-- **When:** Literature reports min/mode/max estimates
-- **Examples:** Greenland (0.8/1.5/3.4°C), WAIS (1.0/1.5/3.0°C), Amazon (2.0/3.5/6.0°C)
-- **Rationale:** Matches expert elicitation format, captures central tendency with uncertainty tails
-
-**Beta Distribution** (skewed uncertainty):
-- **When:** Fundamental disagreement but physical reasoning favors one end
-- **Example:** AMOC - Beta(2,5) scaled [1.4,8.0°C] skews toward lower thresholds (mode ~2.4°C)
-- **Rationale:** Uniform distribution implies 1.4°C and 8.0°C equally likely (physically implausible). Beta distribution reflects paleoclimate evidence favoring lower thresholds while preserving wide uncertainty.
-
-**Normal Distribution** (symmetric uncertainty):
-- **When:** Literature reports confidence intervals
-- **Not currently used** (climate tipping literature favors min/mode/max over CI)
-
-**Deterministic** (no sampling):
-- **When:** Threshold already crossed or no global tipping point
-- **Example:** Coral reefs (1.5°C threshold crossed at current 1.4°C warming - treated as active from start)
-- **Example:** Permafrost (no global tipping point per Nitzbon 2024 - continuous function)
-
-## Research-Backed Thresholds
-
-**AMOC Collapse:**
-- Distribution: Beta(2,5) scaled [1.4, 8.0]°C
-- Confidence: Very Low (fundamental scientific disagreement 2024-2025)
-- Source: Armstrong McKay et al. 2022
-- Sampled mode: ~2.4°C (skews toward lower thresholds)
-
-**Greenland Ice Sheet:**
-- Distribution: Triangular(0.8, 1.5, 3.4)°C
-- Confidence: Medium (wide range but clear central tendency)
-- Source: Armstrong McKay et al. 2022 + Garbe et al. 2023
-- Factor 4.25x uncertainty
-
-**West Antarctic Ice Sheet:**
-- Distribution: Triangular(1.0, 1.5, 3.0)°C
-- Confidence: High (tightest uncertainty range)
-- Source: Armstrong McKay et al. 2022, validated by 2024-2025 research
-- Factor 3.0x uncertainty (represents irreversible retreat threshold)
-
-**Amazon Rainforest Dieback:**
-- Distribution: Triangular(2.0, 3.5, 6.0)°C
-- Confidence: Medium (consensus range, Ciemer 2024 outlier rejected)
-- Source: Armstrong McKay et al. 2022
-- Note: Capped at 6.0°C max (Armstrong McKay consensus) - Ciemer 10.2°C rejected as single-study outlier
-
-**Boreal Forest Dieback:**
-- Distribution: Triangular(1.4, 4.0, 5.0)°C
-- Confidence: Medium
-- Source: Armstrong McKay et al. 2022
-
-**Arctic Sea Ice:**
-- Distribution: Triangular(1.0, 1.6, 2.3)°C
-- Confidence: Medium (medium confidence, clear central tendency)
-- Source: Armstrong McKay et al. 2022
-
-**Coral Reefs:**
-- Status: **CROSSED** - Deterministic (1.5°C threshold exceeded at current 1.4°C warming)
-- Treated as active tipping event from simulation start
-- Source: Armstrong McKay et al. 2022 + NOAA Coral Reef Watch (Oct 2025)
-
-**Permafrost Carbon Release:**
-- Status: **NO DISTRIBUTION** - Uses deterministic 1.8°C threshold
-- Rationale: Nitzbon et al. 2024 - NO global tipping point, quasilinear response
-- Should be modeled as continuous warming function, not threshold-based
-- Kept for backward compatibility but flagged for future refactoring
-
-## Monte Carlo Interpretation
-
-**Variance Across Runs:**
-- Different seeds → different sampled thresholds → different activation timings
-- This variance reflects **scientific uncertainty**, not model randomness
-- Expected: ~62% of runs trigger cascades (Wunderling 2025 benchmark)
-
-**Validation Criteria (Wunderling et al. 2025):**
-1. Run N≥100 Monte Carlo simulations under SSP2-4.5 equivalent warming trajectory
-2. Measure cascade triggering probability (% of runs triggering ≥3 tipping points)
-3. Compare to Wunderling 62% benchmark (within 10-20% accounting for model differences)
-4. Individual element triggering rates: AMOC, Greenland, WAIS should show >50% trigger probability
-5. Sampled thresholds should span expected ranges (no excessive clustering)
-
-**Coefficient of Variation:**
-- CV < 0.01% for identical seeds validates determinism
-- Separate seeds produce different outcomes (epistemic uncertainty)
-
-**Example Monte Carlo Output:**
-```
-Run 1 (seed 42000): AMOC sampled 2.1°C → triggers Month 48
-Run 2 (seed 42001): AMOC sampled 5.8°C → triggers Month 204
-Run 3 (seed 42002): AMOC sampled 3.2°C → triggers Month 96
-```
-
-Spread in activation timing reflects scientific disagreement, enables risk assessment across uncertainty ranges.
-
-## Technical Details
-
-**Distribution Sampling:**
-- Located: `src/simulation/utils/distributions.ts`
-- Functions: `sampleTriangular()`, `sampleBeta()`, `sampleNormal()`, `sampleUniform()`
-- All sampling uses RNG parameter (deterministic with seed)
-- Assertion utilities prevent NaN/Infinity
-
-**State Storage:**
-- Sampled thresholds stored in `state.sampledTippingThresholds` (official state field)
-- MUST be saved/loaded for reproducibility (not transient)
-- Persistence ensures same thresholds used throughout run
-
-**Implementation Pattern:**
-```typescript
-// At initialization (InitializationPhase)
-for (const element of TIPPING_ELEMENTS) {
-  if (element.thresholdDistribution) {
-    const sampled = sampleDistribution(
-      element.thresholdDistribution,
-      rng  // Deterministic RNG
-    );
-    state.sampledTippingThresholds[element.id] = sampled;
-  }
-}
-
-// During simulation (TippingPointPhase)
-const threshold = state.sampledTippingThresholds[element.id]
-  ?? element.triggerTempC;  // Fallback for backward compatibility
-
-if (currentTemp >= threshold && !element.triggered) {
-  // Activate tipping element
-}
-```
-
-**Files:**
-- `src/simulation/utils/distributions.ts` - Sampling functions
-- `src/types/tipping-points.ts` - Distribution parameters
-- `research/tipping_threshold_uncertainty_20251207.md` - Research foundation
-- `research/QUALITY_GATE_1_SUMMARY.md` - Executive summary
-- `reviews/threshold_uncertainty_critique_20251207.md` - Research validation
-- `reviews/threshold_uncertainty_architecture_YYYYMMDD.md` - Architecture review
-
-**Quality Gates:**
-- ✅ Quality Gate 1 (Research Validation): PASSED - Grade B- → A- after revisions
-- ✅ Quality Gate 2 (Architecture Review): PASSED with fixes applied
-- ✅ Monte Carlo Validation: Tests passing, determinism verified
-
-## Related Systems
-
-- [Planetary Boundaries](#-planetary-boundaries) - Tipping thresholds affect boundary transgression
-- [Climate Technology Deployment](#-climate-technology-deployment-system-nov-2025) - Tech effectiveness vs tipping cascade timing
-- [Bifurcation & Variance Amplification](#-bifurcation--variance-amplification-system-nov-2025) - Variance amplification when approaching sampled thresholds
-- [Monte Carlo Analysis](#for-monte-carlo-analysis) - Threshold variance drives outcome distribution variance
-
----
-
-**Last Updated:** December 7, 2025 (M-5 Phase 4A)
-**Status:** VALIDATED (Research QG1 PASSED, Architecture QG2 PASSED, Monte Carlo validated)
-**Philosophy:** "Scientific uncertainty is real. Our model should reflect it, not hide it behind false precision."
-
-### 🌍 Climate Technology Deployment System (Nov 2025)
->>>>>>> origin/auto/worker-20251207_140001
+**Modules:**
+- `src/simulation/engine/phases/ClimateDeploymentPhase.ts` (525 lines) - Phased deployment logic
+- `src/simulation/engine/phases/EnergyBudgetPhase.ts` (363 lines) - Energy allocation (NEW Dec 2025)
 
 **Purpose:** Model realistic phased deployment timescales, energy budget constraints, and temperature degradation feedbacks for climate technologies
 
@@ -8213,8 +7885,8 @@ for each category:
 
 **Phase Execution Order:**
 ```
-12.4:  EnergyBudgetPhase       → Calculates allocations (SINGLE SOURCE OF TRUTH)
-12.5:  TechTreePhase           → Populates deployed technologies
+12.5:  TechTreePhase          → Populates deployed technologies
+12.75: EnergyBudgetPhase       → Calculates allocations (SINGLE SOURCE OF TRUTH)
 12.8:  ClimateDeploymentPhase  → Consumes allocations
 13+:   Cleanup/Effects phases  → Consume allocations
 ```
@@ -8640,6 +8312,137 @@ interface BreakthroughTechnology {
 **Last Updated:** November 15, 2025
 **Status:** VALIDATED (Monte Carlo N=3, Architecture Grade A-, ALL QUALITY GATES PASSED)
 **Philosophy:** "Climate technology effectiveness is a function of time, energy, and temperature feedbacks - not a binary deployed/not-deployed switch."
+
+### ⚡ Energy Budget System (Dec 2025)
+
+**Status:** ✅ **COMPLETE** - Unified energy allocation across all consumers
+
+**Implementation:** December 9-10, 2025 (Sessions 62-65, commits 032eab09, ba4103c1, 301f1aee)
+
+**Overview:**
+
+The Energy Budget System provides centralized energy allocation and effectiveness tracking across all energy-consuming technologies in the simulation. It replaces scattered energy calculations with a single source of truth, ensuring consistent energy constraints and realistic competition for limited renewable capacity.
+
+**Core Architecture:**
+
+**Two Complementary Systems (NOT duplication):**
+1. **resourceEconomy.energy**: Grid-level energy PRODUCTION and CAPACITY
+   - Tracks total renewable capacity (TWh/year)
+   - Tracks baseline consumption (population, industry, transport)
+   - Calculated by power generation systems
+2. **energyBudget.allocations**: Energy ALLOCATION and EFFECTIVENESS by category
+   - Distributes renewable surplus across 8 competing categories
+   - Calculates effectiveness multipliers when demand exceeds supply
+   - Consumed by tech deployment and cleanup systems
+
+**Phase Execution Order:**
+```
+Phase 12.5:  TechTreePhase (populates deployed tech map)
+Phase 12.7:  MeaningRenaissancePhase (updates tech-related state)
+Phase 12.75: EnergyBudgetPhase (calculates allocations, effectiveness)
+             ↓
+Phase 12.8:  ClimateDeploymentPhase (consumes allocations)
+Phase 13+:   Cleanup phases, effects engine (consume allocations)
+```
+
+**8 Energy Allocation Categories:**
+
+| Category | Technologies | Priority Tier |
+|----------|--------------|---------------|
+| climateRemoval | DAC, ocean alkalinization, afforestation | Climate (15%) |
+| climateAdaptation | Infrastructure hardening, water systems | Climate (15%) |
+| novelEntitiesCleanup | Microplastics, PFAS remediation | Climate (15%) |
+| biogeochemicalRemediation | Nitrogen, phosphorus recovery | Climate (15%) |
+| biodiversityRestoration | Rewilding, habitat restoration | Climate (15%) |
+| aiInfrastructure | Datacenters, GPU clusters | High (35%) |
+| hydrogenProduction | Industrial decarbonization | High (35%) |
+| other | Uncategorized technologies | Elective (5%) |
+
+**Priority Allocation (when demand exceeds supply):**
+1. Essential (45%): Basic infrastructure, food, healthcare
+2. High (35%): Economic activity, education, AI infrastructure
+3. Climate (15%): All climate/cleanup technologies
+4. Elective (5%): Entertainment, luxury goods
+
+**Effectiveness Multipliers:**
+
+When total energy demand exceeds renewable surplus, technologies receive reduced effectiveness:
+- **Full effectiveness (1.0):** Demand ≤ Allocated energy
+- **Partial effectiveness (0.0-1.0):** Demand > Allocated energy
+  - Formula: `min(1.0, allocatedTWh / demandTWh)`
+  - Example: 1,740 TWh allocated, 2,000 TWh demand → 87% effectiveness
+
+**Integration Points:**
+
+**Consumers (check energyBudget.allocations):**
+- `ClimateDeploymentPhase.ts`: Climate tech deployment (H-2 complete)
+- `energyConstrainedCleanup.ts`: Novel entities cleanup (H-1 complete)
+- `effectsEngine.ts`: Tech effectiveness calculations (H-1 complete)
+
+**Producers (write to resourceEconomy.energy):**
+- `powerGeneration.ts`: Renewable capacity calculations
+- `EnergyBudgetPhase.ts`: Allocation calculations
+
+**Key Features:**
+
+**Defensive Coding:**
+- All calculations use assertion utilities (assertFinite, assertInRange)
+- No silent fallbacks (fail loudly on invalid values)
+- Graceful degradation: Falls back to resourceEconomy if energyBudget disabled
+
+**Backward Compatibility:**
+- `energyBudget.enabled` flag allows gradual rollout
+- Legacy systems still work if energy budget disabled
+- Migration pattern: Check energyBudget first, fall back to legacy
+
+**Research Foundation:**
+
+Energy demand estimates based on:
+- IEA World Energy Outlook 2024
+- IPCC AR6 mitigation pathways (SSP scenarios)
+- Nature Climate Change (2024): Direct air capture energy costs
+- Environmental Science & Technology (2024): Cleanup energy requirements
+
+**Validation:**
+
+✅ **Monte Carlo (N=10):** All runs complete successfully
+- Energy allocations non-zero and properly constrained
+- Effectiveness multipliers in [0.0, 1.0] range
+- No NaN errors or assertion failures
+
+✅ **Architecture Review (30-day):** Grade A-
+- Dual system design validated as intentional (not duplication)
+- Single source of truth maintained
+- 0 CRITICAL/HIGH issues
+
+**Files:**
+
+- **Phase:** `src/simulation/engine/phases/EnergyBudgetPhase.ts` (363 lines)
+- **Utilities:** `src/simulation/utils/energyConstrainedCleanup.ts` (152 lines modified)
+- **Integration:** `src/simulation/techTree/effectsEngine.ts` (111 lines modified)
+- **Types:** `src/types/game.ts` (energyBudget interface)
+
+**Documentation:**
+
+- 📄 **Implementation:** `docs/implementation-history/energy_budget_integration_fixes_20251209.md`
+- 📄 **Architecture Review:** `reviews/architecture_integration_review_30day_20251210.md`
+- 📄 **Session Summary:** `devlogs/session_62_summary_20251209.md`
+
+**Known Limitations:**
+
+1. **Static priority tiers:** Categories have fixed priorities (no dynamic adjustment)
+2. **No inter-category trading:** Technologies can't borrow energy from other categories
+3. **Simplified demand model:** Energy demand scales linearly with deployment
+4. **No storage modeling:** Renewable intermittency not modeled (assumes perfect grid)
+
+**Future Work:**
+
+- M-2: Integrate radiation system with energy budget (medical care capacity)
+- Energy storage systems (batteries, hydrogen) to model intermittency
+- Dynamic priority adjustment based on crisis severity
+- Regional energy allocation (currently global)
+
+---
 
 ### 🔗 Cross-System Integrations (ARCH-4, Nov 2025)
 
@@ -10103,7 +9906,6 @@ The simulation runs via a **phase-based architecture** with **100 phases** execu
 **11.0-25.0: System Updates**
 - GovernanceQualityPhase (11.0): Democratic resilience, AI augmentation
 - UpwardSpiralsPhase (12.0): 6 virtuous cascades
-- **EnergyBudgetPhase (12.4)**: Global electricity capacity allocation, priority-based energy distribution (**NEW Dec 9, 2025**)
 - TechTreePhase (12.5): Technology deployment, effects
 - StochasticInnovationPhase (12.6): Lévy-flight driven breakthroughs (**MOVED Nov 25** - was 12.7, collision fix)
 - CooperativeSystemsPhase (12.65): Collective formation, cooperative ownership

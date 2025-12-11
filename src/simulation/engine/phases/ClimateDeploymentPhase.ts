@@ -8,29 +8,30 @@
  *
  * **Research Foundation:** research/climate_deployment_timescales_20251113.md
  * **Implementation Plan:** plans/climate_phased_deployment_model_20251113.md
- * **ARCHITECTURE FIX H-2 (Dec 9, 2025):** Removed legacy energy allocation, now uses EnergyBudgetPhase
  *
- * **EXECUTION ORDER:** 12.8 (After EnergyBudgetPhase 12.75, before environmental effects)
- * **DEPENDENCIES:**
- * - tech-tree (12.5) - Requires breakthrough technologies
- * - energy-budget (12.75) - Consumes energy allocations
- *
+ * **EXECUTION ORDER:** 12.8 (After tech-tree 12.5, before environmental effects)
+ * **DEPENDENCIES:** tech-tree (12.5) - Requires energySystem, breakthrough technologies
  * **SIDE EFFECTS:**
- * - Updates technology deployment phases (planning → pilot → scaling → mature → saturated)
- * - Adjusts technology effectiveness by deployment progress and energy availability
+ * - Updates technology deployment phases
+ * - Partitions renewable energy budget
+ * - Adjusts technology effectiveness by deployment progress
  *
- * **Phase Logic:**
- * 1. For each climate tech: get energy multiplier from EnergyBudgetPhase allocations
- * 2. Advance deployment phase based on energy availability (faster with more energy)
- * 3. Calculate deployment-adjusted effectiveness (phase multiplier × energy multiplier)
- * 4. Update deployment level in tech tree state
- * 5. Log phase transitions
+ * **5-Step Phase Logic:**
+ * 1. For each climate tech: get energy effectiveness from EnergyBudgetPhase
+ * 2. Calculate deployment-adjusted effectiveness (phase multiplier × energy multiplier)
+ * 3. Update technology deployment levels
+ * 4. Advance deployment phases based on energy availability
+ * 5. Log phase transitions (planning → pilot → scaling → mature)
+ *
+ * **Energy Source of Truth:** EnergyBudgetPhase (order 12.75) calculates effectiveness
+ * multipliers based on energy allocation vs demand. This phase consumes those multipliers.
  */
 
 import { GameState, SimulationPhase, PhaseResult, RNGFunction, GameEvent } from '@/types/game';
 import { assertFinite, assertDefined, assertInRange } from '@/simulation/utils/assertions';
 import { getTechById, type TechDefinition } from '@/simulation/techTree/comprehensiveTechTree';
 import { addSimulationEvent } from '@/simulation/utils/eventLogger';
+import { mapTechToEnergyCategory } from '@/simulation/utils/energyCategories';
 
 export class ClimateDeploymentPhase implements SimulationPhase {
   readonly id = 'climate-deployment';
@@ -41,7 +42,10 @@ export class ClimateDeploymentPhase implements SimulationPhase {
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const events: GameEvent[] = [];
 
-    // Get climate technologies
+    // Energy budget calculated by EnergyBudgetPhase (order 12.75)
+    // This phase consumes those effectiveness multipliers
+
+    // Update each climate technology
     const climateTechs = this.getClimateTechnologies(state);
 
     for (const tech of climateTechs) {
@@ -49,38 +53,13 @@ export class ClimateDeploymentPhase implements SimulationPhase {
         continue; // Skip if no deployment tracking
       }
 
-      // Get energy multiplier from EnergyBudgetPhase allocations
+      // Step 1: Get energy effectiveness from EnergyBudgetPhase
       const energyMultiplier = this.getEnergyMultiplier(state, tech);
 
-      // Advance phase based on energy availability
-      if (energyMultiplier > 0 && tech.deploymentTimeline) {
-        const phaseAdvanced = this.advancePhase(state, tech, energyMultiplier);
-
-        if (phaseAdvanced) {
-          // Log phase transition
-          addSimulationEvent(state, {
-            type: 'deployment',
-            severity: 'info',
-            agent: 'climate-deployment',
-            title: `🌍⚡ ${tech.name}: ${tech.deploymentPhase} phase`,
-            description: `Phase progress: ${tech.phaseProgress?.toFixed(1)}%, energy effectiveness: ${(energyMultiplier * 100).toFixed(0)}%`,
-            effects: {
-              techId: tech.id,
-              phase: tech.deploymentPhase || 'unknown',
-              progress: tech.phaseProgress || 0,
-              energyMultiplier,
-            },
-          });
-          // Event is automatically added to state.eventLog, get the last one
-          const event = state.eventLog[state.eventLog.length - 1];
-          events.push(event);
-        }
-      }
-
-      // Calculate deployment-adjusted effectiveness
+      // Step 2: Calculate deployment phase effectiveness
       const phaseMultiplier = this.getPhaseMultiplier(tech);
 
-      // Apply multipliers to base deployment level
+      // Step 3: Apply multipliers to base deployment level
       const baseDeployment = this.getTechDeploymentLevel(state, tech.id);
       const adjustedEffectiveness = assertInRange(
         baseDeployment * phaseMultiplier * energyMultiplier,
@@ -99,12 +78,39 @@ export class ClimateDeploymentPhase implements SimulationPhase {
         }
       );
 
-      // Update deployment level in tech tree state
+      // Step 4: Update deployment level in tech tree state
       this.updateTechDeploymentLevel(state, tech.id, adjustedEffectiveness);
+
+      // Step 5: Advance phase if energy available
+      if (energyMultiplier > 0 && tech.deploymentTimeline) {
+        const phaseAdvanced = this.advancePhase(state, tech, energyMultiplier);
+
+        if (phaseAdvanced) {
+          // Log phase transition
+          addSimulationEvent(state, {
+            type: 'deployment',
+            severity: 'info',
+            agent: 'climate-deployment',
+            title: `🌍⚡ ${tech.name}: ${tech.deploymentPhase} phase`,
+            description: `Phase progress: ${tech.phaseProgress?.toFixed(1)}%, energy effectiveness: ${energyMultiplier.toFixed(2)}`,
+            effects: {
+              techId: tech.id,
+              phase: tech.deploymentPhase || 'unknown',
+              progress: tech.phaseProgress || 0,
+              energyMultiplier,
+            },
+          });
+          // Event is automatically added to state.eventLog, get the last one
+          const event = state.eventLog[state.eventLog.length - 1];
+          events.push(event);
+        }
+      }
     }
 
     return { events };
   }
+
+
 
 
   /**
@@ -114,7 +120,7 @@ export class ClimateDeploymentPhase implements SimulationPhase {
    *
    * @param state Game state
    * @param tech Technology definition
-   * @param energyMultiplier Energy effectiveness multiplier [0, 1] from EnergyBudgetPhase
+   * @param energyMultiplier Effectiveness multiplier [0, 1] from EnergyBudgetPhase
    * @returns True if phase advanced
    */
   private advancePhase(
@@ -131,8 +137,9 @@ export class ClimateDeploymentPhase implements SimulationPhase {
       tech.phaseProgress = 0;
     }
 
-    // Calculate progress increment based on energy effectiveness
-    // Progress = energyMultiplier / phase_duration * 100
+    // Calculate progress increment
+    // Progress = energy_multiplier / phase_duration
+    // (Energy multiplier already accounts for allocation vs requirement)
     const phaseDuration = tech.deploymentTimeline[tech.deploymentPhase] || 1;
     const progressIncrement = (energyMultiplier / phaseDuration) * 100; // Convert to percentage
 
@@ -259,34 +266,34 @@ export class ClimateDeploymentPhase implements SimulationPhase {
   }
 
   /**
-   * Get energy effectiveness multiplier from EnergyBudgetPhase
+   * Calculate energy constraint multiplier
    *
-   * ARCHITECTURE FIX H-2 (Dec 9, 2025): Remove legacy energy system, use EnergyBudgetPhase allocations only
+   * UPDATED (Dec 10, 2025): Energy budget system is now single source of truth
+   *
+   * Reads effectiveness multiplier from EnergyBudgetPhase (order 12.75).
+   * EnergyBudgetPhase calculates: (allocation / demand) ^ 0.8
    *
    * @param state Game state
    * @param tech Technology definition
    * @returns Multiplier [0, 1]
    */
   private getEnergyMultiplier(state: GameState, tech: TechDefinition): number {
-    // Check if energy budget system is available
-    if (!state.energyBudget?.enabled || !state.energyBudget.allocations) {
-      console.warn(`⚠️ EnergyBudgetPhase not enabled for tech ${tech.id}, assuming full energy availability`);
+    // Energy budget system is always enabled (enabled: true by default)
+    // Map tech ID to energy category (uses shared utility from energyCategories.ts)
+    const category = mapTechToEnergyCategory(tech.id);
+
+    if (!category) {
+      // Technology doesn't have energy requirements
       return 1.0;
     }
 
-    // Map tech ID to energy category
-    const category = this.mapTechToEnergyCategory(tech.id);
-    if (!category) {
-      // Tech doesn't have energy requirements
+    if (!state.energyBudget?.allocations[category]) {
+      // Category not tracked in energy budget yet (early deployment before demand calculated)
+      // Assume unconstrained until energy budget starts tracking this category
       return 1.0;
     }
 
     const allocation = state.energyBudget.allocations[category];
-    if (!allocation) {
-      console.warn(`⚠️ No energy allocation for category '${category}' (tech: ${tech.id})`);
-      return 0.5; // Default to 50% effectiveness when category missing
-    }
-
     return assertInRange(allocation.effectivenessMultiplier, 0, 1, {
       location: 'ClimateDeploymentPhase.getEnergyMultiplier',
       valueName: 'energyMultiplier',
@@ -295,31 +302,9 @@ export class ClimateDeploymentPhase implements SimulationPhase {
         techId: tech.id,
         category,
         effectivenessMultiplier: allocation.effectivenessMultiplier,
-        demandTWh: allocation.demandTWh,
-        allocatedTWh: allocation.allocatedTWh,
+        source: 'EnergyBudgetPhase'
       },
     });
-  }
-
-  /**
-   * Map technology ID to energy category (matches EnergyBudgetPhase mapping)
-   */
-  private mapTechToEnergyCategory(techId: string): string | null {
-    // Climate technologies
-    if (techId.includes('dac') || techId.includes('air-capture') || techId.includes('direct_air_capture')) return 'dac';
-    if (techId.includes('hydrogen')) return 'green-hydrogen';
-    if (techId.includes('sai') || techId.includes('geoengineering')) return 'sai';
-    if (techId.includes('mineralization') || techId.includes('weathering')) return 'carbon-mineralization';
-
-    // AI/compute
-    if (techId.includes('ai-') || techId.includes('datacenter')) return 'ai-datacenter';
-    if (techId.includes('compute') || techId.includes('simulation')) return 'advanced-compute';
-
-    // Infrastructure
-    if (techId.includes('industrial') || techId.includes('manufacturing')) return 'industrial-electrification';
-    if (techId.includes('transport') || techId.includes('ev') || techId.includes('clean_energy_package')) return 'transport-electrification';
-
-    return null; // Technology doesn't have energy requirements
   }
 
   /**
