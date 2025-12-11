@@ -132,16 +132,16 @@ export function ActionPanel({
       return { canExecute: false, reason: `Cooldown: ${remaining} months` };
     }
 
-    // TODO: Check resources once costs field is added to AdvocacyAction type
-    // if ((action.costs.reputation ?? 0) > resources.reputation) {
-    //   return { canExecute: false, reason: `Need ${action.costs.reputation} reputation` };
-    // }
-    // if ((action.costs.politicalCapital ?? 0) > resources.politicalCapital) {
-    //   return { canExecute: false, reason: `Need ${action.costs.politicalCapital} political capital` };
-    // }
-    // if ((action.costs.funding ?? 0) > resources.funding) {
-    //   return { canExecute: false, reason: `Need ${action.costs.funding} funding` };
-    // }
+    // Check resources
+    if ((action.costs.reputation ?? 0) > resources.reputation) {
+      return { canExecute: false, reason: `Need ${action.costs.reputation} reputation` };
+    }
+    if ((action.costs.politicalCapital ?? 0) > resources.politicalCapital) {
+      return { canExecute: false, reason: `Need ${action.costs.politicalCapital} political capital` };
+    }
+    if ((action.costs.funding ?? 0) > resources.funding) {
+      return { canExecute: false, reason: `Need ${action.costs.funding} funding` };
+    }
 
     // Check influence bounds
     const domainInfluence = influenceByDomain[action.domain] || 0;
@@ -305,8 +305,7 @@ export function ActionPanel({
                 <div className={styles.actionEffect}>
                   {formatEffectRange(action.baseEffect)} effect over {action.duration} months
                 </div>
-                {/* TODO: Add costs display once costs field is added to AdvocacyAction type */}
-                {/* <div className={styles.actionCosts}>
+                <div className={styles.actionCosts}>
                   {action.costs.reputation && action.costs.reputation > 0 && (
                     <span className={styles.cost}>R:{action.costs.reputation}</span>
                   )}
@@ -316,7 +315,7 @@ export function ActionPanel({
                   {action.costs.funding && action.costs.funding > 0 && (
                     <span className={styles.cost}>${action.costs.funding}B</span>
                   )}
-                </div> */}
+                </div>
               </div>
 
               {/* Expanded Details */}
@@ -327,8 +326,7 @@ export function ActionPanel({
                     <span>Cooldown: {action.cooldown} months</span>
                     <span>Max cumulative: {(action.maxCumulativeEffect * 100).toFixed(0)}%</span>
                   </div>
-                  {/* TODO: Add research sources display once field is added to AdvocacyAction type */}
-                  {/* {action.researchSources.length > 0 && (
+                  {action.researchSources.length > 0 && (
                     <div className={styles.actionSources}>
                       <span className={styles.sourcesLabel}>Sources:</span>
                       <ul className={styles.sourcesList}>
@@ -337,7 +335,7 @@ export function ActionPanel({
                         ))}
                       </ul>
                     </div>
-                  )} */}
+                  )}
                 </div>
               )}
 
