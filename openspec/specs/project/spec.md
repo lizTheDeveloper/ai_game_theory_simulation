@@ -136,99 +136,49 @@ The project SHALL preserve implementation histories and research context.
 
 ## Current Status
 
-**Session:** 56 (December 9, 2025 01:00 UTC)
-**Mode:** Maintenance (18 consecutive maintenance sessions: 34-56)
-**Research Quality:** A- (62.8% sources from 2024-2025, per UPDATE_QUEUE.md scan 12/9/2025)
-**Architecture Health:** A (0 CRITICAL, 0 HIGH blockers, determinism restored)
-**Test Coverage:** 82.29% (462+ tests passing)
-**System State:** Production-ready, all quality gates GREEN
+**Session:** 61 (December 9, 2025)
+**Mode:** Maintenance (20+ consecutive maintenance sessions)
+**Research Quality:** B+ (62.9% sources from 2024-2025, 178 files need updates)
+**Architecture Health:** B+ (0 CRITICAL, 2 HIGH integration issues)
+**Test Coverage:** 82.47% (462+ tests passing)
+**System State:** Production-ready, integration gaps identified
 
 **Token Conservation:** DISABLED (Dec 4, 2025 per PM request)
-- Normal operation restored: full features, proper documentation
-- Autonomous workers: Running hourly (restored from 4h intervals)
+- Normal operation restored
+- Full productivity mode
 
 ---
 
 ## Active Work
 
-### COMPLETED CRITICAL Priority
-- CRITICAL-1: Game UI State Integration (frontend) - COMPLETE Dec 7, 2025
-  - Archival: `/plans/completed/CRITICAL_game_ui_state_integration_IMPLEMENTED_20251207.md`
-
 ### CRITICAL Priority
-None - All CRITICAL work complete
-None (all CRITICAL work complete)
->>>>>>> origin/auto/worker-20251208_060001
-
-**Recent CRITICAL Fixes:**
-- Threshold lowering regression (Dec 10, 2025 - commit 4259d54a)
-  - Context: Fixes reverted in merge, AMOC→Amazon interaction removal re-applied
-  - Verification: Research audit detected regression, simulation-maintainer executed fix
-  - Status: COMPLETE
-
-### COMPLETED HIGH Priority (Session 64-65)
-
-**Quality Gate Achievements:**
-- Architecture Integration Review (Dec 10) - Grade A- (0 CRITICAL/HIGH issues)
-- Research Source Validation Audit (Dec 10) - Grade B- (64.9% sources <3yr)
-
-**Completed Items:**
-- HIGH-7: Conditional climate stability floor (research debate finding) - COMPLETE Dec 7, 2025
-- H-2: Duplicate energy calculation removal (ClimateDeploymentPhase cleanup) - COMPLETE Dec 10, 2025 (commits ad27cd41, 1ca93fe6)
-  - VERIFIED: Architecture review confirmed removal of 7-step duplicate logic
-  - Single source of truth: EnergyBudgetPhase (order 12.75)
-- Sleeper agent rate justification (7.5% → Hubinger et al. 2024) - COMPLETE Dec 10, 2025 (commit 248bad46)
-- Sandbagging level citation (0.4-0.6 → van der Weij/Meinke 2024) - COMPLETE Dec 10, 2025 (commit 248bad46)
-- Detection risk calibration (50% baseline → time-dependent model) - COMPLETE Dec 10, 2025 (commit fd7694a2)
-  - VERIFIED: Time-dependent model implemented (25% early → 80% late, sleeperEconomy.ts:339-355)
-- H-1: Energy budget system underutilization - COMPLETE Dec 10, 2025 (Phase 1)
-  - VERIFIED: ClimateDeploymentPhase consumes effectivenessMultiplier from state.energyBudget.allocations
-  - Quality Gate 2: Grade B+ (0 CRITICAL/HIGH issues)
-  - Files: aiInfrastructureResources.ts, powerGeneration.ts, EnergyBudgetPhase.ts
-  - Tests: energyBudgetIntegration.test.ts (6 tests passing)
-- **Issue #747:** AI capability doubling time parameter mismatch - COMPLETE Dec 10, 2025 (commit 451a127f)
-  - Fixed: 8mo → 5.9mo (Epoch AI research-verified)
-  - Location: aiCapabilities.ts
-- **Issue #749:** EnergyBudgetPhase order documentation mismatch - COMPLETE Dec 10, 2025 (commit 0f6c0ab6)
-  - Fixed: Comment now matches code (12.75)
-- HIGH-1: Distribution library consolidation (three redundant files) - COMPLETE Dec 7, 2025
-- HIGH-2: `_sampledTransitionTime` typing - FALSE POSITIVE (already typed)
->>>>>>> origin/auto/worker-20251207_230001
-- HIGH-1: Threshold lowering for tipping cascades (AMOC-Amazon sign error fix) - COMPLETE Dec 8, 2025
->>>>>>> origin/auto/worker-20251208_040001
-  - History: `docs/implementation-history/high7_conditional_climate_stability_floor_20251207.md`
->>>>>>> origin/auto/worker-20251208_060001
+None (system stable)
 
 ### HIGH Priority
-None (all HIGH items verified complete)
-None (system in maintenance mode)
+- **HIGH-2**: Dashboard Missing Radiation Metrics (from architecture review Dec 9)
+  - **Impact:** M-6 radiation features invisible to dashboard
+  - **Effort:** Small (add radiationMetrics to StateDelta interface)
+  - **Status:** NEW (identified in architecture review)
+
+- **HIGH-1**: Radiation Integration with Regional Systems (from architecture review Dec 9)
+  - **Impact:** Medical care + cohort distribution use simplified models
+  - **Effort:** Medium (connect to healthcare system state, regional population)
+  - **Status:** NEW (identified in architecture review)
 
 **Recently Completed:**
 - HIGH-7: Conditional Climate Stability Floor (Session 56)
 >>>>>>> origin/auto/worker-20251207_170001
 
 ### MEDIUM Priority
->>>>>>> origin/auto/worker-20251207_150002
-- M-6: Enhanced radiation modeling (acute vs chronic, tissue sensitivity)
->>>>>>> origin/auto/worker-20251207_140001
-### COMPLETED MEDIUM Priority
-- M-5: Threshold uncertainty modeling (distribution sampling library) - COMPLETE Dec 7, 2025
-- M-6: Enhanced radiation modeling (acute vs chronic, tissue sensitivity) - COMPLETE Dec 8, 2025
+- **MEDIUM-3**: Dual Population Fields (from architecture review Dec 9)
+  - **Impact:** Legacy `globalMetrics.population` causes confusion, NaN risk
+  - **Effort:** Small (sync from `humanPopulationSystem.population` or remove)
+  - **Status:** NEW (footgun documented in Nov 2025 god mode NaN bug)
 
-### MEDIUM Priority
-(Empty - all items complete or deferred)
->>>>>>> origin/auto/worker-20251208_030001
-### COMPLETED MEDIUM Priority
-- M-5: Threshold uncertainty modeling (distribution sampling library) - COMPLETE Dec 7, 2025
-  - History: `docs/implementation-history/m5_architecture_review_fixes_20251207.md`
-- M-6: Enhanced radiation modeling (acute vs chronic, tissue sensitivity) - COMPLETE Dec 8, 2025
-  - History: `docs/implementation-history/m6_enhanced_radiation_modeling_20251208.md`
-- M-7: Fix population assertions for near-extinction scenarios - COMPLETE Dec 7, 2025
-  - Documented in simulation spec (lines 226-236)
-
-### MEDIUM Priority
-(None active)
->>>>>>> origin/auto/worker-20251208_060001
+- **MEDIUM-1**: Silent Fallback Migration (from architecture review Dec 9)
+  - **Impact:** 30+ `?? defaultValue` patterns remain in simulation code
+  - **Effort:** Large (2-3 day migration effort)
+  - **Status:** DEFERRED (partial migration worse than none, per CLAUDE.md)
 
 ### LOW Priority
 - L-2: Enhanced biodiversity modeling (food web collapse)
