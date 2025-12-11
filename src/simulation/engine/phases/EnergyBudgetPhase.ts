@@ -9,27 +9,15 @@
  * **Validation:** reviews/research_validation_energy_budget_20251209.md (QG1 PASSED)
  *
  * **EXECUTION ORDER:** 12.4 (Before ClimateDeploymentPhase 12.8, after tech-tree 12.5)
- * **DEPENDENCIES:**
- * - tech-tree (12.5) - Requires deployed technologies list
- * - powerGenerationSystem (TIER 4.4) - Reads AI datacenter energy usage
- *
- * **CROSS-SYSTEM INTEGRATION (M-1 fix, Dec 10, 2025):**
- * - Reads from state.powerGenerationSystem.energyConstraintActive
- * - Subtracts AI datacenter usage from available capacity
- * - Prevents double-counting of energy allocations across systems
- * - PowerGenerationSystem tracks AI/crypto datacenter usage (TIER 4.4)
- * - EnergyBudgetPhase allocates remaining capacity to climate/industrial techs
- *
+ * **DEPENDENCIES:** tech-tree (12.5) - Requires deployed technologies list
  * **SIDE EFFECTS:**
  * - Updates state.energyBudget.allocations for each tech category
  * - Updates state.energyBudget.conflicts (competition tracking)
  * - Sets effectivenessMultiplier for downstream phases
  *
- * **5-Step Phase Logic:**
- * 0. Grow global capacity annually
- * 0.5. Read AI datacenter usage from PowerGenerationSystem (M-1 integration)
+ * **4-Step Phase Logic:**
  * 1. Calculate energy demand from active technologies
- * 2. Check if total demand exceeds available capacity (after AI subtraction)
+ * 2. Check if total demand exceeds global capacity
  * 3. Allocate energy by priority tier (essential → high → climate → elective)
  * 4. Calculate effectiveness multiplier: (allocated / demand)^exponent
  *
@@ -37,12 +25,12 @@
  * - Tier 1 (Essential): 40-50% capacity - Healthcare, food systems, water
  * - Tier 2 (High Priority): 30-40% capacity - Industry, transport, education
  * - Tier 3 (Climate Tech): 10-20% surplus - DAC, hydrogen, carbon removal
- * - Tier 4 (Elective): 5-10% surplus - Advanced compute (AI tracked separately)
+ * - Tier 4 (Elective): 5-10% surplus - AI expansion, crypto, luxury compute
  *
  * **Key Parameters (corrected from QG1 review):**
  * - Global capacity: 29,000 TWh/year (2024 baseline)
  * - Clean electricity: 11,500 TWh/year (40% clean share)
- * - AI datacenter baseline: 415-460 TWh (tracked in PowerGenerationSystem)
+ * - AI datacenter baseline: 415-460 TWh (NOT 730 TWh)
  * - DAC range: 1,200-2,500 kWh/tCO2 (lower bound raised from 1,000)
  * - Effectiveness exponent: 1.2 (conservative, tech-specific 1.0-1.3)
  */
@@ -50,7 +38,6 @@
 import { GameState, SimulationPhase, PhaseResult, RNGFunction } from '@/types/game';
 import { assertFinite, assertStateProperty, assertInRange } from '@/simulation/utils/assertions';
 import { getTechById } from '@/simulation/techTree/comprehensiveTechTree';
-import { mapTechToEnergyCategory } from '@/simulation/utils/energyCategories';
 
 // Energy requirements per technology category (TWh/year at full deployment)
 // Research: research/energy_budget_constraints_20251209.md sections 2.1-2.3
@@ -137,18 +124,10 @@ export class EnergyBudgetPhase implements SimulationPhase {
     // Step 0: Grow global capacity annually
     this.updateGlobalCapacity(state);
 
-    // Step 0.5: Read from PowerGenerationSystem for global context
-    // (Integration with TIER 4.4 energy constraints - M-1 fix)
-    const powerSystem = state.powerGenerationSystem;
-    const aiConstraintActive = powerSystem?.energyConstraintActive ?? false;
-    const aiConstraintSeverity = powerSystem?.constraintSeverity ?? 0;
-
     // Step 1: Calculate energy demand from active technologies
     const demands = this.calculateEnergyDemands(state);
 
     // Step 2: Check if demand exceeds capacity
-    // NOTE: AI datacenter demand is tracked separately in PowerGenerationSystem
-    // We allocate the remaining capacity to other technologies here
     const totalDemand = Object.values(demands).reduce((sum, d) => sum + d.demandTWh, 0);
     const totalCapacity = assertFinite(
       state.energyBudget.globalCapacity.totalTWh,
@@ -159,31 +138,10 @@ export class EnergyBudgetPhase implements SimulationPhase {
     }
     );
 
-    // Reduce available capacity by AI datacenter usage (cross-system integration)
-    let availableCapacity = totalCapacity;
-    if (powerSystem) {
-      const aiDatacenterUsage = powerSystem.dataCenterPower * 12; // Convert monthly to annual
-      availableCapacity = assertFinite(
-        totalCapacity - aiDatacenterUsage,
-        {
-          location: 'EnergyBudgetPhase.execute',
-          valueName: 'availableCapacity',
-          month: state.currentMonth,
-          additionalInfo: { totalCapacity, aiDatacenterUsage }
-        }
-      );
-
-      // Log warning if AI constraints are limiting other tech deployment
-      if (aiConstraintActive && state.currentMonth % 12 === 0) {
-        console.log(`⚡ AI energy constraints active (severity: ${(aiConstraintSeverity * 100).toFixed(0)}%)`);
-        console.log(`  Available capacity for other techs: ${availableCapacity.toFixed(0)} TWh/year`);
-      }
-    }
-
-    const surplus = availableCapacity - totalDemand;
+    const surplus = totalCapacity - totalDemand;
 
     // Step 3: Allocate energy by priority tier
-    const allocations = this.allocateEnergyByPriority(state, demands, availableCapacity);
+    const allocations = this.allocateEnergyByPriority(state, demands, totalCapacity);
 
     // Step 4: Calculate effectiveness multipliers
     for (const [techCategory, allocation] of Object.entries(allocations)) {
@@ -221,23 +179,38 @@ export class EnergyBudgetPhase implements SimulationPhase {
         .map(([tech, _]) => tech)
     };
 
-    // PHASE 1: Enhanced validation - warn when demand exceeds capacity by >50%
-    if (totalDemand > totalCapacity * 1.5) {
-      const overshoot = ((totalDemand / totalCapacity - 1) * 100).toFixed(0);
-      console.log(`🚨 ENERGY CRISIS: Demand ${totalDemand.toFixed(0)} TWh exceeds capacity ${totalCapacity.toFixed(0)} TWh by ${overshoot}%`);
+    // H-1: Enhanced logging for TIER 4 conflicts (AI + crypto competition)
+    if (surplus < 0) {
+      console.log(`\n⚠️ Energy deficit: ${Math.abs(surplus).toFixed(0)} TWh`);
+      console.log(`   Total demand: ${totalDemand.toFixed(0)} TWh`);
+      console.log(`   Total capacity: ${totalCapacity.toFixed(0)} TWh`);
 
-      // Log top 5 consumers
-      const topConsumers = Object.entries(demands)
-        .sort((a, b) => b[1].demandTWh - a[1].demandTWh)
-        .slice(0, 5)
-        .map(([cat, d]) => `${cat}: ${d.demandTWh.toFixed(0)} TWh`)
-        .join(', ');
+      // Show breakdown of competing techs
+      const competingTechs = state.energyBudget.conflicts.competingTechs;
+      if (competingTechs.length > 0) {
+        console.log(`   Competing categories:`);
+        for (const tech of competingTechs) {
+          const alloc = allocations[tech];
+          if (alloc) {
+            const shortfall = alloc.demandTWh - alloc.allocatedTWh;
+            console.log(`     - ${tech}: ${alloc.demandTWh.toFixed(0)} TWh requested, ${alloc.allocatedTWh.toFixed(0)} TWh allocated (shortfall: ${shortfall.toFixed(0)} TWh)`);
+          }
+        }
+      }
+    } else if (state.currentMonth % 12 === 0) {
+      // Annual summary when NOT constrained
+      console.log(`\n📈 Energy budget: ${surplus.toFixed(0)} TWh surplus (${totalDemand.toFixed(0)} / ${totalCapacity.toFixed(0)} TWh used)`);
 
-      console.log(`  Top consumers: ${topConsumers}`);
-    } else if (surplus < 0) {
-      // Normal deficit warning (< 50% overshoot)
-      console.log(`⚠️ Energy deficit: ${Math.abs(surplus).toFixed(0)} TWh`);
-      console.log(`  Competing techs: ${state.energyBudget.conflicts.competingTechs.join(', ')}`);
+      // Show TIER 4 breakdown (AI + crypto)
+      if (allocations['ai-datacenter'] || allocations['crypto-mining']) {
+        console.log(`   TIER 4 (Elective) breakdown:`);
+        if (allocations['ai-datacenter']) {
+          console.log(`     - AI datacenters: ${allocations['ai-datacenter'].demandTWh.toFixed(0)} TWh (${(allocations['ai-datacenter'].effectivenessMultiplier * 100).toFixed(0)}% effective)`);
+        }
+        if (allocations['crypto-mining']) {
+          console.log(`     - Crypto mining: ${allocations['crypto-mining'].demandTWh.toFixed(0)} TWh (${(allocations['crypto-mining'].effectivenessMultiplier * 100).toFixed(0)}% effective)`);
+        }
+      }
     }
 
     return { events: [] };
@@ -288,7 +261,7 @@ export class EnergyBudgetPhase implements SimulationPhase {
 
   /**
    * Calculate energy demand from active technologies
-   * PHASE 1 (Dec 10, 2025): Added AI infrastructure demand tracking
+   * H-1 (Dec 10, 2025): Added AI datacenter and crypto demand calculation
    */
   private calculateEnergyDemands(state: GameState): Record<string, {
     demandTWh: number;
@@ -302,35 +275,45 @@ export class EnergyBudgetPhase implements SimulationPhase {
       priorityTier: 1
     };
 
-    // PHASE 1: AI infrastructure energy demand (from aiInfrastructureResources.ts)
-    // This is NOT a tech tree technology - it's tracked separately based on AI capability
-    const totalCapability = state.aiAgents.length > 0
-      ? state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0)
-      : 0;
+    // H-1: Calculate AI datacenter demand from powerGenerationSystem
+    // AI inference + training + crypto are tracked in powerGeneration.ts
+    // Convert from TWh/month to TWh/year for budget comparison
+    if (state.powerGenerationSystem) {
+      const power = state.powerGenerationSystem;
 
-    if (totalCapability > 0) {
-      // Energy demand calculation (matching aiInfrastructureResources.ts)
-      // ENERGY_BASE_CONSUMPTION = 500 MW, ENERGY_PER_CAPABILITY_POINT = 200 MW
-      const ENERGY_BASE_CONSUMPTION = 500;
-      const ENERGY_PER_CAPABILITY_POINT = 200;
-      const energyDemandMW = ENERGY_BASE_CONSUMPTION + (totalCapability * ENERGY_PER_CAPABILITY_POINT);
-
-      // Convert MW to TWh/year
-      // 1 MW continuous for 1 year = 8,760 MWh = 0.00876 TWh
-      const energyDemandTWh = assertFinite(
-        energyDemandMW * 0.00876,
+      // AI datacenter demand (inference + training)
+      const aiInferenceTWhYear = power.aiInferencePower * 12; // Convert month to year
+      const aiTrainingTWhYear = power.aiTrainingPower * 12;
+      const aiTotalDemand = assertFinite(
+        aiInferenceTWhYear + aiTrainingTWhYear,
         {
-          location: 'EnergyBudgetPhase.calculateEnergyDemands (AI datacenter)',
-          valueName: 'energyDemandTWh',
+          location: 'EnergyBudgetPhase.calculateEnergyDemands',
+          valueName: 'aiTotalDemand',
           month: state.currentMonth,
-          additionalInfo: { totalCapability, energyDemandMW }
+          additionalInfo: { aiInferenceTWhYear, aiTrainingTWhYear }
         }
       );
 
-      demands['ai-datacenter'] = {
-        demandTWh: energyDemandTWh,
-        priorityTier: 4  // TIER 4: Elective
-      };
+      // Only add demand if non-negligible (> 1 TWh/year)
+      if (aiTotalDemand > 1) {
+        demands['ai-datacenter'] = {
+          demandTWh: aiTotalDemand,
+          priorityTier: 4 // TIER 4 (Elective)
+        };
+      }
+
+      // Crypto mining demand
+      const cryptoTWhYear = power.cryptoPower * 12; // Convert month to year
+      if (cryptoTWhYear > 1) {
+        demands['crypto-mining'] = {
+          demandTWh: assertFinite(cryptoTWhYear, {
+            location: 'EnergyBudgetPhase.calculateEnergyDemands',
+            valueName: 'cryptoTWhYear',
+            month: state.currentMonth
+          }),
+          priorityTier: 4 // TIER 4 (Elective) - same priority as AI
+        };
+      }
     }
 
     // Check deployed technologies from tech tree state
@@ -340,7 +323,7 @@ export class EnergyBudgetPhase implements SimulationPhase {
       if (deploymentLevel === 0) continue;
 
       // Map tech ID to energy category
-      const energyCategory = mapTechToEnergyCategory(techId);
+      const energyCategory = this.mapTechToEnergyCategory(techId);
       if (!energyCategory) continue;
 
       const requirement = TECH_ENERGY_REQUIREMENTS[energyCategory];
@@ -423,6 +406,27 @@ export class EnergyBudgetPhase implements SimulationPhase {
     }
 
     return allocations;
+  }
+
+  /**
+   * Map technology ID to energy category
+   */
+  private mapTechToEnergyCategory(techId: string): string | null {
+    // Climate technologies
+    if (techId.includes('dac') || techId.includes('air-capture')) return 'dac';
+    if (techId.includes('hydrogen')) return 'green-hydrogen';
+    if (techId.includes('sai') || techId.includes('geoengineering')) return 'sai';
+    if (techId.includes('mineralization') || techId.includes('weathering')) return 'carbon-mineralization';
+
+    // AI/compute
+    if (techId.includes('ai-') || techId.includes('datacenter')) return 'ai-datacenter';
+    if (techId.includes('compute') || techId.includes('simulation')) return 'advanced-compute';
+
+    // Infrastructure
+    if (techId.includes('industrial') || techId.includes('manufacturing')) return 'industrial-electrification';
+    if (techId.includes('transport') || techId.includes('ev')) return 'transport-electrification';
+
+    return null; // Technology doesn't have energy requirements
   }
 }
 

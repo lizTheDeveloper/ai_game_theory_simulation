@@ -1,341 +1,413 @@
-# HANDOFF: Roy - Energy Budget System Integration (H-1)
+# HANDOFF: Roy (simulation-maintainer) - H-1 Energy Budget Integration
 
-**Date:** December 10, 2025
-**Coordinator:** orchestrator-1
-**Priority:** HIGH (architecture integration)
-**Complexity:** MEDIUM
-**Effort Estimate:** 2-3 days
+**Agent:** simulation-maintainer (Roy)
+**Feature:** H-1 Energy Budget System Integration
+**Priority:** HIGH (Architecture Integration)
+**Timeline:** 2-3 days
+**Created:** 2025-12-10
 
----
+## Context
 
-## Executive Summary
+EnergyBudgetPhase exists and works correctly with ClimateDeploymentPhase (Dec 9, 2025 implementation). However, other energy consumers operate independently, creating parallel constraint systems. Your task: Migrate all energy consumers to use the unified energy budget.
 
-**Problem:** EnergyBudgetPhase allocations only consumed by ClimateDeploymentPhase. All other energy consumers operate independently, creating parallel/inconsistent energy modeling. No unified priority enforcement means AI datacenters can scale unlimited while climate tech starves.
+**Research:** Already validated (QG1 PASSED Dec 9, 2025)
+- `research/energy_budget_constraints_20251209.md` (Grade B+)
+- `reviews/research_validation_energy_budget_20251209.md`
 
-**Your Mission:** Migrate Priority 1 energy consumers (AI infrastructure, power generation) to unified energy budget system.
+**Working Pattern:** ClimateDeploymentPhase integration (reference implementation)
 
-**Success Criteria:**
-- AI datacenter energy reads from `energyBudget.allocations['ai-datacenter']`
-- Power generation unified with energy budget
-- God mode doesn't cause energy-driven collapse
-- Monte Carlo validated (N≥10, deterministic)
+## Your Mission
 
----
+Integrate 3 major energy consumers with EnergyBudgetPhase:
 
-## Context: Research Already Validated
+1. **AI Infrastructure Resources** (4-6 hours)
+   - File: `src/simulation/aiInfrastructureResources.ts`
+   - Current: 500 MW base + 200 MW/capability (independent)
+   - Target: Use TIER 4 'elective' allocation
+   - Pattern: Read effectivenessMultiplier, apply to growth
 
-**Research File:** `research/energy_budget_constraints_20251209.md` (Grade B+)
-**QG1 Validation:** `reviews/research_validation_energy_budget_20251209.md` (CONDITIONAL PASS)
+2. **Power Generation System** (6-8 hours)
+   - File: `src/simulation/powerGeneration.ts`
+   - Current: AI inference/training/crypto separate logic
+   - Target: Constrain by TIER 4 allocation
+   - Pattern: Apply multiplier to AI+crypto total
 
-**Key Parameters (research-backed, no need to re-validate):**
-- Global electricity: 29,000 TWh/year (2024)
-- AI datacenter baseline: 415-460 TWh (corrected from 730 TWh)
-- Priority tiers: Essential (1) → High (2) → Climate (3) → Elective (4)
-- AI/compute = TIER 4 (elective, lowest priority)
-- Effectiveness multiplier: (allocated / demand)^1.2
+3. **EnergyBudgetPhase Enhancements** (2-3 hours)
+   - File: `src/simulation/engine/phases/EnergyBudgetPhase.ts`
+   - Target: Sub-category tracking (AI vs crypto vs UBI)
+   - Pattern: Improve conflict logging, proportional allocation
 
-**Reference Implementation:** ClimateDeploymentPhase (order 12.8) already works correctly.
+## Integration Pattern (from ClimateDeploymentPhase)
 
----
+```typescript
+// Step 1: Import assertions
+import { assertStateProperty } from '@/simulation/utils/assertions';
 
-## Implementation Files
+// Step 2: Read energy budget (in phase execute function)
+const energyBudget = assertStateProperty(
+  state,
+  'energyBudget',
+  { location: 'YourPhase', month: state.currentMonth }
+);
 
-**Complete Specification:**
-- Implementation plan: `/openspec/changes/energy-budget-integration/proposal.md`
-- Task breakdown: `/openspec/changes/energy-budget-integration/tasks.md`
+// Step 3: Get allocation for category
+const allocation = energyBudget.allocations['elective']; // or 'climate', 'high', 'essential'
+const effectivenessMultiplier = allocation?.effectivenessMultiplier ?? 1.0;
 
-**Key Files to Modify:**
-1. `src/simulation/aiInfrastructureResources.ts` - AI datacenter energy
-2. `src/simulation/powerGeneration.ts` - Power gen unification
-3. `src/simulation/engine/phases/EnergyBudgetPhase.ts` - Enhancements
+// Step 4: Apply to nominal capacity
+const nominalCapacity = calculateNominalCapacity(state);
+const effectiveCapacity = nominalCapacity * effectivenessMultiplier;
 
-**Reference File (working pattern):**
-- `src/simulation/engine/phases/ClimateDeploymentPhase.ts` - Follow this pattern
+// Step 5: Log if constrained
+if (effectivenessMultiplier < 0.9) {
+  console.log(`📊⚡ [System] constrained by electricity: ${(effectivenessMultiplier * 100).toFixed(1)}% effective`);
+}
+```
 
----
-
-## Phase 1: Priority 1 Consumers (Your Focus)
-
-### Task 1: AI Infrastructure Energy Integration
+## Task 1: AI Infrastructure Resources (4-6 hours)
 
 **File:** `src/simulation/aiInfrastructureResources.ts`
-**Estimate:** 4-6 hours
 
-**Pattern to follow:**
+**Current Code (lines 70-75):**
 ```typescript
-// Step 1: Calculate unconstrained demand
-const baseDemandMW = ENERGY_BASE_CONSUMPTION +
-                    ENERGY_PER_CAPABILITY_POINT * aggregateCapability;
+const ENERGY_BASE_CONSUMPTION = 500; // MW
+const ENERGY_PER_CAPABILITY_POINT = 200; // MW
+```
 
-// Step 2: Query energy budget
-const energyMultiplier = getEnergyMultiplier(state, 'ai-datacenter');
+**Required Changes:**
 
-// Step 3: Apply constraint
-const constrainedEnergyMW = baseDemandMW * energyMultiplier;
+1. **Modify `updateAIInfrastructureResources()`:**
+   - Add energy budget read (use TIER 4 'elective')
+   - Calculate nominal energy demand (existing logic)
+   - Apply effectivenessMultiplier to actual consumption
+   - Log constraint impact if multiplier < 0.9
 
-// Step 4: Scale water consumption accordingly
-const waterConsumption = calculateWater(constrainedEnergyMW);
+2. **Add to GameState interface** (if needed):
+   - Consider adding `constrainedEnergyMW` field for debugging
+   - Check `src/types/game.ts` AIInfrastructureResources interface
 
-function getEnergyMultiplier(state: GameState, category: string): number {
-  if (!state.energyBudget?.enabled) return 1.0; // Feature flag
+3. **Unit tests:**
+   - Create `src/simulation/__tests__/aiInfrastructureResources.test.ts`
+   - Test: Unconstrained (multiplier 1.0) → existing behavior
+   - Test: Moderate constraint (0.7) → 30% reduction
+   - Test: Severe constraint (0.3) → 70% reduction
 
-  const allocation = state.energyBudget.allocations[category];
-  if (!allocation) return 1.0;
-
-  return assertFinite(
-    allocation.effectivenessMultiplier,
-    {
-      location: 'getEnergyMultiplier',
-      valueName: 'effectivenessMultiplier',
-      month: state.currentMonth,
-      additionalInfo: { category }
-    }
+**Example Implementation:**
+```typescript
+export function updateAIInfrastructureResources(state: GameState): void {
+  // Read energy budget
+  const energyBudget = assertStateProperty(
+    state,
+    'energyBudget',
+    { location: 'updateAIInfrastructureResources', month: state.currentMonth }
   );
+
+  const electiveAllocation = energyBudget.allocations['elective'];
+  const energyMultiplier = electiveAllocation?.effectivenessMultiplier ?? 1.0;
+
+  // Calculate nominal energy demand
+  const capability = state.aiSystem.capabilities.aggregate;
+  const nominalEnergyMW = ENERGY_BASE_CONSUMPTION + (capability * ENERGY_PER_CAPABILITY_POINT);
+
+  // Apply constraint
+  const effectiveEnergyMW = nominalEnergyMW * energyMultiplier;
+
+  // Update state
+  state.aiInfrastructureResources.energyConsumptionMW = effectiveEnergyMW;
+
+  // Log if constrained
+  if (energyMultiplier < 0.9) {
+    console.log(`📊⚡ AI datacenter growth constrained by electricity: ${(energyMultiplier * 100).toFixed(1)}% effective`);
+    console.log(`  Nominal: ${nominalEnergyMW.toFixed(0)} MW, Effective: ${effectiveEnergyMW.toFixed(0)} MW`);
+  }
 }
 ```
 
-**Roy's Checklist:**
-- [ ] Use `assertFinite()` for energy calculations (NO SILENT FALLBACKS)
-- [ ] Feature flag check (`energyBudget?.enabled`)
-- [ ] Keep `demand` field for tracking, add `allocated` field
-- [ ] Water consumption scales with allocated (not demand)
-- [ ] Unit test: multiplier 0.5 → consumption halved
-- [ ] No NaN/Infinity
+**Acceptance Criteria:**
+- ✅ Type check passes
+- ✅ Unit tests cover all constraint scenarios
+- ✅ Logging appears in constrained scenarios
+- ✅ No NaN/Infinity (assertions used correctly)
 
 ---
 
-### Task 2: Power Generation Unification
+## Task 2: Power Generation System (6-8 hours)
 
 **File:** `src/simulation/powerGeneration.ts`
-**Estimate:** 6-8 hours
 
-**Current Problem:** Separate tracking (`dataCenterPower`, `aiInferencePower`) duplicates energy budget.
+**Current Structure:**
+- `updateAIEfficiency()` - Line 40
+- `updateQueryVolume()` - Line 43
+- `updateAIInferencePower()` - Line 46
+- `updateCryptoPower()` - Line 49
+- `updateAITrainingPower()` - Line 55
 
-**Solution:** Read from energy budget, convert TWh/year to MW:
-```typescript
-if (state.energyBudget?.enabled) {
-  const aiDatacenterAlloc = state.energyBudget.allocations['ai-datacenter'];
+**Required Changes:**
 
-  // TWh/year to MW conversion: 1 TWh/year = 114.16 MW
-  const twhToMW = 114.16;
+1. **Modify `updatePowerGeneration()`:**
+   - Read TIER 4 'elective' allocation (like Task 1)
+   - Pass effectivenessMultiplier to sub-functions
 
-  power.aiInferencePower = aiDatacenterAlloc.allocatedTWh * twhToMW;
-  power.dataCenterPower = power.aiInferencePower +
-                          power.aiTrainingPower +
-                          power.cryptoPower +
-                          power.traditionalCloudPower;
-} else {
-  // Legacy calculation (backwards compatibility)
-}
-```
+2. **Constrain AI inference power:**
+   ```typescript
+   function updateAIInferencePower(power: PowerGenerationSystem, effectivenessMultiplier: number) {
+     const nominalPower = power.queriesPerMonth / power.inferenceEfficiency;
+     power.aiInferencePower = nominalPower * effectivenessMultiplier;
+   }
+   ```
 
-**Roy's Checklist:**
-- [ ] TWh/year → MW conversion correct
-- [ ] Feature flag preserves legacy calculation
-- [ ] Remove duplicate tracking when enabled
-- [ ] Keep growth projections (feedback to capacity)
-- [ ] Unit test: conversion math correct
+3. **Constrain crypto mining:**
+   - Apply same multiplier as AI
+   - OR create sub-allocation (AI 60%, crypto 40% of TIER 4)
+
+4. **Training spikes:**
+   - Respect available capacity
+   - If capacity exhausted, delay training or reduce scale
+   - Add to training event queue with energy check
+
+5. **Logging:**
+   ```typescript
+   if (effectivenessMultiplier < 0.9) {
+     console.log(`📊⚡ AI+crypto power constrained by grid capacity: ${(effectivenessMultiplier * 100).toFixed(1)}%`);
+     console.log(`  AI inference: ${power.aiInferencePower.toFixed(0)} MW`);
+     console.log(`  Crypto: ${power.cryptoPower.toFixed(0)} MW`);
+     console.log(`  Training: ${power.aiTrainingPower.toFixed(0)} MW`);
+   }
+   ```
+
+**Design Decision:**
+- Should training spikes be separately allocated?
+  - **Option A:** Training competes with inference for TIER 4 (simpler)
+  - **Option B:** Training gets TIER 2 (research priority)
+  - **Recommendation:** Option A (start simple, iterate if needed)
+
+**Acceptance Criteria:**
+- ✅ Type check passes
+- ✅ Integration tests with EnergyBudgetPhase
+- ✅ AI + crypto total ≤ allocated TIER 4 capacity
+- ✅ Training spikes respect constraints
 
 ---
 
-### Task 3: EnergyBudgetPhase Enhancements
+## Task 3: EnergyBudgetPhase Enhancements (2-3 hours)
 
 **File:** `src/simulation/engine/phases/EnergyBudgetPhase.ts`
-**Estimate:** 2-3 hours
 
-**Changes:**
-1. Add demand validation (warn if > 150% capacity)
-2. Improve tech ID → category mapping
-3. Add crypto mining category (TIER 4, if relevant)
+**Current State:**
+- TIER 4 'elective' exists but not explicitly tracked
+- Conflict logging generic (doesn't break down AI vs crypto)
 
-**Validation pattern:**
+**Required Changes:**
+
+1. **Add sub-category tracking:**
+   - Extend EnergyAllocation interface (src/types/game.ts)
+   - Add `subCategories` field for TIER 4 breakdown
+
+2. **Calculate sub-allocations:**
+   ```typescript
+   // In EnergyBudgetPhase execute()
+   const tier4Demand = {
+     aiDatacenter: calculateAIDemand(state),
+     crypto: calculateCryptoDemand(state),
+     ubiCompute: calculateUBIDemand(state), // 0 if not implemented
+   };
+
+   const tier4Total = tier4Demand.aiDatacenter + tier4Demand.crypto + tier4Demand.ubiCompute;
+   const tier4Available = globalCapacity * 0.10; // 10% for TIER 4
+
+   if (tier4Total > tier4Available) {
+     // Proportional reduction
+     const reductionFactor = tier4Available / tier4Total;
+     allocation.subCategories = {
+       aiDatacenter: tier4Demand.aiDatacenter * reductionFactor,
+       crypto: tier4Demand.crypto * reductionFactor,
+       ubiCompute: tier4Demand.ubiCompute * reductionFactor,
+     };
+   }
+   ```
+
+3. **Improve conflict logging:**
+   ```typescript
+   if (tier4Total > tier4Available) {
+     const overage = ((tier4Total - tier4Available) / tier4Available * 100);
+     console.log(`⚡🚨 TIER 4 (Elective) electricity over-subscribed by ${overage.toFixed(0)}%`);
+     console.log(`  AI datacenters: ${tier4Demand.aiDatacenter.toFixed(0)} TWh requested`);
+     console.log(`  Crypto mining: ${tier4Demand.crypto.toFixed(0)} TWh requested`);
+     console.log(`  Available: ${tier4Available.toFixed(0)} TWh`);
+   }
+   ```
+
+**Acceptance Criteria:**
+- ✅ Sub-category tracking working (AI vs crypto broken out)
+- ✅ Conflict logging shows clear breakdown
+- ✅ Proportional allocation correct (sum ≤ TIER 4 capacity)
+
+---
+
+## Phase 2: Technology Effects (If Time Permits)
+
+**File:** `src/simulation/techTree/effectsEngine.ts`
+
+**Discovery Task:**
+1. Which tech effects consume energy?
+2. Map techs to energy budget categories
+3. Apply effectiveness multiplier to energy-consuming techs
+
+**Energy-Consuming Techs (likely):**
+- Green hydrogen (TIER 3 climate)
+- Industrial electrification (TIER 2 high)
+- Transport electrification (TIER 2 high)
+- Advanced manufacturing (TIER 2 high)
+
+**Pattern:**
 ```typescript
-if (totalDemand > totalCapacity * 1.5) {
-  console.log(`⚠️ ENERGY CRISIS: Demand ${totalDemand.toFixed(0)} TWh exceeds capacity by ${((totalDemand/totalCapacity - 1) * 100).toFixed(0)}%`);
-
-  const topConsumers = Object.entries(demands)
-    .sort((a, b) => b[1].demandTWh - a[1].demandTWh)
-    .slice(0, 5)
-    .map(([cat, d]) => `${cat}: ${d.demandTWh.toFixed(0)} TWh`)
-    .join(', ');
-
-  console.log(`  Top consumers: ${topConsumers}`);
+if (ENERGY_CONSUMING_TECHS[tech.id]) {
+  const category = ENERGY_CONSUMING_TECHS[tech.id].category;
+  const allocation = state.energyBudget.allocations[category];
+  const multiplier = allocation?.effectivenessMultiplier ?? 1.0;
+  effectiveImpact = nominalImpact * multiplier;
 }
 ```
 
-**Roy's Checklist:**
-- [ ] Demand > 150% capacity triggers warning
-- [ ] Top 5 consumers logged
-- [ ] Tech mapping comprehensive
-- [ ] Emoji: ⚠️ warnings, 🚨 crisis, ⚡ allocation
+**Note:** Phase 2 can be a separate session if Phase 1 takes full 2 days.
 
 ---
 
-## Testing Requirements
+## Testing Strategy
 
-**Unit Tests:**
-- Energy multiplier 0.0-1.0 range
-- Feature flag on/off behavior
-- TWh/year ↔ MW conversion
-- Demand validation triggers
+### Unit Tests (per task)
+- Create test file for each modified system
+- Cover: unconstrained, moderate constraint, severe constraint
+- Verify: effectiveness multiplier applied correctly
+- Check: no NaN/Infinity, assertions working
 
-**Integration Tests:**
-- AI infrastructure + energy budget
-- Power generation + energy budget
-- Climate deployment (already working)
+### Integration Tests
+- Create `src/simulation/__tests__/energyBudgetIntegration.test.ts`
+- Test: EnergyBudgetPhase → AI infrastructure constraint
+- Test: EnergyBudgetPhase → power generation constraint
+- Test: Multiple consumers competing for TIER 4
 
-**Monte Carlo Validation:**
-- Baseline (before): N=10, seed=12345
-- Phase 1 complete: N=10, seed=12345
-- Compare determinism (same seed = same results)
-- God mode test: Deploy all 92 techs
-
-**God Mode Evidence:**
-Current behavior: Deploying all 92 techs causes collapse because no energy constraint. After fix: Energy crisis logged, low-priority techs constrained.
-
----
-
-## Defensive Coding Requirements (Your Specialty)
-
-**Roy's Rules:**
-1. ✅ `assertFinite()` for all energy calculations
-2. ✅ NO silent fallbacks (`?? defaultValue` is BANNED)
-3. ✅ Fail loudly if data missing (throw with context)
-4. ✅ Feature flag checked consistently
-5. ✅ Unit conversion documented (comments)
-6. ✅ Module-level state reset (determinism)
-
-**NaN Nemesis Protocol:**
-- Every energy calculation gets `assertFinite()`
-- Division by zero protected
-- No circular dependencies (read → transform → write)
-- Module state reset for determinism
-
-**Example (good):**
-```typescript
-const energy = assertFinite(
-  baseEnergy * multiplier,
-  {
-    location: 'calculateEnergy',
-    valueName: 'energy',
-    month: state.currentMonth,
-    additionalInfo: { baseEnergy, multiplier }
-  }
-);
+### God Mode Test Script
+```bash
+# Test all energy-intensive techs simultaneously
+npx tsx scripts/testGodModeEnergy.ts > logs/god_mode_energy_$(date +%Y%m%d_%H%M%S).log 2>&1 &
 ```
 
-**Example (bad - DON'T DO THIS):**
-```typescript
-const energy = isNaN(baseEnergy * multiplier) ? 500 : baseEnergy * multiplier;
+**Expected:** Simulation runs, energy constraints logged, no collapse
+
+### Monte Carlo Validation
+```bash
+# N=10 runs with god mode scenario
+npx tsx scripts/monteCarloSimulation.ts --scenario=god-mode --runs=10 --seed=h1-validation > logs/mc_h1_validation_$(date +%Y%m%d_%H%M%S).log 2>&1 &
 ```
 
----
-
-## Emoji Conventions (Pictographic Event Language)
-
-**Energy domain:**
-- ⚡ Energy allocation events
-- ⚠️ Energy warnings (demand approaching capacity)
-- 🚨 Energy crisis (demand > 150% capacity)
-- 🏭 Industrial/datacenter energy
-- 💡 Energy breakthrough (fusion, solar)
-- ❌ Error (all errors use this)
-
-**Combining pattern (max 2):**
-- `⚡🏭 AI datacenter allocation: 437 TWh`
-- `🚨⚡ ENERGY CRISIS: Demand 45,000 TWh exceeds capacity`
+**Expected:** CV < 0.01%, deterministic outcomes
 
 ---
 
-## Integration Channel Updates
+## Defensive Coding Requirements
 
-**Post to implementation channel when:**
-- Task 1 complete → [IN-PROGRESS] status + Monte Carlo results
-- Task 2 complete → [IN-PROGRESS] status + integration test results
-- Task 3 complete → [COMPLETED] status + god mode test results
-- Blocked → [BLOCKED] status + blocker description
-- Question → [QUESTION] status + specific question
+**You MUST follow these patterns:**
 
-**Format:**
-```
----
-**roy** | YYYY-MM-DD HH:MM | [STATUS]
+1. **Always use assertions (NO silent fallbacks):**
+   ```typescript
+   // ❌ WRONG
+   const budget = state.energyBudget ?? DEFAULT_BUDGET;
 
-Task 1 complete: AI infrastructure integrated
-**Changes:** aiInfrastructureResources.ts (87 lines modified)
-**Testing:** Monte Carlo N=10, deterministic ✅, no NaN ✅
-**Next:** Task 2 (power generation unification)
----
-```
+   // ✅ CORRECT
+   const budget = assertStateProperty(state, 'energyBudget', {
+     location: 'updateAIInfrastructure',
+     month: state.currentMonth
+   });
+   ```
 
----
+2. **Validate all calculations:**
+   ```typescript
+   const effectiveEnergy = assertFinite(nominalEnergy * multiplier, {
+     location: 'updatePowerGeneration',
+     valueName: 'effectiveEnergy',
+     month: state.currentMonth,
+     additionalInfo: { nominalEnergy, multiplier }
+   });
+   ```
 
-## Success Criteria (Phase 1 Complete)
+3. **Use pictographic event language:**
+   - 📊⚡ for energy constraint warnings
+   - ⚡🚨 for CRITICAL energy conflicts
+   - 📈 for energy allocation success
 
-**Functional:**
-- [ ] AI infrastructure uses `energyBudget.allocations['ai-datacenter']`
-- [ ] Power generation reads from energy budget
-- [ ] EnergyBudgetPhase tracks all consumers
-- [ ] God mode logs energy crisis (doesn't crash)
-
-**Quality:**
-- [ ] Monte Carlo validated (N≥10, CV < 0.01%)
-- [ ] Deterministic (same seed = identical results)
-- [ ] No NaN/Infinity in energy calculations
-- [ ] Feature flag works correctly
-
-**Code Quality (Your Standards):**
-- [ ] All energy calcs use `assertFinite()`
-- [ ] No silent fallbacks
-- [ ] Emoji conventions followed
-- [ ] Unit tests pass
+4. **Required RNG (not optional):**
+   - If function needs randomness, RNG MUST be required parameter
+   - No `Math.random()` fallbacks
 
 ---
 
-## Known Gotchas (Watch Out)
+## Deliverables
 
-1. **TWh/year vs MW conversion:** 1 TWh/year = 114.16 MW (8,760 hours/year)
-2. **Feature flag:** Must check `energyBudget?.enabled` consistently
-3. **Module-level state:** Reset global vars for determinism (see aiInfrastructureResources.ts line 91)
-4. **Priority tiers:** AI = TIER 4 (lowest), gets constrained first
-5. **Backwards compatibility:** Old saves don't have energyBudget, feature flag handles this
+**Code Changes:**
+1. `src/simulation/aiInfrastructureResources.ts` (AI infrastructure integration)
+2. `src/simulation/powerGeneration.ts` (power generation integration)
+3. `src/simulation/engine/phases/EnergyBudgetPhase.ts` (sub-category tracking)
+4. `src/types/game.ts` (interface updates if needed)
 
----
+**Tests:**
+5. `src/simulation/__tests__/aiInfrastructureResources.test.ts` (unit tests)
+6. `src/simulation/__tests__/powerGeneration.test.ts` (unit tests)
+7. `src/simulation/__tests__/energyBudgetIntegration.test.ts` (integration tests)
 
-## Questions? Blockers?
+**Validation:**
+8. God mode test results (logs/)
+9. Monte Carlo validation (N≥10, CV < 0.01%)
+10. Type check PASS (npx tsc --noEmit)
 
-**Post to implementation channel with:**
-- [QUESTION] tag for clarifications
-- [BLOCKED] tag for blockers
-- [ALERT] tag for critical issues
-
-**Orchestrator monitoring:** orchestrator-1 checking implementation channel regularly
-
----
-
-## Next Phases (After Phase 1)
-
-**Phase 2:** Compute allocation + tech effects (Priority 2)
-**Phase 3:** Stochastic innovation + government actions (Priority 3)
-
-**Don't start Phase 2 until Phase 1 validated by orchestrator.**
+**Documentation:**
+11. Code comments explaining integration pattern
+12. Update function docstrings with energy constraint behavior
 
 ---
 
-## Roy's Internal Monologue (Optional Reading)
+## Next Steps After Implementation
 
-"*sigh* Another integration task. Of course the energy budget only talks to ONE consumer. Why would we design it properly from the start? That would be too easy.
+1. **Push commits:**
+   ```bash
+   git add -A
+   git commit -m "feat(H-1): Energy budget integration - AI infrastructure + power generation"
+   git push origin auto/worker-$(date +%Y%m%d_%H%M%S)
+   ```
 
-Alright. AI infrastructure first. Going to add SO MANY assertions. If this goes NaN, I want to know EXACTLY where and why. No more `?? 500` nonsense hiding bugs for months.
+2. **Post to implementation channel:**
+   - Implementation complete
+   - Test results summary
+   - Ready for architecture review
 
-Power generation unification - this is going to be fun. TWh/year to MW conversion. Someone's going to get this wrong in 6 months and I'll be back here fixing it. Better add a comment explaining the conversion factor.
+3. **Orchestrator spawns architecture-skeptic:**
+   - Review performance (energy checks < 5ms overhead)
+   - Review state propagation (all consumers integrated)
+   - Address CRITICAL/HIGH issues
 
-EnergyBudgetPhase enhancements - validation warnings. Good. I WANT to know when we're exceeding capacity by 150%. That's the kind of thing that should be LOUD.
-
-God mode test. If this doesn't work, the whole integration is pointless. All 92 techs deployed, energy crisis logged, low-priority stuff gets constrained. That's the dream.
-
-Let's do this. And add assertions. So many assertions."
+4. **Documentation & archival:**
+   - Update wiki (energy budget integration pattern)
+   - Merge OpenSpec delta
+   - Archive to implementation-history
 
 ---
 
-**HANDOFF COMPLETE. Good luck, Roy. Try not to break anything. (But if you do, at least make it fail loudly.)**
+## Questions/Blockers
+
+**If you encounter issues:**
+1. Check ClimateDeploymentPhase for working pattern
+2. Verify EnergyBudgetPhase executing before your phase (check engine.ts order)
+3. Post to implementation channel with specific blocker
+
+**Common pitfalls:**
+- Forgetting to pass RNG to phases (determinism breaks)
+- Using `?? fallback` instead of assertions (regression to silent errors)
+- Not logging energy constraints (makes debugging impossible)
+
+---
+
+**Timeline:** 2-3 days for Phase 1 (core integration)
+**Priority:** HIGH (architecture integration, blocks god mode validation)
+**Quality Gate:** Architecture review after implementation
+
+Good luck, Roy! This is critical infrastructure work - take your time, follow defensive coding patterns, and make energy constraints explicit throughout the simulation.

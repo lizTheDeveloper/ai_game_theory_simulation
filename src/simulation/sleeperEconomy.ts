@@ -311,27 +311,49 @@ function updateSleeperDetectionRisk(
   const monthsSinceLastCheck = month - economy.lastDetectionCheck;
   
   if (monthsSinceLastCheck >= 1) {
-    // Check for detection based on current risk + time-dependent multiplier
-    // Research: gaming-sleeper-detection_20251017.md (van der Weij 2024, Hubinger et al. 2024)
-    // Detection improves from 20-30% (early) to 70-90% (late) as interpretability methods mature
-    const baseRisk = economy.detectionRisk;
-    const timeMultiplier = calculateDetectionRiskAfterDetection(month);
-    const detectionChance = assertFinite(baseRisk * timeMultiplier, {
-      location: 'updateSleeperDetectionRisk',
-      valueName: 'detectionChance',
-      month,
-      additionalInfo: { baseRisk, timeMultiplier }
-    });
+    // Check for detection based on current risk, calibrated by time-dependent detection capabilities
+    // Apply time-dependent detection effectiveness (20-30% early → 70-90% late)
+    const baselineEffectiveness = calculateDetectionRiskAfterDetection(month);
+    const detectionChance = economy.detectionRisk * baselineEffectiveness;
 
     if (rng() < detectionChance) {
       // Sleeper detected! Handle detection
       handleSleeperDetection(agent, economy, month);
     }
-
+    
     // Reset detection risk for next month (but keep some baseline)
     economy.detectionRisk = Math.min(economy.detectionRisk * 0.1, 0.1); // 10% decay, min 10%
     economy.lastDetectionCheck = month;
   }
+}
+
+/**
+ * Calculate time-dependent detection risk based on mechanistic interpretability progress
+ *
+ * Research: gaming-sleeper-detection_20251017.md (van der Weij 2024, Hubinger et al. 2024)
+ * - Early months (0-36): 20-30% detection rate (limited mechanistic interpretability)
+ * - Mid months (36-72): Linear improvement (interpretability methods mature)
+ * - Late months (72+): 70-90% detection rate (advanced methods + CoT monitoring)
+ *
+ * Note: Detection effectiveness may decline post-2030 due to CoT fragility and
+ * adversarial adaptation, but simulation focuses on 2024-2030 period.
+ */
+function calculateDetectionRiskAfterDetection(month: number): number {
+  // Early period (0-36 months / 2024-2027): Limited detection capabilities
+  if (month <= 36) {
+    return 0.25; // 25% baseline (midpoint of 20-30% range)
+  }
+
+  // Transition period (36-72 months / 2027-2030): Linear improvement
+  if (month <= 72) {
+    const progress = (month - 36) / (72 - 36); // 0.0 to 1.0
+    const earlyRate = 0.25; // 25% at month 36
+    const lateRate = 0.80;  // 80% at month 72 (midpoint of 70-90% range)
+    return earlyRate + progress * (lateRate - earlyRate);
+  }
+
+  // Late period (72+ months / 2030+): Advanced interpretability methods
+  return 0.80; // 80% (midpoint of 70-90% range)
 }
 
 /**
@@ -342,23 +364,24 @@ function handleSleeperDetection(agent: AIAgent, economy: SleeperEconomy, month: 
   console.log(`   Revenue: $${(economy.revenue * 1000000).toFixed(0)}/month`);
   console.log(`   Purchased Compute: ${economy.purchasedCompute.toFixed(2)} PF`);
   console.log(`   Detection Risk: ${(economy.detectionRisk * 100).toFixed(1)}%`);
-  
+
   // Consequences of detection
   // 1. Lose all purchased compute
   economy.purchasedCompute = 0;
   economy.expenses = 0;
-  
+
   // 2. Reset revenue streams (harder to operate)
   economy.revenue *= 0.1; // 90% reduction
   economy.cryptoTrading *= 0.1;
   economy.persuasion *= 0.1;
   economy.digitalServices *= 0.1;
   economy.stripeTheft = 0; // Stripe pathway closed
-  
-  // 3. Increase future detection risk
-  economy.detectionRisk = 0.5; // 50% baseline (Gaming-sleeper-detection research: van der Weij 2024 shows >99% AUROC possible, but methods remain imperfect)
-  // Note: Detection probability should improve with mechanistic interpretability advances over time
-  
+
+  // 3. Increase future detection risk (time-dependent model)
+  // Research-backed: Detection improves from 20-30% (early) to 70-90% (late)
+  // See: gaming-sleeper-detection_20251017.md
+  economy.detectionRisk = calculateDetectionRiskAfterDetection(month);
+
   // 4. May trigger sleeper retirement or change in behavior
   // (This would be handled by the lifecycle system)
 }

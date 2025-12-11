@@ -26,7 +26,7 @@
  */
 
 import { GameState } from '@/types/game';
-import { assertFinite } from './utils/assertions';
+import { assertFinite, assertStateProperty } from './utils/assertions';
 
 /**
  * Water consumption parameters (FIX #3A: Research-corrected values)
@@ -107,17 +107,14 @@ const WUE_FLOOR = 0.3;
 /**
  * Calculate AI resource consumption for current month
  * FIX #3A (Oct 19, 2025): Corrected water model - separate training/inference, logarithmic scaling
- * PHASE 1 (Dec 10, 2025): Integrated with unified energy budget system
+ * H-1 (Dec 10, 2025): Integrated with energy budget constraints
  *
  * @param state Current game state
- * @returns Water consumption (million liters/month), energy consumption (MW), and constraint status
+ * @returns Water consumption (million liters/month) and energy consumption (MW)
  */
 export function calculateAIResourceConsumption(state: GameState): {
   waterConsumption: number;
   energyConsumption: number;
-  energyDemand: number;
-  energyAllocated: number;
-  constrainedByEnergy: boolean;
   wue: number;
 } {
   // Calculate total AI capability across all agents
@@ -142,68 +139,63 @@ export function calculateAIResourceConsumption(state: GameState): {
 
   const inferenceWater = (WATER_INFERENCE_BASE + logarithmicTerm) * demandElasticity;
 
-  // Energy consumption - calculate unconstrained demand first
-  const energyDemandMW = ENERGY_BASE_CONSUMPTION + (totalCapability * ENERGY_PER_CAPABILITY_POINT);
+  const totalWater = trainingWater + inferenceWater;
 
-  // PHASE 1: Query energy budget for actual allocation
-  const energyMultiplier = getEnergyMultiplier(state, 'ai-datacenter');
-  const energyAllocatedMW = assertFinite(
-    energyDemandMW * energyMultiplier,
+  // Energy consumption (scales with capability)
+  // H-1: Calculate nominal energy demand (before budget constraints)
+  const nominalEnergyMW = assertFinite(
+    ENERGY_BASE_CONSUMPTION + (totalCapability * ENERGY_PER_CAPABILITY_POINT),
     {
       location: 'calculateAIResourceConsumption',
-      valueName: 'energyAllocatedMW',
+      valueName: 'nominalEnergyMW',
       month: state.currentMonth,
-      additionalInfo: { energyDemandMW, energyMultiplier }
+      additionalInfo: { totalCapability, baseConsumption: ENERGY_BASE_CONSUMPTION }
     }
   );
 
-  const constrainedByEnergy = energyMultiplier < 0.99;
+  // H-1: Read energy budget allocation (TIER 4 'elective')
+  // Energy budget system is enabled by default
+  let effectivenessMultiplier = 1.0;
+  if (state.energyBudget?.allocations?.['ai-datacenter']) {
+    const allocation = state.energyBudget.allocations['ai-datacenter'];
+    effectivenessMultiplier = assertFinite(
+      allocation.effectivenessMultiplier,
+      {
+        location: 'calculateAIResourceConsumption',
+        valueName: 'effectivenessMultiplier',
+        month: state.currentMonth,
+        additionalInfo: { category: 'ai-datacenter', allocation }
+      }
+    );
+  }
 
-  // Water scales with ALLOCATED energy (not demand)
-  // Research: Cooling systems scale with actual datacenter operation
-  const totalWater = (trainingWater + inferenceWater) * energyMultiplier;
+  // H-1: Apply energy budget constraint to datacenter growth
+  const effectiveEnergyMW = assertFinite(
+    nominalEnergyMW * effectivenessMultiplier,
+    {
+      location: 'calculateAIResourceConsumption',
+      valueName: 'effectiveEnergyMW',
+      month: state.currentMonth,
+      additionalInfo: { nominalEnergyMW, effectivenessMultiplier }
+    }
+  );
+
+  // H-1: Log if constrained (only if significant constraint)
+  if (effectivenessMultiplier < 0.9 && state.currentMonth % 12 === 0) {
+    console.log(`\n📊⚡ AI datacenter growth constrained by electricity: ${(effectivenessMultiplier * 100).toFixed(1)}% effective`);
+    console.log(`   Nominal demand: ${nominalEnergyMW.toFixed(0)} MW`);
+    console.log(`   Allocated: ${effectiveEnergyMW.toFixed(0)} MW`);
+    console.log(`   Total AI capability: ${totalCapability.toFixed(2)}`);
+  }
 
   // Improve WUE over time (efficiency gains from better cooling technology)
   globalWUE = Math.max(WUE_FLOOR, globalWUE * (1 - WUE_IMPROVEMENT_RATE_MONTHLY));
 
   return {
     waterConsumption: totalWater,
-    energyConsumption: energyAllocatedMW,
-    energyDemand: energyDemandMW,
-    energyAllocated: energyAllocatedMW,
-    constrainedByEnergy,
+    energyConsumption: effectiveEnergyMW,  // H-1: Return constrained value
     wue: globalWUE
   };
-}
-
-/**
- * Get energy multiplier from unified energy budget
- * PHASE 1 (Dec 10, 2025): Query EnergyBudgetPhase allocations
- *
- * @param state Current game state
- * @param category Energy category (e.g. 'ai-datacenter')
- * @returns Effectiveness multiplier [0, 1] where 1.0 = unconstrained
- */
-function getEnergyMultiplier(state: GameState, category: string): number {
-  // Feature flag check
-  if (!state.energyBudget?.enabled) {
-    return 1.0; // Energy budget disabled = no constraints
-  }
-
-  const allocation = state.energyBudget.allocations[category];
-  if (!allocation) {
-    return 1.0; // Category not tracked = no constraint
-  }
-
-  return assertFinite(
-    allocation.effectivenessMultiplier,
-    {
-      location: 'getEnergyMultiplier',
-      valueName: 'effectivenessMultiplier',
-      month: state.currentMonth,
-      additionalInfo: { category, allocated: allocation.allocatedTWh, demand: allocation.demandTWh }
-    }
-  );
 }
 
 /**
