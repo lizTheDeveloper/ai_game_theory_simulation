@@ -14,6 +14,7 @@
 import { GameState } from '@/types/game';
 import { ActionResult } from '@/simulation/agents/types';
 import { CategorizedGovernmentAction } from '../core/types';
+import { getAgentById } from '@/simulation/utils/simulationIndices';
 
 let eventIdCounter = 0;
 const generateUniqueId = (prefix: string, month: number): string => {
@@ -45,7 +46,8 @@ const detectMisalignedAIs: CategorizedGovernmentAction = {
 
     // Apply detections to state
     detectedAIs.forEach(detected => {
-      const ai = state.aiAgents.find((a: any) => a.id === detected.id);
+      // O(n) fallback since execute() doesn't have PhaseContext.indices
+      const ai = getAgentById(state, detected.id);
       if (ai) {
         ai.detectedMisaligned = true;
       }
