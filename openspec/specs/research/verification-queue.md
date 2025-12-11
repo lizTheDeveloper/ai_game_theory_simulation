@@ -347,6 +347,77 @@ economy.detectionRisk = 0.5;  // 50% baseline risk
 
 ---
 
+### Trust Restoration Re-Research
+**Status:** ✅ RESOLVED (Dec 11, 2025)
+**Context:** Citation misattribution - Mayer 1995 doesn't cover trust restoration
+**Research File:** `research/institutional_trust_restoration_20251211.md`
+**Original Issue:** `research/mayer_1995_trust_restoration_verification_20251029.md`
+
+**Research Complete (Dec 11, 2025):**
+- **Grade:** A- (Composite Model - Best Available Evidence)
+- **Researcher:** Cynthia (autonomous-researcher)
+- **Sources:** 9 peer-reviewed (2023-2025) + 2 empirical quantitative studies
+
+**✅ Key Findings:**
+1. **Timescale Data (BCG 2024):**
+   - Trust erosion: -25% to -50% in 1 month (major breach)
+   - Recovery: 24-36+ months (12% success rate at 3 years)
+   - Efficacy failures: 0% recovery (harder than ethical failures)
+
+2. **Mechanisms (Peer-Reviewed):**
+   - Procedural changes: Most effective across all sectors (Choi 2025)
+   - Transparency: +15% effectiveness (Briscese & Grignani 2024)
+   - Accountability: +15% effectiveness (multiple sources)
+   - Verbal apology alone: +5% only (Sharma et al. 2023)
+
+3. **Recovery Dynamics (Federal Reserve Study 2024):**
+   - Twitter sentiment: 3-month recovery (attention-driven)
+   - Economic impacts: 6-month persistence
+   - Deep institutional trust: 24-36 months
+
+**⚠️ Limitations Acknowledged:**
+- Only 1.5% of trust literature addresses repair (major research gap)
+- Corporate data (BCG) not peer-reviewed
+- Twitter sentiment ≠ deep institutional trust
+- Geographic bias (Western high-income countries only)
+
+**Simulation Parameters (Confidence Levels):**
+- Trust erosion speed: HIGH confidence (consistent across sources)
+- Procedural change effectiveness: MEDIUM confidence (peer-reviewed)
+- Complete restoration timescale: LOW confidence (limited empirical data)
+- Recovery success rate: LOW confidence (corporate-specific)
+
+**Recommended Implementation:**
+```typescript
+// Trust erosion (fast)
+initialDrop = -0.25 to -0.50  // Major breach
+dropSpeed = 1 month
+
+// Trust restoration (slow, asymmetric)
+if (proceduralReformsImplemented) {
+  months1to6 = +0.20 * initialDrop      // 20% recovery (attention-based)
+  months7to12 = +0.15 * initialDrop     // 15% additional (slower)
+  years2to3 = +0.30 * initialDrop       // 30% asymptotic (diminishing returns)
+  completeRestoration = 0.12            // 12% chance at 3 years
+} else {
+  recovery = 0.05 * initialDrop/year    // Minimal without reforms
+}
+
+// Mechanism effectiveness (additive)
+proceduralChanges = +0.30
+transparency = +0.15
+accountability = +0.15
+verbalApology = +0.05
+```
+
+**Next Steps:**
+- Implementation approved (MEDIUM priority)
+- Monte Carlo validation N≥10 required
+- Sensitivity analysis on timescale assumptions
+- Document uncertainty explicitly in code comments
+
+---
+
 ## Workflow
 
 ### Adding to Queue
