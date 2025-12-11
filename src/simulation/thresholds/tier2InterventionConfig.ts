@@ -525,10 +525,10 @@ export function sampleTier2InterventionParameters(rng: RNGFunction): Tier2Interv
     detectionRate: sampleBeta(
       DARK_COMPUTE_MONITORING_PARAMS.detectionRate.alpha,
       DARK_COMPUTE_MONITORING_PARAMS.detectionRate.beta,
+      DARK_COMPUTE_MONITORING_PARAMS.detectionRate.bounds[0],
+      DARK_COMPUTE_MONITORING_PARAMS.detectionRate.bounds[1],
       rng
-    ) * (DARK_COMPUTE_MONITORING_PARAMS.detectionRate.bounds[1] -
-         DARK_COMPUTE_MONITORING_PARAMS.detectionRate.bounds[0]) +
-         DARK_COMPUTE_MONITORING_PARAMS.detectionRate.bounds[0],
+    ),
     falsePositiveRate: sampleTriangular(
       DARK_COMPUTE_MONITORING_PARAMS.falsePositiveRate.min,
       DARK_COMPUTE_MONITORING_PARAMS.falsePositiveRate.mode,
