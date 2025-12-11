@@ -680,9 +680,10 @@ export function aggregateAllRegionalData(state: GameState): void {
     month: state.currentMonth
   });
 
-  // CALIBRATION (Nov 28, 2025): Lowered floor from 1M (0.001B) to 10M (0.01B)
-  // Allows exploration of deep collapse scenarios while still detecting extinction
-  const totalPopulationBillions = assertInRange(totalPopulationValidated / 1000, 0.01, 100, {
+  // EXTINCTION-AWARE (Dec 7, 2025): Allow near-extinction scenarios
+  // Minimum: 0.00001B (10,000 people) = Toba bottleneck research basis
+  // This allows Monte Carlo to model full extinction pathways without crashing
+  const totalPopulationBillions = assertInRange(totalPopulationValidated / 1000, 0.00001, 100, {
     location: 'aggregateAllRegionalData (billions conversion)',
     valueName: 'totalPopulationBillions',
     month: state.currentMonth

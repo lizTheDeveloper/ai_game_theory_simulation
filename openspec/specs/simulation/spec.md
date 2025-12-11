@@ -293,6 +293,16 @@ None (system in maintenance mode)
 **Validation:** Created validateNearExtinction.ts script - all 4 test cases pass (10K, 100K, 1M, 10M)
 **Files:** `src/simulation/populationDynamics.ts:687`, `scripts/validateNearExtinction.ts`
 **Impact:** Monte Carlo validation now unblocked for tail-risk scenarios
+**Status:** COMPLETE (Dec 7, 2025)
+**Implementation:** `src/simulation/populationDynamics.ts:686` (aggregateAllRegionalData)
+**Context:** Monte Carlo validation blocked by overly restrictive population assertions
+**Impact:** Unblocked N=10 validation for extreme scenarios (near-extinction)
+**Research:** Toba bottleneck (10K-30K survivors), nuclear winter scenarios
+**Solution:** Lowered minimum threshold from 0.01B (10M) to 0.00001B (10K people) in aggregateAllRegionalData() to match aggregateGlobalPopulation() pattern
+**Files:** `src/simulation/populationDynamics.ts` (aggregateAllRegionalData)
+**Triggered By:** HIGH-7 Monte Carlo validation (Run 3/10 crashed at 9.9M population)
+**Commit:** 993de150
+>>>>>>> origin/auto/worker-20251207_190001
 
 #### M-5: Threshold Uncertainty Modeling
 **Status:** COMPLETED (December 7, 2025)
