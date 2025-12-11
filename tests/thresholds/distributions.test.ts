@@ -18,7 +18,7 @@ import {
   sampleLogNormal,
   sampleTriangular,
   getDistributionStats,
-} from '@/simulation/thresholds/distributions';
+} from '@/simulation/utils/distributions';
 import type { RNGFunction } from '@/types/config';
 
 /**

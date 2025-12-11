@@ -21,7 +21,7 @@
 
 import type { RNGFunction } from '@/types/config';
 import { assertFinite, assertInRange } from '@/simulation/utils/assertions';
-import { sampleNormal, sampleLogNormal, sampleUniform } from '@/simulation/thresholds/distributions';
+import { sampleNormal, sampleLogNormal, sampleUniform } from '@/simulation/utils/distributions';
 
 /**
  * Uncertainty Parameters Interface

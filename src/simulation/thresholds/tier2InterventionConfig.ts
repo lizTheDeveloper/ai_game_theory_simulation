@@ -19,7 +19,7 @@ import {
   sampleTriangular,
   sampleUniform,
   sampleLogNormal
-} from './distributions';
+} from '../utils/distributions';
 
 /**
  * 1. AI INTERPRETABILITY ENSEMBLE DETECTION
