@@ -19,6 +19,41 @@ This queue tracks research citations that need verification (Quality Gate 1) bef
 
 ### HIGH Priority
 
+#### Threshold Lowering for Tipping Cascades
+**Status:** ✅ RESOLVED - COMPLETE (Dec 8, 2025)
+**Change:** Archived to `docs/implementation-history/threshold-lowering-tipping-cascades_20251208.md`
+**Commit:** cf49657 (original), 26527297 (fixes)
+**Context:** Implements threshold lowering mechanism from mechanism audit gap
+**Verification File:** `research/verification_cf49657_20251207.md`
+
+**Verification Complete (Dec 7, 2025):**
+- **Initial Grade:** C (super-alignment-researcher)
+- **Final Grade:** D (research-skeptic downgrade)
+- **Reviewers:** Cynthia (researcher), Sylvia (skeptic)
+
+**CRITICAL Issues Found:**
+1. ❌ **AMOC → Amazon Sign Error:** Implementation claims AMOC collapse destabilizes Amazon, but 2023-2025 literature shows AMOC collapse **stabilizes** Amazon by increasing rainfall
+2. ❌ **sqrt(progress) Scaling Backwards:** Front-loads effects when physics suggests acceleration over time (rate-induced tipping cascades)
+3. ❌ **Missing Stabilizing Feedbacks:** Only destabilizing interactions modeled, creating catastrophization bias
+4. ⚠️ **Quantitative Magnitudes Not Validated:** 0.10-0.30°C values are engineering estimates, not empirically derived
+5. ⚠️ **0.5°C Cap Misattributed:** Not found in Wunderling et al. (2024)
+
+**Fixes Applied (Dec 8, 2025):**
+1. ✅ **AMOC → Amazon interaction REMOVED** (contradicted by research)
+2. ✅ **AMOC → Greenland stabilizing feedback ADDED** (-0.15°C = stabilizing)
+3. ✅ **sqrt(progress) replaced with linear scaling** (matches rate-induced cascades)
+4. ✅ **Documentation updated** (magnitudes now labeled "engineering estimates")
+5. ✅ **0.5°C cap comment corrected** (removed misattribution to Wunderling)
+
+**Validation (Dec 8, 2025):**
+- Monte Carlo N=10, 120 months: All runs successful, deterministic, no NaN errors
+- Files: `src/types/tipping-points.ts`, `src/simulation/engine/phases/ClimateSystemPhase.ts`
+
+**Resolution:** All CRITICAL/HIGH issues addressed. Ready for production.
+
+---
+
+>>>>>>> origin/auto/worker-20251208_040001
 #### AI Governance 2025 Proposals
 **Status:** ✅ VERIFIED - Grade A (with implementation caveats)
 **Change:** (pending - needs change folder created)

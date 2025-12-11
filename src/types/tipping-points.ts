@@ -487,23 +487,26 @@ export const TIPPING_ELEMENTS: Omit<TippingElement, 'triggered' | 'monthsSinceTr
 ];
 
 /**
- * Tipping Element Interaction Matrix (Nov 23, 2025)
+ * Tipping Element Interaction Matrix (Nov 23, 2025 | Updated Dec 8, 2025)
  *
- * Research-backed threshold lowering effects when one tipping element tips another.
+ * Threshold lowering effects when one tipping element tips another.
+ * MECHANISMS are research-backed; MAGNITUDES are conservative engineering estimates.
  *
  * Sources:
  * - Armstrong McKay et al. (2022) Science - Network of 16 tipping elements with causal interactions
  * - Wunderling et al. (2024) Earth System Dynamics - "combined effect tending to lower temperature thresholds"
  * - Climate tipping points research file: research/climate_tipping_points_2024_2025_20251116.md
+ * - Verification file: research/verification_cf49657_20251207.md
  *
  * Format: source_id -> target_id -> threshold_reduction_C
  *
- * Magnitude Justification (Wunderling et al. 2024):
+ * Magnitude Estimates (conservative engineering estimates pending empirical validation):
  * - Direct interactions (e.g., ice sheet -> AMOC): 0.2-0.4 C reduction
- * - Indirect interactions (e.g., Arctic ice -> Amazon): 0.1-0.2 C reduction
+ * - Indirect interactions (e.g., Arctic ice -> permafrost): 0.1-0.2 C reduction
  * - Weak interactions: 0.05-0.1 C reduction
  *
- * Conservative estimates used (lower end of ranges) to avoid over-catastrophizing.
+ * NOTE: Quantitative magnitudes are engineering estimates pending empirical validation
+ * from network modeling studies. Research validates MECHANISMS, not specific degree values.
  */
 export interface TippingInteraction {
   /** Source element that tips first */
@@ -570,6 +573,7 @@ export const TIPPING_INTERACTIONS: TippingInteraction[] = [
     mechanism: 'Carbon feedback: accelerated global warming from permafrost carbon release'
   },
 
+<<<<<<< HEAD
   // === AMOC -> TROPICAL SYSTEMS ===
   // AMOC collapse shifts tropical rainfall patterns
   // ⚠️ RESEARCH UNCERTAINTY: 2023-2025 studies show AMOC collapse may STABILIZE Amazon
@@ -587,6 +591,22 @@ export const TIPPING_INTERACTIONS: TippingInteraction[] = [
   //   thresholdReduction: 0.25, // REMOVED - sign uncertain
   //   mechanism: 'Monsoon disruption: AMOC collapse shifts ITCZ southward, reducing Amazon rainfall'
   // },
+=======
+  // === AMOC -> ICE SHEETS ===
+  // AMOC collapse reduces heat transport to North Atlantic
+  // This counterintuitively SLOWS Greenland melt (stabilizing feedback)
+  {
+    sourceId: 'amoc',
+    targetId: 'greenland',
+    thresholdReduction: -0.15, // NEGATIVE = stabilizing (raises threshold)
+    mechanism: 'Heat transport reduction: AMOC collapse reduces heat transport to North Atlantic, slowing Greenland melt'
+  },
+  // NOTE: AMOC -> Amazon interaction REMOVED (Dec 8, 2025)
+  // Research shows AMOC collapse actually STABILIZES Amazon via increased rainfall
+  // Sources: Nature Comms 2023, npj Climate 2025, JGR Atmospheres 2025
+  // Mechanism was incorrectly stated as destabilizing (sign error)
+  // See: research/verification_cf49657_20251207.md for full analysis
+>>>>>>> origin/auto/worker-20251208_040001
 
   // === AMAZON -> GLOBAL CLIMATE ===
   // Amazon dieback releases stored carbon
