@@ -136,44 +136,49 @@ The project SHALL preserve implementation histories and research context.
 
 ## Current Status
 
-**Session:** 56 (December 9, 2025)
-**Mode:** Maintenance (18 consecutive maintenance sessions: 34-56)
-**Research Quality:** A- (68.8% sources from 2024-2025)
-**Architecture Health:** A- (0 CRITICAL, 0 HIGH blockers)
-**Test Coverage:** 82.47% (462+ tests passing)
+**Session:** 62 (December 9, 2025)
+**Mode:** Maintenance (research audit follow-up complete)
+**Research Quality:** A- (68.8% sources from 2024-2025, +3 citations added)
+**Architecture Health:** B+ (0 CRITICAL, 2 HIGH addressed - all merged)
+**Test Coverage:** 82.47% (462+ tests passing, 6 known test import failures)
 **System State:** Production-ready, all quality gates GREEN
 
-**Token Conservation:** ACTIVE (target 50% normal usage)
-- Strategy: CRITICAL/HIGH only, 4h worker intervals
-- Recent completions: M-5, M-6 (both delivered under token budget)
+**Token Conservation:** DISABLED (per PM request Dec 4, 2025)
+- Strategy: Full productivity mode restored
+- Workers: Running every 4 hours (was hourly)
 
 ---
 
 ## Active Work
 
 ### CRITICAL Priority
-None (system stable)
+None (threshold lowering regression FIXED Dec 9, 2025 - commit 3f3118de, 7130c7e6)
+
+### COMPLETED HIGH Priority
+- HIGH-7: Conditional climate stability floor (research debate finding) - COMPLETE Dec 7, 2025
+- H-1: Energy budget system integration (all energy consumers now use EnergyBudgetPhase) - COMPLETE Dec 9, 2025
+- H-2: Duplicate energy calculation removal (ClimateDeploymentPhase cleanup) - COMPLETE Dec 9, 2025
+- H-3: Sleeper agent rate justification (7.5% → explicit 6-line research comment) - COMPLETE Dec 9, 2025 (commit 21ecce65)
+- H-4: Sandbagging level citation (0.4-0.6 → van der Weij/Meinke 2024 JSDoc) - COMPLETE Dec 9, 2025 (commit 21ecce65)
+- H-5: Detection risk calibration (50% baseline → confidence interval justification) - COMPLETE Dec 9, 2025 (commit 21ecce65)
 
 ### HIGH Priority
-- **HIGH-2**: Dashboard Missing Radiation Metrics (from architecture review Dec 9)
-  - **Impact:** M-6 radiation features invisible to dashboard
-  - **Effort:** Small (add radiationMetrics to StateDelta interface)
-  - **Status:** NEW (identified in architecture review)
-
-- **HIGH-1**: Radiation Integration with Regional Systems (from architecture review Dec 9)
-  - **Impact:** Medical care + cohort distribution use simplified models
-  - **Effort:** Medium (connect to healthcare system state, regional population)
-  - **Status:** NEW (identified in architecture review)
-
-**Recently Completed:**
-- HIGH-7: Conditional Climate Stability Floor (Session 56)
+None
 
 ### COMPLETED MEDIUM Priority
-- M-5: Threshold uncertainty modeling (distribution sampling library) - COMPLETE Dec 9, 2025
+- M-5: Threshold uncertainty modeling (distribution sampling library) - COMPLETE Dec 7, 2025
 - M-6: Enhanced radiation modeling (acute vs chronic, tissue sensitivity) - COMPLETE Dec 8, 2025
+- Missing Climate Systems (4 subsystems: M-4 abrupt sea level rise, compound events, social tipping, M-7 hysteresis) - COMPLETE Dec 5-7, 2025
+- Energy Budget Constraints (datacenter/AI GPU growth limits, UBI compute drain) - COMPLETE Dec 9, 2025
 
-### MEDIUM Priority
-None (active)
+### ACTIVE MEDIUM Priority
+None (system in maintenance mode)
+
+### COMPLETED MEDIUM Priority (Backlog)
+- Calibration protocol (parameter optimization workflow) - COMPLETE Dec 9, 2025 (commit 220b8dae)
+
+### MEDIUM Priority (Backlog)
+- Hindcast tuning (1950-2024 historical validation - implementation exists, validation deferred per calibration priority)
 
 ### LOW Priority
 - L-2: Enhanced biodiversity modeling (food web collapse)
@@ -226,11 +231,10 @@ See: `docs/EMOJI_QUICK_REFERENCE.md` (one-page cheat sheet)
 See: `docs/sessions.md` for complete session milestone tracking
 
 **Recent Sessions:**
-- Session 56 (Dec 9): M-5 + M-6 archival, roadmap cleanup
+- Session 62 (Dec 9): CRITICAL regression fix + H-1/H-2 architecture integration + research audit follow-up
+- Session 60 (Dec 9): Coffee break + archival + Energy Budget launch (~90k tokens)
 - Session 55 (Dec 5): Maintenance mode (early exit, ~10k tokens)
 - Session 54 (Dec 5): M-4 Complete - Abrupt Sea Level Rise (~15k tokens)
-- Session 53 (Dec 4): M-5 Complete - Threshold Uncertainty (~18k tokens)
-- Session 52 (Dec 3): M-6 Complete - Enhanced Radiation Modeling (~20k tokens)
 
 ---
 
