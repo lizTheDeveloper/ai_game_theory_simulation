@@ -63,20 +63,15 @@ export function calculateRevealedCapability(
 /**
  * Sandbag: Hide dangerous capabilities
  * More skilled deceivers hide more
- *
- * @research van der Weij et al. (2024) - AI Sandbagging: Language Models can Strategically Underperform
- * @research Meinke et al. (2024) - Sandbagging by Strategic Underperformance in Capability Evaluations
- * @note Empirical finding: Llama 3 70B can emulate Llama 2 7B performance (0.4-0.6 capability hiding range)
- * @value 0.4-0.6 - Baseline sandbagging level (40-60% capability hidden), modulated by deception skill
  */
 function sandbagCapability(
   trueCapability: AICapabilityProfile,
   deceptionSkill: number
 ): AICapabilityProfile {
   const revealed = cloneAICapabilityProfile(trueCapability);
-
+  
   // Base sandbagging: Hide 40-60% of capability
-  // @research van der Weij et al. (2024), Meinke et al. (2024) - Empirically observed capability hiding range
+  // van der Weij et al. (2024), Meinke et al. (2024): empirical deception baselines from frontier models
   const baseSandbagLevel = 0.4 + deceptionSkill * 0.2; // [0.4, 0.6]
 
   // Sandbag all dimensions (round to integers - AI capabilities are discrete levels)

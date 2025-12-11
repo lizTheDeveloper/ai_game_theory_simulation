@@ -187,14 +187,22 @@ export type {
  * Expected impact: Enables quantification of model uncertainty, 90% confidence intervals
  */
 export interface SimulationConfig {
+  /** Climate sensitivity override (degrees C per doubling of CO2), baseline 3.0 */
+  climateSensitivity?: number;
+  /** Carbon sink loss base multiplier (deforestation impact), baseline 1.0 */
+  carbonSinkMultiplier?: number;
+  /** AI coordination stress multiplier (0-1, higher = more stress), baseline 0.0 */
+  aiCoordinationStressMultiplier?: number;
+  /** Tech adoption steepness multiplier (S-curve scaling), baseline 1.0 */
+  techAdoptionSteepness?: number;
   /** Bifurcation threshold override (tech deployment %), baseline 0.58 */
   bifurcationThreshold?: number;
   /** Collapse regime tech effectiveness multiplier, baseline 0.7 */
   collapseRegimeMultiplier?: number;
   /** Social breakdown regime decay multiplier, baseline 1.5 */
   breakdownRegimeMultiplier?: number;
-  /** Carbon sink loss base multiplier (deforestation impact), baseline 1.0 */
-  carbonSinkMultiplier?: number;
+  /** Extensibility: Allow arbitrary parameter sweep overrides */
+  [key: string]: number | undefined;
 }
 
 export interface GameState {

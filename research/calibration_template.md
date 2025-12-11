@@ -1,251 +1,204 @@
-# Calibration Template: [Parameter/System Name]
+# Calibration Template
 
+**Purpose:** Document rationale for parameter calibration to preserve research backing through git history.
+
+---
+
+## Parameter Name
+
+**Parameter:** [Name of parameter being calibrated]
+**Location:** [File path and line number]
+**Calibrated by:** [Worker/agent ID]
 **Date:** [YYYY-MM-DD]
-**Calibrator:** [Agent name or session ID]
-**Priority:** [CRITICAL/HIGH/MEDIUM/LOW]
-**Status:** [PROPOSED / IN_PROGRESS / VALIDATED / ARCHIVED]
 
 ---
 
-## Executive Summary
+## 1. Motivation
 
-**What:** [One-sentence description of what is being calibrated]
+**Why calibrate this parameter?**
 
-**Why:** [Why this calibration is needed - what problem does it solve?]
+[Describe the problem or gap that motivates calibration. Examples:]
+- Hindcast validation shows X% deviation from historical data
+- Monte Carlo runs produce unrealistic outcome distributions
+- Architecture review identified parameter as uncalibrated assumption
+- Recent research (YYYY) suggests different value
+- Parameter value was placeholder, needs research backing
 
-**Result:** [One-sentence summary of the calibration outcome]
-
----
-
-## Current State
-
-### Existing Values
-```typescript
-// Current implementation location
-// File: [path/to/file.ts:line]
-const parameter = [current value];  // [Brief inline comment]
-```
-
-**Problem with current values:**
-- [Issue 1: e.g., "Hindcast shows 10% overshoot in 2020"]
-- [Issue 2: e.g., "Not research-backed - arbitrary choice"]
-- [Issue 3: e.g., "Doesn't match 2024-2025 empirical data"]
-
-### Impact of Problem
-- **Hindcast accuracy:** [e.g., "Off by X% in year YYYY"]
-- **Research quality:** [e.g., "Grade D - no sources"]
-- **Monte Carlo outcomes:** [e.g., "Unrealistic outcome distributions"]
+**Current state:**
+- Current value: [X]
+- Problem: [Describe issue with current value]
+- Impact: [What systems/outcomes are affected?]
 
 ---
 
-## Research Foundation
+## 2. Research Backing
 
-### Primary Sources
+**Primary sources (minimum 2 required):**
 
-**Source 1:**
-- **Citation:** [Author(s), Year, Title, Journal/Institution]
-- **Link:** [DOI or URL]
-- **Key Finding:** [Quote or paraphrase the relevant finding]
-- **Data Extracted:** [Specific numbers, ranges, equations]
-- **Quality:** [Peer-reviewed / Preprint / Industry report / etc.]
+1. **[Author et al. (YYYY)]** - [Title]
+   - Citation: [Full citation]
+   - Relevant finding: [What this paper says about the parameter]
+   - Parameter value from paper: [X]
+   - Confidence: [HIGH/MEDIUM/LOW based on sample size, replication]
 
-**Source 2:**
-- [Same format as above]
+2. **[Author et al. (YYYY)]** - [Title]
+   - Citation: [Full citation]
+   - Relevant finding: [What this paper says about the parameter]
+   - Parameter value from paper: [Y]
+   - Confidence: [HIGH/MEDIUM/LOW]
 
-**Source 3:**
-- [Same format as above]
+**Additional sources (if available):**
+- [List other supporting papers with brief notes]
 
-### Contradictory Evidence
+**Uncertainty range:**
+- Lower bound: [X] (source: [paper])
+- Upper bound: [Y] (source: [paper])
+- Best estimate: [Z] (justification: [why this value within range])
 
-**Did you find sources that CONTRADICT the calibration?**
-
-[If YES, list them here - transparency about conflicting evidence is critical]
-
-**Source X:**
-- **Citation:** [...]
-- **Contradicts by:** [Explain the contradiction]
-- **Resolution:** [Why we're proceeding despite this - e.g., "Source X used outdated methodology", "Our context differs", etc.]
-
-[If NO contradictory evidence found, state: "No contradictory evidence found in literature search (searched: [databases/sources checked])"]
-
-### Research Grade
-
-**Self-Assessment:**
-- **Peer-reviewed sources:** [X out of Y sources]
-- **2024-2025 sources:** [X out of Y sources]
-- **Parameter justification:** [Strong / Moderate / Weak]
-- **Expected Grade:** [A / B / C / D / F]
+**Peer review status:**
+- ✅ All sources peer-reviewed in journals
+- ✅ Sources from 2024-2025 (or justify if older)
+- ✅ No contradictory evidence found (or document and resolve)
 
 ---
 
-## Proposed Calibration
+## 3. Current Value
 
-### New Values
+**Before calibration:**
 
 ```typescript
-// Proposed implementation
-// File: [path/to/file.ts:line]
-const parameter = [new value];  // [Research-backed comment with citation]
-
-// OR if range:
-const parameterMin = [value];  // [Citation, page/section]
-const parameterMax = [value];  // [Citation, page/section]
+// File: [path/to/file.ts]
+const parameterName = X; // [Current comment if any]
 ```
 
-### Justification
-
-**Why these specific values:**
-1. [Reason 1 with citation]
-2. [Reason 2 with citation]
-3. [Reason 3 with citation]
-
-**Range bounds (if applicable):**
-- **Lower bound:** [Value] - [Justification]
-- **Upper bound:** [Value] - [Justification]
-- **Default/Baseline:** [Value] - [Justification]
-
-### Expected Impact
-
-**Hindcast (if applicable):**
-- **Before calibration:** [Metric] = [Value] ([X%] deviation from historical)
-- **After calibration:** [Metric] = [Expected value] ([Y%] deviation - target: <5%)
-
-**Monte Carlo:**
-- **Expected outcome shift:** [e.g., "Utopia outcomes increase from 15% to 25%"]
-- **Realism improvement:** [e.g., "Eliminates unrealistic extinction spike at month 120"]
+**Issues with current value:**
+- [Why is this value wrong/ungrounded?]
+- [What data or research contradicts it?]
+- [What unrealistic behavior does it cause?]
 
 ---
 
-## Validation Plan
+## 4. Proposed Value
 
-### Phase 1: Unit Tests
-- [ ] Add unit test for new parameter values
-- [ ] Test edge cases (min, max, midpoint)
-- [ ] Verify no NaN/Infinity from new values
+**After calibration:**
 
-### Phase 2: Hindcast Validation (if applicable)
-- [ ] Run hindcast 1990-2024 (or relevant period)
-- [ ] Check deviation at checkpoint years
-- [ ] Target: <5% deviation for all checkpoints
-- [ ] Document any regressions
+```typescript
+// File: [path/to/file.ts]
+const parameterName = Y; // [Citation] - [Brief justification]
+// Uncertainty: ±Z% (range: [lower]-[upper])
+```
 
-### Phase 3: Monte Carlo Validation
-- [ ] Run N≥10 simulations with same seed
-- [ ] Check determinism (CV < 0.01%)
-- [ ] Check outcome distribution realism
-- [ ] Compare before/after distributions
-- [ ] Document any unexpected shifts
+**Justification:**
+- Research backing: [Which paper(s) support this value]
+- Calculation: [If derived, show work]
+- Comparison: [How does this compare to current value? Why is it better?]
+- Regional variation: [If applicable, note geographic differences]
 
-### Phase 4: Architecture Review
-- [ ] Submit to architecture-skeptic (Quality Gate 2)
-- [ ] Check for performance impacts
-- [ ] Check for state propagation issues
-- [ ] Address CRITICAL/HIGH issues
+**Expected impact:**
+- [What changes in simulation behavior?]
+- [Which systems are affected?]
+- [What outcome distributions should shift?]
 
 ---
 
-## Implementation Notes
+## 5. Validation
 
-### Files Modified
-```
-src/[path]/[file1].ts  - [Brief description of changes]
-src/[path]/[file2].ts  - [Brief description of changes]
-```
+### Hindcast Validation (if applicable)
 
-### Migration Notes
-[If changing existing parameters, note any migration steps needed]
+**Test:** Run historical simulation (1990-2024) with new parameter value
 
-### Breaking Changes
-[List any breaking changes - e.g., "Removes deprecated fallback values"]
+| Metric | Before | After | Target | Pass? |
+|--------|--------|-------|--------|-------|
+| Population 2020 | [X%] deviation | [Y%] deviation | <5% | [✅/❌] |
+| Temperature 2020 | [X°C] | [Y°C] | ~1.2°C | [✅/❌] |
+| GDP 2020 | [X%] deviation | [Y%] deviation | <10% | [✅/❌] |
 
----
+**Result:** [Pass/Fail with notes]
 
-## Results
+### Monte Carlo Validation
 
-### Hindcast Results (if applicable)
+**Test:** Run N≥10 simulations with different RNG seeds
 
-| Year | Historical | Before Calibration | After Calibration | Deviation |
-|------|-----------|-------------------|------------------|-----------|
-| 1990 | [value]   | [value] ([±X%])   | [value] ([±Y%])  | [Y%]      |
-| 2000 | [value]   | [value] ([±X%])   | [value] ([±Y%])  | [Y%]      |
-| 2010 | [value]   | [value] ([±X%])   | [value] ([±Y%])  | [Y%]      |
-| 2020 | [value]   | [value] ([±X%])   | [value] ([±Y%])  | [Y%]      |
+| Run | Seed | Outcome | Key Metric | Notes |
+|-----|------|---------|------------|-------|
+| 1 | 42 | [Status] | [X] | - |
+| 2 | 123 | [Status] | [Y] | - |
+| ... | ... | ... | ... | ... |
 
-**Summary:** [Did calibration achieve target? By how much did accuracy improve?]
+**Statistics:**
+- Mean: [X]
+- Std dev: [Y]
+- CV: [Z]% (target: <0.01% for determinism)
+- Outcome distribution: [Realistic/Unrealistic - justify]
 
-### Monte Carlo Results
-
-**Determinism Check:**
-- **N:** [number of runs]
-- **Seed:** [seed value]
-- **CV:** [coefficient of variation]
-- **Status:** [PASS <0.01% / FAIL]
-
-**Outcome Distribution:**
-
-| Outcome Tier | Before Calibration | After Calibration | Change |
-|-------------|-------------------|------------------|--------|
-| Utopia      | [X%]              | [Y%]             | [±Z%]  |
-| Flourishing | [X%]              | [Y%]             | [±Z%]  |
-| Status Quo  | [X%]              | [Y%]             | [±Z%]  |
-| Collapse    | [X%]              | [Y%]             | [±Z%]  |
-| Extinction  | [X%]              | [Y%]             | [±Z%]  |
-
-**Realism Assessment:** [Are outcome distributions more realistic after calibration?]
+**Result:** [Pass/Fail with notes]
 
 ### Architecture Review
 
-**Grade:** [A / B / C / D / F]
-**Reviewer:** [architecture-skeptic or agent name]
-**Issues Found:** [CRITICAL: X, HIGH: Y, MEDIUM: Z, LOW: W]
-**Resolution:** [How CRITICAL/HIGH issues were addressed]
+**Reviewer:** [architecture-skeptic / research-skeptic]
+**Grade:** [A/B/C/D/F]
+**Issues:**
+- CRITICAL: [List any]
+- HIGH: [List any]
+- MEDIUM: [List any]
+- LOW: [List any]
+
+**Actions taken:** [How were CRITICAL/HIGH issues addressed?]
 
 ---
 
-## Conclusion
+## 6. Implementation
 
-**Calibration Status:** [SUCCESS / PARTIAL / FAILED]
+**Files modified:**
+1. `[path/to/file1.ts]` - [Description of change]
+2. `[path/to/file2.ts]` - [Description of change]
 
-**Success Criteria Met:**
-- [ ] Hindcast accuracy improved to target
-- [ ] Monte Carlo determinism maintained (CV < 0.01%)
-- [ ] Research validation passed (Grade B+ or higher)
-- [ ] Architecture review passed (Grade B+ or higher)
-- [ ] No regressions introduced
+**Git commit:** [commit hash after implementation]
 
-**Future Work:**
-- [Any follow-up calibrations needed]
-- [Any uncertainties remaining]
-- [Any better data sources to monitor]
+**Documentation updated:**
+- `docs/wiki/README.md` - [Section updated with new parameter]
+- `research/[topic]_[date].md` - [Research findings preserved]
+- `docs/CALIBRATION_OWNERSHIP.md` - [Marked STABLE]
 
-**Recommendation:** [MERGE / DEFER / REJECT]
-
----
-
-## Metadata
-
-**Commits:**
-- [commit hash]: [Commit message]
-- [commit hash]: [Commit message]
-
-**Related Files:**
-- Research: `research/[topic]_[date].md`
-- Validation: `reviews/[validation_file].md`
-- Change Proposal: `openspec/changes/[feature]/`
-
-**Registry Entry:** Updated in `docs/CALIBRATION_OWNERSHIP.md`
+**Tests passing:**
+- ✅ `npm test` - All tests pass
+- ✅ `npx tsc --noEmit` - No new type errors
+- ✅ Monte Carlo N≥10 - CV < 0.01%
+- ✅ Architecture review - Grade B+ or higher
 
 ---
 
-## Appendix: Raw Data
+## 7. Competing Calibrations (if applicable)
 
-[Include any raw data tables, intermediate calculations, or supplementary analysis here]
+**If another calibration existed for this parameter:**
 
-**Example:**
-```
-Regional CDR data (UN WPP 2024):
-Region          1990   1995   2000   2005   2010   2015   2020
-Sub-Saharan     15.5   14.7   14.2   12.8   11.2    9.8    8.7
-Europe          10.5   10.8   10.9   10.8   10.9   11.0   11.0
-[...]
-```
+| Calibration | Value | Research Backing | Status | Notes |
+|-------------|-------|------------------|--------|-------|
+| This calibration | [Y] | [Papers] | ✅ ACCEPTED | [Why chosen] |
+| Competing calibration | [Z] | [Papers] | ❌ REJECTED | [Why rejected] |
+
+**Rationale for rejection:**
+- [Weaker research backing / Older sources / Methodological issues / etc.]
+
+---
+
+## 8. Future Monitoring
+
+**Re-calibration triggers:**
+- [ ] New research published contradicting this value
+- [ ] Hindcast validation shows >5% deviation with new data
+- [ ] Monte Carlo outcome distributions become unrealistic
+- [ ] Architecture review downgrades to C or lower
+
+**Next review date:** [3 months from calibration date]
+
+**Watch for:**
+- [Specific papers/researchers to monitor]
+- [Upcoming conferences/reports that may affect this parameter]
+- [Related parameters that may need coordinated recalibration]
+
+---
+
+**Saved:** `research/[parameter_name]_calibration_[YYYYMMDD].md`
+**Session time:** [X hours]
+**Quality gate grades:** Research [A/B/C/D/F], Architecture [A/B/C/D/F]
