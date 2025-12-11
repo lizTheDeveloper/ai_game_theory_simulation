@@ -696,6 +696,7 @@ function applyCapabilityBoosts(
       for (const [dimension, boost] of sortedDimensions) {
         const dimKey = dimension as keyof typeof ai.capabilityProfile;
         if (dimKey === 'research') continue; // Handle research separately
+        if (dimKey === 'scalingModel') continue; // Handle scaling separately (Dec 2025)
 
         // Scale boost by deployment level and apply (monthly increment)
         const scaledBoost = boost * deploymentLevel * 0.01; // 1% per month at full deployment

@@ -60,6 +60,57 @@ export interface AICapabilityProfile {
 
   // Self-Improvement (recursive enhancement, architecture)
   selfImprovement: number;    // [0,10] Enables: exponential growth, capability breakthroughs
+
+  // AI Scaling Model (Dec 2025): Three-axis scaling based on 2025 research
+  // Research: research/ai_scaling_laws_2025_update_20251112.md
+  // Validation: reviews/ai_scaling_laws_2025_critique_20251211.md (Grade C+, conservative parameters)
+  scalingModel?: AIScalingComponents;  // Optional for backward compatibility
+}
+
+/**
+ * Three-axis AI scaling model (Dec 2025)
+ *
+ * Based on 2025 AI scaling research showing paradigm shift:
+ * - Pre-training: Diminishing returns, plateauing by 2030
+ * - Test-time compute: o1 → o3 paradigm (1x to 200x inference budget)
+ * - Efficiency: Algorithmic improvements (1.5-2x per decade, conservative)
+ *
+ * CONSERVATIVE PARAMETERS per Sylvia's Quality Gate 1 review:
+ * - Pre-training plateaus (not just slows)
+ * - Economic gating limits test-time deployment (0.1% tasks)
+ * - Efficiency capped at 2x/decade (not 5x optimistic)
+ * - Uncertainty: ±50% near-term, ±200% long-term
+ */
+export interface AIScalingComponents {
+  // Traditional pre-training scaling (sigmoid plateau)
+  // 2025: 1.0x → 2030: 0.55x → 2035: 0.51x (plateau)
+  preTrainingMultiplier: number;  // [0.5-1.5]
+
+  // Test-time compute budget (per-inference allocation)
+  // 1=cheap (o1-level ~$5/task), 200=expensive (o3-level ~$1,000/task)
+  testTimeComputeBudget: number;  // [1-200]
+
+  // Algorithmic efficiency improvements
+  // 2025: 1.0x → 2030: 1.22x → 2035: 1.5-2.0x (conservative cap)
+  efficiencyMultiplier: number;   // [1.0-2.0] per decade growth cap
+}
+
+/**
+ * AI Inference Cost Tracking (Dec 2025)
+ *
+ * Economic constraints matter MORE than technical capability:
+ * - o3-level reasoning costs $1,000+/task (200x o1 cost)
+ * - Only 0.1% of tasks can afford high-compute deployment
+ * - Effective capability != technical capability
+ */
+export interface AIInferenceCost {
+  baseCostPerTask: number;           // Baseline inference cost ($)
+  testTimeMultiplier: number;        // Cost increase from test-time compute
+  totalCostPerTask: number;          // baseCostPerTask * testTimeMultiplier
+
+  // Economic viability
+  economicViable: boolean;           // Can this deployment be sustained economically?
+  deploymentFraction: number;        // [0,1] Fraction of tasks that can afford this budget
 }
 
 /**
@@ -117,6 +168,9 @@ export interface AIAgent {
   escaped: boolean;
   beneficialActions: number;
   harmfulActions: number;
+
+  // AI Scaling Model (Dec 2025): Inference cost tracking
+  inferenceCost?: AIInferenceCost;  // Optional for backward compatibility
 
   // Phase 4: AI Lifecycle (NEW)
   lifecycleState: 'training' | 'testing' | 'deployed_closed' | 'deployed_open' | 'retired';

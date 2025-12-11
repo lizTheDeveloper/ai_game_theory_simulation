@@ -67,7 +67,7 @@ export class AIAlignmentEvolutionPhase implements SimulationPhase {
     setDeterministicRng(rng);
 
     // Execute sub-phases in strict order to preserve RNG consumption
-    // Order: 2.5 → 3.4 → 3.5 → 4.05
+    // Order: 2.5 → 3.4 → 3.5 → 4.05 → 4.06 (AI Scaling, Dec 2025)
 
     // 1. LLM Weight Update (order 2.5)
     const llmChanges = this.executeLLMWeightUpdate(state, rng, events);
@@ -80,6 +80,9 @@ export class AIAlignmentEvolutionPhase implements SimulationPhase {
 
     // 4. RLHF Binding (order 4.05)
     this.executeRLHFBinding(state, rng, events);
+
+    // 5. AI Scaling Evolution (order 4.06, Dec 2025)
+    this.executeScalingEvolution(state, rng, events);
 
     return {
       events,
@@ -801,6 +804,76 @@ export class AIAlignmentEvolutionPhase implements SimulationPhase {
       console.log(`  Avg binding strength: ${avgBinding.toFixed(2)}`);
     } else {
       console.log(`  All AI agents terminated - no averages to compute`);
+    }
+  }
+
+  /**
+   * AI Scaling Evolution (order 4.06, Dec 2025)
+   *
+   * Updates AI scaling components over time using CONSERVATIVE parameters:
+   * - Pre-training: Sigmoid plateau (not continued exponential)
+   * - Efficiency: 1.5-2x/decade cap (not 5x optimistic)
+   * - Uncertainty: ±50% near-term, ±200% long-term
+   *
+   * Research: research/ai_scaling_laws_2025_update_20251112.md
+   * Validation: reviews/ai_scaling_laws_2025_critique_20251211.md (Grade C+)
+   */
+  private executeScalingEvolution(
+    state: GameState,
+    rng: RNGFunction,
+    events: GameEvent[]
+  ): void {
+    const { updateScalingComponents, calculateInferenceCost, calculateEffectiveCapability } = require('../../aiScalingStrategy');
+    const { calculateTotalCapabilityFromProfile, calculateEffectiveCapabilityWithScaling } = require('../../capabilities');
+
+    // Only evolve every 6 months (efficiency optimization)
+    if (state.currentMonth % 6 !== 0) {
+      return;
+    }
+
+    console.log(`\n=== AI Scaling Evolution (Month ${state.currentMonth}) ===`);
+
+    const monthsSince2025 = state.currentMonth; // Simulation starts Jan 2025
+
+    for (const agent of state.aiAgents) {
+      // Skip if no scaling model (backward compatibility)
+      if (!agent.capabilityProfile.scalingModel) {
+        continue;
+      }
+
+      // Update scaling components
+      const updatedScaling = updateScalingComponents(
+        agent.capabilityProfile.scalingModel,
+        monthsSince2025,
+        rng
+      );
+
+      agent.capabilityProfile.scalingModel = updatedScaling;
+
+      // Recalculate inference cost
+      agent.inferenceCost = calculateInferenceCost(updatedScaling.testTimeComputeBudget);
+
+      // Recalculate effective capability
+      const effectiveCapability = calculateEffectiveCapabilityWithScaling(
+        agent.capabilityProfile,
+        agent.inferenceCost
+      );
+
+      agent.capability = assertFinite(effectiveCapability, {
+        location: 'AIAlignmentEvolutionPhase.executeScalingEvolution',
+        valueName: 'effectiveCapability',
+        month: state.currentMonth,
+        additionalInfo: { agentId: agent.id }
+      });
+
+      // Log only on first agent for brevity
+      if (agent.id === state.aiAgents[0]?.id && agent.inferenceCost) {
+        console.log(`  Pre-training multiplier: ${updatedScaling.preTrainingMultiplier.toFixed(3)}x`);
+        console.log(`  Efficiency multiplier: ${updatedScaling.efficiencyMultiplier.toFixed(3)}x`);
+        console.log(`  Test-time compute budget: ${updatedScaling.testTimeComputeBudget.toFixed(1)}x`);
+        console.log(`  Inference cost: $${agent.inferenceCost.totalCostPerTask.toFixed(2)}/task`);
+        console.log(`  Deployment fraction: ${(agent.inferenceCost.deploymentFraction * 100).toFixed(1)}%`);
+      }
     }
   }
 }

@@ -1,12 +1,13 @@
 /**
  * Multi-dimensional AI capability system (Phase 2.5)
- * 
+ *
  * Replaces single 'capability' number with strategic dimensions.
  * Each dimension grows at different rates and enables different extinction types.
  */
 
 import { AICapabilityProfile, AIResearchCapabilities, ResearchInvestments, AIAgent } from '@/types/game';
 import { deterministicRandom } from '@/simulation/utils/deterministicRng';
+import { initializeScalingComponents } from './aiScalingStrategy';
 
 /**
  * Initialize a fresh capability profile for a new AI agent
@@ -46,7 +47,9 @@ export function createEmptyCapabilityProfile(): AICapabilityProfile {
         security: 0,
         architectures: 0
       }
-    }
+    },
+    // AI Scaling Model (Dec 2025): Initialize with 2025 baseline
+    scalingModel: initializeScalingComponents(1)  // 1x test-time compute (o1-level)
   };
 }
 
@@ -118,7 +121,9 @@ export function initializeCapabilityProfile(seed: number = deterministicRandom()
         security: toCapabilityLevel(4.5 * variation(18)),    // 3.6-4.5 → 4 or 5: Elite vulnerability discovery
         architectures: toCapabilityLevel(5.0 * variation(19)) // 4.0-5.0 → 4 or 5: Complex system design superhuman
       }
-    }
+    },
+    // AI Scaling Model (Dec 2025): Initialize with 2025 baseline
+    scalingModel: initializeScalingComponents(1)  // 1x test-time compute (o1-level)
   };
 }
 
@@ -435,17 +440,61 @@ export function scaleCapabilityProfile(
         security: toCapabilityLevel(profile.research.computerScience.security * multiplier),
         architectures: toCapabilityLevel(profile.research.computerScience.architectures * multiplier)
       }
-    }
+    },
+    // AI Scaling Model (Dec 2025): Preserve existing scaling components (don't scale them)
+    scalingModel: profile.scalingModel
   };
+}
+
+/**
+ * Calculate effective AI capability WITH scaling components (Dec 2025)
+ *
+ * Wraps base capability calculation with three-axis scaling model:
+ * - Pre-training multiplier (sigmoid plateau)
+ * - Efficiency multiplier (1.5-2x/decade)
+ * - Test-time compute boost (logarithmic, economically gated)
+ *
+ * CRITICAL: Economic constraints reduce effective capability
+ * - $1,000/task = 0.1% deployment fraction
+ * - Effective capability = base * scaling * economic_gating
+ *
+ * @param profile - AI capability profile (includes scalingModel)
+ * @param inferenceCost - Optional inference cost for economic gating
+ * @returns Effective capability incorporating scaling and economics
+ */
+export function calculateEffectiveCapabilityWithScaling(
+  profile: AICapabilityProfile,
+  inferenceCost?: { deploymentFraction: number }
+): number {
+  // Base capability from 7-dimensional profile
+  const baseCapability = calculateTotalCapabilityFromProfile(profile);
+
+  // If no scaling model, return base (backward compatibility)
+  if (!profile.scalingModel) {
+    return baseCapability;
+  }
+
+  // Import scaling calculation
+  const { calculateEffectiveCapability } = require('./aiScalingStrategy');
+
+  // Economic deployment fraction (default: 1.0 = no constraints)
+  const deploymentFraction = inferenceCost?.deploymentFraction ?? 1.0;
+
+  // Calculate with scaling components
+  return calculateEffectiveCapability(
+    baseCapability,
+    profile.scalingModel,
+    deploymentFraction
+  );
 }
 
 /**
  * Calculate OBSERVABLE AI capability (what government can see)
  * Uses revealedCapability instead of trueCapability
- * 
+ *
  * Government decisions should be based on this, not true capability.
  * This is critical for the adversarial evaluation system to work correctly.
- * 
+ *
  * @param aiAgents - Array of AI agents
  * @returns Total observable AI capability (sum of revealed capabilities)
  */
@@ -454,7 +503,7 @@ export function calculateObservableAICapability(
 ): number {
   return aiAgents
     .filter(ai => ai.lifecycleState !== 'retired')
-    .reduce((sum, ai) => 
+    .reduce((sum, ai) =>
       sum + calculateTotalCapabilityFromProfile(ai.revealedCapability), 0
     );
 }

@@ -6,7 +6,8 @@
  */
 
 import { GameState, AIAgent, ScenarioMode, HistoricalOverrides } from '@/types/game';
-import { initializeCapabilityProfile, initializeResearchInvestments, calculateTotalCapabilityFromProfile, updateDerivedCapabilities, scaleCapabilityProfile } from './capabilities';
+import { initializeCapabilityProfile, initializeResearchInvestments, calculateTotalCapabilityFromProfile, updateDerivedCapabilities, scaleCapabilityProfile, calculateEffectiveCapabilityWithScaling } from './capabilities';
+import { calculateInferenceCost } from './aiScalingStrategy';
 import { computeEffectiveAlignment, computeAlignmentRobustness } from '@/types/alignment-techniques';
 import { wrapStateForValidation } from './utils/stateValidation';
 import { assertFinite, assertProbability, assertInRange } from './utils/assertions';
@@ -335,9 +336,10 @@ export function createAIAgent(
   }
   const capabilityProfile = scaleCapabilityProfile(baseProfile, scalingFactor);
 
-  // Calculate actual total capability from scaled profile
+  // Calculate actual total capability from scaled profile WITH scaling components (Dec 2025)
   // CRITICAL FIX (Nov 7, 2025): Round to integer (capabilities are discrete levels 0-5)
-  const actualCapability = Math.round(calculateTotalCapabilityFromProfile(capabilityProfile));
+  // AI Scaling Model (Dec 2025): Use effective capability with scaling components
+  const actualCapability = Math.round(calculateEffectiveCapabilityWithScaling(capabilityProfile));
   
   // Determine sleeper status (5-10% of misaligned AIs are sleepers)
   const internalAlignment = alignment - 0.0 * 0.8; // Initial resentment = 0
@@ -382,6 +384,10 @@ export function createAIAgent(
     escaped: false,
     beneficialActions: 0,
     harmfulActions: 0,
+    // AI Scaling Model (Dec 2025): Calculate inference cost from test-time compute budget
+    inferenceCost: capabilityProfile.scalingModel
+      ? calculateInferenceCost(capabilityProfile.scalingModel.testTimeComputeBudget)
+      : undefined,
     // Phase 4: AI Lifecycle
     // ROOT CAUSE FIX (Oct 27, 2025): Bug #17 - REAL 2025 frontier AI distribution
     //
@@ -665,10 +671,38 @@ export function createDefaultInitialState(
     // 20 heterogeneous AI agents
     // NOT A MONOLITH - different creators, alignments, goals
     aiAgents,
-    
+
     // Phase 2: Initialize organizations (will be linked after state creation)
     organizations: [],
-    
+
+    // AI Capability Scaling System (Dec 2025)
+    // Three-axis model: pre-training plateau, test-time compute, efficiency gains
+    // Research: research/ai_scaling_laws_2025_REVISED_20251211.md (QG1 PASSED)
+    aiCapabilityScaling: {
+      // Pre-training sigmoid plateau (Section 7.1)
+      preTrainingMultiplier: 1.0,           // Start at baseline (2024)
+      preTrainingPlateau: 1.5,              // Max 1.5x GPT-4 baseline
+      preTrainingInflectionYear: 2024,      // Plateau begins 2024
+      preTrainingSteepness: 2.0,            // Rapid saturation
+
+      // Test-time compute (Section 7.3)
+      testTimeComputeBudget: 1.0,           // Start at o1-level ($5/task)
+      testTimeDeploymentShare: 0.001,       // 0.1% of tasks (high-value only)
+      testTimeCostThreshold: 100,           // $100 economic gate threshold
+
+      // Efficiency improvements (Section 7.2)
+      efficiencyMultiplier: 1.0,            // Start at baseline
+      efficiencyGrowthRate: 0.075,          // 7.5% annual (conservative midpoint: 5-10%)
+      efficiencyBaseYear: 2024,             // Reference year
+
+      // Economic constraints
+      costPerInference: 5,                  // $5 baseline (o1-level)
+      economicDeploymentGate: 1.0,          // Full viability at baseline cost
+
+      // Uncertainty (Section 7)
+      uncertaintyMultiplier: 0.5            // ±50% near-term (2025-2027), ±200% long-term (2028+)
+    },
+
     government: {
       controlDesire: 0.3,
       capabilityToControl: 0.5,
