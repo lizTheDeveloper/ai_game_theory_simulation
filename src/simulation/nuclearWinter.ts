@@ -116,7 +116,7 @@ export function initializeNuclearWinterState(): NuclearWinterState {
  * @param state - Game state
  * @param warScale - Number of warheads exchanged (determines soot)
  * @param targetCountries - Countries that were hit (for radiation zones)
- * @param rng - Deterministic RNG function (REQUIRED for reproducibility)
+ * @param rng - Random number generator (required for deterministic simulation)
  */
 export function triggerNuclearWinter(
   state: GameState,
@@ -124,7 +124,7 @@ export function triggerNuclearWinter(
   targetCountries: string[],
   rng: () => number
 ): void {
-  // Fail loudly if RNG missing (REQUIRED for deterministic simulation)
+  // CRITICAL: Validate RNG is provided (deterministic simulation requirement)
   if (!rng || typeof rng !== 'function') {
     throw new Error('❌ CRITICAL: RNG required for deterministic simulation in triggerNuclearWinter');
   }
@@ -579,7 +579,7 @@ function calculateResilientFoodMultiplier(state: GameState): number {
  * @param winter - Nuclear winter state
  * @param countries - Countries hit by nuclear weapons
  * @param currentMonth - Current simulation month
- * @param rng - Deterministic RNG function (REQUIRED for reproducibility)
+ * @param rng - Random number generator (required for deterministic simulation)
  */
 function addRadiationZonesEnhanced(
   state: GameState,
@@ -588,7 +588,7 @@ function addRadiationZonesEnhanced(
   currentMonth: number,
   rng: () => number
 ): void {
-  // Fail loudly if RNG missing (REQUIRED for deterministic simulation)
+  // CRITICAL: Validate RNG is provided (deterministic simulation requirement)
   if (!rng || typeof rng !== 'function') {
     throw new Error('❌ CRITICAL: RNG required for deterministic simulation in addRadiationZonesEnhanced');
   }
@@ -619,7 +619,7 @@ function addRadiationZonesEnhanced(
 
     // Calculate effective LD50 (medical care + combined injury prevalence)
     // Research: 65% of nuclear casualties have combined injuries (NIAID PMC8771911)
-    const hasCombinedInjury = rng() < 0.65;  // 65% prevalence (deterministic)
+    const hasCombinedInjury = rng() < 0.65;  // 65% prevalence (deterministic with seed)
     const effectiveLD50 = calculateEffectiveLD50(medicalCare, hasCombinedInjury);
 
     // Estimate initial dose rate at t=1h (typical range: 1-10 Gy/hour for fallout zone)

@@ -1,6 +1,6 @@
 # Research Update Queue
-**Generated:** 12/8/2025, 9:30:03 PM
-**Files Scanned:** 542
+**Generated:** 12/9/2025, 12:30:04 AM
+**Files Scanned:** 543
 
 ---
 
@@ -956,7 +956,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 340 (62.7%)
+**Count:** 341 (62.8%)
 
 All sources <3 years old. No action required.
 
@@ -968,9 +968,9 @@ All sources <3 years old. No action required.
 |--------|-------|
 | Total files | 542 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 179 (33.0%) |
+| HIGH | 178 (32.8%) |
 | MEDIUM | 24 (4.4%) |
-| LOW | 340 (62.7%) |
+| LOW | 341 (62.8%) |
 | Average age | 7.4 years |
 | Oldest source | 1955 (70 years ago) |
 
@@ -978,7 +978,7 @@ All sources <3 years old. No action required.
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 340 | 62.7% |
+| Current (<3yr) | 341 | 62.8% |
 | Warning (3-5yr) | 24 | 4.4% |
 | Critical (>5yr) | 178 | 32.8% |
 
@@ -992,7 +992,7 @@ All sources <3 years old. No action required.
 
 ## 🔄 Next Steps
 
-1. Update 181 HIGH priority file(s) within 1 month
+1. Update 178 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 

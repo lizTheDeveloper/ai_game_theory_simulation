@@ -24,7 +24,7 @@ console.log(`  Carbon intensity: ${state.powerGenerationSystem.carbonIntensity.t
 
 // Trigger nuclear winter (150 Tg soot - worst case)
 console.log('\n--- Triggering Nuclear Winter (150 Tg soot) ---');
-triggerNuclearWinter(state, 5000, ['United States', 'Russia', 'China']);
+triggerNuclearWinter(state, 5000, ['United States', 'Russia', 'China'], rng);
 
 console.log(`\nNuclear winter state:`);
 console.log(`  Active: ${state.nuclearWinterState.active}`);
