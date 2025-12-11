@@ -206,10 +206,11 @@ None - All HIGH priority work COMPLETE (verified Dec 10 architecture review)
   - Efficiency multipliers (2x/year gains)
   - Cost-performance tradeoffs (200x variation)
   - Research: `ai_scaling_laws_2025_update_20251112.md`
-- **Trust Restoration Re-Research** (Citation misattribution fix)
-  - Replace Mayer 1995 (doesn't cover restoration)
-  - Find 2024-2025 institutional trust recovery research
-  - Research needed
+- **Trust Restoration Implementation** (Research COMPLETE Dec 11, implementation pending)
+  - Research: `institutional_trust_restoration_20251211.md` (Grade A-)
+  - 9 peer-reviewed sources (2023-2025) replacing Mayer 1995 misattribution
+  - Parameters validated: asymmetric recovery (fast erosion, slow restoration)
+  - Implementation approved with uncertainty acknowledgment
 - Hindcast tuning (1950-2024 historical validation)
 - Calibration protocol (parameter optimization workflow)
 
