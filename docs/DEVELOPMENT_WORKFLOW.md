@@ -671,3 +671,118 @@ Verification file archived to research/completed/
 - **Audit trail**: Clear paper trail of what needs verification
 - **Research integrity**: Systematic approach to citation verification
 
+---
+
+## Calibration Coordination Protocol
+
+**Purpose:** Prevent calibration conflicts in multi-worker git architecture by coordinating parameter tuning work.
+
+**Created:** December 9, 2025 (Session 62)
+**Problem solved:** Session 21 discovered ocean pH calibration conflict (70% vs 50% reduction) due to parallel worker calibration without coordination.
+
+### When to Use This Protocol
+
+Use calibration coordination when:
+- Tuning existing parameter values based on new research
+- Adjusting parameters after hindcast/Monte Carlo validation
+- Recalibrating after research validation reveals better sources
+- ANY change to numeric parameters in simulation code
+
+**DO NOT use for:**
+- New feature implementation (use orchestrator workflow instead)
+- Bug fixes that don't change parameter values
+- Documentation-only updates
+
+### Calibration Workflow
+
+```
+1. Identify parameter needing calibration
+   ↓
+2. git pull origin main  # Get latest registry
+   ↓
+3. Check docs/CALIBRATION_OWNERSHIP.md for parameter status
+   ↓
+4. If STABLE → Update to ACTIVE (your name, date) → git push immediately
+   If ACTIVE → Choose different work or coordinate with other worker
+   ↓
+5. Create calibration research file: research/calibration_[param]_[date].md
+   (Use research/calibration_template.md as template)
+   ↓
+6. Gather research sources (2+ peer-reviewed, 2024-2025 preferred)
+   ↓
+7. Document proposed values with justification
+   ↓
+8. Run hindcast validation (if applicable)
+   ↓
+9. Run Monte Carlo N≥10 (determinism check CV < 0.01%)
+   ↓
+10. Submit for architecture review (Quality Gate 2)
+   ↓
+11. Update CALIBRATION_OWNERSHIP.md → status STABLE, add research backing
+   ↓
+12. Commit with message: "calibration: [Parameter] - [brief reason]"
+```
+
+### Key Files
+
+**Calibration Ownership Registry:** `docs/CALIBRATION_OWNERSHIP.md`
+- Tracks which parameters are STABLE vs ACTIVE (being calibrated)
+- Documents current values and research backing for each parameter
+- Prevents duplicate calibration work
+
+**Calibration Template:** `research/calibration_template.md`
+- Standard format for documenting calibration rationale
+- Includes: research foundation, proposed values, validation plan, results
+- Ensures calibrations have proper research backing
+
+### Conflict Resolution
+
+**If you discover a calibration conflict** (two workers calibrated same parameter):
+
+1. Check git log to see which worker committed first
+2. First worker's calibration wins (unless research grade significantly lower)
+3. Second worker's work goes to `research/alternative_calibrations/` for reference
+4. Document rationale for chosen calibration in CALIBRATION_OWNERSHIP.md
+5. Post to coordination channel to notify other workers
+
+**Prevention:** Always `git pull` and check CALIBRATION_OWNERSHIP.md before starting calibration.
+
+### Quality Standards
+
+**All calibrations must meet:**
+- ✅ 2+ peer-reviewed sources (2024-2025 preferred)
+- ✅ Explicit parameter justification (not arbitrary values)
+- ✅ Monte Carlo validation N≥10, CV < 0.01%
+- ✅ Architecture review (Quality Gate 2)
+- ✅ Documented in CALIBRATION_OWNERSHIP.md
+
+**Validation targets:**
+- **Hindcast:** <5% deviation for all checkpoint years (if applicable)
+- **Determinism:** CV < 0.01% across N≥10 runs with same seed
+- **Research Grade:** B+ or higher
+- **Architecture Grade:** B+ or higher (no CRITICAL/HIGH issues)
+
+### Example: Ocean pH Calibration
+
+**Problem:** Session 21 found conflict between 70% reduction (pH=8.0) vs 50% reduction (pH=7.95)
+
+**Resolution:**
+1. Created CALIBRATION_OWNERSHIP.md entry for ocean acidification
+2. Documented research backing: NOAA Ocean Acidification Program
+3. Chose 70% reduction (better match to NOAA observed data)
+4. Added rationale to registry
+5. Marked status STABLE
+
+**Lesson:** Registry prevents future conflicts, preserves research rationale in git history.
+
+### Maintenance
+
+**Update CALIBRATION_OWNERSHIP.md:**
+- **Before** starting calibration (status → ACTIVE)
+- **After** completing calibration (status → STABLE, add research backing)
+- **When** new research emerges that invalidates calibration (add note)
+
+**Archive policy:**
+- Keep last 5 calibration history entries per parameter in main registry
+- Move older entries to `docs/calibration-history/[parameter].md`
+- Never delete research backing citations
