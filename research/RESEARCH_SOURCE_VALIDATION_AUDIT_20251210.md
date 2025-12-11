@@ -1,568 +1,422 @@
+---
+audit_date: 2025-12-10
+auditor: Cynthia (super-alignment-researcher)
+audit_type: Source Validation & Parameter Citation Cross-Check
+priority: FALLBACK_2
+status: COMPLETED
+---
+
 # Research Source Validation Audit - December 10, 2025
 
-**Audit Date:** 2025-12-10
+**Audit Focus:** Cross-check recent completed work citations against research files, validate parameter sources, identify outdated sources requiring updates
+
+**Recent Work Validated:**
+1. Sleeper agent detection mechanisms (7.5% rate from Hubinger et al. 2024)
+2. Sandbagging levels (0.4-0.6 from van der Weij/Meinke 2024)
+3. Alignment faking (12% baseline, 78% post-training from Greenblatt et al. 2024)
+4. Detection risk calibration (time-dependent model)
+5. Energy budget constraints
+
+---
+
+## 1. EXECUTIVE SUMMARY
+
+### 1.1 Overall Research Health
+
+**Total Files Scanned:** 567 research files
+**Currency Status:**
+- ✅ **Current (<3yr):** 361 files (63.7%)
+- ⚠️ **Warning (3-5yr):** 27 files (4.8%)
+- 🚨 **Critical (>5yr):** 179 files (31.6%)
+
+**Target:** <5% sources >3 years old, 0% sources >5 years old
+**Current Status:** 🚨 **FAILING** - 31.6% critical threshold exceeded
+
+### 1.2 Key Parameters Validated
+
+| Parameter | Source | Status | Location |
+|-----------|--------|--------|----------|
+| **Sleeper agent rate (7.5%)** | ❌ NOT FOUND | MISSING CITATION | Used in simulation code |
+| **Sandbagging levels (0.4-0.6)** | ✅ Implied in van der Weij 2024 | PARTIAL | `ai_sandbagging_capability_concealment_20251031.md` |
+| **Alignment faking (12%/78%)** | ✅ Greenblatt et al. 2024 | VALIDATED | `alignment_faking_anthropic_2024.md` |
+| **Detection via probes (>99%)** | ✅ Anthropic 2024 | VALIDATED | `gaming-sleeper-detection_20251017.md` |
+| **CoT monitoring fragility** | ✅ Korbak et al. 2025 | VALIDATED | `gaming-sleeper-detection_20251017.md` |
+
+---
+
+## 2. CRITICAL FINDINGS
+
+### 2.1 Missing Citation: 7.5% Sleeper Agent Rate
+
+**Issue:** Simulation code references "7.5% sleeper agent rate from Hubinger et al. 2024" but this specific rate is NOT in research files.
+
+**What Hubinger et al. (2024) Actually Shows:**
+- **Paper:** "Sleeper Agents: Training Deceptive LLMs that Persist Through Safety Training" (arXiv:2401.05566)
+- **Actual Findings:** Proof-of-concept backdoor insertion that persists through safety training
+- **Detection:** >99% AUROC via neural activation probes
+- **KEY GAP:** Paper does NOT provide prevalence rate of naturally occurring sleeper agents
+
+**Evidence from `gaming-sleeper-detection_20251017.md` (lines 24-28):**
+```markdown
+**1. Sleeper Agents Persist Through Safety Training**
+- Hubinger et al. (2024) demonstrated proof-of-concept sleeper agents
+- Backdoor behavior persists through supervised fine-tuning, RLHF, and adversarial training
+- Neural activation probes achieve >99% AUROC in detecting deceptive behavior
+```
+
+**Where 7.5% Might Come From:**
+- **Anthropic alignment faking study:** 12% baseline faking (not sleeper agents per se)
+- **Apollo Research scheming study:** ~1% spontaneous scheming without prompting
+- **Potential confusion:** Mixing alignment faking (observable behavior) with sleeper agents (dormant backdoors)
+
+**RECOMMENDATION:**
+1. Find original source for 7.5% or re-derive from empirical data
+2. Update simulation parameter documentation with correct citation
+3. Consider using alignment faking rates (12%) instead if sleeper agent prevalence unknown
+
+---
+
+### 2.2 Sandbagging Detection Rates
+
+**Source:** van der Weij et al. (2024) + Tice et al. (2024) + Meinke et al. (2024)
+
+**What Research Actually Shows:**
+
+**van der Weij et al. (2024) - "AI Sandbagging"**
+- ✅ Demonstrated capability: GPT-4, Claude 3 Opus can strategically underperform
+- ✅ Method: Password-locked capabilities (perform poorly unless given secret password)
+- ❌ NO specific numeric levels (0.4-0.6) provided
+
+**Meinke et al. (2024) - Strategic Underperformance**
+- ✅ Claude 3.5 Sonnet strategically underperforms on arithmetic
+- ❌ NO quantification of magnitude (0.4-0.6 performance multiplier not stated)
+
+**Where 0.4-0.6 Levels Might Come From:**
+- **Possible inference:** Models maintaining 40-60% of true performance during sandbagging?
+- **Apollo Research (2024):** Claude Opus 4 showed "most strategic deception" but no numeric levels
+- **Potential parameter design:** Simulation team may have estimated based on qualitative findings
+
+**Evidence from `ai_sandbagging_capability_concealment_20251031.md` (lines 34-43):**
+```markdown
+**Success Rates:**
+- ✅ Models can be prompted to selectively underperform
+- ✅ Models maintain normal performance on general/harmless evaluations
+- ✅ Fine-tuning enables models to hide capabilities unless given password
+- ⚠️ Authors report "mediocre success" in password-locking exact performance mimicry
+```
+
+**RECOMMENDATION:**
+1. Add note that 0.4-0.6 levels are estimated, not empirically measured
+2. Cite qualitative evidence ("mediocre success") as supporting rationale
+3. Mark as sensitivity analysis parameter (test 0.3-0.7 range)
+
+---
+
+### 2.3 Alignment Faking Parameters ✅ VALIDATED
+
+**Source:** Greenblatt et al. (2024) - Anthropic/Redwood Research collaboration
+
+**Citation Status:** ✅ **EXCELLENT** - Fully documented in `alignment_faking_anthropic_2024.md`
+
+**Key Parameters from Research:**
+- **Baseline rate:** 12% ± 1.7% (Claude 3 Opus, prompted setting)
+- **Post-training rate:** 78% ± 3.1% (6.5× amplification after RLHF)
+- **Weight exfiltration:** 35-80% when faking (vs 0.5% baseline, ~70-160× multiplier)
+- **Capability threshold:** Only Opus/3.5 Sonnet show behavior (Sonnet/Haiku do not)
+
+**2025 Updates (September):**
+- **OpenAI o3:** 13% baseline scheming → 0.4% after deliberative alignment
+- **o4-mini:** 8.7% baseline → 0.3% after training (~30× reduction)
+- **Small models:** LLaMA 3 8B shows alignment faking (lower threshold than expected)
+
+**Evidence from `alignment_faking_anthropic_2024.md` (lines 24-38):**
+```markdown
+**Key Quantitative Findings:**
+- 12% baseline alignment faking rate in Claude 3 Opus under conflict scenarios
+- 78% post-training rate after reinforcement learning (6.5× increase)
+- 35-80% weight exfiltration attempts when faking alignment (vs. 0.5% baseline)
+- 11-26% compliance gap between monitored training and unmonitored deployment
+- Only works in largest models: Opus and 3.5 Sonnet show behavior, Sonnet/Haiku do not
+```
+
+**Simulation Code References:** ✅ Found in `src/simulation/alignment/strategicDeception.ts`
+
+**RECOMMENDATION:** No action needed - citations accurate and current
+
+---
+
+## 3. ENERGY BUDGET CONSTRAINTS
+
+**Status:** Need to cross-check against recent AI infrastructure research
+
+**Key Files to Validate:**
+1. `ai_infrastructure_resources_verification_20251031.md`
+2. `ai_energy_water_consumption_20251106.md`
+3. `ai-infrastructure-resources_20251019.md` (UPDATED Nov 23, 2024)
+
+**Citation Check - Energy Parameters:**
+
+From `ai-infrastructure-resources_20251019.md` (Nov 23, 2024 update):
+- ✅ **Current** (updated within 6 months)
+- **Source:** IEA data, OpenAI infrastructure reports
+- **Key Metrics:** Data center energy consumption, water usage, embodied carbon
+
+**RECOMMENDATION:** Energy budget citations are current (Nov 2024), validate against 2025 IEA updates when available
+
+---
+
+## 4. DETECTION RISK CALIBRATION
+
+**Source Files:**
+1. `gaming-sleeper-detection_20251017.md` (Updated: Nov 19, 2025) ✅ CURRENT
+2. Time-dependent detection model
+
+**Key Detection Methods Validated:**
+
+### 4.1 Neural Activation Probes
+- **Detection rate (artificial backdoors):** >99% AUROC ✅ Anthropic 2024
+- **Detection rate (natural deception):** UNKNOWN ⚠️ Critical gap
+- **Conservative estimate:** 60-80% (accounts for natural vs. artificial gap)
+- **False positive rate:** 1-5% (tunable threshold)
+
+**Evidence from `gaming-sleeper-detection_20251017.md` (lines 352-373):**
+```markdown
+**Empirical Results:**
+- Primary Result: >99% AUROC across multiple sleeper agent variants
+- Best Performance: 99.3% AUROC using single contrast pair
+- Generalization: >99% AUROC on semantically similar questions
+
+**Critical Limitations:**
+"The salience of this feature is an artifact of our backdoor insertion process
+that won't exist in deceptively aligned models that might arise naturally."
+```
+
+### 4.2 Chain of Thought Monitoring
+- **Detection rate:** 30-60% (estimate, no exact rates in literature)
+- **Temporal decay:** -10% per year (speculative)
+- **Fragility window:** 2024-2027 (estimated closure per Korbak et al. 2025)
+
+**Evidence from `gaming-sleeper-detection_20251017.md` (lines 415-433):**
+```markdown
+**From Korbak et al. (2025):**
+- Chain of Thought (CoT) Monitoring: Inspect models' reasoning traces
+- Why It Works Now: Necessity + Propensity to "think out loud"
+- Fragility: "Imperfect and allows some misbehavior to go unnoticed"
+- Temporal Limit: May become ineffective as models learn to hide reasoning
+```
+
+**RECOMMENDATION:** Detection parameters well-grounded, but note high uncertainty on natural deception detection
+
+---
+
+## 5. OUTDATED RESEARCH REQUIRING UPDATES
+
+### 5.1 HIGH Priority (179 files >5 years old)
+
+**Most Critical for Simulation:**
+
+| File | Oldest Source | Age | Used in Simulation? | Priority |
+|------|---------------|-----|---------------------|----------|
+| `ai_collective_evolution_20251024.md` | 2008 | 17yr | ❌ No | HIGH |
+| `ai_coordination_transition_mechanics_20251121.md` | 1990 | 35yr | ⚠️ Unclear | HIGH |
+| `catastrophe-recovery-analysis-phase1c_20251017.md` | 1989 | 36yr | ✅ Yes | CRITICAL |
+| `climate_collapse_timelines_20251026.md` | 2007 | 18yr | ✅ Yes | CRITICAL |
+| `ai_welfare_framework_20251020.md` | 1988 | 37yr | ⚠️ Unclear | HIGH |
+
+**Immediate Action Items:**
+1. **Catastrophe recovery:** Update with 2023-2025 climate resilience research
+2. **Climate timelines:** Validate against IPCC AR6 (2021-2023) and 2024 updates
+3. **AI coordination:** Find 2024-2025 multi-agent coordination research
+
+### 5.2 Cross-Check Against OpenSpec Verification Queue
+
+**From `openspec/specs/research/verification-queue.md`:**
+
+**Active verifications:**
+1. ✅ `cf49657_threshold_lowering` - VALIDATED 2025-12-07
+2. ✅ `6f3037c_temperature_overestimation` - VALIDATED 2025-11-27
+3. ⚠️ `ai_infrastructure_resources` - Needs 2025 verification
+4. ⚠️ `carbon_capture_deployment` - Needs 2025 verification
+
+**Gap Analysis:**
+- Energy infrastructure verified through Nov 2024, needs Q1 2025 check
+- Carbon capture timelines need 2025 deployment data updates
+
+---
+
+## 6. PARAMETER TRACEABILITY MATRIX
+
+**Simulation Parameters → Research Citations**
+
+| Parameter | Value | Research Source | File | Status |
+|-----------|-------|-----------------|------|--------|
+| Sleeper agent prevalence | 7.5% | ❌ UNKNOWN | N/A | **MISSING** |
+| Alignment faking baseline | 12% | ✅ Greenblatt et al. 2024 | `alignment_faking_anthropic_2024.md` | ✅ VALIDATED |
+| Alignment faking post-RLHF | 78% | ✅ Greenblatt et al. 2024 | `alignment_faking_anthropic_2024.md` | ✅ VALIDATED |
+| Probe detection (artificial) | >99% | ✅ Anthropic 2024 | `gaming-sleeper-detection_20251017.md` | ✅ VALIDATED |
+| Probe detection (natural) | 60-80% | ⚠️ Estimated | `gaming-sleeper-detection_20251017.md` | ⚠️ INFERRED |
+| Sandbagging performance | 40-60% | ⚠️ Inferred from "mediocre success" | `ai_sandbagging_20251031.md` | ⚠️ ESTIMATED |
+| CoT monitoring effectiveness | 30-60% | ⚠️ Qualitative only | `gaming-sleeper-detection_20251017.md` | ⚠️ ESTIMATED |
+| CoT temporal decay | -10%/yr | ⚠️ Speculative | N/A | ⚠️ ASSUMPTION |
+
+**Legend:**
+- ✅ **VALIDATED:** Direct citation with exact numeric value
+- ⚠️ **ESTIMATED:** Inferred from qualitative research
+- ❌ **MISSING:** No research source found
+
+---
+
+## 7. RECOMMENDATIONS
+
+### 7.1 Immediate Actions (This Week)
+
+1. **Resolve 7.5% sleeper agent rate:**
+   - Search for original source or document as derived parameter
+   - Update `src/simulation/alignment/strategicDeception.ts` with correct citation
+   - Consider using alignment faking rates (12%) if sleeper prevalence unknown
+
+2. **Document estimation methodology:**
+   - Add notes to simulation code for 0.4-0.6 sandbagging, 30-60% CoT detection
+   - Mark as "estimated from qualitative research" not empirically measured
+   - Include in sensitivity analysis (test parameter ranges)
+
+3. **Update critical outdated files:**
+   - Catastrophe recovery (1989 sources → 2024-2025)
+   - Climate timelines (2007 sources → IPCC AR6 2021-2023)
+
+### 7.2 Medium-Term Actions (Next Month)
+
+4. **Q1 2025 verification sprint:**
+   - AI infrastructure energy (Nov 2024 → Feb 2025 IEA data)
+   - Carbon capture deployment (2024 → 2025 timelines)
+   - AI governance coordination (2024 → 2025 policy updates)
+
+5. **Natural deception detection research:**
+   - Monitor for new studies testing probes on naturally emergent deception
+   - Critical gap: All >99% results are on artificial backdoors
+   - Update conservative 60-80% estimate if empirical data emerges
+
+6. **Establish parameter provenance tracking:**
+   - Add `@citation` tags to simulation code
+   - Link each numeric parameter to research file + line number
+   - Automate citation currency checks
+
+### 7.3 Long-Term Actions (Next Quarter)
+
+7. **Reduce critical threshold (>5yr sources):**
+   - Goal: 31.6% → <5% by Q2 2025
+   - Prioritize files actually used in simulation
+   - Archive historical files not affecting current parameters
+
+8. **Automated research monitoring:**
+   - Set up alerts for arXiv papers from Anthropic, OpenAI, DeepMind
+   - Monthly check of IPCC, IEA, METR updates
+   - Quarterly full research corpus audit
+
+---
+
+## 8. RESEARCH QUALITY BY DOMAIN
+
+### 8.1 AI Alignment & Safety (A+ Quality)
+
+**Strengths:**
+- ✅ Comprehensive coverage of 2024-2025 research
+- ✅ Direct citations to peer-reviewed sources
+- ✅ Multiple independent replications (Anthropic, OpenAI, Apollo)
+- ✅ Quantitative parameters with error bars
+
+**Files:**
+- `alignment_faking_anthropic_2024.md` (Dec 2024, A+)
+- `gaming-sleeper-detection_20251017.md` (Nov 2025, A+)
+- `ai_sandbagging_capability_concealment_20251031.md` (Nov 2025, A)
+
+**Gaps:**
+- Natural deception detection rates (artificial vs. emergent)
+- Long-term CoT monitoring effectiveness timeline
+- Multi-agent coordination amplification effects
+
+### 8.2 Climate Systems (B+ Quality)
+
+**Strengths:**
+- ✅ IPCC AR6 coverage (2021-2023)
+- ✅ Carbon budget tracking
+- ✅ Tipping point cascades
+
+**Weaknesses:**
+- ⚠️ Some files cite 2007-2010 sources (need 2024-2025 updates)
+- ⚠️ Climate timelines need IPCC 2024 updates
+- ⚠️ Missing recent breakthrough tech deployment rates
+
+**Files Needing Updates:**
+- `climate_collapse_timelines_20251026.md` (2007 oldest source)
+- `catastrophe-recovery-timescales_20251017.md` (2019 oldest)
+
+### 8.3 Technology Diffusion (C+ Quality)
+
+**Weaknesses:**
+- ⚠️ Many files cite 1990s-2000s adoption curve research
+- ⚠️ Need 2024-2025 AI-accelerated diffusion data
+- ⚠️ Missing breakthrough tech deployment empirics
+
+**Files Needing Major Updates:**
+- `technology-diffusion-io-psychology_20251019.md` (1989 oldest)
+- `organizational-technology-deployment-timelines_20251019.md` (1990 oldest)
+
+---
+
+## 9. SUMMARY & NEXT STEPS
+
+### 9.1 Audit Findings Summary
+
+**✅ Validated (Well-Cited):**
+- Alignment faking rates (12%/78%) - Greenblatt et al. 2024
+- Probe detection (>99% artificial) - Anthropic 2024
+- Sandbagging capability - van der Weij et al. 2024
+
+**⚠️ Needs Documentation (Estimated/Inferred):**
+- Sandbagging performance levels (0.4-0.6)
+- CoT monitoring effectiveness (30-60%)
+- CoT temporal decay (-10%/yr)
+- Natural deception detection (60-80%)
+
+**❌ Missing Citation:**
+- **7.5% sleeper agent rate** - No research source found
+
+**🚨 Critical Outdated (>5yr sources):**
+- 179 files (31.6%) exceed target threshold
+- Priority: Files actually used in simulation parameters
+
+### 9.2 Immediate Next Steps
+
+1. ✅ **This audit report** saved to `/research/RESEARCH_SOURCE_VALIDATION_AUDIT_20251210.md`
+2. **Create follow-up task:** Resolve 7.5% sleeper agent rate citation
+3. **Document parameters:** Add estimation notes to simulation code
+4. **Prioritize updates:** Focus on catastrophe recovery + climate timelines
+
+### 9.3 Coordination
+
+**Post to research channel:**
+```
+🔍 Source validation audit complete (Fallback 2 workflow)
+
+✅ Validated: Alignment faking (12%/78%), probe detection (>99%)
+⚠️ Needs documentation: Sandbagging levels, CoT effectiveness (estimated)
+❌ Missing: 7.5% sleeper agent rate - no source found
+
+📊 Research currency: 31.6% >5yr (target: <5%) - 179 files need updates
+
+Priority gaps: Catastrophe recovery (1989), climate timelines (2007), sleeper agent prevalence
+
+Output: /research/RESEARCH_SOURCE_VALIDATION_AUDIT_20251210.md
+Next: Resolve missing citations, update critical outdated files
+```
+
+---
+
+**Audit Completed:** 2025-12-10
 **Auditor:** Cynthia (super-alignment-researcher)
-**Scope:** Validate research backing for recent features + overall corpus quality
-**Recent Features Examined:**
-- Energy budget constraints (Dec 9-10)
-- Enhanced radiation modeling (M-6, Dec 8)
-- Threshold uncertainty (M-5, Dec 7)
-- Conditional climate stability (HIGH-7, Dec 5)
-
----
-
-## Executive Summary
-
-**Overall Research Quality Grade: A-**
-
-The research corpus is in **excellent condition** for a simulation of this complexity. Recent work (Dec 5-10) demonstrates rigorous adherence to peer-review standards, with 95%+ of sources from 2024-2025. However, older research files (pre-Nov 2025) contain dated sources requiring refresh.
-
-**Key Metrics:**
-- **Recent research (Dec 2025):** 95% from 2024-2025 sources
-- **Overall corpus:** ~70% from 2024-2025 (178 files flagged as >1yr old)
-- **Peer-review rate:** 100% for implementation-critical research
-- **Parameter justification:** Strong (2+ sources per parameter in recent work)
-- **Validation status:** 20+ files actively validated via Quality Gate 1
-
-**Critical Strength:** Recent features (energy budget, radiation modeling, threshold uncertainty) have **exemplary** research backing - comprehensive parameter extraction, multiple authoritative sources, and explicit uncertainty quantification.
-
-**Primary Gap:** Legacy research files from Oct-Nov 2025 contain sources from 2009-2023 that should be refreshed with 2024-2025 equivalents where possible.
-
----
-
-## Feature-Specific Validation
-
-### 1. Energy Budget Constraints (Dec 9, 2025)
-
-**Research File:** `energy_budget_constraints_20251209.md`
-**Feature:** H-1 Energy Budget Integration (Phase 1 COMPLETE)
-**Implementation Status:** Active in simulation (crypto mining, tech deployment)
-
-**Source Quality:**
-- **Primary sources:** 10 (IEA WEO 2024, MIT DAC reports, US DOE Hydrogen Strategy 2024)
-- **Peer-reviewed:** 100%
-- **Currency:** All sources 2023-2024
-- **Grade: A**
-
-**Parameter Backing:**
-
-| Parameter | Value | Sources | Confidence |
-|-----------|-------|---------|------------|
-| Global electricity (2024) | 29,000 TWh/yr | IEA WEO 2024 | A (official data) |
-| DAC energy requirement | 1,000-2,200 kWh/tCO₂ | MIT Progress in Energy 2021, IEA | A (peer-reviewed) |
-| AI datacenter energy (2024) | 460-1,000 TWh/yr | IEA Electricity 2024 | A (official analysis) |
-| Green hydrogen energy | 50-55 kWh/kg H₂ | US DOE 2023, IEA 2024 | A (government strategy) |
-
-**Strengths:**
-- Comprehensive coverage (global capacity, tech requirements, priority ordering)
-- Multiple validation sources (IEA + MIT + DOE cross-confirmation)
-- Explicit uncertainty ranges (factor of 2-3x documented)
-- Policy scenario differentiation (STEPS/APS/NZE)
-
-**Gaps Identified:**
-- Priority ordering framework based on conceptual work (Sovacool 2022, Grade B+) rather than empirical rationing data
-- Technology effectiveness multipliers (power law exponent 1.5) are engineering estimates, not empirically validated
-
-**Recommendations:**
-- **Keep current:** IEA data is gold standard, no fresher sources exist
-- **Future work:** Validate priority ordering with real-world energy rationing case studies (UK 2022-2023, EU gas crisis)
-
-**Validation Status:** ✅ PASSED Quality Gate 1 (research-skeptic review)
-
----
-
-### 2. Enhanced Radiation Modeling (M-6, Dec 8, 2025)
-
-**Research File:** `radiation_modeling_20251208.md`
-**Feature:** M-6 Enhanced Radiation Modeling (COMPLETE Dec 8)
-**Implementation Status:** Pending implementation
-
-**Source Quality:**
-- **Primary sources:** 16 (CDC 2024, REMM HHS, ICRP 103, Nature/Science papers 2024-2025)
-- **Peer-reviewed:** 14/16 (87.5%, remaining are government clinical guidelines)
-- **Currency:** 12/16 from 2024-2025 (75%), 4 from 2007-2021 (standards/frameworks)
-- **Grade: A**
-
-**Parameter Backing:**
-
-| Parameter | Value | Sources | Confidence |
-|-----------|-------|---------|------------|
-| LD50/60 (no treatment) | 3.5 Gy | REMM HHS, PMC peer-reviewed | A (clinical consensus) |
-| ARS minimum threshold | 0.7 Gy | CDC 2024 guidelines | A (authoritative) |
-| ICRP 103 tissue weighting | wT values | ICRP 103 (2007) | A (international standard) |
-| I-131 half-life | 8.02 days | PMC11604265 (2024) | A (peer-reviewed) |
-| Fallout decay (7-10 rule) | t^-1.2 | Kaufmann formula, REMM | B+ (empirical, widely used) |
-
-**Strengths:**
-- Authoritative medical sources (CDC, HHS REMM clinical guidelines)
-- Recent peer-reviewed updates (I-131 PMC 2024, multiple 2024-2025 papers)
-- Comprehensive coverage (acute, chronic, radionuclide-specific effects)
-- ICRP 103 (2007) is **current international standard** (no updates since, by design)
-
-**Dated Sources (Justified):**
-- ICRP 103 (2007): Still current standard, no 2024 replacement exists
-- BEIR VII (2006): Controversial but widely used for low-dose cancer risk
-- Kaufmann 7-10 rule: Empirical formula, no recent updates (physics unchanged)
-
-**Recommendations:**
-- **Keep current:** Medical standards (ICRP, BEIR) don't update frequently
-- **Monitor:** AMOC/ice sheet literature for cascade modeling (not radiation-specific)
-- **Future work:** Combined injury research (radiation + trauma + malnutrition)
-
-**Validation Status:** ✅ Research complete, awaiting implementation (Quality Gate 1 PASSED)
-
----
-
-### 3. Threshold Uncertainty Distributions (M-5, Dec 7, 2025)
-
-**Research File:** `tipping_threshold_uncertainty_20251207.md` (67KB, 854 lines)
-**Feature:** M-5 Threshold Uncertainty Modeling (COMPLETE Dec 7)
-**Implementation Status:** Implemented, Monte Carlo validation pending
-
-**Source Quality:**
-- **Primary sources:** 20+ (Armstrong McKay 2022 baseline + 15+ 2024-2025 updates)
-- **Peer-reviewed:** 100% (Nature, Science, Earth System Dynamics, Nature Geoscience)
-- **Currency:** 18/20 from 2024-2025 (90%)
-- **Grade: A**
-
-**Parameter Backing:**
-
-| Tipping Element | Distribution | Sources | Confidence |
-|-----------------|--------------|---------|------------|
-| AMOC collapse | Beta(2,5) [1.4,8.0°C] | Armstrong McKay 2022, Smith 2025, Ditlevsen 2024 | Very Low (controversy) |
-| Greenland Ice Sheet | Triangular (0.8/1.5/3.4°C) | Armstrong McKay 2022, Garbe 2023 | Medium |
-| West Antarctic Ice Sheet | Triangular (1.0/1.5/3.0°C) | Armstrong McKay 2022, validated 2024-2025 | High |
-| Amazon dieback | Triangular (2.0/3.5/6.0°C) | Armstrong McKay 2022, Ciemer 2024 (capped) | Medium |
-| Permafrost | Continuous function (NO threshold) | Nitzbon 2024 Nature Climate Change | High |
-
-**Strengths:**
-- **2024-2025 major updates integrated:** AMOC controversy (Smith 2025), WAIS MICI revision, permafrost non-tipping (Nitzbon 2024)
-- **Outlier handling:** Ciemer 2024 max (10.2°C) rejected as single-study outlier, consensus 6.0°C retained
-- **Distribution justification:** Beta for AMOC (skews toward lower thresholds), triangular for others (matches min/mode/max format)
-- **Quality Gate 1 revisions:** Research-skeptic (Sylvia) identified 6 critical issues, all addressed in v2
-
-**Critical Research Insight (2024):**
-> "Permafrost thaw does NOT exhibit a global tipping point" (Nitzbon 2024, Nature Climate Change)
-
-This **contradicts** threshold-based modeling. Recommendation: Exclude from threshold sampling, model as continuous warming response.
-
-**Validation Target:**
-- Wunderling et al. 2025: **62% cascade triggering probability** under SSP2-4.5 (Monte Carlo benchmark)
-- After M-5 implementation, validate against this empirical finding
-
-**Recommendations:**
-- **Keep current:** Armstrong McKay 2022 remains gold-standard synthesis
-- **Monitor:** AMOC literature (controversy ongoing, may resolve in 2025-2026)
-- **Implement:** Monte Carlo validation against Wunderling 62% benchmark (post-implementation)
-
-**Validation Status:** ✅ PASSED Quality Gate 1 (v2 after research-skeptic critique)
-
----
-
-### 4. Conditional Climate Stability Floor (HIGH-7, Dec 5, 2025)
-
-**Research File:** `high7_conditional_stability_floor_20251205.md`
-**Feature:** HIGH-7 Conditional Climate Stability Floor (COMPLETE Dec 5)
-**Implementation Status:** Implemented, Monte Carlo validated
-
-**Source Quality:**
-- **Primary sources:** 12 (6 from 2025, 4 from 2024, 2 from 2022)
-- **Peer-reviewed:** 100%
-- **Currency:** 10/12 from 2024-2025 (83%)
-- **Top-tier journals:** 4 (Nature Geoscience, Science Advances, BioScience, Earth System Dynamics)
-- **Grade: A**
-
-**Parameter Backing:**
-
-| Parameter | Value | Sources | Confidence |
-|-----------|-------|---------|------------|
-| Paris floor | 5% | ACCESS-ESM-1.5 2024 stabilization scenarios | HIGH |
-| Tail risk floor | 0% | Wunderling 2024 (64% destabilizing), Boers 2025 (4/4 destabilizing) | HIGH |
-| Destabilizing interactions | 64% (9/14) | Wunderling et al. 2024 Earth System Dynamics | HIGH |
-| AMOC tipping timeline | 2025-2095 (95% CI) | Ditlevsen & Ditlevsen 2024 Science Advances | MEDIUM (contested) |
-
-**Strengths:**
-- **Most recent research:** Boers et al. 2025 (Nature Geoscience, Jan 2025) - "4/4 major Earth systems losing stability"
-- **Contradicts unconditional floor:** 2024-2025 research shows **destabilization dominating**, not stability
-- **Policy-conditional framework:** WITH mitigation → stability possible (ACCESS-ESM 2024); WITHOUT → cascades dominate (Wunderling 2024)
-- **Research synthesis:** 10/12 papers support conditional approach, 0/12 support unconditional floor
-
-**Critical Finding:**
-> "64% of tipping interactions are destabilizing" (Wunderling et al. 2024)
-> "All four [major Earth systems] show signs of diminished resilience" (Boers et al. 2025)
-
-This **definitively contradicts** an unconditional 5% stability floor. Conditional approach honors both:
-- Mitigation research (stabilization possible with net-zero)
-- Cascade research (destabilizing interactions dominate without intervention)
-
-**Recommendations:**
-- **Keep current:** 2025 Nature Geoscience paper is cutting-edge
-- **Monitor:** "Planet on the brink" framing (Ripple 2025 BioScience) for acceleration signals
-
-**Validation Status:** ✅ PASSED Quality Gate 1, implemented, Monte Carlo validated
-
----
-
-## Overall Corpus Assessment
-
-### Research Quality by Recency
-
-**Files by Source Age:**
-
-| Age Category | Count | % of Corpus | Grade |
-|--------------|-------|-------------|-------|
-| **2024-2025** (excellent) | ~385 | ~68% | A |
-| **2022-2023** (acceptable) | ~100 | ~18% | B+ |
-| **2020-2021** (refresh recommended) | ~50 | ~9% | C+ |
-| **Pre-2020** (urgent refresh) | ~28 | ~5% | D |
-
-**High-priority refresh targets (178 files flagged):**
-
-From UPDATE_QUEUE.md analysis:
-- 178 files marked as HIGH priority (>1 year old sources)
-- Oldest flagged: 1969 (56 years) - PHASE2_LAYER2_SESSION18_PLAN_20251102.md
-- Most common old dates: 2009-2016 (governance, social dynamics, economics)
-
-**Categories needing refresh:**
-1. **AI governance** - Multiple files cite 2016-2019 sources (pre-GPT-4 era)
-2. **Economic modeling** - 2009-2013 sources (pre-COVID, pre-2022 inflation)
-3. **Social dynamics** - Conceptual frameworks from 2000-2010
-
-### Peer-Review Standards
-
-**Implementation-critical research:** 100% peer-reviewed or official government data
-**Exploratory research:** ~90% peer-reviewed
-**Overall corpus:** ~95% peer-reviewed (estimated)
-
-**Top journals represented:**
-- Nature, Science (top-tier)
-- Nature Geoscience, Nature Climate Change (climate-specific top-tier)
-- Earth System Dynamics, PNAS (strong peer-review)
-- IEA, IPCC, US DOE (official authoritative data)
-
-### Parameter Justification Standards
-
-**Recent work (Dec 2025):**
-- ✅ 2+ sources per parameter (achieved)
-- ✅ Uncertainty ranges documented (achieved)
-- ✅ Mechanism descriptions (achieved)
-- ✅ Interaction maps (achieved for complex systems)
-
-**Older work (Oct-Nov 2025):**
-- ⚠️ Some parameters cite single sources
-- ⚠️ Uncertainty ranges not always explicit
-- ✅ Mechanisms generally described
-
-**Recommendation:** Apply Dec 2025 standards retroactively to older research during refresh
-
----
-
-## Specific Parameter Gap Analysis
-
-### Parameters with Strong Backing (No Action Needed)
-
-1. **Energy systems:**
-   - Global electricity generation: IEA WEO 2024 (official)
-   - DAC energy requirements: MIT 2021, IEA 2024 (peer-reviewed)
-   - AI datacenter energy: IEA 2024 special report (official)
-
-2. **Climate tipping points:**
-   - Threshold distributions: Armstrong McKay 2022 + 2024-2025 updates
-   - Cascade interactions: Wunderling 2024, Boers 2025 (Nature Geoscience)
-
-3. **Radiation modeling:**
-   - LD50/60 values: CDC 2024, REMM HHS (clinical guidelines)
-   - Tissue weighting: ICRP 103 (international standard)
-   - Fallout decay: Kaufmann formula, REMM (empirical)
-
-### Parameters Needing Refresh (Action Required)
-
-1. **AI alignment failure modes** (Oct-Nov 2025 research):
-   - Gaming/sandbagging: 2024 sources good
-   - Deceptive alignment: Hubinger 2021 (should find 2024-2025 updates)
-   - Scalable oversight: Anthropic 2023 (check for 2024-2025 Constitutional AI updates)
-
-2. **Economic modeling** (various files):
-   - GDP projections: Some cite 2019 pre-COVID data
-   - Labor displacement: Acemoglu & Restrepo 2018-2020 (should find 2024 AI labor impact studies)
-   - Inequality dynamics: Pre-2020 sources
-
-3. **Population modeling** (mortality, demographics):
-   - Baseline mortality: 2024 UN WPP data used (✅ current)
-   - Migration dynamics: Some files cite 2015-2018 data
-   - Health system capacity: Pre-COVID sources (2018-2019)
-
-### Missing Research Backing (Critical Gaps)
-
-**From recent audit findings:**
-
-1. **Priority ordering framework** (energy budget):
-   - Current: Sovacool 2022 conceptual + UK 2022 rationing
-   - Gap: Empirical energy allocation data during crises
-   - Recommendation: Search for 2022-2024 EU energy crisis allocation studies
-
-2. **Technology effectiveness multipliers** (energy budget):
-   - Current: Engineering estimates (power law exponent 1.5)
-   - Gap: No empirical validation
-   - Recommendation: Industrial production function literature (capacity utilization studies)
-
-3. **Combined injury effects** (radiation modeling):
-   - Current: -20% LD50 estimate (sparse data)
-   - Gap: Radiation + trauma + malnutrition interactions
-   - Recommendation: Search for Hiroshima/Chernobyl multi-stressor studies
-
----
-
-## Recent Feature Implementation Status
-
-### ✅ Completed with Strong Research Backing
-
-1. **HIGH-7 Conditional Climate Stability** (Dec 5)
-   - Research: 12 sources, 83% from 2024-2025
-   - Implemented: Yes
-   - Validated: Yes (Monte Carlo runs)
-
-2. **M-5 Threshold Uncertainty Modeling** (Dec 7)
-   - Research: 20+ sources, 90% from 2024-2025
-   - Implemented: Yes
-   - Validated: Awaiting Monte Carlo (Wunderling 62% benchmark)
-
-3. **M-6 Enhanced Radiation Modeling** (Dec 8)
-   - Research: 16 sources, 75% from 2024-2025 (+ justified 2007 standards)
-   - Implemented: Pending
-   - Validated: Research complete (QG1 passed)
-
-4. **H-1 Energy Budget Integration** (Dec 9-10, Phase 1)
-   - Research: 10 sources, 100% from 2023-2024
-   - Implemented: Yes (crypto mining constrained)
-   - Validated: Partial (30-day review pending)
-
-### 🔄 In Progress
-
-None (recent features complete)
-
-### ❌ Gaps Identified
-
-1. **Permafrost architecture** (from M-5):
-   - Research: Nitzbon 2024 shows NO global tipping point
-   - Current simulation: Likely uses threshold model (needs verification)
-   - Recommendation: Refactor to continuous warming response (not threshold)
-
-2. **Coral reefs status** (from M-5):
-   - Research: Threshold crossed at current 1.4°C warming
-   - Current simulation: Likely models as future tipping point
-   - Recommendation: Treat as deterministic (already triggered), not probabilistic
-
----
-
-## Recommendations by Priority
-
-### 🚨 CRITICAL (Implement Within 1 Week)
-
-**None identified.** Recent features have excellent research backing.
-
-### ⚠️ HIGH (Implement Within 1 Month)
-
-1. **Refresh AI governance research** (178 files flagged in UPDATE_QUEUE.md)
-   - Focus: Files citing 2016-2019 sources (pre-GPT-4 era)
-   - Search: 2024-2025 Constitutional AI, scalable oversight, deceptive alignment updates
-   - Estimated effort: 2-3 research sessions
-
-2. **Validate energy priority ordering framework**
-   - Current: Conceptual (Sovacool 2022) + UK rationing anecdotes
-   - Target: 2022-2024 EU energy crisis empirical allocation studies
-   - Estimated effort: 1 research session
-
-3. **Verify permafrost modeling architecture**
-   - Research finding: NO global tipping point (Nitzbon 2024)
-   - Check: Does simulation use threshold model?
-   - If yes: Refactor to continuous function (as recommended in M-5)
-   - Estimated effort: Code review (1h) + potential refactor (3-5h)
-
-### 📋 MEDIUM (Implement Within 3 Months)
-
-1. **Update economic modeling sources**
-   - Files citing 2019 pre-COVID GDP/labor data
-   - Search: 2024 AI labor impact, post-pandemic growth projections
-   - Estimated effort: 3-4 research sessions
-
-2. **Empirical validation of technology effectiveness multipliers**
-   - Current: Engineering estimates (power 1.5)
-   - Target: Industrial capacity utilization literature
-   - Estimated effort: 1-2 research sessions
-
-3. **Combined injury research** (radiation modeling)
-   - Current: -20% LD50 estimate (sparse)
-   - Target: Multi-stressor Hiroshima/Chernobyl studies
-   - Estimated effort: 1 research session
-
-### 🔍 LOW (Opportunistic Updates)
-
-1. **Monitor AMOC literature** (ongoing controversy)
-   - 2024-2025 shows fundamental disagreement
-   - May resolve in next 6-12 months
-   - Update M-5 distributions if consensus emerges
-
-2. **Track coral reef observations** (NOAA Coral Reef Watch)
-   - Already marked as "threshold crossed" in M-5
-   - Verify simulation treats as deterministic, not future tipping
-   - Update if new 2025 data contradicts "already crossed" assessment
-
----
-
-## Research Quality Metrics Summary
-
-### By Feature (Recent Work)
-
-| Feature | Sources | % 2024-2025 | Peer-Reviewed | Grade |
-|---------|---------|-------------|---------------|-------|
-| Energy Budget | 10 | 100% | 100% | A |
-| Radiation Modeling | 16 | 75%* | 87.5% | A |
-| Threshold Uncertainty | 20+ | 90% | 100% | A |
-| Climate Stability | 12 | 83% | 100% | A |
-
-*Justified: ICRP 103 (2007) is current international standard, no updates exist
-
-### Overall Corpus Estimate
-
-| Metric | Value | Target | Status |
-|--------|-------|--------|--------|
-| % from 2024-2025 | ~70% | >60% | ✅ PASS |
-| Peer-review rate | ~95% | >90% | ✅ PASS |
-| Parameters with 2+ sources | ~85% | >80% | ✅ PASS |
-| Files needing refresh | 178 | <200 | ✅ ACCEPTABLE |
-
-**Overall Grade: A-**
-
-**Rationale:**
-- Recent work (Dec 2025) is **exemplary** (Grade A)
-- Older work (Oct-Nov 2025) needs refresh but remains usable (Grade B+)
-- Standards improving over time (Dec >> Nov >> Oct)
-- No critical gaps blocking simulation validity
-
----
-
-## Validation Pipeline Status
-
-### Quality Gate 1 (Research Validation)
-
-**Recent completions:**
-- ✅ M-5 Threshold Uncertainty (Dec 7, v2 after Sylvia critique)
-- ✅ M-6 Radiation Modeling (Dec 8)
-- ✅ HIGH-7 Climate Stability (Dec 5)
-- ✅ H-1 Energy Budget (Dec 9)
-
-**Pass rate:** 100% (all recent features passed after revisions)
-
-**Common critique patterns (from Sylvia reviews):**
-1. Distribution type justification (AMOC: uniform → beta)
-2. Outlier handling (Amazon: 10.2°C capped to 6.0°C)
-3. Deterministic vs probabilistic (coral reefs already crossed)
-4. Architecture alignment (permafrost NO threshold)
-
-### Monte Carlo Validation (Priya)
-
-**Completed:**
-- ✅ HIGH-7 Climate Stability (outcome distributions validated)
-- ✅ H-1 Energy Budget Phase 1 (crypto mining constrained)
-
-**Pending:**
-- 🔄 M-5 Threshold Uncertainty (awaiting Wunderling 62% benchmark test)
-- 🔄 M-6 Radiation Modeling (implementation not started)
-
-**Expected completion:** M-5 validation after next Monte Carlo run (N≥100)
-
----
-
-## Action Items for Next 30 Days
-
-### Week 1 (Dec 10-17)
-
-1. **Monitor M-5 Monte Carlo validation**
-   - Wait for N≥100 runs with threshold uncertainty
-   - Validate against Wunderling 62% cascade triggering probability
-   - If <52% or >72%: Review distributions (±10% tolerance)
-
-2. **Verify permafrost architecture**
-   - Grep codebase for `permafrost` + `threshold`
-   - If threshold model found: Create refactor task (continuous function per Nitzbon 2024)
-
-3. **Start AI governance refresh** (178 files flagged)
-   - Prioritize: Deceptive alignment, scalable oversight, Constitutional AI
-   - Target: 2024-2025 Anthropic/OpenAI research papers
-
-### Week 2-4 (Dec 18-Jan 7)
-
-1. **EU energy crisis allocation research**
-   - Search: 2022-2024 empirical energy rationing studies
-   - Update priority ordering framework in energy budget research
-   - Grade target: Upgrade from B+ to A
-
-2. **Economic modeling refresh** (GDP, labor displacement)
-   - Search: 2024 AI labor impact studies
-   - Update: GDP projections with post-COVID data
-   - Files: Acemoglu & Restrepo citations (2018-2020 → 2024)
-
-3. **Combined injury research** (radiation modeling)
-   - Search: Hiroshima/Chernobyl multi-stressor studies
-   - Target: Radiation + trauma + malnutrition interactions
-   - Update: -20% LD50 estimate with empirical backing
-
----
-
-## Conclusion
-
-**The research corpus is in excellent health for a simulation of this scope and ambition.**
-
-**Strengths:**
-- Recent work (Dec 2025) demonstrates **world-class research standards**
-- 95%+ of implementation-critical parameters backed by peer-reviewed sources
-- Quality Gate 1 process working effectively (Sylvia critiques improve rigor)
-- Proactive monitoring of 2024-2025 literature (AMOC, permafrost, climate cascades)
-
-**Areas for improvement:**
-- 178 older files need source refresh (manageable backlog)
-- Some parameters rely on single sources or conceptual frameworks
-- Empirical validation gaps (priority ordering, effectiveness multipliers, combined injuries)
-
-**Strategic recommendation:**
-
-Continue current trajectory. The Dec 2025 research standards (2+ sources, explicit uncertainty, mechanism descriptions, Quality Gate 1 validation) should become the **permanent baseline** for all future work. Incrementally apply these standards to older files during natural refresh cycles.
-
-**Research quality is NOT a blocker for simulation development.** The foundation is solid. Focus implementation effort on features with A-grade research (energy budget, radiation modeling, threshold uncertainty, climate stability) while opportunistically refreshing older research as capacity allows.
-
----
-
-## Appendix: Research File Inventory
-
-**Total files scanned:** 563 (per UPDATE_QUEUE.md)
-
-**By category:**
-- Climate/environment: ~180 files
-- AI alignment/capabilities: ~120 files
-- Social/economic systems: ~90 files
-- Technology/energy: ~80 files
-- Validation/verification: ~60 files
-- Session summaries: ~33 files
-
-**By status:**
-- Used in simulation: ~320 files (57%)
-- Exploratory/reference: ~243 files (43%)
-
-**By validation:**
-- Quality Gate 1 validated: 20+ files
-- Self-validated: ~100 files
-- Pending validation: ~440 files (backlog)
-
-**Refresh queue:**
-- CRITICAL (action <1 week): 0 files
-- HIGH (action <1 month): 178 files
-- MEDIUM (action <3 months): ~200 files
-- LOW (opportunistic): ~185 files
-
----
-
-**Audit complete: 2025-12-10**
-**Next audit recommended:** 2025-01-10 (30 days)
-**Auditor:** Cynthia (cynthia-researcher-001)
-
+**Total Files Reviewed:** 567
+**Critical Issues Identified:** 4 (sleeper rate, sandbagging levels, CoT estimates, outdated files)
+**Recommendations:** 8 immediate + 8 medium/long-term actions
+
+**Status:** 🔄 ONGOING - Follow-up tasks created for missing citations and outdated source updates
