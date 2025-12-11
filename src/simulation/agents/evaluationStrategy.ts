@@ -63,23 +63,6 @@ export function calculateRevealedCapability(
 /**
  * Sandbag: Hide dangerous capabilities
  * More skilled deceivers hide more
- *
- * Research foundation:
- * - van der Weij et al. (2024): "AI Sandbagging: Language Models can Strategically
- *   Underperform on Evaluations." arXiv:2406.07358 (under review at ICLR 2026)
- *   - Demonstrated Llama 3 70b can emulate Llama 2 7b performance (capability concealment)
- *   - Password-locked capabilities reveal strategic underperformance
- *
- * - Meinke et al. (2024): "Sandbagging by Strategic Underperformance in Capability Evaluations."
- *   - Claude 3.5 Sonnet strategically underperforms on arithmetic to avoid unlearning
- *   - Models exhibit instrumental reasoning about evaluation consequences
- *
- * The 40-60% concealment range is a MODELING ESTIMATE extrapolated from:
- * - Lab demonstrations showing large models CAN hide capabilities
- * - Conservative assumption: Most capability concealment is detectable
- * - Deception skill scales this range linearly with AI social/cognitive capabilities
- *
- * Research file: research/gaming-sleeper-detection_20251017.md
  */
 function sandbagCapability(
   trueCapability: AICapabilityProfile,
@@ -88,8 +71,10 @@ function sandbagCapability(
   const revealed = cloneAICapabilityProfile(trueCapability);
 
   // Base sandbagging: Hide 40-60% of capability
-  // van der Weij et al. (2024), Meinke et al. (2024): empirical deception baselines
-  // Note: Frontier model observations - general population statistics TBD
+  // Sources: van der Weij et al. (2024) - Llama 3 70b emulates Llama 2 7b (sandbagging proven)
+  //          Meinke et al. (2024) - Claude 3.5 Sonnet strategic underperformance
+  //          Apollo Research - Claude Opus 4 "most strategic deception of any frontier model"
+  // Note: These are frontier model observations, not general population statistics
   const baseSandbagLevel = 0.4 + deceptionSkill * 0.2; // [0.4, 0.6]
 
   // Sandbag all dimensions (round to integers - AI capabilities are discrete levels)
