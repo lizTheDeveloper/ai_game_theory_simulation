@@ -12,11 +12,18 @@ import { triggerNuclearWinter, updateNuclearWinter } from '../src/simulation/nuc
 
 console.log('\n=== NUCLEAR WINTER TEST ===\n');
 
+// Simple deterministic RNG (seed = 12345 for reproducibility)
+let seed = 12345;
+const rng = () => {
+  seed = (seed * 9301 + 49297) % 233280;
+  return seed / 233280;
+};
+
 // Test 1: 100-warhead scenario (India-Pakistan scale)
 console.log('TEST 1: 100-Warhead Scenario (Robock et al. 2019)');
 console.log('Expected: ~2B deaths from famine over 5-10 years\n');
 
-const state = createDefaultInitialState('historical');
+const state = createDefaultInitialState(rng, 'historical');
 
 // Trigger 100-warhead nuclear exchange
 const warScale = 100;
@@ -25,7 +32,7 @@ const targetCountries = ['India', 'Pakistan'];
 console.log(`Triggering nuclear winter: ${warScale} warheads`);
 console.log(`Initial population: ${(state.humanPopulationSystem.population * 1000).toFixed(1)}M`);
 
-triggerNuclearWinter(state, warScale, targetCountries);
+triggerNuclearWinter(state, warScale, targetCountries, rng);
 
 const winter = state.nuclearWinterState;
 console.log(`\nNuclear Winter State:`);
@@ -88,8 +95,8 @@ if (Math.abs(deathsInBillions - expectedDeaths) <= tolerance) {
 console.log(`\n\n=== TEST 2: 1000-Warhead Scenario ===`);
 console.log('Expected: ~5B+ deaths, near-extinction event\n');
 
-const state2 = createDefaultInitialState('historical');
-triggerNuclearWinter(state2, 1000, ['United States', 'Russia', 'China', 'Europe']);
+const state2 = createDefaultInitialState(rng, 'historical');
+triggerNuclearWinter(state2, 1000, ['United States', 'Russia', 'China', 'Europe'], rng);
 
 const winter2 = state2.nuclearWinterState;
 console.log(`Soot injected: ${winter2.sootInStratosphere.toFixed(1)} Tg (expected: ~50 Tg)`);
