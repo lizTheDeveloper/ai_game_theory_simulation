@@ -211,11 +211,16 @@ None - All HIGH priority work COMPLETE (verified Dec 10 architecture review)
   - Implementation: `src/simulation/engine/phases/AIScalingPhase.ts`
   - History: `docs/implementation-history/ai_scaling_three_axis_model_20251211.md` (comprehensive archive)
 
+### COMPLETED MEDIUM Priority
+- **Trust Restoration Re-Research** - COMPLETE Dec 11, 2025
+  - Replaced Mayer 1995 citation (didn't cover restoration)
+  - Research file: `research/institutional_trust_restoration_20251211.md`
+  - QG1: Grade B+ (9 peer-reviewed sources 2023-2025)
+  - Critique: `reviews/institutional_trust_restoration_critique_20251211.md`
+  - Key findings: Trust erosion 25-50%/month, restoration 24-36+ months, procedural changes most effective
+  - Implementation requirements: Institutional type modifiers, separate attention vs deep trust, LOW confidence flags
+
 ### MEDIUM Priority (Backlog)
-- **Trust Restoration Re-Research** (Citation misattribution fix)
-  - Replace Mayer 1995 (doesn't cover restoration)
-  - Find 2024-2025 institutional trust recovery research
-  - Research needed
 - Hindcast tuning (1950-2024 historical validation)
 - Calibration protocol (parameter optimization workflow)
 
