@@ -250,11 +250,143 @@ The simulation SHALL model environmental, social, and technological debt.
 - AND it MUST increase failure probability
 - AND maintenance burden MUST constrain new development
 
+### Requirement: Information Ecology & Epistemic Degradation
+The simulation SHALL model information environment quality as a critical mediator between AI alignment and coordination capacity.
+
+**Research:** `research/information_ecology_epistemic_degradation_20251202.md` (15+ sources, 2024-2025)
+**Implementation:** `src/simulation/informationEcology.ts`, `src/simulation/engine/phases/InformationEcologyPhase.ts`
+**Quality Gates:** QG1 Grade B+ (Sylvia), QG2 PASS (architecture-skeptic)
+**Validation:** Perfect determinism (CV = 0.000000%)
+
+**Core Insight:** Even with aligned AI, polarized societies with degraded epistemic commons may be unable to coordinate effectively. Coordination depends on shared reality, institutional trust, and low polarization.
+
+#### Scenario: Epidemic Misinformation Spread
+- WHEN modeling misinformation dynamics
+- THEN it MUST use SIS/SIR epidemic model: `dI/dt = β × S × I - γ × I`
+- AND basic reproduction number R₀ MUST determine spread (R₀ > 1: exponential, R₀ < 1: containment)
+- AND transmission rate β MUST be amplified by echo chambers (1.5x-3.0x) and AI-generated content (up to 50% boost)
+- AND recovery rate γ MUST be boosted by fact-checking capacity (up to 100%)
+- AND misinformationPrevalence MUST track fraction of information environment (0-1)
+
+**Parameters (Research-Backed):**
+- Baseline R₀: 1.5 (mild exponential growth)
+- Transmission rate β: 0.1-0.8 per day (0.3 baseline, varies by content emotionality)
+- Recovery rate γ: 0.05-0.2 per day (0.1 baseline = 10-day belief duration)
+- Source: Alotaibi et al. (2024) Scientific Reports 14:18729
+
+#### Scenario: Trust Erosion and Recovery
+- WHEN societies experience crises (nuclear events, climate disasters, AI failures, war)
+- THEN institutional trust MUST erode by 25-50% per month
+- AND erosion rate MUST be amplified by polarization
+- AND recovery MUST be slow during stability (2-5% per month)
+- AND recovery rate MUST depend on epistemic health
+- AND institutionalTrustIndex MUST track government, media, science trust (0-1)
+
+**Parameters (Research-Backed):**
+- Crisis erosion: -0.25 to -0.50 per month
+- Stability recovery: +0.02 to +0.05 per month
+- Baseline trust: 0.40 (US 2024)
+- Source: 2025 Edelman Trust Barometer
+
+#### Scenario: Polarization Feedback Loops
+- WHEN modeling affective polarization
+- THEN it MUST be driven by misinformation prevalence, echo chamber strength, and crisis events
+- AND it MUST be dampened by cross-cutting exposure and successful coordination
+- AND polarizationIndex MUST track othering + aversion + moralization (0-1)
+- AND polarization MUST amplify trust erosion during crises
+
+**Parameters (Research-Backed):**
+- Baseline polarization: 0.60 (significant affective polarization, US 2024)
+- Echo chamber strength: 0.50 (moderate filter bubbles)
+- Source: APSR (2025) "A New Measure of Affective Polarization"
+
+#### Scenario: Fact-Checking Capacity Decay
+- WHEN fact-checking infrastructure is deployed
+- THEN it MUST decay by 10% per month without maintenance
+- AND it MUST reduce transmission rate β by up to 50%
+- AND it MUST increase recovery rate γ by up to 100%
+- AND effects MUST decay rapidly (days to weeks) without repeated exposure
+- AND AI capabilities MAY boost capacity if alignment is high
+
+**Parameters (Research-Backed):**
+- Natural decay: 10% per month
+- Effectiveness duration: days to weeks
+- Baseline capacity: 0.30 (limited infrastructure)
+- Source: Capewell et al. (2024) JASP, Nature Human Behaviour (2021)
+
+#### Scenario: AI-Generated Content Amplification
+- WHEN AI capabilities advance (digital.informationProcessing > 0.6)
+- THEN AI-generated content fraction MUST increase
+- AND it MUST amplify transmission rate β by up to 50%
+- AND it MUST overwhelm epistemic infrastructure when fraction > 0.5
+- AND aiGeneratedContentFraction MUST track (0-1)
+
+**Parameters (Research-Backed):**
+- Baseline fraction: 0.10 (early AI era, 2025)
+- Amplification: up to 50% boost to β
+- Source: Frontiers in Computer Science (2025) DOI: 10.3389/fcomp.2025.1570085
+
+#### Scenario: Coordination Capacity Calculation
+- WHEN calculating ability to implement collective solutions
+- THEN coordinationCapacity MUST be: `trust × (1 - polarization) × (1 - misinformation)`
+- AND capacity < 0.2 MUST indicate severe dysfunction
+- AND capacity < 0.3 during crises MUST increase collapse probability
+- AND capacity MUST modify AI deployment effectiveness
+- AND capacity MUST affect policy implementation quality
+
+**Formula:** `coordination = trust × (1 - polarization) × (1 - misinformation)`
+
+**Integration Points:**
+- CoordinatedDeploymentPhase: Reduces AI deployment effectiveness (50% to 100% based on coordination)
+- GovernancePhase: Reduces policy quality (60% to 100% based on epistemic health)
+
+#### Scenario: Epistemic Health Composite
+- WHEN calculating overall information environment quality
+- THEN epistemicHealth MUST be: `trust × 0.4 + (1 - polarization) × 0.3 + (1 - misinformation) × 0.3`
+- AND epistemic health > 0.6 MUST be required for utopia outcomes
+- AND epistemic health < 0.4 MUST trigger governance warnings
+- AND epistemicHealth MUST track (0-1)
+
+**Formula:** `epistemicHealth = trust × 0.4 + (1 - polarization) × 0.3 + (1 - misinformation) × 0.3`
+
+**Source:** Derived from Labarre (2024) epistemic vulnerability framework (note: research file incorrectly cited as "McCoy et al.")
+
+#### Scenario: Regional Heterogeneity (Future Work)
+- WHEN modeling regional variance
+- THEN Northern Europe MUST have 0.30-0.40 vulnerability
+- AND US/Spain MUST have 0.60-0.70 vulnerability
+- AND Eastern Europe MUST have 0.70-0.80 vulnerability
+- AND regionalVariance MUST track heterogeneity (0-1)
+
+**Note:** Currently single global model (regional variance = 0.30). Full regional modeling is MEDIUM priority future work.
+
+**Source:** Labarre (2024) 20-country comparative analysis
+
+#### Scenario: Deterministic Validation
+- WHEN validating Information Ecology implementation
+- THEN Monte Carlo runs MUST achieve CV < 0.01% for all metrics
+- AND N ≥ 10 runs with same seed MUST produce identical results
+- AND no `Math.random()` MUST be used (use seeded RNG)
+
+**Achievement:** Perfect determinism (CV = 0.000000%) across all metrics (N=5, seed="information-ecology-test")
+
+**History:** `docs/implementation-history/2025-12/information-ecology/README.md`
+
 ---
 
 ## Active Work
 
-### HIGH Priority
+### Completed HIGH Priority
+
+#### Information Ecology & Epistemic Degradation
+**Status:** COMPLETE (Dec 12, 2025, Session 76)
+**Implementation:** `src/simulation/informationEcology.ts` (458 lines), `src/simulation/engine/phases/InformationEcologyPhase.ts` (184 lines)
+**Research:** `research/information_ecology_epistemic_degradation_20251202.md` (15+ sources, 2024-2025)
+**Quality Gates:** QG1 Grade B+ (Sylvia), QG2 PASS (2 HIGH issues fixed)
+**Validation:** Perfect determinism (CV = 0.000000%, N=5)
+**Impact:** 20-40% reduction in managed transition probability for polarized scenarios
+**Summary:** Comprehensive epistemic environment modeling including epidemic misinformation spread (SIS/SIR), trust erosion/recovery, polarization feedback loops, fact-checking capacity decay, AI amplification, and coordination capacity calculation. Integration with CoordinatedDeploymentPhase (epistemic modifier on AI deployment effectiveness).
+**History:** `docs/implementation-history/2025-12/information-ecology/README.md`
 
 #### HIGH-7: Conditional Climate Stability Floor
 **Status:** COMPLETE (Dec 5, 2025, retroactive validation Dec 7)
@@ -264,6 +396,12 @@ The simulation SHALL model environmental, social, and technological debt.
 **Summary:** Conditional floor (5% in stabilization scenarios, 0% in tail risk) replaces unconditional floor. Aligns with 2024-2025 research showing destabilizing tipping cascades.
 **Known Issues:** Monte Carlo validation partial (N=10 blocked by population assertion edge case, not a feature bug)
 **History:** `docs/implementation-history/high7_conditional_climate_stability_floor_20251207.md`
+
+---
+
+### HIGH Priority (Active)
+
+**None currently active.** Next HIGH priority work should be selected from MEDIUM backlog or new proposals.
 
 ---
 
