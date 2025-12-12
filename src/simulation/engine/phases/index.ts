@@ -56,6 +56,7 @@ export { OutcomeProbabilitiesPhase } from './OutcomeProbabilitiesPhase';
 // export { UpdateEconomicStagePhase } from './UpdateEconomicStagePhase';  // CONSOLIDATED into EconomicSystemPhase (Batch 7, Nov 9, 2025)
 export { EarlyWarningPhase } from './EarlyWarningPhase';  // TIER 3.4 (Oct 17, 2025)
 export { CrisisDetectionPhase } from './CrisisDetectionPhase';
+export { SupplyChainCascadesPhase } from './SupplyChainCascadesPhase';  // HIGH Priority (Dec 12, 2025): Supply chain cascade propagation
 
 // Batch 2: System update phases (medium risk)
 // export { GovernanceQualityPhase } from './GovernanceQualityPhase';  // CONSOLIDATED into GovernanceSystemPhase (Batch 5, Nov 9, 2025)

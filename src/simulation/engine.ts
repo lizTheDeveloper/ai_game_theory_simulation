@@ -56,6 +56,7 @@ import {
   // UpdateEconomicStagePhase removed - merged into EconomicSystemPhase (Batch 7, Nov 9, 2025)
   EarlyWarningPhase,  // TIER 3.4 (Oct 17, 2025): Early warning systems for tipping points
   CrisisDetectionPhase,
+  SupplyChainCascadesPhase,  // HIGH Priority (Dec 12, 2025): Supply chain cascade propagation
   // Batch 2: System updates (10.x - 21.x)
   // GovernanceQualityPhase removed - merged into GovernanceSystemPhase (Batch 5, Nov 9, 2025)
   // UpwardSpiralsPhase removed - merged into CooperativeSystemsPhase (Batch 5, Nov 9, 2025)
@@ -535,6 +536,7 @@ export class SimulationEngine {
     // UpdateEconomicStagePhase removed - merged into EconomicSystemPhase (Batch 7, Nov 9, 2025)
     this.orchestrator.registerPhase(new EarlyWarningPhase());  // TIER 3.4: Early warning systems for tipping points
     this.orchestrator.registerPhase(new CrisisDetectionPhase());
+    this.orchestrator.registerPhase(new SupplyChainCascadesPhase());  // HIGH Priority (Dec 12, 2025): Supply chain cascade propagation (order 26.5)
 
     // Batch 2: System updates (10.x - 21.x)
     // GovernanceQualityPhase removed - merged into GovernanceSystemPhase (Batch 5, Nov 9, 2025)

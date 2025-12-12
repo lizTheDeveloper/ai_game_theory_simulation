@@ -978,6 +978,38 @@ export function createDefaultInitialState(
     // Phase 4: Technological Risk Accumulation
     technologicalRisk: initializeTechnologicalRisk(),
 
+    // Supply Chain Cascades (HIGH Priority, Dec 12, 2025)
+    supplyChainCascades: {
+      justInTimeVulnerability: {
+        semiconductorBuffer: 5.0,         // Days (mid-range of 1-7 days current baseline)
+        rareEarthBuffer: 4.0,             // Days (slightly less - more concentrated supply)
+        criticalInputsBuffer: 6.0,        // Days (slightly more - some buffer stock adoption)
+        disruptionActive: false,
+        daysUntilCascade: 3.0,            // Critical threshold (several days)
+      },
+      singlePointsOfFailure: {
+        suezStatus: 'open',
+        panamaStatus: 'open',
+        malaccaStatus: 'open',
+        swiftStatus: 'operational',
+        taiwanSemiconductorCapacity: 1.0, // 100% operational baseline
+      },
+      infrastructureCascades: {
+        powerGridStatus: 1.0,             // 100% operational
+        waterSystemStatus: 1.0,
+        foodSystemStatus: 1.0,
+        healthcareSystemStatus: 1.0,
+        cascadeActive: false,
+        hoursInCascade: 0,
+      },
+      financeCascades: {
+        creditAvailability: 1.0,          // Full credit availability
+        paymentSystemStatus: 1.0,         // Fully operational
+        cashReservesDepletion: 0.0,       // No depletion
+        employmentCascadeActive: false,
+      },
+    },
+
     // Information Ecology & Epistemic Degradation
     informationEcology: initializeInformationEcology(rngFunction),
 

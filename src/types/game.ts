@@ -505,6 +505,53 @@ export interface GameState {
   environmentalAccumulation: EnvironmentalAccumulation; // Phase 2: Environmental debt tracking
   socialAccumulation: SocialAccumulation; // Phase 3: Social cohesion & meaning crisis tracking
   technologicalRisk: TechnologicalRisk; // Phase 4: AI capability risk tracking
+
+  /**
+   * Supply Chain Cascade Propagation (HIGH Priority, Dec 12, 2025)
+   *
+   * Models fast-cascade failure modes (days-to-weeks) distinct from slow climate tipping (decades-centuries).
+   * Critical blind spot: Current collapse scenarios 2-5x too slow due to missing cascade mechanics.
+   *
+   * Four subsystems:
+   * 1. Just-in-time buffer exhaustion: 1-7 days inventory (vs historical 90 days), critical threshold
+   * 2. Single points of failure: Geographic chokepoints (Suez, Panama), semiconductor supply
+   * 3. Infrastructure cascades: Power → Water → Food → Healthcare (5x multiplier, 74% spread)
+   * 4. Finance cascades: Credit freeze → JIT manufacturing halt (conservative modeling)
+   *
+   * Research: research/supply_chain_cascades_20251212.md (One Earth 2024, Texas freeze 2021, Suez 2024)
+   * Validation: reviews/supply_chain_cascades_critique_20251212.md (Quality Gate 1 PASSED, Grade A-)
+   * Expected impact: Collapse scenarios 2-5x faster, realistic cascade propagation timescales
+   */
+  supplyChainCascades: {
+    justInTimeVulnerability: {
+      semiconductorBuffer: number;        // Days of inventory
+      rareEarthBuffer: number;
+      criticalInputsBuffer: number;
+      disruptionActive: boolean;
+      daysUntilCascade: number;
+    };
+    singlePointsOfFailure: {
+      suezStatus: 'open' | 'restricted' | 'closed';
+      panamaStatus: 'open' | 'restricted' | 'closed';
+      malaccaStatus: 'open' | 'restricted' | 'closed';
+      swiftStatus: 'operational' | 'restricted' | 'failed';
+      taiwanSemiconductorCapacity: number; // 0-1
+    };
+    infrastructureCascades: {
+      powerGridStatus: number;             // 0-1
+      waterSystemStatus: number;
+      foodSystemStatus: number;
+      healthcareSystemStatus: number;
+      cascadeActive: boolean;
+      hoursInCascade: number;
+    };
+    financeCascades: {
+      creditAvailability: number;          // 0-1
+      paymentSystemStatus: number;
+      cashReservesDepletion: number;
+      employmentCascadeActive: boolean;
+    };
+  };
   informationEcology: import('../simulation/informationEcology').InformationEcologyState; // Phase: Information ecology & epistemic degradation
 
   /**
