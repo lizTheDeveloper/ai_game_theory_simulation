@@ -280,10 +280,16 @@ None (threshold lowering regression FIXED Dec 9, 2025 - commit 3f3118de, 7130c7e
   - Key findings: Trust erosion 25-50%/month, restoration 24-36+ months, procedural changes most effective
   - Implementation requirements: Institutional type modifiers, separate attention vs deep trust, LOW confidence flags
 
+### COMPLETED MEDIUM Priority
+- **M-5 (Architecture):** Phase execution order documentation gap (12.x range) - COMPLETE Dec 12, 2025 (commit 12cb6e7c)
+  - Created comprehensive documentation: `docs/phase-order-12x-range.md`
+  - Documents 7 phases in 12.x range with dependency graph
+  - Provides insertion guidelines for future phases
+  - Status: Complete (180-line documentation)
+
 ### MEDIUM Priority (Backlog)
 - Hindcast tuning (1950-2024 historical validation) - HIGH value for model validation
 - Calibration protocol (parameter optimization workflow)
-- **M-5 (Architecture):** Phase execution order documentation gap (12.x range) - DEFERRED (1-2 hours effort, non-urgent)
 - **M-6 (Architecture):** Defensive fallback patterns in remaining files (~50 instances) - MONITORING (2-3 days effort, non-urgent, mostly valid patterns)
 
 ### COMPLETED LOW Priority
