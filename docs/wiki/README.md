@@ -14,7 +14,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **17-dimensional quality of life**: Survival, health, education, meaning, environment
 - **Multi-paradigm perspectives**: Western Liberal, Development, Ecological, Indigenous worldviews
 - **Deterministic simulation**: Reproducible with RNG seeds for Monte Carlo analysis
-- **Phase-based architecture**: 100 phases per step (reduced from 116 via Nov 2025 consolidation, +2 AIAgentCoordinationPhase + BaselineMortalityPhase Nov 24, +1 TechDeploymentSchedulePhase Nov 25)
+- **Phase-based architecture**: 103 registered phases (consolidated from 116 in Nov 2025, +AIScalingPhase Dec 11, +ExtinctionDebtPhase Dec 9)
 
 ## 🚀 Project Status
 
@@ -2718,6 +2718,55 @@ This section documents **critical parameter uncertainty findings** identified du
 
 **For the complete changelog, see [RECENT_CHANGES.md](./RECENT_CHANGES.md)**
 
+**December 11, 2025 - Three-Axis AI Capability Scaling Model (Session 67)**
+
+**Achievement:** Replaced exponential AI scaling assumption with research-backed three-axis model capturing 2024-2025 paradigm shift from pre-training to test-time compute.
+
+**Core Innovation:** Multi-axis capability model with explicit economic constraints:
+- **Pre-training axis:** Sigmoid plateau at 1.5x by 2027 (Orion/Gemini stagnation evidence)
+- **Test-time compute axis:** Logarithmic scaling with economic deployment gate (o3 costs dollar-1000+ per task)
+- **Efficiency axis:** Conservative 1.5-2x per decade (rejected non-peer-reviewed 23x claims)
+
+**Research Foundation (QG1 PASSED, Grade B+):**
+- Sevilla & Roldán (2024) - Epoch AI 4.1x/year through 2024
+- McKenzie et al. (2024) - "Scaling Laws Do Not Scale" (arXiv:2307.03201)
+- Villalobos et al. (2024) - Data exhaustion timeline (arXiv:2211.04325)
+- Lu (2025) - Efficiency-doubling framework (arXiv:2501.02156)
+- Bloomberg/TechCrunch (2024) - Plateau evidence, o3 cost analysis
+
+**Expected Outcome:** Logarithmic AI capability growth 2025-2035 (10-30x slower than previous exponential assumptions), preventing unrealistic capability explosions.
+
+**Files:** `src/simulation/engine/phases/AIScalingPhase.ts`, `research/ai_scaling_laws_2025_REVISED_20251211.md`
+
+**Implementation:** `docs/implementation-history/ai_scaling_three_axis_model_20251211.md`
+
+**QG1 Critique:** `reviews/ai_scaling_laws_2025_critique_20251211.md` (Original Grade C+ → Revised Grade B+)
+
+---
+
+**December 11, 2025 - Institutional Trust Restoration Research Update**
+
+**Achievement:** Updated trust restoration mechanics with current 2023-2025 research, replacing 2009-era sources.
+
+**Key Findings:**
+- **Institutional trust recovery:** Median 2.5 years post-crisis (range 1-8 years, Xue et al. 2024 meta-analysis)
+- **Asymmetric decay vs recovery:** Trust declines faster than it recovers (baseline 0.5%/month recovery vs instant crises)
+- **Path-dependent recovery:** Severity of violation affects timeline (minor: 1-2 years, major: 5-8+ years)
+- **Multi-stage process:** Crisis response → accountability → reform implementation → sustained credibility
+
+**Research Foundation:**
+- Xue et al. (2024) - Meta-analysis of 957 institutional trust estimates (Social Science Research)
+- Coppock (2024) - Trust repair timelines (Nature Human Behaviour)
+- Bailey & Ponce de Leon (2023) - Bank failures and trust recovery (American Political Science Review)
+
+**Integration:** Trust recovery mechanics already implemented in `SocialStabilitySystemPhase.ts` - research update provides 2024-2025 citations for existing parameters.
+
+**Files:** `research/institutional_trust_restoration_20251211.md`
+
+**Impact:** Dystopia escape pathways remain viable with research-backed recovery timelines.
+
+---
+
 **December 9, 2025 - Extinction Debt Phase Registration (CRITICAL-1)**
 
 **Achievement:** ExtinctionDebtPhase now properly registered in engine orchestrator, resolving critical bug where committed extinctions were calculated but never realized.
@@ -4759,13 +4808,16 @@ The fundamental building blocks of the simulation:
 | [💻 Compute Infrastructure](./systems/compute-infrastructure.md) | ✅ | Data centers, allocation, Moore's law |
 | [🤖 AI Agents](./systems/ai-agents.md) | ✅ | AI models, capabilities, alignment, lifecycles |
 | [🧠 Alignment Dynamics](./systems/alignment-dynamics.md) | ✅ | Multi-theory alignment evolution (Oct 23, 2025) |
+| [⚡ AI Capability Scaling](./systems/ai-scaling.md) | ✅ | Three-axis model: pre-training plateau, test-time compute, efficiency gains (Dec 11, 2025) |
 | [🏛️ Government](./systems/government.md) | ✅ | Regulations, control, policies |
 | [👥 Society](./systems/society.md) | ✅ | Trust, unemployment, adaptation |
 | [🌍 Environmental](./systems/environmental.md) | ✅ | Resources (65%), pollution (30%), climate, biodiversity (35%); **Multi-timescale tipping points** (Oct 26, 2025); **Climate Mortality Phase 2: Storm Systems + BII Framework** (Nov 6, 2025) |
 | [🤝 Social Cohesion](./systems/social-cohesion.md) | ✅ | Meaning crisis (22%), institutional erosion, social bonds, **crisis mitigation mechanics** (Oct 30, 2025) |
 | [⚠️ Technological Risk](./systems/technological-risk.md) | ✅ | Misalignment, safety debt, concentration, complacency |
 | [🔬 Breakthrough Technologies](./systems/breakthrough-technologies.md) | ✅ | **71 technologies** in comprehensive tech tree (TIER 0-4) |
+| [⚡ Energy Budget System](./systems/energy-budget.md) | ✅ | Priority-based energy allocation across climate, AI, cleanup systems (Dec 9, 2025) |
 | [🏛️ Governance Quality](./systems/governance-quality.md) | ✅ | Democratic resilience, decision quality, institutional capacity |
+| [🤝 Institutional Trust](./systems/institutional-trust.md) | ✅ | Trust restoration pathways, asymmetric decay/recovery (Dec 11, 2025) |
 | [🌟 Upward Spirals](./systems/upward-spirals.md) | ✅ | 6 virtuous cascades, multiple paths to Utopia |
 | [🎨 Meaning Renaissance](./systems/meaning-renaissance.md) | ✅ | Cultural flourishing, 4 dimensions of meaning |
 | [🕊️ Conflict Resolution](./systems/conflict-resolution.md) | ✅ | Diplomatic AI, post-scarcity peace, cyber defense, 4 pillars |
@@ -10146,7 +10198,7 @@ The simulation runs via a **phase-based architecture** with **100 phases** execu
   - **Research:** UN World Population Prospects 2024, Chetty 2016 (JAMA), Kahn 2022, Pappas 1993 (NEJM)
   - **Files:** `BaselineMortalityPhase.ts`, `bayesianMortality.ts`
 
-**Total Phases**: 99 registered phases (reduced from 116 via Nov 2025 consolidation, +2 Nov 24)
+**Total Phases**: 103 registered phases (consolidated from 116 in Nov 2025, +AIScalingPhase Dec 11, +ExtinctionDebtPhase Dec 9)
 
 ---
 
