@@ -938,11 +938,22 @@ export function assertAICapability(
  *
  * Validates:
  * 1. Finite value
- * 2. Range: [0, 100] (sum/average of all dimensions, can be continuous)
+ * 2. Range: [0, 2000] (base [0-5] × scaling multipliers)
  *
  * NOTE: Unlike individual dimensions, aggregate capability CAN be continuous.
  * Individual dimensions are discrete integers [0, 5], but their sum/weighted
- * average produces continuous values.
+ * average produces continuous values. With AI scaling (efficiency gains,
+ * test-time compute), capabilities can exceed 100 significantly.
+ *
+ * Max theoretical capability (75 years):
+ * - Base: 5.0 (weighted sum of dimensions)
+ * - Pre-training: ~0.5x (decays via sigmoid)
+ * - Efficiency: 2^7.5 ≈ 181x (2x per decade, capped)
+ * - Test-time: ~2.06x (log scaling at 200x budget)
+ * - Deployment: ~1.0x (economic gating)
+ * = 5 × 0.5 × 181 × 2.06 × 1.0 ≈ 932
+ *
+ * Setting max to 2000 provides safety margin for edge cases.
  *
  * @throws Error if capability is invalid
  */
@@ -956,17 +967,20 @@ export function assertAIAggregateCapability(
 ): number {
   assertFinite(capability, context);
 
-  // Aggregate capability can be much larger than individual dimensions
-  // (sum of 6 core dimensions + 13 research sub-dimensions = up to 19*5 = 95)
-  if (capability < 0 || capability > 100) {
+  // CRITICAL FIX (Dec 12, 2025): Updated max from 100 to 2000
+  // With AI scaling multipliers (efficiency, test-time compute), capabilities
+  // can exceed 100 significantly over 75-year simulation runs
+  // Frontier models (capability >= 8.0) need room to scale
+  if (capability < 0 || capability > 2000) {
     throw new Error(
       `❌ AI aggregate capability out of range in ${context.location}\n` +
       `   ${context.valueName} = ${capability}\n` +
-      `   Valid range: [0, 100]\n` +
+      `   Valid range: [0, 2000]\n` +
       (context.agentId ? `   Agent: ${context.agentId}\n` : '') +
       `\n` +
-      `   Aggregate capability is sum of all dimension levels.\n` +
-      `   Unlike individual dimensions, aggregate CAN be continuous.`
+      `   Aggregate capability = base × scaling multipliers.\n` +
+      `   Scaling: pre-training (0.5-1.0x), efficiency (1-181x), test-time (1-2x).\n` +
+      `   Max theoretical ~932, upper bound 2000 for safety.`
     );
   }
 
