@@ -24,6 +24,7 @@ import { initializeTechnologicalRisk } from './technologicalRisk';
 import { initializeInformationEcology } from './informationEcology';
 import { initializeSpecificTippingPoints } from './specificTippingPoints';
 import { initializeUpwardSpirals } from './upwardSpirals';
+import { initializeSupplyChainCascades } from './supplyChainCascades';
 import { initializeMeaningRenaissance } from './meaningRenaissance';
 import { initializeConflictResolution } from './conflictResolution';
 import { initializeDiplomaticAI } from './diplomaticAI';
@@ -1120,6 +1121,7 @@ export function createDefaultInitialState(
     nuclearWinterState: initializeNuclearWinterState(),  // TIER 1.7.4: Long-term nuclear war effects
     nuclearCommandControlState: initializeNuclearCommandControl(),  // TIER 1 Phase 1B: Circuit breakers
     technologyEffects: initializeTechnologyEffects(),  // Nov 27 2025: Tech effects accumulator (phase order bug fix)
+    supplyChainCascades: initializeSupplyChainCascades(),  // Session 74 (Dec 2025): Fast-timescale collapse modeling
 
     // TIER 2: Major Mitigations
     ubiSystem: initializeUBISystem(),

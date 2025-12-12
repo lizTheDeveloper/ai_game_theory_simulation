@@ -43,6 +43,14 @@ import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
  * Information Ecology Phase
  *
  * Updates epistemic health and modulates government coordination capacity.
+ *
+ * **DEPENDENCIES:**
+ * - Runs at order 18.0, BEFORE ExogenousShockPhase (27.5) and GeopoliticalConflictPhase (28.0)
+ * - Modifies society.coordinationCapacity which affects:
+ *   - ExogenousShockPhase (27.5) - Coordination affects shock resilience
+ *   - GeopoliticalConflictPhase (28.0) - Coordination reduces conflict escalation
+ * - Sequential ordering ensures no stale-state reads
+ * - If reordering, verify all coordinationCapacity consumers are downstream
  */
 export class InformationEcologyPhase implements SimulationPhase {
   readonly id = 'information_ecology';
@@ -81,7 +89,10 @@ export class InformationEcologyPhase implements SimulationPhase {
       throw new Error('❌ society not initialized');
     }
 
-    const baseCoordination = society.coordinationCapacity ?? 0.5;
+    const baseCoordination = assertStateProperty(society, 'coordinationCapacity', {
+      location: 'InformationEcologyPhase.execute',
+      month: state.currentMonth,
+    });
 
     // Modulate coordination capacity (soft constraint, not hard cutoff)
     society.coordinationCapacity = assertFinite(baseCoordination * coordinationModifier, {
