@@ -228,13 +228,13 @@ describe('sampleBeta', () => {
     const rng = createTestRNG('test-seed-beta-5');
 
     assert.throws(
-      () => sampleBeta(0, 1, rng),
+      () => sampleBeta(0, 1, 0, 1, rng),
       /alpha.*must be > 0/,
       'Should reject alpha = 0'
     );
 
     assert.throws(
-      () => sampleBeta(-1, 1, rng),
+      () => sampleBeta(-1, 1, 0, 1, rng),
       /alpha.*must be > 0/,
       'Should reject negative alpha'
     );
@@ -244,13 +244,13 @@ describe('sampleBeta', () => {
     const rng = createTestRNG('test-seed-beta-6');
 
     assert.throws(
-      () => sampleBeta(1, 0, rng),
+      () => sampleBeta(1, 0, 0, 1, rng),
       /beta.*must be > 0/,
       'Should reject beta = 0'
     );
 
     assert.throws(
-      () => sampleBeta(1, -1, rng),
+      () => sampleBeta(1, -1, 0, 1, rng),
       /beta.*must be > 0/,
       'Should reject negative beta'
     );
@@ -260,14 +260,14 @@ describe('sampleBeta', () => {
     const rng = createTestRNG('test-seed-beta-7');
 
     assert.throws(
-      () => sampleBeta(NaN, 1, rng),
-      /Invalid triangular distribution/,
+      () => sampleBeta(NaN, 1, 0, 1, rng),
+      /Invalid beta distribution/,
       'Should reject NaN alpha'
     );
 
     assert.throws(
-      () => sampleBeta(1, Infinity, rng),
-      /Invalid triangular distribution/,
+      () => sampleBeta(1, Infinity, 0, 1, rng),
+      /Invalid beta distribution/,
       'Should reject Infinity beta'
     );
   });
