@@ -1,7 +1,8 @@
 ---
 oldest_source: 1989
 newest_source: 2025
-last_verified: 2025-12-10
+last_verified: 2025-12-12
+verification_note: Kuran (1991) preference falsification updated with Shamaileh (2025) peer-reviewed methodological advances
 ---
 
 # Phase 1C Analysis: Catastrophe Recovery Research
@@ -311,6 +312,8 @@ Phase 1C was never implemented. The project transitioned directly from Phase 1B 
 - Acemoglu & Robinson (2001): Critical junctures during institutional flux
 - Svolik (2012): Democratic breakdowns require both elite defection AND mass mobilization
 - Kuran (1991): Preference falsification can suddenly cascade
+  - **2025 Update:** Shamaileh (2025) "On the measurement of preference falsification using nonresponse rates" *Political Science Research and Methods* 13(2):373-391 - Recent peer-reviewed work on methodological improvements for measuring preference falsification
+  - Sunstein (2019): #MeToo as revolutionary cascade - applies preference falsification framework to contemporary social movements
 
 **Implication:** Focus on preventing 70% mortality catastrophes rather than assuming recovery is possible.
 

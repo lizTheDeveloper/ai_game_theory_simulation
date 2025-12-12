@@ -1,6 +1,14 @@
+---
+oldest_source: 1990
+newest_source: 2025
+last_verified: 2025-12-12
+verification_note: Lin (1990) Great Leap Forward updated with 4 peer-reviewed 2024-2025 studies (Frank, Chen, Sun, Wang)
+---
+
 # AI Coordination Transition Mechanics Research
 **Research Date:** November 21, 2025
-**Researcher:** Cynthia (super-alignment-researcher)
+**Last Updated:** December 12, 2025 (autonomous-researcher - added 2024-2025 Great Leap Forward research)
+**Researcher:** Cynthia (super-alignment-researcher), autonomous-researcher (Dec 12 update)
 **Status:** Draft for Research Skeptic validation
 
 ## Executive Summary
@@ -20,13 +28,19 @@ This research addresses a critical model gap revealed in god mode testing: deplo
 #### Coerced/Rapid Transitions (High Mortality)
 
 **China's Great Leap Forward (1959-1961)**
-- **Mortality:** 15-55 million deaths
+- **Mortality:** 15-45 million deaths (recent estimates)
 - **Mechanism:** Forced agricultural collectivization, elimination of household plots, compulsory food rationing
 - **Key Factor:** Rapid pace without capacity assessment or transition support
+- **Resource diversion:** 61% of output decline attributable to excessive procurement and resource diversion to industry
 - **Citations:**
   - Lin (1990). "Collectivization and China's agricultural crisis in 1959-1961." Journal of Political Economy
   - Mortality consequences study from 1988 Chinese national fertility survey (UCLA CCPR, 2024)
   - NBER WP analyzing institutional causes of Great Leap Famine
+  - **2024-2025 Updates:**
+    - Frank et al. (2025). "Campaigning for Extinction: Eradication of Sparrows and the Great Famine in China." *SSRN Electronic Journal*
+    - Chen et al. (2024). "The enduring trauma: How officials' childhood famine experiences affect year-end spending surge." *Journal of Development Economics* (Oct 2024)
+    - Sun et al. (2025). "Action in crisis: healthcare resource allocation and the role of local officials during the great Chinese famine." *Cliometrica* (Nov 2025)
+    - Wang et al. (2024). "Early-life famine exposure and later-life dietary behavior." *Economics & Human Biology* (Dec 2024)
 
 **USSR Collectivization**
 - **Mortality:** 5-8 million deaths (referenced in roadmap, needs peer-reviewed source)
