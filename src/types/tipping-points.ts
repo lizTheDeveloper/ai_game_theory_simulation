@@ -71,8 +71,8 @@ export interface TippingElement {
   /** Current progress through transition (0.0 = not started, 1.0 = complete) */
   progress: number;
 
-  /** Current state in hysteresis state machine (M-7, Dec 5, 2025) */
-  state?: TippingElementState;
+  /** Current state in hysteresis state machine (M-7, Dec 5, 2025) - REQUIRED (MEDIUM-2 fix, Dec 12, 2025) */
+  state: TippingElementState;
 
   /** Impact on climate stability when fully transitioned (-0.X reduction) */
   impactClimateStability: number;
