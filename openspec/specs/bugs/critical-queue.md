@@ -14,11 +14,11 @@ This file tracks bugs that block normal development or cause significant system 
 
 ## Queue Status
 
-**Last Updated:** December 12, 2025 (Session 70)
+**Last Updated:** December 12, 2025 (Session 71)
 
 **Active CRITICAL bugs:** 0
 **Active HIGH bugs:** 0
-**Active MEDIUM bugs:** 6 (2 from Session 55, 4 from Session 70 Architecture Review - all deferred, non-blocking)
+**Active MEDIUM bugs:** 4 (2 from Session 55, 2 from Session 70 Architecture Review - all deferred, non-blocking)
 
 **System Status:** STABLE - Production ready, zero blocking issues
 
@@ -278,6 +278,24 @@ The risky calculation-path fallbacks have been addressed.
 ---
 
 ## Resolved Bugs (Recent)
+
+### Session 71 (Dec 12, 2025)
+
+**M-3: Duplicate Energy Category Mapping** ✅ RESOLVED
+- **Discovered:** Session 70 (Dec 12, 2025) - 30-day Architecture Review
+- **Fixed:** Session 71 (verified - already resolved in commits c17a3e4f, 03ea1d62)
+- **Root Cause:** Legacy local method predated shared utility creation
+- **Solution:** Local mapTechToEnergyCategory method deleted, shared utility from energyCategories.ts used
+- **Impact:** Eliminated code duplication, single source of truth for energy category mapping
+- **Verification:** No duplicate method found in ClimateDeploymentPhase.ts, shared utility in use
+
+**M-4: AIScalingPhase Missing Dependencies Declaration** ✅ RESOLVED
+- **Discovered:** Session 70 (Dec 12, 2025) - 30-day Architecture Review
+- **Fixed:** Session 71 (current session)
+- **Root Cause:** Object literal phase definition without explicit dependencies field
+- **Solution:** Added `dependencies: []` with documentation comment (no phase dependencies)
+- **Impact:** Consistency with other phases, explicit declaration of no dependencies
+- **Verification:** TypeScript compiles cleanly
 
 ### Session 70 (Dec 12, 2025)
 
