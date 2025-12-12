@@ -108,11 +108,14 @@ export function initializeInformationEcology(rng: RNGFunction): InformationEcolo
  * - Susceptible: Not currently believing misinformation
  * - Infected: Currently believing misinformation
  *
- * **CAVEAT:** Epidemiological model contested (Springer 2025 critique).
+ * **CAVEAT (QG1 Validation, Dec 12, 2025):** Epidemiological model contested (Yee 2025, Synthese).
  * Biological analogies may be fundamentally flawed due to:
+ * - Constant transmission rates assume homogeneous spreading (empirically false)
  * - Semantic mutation (misinformation changes meaning)
  * - Agency (people choose to spread)
  * - Network structure (clustered, not complete connectivity)
+ *
+ * **Effect sizes should be treated as upper bounds.** Real-world spread likely slower than model predicts.
  *
  * @param state Information ecology state
  * @param rng Deterministic RNG
