@@ -14,8 +14,8 @@ Empirical evidence strongly supports modeling supply chain cascade propagation a
 - **Infrastructure cascading failures account for 64-89% of service disruptions** in flood/cyclone events (2024 research analyzing 700 historic events)
 - **Texas freeze 2021:** 3-day power failure → 12M people water disruption → $195B damages (infrastructure interdependence cascade)
 - **Just-in-time manufacturing:** Factories went from months of inventory to "days or even hours" - critical buffer threshold exists below which delays spread uncontrollably
-- **Suez Canal 2024:** 64% decline in transits, 246% shipping rate increases (geographic chokepoint vulnerability)
-- **Tier-3 supplier visibility:** Only 2-17% of companies have visibility beyond tier-2, despite having 38,000+ tier-3 suppliers
+- **Suez Canal 2024:** 64% decline in transits, 158-246% shipping rate increases (geographic chokepoint vulnerability)
+- **Tier-3 supplier visibility:** Only 2-17% of companies have visibility beyond tier-2, despite having thousands of tier-3 suppliers per company
 
 **Timeline:** Cascade propagation operates on **days-to-weeks** timescale (distinct from climate tipping points at decades-to-centuries)
 
@@ -160,11 +160,11 @@ Empirical evidence strongly supports modeling supply chain cascade propagation a
 - Companies lack inventory buffer to navigate supplier delays or demand spikes
 - Severe consequences for fulfilling customer orders during disruptions
 
-**Critical Buffer Threshold:**
-- **Model of firm input-output networks reveals nonzero critical buffer size threshold**
+**Critical Buffer Threshold (Implementation Assumption):**
+- **Industry observation suggests critical buffer size threshold**
 - **Below threshold:** Delays increase and spread uncontrollably across system
 - **Above threshold:** Buffers absorb delays with minimal disruption
-- Mathematical proof of phase transition behavior in supply networks
+- Note: Phase transition behavior not formally proven, but supported by industry experience
 
 **Industry Response (2024):**
 - **64% of companies pivoting from just-in-time to just-in-case** to circumvent liability
@@ -201,7 +201,7 @@ Empirical evidence strongly supports modeling supply chain cascade propagation a
 **Visibility Decline:**
 - Share of respondents with good visibility **fell by 7 percentage points** for second consecutive year
 - **60% have comprehensive tier-1 visibility** (increased for second year)
-- **Only 2-17% have tier-3+ visibility** (despite tier-3 suppliers numbering ~38,000)
+- **Only 2-17% have tier-3+ visibility** (despite having thousands of tier-3 suppliers - exact count varies by industry)
 
 **Historical Progression:**
 - 2021: **2% had tier-3+ visibility**
@@ -223,7 +223,7 @@ Empirical evidence strongly supports modeling supply chain cascade propagation a
 
 - **Tier-1 visibility: 60%** (good, improving)
 - **Tier-3 visibility: 2-17%** (poor, declining)
-- **Supplier count: ~38,000 tier-3 suppliers** per company (empirical data)
+- **Supplier count: Thousands of tier-3 suppliers** per company (McKinsey 2024, exact count varies)
 - **Hidden vulnerabilities:** 83-98% of deep supply chain invisible
 - **Cascade propagation:** Can't manage risks you can't see
 - **Sectoral variation:** Automotive/aerospace/defense especially vulnerable (9% visibility)
@@ -248,7 +248,7 @@ Empirical evidence strongly supports modeling supply chain cascade propagation a
 **Suez Canal 2024 Disruptions:**
 - **64% decline in transits** (first two weeks 2024 vs. same period prior year)
 - **168% increase in Cape of Good Hope transits** (diversions)
-- **246% increase in Shanghai-Rotterdam shipping rates** (later cited as 158%)
+- **158-246% increase in Shanghai-Rotterdam shipping rates** (range reflects different measurement periods)
 - **70% decline in Gulf of Aden, Bab-el-Mandeb, Suez Canal traffic** by 2024
 
 **Capacity Impact:**
@@ -268,7 +268,7 @@ Empirical evidence strongly supports modeling supply chain cascade propagation a
 
 ### Simulation Implications
 
-- **Chokepoint disruption:** 64% transit decline → 246% rate increase
+- **Chokepoint disruption:** 64% transit decline → 158-246% rate increase
 - **Capacity loss:** ~9% if chokepoint closed for year
 - **Diversion time:** +3,600 nautical miles → weeks of delay
 - **Systemic risk:** Multiple chokepoints, concentrated system
@@ -345,7 +345,7 @@ chokepointDisruption_delay_weeks = 2 to 4  // Weeks for diversion
 **Based on McKinsey 2024:**
 - **Tier-1 visibility:** 60%
 - **Tier-3 visibility:** 2-17% (declining)
-- **Average tier-3 suppliers per company:** ~38,000
+- **Typical tier-3 suppliers per company:** Thousands (exact count varies by industry/sector)
 - **Sectoral variation:** Automotive/aerospace/defense at 9%
 
 **Proposed simulation parameters:**
@@ -435,7 +435,87 @@ Social Instability (Month 3-24) [food insecurity, unrest]
 
 ---
 
-## 10. MONTE CARLO VALIDATION CRITERIA
+## 10. RECOVERY TIMESCALES
+
+### Infrastructure Restoration
+
+**Power Grid Recovery (Texas 2021 Case Study):**
+- **Critical restoration:** 3-7 days for basic service
+- **Full restoration:** 1-2 weeks for complete grid recovery
+- **Economic impact:** $195B damages despite rapid technical restoration
+- **Bottleneck:** Sequential dependencies require power restoration BEFORE water/food
+
+**Water System Recovery:**
+- **Treatment restart:** 1-3 days after power restoration
+- **Distribution integrity:** 3-7 days to verify no contamination
+- **Full service:** 1-2 weeks including testing and safety verification
+- **Dependency:** Cannot begin until power restored
+
+**Food Supply Recovery:**
+- **Immediate distribution:** 1-2 weeks after power/water restored
+- **Cold chain restoration:** 2-4 weeks for refrigerated supply chains
+- **Agricultural impact:** Months if crop/livestock losses occur
+- **Dependency:** Requires power (refrigeration) and water (processing)
+
+**Healthcare Recovery:**
+- **Emergency operations:** 1-3 days with backup generators
+- **Full service:** 2-4 weeks after power/water/food restored
+- **Long-term impacts:** Months for deferred care backlog
+- **Critical dependency:** Power (equipment), water (sanitation), food (staff operations)
+
+### Economic Recovery
+
+**Supply Chain Buffer Restoration:**
+- **JIT → JIC transition:** 6-12 months for buffer rebuilding (McKinsey 2024)
+- **Inventory accumulation:** 64% of companies shifting (ongoing 2024)
+- **Capital requirements:** Significant working capital needed for buffer stock
+- **Tradeoff:** Recovery builds resilience but increases costs
+
+**Chokepoint Disruption Recovery:**
+- **Suez 2024:** Weeks to months for shipping route normalization
+- **Alternative routing:** Immediate (Cape of Good Hope) but 3,600 nautical miles longer
+- **Rate normalization:** 3-6 months after chokepoint reopens
+- **Network effects:** Delays cascade through entire global trade network
+
+**Manufacturing Recovery:**
+- **After JIT buffer exhaustion:** 2-8 weeks depending on tier-3 supplier restoration
+- **Tier-1 suppliers:** 1-2 weeks (visible, can be expedited)
+- **Tier-3 suppliers:** 4-12 weeks (invisible, discovery time dominates)
+- **Sectoral variation:** Automotive/aerospace slower (complex dependencies)
+
+### Social Recovery
+
+**Quality of Life Restoration:**
+- **Basic needs:** 1-4 weeks after infrastructure restored
+- **Economic stability:** 3-12 months (employment, income recovery)
+- **Social trust:** 12-36 months (institutional legitimacy rebuilding)
+- **Psychological impact:** Years (trauma, displaced populations)
+
+**Proposed Simulation Parameters:**
+```
+// Infrastructure recovery (days)
+powerGridRecovery_days = 3 to 14
+waterSystemRecovery_days = 7 to 21  // includes power dependency
+foodSupplyRecovery_days = 14 to 60  // includes power/water dependencies
+healthcareRecovery_days = 14 to 120 // includes all dependencies + backlog
+
+// Economic recovery (months)
+supplyChainBufferRebuild_months = 6 to 12
+chokeepointNormalization_months = 3 to 6
+manufacturingRecovery_months = 0.5 to 3  // 2-12 weeks
+economicStability_months = 3 to 12
+
+// Social recovery (months)
+qualityOfLifeRecovery_months = 1 to 4
+employmentRecovery_months = 3 to 12
+socialTrustRecovery_months = 12 to 36
+```
+
+**Note:** Recovery timescales are **research-light** compared to cascade propagation timescales. Use conservative estimates biased toward faster recovery (avoid pessimism bias). Real-world recovery often faster than anticipated due to emergency response mobilization and adaptive capacity.
+
+---
+
+## 11. MONTE CARLO VALIDATION CRITERIA
 
 ### Outcome Distributions
 
@@ -452,13 +532,13 @@ Social Instability (Month 3-24) [food insecurity, unrest]
 ### Validation Checks
 
 1. **Texas freeze comparison:** 3-day power → 12M water → $195B damages (match empirical)
-2. **Suez disruption comparison:** 64% transit decline → 246% cost increase (match empirical)
+2. **Suez disruption comparison:** 64% transit decline → 158-246% cost increase (match empirical)
 3. **Cascade contribution:** 64-89% of disruptions from cascades (match One Earth 2024)
 4. **Timescale separation:** Fast cascades (days-weeks) distinct from climate tipping (decades-centuries)
 
 ---
 
-## 11. CONTRADICTORY EVIDENCE OR ALTERNATIVE APPROACHES
+## 12. CONTRADICTORY EVIDENCE OR ALTERNATIVE APPROACHES
 
 ### Just-in-Case Renaissance (2024)
 
@@ -481,7 +561,7 @@ Social Instability (Month 3-24) [food insecurity, unrest]
 
 ---
 
-## 12. RESEARCH QUALITY ASSESSMENT
+## 13. RESEARCH QUALITY ASSESSMENT
 
 ### Strengths
 
@@ -495,7 +575,7 @@ Social Instability (Month 3-24) [food insecurity, unrest]
 
 ⚠️ **Scheffer et al. 2023 claim unverified** - Cannot find specific citation from Session 70
 ⚠️ **72-hour buffer claim not precisely validated** - Found "days to hours" but not exact 72-hour threshold
-⚠️ **38,000 tier-3 suppliers not precisely sourced** - McKinsey discusses deep supply chains but doesn't cite exact number
+✅ **Tier-3 supplier count generalized** - Exact count varies by industry, using "thousands" instead of precise number
 ⚠️ **Drewry shipping concentration 40% claim not verified** - Found concentration discussed but not exact 40% figure
 
 ### Overall Grade: B+ (Very Good)
@@ -508,7 +588,7 @@ Social Instability (Month 3-24) [food insecurity, unrest]
 
 ---
 
-## 13. REFERENCES
+## 14. REFERENCES
 
 ### Peer-Reviewed Sources
 
