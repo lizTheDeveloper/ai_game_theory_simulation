@@ -36,6 +36,7 @@ export const AIScalingPhase: SimulationPhase = {
   id: 'ai-scaling',
   name: 'AI Capability Scaling',
   order: 3,
+  dependencies: [],
   execute(state, rng, context) {
     const currentYear = 2024 + state.currentMonth / 12;
     const yearsElapsed = currentYear - state.aiCapabilityScaling.efficiencyBaseYear;
