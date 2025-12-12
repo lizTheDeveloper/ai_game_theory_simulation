@@ -136,8 +136,8 @@ The project SHALL preserve implementation histories and research context.
 
 ## Current Status
 
-**Session:** 70 (December 12, 2025)
-**Mode:** Architecture maintenance + roadmap cleanup
+**Session:** 70 (December 12, 2025) - COMPLETE
+**Mode:** Architecture maintenance + research audit + roadmap cleanup
 **Research Quality:** A (94.2% validated sources, comprehensive audit complete)
 **Architecture Health:** A- (0 CRITICAL, 0 HIGH, 4 MEDIUM deferred - system health excellent)
 **Test Coverage:** 82.47% (462+ tests passing, 6 known test import failures)
@@ -149,11 +149,16 @@ The project SHALL preserve implementation histories and research context.
 
 **Session 70 Summary:**
 - 30-day Architecture Integration Review COMPLETE (Nov 12 - Dec 12, 2025)
+- M-3: Duplicate energy category mapping - VERIFIED already resolved in prior session
+- M-4: AIScalingPhase dependencies declaration - FIXED (added explicit `dependencies: []`)
 - H-1: ClimateDeploymentPhase energy-budget dependency FIXED (commit 3303f984)
 - H-2: Optional RNG in oceanAcidification.ts FIXED (commit 3303f984)
+- Research audit COMPLETE: Grade A, 613 files reviewed, 94.2% validated sources
+- Research debate COMPLETE: 5 systemic blind spots identified (see research priorities below)
 - 0 CRITICAL, 0 HIGH issues remaining
 - 4 MEDIUM issues deferred (non-blocking)
 - System health: A- (excellent)
+- Archived: `docs/implementation-history/session70_m3_m4_architecture_review_20251212.md`
 
 ---
 
@@ -199,6 +204,43 @@ None - All HIGH priority work COMPLETE (verified Dec 12 architecture review)
 - Energy Budget Constraints (datacenter/AI GPU growth limits, UBI compute drain) - COMPLETE Dec 9, 2025
 - M-1: Detection risk calibration - incomplete integration - COMPLETE Dec 10, 2025 (commit a3b3315b)
 
+### Research-Identified Priorities (Session 70 Debate)
+
+**Context:** Research audit identified five systemic blind spots that could bias simulation toward optimistic outcomes.
+
+**CRITICAL Gap: Information Ecology (NOT MODELED)**
+- **Impact:** Could shift managed transition probabilities by 20-40%
+- **Effort:** 3-5 days implementation
+- **Confidence:** HIGH
+- **What's missing:** Misinformation propagation, institutional trust erosion, echo chambers, AI-generated content flooding, epistemic capacity degradation
+- **Evidence:** Vosoughi et al. 2018 (falsehoods spread 6x faster), Bail et al. 2018 (polarization feedback)
+- **Recommendation:** Promote to HIGH priority for next implementation cycle
+
+**HIGH Gap: Supply Chain Cascade Propagation (UNDERMODELED)**
+- **Impact:** Collapse scenarios may be 2-5x too slow (model individual failures vs. cascades)
+- **Effort:** 2-3 days implementation
+- **Confidence:** HIGH
+- **What's missing:** Just-in-time manufacturing (72-hour buffers), single points of failure, power→water→food→healthcare cascades
+- **Evidence:** COVID-19 analysis (McKinsey 2024), Texas freeze 2021, Scheffer et al. 2023 (Nature)
+- **Recommendation:** Promote to HIGH priority
+
+**HIGH Gap: Rebound Effects (IDENTIFIED NOV 21, NOT IMPLEMENTED)**
+- **Impact:** Climate mitigation timescales +15-30% longer, AI compute 2-3x faster than modeled
+- **Effort:** 1 day implementation
+- **Confidence:** HIGH
+- **What's missing:** Jevons paradox (efficiency gains → increased consumption)
+- **Evidence:** Sorrell et al. 2024 (30-60% rebound), 150+ years of empirical data
+- **Recommendation:** Implement immediately (1-day effort, high impact)
+
+**MEDIUM Gap: AI Capability Measurement Validity**
+- **Impact:** 8-month doubling time may be optimistic (based on 2010-2024 data, pre-training plateau)
+- **Effort:** Parameter uncertainty bands
+- **Confidence:** MEDIUM
+- **Evidence:** Epoch AI 2025 (diminishing returns), arXiv 2501.02156 (efficiency-aware scaling)
+- **Recommendation:** Add uncertainty bounds [12, 8, 6] months
+
+**See:** `reviews/research_debate_simulation_priorities_20251212.md` for complete analysis
+
 ### COMPLETED MEDIUM Priority
 - **M-1: Dual energy constraint systems** - COMPLETE Dec 10, 2025 (commits 2a06d8f9, 204d6f39, bf94d165)
   - PowerGenerationSystem now integrates with EnergyBudgetPhase
@@ -208,6 +250,14 @@ None - All HIGH priority work COMPLETE (verified Dec 12 architecture review)
   - Architecture review upgrade: B+ → A-
   - Related: Math.random() determinism violation FIXED (nuclearWinter.ts:597)
   - History: docs/implementation-history/m1_energy_integration_20251210.md
+- **M-3: Duplicate energy category mapping** - COMPLETE (prior session, verified Session 70)
+  - Shared utility correctly used in ClimateDeploymentPhase
+  - No duplicate local method exists
+  - TypeScript compiles cleanly
+- **M-4: AIScalingPhase missing dependencies declaration** - COMPLETE Session 70
+  - Added explicit `dependencies: []` with documentation comment
+  - Consistent with other no-dependency phases
+  - Makes design explicit for phase orchestrator validation
 
 ### COMPLETED MEDIUM Priority
 - **AI Scaling Paradigm Update** - COMPLETE Dec 11, 2025
@@ -230,12 +280,10 @@ None - All HIGH priority work COMPLETE (verified Dec 12 architecture review)
   - Implementation requirements: Institutional type modifiers, separate attention vs deep trust, LOW confidence flags
 
 ### MEDIUM Priority (Backlog)
-- Hindcast tuning (1950-2024 historical validation)
+- Hindcast tuning (1950-2024 historical validation) - HIGH value for model validation
 - Calibration protocol (parameter optimization workflow)
-- **M-1 (Architecture):** Duplicate energy category mapping (ClimateDeploymentPhase) - DEFERRED (15 min effort, non-blocking)
-- **M-2 (Architecture):** AIScalingPhase missing dependencies declaration - DEFERRED (10 min effort, non-blocking)
-- **M-3 (Architecture):** Phase execution order documentation gap (12.x range) - DEFERRED (1-2 hours effort, non-urgent)
-- **M-4 (Architecture):** Defensive fallback patterns in remaining files (~50 instances) - MONITORING (2-3 days effort, non-urgent)
+- **M-5 (Architecture):** Phase execution order documentation gap (12.x range) - DEFERRED (1-2 hours effort, non-urgent)
+- **M-6 (Architecture):** Defensive fallback patterns in remaining files (~50 instances) - MONITORING (2-3 days effort, non-urgent, mostly valid patterns)
 
 ### COMPLETED LOW Priority
 - **L-1: Duplicate tech category mapping cleanup** - COMPLETE Dec 10, 2025
@@ -298,7 +346,7 @@ See: `docs/EMOJI_QUICK_REFERENCE.md` (one-page cheat sheet)
 See: `docs/sessions.md` for complete session milestone tracking
 
 **Recent Sessions:**
-- Session 70 (Dec 12): 30-day Architecture Review COMPLETE (A-), H-1/H-2 fixes COMPLETE (0 CRITICAL/HIGH issues), roadmap maintenance, 4 MEDIUM deferred (non-blocking)
+- Session 70 (Dec 12): 30-day Architecture Review COMPLETE (A-), M-3/M-4 bugs RESOLVED, Research audit COMPLETE (A, 94.2% validated), Research debate identified 5 systemic blind spots, roadmap maintenance, archival complete
 - Session 69 (Dec 11 Night): Research foundation EXCELLENT (A grade, 94.2% validated sources)
 - Session 68 (Dec 11 Night): Trust Restoration Re-Research COMPLETE (B+), Research Source Validation Audit (A, 613 files), Architecture Review (A-), research foundation solid
 - Session 67 (Dec 11): AI Scaling implementation COMPLETE (Grade B+ QG1 revised, Grade B- QG2), conservative three-axis model, technical debt tracked
