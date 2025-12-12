@@ -480,3 +480,40 @@ export function confidenceIntervalToNormal(
 
   return { mean, std };
 }
+
+
+/**
+ * Format distribution parameters for display
+ *
+ * Returns human-readable string representation of distribution parameters.
+ * Used for logging, debugging, and test output.
+ *
+ * @param type Distribution type ('normal', 'beta', 'lognormal', 'triangular')
+ * @param params Distribution parameters
+ * @returns Formatted string (e.g., "Normal(μ=1.50, σ=0.30)")
+ *
+ * @example
+ * getDistributionStats('normal', { mean: 1.5, stdDev: 0.3 })
+ * // Returns: 'Normal(μ=1.50, σ=0.30)'
+ */
+export function getDistributionStats(
+  type: string,
+  params: Record<string, number>
+): string {
+  switch (type) {
+    case 'normal':
+      return `Normal(μ=${params.mean.toFixed(2)}, σ=${params.stdDev.toFixed(2)})`;
+
+    case 'beta':
+      return `Beta(α=${params.alpha.toFixed(2)}, β=${params.beta.toFixed(2)})`;
+
+    case 'lognormal':
+      return `LogNormal(μ=${params.mu.toFixed(2)}, σ=${params.sigma.toFixed(2)})`;
+
+    case 'triangular':
+      return `Triangular(min=${params.min.toFixed(2)}, mode=${params.mode.toFixed(2)}, max=${params.max.toFixed(2)})`;
+
+    default:
+      return `Unknown(${type})`;
+  }
+}
