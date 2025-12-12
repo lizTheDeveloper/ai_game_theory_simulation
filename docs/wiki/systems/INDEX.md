@@ -124,10 +124,19 @@ This index lists all major systems in the AI Game Theory Simulation, organized b
 ## TIER 4: Enrichment Systems
 
 ### Information Warfare
-**File:** *Not yet documented*
-**Status:** Implemented
+**File:** [information-warfare.md](information-warfare.md)
+**Status:** ✅ Documented
 **Phase:** InformationWarfarePhase
 **Summary:** Misinformation, disinformation, propaganda. Information integrity degradation. Social cohesion impacts.
+
+### Information Ecology
+**File:** [information-ecology.md](information-ecology.md)
+**Status:** ✅ Implemented (Dec 12, 2025)
+**Phase:** InformationEcologyPhase (18.0)
+**Summary:** Epistemic environment health. Misinformation epidemiology (SIS model). Trust erosion. Polarization dynamics. Shared reality degradation. Coordination capacity modulation. Impact: 20-40% reduction in managed transition probability for polarized scenarios.
+**Research:** 15+ peer-reviewed sources (Alotaibi 2024, Labarre 2024, APSR 2025, Edelman 2025)
+**Quality Gates:** QG1: B+ (research skeptic), QG2: A (architecture skeptic)
+**Determinism:** Perfect (CV = 0.000000%)
 
 ### Power Generation System
 **File:** *Not yet documented*
@@ -183,7 +192,7 @@ This index lists all major systems in the AI Game Theory Simulation, organized b
 
 ## Organization by Completeness
 
-### ✅ Fully Documented (12 systems)
+### ✅ Fully Documented (13 systems)
 1. Baseline Corrections (TIER 0)
 2. Phosphorus Depletion (TIER 1.1)
 3. Freshwater Depletion (TIER 1.2)
@@ -196,6 +205,7 @@ This index lists all major systems in the AI Game Theory Simulation, organized b
 10. Radiation System (TIER 1.7) - **✅ Integration complete (Oct 14)**
 11. Climate Impact Cascade (TIER 1.8) - **✅ Complete (Oct 29)**
 12. Planetary Boundaries (TIER 3)
+13. Information Ecology (TIER 4.4) - **✅ Complete (Dec 12, 2025)** - Misinformation epidemiology, trust erosion, polarization, shared reality, coordination capacity modulation
 
 ### 🟡 Partially Documented (2 systems)
 1. Environmental Accumulation (covered in baseline-corrections.md)
