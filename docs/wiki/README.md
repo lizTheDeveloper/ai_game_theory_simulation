@@ -4823,6 +4823,7 @@ The fundamental building blocks of the simulation:
 | [🕊️ Conflict Resolution](./systems/conflict-resolution.md) | ✅ | Diplomatic AI, post-scarcity peace, cyber defense, 4 pillars |
 | [☢️ Nuclear Deterrence](./systems/nuclear-deterrence.md) | ✅ | 5 nuclear states, MAD mechanics, bilateral tensions, escalation ladder |
 | [📰 Information Warfare](./systems/information-warfare.md) | ✅ | Truth decay, deepfakes, epistemological crisis, coordination penalty |
+| [📡 Information Ecology](./systems/information-ecology.md) | ✅ | Misinformation epidemiology, trust erosion, polarization, shared reality degradation (Dec 12, 2025) |
 | [👥 Population Dynamics](./systems/population-dynamics.md) | ✅ | 8B → concrete tracking, refugee crises, bottleneck events |
 | [🔍 Sleeper Detection](./systems/sleeper-detection.md) | ✅ | Blown cover mechanics, 70% detection bonus, nuanced trust |
 | [🌊 Planetary Boundaries](./systems/) | ✅ | Phosphorus, freshwater, ocean acidification, novel entities (TIER 1) |
