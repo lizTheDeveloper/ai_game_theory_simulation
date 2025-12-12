@@ -19,7 +19,7 @@
  */
 
 import { GameState } from '../types/game';
-import { assertFinite } from './utils/assertions';
+import { assertFinite, assertStateProperty } from './utils/assertions';
 
 /**
  * Supply Chain Cascades State
@@ -350,7 +350,10 @@ function updateChokepoints(
   // Chokepoint recovery (probability-based)
   if (cascades.chokepoints.suezStatus === 'restricted') {
     // 20% monthly chance of recovery if tension drops
-    const tension = (state.geopoliticalConflict?.tension ?? 0) / 100;
+    const tension = assertStateProperty(state, 'geopoliticalConflict.tension', {
+      location: 'updateChokepoints',
+      month: state.currentMonth
+    }) / 100;
     if (rng() > tension) {
       cascades.chokepoints.suezStatus = 'open';
       console.log(`\n🌍✅ SUEZ CANAL REOPENED (Month ${state.currentMonth})`);
@@ -359,7 +362,10 @@ function updateChokepoints(
 
   // Taiwan semiconductor recovery (gradual)
   if (cascades.chokepoints.taiwanSemiconductorCapacity < 1.0) {
-    const tension = (state.geopoliticalConflict?.tension ?? 0) / 100;
+    const tension = assertStateProperty(state, 'geopoliticalConflict.tension', {
+      location: 'updateChokepoints',
+      month: state.currentMonth
+    }) / 100;
     if (tension < 0.5) {
       cascades.chokepoints.taiwanSemiconductorCapacity = Math.min(
         1.0,
