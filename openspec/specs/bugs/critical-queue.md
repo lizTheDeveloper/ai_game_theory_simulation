@@ -14,11 +14,11 @@ This file tracks bugs that block normal development or cause significant system 
 
 ## Queue Status
 
-**Last Updated:** December 12, 2025 (Session 70)
+**Last Updated:** December 12, 2025 (Session 71)
 
 **Active CRITICAL bugs:** 0
 **Active HIGH bugs:** 0
-**Active MEDIUM bugs:** 6 (2 from Session 55, 4 from Session 70 Architecture Review - all deferred, non-blocking)
+**Active MEDIUM bugs:** 4 (2 from Session 55, 2 from Session 70 Architecture Review - all deferred, non-blocking)
 
 **System Status:** STABLE - Production ready, zero blocking issues
 
@@ -117,75 +117,6 @@ Low - type system allows undefined, but runtime always provides value. No bugs o
 
 ---
 
-### MEDIUM-3: Duplicate Energy Category Mapping
-
-**Discovered:** Session 70 (Dec 12, 2025) - 30-day Architecture Review
-**Status:** DEFERRED (non-blocking)
-**Impact:** Code duplication in ClimateDeploymentPhase
-
-**Description:**
-ClimateDeploymentPhase has a local `mapTechToEnergyCategory` method despite the shared utility existing in `@/simulation/utils/energyCategories.ts`. The import exists but the local method is still used.
-
-**Location:**
-- File: `src/simulation/engine/phases/ClimateDeploymentPhase.ts`
-- Lines: 313-328
-
-**Root Cause:**
-Legacy code - local method predates shared utility creation.
-
-**Recommendation:**
-Delete local method, use imported utility from energyCategories.ts.
-
-**Impact:**
-Low - functional duplication, no bugs. Maintenance burden only.
-
-**Priority:** MEDIUM (code quality improvement)
-**Effort:** TRIVIAL (15 min)
-
-**Next Steps:**
-- Delete local mapTechToEnergyCategory method
-- Verify shared utility is already imported
-- Run TypeScript compilation (npx tsc --noEmit)
-- Run tests
-
----
-
-### MEDIUM-4: AIScalingPhase Missing Dependencies Declaration
-
-**Discovered:** Session 70 (Dec 12, 2025) - 30-day Architecture Review
-**Status:** DEFERRED (non-blocking)
-**Impact:** Documentation inconsistency
-
-**Description:**
-AIScalingPhase is defined as an object literal without explicit `readonly dependencies` array. Most other phases use class syntax with explicit `readonly dependencies = [...]` declarations.
-
-**Location:**
-- File: `src/simulation/engine/phases/AIScalingPhase.ts`
-- Lines: 24-27
-
-**Current:**
-```typescript
-export const AIScalingPhase: SimulationPhase = {
-  id: 'ai-scaling',
-  name: 'AI Capability Scaling',
-  order: 3,
-  execute(state, rng, context) {
-```
-
-**Recommendation:**
-Add explicit dependencies declaration (even if empty array) for consistency with other phases.
-
-**Impact:**
-Low - documentation/consistency only, no functional impact.
-
-**Priority:** MEDIUM (consistency improvement)
-**Effort:** TRIVIAL (10 min)
-
-**Next Steps:**
-- Add `readonly dependencies = []` to AIScalingPhase object
-- Verify TypeScript compilation
-- Document that phase has no dependencies (reads global AI state only)
-
 ---
 
 ### MEDIUM-5: Phase Execution Order Documentation Gap
@@ -278,6 +209,30 @@ The risky calculation-path fallbacks have been addressed.
 ---
 
 ## Resolved Bugs (Recent)
+
+### Session 71 (Dec 12, 2025)
+
+**H-3: Precision Fermentation Citation Fabrication (Issue #796)** ✅ RESOLVED
+- **Discovered:** Session 70 (Dec 11, 2025) - Architecture review + research-skeptic verification
+- **Fixed:** Session 71 (commit ad11139c)
+- **Root Cause:** 3 fabricated/misattributed citations (CE Delft 2021, FAO 2024, GFI 2024)
+- **Solution:** Replaced with peer-reviewed sources (Poore & Nemecek 2018, Grossmann et al. 2024, Bouwman et al. 2013)
+- **Impact:** Research grade upgrade C → A-, parameter adjusted nitrogenReduction 0.40 → 0.33 (25-40% range)
+- **Verification:** Citations verified, parameters justified from research data
+
+**M-3: Duplicate Energy Category Mapping** ✅ RESOLVED
+- **Discovered:** Session 70 (Dec 12, 2025) - 30-day Architecture Review
+- **Fixed:** Session 71 (pre-existing fix from Dec 10, commit c17a3e4f)
+- **Root Cause:** Legacy local method in ClimateDeploymentPhase
+- **Solution:** Verified shared utility already in use, local method previously removed
+- **Impact:** Code duplication eliminated, maintenance burden reduced
+
+**M-4: AIScalingPhase Missing Dependencies Declaration** ✅ RESOLVED
+- **Discovered:** Session 70 (Dec 12, 2025) - 30-day Architecture Review
+- **Fixed:** Session 71 (commit by simulation-maintainer)
+- **Root Cause:** Object literal phase definition without explicit dependencies field
+- **Solution:** Added explicit `dependencies: []` with documentation comment
+- **Impact:** Consistency with other phase definitions, orchestrator validation enabled
 
 ### Session 70 (Dec 12, 2025)
 
