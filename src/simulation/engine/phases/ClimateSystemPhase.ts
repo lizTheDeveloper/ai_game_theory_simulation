@@ -311,10 +311,7 @@ export class ClimateSystemPhase implements SimulationPhase {
       // Get recovery threshold (undefined = irreversible, same as trigger = no hysteresis)
       const recoveryThreshold = element.recoveryTempC ?? -Infinity; // If undefined, never recovers
 
-      // Initialize state if not set (backward compatibility)
-      if (!element.state) {
-        element.state = element.triggered ? TippingElementState.PROGRESSING : TippingElementState.NOT_TRIGGERED;
-      }
+      // State is now always initialized (MEDIUM-2 fix, Dec 12, 2025) - no backward compatibility check needed
 
       switch (element.state) {
         case TippingElementState.NOT_TRIGGERED:

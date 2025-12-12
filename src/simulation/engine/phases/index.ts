@@ -98,7 +98,7 @@ export { WarMeaningFeedbackPhase } from './WarMeaningFeedbackPhase';
 export { ClimateJusticePhase } from './ClimateJusticePhase';
 export { OrganizationViabilityPhase } from './OrganizationViabilityPhase';
 // export { CooperativeOwnershipPhase } from './CooperativeOwnershipPhase';  // CONSOLIDATED into CooperativeSystemsPhase (Batch 5, Nov 9, 2025)
-export { NuclearWinterPhase } from './NuclearWinterPhase';
+// export { NuclearWinterPhase } from './NuclearWinterPhase';  // CONSOLIDATED into NuclearCrisisPhase (Batch 4, Nov 9, 2025)
 export { WetBulbTemperaturePhase } from './WetBulbTemperaturePhase';  // Wet Bulb Temperature Events (Oct 17, 2025)
 export { ExtremeWeatherEventsPhase } from './ExtremeWeatherEventsPhase';  // Extreme Weather Events (Oct 28, 2025)
 export { PlanetaryBoundariesPhase } from './PlanetaryBoundariesPhase';
