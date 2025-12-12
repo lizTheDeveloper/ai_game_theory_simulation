@@ -1,3 +1,11 @@
+---
+oldest_source: 2000
+newest_source: 2025
+last_verified: 2025-12-12
+status: used_in_simulation
+verification_status: CURRENT
+---
+
 # Cleanup Effectiveness vs Concentration Scaling Laws
 
 **Research Date:** December 1, 2025

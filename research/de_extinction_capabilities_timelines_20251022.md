@@ -1,3 +1,11 @@
+---
+oldest_source: 1995
+newest_source: 2025
+last_verified: 2025-12-12
+status: used_in_simulation
+verification_status: CURRENT
+---
+
 # De-Extinction Technologies: Current State and Near-Future Potential
 ## Research Assessment for Biosphere Recovery Mechanics
 

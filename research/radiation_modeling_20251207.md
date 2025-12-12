@@ -1,3 +1,11 @@
+---
+oldest_source: 2006
+newest_source: 2025
+last_verified: 2025-12-12
+status: used_in_simulation
+verification_status: CURRENT
+---
+
 # Enhanced Radiation Modeling Research
 
 **Date:** 2025-12-07

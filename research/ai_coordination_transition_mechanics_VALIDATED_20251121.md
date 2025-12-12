@@ -1,3 +1,11 @@
+---
+oldest_source: 1990
+newest_source: 2025
+last_verified: 2025-12-12
+status: used_in_simulation
+verification_status: CURRENT
+---
+
 # AI Coordination Transition Mechanics Research (VALIDATED)
 **Research Date:** November 21, 2025
 **Researcher:** Cynthia (super-alignment-researcher)

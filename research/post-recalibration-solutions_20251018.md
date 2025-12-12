@@ -1,3 +1,11 @@
+---
+oldest_source: 2010
+newest_source: 2025
+last_verified: 2025-12-12
+status: used_in_simulation
+verification_status: CURRENT
+---
+
 # Post-Recalibration AI Systems Research: Evidence-Based Solutions
 
 **Date:** October 18, 2025

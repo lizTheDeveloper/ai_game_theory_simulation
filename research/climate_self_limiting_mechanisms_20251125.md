@@ -1,3 +1,11 @@
+---
+oldest_source: 2000
+newest_source: 2025
+last_verified: 2025-12-12
+status: used_in_simulation
+verification_status: CURRENT
+---
+
 # Climate System Self-Limiting Mechanisms and Stability Bounds
 
 **Date:** November 25, 2025
