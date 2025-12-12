@@ -1054,6 +1054,30 @@ export interface GameState {
   // Technology Effects Accumulator (Nov 27, 2025) - Prevents phase order bugs
   technologyEffects: import('../types/technologyEffects').TechnologyEffectsState; // Accumulated tech effects applied after resource economy updates
 
+  /**
+   * Supply Chain Cascade Propagation (Session 74, Dec 12, 2025)
+   *
+   * Models fast-timescale cascade failures (days-to-weeks) through interconnected systems.
+   * Addresses critical gap: collapse scenarios were 2-5x too slow (Session 70 finding).
+   *
+   * Four cascade types:
+   * - JIT manufacturing vulnerabilities (buffer exhaustion → production halts)
+   * - Geographic chokepoints (Suez, Panama, Taiwan semiconductors)
+   * - Infrastructure cascades (power→water→food→healthcare sequential propagation)
+   * - Finance cascades (credit freeze → supply chain collapse → unemployment)
+   *
+   * Key parameters:
+   * - Infrastructure cascade multiplier: 5× risk (One Earth 2024, Nirandjan et al.)
+   * - Cascade spread probability: 74% (cascades spread beyond initial footprint)
+   * - Texas 2021 validation: 3-day power → 12M water disruption → $195B damages
+   * - Suez 2024 validation: 64% transit decline → 158-246% shipping cost increase
+   *
+   * Research: research/supply_chain_cascades_20251212.md
+   * Critique: reviews/supply_chain_cascades_critique_20251212.md (QG1: Grade B)
+   * Expected impact: Realistic collapse timescales, infrastructure interdependence, cascade propagation
+   */
+  supplyChainCascades?: import('../simulation/supplyChainCascades').SupplyChainCascadesState;
+
   // Universal Basic Income + Purpose Infrastructure (TIER 2.1)
   ubiSystem: import('../types/ubi').UBISystem; // Enhanced UBI with purpose infrastructure for post-work society
 
