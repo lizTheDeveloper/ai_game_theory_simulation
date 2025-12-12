@@ -14,11 +14,11 @@ This file tracks bugs that block normal development or cause significant system 
 
 ## Queue Status
 
-**Last Updated:** December 7, 2025 (Session 58)
+**Last Updated:** December 12, 2025 (Session 70)
 
 **Active CRITICAL bugs:** 0
 **Active HIGH bugs:** 0
-**Active MEDIUM bugs:** 2 (carried forward from Session 55)
+**Active MEDIUM bugs:** 6 (2 from Session 55, 4 from Session 70 Architecture Review - all deferred, non-blocking)
 
 **System Status:** STABLE - Production ready, zero blocking issues
 
@@ -117,6 +117,158 @@ Low - type system allows undefined, but runtime always provides value. No bugs o
 
 ---
 
+### MEDIUM-3: Duplicate Energy Category Mapping
+
+**Discovered:** Session 70 (Dec 12, 2025) - 30-day Architecture Review
+**Status:** DEFERRED (non-blocking)
+**Impact:** Code duplication in ClimateDeploymentPhase
+
+**Description:**
+ClimateDeploymentPhase has a local `mapTechToEnergyCategory` method despite the shared utility existing in `@/simulation/utils/energyCategories.ts`. The import exists but the local method is still used.
+
+**Location:**
+- File: `src/simulation/engine/phases/ClimateDeploymentPhase.ts`
+- Lines: 313-328
+
+**Root Cause:**
+Legacy code - local method predates shared utility creation.
+
+**Recommendation:**
+Delete local method, use imported utility from energyCategories.ts.
+
+**Impact:**
+Low - functional duplication, no bugs. Maintenance burden only.
+
+**Priority:** MEDIUM (code quality improvement)
+**Effort:** TRIVIAL (15 min)
+
+**Next Steps:**
+- Delete local mapTechToEnergyCategory method
+- Verify shared utility is already imported
+- Run TypeScript compilation (npx tsc --noEmit)
+- Run tests
+
+---
+
+### MEDIUM-4: AIScalingPhase Missing Dependencies Declaration
+
+**Discovered:** Session 70 (Dec 12, 2025) - 30-day Architecture Review
+**Status:** DEFERRED (non-blocking)
+**Impact:** Documentation inconsistency
+
+**Description:**
+AIScalingPhase is defined as an object literal without explicit `readonly dependencies` array. Most other phases use class syntax with explicit `readonly dependencies = [...]` declarations.
+
+**Location:**
+- File: `src/simulation/engine/phases/AIScalingPhase.ts`
+- Lines: 24-27
+
+**Current:**
+```typescript
+export const AIScalingPhase: SimulationPhase = {
+  id: 'ai-scaling',
+  name: 'AI Capability Scaling',
+  order: 3,
+  execute(state, rng, context) {
+```
+
+**Recommendation:**
+Add explicit dependencies declaration (even if empty array) for consistency with other phases.
+
+**Impact:**
+Low - documentation/consistency only, no functional impact.
+
+**Priority:** MEDIUM (consistency improvement)
+**Effort:** TRIVIAL (10 min)
+
+**Next Steps:**
+- Add `readonly dependencies = []` to AIScalingPhase object
+- Verify TypeScript compilation
+- Document that phase has no dependencies (reads global AI state only)
+
+---
+
+### MEDIUM-5: Phase Execution Order Documentation Gap
+
+**Discovered:** Session 70 (Dec 12, 2025) - 30-day Architecture Review
+**Status:** DEFERRED (non-urgent)
+**Impact:** Maintenance burden for phase ordering
+
+**Description:**
+The 12.x phase range has grown complex with fractional ordering:
+```
+12.5   TechTreePhase
+12.6   StochasticInnovationPhase
+12.61  Tier2SocialSystemsPhase
+12.65  CooperativeSystemsPhase
+12.7   MeaningRenaissancePhase
+12.75  EnergyBudgetPhase
+12.8   ClimateDeploymentPhase
+```
+
+The fractional ordering makes it hard to insert new phases and understand data flow.
+
+**Location:**
+- File: `src/simulation/engine/PhaseOrchestrator.ts` (or dedicated doc file)
+
+**Root Cause:**
+Incremental growth - phases added over time without refactoring order ranges.
+
+**Recommendation:**
+Consider phase grouping documentation in PhaseOrchestrator or dedicated doc file showing:
+- Phase groups (initialization, AI, economy, climate, etc.)
+- Data flow between groups
+- Insertion points for new phases
+
+**Impact:**
+Low - current system works, but maintenance burden for future phase additions.
+
+**Priority:** MEDIUM (maintenance improvement)
+**Effort:** SMALL (1-2 hours)
+
+**Next Steps:**
+- Survey all phase orders
+- Group by domain/data flow
+- Document recommended insertion ranges
+- Create phase architecture diagram (optional)
+
+---
+
+### MEDIUM-6: Defensive Fallback Patterns in Remaining Files
+
+**Discovered:** Session 70 (Dec 12, 2025) - 30-day Architecture Review (follow-up from Nov 16)
+**Status:** MONITORING (non-urgent)
+**Impact:** Partial assertion migration (split-brain error handling)
+
+**Description:**
+Approximately 50 instances of `?? defaultValue` or `|| 0` remain in calculation paths:
+- `src/simulation/organizationManagement.ts` line 539: `(regionCounts.get(region) || 0)`
+- `src/simulation/unknownUnknowns.ts` line 193: `state.planetaryBoundariesSystem.novelEntitiesIncrementalImpact || 0`
+- `src/simulation/flashWarEscalation.ts` line 123: `peace.activeConflicts || 0`
+- Multiple files in `src/simulation/techTree/`
+
+**Root Cause:**
+Partial migration to assertion utilities (Nov 2025). CRITICAL regressions fixed (dystopiaProgression.ts, aiSuffering.ts), but broader cleanup remains incomplete.
+
+**Assessment:**
+Current state is **acceptable**. The remaining patterns are mostly:
+1. Map.get() idioms (valid - Map returns undefined for missing keys)
+2. Config defaults (valid - initialization fallbacks)
+3. UI display values (valid - not in calculation paths)
+
+The risky calculation-path fallbacks have been addressed.
+
+**Priority:** MEDIUM (code quality improvement, non-urgent)
+**Effort:** MEDIUM (2-3 days for full cleanup)
+
+**Next Steps:**
+- Audit remaining instances (categorize valid vs risky)
+- Replace risky patterns with assertion utilities
+- Document valid fallback patterns (Map.get, initialization, UI)
+- Update defensive coding guidelines
+
+---
+
 ## LOW Priority Bugs
 
 **Definition:** Code style, optimization opportunities, refactoring suggestions, minor documentation improvements
@@ -126,6 +278,24 @@ Low - type system allows undefined, but runtime always provides value. No bugs o
 ---
 
 ## Resolved Bugs (Recent)
+
+### Session 70 (Dec 12, 2025)
+
+**H-1: ClimateDeploymentPhase Missing Energy Budget Dependency** ✅ RESOLVED
+- **Discovered:** Session 70 (Dec 12, 2025) - 30-day Architecture Review
+- **Fixed:** Session 70 (commit 3303f984)
+- **Root Cause:** Implicit dependency not declared (phase ordering worked but orchestrator couldn't validate)
+- **Solution:** Added 'energy-budget' to dependencies array in ClimateDeploymentPhase
+- **Impact:** Makes implicit dependency explicit (reads effectiveness multipliers from energy budget)
+- **Verification:** TypeScript compiles cleanly, phase orchestrator can validate data flow
+
+**H-2: Optional RNG in Initialization Functions** ✅ RESOLVED
+- **Discovered:** Session 70 (Dec 12, 2025) - 30-day Architecture Review
+- **Fixed:** Session 70 (commit 3303f984)
+- **Root Cause:** oceanAcidification.ts accepted optional RNG with fallback (split-brain initialization)
+- **Solution:** Made RNG required, added fail-loudly assertion, removed fallback value
+- **Impact:** Consistent Monte Carlo initialization (0.8-1.2 randomized, no fixed fallback)
+- **Verification:** TypeScript compiles cleanly, determinism preserved
 
 ### Session 58 (Dec 7, 2025)
 
@@ -276,6 +446,6 @@ This file tracks bugs discovered during **Quality Gate 2** (architecture review)
 
 ---
 
-**Last Review:** December 7, 2025 (Session 58)
-**Next Review:** December 14-21, 2025 (estimated)
-**System Status:** STABLE - Zero blocking issues, production ready
+**Last Review:** December 12, 2025 (Session 70) - 30-day Architecture Integration Review
+**Next Review:** January 2026 (estimated)
+**System Status:** STABLE - Zero blocking issues, production ready, 6 MEDIUM deferred (non-blocking)
