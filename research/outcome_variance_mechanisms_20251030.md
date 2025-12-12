@@ -1,3 +1,11 @@
+---
+oldest_source: 1994
+newest_source: 2025
+last_verified: 2025-12-12
+status: used_in_simulation
+verification_status: CURRENT
+---
+
 # Outcome Variance Mechanisms: Research Review
 
 **Date:** October 30, 2025

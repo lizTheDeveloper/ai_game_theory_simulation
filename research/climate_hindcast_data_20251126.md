@@ -1,3 +1,11 @@
+---
+oldest_source: 1990
+newest_source: 2025
+last_verified: 2025-12-12
+status: used_in_simulation
+verification_status: CURRENT
+---
+
 # Historical Climate Data for Mini-Hindcast Validation (1990-2010)
 
 **Research Date:** 2025-11-26

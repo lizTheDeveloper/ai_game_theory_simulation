@@ -1,3 +1,11 @@
+---
+oldest_source: 2016
+newest_source: 2025
+last_verified: 2025-12-12
+status: used_in_simulation
+verification_status: CURRENT
+---
+
 # PREDICTS Database Verification Report
 ## Natural History Museum Species Baseline for BII Calculations
 

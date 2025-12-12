@@ -1,3 +1,11 @@
+---
+oldest_source: 1998
+newest_source: 2025
+last_verified: 2025-12-12
+status: used_in_simulation
+verification_status: CURRENT
+---
+
 # Climate Tipping Point Timescale Research
 **Date:** November 7, 2025 (Updated)
 **Last Updated:** November 24, 2025 (Autonomous Researcher - added ESD April 2025 probability estimates, Science Advances AMOC physics-based early warning)

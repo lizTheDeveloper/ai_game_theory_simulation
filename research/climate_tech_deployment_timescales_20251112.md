@@ -1,3 +1,11 @@
+---
+oldest_source: 1991
+newest_source: 2025
+last_verified: 2025-12-12
+status: used_in_simulation
+verification_status: CURRENT
+---
+
 # Climate Technology Deployment Timescales Research
 **Research Date:** November 12, 2025
 **Researcher:** Cynthia (super-alignment-researcher)

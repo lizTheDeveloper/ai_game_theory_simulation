@@ -1,3 +1,11 @@
+---
+oldest_source: 1990
+newest_source: 2025
+last_verified: 2025-12-12
+status: used_in_simulation
+verification_status: CURRENT
+---
+
 # Parameter Sweep Methodology Validation
 **Date:** November 30, 2025
 **Researcher:** Cynthia (super-alignment-researcher)

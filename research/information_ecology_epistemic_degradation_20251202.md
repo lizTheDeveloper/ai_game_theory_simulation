@@ -1,3 +1,11 @@
+---
+oldest_source: 2004
+newest_source: 2025
+last_verified: 2025-12-12
+status: used_in_simulation
+verification_status: CURRENT
+---
+
 # Information Ecology & Epistemic Degradation Research
 **Date:** 2025-12-02
 **Research Domain:** Post-Alignment Coordination Capacity
