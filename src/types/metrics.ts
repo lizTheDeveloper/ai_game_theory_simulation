@@ -3,7 +3,24 @@
 export interface GlobalMetrics {
   socialStability: number; // [0,∞) General societal wellbeing
   technologicalBreakthroughRate: number; // [0,∞) Rate of tech advancement (used in eventSystem + UI)
-  manufacturingCapability: number; // [0,∞) Physical production capacity
+
+  /**
+   * Manufacturing capability as percentage-based capacity metric.
+   *
+   * Scale: [0, 100+] where:
+   * - 0.1 = Current baseline (2025 global manufacturing capacity)
+   * - 100 = "Normal" capacity (mature industrial civilization)
+   * - >100 = Post-scarcity production (Clarke-tech level)
+   *
+   * Note: Type says [0,∞) but code often caps at 100. Consider:
+   * - Option A: Strict [0, 100] percentage scale
+   * - Option B: Allow >100 for super-abundant futures
+   * - Option C: Define empirical grounding (World Bank MVA, TFP studies)
+   *
+   * Research validation needed: LOW priority (2-4 hours)
+   * See: reviews/research_debate_manufacturing_capability_scale_20251212.md
+   */
+  manufacturingCapability: number; // [0,∞) Physical production capacity (functionally capped at ~100)
   economicTransitionStage: number; // [0,4] Economic system evolution stage
   wealthDistribution: number; // [0,1] Equity of AI benefit distribution
   qualityOfLife: number; // [0,∞) Key discriminator between outcomes
