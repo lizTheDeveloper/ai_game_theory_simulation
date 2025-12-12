@@ -118,12 +118,7 @@ export function updateSupplyChainCascades(
     throw new Error('❌ CRITICAL: RNG required for deterministic supply chain cascade modeling');
   }
 
-  // Initialize state if not present (backward compatibility)
-  if (!state.supplyChainCascades) {
-    (state as any).supplyChainCascades = initializeSupplyChainCascades();
-  }
-
-  const cascades = state.supplyChainCascades!;  // Non-null assertion: just initialized above
+  const cascades = state.supplyChainCascades;
 
   // Phase 1: Check for trigger conditions
   checkTriggerConditions(state, cascades, rng);

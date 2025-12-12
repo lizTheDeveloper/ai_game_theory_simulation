@@ -1076,7 +1076,7 @@ export interface GameState {
    * Critique: reviews/supply_chain_cascades_critique_20251212.md (QG1: Grade B)
    * Expected impact: Realistic collapse timescales, infrastructure interdependence, cascade propagation
    */
-  supplyChainCascades?: import('../simulation/supplyChainCascades').SupplyChainCascadesState;
+  supplyChainCascades: import('../simulation/supplyChainCascades').SupplyChainCascadesState;
 
   // Universal Basic Income + Purpose Infrastructure (TIER 2.1)
   ubiSystem: import('../types/ubi').UBISystem; // Enhanced UBI with purpose infrastructure for post-work society
