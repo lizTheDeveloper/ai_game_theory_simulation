@@ -1,6 +1,6 @@
 # Research Update Queue
-**Generated:** 12/12/2025, 9:30:05 AM
-**Files Scanned:** 618
+**Generated:** 12/12/2025, 10:30:09 AM
+**Files Scanned:** 623
 
 ---
 
@@ -12,7 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 184 (29.8%)
+**Count:** 185 (29.7%)
 
 ### `AUTONOMOUS_RESEARCHER_SESSION_20251203_2030.md`
 - **Oldest source:** 1981 (44 years old)
@@ -123,6 +123,11 @@
 - **Oldest source:** 2008 (17 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/RESEARCH_SOURCE_VALIDATION_AUDIT_20251129.md`
+
+### `RESEARCH_SOURCE_VALIDATION_AUDIT_20251212.md`
+- **Oldest source:** 2007 (18 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/RESEARCH_SOURCE_VALIDATION_AUDIT_20251212.md`
 
 ### `RESEARCH_STATUS_20251115.md`
 - **Oldest source:** 1981 (44 years old)
@@ -938,7 +943,7 @@
 
 ## 📋 MEDIUM (Review Within Quarter)
 
-**Count:** 27 (4.4%)
+**Count:** 27 (4.3%)
 
 - `INDEX_20251211.md` - Oldest: 2020 (5 years)
 - `LAYER2_COMPREHENSIVE_STATUS_20251030.md` - Oldest: 2020 (5 years)
@@ -972,7 +977,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 407 (65.9%)
+**Count:** 411 (66.0%)
 
 All sources <3 years old. No action required.
 
@@ -982,33 +987,33 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 618 |
+| Total files | 623 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 184 (29.8%) |
-| MEDIUM | 27 (4.4%) |
-| LOW | 407 (65.9%) |
-| Average age | 6.8 years |
+| HIGH | 185 (29.7%) |
+| MEDIUM | 27 (4.3%) |
+| LOW | 411 (66.0%) |
+| Average age | 6.7 years |
 | Oldest source | 1955 (70 years ago) |
 
 ### Research Currency
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 407 | 65.9% |
-| Warning (3-5yr) | 27 | 4.4% |
-| Critical (>5yr) | 184 | 29.8% |
+| Current (<3yr) | 411 | 66.0% |
+| Warning (3-5yr) | 27 | 4.3% |
+| Critical (>5yr) | 185 | 29.7% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-- **Current:** 29.8% critical (>5yr)
+- **Current:** 29.7% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
-1. Update 184 HIGH priority file(s) within 1 month
+1. Update 185 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 
