@@ -1,44 +1,63 @@
 # AI Scaling Technical Debt
 
 **Created:** December 11, 2025
+**Updated:** December 12, 2025 (Session 69)
 **Feature:** Three-Axis AI Scaling Model
 **QG2 Grade:** B- (Acceptable with HIGH priority improvements needed)
-**Status:** Safe to ship, fixes scheduled between features
+**Status:** HIGH priority items COMPLETE (Dec 12, 2025) - MEDIUM/LOW items remain
 
 ---
 
-## HIGH Priority (7-11 hours total)
+## HIGH Priority (COMPLETE)
 
-### HIGH-1: Performance Overhead - Dynamic Requires in Hot Paths
-**Issue:** aiScalingStrategy.ts uses dynamic requires, adding ~10ms per simulation step
-**Impact:** Performance overhead in phase execution
-**Fix:** Convert to static imports at module level
-**Effort:** 1-2 hours
-**File:** `src/simulation/aiScalingStrategy.ts`
+### ✅ HIGH-1: Performance Overhead - Dynamic Requires in Hot Paths
+**Status:** VERIFIED NOT AN ISSUE (Dec 12, 2025)
+**Finding:** No dynamic requires found in aiScalingStrategy.ts - issue was misidentified or already fixed
+**Verification:** `grep 'require(' src/simulation/aiScalingStrategy.ts` returns no matches
+**Files checked:** `src/simulation/aiScalingStrategy.ts`
 
-### HIGH-2: Circular Dependency Risk
-**Issue:** capabilities.ts ⟷ aiScalingStrategy.ts potential circular dependency
-**Impact:** Risk of initialization order issues, breaks module boundaries
-**Fix:** Refactor to unidirectional dependency (aiScalingStrategy → capabilities)
-**Effort:** 4-6 hours
-**Files:** `src/simulation/systems/capabilities.ts`, `src/simulation/aiScalingStrategy.ts`
+### ✅ HIGH-2: Circular Dependency Risk
+**Status:** VERIFIED NO CIRCULAR DEPENDENCY (Dec 12, 2025)
+**Finding:** Unidirectional dependency confirmed (capabilities.ts → aiScalingStrategy.ts, not vice versa)
+**Verification:**
+- `capabilities.ts` imports `initializeScalingComponents` from aiScalingStrategy
+- `aiScalingStrategy.ts` does NOT import from capabilities
+- Clean module boundary, no initialization order issues
+**Files verified:** `src/simulation/capabilities.ts`, `src/simulation/aiScalingStrategy.ts`
 
-### HIGH-3: No State Evolution Tracking
-**Issue:** No history of AI scaling component changes over time
-**Impact:** Can't debug capability changes, no visibility into scaling evolution
-**Fix:** Add `aiScalingHistory: Array<{month, preTraining, efficiency, testTime}>` to GameState
-**Effort:** 2-3 hours
-**Files:** `src/types/game.ts`, `src/simulation/aiScalingStrategy.ts`, dashboard components
+### ✅ HIGH-3: No State Evolution Tracking
+**Status:** COMPLETE (Dec 12, 2025)
+**Resolution:** Added `aiScalingHistory` tracking to GameState
+**Implementation:**
+- Added `aiScalingHistory: Array<{month, preTrainingMultiplier, efficiencyMultiplier, testTimeComputeBudget}>` to GameState
+- Updated AIScalingPhase to record history each month
+- Initialized as empty array in initialization.ts
+- Full test coverage: 25 tests passing (tests/unit/phases/AIScalingPhase.test.ts)
+**Impact:** Can now debug AI capability changes by inspecting complete evolution timeline
+**Files changed:**
+- `src/types/game.ts`
+- `src/simulation/engine/phases/AIScalingPhase.ts`
+- `src/simulation/initialization.ts`
+- `tests/unit/phases/AIScalingPhase.test.ts` (NEW)
 
 ---
 
 ## MEDIUM Priority
 
-### MEDIUM-1: Test Coverage Gaps
-**Issue:** No unit tests for scaling strategy functions
-**Impact:** Regression risk when fixing HIGH priority items
-**Fix:** Add test suite for calculateEffectiveCapability, updateScalingComponents, etc.
-**Effort:** 2-3 hours
+### ✅ MEDIUM-1: Test Coverage Gaps
+**Status:** PARTIALLY COMPLETE (Dec 12, 2025)
+**Progress:** Added 25 tests for AIScalingPhase (tests/unit/phases/AIScalingPhase.test.ts)
+**Coverage includes:**
+- Phase metadata and error handling
+- AI scaling history tracking (5 tests)
+- Pre-training plateau model (2 tests)
+- Efficiency improvements (2 tests)
+- Test-time compute deployment gating (4 tests)
+- Agent capability updates (3 tests)
+- Edge cases and error handling (4 tests)
+- Annual logging (2 tests)
+**Remaining:** Unit tests for aiScalingStrategy.ts utility functions (calculateEffectiveCapability, updateScalingComponents, etc.)
+**Effort remaining:** 1-2 hours
 
 ### MEDIUM-2: Magic Numbers in Scaling Formulas
 **Issue:** Hard-coded constants (0.2, 0.15, 100, etc.) in scaling calculations
@@ -78,29 +97,35 @@
 
 ## Timeline
 
-**Recommended schedule:**
-1. Complete current sprint work
-2. Address HIGH-1 (dynamic requires) - Quick win, measurable perf improvement
-3. Address HIGH-2 (circular dependency) - Architectural cleanup
-4. Address HIGH-3 (state tracking) - Enables debugging
-5. MEDIUM/LOW items as time permits
+**Original schedule:**
+1. ✅ HIGH-1: Performance overhead - VERIFIED NOT AN ISSUE
+2. ✅ HIGH-2: Circular dependency - VERIFIED ALREADY CLEAN
+3. ✅ HIGH-3: State tracking - IMPLEMENTED + TESTED (25 tests)
+4. 🔄 MEDIUM-1: Test coverage - PARTIALLY COMPLETE (AIScalingPhase done, utilities remain)
+5. ⏸️ MEDIUM-2, MEDIUM-3, LOW items - Deferred to future sessions
 
-**Total HIGH priority effort:** 7-11 hours
-**Total MEDIUM priority effort:** 6-8 hours
-**Total LOW priority effort:** 2 hours
+**Completed effort:** 2-3 hours (HIGH-3 only; HIGH-1/HIGH-2 were verification only)
+**Remaining MEDIUM priority effort:** 5-7 hours
+**Remaining LOW priority effort:** 2 hours
 
 ---
 
 ## Risk Assessment
 
-**Risk of NOT fixing:**
-- HIGH-1: Ongoing performance overhead (minor, ~10ms/step)
-- HIGH-2: Potential initialization order bugs (moderate, may cause subtle issues)
-- HIGH-3: Reduced debuggability (low, workaround via logs)
+**Current status (Dec 12, 2025):**
+- ✅ HIGH-1: Not an issue (no dynamic requires found)
+- ✅ HIGH-2: Not an issue (clean unidirectional dependency)
+- ✅ HIGH-3: RESOLVED (aiScalingHistory implemented, 25 tests passing)
 
-**Overall risk:** LOW - System is stable, these are polish/quality improvements
+**Risk of NOT fixing remaining items:**
+- MEDIUM-1: Low regression risk (HIGH-3 tests cover phase execution, utilities are pure functions)
+- MEDIUM-2: Low maintainability impact (magic numbers are documented in comments)
+- MEDIUM-3: Low visibility impact (data available via aiScalingHistory, just not visualized)
+- LOW items: Minimal impact (polish/quality improvements)
 
-**Recommendation:** Safe to ship now, schedule fixes between features
+**Overall risk:** VERY LOW - All blocking issues resolved, system stable
+
+**Recommendation:** All HIGH priority items complete. MEDIUM/LOW items are polish/quality improvements, can be scheduled as time permits.
 
 ---
 
