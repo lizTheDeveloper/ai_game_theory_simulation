@@ -16,27 +16,16 @@
  * - Wide uncertainty bands: plus-minus 50% near-term, plus-minus 200% long-term
  *
  * Expected outcome: Logarithmic growth 2025-2035 (10-30x slower than exponential)
- *
- * REBOUND EFFECTS (Jevons Paradox) - Economic Productivity
- * - 60% of productivity gains offset by scope creep (same as energy rebound)
- * - Example: 50% productivity improvement → 20% net gain (30% consumed by more tasks)
- * - Research: energy_budget_constraints_20251209.md, Sorrell et al. (2024)
  */
 
 import type { SimulationPhase } from '../PhaseOrchestrator';
 import { assertFinite, assertInRange } from '@/simulation/utils/assertions';
 
-/**
- * Productivity rebound coefficient (60% - same as AI energy rebound)
- * Mechanism: Productivity gains enable taking on more work, offsetting efficiency
- */
-const PRODUCTIVITY_REBOUND_COEFFICIENT = 0.60;
-
 export const AIScalingPhase: SimulationPhase = {
   id: 'ai-scaling',
   name: 'AI Capability Scaling',
   order: 3,
-  dependencies: [],
+  dependencies: [], // No dependencies - reads only global AI state
   execute(state, rng, context) {
     const currentYear = 2024 + state.currentMonth / 12;
     const yearsElapsed = currentYear - state.aiCapabilityScaling.efficiencyBaseYear;
@@ -70,35 +59,10 @@ export const AIScalingPhase: SimulationPhase = {
       }
     );
 
-    // REBOUND EFFECTS: Apply productivity rebound to efficiency gains
     const efficiencyGrowthBase = state.aiCapabilityScaling.efficiencyGrowthRate;
     const efficiencyGrowthVariation = (rng() - 0.5) * 0.05;
-    const technicalGrowthRate = efficiencyGrowthBase + efficiencyGrowthVariation;
-
-    // Net growth after productivity rebound
-    // Technical: 5-10%/year → Net: 2-4%/year (60% rebound)
-    const netGrowthRate = assertFinite(
-      technicalGrowthRate * (1 - PRODUCTIVITY_REBOUND_COEFFICIENT),
-      {
-        location: 'AIScalingPhase.efficiency',
-        valueName: 'netGrowthRate',
-        month: state.currentMonth,
-        additionalInfo: {
-          technicalGrowthRate,
-          reboundCoefficient: PRODUCTIVITY_REBOUND_COEFFICIENT,
-          reboundEffect: `${(PRODUCTIVITY_REBOUND_COEFFICIENT * 100).toFixed(0)}% of productivity offset by scope creep`
-        }
-      }
-    );
-
-    // Validate rebound coefficient
-    assertInRange(PRODUCTIVITY_REBOUND_COEFFICIENT, 0, 1, {
-      location: 'AIScalingPhase.efficiency',
-      valueName: 'PRODUCTIVITY_REBOUND_COEFFICIENT',
-      month: state.currentMonth
-    });
-
-    const efficiencyBase = Math.pow(1 + netGrowthRate, yearsElapsed);
+    const effectiveGrowthRate = efficiencyGrowthBase + efficiencyGrowthVariation;
+    const efficiencyBase = Math.pow(1 + effectiveGrowthRate, yearsElapsed);
     const efficiencyUncertaintyFactor = 1 + (rng() - 0.5) * uncertaintyRange;
 
     state.aiCapabilityScaling.efficiencyMultiplier = assertFinite(
@@ -107,13 +71,7 @@ export const AIScalingPhase: SimulationPhase = {
         location: 'AIScalingPhase.efficiency',
         valueName: 'efficiencyMultiplier',
         month: state.currentMonth,
-        additionalInfo: {
-          yearsElapsed,
-          technicalGrowthRate,
-          netGrowthRate,
-          efficiencyBase,
-          efficiencyUncertaintyFactor
-        }
+        additionalInfo: { yearsElapsed, effectiveGrowthRate, efficiencyBase, efficiencyUncertaintyFactor }
       }
     );
 
@@ -172,14 +130,6 @@ export const AIScalingPhase: SimulationPhase = {
     );
 
     state.aiCapabilityScaling.uncertaintyMultiplier = uncertaintyRange;
-
-    // HIGH-3: Record scaling history each month for debugging capability changes
-    state.aiScalingHistory.push({
-      month: state.currentMonth,
-      preTrainingMultiplier: state.aiCapabilityScaling.preTrainingMultiplier,
-      efficiencyMultiplier: state.aiCapabilityScaling.efficiencyMultiplier,
-      testTimeComputeBudget: state.aiCapabilityScaling.testTimeComputeBudget
-    });
 
     for (const agent of state.aiAgents) {
       if (!agent.capabilityProfile.scalingModel) {
