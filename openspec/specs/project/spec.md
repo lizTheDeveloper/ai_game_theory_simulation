@@ -136,7 +136,7 @@ The project SHALL preserve implementation histories and research context.
 
 ## Current Status
 
-**Session:** 75 (December 12, 2025) - VALIDATION COMPLETE
+**Session:** 76 (December 12, 2025) - VALIDATION COMPLETE
 **Mode:** Architecture Integration Review + Research Audit + Documentation Sync
 **Research Quality:** A (94.2% validated sources, audit confirmed Dec 12)
 **Architecture Health:** A- (0 CRITICAL, 0 HIGH, 4 MEDIUM deferred)
@@ -161,11 +161,15 @@ The project SHALL preserve implementation histories and research context.
 - Rebound effects integration verified (AIScalingPhase, EnergyBudgetPhase)
 - OpenSpec change proposal archived
 
-**Session 75 Summary (COMPLETE):**
-- Architecture Integration Review (Grade A-, 0 CRITICAL/HIGH issues)
-- Research Source Validation Audit (Grade A-, 94.2% validated)
-- Documentation sync (wiki updated Dec 5-12 changes)
-- Supply chain cascades verified (Session 74 implementation)
+**Session 75-76 Summary (COMPLETE):**
+- Session 75: Architecture Integration Review (Grade A-, 0 CRITICAL/HIGH issues)
+- Session 75: Research Source Validation Audit (Grade A, 94.2% validated)
+- Session 75: Documentation sync (wiki updated Dec 5-12 changes)
+- Session 76: Architecture Review (Grade A-, 0 blocking issues)
+- Session 76: Research Audit (Grade A, 94.2% validated sources confirmed)
+- Session 76: Wiki sync (Sessions 74-76 implementation history)
+- Session 76: M-5 Phase Order Documentation COMPLETE (commit 12cb6e7c)
+- Session 76: Manufacturing capability scale finding → Research backlog (MEDIUM)
 - System STABLE, zero blocking issues
 
 ---
@@ -298,6 +302,10 @@ None (threshold lowering regression FIXED Dec 9, 2025 - commit 3f3118de, 7130c7e
 - Hindcast tuning (1950-2024 historical validation) - HIGH value for model validation
 - Calibration protocol (parameter optimization workflow)
 - **M-6 (Architecture):** Defensive fallback patterns in remaining files (~50 instances) - MONITORING (2-3 days effort, non-urgent, mostly valid patterns)
+- **M-7 (Research):** Manufacturing capability scale needs empirical grounding (Session 76 finding)
+  - Context: Current [0,100] scale lacks research-backed interpretation
+  - Recommendation: Ground in specific metrics (production capacity units, technology readiness levels)
+  - Priority: MEDIUM (doesn't block current work, affects realism)
 
 ### COMPLETED LOW Priority
 - **L-1: Duplicate tech category mapping cleanup** - COMPLETE Dec 10, 2025
@@ -360,6 +368,7 @@ See: `docs/EMOJI_QUICK_REFERENCE.md` (one-page cheat sheet)
 See: `docs/sessions.md` for complete session milestone tracking
 
 **Recent Sessions:**
+- Session 76 (Dec 12): VALIDATION COMPLETE - Architecture A-, research A (94.2%), M-5 COMPLETE, wiki sync, manufacturing scale finding
 - Session 75 (Dec 12): VALIDATION COMPLETE - Architecture review A-, research audit A (94.2%), wiki sync, 0 blocking issues
 - Session 74 (Dec 12): Supply Chain Cascades IMPLEMENTED (A- grade, 586 lines), rebound effects verified, system STABLE
 - Session 73 (Dec 12): Rebound effects IMPLEMENTED (Jevons Paradox), citation corrections
