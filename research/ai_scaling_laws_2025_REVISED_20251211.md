@@ -982,37 +982,47 @@ function getAICapabilityWithUncertainty(
    - **Used for:** Cost growth 2.4x/year (2016-2023)
    - **Credibility:** A (45 models analyzed)
 
+6. **Epoch AI (2024).** "Can AI scaling continue through 2030?" https://epoch.ai/blog/can-ai-scaling-continue-through-2030 ⭐ **ADDED Dec 12, 2025**
+   - **Used for:** Infrastructure constraints (power, chips, latency), 2e29 FLOP 2030 projection, 1-5 GW single-campus datacenters
+   - **Key Findings:**
+     - Power is most restrictive constraint (median 2e29 FLOP by 2030)
+     - Single-campus datacenters: 1-5 GW (Amazon 960 MW nuclear contract, Microsoft/OpenAI pursuing 5 GW)
+     - Distributed networks: 2-45 GW US-based (4-20 Pbps inter-datacenter bandwidth)
+     - Power infrastructure = 40% of GPU costs by 2030
+     - Training duration: 2-9 months; resource capture: 10-40% of infrastructure
+   - **Credibility:** A+ (Epoch AI authoritative on compute trends, multi-constraint quantitative analysis)
+
 ### Theoretical / Preprints (B-tier)
 
-6. **Lu, C. (2025).** "The Race to Efficiency: A New Perspective on AI Scaling Laws." arXiv:2501.02156.
+7. **Lu, C. (2025).** "The Race to Efficiency: A New Perspective on AI Scaling Laws." arXiv:2501.02156.
    - **Used for:** Efficiency-doubling framework, theoretical limits
    - **Credibility:** B+ (arXiv preprint, theoretical model not empirically validated)
 
-7. **"Revisiting Scaling Laws for Language Models."** ACL 2025. aclanthology.org/2025.acl-long.1163.pdf
+8. **"Revisiting Scaling Laws for Language Models."** ACL 2025. aclanthology.org/2025.acl-long.1163.pdf
    - **Used for:** Scaling law curvature at large scale
    - **Credibility:** A- (peer-reviewed, domain-limited)
 
-8. **"AI Scaling: From Up to Down and Out."** arXiv:2502.01677. February 2025.
+9. **"AI Scaling: From Up to Down and Out."** arXiv:2502.01677. February 2025.
    - **Used for:** "Extensively mined" efficiency techniques comment
    - **Credibility:** B+ (preprint, not yet peer-reviewed)
 
 ### Industry Reports (B-tier, directional)
 
-9. **Bloomberg (Nov 13, 2024).** "OpenAI, Google and Anthropic Are Struggling to Build More Advanced AI."
+10. **Bloomberg (Nov 13, 2024).** "OpenAI, Google and Anthropic Are Struggling to Build More Advanced AI."
    - **Used for:** Orion plateau evidence, Gemini underperformance
    - **Credibility:** B+ (major outlet, multiple employee sources, NOT peer-reviewed)
 
-10. **TechCrunch (Dec 23, 2024).** "OpenAI's o3 suggests AI models are scaling in new ways — but so are the costs."
+11. **TechCrunch (Dec 23, 2024).** "OpenAI's o3 suggests AI models are scaling in new ways — but so are the costs."
     - **Used for:** o3 cost data ($1,000+ per task)
     - **Credibility:** B (industry journalism, corroborated by ARC Prize)
 
-11. **ARC Prize (Dec 20, 2024).** "OpenAI o3 Breakthrough High Score on ARC-AGI-Pub." https://arcprize.org/blog/oai-o3-pub-breakthrough
+12. **ARC Prize (Dec 20, 2024).** "OpenAI o3 Breakthrough High Score on ARC-AGI-Pub." https://arcprize.org/blog/oai-o3-pub-breakthrough
     - **Used for:** o3 performance (87.5% on ARC-AGI), high-compute cost
     - **Credibility:** A (independent benchmark, transparent methodology)
 
 ### Internal Research
 
-12. **`ai_scaling_slowdown_evidence_20251210.md`** (Dec 10, 2025).
+13. **`ai_scaling_slowdown_evidence_20251210.md`** (Dec 10, 2025).
     - **Used for:** Comprehensive industry slowdown synthesis
     - **Credibility:** B+ (synthesizes multiple external sources)
 

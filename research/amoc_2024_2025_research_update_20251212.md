@@ -73,7 +73,35 @@ The 2024-2025 research on AMOC collapse shows **significant controversy** betwee
 
 ---
 
-### 1.3 Expert Consensus Warning (October 2024)
+### 1.3 Physics-Based Collapse Indicators (Westen et al., 2025b)
+
+**Citation:** Westen, R. M., et al. (2025). Physics-Based Indicators for the Onset of an AMOC Collapse Under Climate Change. *Journal of Geophysical Research: Oceans*. DOI: 10.1029/2025JC022651
+
+**Publication:** Journal of Geophysical Research: Oceans, 2025
+
+**Key Findings:**
+- **Multi-model analysis (25 climate models)** shows AMOC could collapse **by 2063** (25th-57th percentiles: 2026-2095) under SSP2-4.5 (intermediate emissions)
+- **By 2055** (25th-75th percentiles: 2023-2076) under SSP5-8.5 (high emissions)
+- **Temperature thresholds:** +2.48°C for SSP2-4.5, +2.79°C for SSP5-8.5
+- **Collapse transition time:** >100 years to reach substantially weaker state
+
+**Mechanism - Bflux Indicator:**
+- Novel physics-based indicator diagnosed from **surface buoyancy fluxes** over North Atlantic
+- Bflux multimodel mean changes sign by collapse onset
+- Successfully validated across multiple forcing scenarios (quasi-equilibrium, pulse, climate change)
+- Works across different climate models (CESM + 24 others)
+
+**Methodological Strength:**
+- Not based on statistical extrapolation
+- Physics-based (surface buoyancy budget)
+- Multi-model validation (25 models, not single-model result)
+- Tested under diverse forcing scenarios
+
+**Implication for Simulation:** Provides quantitative collapse timing windows tied to specific warming thresholds (+2.48°C, +2.79°C), with multi-model consensus. Transition is gradual (>100 years), not abrupt.
+
+---
+
+### 1.4 Expert Consensus Warning (October 2024)
 
 **Citation:** Open letter from 44 climate scientists (October 2024)
 
@@ -91,6 +119,8 @@ The 2024-2025 research on AMOC collapse shows **significant controversy** betwee
 - Oceanography specialists
 
 **Caution:** This is an expert judgment letter, not a peer-reviewed study. Reflects consensus concern but not quantitative modeling.
+
+**Consistency with Westen et al. 2025b:** Expert judgment (~2055) aligns with multi-model median (2055 SSP5-8.5, 2063 SSP2-4.5).
 
 ---
 
@@ -221,7 +251,10 @@ The 2024-2025 research on AMOC collapse shows **significant controversy** betwee
 
 1. **Probabilistic Threshold:**
    - NOT deterministic "crosses 2°C → collapse"
-   - Use probability distribution: 10% chance at 1.5°C, 50% at 2.5°C, 90% at 4°C (example)
+   - **Multi-model consensus thresholds (Westen et al. 2025b):**
+     - SSP2-4.5: +2.48°C warming → 2063 median collapse onset (range 2026-2095)
+     - SSP5-8.5: +2.79°C warming → 2055 median collapse onset (range 2023-2076)
+   - Use probability distribution: 10% chance at 1.5°C, 50% at 2.5°C, 90% at 4°C
    - Sample from distribution each Monte Carlo run
 
 2. **Transition Timescale:**
@@ -282,8 +315,10 @@ The 2024-2025 research on AMOC collapse shows **significant controversy** betwee
 
 ## Sources
 
-1. [Westen et al. (2025) - Strongly Eddying Ocean Model](https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2024GL114532)
-2. [Liu et al. (2025) - Orbital Forcing Sensitivity](https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2025GL115941)
-3. [Continued Atlantic overturning - Nature 2025](https://www.nature.com/articles/s41586-024-08544-0)
-4. [NOAA/AOML AMOC Research](https://www.aoml.noaa.gov/advancing-our-understanding-of-the-amoc/)
-5. [Expert Open Letter - October 2024](https://www.sciencemediacentre.org/expert-reaction-to-paper-warning-of-a-collapse-of-the-atlantic-meridional-overturning-circulation/)
+1. [Westen et al. (2025a) - Strongly Eddying Ocean Model](https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2024GL114532)
+2. [Westen et al. (2025b) - Physics-Based Indicators](https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025JC022651) ⭐ **NEW - December 2025**
+3. [Liu et al. (2025) - Orbital Forcing Sensitivity](https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2025GL115941)
+4. [Continued Atlantic overturning - Nature 2025](https://www.nature.com/articles/s41586-024-08544-0)
+5. [NOAA/AOML AMOC Research](https://www.aoml.noaa.gov/advancing-our-understanding-of-the-amoc/)
+6. [Expert Open Letter - October 2024](https://www.sciencemediacentre.org/expert-reaction-to-paper-warning-of-a-collapse-of-the-atlantic-meridional-overturning-circulation/)
+7. [Global Tipping Points Report 2025](https://www.global-tipping-points.org/) ⭐ **NEW - 2025**
