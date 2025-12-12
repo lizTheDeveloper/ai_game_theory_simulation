@@ -276,8 +276,10 @@ export function attemptAIDeEscalation(state: GameState, rng: RNGFunction): boole
   });
 
   // Success chance increases with social capability
+  // Clamp to [0, 1] to prevent overflow from high social capability
+  const rawSuccessChance = DEESCALATION_SUCCESS_RATE * (1 + (bestSocialCapability / 10));
   const successChance = assertProbability(
-    DEESCALATION_SUCCESS_RATE * (1 + (bestSocialCapability / 10)),
+    Math.min(1.0, Math.max(0.0, rawSuccessChance)),
     {
       location: 'attemptAIDeEscalation',
       valueName: 'successChance',

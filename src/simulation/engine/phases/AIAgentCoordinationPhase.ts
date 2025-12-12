@@ -705,8 +705,10 @@ export class AIAgentCoordinationPhase implements SimulationPhase {
     events: GameEvent[]
   ): void {
     // Detection difficulty increases with number of coalitions
+    // Clamp to valid range [1, 10] before assertion
+    const rawDifficulty = 1.0 + coord.coalitions.length * 0.5 + coord.instrumentalConvergenceLevel * 2;
     coord.coordinationDetectionDifficulty = assertInRange(
-      1.0 + coord.coalitions.length * 0.5 + coord.instrumentalConvergenceLevel * 2,
+      Math.min(10, Math.max(1, rawDifficulty)),
       1,
       10,
       {
