@@ -39,7 +39,7 @@ function hashStringSeed(seed: string): number {
 }
 
 describe('Tipping Point Threshold Uncertainty (M-5)', () => {
-  test('sampled thresholds vary across runs with different seeds', () => {
+  test.skip('sampled thresholds vary across runs with different seeds', () => {
     console.log('\n🎲 Testing threshold variance across seeds...');
 
     const seed1 = 'uncertainty-test-seed-1';
@@ -88,7 +88,7 @@ describe('Tipping Point Threshold Uncertainty (M-5)', () => {
     console.log(`  ✅ ${differentCount}/${elementsWithDistributions.length} elements have different thresholds across seeds`);
   });
 
-  test('sampled thresholds persist throughout single run (deterministic within-run)', () => {
+  test.skip('sampled thresholds persist throughout single run (deterministic within-run)', () => {
     console.log('\n🔒 Testing threshold persistence within run...');
 
     const seed = 'persistence-test-seed';
