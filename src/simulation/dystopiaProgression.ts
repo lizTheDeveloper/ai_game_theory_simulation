@@ -244,7 +244,7 @@ export function updateGovernmentControlResponse(state: GameState, rng: RNGFuncti
     // Economic efficiency decline (authoritarianism → corruption, inefficiency)
     state.globalMetrics.manufacturingCapability = assertInRange(
       Math.max(0.5, state.globalMetrics.manufacturingCapability * 0.999), // -0.1%/month
-      0, 10,
+      0, 100, // manufacturingCapability range [0,∞) per metrics.ts, capped at 100 by supplyChainCascades
       { location: 'authRegime_manufacturing', valueName: 'manufacturingCapability', month: state.currentMonth }
     );
   }
