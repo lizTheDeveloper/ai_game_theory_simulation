@@ -14,11 +14,11 @@ This file tracks bugs that block normal development or cause significant system 
 
 ## Queue Status
 
-**Last Updated:** December 12, 2025 (Session 71)
+**Last Updated:** December 12, 2025 (Session 76)
 
 **Active CRITICAL bugs:** 0
 **Active HIGH bugs:** 0
-**Active MEDIUM bugs:** 4 (M-3 and M-4 resolved Session 71, M-5 and M-6 deferred)
+**Active MEDIUM bugs:** 3 (M-3, M-4, M-1 resolved; M-5 and M-6 deferred)
 
 **System Status:** STABLE - Production ready, zero blocking issues
 
@@ -193,10 +193,42 @@ Added explicit `dependencies: []` declaration to AIScalingPhase object (line 28)
 
 ---
 
+### MEDIUM-1: Information Ecology Silent Fallback Pattern
+
+**Discovered:** Session 76 (Dec 12, 2025) - 30-day Architecture Integration Review
+**Status:** RESOLVED (Session 76, commit 4d4d40a4)
+**Impact:** Silent fallback pattern inconsistent with assertion utilities approach
+
+**Description:**
+InformationEcologyPhase.ts used defensive fallback in Phase 1 stub:
+```typescript
+const level = state.informationEcology?.misinformationLevel ?? 0;
+```
+
+**Location:**
+- File: `src/simulation/engine/phases/InformationEcologyPhase.ts`
+- Function: execute (stub phase)
+
+**Root Cause:**
+Stub code from Phase 1 implementation (placeholder logic).
+
+**Solution:**
+Removed `state.informationEcology?.misinformationLevel ?? 0` fallback. No replacement needed (stub returns early, no calculations).
+
+**Verification:**
+- ✅ TypeScript compilation clean
+- ✅ No functional changes (stub phase)
+- ✅ Consistent with assertion utilities approach
+
+**Priority:** MEDIUM → RESOLVED (Session 76)
+**Commit:** 4d4d40a4
+
+---
+
 ### MEDIUM-5: Phase Execution Order Documentation Gap
 
 **Discovered:** Session 70 (Dec 12, 2025) - 30-day Architecture Review
-**Status:** DEFERRED (non-urgent)
+**Status:** RESOLVED (Session 70, commit 12cb6e7c)
 **Impact:** Maintenance burden for phase ordering
 
 **Description:**
@@ -283,6 +315,32 @@ The risky calculation-path fallbacks have been addressed.
 ---
 
 ## Resolved Bugs (Recent)
+
+### Session 76 (Dec 12, 2025)
+
+**H-1: ClimateDeploymentPhase Missing Energy Budget Dependency (Architecture Integration Review)** ✅ RESOLVED
+- **Discovered:** Session 76 (Dec 12, 2025) - 30-day Architecture Integration Review
+- **Fixed:** Session 76 (commit 4d4d40a4)
+- **Root Cause:** Implicit dependency not declared (ClimateDeploymentPhase reads from EnergyBudgetPhase)
+- **Solution:** Added 'energy-budget' to dependencies array in ClimateDeploymentPhase
+- **Impact:** Makes implicit dependency explicit, phase orchestrator can validate data flow
+- **Verification:** TypeScript compiles cleanly, no functional changes (already worked via ordering)
+
+**H-2: Supply Chain Cascades RNG Initialization Pattern** ✅ RESOLVED
+- **Discovered:** Session 76 (Dec 12, 2025) - 30-day Architecture Integration Review
+- **Fixed:** Session 76 (commit 4d4d40a4)
+- **Root Cause:** supplyChainCascades.ts initialization accepted optional RNG with fallback
+- **Solution:** Made RNG required, added fail-loudly assertion, removed fallback value
+- **Impact:** Consistent Monte Carlo initialization (0.8-1.2 randomized, no fixed fallback)
+- **Verification:** TypeScript compiles cleanly, determinism preserved
+
+**M-1: Information Ecology Silent Fallback Pattern** ✅ RESOLVED
+- **Discovered:** Session 76 (Dec 12, 2025) - 30-day Architecture Integration Review
+- **Fixed:** Session 76 (commit 4d4d40a4)
+- **Root Cause:** InformationEcologyPhase.ts used defensive fallback in Phase 1 stub
+- **Solution:** Removed `state.informationEcology?.misinformationLevel ?? 0` fallback
+- **Impact:** Consistent with assertion utilities approach
+- **Verification:** TypeScript compiles cleanly, no functional changes (stub phase)
 
 ### Session 70 (Dec 12, 2025)
 
