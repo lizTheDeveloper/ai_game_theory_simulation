@@ -14,7 +14,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **17-dimensional quality of life**: Survival, health, education, meaning, environment
 - **Multi-paradigm perspectives**: Western Liberal, Development, Ecological, Indigenous worldviews
 - **Deterministic simulation**: Reproducible with RNG seeds for Monte Carlo analysis
-- **Phase-based architecture**: 103 registered phases (consolidated from 116 in Nov 2025, +AIScalingPhase Dec 11, +ExtinctionDebtPhase Dec 9)
+- **Phase-based architecture**: 104 registered phases (consolidated from 116 in Nov 2025, +AIScalingPhase Dec 11, +ExtinctionDebtPhase Dec 9, +SupplyChainCascadesPhase Dec 12)
 
 ## 🚀 Project Status
 
@@ -2652,15 +2652,16 @@ This section documents **critical parameter uncertainty findings** identified du
    - **Affected Outcomes:** Long-term recovery scenarios; "collapse" scenarios show as permanent when technically reversible
    - **Source:** Coral restoration literature (2024-2025)
 
-### 5 Significant Modeling Gaps
+### Significant Modeling Gaps (Updated Dec 12, 2025)
 
-| Gap | Evidence | Impact | Priority |
-|-----|----------|--------|----------|
-| **Supply chain mineral constraints** | IEA: Lithium limits solar deployment 28%, rare earths constrain wind | Renewable deployment 20-40% lower than projected | HIGH |
-| **Rebound effects** | Sorrell et al. 2024: 30-60% of efficiency gains rebounded (Jevons paradox) | Climate mitigation timescales extend 15-30% | HIGH |
-| **AI deception detection scaling** | Anthropic 2025: 95% success (7B params) → 60% (large models) | Assumes deployment-ready; actually in research phase | MEDIUM |
-| **Supply chain lag** | Grid integration: 2-5 years between installation and use | Effective deployment reduces 10-15% due to time lag | MEDIUM |
-| **Compound uncertainty** | 29+ parameter chain; 80% individual confidence ≠ 80% compound | Outcomes stated as point estimates vs confidence intervals | MEDIUM |
+| Gap | Evidence | Impact | Priority | Status |
+|-----|----------|--------|----------|--------|
+| ~~**Supply chain cascades**~~ | ~~One Earth 2024: 5x cascade multiplier, 74% spread probability~~ | ~~Collapse scenarios 2-5x too slow~~ | ~~HIGH~~ | **RESOLVED Dec 12** - Implemented in Session 74 |
+| ~~**Rebound effects**~~ | ~~Sorrell et al. 2024: 30-60% of efficiency gains rebounded (Jevons paradox)~~ | ~~Climate mitigation timescales extend 15-30%~~ | ~~HIGH~~ | **RESOLVED Dec 12** - Implemented across AI/climate/economic systems |
+| **Supply chain mineral constraints** | IEA: Lithium limits solar deployment 28%, rare earths constrain wind | Renewable deployment 20-40% lower than projected | HIGH | Open |
+| **AI deception detection scaling** | Anthropic 2025: 95% success (7B params) → 60% (large models) | Assumes deployment-ready; actually in research phase | MEDIUM | Open |
+| **Supply chain lag** | Grid integration: 2-5 years between installation and use | Effective deployment reduces 10-15% due to time lag | MEDIUM | Partial (deployment phases implemented) |
+| **Compound uncertainty** | 29+ parameter chain; 80% individual confidence ≠ 80% compound | Outcomes stated as point estimates vs confidence intervals | MEDIUM | Open |
 
 **Interpretation Guidance:**
 - **Worst-case scenarios** (nuclear war, cascading collapse) - Most affected by parameter uncertainty; actual outcomes likely 15-30% less severe
@@ -2717,6 +2718,94 @@ This section documents **critical parameter uncertainty findings** identified du
 ## Recent Changes
 
 **For the complete changelog, see [RECENT_CHANGES.md](./RECENT_CHANGES.md)**
+
+**December 12, 2025 - Supply Chain Cascade Propagation System (Session 74)**
+
+**Achievement:** Implemented fast-timescale (days-to-weeks) cascade failure modeling through just-in-time vulnerabilities, geographic chokepoints, infrastructure interdependence, and finance-supply chain feedback loops.
+
+**Core System:** 7-phase cascade propagation architecture:
+1. **Trigger Detection:** Infrastructure degradation, geopolitical conflicts, economic shocks
+2. **Infrastructure Cascades:** Power → Water → Food → Healthcare (5x multiplier, One Earth 2024)
+3. **JIT Buffer Tracking:** 2-3 month baseline buffers, critical threshold at <0.5 months
+4. **Chokepoint Monitoring:** Suez/Panama/Malacca canals, Taiwan semiconductor capacity
+5. **Finance Cascades:** Credit → Payment Systems → Employment disruptions
+6. **Economic/Social Impacts:** Manufacturing capacity (max 20% reduction), social stability, QoL, mortality
+7. **Sequential Recovery:** Power → Water → Food → Healthcare (Texas 2021 pattern)
+
+**Research Foundation (QG1 PASSED, Grade B):**
+- One Earth 2024 (Nirandjan et al.) - Infrastructure cascade multiplier: 5x, spread probability: 74%
+- Texas 2021 validation - 3-day power outage → 12M water disruption → $195B damages
+- Supply Chain Dive 2024 - JIT buffers reduced to days-to-hours (semiconductors: 2mo baseline)
+- Drewry/UNCTAD 2024 - Suez blockage: 64% transit decline, 158-246% rate increase
+
+**Integration Points:**
+- Reads: `energyBudget.globalCapacity`, `geopoliticalConflict`, `globalMetrics.socialStability`
+- Writes: `manufacturingCapability`, `socialStability`, `qualityOfLife`, `crisisResilience`, `population`
+- State: `supplyChainCascades` (JIT, chokepoints, infrastructure, finance subsystems)
+
+**Files:** `src/simulation/supplyChainCascades.ts` (585 lines), `src/simulation/engine/phases/SupplyChainCascadesPhase.ts`
+
+**Research:** `research/supply_chain_cascades_20251212.md`, `reviews/supply_chain_cascades_critique_20251212.md`
+
+**Next Steps:** Monte Carlo validation (N≥10, Priya), Architecture review (QG2), Wiki documentation
+
+---
+
+**December 12, 2025 - Rebound Effects Implementation (Jevons Paradox)**
+
+**Achievement:** Comprehensive modeling of energy efficiency rebound effects across AI infrastructure, climate technologies, and economic productivity systems.
+
+**Three Implementation Areas:**
+
+1. **AI Infrastructure Energy Rebound (60% coefficient)**
+   - Google's paradox: 33x efficiency improvement → 50% emission INCREASE (not decrease)
+   - Net effect: 25%/year technical improvement → 10%/year actual reduction
+   - File: `src/simulation/aiInfrastructureResources.ts`
+
+2. **Climate Tech Efficiency Rebound (30% coefficient)**
+   - Lower rebound than market-driven AI (policy-constrained deployment)
+   - Applied to: DAC, green hydrogen, SAI, carbon mineralization
+   - Net effect: 10%/year technical → 7%/year actual reduction
+   - File: `src/simulation/engine/phases/EnergyBudgetPhase.ts`
+
+3. **Economic AI Productivity Rebound (60% coefficient)**
+   - Productivity gains offset by scope creep and increased usage
+   - Net effect: 50% productivity improvement → 20% net gain
+   - File: `src/simulation/engine/phases/AIScalingPhase.ts`
+
+**Research Foundation (QG1 PASSED, Grade B+):**
+- Sorrell et al. (2024) - 30-60% of efficiency gains rebounded (Jevons paradox empirical validation)
+- Google 2019-2024 data - 33x efficiency improvement with 50% emission increase
+- Research: `research/energy_budget_constraints_20251209.md`
+
+**Expected Impact:**
+- Climate mitigation timescales extend 15-30% (addresses research gap identified in Session 66)
+- AI compute growth 2-3x faster than efficiency-only projections
+- More realistic energy competition scenarios in multi-system simulations
+
+**Key Insight:** Efficiency doesn't reduce consumption - it enables MORE usage. Model the paradox.
+
+**Status:** Implementation COMPLETE, QG1 PASSED, QG2 pending, Monte Carlo validation pending
+
+---
+
+**December 12, 2025 - Manufacturing Capability Scale Fix**
+
+**Bug Fixed:** Supply chain cascades treated `manufacturingCapability` as [0, 100] scale, but GameState expects [0, 10] range centered around 1.0.
+
+**Root Cause:** Used additive operations (- 0.2, + 2) instead of multiplicative (*0.8, *1.02). Other systems use multiplicative factors indicating [0, ~10] scale.
+
+**Fix Applied:**
+- Infrastructure cascade: Use multiplier (max 0.8) instead of subtraction
+- JIT disruption: Use multiplier (1.0 - impact*0.1) instead of subtraction
+- Recovery: Use 1.02 growth multiplier, cap at 10 (not 100)
+- Assertion range corrected in `dystopiaProgression.ts`: [0, 100] → [0, 10]
+
+**Files:** `src/simulation/supplyChainCascades.ts`, `src/simulation/dystopiaProgression.ts`
+
+**Impact:** Prevents out-of-range assertion failures in state validation, ensures manufacturing capability stays within valid bounds
+
+---
 
 **December 11, 2025 - Three-Axis AI Capability Scaling Model (Session 67)**
 
@@ -7509,6 +7598,108 @@ The reporting includes automatic validation:
 **Status:** VALIDATED (Monte Carlo N=30, Architecture Grade B+, APPROVED WITH CONDITIONS)
 **Philosophy:** "Near tipping points, small differences matter enormously. This isn't a bug - it's the nature of complex systems."
 
+---
+
+### 📦 Supply Chain Cascade Propagation System (Dec 2025)
+
+**Phase:** SupplyChainCascadesPhase (order TBD, pending architecture review)
+**Status:** Implementation COMPLETE, QG1 PASSED (Grade B), QG2 pending, Monte Carlo validation pending
+
+## Overview
+
+Models fast-timescale (days-to-weeks) cascade failures through just-in-time manufacturing vulnerabilities, geographic chokepoint failures, infrastructure interdependence cascades, and finance-supply chain feedback loops.
+
+Addresses Session 70 finding: Collapse scenarios were 2-5x too slow due to missing fast-cascade dynamics.
+
+## 7-Phase Cascade Architecture
+
+**1. Trigger Detection**
+- Infrastructure degradation (power grid failures from energyBudget)
+- Geopolitical conflicts (chokepoint disruptions, Taiwan semiconductor risk)
+- Economic shocks (credit availability collapse, social stability <30)
+
+**2. Infrastructure Cascades (Power→Water→Food→Healthcare)**
+- Research: One Earth 2024 (Nirandjan et al.) - 5x cascade multiplier, 74% spread probability
+- Validation: Texas 2021 - 3-day power outage → 12M water disruption → $195B damages
+- Timescales: Hours (power→water), days (water→food, food→healthcare)
+- Floors: 20% (power), 30% (water), 40% (food), 50% (healthcare)
+
+**3. JIT Buffer Tracking**
+- Baseline buffers: 2mo (semiconductors), 3mo (rare earth), 2mo (critical inputs)
+- Depletion triggers: Chokepoint disruption OR regional tension >70%
+- Critical threshold: <0.5 months → production disruptions
+
+**4. Chokepoint Monitoring**
+- Suez/Panama/Malacca canal status tracking
+- Taiwan semiconductor capacity (max 50% loss from regional conflict)
+- Recovery: Probability-based when tension drops below 50%
+
+**5. Finance Cascades (Credit→Payment→Employment)**
+- Credit availability → payment system degradation
+- Cash reserves depletion → employment cascade activation
+- Floors: 30% (credit), 50% (payment systems)
+
+**6. Economic/Social Impacts**
+- Manufacturing capacity: Max 20% reduction (infrastructure), 10% (JIT)
+- Social stability: Max 5 points/month from healthcare degradation
+- Quality of Life: Max 2%/month from water/food infrastructure loss
+- Population: Max 0.1%/month mortality from healthcare collapse
+- Crisis resilience: Max 10% reduction from finance cascades
+
+**7. Sequential Recovery (Texas 2021 Pattern)**
+- Power restores first (10mo, requires social stability >50)
+- Water restores second (7mo, requires power >80%)
+- Food restores third (5mo, requires water >80%)
+- Healthcare restores last (10mo, requires food >80%)
+- Manufacturing capacity: Slow recovery (2%/month growth multiplier)
+
+## State Structure
+
+```typescript
+interface SupplyChainCascadesState {
+  justInTime: { semiconductorBuffer_months, rareEarthBuffer_months, criticalInputsBuffer_months, disruptionActive, daysUntilCascade };
+  chokepoints: { suezStatus, panamaStatus, malaccaStatus, taiwanSemiconductorCapacity };
+  infrastructure: { powerGridStatus, waterSystemStatus, foodSystemStatus, healthcareSystemStatus, cascadeActive, hoursInCascade };
+  finance: { creditAvailability, paymentSystemStatus, cashReservesDepletion, employmentCascadeActive };
+}
+```
+
+## Integration Points
+
+**Reads:** `energyBudget.globalCapacity`, `geopoliticalConflict`, `globalMetrics.socialStability`
+**Writes:** `manufacturingCapability`, `socialStability`, `qualityOfLife`, `crisisResilience`, `population`
+
+## Research Foundation (QG1 PASSED, Grade B)
+
+- One Earth 2024 (Nirandjan et al.) - Infrastructure cascade multiplier: 5x, spread probability: 74%
+- Texas 2021 validation - 3-day power → 12M water → $195B damages
+- Supply Chain Dive 2024 - JIT buffers: days-to-hours (semiconductor baseline: 2mo)
+- Drewry/UNCTAD 2024 - Suez blockage: 64% transit decline, 158-246% rate increase
+
+**Research:** `research/supply_chain_cascades_20251212.md`
+**Critique:** `reviews/supply_chain_cascades_critique_20251212.md`
+
+## Expected Impact
+
+- Collapse scenarios: 2-5x faster progression
+- Manufacturing disruptions: More realistic short-term shock responses
+- Infrastructure cascades: Hours-to-days timescale (vs previous months-only modeling)
+- Chokepoint effects: Explicit modeling of Suez/Panama/Malacca/Taiwan dependencies
+
+## Implementation Files
+
+- `src/simulation/supplyChainCascades.ts` (585 lines) - Core cascade logic
+- `src/simulation/engine/phases/SupplyChainCascadesPhase.ts` - Phase wrapper
+- `src/types/game.ts` - SupplyChainCascadesState interface
+
+## Next Steps
+
+1. Monte Carlo validation (Priya) - N≥10, CV < 0.01% determinism check
+2. Architecture review (QG2) - Performance, state propagation, integration review
+3. Documentation - DevLog creation, spec merge & archive
+
+---
+
 ### 🌍 Climate Technology Deployment System (Nov 2025, Updated Dec 2025)
 
 **Modules:**
@@ -10198,7 +10389,7 @@ The simulation runs via a **phase-based architecture** with **100 phases** execu
   - **Research:** UN World Population Prospects 2024, Chetty 2016 (JAMA), Kahn 2022, Pappas 1993 (NEJM)
   - **Files:** `BaselineMortalityPhase.ts`, `bayesianMortality.ts`
 
-**Total Phases**: 103 registered phases (consolidated from 116 in Nov 2025, +AIScalingPhase Dec 11, +ExtinctionDebtPhase Dec 9)
+**Total Phases**: 104 registered phases (consolidated from 116 in Nov 2025, +AIScalingPhase Dec 11, +ExtinctionDebtPhase Dec 9, +SupplyChainCascadesPhase Dec 12)
 
 ---
 
