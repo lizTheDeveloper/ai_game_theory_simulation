@@ -71,6 +71,8 @@ export function assertDefined<T>(
 /**
  * Assert a number is in valid range [min, max]
  *
+ * @param epsilon - Optional tolerance for floating-point comparisons (default: 0)
+ *                  Use 1e-10 for [0, 1] bounded values to handle rounding errors
  * @throws Error if value is outside range or non-finite
  */
 export function assertInRange(
@@ -82,15 +84,31 @@ export function assertInRange(
     valueName: string;
     month?: number;
     additionalInfo?: Record<string, any>;
+    epsilon?: number;  // Tolerance for floating-point errors
   }
 ): number {
   assertFinite(value, context);
 
+  const epsilon = context.epsilon ?? 0;
+
+  // Clamp to valid range if within epsilon tolerance
+  // This handles benign floating-point errors (e.g., 1.0000000000000007 → 1.0)
+  if (epsilon > 0) {
+    if (value < min && value >= min - epsilon) {
+      return min;  // Clamp to min
+    }
+    if (value > max && value <= max + epsilon) {
+      return max;  // Clamp to max
+    }
+  }
+
+  // Strict check (fail loudly if outside tolerance)
   if (value < min || value > max) {
     const errorMsg = [
       `❌ Out-of-range value in ${context.location}`,
       `   ${context.valueName} = ${value}`,
       `   Valid range: [${min}, ${max}]`,
+      epsilon > 0 ? `   Tolerance: ±${epsilon}` : '',
       context.month !== undefined ? `   Month: ${context.month}` : '',
     ].filter(Boolean).join('\n');
 
@@ -102,6 +120,7 @@ export function assertInRange(
 /**
  * Assert a probability is valid [0, 1]
  *
+ * Uses epsilon tolerance (1e-10) to handle floating-point rounding errors
  * @throws Error if not a valid probability
  */
 export function assertProbability(
@@ -116,6 +135,7 @@ export function assertProbability(
   return assertInRange(value, 0, 1, {
     ...context,
     valueName: `${context.valueName} (probability)`,
+    epsilon: 1e-10,  // Tolerance for floating-point errors
   });
 }
 

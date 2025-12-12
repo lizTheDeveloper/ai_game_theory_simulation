@@ -931,7 +931,12 @@ function applySocialCascadeDynamics(state: GameState, rng: RNGFunction): void {
       cascade.adoptionLevel = assertInRange(
         cascade.adoptionLevel + cascade.adoptionRate,
         0, 1,
-        { location: 'applySocialCascadeDynamics', valueName: 'adoptionLevel', month: state.currentMonth }
+        {
+          location: 'applySocialCascadeDynamics',
+          valueName: 'adoptionLevel',
+          month: state.currentMonth,
+          epsilon: 1e-10  // Tolerance for floating-point rounding errors
+        }
       );
       continue;
     }
@@ -946,14 +951,24 @@ function applySocialCascadeDynamics(state: GameState, rng: RNGFunction): void {
     cascade.adoptionLevel = assertInRange(
       Math.min(0.80, newAdoption), // Saturation at 80%
       0, 1,
-      { location: 'applySocialCascadeDynamics', valueName: 'newAdoption', month: state.currentMonth }
+      {
+        location: 'applySocialCascadeDynamics',
+        valueName: 'newAdoption',
+        month: state.currentMonth,
+        epsilon: 1e-10  // Tolerance for floating-point rounding errors
+      }
     );
 
     // Social proof strength grows with adoption
     cascade.socialProofStrength = assertInRange(
       cascade.adoptionLevel * cascade.mediaVisibility,
       0, 1,
-      { location: 'applySocialCascadeDynamics', valueName: 'socialProofStrength', month: state.currentMonth }
+      {
+        location: 'applySocialCascadeDynamics',
+        valueName: 'socialProofStrength',
+        month: state.currentMonth,
+        epsilon: 1e-10  // Tolerance for floating-point rounding errors
+      }
     );
 
     // End cascade if saturated or trust declines
