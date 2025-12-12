@@ -473,18 +473,37 @@ export class CoordinatedDeploymentPhase implements SimulationPhase {
 
     // Apply bottleneck constraints (CRITICAL-2)
     // Real-world: High AI capability doesn't matter if trust or governance blocks implementation
-    const coordinationQuality = Math.min(
+    const coordinationBase = Math.min(
       coordinationRaw,
       aiTrust * 2.0,        // Can't coordinate beyond 2x trust level
       governance * 1.5      // Can't coordinate beyond 1.5x governance capacity
     );
 
+    // Apply epistemic health modifier from Information Ecology (Dec 12, 2025)
+    // Degraded information environment reduces coordination capacity
+    const epistemicModifier = state.society?.coordinationCapacity ?? 1.0;
+    const coordinationQuality = assertFinite(
+      coordinationBase * epistemicModifier,
+      {
+        location: 'CoordinatedDeploymentPhase.assessCoordinationQuality',
+        valueName: 'coordinationQuality after epistemic modifier',
+        month: state.currentMonth,
+        additionalInfo: {
+          coordinationBase,
+          epistemicModifier,
+          epistemicHealth: state.informationEcology?.epistemicHealth
+        }
+      }
+    );
+
     assertProbability(coordinationQuality, {
       location: 'CoordinatedDeploymentPhase.assessCoordinationQuality',
-      valueName: 'coordinationQuality',
+      valueName: 'coordinationQuality (final)',
       month: state.currentMonth,
       additionalInfo: {
         coordinationRaw,
+        coordinationBase,
+        epistemicModifier,
         aiResearch,
         aiSocial,
         governance,
