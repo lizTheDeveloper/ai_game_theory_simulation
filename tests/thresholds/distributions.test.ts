@@ -429,9 +429,9 @@ describe('sampleTriangular', () => {
     const rng = createTestRNG('test-seed-tri-5');
 
     assert.throws(
-      () => sampleTriangular(0.5, 0.5, 1, rng),
+      () => sampleTriangular(0.6, 0.5, 1, rng),
       /Invalid triangular|min.*<=.*mode/,
-      'Should reject min = mode'
+      'Should reject min > mode'
     );
 
     assert.throws(
@@ -445,9 +445,9 @@ describe('sampleTriangular', () => {
     const rng = createTestRNG('test-seed-tri-6');
 
     assert.throws(
-      () => sampleTriangular(0, 1, 1, rng),
+      () => sampleTriangular(0, 1.1, 1, rng),
       /Invalid triangular|mode.*<=.*max/,
-      'Should reject mode = max'
+      'Should reject mode > max'
     );
 
     assert.throws(
