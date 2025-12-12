@@ -194,8 +194,18 @@ None (threshold lowering regression FIXED Dec 9, 2025 - commit 3f3118de, 7130c7e
   - Added fail-loudly assertion (prevents silent non-determinism)
   - Impact: Consistent Monte Carlo initialization
 
+### COMPLETED HIGH Priority (Session 71)
+- **Rebound Effects (Jevons Paradox)** - COMPLETE Dec 12, 2025 (commits 979fa60c, 1f6f2a68)
+  - AI infrastructure energy rebound: 60% coefficient (Google paradox: 33× efficiency → 50% emission increase)
+  - Climate tech efficiency rebound: 30% coefficient (policy-constrained deployment)
+  - Economic AI productivity rebound: 60% coefficient (scope creep offsets gains)
+  - Net effect: 25%/year technical improvement → 10%/year actual reduction
+  - Research: energy_budget_constraints_20251209.md (Grade B+)
+  - Files: aiInfrastructureResources.ts, EnergyBudgetPhase.ts, AIScalingPhase.ts
+  - Quality Gates: QG1 PASSED, QG2 Pending, Monte Carlo Pending
+
 ### HIGH Priority
-None - All HIGH priority work COMPLETE (verified Dec 12 architecture review)
+None - All HIGH priority work COMPLETE (verified Dec 12 architecture review + Session 71 rebound effects)
 
 ### COMPLETED MEDIUM Priority
 - M-5: Threshold uncertainty modeling (distribution sampling library) - COMPLETE Dec 7, 2025
@@ -224,13 +234,13 @@ None - All HIGH priority work COMPLETE (verified Dec 12 architecture review)
 - **Evidence:** COVID-19 analysis (McKinsey 2024), Texas freeze 2021, Scheffer et al. 2023 (Nature)
 - **Recommendation:** Promote to HIGH priority
 
-**HIGH Gap: Rebound Effects (IDENTIFIED NOV 21, NOT IMPLEMENTED)**
-- **Impact:** Climate mitigation timescales +15-30% longer, AI compute 2-3x faster than modeled
-- **Effort:** 1 day implementation
-- **Confidence:** HIGH
-- **What's missing:** Jevons paradox (efficiency gains → increased consumption)
-- **Evidence:** Sorrell et al. 2024 (30-60% rebound), 150+ years of empirical data
-- **Recommendation:** Implement immediately (1-day effort, high impact)
+**~~HIGH Gap: Rebound Effects~~ - COMPLETE Dec 12, 2025**
+- **Status:** ✅ IMPLEMENTED (3 systems: AI infrastructure 60%, climate tech 30%, economic productivity 60%)
+- **Commits:** 979fa60c (AI infrastructure + climate tech), 1f6f2a68 (economic productivity)
+- **Files:** aiInfrastructureResources.ts, EnergyBudgetPhase.ts, AIScalingPhase.ts
+- **Impact:** Climate mitigation timescales +15-30% longer, AI compute 2-3x faster (more realistic)
+- **Evidence:** Sorrell et al. 2024 (30-60% rebound), Google 2019-2024 (33× efficiency → 50% emission increase)
+- **Quality Gates:** QG1 PASSED (Research Grade B+), QG2 Pending, Monte Carlo Pending
 
 **MEDIUM Gap: AI Capability Measurement Validity**
 - **Impact:** 8-month doubling time may be optimistic (based on 2010-2024 data, pre-training plateau)
