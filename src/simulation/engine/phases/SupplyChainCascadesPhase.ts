@@ -25,13 +25,13 @@ import { setDeterministicRng } from '@/simulation/utils/deterministicRng';
 export class SupplyChainCascadesPhase implements SimulationPhase {
   readonly id = 'supply_chain_cascades';
   readonly name = 'SupplyChainCascades';
-  readonly order = 26.5; // After crisis management (26), before health/safety nets
+  readonly order = 36.5; // After crisis management (26), before health/safety nets
 
   // DEPENDENCIES: Supply chain cascades interact with multiple systems
   readonly dependencies = [
-    'crisis_management',      // Crisis events trigger cascades
+    'crisis-detection',      // Crisis events trigger cascades
     'energy-budget',          // Power grid status affects infrastructure cascades
-    'geopolitical_conflict',  // Conflicts can disrupt chokepoints
+    'geopolitical-conflict',  // Conflicts can disrupt chokepoints
   ];
 
   execute(state: GameState, _rng: RNGFunction): PhaseResult {
