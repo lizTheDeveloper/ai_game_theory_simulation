@@ -359,6 +359,21 @@ export interface GameState {
     uncertaintyMultiplier: number;      // ±50% near-term (2025-2027), ±200% long-term (2028+)
   };
 
+  /**
+   * AI Scaling History (HIGH-3: State Evolution Tracking, Dec 2025)
+   *
+   * Track evolution of AI scaling components over time for debugging capability changes.
+   * Recorded monthly by AIScalingPhase.
+   *
+   * Expected impact: Visibility into scaling evolution, debugging capability trajectories
+   */
+  aiScalingHistory: Array<{
+    month: number;
+    preTrainingMultiplier: number;
+    efficiencyMultiplier: number;
+    testTimeComputeBudget: number;
+  }>;
+
   // Government System (30 Countries) - Oct 19, 2025
   // Research-backed government modeling with coalition formation, policy response, elections
   // Research: V-Dem v14 (2024), WGI 2024, Laver (2020), Manifesto Project
