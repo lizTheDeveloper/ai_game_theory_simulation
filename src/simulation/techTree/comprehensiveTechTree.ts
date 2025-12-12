@@ -664,7 +664,7 @@ const ALL_TECH: TechDefinition[] = [
   {
     id: 'precision_fermentation_nitrogen',
     name: 'Precision Fermentation (Nitrogen Pathway)',
-    description: 'Microbial protein production - 100x land efficiency, 30-50% agricultural N demand reduction via animal ag replacement',
+    description: 'Microbial protein production - 100x land efficiency, 25-40% agricultural N demand reduction via animal ag replacement',
     category: 'agriculture',
     status: 'unlockable',
     prerequisites: [],
@@ -684,16 +684,16 @@ const ALL_TECH: TechDefinition[] = [
     deploymentMonthsRequired: 60,  // 5 years to scale (2025-2030)
     deploymentLevel: 0,
     effects: {
-      nitrogenReduction: 0.40,  // 40% middle of 30-50% range (via animal ag replacement)
+      nitrogenReduction: 0.33,  // 33% midpoint of 25-40% defensible range (via animal ag replacement - Poore & Nemecek 2018, Grossmann et al. 2024)
       biogeochemicalFlowsReduction: 0.25,  // Reduces agricultural N demand
       landUseReduction: 0.50,  // 100x more efficient than animal ag
       waterEfficiency: 0.30,  // 95% less water than conventional dairy
       ghgReduction: 0.15,  // 80% lower GHG than conventional dairy
     },
     citations: [
-      'CE Delft (2021) - Precision fermentation efficiency gains',
-      'Good Food Institute (2024) - Cost parity $10/kg achieved',
-      'FAO (2024) - Sustainable media feedstocks for cellular agriculture'
+      'Poore & Nemecek (2018) - Science 360(6392):987-992 - Environmental impacts of animal products vs alternatives',
+      'Grossmann et al. (2024) - Biotechnology Advances 73:108367 - Sustainable media feedstocks for cellular agriculture',
+      'Bouwman et al. (2013) - PNAS 110(52):21199-21204 - Global nitrogen cycle modeling'
     ],
   },
 
