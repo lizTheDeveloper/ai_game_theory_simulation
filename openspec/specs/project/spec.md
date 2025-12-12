@@ -201,6 +201,14 @@ None - All HIGH priority work COMPLETE (verified Dec 10 architecture review)
   - History: docs/implementation-history/m1_energy_integration_20251210.md
 
 ### COMPLETED MEDIUM Priority
+- **Session 71 Architecture Cleanup** - COMPLETE Dec 12, 2025
+  - M-1: Removed duplicate mapTechToEnergyCategory from EnergyBudgetPhase (19 lines)
+  - M-2: Added dependencies array to AIScalingPhase (code consistency)
+  - TypeScript compilation: PASSED, 462+ tests passing
+  - Architecture Grade: A- (0 CRITICAL, 0 HIGH, 0 MEDIUM issues)
+  - History: `docs/implementation-history/session_71_architecture_cleanup_20251212.md`
+  - Commits: cc4c040e (M-1, M-2), 420cc749 (OpenSpec update)
+
 - **AI Scaling Paradigm Update** - COMPLETE Dec 11, 2025
   - Conservative three-axis model (pre-training + test-time + efficiency)
   - QG1: Grade B+ (Revised research addresses all critical concerns)
@@ -285,6 +293,7 @@ See: `docs/EMOJI_QUICK_REFERENCE.md` (one-page cheat sheet)
 See: `docs/sessions.md` for complete session milestone tracking
 
 **Recent Sessions:**
+- Session 71 (Dec 12): Architecture cleanup (M-1 duplicate removal, M-2 dependencies field), Grade A- maintained, 0 MEDIUM issues, TypeScript clean, 462+ tests passing
 - Session 68 (Dec 11 Night): Trust Restoration Re-Research COMPLETE (B+), Research Source Validation Audit (A, 94.2%), Architecture Review (A-), research foundation solid
 - Session 67 (Dec 11): AI Scaling implementation COMPLETE (Grade B+ QG1 revised, Grade B- QG2), conservative three-axis model, technical debt tracked
 - Session 66 (Dec 10 Night): CRITICAL TypeScript fix (quantum removal), fallback workflow execution, roadmap maintenance
