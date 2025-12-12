@@ -12,7 +12,7 @@
  * - IPCC AR6 WG1 (2021) - Chapter 8, tipping elements
  */
 
-import { TippingPointSystem, TIPPING_ELEMENTS } from '../types/tipping-points';
+import { TippingPointSystem, TIPPING_ELEMENTS, TippingElementState } from '../types/tipping-points';
 
 /**
  * Initialize the tipping point system state
@@ -35,6 +35,7 @@ export function initializeTippingPointSystem(rng: () => number): TippingPointSys
         triggered: false,
         monthsSinceTrigger: 0,
         progress: 0.0,
+        state: TippingElementState.NOT_TRIGGERED,  // Initialize state explicitly (MEDIUM-2 fix, Dec 12, 2025)
         // Initialize MICI fields for ice sheet elements
         abruptMode: false,
         accumulatedAbruptSLR: 0.0

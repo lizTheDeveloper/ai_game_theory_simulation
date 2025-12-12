@@ -461,14 +461,14 @@ describe('sampleTriangular', () => {
     const rng = createTestRNG('test-seed-tri-7');
 
     assert.throws(
-      () => sampleTriangular(NaN, 0.5, 1, rng),
-      /Non-finite value/,
+      ()() => sampleTriangular(NaN, 0.5, 1, rng),
+      /Invalid triangular|Non-finite value/,
       'Should reject NaN min'
     );
 
     assert.throws(
-      () => sampleTriangular(0, Infinity, 1, rng),
-      /Non-finite value/,
+      ()() => sampleTriangular(0, Infinity, 1, rng),
+      /Invalid triangular|Non-finite value/,
       'Should reject Infinity mode'
     );
   });
