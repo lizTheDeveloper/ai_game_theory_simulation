@@ -70,8 +70,8 @@ const createInitialGovernment = (): GovernmentAgent => ({
 const createInitialSociety = (): HumanSocietyAgent => ({
   trustInAI: 0.6, // Cautious optimism initially
   paranoiaLevel: 0.2, // Low fear/anxiety about AI initially
-  coordinationCapacity: 0.4, // Medium coordination ability
-  baseCoordinationCapacity: 0.4, // Base coordination (before IE modifiers)
+  coordinationCapacity: 0.65, // Medium coordination ability (matches initialization.ts)
+  baseCoordinationCapacity: 0.65, // Base coordination (before IE modifiers)
   unemploymentLevel: 0.1, // Low unemployment initially
   socialAdaptation: 0.1, // Much more limited initial adaptation
   workflowAdaptation: 0.21, // 21% baseline (2024 empirical data)
