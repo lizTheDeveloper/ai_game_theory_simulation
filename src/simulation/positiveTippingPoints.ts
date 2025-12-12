@@ -929,7 +929,7 @@ function applySocialCascadeDynamics(state: GameState, rng: RNGFunction): void {
     if (!cascade.cascadeActive) {
       // Normal slow growth
       cascade.adoptionLevel = assertInRange(
-        cascade.adoptionLevel + cascade.adoptionRate,
+        Math.min(1.0, cascade.adoptionLevel + cascade.adoptionRate),  // Clamp to max before assertion
         0, 1,
         {
           location: 'applySocialCascadeDynamics',
