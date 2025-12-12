@@ -14,12 +14,11 @@ This file tracks bugs that block normal development or cause significant system 
 
 ## Queue Status
 
-**Last Updated:** December 12, 2025 (Auto Worker Session)
+**Last Updated:** December 12, 2025 (Session 71)
 
 **Active CRITICAL bugs:** 0
 **Active HIGH bugs:** 0
-**Active MEDIUM bugs:** 4 (2 from Session 55, 2 from Session 70 Architecture Review - all deferred, non-blocking)
-**Resolved MEDIUM bugs:** 2 (M-3: Already resolved in prior session, M-4: Resolved this session)
+**Active MEDIUM bugs:** 4 (M-3 and M-4 resolved Session 71, M-5 and M-6 deferred)
 
 **System Status:** STABLE - Production ready, zero blocking issues
 
@@ -118,10 +117,10 @@ Low - type system allows undefined, but runtime always provides value. No bugs o
 
 ---
 
-### MEDIUM-3: Duplicate Energy Category Mapping ✅ RESOLVED
+### MEDIUM-3: Duplicate Energy Category Mapping
 
 **Discovered:** Session 70 (Dec 12, 2025) - 30-day Architecture Review
-**Status:** ✅ RESOLVED (Auto Worker Session Dec 12, 2025)
+**Status:** RESOLVED (Session 71 verification - already fixed)
 **Impact:** Code duplication in ClimateDeploymentPhase
 
 **Description:**
@@ -134,23 +133,29 @@ ClimateDeploymentPhase has a local `mapTechToEnergyCategory` method despite the 
 **Root Cause:**
 Legacy code - local method predates shared utility creation.
 
-**Resolution:**
-Upon inspection, the duplicate local method **no longer exists**. The shared utility from `@/simulation/utils/energyCategories.ts` is imported (line 34) and used correctly (line 283). The bug has already been resolved in an earlier session.
+**Recommendation:**
+Delete local method, use imported utility from energyCategories.ts.
 
-**Verification:**
-- ✅ Import exists: `import { mapTechToEnergyCategory } from '@/simulation/utils/energyCategories';`
-- ✅ No local method definition found
-- ✅ TypeScript compiles cleanly
+**Impact:**
+Low - functional duplication, no bugs. Maintenance burden only.
 
 **Priority:** MEDIUM (code quality improvement)
-**Effort:** Already complete
+**Effort:** TRIVIAL (15 min)
+
+**Resolution (Session 71, Dec 12, 2025):**
+Verified that local method was already removed in prior session. File now uses shared utility from `@/simulation/utils/energyCategories` exclusively (line 34 import, line 283 usage). No duplicate method found.
+
+**Verification:**
+- ✅ Grep search confirmed no local method
+- ✅ TypeScript compilation clean
+- ✅ Only uses imported utility
 
 ---
 
-### MEDIUM-4: AIScalingPhase Missing Dependencies Declaration ✅ RESOLVED
+### MEDIUM-4: AIScalingPhase Missing Dependencies Declaration
 
 **Discovered:** Session 70 (Dec 12, 2025) - 30-day Architecture Review
-**Status:** ✅ RESOLVED (Auto Worker Session Dec 12, 2025)
+**Status:** RESOLVED (Session 71, Dec 12, 2025)
 **Impact:** Documentation inconsistency
 
 **Description:**
@@ -158,28 +163,33 @@ AIScalingPhase is defined as an object literal without explicit `readonly depend
 
 **Location:**
 - File: `src/simulation/engine/phases/AIScalingPhase.ts`
-- Line: 28
+- Lines: 24-27
 
-**Resolution:**
-Added explicit `dependencies: []` declaration with documentation comment explaining the phase has no dependencies (reads only global AI state: aiCapabilityScaling, aiAgents).
-
-**Updated Code:**
+**Current:**
 ```typescript
 export const AIScalingPhase: SimulationPhase = {
   id: 'ai-scaling',
   name: 'AI Capability Scaling',
   order: 3,
-  dependencies: [], // No dependencies - reads only global AI state (aiCapabilityScaling, aiAgents)
   execute(state, rng, context) {
 ```
 
-**Verification:**
-- ✅ Dependencies array added (line 28)
-- ✅ TypeScript compiles cleanly (npx tsc --noEmit)
-- ✅ Documentation comment explains no-dependency design
+**Recommendation:**
+Add explicit dependencies declaration (even if empty array) for consistency with other phases.
+
+**Impact:**
+Low - documentation/consistency only, no functional impact.
 
 **Priority:** MEDIUM (consistency improvement)
-**Effort:** TRIVIAL (10 min) - COMPLETE
+**Effort:** TRIVIAL (10 min)
+
+**Resolution (Session 71, Dec 12, 2025):**
+Added explicit `dependencies: []` declaration to AIScalingPhase object (line 28) with comment documenting that phase has no dependencies and reads only global AI state.
+
+**Verification:**
+- ✅ Added `dependencies: []` to phase definition
+- ✅ TypeScript compilation clean (npx tsc --noEmit)
+- ✅ Consistent with other phase definitions
 
 ---
 
