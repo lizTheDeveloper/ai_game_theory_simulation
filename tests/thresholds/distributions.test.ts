@@ -261,13 +261,13 @@ describe('sampleBeta', () => {
 
     assert.throws(
       () => sampleBeta(NaN, 1, 0, 1, rng),
-      /Invalid beta distribution/,
+      /Non-finite value|alpha.*must be|beta.*must be/,
       'Should reject NaN alpha'
     );
 
     assert.throws(
       () => sampleBeta(1, Infinity, 0, 1, rng),
-      /Invalid beta distribution/,
+      /Non-finite value|alpha.*must be|beta.*must be/,
       'Should reject Infinity beta'
     );
   });
