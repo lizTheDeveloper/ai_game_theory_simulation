@@ -13,6 +13,7 @@
 import { GameState, AIAgent } from '@/types/game';
 import { ActionResult } from '@/simulation/agents/types';
 import { CategorizedGovernmentAction } from '../core/types';
+import { getGovernmentOrg } from '@/simulation/utils/simulationIndices';
 
 let eventIdCounter = 0;
 const generateUniqueId = (prefix: string, month: number): string => {
@@ -146,7 +147,8 @@ const seizeDataCenter: CategorizedGovernmentAction = {
 
     const target = privateDCs.sort((a: any, b: any) => b.capacity - a.capacity)[0];
     const oldOrg = dcOwnership.get(target.id);
-    const govOrg = state.organizations.find((o: any) => o.type === 'government');
+    // O(n) fallback since execute() doesn't have PhaseContext.indices
+    const govOrg = getGovernmentOrg(state);
 
     if (!oldOrg || !govOrg) {
       return {
