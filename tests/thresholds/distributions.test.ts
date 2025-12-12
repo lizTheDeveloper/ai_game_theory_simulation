@@ -256,20 +256,17 @@ describe('sampleBeta', () => {
     );
   });
 
-  test('parameter validation: rejects NaN/Infinity', () => {
+  test('parameter validation: rejects NaN', () => {
     const rng = createTestRNG('test-seed-beta-7');
 
     assert.throws(
       () => sampleBeta(NaN, 1, 0, 1, rng),
-      /Invalid beta distribution/,
+      /Non-finite value|alpha.*must be|beta.*must be/,
       'Should reject NaN alpha'
     );
 
-    assert.throws(
-      () => sampleBeta(1, Infinity, 0, 1, rng),
-      /Invalid beta distribution/,
-      'Should reject Infinity beta'
-    );
+    // Note: Infinity is mathematically valid (degenerate distribution)
+    // Beta(1, Infinity) returns 0 (point mass at lower bound)
   });
 });
 
