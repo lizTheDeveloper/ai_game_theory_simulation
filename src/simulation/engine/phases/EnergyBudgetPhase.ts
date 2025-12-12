@@ -61,33 +61,56 @@ import { GameState, SimulationPhase, PhaseResult, RNGFunction } from '@/types/ga
 import { assertFinite, assertStateProperty, assertInRange } from '@/simulation/utils/assertions';
 import { getTechById } from '@/simulation/techTree/comprehensiveTechTree';
 
+/**
+ * REBOUND EFFECTS (Jevons Paradox) - Climate Tech
+ *
+ * Climate tech has LOWER rebound (30% vs AI's 60%) because:
+ * - Deployment is policy-constrained, not market-driven
+ * - Carbon pricing internalizes costs (unlike AI with no carbon price)
+ * - Explicit climate goals limit usage expansion
+ *
+ * Research: energy_budget_constraints_20251209.md
+ * Sorrell et al. (2024): 30-60% rebound across sectors
+ */
+
+/** Climate tech efficiency improvement (10%/year - more conservative than AI's 25%) */
+const CLIMATE_TECH_EFFICIENCY_GAIN = 0.10;
+
+/** Climate tech rebound coefficient (30% - lower than AI's 60%) */
+const CLIMATE_TECH_REBOUND = 0.30;
+
 // Energy requirements per technology category (TWh/year at full deployment)
 // Research: research/energy_budget_constraints_20251209.md sections 2.1-2.3
 const TECH_ENERGY_REQUIREMENTS: Record<string, {
   tWhPerUnit: number;  // Energy per unit of deployment
   priorityTier: 1 | 2 | 3 | 4;
   description: string;
+  reboundCoefficient?: number;  // Optional rebound effect (0-1)
 }> = {
   // TIER 3: Climate technologies (10-20% surplus)
   'dac': {
     tWhPerUnit: 15_000,  // 1,500 kWh/tCO2 * 10 GtCO2/year (mid-range)
     priorityTier: 3,
-    description: 'Direct Air Capture at gigatonne scale'
+    description: 'Direct Air Capture at gigatonne scale',
+    reboundCoefficient: 0.30  // 30% rebound (policy-constrained)
   },
   'green-hydrogen': {
     tWhPerUnit: 5_250,  // 52.5 kWh/kg * 100 Mt/year
     priorityTier: 3,
-    description: 'Green hydrogen production'
+    description: 'Green hydrogen production',
+    reboundCoefficient: 0.30  // 30% rebound (policy-constrained)
   },
   'sai': {
     tWhPerUnit: 100,  // Solar geoengineering (low energy)
     priorityTier: 3,
-    description: 'Stratospheric Aerosol Injection'
+    description: 'Stratospheric Aerosol Injection',
+    reboundCoefficient: 0.30  // 30% rebound (deployment caps)
   },
   'carbon-mineralization': {
     tWhPerUnit: 8_000,  // Enhanced weathering at scale
     priorityTier: 3,
-    description: 'Enhanced weathering and mineralization'
+    description: 'Enhanced weathering and mineralization',
+    reboundCoefficient: 0.30  // 30% rebound (policy-constrained)
   },
 
   // TIER 4: AI/compute expansion (5-10% surplus)

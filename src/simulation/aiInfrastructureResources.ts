@@ -26,7 +26,7 @@
  */
 
 import { GameState } from '@/types/game';
-import { assertFinite, assertStateProperty } from './utils/assertions';
+import { assertFinite, assertInRange, assertStateProperty } from './utils/assertions';
 
 /**
  * Water consumption parameters (FIX #3A: Research-corrected values)
@@ -105,6 +105,24 @@ const WUE_IMPROVEMENT_RATE_MONTHLY = WUE_IMPROVEMENT_RATE_YEARLY / 12;
 const WUE_FLOOR = 0.3;
 
 /**
+ * REBOUND EFFECTS (Jevons Paradox) - Research: energy_budget_constraints_20251209.md
+ *
+ * Google 2019-2024: 33× efficiency gain → 50% emission INCREASE (not 33× reduction)
+ * Mechanism: Efficiency improvements enable more usage, offsetting technical gains
+ * Sorrell et al. (2024): 30-60% of efficiency gains rebounded across sectors
+ *
+ * Result: 25%/year technical improvement → 10%/year net reduction
+ */
+
+/** Annual efficiency improvement rate (25%/year) */
+const EFFICIENCY_GAIN_PER_YEAR = 0.25;
+
+/** Rebound coefficient (60% of efficiency gains offset by usage growth)
+ * Research: energy_budget_constraints_20251209.md lines 828-834
+ * Google example: 33× efficiency → 50% MORE emissions (rebound dominates) */
+const REBOUND_COEFFICIENT = 0.60;
+
+/**
  * Calculate AI resource consumption for current month
  * FIX #3A (Oct 19, 2025): Corrected water model - separate training/inference, logarithmic scaling
  * H-1 (Dec 10, 2025): Integrated with energy budget constraints
@@ -142,14 +160,53 @@ export function calculateAIResourceConsumption(state: GameState): {
   const totalWater = trainingWater + inferenceWater;
 
   // Energy consumption (scales with capability)
-  // H-1: Calculate nominal energy demand (before budget constraints)
+  // REBOUND EFFECTS: Apply efficiency improvements with 60% offset
+  // Calculate years since 2025 baseline
+  const yearsSinceBaseline = state.currentMonth / 12;
+
+  // Net efficiency gain after rebound effects
+  // Technical: 25%/year improvement → 10%/year net improvement (60% rebound)
+  const netEfficiencyGain = assertFinite(
+    EFFICIENCY_GAIN_PER_YEAR * (1 - REBOUND_COEFFICIENT),
+    {
+      location: 'calculateAIResourceConsumption',
+      valueName: 'netEfficiencyGain',
+      month: state.currentMonth,
+      additionalInfo: {
+        technicalGain: EFFICIENCY_GAIN_PER_YEAR,
+        reboundCoefficient: REBOUND_COEFFICIENT
+      }
+    }
+  );
+
+  // Validate rebound coefficient is in [0, 1]
+  assertInRange(REBOUND_COEFFICIENT, 0, 1, {
+    location: 'calculateAIResourceConsumption',
+    valueName: 'REBOUND_COEFFICIENT',
+    month: state.currentMonth
+  });
+
+  // Calculate rebound multiplier: (1 + 10%)^years
+  // Year 0: 1.0, Year 1: 1.1, Year 5: 1.61
+  const reboundMultiplier = Math.pow(1 + netEfficiencyGain, yearsSinceBaseline);
+
+  // Base energy demand (without efficiency improvements)
+  const baselineEnergyMW = ENERGY_BASE_CONSUMPTION + (totalCapability * ENERGY_PER_CAPABILITY_POINT);
+
+  // H-1: Calculate nominal energy demand (after efficiency, before budget constraints)
+  // Efficiency REDUCES energy consumption (divide by multiplier)
   const nominalEnergyMW = assertFinite(
-    ENERGY_BASE_CONSUMPTION + (totalCapability * ENERGY_PER_CAPABILITY_POINT),
+    baselineEnergyMW / reboundMultiplier,
     {
       location: 'calculateAIResourceConsumption',
       valueName: 'nominalEnergyMW',
       month: state.currentMonth,
-      additionalInfo: { totalCapability, baseConsumption: ENERGY_BASE_CONSUMPTION }
+      additionalInfo: {
+        totalCapability,
+        baselineEnergyMW,
+        reboundMultiplier,
+        yearsSinceBaseline
+      }
     }
   );
 
