@@ -218,9 +218,9 @@ economy.detectionRisk = 0.5;  // 50% baseline risk
 ---
 
 #### Nitrogen-Food Phase 3 Technologies
-**Status:** ✅ VERIFIED - Grade B+ (Conditional Pass)
+**Status:** ✅ RESOLVED (Dec 12, 2025)
 **Change:** (pending - needs change folder created)
-**Commit:** cd1e83a
+**Commit:** cd1e83a (verification), HEAD (timeline fix verified)
 **Context:** 6 new nitrogen reduction technologies added to tech tree
 **Verification File:** `research/verification_cd1e83a_20251208.md`
 
@@ -240,17 +240,18 @@ economy.detectionRisk = 0.5;  // 50% baseline risk
 5. **Soil Health Restoration (20-40% NUE improvement)** - Gu 2023 shows 10-80% range, but "soil health" term vague
 6. **Integrated Nutrient Management (25-45% efficiency)** - Gu 2023 11-measure package supports range
 
-**CRITICAL Issue Found:**
-- ❌ **Nitroplast Timeline Error:** Tech tree shows `minMonth: 60` (5 years) but research consensus is 2040s-2050s deployment (15-25 years minimum)
-- **Required Fix:** Change `minMonth: 60` → `minMonth: 180` to match research timeline
+**✅ CRITICAL Issue RESOLVED (Dec 12, 2025):**
+- ✅ **Nitroplast Timeline Fixed:** Code verification shows `minMonth: 180` (15 years, line 645 of comprehensiveTechTree.ts)
+- ✅ **Comment Confirms:** "Available 2040+ (15 years from 2025)" matches 2040s-2050s research timeline
+- ✅ **Duplicate Cleanup:** Three incorrect duplicate entries (minMonth: 60/120) removed with comments at lines 853-854, 2020-2021, 2466-2467
 
-**Recommended Actions:**
-1. Fix nitroplast timeline (CRITICAL - blocks Monte Carlo)
-2. Add research citations to tech tree comments
-3. Clarify vague terms ("Soil Health" → "Precision Agriculture NUE" or add explicit sources)
-4. Proceed with Monte Carlo validation after timeline fix
+**Remaining Recommendations:**
+1. ✅ ~~Fix nitroplast timeline~~ (COMPLETE - verified in HEAD)
+2. Add research citations to tech tree comments (optional improvement)
+3. Clarify vague terms ("Soil Health" → "Precision Agriculture NUE" or add explicit sources) (optional improvement)
+4. Proceed with Monte Carlo validation (ready)
 
-**Next Steps:** Timeline fix required before implementation → Monte Carlo N≥10
+**Ready for archival to Recently Resolved.**
 
 ---
 
