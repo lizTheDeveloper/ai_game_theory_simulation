@@ -89,7 +89,9 @@ export class InformationEcologyPhase implements SimulationPhase {
       throw new Error('❌ society not initialized');
     }
 
-    const baseCoordination = assertStateProperty(society, 'coordinationCapacity', {
+    // FIX (Dec 12, 2025): Use baseCoordinationCapacity to prevent compound multiplication bug
+    // Previously read coordinationCapacity (already-modified value), causing exponential decay
+    const baseCoordination = assertStateProperty(society, 'baseCoordinationCapacity', {
       location: 'InformationEcologyPhase.execute',
       month: state.currentMonth,
     });
@@ -126,55 +128,54 @@ export class InformationEcologyPhase implements SimulationPhase {
    * Detect and apply epistemic shocks
    *
    * Nuclear events, major AI deceptions, etc. cause stepwise trust drops.
+   *
+   * **Performance:** Single-pass eventLog scan (O(n) instead of 3 * O(n))
    */
   private detectAndApplyShocks(
     state: GameState,
     infoEcology: import('@/simulation/informationEcology').InformationEcologyState,
     rng: RNGFunction
   ): void {
-    // Check for nuclear events (recent detonations)
-    const recentNuclearEvents = state.eventLog.filter(
-      (event) =>
-        event.timestamp >= state.currentMonth - 1 && // Last month
-        event.type === 'catastrophe' &&
-        event.description.toLowerCase().includes('nuclear')
-    );
+    // Single-pass categorization of recent events (performance optimization)
+    const recentEvents = { nuclear: 0, deception: 0, catastrophes: 0 };
 
-    if (recentNuclearEvents.length > 0) {
-      const severity = Math.min(1.0, recentNuclearEvents.length * 0.3); // 30% per detonation
+    for (const event of state.eventLog) {
+      if (event.timestamp < state.currentMonth - 1) continue; // Skip old events
+
+      const desc = event.description.toLowerCase();
+
+      if (event.type === 'catastrophe') {
+        if (desc.includes('nuclear')) {
+          recentEvents.nuclear++;
+        }
+        if (desc.includes('extinction') || desc.includes('collapse')) {
+          recentEvents.catastrophes++;
+        }
+      }
+
+      if (event.type === 'crisis' && (desc.includes('deception') || desc.includes('sleeper'))) {
+        recentEvents.deception++;
+      }
+    }
+
+    // Apply shocks based on categorized events
+    if (recentEvents.nuclear > 0) {
+      const severity = Math.min(1.0, recentEvents.nuclear * 0.3); // 30% per detonation
       applyEpistemicShock(infoEcology, severity, rng);
       console.log(
         `☢️ Nuclear detonation(s) caused epistemic shock (severity ${(severity * 100).toFixed(0)}%)`
       );
     }
 
-    // Check for major AI deception events
-    const recentDeceptionEvents = state.eventLog.filter(
-      (event) =>
-        event.timestamp >= state.currentMonth - 1 &&
-        event.type === 'crisis' &&
-        (event.description.toLowerCase().includes('deception') ||
-         event.description.toLowerCase().includes('sleeper'))
-    );
-
-    if (recentDeceptionEvents.length > 0) {
-      const severity = Math.min(1.0, recentDeceptionEvents.length * 0.2); // 20% per event
+    if (recentEvents.deception > 0) {
+      const severity = Math.min(1.0, recentEvents.deception * 0.2); // 20% per event
       applyEpistemicShock(infoEcology, severity, rng);
       console.log(
         `🎭 AI deception event(s) caused epistemic shock (severity ${(severity * 100).toFixed(0)}%)`
       );
     }
 
-    // Check for extinction-tier events (civilizational collapse, severe crises)
-    const recentCatastrophes = state.eventLog.filter(
-      (event) =>
-        event.timestamp >= state.currentMonth - 1 &&
-        event.type === 'catastrophe' &&
-        (event.description.toLowerCase().includes('extinction') ||
-         event.description.toLowerCase().includes('collapse'))
-    );
-
-    if (recentCatastrophes.length > 0) {
+    if (recentEvents.catastrophes > 0) {
       const severity = 0.8; // Major shock
       applyEpistemicShock(infoEcology, severity, rng);
       console.log(`💥 Catastrophic event caused major epistemic shock`);
