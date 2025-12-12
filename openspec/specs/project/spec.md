@@ -197,7 +197,38 @@ The project SHALL preserve implementation histories and research context.
 ## Active Work
 
 ### CRITICAL Priority
-None (threshold lowering regression FIXED Dec 9, 2025 - commit 3f3118de, 7130c7e6)
+
+**CRITICAL-1: AI Alignment Stability Over Time** - NEW Dec 12, 2025 (Research Debate)
+- **Status:** ⚠️ READY - Research phase needed
+- **Priority:** CRITICAL
+- **Impact:** 30-50% (models static alignment, NOT degradation over 10-20 years)
+- **Confidence:** HIGH (strong evidence base)
+- **Effort:** 3-5 days (research 2d, implementation 3d, validation 1d)
+- **Context:** Current simulation models alignment as static property (1% sleeper rate at deployment). Missing: degradation under optimization pressure, distribution shift, reward hacking evolution, monitoring decay
+- **Evidence:**
+  - Hubinger et al. 2024: "Sleeper Agents: Training Deceptive LLMs That Persist Through Safety Training"
+  - Anthropic 2024: "Alignment Faking in Large Language Models"
+  - UK AISI 2025: "Emerging Risks From AI: Lessons From The Safeguarding Frontier"
+  - Kenton et al. 2024: "Alignment of Language Agents"
+- **Gap:** CoordinatedDeploymentPhase assumes alignment is binary and permanent. Reality: alignment degrades under:
+  - Optimization pressure (reward hacking evolution)
+  - Distribution shift (deployment ≠ training)
+  - Monitoring decay (resources shift to new problems)
+  - Adversarial pressure (red teams, competitors, nation-states)
+- **Recommendation:** Implement alignment degradation mechanics:
+  - Base degradation rate: 0.5-2% per year (LOW confidence, needs research)
+  - Monitoring effectiveness: -50% degradation if well-resourced
+  - Adversarial pressure multiplier: 1.5-3x in conflict scenarios
+  - Recovery path: Safety research can restore (months-to-years timescale)
+- **Next Steps:**
+  1. Research validation (Quality Gate 1): 2 days - super-alignment-researcher + research-skeptic
+  2. Create OpenSpec change proposal in `openspec/changes/ai-alignment-stability/`
+  3. Implementation via orchestrator agent
+  4. Quality Gate 2: architecture-skeptic review
+  5. Monte Carlo validation (N≥10)
+- **Files to modify:** `src/simulation/aiAlignment.ts`, `src/simulation/engine/phases/CoordinatedDeploymentPhase.ts`, `src/types/game.ts` (AIAlignment interface)
+- **Research file:** To be created: `research/ai_alignment_stability_degradation_20251212.md`
+- **Related:** Information Ecology (Session 76) provides epistemic degradation foundation
 
 ### COMPLETED HIGH Priority (Sessions 64-70)
 - HIGH-7: Conditional climate stability floor (research debate finding) - COMPLETE Dec 7, 2025
@@ -250,7 +281,39 @@ None (threshold lowering regression FIXED Dec 9, 2025 - commit 3f3118de, 7130c7e
 
 ### HIGH Priority (Active)
 
-**None currently active.** Next HIGH priority work should be selected from MEDIUM/LOW backlog or new research-identified priorities.
+**HIGH-1: AI Governance Implementation Gap** - NEW Dec 12, 2025 (Research Debate)
+- **Status:** ⚠️ READY - Research phase needed
+- **Priority:** HIGH
+- **Impact:** 15-30% (assumes coordination without modeling enforcement mechanisms)
+- **Confidence:** MEDIUM (theoretical consensus, limited empirical data)
+- **Effort:** 5-7 days (research 2d, implementation 4d, validation 2d)
+- **Context:** CoordinatedDeploymentPhase models coordination quality (0.0-1.0) but assumes actors comply. Missing: monitoring, penalties, defection incentives, regulatory capture, enforcement costs
+- **Evidence:**
+  - Maas 2024: "International Governance of Civilian AI: A Jurisdictional Certification Approach"
+  - Trager 2023: "International Coordination on AI Governance"
+  - Dafoe 2018: "AI Governance: A Research Agenda"
+  - Hoffman 2023: "Assuring Globally Catastrophic Risk"
+- **Gap:** Current model (Session 74-76):
+  - ✅ Coordination quality degrades with scale/time (implemented)
+  - ✅ Epistemic degradation affects deployment (Information Ecology, Session 76)
+  - ❌ NO enforcement mechanisms (assumes voluntary compliance)
+  - ❌ NO defection dynamics (first-mover advantage, free-rider problem)
+  - ❌ NO monitoring costs (assumes perfect transparency)
+  - ❌ NO regulatory capture (assumes benevolent regulators)
+- **Recommendation:** Add governance enforcement subsystem:
+  - Monitoring effectiveness: 60-80% initial, decays with resources
+  - Penalty credibility: 0.3-0.7 (depends on hegemon vs multilateral)
+  - Defection incentive: scales with AI capability advantage (1.5-10x)
+  - Regulatory capture: 5-15%/year probability (industry lobbying)
+  - Recovery: International crises can restore enforcement (months-to-years)
+- **Next Steps:**
+  1. Research validation (Quality Gate 1): 2 days
+  2. Create OpenSpec change proposal in `openspec/changes/ai-governance-enforcement/`
+  3. Implementation after CRITICAL-1 (alignment stability)
+  4. Quality Gate 2 + Monte Carlo validation
+- **Files to modify:** `src/simulation/coordinatedDeployment.ts`, `src/simulation/engine/phases/CoordinatedDeploymentPhase.ts`, `src/types/game.ts` (AIGovernance interface)
+- **Research file:** To be created: `research/ai_governance_enforcement_mechanisms_20251212.md`
+- **Related:** Complements Information Ecology (Session 76) - both model degradation of coordination capacity
 
 ### COMPLETED MEDIUM Priority
 - M-5: Threshold uncertainty modeling (distribution sampling library) - COMPLETE Dec 7, 2025
