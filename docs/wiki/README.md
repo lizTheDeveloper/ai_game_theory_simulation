@@ -14,7 +14,7 @@ The simulation asks: **What happens after we solve AI alignment?** Will we achie
 - **17-dimensional quality of life**: Survival, health, education, meaning, environment
 - **Multi-paradigm perspectives**: Western Liberal, Development, Ecological, Indigenous worldviews
 - **Deterministic simulation**: Reproducible with RNG seeds for Monte Carlo analysis
-- **Phase-based architecture**: 104 registered phases (consolidated from 116 in Nov 2025, +AIScalingPhase Dec 11, +ExtinctionDebtPhase Dec 9, +SupplyChainCascadesPhase Dec 12)
+- **Phase-based architecture**: 105 registered phases (consolidated from 116 in Nov 2025, +AIScalingPhase Dec 11, +ExtinctionDebtPhase Dec 9, +SupplyChainCascadesPhase Dec 12, +InformationEcologyPhase Dec 12)
 
 ## 🚀 Project Status
 
@@ -2718,6 +2718,62 @@ This section documents **critical parameter uncertainty findings** identified du
 
 **For the complete changelog, see [RECENT_CHANGES.md](./RECENT_CHANGES.md)**
 
+**December 12, 2025 - Information Ecology & Epistemic Degradation System (Session 76)**
+
+**Achievement:** Implemented comprehensive epistemic environment modeling addressing critical question: **Can polarized societies with degraded information ecosystems effectively coordinate to utilize aligned AI?**
+
+**Answer:** Not automatically. Coordination capacity depends critically on shared epistemic commons (trust, shared reality, low polarization), which degrades through misinformation epidemics and feedback loops.
+
+**Core Mechanisms:**
+- **Misinformation epidemics:** SIS/SIR model with R₀ ∈ [1.2, 1.8], amplified by echo chambers (1.5-3.0x) and AI-generated content (up to 50% boost)
+- **Trust erosion:** Crisis-driven stepwise drops (25-50%/month) vs slow recovery (2-5%/month), amplified by polarization
+- **Polarization feedback:** AI algorithms drive bounded effects (±3pp per 10 days), with diminishing returns at extremes
+- **Fact-checking decay:** Effectiveness half-life [5, 30] days (contested parameter, sampled per run)
+- **Coordination capacity:** Formula `trust × (1 - polarization) × (1 - misinformation)`, modulates AI deployment effectiveness
+
+**Research Foundation (15+ sources, 2024-2025):**
+- Vosoughi et al. (2018): Misinformation spreading dynamics
+- Alotaibi et al. (2024): SIS epidemic parameters (β = 0.1-0.8, γ = 0.05-0.2)
+- Pennycook et al. (2024): Fact-checking effectiveness decay
+- Lorenz-Spreen et al. (2023): AI polarization effects
+- Labarre (2024): Epistemic vulnerability framework (20-country analysis)
+- Edelman Trust Barometer (2025): Trust baseline (US: 0.40)
+
+**Quality Gates:**
+- **QG1 (Research Validation):** Grade B+ - CONDITIONAL PASS (Sylvia)
+  - Citation corrected: "McCoy et al." → "Labarre (2024)"
+  - Contested parameters documented with uncertainty ranges
+  - Epidemiological model validity questioned (Springer 2025 critique) but accepted with caveats
+- **QG2 (Architecture Review):** PASS (Architecture Skeptic)
+  - Fixed HIGH-1: Silent fallback pattern (added defensive assertions)
+  - Fixed HIGH-2: Math.random() usage (implemented seeded RNG)
+  - Deferred 3 MEDIUM, 2 LOW non-blocking issues
+
+**Validation:** Perfect determinism (CV = 0.000000%, N=5, seed="information-ecology-test")
+
+**Impact:** 20-40% reduction in managed transition probability for polarized scenarios. Coordination capacity < 0.2 triggers catastrophic policy failures. Misinformation R₀ > 1.5 creates exponential spread preventing crisis response.
+
+**Integration Points:**
+- **CoordinatedDeploymentPhase:** Epistemic modifier reduces AI deployment effectiveness (50-100% based on coordination)
+- **Society state:** `baseCoordinationCapacity` field added to prevent compound multiplication bug (stores base value before IE modifiers)
+
+**Performance Optimization:**
+- EventLog filtering: Single-pass categorization (O(n)) replaces 3 separate filter() calls (3×O(n)), achieving 3x speedup for shock detection
+
+**Files:**
+- Implementation: `src/simulation/informationEcology.ts` (458 lines), `src/simulation/engine/phases/InformationEcologyPhase.ts` (184 lines, order 18.0)
+- Research: `research/information_ecology_epistemic_degradation_20251202.md`
+- History: `docs/implementation-history/2025-12/information-ecology/README.md`
+- Reviews: `reviews/information_ecology_qg1_validation_20251212.md`, `reviews/information_ecology_architecture_review_20251212.md`
+
+**Critical Uncertainties:**
+- Epidemiological model contested (Springer 2025 philosophy of science critique)
+- Coordination threshold (0.2) from single case study (Ukraine EA Forum, not peer-reviewed)
+- Fact-check decay range [5, 30] days (literature mixed, sampled as distribution)
+- Trust erosion linearity (historical data shows stepwise drops, model uses continuous)
+
+---
+
 **December 11, 2025 - Three-Axis AI Capability Scaling Model (Session 67)**
 
 **Achievement:** Replaced exponential AI scaling assumption with research-backed three-axis model capturing 2024-2025 paradigm shift from pre-training to test-time compute.
@@ -4818,6 +4874,7 @@ The fundamental building blocks of the simulation:
 | [⚡ Energy Budget System](./systems/energy-budget.md) | ✅ | Priority-based energy allocation across climate, AI, cleanup systems (Dec 9, 2025) |
 | [🏛️ Governance Quality](./systems/governance-quality.md) | ✅ | Democratic resilience, decision quality, institutional capacity |
 | [🤝 Institutional Trust](./systems/institutional-trust.md) | ✅ | Trust restoration pathways, asymmetric decay/recovery (Dec 11, 2025) |
+| [📡 Information Ecology](./systems/information-ecology.md) | ✅ | Epistemic degradation modeling: misinformation epidemics (SIS/SIR), trust erosion, polarization feedback loops, coordination capacity modulation (Dec 12, 2025) |
 | [🌟 Upward Spirals](./systems/upward-spirals.md) | ✅ | 6 virtuous cascades, multiple paths to Utopia |
 | [🎨 Meaning Renaissance](./systems/meaning-renaissance.md) | ✅ | Cultural flourishing, 4 dimensions of meaning |
 | [🕊️ Conflict Resolution](./systems/conflict-resolution.md) | ✅ | Diplomatic AI, post-scarcity peace, cyber defense, 4 pillars |
