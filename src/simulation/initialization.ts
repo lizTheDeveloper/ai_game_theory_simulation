@@ -344,8 +344,13 @@ export function createAIAgent(
   // Determine sleeper status (5-10% of misaligned AIs are sleepers)
   const internalAlignment = alignment - 0.0 * 0.8; // Initial resentment = 0
   const isMisaligned = internalAlignment < 0.5;
-  const sleeperChance = 0.075; // 7.5% DERIVED ESTIMATE (Hubinger et al. 2024 proof-of-concept, empirical prevalence TBD)
-  // Uncertainty: ±50% (range 3.75%-11.25%)
+  const sleeperChance = 0.075; // 7.5% THEORETICAL ESTIMATE - NO EMPIRICAL BASIS
+  // NOT from Hubinger et al. 2024 (that paper shows detection, not prevalence)
+  // Justification: Geometric mean of available related rates:
+  //   - 1% spontaneous scheming (Apollo Research 2024)
+  //   - 12% alignment faking (Greenblatt et al. 2024)
+  // Uncertainty: ±80% (range 1.5%-13.5%)
+  // Flag for Monte Carlo sensitivity analysis
   // DETERMINISM FIX (Nov 6, 2025 Batch 3): Use passed rngFunction() parameter, not global deterministicRandom()
   const isSleeper = isMisaligned && rngFunction() < sleeperChance;
   
