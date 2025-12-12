@@ -60,6 +60,7 @@
 import { GameState, SimulationPhase, PhaseResult, RNGFunction } from '@/types/game';
 import { assertFinite, assertStateProperty, assertInRange } from '@/simulation/utils/assertions';
 import { getTechById } from '@/simulation/techTree/comprehensiveTechTree';
+import { mapTechToEnergyCategory } from '@/simulation/utils/energyCategories';
 
 // Energy requirements per technology category (TWh/year at full deployment)
 // Research: research/energy_budget_constraints_20251209.md sections 2.1-2.3
@@ -394,7 +395,7 @@ export class EnergyBudgetPhase implements SimulationPhase {
       if (deploymentLevel === 0) continue;
 
       // Map tech ID to energy category
-      const energyCategory = this.mapTechToEnergyCategory(techId);
+      const energyCategory = mapTechToEnergyCategory(techId);
       if (!energyCategory) continue;
 
       const requirement = TECH_ENERGY_REQUIREMENTS[energyCategory];
@@ -479,26 +480,6 @@ export class EnergyBudgetPhase implements SimulationPhase {
     return allocations;
   }
 
-  /**
-   * Map technology ID to energy category
-   */
-  private mapTechToEnergyCategory(techId: string): string | null {
-    // Climate technologies
-    if (techId.includes('dac') || techId.includes('air-capture')) return 'dac';
-    if (techId.includes('hydrogen')) return 'green-hydrogen';
-    if (techId.includes('sai') || techId.includes('geoengineering')) return 'sai';
-    if (techId.includes('mineralization') || techId.includes('weathering')) return 'carbon-mineralization';
-
-    // AI/compute
-    if (techId.includes('ai-') || techId.includes('datacenter')) return 'ai-datacenter';
-    if (techId.includes('compute') || techId.includes('simulation')) return 'advanced-compute';
-
-    // Infrastructure
-    if (techId.includes('industrial') || techId.includes('manufacturing')) return 'industrial-electrification';
-    if (techId.includes('transport') || techId.includes('ev')) return 'transport-electrification';
-
-    return null; // Technology doesn't have energy requirements
-  }
 }
 
 export const energyBudgetPhase = new EnergyBudgetPhase();
