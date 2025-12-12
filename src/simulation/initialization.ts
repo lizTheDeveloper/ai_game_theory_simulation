@@ -703,6 +703,9 @@ export function createDefaultInitialState(
       uncertaintyMultiplier: 0.5            // ±50% near-term (2025-2027), ±200% long-term (2028+)
     },
 
+    // HIGH-3: AI Scaling history tracking (Dec 2025)
+    aiScalingHistory: [],
+
     government: {
       controlDesire: 0.3,
       capabilityToControl: 0.5,

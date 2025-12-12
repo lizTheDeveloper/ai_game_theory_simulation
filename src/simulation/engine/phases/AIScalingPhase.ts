@@ -172,6 +172,14 @@ export const AIScalingPhase: SimulationPhase = {
 
     state.aiCapabilityScaling.uncertaintyMultiplier = uncertaintyRange;
 
+    // HIGH-3: Record scaling history each month for debugging capability changes
+    state.aiScalingHistory.push({
+      month: state.currentMonth,
+      preTrainingMultiplier: state.aiCapabilityScaling.preTrainingMultiplier,
+      efficiencyMultiplier: state.aiCapabilityScaling.efficiencyMultiplier,
+      testTimeComputeBudget: state.aiCapabilityScaling.testTimeComputeBudget
+    });
+
     for (const agent of state.aiAgents) {
       if (!agent.capabilityProfile.scalingModel) {
         agent.capabilityProfile.scalingModel = {
