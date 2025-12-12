@@ -63,6 +63,7 @@ export interface HumanSocietyAgent {
   communityStrength?: number; // [0,1] Community bonds and mutual aid strength
   institutionalTrust?: number; // [0,1] Trust in institutions
   coordinationCapacity: number; // [0,1] Ability to organize collective action
+  baseCoordinationCapacity: number; // [0,1] Base coordination (before information ecology modifiers) - prevents compound multiplication bug
   unemploymentLevel: number; // [0,1] Percentage of workforce displaced
   socialAdaptation: number; // [0,1] Overall adaptation to post-work economy
   activeMovements: string[]; // Active social movements (used in actionSystem.ts)
