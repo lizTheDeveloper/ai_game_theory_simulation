@@ -14,13 +14,13 @@ This file tracks bugs that block normal development or cause significant system 
 
 ## Queue Status
 
-**Last Updated:** December 12, 2025 (Session 76)
+**Last Updated:** December 12, 2025 (Session 77)
 
 **Active CRITICAL bugs:** 0
-**Active HIGH bugs:** 0
-**Active MEDIUM bugs:** 3 (M-3, M-4, M-1 resolved; M-5 and M-6 deferred)
+**Active HIGH bugs:** 1 (H-1: Floating-point precision in social cascades)
+**Active MEDIUM bugs:** 3 (M-1, M-2, M-3 carried forward)
 
-**System Status:** STABLE - Production ready, zero blocking issues
+**System Status:** DEGRADED - Blocking long-term simulations (>35 years)
 
 ---
 
@@ -36,7 +36,59 @@ This file tracks bugs that block normal development or cause significant system 
 
 **Definition:** Performance regressions (>50%), state propagation bugs, type safety violations, missing error handling
 
-**Status:** None active
+**Status:** 1 active
+
+### HIGH-1: Floating-Point Precision Bug in Social Cascade Dynamics
+
+**Discovered:** December 12, 2025 (Session 77)
+**Status:** ACTIVE
+**Assigned:** simulation-maintainer (Roy)
+**Impact:** Crashes all simulations exceeding 424 months (~35 years)
+
+**Description:**
+Hindcast validation (1950-2024) discovered a floating-point precision bug causing simulation crashes. The `applySocialCascadeDynamics` function produces values that exceed 1.0 by ~1e-15 due to cumulative floating-point rounding errors, triggering the defensive assertion system.
+
+**Error:**
+```
+❌ Out-of-range value in applySocialCascadeDynamics
+   adoptionLevel = 1.0000000000000007
+   Valid range: [0, 1]
+   Month: 424
+```
+
+**Location:**
+- File: `src/simulation/positiveTippingPoints.ts`
+- Function: `applySocialCascadeDynamics` (line 931)
+- Phase: `PositiveTippingPointsPhase`
+
+**Root Cause:**
+Cumulative floating-point rounding errors from incremental updates (e.g., `adoptionLevel += delta`) cause values to slightly exceed the theoretical maximum of 1.0.
+
+**Impact:**
+- Blocks hindcast validation (1950-2024 framework)
+- Blocks long-term Monte Carlo runs (>35 years)
+- Affects all simulations with active social cascades
+
+**Reproducibility:**
+- 100% deterministic (always crashes at month 424 with seed 42)
+- Discovered by: `scripts/hindcastValidation1950to2024.ts`
+- Validation run: `logs/hindcast_validation/hindcast_1950_2024_2025-12-12T19-40-41.log`
+
+**Proposed Fix:**
+1. Add epsilon tolerance to `assertInRange` for [0, 1] bounded values (tolerance: 1e-10)
+2. Add explicit clamping in `positiveTippingPoints.ts` after adoption level updates
+3. Defense in depth: Clamp at source + validate with tolerance
+
+**Estimated Effort:** 1-2 hours
+**Target Completion:** Session 78
+
+**Detailed Analysis:** See `openspec/specs/bugs/critical-floating-point-precision.md`
+
+**Priority Justification:**
+- Blocks HIGH value research infrastructure (hindcast validation)
+- Blocks core simulation functionality (long-term runs)
+- Straightforward fix (~10 lines of code)
+- Validates defensive assertion strategy (fail-loudly on genuine issues)
 
 ---
 
