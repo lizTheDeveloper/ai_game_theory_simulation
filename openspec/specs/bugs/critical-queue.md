@@ -14,13 +14,13 @@ This file tracks bugs that block normal development or cause significant system 
 
 ## Queue Status
 
-**Last Updated:** December 7, 2025 (Session 58)
+**Last Updated:** December 12, 2025 (Session 69+)
 
 **Active CRITICAL bugs:** 0
-**Active HIGH bugs:** 0
-**Active MEDIUM bugs:** 2 (carried forward from Session 55)
+**Active HIGH bugs:** 2 (from architecture review)
+**Active MEDIUM bugs:** 5 (2 carried forward, 3 new from architecture review)
 
-**System Status:** STABLE - Production ready, zero blocking issues
+**System Status:** STABLE - Production ready, architecture improvements identified
 
 ---
 
@@ -36,7 +36,82 @@ This file tracks bugs that block normal development or cause significant system 
 
 **Definition:** Performance regressions (>50%), state propagation bugs, type safety violations, missing error handling
 
-**Status:** None active
+**Status:** 2 active (from Dec 12 architecture review)
+
+### HIGH-1: Trust Restoration Mechanics NOT IMPLEMENTED
+
+**Discovered:** Session 69+ (Dec 12, 2025)
+**Status:** ACTIVE
+**Impact:** Research complete (Grade B+, Dec 11), but no implementation exists
+
+**Description:**
+High-quality research exists for trust restoration mechanics (`research/institutional_trust_restoration_20251211.md`), but there's no corresponding implementation in the simulation.
+
+**Research Complete:**
+- 9 peer-reviewed sources (2023-2025)
+- Trust erosion: 25-50%/month in crisis scenarios
+- Restoration: 24-36+ months minimum
+- Mechanism effectiveness: Procedural changes > distributive justice > transparency
+
+**Location:**
+Missing implementation - should be in government/society subsystem
+
+**Recommendation:**
+1. Verify research file exists and is valid
+2. Create implementation plan
+3. Add trust restoration mechanics to government decision-making
+4. Integrate with social debt system
+
+**Priority:** HIGH (research investment wasted without implementation)
+**Effort:** Medium (2-3 days)
+
+**Next Steps:**
+- [ ] Verify research file exists
+- [ ] Create change proposal in openspec/changes/
+- [ ] Implement trust restoration mechanics
+- [ ] Monte Carlo validation N≥10
+
+---
+
+### HIGH-2: Multi-Paradigm DUI Lacks Feedback to Simulation Core
+
+**Discovered:** Session 69+ (Dec 12, 2025)
+**Status:** ACTIVE
+**Impact:** Paradigm divergence calculated but doesn't affect simulation outcomes
+
+**Description:**
+MultiParadigmDUIUpdatePhase calculates 4 paradigm perspectives (Western Liberal, Development, Ecological, Indigenous) and tracks divergence, but this data doesn't feed back into government decision-making, policy effectiveness, or social conflict mechanics.
+
+**Location:**
+- File: `src/simulation/engine/phases/MultiParadigmDUIUpdatePhase.ts`
+- Issue: Calculation works, no downstream effects
+
+**Current State:**
+- ✅ Paradigm scores calculated correctly [0, 100]
+- ✅ Divergence tracked (max - min)
+- ❌ No impact on government decisions
+- ❌ No impact on policy effectiveness
+- ❌ No social conflict triggered by divergence >20
+
+**Root Cause:**
+Phase implemented as measurement-only, not integrated with decision/outcome phases
+
+**Recommendation:**
+Design feedback loop:
+1. Government decision-making should consider paradigm divergence
+2. Policy effectiveness should scale with paradigm alignment
+3. High divergence (>20) should trigger social conflict mechanics
+4. Breakthrough tech adoption should vary by paradigm perspective
+
+**Priority:** HIGH (complete system not functioning)
+**Effort:** Large (3-5 days)
+
+**Next Steps:**
+- [ ] Design paradigm → government decision integration
+- [ ] Design paradigm → policy effectiveness multiplier
+- [ ] Design paradigm divergence → social conflict trigger
+- [ ] Implement feedback mechanics
+- [ ] Monte Carlo validation N≥10
 
 ---
 
@@ -84,7 +159,114 @@ System load variation on shared infrastructure (VM). Not a regression - pre-exis
 
 ---
 
-### MEDIUM-2: Optional `state` Field Should Be Required
+### MEDIUM-2: AIScalingPhase Updates All Agents When Factors Unchanged
+
+**Discovered:** Session 69+ (Dec 12, 2025)
+**Status:** ACTIVE
+**Impact:** Minor performance inefficiency - unnecessary agent object updates
+
+**Description:**
+AIScalingPhase loops through all agents and updates their capabilities even when scaling factors haven't changed from previous month. This creates unnecessary object churn.
+
+**Location:**
+- File: `src/simulation/engine/phases/AIScalingPhase.ts:133`
+- Function: Main phase function
+
+**Root Cause:**
+No guard clause to skip updates when factors are identical to previous calculation
+
+**Recommendation:**
+Add early-exit guard:
+```typescript
+// After calculating scaling factors
+if (scalingFactors === previousScalingFactors) {
+  return; // Skip agent updates if no change
+}
+```
+
+**Priority:** MEDIUM (optimization, not correctness issue)
+**Effort:** Small (30 min)
+
+**Next Steps:**
+- [ ] Add scaling factor comparison
+- [ ] Add early-exit guard
+- [ ] Verify Monte Carlo determinism unchanged
+
+---
+
+### MEDIUM-3: Feature Flag Check After Phase Registration
+
+**Discovered:** Session 69+ (Dec 12, 2025)
+**Status:** ACTIVE
+**Impact:** Phase registered even if feature flag disabled (code smell)
+
+**Description:**
+EnergyBudgetPhase registers in PhaseOrchestrator, then checks feature flag inside phase function. Better pattern: check flag before registration.
+
+**Location:**
+- File: `src/simulation/engine/phases/EnergyBudgetPhase.ts:142`
+- Pattern: Feature flag check happens after phase registration
+
+**Current Code:**
+```typescript
+// Inside phase function (line 142)
+if (!state.featureFlags?.energyBudgetConstraints) {
+  return;
+}
+```
+
+**Recommended Pattern:**
+```typescript
+// In PhaseOrchestrator registration
+if (state.featureFlags?.energyBudgetConstraints) {
+  phases.push(EnergyBudgetPhase);
+}
+```
+
+**Priority:** MEDIUM (code quality, not functional issue)
+**Effort:** Small (30 min)
+
+**Next Steps:**
+- [ ] Move feature flag check to PhaseOrchestrator
+- [ ] Remove early-return from phase function
+- [ ] Verify tests still pass
+
+---
+
+### MEDIUM-4: Dual Energy Systems Create Confusion Risk
+
+**Discovered:** Session 69+ (Dec 12, 2025)
+**Status:** MONITORING
+**Impact:** Developer confusion - two energy tracking systems exist
+
+**Description:**
+Both EnergyBudgetPhase and PowerGenerationSystem track energy. While they serve different purposes (allocation vs production), this creates confusion risk.
+
+**Location:**
+- `src/simulation/engine/phases/EnergyBudgetPhase.ts` - Global electricity allocation
+- `src/simulation/powerGeneration.ts` - Infrastructure production tracking
+
+**Current Integration:**
+- PowerGenerationSystem feeds into EnergyBudgetPhase
+- EnergyBudgetPhase consumes production data
+- No double-counting detected
+
+**Recommendation:**
+Document the distinction clearly:
+- **PowerGenerationSystem:** Infrastructure-level production tracking (capacity, tech type)
+- **EnergyBudgetPhase:** Global allocation and constraint modeling
+
+**Priority:** MEDIUM (documentation issue)
+**Effort:** Small (30 min)
+
+**Next Steps:**
+- [ ] Add architectural documentation
+- [ ] Clarify comments in both files
+- [ ] Consider renaming for clarity
+
+---
+
+### MEDIUM-5: Optional `state` Field Should Be Required
 
 **Discovered:** Session 55 (Dec 6, 2025)
 **Status:** MONITORING (Carried forward from Session 55)
@@ -126,6 +308,20 @@ Low - type system allows undefined, but runtime always provides value. No bugs o
 ---
 
 ## Resolved Bugs (Recent)
+
+### Session 69+ (Dec 12, 2025)
+
+**HIGH-3: Tipping Cascade O(n²) Element Search** ✅ RESOLVED
+- **Discovered:** Session 69+ architecture review (Dec 12, 2025)
+- **Fixed:** Session 69+ (commit pending)
+- **Root Cause:** Nested loop with linear `.find()` search in threshold lowering calculations
+- **Solution:** Built element index Map at method start, replaced O(n²) searches with O(1) lookups
+- **Impact:** ~16x reduction in search operations per cascade calculation
+- **Defensive Coding:** Added assertFinite() for map size validation, fail-loudly check for duplicate IDs
+- **Verification:** 40/43 ClimateSystemPhase tests pass, threshold lowering tests pass (code path exercised)
+- **Review:** `reviews/architecture_integration_review_20251212.md`
+
+---
 
 ### Session 58 (Dec 7, 2025)
 
