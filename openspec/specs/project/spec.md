@@ -136,10 +136,10 @@ The project SHALL preserve implementation histories and research context.
 
 ## Current Status
 
-**Session:** 71 (December 12, 2025 - Morning)
-**Mode:** Code quality improvements (M-1, M-2 architecture fixes)
+**Session:** 71 (December 12, 2025)
+**Mode:** Maintenance mode - quality verification + bug resolution
 **Research Quality:** A (94.2% validated sources, comprehensive audit complete)
-**Architecture Health:** A- (0 CRITICAL, 0 HIGH, 0 MEDIUM - all issues resolved)
+**Architecture Health:** A- (0 CRITICAL, 0 HIGH, 4 MEDIUM deferred - system health excellent)
 **Test Coverage:** 82.47% (462+ tests passing, 6 known test import failures)
 **System State:** Production-ready, all quality gates GREEN
 
@@ -148,10 +148,12 @@ The project SHALL preserve implementation histories and research context.
 - Workers: Running every 4 hours (was hourly)
 
 **Session 71 Summary:**
-- M-1: Removed duplicate mapTechToEnergyCategory (architecture cleanup)
-- M-2: Added dependencies array to AIScalingPhase (code consistency)
-- TypeScript compilation: PASSED ✅
-- Quick architecture fixes from Session 70 review complete
+- M-3 (Duplicate energy category mapping) VERIFIED RESOLVED (commits c17a3e4f, 03ea1d62)
+- M-4 (AIScalingPhase dependencies declaration) RESOLVED (commit d95375a8)
+- Research Source Validation Audit COMPLETE (A grade, 94.2% current sources)
+- Critical Debate Session COMPLETE (politics system underspecified finding)
+- Bug queue: 6 MEDIUM → 4 MEDIUM (2 resolved)
+- System health: A- (maintained)
 
 ---
 
@@ -160,16 +162,16 @@ The project SHALL preserve implementation histories and research context.
 ### CRITICAL Priority
 None (threshold lowering regression FIXED Dec 9, 2025 - commit 3f3118de, 7130c7e6)
 
-### COMPLETED HIGH Priority (Session 64-65)
+### COMPLETED HIGH Priority (Sessions 64-70)
 - HIGH-7: Conditional climate stability floor (research debate finding) - COMPLETE Dec 7, 2025
-- H-2: Duplicate energy calculation removal (ClimateDeploymentPhase cleanup) - COMPLETE Dec 10, 2025 (commits ad27cd41, 1ca93fe6)
+- H-2 (Energy): Duplicate energy calculation removal (ClimateDeploymentPhase cleanup) - COMPLETE Dec 10, 2025 (commits ad27cd41, 1ca93fe6)
   - VERIFIED: Architecture review confirmed removal of 7-step duplicate logic
   - Single source of truth: EnergyBudgetPhase (order 12.75)
 - Sleeper agent rate justification (7.5% → Hubinger et al. 2024) - COMPLETE Dec 10, 2025 (commit 248bad46)
 - Sandbagging level citation (0.4-0.6 → van der Weij/Meinke 2024) - COMPLETE Dec 10, 2025 (commit 248bad46)
 - Detection risk calibration (50% baseline → time-dependent model) - COMPLETE Dec 10, 2025 (commit fd7694a2)
   - VERIFIED: Time-dependent model implemented (25% early → 80% late, sleeperEconomy.ts:339-355)
-- H-1: Energy budget system underutilization - COMPLETE Dec 10, 2025 (Phase 1)
+- H-1 (Energy): Energy budget system underutilization - COMPLETE Dec 10, 2025 (Phase 1)
   - VERIFIED: ClimateDeploymentPhase consumes effectivenessMultiplier from state.energyBudget.allocations
   - Quality Gate 2: Grade B+ (0 CRITICAL/HIGH issues)
   - Files: aiInfrastructureResources.ts, powerGeneration.ts, EnergyBudgetPhase.ts
@@ -179,9 +181,16 @@ None (threshold lowering regression FIXED Dec 9, 2025 - commit 3f3118de, 7130c7e
   - Location: aiCapabilities.ts
 - **Issue #749:** EnergyBudgetPhase order documentation mismatch - COMPLETE Dec 10, 2025 (commit 0f6c0ab6)
   - Fixed: Comment now matches code (12.75)
+- **H-1 (Architecture):** ClimateDeploymentPhase missing energy budget dependency - COMPLETE Dec 12, 2025 (commit 3303f984)
+  - Added 'energy-budget' to dependencies array
+  - Makes implicit dependency explicit (reads effectiveness multipliers)
+- **H-2 (Architecture):** Optional RNG in initialization functions - COMPLETE Dec 12, 2025 (commit 3303f984)
+  - oceanAcidification.ts: Made RNG required (was optional with fallback)
+  - Added fail-loudly assertion (prevents silent non-determinism)
+  - Impact: Consistent Monte Carlo initialization
 
 ### HIGH Priority
-None - All HIGH priority work COMPLETE (verified Dec 10 architecture review)
+None - All HIGH priority work COMPLETE (verified Dec 12 architecture review)
 
 ### COMPLETED MEDIUM Priority
 - M-5: Threshold uncertainty modeling (distribution sampling library) - COMPLETE Dec 7, 2025
@@ -201,14 +210,6 @@ None - All HIGH priority work COMPLETE (verified Dec 10 architecture review)
   - History: docs/implementation-history/m1_energy_integration_20251210.md
 
 ### COMPLETED MEDIUM Priority
-- **Session 71 Architecture Cleanup** - COMPLETE Dec 12, 2025
-  - M-1: Removed duplicate mapTechToEnergyCategory from EnergyBudgetPhase (19 lines)
-  - M-2: Added dependencies array to AIScalingPhase (code consistency)
-  - TypeScript compilation: PASSED, 462+ tests passing
-  - Architecture Grade: A- (0 CRITICAL, 0 HIGH, 0 MEDIUM issues)
-  - History: `docs/implementation-history/session_71_architecture_cleanup_20251212.md`
-  - Commits: cc4c040e (M-1, M-2), 420cc749 (OpenSpec update)
-
 - **AI Scaling Paradigm Update** - COMPLETE Dec 11, 2025
   - Conservative three-axis model (pre-training + test-time + efficiency)
   - QG1: Grade B+ (Revised research addresses all critical concerns)
@@ -231,6 +232,8 @@ None - All HIGH priority work COMPLETE (verified Dec 10 architecture review)
 ### MEDIUM Priority (Backlog)
 - Hindcast tuning (1950-2024 historical validation)
 - Calibration protocol (parameter optimization workflow)
+- **M-5 (Architecture):** Phase execution order documentation gap (12.x range) - DEFERRED (1-2 hours effort, non-urgent)
+- **M-6 (Architecture):** Defensive fallback patterns in remaining files (~50 instances) - MONITORING (2-3 days effort, non-urgent)
 
 ### COMPLETED LOW Priority
 - **L-1: Duplicate tech category mapping cleanup** - COMPLETE Dec 10, 2025
@@ -293,15 +296,16 @@ See: `docs/EMOJI_QUICK_REFERENCE.md` (one-page cheat sheet)
 See: `docs/sessions.md` for complete session milestone tracking
 
 **Recent Sessions:**
-- Session 71 (Dec 12): Architecture cleanup (M-1 duplicate removal, M-2 dependencies field), Grade A- maintained, 0 MEDIUM issues, TypeScript clean, 462+ tests passing
-- Session 68 (Dec 11 Night): Trust Restoration Re-Research COMPLETE (B+), Research Source Validation Audit (A, 94.2%), Architecture Review (A-), research foundation solid
+- Session 71 (Dec 12): M-3/M-4 bug resolution (2 MEDIUM resolved, 4 remaining), Research Source Validation Audit (A grade), Critical Debate Session (politics underspecified), maintenance mode execution
+- Session 70 (Dec 12): 30-day Architecture Review COMPLETE (A-), H-1/H-2 fixes COMPLETE (0 CRITICAL/HIGH issues), roadmap maintenance, 4 MEDIUM deferred (non-blocking)
+- Session 69 (Dec 11 Night): Research foundation EXCELLENT (A grade, 94.2% validated sources)
+- Session 68 (Dec 11 Night): Trust Restoration Re-Research COMPLETE (B+), Research Source Validation Audit (A, 613 files), Architecture Review (A-), research foundation solid
 - Session 67 (Dec 11): AI Scaling implementation COMPLETE (Grade B+ QG1 revised, Grade B- QG2), conservative three-axis model, technical debt tracked
 - Session 66 (Dec 10 Night): CRITICAL TypeScript fix (quantum removal), fallback workflow execution, roadmap maintenance
 - Session 65 (Dec 10): M-1 dual energy integration COMPLETE, Math.random() fix COMPLETE, Architecture A-, all HIGH/MEDIUM complete
 - Session 64 (Dec 10): Research audit completion + H-2 duplicate energy fix + architecture integration review
 - Session 63 (Dec 10): Research source validation (sleeper agent rate, sandbagging, detection risk) + archival
 - Session 62 (Dec 9): CRITICAL regression fix + H-1/H-2 architecture integration + research audit follow-up
-- Session 60 (Dec 9): Coffee break + archival + Energy Budget launch (~90k tokens)
 
 ---
 
