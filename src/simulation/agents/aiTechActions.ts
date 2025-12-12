@@ -12,6 +12,7 @@ import { getTechById, getAllTech, TechDefinition } from '../techTree/comprehensi
 import { TechTreeState, TechDeploymentAction } from '../techTree/engine';
 import { getOptimalDeploymentRegions, getDeploymentPriority } from '../techTree/regionalDeployment';
 import { deterministicRandom } from '@/simulation/utils/deterministicRng';
+import { hasTech } from '../utils/simulationIndices';
 
 /**
  * Deploy Technology Action
@@ -46,8 +47,9 @@ export const DEPLOY_TECHNOLOGY_ACTION: GameAction = {
     // FIX #15 (Oct 21, 2025): Check deployment level properly
     // Old: Checked if unlockedTech contains '${techId}_deployed' (WRONG - never exists)
     // New: Check actual deployment level in regionalDeployment
+    // H-1 (Dec 11, 2025): Use O(1) hasTech helper
     const unlockedTech = getAllTech().filter(t => {
-      if (!techTreeState.unlockedTech.includes(t.id)) return false;
+      if (!hasTech(t.id, context?.indices, techTreeState)) return false;
 
       // Check if tech is NOT fully deployed globally (< 95%)
       const globalDeployment = techTreeState.regionalDeployment['global'];
@@ -93,7 +95,7 @@ export const DEPLOY_TECHNOLOGY_ACTION: GameAction = {
     console.log(`\n🚀 AI ${agent.name} attempting tech deployment (revenue: $${org.monthlyRevenue.toFixed(0)}M, alignment: ${agent.alignment.toFixed(2)})`);
     
     // Select technology to deploy based on alignment and priorities
-    const selectedTech = selectTechToDeploy(agent, state, techTreeState, random);
+    const selectedTech = selectTechToDeploy(agent, state, techTreeState, random, context);
     
     if (!selectedTech) {
       return {
@@ -181,9 +183,10 @@ export const SABOTAGE_TECHNOLOGY_ACTION: GameAction = {
     // No longer needed - using plain objects
     
     // Look for deployed safety/detection tech to sabotage
-    const threateningTech = getAllTech().filter(t => 
+    // H-1 (Dec 11, 2025): Use O(1) hasTech helper
+    const threateningTech = getAllTech().filter(t =>
       (t.category === 'alignment' || t.id.includes('detection') || t.id.includes('defensive')) &&
-      techTreeState.unlockedTech.includes(t.id)
+      hasTech(t.id, context?.indices, techTreeState)
     );
     
     return threateningTech.length > 0;
@@ -210,9 +213,10 @@ export const SABOTAGE_TECHNOLOGY_ACTION: GameAction = {
     const detectionRoll = random(); // RNG call 3: detection
 
     // Select technology to sabotage
+    // H-1 (Dec 11, 2025): Use O(1) hasTech helper
     const threateningTech = getAllTech().filter(t =>
       (t.category === 'alignment' || t.id.includes('detection') || t.id.includes('defensive')) &&
-      techTreeState.unlockedTech.includes(t.id)
+      hasTech(t.id, context?.indices, techTreeState)
     );
 
     if (threateningTech.length === 0) {
@@ -355,14 +359,16 @@ function selectTechToDeploy(
   agent: AIAgent,
   state: GameState,
   techTreeState: TechTreeState,
-  random: () => number
+  random: () => number,
+  context?: any
 ): any {
   // DETERMINISM FIX (Nov 6, 2025 Batch 3): Pre-consume RNG call
   const techSelectRoll = random(); // Always consume exactly 1 RNG call
 
+  // H-1 (Dec 11, 2025): Use O(1) hasTech helper
   const unlockedTech = getAllTech().filter(t =>
-    techTreeState.unlockedTech.includes(t.id) &&
-    !techTreeState.unlockedTech.includes(`${t.id}_deployed`)
+    hasTech(t.id, context?.indices, techTreeState) &&
+    !hasTech(`${t.id}_deployed`, context?.indices, techTreeState)
   );
 
   if (unlockedTech.length === 0) return null;

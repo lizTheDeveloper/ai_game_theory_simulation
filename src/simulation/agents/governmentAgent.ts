@@ -8,6 +8,7 @@ import { GameState, GameEvent, AIAgent, PhaseContext } from '@/types/game';
 import { getTrustInAIForPolicy } from '../socialCohesion';
 import { GameAction, ActionResult } from './types';
 import { getTrustInAI } from '../socialCohesion';
+import { getGovernmentOrg } from '../utils/simulationIndices';
 import { 
   calculateRegulationStructuralEffects, 
   calculateUBIVariantEffects, 
@@ -1429,7 +1430,8 @@ timestamp: state.currentMonth,
     energyCost: 4,
     
     canExecute: (state) => {
-      const govOrg = state.organizations.find(o => o.type === 'government');
+      // O(n) fallback since canExecute() doesn't have PhaseContext.indices
+      const govOrg = getGovernmentOrg(state);
       if (!govOrg) return false;
       
       // Don't build if already building
@@ -1447,8 +1449,10 @@ timestamp: state.currentMonth,
       return privateDCs > 2;
     },
     
-    execute: (state, random, agentId?: string) => {      const govOrg = state.organizations.find((o: any) => o.type === 'government');
-      
+    execute: (state, random, agentId?: string) => {
+      // O(n) fallback since execute() doesn't have PhaseContext.indices
+      const govOrg = getGovernmentOrg(state);
+
       if (!govOrg) {
         return {
           success: false,
@@ -1539,8 +1543,9 @@ timestamp: state.currentMonth,
 
       const target = privateDCs.sort((a: any, b: any) => b.capacity - a.capacity)[0];
       const oldOrg = dcOwnership.get(target.id);
-      const govOrg = state.organizations.find((o: any) => o.type === 'government');
-      
+      // O(n) fallback since execute() doesn't have PhaseContext.indices
+      const govOrg = getGovernmentOrg(state);
+
       if (!oldOrg || !govOrg) {
         return {
           success: false,

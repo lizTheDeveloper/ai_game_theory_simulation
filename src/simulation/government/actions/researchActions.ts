@@ -14,6 +14,7 @@
 import { GameState } from '@/types/game';
 import { ActionResult } from '@/simulation/agents/types';
 import { CategorizedGovernmentAction } from '../core/types';
+import { getGovernmentOrg } from '@/simulation/utils/simulationIndices';
 
 let eventIdCounter = 0;
 const generateUniqueId = (prefix: string, month: number): string => {
@@ -74,7 +75,8 @@ const fundNationalCompute: CategorizedGovernmentAction = {
   energyCost: 4,
 
   canExecute: (state: GameState): boolean => {
-    const govOrg = state.organizations.find(o => o.type === 'government');
+    // O(n) fallback since canExecute() doesn't have PhaseContext.indices
+    const govOrg = getGovernmentOrg(state);
     if (!govOrg) return false;
 
     // Don't build if already building
@@ -93,7 +95,8 @@ const fundNationalCompute: CategorizedGovernmentAction = {
   },
 
   execute: (state: GameState, random: () => number, agentId?: string): ActionResult => {
-    const govOrg = state.organizations.find((o: any) => o.type === 'government');
+    // O(n) fallback since execute() doesn't have PhaseContext.indices
+    const govOrg = getGovernmentOrg(state);
 
     if (!govOrg) {
       return {

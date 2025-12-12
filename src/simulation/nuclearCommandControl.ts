@@ -21,6 +21,7 @@
 import type { GameState } from '../types/game';
 import type { RNGFunction } from '../types/game';
 import { assertProbability, assertInRange, assertFinite } from './utils/assertions';
+import { getAgentByName } from './utils/simulationIndices';
 
 /**
  * Default configuration for circuit breaker deployment
@@ -244,7 +245,8 @@ export function checkCircuitBreakers(
     // AI needs high social + cognitive capability to fool humans
     let aiBypassCapability = 0;
     if (context.aiAgent) {
-      const ai = state.aiAgents.find(a => a.name === context.aiAgent);
+      // O(n) search (no index for name lookups)
+      const ai = getAgentByName(state, context.aiAgent);
       if (ai) {
         aiBypassCapability = (
           ai.capabilityProfile.social * 0.5 +
@@ -278,7 +280,8 @@ export function checkCircuitBreakers(
 
   // Layer 2: AI Kill Switch
   if (ncc.aiKillSwitches.deployed && context.aiAgent) {
-    const ai = state.aiAgents.find(a => a.name === context.aiAgent);
+    // O(n) search (no index for name lookups)
+    const ai = getAgentByName(state, context.aiAgent);
 
     if (ai && rng() < ncc.aiKillSwitches.coverage) {
       // This AI has a kill switch
