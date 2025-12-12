@@ -74,7 +74,8 @@ import {
   assertFinite,
   assertProbability,
   assertInRange,
-  assertDefined
+  assertDefined,
+  assertStateProperty
 } from '@/simulation/utils/assertions';
 
 /**
@@ -481,7 +482,20 @@ export class CoordinatedDeploymentPhase implements SimulationPhase {
 
     // Apply epistemic health modifier from Information Ecology (Dec 12, 2025)
     // Degraded information environment reduces coordination capacity
-    const epistemicModifier = state.society?.coordinationCapacity ?? 1.0;
+    //
+    // CRITICAL DESIGN: Multiplicative decay is INTENTIONAL
+    // - Epistemic collapse (misinformation) × Crisis shock → Catastrophic coordination failure
+    // - Historical evidence: COVID-19 (misinformation + pandemic = coordination breakdown)
+    // - Recovery mechanism: Aligned AI can restore coordination via trusted channels
+    // - Death spirals are realistic when information environment degrades under stress
+    const epistemicModifier = assertStateProperty(
+      state.society,
+      'coordinationCapacity',
+      {
+        location: 'CoordinatedDeploymentPhase.assessCoordinationQuality',
+        month: state.currentMonth
+      }
+    );
     const coordinationQuality = assertFinite(
       coordinationBase * epistemicModifier,
       {
@@ -491,7 +505,8 @@ export class CoordinatedDeploymentPhase implements SimulationPhase {
         additionalInfo: {
           coordinationBase,
           epistemicModifier,
-          epistemicHealth: state.informationEcology?.epistemicHealth
+          epistemicHealth: state.informationEcology?.epistemicHealth,
+          note: 'Multiplicative decay is intentional - epistemic collapse + crisis = catastrophic failure'
         }
       }
     );
