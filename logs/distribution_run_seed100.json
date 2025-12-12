@@ -1,0 +1,11 @@
+{
+  "seed": 100,
+  "maxMonths": 120,
+  "outcome": "unknown",
+  "finalClimate": 0,
+  "avgClimate": 0,
+  "cascadeCount": 49,
+  "maxCascadeMultiplier": 1.4,
+  "tippedElements": 0,
+  "population": 7.974411409174192
+}
