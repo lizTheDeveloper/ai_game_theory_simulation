@@ -89,10 +89,9 @@ export class InformationEcologyPhase implements SimulationPhase {
       throw new Error('❌ society not initialized');
     }
 
-    const baseCoordination = assertStateProperty(society, 'coordinationCapacity', {
-      location: 'InformationEcologyPhase.execute',
-      month: state.currentMonth,
-    });
+    // FIX (Dec 12, 2025): Use baseCoordinationCapacity to prevent compound multiplication bug
+    // Previously read coordinationCapacity (already-modified value), causing exponential decay
+    const baseCoordination = society.baseCoordinationCapacity;
 
     // Modulate coordination capacity (soft constraint, not hard cutoff)
     society.coordinationCapacity = assertFinite(baseCoordination * coordinationModifier, {

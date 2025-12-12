@@ -9,7 +9,7 @@
  */
 
 import { GameState, GameEvent } from '@/types/game';
-import { assertDefined } from '@/simulation/utils/assertions';
+import { assertDefined, assertStateProperty } from '@/simulation/utils/assertions';
 
 /**
  * Log levels for different use cases
@@ -77,6 +77,16 @@ export interface MetricSnapshot {
   // Planetary boundaries (ISSUE-8 fix, Oct 30, 2025)
   biosphere_integrity?: number; // Biosphere integrity boundary value (extinction rate / safe threshold)
   biosphere?: number; // Alias for biosphere_integrity (compatibility)
+
+  // Information Ecology metrics (Dec 12, 2025)
+  epistemicHealth?: number; // [0, 1] Quality of information environment
+  polarization?: number; // [0, 1] Affective polarization level
+  socialTrust?: number; // [0, 1] General social trust
+  sharedReality?: number; // [0, 1] Consensus on basic facts
+  misinformationLoad?: number; // [0, 1] Misinformation prevalence
+  factCheckHalfLife?: number; // Days - fact-check effectiveness half-life
+  misinformationR0?: number; // Misinformation reproduction number
+  coordinationCapacity?: number; // [0, 1] Society's coordination capacity
 }
 
 /**
@@ -224,7 +234,42 @@ export class SimulationLogger {
           month: state.currentMonth
         }
       ).currentValue,
-      biosphere: state.planetaryBoundariesSystem.boundaries.biosphere_integrity.currentValue // Alias (already validated)
+      biosphere: state.planetaryBoundariesSystem.boundaries.biosphere_integrity.currentValue, // Alias (already validated)
+
+      // Information Ecology metrics (Dec 12, 2025)
+      // Fail loudly if information ecology not initialized
+      epistemicHealth: assertStateProperty(state, 'informationEcology.epistemicHealth', {
+        location: 'createSnapshot',
+        month: state.currentMonth
+      }),
+      polarization: assertStateProperty(state, 'informationEcology.polarization', {
+        location: 'createSnapshot',
+        month: state.currentMonth
+      }),
+      socialTrust: assertStateProperty(state, 'informationEcology.socialTrust', {
+        location: 'createSnapshot',
+        month: state.currentMonth
+      }),
+      sharedReality: assertStateProperty(state, 'informationEcology.sharedReality', {
+        location: 'createSnapshot',
+        month: state.currentMonth
+      }),
+      misinformationLoad: assertStateProperty(state, 'informationEcology.misinformationLoad', {
+        location: 'createSnapshot',
+        month: state.currentMonth
+      }),
+      factCheckHalfLife: assertStateProperty(state, 'informationEcology.factCheckHalfLife', {
+        location: 'createSnapshot',
+        month: state.currentMonth
+      }),
+      misinformationR0: assertStateProperty(state, 'informationEcology.misinformationR0', {
+        location: 'createSnapshot',
+        month: state.currentMonth
+      }),
+      coordinationCapacity: assertStateProperty(state, 'society.coordinationCapacity', {
+        location: 'createSnapshot',
+        month: state.currentMonth
+      })
     };
   }
   
