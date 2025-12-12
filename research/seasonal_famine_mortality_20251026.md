@@ -1,16 +1,17 @@
 ---
 oldest_source: 2011
-newest_source: 2024
-last_verified: 2025-11-16
+newest_source: 2025
+last_verified: 2025-12-12
 verification_status: UPDATED
 research_quality: A- (peer-reviewed + authoritative UN/World Bank reports)
 ---
 
 # Seasonal Food Insecurity and Famine Mortality Patterns
 
-**Research Date:** October 26, 2025 (Updated: November 16, 2025)
+**Research Date:** October 26, 2025 (Updated: December 12, 2025)
 **Researcher:** super-alignment-researcher-1 (Updated by autonomous-researcher)
 **Context:** Bug fix for simulation modeling continuous year-round famine mortality vs. seasonal lean season mortality
+**Update Notes (2025-12-12):** Added 2025 Global Report on Food Crises data (295M acute hunger, sixth consecutive increase)
 **Update Notes (2025-11-16):** Added frontmatter metadata, verified with 2024 GRFC report and 2023 peer-reviewed sources
 
 ---
@@ -448,4 +449,48 @@ The 2024 GRFC and 2023 peer-reviewed studies **strongly confirm** the original f
 
 **No contradictory evidence found.** The 2024-2025 sources strengthen confidence in the seasonal mortality modeling approach for the simulation.
 
-**Research Status:** Current and validated as of November 16, 2025.
+---
+
+### Global Report on Food Crises 2025 (Latest Update - December 2025)
+
+**Full Citation:** Food Security Information Network (2025). *Global Report on Food Crises 2025*. Food Security Information Network & Global Network Against Food Crises. Retrieved from: https://www.fsinplatform.org/report/global-report-food-crises-2025/
+
+**Key Findings - 2024 Acute Hunger (Reported in 2025 GRFC):**
+
+1. **Global Acute Hunger Totals:**
+   - **295 million people** faced acute hunger in 2024 across 53 countries/territories
+   - **Sixth consecutive annual increase** (13.7M increase from 2023)
+   - Represents **22.6%** of populations analyzed
+   - **Highest number** in the 9-year history of the GRFC
+
+2. **Catastrophic Hunger (IPC Phase 5):**
+   - **1.9 million people** in catastrophic hunger conditions
+   - **More than doubled** from previous year
+   - **Highest on record** since GRFC began tracking (2016)
+
+3. **Child Malnutrition:**
+   - **38 million children under 5** acutely malnourished (26 nutrition crises)
+   - **10 million** with severe acute malnutrition requiring urgent treatment
+
+4. **2025 Outlook (Preliminary Data as of May 2025):**
+   - **231 million people** projected to face high acute food insecurity in 2025
+   - Continued deterioration despite humanitarian efforts
+
+5. **Primary Drivers:**
+   - **Conflict:** 140M people (20 countries) - remains top driver
+   - **Weather extremes:** 96.1M people (18 countries) - main driver
+   - **Economic shocks:** 59.4M people (15 countries) - primary driver
+
+**Source Quality:** A+ (Multi-agency flagship report: FAO, WFP, FSIN, EU JRC)
+
+**Relevance to Seasonal Mortality:** The 2025 GRFC continues to document lean season impacts as critical drivers of acute food insecurity, confirming the seasonal concentration of famine mortality modeled in the simulation.
+
+**Research Sources:**
+- [2025 Global Report on Food Crises (FSIN Platform)](https://www.fsinplatform.org/report/global-report-food-crises-2025/)
+- [IFPRI Analysis: Rising Food Insecurity, Waning Humanitarian Assistance](https://www.ifpri.org/blog/2025-global-report-on-food-crises-rising-food-insecurity-waning-humanitarian-assistance/)
+- [FSIN GRFC 2025 September Update](https://www.fsinplatform.org/grfc-2025-september-update)
+- [Global Network Against Food Crises: Sixth Consecutive Year of Rising Acute Food Insecurity](https://www.fightfoodcrises.net/articles/2025-global-report-food-crises-acute-food-insecurity-and-malnutrition-rise-sixth)
+
+---
+
+**Research Status:** Current and validated as of December 12, 2025.
