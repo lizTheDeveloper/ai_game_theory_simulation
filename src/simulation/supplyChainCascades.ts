@@ -120,7 +120,7 @@ export function updateSupplyChainCascades(
 
   // Initialize state if not present (backward compatibility)
   if (!state.supplyChainCascades) {
-    state.supplyChainCascades = initializeSupplyChainCascades();
+    (state as any).supplyChainCascades = initializeSupplyChainCascades();
   }
 
   // TODO: Implement cascade logic

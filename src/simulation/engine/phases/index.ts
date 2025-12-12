@@ -141,6 +141,7 @@ export { CriticalJuncturePhase } from './CriticalJuncturePhase';  // Contingency
 // export { ExtinctionProgressPhase } from './ExtinctionProgressPhase';  // REMOVED: Consolidated into ExtinctionSystemPhase (Nov 26, 2025)
 export { TechnologyDiffusionPhase } from './TechnologyDiffusionPhase';
 export { CatastrophicScenariosPhase } from './CatastrophicScenariosPhase';
+export { SupplyChainCascadesPhase } from './SupplyChainCascadesPhase';  // Session 74: Supply chain cascade propagation (order 26.5)
 export { EventCollectionPhase } from './EventCollectionPhase';
 export { TimeAdvancementPhase } from './TimeAdvancementPhase';
 export { TechDeploymentSchedulePhase } from './TechDeploymentSchedulePhase';  // Nov 25, 2025: Sequenced tech deployment

@@ -176,6 +176,7 @@ import { ClimateSystemPhase } from './engine/phases/ClimateSystemPhase';  // Con
 import { AbruptSeaLevelRisePhase } from './engine/phases/AbruptSeaLevelRisePhase';  // M-4 (Dec 5, 2025): Marine ice sheet instability
 import { EnergyBudgetPhase } from './engine/phases/EnergyBudgetPhase';  // TIER 2 (Dec 9, 2025): Energy budget constraints for tech deployment
 import { ClimateDeploymentPhase } from './engine/phases/ClimateDeploymentPhase';  // TIER 1 CRITICAL (Nov 2025): Climate tech phased deployment + energy constraints
+import { SupplyChainCascadesPhase } from './engine/phases/SupplyChainCascadesPhase';  // Session 74 (Dec 12, 2025): Supply chain cascade propagation
 import { ClimateDeploymentDelayPhase } from './engine/phases/ClimateDeploymentDelayPhase';  // TIER 1 CRITICAL (Nov 18, 2025): Three-delay model
 import { VolcanicForcingPhase } from './engine/phases/VolcanicForcingPhase';  // HIGH PRIORITY (Nov 27, 2025): Stratospheric aerosol forcing for hindcast validation
 import { PermafrostCarbonPhase } from './engine/phases/PermafrostCarbonPhase';  // TIER 2 RD-1 (Nov 28, 2025): Permafrost carbon feedback loop
@@ -660,6 +661,7 @@ export class SimulationEngine {
     // === BATCH 5 CONSOLIDATED SOCIAL & GOVERNANCE (Nov 9, 2025): 20 → 8 phases (-12 files) ===
     this.orchestrator.registerPhase(new GovernanceSystemPhase());  // Consolidated: GovernanceQualityPhase (10.0), GovernmentElectionPhase (8.5), PolicyImplementationPhase (25.5) → order 10.0
     this.orchestrator.registerPhase(new SocialStabilitySystemPhase());  // Consolidated: SocialStabilityPhase (33.0), SocialCohesionUpdatePhase (26.1), ParanoiaPhase (32.0), TrustRecoveryPhase (24.5) → order 26.1
+    this.orchestrator.registerPhase(new SupplyChainCascadesPhase());  // Session 74 (Dec 12, 2025): Supply chain cascade propagation (order 26.5)
     this.orchestrator.registerPhase(new CooperativeSystemsPhase());  // Consolidated: CollectiveFormationPhase (4.2), CollectiveActionsPhase (5.5), CooperativeOwnershipPhase (15.5), CooperativeSpiralsPhase (11.5), UpwardSpiralsPhase (11.0) → order 11.5
     this.orchestrator.registerPhase(new InternationalRelationsPhase());  // Consolidated: DiplomaticAIPhase (14.0), ConflictResolutionPhase (13.0), MADDeterrencePhase (16.0), FlashWarEscalationPhase (29.0) → order 13.0
     this.orchestrator.registerPhase(new GeopoliticalConflictPhase());  // TIER 2 RD-3 (Nov 28, 2025): AI-era geopolitical conflict escalation (order 28.0)
