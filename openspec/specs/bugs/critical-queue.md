@@ -14,13 +14,13 @@ This file tracks bugs that block normal development or cause significant system 
 
 ## Queue Status
 
-**Last Updated:** December 12, 2025 (Session 79 - 30-day architecture review)
+**Last Updated:** December 13, 2025 (Session 82 - Hindcast validation)
 
-**Active CRITICAL bugs:** 0
+**Active CRITICAL bugs:** 1 (CRITICAL-1: Population collapse)
 **Active HIGH bugs:** 0
 **Active MEDIUM bugs:** 5 (M-1, M-2, M-5, M-7, M-8)
 
-**System Status:** EXCELLENT - Zero blocking issues, production ready, sustained A- grade
+**System Status:** CRITICAL - Population mechanics broken for hindcast period (1990-2020)
 
 **Latest Architecture Review:** `reviews/architecture_integration_review_20251212_comprehensive.md` (Grade: A-)
 
@@ -30,7 +30,94 @@ This file tracks bugs that block normal development or cause significant system 
 
 **Definition:** System crashes, data corruption, determinism breaks, security vulnerabilities
 
-**Status:** None active
+**Status:** 1 active (CRITICAL-1: Hindcast population collapse)
+
+### CRITICAL-1: Hindcast Population Collapse (-42% vs +46% Historical)
+
+**Discovered:** December 13, 2025 (Session 82)
+**Status:** 🔴 ACTIVE - Investigation in progress
+**Assigned:** simulation-maintainer (Roy)
+**Impact:** Blocks hindcast validation framework, undermines population mechanics confidence
+
+**Description:**
+Population declines -42% during 1990-2020 hindcast when historical data shows +46% growth (5.327B → 7.795B). This catastrophic error blocks historical parameter tuning and validation.
+
+**Validation Results:**
+```
+✅ 1990: 5.258B vs 5.327B (-1.30%)  [Initialization ACCURATE]
+⚠️ 1995: 5.212B vs 5.744B (-9.26%)  [Regression begins]
+⚠️ 2000: 5.369B vs 6.143B (-12.60%)
+⚠️ 2005: 5.425B vs 6.542B (-17.07%)
+⚠️ 2010: 5.330B vs 6.957B (-23.38%)
+⚠️ 2015: 5.038B vs 7.38B (-31.74%)
+⚠️ 2020: 4.508B vs 7.795B (-42.17%) [CATASTROPHIC]
+```
+
+**Key Anomaly:**
+- Reported growth rate: +1.7-1.8% per month
+- Actual population change: -0.8% over 5 years
+- **CONTRADICTION:** Growth rates don't match population changes
+
+**Debug Output (1990-1995):**
+```
+1991: Pop=5.063B, Birth=27.00/1k/mo, Death=8.88/1k/mo, Growth=1.812%/mo
+1992: Pop=5.097B, Birth=26.79/1k/mo, Death=8.85/1k/mo, Growth=1.794%/mo
+1993: Pop=5.136B, Birth=26.57/1k/mo, Death=8.82/1k/mo, Growth=1.775%/mo
+1994: Pop=5.176B, Birth=26.35/1k/mo, Death=8.78/1k/mo, Growth=1.756%/mo
+1995: Pop=5.216B, Birth=26.12/1k/mo, Death=8.75/1k/mo, Growth=1.738%/mo
+```
+
+**Location:**
+- File: `src/simulation/populationDynamics.ts`
+- Functions: `initializeHumanPopulationSystem`, population update logic
+- Related: `src/simulation/regionalPopulations.ts` (regional → global aggregation)
+
+**Root Cause Hypotheses:**
+
+1. **Annual/Monthly Rate Confusion:**
+   - Initialization sets ANNUAL rates (1.8%/year)
+   - Simulation applies as MONTHLY rates (1.8%/month = 21.6%/year)
+   - Result: 12x multiplier error
+   - **Issue:** Doesn't explain population DECLINE
+
+2. **Mortality System Double-Counting:**
+   - Base death rate (8/1k/month)
+   - Regional death rates applied separately
+   - Bayesian mortality system applied
+   - Crisis mortality applied
+   - **Possible:** Death rate applied 2-4x per month
+
+3. **Population Units Mismatch:**
+   - Regional populations in MILLIONS
+   - Global population in BILLIONS
+   - **Possible:** Unit conversion error in aggregation
+
+4. **Growth Calculation vs Application:**
+   - Growth rate CALCULATED correctly (for display)
+   - Growth rate NOT APPLIED correctly (to population)
+   - **Possible:** Display bug masking calculation bug
+
+**Reproducibility:**
+- 100% deterministic (same seed = same collapse)
+- Discovered by: `scripts/hindcastDemographicValidation.ts`
+- Debug script: `scripts/debugHindcastPopulation.ts`
+- Investigation: `devlogs/hindcast_population_collapse_investigation_20251213.md`
+
+**Next Steps:**
+1. Trace population update logic in `populationDynamics.ts`
+2. Check for mortality double-counting (regional + Bayesian + crisis)
+3. Verify unit consistency (millions vs billions)
+4. Create minimal single-month reproduction case
+5. Compare 1990 hindcast vs 2025 baseline behavior
+
+**Estimated Effort:** 2-4 hours (requires deep investigation)
+**Target Completion:** Session 83
+
+**Priority Justification:**
+- Blocks HIGH value research infrastructure (hindcast validation)
+- Undermines confidence in population mechanics
+- May affect forward simulations (2025+) if root cause is systemic
+- Error magnitude: -61.7 percentage points (catastrophic)
 
 ---
 
