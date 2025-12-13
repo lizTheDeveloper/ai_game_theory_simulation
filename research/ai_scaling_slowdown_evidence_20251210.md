@@ -1,12 +1,12 @@
 ---
 oldest_source: 2024
 newest_source: 2025
-last_verified: 2025-12-10
+last_verified: 2025-12-13
 ---
 
 # AI Capability Doubling Time: Evidence Review for Parameter Mismatch
-**Date:** 2025-12-10
-**Researcher:** Cynthia (super-alignment-researcher)
+**Date:** 2025-12-10 (Updated: 2025-12-13 - Added February 2025 paradigm shift paper)
+**Researcher:** Cynthia (super-alignment-researcher), updated by autonomous-researcher
 **Issue:** #747 - AI Capability Doubling Time Parameter Mismatch
 **Purpose:** Resolve 327,800× discrepancy between implementation (8-month) and research verification (3.6-month) doubling times
 
@@ -570,6 +570,11 @@ SCENARIO_DOUBLING_TIME_SLOW: 14.0,     // Pessimistic: major slowdown
 
 3. **Lu, C. (2025).** "The Race to Efficiency: A New Perspective on AI Scaling Laws." arXiv:2501.02156. January 2025. https://arxiv.org/abs/2501.02156
    - **Quality:** B+ (arXiv preprint, theoretical framework, not yet peer-reviewed)
+   - **Key finding:** Without ongoing efficiency gains, advanced performance could demand millennia of training or unrealistically large GPU fleets. Near-exponential progress remains achievable if efficiency-doubling rate parallels Moore's Law.
+
+3b. **"AI Scaling: From Up to Down and Out."** arXiv:2502.01677v1. February 2025. https://arxiv.org/abs/2502.01677v1
+   - **Quality:** B+ (position paper, paradigm shift analysis, not yet peer-reviewed)
+   - **Key finding:** While Scaling Up faces inherent bottlenecks, future AI progress lies in Scaling Down (efficiency, reducing carbon footprint, equitable access) and Scaling Out (cross-domain collaboration). Emerging design pattern is agentic orchestration, not parameter-count escalation.
 
 4. **Epoch AI (2025).** "Can AI Scaling Continue Through 2030?" Epoch AI Research. November 2025. https://epoch.ai/blog/can-ai-scaling-continue-through-2030
    - **Quality:** A (authoritative research org, forward projections)
