@@ -124,7 +124,11 @@ export class InformationEcologyPhase implements SimulationPhase {
   /**
    * Detect and apply epistemic shocks
    *
-   * Nuclear events, major AI deceptions, etc. cause stepwise trust drops.
+   * Nuclear events, major AI deceptions, infrastructure cascades, etc. cause stepwise trust drops.
+   *
+   * **INTEGRATION: Infrastructure Cascades → Epistemic Shock (Direction 2)**
+   * Prolonged infrastructure disruptions (> 7 days) trigger trust erosion
+   * Research: Texas freeze 2021 - Infrastructure failure → social coordination breakdown
    */
   private detectAndApplyShocks(
     state: GameState,
@@ -162,6 +166,28 @@ export class InformationEcologyPhase implements SimulationPhase {
       console.log(
         `🎭 AI deception event(s) caused epistemic shock (severity ${(severity * 100).toFixed(0)}%)`
       );
+    }
+
+    // INTEGRATION: Check for prolonged infrastructure cascades (Direction 2)
+    const recentInfrastructureCascades = state.eventLog.filter(
+      (event) =>
+        event.timestamp >= state.currentMonth - 1 &&
+        event.type === 'crisis' &&
+        event.description.toLowerCase().includes('infrastructure cascade')
+    );
+
+    if (recentInfrastructureCascades.length > 0) {
+      // Use shockMagnitude from event effects (already scaled by cascade duration)
+      const totalSeverity = recentInfrastructureCascades.reduce(
+        (sum, event) => sum + (typeof event.effects.shockMagnitude === 'number' ? event.effects.shockMagnitude : 0),
+        0
+      );
+      if (totalSeverity > 0) {
+        applyEpistemicShock(infoEcology, totalSeverity, rng);
+        console.log(
+          `💧 Prolonged infrastructure cascade(s) caused epistemic shock (severity ${(totalSeverity * 100).toFixed(1)}%)`
+        );
+      }
     }
 
     // Check for extinction-tier events (civilizational collapse, severe crises)

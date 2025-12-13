@@ -214,6 +214,11 @@ function checkTriggerConditions(
  *
  * Research: One Earth 2024 - 5× cascade multiplier, 74% spread probability
  * Validation: Texas 2021 - 3-day power → 12M water disruption
+ *
+ * **INTEGRATION: Information Ecology → Cascade Vulnerability (Direction 1)**
+ * Low shared epistemic reality (< 0.4) increases cascade spread by 30%
+ * Research: Crisis coordination capacity degrades with epistemic degradation
+ * (information_ecology_epistemic_degradation_20251202.md, section 4)
  */
 function updateInfrastructureCascades(
   state: GameState,
@@ -221,12 +226,23 @@ function updateInfrastructureCascades(
 ): void {
   const infra = cascades.infrastructure;
 
+  // INTEGRATION: Epistemic degradation modifier (Direction 1)
+  // When shared epistemic reality degrades, coordination capacity falls
+  // → Slower cascade response → Increased effective spread probability
+  const epistemicReality = state.informationEcology?.sharedReality ?? 1.0;
+  const cascadeVulnerabilityMultiplier = epistemicReality < 0.4
+    ? 1.3  // 30% increased vulnerability when epistemic reality severely degraded
+    : 1.0;
+
   // Check if cascade should activate
   if (infra.powerGridStatus < 0.7 && !infra.cascadeActive) {
     infra.cascadeActive = true;
     infra.hoursInCascade = 0;
     console.log(`\n⚡💥 INFRASTRUCTURE CASCADE ACTIVATED (Month ${state.currentMonth})`);
     console.log(`   Power grid status: ${(infra.powerGridStatus * 100).toFixed(0)}%`);
+    if (cascadeVulnerabilityMultiplier > 1.0) {
+      console.log(`   ⚠️ Epistemic degradation (${(epistemicReality * 100).toFixed(0)}%) increases cascade vulnerability by 30%`);
+    }
   }
 
   if (infra.cascadeActive) {
@@ -235,7 +251,8 @@ function updateInfrastructureCascades(
 
     // Power → Water cascade (hours timescale)
     if (infra.hoursInCascade > 24) {  // After 24 hours
-      const waterDegradation = (1.0 - infra.powerGridStatus) * 0.1;  // 10% per month at 0% power
+      const baseDegradation = (1.0 - infra.powerGridStatus) * 0.1;  // 10% per month at 0% power
+      const waterDegradation = baseDegradation * cascadeVulnerabilityMultiplier;
       infra.waterSystemStatus = Math.max(
         0,
         infra.waterSystemStatus - waterDegradation
@@ -244,7 +261,8 @@ function updateInfrastructureCascades(
 
     // Water → Food cascade (days timescale)
     if (infra.hoursInCascade > 72 && infra.waterSystemStatus < 0.7) {  // After 3 days
-      const foodDegradation = (1.0 - infra.waterSystemStatus) * 0.08;  // 8% per month
+      const baseDegradation = (1.0 - infra.waterSystemStatus) * 0.08;  // 8% per month
+      const foodDegradation = baseDegradation * cascadeVulnerabilityMultiplier;
       infra.foodSystemStatus = Math.max(
         0,
         infra.foodSystemStatus - foodDegradation
@@ -253,7 +271,8 @@ function updateInfrastructureCascades(
 
     // Food → Healthcare cascade (days timescale)
     if (infra.hoursInCascade > 168 && infra.foodSystemStatus < 0.7) {  // After 7 days
-      const healthcareDegradation = (1.0 - infra.foodSystemStatus) * 0.05;  // 5% per month
+      const baseDegradation = (1.0 - infra.foodSystemStatus) * 0.05;  // 5% per month
+      const healthcareDegradation = baseDegradation * cascadeVulnerabilityMultiplier;
       infra.healthcareSystemStatus = Math.max(
         0,
         infra.healthcareSystemStatus - healthcareDegradation

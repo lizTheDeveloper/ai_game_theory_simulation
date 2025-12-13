@@ -17,6 +17,11 @@ import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFu
  * - Cascade spread probability: 74% (Nirandjan et al. 2024)
  * - Texas 2021 validation: 3-day power → 12M water → $195B damages
  * - Suez 2024 validation: 64% transit decline → 158-246% rate increase
+ *
+ * **INTEGRATION: Cascade → Epistemic Shock (Direction 2)**
+ * Prolonged cascades (> 7 days) trigger epistemic shock events
+ * Research: Texas freeze 2021 - Infrastructure failure → social trust erosion
+ * (supply_chain_cascades_20251212.md, section 3)
  */
 
 import { updateSupplyChainCascades } from '../../supplyChainCascades';
@@ -41,7 +46,43 @@ export class SupplyChainCascadesPhase implements SimulationPhase {
     // Update supply chain cascades (function handles state initialization)
     updateSupplyChainCascades(state, _rng);
 
-    // Return phase result (no events emitted in minimal version)
-    return { events: [] };
+    // INTEGRATION: Detect prolonged infrastructure cascades → epistemic shock (Direction 2)
+    const events: GameEvent[] = [];
+    const infra = state.supplyChainCascades.infrastructure;
+
+    if (infra.cascadeActive && infra.hoursInCascade > 168) {  // > 7 days
+      // Scale shock magnitude with cascade duration
+      // 7 days → minimal shock, 30 days → max 30% shock
+      const shockMagnitude = Math.min(
+        0.3,  // Cap at 30% trust erosion
+        ((infra.hoursInCascade - 168) / 720) * 0.2  // Scale with excess duration
+      );
+
+      const durationDays = (infra.hoursInCascade / 24).toFixed(0);
+
+      // Emit event for InformationEcologyPhase to process
+      events.push({
+        id: `infrastructure_cascade_shock_${state.currentMonth}`,
+        timestamp: state.currentMonth,
+        type: 'crisis',
+        severity: shockMagnitude > 0.15 ? 'high' : 'medium',
+        agent: 'supply_chain_cascades',
+        title: `Infrastructure Cascade Epistemic Shock`,
+        description: `🚨💧 Infrastructure cascade (${durationDays} days) triggers epistemic shock`,
+        effects: {
+          shockMagnitude,
+          cascadeDurationDays: parseFloat(durationDays),
+        },
+      });
+
+      // Only log once per month to avoid spam
+      if (infra.hoursInCascade % 720 === 0) {
+        console.log(`\n🚨💧 PROLONGED CASCADE TRIGGERS EPISTEMIC SHOCK (Month ${state.currentMonth})`);
+        console.log(`   Cascade duration: ${durationDays} days`);
+        console.log(`   Shock magnitude: ${(shockMagnitude * 100).toFixed(1)}%`);
+      }
+    }
+
+    return { events };
   }
 }
