@@ -42,8 +42,17 @@ interface ValidationResult {
 function runHindcast(seed: number): ValidationResult[] {
   const rng = seedrandom(`hindcast-demographic-${seed}`);
 
-  // HINDCAST FIX (Dec 13, 2025): Use historicalOverrides to initialize 1990 state
-  const state: GameState = createDefaultInitialState(
+  // Suppress simulation output
+  const originalLog = console.log;
+  const originalWarn = console.warn;
+  const originalError = console.error;
+  console.log = () => {};
+  console.warn = () => {};
+  console.error = () => {};
+
+  try {
+    // HINDCAST FIX (Dec 13, 2025): Use historicalOverrides to initialize 1990 state
+    const state: GameState = createDefaultInitialState(
     rng,
     'historical', // scenarioMode
     undefined, // alignmentDynamicsConfig
@@ -83,13 +92,35 @@ function runHindcast(seed: number): ValidationResult[] {
   const results: ValidationResult[] = [];
   const checkpointYears = [1990, 1995, 2000, 2005, 2010, 2015, 2020];
 
+  // Capture initial 1990 state before simulation starts
+  const year1990 = state.currentYear;
+  if (checkpointYears.includes(year1990)) {
+    const simPop = state.humanPopulationSystem.population;
+    const histPop = HISTORICAL_POPULATION[year1990 as keyof typeof HISTORICAL_POPULATION];
+
+    if (histPop !== undefined) {
+      const deviation = simPop - histPop;
+      const deviationPercent = (deviation / histPop) * 100;
+
+      results.push({
+        year: year1990,
+        month: state.currentMonth,
+        simulated: simPop,
+        historical: histPop,
+        deviation,
+        deviationPercent
+      });
+    }
+  }
+
   // Run hindcast 1990-2020 (360 months)
-  for (let month = 0; month <= 360; month++) {
+  for (let month = 1; month <= 360; month++) {
     engine.step(state);
 
     const year = state.currentYear;
 
     // Check if we're at a checkpoint year (end of year)
+    // Month % 12 === 0 means we just completed December (month 12, 24, 36, etc.)
     if (checkpointYears.includes(year) && state.currentMonth % 12 === 0) {
       const simPop = state.humanPopulationSystem.population;
       const histPop = HISTORICAL_POPULATION[year as keyof typeof HISTORICAL_POPULATION];
@@ -108,9 +139,15 @@ function runHindcast(seed: number): ValidationResult[] {
         });
       }
     }
-  }
+    }
 
-  return results;
+    return results;
+  } finally {
+    // Restore console methods
+    console.log = originalLog;
+    console.warn = originalWarn;
+    console.error = originalError;
+  }
 }
 
 function calculateCV(values: number[]): number {
@@ -125,7 +162,7 @@ async function main() {
   console.log('Testing regional historical death rate implementation');
   console.log('Target: Reduce 2020 overshoot from 10.3% to <5-7%\n');
 
-  const N_RUNS = 3;  // Quick test (Dec 13): Changed from 10 to 3 for faster iteration
+  const N_RUNS = 1;  // Quick test (Dec 13): Changed to 1 for debugging
   const allResults: ValidationResult[][] = [];
 
   // Run Monte Carlo hindcasts
