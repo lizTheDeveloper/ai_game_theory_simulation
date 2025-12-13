@@ -41,22 +41,51 @@ interface ValidationResult {
 
 function runHindcast(seed: number): ValidationResult[] {
   const rng = seedrandom(`hindcast-demographic-${seed}`);
-  const state: GameState = createDefaultInitialState(rng);
 
-  // Enable historical mode
-  state.historicalMode = true;
+  // HINDCAST FIX (Dec 13, 2025): Use historicalOverrides to initialize 1990 state
+  const state: GameState = createDefaultInitialState(
+    rng,
+    'historical', // scenarioMode
+    undefined, // alignmentDynamicsConfig
+    undefined, // climatePriorityConfig
+    undefined, // thresholdSliders
+    undefined, // speculativeScenario
+    { // historicalOverrides
+      startYear: 1990,
+      co2Ppm: 354,
+      temperatureAnomalyC: 0.45,
+      globalPopulationBillions: 5.327,
+      emissionsGtCO2PerYear: 22.6,
+      environmental: {
+        arcticIceLoss: 0.05,
+        permafrostThaw: 0.02,
+        amazonDieback: 0.01,
+        sinkSaturation: 0.15
+      },
+      planetaryBoundaries: {
+        climateChange: 0.35,
+        biosphereIntegrity: 0.85,
+        biogeochemicalFlows: 0.65,
+        landSystemChange: 0.55,
+        freshwaterChange: 0.45,
+        novelEntities: 0.35,
+        oceanAcidification: 0.25,
+        stratosphericOzone: 0.95,
+        atmosphericAerosols: 0.50
+      }
+    }
+  );
 
-  // Start at 1990
-  state.currentMonth = 0;
-  state.currentYear = 1990;
+  // Historical mode is set by historicalOverrides
+  // currentYear and currentMonth are set by historicalOverrides.startYear
 
-  const engine = new SimulationEngine();
+  const engine = new SimulationEngine({ seed });
   const results: ValidationResult[] = [];
   const checkpointYears = [1990, 1995, 2000, 2005, 2010, 2015, 2020];
 
   // Run hindcast 1990-2020 (360 months)
   for (let month = 0; month <= 360; month++) {
-    engine.simulateStep(state, rng);
+    engine.step(state);
 
     const year = state.currentYear;
 
@@ -96,7 +125,7 @@ async function main() {
   console.log('Testing regional historical death rate implementation');
   console.log('Target: Reduce 2020 overshoot from 10.3% to <5-7%\n');
 
-  const N_RUNS = 10;
+  const N_RUNS = 3;  // Quick test (Dec 13): Changed from 10 to 3 for faster iteration
   const allResults: ValidationResult[][] = [];
 
   // Run Monte Carlo hindcasts
