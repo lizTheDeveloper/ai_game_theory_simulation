@@ -1,6 +1,6 @@
 # Research Update Queue
-**Generated:** 12/13/2025, 4:30:07 PM
-**Files Scanned:** 632
+**Generated:** 12/13/2025, 5:30:05 PM
+**Files Scanned:** 634
 
 ---
 
@@ -12,7 +12,7 @@
 
 ## ⚠️ HIGH (Action Required Within 1 Month)
 
-**Count:** 186 (29.4%)
+**Count:** 187 (29.5%)
 
 ### `AUTONOMOUS_RESEARCHER_SESSION_20251203_2030.md`
 - **Oldest source:** 1981 (44 years old)
@@ -148,6 +148,11 @@
 - **Oldest source:** 2012 (13 years old)
 - **Status:** Not used in simulation
 - **Path:** `research/RESEARCH_VALIDATION_AUDIT_20251206.md`
+
+### `RESEARCH_VALIDATION_AUDIT_DEC13_2025.md`
+- **Oldest source:** 2019 (6 years old)
+- **Status:** Not used in simulation
+- **Path:** `research/RESEARCH_VALIDATION_AUDIT_DEC13_2025.md`
 
 ### `ROADMAP_RESEARCH_STATUS_20251127.md`
 - **Oldest source:** 2019 (6 years old)
@@ -982,7 +987,7 @@
 
 ## ✅ LOW (Monitor Only)
 
-**Count:** 419 (66.3%)
+**Count:** 420 (66.2%)
 
 All sources <3 years old. No action required.
 
@@ -992,11 +997,11 @@ All sources <3 years old. No action required.
 
 | Metric | Value |
 |--------|-------|
-| Total files | 632 |
+| Total files | 634 |
 | CRITICAL | 0 (0.0%) |
-| HIGH | 186 (29.4%) |
+| HIGH | 187 (29.5%) |
 | MEDIUM | 27 (4.3%) |
-| LOW | 419 (66.3%) |
+| LOW | 420 (66.2%) |
 | Average age | 6.7 years |
 | Oldest source | 1955 (70 years ago) |
 
@@ -1004,21 +1009,21 @@ All sources <3 years old. No action required.
 
 | Status | Files | Percentage |
 |--------|-------|------------|
-| Current (<3yr) | 419 | 66.3% |
+| Current (<3yr) | 420 | 66.2% |
 | Warning (3-5yr) | 27 | 4.3% |
-| Critical (>5yr) | 186 | 29.4% |
+| Critical (>5yr) | 187 | 29.5% |
 
 ### Targets
 
 - **Goal:** <5% sources >3 years old, 0% sources >5 years old
-- **Current:** 29.4% critical (>5yr)
+- **Current:** 29.5% critical (>5yr)
 - **Status:** 🚨 CRITICAL threshold exceeded
 
 ---
 
 ## 🔄 Next Steps
 
-1. Update 186 HIGH priority file(s) within 1 month
+1. Update 187 HIGH priority file(s) within 1 month
 2. Schedule research update sprint
 3. Coordinate with research team
 
