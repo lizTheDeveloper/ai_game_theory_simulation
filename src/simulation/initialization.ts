@@ -1114,7 +1114,8 @@ export function createDefaultInitialState(
     },
 
     // Population Dynamics & Refugee Crises (TIER 1.6)
-    humanPopulationSystem: initializeHumanPopulationSystem(),
+    // HINDCAST FIX (Dec 13, 2025): Pass startYear to enable 1990 regional population initialization
+    humanPopulationSystem: initializeHumanPopulationSystem(historicalOverrides?.startYear ?? 2025),
     refugeeCrisisSystem: initializeRefugeeCrisisSystem(),
     migrationFlows: initializeMigrationFlows(), // Phase 8 - Hindcast Calibration (Nov 25 2025)
     countryPopulationSystem: initializeCountryPopulations(),
@@ -1606,35 +1607,52 @@ export function createDefaultInitialState(
     }
 
     // Apply population overrides
-    // Scale regional populations proportionally to match historical global population
+    // HINDCAST FIX (Dec 13, 2025): For 1990, regional populations are already initialized
+    // correctly via initializeHumanPopulationSystem(1990). No scaling needed.
+    // For other years, scale proportionally.
     const currentPop = state.humanPopulationSystem.population;
     const targetPop = historicalOverrides.globalPopulationBillions;
-    const popScaleFactor = targetPop / currentPop;
 
-    state.humanPopulationSystem.population = assertFinite(targetPop, {
-      location: 'applyHistoricalOverrides',
-      valueName: 'population',
-      additionalInfo: { startYear: historicalOverrides.startYear }
-    });
-    state.humanPopulationSystem.baselinePopulation = targetPop;
-    state.humanPopulationSystem.peakPopulation = targetPop;
-    state.initialPopulation = targetPop;
-    state.society.totalPopulation = targetPop;
+    if (historicalOverrides.startYear === 1990) {
+      // 1990: Regional populations already correct from initializeRegionalPopulations(1990)
+      // Total: 5.258B (1.3% below UN 5.327B due to regional boundary differences)
+      // Just sync global aggregates to match regional sum
+      console.log(`  Using 1990 regional population baseline (${currentPop.toFixed(3)}B from UN WPP 2024)`);
+      state.humanPopulationSystem.baselinePopulation = currentPop;
+      state.humanPopulationSystem.peakPopulation = currentPop;
+      state.initialPopulation = currentPop;
+      state.society.totalPopulation = currentPop;
+      state.globalMetrics.population = currentPop;
+    } else {
+      // Other years: Scale regional populations proportionally
+      const popScaleFactor = targetPop / currentPop;
+      console.log(`  Scaling regional populations by ${popScaleFactor.toFixed(3)}x to match ${targetPop.toFixed(3)}B`);
 
-    // DEPRECATED: globalMetrics.population is NOT synced after initialization.
-    // ALWAYS read from humanPopulationSystem.population instead.
-    // This write is for legacy compatibility only and may be removed in future.
-    // See: Nov 2025 god mode NaN bug - reading from wrong population field caused silent failure.
-    state.globalMetrics.population = targetPop;
+      state.humanPopulationSystem.population = assertFinite(targetPop, {
+        location: 'applyHistoricalOverrides',
+        valueName: 'population',
+        additionalInfo: { startYear: historicalOverrides.startYear }
+      });
+      state.humanPopulationSystem.baselinePopulation = targetPop;
+      state.humanPopulationSystem.peakPopulation = targetPop;
+      state.initialPopulation = targetPop;
+      state.society.totalPopulation = targetPop;
 
-    // Scale regional populations proportionally
-    if (state.humanPopulationSystem.regionalPopulations) {
-      for (const region of state.humanPopulationSystem.regionalPopulations) {
-        region.population = assertFinite(region.population * popScaleFactor, {
-          location: 'applyHistoricalOverrides',
-          valueName: 'regional.population',
-          additionalInfo: { regionName: region.name, startYear: historicalOverrides.startYear }
-        });
+      // DEPRECATED: globalMetrics.population is NOT synced after initialization.
+      // ALWAYS read from humanPopulationSystem.population instead.
+      // This write is for legacy compatibility only and may be removed in future.
+      // See: Nov 2025 god mode NaN bug - reading from wrong population field caused silent failure.
+      state.globalMetrics.population = targetPop;
+
+      // Scale regional populations proportionally
+      if (state.humanPopulationSystem.regionalPopulations) {
+        for (const region of state.humanPopulationSystem.regionalPopulations) {
+          region.population = assertFinite(region.population * popScaleFactor, {
+            location: 'applyHistoricalOverrides',
+            valueName: 'regional.population',
+            additionalInfo: { regionName: region.name, startYear: historicalOverrides.startYear }
+          });
+        }
       }
     }
 

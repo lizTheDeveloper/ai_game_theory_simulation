@@ -162,7 +162,260 @@ export function getTimeVaryingDeathRate(regionName: string, year: number): numbe
  * Based on UN World Population Prospects 2024 data for major world regions.
  * Includes realistic demographics, vulnerabilities, and development stages.
  */
-function initializeRegionalPopulations(): RegionalPopulation[] {
+/**
+ * Initialize regional populations
+ *
+ * @param startYear Year to initialize for (1990 or 2025). Default: 2025
+ * @returns Array of regional population data
+ *
+ * Research sources:
+ * - 2025: UN World Population Prospects 2024
+ * - 1990: research/regional_death_rates_unwpp2024_20251209.md (Grade B)
+ */
+function initializeRegionalPopulations(startYear: number = 2025): RegionalPopulation[] {
+  // ============================================================================
+  // 1990 BASELINE (for hindcast validation)
+  // ============================================================================
+  if (startYear === 1990) {
+    return [
+      {
+        name: 'East Asia',
+        // UN WPP 2024: China 1143M + Japan 124M + Koreas 65M + Mongolia 2M = 1354M
+        // Source: research/regional_death_rates_unwpp2024_20251209.md
+        population: 1354,
+        peakPopulation: 1354,
+        baselinePopulation: 1354,
+        baselineBirthRate: 0.0176,  // 1990 TFR 2.2
+        baselineDeathRate: 0.0070,  // 1990 CDR 7.0/1000
+        adjustedBirthRate: 0.0176,
+        adjustedDeathRate: 0.0070,
+        netGrowthRate: 0.0106,
+        healthcareQuality: 0.65,  // 1990 level (improving)
+        economicStage: 2.5,  // Industrializing (pre-modern China)
+        fertilityRate: 2.2,  // 1990 TFR
+        medianAge: 31,  // 1990 age structure (younger than 2025)
+        carryingCapacity: 1600,
+        baselineCarryingCapacity: 1600,
+        populationPressure: 0.85,
+        climateVulnerability: 0.3,
+        resourceVulnerability: 0.4,
+        conflictRisk: 0.2,
+        foodSecurity: 0.75,
+        qualityOfLife: 0.65,  // 1990 HDI lower than 2025
+        monthlyExcessDeaths: 0,
+        cumulativeCrisisDeaths: 0,
+        refugeeBurden: 0,
+        emigrationPressure: 0
+      },
+      {
+        name: 'South Asia',
+        // UN WPP 2024: India ~850M + Pakistan ~108M + Bangladesh ~107M + others ~192M = 1257M
+        // Source: research/regional_death_rates_unwpp2024_20251209.md
+        population: 1257,
+        peakPopulation: 1257,
+        baselinePopulation: 1257,
+        baselineBirthRate: 0.030,  // 1990 high fertility
+        baselineDeathRate: 0.010,  // 1990 CDR 10-11/1000
+        adjustedBirthRate: 0.030,
+        adjustedDeathRate: 0.010,
+        netGrowthRate: 0.020,
+        healthcareQuality: 0.40,  // 1990 level (lower than 2025)
+        economicStage: 1.5,  // Pre-liberalization India
+        fertilityRate: 3.8,  // 1990 TFR
+        medianAge: 22,  // 1990 age structure
+        carryingCapacity: 1800,
+        baselineCarryingCapacity: 1800,
+        populationPressure: 0.70,
+        climateVulnerability: 0.70,
+        resourceVulnerability: 0.60,
+        conflictRisk: 0.35,
+        foodSecurity: 0.60,
+        qualityOfLife: 0.50,  // 1990 HDI
+        monthlyExcessDeaths: 0,
+        cumulativeCrisisDeaths: 0,
+        refugeeBurden: 0,
+        emigrationPressure: 0
+      },
+      {
+        name: 'Sub-Saharan Africa',
+        // UN WPP 2024: Nigeria ~96M + Ethiopia ~48M + others ~377M = 521M
+        // Source: research/regional_death_rates_unwpp2024_20251209.md
+        population: 521,
+        peakPopulation: 521,
+        baselinePopulation: 521,
+        baselineBirthRate: 0.044,  // 1990 very high fertility
+        baselineDeathRate: 0.015,  // 1990 CDR 15-16/1000 (pre-ARVT)
+        adjustedBirthRate: 0.044,
+        adjustedDeathRate: 0.015,
+        netGrowthRate: 0.029,
+        healthcareQuality: 0.25,  // 1990 level (pre-MDG improvements)
+        economicStage: 0.8,  // Primarily agriculture
+        fertilityRate: 6.0,  // 1990 TFR
+        medianAge: 17,  // 1990 age structure (very young)
+        carryingCapacity: 1200,
+        baselineCarryingCapacity: 1200,
+        populationPressure: 0.43,
+        climateVulnerability: 0.80,
+        resourceVulnerability: 0.75,
+        conflictRisk: 0.50,  // 1990 conflicts
+        foodSecurity: 0.50,
+        qualityOfLife: 0.40,  // 1990 HDI
+        monthlyExcessDeaths: 0,
+        cumulativeCrisisDeaths: 0,
+        refugeeBurden: 0,
+        emigrationPressure: 0
+      },
+      {
+        name: 'Europe',
+        // UN WPP 2024: Russia ~148M + Germany ~79M + UK ~57M + France ~58M + others ~379M = 721M
+        // Source: research/regional_death_rates_unwpp2024_20251209.md
+        population: 721,
+        peakPopulation: 721,
+        baselinePopulation: 721,
+        baselineBirthRate: 0.012,  // 1990 low fertility (already below replacement)
+        baselineDeathRate: 0.010,  // 1990 CDR 10-11/1000
+        adjustedBirthRate: 0.012,
+        adjustedDeathRate: 0.010,
+        netGrowthRate: 0.002,
+        healthcareQuality: 0.75,  // 1990 level (Soviet collapse hurts East)
+        economicStage: 3.5,  // Post-industrial (West), transitioning (East)
+        fertilityRate: 1.7,  // 1990 TFR
+        medianAge: 38,  // 1990 age structure
+        carryingCapacity: 750,
+        baselineCarryingCapacity: 750,
+        populationPressure: 0.96,
+        climateVulnerability: 0.2,
+        resourceVulnerability: 0.3,
+        conflictRisk: 0.15,  // Cold War ending
+        foodSecurity: 0.90,
+        qualityOfLife: 0.75,  // 1990 HDI
+        monthlyExcessDeaths: 0,
+        cumulativeCrisisDeaths: 0,
+        refugeeBurden: 0,
+        emigrationPressure: 0
+      },
+      {
+        name: 'Latin America',
+        // UN WPP 2024: Brazil ~149M + Mexico ~84M + others ~209M = 442M
+        // Source: research/regional_death_rates_unwpp2024_20251209.md
+        population: 442,
+        peakPopulation: 442,
+        baselinePopulation: 442,
+        baselineBirthRate: 0.025,  // 1990 moderate fertility (demographic transition ongoing)
+        baselineDeathRate: 0.007,  // 1990 CDR 7-8/1000
+        adjustedBirthRate: 0.025,
+        adjustedDeathRate: 0.007,
+        netGrowthRate: 0.018,
+        healthcareQuality: 0.60,  // 1990 level
+        economicStage: 2.5,  // Middle-income transition
+        fertilityRate: 3.0,  // 1990 TFR
+        medianAge: 25,  // 1990 age structure
+        carryingCapacity: 700,
+        baselineCarryingCapacity: 700,
+        populationPressure: 0.63,
+        climateVulnerability: 0.50,
+        resourceVulnerability: 0.45,
+        conflictRisk: 0.30,  // 1990 regional conflicts
+        foodSecurity: 0.75,
+        qualityOfLife: 0.65,  // 1990 HDI
+        monthlyExcessDeaths: 0,
+        cumulativeCrisisDeaths: 0,
+        refugeeBurden: 0,
+        emigrationPressure: 0
+      },
+      {
+        name: 'North America',
+        // UN WPP 2024: USA ~253M + Canada ~28M + Mexico ~2M (in North America region) = 283M
+        // Source: research/regional_death_rates_unwpp2024_20251209.md
+        population: 283,
+        peakPopulation: 283,
+        baselinePopulation: 283,
+        baselineBirthRate: 0.016,  // 1990 moderate fertility
+        baselineDeathRate: 0.009,  // 1990 CDR 8-9/1000
+        adjustedBirthRate: 0.016,
+        adjustedDeathRate: 0.009,
+        netGrowthRate: 0.007,
+        healthcareQuality: 0.85,  // 1990 level (high)
+        economicStage: 4.0,  // Post-industrial
+        fertilityRate: 2.0,  // 1990 TFR
+        medianAge: 33,  // 1990 age structure
+        carryingCapacity: 400,
+        baselineCarryingCapacity: 400,
+        populationPressure: 0.71,
+        climateVulnerability: 0.3,
+        resourceVulnerability: 0.25,
+        conflictRisk: 0.1,
+        foodSecurity: 0.95,
+        qualityOfLife: 0.85,  // 1990 HDI
+        monthlyExcessDeaths: 0,
+        cumulativeCrisisDeaths: 0,
+        refugeeBurden: 0,
+        emigrationPressure: 0
+      },
+      {
+        name: 'Middle East & North Africa',
+        // UN WPP 2024: Egypt ~57M + Iran ~56M + others ~124M = 237M
+        // Source: research/regional_death_rates_unwpp2024_20251209.md
+        population: 237,
+        peakPopulation: 237,
+        baselinePopulation: 237,
+        baselineBirthRate: 0.032,  // 1990 high fertility
+        baselineDeathRate: 0.008,  // 1990 CDR 8-9/1000
+        adjustedBirthRate: 0.032,
+        adjustedDeathRate: 0.008,
+        netGrowthRate: 0.024,
+        healthcareQuality: 0.60,  // 1990 level (oil wealth variation)
+        economicStage: 2.0,  // Oil economy + agriculture
+        fertilityRate: 4.5,  // 1990 TFR
+        medianAge: 21,  // 1990 age structure
+        carryingCapacity: 400,
+        baselineCarryingCapacity: 400,
+        populationPressure: 0.59,
+        climateVulnerability: 0.70,
+        resourceVulnerability: 0.75,  // Water stress
+        conflictRisk: 0.45,  // 1990 Gulf War era
+        foodSecurity: 0.70,
+        qualityOfLife: 0.60,  // 1990 HDI
+        monthlyExcessDeaths: 0,
+        cumulativeCrisisDeaths: 0,
+        refugeeBurden: 0,
+        emigrationPressure: 0
+      },
+      {
+        name: 'Southeast Asia',
+        // UN WPP 2024: Indonesia ~184M + Philippines ~62M + Vietnam ~67M + others ~130M = 443M
+        // Source: research/regional_death_rates_unwpp2024_20251209.md
+        population: 443,
+        peakPopulation: 443,
+        baselinePopulation: 443,
+        baselineBirthRate: 0.026,  // 1990 moderate-high fertility
+        baselineDeathRate: 0.008,  // 1990 CDR 8-9/1000
+        adjustedBirthRate: 0.026,
+        adjustedDeathRate: 0.008,
+        netGrowthRate: 0.018,
+        healthcareQuality: 0.55,  // 1990 level (Tiger economies emerging)
+        economicStage: 2.0,  // Rapid industrialization beginning
+        fertilityRate: 3.2,  // 1990 TFR
+        medianAge: 24,  // 1990 age structure
+        carryingCapacity: 800,
+        baselineCarryingCapacity: 800,
+        populationPressure: 0.55,
+        climateVulnerability: 0.65,
+        resourceVulnerability: 0.50,
+        conflictRisk: 0.25,
+        foodSecurity: 0.70,
+        qualityOfLife: 0.60,  // 1990 HDI
+        monthlyExcessDeaths: 0,
+        cumulativeCrisisDeaths: 0,
+        refugeeBurden: 0,
+        emigrationPressure: 0
+      }
+    ];
+  }
+
+  // ============================================================================
+  // 2025 BASELINE (default)
+  // ============================================================================
   return [
     {
       name: 'East Asia',
@@ -443,9 +696,11 @@ function initializeRegionalPopulations(): RegionalPopulation[] {
  * FIX (Nov 5, 2025): Initialize mortalityStabilizers, famineState, and resilienceProfile
  * at region creation time, not lazily on first update. This prevents "missing mortalityStabilizers"
  * errors during Monte Carlo validation.
+ *
+ * @param startYear Year to initialize for (1990 or 2025). Default: 2025
  */
-function initializeRegionalPopulationsWithStabilizers(): RegionalPopulation[] {
-  const regions = initializeRegionalPopulations();
+function initializeRegionalPopulationsWithStabilizers(startYear: number = 2025): RegionalPopulation[] {
+  const regions = initializeRegionalPopulations(startYear);
 
   // Initialize mortality stabilizers, famine state, and resilience for each region
   for (const region of regions) {
@@ -458,14 +713,16 @@ function initializeRegionalPopulationsWithStabilizers(): RegionalPopulation[] {
 }
 
 /**
- * Initialize population system (2025 baseline)
+ * Initialize population system
  *
  * NOTE: Global population is DERIVED from regional populations (bottom-up architecture).
  * The hardcoded values below are placeholders that get overwritten by aggregation in first update.
+ *
+ * @param startYear Year to initialize for (1990 or 2025). Default: 2025
  */
-export function initializeHumanPopulationSystem(): HumanPopulationSystem {
+export function initializeHumanPopulationSystem(startYear: number = 2025): HumanPopulationSystem {
   // FIX (Nov 5, 2025): Use new function that initializes mortalityStabilizers at region creation
-  const regionalPopulations = initializeRegionalPopulationsWithStabilizers();
+  const regionalPopulations = initializeRegionalPopulationsWithStabilizers(startYear);
 
   // Calculate initial global population from regional data (UN 2024: ~8.136B)
   const initialPopulationMillions = regionalPopulations.reduce((sum, region) => sum + region.population, 0);
