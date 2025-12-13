@@ -14,13 +14,13 @@ This file tracks bugs that block normal development or cause significant system 
 
 ## Queue Status
 
-**Last Updated:** December 13, 2025 (Session 82 - Hindcast validation)
+**Last Updated:** December 13, 2025 (Session 83 - CRITICAL-1 RESOLVED)
 
-**Active CRITICAL bugs:** 1 (CRITICAL-1: Population collapse)
+**Active CRITICAL bugs:** 0 (CRITICAL-1 RESOLVED)
 **Active HIGH bugs:** 0
 **Active MEDIUM bugs:** 5 (M-1, M-2, M-5, M-7, M-8)
 
-**System Status:** CRITICAL - Population mechanics broken for hindcast period (1990-2020)
+**System Status:** STABLE - All critical bugs resolved, hindcast validation operational
 
 **Latest Architecture Review:** `reviews/architecture_integration_review_20251212_comprehensive.md` (Grade: A-)
 
@@ -30,14 +30,14 @@ This file tracks bugs that block normal development or cause significant system 
 
 **Definition:** System crashes, data corruption, determinism breaks, security vulnerabilities
 
-**Status:** 1 active (CRITICAL-1: Hindcast population collapse)
+**Status:** 0 active (all CRITICAL bugs resolved)
 
-### CRITICAL-1: Hindcast Population Collapse (-42% vs +46% Historical)
+### ~CRITICAL-1: Hindcast Population Collapse (-42% vs +46% Historical)~ ✅ RESOLVED
 
 **Discovered:** December 13, 2025 (Session 82)
-**Status:** 🔴 ACTIVE - Investigation in progress
-**Assigned:** simulation-maintainer (Roy)
-**Impact:** Blocks hindcast validation framework, undermines population mechanics confidence
+**Status:** ✅ RESOLVED (Session 83, Dec 13, 2025)
+**Assigned:** simulation-maintainer (Roy) - COMPLETED
+**Impact:** ~~Blocks hindcast validation framework~~ UNBLOCKED - hindcast validation operational
 
 **Description:**
 Population declines -42% during 1990-2020 hindcast when historical data shows +46% growth (5.327B → 7.795B). This catastrophic error blocks historical parameter tuning and validation.
@@ -114,10 +114,46 @@ Population declines -42% during 1990-2020 hindcast when historical data shows +4
 **Target Completion:** Session 83
 
 **Priority Justification:**
-- Blocks HIGH value research infrastructure (hindcast validation)
-- Undermines confidence in population mechanics
-- May affect forward simulations (2025+) if root cause is systemic
-- Error magnitude: -61.7 percentage points (catastrophic)
+- ~~Blocks~~ UNBLOCKED HIGH value research infrastructure (hindcast validation)
+- ~~Undermines confidence in population mechanics~~ RESOLVED - validated with N=3 runs
+- ~~May affect forward simulations~~ NOT affected - forward sims use correct mortality
+- Error magnitude: -61.7 percentage points (was catastrophic, now FIXED)
+
+**Resolution (Session 83, Dec 13, 2025):**
+
+**Root Cause:** Architecture mismatch between historical and modern mortality systems. Two phases were applying mortality AFTER regional aggregation without historical mode guards:
+1. TransitionMortalityPhase (order 26) - Tech deployment mortality
+2. CoordinatedDeploymentPhase (order 10.5) - AI-coordinated deployment mortality
+
+This created phantom mortality from tech deployments that never occurred during 1990-2024.
+
+**Fix:** Added `isHistoricalModeActive()` guards to both phases. Historical demographic data (UN crude death rates) already includes ALL mortality sources. These phases model FUTURE transition mortality from rapid tech deployment.
+
+**Validation Results (N=3, CV=0%):**
+```
+✅ 1990: 5.258B vs 5.327B (-1.30%)
+✅ 1995: 5.744B vs 5.744B (+0.00%)
+✅ 2000: 6.245B vs 6.143B (+1.66%)
+✅ 2005: 6.755B vs 6.542B (+3.26%)
+✅ 2010: 7.269B vs 6.957B (+4.48%)
+✅ 2015: 7.779B vs 7.380B (+5.41%)
+✅ 2020: 8.276B vs 7.795B (+6.17%)
+```
+
+Final deviation: +6.17% (within <7% success criteria)
+Determinism verified: CV = 0.000000% (perfectly reproducible)
+
+**Files Changed:**
+- `src/simulation/engine/phases/TransitionMortalityPhase.ts` - Added historical mode guard
+- `src/simulation/engine/phases/CoordinatedDeploymentPhase.ts` - Added historical mode guard
+- `devlogs/hindcast_population_collapse_investigation_20251213.md` - Investigation log
+- `scripts/debugPopulationDelta.ts` - Debug tool (new)
+
+**Impact:**
+- ✅ Resolves CRITICAL-1 bug blocking hindcast validation
+- ✅ Enables historical parameter calibration (1990-2024)
+- ✅ Validates regional population system architecture
+- ✅ Confirms defensive coding patterns work correctly
 
 ---
 
