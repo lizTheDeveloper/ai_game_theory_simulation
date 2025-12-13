@@ -29,6 +29,7 @@ import {
   assertProbability,
   assertStateProperty
 } from '@/simulation/utils/assertions';
+import { isHistoricalModeActive } from '@/simulation/utils/historicalMode';
 
 /**
  * Calculate system complexity from simultaneous transitions
@@ -506,6 +507,15 @@ export const TransitionMortalityPhase: SimulationPhase = {
   order: 26, // After tech deployment, before population/QoL updates
 
   execute(state, rng, context) {
+    // CRITICAL-1 FIX (Dec 13, 2025): Skip in historical mode
+    // Historical demographic data already includes all mortality sources.
+    // Transition mortality would double-count deaths that never happened (1990-2024).
+    // Root cause: Transition mortality applied to global pop after regional aggregation,
+    // creating mismatch between regional sum and global value.
+    if (isHistoricalModeActive(state)) {
+      return { events: [] };
+    }
+
     // Update coordination quality from current state
     state.transitionMortality.globalCoordinationQuality = calculateCoordinationQuality(state);
 

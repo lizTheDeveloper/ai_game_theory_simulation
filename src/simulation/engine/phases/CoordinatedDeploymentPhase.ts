@@ -108,6 +108,16 @@ export class CoordinatedDeploymentPhase implements SimulationPhase {
   ] as const;
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
+    // CRITICAL-1 FIX (Dec 13, 2025): Skip in historical mode
+    // Historical demographic data already includes all mortality sources.
+    // Coordinated deployment mortality would double-count deaths that never happened (1990-2024).
+    // Root cause: Deployment mortality applied to global pop after regional aggregation,
+    // creating mismatch between regional sum and global value.
+    const { isHistoricalModeActive } = require('@/simulation/utils/historicalMode');
+    if (isHistoricalModeActive(state)) {
+      return { events: [] };
+    }
+
     // CRITICAL: RNG must be defined (deterministic simulation requirement)
     assertDefined(rng, {
       location: 'CoordinatedDeploymentPhase.execute',
