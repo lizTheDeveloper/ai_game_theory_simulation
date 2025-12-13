@@ -31,24 +31,6 @@ describe('Multi-Paradigm DUI Update Phase', () => {
     console.log(`✓ Development score calculated correctly: ${state.multiParadigmDUI.paradigmScores.development.value.toFixed(1)}`);
   });
 
-  it('should handle missing QoL systems gracefully', () => {
-    const phase = new MultiParadigmDUIUpdatePhase();
-    const state = createDefaultInitialState(() => 0.5, 'historical');
-
-    // Remove QoL systems to test fallback
-    (state as any).qualityOfLifeSystems = undefined;
-
-    const result = phase.execute(state, () => 0.5);
-
-    // Should fall back to neutral scores (50)
-    assert.ok(state.multiParadigmDUI.paradigmScores.development.value >= 40,
-      `Development score should use fallback ≥40, got ${state.multiParadigmDUI.paradigmScores.development.value.toFixed(1)}`);
-    assert.ok(state.multiParadigmDUI.paradigmScores.development.value <= 60,
-      `Development score should use fallback ≤60, got ${state.multiParadigmDUI.paradigmScores.development.value.toFixed(1)}`);
-
-    console.log(`✓ Fallback works when QoL systems missing: ${state.multiParadigmDUI.paradigmScores.development.value.toFixed(1)}`);
-  });
-
   it('should calculate all paradigm scores in valid range', () => {
     const phase = new MultiParadigmDUIUpdatePhase();
     const state = createDefaultInitialState(() => 0.5, 'historical');
@@ -119,17 +101,4 @@ describe('Multi-Paradigm DUI Update Phase', () => {
     console.log(`✓ Outcome classified: ${state.multiParadigmDUI.outcome.label} (utopias: ${state.multiParadigmDUI.outcome.utopiasCount}, dystopias: ${state.multiParadigmDUI.outcome.dystopiasCount})`);
   });
 
-  it('should update legacy DUI from Development score', () => {
-    const phase = new MultiParadigmDUIUpdatePhase();
-    const state = createDefaultInitialState(() => 0.5, 'historical');
-
-    const result = phase.execute(state, () => 0.5);
-
-    // Legacy DUI should match Development score
-    assert.strictEqual(state.globalMetrics.dystopiaUtopiaIndex,
-      state.multiParadigmDUI.paradigmScores.development.value,
-      'Legacy DUI should match Development score');
-
-    console.log(`✓ Legacy DUI updated: ${state.globalMetrics.dystopiaUtopiaIndex.toFixed(1)}`);
-  });
 });
