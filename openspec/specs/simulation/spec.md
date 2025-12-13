@@ -379,11 +379,14 @@ The simulation SHALL model information environment quality as a critical mediato
 ### Completed HIGH Priority
 
 #### Information Ecology & Epistemic Degradation
-**Status:** COMPLETE (Dec 12, 2025, Session 76)
+**Status:** COMPLETE (Dec 12, 2025, Sessions 76-77)
 **Implementation:** `src/simulation/informationEcology.ts` (458 lines), `src/simulation/engine/phases/InformationEcologyPhase.ts` (184 lines)
 **Research:** `research/information_ecology_epistemic_degradation_20251202.md` (15+ sources, 2024-2025)
-**Quality Gates:** QG1 Grade B+ (Sylvia), QG2 PASS (2 HIGH issues fixed)
-**Validation:** Perfect determinism (CV = 0.000000%, N=5)
+**Quality Gates:** QG1 Grade B+ (Sylvia), QG2 Grade B+ (2 HIGH issues fixed Session 76)
+**Validation:** CONDITIONAL PASS (B) - Perfect determinism (CV = 0.000000%, N=5), 2 bugs found and fixed Session 77
+  - Bug #1: Compound multiplication (coordination collapse) - FIXED
+  - Bug #2: 1-month shock timing lag - FIXED
+  - Issue #3: Epistemic health paradox - TRACKED (non-blocking)
 **Impact:** 20-40% reduction in managed transition probability for polarized scenarios
 **Summary:** Comprehensive epistemic environment modeling including epidemic misinformation spread (SIS/SIR), trust erosion/recovery, polarization feedback loops, fact-checking capacity decay, AI amplification, and coordination capacity calculation. Integration with CoordinatedDeploymentPhase (epistemic modifier on AI deployment effectiveness).
 **History:** `docs/implementation-history/2025-12/information-ecology/README.md`
@@ -401,7 +404,15 @@ The simulation SHALL model information environment quality as a critical mediato
 
 ### HIGH Priority (Active)
 
-**None currently active.** Next HIGH priority work should be selected from MEDIUM backlog or new proposals.
+**None currently active.** All CRITICAL/HIGH bugs resolved (Session 83). Next HIGH priority work should be selected from MEDIUM backlog or new proposals.
+
+**Recent Resolutions:**
+- CRITICAL-1: Hindcast population collapse - RESOLVED Dec 13, 2025 (Session 83)
+  - Root cause: TransitionMortalityPhase + CoordinatedDeploymentPhase applied mortality in historical mode
+  - Fix: Added `isHistoricalModeActive()` guards to both phases
+  - Validation: N=3 runs, CV=0%, +6.17% final deviation (within <7% criteria)
+  - Archive: docs/implementation-history/2025-12/critical-1-hindcast-population-collapse/
+- H-1: Floating-point precision bug - RESOLVED Dec 12, 2025 (Session 77)
 
 ---
 
@@ -415,6 +426,15 @@ The simulation SHALL model information environment quality as a critical mediato
 **Validation:** Created validateNearExtinction.ts script - all 4 test cases pass (10K, 100K, 1M, 10M)
 **Files:** `src/simulation/populationDynamics.ts:687`, `scripts/validateNearExtinction.ts`
 **Impact:** Monte Carlo validation now unblocked for tail-risk scenarios
+
+#### Hindcast Validation 1990-2024
+**Status:** ✅ OPERATIONAL (Dec 13, 2025, Session 83)
+**Context:** Historical validation framework for parameter calibration
+**Implementation:** TransitionMortalityPhase + CoordinatedDeploymentPhase historical mode guards
+**Validation:** N=3 runs, CV=0%, +6.17% final deviation (1990-2020: 5.258B → 8.276B vs 7.795B historical)
+**Files:** `src/simulation/engine/phases/TransitionMortalityPhase.ts`, `src/simulation/engine/phases/CoordinatedDeploymentPhase.ts`
+**Impact:** Enables parameter tuning against 30+ years of historical data
+**Next:** Extend to 1950-1989 validation (MEDIUM priority)
 
 #### M-5: Threshold Uncertainty Modeling
 **Status:** ✅ COMPLETE (Dec 7, 2025)
