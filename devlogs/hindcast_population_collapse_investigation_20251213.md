@@ -139,5 +139,66 @@ Final state (1995):
 
 ---
 
-**Status:** Investigation ongoing
-**Next session:** Trace population update logic to find root cause
+## Root Cause Found (Session 82)
+
+**Architecture mismatch between historical and modern mortality systems:**
+
+### The Bug
+
+Two phases were applying mortality AFTER regional population aggregation, but WITHOUT historical mode guards:
+
+1. **TransitionMortalityPhase** (order 26) - Technology deployment mortality
+2. **CoordinatedDeploymentPhase** (order 10.5) - AI-coordinated deployment mortality
+
+**Execution order:**
+1. HumanPopulationPhase (20.52) - Updates regional pops, aggregates to global
+   - Historical mode: `netGrowthRate = births - deaths` ✅
+2. TransitionMortalityPhase (26) - Subtracts deaths from global ❌
+3. BayesianMortalityPhase (35) - Disabled in historical mode ✅
+
+**The problem:**
+- Regional populations applied deaths correctly (historical CDR data)
+- They got aggregated to global
+- Then TWO phases subtracted ADDITIONAL deaths from global
+- This created phantom mortality that never occurred in 1990-2024
+
+### The Fix (CRITICAL-1)
+
+Added historical mode guards to both phases:
+
+```typescript
+// TransitionMortalityPhase.ts, line 510
+if (isHistoricalModeActive(state)) {
+  return { events: [] };
+}
+
+// CoordinatedDeploymentPhase.ts, line 117
+if (isHistoricalModeActive(state)) {
+  return { events: [] };
+}
+```
+
+**Rationale:** Historical demographic data (UN CDR) already includes ALL mortality sources. These phases model FUTURE transition mortality from rapid tech deployment, which didn't occur in 1990-2024.
+
+### Validation Results
+
+**Before fix:**
+- 2020: 4.508B (-42% from 1990) ❌ CATASTROPHIC
+
+**After fix:**
+- 2020: 8.276B (+57% from 1990) ✅ SUCCESS
+- Deviation: +6.17% vs UN data (well within <7% criteria)
+- Determinism: CV = 0.000000% (perfect)
+
+**Progression:**
+- 1990: 5.258B (-1.3%) ✅
+- 1995: 5.744B (+0.0%) ✅
+- 2000: 6.245B (+1.7%) ✅
+- 2005: 6.755B (+3.3%) ✅
+- 2010: 7.269B (+4.5%) ✅
+- 2015: 7.779B (+5.4%) ✅
+- 2020: 8.276B (+6.2%) ✅
+
+**Status:** RESOLVED (Dec 13, 2025, Session 82)
+**Commits:** TransitionMortalityPhase + CoordinatedDeploymentPhase historical guards
+**Validation:** N=3 runs, CV=0%, <7% deviation
