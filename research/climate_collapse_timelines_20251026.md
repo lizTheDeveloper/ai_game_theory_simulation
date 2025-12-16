@@ -1,7 +1,8 @@
 ---
-oldest_source: 2021
+oldest_source: 2008
 newest_source: 2025
-last_verified: 2025-11-06
+last_verified: 2025-12-12
+verification_note: Lenton et al. (2008) foundational paper updated with Armstrong McKay (2024) systematic review - 200+ studies synthesized
 ---
 
 # Climate System Collapse Timelines After Crossing Tipping Points
@@ -373,6 +374,10 @@ The Younger Dryas represents the **fastest well-documented climate transition** 
    - DOI: 10.1073/pnas.0705414105
    - Credibility: Foundational paper, 3000+ citations, defined tipping point framework
    - Key finding: Transition timescales are distinct from threshold-crossing timescales
+   - **2024 Update:** Armstrong McKay, D.I. (2024). "Two decades of climate tipping points research: Progress and outlook," *Dialogues in Climate Change*. DOI: 10.1177/29768659241293272
+     - Systematic assessment synthesizing 200+ studies since Lenton et al. (2008)
+     - Examines potential tipping dynamics from models, observations, palaeorecords, and theory
+     - Finds five tipping elements already above minimum estimates at ~1.2°C warming
 
 ---
 
