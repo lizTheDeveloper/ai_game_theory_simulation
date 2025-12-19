@@ -1,0 +1,84 @@
+{
+  "dashboard": {
+    "title": "MARCUS Platform Overview",
+    "tags": ["marcus", "platform", "overview"],
+    "timezone": "browser",
+    "editable": true,
+    "graphTooltip": 1,
+    "time": {
+      "from": "now-1h",
+      "to": "now"
+    },
+    "refresh": "5s",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Request Rate",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+        "targets": [
+          {
+            "expr": "rate(marcus_http_requests_total{job=\"marcus-platform\"}[5m])",
+            "legendFormat": "{{method}} {{path}}"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Error Rate",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
+        "targets": [
+          {
+            "expr": "rate(marcus_http_requests_total{job=\"marcus-platform\",status=~\"5..\"}[5m]) / rate(marcus_http_requests_total{job=\"marcus-platform\"}[5m]) * 100",
+            "legendFormat": "Error Rate %"
+          }
+        ],
+        "alert": {
+          "conditions": [{"evaluator": {"params": [5], "type": "gt"}}],
+          "name": "High Error Rate"
+        }
+      },
+      {
+        "id": 3,
+        "title": "P95 Response Time",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8},
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, rate(marcus_http_request_duration_seconds_bucket{job=\"marcus-platform\"}[5m]))",
+            "legendFormat": "P95 Latency"
+          }
+        ],
+        "yaxes": [{"format": "s"}]
+      },
+      {
+        "id": 4,
+        "title": "Active Connections",
+        "type": "stat",
+        "gridPos": {"h": 4, "w": 6, "x": 12, "y": 8},
+        "targets": [
+          {
+            "expr": "marcus_http_active_connections{job=\"marcus-platform\"}",
+            "legendFormat": "Active"
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Uptime",
+        "type": "stat",
+        "gridPos": {"h": 4, "w": 6, "x": 18, "y": 8},
+        "targets": [
+          {
+            "expr": "time() - process_start_time_seconds{job=\"marcus-platform\"}",
+            "legendFormat": "Uptime"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {"unit": "s"}
+        }
+      }
+    ]
+  }
+}

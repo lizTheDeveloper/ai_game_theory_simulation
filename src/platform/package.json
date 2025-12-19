@@ -1,0 +1,64 @@
+{
+  "name": "@marcus/platform",
+  "version": "3.0.0",
+  "description": "MARCUS 3.0 Citation Integrity Platform - Backend Services",
+  "private": true,
+  "main": "index.ts",
+  "scripts": {
+    "typecheck": "tsc --project tsconfig.platform.json --noEmit",
+    "build": "tsc --project tsconfig.platform.json",
+    "test": "jest",
+    "start": "node dist/api/server.js",
+    "dev": "ts-node-dev --respawn api/server.ts"
+  },
+  "dependencies": {
+    "@types/validator": "^13.15.10",
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "graphql-redis-subscriptions": "^2.7.0",
+    "helmet": "^7.1.0",
+    "ioredis": "^5.4.0",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.13.0",
+    "prom-client": "^15.1.0",
+    "validator": "^13.15.23",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.12",
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/node": "^20.19.25",
+    "@types/pg": "^8.11.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.4.5",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.0.0"
+  },
+  "optionalDependencies": {
+    "@apollo/server": "^4.10.0",
+    "@aws-sdk/client-secrets-manager": "^3.500.0",
+    "@graphql-tools/schema": "^10.0.0",
+    "@opentelemetry/auto-instrumentations-node": "^0.40.0",
+    "@opentelemetry/exporter-jaeger": "^1.20.0",
+    "@opentelemetry/resources": "^1.20.0",
+    "@opentelemetry/sdk-node": "^0.46.0",
+    "@opentelemetry/sdk-trace-base": "^1.20.0",
+    "@opentelemetry/semantic-conventions": "^1.20.0",
+    "axios": "^1.6.0",
+    "dataloader": "^2.2.2",
+    "graphql": "^16.8.0",
+    "graphql-subscriptions": "^2.0.0",
+    "graphql-ws": "^5.14.0",
+    "pino": "^8.18.0",
+    "winston": "^3.11.0",
+    "ws": "^8.16.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

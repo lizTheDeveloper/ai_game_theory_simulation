@@ -1,0 +1,226 @@
+name: Security Scanning (SAST + Dependency Audit)
+
+# Run security scans on every PR and push to main
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  schedule:
+    # Run daily at 9 AM UTC
+    - cron: '0 9 * * *'
+
+jobs:
+  # ============================================================================
+  # ESLint Security Scan (TypeScript/JavaScript)
+  # ============================================================================
+  eslint-security:
+    name: ESLint Security Analysis
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write # For GitHub Code Scanning
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ESLint security scan
+        run: |
+          npx eslint . \
+            --ext .ts,.tsx,.js,.jsx \
+            --format json \
+            --output-file eslint-results.json \
+            --plugin security \
+            --plugin no-secrets
+        continue-on-error: true
+
+      - name: Upload ESLint results
+        uses: actions/upload-artifact@v4
+        with:
+          name: eslint-security-results
+          path: eslint-results.json
+          retention-days: 30
+
+      - name: Check for security issues
+        run: |
+          ERRORS=$(cat eslint-results.json | jq '[.[] | select(.errorCount > 0)] | length')
+          if [ "$ERRORS" -gt 0 ]; then
+            echo "❌ ESLint found $ERRORS files with security issues"
+            exit 1
+          fi
+          echo "✅ No security issues found by ESLint"
+
+  # ============================================================================
+  # npm audit (Dependency Vulnerabilities)
+  # ============================================================================
+  npm-audit:
+    name: NPM Dependency Audit
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Run npm audit
+        run: |
+          npm audit --json > npm-audit-results.json || true
+        continue-on-error: true
+
+      - name: Upload audit results
+        uses: actions/upload-artifact@v4
+        with:
+          name: npm-audit-results
+          path: npm-audit-results.json
+          retention-days: 30
+
+      - name: Check for HIGH/CRITICAL vulnerabilities
+        run: |
+          HIGH=$(cat npm-audit-results.json | jq '.metadata.vulnerabilities.high // 0')
+          CRITICAL=$(cat npm-audit-results.json | jq '.metadata.vulnerabilities.critical // 0')
+
+          echo "High vulnerabilities: $HIGH"
+          echo "Critical vulnerabilities: $CRITICAL"
+
+          if [ "$HIGH" -gt 0 ] || [ "$CRITICAL" -gt 0 ]; then
+            echo "❌ Found HIGH or CRITICAL vulnerabilities"
+            exit 1
+          fi
+          echo "✅ No HIGH or CRITICAL vulnerabilities found"
+
+  # ============================================================================
+  # Snyk Security Scan
+  # ============================================================================
+  snyk-scan:
+    name: Snyk Vulnerability Scan
+    runs-on: ubuntu-latest
+    if: github.event_name != 'schedule' # Skip on scheduled runs (use Snyk monitoring instead)
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Snyk security test
+        uses: snyk/actions/node@master
+        continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=high --json-file-output=snyk-results.json
+
+      - name: Upload Snyk results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: snyk-results
+          path: snyk-results.json
+          retention-days: 30
+
+  # ============================================================================
+  # CodeQL Analysis (GitHub Advanced Security)
+  # ============================================================================
+  codeql:
+    name: CodeQL Security Analysis
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: ['javascript']
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          # Custom config excludes documented false positives
+          # See: reviews/codeql_false_positives_architecture_review_20251127.md
+          config-file: .github/codeql/codeql-config.yml
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v3
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{matrix.language}}"
+
+  # ============================================================================
+  # Secret Scanning (Detect hardcoded secrets)
+  # ============================================================================
+  secret-scan:
+    name: Secret Detection
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Full history for secret scanning
+
+      - name: Run gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_ENABLE_COMMENTS: false
+
+  # ============================================================================
+  # Security Summary
+  # ============================================================================
+  security-summary:
+    name: Security Scan Summary
+    runs-on: ubuntu-latest
+    needs: [eslint-security, npm-audit, snyk-scan, codeql, secret-scan]
+    if: always()
+
+    steps:
+      - name: Generate summary
+        run: |
+          echo "# Security Scan Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Scan Status" >> $GITHUB_STEP_SUMMARY
+          echo "- ESLint Security: ${{ needs.eslint-security.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- NPM Audit: ${{ needs.npm-audit.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Snyk Scan: ${{ needs.snyk-scan.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- CodeQL: ${{ needs.codeql.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Secret Scan: ${{ needs.secret-scan.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          if [ "${{ needs.eslint-security.result }}" != "success" ] || \
+             [ "${{ needs.npm-audit.result }}" != "success" ]; then
+            echo "❌ Security scan FAILED. Review findings above." >> $GITHUB_STEP_SUMMARY
+            exit 1
+          fi
+
+          echo "✅ All security scans passed!" >> $GITHUB_STEP_SUMMARY

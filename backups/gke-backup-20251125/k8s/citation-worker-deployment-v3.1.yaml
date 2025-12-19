@@ -1,0 +1,277 @@
+---
+# MARCUS 3.1 - Citation Worker Deployment with Async Support
+#
+# Enhanced deployment with feature flags for gradual async agent rollout.
+# Supports canary deployments: 10% → 25% → 50% → 75% → 100%
+#
+# Key Changes from 3.0:
+# - Uses citation_worker_v2.py (feature flag support)
+# - New environment variables for async control
+# - Gradual rollout via ASYNC_AGENT_ROLLOUT_PERCENT
+#
+# Author: Marcus (Platform Engineer)
+# Date: 2025-11-22
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: marcus-async-config
+  namespace: marcus-platform
+data:
+  # Async agent feature flags (MARCUS 3.1)
+  ENABLE_ASYNC_AGENT: "true"
+  ASYNC_AGENT_ROLLOUT_PERCENT: "0"  # Start at 0%, increase gradually
+  AGENT_MODE: "auto"  # auto | sync | async
+
+  # Performance tuning for async mode
+  ASYNC_DB_POOL_MIN: "2"
+  ASYNC_DB_POOL_MAX: "10"
+  ASYNC_REDIS_POOL_SIZE: "5"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: citation-worker-v31
+  namespace: marcus-platform
+  labels:
+    app: citation-worker
+    version: v3.1
+    component: worker
+spec:
+  replicas: 5  # Start with 5 replicas
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: citation-worker
+      version: v3.1
+  template:
+    metadata:
+      labels:
+        app: citation-worker
+        version: v3.1
+        component: worker
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9090"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: citation-worker
+
+      # Init container: Install async dependencies
+      initContainers:
+        - name: install-async-deps
+          image: python:3.11-slim
+          command: ['sh', '-c']
+          args:
+            - |
+              pip install --target /deps asyncpg==0.29.0 aioredis==2.0.1 aiohttp==3.9.1
+          volumeMounts:
+            - name: python-deps
+              mountPath: /deps
+
+      containers:
+        - name: worker
+          image: gcr.io/project-6d921a00-c010-437c-990/citation-worker:v3.1
+          imagePullPolicy: Always
+
+          command: ["python3"]
+          args: ["-u", "/app/citation_worker_v2.py"]
+
+          env:
+            # Agent identification
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: AGENT_ID
+              value: "$(POD_NAME)"
+
+            # Database config
+            - name: POSTGRES_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: marcus-config
+                  key: POSTGRES_HOST
+            - name: POSTGRES_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: marcus-config
+                  key: POSTGRES_PORT
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: marcus-config
+                  key: POSTGRES_DB
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: password
+
+            # Redis config
+            - name: REDIS_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: marcus-config
+                  key: REDIS_HOST
+            - name: REDIS_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: marcus-config
+                  key: REDIS_PORT
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: redis-credentials
+                  key: password
+                  optional: true
+            - name: REDIS_CLUSTER_MODE
+              value: "false"  # Set to "true" for cluster mode
+
+            # Async agent feature flags (from async-config)
+            - name: ENABLE_ASYNC_AGENT
+              valueFrom:
+                configMapKeyRef:
+                  name: marcus-async-config
+                  key: ENABLE_ASYNC_AGENT
+            - name: ASYNC_AGENT_ROLLOUT_PERCENT
+              valueFrom:
+                configMapKeyRef:
+                  name: marcus-async-config
+                  key: ASYNC_AGENT_ROLLOUT_PERCENT
+            - name: AGENT_MODE
+              valueFrom:
+                configMapKeyRef:
+                  name: marcus-async-config
+                  key: AGENT_MODE
+
+            # Python path for async dependencies
+            - name: PYTHONPATH
+              value: "/deps:/app"
+
+          ports:
+            - name: metrics
+              containerPort: 9090
+              protocol: TCP
+
+          resources:
+            requests:
+              cpu: "500m"       # 0.5 CPU cores
+              memory: "512Mi"   # 512 MB RAM
+            limits:
+              cpu: "2000m"      # 2 CPU cores max
+              memory: "2Gi"     # 2 GB RAM max
+
+          livenessProbe:
+            exec:
+              command:
+                - python3
+                - -c
+                - "import redis; r = redis.Redis(host='$REDIS_HOST', port=int('$REDIS_PORT')); r.ping()"
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            timeoutSeconds: 5
+            failureThreshold: 3
+
+          readinessProbe:
+            exec:
+              command:
+                - python3
+                - -c
+                - "import redis; r = redis.Redis(host='$REDIS_HOST', port=int('$REDIS_PORT')); r.ping()"
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+
+          volumeMounts:
+            - name: python-deps
+              mountPath: /deps
+
+      volumes:
+        - name: python-deps
+          emptyDir: {}
+
+      # Pod scheduling preferences
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - citation-worker
+                topologyKey: kubernetes.io/hostname
+
+---
+# Service for worker metrics
+apiVersion: v1
+kind: Service
+metadata:
+  name: citation-worker-v31-metrics
+  namespace: marcus-platform
+  labels:
+    app: citation-worker
+    version: v3.1
+spec:
+  type: ClusterIP
+  ports:
+    - name: metrics
+      port: 9090
+      targetPort: 9090
+      protocol: TCP
+  selector:
+    app: citation-worker
+    version: v3.1
+
+---
+# ServiceAccount for workers
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: citation-worker
+  namespace: marcus-platform
+
+---
+# Role for workers (minimal permissions)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: citation-worker
+  namespace: marcus-platform
+rules:
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get"]
+
+---
+# RoleBinding for workers
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: citation-worker
+  namespace: marcus-platform
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: citation-worker
+subjects:
+  - kind: ServiceAccount
+    name: citation-worker
+    namespace: marcus-platform

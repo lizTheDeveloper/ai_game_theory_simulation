@@ -1,0 +1,376 @@
+{
+  "dashboard": {
+    "title": "Paradigm Dynamics",
+    "uid": "sim-paradigms-02",
+    "tags": ["simulation", "research-tool", "paradigms"],
+    "timezone": "browser",
+    "schemaVersion": 38,
+    "version": 1,
+    "refresh": "5s",
+    "time": {
+      "from": "now-6h",
+      "to": "now"
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 1,
+    "panels": [
+      {
+        "id": 1,
+        "type": "timeseries",
+        "title": "Paradigm Influence Over Time",
+        "gridPos": { "x": 0, "y": 0, "w": 24, "h": 8 },
+        "datasource": { "type": "prometheus", "uid": "prometheus" },
+        "targets": [
+          {
+            "expr": "paradigm_influence{paradigm=\"western\"}",
+            "refId": "A",
+            "legendFormat": "Western Liberal"
+          },
+          {
+            "expr": "paradigm_influence{paradigm=\"development\"}",
+            "refId": "B",
+            "legendFormat": "Development"
+          },
+          {
+            "expr": "paradigm_influence{paradigm=\"ecological\"}",
+            "refId": "C",
+            "legendFormat": "Ecological"
+          },
+          {
+            "expr": "paradigm_influence{paradigm=\"indigenous\"}",
+            "refId": "D",
+            "legendFormat": "Indigenous"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "series",
+              "axisLabel": "Influence",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 15,
+              "gradientMode": "opacity",
+              "hideFrom": {
+                "tooltip": false,
+                "viz": false,
+                "legend": false
+              },
+              "lineInterpolation": "smooth",
+              "lineWidth": 2,
+              "pointSize": 4,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "never",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "min": 0,
+            "max": 1,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "color": "green", "value": null }
+              ]
+            },
+            "unit": "percentunit"
+          },
+          "overrides": [
+            {
+              "matcher": { "id": "byName", "options": "Western Liberal" },
+              "properties": [
+                { "id": "color", "value": { "mode": "fixed", "fixedColor": "#0080FF" } }
+              ]
+            },
+            {
+              "matcher": { "id": "byName", "options": "Development" },
+              "properties": [
+                { "id": "color", "value": { "mode": "fixed", "fixedColor": "#00CC66" } }
+              ]
+            },
+            {
+              "matcher": { "id": "byName", "options": "Ecological" },
+              "properties": [
+                { "id": "color", "value": { "mode": "fixed", "fixedColor": "#FFB000" } }
+              ]
+            },
+            {
+              "matcher": { "id": "byName", "options": "Indigenous" },
+              "properties": [
+                { "id": "color", "value": { "mode": "fixed", "fixedColor": "#FF00FF" } }
+              ]
+            }
+          ]
+        },
+        "options": {
+          "tooltip": {
+            "mode": "multi",
+            "sort": "desc"
+          },
+          "legend": {
+            "displayMode": "table",
+            "placement": "bottom",
+            "showLegend": true,
+            "calcs": ["lastNotNull", "mean"]
+          }
+        }
+      },
+      {
+        "id": 2,
+        "type": "piechart",
+        "title": "Current Paradigm Distribution",
+        "gridPos": { "x": 0, "y": 8, "w": 12, "h": 8 },
+        "datasource": { "type": "prometheus", "uid": "prometheus" },
+        "targets": [
+          {
+            "expr": "paradigm_influence{paradigm=\"western\"}",
+            "refId": "A",
+            "legendFormat": "Western Liberal"
+          },
+          {
+            "expr": "paradigm_influence{paradigm=\"development\"}",
+            "refId": "B",
+            "legendFormat": "Development"
+          },
+          {
+            "expr": "paradigm_influence{paradigm=\"ecological\"}",
+            "refId": "C",
+            "legendFormat": "Ecological"
+          },
+          {
+            "expr": "paradigm_influence{paradigm=\"indigenous\"}",
+            "refId": "D",
+            "legendFormat": "Indigenous"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "mappings": [],
+            "unit": "percentunit"
+          },
+          "overrides": [
+            {
+              "matcher": { "id": "byName", "options": "Western Liberal" },
+              "properties": [
+                { "id": "color", "value": { "mode": "fixed", "fixedColor": "#0080FF" } }
+              ]
+            },
+            {
+              "matcher": { "id": "byName", "options": "Development" },
+              "properties": [
+                { "id": "color", "value": { "mode": "fixed", "fixedColor": "#00CC66" } }
+              ]
+            },
+            {
+              "matcher": { "id": "byName", "options": "Ecological" },
+              "properties": [
+                { "id": "color", "value": { "mode": "fixed", "fixedColor": "#FFB000" } }
+              ]
+            },
+            {
+              "matcher": { "id": "byName", "options": "Indigenous" },
+              "properties": [
+                { "id": "color", "value": { "mode": "fixed", "fixedColor": "#FF00FF" } }
+              ]
+            }
+          ]
+        },
+        "options": {
+          "pieType": "donut",
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          },
+          "displayLabels": ["name", "percent"],
+          "legendDisplayMode": "table",
+          "legendPlacement": "right",
+          "legendShowLegend": true,
+          "legendValues": ["value", "percent"],
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          }
+        }
+      },
+      {
+        "id": 3,
+        "type": "stat",
+        "title": "Paradigm Transition Velocity",
+        "gridPos": { "x": 12, "y": 8, "w": 12, "h": 4 },
+        "datasource": { "type": "prometheus", "uid": "prometheus" },
+        "targets": [
+          {
+            "expr": "paradigm_transition_velocity",
+            "refId": "A",
+            "legendFormat": "Velocity"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "color": "rgba(255, 255, 255, 0.4)", "value": null },
+                { "color": "#00F0FF", "value": 0.01 },
+                { "color": "#FFB000", "value": 0.05 },
+                { "color": "#FF0040", "value": 0.1 }
+              ]
+            },
+            "unit": "none",
+            "decimals": 3
+          },
+          "overrides": []
+        },
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "center",
+          "orientation": "auto",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          },
+          "textMode": "value_and_name",
+          "text": {
+            "titleSize": 14,
+            "valueSize": 32
+          }
+        }
+      },
+      {
+        "id": 4,
+        "type": "bargauge",
+        "title": "Paradigm Influence Levels",
+        "gridPos": { "x": 12, "y": 12, "w": 12, "h": 4 },
+        "datasource": { "type": "prometheus", "uid": "prometheus" },
+        "targets": [
+          {
+            "expr": "paradigm_influence{paradigm=\"western\"}",
+            "refId": "A",
+            "legendFormat": "Western"
+          },
+          {
+            "expr": "paradigm_influence{paradigm=\"development\"}",
+            "refId": "B",
+            "legendFormat": "Development"
+          },
+          {
+            "expr": "paradigm_influence{paradigm=\"ecological\"}",
+            "refId": "C",
+            "legendFormat": "Ecological"
+          },
+          {
+            "expr": "paradigm_influence{paradigm=\"indigenous\"}",
+            "refId": "D",
+            "legendFormat": "Indigenous"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "mappings": [],
+            "min": 0,
+            "max": 1,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "color": "rgba(255, 255, 255, 0.2)", "value": null }
+              ]
+            },
+            "unit": "percentunit"
+          },
+          "overrides": [
+            {
+              "matcher": { "id": "byName", "options": "Western" },
+              "properties": [
+                { "id": "color", "value": { "mode": "fixed", "fixedColor": "#0080FF" } }
+              ]
+            },
+            {
+              "matcher": { "id": "byName", "options": "Development" },
+              "properties": [
+                { "id": "color", "value": { "mode": "fixed", "fixedColor": "#00CC66" } }
+              ]
+            },
+            {
+              "matcher": { "id": "byName", "options": "Ecological" },
+              "properties": [
+                { "id": "color", "value": { "mode": "fixed", "fixedColor": "#FFB000" } }
+              ]
+            },
+            {
+              "matcher": { "id": "byName", "options": "Indigenous" },
+              "properties": [
+                { "id": "color", "value": { "mode": "fixed", "fixedColor": "#FF00FF" } }
+              ]
+            }
+          ]
+        },
+        "options": {
+          "displayMode": "gradient",
+          "orientation": "horizontal",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          },
+          "showUnfilled": false,
+          "text": {
+            "titleSize": 12,
+            "valueSize": 16
+          }
+        }
+      }
+    ],
+    "style": "dark",
+    "templating": {
+      "list": []
+    },
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": {
+            "type": "datasource",
+            "uid": "grafana"
+          },
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "target": {
+            "limit": 100,
+            "matchAny": false,
+            "tags": [],
+            "type": "dashboard"
+          },
+          "type": "dashboard"
+        }
+      ]
+    }
+  },
+  "folderUid": "ef4v15yhwmjggd",
+  "overwrite": true
+}

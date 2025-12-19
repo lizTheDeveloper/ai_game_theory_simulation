@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+    margin: 0;
+    padding: 50pt 60pt;
+    width: 720pt;
+    height: 405pt;
+    background: #000000;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+h1 {
+    color: #00F0FF;
+    font-size: 32pt;
+    font-weight: 300;
+    margin: 0 0 30pt 0;
+    text-transform: uppercase;
+    letter-spacing: 2pt;
+}
+
+.integration-steps {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30pt;
+    position: relative;
+}
+
+.integration-steps::before {
+    content: "";
+    position: absolute;
+    top: 25pt;
+    left: 80pt;
+    right: 80pt;
+    height: 2px;
+    background: linear-gradient(90deg, #00F0FF 0%, #00FF88 100%);
+    z-index: 0;
+}
+
+.step {
+    background: #000000;
+    border: 2px solid rgba(0, 240, 255, 0.3);
+    width: 140pt;
+    padding: 15pt;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.step-number {
+    color: #00F0FF;
+    font-size: 24pt;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    margin-bottom: 8pt;
+}
+
+.step-title {
+    color: #FFFFFF;
+    font-size: 12pt;
+    font-weight: bold;
+    margin-bottom: 5pt;
+}
+
+.step-time {
+    color: #00FF88;
+    font-size: 10pt;
+}
+
+.code-sample {
+    background: rgba(0, 240, 255, 0.05);
+    border: 1px solid rgba(0, 240, 255, 0.2);
+    padding: 15pt;
+    margin-top: 20pt;
+}
+
+.code-label {
+    color: #00F0FF;
+    font-size: 11pt;
+    margin-bottom: 10pt;
+    text-transform: uppercase;
+    letter-spacing: 1pt;
+}
+
+.code-text {
+    color: #00FF88;
+    font-family: 'Courier New', monospace;
+    font-size: 11pt;
+    line-height: 1.5;
+}
+
+.features-list {
+    margin-top: 20pt;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15pt;
+}
+
+.feature-item {
+    color: #FFFFFF;
+    font-size: 11pt;
+    padding-left: 20pt;
+    position: relative;
+}
+
+.feature-item::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #00FF88;
+}
+</style>
+</head>
+<body>
+    <h1>Integration Path</h1>
+
+    <div class="integration-steps">
+        <div class="step">
+            <div class="step-number">01</div>
+            <div class="step-title">API Setup</div>
+            <div class="step-time">< 1 hour</div>
+        </div>
+        <div class="step">
+            <div class="step-number">02</div>
+            <div class="step-title">Deploy Workers</div>
+            <div class="step-time">2 hours</div>
+        </div>
+        <div class="step">
+            <div class="step-number">03</div>
+            <div class="step-title">Production Ready</div>
+            <div class="step-time">Same day</div>
+        </div>
+    </div>
+
+    <div class="code-sample">
+        <div class="code-label">Simple GraphQL Integration</div>
+        <div class="code-text">
+mutation {<br/>
+&nbsp;&nbsp;analyzeCitation(input: {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;claim: "GPT-4 scores 86.4% on MMLU",<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;citation: "OpenAI, 2023"<br/>
+&nbsp;&nbsp;}) {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;confidence<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;consensus<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;agents { name, vote, reasoning }<br/>
+&nbsp;&nbsp;}<br/>
+}
+        </div>
+    </div>
+
+    <div class="features-list">
+        <div class="feature-item">REST and GraphQL APIs</div>
+        <div class="feature-item">Kubernetes Helm charts</div>
+        <div class="feature-item">Docker images provided</div>
+        <div class="feature-item">Auto-scaling configured</div>
+        <div class="feature-item">Monitoring dashboards</div>
+        <div class="feature-item">24/7 support available</div>
+    </div>
+</body>
+</html>

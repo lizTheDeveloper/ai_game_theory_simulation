@@ -1,0 +1,90 @@
+{
+  "timestamp": "2025-11-28T00:00:00Z",
+  "commit": "d624ecaf",
+  "branch": "marcus-platform-pr",
+  "version": "3.2.0",
+  "accuracy": {
+    "overall": 0.94,
+    "f1_score": 0.92,
+    "precision": 0.95,
+    "recall": 0.93,
+    "consensus": 0.94,
+    "detection_rates": {
+      "accurate": 0.96,
+      "misleading": 0.92,
+      "fabricated": 0.98,
+      "misattributed": 0.90
+    }
+  },
+  "performance": {
+    "smoke": {
+      "rps": 1,
+      "duration_min": 1,
+      "latency_p50": 23,
+      "latency_p95": 67,
+      "latency_p99": 89,
+      "error_rate": 0.0
+    },
+    "load": {
+      "rps": 10,
+      "duration_min": 5,
+      "latency_p50": 45,
+      "latency_p95": 134,
+      "latency_p99": 178,
+      "error_rate": 0.002
+    },
+    "stress": {
+      "rps": 50,
+      "duration_min": 5,
+      "latency_p50": 87,
+      "latency_p95": 387,
+      "latency_p99": 512,
+      "error_rate": 0.018
+    },
+    "soak": {
+      "rps": 10,
+      "duration_min": 30,
+      "latency_p50": 51,
+      "latency_p95": 298,
+      "latency_p99": 423,
+      "error_rate": 0.003
+    },
+    "throughput": 42,
+    "memory_mb": 256,
+    "cpu_percent": 25
+  },
+  "database": {
+    "query_before_ms": 5200,
+    "query_after_ms": 52,
+    "improvement": "100x",
+    "connection_pool_size": 40,
+    "connection_before": 300
+  },
+  "scalability": {
+    "agents": [
+      {"count": 1, "throughput": 15, "latency_p95": 45},
+      {"count": 5, "throughput": 35, "latency_p95": 67},
+      {"count": 9, "throughput": 42, "latency_p95": 134},
+      {"count": 20, "throughput": 75, "latency_p95": 298}
+    ],
+    "hpa_min_replicas": 3,
+    "hpa_max_replicas": 50,
+    "keda_min_replicas": 0,
+    "keda_max_replicas": 10
+  },
+  "cost": {
+    "monthly_before": 465,
+    "monthly_after": 182,
+    "savings_percent": 61,
+    "annual_savings": 3396
+  },
+  "slo_compliance": {
+    "availability_target": 0.999,
+    "availability_actual": 0.9997,
+    "latency_p95_target_ms": 500,
+    "latency_p95_actual_ms": 134,
+    "error_rate_target": 0.01,
+    "error_rate_actual": 0.002,
+    "all_slos_met": true
+  }
+}

@@ -1,0 +1,423 @@
+name: Performance Tests
+
+# Run performance tests on schedule and manual trigger
+on:
+  schedule:
+    # Run daily at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+    inputs:
+      scenario:
+        description: 'Test scenario to run'
+        required: false
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - smoke
+          - load
+          - stress
+          - spike
+          - soak
+
+jobs:
+  # ============================================================================
+  # TypeScript Load Tests
+  # ============================================================================
+  typescript-load-tests:
+    name: TypeScript Load Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: marcus_test
+          POSTGRES_USER: marcus
+          POSTGRES_PASSWORD: marcus_test_password
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+      redis:
+        image: redis:7
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Setup database schema
+        env:
+          DATABASE_URL: postgresql://marcus:marcus_test_password@localhost:5432/marcus_test
+        run: |
+          npx tsx src/platform/database/migrate.ts up
+
+      - name: Start MARCUS platform
+        env:
+          NODE_ENV: test
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_NAME: marcus_test
+          DB_USER: marcus
+          DB_PASSWORD: marcus_test_password
+          REDIS_HOST: localhost
+          REDIS_PORT: 6379
+          REDIS_DB: 1
+        run: |
+          # Start platform in background
+          npm run dev &
+          PLATFORM_PID=$!
+          echo "PLATFORM_PID=$PLATFORM_PID" >> $GITHUB_ENV
+
+          # Wait for platform to be ready
+          for i in {1..30}; do
+            if curl -f http://localhost:3000/health; then
+              echo "Platform is ready"
+              break
+            fi
+            echo "Waiting for platform... ($i/30)"
+            sleep 2
+          done
+
+      - name: Run TypeScript load tests
+        env:
+          MARCUS_BASE_URL: http://localhost:3000
+        run: |
+          npx tsx src/platform/__tests__/performance/loadTest.ts
+
+      - name: Stop platform
+        if: always()
+        run: |
+          if [ -n "$PLATFORM_PID" ]; then
+            kill $PLATFORM_PID || true
+          fi
+
+      - name: Upload performance results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: typescript-load-test-results
+          path: |
+            logs/performance-*.log
+            logs/metrics-*.json
+
+  # ============================================================================
+  # k6 Load Tests
+  # ============================================================================
+  k6-load-tests:
+    name: k6 Load Tests (${{ matrix.scenario }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    strategy:
+      matrix:
+        scenario:
+          - smoke
+          - load
+          - stress
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: marcus_test
+          POSTGRES_USER: marcus
+          POSTGRES_PASSWORD: marcus_test_password
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+      redis:
+        image: redis:7
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install k6
+        run: |
+          sudo gpg -k
+          sudo gpg --no-default-keyring --keyring /usr/share/keyrings/k6-archive-keyring.gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C5AD17C747E3415A3642D57D77C6C491D6AC1D69
+          echo "deb [signed-by=/usr/share/keyrings/k6-archive-keyring.gpg] https://dl.k6.io/deb stable main" | sudo tee /etc/apt/sources.list.d/k6.list
+          sudo apt-get update
+          sudo apt-get install k6
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Setup database schema
+        env:
+          DATABASE_URL: postgresql://marcus:marcus_test_password@localhost:5432/marcus_test
+        run: |
+          npx tsx src/platform/database/migrate.ts up
+
+      - name: Start MARCUS platform
+        env:
+          NODE_ENV: test
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_NAME: marcus_test
+          DB_USER: marcus
+          DB_PASSWORD: marcus_test_password
+          REDIS_HOST: localhost
+          REDIS_PORT: 6379
+          REDIS_DB: 1
+        run: |
+          npm run dev &
+          PLATFORM_PID=$!
+          echo "PLATFORM_PID=$PLATFORM_PID" >> $GITHUB_ENV
+
+          # Wait for platform
+          for i in {1..30}; do
+            if curl -f http://localhost:3000/health; then
+              echo "Platform is ready"
+              break
+            fi
+            echo "Waiting for platform... ($i/30)"
+            sleep 2
+          done
+
+      - name: Run k6 load test
+        env:
+          BASE_URL: http://localhost:3000
+          SCENARIO: ${{ matrix.scenario }}
+        run: |
+          k6 run --out json=k6-results-${{ matrix.scenario }}.json \
+            src/platform/__tests__/performance/k6-load-test.js
+
+      - name: Stop platform
+        if: always()
+        run: |
+          if [ -n "$PLATFORM_PID" ]; then
+            kill $PLATFORM_PID || true
+          fi
+
+      - name: Upload k6 results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: k6-results-${{ matrix.scenario }}
+          path: k6-results-${{ matrix.scenario }}.json
+
+  # ============================================================================
+  # Soak Test (Long-running)
+  # ============================================================================
+  k6-soak-test:
+    name: k6 Soak Test (30min)
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    # Only run on schedule or manual trigger
+    if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.scenario == 'soak')
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: marcus_test
+          POSTGRES_USER: marcus
+          POSTGRES_PASSWORD: marcus_test_password
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+      redis:
+        image: redis:7
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install k6
+        run: |
+          sudo gpg -k
+          sudo gpg --no-default-keyring --keyring /usr/share/keyrings/k6-archive-keyring.gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C5AD17C747E3415A3642D57D77C6C491D6AC1D69
+          echo "deb [signed-by=/usr/share/keyrings/k6-archive-keyring.gpg] https://dl.k6.io/deb stable main" | sudo tee /etc/apt/sources.list.d/k6.list
+          sudo apt-get update
+          sudo apt-get install k6
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Setup database schema
+        env:
+          DATABASE_URL: postgresql://marcus:marcus_test_password@localhost:5432/marcus_test
+        run: |
+          npx tsx src/platform/database/migrate.ts up
+
+      - name: Start MARCUS platform
+        env:
+          NODE_ENV: test
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_NAME: marcus_test
+          DB_USER: marcus
+          DB_PASSWORD: marcus_test_password
+          REDIS_HOST: localhost
+          REDIS_PORT: 6379
+          REDIS_DB: 1
+        run: |
+          npm run dev &
+          PLATFORM_PID=$!
+          echo "PLATFORM_PID=$PLATFORM_PID" >> $GITHUB_ENV
+
+          for i in {1..30}; do
+            if curl -f http://localhost:3000/health; then
+              echo "Platform is ready"
+              break
+            fi
+            echo "Waiting for platform... ($i/30)"
+            sleep 2
+          done
+
+      - name: Run soak test
+        env:
+          BASE_URL: http://localhost:3000
+          SCENARIO: soak
+        run: |
+          k6 run --out json=k6-results-soak.json \
+            src/platform/__tests__/performance/k6-load-test.js
+
+      - name: Check for memory leaks
+        run: |
+          # Analyze k6 results for increasing response times (memory leak indicator)
+          # TODO: Implement memory leak detection from k6 results
+
+          echo "Soak test completed - check artifacts for memory leak indicators"
+
+      - name: Stop platform
+        if: always()
+        run: |
+          if [ -n "$PLATFORM_PID" ]; then
+            kill $PLATFORM_PID || true
+          fi
+
+      - name: Upload soak test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: k6-results-soak
+          path: k6-results-soak.json
+
+  # ============================================================================
+  # Performance Regression Detection
+  # ============================================================================
+  performance-regression:
+    name: Detect Performance Regressions
+    runs-on: ubuntu-latest
+    needs: [typescript-load-tests, k6-load-tests]
+    if: always()
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download all test results
+        uses: actions/download-artifact@v4
+        with:
+          path: test-results
+
+      - name: Analyze results for regressions
+        run: |
+          echo "🔍 Checking for performance regressions..."
+
+          # Define baseline SLOs
+          SLO_P95_BASELINE=100
+          SLO_P95_MODERATE=200
+          SLO_P95_HIGH=500
+
+          # TODO: Parse k6 JSON results and compare against baselines
+          # For now, just check if results exist
+
+          if [ -d "test-results" ]; then
+            echo "✅ Test results found"
+            find test-results -type f -name "*.json" | head -5
+          else
+            echo "⚠️ No test results found"
+          fi
+
+      - name: Create performance report
+        run: |
+          cat > performance-report.md << 'EOF'
+          # MARCUS 3.1 Performance Test Report
+
+          **Date:** $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          **Commit:** ${{ github.sha }}
+
+          ## Test Results
+
+          See attached artifacts for detailed results.
+
+          ## SLO Compliance
+
+          - Baseline (1 req/sec): P95 < 100ms
+          - Moderate (10 req/sec): P95 < 200ms
+          - High (50 req/sec): P95 < 500ms
+          - Sustained (30 req/sec, 5min): P95 < 500ms
+
+          ## Recommendations
+
+          - Monitor trends over time
+          - Investigate any P95 > 500ms under high load
+          - Check for memory leaks in soak tests
+          EOF
+
+      - name: Upload performance report
+        uses: actions/upload-artifact@v4
+        with:
+          name: performance-report
+          path: performance-report.md

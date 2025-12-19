@@ -1,0 +1,30 @@
+# MARCUS 3.1 Citation Integrity Agent Dependencies
+#
+# Install with: pip install -r requirements.txt
+#
+# Author: Marcus (Platform Engineer)
+# Date: 2025-11-22
+
+# Database connectivity - Sync (legacy)
+psycopg2-binary>=2.9.9  # PostgreSQL adapter for Python
+
+# Database connectivity - Async (MARCUS 3.1)
+asyncpg>=0.29.0  # High-performance async PostgreSQL driver
+
+# Redis client for caching and state coordination - Sync (legacy)
+redis>=5.0.1
+
+# Redis client - Async (MARCUS 3.1)
+aioredis>=2.0.1  # Async Redis client
+
+# HTTP client - Async (MARCUS 3.1)
+aiohttp>=3.9.1  # Async HTTP client for concurrent API calls
+
+# Numerical computing for statistical calculations
+numpy>=1.26.0
+
+# Optional: For better logging
+colorlog>=6.8.0
+
+# Prometheus metrics for monitoring and observability
+prometheus-client>=0.19.0

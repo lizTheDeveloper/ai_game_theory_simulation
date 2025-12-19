@@ -1,0 +1,67 @@
+# MARCUS 3.1 L6 Cost Optimization
+# KEDA ScaledObject for Event-Driven Autoscaling
+#
+# Features:
+# - Scale to 0 when queue is empty (save ~$8/month)
+# - Scale up based on Redis queue depth (1 pod per 10 items)
+# - Max 20 pods for burst capacity
+#
+# Author: Marcus (Platform Engineer)
+# Date: 2025-11-22
+
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: citation-worker-scaler
+  namespace: marcus-platform
+spec:
+  # Target deployment
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: citation-agent
+
+  # Polling interval (how often to check Redis)
+  pollingInterval: 15  # seconds
+
+  # Cooldown period before scaling to zero
+  cooldownPeriod: 300  # 5 minutes (wait for queue to drain)
+
+  # Min/max replicas
+  minReplicaCount: 0   # Scale to zero!
+  maxReplicaCount: 20  # Burst capacity
+
+  # Triggers (Redis queue depth)
+  triggers:
+    - type: redis
+      metadata:
+        # Redis connection
+        address: redis:6379
+        databaseIndex: "0"
+
+        # Queue to monitor
+        listName: citation_analysis_queue
+        listLength: "10"  # 1 pod per 10 queue items
+
+---
+# Optional: TriggerAuthentication for Redis password
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: redis-trigger-auth
+  namespace: marcus-platform
+spec:
+  secretTargetRef:
+    - parameter: password
+      name: marcus-redis-secret
+      key: password
+
+---
+# Install KEDA (one-time setup)
+# kubectl apply -f https://github.com/kedacore/keda/releases/download/v2.10.0/keda-2.10.0.yaml
+#
+# Verify KEDA installed:
+# kubectl get pods -n keda
+#
+# Monitor scaling:
+# kubectl get hpa -n marcus-platform -w

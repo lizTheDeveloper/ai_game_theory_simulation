@@ -1,0 +1,458 @@
+{
+  "dashboard": {
+    "title": "Simulation Overview",
+    "uid": "sim-overview-01",
+    "tags": ["simulation", "research-tool", "overview"],
+    "timezone": "browser",
+    "schemaVersion": 38,
+    "version": 1,
+    "refresh": "5s",
+    "time": {
+      "from": "now-1h",
+      "to": "now"
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 1,
+    "panels": [
+      {
+        "id": 1,
+        "type": "stat",
+        "title": "Current Month",
+        "gridPos": { "x": 0, "y": 0, "w": 6, "h": 4 },
+        "datasource": { "type": "prometheus", "uid": "prometheus" },
+        "targets": [
+          {
+            "expr": "simulation_current_month",
+            "refId": "A",
+            "legendFormat": "Month"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "fixed",
+              "fixedColor": "#00F0FF"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "color": "green", "value": null }
+              ]
+            },
+            "unit": "none",
+            "decimals": 0
+          },
+          "overrides": []
+        },
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "center",
+          "orientation": "auto",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          },
+          "textMode": "value_and_name",
+          "text": {
+            "titleSize": 12,
+            "valueSize": 32
+          }
+        }
+      },
+      {
+        "id": 2,
+        "type": "stat",
+        "title": "Simulation Phase",
+        "gridPos": { "x": 6, "y": 0, "w": 6, "h": 4 },
+        "datasource": { "type": "prometheus", "uid": "prometheus" },
+        "targets": [
+          {
+            "expr": "simulation_phase",
+            "refId": "A",
+            "legendFormat": "Phase"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "fixed",
+              "fixedColor": "#00F0FF"
+            },
+            "mappings": [
+              { "type": "value", "value": 0, "text": "Alignment" },
+              { "type": "value", "value": 1, "text": "Transition" },
+              { "type": "value", "value": 2, "text": "Flourishing" },
+              { "type": "value", "value": 3, "text": "Transcendence" }
+            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "color": "#00F0FF", "value": null }
+              ]
+            },
+            "unit": "none"
+          },
+          "overrides": []
+        },
+        "options": {
+          "colorMode": "value",
+          "graphMode": "none",
+          "justifyMode": "center",
+          "orientation": "auto",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          },
+          "textMode": "value",
+          "text": {
+            "titleSize": 12,
+            "valueSize": 24
+          }
+        }
+      },
+      {
+        "id": 3,
+        "type": "gauge",
+        "title": "Quality of Life",
+        "gridPos": { "x": 12, "y": 0, "w": 12, "h": 8 },
+        "datasource": { "type": "prometheus", "uid": "prometheus" },
+        "targets": [
+          {
+            "expr": "simulation_qol_overall",
+            "refId": "A",
+            "legendFormat": "QoL"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "color": "#FF0040", "value": null },
+                { "color": "#FFB000", "value": 0.3 },
+                { "color": "#00FF88", "value": 0.7 }
+              ]
+            },
+            "min": 0,
+            "max": 1,
+            "unit": "percentunit"
+          },
+          "overrides": []
+        },
+        "options": {
+          "orientation": "horizontal",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          },
+          "showThresholdLabels": true,
+          "showThresholdMarkers": true,
+          "text": {
+            "titleSize": 14,
+            "valueSize": 28
+          }
+        }
+      },
+      {
+        "id": 4,
+        "type": "stat",
+        "title": "Population",
+        "gridPos": { "x": 0, "y": 4, "w": 6, "h": 4 },
+        "datasource": { "type": "prometheus", "uid": "prometheus" },
+        "targets": [
+          {
+            "expr": "simulation_population_billions",
+            "refId": "A",
+            "legendFormat": "Population"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "fixed",
+              "fixedColor": "rgba(255, 255, 255, 0.7)"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "color": "green", "value": null }
+              ]
+            },
+            "unit": "short",
+            "decimals": 2,
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "fillOpacity": 10,
+              "gradientMode": "opacity",
+              "hideFrom": {
+                "tooltip": false,
+                "viz": false,
+                "legend": false
+              },
+              "lineWidth": 2,
+              "scaleDistribution": {
+                "type": "linear"
+              }
+            }
+          },
+          "overrides": []
+        },
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "center",
+          "orientation": "auto",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          },
+          "textMode": "value_and_name",
+          "text": {
+            "titleSize": 12,
+            "valueSize": 28
+          }
+        }
+      },
+      {
+        "id": 5,
+        "type": "stat",
+        "title": "AI Agents",
+        "gridPos": { "x": 6, "y": 4, "w": 6, "h": 4 },
+        "datasource": { "type": "prometheus", "uid": "prometheus" },
+        "targets": [
+          {
+            "expr": "simulation_ai_agents_count",
+            "refId": "A",
+            "legendFormat": "Agents"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "fixed",
+              "fixedColor": "#0080FF"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "color": "#0080FF", "value": null }
+              ]
+            },
+            "unit": "none",
+            "decimals": 0
+          },
+          "overrides": []
+        },
+        "options": {
+          "colorMode": "value",
+          "graphMode": "none",
+          "justifyMode": "center",
+          "orientation": "auto",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          },
+          "textMode": "value_and_name",
+          "text": {
+            "titleSize": 12,
+            "valueSize": 36
+          }
+        }
+      },
+      {
+        "id": 6,
+        "type": "stat",
+        "title": "Technologies Deployed",
+        "gridPos": { "x": 0, "y": 8, "w": 8, "h": 4 },
+        "datasource": { "type": "prometheus", "uid": "prometheus" },
+        "targets": [
+          {
+            "expr": "simulation_techs_deployed",
+            "refId": "A",
+            "legendFormat": "Deployed"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "fixed",
+              "fixedColor": "#00CC66"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "color": "#00CC66", "value": null }
+              ]
+            },
+            "unit": "none",
+            "decimals": 0
+          },
+          "overrides": []
+        },
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "center",
+          "orientation": "auto",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          },
+          "textMode": "value_and_name",
+          "text": {
+            "titleSize": 12,
+            "valueSize": 32
+          }
+        }
+      },
+      {
+        "id": 7,
+        "type": "stat",
+        "title": "Active Crises",
+        "gridPos": { "x": 8, "y": 8, "w": 8, "h": 4 },
+        "datasource": { "type": "prometheus", "uid": "prometheus" },
+        "targets": [
+          {
+            "expr": "simulation_active_crises",
+            "refId": "A",
+            "legendFormat": "Crises"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "color": "rgba(255, 255, 255, 0.4)", "value": null },
+                { "color": "#FFB000", "value": 1 },
+                { "color": "#FF0040", "value": 3 }
+              ]
+            },
+            "unit": "none",
+            "decimals": 0
+          },
+          "overrides": []
+        },
+        "options": {
+          "colorMode": "value",
+          "graphMode": "none",
+          "justifyMode": "center",
+          "orientation": "auto",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          },
+          "textMode": "value_and_name",
+          "text": {
+            "titleSize": 12,
+            "valueSize": 36
+          }
+        }
+      },
+      {
+        "id": 8,
+        "type": "bargauge",
+        "title": "Outcome Trajectory",
+        "gridPos": { "x": 16, "y": 8, "w": 8, "h": 4 },
+        "datasource": { "type": "prometheus", "uid": "prometheus" },
+        "targets": [
+          {
+            "expr": "simulation_outcome_tier",
+            "refId": "A",
+            "legendFormat": "Outcome"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [
+              { "type": "value", "value": 0, "text": "Extinction" },
+              { "type": "value", "value": 1, "text": "Collapse" },
+              { "type": "value", "value": 2, "text": "Dystopia" },
+              { "type": "value", "value": 3, "text": "Status Quo" },
+              { "type": "value", "value": 4, "text": "Recovery" },
+              { "type": "value", "value": 5, "text": "Flourishing" },
+              { "type": "value", "value": 6, "text": "Utopia" }
+            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "color": "#FF0040", "value": null },
+                { "color": "#FF6B00", "value": 1 },
+                { "color": "#FFB000", "value": 2 },
+                { "color": "rgba(255, 255, 255, 0.6)", "value": 3 },
+                { "color": "#00CC66", "value": 4 },
+                { "color": "#00FF88", "value": 5 },
+                { "color": "#00F0FF", "value": 6 }
+              ]
+            },
+            "min": 0,
+            "max": 6,
+            "unit": "none"
+          },
+          "overrides": []
+        },
+        "options": {
+          "displayMode": "gradient",
+          "orientation": "horizontal",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          },
+          "showUnfilled": true,
+          "text": {
+            "titleSize": 12,
+            "valueSize": 18
+          }
+        }
+      }
+    ],
+    "style": "dark",
+    "templating": {
+      "list": []
+    },
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": {
+            "type": "datasource",
+            "uid": "grafana"
+          },
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "target": {
+            "limit": 100,
+            "matchAny": false,
+            "tags": [],
+            "type": "dashboard"
+          },
+          "type": "dashboard"
+        }
+      ]
+    }
+  },
+  "folderUid": "ef4v15yhwmjggd",
+  "overwrite": true
+}

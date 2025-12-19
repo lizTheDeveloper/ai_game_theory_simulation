@@ -1,0 +1,608 @@
+{
+  "dashboard": {
+    "title": "Technology Tree",
+    "uid": "sim-tech-tree-06",
+    "tags": ["simulation", "research-tool", "technology", "tech-tree"],
+    "timezone": "browser",
+    "schemaVersion": 38,
+    "version": 1,
+    "refresh": "5s",
+    "time": {
+      "from": "now-6h",
+      "to": "now"
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 1,
+    "panels": [
+      {
+        "id": 1,
+        "type": "bargauge",
+        "title": "Tech Tree Progress by Tier",
+        "gridPos": { "x": 0, "y": 0, "w": 24, "h": 6 },
+        "datasource": { "type": "prometheus", "uid": "prometheus" },
+        "targets": [
+          {
+            "expr": "tech_tier_completion{tier=\"0\"}",
+            "refId": "A",
+            "legendFormat": "TIER 0: Crisis Response"
+          },
+          {
+            "expr": "tech_tier_completion{tier=\"1\"}",
+            "refId": "B",
+            "legendFormat": "TIER 1: Stabilization"
+          },
+          {
+            "expr": "tech_tier_completion{tier=\"2\"}",
+            "refId": "C",
+            "legendFormat": "TIER 2: Transformation"
+          },
+          {
+            "expr": "tech_tier_completion{tier=\"3\"}",
+            "refId": "D",
+            "legendFormat": "TIER 3: Advanced"
+          },
+          {
+            "expr": "tech_tier_completion{tier=\"4\"}",
+            "refId": "E",
+            "legendFormat": "TIER 4: Clarke Tech"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "min": 0,
+            "max": 1,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "color": "rgba(255, 255, 255, 0.1)", "value": null },
+                { "color": "rgba(0, 128, 255, 0.3)", "value": 0.2 },
+                { "color": "rgba(0, 240, 255, 0.5)", "value": 0.4 },
+                { "color": "rgba(0, 255, 136, 0.7)", "value": 0.6 },
+                { "color": "#00FF88", "value": 0.8 }
+              ]
+            },
+            "unit": "percentunit"
+          },
+          "overrides": []
+        },
+        "options": {
+          "displayMode": "gradient",
+          "orientation": "horizontal",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          },
+          "showUnfilled": true,
+          "text": {
+            "titleSize": 12,
+            "valueSize": 16
+          }
+        }
+      },
+      {
+        "id": 2,
+        "type": "stat",
+        "title": "Total Technologies Deployed",
+        "gridPos": { "x": 0, "y": 6, "w": 6, "h": 4 },
+        "datasource": { "type": "prometheus", "uid": "prometheus" },
+        "targets": [
+          {
+            "expr": "simulation_techs_deployed",
+            "refId": "A",
+            "legendFormat": "Deployed"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "fixed",
+              "fixedColor": "#00F0FF"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "color": "#00F0FF", "value": null }
+              ]
+            },
+            "unit": "none",
+            "decimals": 0
+          },
+          "overrides": []
+        },
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "center",
+          "orientation": "auto",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          },
+          "textMode": "value",
+          "text": {
+            "titleSize": 12,
+            "valueSize": 48
+          }
+        }
+      },
+      {
+        "id": 3,
+        "type": "stat",
+        "title": "Total Available Technologies",
+        "gridPos": { "x": 6, "y": 6, "w": 6, "h": 4 },
+        "datasource": { "type": "prometheus", "uid": "prometheus" },
+        "targets": [
+          {
+            "expr": "71",
+            "refId": "A",
+            "legendFormat": "Total"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "fixed",
+              "fixedColor": "rgba(255, 255, 255, 0.4)"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "color": "rgba(255, 255, 255, 0.4)", "value": null }
+              ]
+            },
+            "unit": "none",
+            "decimals": 0
+          },
+          "overrides": []
+        },
+        "options": {
+          "colorMode": "value",
+          "graphMode": "none",
+          "justifyMode": "center",
+          "orientation": "auto",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          },
+          "textMode": "value",
+          "text": {
+            "titleSize": 12,
+            "valueSize": 48
+          }
+        }
+      },
+      {
+        "id": 4,
+        "type": "piechart",
+        "title": "Deployment Status",
+        "gridPos": { "x": 12, "y": 6, "w": 12, "h": 8 },
+        "datasource": { "type": "prometheus", "uid": "prometheus" },
+        "targets": [
+          {
+            "expr": "simulation_techs_deployed",
+            "refId": "A",
+            "legendFormat": "Deployed"
+          },
+          {
+            "expr": "71 - simulation_techs_deployed",
+            "refId": "B",
+            "legendFormat": "Not Deployed"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "mappings": [],
+            "unit": "none"
+          },
+          "overrides": [
+            {
+              "matcher": { "id": "byName", "options": "Deployed" },
+              "properties": [
+                { "id": "color", "value": { "mode": "fixed", "fixedColor": "#00FF88" } }
+              ]
+            },
+            {
+              "matcher": { "id": "byName", "options": "Not Deployed" },
+              "properties": [
+                { "id": "color", "value": { "mode": "fixed", "fixedColor": "rgba(255, 255, 255, 0.1)" } }
+              ]
+            }
+          ]
+        },
+        "options": {
+          "pieType": "donut",
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          },
+          "displayLabels": ["name", "value"],
+          "legendDisplayMode": "table",
+          "legendPlacement": "bottom",
+          "legendShowLegend": true,
+          "legendValues": ["value", "percent"],
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          }
+        }
+      },
+      {
+        "id": 5,
+        "type": "table",
+        "title": "Recently Deployed Technologies",
+        "gridPos": { "x": 0, "y": 10, "w": 12, "h": 8 },
+        "datasource": { "type": "prometheus", "uid": "prometheus" },
+        "targets": [
+          {
+            "expr": "tech_deployed{tier=\"0\"}",
+            "refId": "A",
+            "format": "table",
+            "instant": true
+          },
+          {
+            "expr": "tech_deployed{tier=\"1\"}",
+            "refId": "B",
+            "format": "table",
+            "instant": true
+          },
+          {
+            "expr": "tech_deployed{tier=\"2\"}",
+            "refId": "C",
+            "format": "table",
+            "instant": true
+          },
+          {
+            "expr": "tech_deployed{tier=\"3\"}",
+            "refId": "D",
+            "format": "table",
+            "instant": true
+          },
+          {
+            "expr": "tech_deployed{tier=\"4\"}",
+            "refId": "E",
+            "format": "table",
+            "instant": true
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "custom": {
+              "align": "left",
+              "displayMode": "auto",
+              "filterable": true,
+              "inspect": false
+            },
+            "mappings": [
+              {
+                "type": "value",
+                "value": 0,
+                "options": {
+                  "index": 0,
+                  "text": "Not Deployed",
+                  "color": "rgba(255, 255, 255, 0.2)"
+                }
+              },
+              {
+                "type": "value",
+                "value": 1,
+                "options": {
+                  "index": 1,
+                  "text": "DEPLOYED",
+                  "color": "#00FF88"
+                }
+              }
+            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "color": "transparent", "value": null }
+              ]
+            }
+          },
+          "overrides": [
+            {
+              "matcher": { "id": "byName", "options": "name" },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 250
+                },
+                {
+                  "id": "displayName",
+                  "value": "Technology"
+                }
+              ]
+            },
+            {
+              "matcher": { "id": "byName", "options": "tier" },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 80
+                },
+                {
+                  "id": "displayName",
+                  "value": "Tier"
+                },
+                {
+                  "id": "custom.displayMode",
+                  "value": "color-background-solid"
+                },
+                {
+                  "id": "color",
+                  "value": {
+                    "mode": "thresholds"
+                  }
+                },
+                {
+                  "id": "thresholds",
+                  "value": {
+                    "mode": "absolute",
+                    "steps": [
+                      { "color": "rgba(255, 255, 255, 0.1)", "value": null },
+                      { "color": "rgba(0, 128, 255, 0.3)", "value": 1 },
+                      { "color": "rgba(0, 240, 255, 0.5)", "value": 2 },
+                      { "color": "rgba(0, 255, 136, 0.7)", "value": 3 },
+                      { "color": "#00FF88", "value": 4 }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "matcher": { "id": "byName", "options": "Value" },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "Status"
+                },
+                {
+                  "id": "custom.displayMode",
+                  "value": "color-background-solid"
+                }
+              ]
+            }
+          ]
+        },
+        "options": {
+          "showHeader": true,
+          "sortBy": [
+            {
+              "displayName": "Status",
+              "desc": true
+            }
+          ],
+          "footer": {
+            "show": false,
+            "reducer": ["sum"],
+            "fields": ""
+          }
+        },
+        "transformations": [
+          {
+            "id": "merge"
+          },
+          {
+            "id": "organize",
+            "options": {
+              "excludeByName": {
+                "Time": true,
+                "__name__": true,
+                "job": true,
+                "instance": true
+              }
+            }
+          },
+          {
+            "id": "filterByValue",
+            "options": {
+              "filters": [
+                {
+                  "fieldName": "Value",
+                  "config": {
+                    "id": "equal",
+                    "options": {
+                      "value": 1
+                    }
+                  }
+                }
+              ],
+              "match": "any"
+            }
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "type": "timeseries",
+        "title": "Technology Deployment Timeline",
+        "gridPos": { "x": 12, "y": 14, "w": 12, "h": 10 },
+        "datasource": { "type": "prometheus", "uid": "prometheus" },
+        "targets": [
+          {
+            "expr": "simulation_techs_deployed",
+            "refId": "A",
+            "legendFormat": "Total Deployed"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "fixed",
+              "fixedColor": "#00F0FF"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "Technologies",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 20,
+              "gradientMode": "opacity",
+              "hideFrom": {
+                "tooltip": false,
+                "viz": false,
+                "legend": false
+              },
+              "lineInterpolation": "stepAfter",
+              "lineWidth": 2,
+              "pointSize": 6,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "min": 0,
+            "max": 71,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "color": "green", "value": null }
+              ]
+            },
+            "unit": "none"
+          },
+          "overrides": []
+        },
+        "options": {
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          },
+          "legend": {
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true,
+            "calcs": []
+          }
+        }
+      },
+      {
+        "id": 7,
+        "type": "heatmap",
+        "title": "Technology Dependency Matrix",
+        "gridPos": { "x": 0, "y": 18, "w": 12, "h": 6 },
+        "datasource": { "type": "prometheus", "uid": "prometheus" },
+        "targets": [
+          {
+            "expr": "tech_dependency_satisfied",
+            "refId": "A",
+            "format": "table",
+            "instant": true
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "custom": {
+              "hideFrom": {
+                "tooltip": false,
+                "viz": false,
+                "legend": false
+              },
+              "scaleDistribution": {
+                "type": "linear"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "color": "rgba(255, 255, 255, 0.1)", "value": null },
+                { "color": "#00FF88", "value": 1 }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "options": {
+          "calculate": false,
+          "cellGap": 1,
+          "cellValues": {},
+          "color": {
+            "exponent": 0.5,
+            "fill": "rgba(255, 255, 255, 0.1)",
+            "mode": "scheme",
+            "reverse": false,
+            "scale": "exponential",
+            "scheme": "Oranges",
+            "steps": 64
+          },
+          "exemplars": {
+            "color": "rgba(255,0,255,0.7)"
+          },
+          "filterValues": {
+            "le": 1e-9
+          },
+          "legend": {
+            "show": true
+          },
+          "rowsFrame": {
+            "layout": "auto"
+          },
+          "showValue": "never",
+          "tooltip": {
+            "show": true,
+            "yHistogram": false
+          },
+          "yAxis": {
+            "axisPlacement": "left",
+            "reverse": false
+          }
+        }
+      }
+    ],
+    "style": "dark",
+    "templating": {
+      "list": []
+    },
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": {
+            "type": "datasource",
+            "uid": "grafana"
+          },
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 240, 255, 1)",
+          "name": "Technology Events",
+          "target": {
+            "limit": 100,
+            "matchAny": false,
+            "tags": ["technology"],
+            "type": "tags"
+          }
+        }
+      ]
+    }
+  },
+  "folderUid": "ef4v15yhwmjggd",
+  "overwrite": true
+}

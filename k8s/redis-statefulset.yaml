@@ -1,0 +1,224 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-headless
+  namespace: marcus-platform
+  labels:
+    app: redis
+spec:
+  ports:
+    - port: 6379
+      targetPort: 6379
+      name: redis
+    - port: 16379
+      targetPort: 16379
+      name: redis-cluster
+  clusterIP: None
+  selector:
+    app: redis
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  namespace: marcus-platform
+  labels:
+    app: redis
+spec:
+  ports:
+    - port: 6379
+      targetPort: 6379
+      name: redis
+  selector:
+    app: redis
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: redis
+  namespace: marcus-platform
+spec:
+  serviceName: redis-headless
+  replicas: 6  # 3 primary + 3 replica
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+        - name: redis
+          image: redis:7-alpine
+          ports:
+            - containerPort: 6379
+              name: redis
+            - containerPort: 16379
+              name: redis-cluster
+          command:
+            - redis-server
+          args:
+            - /etc/redis/redis.conf
+            - --cluster-enabled yes
+            - --cluster-config-file /data/nodes.conf
+            - --cluster-node-timeout 5000
+            - --appendonly yes
+            - --protected-mode no
+            - --bind 0.0.0.0
+            - --requirepass $(REDIS_PASSWORD)
+          env:
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: marcus-secrets
+                  key: REDIS_PASSWORD
+          volumeMounts:
+            - name: redis-data
+              mountPath: /data
+            - name: redis-config
+              mountPath: /etc/redis/redis.conf
+              subPath: redis.conf
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "500m"
+          livenessProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - redis-cli -a $REDIS_PASSWORD ping
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - redis-cli -a $REDIS_PASSWORD ping
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            timeoutSeconds: 3
+      volumes:
+        - name: redis-config
+          configMap:
+            name: redis-config
+  volumeClaimTemplates:
+    - metadata:
+        name: redis-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: "standard-rwo"
+        resources:
+          requests:
+            storage: 10Gi
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-config
+  namespace: marcus-platform
+data:
+  redis.conf: |
+    # ========================================================================
+    # MARCUS 3.1: Redis Cluster Configuration with Memory Management
+    # Updated: 2025-11-22 (L2: Memory limits and eviction policy)
+    # ========================================================================
+
+    # Redis cluster configuration
+    cluster-enabled yes
+    cluster-require-full-coverage no
+    cluster-node-timeout 5000
+    cluster-migration-barrier 1
+
+    # Persistence
+    appendonly yes
+    appendfsync everysec
+    auto-aof-rewrite-percentage 100
+    auto-aof-rewrite-min-size 64mb
+
+    # ========================================================================
+    # MEMORY MANAGEMENT (L2 Enhancement)
+    # ========================================================================
+    # Container limit: 1Gi = 1,073,741,824 bytes
+    # Redis maxmemory: 80% = 858,993,459 bytes (~820Mi)
+    # This leaves 20% headroom for:
+    # - Copy-on-write during AOF rewrites
+    # - Internal structures (connections, buffers)
+    # - Cluster gossip protocol overhead
+    maxmemory 858993459
+
+    # Eviction policy: allkeys-lru
+    # Evicts least recently used keys when maxmemory reached
+    # Works for both cached data (with TTL) and locks (no TTL)
+    maxmemory-policy allkeys-lru
+
+    # LRU sampling size (accuracy vs. speed)
+    # Default: 5 (good balance)
+    maxmemory-samples 5
+
+    # ========================================================================
+    # PERFORMANCE
+    # ========================================================================
+    tcp-backlog 511
+    timeout 300            # Close idle connections after 5 minutes (reduced from 0)
+    tcp-keepalive 60       # Send TCP keepalives every 60 seconds (reduced from 300)
+
+    # Slow log configuration
+    slowlog-log-slower-than 10000  # Log commands taking >10ms
+    slowlog-max-len 128            # Keep last 128 slow commands
+
+    # Latency monitoring
+    latency-monitor-threshold 100  # Track events taking >100ms
+
+    # Logging
+    loglevel notice
+    logfile ""
+
+    # Security (password set via command line args)
+    protected-mode yes
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: redis-cluster-init
+  namespace: marcus-platform
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: redis-cluster-init
+          image: redis:7-alpine
+          command:
+            - /bin/sh
+            - -c
+            - |
+              # Wait for all Redis pods to be ready
+              sleep 30
+
+              # Create cluster
+              redis-cli --cluster create \
+                redis-0.redis-headless.marcus-platform.svc.cluster.local:6379 \
+                redis-1.redis-headless.marcus-platform.svc.cluster.local:6379 \
+                redis-2.redis-headless.marcus-platform.svc.cluster.local:6379 \
+                redis-3.redis-headless.marcus-platform.svc.cluster.local:6379 \
+                redis-4.redis-headless.marcus-platform.svc.cluster.local:6379 \
+                redis-5.redis-headless.marcus-platform.svc.cluster.local:6379 \
+                --cluster-replicas 1 \
+                --cluster-yes \
+                -a ${REDIS_PASSWORD}
+          env:
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: marcus-secrets
+                  key: REDIS_PASSWORD

@@ -1,0 +1,365 @@
+---
+# MARCUS 3.0 - Citation Worker HPA with Redis Queue Depth
+#
+# HIGH PRIORITY #5: Automatic scaling based on queue depth
+#
+# Problem:
+# - No automatic scaling based on Redis queue depth
+# - Manual scaling required during load spikes
+# - Workers can't respond to demand automatically
+#
+# Solution:
+# - HPA based on Redis queue depth metric
+# - Target: queue depth < 10 items per worker
+# - Scale workers 2-50 based on demand
+#
+# Prerequisites:
+# - Prometheus Adapter installed (custom metrics)
+# - Redis queue exporter running
+# - ServiceMonitor configured for metrics scraping
+#
+# Author: Marcus (Platform Engineer)
+# Date: 2025-11-22
+
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: citation-workers-hpa
+  namespace: marcus-platform
+  labels:
+    app: citation-worker
+    component: worker
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: citation-worker
+  minReplicas: 2
+  maxReplicas: 50
+  metrics:
+    # PRIMARY METRIC: Redis queue depth (items per worker)
+    # Target: Each worker should handle max 10 items in queue
+    - type: External
+      external:
+        metric:
+          name: redis_queue_depth
+          selector:
+            matchLabels:
+              queue: citation_tasks
+        target:
+          type: AverageValue
+          averageValue: "10"
+
+    # SECONDARY METRIC: Worker CPU utilization
+    # Prevents over-scaling when workers are CPU-bound
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+
+    # TERTIARY METRIC: Worker memory utilization
+    # Prevents OOM when agents load large documents
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 80
+
+    # QUEUE LATENCY METRIC: Average time items spend in queue
+    # Scale up if queue latency > 30 seconds
+    - type: External
+      external:
+        metric:
+          name: redis_queue_latency_seconds
+          selector:
+            matchLabels:
+              queue: citation_tasks
+        target:
+          type: AverageValue
+          averageValue: "30"
+
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 300  # 5 minutes - prevent flapping
+      policies:
+        # Conservative scale-down to avoid queue buildup
+        - type: Percent
+          value: 25         # Max 25% reduction per period
+          periodSeconds: 60
+        - type: Pods
+          value: 2          # Max 2 pods per minute
+          periodSeconds: 60
+      selectPolicy: Min     # Choose more conservative policy
+
+    scaleUp:
+      stabilizationWindowSeconds: 30  # 30 seconds - fast response to load
+      policies:
+        # Aggressive scale-up to handle spikes
+        - type: Percent
+          value: 100        # Double capacity if needed
+          periodSeconds: 30
+        - type: Pods
+          value: 5          # Add up to 5 pods per 30s
+          periodSeconds: 30
+      selectPolicy: Max     # Choose more aggressive policy
+
+---
+# Pod Disruption Budget - Maintain minimum workers during updates
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: citation-workers-pdb
+  namespace: marcus-platform
+spec:
+  minAvailable: 2  # Always keep at least 2 workers running
+  selector:
+    matchLabels:
+      app: citation-worker
+
+---
+# ServiceMonitor for Prometheus - Scrape worker metrics
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: citation-workers-metrics
+  namespace: marcus-platform
+  labels:
+    app: citation-worker
+spec:
+  selector:
+    matchLabels:
+      app: citation-worker
+  endpoints:
+    - port: metrics
+      interval: 15s
+      path: /metrics
+
+---
+# Redis Queue Exporter - Export queue depth as Prometheus metric
+#
+# This deployment runs a sidecar that queries Redis and exports queue metrics
+# for HPA consumption via Prometheus Adapter.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-queue-exporter
+  namespace: marcus-platform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis-queue-exporter
+  template:
+    metadata:
+      labels:
+        app: redis-queue-exporter
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9121"
+        prometheus.io/path: "/metrics"
+    spec:
+      containers:
+        - name: exporter
+          image: oliver006/redis_exporter:latest
+          ports:
+            - containerPort: 9121
+              name: metrics
+          env:
+            - name: REDIS_ADDR
+              value: "redis:6379"
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: redis-credentials
+                  key: password
+                  optional: true
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 100m
+              memory: 128Mi
+          livenessProbe:
+            httpGet:
+              path: /metrics
+              port: 9121
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /metrics
+              port: 9121
+            initialDelaySeconds: 5
+            periodSeconds: 10
+
+---
+# Service for Redis Queue Exporter
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-queue-exporter
+  namespace: marcus-platform
+  labels:
+    app: redis-queue-exporter
+spec:
+  selector:
+    app: redis-queue-exporter
+  ports:
+    - port: 9121
+      targetPort: 9121
+      name: metrics
+
+---
+# ServiceMonitor for Redis Exporter
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: redis-queue-exporter-metrics
+  namespace: marcus-platform
+spec:
+  selector:
+    matchLabels:
+      app: redis-queue-exporter
+  endpoints:
+    - port: metrics
+      interval: 15s
+      path: /metrics
+
+---
+# PrometheusRule - Recording rules for queue metrics
+#
+# Transform raw Redis metrics into HPA-consumable format
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: citation-queue-rules
+  namespace: marcus-platform
+spec:
+  groups:
+    - name: citation_queue_metrics
+      interval: 15s
+      rules:
+        # Queue depth per worker (total queue / worker count)
+        - record: redis_queue_depth
+          expr: |
+            redis_list_length{list="citation_tasks"}
+            /
+            count(kube_pod_info{namespace="marcus-platform",pod=~"citation-worker-.*"})
+
+        # Queue latency (oldest item age in seconds)
+        - record: redis_queue_latency_seconds
+          expr: |
+            time() - redis_list_oldest_timestamp{list="citation_tasks"}
+
+        # Worker throughput (citations processed per second)
+        - record: worker_throughput_per_second
+          expr: |
+            rate(citation_analysis_counter_total[1m])
+
+        # Worker saturation (queue depth / throughput)
+        # High value = workers can't keep up
+        - record: worker_saturation_ratio
+          expr: |
+            redis_queue_depth
+            /
+            (worker_throughput_per_second + 0.1)
+
+---
+# ConfigMap - HPA Configuration Documentation
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hpa-config-docs
+  namespace: marcus-platform
+data:
+  README.md: |
+    # Citation Worker HPA Configuration
+
+    ## Scaling Behavior
+
+    **Scale-Up Triggers:**
+    1. Queue depth > 10 items per worker (PRIMARY)
+    2. Queue latency > 30 seconds
+    3. CPU utilization > 70%
+    4. Memory utilization > 80%
+
+    **Scale-Down Triggers:**
+    1. Queue depth < 10 items per worker
+    2. Queue latency < 30 seconds
+    3. CPU utilization < 70%
+    4. Memory utilization < 80%
+
+    **Scaling Limits:**
+    - Min workers: 2
+    - Max workers: 50
+    - Scale-up: +100% (double) or +5 pods per 30s (whichever is larger)
+    - Scale-down: -25% or -2 pods per 60s (whichever is smaller)
+
+    ## Monitoring
+
+    **Key Metrics:**
+    - `redis_queue_depth`: Items in queue per worker
+    - `redis_queue_latency_seconds`: Age of oldest queued item
+    - `worker_throughput_per_second`: Citations processed/sec
+    - `worker_saturation_ratio`: Queue depth / throughput
+
+    **Dashboards:**
+    - Grafana: MARCUS Worker Scaling Dashboard
+    - Prometheus: http://prometheus:9090/graph
+
+    ## Testing
+
+    **Simulate Load Spike:**
+    ```bash
+    # Add 1000 tasks to queue
+    kubectl exec -it redis-0 -n marcus-platform -- redis-cli LPUSH citation_tasks $(seq 1 1000)
+
+    # Watch HPA scale up
+    kubectl get hpa citation-workers-hpa -n marcus-platform --watch
+    ```
+
+    **Verify Scaling:**
+    ```bash
+    # Check current worker count
+    kubectl get pods -n marcus-platform -l app=citation-worker
+
+    # Check HPA status
+    kubectl describe hpa citation-workers-hpa -n marcus-platform
+
+    # View queue metrics
+    kubectl port-forward svc/redis-queue-exporter 9121:9121 -n marcus-platform
+    curl http://localhost:9121/metrics | grep citation
+    ```
+
+    ## Tuning Parameters
+
+    **Environment Variables:**
+    - `REDIS_POOL_SIZE`: Redis connection pool size (default: 20)
+    - `WORKER_CONCURRENCY`: Concurrent tasks per worker (default: 4)
+    - `QUEUE_POLL_INTERVAL`: Queue polling interval (default: 1s)
+
+    **HPA Tuning:**
+    - Adjust `averageValue` in metrics to change sensitivity
+    - Modify `stabilizationWindowSeconds` to prevent flapping
+    - Change `minReplicas`/`maxReplicas` based on workload
+
+    ## Troubleshooting
+
+    **Workers not scaling up:**
+    1. Check Prometheus Adapter: `kubectl logs -n kube-system deploy/prometheus-adapter`
+    2. Verify metrics available: `kubectl get apiservice v1beta1.external.metrics.k8s.io`
+    3. Check HPA status: `kubectl describe hpa citation-workers-hpa -n marcus-platform`
+
+    **Workers scaling down too fast:**
+    1. Increase `stabilizationWindowSeconds` for scale-down
+    2. Decrease scale-down `value` percentage
+    3. Check if queue is truly empty or just drained temporarily
+
+    **Queue depth not decreasing:**
+    1. Check worker logs for errors: `kubectl logs -l app=citation-worker -n marcus-platform`
+    2. Verify workers are processing: Check `worker_throughput_per_second` metric
+    3. Check if workers are CPU/memory bound

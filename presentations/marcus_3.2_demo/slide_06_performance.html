@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+    margin: 0;
+    padding: 50pt 60pt;
+    width: 720pt;
+    height: 405pt;
+    background: #000000;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+h1 {
+    color: #00F0FF;
+    font-size: 32pt;
+    font-weight: 300;
+    margin: 0 0 25pt 0;
+    text-transform: uppercase;
+    letter-spacing: 2pt;
+}
+
+.comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.comparison-table th {
+    background: rgba(0, 240, 255, 0.1);
+    color: #00F0FF;
+    font-size: 12pt;
+    padding: 12pt;
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 1pt;
+    border-bottom: 2px solid rgba(0, 240, 255, 0.3);
+}
+
+.comparison-table td {
+    padding: 12pt;
+    font-size: 12pt;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.metric-name {
+    color: #FFFFFF;
+    opacity: 0.9;
+}
+
+.before-value {
+    color: #FF0040;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    text-align: center;
+}
+
+.after-value {
+    color: #00FF88;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    text-align: center;
+}
+
+.improvement {
+    color: #00F0FF;
+    font-family: 'Courier New', monospace;
+    text-align: center;
+}
+
+.comparison-table tr:hover {
+    background: rgba(0, 240, 255, 0.05);
+}
+</style>
+</head>
+<body>
+    <h1>Performance Improvements</h1>
+
+    <table class="comparison-table">
+        <thead>
+            <tr>
+                <th style="width: 40%">Metric</th>
+                <th style="width: 20%">Before</th>
+                <th style="width: 20%">After</th>
+                <th style="width: 20%">Improvement</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="metric-name">Metrics Cardinality</td>
+                <td class="before-value">25,000</td>
+                <td class="after-value">10,000</td>
+                <td class="improvement">60% ↓</td>
+            </tr>
+            <tr>
+                <td class="metric-name">Redis Memory</td>
+                <td class="before-value">OOM Daily</td>
+                <td class="after-value">Stable 2GB</td>
+                <td class="improvement">100% Fix</td>
+            </tr>
+            <tr>
+                <td class="metric-name">Citation Throughput</td>
+                <td class="before-value">15/sec</td>
+                <td class="after-value">42/sec</td>
+                <td class="improvement">2.8x ↑</td>
+            </tr>
+            <tr>
+                <td class="metric-name">API Latency (P95)</td>
+                <td class="before-value">450ms</td>
+                <td class="after-value">134ms</td>
+                <td class="improvement">70% ↓</td>
+            </tr>
+            <tr>
+                <td class="metric-name">Database Queries</td>
+                <td class="before-value">O(n²)</td>
+                <td class="after-value">O(1)</td>
+                <td class="improvement">100x ↑</td>
+            </tr>
+            <tr>
+                <td class="metric-name">Platform Cost</td>
+                <td class="before-value">$120/mo</td>
+                <td class="after-value">$45/mo</td>
+                <td class="improvement">63% ↓</td>
+            </tr>
+            <tr>
+                <td class="metric-name">Platform Health</td>
+                <td class="before-value">7.5/10</td>
+                <td class="after-value">10/10</td>
+                <td class="improvement">Perfect</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

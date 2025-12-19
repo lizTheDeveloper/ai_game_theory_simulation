@@ -1,0 +1,61 @@
+{
+  "dashboard": {
+    "title": "MARCUS Database Metrics",
+    "tags": ["marcus", "database", "postgresql"],
+    "timezone": "browser",
+    "refresh": "10s",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Query Time (P95)",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+        "targets": [
+          {"expr": "histogram_quantile(0.95, rate(pg_query_duration_seconds_bucket[5m]))", "legendFormat": "P95"}
+        ],
+        "yaxes": [{"format": "s"}]
+      },
+      {
+        "id": 2,
+        "title": "Connection Pool Usage",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
+        "targets": [
+          {"expr": "pg_stat_database_numbackends", "legendFormat": "Active"},
+          {"expr": "pg_settings_max_connections", "legendFormat": "Max"}
+        ],
+        "alert": {"conditions": [{"evaluator": {"params": [0.9], "type": "gt"}}]}
+      },
+      {
+        "id": 3,
+        "title": "Cache Hit Ratio",
+        "type": "gauge",
+        "gridPos": {"h": 6, "w": 8, "x": 0, "y": 8},
+        "targets": [
+          {"expr": "pg_stat_database_blks_hit / (pg_stat_database_blks_hit + pg_stat_database_blks_read)"}
+        ],
+        "fieldConfig": {"defaults": {"unit": "percentunit", "min": 0, "max": 1}},
+        "alert": {"conditions": [{"evaluator": {"params": [0.9], "type": "lt"}}]}
+      },
+      {
+        "id": 4,
+        "title": "Transactions per Second",
+        "type": "graph",
+        "gridPos": {"h": 6, "w": 8, "x": 8, "y": 8},
+        "targets": [
+          {"expr": "rate(pg_stat_database_xact_commit[5m])", "legendFormat": "Commits"},
+          {"expr": "rate(pg_stat_database_xact_rollback[5m])", "legendFormat": "Rollbacks"}
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Table Sizes",
+        "type": "table",
+        "gridPos": {"h": 6, "w": 8, "x": 16, "y": 8},
+        "targets": [
+          {"expr": "pg_table_size_bytes", "format": "table", "instant": true}
+        ]
+      }
+    ]
+  }
+}

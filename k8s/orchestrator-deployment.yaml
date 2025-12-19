@@ -1,0 +1,203 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: orchestrator
+  namespace: marcus-platform
+  labels:
+    app: orchestrator
+spec:
+  ports:
+    - port: 3000
+      targetPort: 3000
+      name: http
+    - port: 9090
+      targetPort: 9090
+      name: prometheus
+    - port: 4000
+      targetPort: 4000
+      name: metrics
+  selector:
+    app: orchestrator
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orchestrator
+  namespace: marcus-platform
+  labels:
+    app: orchestrator
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: orchestrator
+  template:
+    metadata:
+      labels:
+        app: orchestrator
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9090"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: marcus-orchestrator
+      containers:
+        - name: orchestrator
+          image: gcr.io/project-6d921a00-c010-437c-990/marcus-orchestrator:v3.2.1-circuit-breakers
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+              name: http
+            - containerPort: 9090
+              name: metrics
+          env:
+            # From ConfigMap
+            - name: NODE_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: marcus-config
+                  key: NODE_ENV
+            - name: LOG_LEVEL
+              valueFrom:
+                configMapKeyRef:
+                  name: marcus-config
+                  key: LOG_LEVEL
+            - name: POSTGRES_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: marcus-config
+                  key: POSTGRES_HOST
+            - name: POSTGRES_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: marcus-config
+                  key: POSTGRES_PORT
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: marcus-config
+                  key: POSTGRES_DB
+            - name: REDIS_CLUSTER_NODES
+              valueFrom:
+                configMapKeyRef:
+                  name: marcus-config
+                  key: REDIS_CLUSTER_NODES
+            - name: AGENT_MAX_WORKERS
+              valueFrom:
+                configMapKeyRef:
+                  name: marcus-config
+                  key: AGENT_MAX_WORKERS
+            - name: JAEGER_AGENT_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: marcus-config
+                  key: JAEGER_AGENT_HOST
+            - name: JAEGER_AGENT_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: marcus-config
+                  key: JAEGER_AGENT_PORT
+
+            # From Secrets
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: marcus-secrets
+                  key: JWT_SECRET
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: marcus-secrets
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: marcus-secrets
+                  key: POSTGRES_PASSWORD
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: marcus-secrets
+                  key: REDIS_PASSWORD
+
+            # Pod metadata
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "1000m"
+
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 2
+
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/sh", "-c", "sleep 15"]
+
+      terminationGracePeriodSeconds: 30
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: marcus-orchestrator
+  namespace: marcus-platform
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: marcus-orchestrator
+  namespace: marcus-platform
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "services"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["apps"]
+    resources: ["deployments", "statefulsets"]
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: marcus-orchestrator
+  namespace: marcus-platform
+subjects:
+  - kind: ServiceAccount
+    name: marcus-orchestrator
+    namespace: marcus-platform
+roleRef:
+  kind: Role
+  name: marcus-orchestrator
+  apiGroup: rbac.authorization.k8s.io

@@ -1,0 +1,59 @@
+{
+  "dashboard": {
+    "title": "MARCUS Redis Metrics",
+    "tags": ["marcus", "redis", "cache"],
+    "timezone": "browser",
+    "refresh": "10s",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Operations per Second",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+        "targets": [
+          {"expr": "rate(redis_commands_total[5m])", "legendFormat": "{{cmd}}"}
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Cache Hit Rate",
+        "type": "gauge",
+        "gridPos": {"h": 6, "w": 6, "x": 12, "y": 0},
+        "targets": [
+          {"expr": "rate(redis_keyspace_hits_total[5m]) / (rate(redis_keyspace_hits_total[5m]) + rate(redis_keyspace_misses_total[5m]))"}
+        ],
+        "fieldConfig": {"defaults": {"unit": "percentunit", "min": 0, "max": 1}}
+      },
+      {
+        "id": 3,
+        "title": "Memory Usage",
+        "type": "graph",
+        "gridPos": {"h": 6, "w": 6, "x": 18, "y": 0},
+        "targets": [
+          {"expr": "redis_memory_used_bytes", "legendFormat": "Used"},
+          {"expr": "redis_memory_max_bytes", "legendFormat": "Max"}
+        ],
+        "yaxes": [{"format": "bytes"}],
+        "alert": {"conditions": [{"evaluator": {"params": [0.9], "type": "gt"}}]}
+      },
+      {
+        "id": 4,
+        "title": "Connected Clients",
+        "type": "stat",
+        "gridPos": {"h": 4, "w": 8, "x": 0, "y": 8},
+        "targets": [
+          {"expr": "redis_connected_clients"}
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Evicted Keys",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 16, "x": 8, "y": 8},
+        "targets": [
+          {"expr": "rate(redis_evicted_keys_total[5m])", "legendFormat": "Evictions/sec"}
+        ]
+      }
+    ]
+  }
+}

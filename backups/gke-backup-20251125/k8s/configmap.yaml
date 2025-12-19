@@ -1,0 +1,49 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: marcus-config
+  namespace: marcus-platform
+data:
+  # Application configuration
+  NODE_ENV: "production"
+  LOG_LEVEL: "info"
+
+  # PostgreSQL configuration
+  POSTGRES_HOST: "postgres-primary.marcus-platform.svc.cluster.local"
+  POSTGRES_PORT: "5432"
+  POSTGRES_DB: "citation_integrity"
+  POSTGRES_POOL_MIN: "10"
+  POSTGRES_POOL_MAX: "50"
+
+  # Redis configuration
+  REDIS_HOST: "redis.marcus-platform.svc.cluster.local"
+  REDIS_PORT: "6379"
+  REDIS_CLUSTER_NODES: "redis-0.redis-headless.marcus-platform.svc.cluster.local:6379,redis-1.redis-headless.marcus-platform.svc.cluster.local:6379,redis-2.redis-headless.marcus-platform.svc.cluster.local:6379"
+  REDIS_CLUSTER_ENABLED: "true"
+
+  # Agent configuration
+  AGENT_MAX_WORKERS: "10"
+  AGENT_TIMEOUT_MS: "30000"
+  AGENT_HEALTH_CHECK_INTERVAL_MS: "10000"
+
+  # Circuit breaker configuration
+  CIRCUIT_BREAKER_FAILURE_THRESHOLD: "5"
+  CIRCUIT_BREAKER_TIMEOUT_MS: "60000"
+  CIRCUIT_BREAKER_HALF_OPEN_MAX_CALLS: "3"
+
+  # Rate limiting configuration
+  RATE_LIMIT_WINDOW_MS: "60000"
+  RATE_LIMIT_MAX_REQUESTS: "100"
+
+  # Monitoring configuration
+  PROMETHEUS_PORT: "9090"
+  METRICS_ENABLED: "true"
+  TRACING_ENABLED: "true"
+  JAEGER_AGENT_HOST: "jaeger-agent.marcus-platform.svc.cluster.local"
+  JAEGER_AGENT_PORT: "6831"
+
+  # Feature flags
+  ENABLE_CHAOS_ENGINEERING: "false"
+  ENABLE_ADVANCED_METRICS: "true"
+  ENABLE_DISTRIBUTED_TRACING: "true"
