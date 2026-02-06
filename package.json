@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack --port 3333",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "setup-hooks": "bash scripts/setup-hooks.sh"
   },
   "dependencies": {
     "@radix-ui/react-collapsible": "^1.1.12",

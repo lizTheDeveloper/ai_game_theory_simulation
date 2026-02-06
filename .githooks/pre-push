@@ -1,0 +1,12 @@
+#!/bin/bash
+# Pre-push hook: Run tests before pushing
+
+set -e
+
+echo "🧪 Running pre-push tests..."
+
+# Run regression tests
+echo "  ✓ Running regression tests..."
+npx tsx tests/refactoring/runRegressionTests.ts
+
+echo "✅ Pre-push tests passed!"

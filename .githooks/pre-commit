@@ -1,0 +1,16 @@
+#!/bin/bash
+# Pre-commit hook: Run linting and type checking
+
+set -e
+
+echo "🔍 Running pre-commit checks..."
+
+# Run type checking
+echo "  ✓ Type checking..."
+npx tsc --noEmit
+
+# Run linter
+echo "  ✓ Linting..."
+npm run lint
+
+echo "✅ Pre-commit checks passed!"
