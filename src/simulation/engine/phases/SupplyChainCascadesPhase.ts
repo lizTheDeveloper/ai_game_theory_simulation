@@ -28,10 +28,11 @@ export class SupplyChainCascadesPhase implements SimulationPhase {
   readonly order = 36.5; // After crisis management (26), before health/safety nets
 
   // DEPENDENCIES: Supply chain cascades interact with multiple systems
+  // Note: geopolitical-conflict removed (phase not registered in PhaseOrchestrator)
+  // Ordering (36.5) already ensures correct execution sequence
   readonly dependencies = [
     'crisis-detection',      // Crisis events trigger cascades
     'energy-budget',          // Power grid status affects infrastructure cascades
-    'geopolitical-conflict',  // Conflicts can disrupt chokepoints
   ];
 
   execute(state: GameState, _rng: RNGFunction): PhaseResult {

@@ -18,7 +18,7 @@
  * - Suez 2024 validation: 64% transit decline → 158-246% rate increase
  */
 
-import { GameState } from '../types/game';
+import { GameState, RNGFunction } from '../types/game';
 import { assertFinite, assertStateProperty } from './utils/assertions';
 
 /**
@@ -111,7 +111,7 @@ export function initializeSupplyChainCascades(): SupplyChainCascadesState {
  */
 export function updateSupplyChainCascades(
   state: GameState,
-  rng: () => number
+  rng: RNGFunction
 ): void {
   // RNG is REQUIRED for deterministic Monte Carlo validation
   if (!rng || typeof rng !== 'function') {

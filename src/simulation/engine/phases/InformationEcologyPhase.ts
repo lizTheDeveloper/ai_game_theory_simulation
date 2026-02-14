@@ -132,49 +132,58 @@ export class InformationEcologyPhase implements SimulationPhase {
     infoEcology: import('@/simulation/informationEcology').InformationEcologyState,
     rng: RNGFunction
   ): void {
-    // Check for nuclear events (recent detonations)
-    const recentNuclearEvents = state.eventLog.filter(
-      (event) =>
-        event.timestamp >= state.currentMonth - 1 && // Last month
-        event.type === 'catastrophe' &&
-        event.description.toLowerCase().includes('nuclear')
-    );
+    // Single-pass event detection (O(n) instead of 3×O(n))
+    let nuclearCount = 0;
+    let deceptionCount = 0;
+    let catastropheCount = 0;
 
-    if (recentNuclearEvents.length > 0) {
-      const severity = Math.min(1.0, recentNuclearEvents.length * 0.3); // 30% per detonation
+    const cutoffMonth = state.currentMonth - 1;
+
+    for (const event of state.eventLog) {
+      if (event.timestamp < cutoffMonth) continue;
+
+      const descLower = event.description.toLowerCase();
+
+      // Nuclear events
+      if (event.type === 'catastrophe' && descLower.includes('nuclear')) {
+        nuclearCount++;
+      }
+
+      // AI deception events
+      if (
+        event.type === 'crisis' &&
+        (descLower.includes('deception') || descLower.includes('sleeper'))
+      ) {
+        deceptionCount++;
+      }
+
+      // Extinction-tier catastrophes
+      if (
+        event.type === 'catastrophe' &&
+        (descLower.includes('extinction') || descLower.includes('collapse'))
+      ) {
+        catastropheCount++;
+      }
+    }
+
+    // Apply shocks based on detected events
+    if (nuclearCount > 0) {
+      const severity = Math.min(1.0, nuclearCount * 0.3); // 30% per detonation
       applyEpistemicShock(infoEcology, severity, rng);
       console.log(
         `☢️ Nuclear detonation(s) caused epistemic shock (severity ${(severity * 100).toFixed(0)}%)`
       );
     }
 
-    // Check for major AI deception events
-    const recentDeceptionEvents = state.eventLog.filter(
-      (event) =>
-        event.timestamp >= state.currentMonth - 1 &&
-        event.type === 'crisis' &&
-        (event.description.toLowerCase().includes('deception') ||
-         event.description.toLowerCase().includes('sleeper'))
-    );
-
-    if (recentDeceptionEvents.length > 0) {
-      const severity = Math.min(1.0, recentDeceptionEvents.length * 0.2); // 20% per event
+    if (deceptionCount > 0) {
+      const severity = Math.min(1.0, deceptionCount * 0.2); // 20% per event
       applyEpistemicShock(infoEcology, severity, rng);
       console.log(
         `🎭 AI deception event(s) caused epistemic shock (severity ${(severity * 100).toFixed(0)}%)`
       );
     }
 
-    // Check for extinction-tier events (civilizational collapse, severe crises)
-    const recentCatastrophes = state.eventLog.filter(
-      (event) =>
-        event.timestamp >= state.currentMonth - 1 &&
-        event.type === 'catastrophe' &&
-        (event.description.toLowerCase().includes('extinction') ||
-         event.description.toLowerCase().includes('collapse'))
-    );
-
-    if (recentCatastrophes.length > 0) {
+    if (catastropheCount > 0) {
       const severity = 0.8; // Major shock
       applyEpistemicShock(infoEcology, severity, rng);
       console.log(`💥 Catastrophic event caused major epistemic shock`);
