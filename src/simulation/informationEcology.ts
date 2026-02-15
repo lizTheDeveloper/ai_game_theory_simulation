@@ -376,6 +376,10 @@ export function applyEpistemicShock(
     additionalInfo: { polarizationSpike, severity: severityChecked },
   });
 
+  // FIX (Dec 12, 2025): Recalculate epistemic health immediately after shock
+  // Previously deferred recalculation to next month, causing 1-month lag in coordination impact
+  state.epistemicHealth = updateEpistemicHealth(state);
+
   // Reset shock timer
   state.daysSinceLastShock = 0;
 }
