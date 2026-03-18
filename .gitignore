@@ -90,3 +90,5 @@ abstract_agent_team/
 # Worker lock files
 *.lock
 .mcp.json
+ai_risk_db.env
+.claude/mcp-config.json
