@@ -51,6 +51,7 @@ logs/**/*.md
 logs/autonomous/status_current.txt
 logs/autonomous/researcher/status_current.txt
 logs/autonomous/metrics_*.json
+logs/merge_orchestrator/
 
 # Underdocumented tracking (constantly updating, causes merge conflicts)
 docs/underdocumented_items.json
@@ -88,3 +89,4 @@ research/embeddings/*.pkl
 abstract_agent_team/
 # Worker lock files
 *.lock
+.mcp.json
